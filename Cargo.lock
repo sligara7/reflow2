@@ -388,6 +388,7 @@ version = "0.0.1"
 dependencies = [
  "dynograph-core",
  "dynograph-storage",
+ "serde_json",
 ]
 
 [[package]]

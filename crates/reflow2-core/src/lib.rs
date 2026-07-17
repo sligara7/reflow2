@@ -29,9 +29,11 @@
 pub mod graph;
 pub mod nodes;
 pub mod schema;
+pub mod temporal;
 
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
 pub use schema::load_schema;
+pub use temporal::{ChangeAction, ChangeRecord, ChangeType, EpochType, parse_snapshot_state};
 
 // Re-export the foundation types that appear in this crate's public API, so
 // callers don't need a direct dependency on dynograph-core / -storage.

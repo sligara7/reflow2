@@ -19,6 +19,11 @@ pub mod node {
     // P2 · Structure (structure.yaml)
     pub const COMPONENT: &str = "Component";
     pub const INTERFACE: &str = "Interface";
+    // Axis Z · change over time (temporal.yaml)
+    pub const DESIGN_EPOCH: &str = "DesignEpoch";
+    pub const TEMPORAL_FACT: &str = "TemporalFact";
+    pub const SNAPSHOT: &str = "Snapshot";
+    pub const CHANGE_EVENT: &str = "ChangeEvent";
 }
 
 /// Edge type names, matching `schema/*.yaml`.
@@ -29,6 +34,28 @@ pub mod edge {
     pub const SATISFIES: &str = "SATISFIES";
     /// `Capability → Component` — the WHAT→WHERE allocation binding.
     pub const ALLOCATED_TO: &str = "ALLOCATED_TO";
+
+    // Axis Z · change over time (temporal.yaml)
+    /// `DesignEpoch → DesignEpoch` — one epoch comes before another (ordering).
+    pub const PRECEDES: &str = "PRECEDES";
+    /// `DesignEpoch → DesignEpoch` — one epoch nests inside a larger one.
+    pub const CONTAINS_EPOCH: &str = "CONTAINS_EPOCH";
+    /// `* → DesignEpoch` — a Snapshot or ChangeEvent is pinned to its epoch.
+    pub const AT_EPOCH: &str = "AT_EPOCH";
+    /// `ChangeEvent → *` — the node a ChangeEvent added/modified/removed.
+    pub const CHANGED: &str = "CHANGED";
+    /// `* → Snapshot` — an entity has a captured state snapshot.
+    pub const HAS_SNAPSHOT: &str = "HAS_SNAPSHOT";
+    /// `* → DesignEpoch` — a Fragment/ChangeEvent/Verification happened during an epoch.
+    pub const OCCURS_DURING: &str = "OCCURS_DURING";
+    /// `* → TemporalFact` — an entity carries a time-bounded fact.
+    pub const HAS_TEMPORAL_FACT: &str = "HAS_TEMPORAL_FACT";
+    /// `TemporalFact → *` — the entity a temporal fact concerns.
+    pub const ABOUT_ENTITY: &str = "ABOUT_ENTITY";
+    /// `TemporalFact → DesignEpoch` — the fact becomes true at this epoch.
+    pub const VALID_FROM: &str = "VALID_FROM";
+    /// `TemporalFact → DesignEpoch` — the fact stops being true at this epoch.
+    pub const VALID_TO: &str = "VALID_TO";
 }
 
 use std::collections::HashMap;
