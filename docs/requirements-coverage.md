@@ -150,14 +150,37 @@ so none is a silent stub.
 | EX-D9 | Symmetric-edge auto-inverse | ⬜ | not needed by current edges; deferred |
 | EX-D10 | Per-fragment metrics | ⬜ | deferred |
 | EX-D11 | Selective context threading | 🟡 | rosters threaded only into edge passes ✅; epoch threading partial |
-| EX-R1 | Resolution: matched-unchanged / matched-evolved / genuinely-new | ⬜ | **deferred**; currently create-or-replace by id only |
-| EX-R2 | `fuzzy_then_vector` dedup + embedding generation | ⬜ | **deferred** — needs an embedding generator (a stub even in storyflow; tied to the surface decision) |
+| EX-R1 | Resolution: matched-unchanged / matched-evolved / genuinely-new | ✅ | id-based resolution in `integrate_node` · `reingest_with_changed_content_evolves_and_snapshots`, `reingest_identical_content_is_a_noop_no_snapshot` |
+| EX-R2 | `fuzzy_then_vector` cross-id dedup + embedding generation | ⬜ | **deferred** — resolution matches by id; matching differently-worded ids needs fuzzy (`token_sort_ratio`, no network) + a vector tiebreaker (needs an embedding generator). Optional/pluggable — see the embeddings note below |
 | EX-I1 | One typed integration payload | ✅ | single `ingest` path |
 | EX-I2 | MERGE + provenance on a Fragment | ✅ | Fragment + `YIELDED` + provenance stamp · `full_ingest_...` |
 | EX-I3 | Unknown/phantom edges dropped + surfaced | ✅ | `dropped_edges` · `phantom_edge_is_dropped_not_written` |
 | EX-Z1 | Ingest in an active `DesignEpoch` context | 🟡 | `IngestOptions.epoch_id` → `OCCURS_DURING`; not required |
 | EX-Z2 | The `changes` pass (ChangeEvent extraction) | ⬜ | deferred |
-| EX-Z3 | Time-aware integration (matched-evolved → snapshot, never silent overwrite) | ⬜ | **deferred** — depends on EX-R1/R2; today re-ingest with new ids duplicates, with same ids overwrites-in-place without a snapshot |
+| EX-Z3 | Time-aware integration (matched-evolved → snapshot, never silent overwrite) | ✅ | `integrate_node` snapshots the prior state + records a `ChangeEvent` before applying an evolved node; lazily opens an epoch if none given · `reingest_with_changed_content_evolves_and_snapshots`. (Cross-id evolution still needs EX-R2.) |
+
+### Note: are embeddings (an embeddings-rs sidecar) actually needed?
+
+Deliberately kept **optional**. The core needs no embeddings today:
+
+- **Topology / clustering** is pure graph theory — `dynograph-graph` ships Leiden-style
+  `louvain` community detection and the components/cuts already used by HEAL. No vectors.
+- **Time-aware resolution** (matched-evolved) is id-based (above). No vectors.
+- **Near-identical cross-id dedup** can use `dynograph-resolution`'s fuzzy string matching
+  (`token_sort_ratio`/`jaro_winkler`) — still no network.
+
+Embeddings earn their keep only for two things: **semantic** dedup (matching entities that
+are the same idea but worded differently, beyond fuzzy strings) and **semantic retrieval /
+"local search"** (finding entry-point nodes from a free-text query — e.g. gap-surfacing
+anchors, the resolution vector-probe). Both are tied to the deferred interaction-surface
+decision: an **agent-native** surface can reuse the agent's own embedding access; a **hosted**
+surface would run a self-contained generator like
+[embeddings-rs](https://github.com/sligara7/embeddings-rs) (768-dim nomic, `POST /embed`).
+
+**Plan:** keep embeddings behind an optional, pluggable `EmbeddingBackend` seam (mirroring
+`LlmBackend`) — the core runs fully without it; plug in embeddings-rs (or agent-native
+embeddings) to upgrade EX-R2 to `fuzzy_then_vector` and enable semantic retrieval. Not wired
+yet — decide it with the surface.
 
 ## Three Axes — [three-axes.md](three-axes.md)
 

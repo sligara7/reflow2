@@ -28,24 +28,32 @@
 //!   `status` goes `Partial`. Nothing is silently swallowed.
 //! - **Provenance** — everything created is linked from one `Fragment` via
 //!   `YIELDED`, stamped with how it entered the graph.
+//! - **Time-aware resolution** — each extracted node resolves to
+//!   *matched-unchanged* (no-op), *matched-evolved* (snapshot the prior state +
+//!   record a `ChangeEvent`, THEN apply — never a silent overwrite), or
+//!   *genuinely-new*. Re-ingesting an updated brief records the change.
 //!
-//! Deferred (noted so they're not mistaken for done): graph-informed
-//! **fuzzy/vector resolution** and *matched-evolved* snapshotting (need an
-//! embedding generator — a stub even in storyflow, and tied to the deferred
-//! interaction-surface decision), the **SME** augmentation pass, real
-//! parallelism (passes run sequentially here), per-fragment metrics, and the
-//! remaining passes (flows, actors, interfaces, decisions, artifacts, resources,
-//! dependencies, inference, dimensions, changes). This increment implements the
-//! spine: project/requirements/constraints/capabilities → components → satisfies.
+//! Deferred (noted so they're not mistaken for done): **cross-id dedup** —
+//! resolution matches by id today; matching two differently-worded ids as the
+//! same entity needs fuzzy/vector similarity (`fuzzy_then_vector`), whose vector
+//! leg needs an embedding generator (see the optional embedding seam / the
+//! interaction-surface decision). Also deferred: the **SME** augmentation pass,
+//! real parallelism (passes run sequentially here), per-pass timeout/retry,
+//! metrics, and the remaining passes (flows, actors, interfaces, decisions,
+//! artifacts, resources, dependencies, inference, dimensions, changes). This
+//! increment implements the spine:
+//! project/requirements/constraints/capabilities → components → satisfies.
 
 use std::collections::HashMap;
 
-use dynograph_core::DynoError;
+use dynograph_core::{DynoError, Value};
+use dynograph_storage::StoredNode;
 use serde::Deserialize;
 
 use crate::graph::DesignGraph;
 use crate::llm::{LlmBackend, LlmRequest, complete_json};
 use crate::nodes::{Props, edge, node};
+use crate::temporal::{ChangeAction, ChangeRecord, ChangeType, EpochType};
 
 // ---- Extraction output shapes (strict JSON per pass) -----------------------
 
@@ -205,10 +213,18 @@ pub enum IngestStatus {
 pub struct IngestReport {
     /// The provenance Fragment created for this input.
     pub fragment_id: String,
-    /// Nodes created (or updated) this run.
+    /// Genuinely-new nodes created this run (includes the provenance Fragment).
     pub nodes_created: usize,
+    /// Matched-evolved nodes: an existing node whose content changed — snapshotted
+    /// and re-recorded with a `ChangeEvent`, never silently overwritten.
+    pub nodes_evolved: usize,
+    /// Matched-unchanged nodes: already present, identical content → left as-is.
+    pub nodes_unchanged: usize,
     /// Edges created this run.
     pub edges_created: usize,
+    /// The `DesignEpoch` matched-evolved snapshots were pinned to (`Some` only
+    /// when at least one node evolved).
+    pub epoch_used: Option<String>,
     /// Pass-level failures (enveloped; siblings survived).
     pub pass_errors: Vec<PassError>,
     /// Node-level problems (e.g. a bad enum), recorded not fatal.
@@ -229,8 +245,13 @@ pub struct IngestOptions {
     /// How this content entered the graph (`authored`/`planned`/`imported`/…).
     pub provenance: String,
     /// The active `DesignEpoch` this ingest happens in, if any (wired via
-    /// `OCCURS_DURING`).
+    /// `OCCURS_DURING`). Matched-evolved snapshots are pinned here; if unset and
+    /// a node evolves, ingest opens `epoch:{fragment_id}` and reports it.
     pub epoch_id: Option<String>,
+    /// The change type recorded on the `ChangeEvent` for every matched-evolved
+    /// node this run (why you re-ingested). Per-node auto-classification is the
+    /// deferred `changes` pass (EX-Z2); until then the caller declares it.
+    pub change_type: ChangeType,
 }
 
 impl Default for IngestOptions {
@@ -240,6 +261,7 @@ impl Default for IngestOptions {
             fragment_title: "Ingested design input".to_string(),
             provenance: "authored".to_string(),
             epoch_id: None,
+            change_type: ChangeType::ScopeChange,
         }
     }
 }
@@ -401,44 +423,38 @@ impl DesignGraph {
             Vec::new()
         };
 
-        // ---- INTEGRATE (typed, provenance-stamped) ----
-        let mut warnings = Vec::new();
-        let mut dropped_edges = Vec::new();
-        let mut created_ids: HashMap<String, &'static str> = HashMap::new();
-        let mut nodes_created = 0usize;
-        let mut edges_created = 0usize;
+        // ---- INTEGRATE (resolve → typed, provenance-stamped, time-aware) ----
+        let effective_epoch = options
+            .epoch_id
+            .clone()
+            .unwrap_or_else(|| format!("epoch:{}", options.fragment_id));
+        let mut st = Integration::new(&options.fragment_id, effective_epoch, options.change_type);
 
-        // Provenance fragment first.
+        // Provenance fragment first (a new fragment per ingest).
         let mut frag_props = Props::new()
             .set("title", options.fragment_title.as_str())
             .set("fragment_type", "design")
             .set("provenance", options.provenance.as_str());
-        // provenance must be a valid enum value; fall back loudly if not.
         if !PROVENANCE_VALUES.contains(&options.provenance.as_str()) {
-            warnings.push(format!(
+            st.warnings.push(format!(
                 "provenance '{}' not a schema value; using 'authored'",
                 options.provenance
             ));
             frag_props = frag_props.set("provenance", "authored");
         }
-        self.create_node(node::FRAGMENT, &options.fragment_id, frag_props)?;
-        nodes_created += 1;
-        if let Some(epoch) = &options.epoch_id {
-            // Best-effort provenance-in-time; a bad epoch id is a warning, not fatal.
-            if let Err(e) = self.create_edge(
-                edge::OCCURS_DURING,
-                node::FRAGMENT,
-                &options.fragment_id,
-                node::DESIGN_EPOCH,
-                epoch,
-                Props::new(),
-            ) {
-                warnings.push(format!("OCCURS_DURING epoch '{epoch}': {e}"));
-            }
+        match self.create_node(node::FRAGMENT, &options.fragment_id, frag_props) {
+            Ok(_) => st.nodes_created += 1,
+            Err(e) => st
+                .warnings
+                .push(format!("fragment '{}': {e}", options.fragment_id)),
+        }
+        // Honor a caller-named epoch up front so provenance-in-time is valid.
+        if options.epoch_id.is_some() {
+            self.ensure_epoch(&mut st);
+            self.link_fragment_epoch(&mut st);
         }
 
-        // Helper closure can't borrow self mutably twice, so integrate inline.
-        // Nodes: project, requirements, constraints, capabilities, components.
+        // Nodes (resolved: unchanged / evolved / new).
         if let Some(p) = &project {
             let mut props = Props::new().set("name", p.name.as_str());
             props = props.set_opt("objective", p.objective.as_deref());
@@ -448,16 +464,7 @@ impl DesignGraph {
             {
                 props = props.set("mode", m);
             }
-            self.integrate_node(
-                node::PROJECT,
-                &p.id,
-                props,
-                &options.fragment_id,
-                &mut created_ids,
-                &mut nodes_created,
-                &mut edges_created,
-                &mut warnings,
-            );
+            self.integrate_node(&mut st, node::PROJECT, &p.id, props);
         }
         for r in &requirements {
             let mut props = Props::new()
@@ -468,16 +475,7 @@ impl DesignGraph {
             {
                 props = props.set("priority", pr);
             }
-            self.integrate_node(
-                node::REQUIREMENT,
-                &r.id,
-                props,
-                &options.fragment_id,
-                &mut created_ids,
-                &mut nodes_created,
-                &mut edges_created,
-                &mut warnings,
-            );
+            self.integrate_node(&mut st, node::REQUIREMENT, &r.id, props);
         }
         for c in &constraints {
             let mut props = Props::new()
@@ -488,172 +486,260 @@ impl DesignGraph {
             {
                 props = props.set("category", cat);
             }
-            self.integrate_node(
-                node::CONSTRAINT,
-                &c.id,
-                props,
-                &options.fragment_id,
-                &mut created_ids,
-                &mut nodes_created,
-                &mut edges_created,
-                &mut warnings,
-            );
+            self.integrate_node(&mut st, node::CONSTRAINT, &c.id, props);
         }
         for c in &capabilities {
             let props = Props::new()
                 .set("name", c.name.as_str())
                 .set("description", c.description.as_str());
-            self.integrate_node(
-                node::CAPABILITY,
-                &c.id,
-                props,
-                &options.fragment_id,
-                &mut created_ids,
-                &mut nodes_created,
-                &mut edges_created,
-                &mut warnings,
-            );
+            self.integrate_node(&mut st, node::CAPABILITY, &c.id, props);
         }
         for c in &components {
             let props = Props::new()
                 .set("name", c.name.as_str())
                 .set("purpose", c.purpose.as_str());
-            self.integrate_node(
-                node::COMPONENT,
-                &c.id,
-                props,
-                &options.fragment_id,
-                &mut created_ids,
-                &mut nodes_created,
-                &mut edges_created,
-                &mut warnings,
-            );
+            self.integrate_node(&mut st, node::COMPONENT, &c.id, props);
         }
 
         // Edges: ALLOCATED_TO (capability -> component), SATISFIES (capability -> requirement).
         for c in &components {
             for cap_id in &c.allocated_capability_ids {
                 self.integrate_edge(
+                    &mut st,
                     edge::ALLOCATED_TO,
                     node::CAPABILITY,
                     cap_id,
                     node::COMPONENT,
                     &c.id,
-                    &created_ids,
-                    &mut edges_created,
-                    &mut dropped_edges,
                 );
             }
         }
         for s in &satisfies {
             self.integrate_edge(
+                &mut st,
                 edge::SATISFIES,
                 node::CAPABILITY,
                 &s.capability_id,
                 node::REQUIREMENT,
                 &s.requirement_id,
-                &created_ids,
-                &mut edges_created,
-                &mut dropped_edges,
             );
         }
 
-        let status = if errors.is_empty() && warnings.is_empty() && dropped_edges.is_empty() {
+        // If we lazily opened an epoch for evolutions, tie the fragment to it too.
+        if options.epoch_id.is_none() && st.nodes_evolved > 0 {
+            self.link_fragment_epoch(&mut st);
+        }
+        let epoch_used = if st.nodes_evolved > 0 || options.epoch_id.is_some() {
+            Some(st.epoch_id.clone())
+        } else {
+            None
+        };
+        let status = if errors.is_empty() && st.warnings.is_empty() && st.dropped_edges.is_empty() {
             IngestStatus::Ok
         } else {
             IngestStatus::Partial
         };
         Ok(IngestReport {
             fragment_id: options.fragment_id.clone(),
-            nodes_created,
-            edges_created,
+            nodes_created: st.nodes_created,
+            nodes_evolved: st.nodes_evolved,
+            nodes_unchanged: st.nodes_unchanged,
+            edges_created: st.edges_created,
+            epoch_used,
             pass_errors: errors,
-            warnings,
-            dropped_edges,
+            warnings: st.warnings,
+            dropped_edges: st.dropped_edges,
             status,
         })
     }
 
-    /// Create/merge one node, link it from the provenance fragment via YIELDED,
-    /// and contain it under the project spine. A node that fails schema
-    /// validation is recorded as a warning, not fatal (no cascade).
-    #[allow(clippy::too_many_arguments)]
-    fn integrate_node(
-        &mut self,
-        node_type: &'static str,
-        id: &str,
-        props: Props,
-        fragment_id: &str,
-        created_ids: &mut HashMap<String, &'static str>,
-        nodes_created: &mut usize,
-        edges_created: &mut usize,
-        warnings: &mut Vec<String>,
-    ) {
-        match self.create_node(node_type, id, props) {
-            Ok(_) => {
-                created_ids.insert(id.to_string(), node_type);
-                *nodes_created += 1;
-                // Provenance: Fragment YIELDED node {created}.
-                if self
-                    .create_edge(
-                        edge::YIELDED,
-                        node::FRAGMENT,
-                        fragment_id,
-                        node_type,
-                        id,
-                        Props::new().set("action", "created"),
-                    )
-                    .is_ok()
-                {
-                    *edges_created += 1;
-                }
-            }
-            Err(e) => warnings.push(format!("skipped {node_type} '{id}': {e}")),
+    /// Ensure the effective `DesignEpoch` node exists — created lazily the first
+    /// time a matched-evolved node needs somewhere to pin its snapshot.
+    fn ensure_epoch(&mut self, st: &mut Integration) {
+        if st.epoch_ready {
+            return;
+        }
+        st.epoch_ready = true;
+        if matches!(self.get_node(node::DESIGN_EPOCH, &st.epoch_id), Ok(None))
+            && let Err(e) = self.add_epoch(&st.epoch_id, "ingest epoch", EpochType::Revision, 0)
+        {
+            st.warnings
+                .push(format!("open epoch '{}': {e}", st.epoch_id));
         }
     }
 
-    /// Create one edge, but only between endpoints that were actually created
-    /// this run — a reference to an unknown id is dropped with a reason rather
-    /// than written as a phantom edge (no silent drops).
-    #[allow(clippy::too_many_arguments)]
+    /// `Fragment OCCURS_DURING epoch` — provenance-in-time.
+    fn link_fragment_epoch(&mut self, st: &mut Integration) {
+        if self
+            .create_edge(
+                edge::OCCURS_DURING,
+                node::FRAGMENT,
+                st.fragment_id,
+                node::DESIGN_EPOCH,
+                &st.epoch_id,
+                Props::new(),
+            )
+            .is_ok()
+        {
+            st.edges_created += 1;
+        }
+    }
+
+    /// Resolve one extracted node against the graph and integrate it:
+    /// **genuinely-new** → create; **matched-unchanged** → leave as-is (no write,
+    /// no snapshot); **matched-evolved** → snapshot the prior state + record a
+    /// `ChangeEvent` (via [`record_change`](DesignGraph::record_change)) THEN
+    /// apply the edit — never a silent overwrite (extraction-plan.md, "a
+    /// matched-evolved result that lands with no Snapshot is an integrity
+    /// breach"). Every resolved node is registered so later edges can reference
+    /// it, and linked from the provenance fragment.
+    fn integrate_node(
+        &mut self,
+        st: &mut Integration,
+        node_type: &'static str,
+        id: &str,
+        props: Props,
+    ) {
+        let new_map = props.build();
+        match self.get_node(node_type, id) {
+            Err(e) => st.warnings.push(format!("resolve {node_type} '{id}': {e}")),
+            Ok(None) => match self.create_node(node_type, id, new_map) {
+                Ok(_) => {
+                    st.created_ids.insert(id.to_string(), node_type);
+                    st.nodes_created += 1;
+                    self.yield_edge(st, node_type, id, "created");
+                }
+                Err(e) => st.warnings.push(format!("skipped {node_type} '{id}': {e}")),
+            },
+            Ok(Some(existing)) => {
+                if node_unchanged(&existing, &new_map) {
+                    st.created_ids.insert(id.to_string(), node_type);
+                    st.nodes_unchanged += 1;
+                    return;
+                }
+                // matched-evolved: remember the past, then apply the edit.
+                self.ensure_epoch(st);
+                let ce_id = format!("chg:{}:{id}", st.fragment_id);
+                let name = format!("Re-ingest updated {node_type} {id}");
+                let rec = ChangeRecord {
+                    epoch_id: &st.epoch_id,
+                    change_event_id: &ce_id,
+                    name: &name,
+                    change_type: st.change_type,
+                    target_type: node_type,
+                    target_id: id,
+                    action: ChangeAction::Modified,
+                };
+                match self.record_change(rec) {
+                    Ok(_) => {
+                        if let Err(e) = self.create_node(node_type, id, new_map) {
+                            st.warnings
+                                .push(format!("apply evolved {node_type} '{id}': {e}"));
+                        }
+                        st.created_ids.insert(id.to_string(), node_type);
+                        st.nodes_evolved += 1;
+                        self.yield_edge(st, node_type, id, "updated");
+                    }
+                    Err(e) => st
+                        .warnings
+                        .push(format!("snapshot evolved {node_type} '{id}': {e}")),
+                }
+            }
+        }
+    }
+
+    /// `Fragment YIELDED node {action}` — provenance link.
+    fn yield_edge(&mut self, st: &mut Integration, node_type: &str, id: &str, action: &str) {
+        if self
+            .create_edge(
+                edge::YIELDED,
+                node::FRAGMENT,
+                st.fragment_id,
+                node_type,
+                id,
+                Props::new().set("action", action),
+            )
+            .is_ok()
+        {
+            st.edges_created += 1;
+        }
+    }
+
+    /// Create one edge, but only between endpoints resolved this run — a
+    /// reference to an unknown id is dropped with a reason, never a phantom edge.
     fn integrate_edge(
         &mut self,
+        st: &mut Integration,
         edge_type: &str,
-        from_type: &str,
+        from_type: &'static str,
         from_id: &str,
-        to_type: &str,
+        to_type: &'static str,
         to_id: &str,
-        created_ids: &HashMap<String, &'static str>,
-        edges_created: &mut usize,
-        dropped_edges: &mut Vec<DroppedEdge>,
     ) {
-        let drop = |reason: String, dropped: &mut Vec<DroppedEdge>| {
-            dropped.push(DroppedEdge {
+        let mut drop = |reason: String| {
+            st.dropped_edges.push(DroppedEdge {
                 edge_type: edge_type.to_string(),
                 from_id: from_id.to_string(),
                 to_id: to_id.to_string(),
                 reason,
             });
         };
-        if created_ids.get(from_id) != Some(&from_type) {
-            drop(
-                format!("source '{from_id}' not a created {from_type}"),
-                dropped_edges,
-            );
+        if st.created_ids.get(from_id) != Some(&from_type) {
+            drop(format!("source '{from_id}' not a resolved {from_type}"));
             return;
         }
-        if created_ids.get(to_id) != Some(&to_type) {
-            drop(
-                format!("target '{to_id}' not a created {to_type}"),
-                dropped_edges,
-            );
+        if st.created_ids.get(to_id) != Some(&to_type) {
+            drop(format!("target '{to_id}' not a resolved {to_type}"));
             return;
         }
         match self.create_edge(edge_type, from_type, from_id, to_type, to_id, Props::new()) {
-            Ok(_) => *edges_created += 1,
-            Err(e) => drop(format!("schema rejected: {e}"), dropped_edges),
+            Ok(_) => st.edges_created += 1,
+            Err(e) => drop(format!("schema rejected: {e}")),
         }
     }
+}
+
+/// Mutable accumulators for one integration pass — bundled so the integration
+/// methods keep small, stable signatures (per the modular-code principle).
+struct Integration<'a> {
+    fragment_id: &'a str,
+    epoch_id: String,
+    change_type: ChangeType,
+    epoch_ready: bool,
+    created_ids: HashMap<String, &'static str>,
+    nodes_created: usize,
+    nodes_evolved: usize,
+    nodes_unchanged: usize,
+    edges_created: usize,
+    warnings: Vec<String>,
+    dropped_edges: Vec<DroppedEdge>,
+}
+
+impl<'a> Integration<'a> {
+    fn new(fragment_id: &'a str, epoch_id: String, change_type: ChangeType) -> Self {
+        Self {
+            fragment_id,
+            epoch_id,
+            change_type,
+            epoch_ready: false,
+            created_ids: HashMap::new(),
+            nodes_created: 0,
+            nodes_evolved: 0,
+            nodes_unchanged: 0,
+            edges_created: 0,
+            warnings: Vec::new(),
+            dropped_edges: Vec::new(),
+        }
+    }
+}
+
+/// Whether `existing` already holds every property the extraction produced
+/// (compared only over the extracted keys, so schema defaults don't read as a
+/// change). Equal ⇒ matched-unchanged; differing ⇒ matched-evolved.
+fn node_unchanged(existing: &StoredNode, new_map: &HashMap<String, Value>) -> bool {
+    new_map
+        .iter()
+        .all(|(k, v)| existing.properties.get(k) == Some(v))
 }
 
 // Schema enum value sets (single source of truth is schema/*.yaml; kept here for

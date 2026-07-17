@@ -4,7 +4,9 @@
 //! scriptable mock returns per-pass canned JSON by matching that marker.
 
 use reflow2_core::nodes::{edge, node};
-use reflow2_core::{DesignGraph, IngestOptions, IngestStatus, MockLlmBackend};
+use reflow2_core::{
+    ChangeType, DesignGraph, IngestOptions, IngestStatus, MockLlmBackend, parse_snapshot_state,
+};
 
 const BRIEF: &str = "Build a widget that serves reads fast and works offline.";
 
@@ -171,5 +173,128 @@ fn phantom_edge_is_dropped_not_written() {
         g.outgoing("cap:a", Some(edge::SATISFIES))
             .unwrap()
             .is_empty()
+    );
+}
+
+/// Phase-1-only mock (no components/satisfies edges) with a given requirement
+/// statement, so re-ingest tests can vary just the content that evolves.
+fn mock_v(req_statement: &str) -> MockLlmBackend {
+    MockLlmBackend::new()
+        .on_contains(
+            "[pass:project_intent]",
+            r#"{"project":{"id":"proj:w","name":"Widget","mode":"flexible"}}"#,
+        )
+        .on_contains(
+            "[pass:requirements]",
+            format!(
+                r#"{{"requirements":[{{"id":"req:lat","name":"Latency","statement":"{req_statement}","priority":"high"}}]}}"#
+            ),
+        )
+        .on_contains("[pass:constraints]", r#"{"constraints":[]}"#)
+        .on_contains(
+            "[pass:capabilities]",
+            r#"{"capabilities":[{"id":"cap:cache","name":"Caching","description":"serve reads"}]}"#,
+        )
+        .on_contains(
+            "[pass:discovery]",
+            r#"{"components":false,"interfaces":false,"actors":false,"decisions":false,"artifacts":false,"verifications":false,"flows":false,"resources":false}"#,
+        )
+        .on_contains("[pass:satisfies]", r#"{"satisfies":[]}"#)
+}
+
+#[test]
+fn reingest_with_changed_content_evolves_and_snapshots() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    // v1: latency under 200ms.
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:v1".into(),
+            ..Default::default()
+        },
+        &mock_v("under 200ms"),
+    )
+    .unwrap();
+
+    // v2: same req:lat id, tightened statement → matched-evolved.
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:v2".into(),
+                epoch_id: Some("epoch:v2".into()),
+                change_type: ChangeType::RequirementCreep,
+                ..Default::default()
+            },
+            &mock_v("under 100ms"),
+        )
+        .unwrap();
+
+    // Exactly the requirement evolved; project + capability are unchanged.
+    assert_eq!(report.nodes_evolved, 1);
+    assert_eq!(report.nodes_unchanged, 2);
+    assert_eq!(report.epoch_used.as_deref(), Some("epoch:v2"));
+
+    // The live node holds the new statement...
+    let live = g.get_node(node::REQUIREMENT, "req:lat").unwrap().unwrap();
+    assert_eq!(live.properties["statement"].as_str(), Some("under 100ms"));
+
+    // ...and the past is remembered in a snapshot pinned to the epoch.
+    let snap = g
+        .get_node(node::SNAPSHOT, "snap:epoch:v2:req:lat")
+        .unwrap()
+        .expect("a snapshot of the prior state");
+    let old = parse_snapshot_state(&snap).unwrap();
+    assert_eq!(old["statement"].as_str(), Some("under 200ms"));
+
+    // A ChangeEvent of the declared type records why, wired to what it CHANGED.
+    let ce = g
+        .get_node(node::CHANGE_EVENT, "chg:frag:v2:req:lat")
+        .unwrap()
+        .expect("a change event");
+    assert_eq!(
+        ce.properties["change_type"].as_str(),
+        Some("requirement_creep")
+    );
+    let changed = g
+        .outgoing("chg:frag:v2:req:lat", Some(edge::CHANGED))
+        .unwrap();
+    assert_eq!(changed.len(), 1);
+    assert_eq!(changed[0].to_id, "req:lat");
+}
+
+#[test]
+fn reingest_identical_content_is_a_noop_no_snapshot() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:v1".into(),
+            ..Default::default()
+        },
+        &mock_v("under 200ms"),
+    )
+    .unwrap();
+
+    // Re-ingest the same content: everything resolves matched-unchanged.
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:v2".into(),
+                ..Default::default()
+            },
+            &mock_v("under 200ms"),
+        )
+        .unwrap();
+
+    assert_eq!(report.nodes_evolved, 0);
+    assert_eq!(report.nodes_unchanged, 3); // project, requirement, capability
+    assert_eq!(report.nodes_created, 1); // only the new provenance fragment
+    assert_eq!(report.epoch_used, None, "nothing evolved → no epoch opened");
+    assert_eq!(
+        g.count_nodes(node::SNAPSHOT).unwrap(),
+        0,
+        "unchanged content must not snapshot"
     );
 }
