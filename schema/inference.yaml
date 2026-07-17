@@ -1,0 +1,157 @@
+# inference.yaml — the "why" layer.
+#
+# Edges that capture WHY things relate, not just WHAT connects to WHAT. All use
+# wildcard endpoints (from/to "*") so the intelligence layer sits above the
+# whole catalog. Adapted from Reflow's inference set and validated against
+# storyflow's proven causal edge vocabulary.
+#
+# Each edge carries `confidence` (0..1) and free-text `evidence` so extraction
+# can record how strongly the link is asserted and cite the source text.
+
+schema:
+  name: inference
+  version: 1
+
+  node_types: {}
+
+  edge_types:
+
+    CAUSES:
+      from: "*"
+      to: "*"
+      inference_category: causal
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+        evidence: { type: string }
+        basis: { type: enum, values: [observed, correlational, causal, spurious], default: correlational, description: "Correlation-vs-causation rigor (chain_reflow): how strongly the link is grounded. Do not assert `causal` without a mechanism." }
+        validation_status: { type: enum, values: [unvalidated, hypothesis, validated, refuted], default: unvalidated, description: "Whether the causal claim has been tested (observational / intervention / mechanism / temporal)." }
+      extraction_hint: Source directly brings about target (event/decision → outcome).
+
+    ENABLES:
+      from: "*"
+      to: "*"
+      inference_category: causal
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+        evidence: { type: string }
+      extraction_hint: Source makes target possible without directly causing it.
+
+    BLOCKS:
+      from: "*"
+      to: "*"
+      inference_category: causal
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+        evidence: { type: string }
+      extraction_hint: Source prevents or stalls target.
+
+    TRIGGERS:
+      from: "*"
+      to: "*"
+      inference_category: causal
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+        evidence: { type: string }
+      extraction_hint: Source is the event/condition that initiates target.
+
+    CONTRADICTS:
+      from: "*"
+      to: "*"
+      inference_category: tension
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+        evidence: { type: string }
+        alignment: { type: enum, values: [opposing, supporting], default: opposing, description: "opposing = conflict; supporting = corroboration. Both stored here." }
+      extraction_hint: Two decisions/requirements/claims that conflict (or, with alignment=supporting, reinforce).
+
+    VALIDATES:
+      from: "*"
+      to: "*"
+      inference_category: evidence
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+        evidence: { type: string }
+      extraction_hint: Source confirms target meets intent (a Verification validating a Capability).
+
+    VIOLATES:
+      from: "*"
+      to: "*"
+      inference_category: tension
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+        evidence: { type: string }
+      extraction_hint: Source breaks a Constraint/DesignRule/Requirement target.
+
+    RISKS:
+      from: "*"
+      to: "*"
+      inference_category: risk
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+        evidence: { type: string }
+        severity: { type: enum, values: [low, medium, high, critical] }
+      extraction_hint: Source introduces a risk to target.
+
+    MITIGATES:
+      from: "*"
+      to: "*"
+      inference_category: risk
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+        evidence: { type: string }
+      extraction_hint: Source reduces a risk affecting target.
+
+    EVOLVES_INTO:
+      from: "*"
+      to: "*"
+      inference_category: temporal
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+      extraction_hint: Source is an earlier form that becomes target over time.
+
+    OBSOLETES:
+      from: "*"
+      to: "*"
+      inference_category: temporal
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+      extraction_hint: Source makes target redundant or deprecated.
+
+    DUPLICATES:
+      from: "*"
+      to: "*"
+      inference_category: redundancy
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+      extraction_hint: Source and target cover the same ground (candidate for consolidation).
+
+    ANTICIPATES:
+      from: "*"
+      to: "*"
+      inference_category: temporal
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+      extraction_hint: Source plans for or foreshadows a future target need.
+
+    MASKS:
+      from: "*"
+      to: "*"
+      inference_category: risk
+      pass_1_extractable: true
+      properties:
+        confidence: { type: float, range: [0.0, 1.0] }
+        evidence: { type: string }
+      extraction_hint: Source hides a problem or property of target (e.g. a workaround masking a defect).

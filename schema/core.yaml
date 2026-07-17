@@ -1,0 +1,100 @@
+# core.yaml — P0 Intent layer.
+#
+# The "why we're building this" foundation: the project itself, the needs it
+# must satisfy, the limits it must respect, and the standards it adopts.
+# Domain-neutral: a Project can be software, a physical product, a document,
+# or a process.
+
+schema:
+  name: core
+  version: 1
+
+  node_types:
+
+    Project:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        domain: { type: string, indexed: true, description: "software / hardware / document / process / other — free text; scopes vocabulary examples, not validation." }
+        description: { type: string, fulltext: true }
+        objective: { type: string, description: "One-line statement of what success looks like." }
+        mode: { type: enum, values: [flexible, rigid], default: flexible, description: "flexible = design evolves with the build; rigid = design is the source of truth." }
+        status: { type: enum, values: [active, paused, archived], default: active, indexed: true }
+        created_at: { type: string }
+      embedding_field: description
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
+      extraction_hint: >
+        The top-level thing being designed and built. There is normally one
+        Project per graph. Extracted from a brief, charter, or the opening
+        framing of a design conversation.
+
+    Requirement:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        statement: { type: string, required: true, fulltext: true, description: "The need in the stakeholder's own terms." }
+        kind: { type: enum, values: [functional, nonfunctional, quality, business], default: functional, indexed: true }
+        priority: { type: enum, values: [low, medium, high, critical], default: medium, indexed: true }
+        source: { type: string, description: "Who/what stated it — a user, a regulation, a stakeholder." }
+        rationale: { type: string }
+        status: { type: enum, values: [proposed, accepted, deferred, dropped, met], default: proposed, indexed: true }
+      embedding_field: statement
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
+      extraction_hint: >
+        A stated need or goal the design must satisfy — the bridge between raw
+        intent and concrete Capabilities. Extract one per distinct need. A
+        Capability later SATISFIES one or more Requirements.
+
+    Constraint:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        statement: { type: string, required: true, fulltext: true }
+        category: { type: enum, values: [technical, business, operational, physical, regulatory, budget, schedule], default: technical, indexed: true }
+        priority: { type: enum, values: [low, medium, high, critical], default: medium, indexed: true }
+        rationale: { type: string }
+      embedding_field: statement
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
+      extraction_hint: >
+        A limit or rule the design MUST respect (vs. a Requirement, which is a
+        goal to achieve). "Must run offline", "budget under $5k", "no PII
+        leaves the device", "fits in a 2U rack". Nodes CONSTRAINS-linked to
+        what they bind, or SATISFIES-linked from what honors them.
+
+    DesignRule:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        statement: { type: string, required: true, fulltext: true }
+        category: { type: string, indexed: true, description: "tech_stack / convention / material / methodology / standard / style." }
+        enforced: { type: bool, default: true, description: "Whether violations are gate-blocking." }
+      embedding_field: statement
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
+      extraction_hint: >
+        A chosen standard or convention the build adopts — a tech-stack choice,
+        a coding/style convention, a preferred material, a methodology. Broader
+        than a Constraint: a rule you picked, not a limit imposed on you.
+
+  edge_types:
+
+    CONTAINS:
+      from: Project
+      to: "*"
+      extraction_hint: Ownership/containment from the Project down to any node.
+      properties:
+        note: { type: string }
+
+    SATISFIES:
+      from: "*"
+      to: "*"
+      extraction_hint: >
+        Source node (Capability, Component, Artifact...) fulfills a target
+        Requirement or Constraint. The backbone of design traceability.
+      properties:
+        coverage: { type: enum, values: [full, partial, planned] }
+        evidence: { type: string }
+
+    CONSTRAINS:
+      from: "*"
+      to: "*"
+      extraction_hint: >
+        A Constraint or DesignRule binds a target node. Source = the
+        Constraint/DesignRule, target = what it limits.
+      properties:
+        note: { type: string }

@@ -1,0 +1,60 @@
+# dimensions.yaml — quality-axis assessments (cross-cutting).
+#
+# An N-dimensional quality profile attachable to ANY node. Adapted from
+# Reflow's nine software-quality dimensions and storyflow's scored-assessment
+# node shape (evidence_count + confidence + evidence text).
+
+schema:
+  name: dimensions
+  version: 1
+
+  node_types:
+
+    DimensionAssessment:
+      properties:
+        target_id: { type: string, required: true, indexed: true, description: "Id of the node being assessed." }
+        target_type: { type: string, indexed: true, description: "Label of the assessed node (Component, Capability, Artifact...)." }
+        dimension: { type: enum, values: [reliability, performance, maintainability, security, scalability, observability, testability, coupling, maturity], required: true, indexed: true }
+        score: { type: float, range: [0.0, 1.0], description: "0 = worst, 1 = best on this axis." }
+        confidence: { type: float, range: [0.0, 1.0] }
+        evidence_count: { type: int, default: 1 }
+        evidence: { type: string, description: "Cited support for the score." }
+        description: { type: string }
+        assessed_at: { type: string }
+      embedding_field: evidence
+      extraction_hint: >
+        A single quality-axis score for one node, 0.0–1.0. Emit only when the
+        source material gives concrete evidence for the axis (per the
+        no-speculation rule). Multiple assessments over time accumulate;
+        `find_blind_spots` surfaces nodes with too few axes covered.
+
+    DimensionObservation:
+      properties:
+        target_id: { type: string, required: true, indexed: true }
+        target_type: { type: string, indexed: true }
+        dimension: { type: enum, values: [reliability, performance, maintainability, security, scalability, observability, testability, coupling, maturity], required: true, indexed: true }
+        score: { type: float, range: [0.0, 1.0] }
+        source_fragment_id: { type: string, indexed: true, description: "The Fragment this reading came from." }
+        observed_at: { type: string }
+      extraction_hint: >
+        An immutable, per-fragment (per-epoch) reading of ONE dimension — the raw
+        evidence trail that the current DimensionAssessment is rolled up from.
+        Keeping observations lets quality DRIFT over time be queryable (a
+        Component's maintainability sliding across epochs), tying depth to the Z axis.
+
+  edge_types:
+
+    ASSESSED_ON:
+      from: DimensionAssessment
+      to: "*"
+      extraction_hint: Links an assessment to the node it scores (redundant with target_id, kept for graph traversal).
+
+    HAS_OBSERVATION:
+      from: "*"
+      to: DimensionObservation
+      extraction_hint: Links an entity to a per-fragment dimension reading.
+
+    OBSERVED_IN:
+      from: DimensionObservation
+      to: Fragment
+      extraction_hint: Links a dimension observation to the Fragment that produced it.

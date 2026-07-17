@@ -1,0 +1,124 @@
+# temporal.yaml — Axis Z: how the design changes over time.
+#
+# Adapted from storyflow's temporal.yaml (NarrativeEpoch / TemporalFact /
+# snapshots). A design is never static — requirements creep, features get added,
+# failed tests force fixes, scope shifts. This domain lets the graph REMEMBER the
+# past instead of overwriting it, and attribute every change to its cause.
+
+schema:
+  name: temporal
+  version: 1
+
+  node_types:
+
+    DesignEpoch:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        epoch_type: { type: enum, values: [baseline, revision, milestone, incident_response, release_cut], default: revision, indexed: true }
+        sequence: { type: int, indexed: true, description: "Monotonic ordering key across epochs." }
+        description: { type: string, fulltext: true }
+        checksum: { type: string, description: "Optional hash over the anchored spec set at this epoch (an Anchor is a checksummed baseline epoch)." }
+        created_at: { type: string }
+      embedding_field: description
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
+      extraction_hint: >
+        A named version or milestone of the design — "v1 baseline",
+        "v1.1 requirements creep", "post-load-test hardening". The unit the Z
+        (time) axis is built on. Usually authored at a phase/version transition,
+        not extracted from prose. Generalizes the P2→P3 Anchor.
+
+    TemporalFact:
+      properties:
+        subject_id: { type: string, required: true, indexed: true, description: "Node the fact is about." }
+        fact_type: { type: string, indexed: true, description: "status / allocation / dependency / satisfaction / property — what kind of assertion." }
+        statement: { type: string, fulltext: true, description: "The time-bounded assertion in plain terms." }
+        value: { type: string, description: "JSON of the asserted value (e.g. {status: realized})." }
+      embedding_field: statement
+      extraction_hint: >
+        A time-bounded assertion true only between two epochs. Requirement creep
+        = a satisfaction fact whose VALID_FROM is a later epoch; a dropped
+        requirement = a fact with VALID_TO set. The graph keeps both instead of
+        overwriting — so any past state is reconstructable.
+
+    Snapshot:
+      properties:
+        target_id: { type: string, required: true, indexed: true, description: "Node this snapshot captures." }
+        target_type: { type: string, indexed: true, description: "Label of the captured node (Component, Capability, Requirement...)." }
+        state: { type: string, description: "JSON of the node's property bag at the epoch." }
+        captured_at: { type: string }
+      extraction_hint: >
+        The state of a node captured at a specific DesignEpoch — how a Component
+        or Requirement WAS, then. Enables diffing an entity across revisions.
+        Authored by the versioning workflow, not extracted from prose.
+
+    ChangeEvent:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        change_type: { type: enum, values: [requirement_creep, new_feature, test_failure_fix, performance_optimization, refactor, scope_change, constraint_change, deprecation, resync], required: true, indexed: true }
+        summary: { type: string, fulltext: true }
+        rationale: { type: string, description: "Why the change was made." }
+        detected_at: { type: string }
+      embedding_field: summary
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
+      extraction_hint: >
+        A first-class record of WHY the design changed — requirement creep, a new
+        feature, a fix forced by a failed test, a refactor, a scope change. Wired
+        to what it changed via CHANGED, and to its cause via the inference edges
+        (a failing Verification CAUSES a ChangeEvent that CHANGED an Artifact).
+        This is the design-evolution log; distinct from DriftEvent, which records
+        design-vs-reality divergence rather than intended change.
+
+  edge_types:
+
+    PRECEDES:
+      from: DesignEpoch
+      to: DesignEpoch
+      extraction_hint: One epoch comes before another (ordering).
+
+    CONTAINS_EPOCH:
+      from: DesignEpoch
+      to: DesignEpoch
+      extraction_hint: One epoch nests inside a larger one (a hotfix epoch within a release epoch).
+
+    HAS_TEMPORAL_FACT:
+      from: "*"
+      to: TemporalFact
+      extraction_hint: An entity carries a time-bounded fact.
+
+    ABOUT_ENTITY:
+      from: TemporalFact
+      to: "*"
+      extraction_hint: The entity a temporal fact concerns.
+
+    VALID_FROM:
+      from: TemporalFact
+      to: DesignEpoch
+      extraction_hint: The fact becomes true at this epoch.
+
+    VALID_TO:
+      from: TemporalFact
+      to: DesignEpoch
+      extraction_hint: The fact stops being true at this epoch (absent = still true).
+
+    HAS_SNAPSHOT:
+      from: "*"
+      to: Snapshot
+      extraction_hint: An entity has a captured state snapshot.
+
+    AT_EPOCH:
+      from: "*"
+      to: DesignEpoch
+      extraction_hint: A Snapshot or ChangeEvent is pinned to the epoch it belongs to.
+
+    CHANGED:
+      from: ChangeEvent
+      to: "*"
+      extraction_hint: The node a ChangeEvent created, modified, or removed.
+      properties:
+        action: { type: enum, values: [added, modified, removed] }
+        field: { type: string, description: "Which property/edge changed, when scoped." }
+
+    OCCURS_DURING:
+      from: "*"
+      to: DesignEpoch
+      extraction_hint: A Fragment/ChangeEvent/Verification happened during an epoch.

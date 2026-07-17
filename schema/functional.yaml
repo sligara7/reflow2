@@ -1,0 +1,82 @@
+# functional.yaml — P1 Function layer (WHAT).
+#
+# WHAT the thing does, and HOW its functions interact — independent of WHERE
+# they live. Framework- and domain-neutral: always a DAG of Capabilities.
+
+schema:
+  name: functional
+  version: 1
+
+  node_types:
+
+    Capability:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        description: { type: string, required: true, fulltext: true }
+        capability_type: { type: string, indexed: true, description: "validation / transform / query / persistence / decision / actuation / io / compute — free text; domain-neutral." }
+        tier: { type: enum, values: [strategic, operational, tactical], default: operational, indexed: true }
+        inputs: { type: string, description: "JSON array of input names/types the capability consumes." }
+        outputs: { type: string, description: "JSON array of outputs it produces." }
+        is_entry_point: { type: bool, default: false, description: "A flow's starting capability." }
+        is_exit_point: { type: bool, default: false, description: "A flow's terminal capability." }
+        status: { type: enum, values: [planned, in_progress, realized, verified], default: planned, indexed: true }
+      embedding_field: description
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
+      extraction_hint: >
+        A discrete unit of capability the design must provide — a software
+        function, a product feature, a mechanical action, a process step.
+        Extract the WHAT, never the WHERE. Link capabilities with DEPENDS_ON to
+        form the functional DAG; attach to a Flow with PART_OF_FLOW.
+
+    Flow:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        description: { type: string, fulltext: true }
+        flow_type: { type: enum, values: [process, data_flow, control_flow, decision_flow, capture, retrieval, generation], default: process, indexed: true }
+        tier: { type: enum, values: [strategic, operational, tactical, cross_cutting], default: operational, indexed: true }
+        entry_point: { type: string, description: "Capability name/id where the flow begins." }
+        exit_point: { type: string, description: "Capability name/id where the flow ends." }
+      embedding_field: description
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
+      extraction_hint: >
+        An ordered process that links Capabilities end to end (e.g. "user
+        authentication flow", "assembly sequence"). Capabilities join a flow
+        via PART_OF_FLOW.
+
+    Actor:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        description: { type: string, fulltext: true }
+        actor_type: { type: enum, values: [user, operator, external_system, service, device, stakeholder], default: user, indexed: true }
+      embedding_field: description
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
+      extraction_hint: >
+        An external party, user, system, or device that interacts with the
+        design. Actors sit at the boundary; they INTERACT_WITH Capabilities or
+        Flows and often originate Requirements.
+
+  edge_types:
+
+    DEPENDS_ON:
+      from: "*"
+      to: "*"
+      extraction_hint: >
+        Source needs target to function. Between Capabilities this forms the
+        functional DAG (must stay acyclic); also valid Component→Component.
+      properties:
+        dependency_type: { type: enum, values: [function_call, data_flow, control_flow, error_flow, physical] }
+        optional: { type: bool, default: false }
+
+    PART_OF_FLOW:
+      from: Capability
+      to: Flow
+      extraction_hint: A Capability participates in a Flow.
+      properties:
+        step_order: { type: int, description: "Position of this capability within the flow." }
+
+    INTERACTS_WITH:
+      from: Actor
+      to: "*"
+      extraction_hint: An Actor interacts with a Capability, Flow, or Interface.
+      properties:
+        interaction: { type: string, description: "reads / writes / triggers / receives." }

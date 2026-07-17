@@ -1,0 +1,71 @@
+# build.yaml — P3 Realization layer (BUILD).
+#
+# The concrete things produced when the design is built, and the unit of work
+# by which change enters the graph.
+
+schema:
+  name: build
+  version: 1
+
+  node_types:
+
+    Artifact:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        description: { type: string, fulltext: true }
+        artifact_type: { type: enum, values: [code, config, document, model, drawing, binary, data, asset], default: code, indexed: true }
+        location: { type: string, indexed: true, description: "File path, URI, or physical identifier of the realized thing." }
+        signature: { type: string, description: "Function/class signature, part number, or spec identifier." }
+        status: { type: enum, values: [planned, in_progress, realized, verified], default: realized, indexed: true }
+        created_at: { type: string }
+      embedding_field: description
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
+      extraction_hint: >
+        A concrete realization of a Capability or Component — a source file, a
+        config, a document, a CAD model, a fabricated part. An Artifact
+        REALIZES the Capability/Component it implements.
+
+    Fragment:
+      properties:
+        title: { type: string, required: true, indexed: true, fulltext: true }
+        summary: { type: string, fulltext: true }
+        intent: { type: string, fulltext: true, description: "What this unit of work was meant to accomplish." }
+        fragment_type: { type: enum, values: [implementation, test, design, spec, config, review, bug_fix, refactor, documentation], default: implementation, indexed: true }
+        phase: { type: enum, values: [P0, P1, P2, P3, P4, P5, PM], indexed: true }
+        provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this content entered the graph." }
+        content_ref: { type: string, indexed: true, description: "Pointer to the source content (path/hash) rather than inlining it." }
+        status: { type: enum, values: [ingested, integrated, superseded], default: ingested, indexed: true }
+        created_by: { type: string, indexed: true }
+        created_at: { type: string }
+      embedding_field: summary
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 88 }
+      extraction_hint: >
+        The unit of work by which content enters the graph: a chunk of design
+        prose, a code change, a review note. Fragments are what the extraction
+        pipeline ingests; the entities/edges they yield are linked back with
+        YIELDED. A revised fragment SUPERSEDES its prior version.
+
+  edge_types:
+
+    REALIZES:
+      from: Artifact
+      to: "*"
+      extraction_hint: An Artifact implements/realizes a Capability or Component.
+      properties:
+        completeness: { type: enum, values: [stub, partial, complete] }
+
+    YIELDED:
+      from: Fragment
+      to: "*"
+      extraction_hint: >
+        A Fragment produced (created or updated) this node during extraction.
+        Provides provenance from any node back to the work that introduced it.
+      properties:
+        action: { type: enum, values: [created, updated, merged] }
+
+    SUPERSEDES:
+      from: Fragment
+      to: Fragment
+      extraction_hint: A revised Fragment replaces an earlier version.
+      properties:
+        diff_summary: { type: string }

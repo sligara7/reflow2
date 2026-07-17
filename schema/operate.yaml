@@ -1,0 +1,66 @@
+# operate.yaml — P5 Operation layer.
+#
+# The built thing in the world: packaged versions, the contexts they run in,
+# and the real resources they need or consume.
+
+schema:
+  name: operate
+  version: 1
+
+  node_types:
+
+    Release:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        version: { type: string, indexed: true }
+        description: { type: string, fulltext: true }
+        unit_type: { type: enum, values: [container, package, binary, bundle, physical_build, publication], default: container, indexed: true }
+        status: { type: enum, values: [planned, built, deployed, retired], default: planned, indexed: true }
+        created_at: { type: string }
+      embedding_field: description
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
+      extraction_hint: >
+        A packaged, operable version of some Components/Artifacts — a container
+        image, a released package, a manufactured build, a published document.
+        DEPLOYED_TO an Environment; REQUIRES_RESOURCE for what it consumes.
+
+    Environment:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        description: { type: string, fulltext: true }
+        env_type: { type: enum, values: [development, staging, production, field, lab], default: production, indexed: true }
+        location: { type: string, description: "Cloud region, host, physical site." }
+      embedding_field: description
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
+      extraction_hint: >
+        A context where a Release is deployed and operated — a cloud env, a
+        server, a physical site, a lab bench.
+
+    Resource:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        description: { type: string, fulltext: true }
+        resource_type: { type: string, indexed: true, description: "database / queue / secret / gpu / power / material / bandwidth — free text." }
+        provider: { type: string, indexed: true, description: "Who supplies it (cloud provider, vendor, utility)." }
+      embedding_field: description
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
+      extraction_hint: >
+        A real-world resource the built thing needs or consumes — a database, a
+        message queue, a secret, a GPU, electrical power, a raw material,
+        bandwidth. Linked from Components/Releases via REQUIRES_RESOURCE.
+
+  edge_types:
+
+    DEPLOYED_TO:
+      from: Release
+      to: Environment
+      extraction_hint: A Release runs/operates in an Environment.
+      properties:
+        status: { type: enum, values: [planned, active, rolled_back] }
+
+    REQUIRES_RESOURCE:
+      from: "*"
+      to: Resource
+      extraction_hint: A Component or Release needs/consumes a Resource.
+      properties:
+        criticality: { type: enum, values: [optional, recommended, required] }

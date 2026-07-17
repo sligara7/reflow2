@@ -1,0 +1,94 @@
+# structure.yaml — P2 Structure layer (WHERE).
+#
+# WHERE functions live and how the thing is organized: buildable units, the
+# contracts between them, the decisions that shaped them, and the baseline
+# snapshot taken when design freezes for a build round.
+
+schema:
+  name: structure
+  version: 1
+
+  node_types:
+
+    Component:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        purpose: { type: string, required: true, fulltext: true }
+        kind: { type: enum, values: [service, module, subsystem, assembly, part, section, layer], default: module, indexed: true, description: "The organizational/buildable shape. Domain-neutral." }
+        level: { type: enum, values: [component, subsystem, system, system_of_systems, enterprise], default: component, indexed: true, description: "Axis-Y decomposition level (matryoshka). Used to detect missing-intermediate / level-mismatch gaps: never link across >1 level directly." }
+        tier: { type: enum, values: [strategic, operational, tactical], default: operational, indexed: true }
+        location: { type: string, description: "Where it lives — a source dir, a physical location, a document path." }
+        status: { type: enum, values: [planned, in_progress, realized, verified], default: planned, indexed: true }
+      embedding_field: purpose
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
+      extraction_hint: >
+        A buildable or organizational unit that hosts Capabilities — a
+        microservice, a code module, a mechanical assembly, a document section.
+        Capabilities are ALLOCATED_TO Components; Components CONTAINS
+        sub-Components.
+
+    Interface:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        description: { type: string, fulltext: true }
+        medium: { type: enum, values: [REST, gRPC, event, graphql, cli, library, data, mechanical, electrical, human], default: REST, indexed: true, description: "How the contract is carried." }
+        spec: { type: string, description: "Endpoint path, signature, connector spec, or protocol detail." }
+      embedding_field: description
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
+      extraction_hint: >
+        A contract or connection point between Components (or between a
+        Component and an Actor). One Component PROVIDES it; others CONSUME it.
+        Folds in what a software design would call an API endpoint.
+
+    Decision:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        decision: { type: string, required: true, fulltext: true, description: "What was decided." }
+        rationale: { type: string, fulltext: true }
+        alternatives: { type: string, description: "JSON array of options considered and why they lost." }
+        status: { type: enum, values: [proposed, accepted, superseded, rejected], default: accepted, indexed: true }
+      embedding_field: decision
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
+      extraction_hint: >
+        A design decision with its rationale and the alternatives weighed (an
+        ADR, in software terms). Other nodes are GOVERNED_BY a Decision.
+
+    Anchor:
+      properties:
+        name: { type: string, required: true, indexed: true }
+        design_intent: { type: string, fulltext: true, description: "Summary of the frozen design intent." }
+        key_decisions: { type: string, description: "JSON array of decision ids/summaries in the snapshot." }
+        checksum: { type: string, description: "Hash over the anchored spec set, for drift detection." }
+        created_at: { type: string }
+      extraction_hint: >
+        A checksummed baseline of the design taken when leaving P2 for a build
+        round (P3). Not extracted from prose — created by the workflow at the
+        structure→build transition. DriftEvents reference the Anchor they
+        diverged from.
+
+  edge_types:
+
+    ALLOCATED_TO:
+      from: Capability
+      to: Component
+      extraction_hint: A Capability is assigned to the Component that will provide it. The WHAT→WHERE binding.
+      properties:
+        note: { type: string }
+
+    PROVIDES:
+      from: Component
+      to: Interface
+      extraction_hint: A Component exposes/provides an Interface.
+
+    CONSUMES:
+      from: "*"
+      to: Interface
+      extraction_hint: A Component or Actor depends on/consumes an Interface.
+
+    GOVERNED_BY:
+      from: "*"
+      to: "*"
+      extraction_hint: >
+        Source node is shaped or constrained by a target Decision or DesignRule.
+      properties:
+        note: { type: string }

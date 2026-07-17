@@ -1,0 +1,62 @@
+# verify.yaml — P4 Verification layer.
+#
+# How we know the built thing meets its intent, the gates it must clear, and
+# the record of where reality diverged from design.
+
+schema:
+  name: verify
+  version: 1
+
+  node_types:
+
+    Verification:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        description: { type: string, fulltext: true }
+        method: { type: enum, values: [test, review, simulation, inspection, measurement, analysis], default: test, indexed: true }
+        level: { type: enum, values: [unit, integration, system, acceptance], default: unit, indexed: true }
+        location: { type: string, description: "Path to the test/inspection artifact." }
+        status: { type: enum, values: [planned, passing, failing, skipped, blocked], default: planned, indexed: true }
+        last_run_at: { type: string }
+      embedding_field: description
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
+      extraction_hint: >
+        A check that a Capability or Artifact meets its intent — a test, a
+        review, a simulation, a physical inspection or measurement. It VERIFIES
+        its target; folds in both individual cases and suites (use `level`).
+
+    QualityGate:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        phase: { type: enum, values: [P0, P1, P2, P3, P4, P5, PM], indexed: true }
+        criteria: { type: string, fulltext: true, description: "JSON array of pass/fail conditions." }
+        status: { type: enum, values: [pending, passed, failed, waived], default: pending, indexed: true }
+        evaluated_at: { type: string }
+      embedding_field: criteria
+      extraction_hint: >
+        A phase gate with explicit pass/fail criteria that must clear before
+        advancing (e.g. "DAG is acyclic", "all Requirements have coverage").
+        Usually authored by the workflow, not extracted from prose.
+
+    DriftEvent:
+      properties:
+        name: { type: string, required: true, indexed: true }
+        summary: { type: string, fulltext: true }
+        severity: { type: enum, values: [low, medium, high, critical], default: medium, indexed: true }
+        drift_type: { type: enum, values: [missing_artifact, spec_mismatch, undocumented_addition, status_mismatch, checksum_change], indexed: true }
+        detected_at: { type: string }
+        resolved: { type: bool, default: false, indexed: true }
+      embedding_field: summary
+      extraction_hint: >
+        A recorded divergence between the design (graph/Anchor) and reality
+        (filesystem/build). Produced by drift detection, not extracted from
+        prose. References the Anchor it diverged from via DEPENDS_ON.
+
+  edge_types:
+
+    VERIFIES:
+      from: Verification
+      to: "*"
+      extraction_hint: A Verification checks a Capability, Artifact, or Component.
+      properties:
+        coverage: { type: enum, values: [full, partial, smoke] }
