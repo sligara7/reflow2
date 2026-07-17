@@ -13,24 +13,30 @@ schema:
       properties:
         name: { type: string, required: true, indexed: true, fulltext: true }
         description: { type: string, fulltext: true }
-        artifact_type: { type: enum, values: [code, config, document, model, drawing, binary, data, asset], default: code, indexed: true }
-        location: { type: string, indexed: true, description: "File path, URI, or physical identifier of the realized thing." }
+        artifact_type: { type: enum, values: [code, config, document, spec, diagram, model, drawing, test_result, binary, data, asset], default: code, indexed: true, description: "code=source; spec=machine-readable contract (OpenAPI/protobuf); diagram=dataflow/sequence/arch chart; document=design doc/ADR/readme; test_result=report/coverage; model/drawing=CAD." }
+        location: { type: string, indexed: true, description: "File path, URI, content-hash, or physical identifier of the realized thing (the artifact lives outside the graph; this points to it)." }
         signature: { type: string, description: "Function/class signature, part number, or spec identifier." }
         status: { type: enum, values: [planned, in_progress, realized, verified], default: realized, indexed: true }
         created_at: { type: string }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
       extraction_hint: >
-        A concrete realization of a Capability or Component — a source file, a
-        config, a document, a CAD model, a fabricated part. An Artifact
-        REALIZES the Capability/Component it implements.
+        A concrete, addressable deliverable that lives OUTSIDE the graph and is
+        pointed to by `location` — a source file, an OpenAPI spec, a dataflow
+        chart, a design doc, a CAD model, a test report. Links to the entity it
+        serves via REALIZES (code implements a Capability/Component), SPECIFIES
+        (a spec defines an Interface), DOCUMENTS (a doc/diagram describes any
+        node), or PRODUCES (a Verification emits a test_result). Large/binary
+        artifacts are referenced, never inlined — an indexed `description`
+        carries the searchable summary.
 
     Fragment:
       properties:
         title: { type: string, required: true, indexed: true, fulltext: true }
         summary: { type: string, fulltext: true }
-        intent: { type: string, fulltext: true, description: "What this unit of work was meant to accomplish." }
-        fragment_type: { type: enum, values: [implementation, test, design, spec, config, review, bug_fix, refactor, documentation], default: implementation, indexed: true }
+        intent: { type: string, fulltext: true, description: "What this unit of work was meant to accomplish (the fragment's own inline author-intent)." }
+        fragment_type: { type: enum, values: [implementation, test, design, spec, config, review, bug_fix, refactor, documentation, note, pseudocode, feedback], default: implementation, indexed: true, description: "Purpose of the fragment. Primary content (implementation/test/spec/config) vs. the parallel NOTE layer (note=author intent, pseudocode=pre-implementation sketch, review/feedback=reviewer commentary) that ANNOTATES it." }
+        note_kind: { type: enum, values: [author, reviewer, director], description: "For note/review/feedback/pseudocode fragments: whose voice it is. author=the implementer's intent/pseudocode; reviewer=feedback; director=guidance on how to build. Mirrors storyflow SceneDirection.note_kind. Null for primary content." }
         phase: { type: enum, values: [P0, P1, P2, P3, P4, P5, PM], indexed: true }
         provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this content entered the graph." }
         content_ref: { type: string, indexed: true, description: "Pointer to the source content (path/hash) rather than inlining it." }
@@ -43,7 +49,10 @@ schema:
         The unit of work by which content enters the graph: a chunk of design
         prose, a code change, a review note. Fragments are what the extraction
         pipeline ingests; the entities/edges they yield are linked back with
-        YIELDED. A revised fragment SUPERSEDES its prior version.
+        YIELDED. A revised fragment SUPERSEDES its prior version. A NOTE-layer
+        fragment (note / pseudocode / review / feedback) ANNOTATES the primary
+        fragment or Artifact it comments on — running side-by-side with the code,
+        not producing graph entities itself.
 
   edge_types:
 
@@ -53,6 +62,38 @@ schema:
       extraction_hint: An Artifact implements/realizes a Capability or Component.
       properties:
         completeness: { type: enum, values: [stub, partial, complete] }
+
+    SPECIFIES:
+      from: Artifact
+      to: ["Interface", "Capability", "Component"]
+      extraction_hint: >
+        A machine-readable contract artifact defines an entity — an OpenAPI /
+        protobuf / JSON-schema / IDL file SPECIFIES an Interface (its
+        authoritative contract). Distinct from DOCUMENTS (human explanation) and
+        REALIZES (executable implementation).
+      properties:
+        format: { type: string, description: "openapi / protobuf / json_schema / graphql / asyncapi / idl." }
+
+    DOCUMENTS:
+      from: Artifact
+      to: "*"
+      extraction_hint: >
+        A descriptive artifact explains an entity without implementing it — a
+        design doc, ADR, README, or a dataflow/sequence/architecture diagram
+        DOCUMENTS a Component, Flow, Decision, Interface, or the Project.
+      properties:
+        doc_kind: { type: string, description: "design_doc / adr / readme / dataflow / sequence_diagram / arch_diagram / runbook." }
+
+    PRODUCES:
+      from: Verification
+      to: Artifact
+      extraction_hint: >
+        A Verification run emits a result artifact — a test report, coverage
+        file, simulation output, or inspection record (artifact_type=test_result
+        / data). The pass/fail summary stays on the Verification; this links the
+        durable evidence.
+      properties:
+        outcome: { type: enum, values: [pass, fail, partial, error] }
 
     YIELDED:
       from: Fragment
@@ -69,6 +110,21 @@ schema:
       extraction_hint: A revised Fragment replaces an earlier version.
       properties:
         diff_summary: { type: string }
+
+    ANNOTATES:
+      from: Fragment
+      to: "*"
+      extraction_hint: >
+        A NOTE-layer fragment (note=intent, pseudocode, review, feedback)
+        attaches side-by-side to the thing it comments on — the primary code
+        Fragment, an Artifact, or any design entity (Capability, Component,
+        Decision). The reflow2 analog of storyflow's DIRECTS (author/director
+        notes beside a narrative fragment). Human commentary; does NOT produce
+        graph entities (that's YIELDED) and is NOT machine SME output (that's
+        SUPPLEMENTS).
+      properties:
+        note_kind: { type: enum, values: [author, reviewer, director], description: "Whose voice: author intent/pseudocode, reviewer feedback, or director guidance." }
+        resolved: { type: bool, default: false, description: "For review/feedback: whether the comment has been addressed." }
 
     SUPPLEMENTS:
       from: Fragment

@@ -73,6 +73,7 @@ redesign/
     vision.md            # north star: one coherent graph, concept → operations
     three-axes.md        # X (network) / Y (nesting) / Z (change over time)
     extraction-plan.md   # how phase-aware extraction populates the graph (INGEST)
+    artifact-linking.md  # link real files (code, specs, docs, tests) to entities
     sme-augmentation.md  # LLM-as-SME surfaces considerations the user didn't state
     impact-propagation.md# ripple a change along the golden thread (PROPAGATE)
     gap-surfacing.md     # find graph weaknesses, ask the user questions (DIAGNOSE→PROMPT)
