@@ -155,8 +155,15 @@ fn generative_fixes_require_human_review_and_are_not_applied() {
         proposal.operations.is_empty(),
         "no auto-applicable structural op"
     );
-    assert_eq!(proposal.generated_content.len(), 1);
-    assert_eq!(proposal.generated_content[0].kind, "owner edge");
+    // The orphan capability's fix is a generative owner edge (the isolated
+    // component here also yields a generative stub — both are review-gated).
+    assert!(
+        proposal
+            .generated_content
+            .iter()
+            .any(|s| s.kind == "owner edge"),
+        "orphan capability should propose an owner edge for review"
+    );
 
     // Applying it changes nothing structurally (generation is deferred).
     let before = g.count_nodes(node::CAPABILITY).unwrap();

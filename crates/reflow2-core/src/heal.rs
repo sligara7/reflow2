@@ -48,6 +48,12 @@ pub enum HealCategory {
     Duplicate,
     /// An `ANTICIPATES` with no follow-through — a planned need never built.
     UnresolvedSetup,
+    /// A cluster of ≥2 design nodes with no link to the rest of the design.
+    DisconnectedCommunity,
+    /// A node whose removal splits the design into ≥2 non-trivial subsystems.
+    SinglePointOfFailure,
+    /// An isolated Component — nothing depends on it and it provides nothing.
+    DeadEnd,
 }
 
 impl HealCategory {
@@ -58,6 +64,9 @@ impl HealCategory {
             HealCategory::Contradiction => "contradiction",
             HealCategory::Duplicate => "duplicate",
             HealCategory::UnresolvedSetup => "unresolved_setup",
+            HealCategory::DisconnectedCommunity => "disconnected_community",
+            HealCategory::SinglePointOfFailure => "single_point_of_failure",
+            HealCategory::DeadEnd => "dead_end",
         }
     }
 }
@@ -363,8 +372,84 @@ impl DesignGraph {
             });
         }
 
+        self.detect_structural_defects(&mut issues)?;
+
         issues.sort_by(|a, b| a.id.cmp(&b.id));
         Ok(issues)
+    }
+
+    /// Graph-topology defects over the design network (via `dynograph-graph`):
+    /// disconnected communities, selective single points of failure, dead ends.
+    fn detect_structural_defects(&self, issues: &mut Vec<HealIssue>) -> Result<(), DynoError> {
+        let net = self.design_network()?;
+
+        // disconnected_community — islands of ≥2 nodes cut off from the main
+        // body. Singletons are orphans/dead-ends, handled elsewhere; flag every
+        // non-largest cluster of size ≥2.
+        let mut clusters: Vec<Vec<usize>> = net
+            .component_groups()
+            .into_iter()
+            .filter(|g| g.len() >= 2)
+            .collect();
+        if clusters.len() > 1 {
+            // Keep the largest as "the main design"; the rest are islands. Sort
+            // by size desc, then by first-member id for determinism.
+            clusters.sort_by(|a, b| {
+                b.len()
+                    .cmp(&a.len())
+                    .then(net.id_of(a[0]).cmp(net.id_of(b[0])))
+            });
+            for island in &clusters[1..] {
+                let mut affected: Vec<String> =
+                    island.iter().map(|&i| net.id_of(i).to_string()).collect();
+                affected.sort();
+                issues.push(HealIssue {
+                    id: issue_id(HealCategory::DisconnectedCommunity, &affected),
+                    category: HealCategory::DisconnectedCommunity,
+                    severity: HealSeverity::Warning,
+                    message: format!(
+                        "{} nodes form a cluster disconnected from the rest of the design",
+                        affected.len()
+                    ),
+                    suggested_fix_type: "generate_bridge",
+                    affected_ids: affected,
+                });
+            }
+        }
+
+        // single_point_of_failure — articulation points that actually separate
+        // ≥2 subsystems (not the leaf-cutting every tree-internal node does).
+        for ap in net.articulation_points() {
+            let id = net.id_of(ap).to_string();
+            if self.is_single_point_of_failure(&id)? {
+                issues.push(HealIssue {
+                    id: issue_id(HealCategory::SinglePointOfFailure, std::slice::from_ref(&id)),
+                    category: HealCategory::SinglePointOfFailure,
+                    severity: HealSeverity::Warning,
+                    message: format!(
+                        "every path between subsystems routes through '{id}' — a single point of failure"
+                    ),
+                    suggested_fix_type: "add_redundancy",
+                    affected_ids: vec![id],
+                });
+            }
+        }
+
+        // dead_end — an isolated Component (no traceability edges at all).
+        for idx in 0..net.node_count() {
+            if net.type_of(idx) == node::COMPONENT && net.degree(idx) == 0 {
+                let id = net.id_of(idx).to_string();
+                issues.push(HealIssue {
+                    id: issue_id(HealCategory::DeadEnd, std::slice::from_ref(&id)),
+                    category: HealCategory::DeadEnd,
+                    severity: HealSeverity::Warning,
+                    message: format!("component '{id}' is not connected to anything"),
+                    suggested_fix_type: "generate_bridge",
+                    affected_ids: vec![id],
+                });
+            }
+        }
+        Ok(())
     }
 
     /// Produce a heal proposal for the current defects under `options`. Computes
@@ -432,6 +517,19 @@ impl DesignGraph {
                     kind: "entity",
                     description: format!("Propose the follow-through entity for {}", issue.message),
                 }),
+                HealCategory::DisconnectedCommunity | HealCategory::DeadEnd => generated_content
+                    .push(GeneratedContentStub {
+                        for_issue: issue.id.clone(),
+                        kind: "bridge",
+                        description: format!("Propose a bridging link for {}", issue.message),
+                    }),
+                HealCategory::SinglePointOfFailure => {
+                    generated_content.push(GeneratedContentStub {
+                        for_issue: issue.id.clone(),
+                        kind: "redundancy",
+                        description: format!("Propose redundancy for {}", issue.message),
+                    })
+                }
             }
         }
 

@@ -32,6 +32,7 @@ pub mod heal;
 pub mod nodes;
 pub mod propagate;
 pub mod schema;
+pub mod structure;
 pub mod temporal;
 
 pub use detect::{GapCandidate, GapScope, GapSource};

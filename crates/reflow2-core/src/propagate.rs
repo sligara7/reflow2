@@ -71,6 +71,14 @@ struct EdgeRule {
 /// in this increment.
 ///
 /// [`Causal`]: ImpactDirection::Causal
+/// Whether an edge type is a structural traceability edge (the design network's
+/// coupling edges — the same set PROPAGATE walks, excluding CONTAINS). Shared
+/// with [`crate::structure`] so the impact walk and the topology analysis agree
+/// on what "connected in the design" means.
+pub(crate) fn is_traceability_edge(edge_type: &str) -> bool {
+    structural_rule(edge_type).is_some()
+}
+
 fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
     use ImpactDirection::{Downstream, Lateral, Upstream};
     let (fwd, bwd) = match edge_type {

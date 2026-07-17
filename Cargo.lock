@@ -114,6 +114,11 @@ dependencies = [
 ]
 
 [[package]]
+name = "dynograph-graph"
+version = "0.9.4"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.9.4#7f7744de0731161c2f4504120088cf4fe5632e3d"
+
+[[package]]
 name = "dynograph-storage"
 version = "0.9.4"
 source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.9.4#7f7744de0731161c2f4504120088cf4fe5632e3d"
@@ -387,6 +392,7 @@ name = "reflow2-core"
 version = "0.0.1"
 dependencies = [
  "dynograph-core",
+ "dynograph-graph",
  "dynograph-storage",
  "serde_json",
 ]

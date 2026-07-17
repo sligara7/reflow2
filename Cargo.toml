@@ -27,6 +27,9 @@ repository = "https://github.com/sligara7/reflow2"
 [workspace.dependencies]
 dynograph-core = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.9.4" }
 dynograph-storage = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.9.4", default-features = false }
+# Pure, dependency-free graph-theory algorithms (components, cuts, centrality)
+# that power HEAL's structural defect detectors. No storage/service deps.
+dynograph-graph = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.9.4" }
 
 # For local cross-repo dev against an unreleased foundation, uncomment and
 # adjust the path. Do not commit uncommented.

@@ -11,6 +11,7 @@ description = "Reflow 2.0 deterministic core — schema-driven design graph over
 [dependencies]
 dynograph-core = { workspace = true }
 dynograph-storage = { workspace = true }
+dynograph-graph = { workspace = true }
 # Snapshots store a node's property bag as a JSON string (temporal.yaml's
 # `Snapshot.state`); `Value` is serde-serializable (untagged), so this renders
 # clean JSON rather than an opaque debug blob.

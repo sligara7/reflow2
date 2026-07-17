@@ -47,6 +47,8 @@ pub mod edge {
     pub const REALIZES: &str = "REALIZES";
     /// `Verification → *` — a Verification checks a Capability/Artifact/Component.
     pub const VERIFIES: &str = "VERIFIES";
+    /// `* → *` — a node depends on another (a lateral structural coupling).
+    pub const DEPENDS_ON: &str = "DEPENDS_ON";
 
     // Axis Z · change over time (temporal.yaml)
     /// `DesignEpoch → DesignEpoch` — one epoch comes before another (ordering).
