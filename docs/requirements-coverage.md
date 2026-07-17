@@ -70,7 +70,7 @@ half (question phrasing, anchors) is LLM-gated and deferred.
 | GS-1 | DIAGNOSE→PROMPT→INGEST loop | 🟡 | DIAGNOSE (`detect_gaps`) ✅; **PROMPT + INGEST deferred (LLM)** |
 | GS-2 | Asks the human; distinct from HEAL | ✅ | `detect_gaps` vs `heal`; `full_coherence_loop` leaves the unmet requirement for the human |
 | GS-3 | `GapCandidate` shape | 🟡 | id/gap_source/scope/severity/title/description/affected_ids/suggested_depth/evidence ✅; **`anchor` deferred** |
-| GS-4 | `GapPrompt` shape | ⬜ | deferred (LLM PROMPT step) |
+| GS-4 | `GapPrompt` shape | 🟡 | `GapPrompt` + `GapCandidate::to_prompt` via `LlmBackend` · `gap_becomes_a_plain_question_via_the_backend`; **`relevant_context` graph-slice deferred** |
 | GS-5 | Phase-coverage gaps | 🟡 | concept_without_design, design_without_build, build_without_verification, no_deploy_operate ✅; **no_decisions_recorded deferred** |
 | GS-6 | Traceability gaps | 🟡 | unsatisfied_requirement, unallocated_capability, unrealized_capability, unverified_capability ✅; **interfaceless_dependency deferred** |
 | GS-7 | Structural gaps (asked) | 🟡 | signals computed in HEAL (`orphan_node`, `dead_end`, `disconnected_community`, `single_point_of_failure`); **surfacing as questions deferred with PROMPT** |
@@ -82,7 +82,7 @@ half (question phrasing, anchors) is LLM-gated and deferred.
 | GS-13 | Detectors read computed signals; prove they fire | ✅ | detectors gated on type-population counts · `early_graph_..._not_per_node_floods`, `traceability_fires_per_node_once_the_phase_exists` |
 | GS-14 | Rank by composite severity | ✅ | severity sort · `unsatisfied_requirement_ranks_by_priority` |
 | GS-15 | Anchor in the user's own material | ⬜ | needs text/vector search (anchor) |
-| GS-16 | Graceful degrade + `rephrase_degraded` | ⬜ | LLM rephrase path |
+| GS-16 | Graceful degrade + `rephrase_degraded` | ✅ | `GapCandidate::to_prompt` degrades to raw wording + flag · `prompt_degrades_gracefully_when_the_backend_fails` |
 | GS-17 | Never speak graph-jargon to the user | 🟡 | titles/descriptions are plain; `evidence` deliberately carries jargon; **polished question is the deferred PROMPT step** |
 | GS-18 | Deterministic gap ids + caching | 🟡 | deterministic FNV ids ✅ (`gap_ids_are_deterministic_across_runs`); **caching deferred** |
 | GS-19 | Validate ids at the boundary | ➖ | no cache-key/glob path from external ids yet; relevant when the surface/caching lands |
@@ -146,10 +146,10 @@ schema in `schema/*.yaml`.
 | IS-1 | Core is surface-agnostic | ✅ | `reflow2-core` is a library; no surface/LLM in it |
 | IS-2 | Core = store + schema + loop ops | ✅ | schema + storage + propagate/detect/heal (deterministic loop ops) |
 | IS-3 | Split deterministic vs LLM ops | ✅ | everything built is deterministic; LLM ops explicitly deferred |
-| IS-4 | `LlmBackend` trait for LLM ops | ⬜ | build-order step 3 (not started) |
+| IS-4 | `LlmBackend` trait for LLM ops | 🟡 | `llm::LlmBackend` (object-safe, sync) + `MockLlmBackend` + `complete_json`; first op (`to_prompt`) wired · `tests/llm.rs`. **Real provider backends deferred (surface decision)** |
 | IS-5 | Candidate surfaces preserved | ➖ | deferred *decision* (documented, not code) |
 | IS-6 | Agent-native vs hosted consequence | ➖ | deferred *decision* |
-| IS-7 | Build order (1 store+schema → 2 det. core → 3 LLM → 4 surface) | 🟡 | **steps 1 + 2 complete**; step 3 (LlmBackend + mock) and step 4 (surface) not started |
+| IS-7 | Build order (1 store+schema → 2 det. core → 3 LLM → 4 surface) | 🟡 | **steps 1 + 2 complete; step 3 started** (LlmBackend + mock + first op); real backends + step 4 (surface) not started |
 
 ---
 

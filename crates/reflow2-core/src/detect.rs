@@ -34,6 +34,7 @@
 use dynograph_core::DynoError;
 
 use crate::graph::DesignGraph;
+use crate::llm::{LlmBackend, LlmRequest};
 use crate::nodes::{edge, node};
 
 /// What a gap is about (docs/gap-surfacing.md taxonomy). Adding a detector is
@@ -114,6 +115,64 @@ pub struct GapCandidate {
     pub suggested_depth: u8,
     /// Raw signal backing the gap, for auditing.
     pub evidence: String,
+}
+
+/// A gap turned into a plain-language question the user actually answers
+/// (docs/gap-surfacing.md, the PROMPT half of DIAGNOSE→PROMPT). Produced from a
+/// [`GapCandidate`] via an [`LlmBackend`] — the first LLM-reasoning op wired
+/// through the pluggable boundary.
+#[derive(Debug, Clone)]
+pub struct GapPrompt {
+    /// 1–2 sentences placing the user back in their own design.
+    pub context_setter: String,
+    /// The specific thing to answer, in plain language (no graph jargon).
+    pub question: String,
+    /// Optional scaffolding / examples.
+    pub hints: Vec<String>,
+    /// The gap this addresses.
+    pub candidate_id: String,
+    /// True when LLM rephrase failed and this fell back to the raw candidate
+    /// text — surfaced, never silently shipped as if polished (discipline
+    /// GS-16). The candidate is never dropped.
+    pub rephrase_degraded: bool,
+}
+
+impl GapCandidate {
+    /// Rephrase this gap into a user-facing [`GapPrompt`] via `backend`.
+    ///
+    /// On any backend failure it **degrades gracefully**: it returns the raw
+    /// candidate wording with `rephrase_degraded = true` rather than dropping
+    /// the gap or pretending the fallback is polished (docs/gap-surfacing.md
+    /// discipline: graceful-degrade-with-an-explicit-flag).
+    pub fn to_prompt(&self, backend: &dyn LlmBackend) -> GapPrompt {
+        let request = LlmRequest::new(format!(
+            "Rewrite this design gap as one plain-language question for a non-engineer. \
+             No graph/systems-engineering jargon. Return only the question.\n\n\
+             Gap: {}\nWhy it matters: {}",
+            self.title, self.description
+        ))
+        .with_system(
+            "You help a designer fill gaps in their design by asking clear, \
+             constructive questions grounded in their own work.",
+        );
+
+        match backend.complete(&request) {
+            Ok(response) => GapPrompt {
+                context_setter: self.title.clone(),
+                question: response.text.trim().to_string(),
+                hints: Vec::new(),
+                candidate_id: self.id.clone(),
+                rephrase_degraded: false,
+            },
+            Err(_) => GapPrompt {
+                context_setter: self.title.clone(),
+                question: self.description.clone(),
+                hints: Vec::new(),
+                candidate_id: self.id.clone(),
+                rephrase_degraded: true,
+            },
+        }
+    }
 }
 
 /// FNV-1a 64-bit — a small, stable, dependency-free hash so gap ids are

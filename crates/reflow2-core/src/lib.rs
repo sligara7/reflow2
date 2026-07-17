@@ -29,17 +29,21 @@
 pub mod detect;
 pub mod graph;
 pub mod heal;
+pub mod llm;
 pub mod nodes;
 pub mod propagate;
 pub mod schema;
 pub mod structure;
 pub mod temporal;
 
-pub use detect::{GapCandidate, GapScope, GapSource};
+pub use detect::{GapCandidate, GapPrompt, GapScope, GapSource};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
 pub use heal::{
     GeneratedContentStub, HealCategory, HealIssue, HealOp, HealOperation, HealOptions,
     HealProposal, HealReport, HealSeverity, HealStrategy, SkippedOperation,
+};
+pub use llm::{
+    LlmBackend, LlmError, LlmParams, LlmRequest, LlmResponse, MockLlmBackend, complete_json,
 };
 pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOptions};
 pub use schema::load_schema;

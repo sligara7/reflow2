@@ -62,8 +62,11 @@ service, or LLM wiring exists yet — none does.
   `dynograph-core`, `dynograph-storage` (`default-features = false` so the RocksDB C++ build
   stays opt-in), `dynograph-graph` (pure, no features) — mirrors the predecessor `ir2`. Fast
   dev/test build: `cargo test --no-default-features`. Keep it green, clippy-clean, and
-  `cargo fmt`-ed. Not yet built (LLM/interaction-surface-gated): the PROMPT/rephrase half of
-  SURFACE, HEAL's generative healers' actual content, INGEST, SME, GENESIS.
+  `cargo fmt`-ed. The `llm` module defines the pluggable `LlmBackend` seam (object-safe,
+  sync) + `MockLlmBackend` (build-order step 3); the first op through it is
+  `GapCandidate::to_prompt` (SURFACE's PROMPT half, with graceful degrade). Not yet built:
+  real provider backends (gated on the surface decision), HEAL's generative healer content,
+  INGEST, SME, GENESIS.
 
 **Open decision (deliberately deferred):** the *interaction surface* — MCP/skills for a
 coding agent, a hosted web app, a CLI, or a library — is not yet chosen. It plugs in last

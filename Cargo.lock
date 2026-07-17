@@ -394,6 +394,7 @@ dependencies = [
  "dynograph-core",
  "dynograph-graph",
  "dynograph-storage",
+ "serde",
  "serde_json",
 ]
 
