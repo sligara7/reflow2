@@ -1,6 +1,9 @@
 # Nuggets from Chain Reflow
 
-Review of `~/git_projects/chain_reflow` — the project for **linking independently-built
+> Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+
+Review of [github.com/sligara7/chain_reflow](https://github.com/sligara7/chain_reflow) —
+the project for **linking independently-built
 architectures** together via touchpoint discovery, then running reflow analysis on the
 merged whole. (Its modules `creative_linking`, `causality_analysis`, `matryoshka_analysis`,
 `matrix_gap_detection` were later referenced by integrated_reflow's component index.)

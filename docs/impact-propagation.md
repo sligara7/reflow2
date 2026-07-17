@@ -1,5 +1,7 @@
 # Impact Propagation — the PROPAGATE step of the coherence loop
 
+> Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+
 > When something changes in any phase, this is what walks the **golden thread** to find
 > everything the change touches — the *blast radius* — so DETECT/SURFACE can flag the new
 > gaps and the graph can be healed back to coherence. This is the connective tissue of

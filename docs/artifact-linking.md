@@ -1,5 +1,7 @@
 # Artifact Linking — connecting real files to graph entities
 
+> Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+
 How reflow2 ties the *actual work products* — code, design docs, dataflow charts,
 OpenAPI specs, test results — to the design entities they serve. This is the software
 analogue of storyflow's fragment→node linking, adapted for a developer audience.

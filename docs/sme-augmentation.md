@@ -1,5 +1,7 @@
 # SME Augmentation — the LLM as subject-matter expert
 
+> Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+
 Adapted from storyflow's **supplementary analysis** (`modules/extraction/
 graph_informed_prompts.py` PART 4, `supplementary_fragment.py`, `GroundedClaim`). This is
 the capability that most directly serves the vision's premise — *the user may know very

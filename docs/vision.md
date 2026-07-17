@@ -1,5 +1,7 @@
 # Vision — one coherent graph from concept to operations
 
+> Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+
 > This is the north star. Everything else in `redesign/` (the schema, the extraction
 > pipeline, gap-surfacing, heal, the three axes) exists to serve this.
 
@@ -53,7 +55,7 @@ flowchart LR
 | Step | Mechanism in this design |
 |---|---|
 | **CHANGE** | Axis Z — any edit becomes a `ChangeEvent` at a `DesignEpoch` ([schema/temporal.yaml](../schema/temporal.yaml)); the old state is snapshotted, never clobbered |
-| **PROPAGATE** | Axis X — walk the traceability edges (`SATISFIES` · `ALLOCATED_TO` · `REALIZES` · `VERIFIES` · `DEPLOYED_TO` · `DEPENDS_ON` + inference) up- and downstream to compute the blast radius |
+| **PROPAGATE** | Axis X — walk the traceability edges (`SATISFIES` · `ALLOCATED_TO` · `REALIZES` · `VERIFIES` · `DEPLOYED_TO` · `DEPENDS_ON` + inference) up- and downstream to compute the blast radius ([impact-propagation.md](impact-propagation.md)) |
 | **DETECT** | the touched region is re-diagnosed for new gaps, dangling links, contradictions, and phase-coverage holes |
 | **SURFACE** | gap-surfacing turns each into a plain-language question ([docs/gap-surfacing.md](gap-surfacing.md)) |
 | **RESOLVE / HEAL** | the user answers (→ INGEST) or HEAL proposes structural fixes ([docs/heal-process.md](heal-process.md)); provenance recorded, prior state remembered |

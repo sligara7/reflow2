@@ -1,5 +1,7 @@
 # Operating Environment & Ruleset — the design's "physics"
 
+> Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+
 Adapted from storyflow's **Universe / CosmologyConcept** model
 (`storyflow/services/dynograph/schemas/domains/core.yaml`,
 `modules/diagnose/law_consistency.py`). A design never exists in a vacuum — it must

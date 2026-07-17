@@ -1,6 +1,10 @@
 # Gap Surfacing — DIAGNOSE → PROMPT (the scenarioRunner, for design)
 
-Adapted from storyflow's **scenarioRunner** (`generation_plus/src/services/scenario_gaps.py`,
+> Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+
+Adapted from storyflow's **scenarioRunner**
+([github.com/sligara7/storyflow](https://github.com/sligara7/storyflow):
+`services/generation_plus/src/services/scenario_gaps.py`,
 `scenario_service.py`, `scenario_generation.py`, `llm/proactive_scenario.py`,
 `schemas/scenario.py`) — its DIAGNOSE→PROMPT half of the six universal processes.
 

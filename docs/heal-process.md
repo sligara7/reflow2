@@ -1,8 +1,12 @@
 # HEAL Process — self-repair for the design graph
 
+> Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+
 Adapted from storyflow's **Process 5: HEAL**
-(`dev_storyflow/docs/architecture/five-universal-processes.md`) and its implementation
-(`storyflow/services/generation_plus/src/routers/healing.py`,
+(design notes in [github.com/sligara7/dev_storyflow](https://github.com/sligara7/dev_storyflow)
+`docs/architecture/five-universal-processes.md`) and its implementation in
+[github.com/sligara7/storyflow](https://github.com/sligara7/storyflow)
+(`services/generation_plus/src/routers/healing.py`,
 `schemas/healing.py`, and the Rust `compat/story_validation.rs`).
 
 storyflow found that six **universal processes** recur in every domain. They are the

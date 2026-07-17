@@ -1,10 +1,17 @@
 # Reflow Redesign — "Design Anything, Build Anything"
 
-A clean-room rebuild of Reflow's core idea, starting fresh so nothing in the
-existing repos (`../` reflow, `../../storyflow`, `../../dynograph-foundation`)
-is disturbed.
+A clean-room rebuild of Reflow's core idea
+([github.com/sligara7/reflow2](https://github.com/sligara7/reflow2)), starting fresh so
+nothing in the source projects is disturbed — all of them the author's own work:
+[reflow](https://github.com/sligara7/reflow),
+[storyflow](https://github.com/sligara7/storyflow),
+[chain_reflow](https://github.com/sligara7/chain_reflow), and
+[dynograph-foundation](https://github.com/sligara7/dynograph-foundation).
 
-## Vision (start here)
+**New here? Read [docs/overview.md](docs/overview.md) first** — it maps all the documents
+and how they fit together.
+
+## Vision
 
 Capture the **entire lifecycle — concept → operations — in one graph**, tied together by
 the systems-engineering *golden thread*. When anything changes in any phase, the ripple
@@ -33,9 +40,10 @@ build anything** — not just software. It keeps Reflow's phase spine
 
 ## The design vocabulary
 
-Domain-neutral node types, layered by the phase they feed:
+Domain-neutral node types, layered by the phase they feed (26 types across 10 schema
+domains; see [docs/overview.md](docs/overview.md) and `../tools/validate_schema.py`):
 
-| Phase | Nodes |
+| Phase / layer | Nodes |
 |-------|-------|
 | P0 · Intent | `Project`, `Requirement`, `Constraint`, `DesignRule` |
 | P1 · Function (WHAT) | `Capability`, `Flow`, `Actor` |
@@ -43,7 +51,9 @@ Domain-neutral node types, layered by the phase they feed:
 | P3 · Realization (BUILD) | `Artifact`, `Fragment` |
 | P4 · Verification | `Verification`, `QualityGate`, `DriftEvent` |
 | P5 · Operation | `Release`, `Environment`, `Resource` |
-| Cross-cutting | `DimensionAssessment`, `PhaseEvent` |
+| Operating environment | `EnvironmentRule` |
+| Axis Z · change over time | `DesignEpoch`, `TemporalFact`, `Snapshot`, `ChangeEvent` |
+| Cross-cutting | `DimensionAssessment`, `DimensionObservation` |
 
 **Structural edges:** CONTAINS, PROVIDES, CONSUMES, ALLOCATED_TO, REALIZES,
 VERIFIES, DEPENDS_ON, SATISFIES, PART_OF_FLOW, DEPLOYED_TO, REQUIRES_RESOURCE,
@@ -70,6 +80,7 @@ redesign/
     inference.yaml   #   the "why" edge layer
     dimensions.yaml  #   quality-axis assessments + per-epoch observations
   docs/
+    overview.md          # START HERE — maps all docs and how they fit together
     vision.md            # north star: one coherent graph, concept → operations
     three-axes.md        # X (network) / Y (nesting) / Z (change over time)
     extraction-plan.md   # how phase-aware extraction populates the graph (INGEST)
@@ -96,13 +107,15 @@ Beyond phases and processes, every design is sliced along three independent axes
 
 Reflow's **phases** (P0–P5) are the *linear lifecycle spine* — where a project is.
 Storyflow contributes six *universal graph processes* — the *cyclic engine* that runs
-on the graph regardless of phase:
+on the graph regardless of phase. They map onto the coherence loop; see
+[docs/overview.md](docs/overview.md) for the full reconciliation.
 
-- **GENESIS** — bootstrap the graph from a brief
+- **GENESIS** — bootstrap the graph from a brief *(acknowledged; not yet detailed)*
 - **INGEST** — extraction ([docs/extraction-plan.md](docs/extraction-plan.md))
 - **DIAGNOSE → PROMPT** — find graph weaknesses & ask the user questions ([docs/gap-surfacing.md](docs/gap-surfacing.md))
-- **SYNTHESIZE** — graph → artifacts (docs, diagrams, as-built)
+- **SYNTHESIZE** — graph → artifacts (docs, diagrams, as-built) *(acknowledged; not yet detailed)*
 - **HEAL** — detect & repair structural defects ([docs/heal-process.md](docs/heal-process.md))
+- *(reflow2 addition)* **PROPAGATE** — ripple a change along the golden thread ([docs/impact-propagation.md](docs/impact-propagation.md))
 
 ## Status
 

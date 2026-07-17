@@ -1,5 +1,7 @@
 # The Three Axes — and why Z (change over time) matters most for design
 
+> Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+
 From the user's model of storyflow (`~/Downloads/storyflow_entities.html`, grounded in
 `storyflow/services/dynograph/schemas/domains/*.yaml`). storyflow slices any story along
 three independent axes; a design graph has the exact same three, plus a fourth "depth".

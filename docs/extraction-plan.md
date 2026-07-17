@@ -1,14 +1,18 @@
 # Extraction Plan — leveraging storyflow's battle-tested pipeline
 
+> Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+
 This is a **direct adaptation of storyflow's multi-pass extraction process**, not a
 reinvention. Storyflow's pipeline encodes a lot of hard-won lessons; we keep the
 architecture and the disciplines verbatim, and only swap the *domain vocabulary*
 (narrative entities → design entities from `../schema/`) and the *gate categories*
 (narrative categories → design/phase categories).
 
-Source of truth we are mirroring:
-`storyflow/services/generation_plus/src/modules/extraction/` (multi_pass_orchestrator,
-`passes/`, `graph_informed_*`) and the domain-neutral `dynograph-extract` Rust crate.
+Source of truth we are mirroring, in
+[github.com/sligara7/storyflow](https://github.com/sligara7/storyflow):
+`services/generation_plus/src/modules/extraction/` (multi_pass_orchestrator,
+`passes/`, `graph_informed_*`) and the domain-neutral `dynograph-extract` Rust crate
+(from [dynograph-foundation](https://github.com/sligara7/dynograph-foundation)).
 
 ---
 

@@ -1,6 +1,9 @@
 # Nuggets from the original Reflow (v3.17.0)
 
-Review of `~/git_projects/reflow` (the first project — Nov/Dec 2025, now dormant),
+> Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+
+Review of [github.com/sligara7/reflow](https://github.com/sligara7/reflow) (the first
+project — Nov/Dec 2025, now dormant),
 focused on `tools/`, `workflows/`, `workflow_steps/`. It was already
 "LLM-driven systems engineering with proactive drift prevention," framework-agnostic
 across UAF, systems biology, social networks, ecosystems. Several ideas are worth
