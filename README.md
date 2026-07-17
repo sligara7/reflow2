@@ -65,6 +65,7 @@ redesign/
     build.yaml       #   P3 — artifacts, fragments
     verify.yaml      #   P4 — verifications, gates, drift
     operate.yaml     #   P5 — releases, environments, resources
+    environment.yaml #   operating environment + its authoritative ruleset (codes/laws)
     temporal.yaml    #   axis Z — epochs, time-bounded facts, snapshots, change events
     inference.yaml   #   the "why" edge layer
     dimensions.yaml  #   quality-axis assessments + per-epoch observations
@@ -72,9 +73,11 @@ redesign/
     vision.md            # north star: one coherent graph, concept → operations
     three-axes.md        # X (network) / Y (nesting) / Z (change over time)
     extraction-plan.md   # how phase-aware extraction populates the graph (INGEST)
+    sme-augmentation.md  # LLM-as-SME surfaces considerations the user didn't state
     impact-propagation.md# ripple a change along the golden thread (PROPAGATE)
     gap-surfacing.md     # find graph weaknesses, ask the user questions (DIAGNOSE→PROMPT)
     heal-process.md      # self-repair of the design graph (HEAL)
+    operating-environment.md # the environment's ruleset the design must comply with
     reflow-v3-nuggets.md # ideas carried over from the original Reflow project
     chain-reflow-nuggets.md # ideas from Chain Reflow (matryoshka, causality, linking)
 ```

@@ -69,3 +69,15 @@ schema:
       extraction_hint: A revised Fragment replaces an earlier version.
       properties:
         diff_summary: { type: string }
+
+    SUPPLEMENTS:
+      from: Fragment
+      to: Fragment
+      extraction_hint: >
+        Links an LLM-as-SME supplementary-analysis Fragment (provenance=inferred)
+        to the source Fragment it augments — the design-world analogue of
+        storyflow's SUPPLEMENTS. Carries the grounding label so speculative vs.
+        established SME input stays visible.
+      properties:
+        grounding: { type: enum, values: [verified, extrapolated, speculative, contradicts_known], default: extrapolated, description: "How grounded the SME input is (storyflow's grounding spectrum)." }
+        domain: { type: string, description: "SME knowledge domain — logistics, structural, thermal, regulatory, propulsion, etc." }

@@ -1,0 +1,84 @@
+# environment.yaml — the operating environment and its authoritative ruleset.
+#
+# Adapted from storyflow's Universe + CosmologyConcept model. A design does not
+# exist in a vacuum: it must function within a real-world OPERATING ENVIRONMENT
+# that imposes an authoritative rule-set the design MUST comply with. Swapping
+# the environment swaps the whole constraint space — a house in Kennewick, WA
+# (city ordinances, seismic zone, fire codes) vs. a house on Mars (0.38 g, no
+# atmosphere, radiation, life-support) are completely different design problems.
+#
+# `Environment` itself is defined in operate.yaml (it doubles as the P5
+# deployment/operation context); this domain adds the ruleset it imposes and the
+# compliance edges. Storyflow's "generation grounds HARD against cosmology laws"
+# becomes "the design must comply with the environment's rules, and violations
+# are flagged for human triage (variance/waiver vs. fix) — never silently dropped."
+
+schema:
+  name: environment
+  version: 1
+
+  node_types:
+
+    EnvironmentRule:
+      properties:
+        name: { type: string, required: true, indexed: true, fulltext: true }
+        statement: { type: string, required: true, fulltext: true, description: "What the rule requires or forbids, in plain terms." }
+        rule_type: { type: enum, values: [regulatory, building_code, zoning, safety, environmental, standard, physical_law, interface, constraint], default: regulatory, indexed: true }
+        authority: { type: string, indexed: true, description: "Who issues/enforces it — a city, county, state, agency (NASA), standards body (ISO), or 'physics'." }
+        jurisdiction: { type: string, indexed: true, description: "Where it applies — 'Kennewick, WA', 'Benton County', 'WA State', 'Mars surface'." }
+        effects: { type: string, fulltext: true, description: "What it grants/forbids — the design must not contradict this (the HARD-grounding text)." }
+        reference: { type: string, description: "Citation — e.g. 'IBC 2021 §1607', 'NFPA 101', a datasheet." }
+        mandatory: { type: bool, default: true, description: "Hard (must comply / gate-blocking) vs. soft (advisory)." }
+        priority: { type: int, description: "Ordering/weight when rules conflict." }
+      embedding_field: statement
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
+      extraction_hint: >
+        An authoritative, externally-imposed rule the design must comply with
+        within its operating Environment — a building/fire/electrical code, a
+        zoning or occupancy ordinance, an environmental regulation, a safety
+        standard, or a hard physical law of the operating context. Unlike a
+        chosen DesignRule (adopted) or a project Constraint (self-imposed), an
+        EnvironmentRule is dictated by the environment/authority. Environments
+        IMPOSE these; design nodes COMPLIES_WITH or VIOLATES_RULE them.
+
+  edge_types:
+
+    OPERATES_IN:
+      from: Project
+      to: Environment
+      extraction_hint: >
+        The operating environment(s) the project's result must function in. A
+        project may target more than one (a design portable across environments);
+        each brings its own imposed ruleset.
+
+    IMPOSES:
+      from: Environment
+      to: EnvironmentRule
+      extraction_hint: >
+        The authoritative rule-set an Environment imposes on any design that
+        operates in it — its "codes and physics". One edge per rule.
+
+    COMPLIES_WITH:
+      from: ["Capability", "Component", "Artifact", "Release", "Interface"]
+      to: EnvironmentRule
+      extraction_hint: A design element satisfies an EnvironmentRule.
+      properties:
+        verified: { type: bool, default: false, description: "Whether compliance has been demonstrated (vs. merely asserted)." }
+        evidence: { type: string }
+
+    VIOLATES_RULE:
+      from: ["Capability", "Component", "Artifact", "Release", "Interface", "Fragment"]
+      to: EnvironmentRule
+      extraction_hint: >
+        A design element contradicts an EnvironmentRule (a compliance anomaly).
+        Flagged, never silently dropped. DM/engineer triages via the lifecycle:
+        confirmed = an accepted variance/waiver (kept, documented); rejected =
+        must be fixed (retained for audit).
+      properties:
+        status: { type: enum, values: [proposed, confirmed, rejected], default: proposed, description: "proposed=flagged; confirmed=variance/waiver granted; rejected=must fix. Mirrors storyflow's VIOLATES lifecycle." }
+        proposer: { type: enum, values: [llm, author, check], default: llm, description: "llm=compliance pass; author=manual; check=automated rule check." }
+        severity: { type: enum, values: [low, medium, high, critical], default: high }
+        evidence: { type: string, description: "Why it violates — the specific rule text + offending detail." }
+        rationale: { type: string }
+        detected_at: { type: string }
+        resolved_at: { type: string }

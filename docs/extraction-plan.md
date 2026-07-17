@@ -59,6 +59,19 @@ and returns a strict JSON shape. Passes run in parallel within a phase.
 Adding a pass = one named constant + one gating entry, per storyflow's centralized
 phase-key convention (no naked strings across the file).
 
+### SME augmentation (supplementary analysis) — a gated post-pass
+
+After faithful extraction, an optional **SME pass** (mirrors storyflow's Part-4
+supplementary analysis) has the LLM act as a cross-domain subject-matter expert for the
+project's domain and operating `Environment`, surfacing considerations the user never
+stated — proposed `Requirement`s/`Constraint`s (incl. `concern: logistics`), `RISKS`,
+missing `Capability`s, `EnvironmentRule`s. Each is labeled on the grounding spectrum
+(`verified` / `extrapolated` / `speculative` / `contradicts_known`) with `domain` +
+`confidence`. Output lands as a supplementary Fragment (`provenance: inferred`) linked via
+`SUPPLEMENTS`, and surfaces to the user as `sme_consideration` gap questions to accept /
+edit / dismiss — amplify, never silently merge as fact. See
+[sme-augmentation.md](sme-augmentation.md).
+
 ---
 
 ## The discovery gate (mirrors `passes/discovery.py`)

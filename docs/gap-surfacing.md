@@ -98,6 +98,20 @@ as "should these connect?" questions rather than auto-repaired.
 | `violated_constraint` | a `VIOLATES` edge on a Constraint/DesignRule with no remediation |
 | `unvalidated_causal_claim` | a high-impact causal edge with `basis=correlational` + `validation_status=unvalidated` (chain_reflow: don't trust correlation as causation) |
 
+### Compliance gaps (operating environment — from storyflow's cosmology)
+| gap_source | Fires when… | Example question |
+|---|---|---|
+| `unchecked_compliance` | a design element in scope of a mandatory `EnvironmentRule` has neither `COMPLIES_WITH` nor `VIOLATES_RULE` | "Has the egress width been checked against the fire code?" |
+| `open_violation` | a `VIOLATES_RULE` is still `proposed` (not triaged) | "This exceeds the occupancy limit — seek a variance or redesign?" |
+| `no_operating_environment` | the Project has no `OPERATES_IN` Environment, so no ruleset applies yet | "Where will this operate? (Kennewick? Mars?) — its codes drive the design." |
+
+### SME considerations (LLM-as-subject-matter-expert)
+| gap_source | Fires when… | Example question |
+|---|---|---|
+| `sme_consideration` | the SME augmentation pass surfaced a consideration the user hasn't addressed (a proposed logistics constraint, risk, or missing capability) | "Building on Mars needs a supply/transport plan (launch mass budget, resupply cadence) — add these constraints?" |
+
+SME considerations carry the grounding label (`verified`/`extrapolated`/`speculative`/`contradicts_known`) + `domain` so the user can weigh them; accepting one INGESTs it. See [sme-augmentation.md](sme-augmentation.md).
+
 ### Decomposition / hierarchy gaps (Axis Y — matryoshka, from chain_reflow)
 | gap_source | Fires when… | Example question |
 |---|---|---|

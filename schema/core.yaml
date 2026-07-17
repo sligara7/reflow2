@@ -32,6 +32,7 @@ schema:
         name: { type: string, required: true, indexed: true, fulltext: true }
         statement: { type: string, required: true, fulltext: true, description: "The need in the stakeholder's own terms." }
         kind: { type: enum, values: [functional, nonfunctional, quality, business], default: functional, indexed: true }
+        concern: { type: enum, values: [core, logistics, sustainment, safety, security, cost, schedule, manufacturability, usability, environmental, other], default: core, indexed: true, description: "Cross-cutting concern this need belongs to. 'logistics'/'sustainment' cover the ILS considerations an SME surfaces (supply, transport, build method, maintenance)." }
         priority: { type: enum, values: [low, medium, high, critical], default: medium, indexed: true }
         source: { type: string, description: "Who/what stated it — a user, a regulation, a stakeholder." }
         rationale: { type: string }
@@ -48,6 +49,7 @@ schema:
         name: { type: string, required: true, indexed: true, fulltext: true }
         statement: { type: string, required: true, fulltext: true }
         category: { type: enum, values: [technical, business, operational, physical, regulatory, budget, schedule], default: technical, indexed: true }
+        concern: { type: enum, values: [core, logistics, sustainment, safety, security, cost, schedule, manufacturability, usability, environmental, other], default: core, indexed: true, description: "Cross-cutting concern (ILS facet). Lets logistics/sustainment limits be filtered without a separate node type." }
         priority: { type: enum, values: [low, medium, high, critical], default: medium, indexed: true }
         rationale: { type: string }
       embedding_field: statement

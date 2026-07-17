@@ -54,7 +54,7 @@ schema:
     ChangeEvent:
       properties:
         name: { type: string, required: true, indexed: true, fulltext: true }
-        change_type: { type: enum, values: [requirement_creep, new_feature, test_failure_fix, performance_optimization, refactor, scope_change, constraint_change, deprecation, resync], required: true, indexed: true }
+        change_type: { type: enum, values: [requirement_creep, new_feature, test_failure_fix, performance_optimization, refactor, scope_change, constraint_change, environment_change, deprecation, resync], required: true, indexed: true }
         summary: { type: string, fulltext: true }
         rationale: { type: string, description: "Why the change was made." }
         detected_at: { type: string }

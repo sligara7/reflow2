@@ -28,13 +28,17 @@ schema:
       properties:
         name: { type: string, required: true, indexed: true, fulltext: true }
         description: { type: string, fulltext: true }
-        env_type: { type: enum, values: [development, staging, production, field, lab], default: production, indexed: true }
-        location: { type: string, description: "Cloud region, host, physical site." }
+        env_type: { type: enum, values: [development, staging, production, field, lab, physical_site], default: production, indexed: true }
+        location: { type: string, description: "Cloud region, host, physical site, or jurisdiction." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
       extraction_hint: >
-        A context where a Release is deployed and operated — a cloud env, a
-        server, a physical site, a lab bench.
+        The operating context a design runs/operates in — a cloud env, a server,
+        a lab bench, or a real-world site/jurisdiction (Kennewick WA; Mars
+        surface). More than a deploy target: an Environment IMPOSES an
+        authoritative rule-set (EnvironmentRule, see environment.yaml) that the
+        design must comply with. Swapping the Environment swaps the constraint
+        space.
 
     Resource:
       properties:
