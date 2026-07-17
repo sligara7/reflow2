@@ -26,6 +26,7 @@
 //! assert_eq!(g.count_nodes("Requirement").unwrap(), 1);
 //! ```
 
+pub mod allocate;
 pub mod detect;
 pub mod graph;
 pub mod heal;
@@ -37,6 +38,7 @@ pub mod schema;
 pub mod structure;
 pub mod temporal;
 
+pub use allocate::{AllocationReport, ComponentScore, MisplacedCapability};
 pub use detect::{GapCandidate, GapPrompt, GapScope, GapSource};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
 pub use heal::{

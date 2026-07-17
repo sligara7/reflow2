@@ -234,9 +234,12 @@ is high-value for both DETECT (flag it) and HEAL's creative-bridge healer (propo
    facet is on the interaction edges (`functional.yaml` DEPENDS_ON/PART_OF_FLOW,
    `structure.yaml` ALLOCATED_TO/PROVIDES/CONSUMES), and INGEST's `dependencies` pass emits
    weighted `DEPENDS_ON` (`weight_basis: estimated`). Signal captured; no analysis yet.
-2. **Allocation evaluator** — a deterministic `analysis`/`allocate` module: score the current
-   `ALLOCATED_TO` allocation (coupling cut, cohesion, god-nodes via `cut_structure` +
-   `betweenness`), surface as DETECT-style findings. Proves the idea with no proposer risk.
+2. **Allocation evaluator** ✅ **done** — the `allocate` module scores the current
+   `ALLOCATED_TO` allocation over the weighted `DEPENDS_ON` graph: per-component
+   cohesion/coupling + `modularity`, **misplaced** capabilities (coupled more across a
+   boundary than within), and selective **god-components** (`cut_structure` articulation
+   points that split ≥2 subsystems). Reports unweighted-edge coverage and multi-allocation.
+   `evaluate_allocation()` → `AllocationReport`. No proposer yet.
 3. **Centrality-weighted PROPAGATE (IP-9)** — a small, high-value reuse: rank blast radius by
    node centrality. Independently useful.
 4. **Allocation proposer** — community detection (`louvain` now, **Leiden** once the
