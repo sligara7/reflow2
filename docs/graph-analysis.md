@@ -183,6 +183,31 @@ speculative — demand-pull it):
 
 ---
 
+## Concepts to mine from graphify
+
+[graphify](https://github.com/sligara7) (a codebase-→-knowledge-graph tool) computes several
+graph analyses that transfer directly. Some reflow2 already has (and does better, because it
+classifies *why* an edge matters); a few are genuinely new and worth adding. Recorded here as
+candidates (nothing built from this list yet).
+
+| graphify concept | reflow2 status | reflow2 form / algorithm |
+|---|---|---|
+| **Blast radius** (`affected` — reverse-relation walk with depth) | ✅ have (better) | PROPAGATE — direction-classified, risk-flagged, no-silent-truncation |
+| **God nodes** (top-degree hubs) | ✅ have (better) | HEAL *selective* SPOF (articulation points that split ≥2 subsystems) + `betweenness` |
+| **Communities** (Leiden, colored) | 🟡 partial | `louvain` (Leiden planned) → allocation clusters |
+| **Explained edges** (`EXTRACTED` / `INFERRED` / `AMBIGUOUS`) | ✅ have | inference-edge `basis`/`confidence` + Fragment `provenance` (`YIELDED`) |
+| **Extraction diagnostics** (missing / dangling / duplicate edges) | ✅ mostly | INGEST `dropped_edges` (phantom/dangling) + fuzzy dedup; could add an exact-duplicate-edge count |
+| **Surprising connections** — an edge bridging two otherwise-distant communities (high *edge* betweenness / cross-community) | ⬜ **new** | **Unexpected-coupling detector**: a `DEPENDS_ON`/coupling edge whose endpoints sit in different `louvain` communities is either a hidden coupling to flag (DETECT) *or* a creative-link opportunity (chain_reflow). Powered by cross-community detection + edge betweenness |
+| **Peripheral→hub** — a low-degree node unexpectedly reaching a high-degree hub | ⬜ **new** | A leaf capability wired straight to a god-component, skipping intermediate structure — ties to the matryoshka **`missing_intermediate_level`** gap (chain_reflow) and god-node dependence. Degree/level anomaly |
+| **Graph report** (highlights: key concepts, surprising connections, suggested questions) | ⬜ **new** | A **SYNTHESIZE** rollup artifact: communities/allocation + god-nodes + surprising couplings + DETECT gaps + suggested questions — the "what should I look at?" summary |
+
+The pattern worth borrowing wholesale is graphify's **"every edge is explained"** ethos and
+its **surprising-connection** analysis — the design-world analogue ("these two subsystems look
+independent but there's a hard coupling between them, or there *should* be a link and isn't")
+is high-value for both DETECT (flag it) and HEAL's creative-bridge healer (propose it).
+
+---
+
 ## Non-negotiable disciplines
 
 1. **Weights fail loud.** No silent default-`1.0`; report `weight_basis` coverage so a claim
