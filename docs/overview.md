@@ -59,6 +59,9 @@ the loop like this:
 ### 3½ · Status — *are we meeting the docs?*
 - [requirements-coverage.md](requirements-coverage.md) — traceability matrix: every doc requirement → the module + test that meets it, with an honest Met/Partial/Deferred status. A living document.
 
+### 3¾ · Direction — *the prescriptive graph* (candidate, not yet built)
+- [graph-analysis.md](graph-analysis.md) — use graph-theory tools (`dynograph-graph`/`-vector`/`-cluster`/`-game`) to *make* design decisions, not just record them — e.g. allocate functions to services by cohesion/coupling instead of by domain. Starts with edge **weights**.
+
 ### 4 · Heritage — *where the ideas came from*
 - [reflow-v3-nuggets.md](reflow-v3-nuggets.md) — ideas carried over from the original Reflow.
 - [chain-reflow-nuggets.md](chain-reflow-nuggets.md) — ideas from Chain Reflow (matryoshka, causality, linking).
