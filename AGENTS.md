@@ -41,6 +41,13 @@ Three complementary lenses on the graph: **phases** (P0–P5 lifecycle), **three
 This project is **design/specification stage**. It is **documentation + schema only** —
 there is **no runtime code yet**. Do not assume services, APIs, or a running system exist.
 
+**Open decision (deliberately deferred):** the *interaction surface* — MCP/skills for a
+coding agent, a hosted web app, a CLI, or a library — is not yet chosen. It plugs in last
+and determines whether an external LLM provider is needed (agent-native = no; hosted =
+yes). The core is built to be neutral to this; see
+[docs/interaction-surfaces.md](docs/interaction-surfaces.md). Don't hard-wire a surface or
+an LLM provider into the core.
+
 - `schema/*.yaml` — 10 composable [dynograph-foundation](https://github.com/sligara7/dynograph-foundation)
   schema domains (26 node types, 52 edge types). This is the foundation everything builds on.
 - `docs/*.md` — the vision, design, and process specifications.
@@ -58,6 +65,7 @@ reading order (Vision → Design → Process → Heritage). Then:
 | know how content gets into the graph | [docs/extraction-plan.md](docs/extraction-plan.md), [docs/sme-augmentation.md](docs/sme-augmentation.md), [docs/artifact-linking.md](docs/artifact-linking.md) |
 | know how change is handled | [docs/impact-propagation.md](docs/impact-propagation.md), [docs/gap-surfacing.md](docs/gap-surfacing.md), [docs/heal-process.md](docs/heal-process.md) |
 | understand the operating environment/ruleset | [docs/operating-environment.md](docs/operating-environment.md) |
+| know how a human drives it (and the LLM-sourcing tradeoff) | [docs/interaction-surfaces.md](docs/interaction-surfaces.md) |
 | see where ideas came from | [docs/reflow-v3-nuggets.md](docs/reflow-v3-nuggets.md), [docs/chain-reflow-nuggets.md](docs/chain-reflow-nuggets.md) |
 
 ## Rules for changing this project
