@@ -66,6 +66,12 @@ schema:
       properties:
         dependency_type: { type: enum, values: [function_call, data_flow, control_flow, error_flow, physical] }
         optional: { type: bool, default: false }
+        # Coupling-weight facet (graph-analysis.md). weight is a STRENGTH
+        # (higher = tighter); invert to a cost for shortest-path/closeness.
+        weight: { type: float, range: [0.0, 1.0], description: "Coupling strength (higher = tighter)." }
+        frequency: { type: float, description: "Interactions per unit time, if known (raw signal behind weight)." }
+        data_volume: { type: float, description: "Bytes/records per interaction, if known (raw signal behind weight)." }
+        weight_basis: { type: enum, values: [estimated, evidence, measured], default: estimated, description: "How the weight was set: an LLM estimate, grounded in evidence, or measured from telemetry." }
 
     PART_OF_FLOW:
       from: Capability
@@ -73,6 +79,10 @@ schema:
       extraction_hint: A Capability participates in a Flow.
       properties:
         step_order: { type: int, description: "Position of this capability within the flow." }
+        weight: { type: float, range: [0.0, 1.0], description: "Coupling strength (higher = tighter)." }
+        frequency: { type: float, description: "Interactions per unit time, if known." }
+        data_volume: { type: float, description: "Bytes/records per interaction, if known." }
+        weight_basis: { type: enum, values: [estimated, evidence, measured], default: estimated, description: "How the weight was set." }
 
     INTERACTS_WITH:
       from: Actor

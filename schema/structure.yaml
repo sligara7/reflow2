@@ -74,16 +74,31 @@ schema:
       extraction_hint: A Capability is assigned to the Component that will provide it. The WHAT→WHERE binding.
       properties:
         note: { type: string }
+        # Coupling-weight facet (graph-analysis.md) — see functional.yaml DEPENDS_ON.
+        weight: { type: float, range: [0.0, 1.0], description: "Coupling strength (higher = tighter)." }
+        frequency: { type: float, description: "Interactions per unit time, if known." }
+        data_volume: { type: float, description: "Bytes/records per interaction, if known." }
+        weight_basis: { type: enum, values: [estimated, evidence, measured], default: estimated, description: "How the weight was set." }
 
     PROVIDES:
       from: Component
       to: Interface
       extraction_hint: A Component exposes/provides an Interface.
+      properties:
+        weight: { type: float, range: [0.0, 1.0], description: "Coupling strength (higher = tighter)." }
+        frequency: { type: float, description: "Interactions per unit time, if known." }
+        data_volume: { type: float, description: "Bytes/records per interaction, if known." }
+        weight_basis: { type: enum, values: [estimated, evidence, measured], default: estimated, description: "How the weight was set." }
 
     CONSUMES:
       from: "*"
       to: Interface
       extraction_hint: A Component or Actor depends on/consumes an Interface.
+      properties:
+        weight: { type: float, range: [0.0, 1.0], description: "Coupling strength (higher = tighter)." }
+        frequency: { type: float, description: "Interactions per unit time, if known." }
+        data_volume: { type: float, description: "Bytes/records per interaction, if known." }
+        weight_basis: { type: enum, values: [estimated, evidence, measured], default: estimated, description: "How the weight was set." }
 
     GOVERNED_BY:
       from: "*"

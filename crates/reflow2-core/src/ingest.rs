@@ -180,6 +180,24 @@ struct SatisfiesEdge {
     requirement_id: String,
 }
 
+#[derive(Debug, Default, Deserialize)]
+struct DependenciesOut {
+    #[serde(default)]
+    dependencies: Vec<ExtractedDependency>,
+}
+
+#[derive(Debug, Deserialize)]
+struct ExtractedDependency {
+    from_capability_id: String,
+    to_capability_id: String,
+    #[serde(default)]
+    dependency_type: Option<String>,
+    /// Coupling strength 0..1 (the graph-analysis weight facet). Extraction
+    /// estimates it; integration stamps `weight_basis: estimated`.
+    #[serde(default)]
+    weight: Option<f64>,
+}
+
 // ---- Report shapes ---------------------------------------------------------
 
 /// A pass that failed to produce usable output (enveloped, not fatal).
@@ -445,6 +463,23 @@ impl DesignGraph {
         } else {
             Vec::new()
         };
+        // dependencies: the functional coupling graph, carrying weights — the
+        // signal the graph-analysis allocation work (graph-analysis.md) needs.
+        let dependencies = if !capabilities.is_empty() {
+            run_pass::<DependenciesOut>(
+                backend,
+                "dependencies",
+                pass_prompt(
+                    input,
+                    r#"[pass:dependencies] Which capabilities depend on which? Return JSON {"dependencies":[{"from_capability_id":"cap:...","to_capability_id":"cap:...","dependency_type":"function_call|data_flow|control_flow|error_flow|physical","weight":0.7}]} using only known ids. `weight` is coupling strength 0..1 (higher = tighter). Keep the dependency graph acyclic."#,
+                    Some(&cap_roster),
+                ),
+                &mut errors,
+            )
+            .dependencies
+        } else {
+            Vec::new()
+        };
 
         // ---- INTEGRATE (resolve → typed, provenance-stamped, time-aware) ----
         let effective_epoch = options
@@ -534,6 +569,7 @@ impl DesignGraph {
                     cap_id,
                     node::COMPONENT,
                     &c.id,
+                    Props::new(),
                 );
             }
         }
@@ -545,6 +581,29 @@ impl DesignGraph {
                 &s.capability_id,
                 node::REQUIREMENT,
                 &s.requirement_id,
+                Props::new(),
+            );
+        }
+        for d in &dependencies {
+            let mut props = Props::new().set("weight_basis", "estimated");
+            if let Some(w) = d.weight
+                && (0.0..=1.0).contains(&w)
+            {
+                props = props.set("weight", w);
+            }
+            if let Some(dt) = d.dependency_type.as_deref()
+                && DEPENDENCY_TYPE_VALUES.contains(&dt)
+            {
+                props = props.set("dependency_type", dt);
+            }
+            self.integrate_edge(
+                &mut st,
+                edge::DEPENDS_ON,
+                node::CAPABILITY,
+                &d.from_capability_id,
+                node::CAPABILITY,
+                &d.to_capability_id,
+                props,
             );
         }
 
@@ -769,6 +828,7 @@ impl DesignGraph {
 
     /// Create one edge, but only between endpoints resolved this run — a
     /// reference to an unknown id is dropped with a reason, never a phantom edge.
+    #[allow(clippy::too_many_arguments)]
     fn integrate_edge(
         &mut self,
         st: &mut Integration,
@@ -777,6 +837,7 @@ impl DesignGraph {
         from_id: &str,
         to_type: &'static str,
         to_id: &str,
+        props: Props,
     ) {
         // Redirect endpoints through any fuzzy-merge aliases, so an edge that
         // referenced a merged-away id lands on the canonical node.
@@ -807,7 +868,7 @@ impl DesignGraph {
             drop(format!("target '{to}' not a resolved {to_type}"));
             return;
         }
-        match self.create_edge(edge_type, from_type, &from, to_type, &to, Props::new()) {
+        match self.create_edge(edge_type, from_type, &from, to_type, &to, props) {
             Ok(_) => st.edges_created += 1,
             Err(e) => drop(format!("schema rejected: {e}")),
         }
@@ -879,6 +940,13 @@ const PROVENANCE_VALUES: &[&str] = &[
     "imported",
 ];
 const PRIORITY_VALUES: &[&str] = &["low", "medium", "high", "critical"];
+const DEPENDENCY_TYPE_VALUES: &[&str] = &[
+    "function_call",
+    "data_flow",
+    "control_flow",
+    "error_flow",
+    "physical",
+];
 const CONSTRAINT_CATEGORIES: &[&str] = &[
     "technical",
     "business",

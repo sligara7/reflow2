@@ -41,6 +41,7 @@ fn full_mock() -> MockLlmBackend {
             "[pass:satisfies]",
             r#"{"satisfies":[{"capability_id":"cap:cache","requirement_id":"req:lat"}]}"#,
         )
+        .on_contains("[pass:dependencies]", r#"{"dependencies":[]}"#)
 }
 
 #[test]
@@ -86,6 +87,46 @@ fn full_ingest_builds_a_golden_thread_from_text() {
 }
 
 #[test]
+fn dependencies_pass_captures_weighted_coupling_edges() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    // Two capabilities with a weighted dependency between them.
+    let mock = MockLlmBackend::new()
+        .on_contains("[pass:project_intent]", r#"{"project":{"id":"proj:w","name":"W"}}"#)
+        .on_contains("[pass:requirements]", r#"{"requirements":[]}"#)
+        .on_contains("[pass:constraints]", r#"{"constraints":[]}"#)
+        .on_contains(
+            "[pass:capabilities]",
+            r#"{"capabilities":[{"id":"cap:a","name":"A","description":"da"},{"id":"cap:b","name":"B","description":"db"}]}"#,
+        )
+        .on_contains(
+            "[pass:discovery]",
+            r#"{"components":false,"interfaces":false,"actors":false,"decisions":false,"artifacts":false,"verifications":false,"flows":false,"resources":false}"#,
+        )
+        .on_contains("[pass:satisfies]", r#"{"satisfies":[]}"#)
+        .on_contains(
+            "[pass:dependencies]",
+            r#"{"dependencies":[{"from_capability_id":"cap:a","to_capability_id":"cap:b","dependency_type":"data_flow","weight":0.8}]}"#,
+        );
+
+    let report = g.ingest(BRIEF, &IngestOptions::default(), &mock).unwrap();
+    assert_eq!(report.status, IngestStatus::Ok, "clean run: {report:?}");
+
+    let deps = g.outgoing("cap:a", Some(edge::DEPENDS_ON)).unwrap();
+    assert_eq!(deps.len(), 1);
+    assert_eq!(deps[0].to_id, "cap:b");
+    // The weight facet the graph-analysis work needs is captured on the edge.
+    assert_eq!(deps[0].properties["weight"].as_f64(), Some(0.8));
+    assert_eq!(
+        deps[0].properties["weight_basis"].as_str(),
+        Some("estimated")
+    );
+    assert_eq!(
+        deps[0].properties["dependency_type"].as_str(),
+        Some("data_flow")
+    );
+}
+
+#[test]
 fn discovery_gate_suppresses_phase_two_when_absent() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     // Components declared absent: the components pass must not run even though a
@@ -100,6 +141,7 @@ fn discovery_gate_suppresses_phase_two_when_absent() {
         .on_contains("[pass:constraints]", r#"{"constraints":[]}"#)
         .on_contains("[pass:capabilities]", r#"{"capabilities":[{"id":"cap:a","name":"C","description":"d"}]}"#)
         .on_contains("[pass:satisfies]", r#"{"satisfies":[]}"#)
+        .on_contains("[pass:dependencies]", r#"{"dependencies":[]}"#)
         .on_contains("[pass:components]", r#"{"components":[{"id":"cmp:x","name":"X","purpose":"p"}]}"#);
 
     let report = g.ingest(BRIEF, &IngestOptions::default(), &mock).unwrap();
@@ -200,6 +242,7 @@ fn mock_v(req_statement: &str) -> MockLlmBackend {
             r#"{"components":false,"interfaces":false,"actors":false,"decisions":false,"artifacts":false,"verifications":false,"flows":false,"resources":false}"#,
         )
         .on_contains("[pass:satisfies]", r#"{"satisfies":[]}"#)
+        .on_contains("[pass:dependencies]", r#"{"dependencies":[]}"#)
 }
 
 #[test]
@@ -284,6 +327,7 @@ fn mock_cap(cap_id: &str, cap_name: &str, satisfy: bool) -> MockLlmBackend {
             r#"{"components":false,"interfaces":false,"actors":false,"decisions":false,"artifacts":false,"verifications":false,"flows":false,"resources":false}"#,
         )
         .on_contains("[pass:satisfies]", sat)
+        .on_contains("[pass:dependencies]", r#"{"dependencies":[]}"#)
 }
 
 #[test]

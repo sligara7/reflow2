@@ -137,7 +137,7 @@ so none is a silent stub.
 | EX-2 | Discovery gate (orthogonal booleans, anchor-required) | 🟡 | `Discovery` classifier gates phase-2; only `components` gate consumed — the rest parsed but their passes deferred (`#[allow(dead_code)]` marks it) |
 | EX-P1 | Phase-1 passes: project_intent, requirements, constraints, capabilities | ✅ | `ingest` · `full_ingest_builds_a_golden_thread_from_text` |
 | EX-P2 | Phase-2 passes: components (+ALLOCATED_TO) | 🟡 | components ✅; **flows, interfaces, actors, decisions, artifacts, resources deferred** |
-| EX-P3 | Phase-3 passes: satisfies (+SATISFIES) | 🟡 | satisfies ✅; **dependencies, verifications, inference, dimensions, changes deferred** |
+| EX-P3 | Phase-3 passes: satisfies (+SATISFIES), dependencies (+weighted DEPENDS_ON) | 🟡 | satisfies ✅; **dependencies ✅** (emits weighted DEPENDS_ON — `dependencies_pass_captures_weighted_coupling_edges`); **verifications, inference, dimensions, changes deferred** |
 | EX-SME | SME augmentation post-pass | ⬜ | LLM; see sme-augmentation.md |
 | EX-D1 | One shared LLM-call helper | ✅ | `run_pass` |
 | EX-D2 | Never-raises + error envelopes; siblings survive | ✅ | `PassError` · `a_failed_pass_is_enveloped_and_siblings_survive` |

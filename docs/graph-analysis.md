@@ -205,8 +205,10 @@ speculative — demand-pull it):
 
 ## Build order (increments, smallest-signal first)
 
-1. **Weights facet** — schema property + INGEST `dependencies` pass emits `weight` +
-   `weight_basis`. Capture the signal; no analysis. (Prerequisite for everything else.)
+1. **Weights facet** ✅ **done** — the `weight`/`frequency`/`data_volume`/`weight_basis`
+   facet is on the interaction edges (`functional.yaml` DEPENDS_ON/PART_OF_FLOW,
+   `structure.yaml` ALLOCATED_TO/PROVIDES/CONSUMES), and INGEST's `dependencies` pass emits
+   weighted `DEPENDS_ON` (`weight_basis: estimated`). Signal captured; no analysis yet.
 2. **Allocation evaluator** — a deterministic `analysis`/`allocate` module: score the current
    `ALLOCATED_TO` allocation (coupling cut, cohesion, god-nodes via `cut_structure` +
    `betweenness`), surface as DETECT-style findings. Proves the idea with no proposer risk.
