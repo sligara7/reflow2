@@ -106,6 +106,16 @@ map:
 | Keep the dependency DAG acyclic | `topological_sort` / `find_cycle` | `DEPENDS_ON` between capabilities must stay acyclic |
 | Suggest missing links | `link_prediction_all` / `link_prediction_from` | Propose edges the topology implies but the graph lacks — feeds HEAL's `missing_link` / creative linking |
 
+> **Leiden > Louvain (planned foundation work).** `dynograph-graph` currently ships
+> **`louvain`**; **Leiden** (Traag et al. 2019) is the better choice for the allocation
+> *proposer* — it fixes Louvain's known flaw of returning **badly-connected or internally
+> disconnected communities** (a "service" whose functions don't even connect), gives higher-
+> quality partitions, and is what GraphRAG/graspologic use. Adding Leiden to
+> `dynograph-graph` is a **separate dynograph-foundation effort** (that repo, not here). Until
+> it lands, the interim guard is cheap and already available: run `connected_components` on
+> each Louvain community and split any that come back disconnected — never emit a disconnected
+> community as a candidate Component.
+
 ### `dynograph-vector` — the numeric toolbox (weights, depth, resolution)
 
 More than embeddings — the math behind several reflow2 features, embeddings-optional:
@@ -202,8 +212,10 @@ speculative — demand-pull it):
    `betweenness`), surface as DETECT-style findings. Proves the idea with no proposer risk.
 3. **Centrality-weighted PROPAGATE (IP-9)** — a small, high-value reuse: rank blast radius by
    node centrality. Independently useful.
-4. **Allocation proposer** — `louvain` (and/or `max_flow_min_cut`) → candidate allocations,
-   scored + explained, emitted as proposals; LLM names the clusters.
+4. **Allocation proposer** — community detection (`louvain` now, **Leiden** once the
+   foundation ships it; guard Louvain with a `connected_components` split) and/or
+   `max_flow_min_cut` → candidate allocations, scored + explained, emitted as proposals; LLM
+   names the clusters.
 5. **Depth/drift analytics** — `dynograph-vector` stats over per-epoch `DimensionObservation`s
    (`linear_regression_slope` drift, `centroid` rollup).
 6. **DBSCAN / game-theory** — demand-pulled when a concrete need appears (feature-space

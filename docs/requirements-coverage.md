@@ -163,8 +163,9 @@ so none is a silent stub.
 
 Deliberately kept **optional**. The core needs no embeddings today:
 
-- **Topology / clustering** is pure graph theory — `dynograph-graph` ships Leiden-style
-  `louvain` community detection and the components/cuts already used by HEAL. No vectors.
+- **Topology / clustering** is pure graph theory — `dynograph-graph` ships `louvain`
+  community detection (Leiden, its better-connected successor, is a planned
+  dynograph-foundation effort) plus the components/cuts already used by HEAL. No vectors.
 - **Time-aware resolution** (matched-evolved) is id-based (above). No vectors.
 - **Near-identical cross-id dedup** can use `dynograph-resolution`'s fuzzy string matching
   (`token_sort_ratio`/`jaro_winkler`) — still no network.
