@@ -56,6 +56,9 @@ the loop like this:
 - [gap-surfacing.md](gap-surfacing.md) — DIAGNOSE → PROMPT: turn weaknesses into constructive questions.
 - [heal-process.md](heal-process.md) — HEAL: propose and apply structural repairs.
 
+### 3½ · Status — *are we meeting the docs?*
+- [requirements-coverage.md](requirements-coverage.md) — traceability matrix: every doc requirement → the module + test that meets it, with an honest Met/Partial/Deferred status. A living document.
+
 ### 4 · Heritage — *where the ideas came from*
 - [reflow-v3-nuggets.md](reflow-v3-nuggets.md) — ideas carried over from the original Reflow.
 - [chain-reflow-nuggets.md](chain-reflow-nuggets.md) — ideas from Chain Reflow (matryoshka, causality, linking).
