@@ -190,7 +190,7 @@ impl DesignGraph {
     /// Assumes node ids are unique across types within a graph (reflow2's typed-
     /// prefix id convention, e.g. `req:`, `cap:`); on a collision the first
     /// type scanned wins.
-    fn node_type_index(&self) -> Result<HashMap<String, String>, DynoError> {
+    pub(crate) fn node_type_index(&self) -> Result<HashMap<String, String>, DynoError> {
         let mut index = HashMap::new();
         let types: Vec<String> = self.schema().node_types.keys().cloned().collect();
         for node_type in types {

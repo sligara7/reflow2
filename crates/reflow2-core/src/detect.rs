@@ -119,7 +119,7 @@ pub struct GapCandidate {
 /// FNV-1a 64-bit — a small, stable, dependency-free hash so gap ids are
 /// reproducible across runs and platforms (`std`'s `DefaultHasher` is not
 /// guaranteed stable). Discipline 6.
-fn fnv1a(input: &str) -> u64 {
+pub(crate) fn fnv1a(input: &str) -> u64 {
     let mut hash: u64 = 0xcbf2_9ce4_8422_2325;
     for byte in input.bytes() {
         hash ^= byte as u64;

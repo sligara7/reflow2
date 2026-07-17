@@ -69,6 +69,14 @@ pub mod edge {
     pub const VALID_FROM: &str = "VALID_FROM";
     /// `TemporalFact → DesignEpoch` — the fact stops being true at this epoch.
     pub const VALID_TO: &str = "VALID_TO";
+
+    // Inference "why" edges (inference.yaml) referenced by HEAL/PROPAGATE.
+    /// `* → *` — two nodes are contradictory (a tension to resolve).
+    pub const CONTRADICTS: &str = "CONTRADICTS";
+    /// `* → *` — two nodes cover the same ground (candidates to merge).
+    pub const DUPLICATES: &str = "DUPLICATES";
+    /// `* → *` — a planned/anticipated need (may lack follow-through).
+    pub const ANTICIPATES: &str = "ANTICIPATES";
 }
 
 use std::collections::HashMap;

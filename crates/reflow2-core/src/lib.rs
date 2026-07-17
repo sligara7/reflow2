@@ -28,6 +28,7 @@
 
 pub mod detect;
 pub mod graph;
+pub mod heal;
 pub mod nodes;
 pub mod propagate;
 pub mod schema;
@@ -35,6 +36,10 @@ pub mod temporal;
 
 pub use detect::{GapCandidate, GapScope, GapSource};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
+pub use heal::{
+    GeneratedContentStub, HealCategory, HealIssue, HealOp, HealOperation, HealOptions,
+    HealProposal, HealReport, HealSeverity, HealStrategy, SkippedOperation,
+};
 pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOptions};
 pub use schema::load_schema;
 pub use temporal::{ChangeAction, ChangeRecord, ChangeType, EpochType, parse_snapshot_state};

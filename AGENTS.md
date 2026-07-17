@@ -51,11 +51,16 @@ service, or LLM wiring exists yet — none does.
   never overwrite), `propagate` (**PROPAGATE** — direction-classified bounded BFS over the
   golden thread → an explained `BlastRadius`; reactive from a `ChangeEvent` or speculative
   from seeds), `detect` (**DETECT** — deterministic gap detectors → ranked `GapCandidate`s;
-  traceability + phase-coverage groups, gated on type-population counts). Consumes
-  `dynograph-foundation` by git tag (`v0.9.4`), `dynograph-storage` with
+  traceability + phase-coverage groups, gated on type-population counts), `heal` (**HEAL** —
+  detect structural defects → a `HealProposal` (propose, never mutate) → atomic `apply_heal`
+  with post-repair verification; mode-aware (rigid = propose-only), strategy-filtered,
+  human-review-gated for generative fixes; content-free duplicate-merge is the applied
+  repair). Consumes `dynograph-foundation` by git tag (`v0.9.4`), `dynograph-storage` with
   `default-features = false` so the RocksDB C++ build stays opt-in — mirrors the predecessor
   `ir2`. Fast dev/test build: `cargo test --no-default-features`. Keep it green, clippy-clean,
-  and `cargo fmt`-ed. Not yet built: the LLM PROMPT/rephrase half of SURFACE, and HEAL.
+  and `cargo fmt`-ed. Not yet built (LLM/interaction-surface-gated or need `dynograph-graph`):
+  the PROMPT/rephrase half of SURFACE, HEAL's generative healers + graph-algorithm defects,
+  INGEST, SME, GENESIS.
 
 **Open decision (deliberately deferred):** the *interaction surface* — MCP/skills for a
 coding agent, a hosted web app, a CLI, or a library — is not yet chosen. It plugs in last

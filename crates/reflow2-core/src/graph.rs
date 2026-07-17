@@ -135,6 +135,41 @@ impl DesignGraph {
         self.engine.scan_nodes(&self.graph_id, node_type)
     }
 
+    /// Delete a node and every edge attached to it. Returns whether it existed.
+    pub fn delete_node(&mut self, node_type: &str, id: &str) -> Result<bool, DynoError> {
+        self.engine.delete_node(&self.graph_id, node_type, id)
+    }
+
+    /// Delete a single edge. Returns whether it existed.
+    pub fn delete_edge(
+        &mut self,
+        edge_type: &str,
+        from_id: &str,
+        to_id: &str,
+    ) -> Result<bool, DynoError> {
+        self.engine
+            .delete_edge(&self.graph_id, edge_type, from_id, to_id)
+    }
+
+    // ---- Atomic batches (used by HEAL's apply step) -----------------------
+
+    /// Begin buffering writes; nothing hits the store until [`commit_batch`].
+    ///
+    /// [`commit_batch`]: Self::commit_batch
+    pub(crate) fn begin_batch(&mut self) {
+        self.engine.begin_batch();
+    }
+
+    /// Flush all buffered writes atomically.
+    pub(crate) fn commit_batch(&mut self) -> Result<usize, DynoError> {
+        self.engine.commit_batch()
+    }
+
+    /// Drop all buffered writes without applying them.
+    pub(crate) fn discard_batch(&mut self) {
+        self.engine.discard_batch();
+    }
+
     // ---- Typed golden-thread constructors ---------------------------------
     //
     // Convenience over `create_node` for the four spine node types, supplying
