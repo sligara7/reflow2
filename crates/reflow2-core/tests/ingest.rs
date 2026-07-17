@@ -263,6 +263,108 @@ fn reingest_with_changed_content_evolves_and_snapshots() {
     assert_eq!(changed[0].to_id, "req:lat");
 }
 
+/// A phase-1 mock emitting one capability (given id + name) and, optionally, a
+/// SATISFIES edge from that capability id to `req:lat`.
+fn mock_cap(cap_id: &str, cap_name: &str, satisfy: bool) -> MockLlmBackend {
+    let sat = if satisfy {
+        format!(r#"{{"satisfies":[{{"capability_id":"{cap_id}","requirement_id":"req:lat"}}]}}"#)
+    } else {
+        r#"{"satisfies":[]}"#.to_string()
+    };
+    MockLlmBackend::new()
+        .on_contains("[pass:project_intent]", r#"{"project":{"id":"proj:w","name":"Widget","mode":"flexible"}}"#)
+        .on_contains("[pass:requirements]", r#"{"requirements":[{"id":"req:lat","name":"Latency","statement":"under 200ms"}]}"#)
+        .on_contains("[pass:constraints]", r#"{"constraints":[]}"#)
+        .on_contains(
+            "[pass:capabilities]",
+            format!(r#"{{"capabilities":[{{"id":"{cap_id}","name":"{cap_name}","description":"serve reads"}}]}}"#),
+        )
+        .on_contains(
+            "[pass:discovery]",
+            r#"{"components":false,"interfaces":false,"actors":false,"decisions":false,"artifacts":false,"verifications":false,"flows":false,"resources":false}"#,
+        )
+        .on_contains("[pass:satisfies]", sat)
+}
+
+#[test]
+fn a_new_id_with_a_matching_name_is_fuzzy_merged_and_edges_redirect() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    // v1: capability cap:cache "Caching".
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:v1".into(),
+            ..Default::default()
+        },
+        &mock_cap("cap:cache", "Caching", false),
+    )
+    .unwrap();
+
+    // v2: a *different* id but the same name → resolves to the existing node
+    // instead of duplicating; a SATISFIES edge on the new id redirects.
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:v2".into(),
+                ..Default::default()
+            },
+            &mock_cap("cap:cache-2", "Caching", true),
+        )
+        .unwrap();
+
+    // The merge happened and is recorded (never silent).
+    assert_eq!(report.fuzzy_merges.len(), 1);
+    assert_eq!(report.fuzzy_merges[0].extracted_id, "cap:cache-2");
+    assert_eq!(report.fuzzy_merges[0].canonical_id, "cap:cache");
+
+    // No duplicate: still one capability, and the new id is not a node.
+    assert_eq!(g.count_nodes(node::CAPABILITY).unwrap(), 1);
+    assert!(
+        g.get_node(node::CAPABILITY, "cap:cache-2")
+            .unwrap()
+            .is_none()
+    );
+
+    // The edge that named cap:cache-2 landed on the canonical cap:cache.
+    let sat = g.outgoing("cap:cache", Some(edge::SATISFIES)).unwrap();
+    assert_eq!(sat.len(), 1);
+    assert_eq!(sat[0].to_id, "req:lat");
+    assert!(
+        report.dropped_edges.is_empty(),
+        "the aliased edge must not be dropped"
+    );
+}
+
+#[test]
+fn a_new_id_with_a_dissimilar_name_is_not_merged() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:v1".into(),
+            ..Default::default()
+        },
+        &mock_cap("cap:cache", "Caching", false),
+    )
+    .unwrap();
+
+    // A genuinely different capability → new node, no merge (conservative).
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:v2".into(),
+                ..Default::default()
+            },
+            &mock_cap("cap:telemetry", "Telemetry", false),
+        )
+        .unwrap();
+
+    assert!(report.fuzzy_merges.is_empty());
+    assert_eq!(g.count_nodes(node::CAPABILITY).unwrap(), 2);
+}
+
 #[test]
 fn reingest_identical_content_is_a_noop_no_snapshot() {
     let mut g = DesignGraph::open_in_memory().unwrap();

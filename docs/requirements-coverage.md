@@ -151,7 +151,7 @@ so none is a silent stub.
 | EX-D10 | Per-fragment metrics | ⬜ | deferred |
 | EX-D11 | Selective context threading | 🟡 | rosters threaded only into edge passes ✅; epoch threading partial |
 | EX-R1 | Resolution: matched-unchanged / matched-evolved / genuinely-new | ✅ | id-based resolution in `integrate_node` · `reingest_with_changed_content_evolves_and_snapshots`, `reingest_identical_content_is_a_noop_no_snapshot` |
-| EX-R2 | `fuzzy_then_vector` cross-id dedup + embedding generation | ⬜ | **deferred** — resolution matches by id; matching differently-worded ids needs fuzzy (`token_sort_ratio`, no network) + a vector tiebreaker (needs an embedding generator). Optional/pluggable — see the embeddings note below |
+| EX-R2 | `fuzzy_then_vector` cross-id dedup + embedding generation | 🟡 | **fuzzy leg done** — `fuzzy_match` uses `token_sort_ratio` (no network) to merge a new id onto an existing same-type node by name at ≥90; merges are recorded in `IngestReport.fuzzy_merges` and edges redirect via aliases · `a_new_id_with_a_matching_name_is_fuzzy_merged_and_edges_redirect`, `a_new_id_with_a_dissimilar_name_is_not_merged`. **Vector tiebreaker for the ambiguous band still deferred** (optional embedding seam — see note below) |
 | EX-I1 | One typed integration payload | ✅ | single `ingest` path |
 | EX-I2 | MERGE + provenance on a Fragment | ✅ | Fragment + `YIELDED` + provenance stamp · `full_ingest_...` |
 | EX-I3 | Unknown/phantom edges dropped + surfaced | ✅ | `dropped_edges` · `phantom_edge_is_dropped_not_written` |

@@ -32,12 +32,16 @@
 //!   *matched-unchanged* (no-op), *matched-evolved* (snapshot the prior state +
 //!   record a `ChangeEvent`, THEN apply — never a silent overwrite), or
 //!   *genuinely-new*. Re-ingesting an updated brief records the change.
+//! - **Cross-id fuzzy dedup** — a new id whose name closely matches an existing
+//!   same-type node (`token_sort_ratio` ≥ [`FUZZY_MATCH_THRESHOLD`], no
+//!   embeddings) resolves to that node instead of duplicating; the merge is
+//!   recorded in `fuzzy_merges` and edges redirect through an alias map.
 //!
-//! Deferred (noted so they're not mistaken for done): **cross-id dedup** —
-//! resolution matches by id today; matching two differently-worded ids as the
-//! same entity needs fuzzy/vector similarity (`fuzzy_then_vector`), whose vector
-//! leg needs an embedding generator (see the optional embedding seam / the
-//! interaction-surface decision). Also deferred: the **SME** augmentation pass,
+//! Deferred (noted so they're not mistaken for done): the **vector tiebreaker**
+//! for the ambiguous middle band of `fuzzy_then_vector` — matching entities that
+//! mean the same but read differently needs embeddings, kept behind an optional
+//! pluggable seam (see the interaction-surface decision). Also deferred: the
+//! **SME** augmentation pass,
 //! real parallelism (passes run sequentially here), per-pass timeout/retry,
 //! metrics, and the remaining passes (flows, actors, interfaces, decisions,
 //! artifacts, resources, dependencies, inference, dimensions, changes). This
@@ -47,6 +51,7 @@
 use std::collections::HashMap;
 
 use dynograph_core::{DynoError, Value};
+use dynograph_resolution::token_sort_ratio;
 use dynograph_storage::StoredNode;
 use serde::Deserialize;
 
@@ -199,6 +204,21 @@ pub struct DroppedEdge {
     pub reason: String,
 }
 
+/// A cross-id fuzzy dedup: an extracted node whose id was new but whose name
+/// matched an existing same-type node closely enough to be treated as the same
+/// entity. Surfaced (never silent) so a wrong merge is auditable.
+#[derive(Debug, Clone)]
+pub struct FuzzyMerge {
+    /// The id the extraction produced.
+    pub extracted_id: String,
+    /// The existing canonical node it resolved to.
+    pub canonical_id: String,
+    /// The node type.
+    pub node_type: &'static str,
+    /// The fuzzy score (0–100) that cleared the threshold.
+    pub score: u32,
+}
+
 /// Whether the ingest ran fully clean or degraded.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum IngestStatus {
@@ -220,6 +240,9 @@ pub struct IngestReport {
     pub nodes_evolved: usize,
     /// Matched-unchanged nodes: already present, identical content → left as-is.
     pub nodes_unchanged: usize,
+    /// Cross-id fuzzy dedups: a new id resolved to an existing node by name
+    /// similarity instead of creating a duplicate. Auditable, never silent.
+    pub fuzzy_merges: Vec<FuzzyMerge>,
     /// Edges created this run.
     pub edges_created: usize,
     /// The `DesignEpoch` matched-evolved snapshots were pinned to (`Some` only
@@ -544,6 +567,7 @@ impl DesignGraph {
             nodes_created: st.nodes_created,
             nodes_evolved: st.nodes_evolved,
             nodes_unchanged: st.nodes_unchanged,
+            fuzzy_merges: st.fuzzy_merges,
             edges_created: st.edges_created,
             epoch_used,
             pass_errors: errors,
@@ -603,49 +627,127 @@ impl DesignGraph {
         let new_map = props.build();
         match self.get_node(node_type, id) {
             Err(e) => st.warnings.push(format!("resolve {node_type} '{id}': {e}")),
-            Ok(None) => match self.create_node(node_type, id, new_map) {
-                Ok(_) => {
-                    st.created_ids.insert(id.to_string(), node_type);
-                    st.nodes_created += 1;
-                    self.yield_edge(st, node_type, id, "created");
+            // Direct id hit → resolve against that node.
+            Ok(Some(_)) => self.integrate_existing(st, node_type, id, new_map),
+            // Id miss → try cross-id fuzzy dedup before creating a duplicate.
+            Ok(None) => match self.fuzzy_match(node_type, &new_map, id) {
+                Err(e) => {
+                    st.warnings
+                        .push(format!("fuzzy-match {node_type} '{id}': {e}"));
+                    self.integrate_new(st, node_type, id, new_map);
                 }
-                Err(e) => st.warnings.push(format!("skipped {node_type} '{id}': {e}")),
+                Ok(Some((canonical, score))) => {
+                    st.aliases.insert(id.to_string(), canonical.clone());
+                    st.fuzzy_merges.push(FuzzyMerge {
+                        extracted_id: id.to_string(),
+                        canonical_id: canonical.clone(),
+                        node_type,
+                        score,
+                    });
+                    self.integrate_existing(st, node_type, &canonical, new_map);
+                }
+                Ok(None) => self.integrate_new(st, node_type, id, new_map),
             },
-            Ok(Some(existing)) => {
-                if node_unchanged(&existing, &new_map) {
-                    st.created_ids.insert(id.to_string(), node_type);
-                    st.nodes_unchanged += 1;
-                    return;
+        }
+    }
+
+    /// Create a genuinely-new node + its provenance link.
+    fn integrate_new(
+        &mut self,
+        st: &mut Integration,
+        node_type: &'static str,
+        id: &str,
+        new_map: HashMap<String, Value>,
+    ) {
+        match self.create_node(node_type, id, new_map) {
+            Ok(_) => {
+                st.created_ids.insert(id.to_string(), node_type);
+                st.nodes_created += 1;
+                self.yield_edge(st, node_type, id, "created");
+            }
+            Err(e) => st.warnings.push(format!("skipped {node_type} '{id}': {e}")),
+        }
+    }
+
+    /// Resolve an extracted node against an existing one (`id` is a real node —
+    /// a direct id hit or a fuzzy-matched canonical): matched-unchanged →
+    /// no-op; matched-evolved → snapshot + `ChangeEvent` THEN apply.
+    fn integrate_existing(
+        &mut self,
+        st: &mut Integration,
+        node_type: &'static str,
+        id: &str,
+        new_map: HashMap<String, Value>,
+    ) {
+        let existing = match self.get_node(node_type, id) {
+            Ok(Some(n)) => n,
+            Ok(None) => return, // vanished between resolve and integrate — nothing to do
+            Err(e) => {
+                st.warnings.push(format!("resolve {node_type} '{id}': {e}"));
+                return;
+            }
+        };
+        if node_unchanged(&existing, &new_map) {
+            st.created_ids.insert(id.to_string(), node_type);
+            st.nodes_unchanged += 1;
+            return;
+        }
+        // matched-evolved: remember the past, then apply the edit.
+        self.ensure_epoch(st);
+        let ce_id = format!("chg:{}:{id}", st.fragment_id);
+        let name = format!("Re-ingest updated {node_type} {id}");
+        let rec = ChangeRecord {
+            epoch_id: &st.epoch_id,
+            change_event_id: &ce_id,
+            name: &name,
+            change_type: st.change_type,
+            target_type: node_type,
+            target_id: id,
+            action: ChangeAction::Modified,
+        };
+        match self.record_change(rec) {
+            Ok(_) => {
+                if let Err(e) = self.create_node(node_type, id, new_map) {
+                    st.warnings
+                        .push(format!("apply evolved {node_type} '{id}': {e}"));
                 }
-                // matched-evolved: remember the past, then apply the edit.
-                self.ensure_epoch(st);
-                let ce_id = format!("chg:{}:{id}", st.fragment_id);
-                let name = format!("Re-ingest updated {node_type} {id}");
-                let rec = ChangeRecord {
-                    epoch_id: &st.epoch_id,
-                    change_event_id: &ce_id,
-                    name: &name,
-                    change_type: st.change_type,
-                    target_type: node_type,
-                    target_id: id,
-                    action: ChangeAction::Modified,
-                };
-                match self.record_change(rec) {
-                    Ok(_) => {
-                        if let Err(e) = self.create_node(node_type, id, new_map) {
-                            st.warnings
-                                .push(format!("apply evolved {node_type} '{id}': {e}"));
-                        }
-                        st.created_ids.insert(id.to_string(), node_type);
-                        st.nodes_evolved += 1;
-                        self.yield_edge(st, node_type, id, "updated");
-                    }
-                    Err(e) => st
-                        .warnings
-                        .push(format!("snapshot evolved {node_type} '{id}': {e}")),
+                st.created_ids.insert(id.to_string(), node_type);
+                st.nodes_evolved += 1;
+                self.yield_edge(st, node_type, id, "updated");
+            }
+            Err(e) => st
+                .warnings
+                .push(format!("snapshot evolved {node_type} '{id}': {e}")),
+        }
+    }
+
+    /// Cross-id dedup: find an existing same-type node whose `name` matches the
+    /// extracted node's name at/above [`FUZZY_MATCH_THRESHOLD`] (token-order- and
+    /// case-insensitive, no embeddings). Returns the best canonical id + score.
+    /// Conservative on purpose — the ambiguous middle band is where the deferred
+    /// LLM adjudication / vector tiebreaker (EX-R2) belongs.
+    fn fuzzy_match(
+        &self,
+        node_type: &'static str,
+        new_map: &HashMap<String, Value>,
+        extracted_id: &str,
+    ) -> Result<Option<(String, u32)>, DynoError> {
+        let Some(new_name) = new_map.get("name").and_then(Value::as_str) else {
+            return Ok(None);
+        };
+        let mut best: Option<(String, u32)> = None;
+        for n in self.scan_nodes(node_type)? {
+            if n.node_id == extracted_id {
+                continue;
+            }
+            if let Some(existing_name) = n.properties.get("name").and_then(Value::as_str) {
+                let score = token_sort_ratio(new_name, existing_name);
+                if score >= FUZZY_MATCH_THRESHOLD && best.as_ref().is_none_or(|(_, b)| score > *b) {
+                    best = Some((n.node_id.clone(), score));
                 }
             }
         }
+        Ok(best)
     }
 
     /// `Fragment YIELDED node {action}` — provenance link.
@@ -676,28 +778,46 @@ impl DesignGraph {
         to_type: &'static str,
         to_id: &str,
     ) {
+        // Redirect endpoints through any fuzzy-merge aliases, so an edge that
+        // referenced a merged-away id lands on the canonical node.
+        let from = st
+            .aliases
+            .get(from_id)
+            .cloned()
+            .unwrap_or_else(|| from_id.to_string());
+        let to = st
+            .aliases
+            .get(to_id)
+            .cloned()
+            .unwrap_or_else(|| to_id.to_string());
+
         let mut drop = |reason: String| {
             st.dropped_edges.push(DroppedEdge {
                 edge_type: edge_type.to_string(),
-                from_id: from_id.to_string(),
-                to_id: to_id.to_string(),
+                from_id: from.clone(),
+                to_id: to.clone(),
                 reason,
             });
         };
-        if st.created_ids.get(from_id) != Some(&from_type) {
-            drop(format!("source '{from_id}' not a resolved {from_type}"));
+        if st.created_ids.get(from.as_str()) != Some(&from_type) {
+            drop(format!("source '{from}' not a resolved {from_type}"));
             return;
         }
-        if st.created_ids.get(to_id) != Some(&to_type) {
-            drop(format!("target '{to_id}' not a resolved {to_type}"));
+        if st.created_ids.get(to.as_str()) != Some(&to_type) {
+            drop(format!("target '{to}' not a resolved {to_type}"));
             return;
         }
-        match self.create_edge(edge_type, from_type, from_id, to_type, to_id, Props::new()) {
+        match self.create_edge(edge_type, from_type, &from, to_type, &to, Props::new()) {
             Ok(_) => st.edges_created += 1,
             Err(e) => drop(format!("schema rejected: {e}")),
         }
     }
 }
+
+/// Minimum `token_sort_ratio` (0–100) for a cross-id fuzzy dedup. High on
+/// purpose: below this, resolution creates a new node rather than risk a wrong
+/// merge — the uncertain band is the deferred LLM/vector tiebreaker's job.
+const FUZZY_MATCH_THRESHOLD: u32 = 90;
 
 /// Mutable accumulators for one integration pass — bundled so the integration
 /// methods keep small, stable signatures (per the modular-code principle).
@@ -707,9 +827,12 @@ struct Integration<'a> {
     change_type: ChangeType,
     epoch_ready: bool,
     created_ids: HashMap<String, &'static str>,
+    /// extracted id → canonical id, for edges that referenced a fuzzy-merged id.
+    aliases: HashMap<String, String>,
     nodes_created: usize,
     nodes_evolved: usize,
     nodes_unchanged: usize,
+    fuzzy_merges: Vec<FuzzyMerge>,
     edges_created: usize,
     warnings: Vec<String>,
     dropped_edges: Vec<DroppedEdge>,
@@ -723,9 +846,11 @@ impl<'a> Integration<'a> {
             change_type,
             epoch_ready: false,
             created_ids: HashMap::new(),
+            aliases: HashMap::new(),
             nodes_created: 0,
             nodes_evolved: 0,
             nodes_unchanged: 0,
+            fuzzy_merges: Vec::new(),
             edges_created: 0,
             warnings: Vec::new(),
             dropped_edges: Vec::new(),
