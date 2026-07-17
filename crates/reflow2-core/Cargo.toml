@@ -1,0 +1,21 @@
+[package]
+name = "reflow2-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "Reflow 2.0 deterministic core — schema-driven design graph over dynograph-foundation"
+
+[dependencies]
+dynograph-core = { workspace = true }
+dynograph-storage = { workspace = true }
+
+[features]
+default = []
+# On-disk persistence via the foundation's RocksDB backend. Off by default so
+# the librocksdb-sys C++ compile stays opt-in; the in-memory backend needs no
+# feature. When off, `DesignGraph::open_rocksdb` fails loud (foundation
+# contract), rather than silently falling back to memory.
+rocksdb = ["dynograph-storage/rocksdb"]

@@ -1,0 +1,35 @@
+# Reflow 2.0 — Rust workspace for the deterministic core.
+#
+# The core is surface-agnostic and LLM-free (see docs/interaction-surfaces.md):
+# it stands up the graph store + schema and the deterministic coherence-loop
+# operations. Consumer surfaces (MCP/CLI/hosted) and LLM-reasoning ops plug in
+# later, exactly as the predecessor `integrated_reflow` (`../ir2`) did.
+#
+# Foundation crates are pulled from `dynograph-foundation` by git tag. They are
+# not published to crates.io. `dynograph-storage` is taken with
+# default-features=false so the RocksDB C++ build (and its ~10-min compile) is
+# opt-in per crate — the core runs on the in-memory backend for dev/tests.
+
+[workspace]
+resolver = "2"
+members = [
+    "crates/reflow2-core",
+]
+
+[workspace.package]
+version = "0.0.1"
+edition = "2024"
+rust-version = "1.94"
+license = "MIT"
+authors = ["Anthony Sligar <sligara7@gmail.com>"]
+repository = "https://github.com/sligara7/reflow2"
+
+[workspace.dependencies]
+dynograph-core = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.9.4" }
+dynograph-storage = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.9.4", default-features = false }
+
+# For local cross-repo dev against an unreleased foundation, uncomment and
+# adjust the path. Do not commit uncommented.
+# [patch."https://github.com/sligara7/dynograph-foundation.git"]
+# dynograph-core    = { path = "../dynograph-foundation/crates/dynograph-core" }
+# dynograph-storage = { path = "../dynograph-foundation/crates/dynograph-storage" }

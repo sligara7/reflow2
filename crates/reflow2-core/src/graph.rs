@@ -1,0 +1,226 @@
+//! [`DesignGraph`] — the reflow2 handle over a schema-configured graph store.
+//!
+//! Thin, deterministic, LLM-free (docs/interaction-surfaces.md, "deterministic
+//! ops"). It wraps a dynograph-foundation [`StorageEngine`] already configured
+//! with the full reflow2 [`Schema`], scopes every call to one logical graph id,
+//! and exposes both generic schema-validated CRUD and typed convenience
+//! constructors for the golden-thread node/edge types.
+//!
+//! Every write goes through the engine's `validate_node` / `validate_edge`, so a
+//! bad node type, a missing required property, or an edge with the wrong
+//! endpoints fails loud here (rule 4 in AGENTS.md: no silent fallbacks).
+
+use dynograph_core::{DynoError, Schema, Value};
+use dynograph_storage::{StorageEngine, StoredEdge, StoredNode};
+
+use crate::nodes::{Props, edge, node};
+
+/// Default logical graph id inside the storage instance. One design lives in
+/// one graph; the id is just a stable name to scope keys.
+pub const DEFAULT_GRAPH_ID: &str = "reflow2";
+
+/// A design graph: a [`StorageEngine`] scoped to a single graph id.
+pub struct DesignGraph {
+    engine: StorageEngine,
+    graph_id: String,
+}
+
+impl DesignGraph {
+    /// Open an in-memory design graph configured with the full reflow2 schema.
+    ///
+    /// The in-memory backend needs no cargo feature and no disk — ideal for
+    /// tests and dev iteration. Fails only if the embedded schema fails to
+    /// merge/validate (a build-time-embedded bug, surfaced at open).
+    pub fn open_in_memory() -> Result<Self, DynoError> {
+        let schema = crate::schema::load_schema()?;
+        Ok(Self {
+            engine: StorageEngine::new_in_memory(schema),
+            graph_id: DEFAULT_GRAPH_ID.to_string(),
+        })
+    }
+
+    /// Use a non-default logical graph id (e.g. to host several designs in one
+    /// storage instance). Chainable off a constructor.
+    #[must_use]
+    pub fn with_graph_id(mut self, id: impl Into<String>) -> Self {
+        self.graph_id = id.into();
+        self
+    }
+
+    /// The graph id every operation is scoped to.
+    pub fn graph_id(&self) -> &str {
+        &self.graph_id
+    }
+
+    /// The merged schema backing this graph.
+    pub fn schema(&self) -> &Schema {
+        self.engine.schema()
+    }
+
+    // ---- Generic, schema-validated CRUD -----------------------------------
+
+    /// Create (or replace) a node of `node_type` with `id` and `props`.
+    /// Validates against the schema; unknown type or missing required property
+    /// is an error, not a silent skip.
+    pub fn create_node(
+        &mut self,
+        node_type: &str,
+        id: &str,
+        props: impl Into<std::collections::HashMap<String, Value>>,
+    ) -> Result<StoredNode, DynoError> {
+        self.engine
+            .create_node(&self.graph_id, node_type, id, props.into())
+    }
+
+    /// Fetch a node by type and id. `Ok(None)` when it does not exist.
+    pub fn get_node(&self, node_type: &str, id: &str) -> Result<Option<StoredNode>, DynoError> {
+        self.engine.get_node(&self.graph_id, node_type, id)
+    }
+
+    /// Count nodes of a type.
+    pub fn count_nodes(&self, node_type: &str) -> Result<usize, DynoError> {
+        self.engine.count_nodes(&self.graph_id, node_type)
+    }
+
+    /// Create an edge of `edge_type` between typed endpoints. Endpoint types
+    /// are validated against the edge's declared `from`/`to`.
+    pub fn create_edge(
+        &mut self,
+        edge_type: &str,
+        from_type: &str,
+        from_id: &str,
+        to_type: &str,
+        to_id: &str,
+        props: impl Into<std::collections::HashMap<String, Value>>,
+    ) -> Result<StoredEdge, DynoError> {
+        self.engine.create_edge(
+            &self.graph_id,
+            edge_type,
+            from_type,
+            from_id,
+            to_type,
+            to_id,
+            props.into(),
+        )
+    }
+
+    /// Outgoing edges from `from_id`, optionally filtered to one edge type.
+    /// This is the primitive the golden-thread walk (PROPAGATE) builds on.
+    pub fn outgoing(
+        &self,
+        from_id: &str,
+        edge_type: Option<&str>,
+    ) -> Result<Vec<StoredEdge>, DynoError> {
+        self.engine
+            .scan_outgoing_edges(&self.graph_id, from_id, edge_type)
+    }
+
+    // ---- Typed golden-thread constructors ---------------------------------
+    //
+    // Convenience over `create_node` for the four spine node types, supplying
+    // only their required properties. Richer properties can still go through
+    // `create_node` with a full `Props`.
+
+    /// P0 · Intent — the top-level thing being designed. `name` is required.
+    pub fn add_project(&mut self, id: &str, name: &str) -> Result<StoredNode, DynoError> {
+        self.create_node(node::PROJECT, id, Props::new().set("name", name))
+    }
+
+    /// P0 · Intent — a stated need. `name` and `statement` are required.
+    pub fn add_requirement(
+        &mut self,
+        id: &str,
+        name: &str,
+        statement: &str,
+    ) -> Result<StoredNode, DynoError> {
+        self.create_node(
+            node::REQUIREMENT,
+            id,
+            Props::new().set("name", name).set("statement", statement),
+        )
+    }
+
+    /// P1 · Function — something the design can do. `name` and `description`
+    /// are required.
+    pub fn add_capability(
+        &mut self,
+        id: &str,
+        name: &str,
+        description: &str,
+    ) -> Result<StoredNode, DynoError> {
+        self.create_node(
+            node::CAPABILITY,
+            id,
+            Props::new()
+                .set("name", name)
+                .set("description", description),
+        )
+    }
+
+    /// P2 · Structure — a buildable part. `name` and `purpose` are required;
+    /// `kind`/`level` take their schema defaults (`module`/`component`).
+    pub fn add_component(
+        &mut self,
+        id: &str,
+        name: &str,
+        purpose: &str,
+    ) -> Result<StoredNode, DynoError> {
+        self.create_node(
+            node::COMPONENT,
+            id,
+            Props::new().set("name", name).set("purpose", purpose),
+        )
+    }
+
+    // ---- Typed golden-thread edges ----------------------------------------
+
+    /// `Project CONTAINS child` — the containment spine (axis Y).
+    pub fn contains(
+        &mut self,
+        project_id: &str,
+        child_type: &str,
+        child_id: &str,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::CONTAINS,
+            node::PROJECT,
+            project_id,
+            child_type,
+            child_id,
+            Props::new(),
+        )
+    }
+
+    /// `Capability SATISFIES Requirement` — the traceability link that binds
+    /// WHAT back to intent (the golden thread).
+    pub fn satisfies(
+        &mut self,
+        capability_id: &str,
+        requirement_id: &str,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::SATISFIES,
+            node::CAPABILITY,
+            capability_id,
+            node::REQUIREMENT,
+            requirement_id,
+            Props::new(),
+        )
+    }
+
+    /// `Capability ALLOCATED_TO Component` — the WHAT→WHERE binding.
+    pub fn allocate(
+        &mut self,
+        capability_id: &str,
+        component_id: &str,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::ALLOCATED_TO,
+            node::CAPABILITY,
+            capability_id,
+            node::COMPONENT,
+            component_id,
+            Props::new(),
+        )
+    }
+}
