@@ -50,10 +50,12 @@ service, or LLM wiring exists yet — none does.
   `ChangeEvent` / `Snapshot` and `record_change`, the **CHANGE** step: snapshot the past,
   never overwrite), `propagate` (**PROPAGATE** — direction-classified bounded BFS over the
   golden thread → an explained `BlastRadius`; reactive from a `ChangeEvent` or speculative
-  from seeds). Consumes `dynograph-foundation` by git tag (`v0.9.4`), `dynograph-storage`
-  with `default-features = false` so the RocksDB C++ build stays opt-in — mirrors the
-  predecessor `ir2`. Fast dev/test build: `cargo test --no-default-features`. Keep it green,
-  clippy-clean, and `cargo fmt`-ed. Next loop steps not yet built: DETECT/SURFACE, HEAL.
+  from seeds), `detect` (**DETECT** — deterministic gap detectors → ranked `GapCandidate`s;
+  traceability + phase-coverage groups, gated on type-population counts). Consumes
+  `dynograph-foundation` by git tag (`v0.9.4`), `dynograph-storage` with
+  `default-features = false` so the RocksDB C++ build stays opt-in — mirrors the predecessor
+  `ir2`. Fast dev/test build: `cargo test --no-default-features`. Keep it green, clippy-clean,
+  and `cargo fmt`-ed. Not yet built: the LLM PROMPT/rephrase half of SURFACE, and HEAL.
 
 **Open decision (deliberately deferred):** the *interaction surface* — MCP/skills for a
 coding agent, a hosted web app, a CLI, or a library — is not yet chosen. It plugs in last

@@ -26,12 +26,14 @@
 //! assert_eq!(g.count_nodes("Requirement").unwrap(), 1);
 //! ```
 
+pub mod detect;
 pub mod graph;
 pub mod nodes;
 pub mod propagate;
 pub mod schema;
 pub mod temporal;
 
+pub use detect::{GapCandidate, GapScope, GapSource};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
 pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOptions};
 pub use schema::load_schema;

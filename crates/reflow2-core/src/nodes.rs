@@ -24,6 +24,10 @@ pub mod node {
     pub const FRAGMENT: &str = "Fragment";
     // P4 · Verification (verify.yaml)
     pub const VERIFICATION: &str = "Verification";
+    // P5 · Operation (operate.yaml)
+    pub const RELEASE: &str = "Release";
+    pub const ENVIRONMENT: &str = "Environment";
+    pub const RESOURCE: &str = "Resource";
     // Axis Z · change over time (temporal.yaml)
     pub const DESIGN_EPOCH: &str = "DesignEpoch";
     pub const TEMPORAL_FACT: &str = "TemporalFact";
