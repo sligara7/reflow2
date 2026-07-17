@@ -144,6 +144,11 @@ pub struct ImpactedNode {
     pub via: Vec<Hop>,
     /// Whether any hop on `via` crossed a risk edge.
     pub crosses_risk_edge: bool,
+    /// The node's betweenness centrality in the design network (normalized
+    /// 0..1) — how much of the golden thread routes through it. A change landing
+    /// on a high-centrality node has a wider secondary blast radius, so it ranks
+    /// higher among equals (IP-9).
+    pub centrality: f64,
 }
 
 /// The computed blast radius of a change.
@@ -322,6 +327,7 @@ impl DesignGraph {
                         direction,
                         via: next_via.clone(),
                         crosses_risk_edge: next_crosses,
+                        centrality: 0.0, // filled in below
                     },
                 );
                 queue.push_back((nb.id, next_depth, next_via, next_crosses));
@@ -331,13 +337,26 @@ impl DesignGraph {
         // A node reached within the bound is not also "beyond" it.
         beyond_depth.retain(|id| !visited.contains_key(id));
 
+        // Centrality-weighted ranking (IP-9): attach each impacted node's
+        // betweenness in the design network — a change landing on a routing hub
+        // has a wider secondary blast radius.
+        let centrality = self.design_network()?.betweenness()?;
+        for node in visited.values_mut() {
+            node.centrality = centrality.get(&node.node_id).copied().unwrap_or(0.0);
+        }
+
         let mut impacted: Vec<ImpactedNode> = visited.into_values().collect();
-        // Deterministic ranking: nearest first, risk-crossing paths amplified,
-        // then by id for stability.
+        // Deterministic ranking: nearest first, then risk-crossing paths, then
+        // higher centrality, then by id for stability.
         impacted.sort_by(|a, b| {
             a.distance
                 .cmp(&b.distance)
                 .then(b.crosses_risk_edge.cmp(&a.crosses_risk_edge))
+                .then(
+                    b.centrality
+                        .partial_cmp(&a.centrality)
+                        .unwrap_or(std::cmp::Ordering::Equal),
+                )
                 .then(a.node_id.cmp(&b.node_id))
         });
 

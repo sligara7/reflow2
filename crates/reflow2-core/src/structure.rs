@@ -16,10 +16,12 @@
 //! *selective* (see [`DesignGraph::is_single_point_of_failure`]) or it fires
 //! everywhere and means nothing.
 
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 use dynograph_core::DynoError;
-use dynograph_graph::{Graph, GraphBuilder, connected_components, cut_structure};
+use dynograph_graph::{
+    Graph, GraphBuilder, betweenness_centrality, connected_components, cut_structure,
+};
 
 use crate::graph::DesignGraph;
 use crate::propagate::is_traceability_edge;
@@ -73,6 +75,20 @@ impl DesignNetwork {
     /// Articulation-point node indices (candidate single points of failure).
     pub(crate) fn articulation_points(&self) -> Vec<usize> {
         cut_structure(&self.graph).articulation_points
+    }
+
+    /// Betweenness centrality (normalized 0..1, unweighted topology) per node id
+    /// — "how much of the golden thread routes through this node". Powers
+    /// PROPAGATE's centrality-weighted ranking (IP-9): a change landing on a
+    /// high-betweenness node has a wider secondary blast radius.
+    pub(crate) fn betweenness(&self) -> Result<HashMap<String, f64>, DynoError> {
+        let scores = betweenness_centrality(&self.graph, false, true)
+            .map_err(|e| DynoError::Query(format!("betweenness centrality: {e}")))?;
+        Ok(scores
+            .iter()
+            .enumerate()
+            .map(|(idx, &s)| (self.id_of(idx).to_string(), s))
+            .collect())
     }
 
     /// Count of components with ≥2 nodes — the "non-trivial subsystems".

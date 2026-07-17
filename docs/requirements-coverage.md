@@ -52,7 +52,7 @@ Implemented in `crates/reflow2-core/src/propagate.rs`; tests in `tests/propagate
 | IP-6 | Tag each node with an impact **kind** | ⬜ | deferred (pairs with DETECT; noted in module docs) |
 | IP-7 | Rank by distance; confidence decays with depth | 🟡 | distance ranking ✅; **depth-decay deferred** |
 | IP-8 | Amplify paths crossing risk edges | ✅ | `RISK_EDGES` + `crosses_risk_edge` sort · `inference_edges_..._flag_risk` |
-| IP-9 | Rank up by centrality (SPOF) | ⬜ | `structure` has SPOF but not wired into ranking |
+| IP-9 | Rank up by centrality (SPOF) | ✅ | each `ImpactedNode` carries its design-network betweenness `centrality`; ranking is distance → risk → centrality → id · `centrality_ranks_a_hub_impact_above_a_leaf_at_the_same_distance` |
 | IP-10 | Rank by criticality (priority/severity) | ⬜ | not inherited into propagate ranking |
 | IP-11 | Runs in current epoch, flagged vs the ChangeEvent | 🟡 | seeded from a `ChangeEvent`; **per-epoch temporal filtering deferred** |
 | IP-12 | Report cause → change → blast radius | 🟡 | change→radius ✅; **cause (`CAUSES`→ChangeEvent) not surfaced** |

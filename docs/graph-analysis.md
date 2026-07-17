@@ -240,8 +240,9 @@ is high-value for both DETECT (flag it) and HEAL's creative-bridge healer (propo
    boundary than within), and selective **god-components** (`cut_structure` articulation
    points that split ≥2 subsystems). Reports unweighted-edge coverage and multi-allocation.
    `evaluate_allocation()` → `AllocationReport`. No proposer yet.
-3. **Centrality-weighted PROPAGATE (IP-9)** — a small, high-value reuse: rank blast radius by
-   node centrality. Independently useful.
+3. **Centrality-weighted PROPAGATE (IP-9)** ✅ **done** — each `ImpactedNode` carries its
+   design-network betweenness `centrality`; PROPAGATE ranks distance → risk → centrality →
+   id, so a change landing on a routing hub out-ranks a leaf at the same distance.
 4. **Allocation proposer** — community detection (`louvain` now, **Leiden** once the
    foundation ships it; guard Louvain with a `connected_components` split) and/or
    `max_flow_min_cut` → candidate allocations, scored + explained, emitted as proposals; LLM

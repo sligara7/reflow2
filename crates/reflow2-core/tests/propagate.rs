@@ -199,3 +199,57 @@ fn unknown_seed_is_surfaced_not_dropped() {
     assert_eq!(radius.unknown_seeds, ["req:ghost"]);
     assert!(radius.impacted.is_empty());
 }
+
+#[test]
+fn centrality_ranks_a_hub_impact_above_a_leaf_at_the_same_distance() {
+    // Two capabilities both satisfy req:r (both impacted at distance 1), but
+    // cap:hub is a routing hub (allocated to two components + realized by an
+    // artifact) while cap:leaf connects to nothing else.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:r", "R", "need").unwrap();
+    g.add_capability("cap:hub", "Hub", "central").unwrap();
+    g.add_capability("cap:leaf", "Leaf", "peripheral").unwrap();
+    g.add_component("cmp:1", "C1", "p1").unwrap();
+    g.add_component("cmp:2", "C2", "p2").unwrap();
+    g.create_node(node::ARTIFACT, "art:1", Props::new().set("name", "a1"))
+        .unwrap();
+
+    g.satisfies("cap:hub", "req:r").unwrap();
+    g.satisfies("cap:leaf", "req:r").unwrap();
+    g.allocate("cap:hub", "cmp:1").unwrap();
+    g.allocate("cap:hub", "cmp:2").unwrap();
+    g.create_edge(
+        edge::REALIZES,
+        node::ARTIFACT,
+        "art:1",
+        node::CAPABILITY,
+        "cap:hub",
+        Props::new(),
+    )
+    .unwrap();
+
+    let radius = g
+        .propagate_from(&["req:r"], PropagateOptions::default())
+        .unwrap();
+    let find = |id: &str| radius.impacted.iter().find(|n| n.node_id == id).unwrap();
+    let pos = |id: &str| {
+        radius
+            .impacted
+            .iter()
+            .position(|n| n.node_id == id)
+            .unwrap()
+    };
+
+    // Same distance...
+    assert_eq!(find("cap:hub").distance, 1);
+    assert_eq!(find("cap:leaf").distance, 1);
+    // ...but the hub is more central...
+    assert!(
+        find("cap:hub").centrality > find("cap:leaf").centrality,
+        "hub {} should out-rank leaf {}",
+        find("cap:hub").centrality,
+        find("cap:leaf").centrality
+    );
+    // ...so it ranks first.
+    assert!(pos("cap:hub") < pos("cap:leaf"));
+}
