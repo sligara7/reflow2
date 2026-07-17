@@ -153,6 +153,25 @@ Runs AFTER extraction, as a separate post-step, so re-ingesting an updated brief
 5. Accumulate non-fatal degradations into `partial_failures` and return
    `status:"partial"` — never a silent "ok".
 
+> **Dependency note — embedding generation is required, and it is a separate slot from
+> vector storage.** Nearly every node type in `../schema/` declares an `embedding_field`
+> and a `resolution: { strategy: fuzzy_then_vector }` (see `core.yaml`, `structure.yaml`,
+> `operate.yaml`, `environment.yaml`, `dimensions.yaml`). The `_then_vector` half and the
+> "vector-match probe" above both require an embedding vector per node — so **something
+> must turn `description`/`statement`/`purpose` text into a vector**. dynograph-foundation
+> supplies vector *storage + HNSW nearest-neighbor search* (and the
+> `resolve_entity(…, embedding)` / `find_similar` plumbing), but it does **not** generate
+> embeddings. That generation slot is filled by an embedding service — storyflow uses
+> [embeddings-rs](https://github.com/sligara7/embeddings-rs) (stateless HTTP, nomic-embed-text-v1.5,
+> 768-dim) wired to dynograph via `EMBEDDING_URL`. Because the slot is decoupled behind
+> that contract, reflow2 can use embeddings-rs or any equivalent provider; **which one is
+> tied to the deferred interaction-surface decision** (agent-native surface may reuse the
+> agent's own embedding access; a hosted surface will want a self-contained generator like
+> embeddings-rs — see [interaction-surfaces.md](interaction-surfaces.md)). Caveat: in
+> storyflow this is still a stub — the extraction pipeline currently passes `None` for the
+> embedding (`// TODO: generate embeddings`), so the HTTP call is not yet wired. Honoring
+> `fuzzy_then_vector` in reflow2 means closing that seam, not just declaring it.
+
 ---
 
 ## Integration (mirrors `dag_client.integrate_fragment`)
