@@ -25,17 +25,18 @@ authors = ["Anthony Sligar <sligara7@gmail.com>"]
 repository = "https://github.com/sligara7/reflow2"
 
 [workspace.dependencies]
-dynograph-core = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.9.4" }
-dynograph-storage = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.9.4", default-features = false }
-# Pure, dependency-free graph-theory algorithms (components, cuts, centrality)
-# that power HEAL's structural defect detectors. No storage/service deps.
-dynograph-graph = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.9.4" }
-# Fuzzy string matching (jaro_winkler / token_sort_ratio) for INGEST cross-id
-# entity dedup — the no-embeddings half of fuzzy_then_vector.
-dynograph-resolution = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.9.4" }
+dynograph-core = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.10.0" }
+dynograph-storage = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.10.0", default-features = false }
+# Pure, dependency-free graph-theory algorithms (components, cuts, centrality,
+# Leiden communities) — powers HEAL's structural detectors + the allocation analysis.
+dynograph-graph = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.10.0" }
+# Fuzzy string matching (jaro_winkler / token_sort_ratio) for INGEST cross-id dedup.
+dynograph-resolution = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.10.0" }
 
-# For local cross-repo dev against an unreleased foundation, uncomment and
-# adjust the path. Do not commit uncommented.
+# For local cross-repo dev against an unreleased foundation, uncomment and point
+# each crate at ../dynograph-foundation/crates/*. Do not commit uncommented.
 # [patch."https://github.com/sligara7/dynograph-foundation.git"]
-# dynograph-core    = { path = "../dynograph-foundation/crates/dynograph-core" }
+# dynograph-core = { path = "../dynograph-foundation/crates/dynograph-core" }
 # dynograph-storage = { path = "../dynograph-foundation/crates/dynograph-storage" }
+# dynograph-graph = { path = "../dynograph-foundation/crates/dynograph-graph" }
+# dynograph-resolution = { path = "../dynograph-foundation/crates/dynograph-resolution" }

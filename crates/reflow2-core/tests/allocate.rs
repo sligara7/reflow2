@@ -127,3 +127,73 @@ fn multi_allocated_capabilities_are_surfaced() {
     let r = g.evaluate_allocation().unwrap();
     assert_eq!(r.multi_allocated, ["cap:shared"]);
 }
+
+#[test]
+fn proposes_clusters_matching_the_coupling_graph() {
+    // Two tightly-coupled triangles joined by one weak bridge; no current
+    // allocation. Leiden should propose exactly the two triangles.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for c in ["cap:a1", "cap:a2", "cap:a3", "cap:b1", "cap:b2", "cap:b3"] {
+        g.add_capability(c, c, "does a thing").unwrap();
+    }
+    depends(&mut g, "cap:a1", "cap:a2", 0.9);
+    depends(&mut g, "cap:a2", "cap:a3", 0.9);
+    depends(&mut g, "cap:a1", "cap:a3", 0.9);
+    depends(&mut g, "cap:b1", "cap:b2", 0.9);
+    depends(&mut g, "cap:b2", "cap:b3", 0.9);
+    depends(&mut g, "cap:b1", "cap:b3", 0.9);
+    depends(&mut g, "cap:a1", "cap:b1", 0.1); // weak bridge
+
+    let p = g.propose_allocation(1.0).unwrap();
+
+    assert_eq!(p.clusters.len(), 2, "leiden should find the two triangles");
+    assert!(
+        p.requires_human_review,
+        "a proposal, not an applied allocation"
+    );
+    // No current allocation → all coupling crosses boundaries.
+    assert_eq!(p.current_modularity, 0.0);
+    assert!(p.proposed_modularity > p.current_modularity);
+
+    let mut sets: Vec<Vec<String>> = p
+        .clusters
+        .iter()
+        .map(|c| c.capability_ids.clone())
+        .collect();
+    sets.sort();
+    assert_eq!(
+        sets,
+        vec![
+            vec!["cap:a1".to_string(), "cap:a2".into(), "cap:a3".into()],
+            vec!["cap:b1".to_string(), "cap:b2".into(), "cap:b3".into()],
+        ]
+    );
+}
+
+#[test]
+fn proposal_beats_a_miscohesive_current_allocation() {
+    // Current allocation splits both tight pairs across two components; the
+    // proposer should regroup them for a higher modularity.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for c in ["cap:a1", "cap:a2", "cap:b1", "cap:b2"] {
+        g.add_capability(c, c, "does a thing").unwrap();
+    }
+    g.add_component("cmp:x", "X", "p").unwrap();
+    g.add_component("cmp:y", "Y", "p").unwrap();
+    g.allocate("cap:a1", "cmp:x").unwrap();
+    g.allocate("cap:b1", "cmp:x").unwrap();
+    g.allocate("cap:a2", "cmp:y").unwrap();
+    g.allocate("cap:b2", "cmp:y").unwrap();
+    depends(&mut g, "cap:a1", "cap:a2", 0.9); // tight, but split across x/y
+    depends(&mut g, "cap:b1", "cap:b2", 0.9); // tight, but split across x/y
+    depends(&mut g, "cap:a1", "cap:b1", 0.1);
+    depends(&mut g, "cap:a2", "cap:b2", 0.1);
+
+    let p = g.propose_allocation(1.0).unwrap();
+    assert!(
+        p.proposed_modularity > p.current_modularity,
+        "proposed {} should beat current {}",
+        p.proposed_modularity,
+        p.current_modularity
+    );
+}

@@ -22,10 +22,10 @@
 //! - **Candidates, not answers.** Misplacement is a *suggestion* to weigh, not a
 //!   command; allocation is multi-objective and the human/SME decides.
 
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeMap, HashMap, HashSet};
 
 use dynograph_core::{DynoError, Value};
-use dynograph_graph::{GraphBuilder, connected_components, cut_structure};
+use dynograph_graph::{GraphBuilder, connected_components, cut_structure, leiden};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{edge, node};
@@ -92,10 +92,42 @@ struct Dep {
     weight: f64,
 }
 
+/// A proposed component (a Leiden community of tightly-coupled capabilities).
+#[derive(Debug, Clone)]
+pub struct ProposedComponent {
+    /// A synthetic id for the cluster (`cluster:N`) — the LLM names it later.
+    pub proposed_id: String,
+    /// The capabilities Leiden grouped together.
+    pub capability_ids: Vec<String>,
+}
+
+/// A proposed allocation — capabilities partitioned by the coupling graph
+/// (Leiden community detection), with how it compares to the current allocation.
+/// A **candidate**, not a command: `requires_human_review` is always true and
+/// the LLM must name the clusters before it becomes real (candidates-not-answers).
+#[derive(Debug, Clone)]
+pub struct ProposedAllocation {
+    /// The proposed components (Leiden communities).
+    pub clusters: Vec<ProposedComponent>,
+    /// Leiden's own modularity for the partition (its objective).
+    pub leiden_modularity: f64,
+    /// This crate's cohesion/coupling modularity of the *proposed* partition,
+    /// over the same dependency set as `current_modularity` (comparable).
+    pub proposed_modularity: f64,
+    /// The same score for the *current* `ALLOCATED_TO` allocation.
+    pub current_modularity: f64,
+    /// The Leiden resolution used (higher → more, smaller clusters).
+    pub resolution: f64,
+    /// `DEPENDS_ON` edges with no `weight` (counted as 1.0) — coverage surfaced.
+    pub unweighted_dependencies: usize,
+    /// Always true — a proposal to review, not an applied allocation.
+    pub requires_human_review: bool,
+}
+
 impl DesignGraph {
-    /// Evaluate the current `ALLOCATED_TO` allocation. See the module docs.
-    pub fn evaluate_allocation(&self) -> Result<AllocationReport, DynoError> {
-        // 1. capability → component (first allocation wins; multi-allocation flagged).
+    /// Current capability → component map from `ALLOCATED_TO` (smallest
+    /// component id wins on multi-allocation), plus the multi-allocated ids.
+    fn current_allocation_map(&self) -> Result<(HashMap<String, String>, Vec<String>), DynoError> {
         let mut cap_to_comp: HashMap<String, String> = HashMap::new();
         let mut multi_allocated = Vec::new();
         for cap in self.scan_nodes(node::CAPABILITY)? {
@@ -103,25 +135,32 @@ impl DesignGraph {
             if allocs.len() > 1 {
                 multi_allocated.push(cap.node_id.clone());
             }
-            // Deterministic pick: smallest component id.
             if let Some(comp) = allocs.into_iter().map(|e| e.to_id).min() {
                 cap_to_comp.insert(cap.node_id, comp);
             }
         }
         multi_allocated.sort();
+        Ok((cap_to_comp, multi_allocated))
+    }
 
-        // 2. weighted DEPENDS_ON edges between allocated capabilities (each once).
+    /// Weighted `DEPENDS_ON` edges (each once) among the given capability set.
+    /// Unweighted edges count as 1.0 and are tallied (returned) — never a silent
+    /// default. Shared by the evaluator and the proposer.
+    fn capability_dependencies(
+        &self,
+        caps: &HashSet<&str>,
+    ) -> Result<(Vec<Dep>, usize), DynoError> {
         let mut deps = Vec::new();
-        let mut unweighted_dependencies = 0usize;
-        for cap in cap_to_comp.keys() {
+        let mut unweighted = 0usize;
+        for cap in caps {
             for e in self.outgoing(cap, Some(edge::DEPENDS_ON))? {
-                if !cap_to_comp.contains_key(&e.to_id) {
-                    continue; // both endpoints must be allocated capabilities
+                if !caps.contains(e.to_id.as_str()) {
+                    continue; // both endpoints must be in the capability set
                 }
                 let weight = match e.properties.get("weight").and_then(Value::as_f64) {
                     Some(w) => w,
                     None => {
-                        unweighted_dependencies += 1;
+                        unweighted += 1;
                         1.0
                     }
                 };
@@ -132,6 +171,15 @@ impl DesignGraph {
                 });
             }
         }
+        Ok((deps, unweighted))
+    }
+
+    /// Evaluate the current `ALLOCATED_TO` allocation. See the module docs.
+    pub fn evaluate_allocation(&self) -> Result<AllocationReport, DynoError> {
+        // 1. capability → component; 2. weighted DEPENDS_ON among allocated caps.
+        let (cap_to_comp, multi_allocated) = self.current_allocation_map()?;
+        let cap_set: HashSet<&str> = cap_to_comp.keys().map(String::as_str).collect();
+        let (deps, unweighted_dependencies) = self.capability_dependencies(&cap_set)?;
 
         // 3. per-component cohesion/coupling + aggregated cross-component coupling.
         let mut internal: HashMap<String, f64> = HashMap::new();
@@ -199,6 +247,73 @@ impl DesignGraph {
         })
     }
 
+    /// **Propose** an allocation by clustering the weighted capability-coupling
+    /// graph with **Leiden** (`resolution` — higher = more, smaller clusters).
+    /// Each community becomes a candidate component. Leiden guarantees connected
+    /// communities, so no post-hoc split guard is needed (unlike Louvain).
+    ///
+    /// This only *proposes*: `requires_human_review` is always true, the clusters
+    /// are unnamed (the LLM names them), and it reports how the proposal's
+    /// modularity compares to the current allocation's — never auto-applies.
+    pub fn propose_allocation(&self, resolution: f64) -> Result<ProposedAllocation, DynoError> {
+        let caps: Vec<String> = self
+            .scan_nodes(node::CAPABILITY)?
+            .into_iter()
+            .map(|n| n.node_id)
+            .collect();
+        let cap_set: HashSet<&str> = caps.iter().map(String::as_str).collect();
+        let (deps, unweighted_dependencies) = self.capability_dependencies(&cap_set)?;
+
+        // Weighted coupling graph over all capabilities.
+        let mut builder = GraphBuilder::new();
+        for c in &caps {
+            builder.add_node(c);
+        }
+        for d in &deps {
+            let _ = builder.add_edge(&d.a, &d.b, d.weight);
+        }
+        let graph = builder.build(false);
+
+        let communities =
+            leiden(&graph, resolution).map_err(|e| DynoError::Query(format!("leiden: {e}")))?;
+
+        // capability → cluster id, and grouped clusters (sorted, deterministic).
+        let mut proposed: HashMap<String, String> = HashMap::new();
+        let mut grouped: BTreeMap<usize, Vec<String>> = BTreeMap::new();
+        for c in &caps {
+            if let Some(idx) = graph.idx_of(c) {
+                let label = communities.labels[idx];
+                proposed.insert(c.clone(), format!("cluster:{label}"));
+                grouped.entry(label).or_default().push(c.clone());
+            }
+        }
+        let clusters = grouped
+            .into_iter()
+            .map(|(label, mut ids)| {
+                ids.sort();
+                ProposedComponent {
+                    proposed_id: format!("cluster:{label}"),
+                    capability_ids: ids,
+                }
+            })
+            .collect();
+
+        // Score proposed vs current over the *same* dependency set.
+        let (current_map, _) = self.current_allocation_map()?;
+        let (_, _, proposed_modularity) = score_modularity(&proposed, &deps);
+        let (_, _, current_modularity) = score_modularity(&current_map, &deps);
+
+        Ok(ProposedAllocation {
+            clusters,
+            leiden_modularity: communities.modularity,
+            proposed_modularity,
+            current_modularity,
+            resolution,
+            unweighted_dependencies,
+            requires_human_review: true,
+        })
+    }
+
     /// Capabilities whose strongest coupling is to a component other than their own.
     fn misplaced(
         &self,
@@ -246,6 +361,26 @@ impl DesignGraph {
         }
         out
     }
+}
+
+/// Cohesion/coupling modularity of an allocation over a dependency set:
+/// `internal / (internal + external)`, where a dependency is *internal* only
+/// when both endpoints map to the same component (a cap with no component
+/// therefore never counts as internal). Returns `(internal, external,
+/// modularity)`; modularity is 1.0 when there is no coupling. Shared by the
+/// evaluator and the proposer so both are scored the same way.
+fn score_modularity(cap_to_comp: &HashMap<String, String>, deps: &[Dep]) -> (f64, f64, f64) {
+    let mut internal = 0.0;
+    let mut external = 0.0;
+    for d in deps {
+        match (cap_to_comp.get(&d.a), cap_to_comp.get(&d.b)) {
+            (Some(x), Some(y)) if x == y => internal += d.weight,
+            _ => external += d.weight,
+        }
+    }
+    let total = internal + external;
+    let modularity = if total == 0.0 { 1.0 } else { internal / total };
+    (internal, external, modularity)
 }
 
 /// Build the undirected component-coupling graph from aggregated cross-component

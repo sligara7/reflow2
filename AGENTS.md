@@ -58,15 +58,19 @@ service, or LLM wiring exists yet — none does.
   repair), `structure` (a `dynograph-graph` view of the design network powering HEAL's
   graph-topology defects: `disconnected_community`, *selective* `single_point_of_failure`,
   `dead_end` — selective because a golden thread is tree-shaped, where every internal node
-  is a naive articulation point). Consumes `dynograph-foundation` by git tag (`v0.9.4`):
-  `dynograph-core`, `dynograph-storage` (`default-features = false` so the RocksDB C++ build
-  stays opt-in), `dynograph-graph` (pure, no features) — mirrors the predecessor `ir2`. Fast
-  dev/test build: `cargo test --no-default-features`. Keep it green, clippy-clean, and
-  `cargo fmt`-ed. The `llm` module defines the pluggable `LlmBackend` seam (object-safe,
-  sync) + `MockLlmBackend` (build-order step 3); the first op through it is
-  `GapCandidate::to_prompt` (SURFACE's PROMPT half, with graceful degrade). Not yet built:
-  real provider backends (gated on the surface decision), HEAL's generative healer content,
-  INGEST, SME, GENESIS.
+  is a naive articulation point), `llm` (the pluggable `LlmBackend` seam — object-safe, sync
+  — + `MockLlmBackend` + `complete_json`; the LLM boundary the core holds as `&dyn`), `ingest`
+  (**INGEST** — freeform text → graph via the `LlmBackend`: phase-gated extraction passes,
+  provenance Fragment, time-aware resolution with matched-evolved snapshots, fuzzy cross-id
+  dedup), `allocate` (**graph-analysis** — `evaluate_allocation` scores the current
+  function→service allocation; `propose_allocation` clusters the weighted coupling graph with
+  Leiden). Consumes `dynograph-foundation` by git tag (`v0.10.0`): `dynograph-core`,
+  `dynograph-storage` (`default-features = false` so the RocksDB C++ build stays opt-in),
+  `dynograph-graph` + `dynograph-resolution` (pure, no features) — mirrors the predecessor
+  `ir2`. Fast dev/test build: `cargo test --no-default-features`. Keep it green, clippy-clean,
+  and `cargo fmt`-ed. Not yet built: real `LlmBackend` provider backends + the interaction
+  surface (deferred decision), the optional embedding seam (semantic dedup/retrieval), HEAL's
+  generative healer content, SME, GENESIS.
 
 **Open decision (deliberately deferred):** the *interaction surface* — MCP/skills for a
 coding agent, a hosted web app, a CLI, or a library — is not yet chosen. It plugs in last

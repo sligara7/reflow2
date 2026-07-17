@@ -38,7 +38,9 @@ pub mod schema;
 pub mod structure;
 pub mod temporal;
 
-pub use allocate::{AllocationReport, ComponentScore, MisplacedCapability};
+pub use allocate::{
+    AllocationReport, ComponentScore, MisplacedCapability, ProposedAllocation, ProposedComponent,
+};
 pub use detect::{GapCandidate, GapPrompt, GapScope, GapSource};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
 pub use heal::{

@@ -98,7 +98,7 @@ map:
 
 | Objective | Method | Notes |
 |---|---|---|
-| Cohesion/coupling ("group what talks most") | `louvain` community detection | Each community = a candidate Component; naturally hierarchical → maps to `Component.level` (axis Y) |
+| Cohesion/coupling ("group what talks most") | `leiden` community detection | Each community = a candidate Component; naturally hierarchical → maps to `Component.level` (axis Y) |
 | Minimize cross-service chatter | `max_flow_min_cut` | Boundaries along the lightest cut (weight = capacity = strength) |
 | Co-locate for latency | `shortest_path` / `closeness_centrality` | Feed **cost** (inverted strength), not strength |
 | Find "god nodes" | `cut_structure` (articulation points) + `betweenness_centrality` | A node everything routes through. HEAL already detects selective articulation-point SPOFs — reuse |
@@ -106,15 +106,11 @@ map:
 | Keep the dependency DAG acyclic | `topological_sort` / `find_cycle` | `DEPENDS_ON` between capabilities must stay acyclic |
 | Suggest missing links | `link_prediction_all` / `link_prediction_from` | Propose edges the topology implies but the graph lacks — feeds HEAL's `missing_link` / creative linking |
 
-> **Leiden > Louvain (planned foundation work).** `dynograph-graph` currently ships
-> **`louvain`**; **Leiden** (Traag et al. 2019) is the better choice for the allocation
-> *proposer* — it fixes Louvain's known flaw of returning **badly-connected or internally
-> disconnected communities** (a "service" whose functions don't even connect), gives higher-
-> quality partitions, and is what GraphRAG/graspologic use. Adding Leiden to
-> `dynograph-graph` is a **separate dynograph-foundation effort** (that repo, not here). Until
-> it lands, the interim guard is cheap and already available: run `connected_components` on
-> each Louvain community and split any that come back disconnected — never emit a disconnected
-> community as a candidate Component.
+> **Leiden (shipped in dynograph-foundation v0.10.0).** The allocation proposer uses
+> **`leiden`** (Traag et al. 2019), which guarantees **connected communities** — so no
+> post-hoc split guard is needed (Louvain's flaw of returning badly-connected/disconnected
+> communities is why we waited for Leiden rather than shipping a guarded Louvain). Higher-
+> quality partitions, and what GraphRAG/graspologic use.
 
 ### `dynograph-vector` — the numeric toolbox (weights, depth, resolution)
 
@@ -140,7 +136,7 @@ DBSCAN over a **precomputed N×N distance matrix** (the caller computes distance
 `dynograph-vector` — this crate is matrix in, labels out). It finds **arbitrarily-shaped
 clusters and flags noise**. Complements `louvain`:
 
-- Louvain partitions by *graph edges* (topology); DBSCAN partitions by a *distance matrix*
+- Leiden partitions by *graph edges* (topology); DBSCAN partitions by a *distance matrix*
   (which can be graph distance, coupling-derived distance, or vector distance).
 - **Noise flagging** = outlier/orphan detection — entities that belong to no cluster (a
   different signal than HEAL's edge-based `orphan_node`).
@@ -174,7 +170,7 @@ speculative — demand-pull it):
 1. **Evaluate** an existing allocation/design — score coupling/cohesion, flag god-nodes and
    fragile cuts, report drift. This is **DIAGNOSE/DETECT applied to architecture quality**
    (findings surfaced as gaps), and it is the safest first thing to build.
-2. **Propose** — run `louvain`/`max_flow_min_cut` → candidate allocations, ranked and
+2. **Propose** — run `leiden`/`max_flow_min_cut` → candidate allocations, ranked and
    *explained*. This is a **SYNTHESIZE** specialization (graph → a design decision), emitted
    as proposals (like HEAL) for a human to accept.
 3. **Re-evaluate on change** — when a capability/dependency changes, PROPAGATE the change and
@@ -194,10 +190,10 @@ candidates (nothing built from this list yet).
 |---|---|---|
 | **Blast radius** (`affected` — reverse-relation walk with depth) | ✅ have (better) | PROPAGATE — direction-classified, risk-flagged, no-silent-truncation |
 | **God nodes** (top-degree hubs) | ✅ have (better) | HEAL *selective* SPOF (articulation points that split ≥2 subsystems) + `betweenness` |
-| **Communities** (Leiden, colored) | 🟡 partial | `louvain` (Leiden planned) → allocation clusters |
+| **Communities** (Leiden, colored) | ✅ have | `leiden` (v0.10.0) → the allocation proposer's clusters |
 | **Explained edges** (`EXTRACTED` / `INFERRED` / `AMBIGUOUS`) | ✅ have | inference-edge `basis`/`confidence` + Fragment `provenance` (`YIELDED`) |
 | **Extraction diagnostics** (missing / dangling / duplicate edges) | ✅ mostly | INGEST `dropped_edges` (phantom/dangling) + fuzzy dedup; could add an exact-duplicate-edge count |
-| **Surprising connections** — an edge bridging two otherwise-distant communities (high *edge* betweenness / cross-community) | ⬜ **new** | **Unexpected-coupling detector**: a `DEPENDS_ON`/coupling edge whose endpoints sit in different `louvain` communities is either a hidden coupling to flag (DETECT) *or* a creative-link opportunity (chain_reflow). Powered by cross-community detection + edge betweenness |
+| **Surprising connections** — an edge bridging two otherwise-distant communities (high *edge* betweenness / cross-community) | ⬜ **new** | **Unexpected-coupling detector**: a `DEPENDS_ON`/coupling edge whose endpoints sit in different `leiden` communities is either a hidden coupling to flag (DETECT) *or* a creative-link opportunity (chain_reflow). Powered by cross-community detection + edge betweenness |
 | **Peripheral→hub** — a low-degree node unexpectedly reaching a high-degree hub | ⬜ **new** | A leaf capability wired straight to a god-component, skipping intermediate structure — ties to the matryoshka **`missing_intermediate_level`** gap (chain_reflow) and god-node dependence. Degree/level anomaly |
 | **Graph report** (highlights: key concepts, surprising connections, suggested questions) | ⬜ **new** | A **SYNTHESIZE** rollup artifact: communities/allocation + god-nodes + surprising couplings + DETECT gaps + suggested questions — the "what should I look at?" summary |
 
@@ -243,10 +239,11 @@ is high-value for both DETECT (flag it) and HEAL's creative-bridge healer (propo
 3. **Centrality-weighted PROPAGATE (IP-9)** ✅ **done** — each `ImpactedNode` carries its
    design-network betweenness `centrality`; PROPAGATE ranks distance → risk → centrality →
    id, so a change landing on a routing hub out-ranks a leaf at the same distance.
-4. **Allocation proposer** — community detection (`louvain` now, **Leiden** once the
-   foundation ships it; guard Louvain with a `connected_components` split) and/or
-   `max_flow_min_cut` → candidate allocations, scored + explained, emitted as proposals; LLM
-   names the clusters.
+4. **Allocation proposer** ✅ **done** — `propose_allocation(resolution)` clusters the
+   weighted capability-coupling graph with **`leiden`** (v0.10.0; connected communities, no
+   guard) → candidate components, scored against the current allocation
+   (proposed vs current modularity) and gated `requires_human_review`; the LLM names the
+   clusters. `max_flow_min_cut` boundaries remain a future addition.
 5. **Depth/drift analytics** — `dynograph-vector` stats over per-epoch `DimensionObservation`s
    (`linear_regression_slope` drift, `centroid` rollup).
 6. **DBSCAN / game-theory** — demand-pulled when a concrete need appears (feature-space
