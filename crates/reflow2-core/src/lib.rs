@@ -28,10 +28,12 @@
 
 pub mod graph;
 pub mod nodes;
+pub mod propagate;
 pub mod schema;
 pub mod temporal;
 
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
+pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOptions};
 pub use schema::load_schema;
 pub use temporal::{ChangeAction, ChangeRecord, ChangeType, EpochType, parse_snapshot_state};
 

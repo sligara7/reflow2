@@ -115,6 +115,26 @@ impl DesignGraph {
             .scan_outgoing_edges(&self.graph_id, from_id, edge_type)
     }
 
+    /// Incoming edges to `to_id`, optionally filtered to one edge type. The
+    /// reverse-direction companion to [`outgoing`](Self::outgoing) — PROPAGATE
+    /// needs both, because impact flows along an edge in whichever direction the
+    /// edge's semantics carry it (e.g. a Requirement's realizers are reached via
+    /// *incoming* SATISFIES).
+    pub fn incoming(
+        &self,
+        to_id: &str,
+        edge_type: Option<&str>,
+    ) -> Result<Vec<StoredEdge>, DynoError> {
+        self.engine
+            .scan_incoming_edges(&self.graph_id, to_id, edge_type)
+    }
+
+    /// All nodes of a type. Used by PROPAGATE to build an id→type index (edge
+    /// adjacency stores only endpoint ids, not their types).
+    pub fn scan_nodes(&self, node_type: &str) -> Result<Vec<StoredNode>, DynoError> {
+        self.engine.scan_nodes(&self.graph_id, node_type)
+    }
+
     // ---- Typed golden-thread constructors ---------------------------------
     //
     // Convenience over `create_node` for the four spine node types, supplying

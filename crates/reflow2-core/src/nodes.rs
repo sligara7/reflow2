@@ -19,6 +19,11 @@ pub mod node {
     // P2 · Structure (structure.yaml)
     pub const COMPONENT: &str = "Component";
     pub const INTERFACE: &str = "Interface";
+    // P3 · Realization (build.yaml)
+    pub const ARTIFACT: &str = "Artifact";
+    pub const FRAGMENT: &str = "Fragment";
+    // P4 · Verification (verify.yaml)
+    pub const VERIFICATION: &str = "Verification";
     // Axis Z · change over time (temporal.yaml)
     pub const DESIGN_EPOCH: &str = "DesignEpoch";
     pub const TEMPORAL_FACT: &str = "TemporalFact";
@@ -34,6 +39,10 @@ pub mod edge {
     pub const SATISFIES: &str = "SATISFIES";
     /// `Capability → Component` — the WHAT→WHERE allocation binding.
     pub const ALLOCATED_TO: &str = "ALLOCATED_TO";
+    /// `Artifact → *` — an Artifact realizes a Capability/Component/Interface.
+    pub const REALIZES: &str = "REALIZES";
+    /// `Verification → *` — a Verification checks a Capability/Artifact/Component.
+    pub const VERIFIES: &str = "VERIFIES";
 
     // Axis Z · change over time (temporal.yaml)
     /// `DesignEpoch → DesignEpoch` — one epoch comes before another (ordering).

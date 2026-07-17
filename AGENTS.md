@@ -43,12 +43,17 @@ runtime code has begun with the **deterministic, LLM-free core** (build-order st
 [docs/interaction-surfaces.md](docs/interaction-surfaces.md)). Do not assume any surface,
 service, or LLM wiring exists yet — none does.
 
-- `crates/reflow2-core/` — Rust crate: loads the 10 schema domains into a merged
-  dynograph `Schema`, opens an in-memory `DesignGraph` over `dynograph-storage`, and gives
-  schema-validated CRUD + typed golden-thread constructors. Consumes `dynograph-foundation`
-  by git tag (`v0.9.4`), `dynograph-storage` with `default-features = false` so the RocksDB
-  C++ build stays opt-in — mirrors the predecessor `ir2`. Fast dev/test build:
-  `cargo test --no-default-features`. Keep it green, clippy-clean, and `cargo fmt`-ed.
+- `crates/reflow2-core/` — Rust crate implementing the deterministic coherence-loop
+  spine so far. Modules: `schema` (loads the 10 domains into one merged dynograph
+  `Schema`), `graph` (`DesignGraph` over `dynograph-storage`, in-memory backend, schema-
+  validated CRUD + typed golden-thread constructors), `temporal` (axis Z — `DesignEpoch` /
+  `ChangeEvent` / `Snapshot` and `record_change`, the **CHANGE** step: snapshot the past,
+  never overwrite), `propagate` (**PROPAGATE** — direction-classified bounded BFS over the
+  golden thread → an explained `BlastRadius`; reactive from a `ChangeEvent` or speculative
+  from seeds). Consumes `dynograph-foundation` by git tag (`v0.9.4`), `dynograph-storage`
+  with `default-features = false` so the RocksDB C++ build stays opt-in — mirrors the
+  predecessor `ir2`. Fast dev/test build: `cargo test --no-default-features`. Keep it green,
+  clippy-clean, and `cargo fmt`-ed. Next loop steps not yet built: DETECT/SURFACE, HEAL.
 
 **Open decision (deliberately deferred):** the *interaction surface* — MCP/skills for a
 coding agent, a hosted web app, a CLI, or a library — is not yet chosen. It plugs in last
