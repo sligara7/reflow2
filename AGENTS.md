@@ -116,6 +116,43 @@ reading order (Vision → Design → Process → Heritage). Then:
 6. **Don't touch the sibling source repos** (`../../storyflow`, etc.) — mine them for
    ideas, but all new work lands here.
 
+## Engineering principles (adapted from storyflow's `PROTOCOL.md ⭐`)
+
+These are the author's hard-won code-quality principles, carried over and adapted to
+reflow2 (a single Rust core, no fleet). They **override speed — timing bends to correctness**.
+
+1. **Right long-term fix — no patches/stopgaps.** Find the *root cause* first (reproduce,
+   trace, prove the mechanism), then fix it at the root, not the symptom. If you can't name
+   the root cause, say so and keep digging. If the correct fix needs something that isn't
+   there yet, **stop and report the gap** — a reported gap is honest; a papered-over one
+   re-breaks later.
+2. **No silent fallbacks / no silent drops — an integrity line, not a style preference.**
+   Never swallow an error into a "looks fine" state (no catch-returns-default, no atomic op
+   that drops the bad part, no empty-on-failure). A swallowed failure makes broken code
+   report success — it *lies* to the user. Fail loud, or don't write it. This is rule 4
+   above; it is the project's first principle. (Enforced concretely across the core — see
+   the "load-bearing invariants" in [CLAUDE.md](CLAUDE.md).)
+3. **Record every deferral — no silent stubs.** When you defer work, write it down as
+   Deferred in [docs/requirements-coverage.md](docs/requirements-coverage.md) **in the same
+   change**, and annotate the code site (an unused field, a stubbed branch) with a pointer
+   back. A deferral nobody wrote down is a silent stub — the same integrity breach as a
+   silent drop. "Partial and recorded" is fine; "looks done but quietly isn't" is not.
+4. **Verify your own claims before stating them.** Run the real check yourself (foreground
+   `cargo test --no-default-features`, clippy, fmt) and confirm any symbol/field/API you
+   reference actually exists. "Tests pass" means you watched them pass; a green that only
+   passed because an error was swallowed is a false report.
+5. **Real-path tests.** A test must exercise the path callers actually use, end to end — not
+   an unchanged inner helper. "Done" = the real behavior is observable and tested, not "it
+   compiles."
+6. **No silent caps/truncation.** If you bound coverage (top-N, a subset of passes, a depth
+   cap), say so loudly in the code and the report — silent truncation reads as "covered
+   everything" when it didn't. (This is why PROPAGATE reports `truncated_beyond_depth` and
+   INGEST records `dropped_edges`.)
+7. **Modular, composable code — no monoliths.** Keep files focused and single-responsibility;
+   split along natural seams (each coherence-loop step is its own module). Prefer small
+   composable pieces and dependency injection (e.g. `&dyn LlmBackend` passed in) over
+   sprawling files or deep inheritance.
+
 ## Provenance of the ideas (so you can trace any decision)
 
 - **storyflow** → the extraction pipeline, the six universal processes, the operating-

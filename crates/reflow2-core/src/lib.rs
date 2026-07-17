@@ -29,6 +29,7 @@
 pub mod detect;
 pub mod graph;
 pub mod heal;
+pub mod ingest;
 pub mod llm;
 pub mod nodes;
 pub mod propagate;
@@ -42,6 +43,7 @@ pub use heal::{
     GeneratedContentStub, HealCategory, HealIssue, HealOp, HealOperation, HealOptions,
     HealProposal, HealReport, HealSeverity, HealStrategy, SkippedOperation,
 };
+pub use ingest::{DroppedEdge, IngestOptions, IngestReport, IngestStatus, PassError};
 pub use llm::{
     LlmBackend, LlmError, LlmParams, LlmRequest, LlmResponse, MockLlmBackend, complete_json,
 };

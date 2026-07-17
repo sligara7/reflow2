@@ -49,6 +49,8 @@ pub mod edge {
     pub const VERIFIES: &str = "VERIFIES";
     /// `* → *` — a node depends on another (a lateral structural coupling).
     pub const DEPENDS_ON: &str = "DEPENDS_ON";
+    /// `Fragment → *` — the fragment that produced/updated a node (provenance).
+    pub const YIELDED: &str = "YIELDED";
 
     // Axis Z · change over time (temporal.yaml)
     /// `DesignEpoch → DesignEpoch` — one epoch comes before another (ordering).

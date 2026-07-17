@@ -22,6 +22,12 @@ status. It reflects the deterministic, LLM-free core built so far (build-order s
 3. **The deferral list** — everything marked ⬜/🟡 is a named, tracked gap; nothing that the
    docs require is silently treated as done.
 
+**Deferral discipline (binding).** When work is deferred, it is recorded here as ⬜/🟡 **in
+the same change that defers it** — and, where it lives in code (an unused field, a stubbed
+branch), annotated at the site with a pointer back here. A deferral that isn't written down
+is a silent stub, which this project treats as the same integrity breach as a silent drop.
+"Partial/Deferred and recorded" is acceptable; "looks done but quietly isn't" is not.
+
 **Legend:** ✅ Met · 🟡 Partial (core met, a stated facet deferred) · ⬜ Deferred (not yet
 built) · ➖ N/A here (a deferred *decision* or a facet gated on the surface/LLM choice).
 
@@ -67,7 +73,7 @@ half (question phrasing, anchors) is LLM-gated and deferred.
 
 | ID | Requirement | Status | Evidence / note |
 |----|-------------|--------|-----------------|
-| GS-1 | DIAGNOSE→PROMPT→INGEST loop | 🟡 | DIAGNOSE (`detect_gaps`) ✅; **PROMPT + INGEST deferred (LLM)** |
+| GS-1 | DIAGNOSE→PROMPT→INGEST loop | 🟡 | DIAGNOSE (`detect_gaps`) ✅, PROMPT (`to_prompt`) ✅, INGEST spine ✅ (see Extraction section); **re-ingest of an answer as time-aware update deferred (EX-R1/EX-Z3)** |
 | GS-2 | Asks the human; distinct from HEAL | ✅ | `detect_gaps` vs `heal`; `full_coherence_loop` leaves the unmet requirement for the human |
 | GS-3 | `GapCandidate` shape | 🟡 | id/gap_source/scope/severity/title/description/affected_ids/suggested_depth/evidence ✅; **`anchor` deferred** |
 | GS-4 | `GapPrompt` shape | 🟡 | `GapPrompt` + `GapCandidate::to_prompt` via `LlmBackend` · `gap_becomes_a_plain_question_via_the_backend`; **`relevant_context` graph-slice deferred** |
@@ -117,6 +123,41 @@ The one **content-free** structural repair — `duplicate` → **merge** — is 
 verified (`apply_merge_repoints_edges_and_verifies`, `merge_carries_a_unique_edge_onto_the_survivor`).
 
 ---
+
+## Extraction / INGEST — [extraction-plan.md](extraction-plan.md)
+
+`crates/reflow2-core/src/ingest.rs`; tests in `tests/ingest.rs`. This increment builds the
+EXTRACT→INTEGRATE spine (a representative subset of passes) via the `LlmBackend` seam. The
+graph-informed *resolution* stage and the remaining passes are deferred — spelled out below
+so none is a silent stub.
+
+| ID | Requirement | Status | Evidence / note |
+|----|-------------|--------|-----------------|
+| EX-1 | Three-phase fan-out (P1 always · P2 gated · P3 edges) | 🟡 | orchestration in `ingest`; a **subset** of passes implemented (below) |
+| EX-2 | Discovery gate (orthogonal booleans, anchor-required) | 🟡 | `Discovery` classifier gates phase-2; only `components` gate consumed — the rest parsed but their passes deferred (`#[allow(dead_code)]` marks it) |
+| EX-P1 | Phase-1 passes: project_intent, requirements, constraints, capabilities | ✅ | `ingest` · `full_ingest_builds_a_golden_thread_from_text` |
+| EX-P2 | Phase-2 passes: components (+ALLOCATED_TO) | 🟡 | components ✅; **flows, interfaces, actors, decisions, artifacts, resources deferred** |
+| EX-P3 | Phase-3 passes: satisfies (+SATISFIES) | 🟡 | satisfies ✅; **dependencies, verifications, inference, dimensions, changes deferred** |
+| EX-SME | SME augmentation post-pass | ⬜ | LLM; see sme-augmentation.md |
+| EX-D1 | One shared LLM-call helper | ✅ | `run_pass` |
+| EX-D2 | Never-raises + error envelopes; siblings survive | ✅ | `PassError` · `a_failed_pass_is_enveloped_and_siblings_survive` |
+| EX-D3 | Per-pass timeout budget | ⬜ | no timeout (sync mock); lands with a real async backend |
+| EX-D4 | No silent fallbacks; retry-once on recoverable-empty then loud | 🟡 | loud `PassError` ✅; **retry-once deferred** |
+| EX-D5 | Keep the gate off reasoning models | ➖ | backend-choice; N/A until a real backend |
+| EX-D6 | Focused prompts; lists are arrays | ✅ | strict per-pass JSON shapes |
+| EX-D7 | Prefix caching — unchanging input first | ✅ | `pass_prompt` puts INPUT first |
+| EX-D8 | Enum tuples from schema; fail loud on drift | 🟡 | LLM enum values validated with loud-skip→`warnings`; **value sets are local consts, not read from `schema/*.yaml`** (drift risk noted) |
+| EX-D9 | Symmetric-edge auto-inverse | ⬜ | not needed by current edges; deferred |
+| EX-D10 | Per-fragment metrics | ⬜ | deferred |
+| EX-D11 | Selective context threading | 🟡 | rosters threaded only into edge passes ✅; epoch threading partial |
+| EX-R1 | Resolution: matched-unchanged / matched-evolved / genuinely-new | ⬜ | **deferred**; currently create-or-replace by id only |
+| EX-R2 | `fuzzy_then_vector` dedup + embedding generation | ⬜ | **deferred** — needs an embedding generator (a stub even in storyflow; tied to the surface decision) |
+| EX-I1 | One typed integration payload | ✅ | single `ingest` path |
+| EX-I2 | MERGE + provenance on a Fragment | ✅ | Fragment + `YIELDED` + provenance stamp · `full_ingest_...` |
+| EX-I3 | Unknown/phantom edges dropped + surfaced | ✅ | `dropped_edges` · `phantom_edge_is_dropped_not_written` |
+| EX-Z1 | Ingest in an active `DesignEpoch` context | 🟡 | `IngestOptions.epoch_id` → `OCCURS_DURING`; not required |
+| EX-Z2 | The `changes` pass (ChangeEvent extraction) | ⬜ | deferred |
+| EX-Z3 | Time-aware integration (matched-evolved → snapshot, never silent overwrite) | ⬜ | **deferred** — depends on EX-R1/R2; today re-ingest with new ids duplicates, with same ids overwrites-in-place without a snapshot |
 
 ## Three Axes — [three-axes.md](three-axes.md)
 
