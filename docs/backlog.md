@@ -141,10 +141,33 @@ the full loop only in AGENTS.md."*
 
 This is the recurring lesson wearing a third face: the capability exists, and the surface that
 should advertise it does not. It also caps the value of every skill written from here on,
-BL-21 included. Options are per-harness skill directories (`.claude/skills/` alongside
-`.grok/skills/`, which `reflow2_init.py` could install by detecting or asking), or folding the
-load-bearing instruction into AGENTS.md and letting skills be depth rather than dependency.
-Size **S** to install both directories; **M** if the answer is restructuring what lives where.
+BL-21 included.
+
+*The vendor docs settle it* — see [skills/README.md](skills/README.md), distilled from the three
+upstream sources kept beside it. Every harness looks somewhere different, and the kit installs
+the one location with the narrowest reach:
+
+| Harness | Reads | Sees the kit's skills |
+|---|---|---|
+| Grok CLI | `.grok/skills/` | yes |
+| Claude Code | `.claude/skills/` | **no** |
+| Copilot / VS Code | `.github/skills/`, `.claude/skills/`, `.agents/skills/` | **no** |
+
+So this is not a vague portability worry: a project bootstrapped by `reflow2_init.py` and opened
+in **Claude Code** — the harness this repo is developed with — has an AGENTS.md naming seven
+skills the agent cannot load. The Grok trial hit the same wall from a third harness.
+
+*The fix is small.* `.claude/skills/` is read by Claude Code **and** Copilot/VS Code, so
+installing there alongside the existing `.grok/skills/` covers all three. `reflow2_init.py`
+already copies a tree; this is a second destination, not new machinery. The skills themselves are
+already spec-compliant (valid `name` matching the directory, real `description`) — only the
+location is wrong.
+
+*Not a problem for MCP.* Grok loads `.mcp.json` as a compatibility source, so the kit's single
+`.mcp.json` already serves both. Skills have no such shim.
+
+Size **S**. Worth doing before BL-21, which otherwise writes a skill into a directory two of
+three harnesses ignore.
 
 **BL-20 · Graph export / import, and versioned local backups** — *user, 2026-07-18.* Unblocks
 BL-19's migration half and, through it, BL-18.
