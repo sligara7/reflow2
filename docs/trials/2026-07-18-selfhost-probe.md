@@ -155,3 +155,42 @@ The one gap is `no_deploy_operate`, which is correct. Both defects are correct: 
 does hold the subsystems together, and the MCP crate really is disconnected in the *design*
 network (it depends on the core in code, which is not a design edge — arguably a modelling gap in
 the probe rather than a finding about reflow2).
+
+
+## Re-run after BL-4, same day
+
+The detector numbers are unchanged (1 gap, 2 defects — BL-4 adds a capability, not a detector), so
+the probe was pointed at the new capability instead: put its one real gap to the user, end the
+session, reopen the graph.
+
+```
+gap: No plan to deploy and operate it
+open after asking: 1
+-- new session --
+open questions: 1
+  asked 2026-07-18T18:00:00Z about gap:3c0d949e1e45b37d
+  "reflow2 has no Release or Environment modelled — is it meant to be deployed,
+   or is it a library people build from source?"
+```
+
+The question and its exact wording survived the process boundary, which is BL-4 working on a real
+design rather than a fixture.
+
+**And it immediately found the next problem.** Answering *"it is a library you build from source;
+no deploy layer is intended yet"* does not change the design, so the gap stays open while the
+question becomes `answered`. A third session then sees:
+
+| | |
+|---|---|
+| `detect_gaps` | 1 open |
+| `open_questions` | 0 |
+| `reviewed_gaps` | 0 |
+
+— a bare open gap with no sign it was ever asked, so it re-asks. BL-4's problem displaced by one
+step. The record is in the graph (`scan_nodes(Question)` holds both question and answer) but
+nothing on the surface points there. Filed as **BL-25**.
+
+Partly this is incomplete usage: an answer meaning "this is fine as it is" should be followed by
+`acknowledge_gap`, which would move the gap to `reviewed_gaps` and close the loop properly. But an
+agent will take the path taken here, and the probe's value is precisely that it takes the path an
+agent would.

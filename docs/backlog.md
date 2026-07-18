@@ -38,6 +38,7 @@ Four independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
+| **BL-25** | **An answered question whose gap is still open is invisible** | Found by re-running the self-host probe minutes after BL-4 shipped. Ask about a gap and answer it; if the answer does not change the design, the gap stays open while the question moves to `status: answered`. So `open_questions` is empty, `reviewed_gaps` is empty, and a third session sees a bare open gap with no sign it was ever asked — and re-asks. That is BL-4's problem displaced one step. The record survives (`scan_nodes(Question)` has both the question and the answer) but nothing on the surface points there. Partly a usage gap — an answer meaning *"this is fine as it is"* should be followed by `acknowledge_gap` — but an agent will take the incomplete path, so the surface should make it recoverable rather than depending on correct use. | S |
 
 ## Closed
 
