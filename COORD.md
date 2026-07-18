@@ -60,7 +60,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
-- BL-2/BL-3/BL-6: assembly hierarchy, requirement status, artifact gap split — @ajs — 2026-07-18 — pending
+- BL-2/BL-3/BL-6: assembly hierarchy, requirement status, artifact gap split — @ajs — 2026-07-18 — `9ab3da3`
 - BL-1 schema discovery + evidence-backed rejections; per-crate AGENTS.md — @ajs — 2026-07-18 — `9440929`
 - Answer the first external user (where-am-i skill, pause/resume, setup kickoff) — @ajs — 2026-07-18 — `ed818ae`
 - Records: CHANGELOG, backlog, trials — @ajs — 2026-07-18 — `ed818ae`
