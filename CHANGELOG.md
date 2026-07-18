@@ -13,6 +13,23 @@ Two companion records, deliberately kept separate:
 
 This file is the third view: *what changed, and when*.
 
+## [Unreleased]
+
+### Fixed
+
+- **Every tool returns an object.** MCP defines `structuredContent` as an object, so seven
+  list-returning tools — including `detect_gaps` — were malformed and rejected outright by
+  spec-compliant clients. Lists now arrive as `{"count": n, "items": [...]}`. Found by a Grok
+  trial; three home-grown test layers missed it because each was a client we wrote.
+
+### Changed
+
+- **`AGENTS.md` is now the primary instruction file**, per the [agents.md](https://agents.md)
+  convention; `CLAUDE.md` is a pointer. The build commands previously lived only in `CLAUDE.md`,
+  which non-Claude agents never read.
+- `COORD.md` claim board, `.gitattributes` union merge for the shared records, and pull-first in
+  every entry point.
+
 ## [0.1.0] — 2026-07-18
 
 The first release the design loop runs end to end on: a real project was designed and built

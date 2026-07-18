@@ -23,6 +23,9 @@ Three independent sources, which is why several items appear on more than one li
 - **Blind trial, 2026-07-18** — an agent with no knowledge of reflow2's source designed and
   built a weather station through the consumer kit. Its friction log is the single richest
   source of findings we have; quotes below are its words.
+- **Grok via opencode, 2026-07-18** — a second blind trial, different model *and* harness. Found
+  the `structuredContent` array bug that three home-grown test layers all missed, because every
+  one of them was a client we wrote. Notes: [trials/](trials/).
 - **macOS / grok build, 2026-07-18** — first real external user. Reached the design loop and
   asked for things the trial agent could not (it had no continuity across sessions to miss).
 - **[reflow-audit.md](reflow-audit.md)** — the original Reflow's workflows and tools, with
@@ -37,6 +40,7 @@ Three independent sources, which is why several items appear on more than one li
 | **BL-3** | **`Requirement.status` reachable** | Already in the schema, defaulting to `proposed`. The trial agent wanted to mark requirements provisional and wrote "ASSUMED" into the statement text instead. | S |
 | **BL-4** | **Persist asked questions** | `gap_to_prompt` output evaporates, so the next session re-derives and re-asks. The trial agent's own framing: *"the stateless-agent problem reflow2 is supposed to solve."* Same gap the external user hit as "how do I pause and resume". | M |
 | **BL-5** | **Re-examine `single_point_of_failure`** | *"All 15 defects vanished at once when I added two bookkeeping edges. Nothing about actual fragility changed."* Use that case as the test. | M |
+| **BL-6b** | **Demote `unexpected_coupling` from a gap to a report-only signal** | Three independent reports now — both blind trials and the coupling work itself. Grok: *"that coupling **is** the product"* on the one real interface in a 3-component design. Community structure is not meaningful at this scale, so it should inform rather than demand attention. | S |
 | **BL-6** | **Rename/split `unverified_capability`** | Fires per-Artifact despite the name, producing gaps titled "Nothing verifies reading.py". Semantically right, legibly wrong. | S |
 
 ## Bigger threads
