@@ -30,8 +30,8 @@ use tokio::sync::Mutex;
 use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
     AgentAnswer, AgentBackend, ChangeType, DesignGraph, Dimension, DynoError, EpochType,
-    GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy, PromptCollector,
-    PropagateOptions, Value,
+    GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy, LinkArtifactOptions,
+    PromptCollector, PropagateOptions, Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -158,6 +158,48 @@ pub struct CreateEdgeReq {
     pub to_id: String,
     #[serde(default)]
     pub props: Option<JsonValue>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct AddArtifactReq {
+    pub id: String,
+    pub name: String,
+    /// `code` (default) / `spec` / `document` / `diagram` / `model` / …
+    #[serde(default)]
+    pub artifact_type: Option<String>,
+    /// Path / URI / content-hash of the real deliverable (lives outside the graph).
+    #[serde(default)]
+    pub location: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct RealizesReq {
+    pub artifact_id: String,
+    /// Node type the artifact realizes (e.g. `Capability`, `Component`).
+    pub target_type: String,
+    pub target_id: String,
+    /// `stub` / `partial` / `complete`.
+    #[serde(default)]
+    pub completeness: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct LinkArtifactReq {
+    pub artifact_id: String,
+    pub name: String,
+    #[serde(default)]
+    pub location: Option<String>,
+    #[serde(default)]
+    pub artifact_type: Option<String>,
+    pub target_type: String,
+    pub target_id: String,
+    #[serde(default)]
+    pub completeness: Option<String>,
+    /// Provenance stamped on the Fragment (default `authored`).
+    #[serde(default)]
+    pub provenance: Option<String>,
+    #[serde(default)]
+    pub fragment_id: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -581,6 +623,70 @@ impl ReflowService {
             .map_err(|e| McpError::invalid_params(format!("invalid HealProposal: {e}"), None))?;
         let mut g = self.graph.lock().await;
         ok_json(g.apply_heal(&proposal).map_err(dyno_err)?)
+    }
+
+    // ---- Artifact linking (connect real files to the design) ----
+
+    #[tool(
+        description = "Create an Artifact node — a real deliverable (file/spec/doc) that \
+                          lives outside the graph, pointed to by `location`."
+    )]
+    pub async fn add_artifact(
+        &self,
+        Parameters(req): Parameters<AddArtifactReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.add_artifact(
+                &req.id,
+                &req.name,
+                req.artifact_type.as_deref(),
+                req.location.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(description = "Link an Artifact to the Capability/Component it REALIZES (implements).")]
+    pub async fn realizes(
+        &self,
+        Parameters(req): Parameters<RealizesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.realizes(
+                &req.artifact_id,
+                &req.target_type,
+                &req.target_id,
+                req.completeness.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Register a real file against the design WITH provenance, atomically: \
+                       Artifact + a provenance Fragment (YIELDED) + a REALIZES edge to the \
+                       Capability/Component it implements. Fails loud if the target is missing. \
+                       Use after building a file so as-designed vs as-built stays honest."
+    )]
+    pub async fn link_artifact(
+        &self,
+        Parameters(req): Parameters<LinkArtifactReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let opts = LinkArtifactOptions {
+            artifact_id: req.artifact_id,
+            name: req.name,
+            location: req.location,
+            artifact_type: req.artifact_type,
+            target_type: req.target_type,
+            target_id: req.target_id,
+            completeness: req.completeness,
+            provenance: req.provenance,
+            fragment_id: req.fragment_id,
+        };
+        let mut g = self.graph.lock().await;
+        ok_json(g.link_artifact(opts).map_err(dyno_err)?)
     }
 
     // ---- Temporal / CHANGE (deterministic, mutating) ----

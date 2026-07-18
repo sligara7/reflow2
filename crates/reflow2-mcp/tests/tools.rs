@@ -165,6 +165,81 @@ async fn genesis_bootstraps_then_detect_hands_off() {
 }
 
 #[tokio::test]
+async fn link_artifact_closes_the_unrealized_capability_gap() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    // Two capabilities, neither realized yet.
+    for (id, name) in [("cap:flight", "Ball flight"), ("cap:score", "Scoring")] {
+        j!(s.add_capability(Parameters(DescribedReq {
+            id: id.into(),
+            name: name.into(),
+            description: "…".into()
+        })));
+    }
+
+    // Realize only cap:flight. Now artifacts>0, so DETECT can flag the other.
+    let link = j!(s.link_artifact(Parameters(LinkArtifactReq {
+        artifact_id: "art:ball".into(),
+        name: "Ball.cs".into(),
+        location: Some("src/Ball.cs".into()),
+        artifact_type: Some("code".into()),
+        target_type: "Capability".into(),
+        target_id: "cap:flight".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+    })));
+    assert_eq!(link["provenance"], "authored");
+    assert_eq!(link["completeness"], "complete");
+
+    // cap:score is unrealized → the gap fires, naming it.
+    let gaps = j!(s.detect_gaps());
+    let unrealized: Vec<&serde_json::Value> = gaps
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|g| g["gap_source"] == "unrealized_capability")
+        .collect();
+    assert!(
+        unrealized.iter().any(|g| g["affected_ids"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|a| a == "cap:score")),
+        "unrealized_capability should name cap:score, got {gaps}"
+    );
+    assert!(
+        !unrealized.iter().any(|g| g["affected_ids"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|a| a == "cap:flight")),
+        "cap:flight is realized — it must NOT be flagged"
+    );
+
+    // Realize cap:score too → the gap clears for it.
+    j!(s.link_artifact(Parameters(LinkArtifactReq {
+        artifact_id: "art:score".into(),
+        name: "Score.cs".into(),
+        location: Some("src/Score.cs".into()),
+        artifact_type: Some("code".into()),
+        target_type: "Capability".into(),
+        target_id: "cap:score".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+    })));
+    let gaps2 = j!(s.detect_gaps());
+    assert!(
+        !gaps2
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|g| g["gap_source"] == "unrealized_capability"),
+        "both capabilities realized — no unrealized_capability gap, got {gaps2}"
+    );
+}
+
+#[tokio::test]
 async fn gap_to_prompt_collect_then_serve() {
     let s = seeded().await;
     let gaps = j!(s.detect_gaps());

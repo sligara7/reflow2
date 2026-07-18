@@ -2,6 +2,13 @@
 
 > Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
 
+> **Status (SP-6):** the **write side is built, link-only** — `DesignGraph::{add_artifact,
+> realizes, link_artifact}` (`src/artifact.rs`) + the `add_artifact` / `realizes` / `link_artifact`
+> MCP tools + the `link-artifacts` consumer skill materialize `Artifact` nodes and `REALIZES`
+> edges with provenance (recorded on a `Fragment` that `YIELDED` the Artifact). As-built **drift
+> detection** (the filesystem reconcile pass + `DriftEvent`) described below is deferred to SP-6b;
+> `SPECIFIES`/`DOCUMENTS`/`PRODUCES` edges are reachable via the generic `create_edge` tool.
+
 How reflow2 ties the *actual work products* — code, design docs, dataflow charts,
 OpenAPI specs, test results — to the design entities they serve. This is the software
 analogue of storyflow's fragment→node linking, adapted for a developer audience.

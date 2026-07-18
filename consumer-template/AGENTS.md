@@ -27,8 +27,11 @@ fidelity?), that is a *gap* — surface it as a question, don't guess.
 2. **DETECT gaps and ask.** Run `detect_gaps`. For each gap, call `gap_to_prompt` to turn it
    into a plain question (see the handshake below), ask the **user**, then write their answer
    back as a Requirement or a node property. Do this **before** building.
-3. **Build only what the graph specifies.** Implement the capabilities/components the graph
-   holds — nothing it doesn't. (Linking the real files back to the graph is coming — SP-6.)
+3. **Build only what the graph specifies, and link the files back.** Implement the
+   capabilities/components the graph holds — nothing it doesn't. After creating each real file,
+   register it with `link_artifact` (Artifact + provenance + `REALIZES` the capability it
+   implements) so as-designed vs as-built stays honest; re-run `detect_gaps` to confirm the
+   `unrealized_capability` gap closed. (See the **link-artifacts** skill.)
 4. **On ANY change or new idea, check impact first.** Record it with `add_change_event`, then
    `propagate_change` (or `propagate_from` for a speculative "what would this touch?"). Update
    **only** the impacted capabilities/components/tests the blast radius names — then re-run

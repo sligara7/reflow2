@@ -48,6 +48,14 @@ pub mod edge {
     pub const ALLOCATED_TO: &str = "ALLOCATED_TO";
     /// `Artifact → *` — an Artifact realizes a Capability/Component/Interface.
     pub const REALIZES: &str = "REALIZES";
+    /// `Artifact → Interface/Capability/Component` — an Artifact defines the contract.
+    pub const SPECIFIES: &str = "SPECIFIES";
+    /// `Artifact → *` — an Artifact documents (explains) a node.
+    pub const DOCUMENTS: &str = "DOCUMENTS";
+    /// `Verification → Artifact` — a Verification emitted this Artifact (evidence).
+    pub const PRODUCES: &str = "PRODUCES";
+    /// `Fragment → *` — a note/review/pseudocode fragment annotates a node.
+    pub const ANNOTATES: &str = "ANNOTATES";
     /// `Verification → *` — a Verification checks a Capability/Artifact/Component.
     pub const VERIFIES: &str = "VERIFIES";
     /// `* → *` — a node depends on another (a lateral structural coupling).
