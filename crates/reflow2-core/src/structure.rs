@@ -38,6 +38,15 @@ const NON_DESIGN_TYPES: &[&str] = &[
     "ChangeEvent",
     "DimensionAssessment",
     "DimensionObservation",
+    // Provenance and observation records: they describe *how the graph came to
+    // be* or *what reality looks like*, not how the design is structured.
+    // Leaving them in distorts the topology they were never part of — a
+    // Fragment lands as an isolated node inflating the community count, and a
+    // DriftEvent's DEPENDS_ON to its Artifact is a traceability edge, so it
+    // both shifts communities and can be reported as a coupling in its own
+    // right.
+    "Fragment",
+    "DriftEvent",
 ];
 
 /// A `dynograph-graph` view of the design network plus the id/type of each dense

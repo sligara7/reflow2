@@ -89,3 +89,124 @@ fn a_peripheral_node_reaching_a_hub_across_communities_is_flagged() {
         bridge.reasons
     );
 }
+
+#[test]
+fn a_properly_modelled_contract_is_not_surprising() {
+    // Two clusters joined only by a contract. The Interface is declared
+    // structure — flagging it would penalise the modelling discipline
+    // AGENTS.md asks for. The *components* it couples are still assessed.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for c in ["cap:a1", "cap:a2", "cap:a3", "cap:b1", "cap:b2", "cap:b3"] {
+        cap(&mut g, c);
+    }
+    dep(&mut g, "cap:a1", "cap:a2", 0.9);
+    dep(&mut g, "cap:a2", "cap:a3", 0.9);
+    dep(&mut g, "cap:a1", "cap:a3", 0.9);
+    dep(&mut g, "cap:b1", "cap:b2", 0.9);
+    dep(&mut g, "cap:b2", "cap:b3", 0.9);
+    dep(&mut g, "cap:b1", "cap:b3", 0.9);
+
+    g.add_component("cmp:a", "A", "left").unwrap();
+    g.add_component("cmp:b", "B", "right").unwrap();
+    g.allocate("cap:a1", "cmp:a").unwrap();
+    g.allocate("cap:b1", "cmp:b").unwrap();
+    g.add_interface("ifc:link", "The contract").unwrap();
+    g.provides("cmp:a", "ifc:link").unwrap();
+    g.consumes("cmp:b", "ifc:link").unwrap();
+
+    let s = g.surprising_connections().unwrap();
+    assert!(
+        !s.iter()
+            .any(|c| c.from_id.starts_with("ifc:") || c.to_id.starts_with("ifc:")),
+        "an Interface must never be reported as a surprising endpoint, got {s:?}"
+    );
+    // If the two components are genuinely distant, the coupling is reported
+    // between *them*, explained by the contract it runs through.
+    if let Some(c) = s.iter().find(|c| c.via.is_some()) {
+        assert_eq!(c.via.as_deref(), Some("ifc:link"));
+        assert!(c.reasons.contains(&"coupled through a shared contract"));
+        assert!(c.from_id.starts_with("cmp:") && c.to_id.starts_with("cmp:"));
+    }
+}
+
+#[test]
+fn fragments_are_not_treated_as_parts_of_the_design() {
+    // A sparse design where Leiden can only produce tiny communities. Every
+    // edge would "bridge communities", which says nothing — so nothing fires.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for c in ["cap:a", "cap:b", "cap:c", "cap:d"] {
+        cap(&mut g, c);
+    }
+    dep(&mut g, "cap:a", "cap:b", 0.5);
+    dep(&mut g, "cap:c", "cap:d", 0.5);
+    dep(&mut g, "cap:b", "cap:c", 0.5);
+
+    assert!(
+        g.surprising_connections().unwrap().is_empty(),
+        "pairs are not 'otherwise-distant parts of the design'"
+    );
+}
+
+#[test]
+fn provenance_nodes_stay_out_of_the_topology() {
+    // Fragments and DriftEvents describe how the graph came to be, not how the
+    // design is shaped. Leaving them in shifts communities and can be reported
+    // as couplings in their own right.
+    use reflow2_core::LinkArtifactOptions;
+    use reflow2_core::drift::{ObservedArtifact, ReconcileOptions};
+
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for c in ["cap:a1", "cap:a2", "cap:a3", "cap:b1", "cap:b2", "cap:b3"] {
+        cap(&mut g, c);
+    }
+    dep(&mut g, "cap:a1", "cap:a2", 0.9);
+    dep(&mut g, "cap:a2", "cap:a3", 0.9);
+    dep(&mut g, "cap:a1", "cap:a3", 0.9);
+    dep(&mut g, "cap:b1", "cap:b2", 0.9);
+    dep(&mut g, "cap:b2", "cap:b3", 0.9);
+    dep(&mut g, "cap:b1", "cap:b3", 0.9);
+    dep(&mut g, "cap:a1", "cap:b1", 0.1);
+
+    let before = g.surprising_connections().unwrap();
+
+    // Register a file (creates an Artifact + a provenance Fragment) and record
+    // drift against it (creates a DriftEvent joined by DEPENDS_ON).
+    g.link_artifact(LinkArtifactOptions {
+        artifact_id: "art:a".into(),
+        name: "a.rs".into(),
+        location: Some("src/a.rs".into()),
+        artifact_type: None,
+        target_type: node::CAPABILITY.into(),
+        target_id: "cap:a1".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: Some("sha256:v1".into()),
+    })
+    .unwrap();
+    g.reconcile_artifacts(
+        &[ObservedArtifact {
+            artifact_id: "art:a".into(),
+            present: true,
+            checksum: Some("sha256:v2".into()),
+        }],
+        &ReconcileOptions {
+            record_events: true,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+
+    let after = g.surprising_connections().unwrap();
+    assert_eq!(
+        before.len(),
+        after.len(),
+        "bookkeeping must not change the topology: {before:?} vs {after:?}"
+    );
+    assert!(
+        !after
+            .iter()
+            .any(|c| c.from_id.starts_with("drift:") || c.to_id.starts_with("drift:")),
+        "a DriftEvent is not a design coupling"
+    );
+}

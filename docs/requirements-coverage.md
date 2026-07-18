@@ -16,7 +16,7 @@ status. It reflects the deterministic, LLM-free core built so far (build-order s
 
 1. **This matrix** — the requirement→code→test mapping below. Requirement IDs (`[IP-1]`, …)
    are extracted from the process docs.
-2. **Automated gates** — `cargo test --no-default-features` (152 tests), `cargo clippy`,
+2. **Automated gates** — `cargo test --no-default-features` (155 tests), `cargo clippy`,
    `cargo fmt --check`, and `python3 tools/validate_schema.py` (schema conforms to
    dynograph-core). These are the executable evidence the matrix cells point at.
 3. **The deferral list** — everything marked ⬜/🟡 is a named, tracked gap; nothing that the
@@ -80,7 +80,7 @@ half (question phrasing, anchors) is LLM-gated and deferred.
 | GS-5 | Phase-coverage gaps | 🟡 | concept_without_design, design_without_build, build_without_verification, no_deploy_operate ✅; **no_decisions_recorded deferred** |
 | GS-6 | Traceability gaps | 🟡 | unsatisfied_requirement, unallocated_capability, unrealized_capability, unverified_capability ✅; **interfaceless_dependency deferred** |
 | GS-6b | Interface pairing gaps | ✅ | `unprovided_interface` / `unconsumed_interface` from `detect_interface_pairing` — keyed on Interface node identity, so a shared name cannot mask a break · `tests/interface.rs` |
-| GS-7 | Structural gaps (asked) | 🟡 | `unexpected_coupling` surfaced as a gap (from `surprising_connections`, a graph-analysis addition) · `an_unexpected_cross_community_coupling_is_surfaced_as_a_gap`; `orphan_node`/`dead_end`/`disconnected_community`/`single_point_of_failure` still computed in HEAL only |
+| GS-7 | Structural gaps (asked) | 🟡 | `unexpected_coupling` surfaced as a gap (from `surprising_connections`, a graph-analysis addition; **selective** since the 2026-07-18 blind trial — `PROVIDES`/`CONSUMES` are declared structure so contracts are collapsed to the components they couple rather than flagged, both communities must be ≥3 nodes to count as *parts* of the design, and provenance nodes (`Fragment`, `DriftEvent`) are excluded from the topology) · `an_unexpected_cross_community_coupling_is_surfaced_as_a_gap`; `orphan_node`/`dead_end`/`disconnected_community`/`single_point_of_failure` still computed in HEAL only |
 | GS-8 | Quality/risk gaps | 🟡 | `declining_dimension` surfaced as a gap (from `dimension_drifts`) · `a_declining_dimension_is_surfaced_as_a_gap...`; `contradiction` detected in HEAL; unmitigated_risk / unvalidated_causal_claim / dimension_blind_spot / violated_constraint still deferred |
 | GS-9 | Compliance gaps | ⬜ | needs the environment layer (EnvironmentRule / OPERATES_IN) |
 | GS-10 | SME gaps | ⬜ | LLM (SME augmentation) |
