@@ -447,6 +447,16 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("and brings back what the user said",
          still[0].get("answer") == "Yes — deliberate.", still[0].get("answer"))
 
+    # BL-19: the graph carries a record of which reflow2 wrote it, beside the
+    # store rather than inside it (RocksDB owns its own directory).
+    import os
+    stamp = graph_path + ".meta.json"
+    c.ok("the graph is stamped with the reflow2 that wrote it", os.path.exists(stamp), stamp)
+    if os.path.exists(stamp):
+        meta = json.load(open(stamp))
+        c.ok("and the stamp records the vocabulary, not just a version",
+             meta.get("node_types", 0) > 0 and meta.get("edge_types", 0) > 0, meta)
+
     # Cross-process determinism. A HashSet's iteration order is seeded per
     # process, so anything derived from it (community detection, and every gap
     # that follows) can differ between runs on an unchanged graph. That would

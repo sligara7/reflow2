@@ -34,8 +34,16 @@ async fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
     tracing::info!(graph_path = %cli.graph_path, "opening reflow2 design graph");
 
-    let service = ReflowService::new(&cli.graph_path)
+    let (service, provenance) = ReflowService::new_reporting(&cli.graph_path)
         .with_context(|| format!("failed to open design graph at {}", cli.graph_path))?;
+
+    // Say it on stderr as well as the log: an operator running this by hand
+    // sees stderr, and "which reflow2 wrote this graph" is exactly the question
+    // that used to have no answer at all.
+    if let Some(note) = provenance {
+        tracing::warn!("{note}");
+        eprintln!("reflow2: {note}");
+    }
 
     tracing::info!("reflow2-mcp serving over stdio");
     let running = service

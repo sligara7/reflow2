@@ -627,6 +627,24 @@ pub struct GapToPromptReq {
 #[tool_router(router = tool_router)]
 impl ReflowService {
     /// Open an on-disk (RocksDB) design graph at `path`.
+    /// Open on disk, reporting which reflow2 wrote the graph.
+    ///
+    /// A mismatch is logged rather than swallowed: an operator who upgrades and
+    /// keeps an older graph should be told, and one whose graph came from a
+    /// *newer* reflow2 is refused outright by the core (see
+    /// `reflow2_core::provenance`) so the server never starts on a design it
+    /// would only partly understand.
+    pub fn new_reporting(path: &str) -> Result<(Self, Option<String>), DynoError> {
+        let (graph, provenance) = DesignGraph::open_rocksdb_with_provenance(path)?;
+        Ok((
+            Self {
+                graph: Arc::new(Mutex::new(graph)),
+                tool_router: Self::tool_router(),
+            },
+            provenance.note(),
+        ))
+    }
+
     pub fn new(path: &str) -> Result<Self, DynoError> {
         Ok(Self {
             graph: Arc::new(Mutex::new(DesignGraph::open_rocksdb(path)?)),

@@ -285,12 +285,26 @@ That is a silent drop, which AGENTS.md rule 4 forbids everywhere else in this co
 a version on the graph directory, there is no way to **detect** that a store predates the format,
 let alone refuse to open it.
 
-Wants, roughly in order of value: a version stamp written into the graph directory (schema
-version + foundation tag + reflow2 commit); a fail-loud check on open when it does not match what
-the binary expects — refuse rather than half-read; a backup-before-upgrade in
-`reflow2_init.py`; and only then a migration/backfill path for additive schema changes. The first
-two are **S** and buy the ability to say "your graph was written by an older reflow2" instead of
-silently misbehaving. Backfill is **M**.
+**The stamp and the check are done.** A `GraphStamp` — reflow2 version, schema version, node and
+edge type counts — is written to `<graph>.meta.json`, a *sibling* of the store rather than a file
+inside a directory RocksDB owns. `open_rocksdb` reads it, compares, refreshes it, and the MCP
+server reports any difference on stderr and in the log.
+
+*What it refuses, and deliberately does not.* Refusing on any mismatch would be worse than the
+problem: schema growth here is additive, so a graph written before a type existed reads perfectly,
+and refusing would lock someone out of their own design over a change that cannot hurt them. The
+line is drawn at **a graph from the future** — one written by a reflow2 whose schema knew *more*
+than the running one. That graph can hold nodes this binary has no vocabulary for, so reading it
+means silently seeing less than is there. Refused loudly, with what wrote it and what to do.
+An unreadable stamp is reported and never overwritten; it may be the only record of what wrote the
+graph.
+
+The declared schema `version` was not usable as the signal — it is 1 in every domain and has never
+been bumped. Type counts are what actually move, and they caught the 26→27 change from BL-4.
+
+*Still open:* **backup-before-upgrade** in `reflow2_init.py`, and a **backfill** path for additive
+schema changes so old nodes gain new defaults rather than reading `None` (**M**, and it wants
+BL-20's export/import first).
 
 **BL-18 · Am I running the current reflow2?** — *user, 2026-07-18.* Extends the update half of
 BL-15, whose local machinery is already built and whose remaining gap this names precisely.

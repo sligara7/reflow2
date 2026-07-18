@@ -41,6 +41,7 @@ pub mod llm;
 pub mod nodes;
 pub mod operate;
 pub mod propagate;
+pub mod provenance;
 pub mod report;
 pub mod schema;
 pub mod structure;
@@ -69,6 +70,7 @@ pub use llm::{
     LlmBackend, LlmError, LlmParams, LlmRequest, LlmResponse, MockLlmBackend, complete_json,
 };
 pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOptions};
+pub use provenance::{GraphStamp, Provenance};
 pub use report::{AllocationSummary, GraphReport};
 pub use schema::load_schema;
 pub use surprises::SurprisingConnection;

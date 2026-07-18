@@ -50,7 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-19 — @ajs — 2026-07-18 — graph version stamp + fail-loud open check
+- _(nothing claimed)_
 
 ## Blocked / waiting
 
@@ -60,6 +60,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-19 (stamp+check half): a graph records which reflow2 wrote it — @ajs — 2026-07-18 — pending
 - BL-21: report-friction skill; installer validates skill frontmatter — @ajs — 2026-07-18 — `31064f6`
 - BL-25: an answered question stays visible while its gap is open — @ajs — 2026-07-18 — `20b7943`
 - BL-4: asked questions outlive the session (new Question node type) — @ajs — 2026-07-18 — `be510b4`

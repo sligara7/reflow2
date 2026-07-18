@@ -17,6 +17,22 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A graph records which reflow2 wrote it** (BL-19). `<graph>.meta.json` sits beside the store —
+  never inside the directory RocksDB owns — holding the reflow2 version, schema version, and node
+  and edge type counts. `open_rocksdb` reads it, compares, refreshes it, and the server reports any
+  difference on stderr and in the log. Until now nothing was written to the graph directory at all,
+  and validation runs on write and never on read, so a graph opened by a different reflow2 just
+  behaved differently with no error and no marker.
+
+  **One difference is fatal, and only one:** a graph written by a reflow2 whose schema knew *more*
+  than the running one. That graph can hold nodes this binary has no vocabulary for, so opening it
+  would silently show less of the design than it holds. Everything else opens and is reported —
+  schema growth is additive, so refusing an older graph would lock someone out of their own design
+  over a change that cannot hurt them.
+
+  The type counts are the signal, not the declared schema version: that is `1` in every domain and
+  has never been bumped.
+
 - **The agent can report friction with reflow2 itself** (BL-21). A `report-friction` skill, with
   the trigger in the consumer `AGENTS.md` because a skill alone is not reliably discovered
   (BL-22). Everything reflow2 knows about its own weak points came from staged trials; ordinary

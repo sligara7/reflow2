@@ -50,11 +50,27 @@ impl DesignGraph {
     /// rule 4), and the C++ `librocksdb-sys` compile stays opt-in. Also fails if
     /// the embedded schema fails to merge or the store cannot be opened.
     pub fn open_rocksdb(path: &str) -> Result<Self, DynoError> {
+        Ok(Self::open_rocksdb_with_provenance(path)?.0)
+    }
+
+    /// Open on disk, and report which reflow2 wrote the graph.
+    ///
+    /// The stamp lives beside the store and is refreshed on the way through.
+    /// Only one difference is fatal — a graph written by a reflow2 that knew
+    /// *more* of the schema than this one, which cannot be read in full. See
+    /// [`crate::provenance`] for why every other difference opens.
+    pub fn open_rocksdb_with_provenance(
+        path: &str,
+    ) -> Result<(Self, crate::provenance::Provenance), DynoError> {
         let schema = crate::schema::load_schema()?;
-        Ok(Self {
-            engine: StorageEngine::new_rocksdb(schema, path)?,
-            graph_id: DEFAULT_GRAPH_ID.to_string(),
-        })
+        let provenance = crate::provenance::check_and_stamp(path, &schema)?;
+        Ok((
+            Self {
+                engine: StorageEngine::new_rocksdb(schema, path)?,
+                graph_id: DEFAULT_GRAPH_ID.to_string(),
+            },
+            provenance,
+        ))
     }
 
     /// Use a non-default logical graph id (e.g. to host several designs in one
