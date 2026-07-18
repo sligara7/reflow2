@@ -14,6 +14,7 @@
 resolver = "2"
 members = [
     "crates/reflow2-core",
+    "crates/reflow2-mcp",
 ]
 
 [workspace.package]

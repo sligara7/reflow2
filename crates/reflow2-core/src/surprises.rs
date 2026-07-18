@@ -34,7 +34,7 @@ use crate::graph::DesignGraph;
 const LATERAL_COUPLING: &[&str] = &["DEPENDS_ON", "PROVIDES", "CONSUMES", "PART_OF_FLOW"];
 
 /// A coupling edge bridging two Leiden communities of the design network.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct SurprisingConnection {
     /// Source id of the edge (graph orientation).
     pub from_id: String,

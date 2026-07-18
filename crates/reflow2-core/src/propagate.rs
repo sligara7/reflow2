@@ -27,7 +27,8 @@ use crate::nodes::edge;
 
 /// The semantic direction of an impact hop (docs/impact-propagation.md,
 /// "Direction matters").
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum ImpactDirection {
     /// Realization: "what did this node's existence justify or shape?"
     Downstream,
@@ -114,7 +115,7 @@ fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
 }
 
 /// One hop in an impact chain — the edge that carried impact to a node, and how.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct Hop {
     /// Edge type traversed.
     pub edge_type: String,
@@ -130,7 +131,7 @@ pub struct Hop {
 
 /// A node reached by propagation, with the explanation of why (discipline 2:
 /// explain every impact).
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct ImpactedNode {
     /// The impacted node's id.
     pub node_id: String,
@@ -152,7 +153,7 @@ pub struct ImpactedNode {
 }
 
 /// The computed blast radius of a change.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct BlastRadius {
     /// Seed node ids the propagation started from.
     pub seeds: Vec<String>,

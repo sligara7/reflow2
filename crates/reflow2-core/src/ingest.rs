@@ -201,7 +201,7 @@ struct ExtractedDependency {
 // ---- Report shapes ---------------------------------------------------------
 
 /// A pass that failed to produce usable output (enveloped, not fatal).
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct PassError {
     /// The pass name (e.g. `"requirements"`).
     pub pass: &'static str,
@@ -210,7 +210,7 @@ pub struct PassError {
 }
 
 /// An edge that could not be created, with the reason (no silent drops).
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct DroppedEdge {
     /// Edge type.
     pub edge_type: String,
@@ -225,7 +225,7 @@ pub struct DroppedEdge {
 /// A cross-id fuzzy dedup: an extracted node whose id was new but whose name
 /// matched an existing same-type node closely enough to be treated as the same
 /// entity. Surfaced (never silent) so a wrong merge is auditable.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct FuzzyMerge {
     /// The id the extraction produced.
     pub extracted_id: String,
@@ -238,7 +238,8 @@ pub struct FuzzyMerge {
 }
 
 /// Whether the ingest ran fully clean or degraded.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum IngestStatus {
     /// All passes and integrations succeeded.
     Ok,
@@ -247,7 +248,7 @@ pub enum IngestStatus {
 }
 
 /// The outcome of an ingest.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct IngestReport {
     /// The provenance Fragment created for this input.
     pub fragment_id: String,

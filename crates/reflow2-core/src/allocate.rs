@@ -31,7 +31,7 @@ use crate::graph::DesignGraph;
 use crate::nodes::{edge, node};
 
 /// Per-component cohesion/coupling scores.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct ComponentScore {
     /// The component id.
     pub component_id: String,
@@ -45,7 +45,7 @@ pub struct ComponentScore {
 
 /// A capability coupled more tightly to another component than to its own — a
 /// candidate to move (a *suggestion*, per the candidates-not-answers rule).
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct MisplacedCapability {
     /// The capability id.
     pub capability_id: String,
@@ -60,7 +60,7 @@ pub struct MisplacedCapability {
 }
 
 /// The evaluation of the current allocation.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct AllocationReport {
     /// Per-component scores.
     pub components: Vec<ComponentScore>,
@@ -93,7 +93,7 @@ struct Dep {
 }
 
 /// A proposed component (a Leiden community of tightly-coupled capabilities).
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct ProposedComponent {
     /// A synthetic id for the cluster (`cluster:N`) — the LLM names it later.
     pub proposed_id: String,
@@ -105,7 +105,7 @@ pub struct ProposedComponent {
 /// (Leiden community detection), with how it compares to the current allocation.
 /// A **candidate**, not a command: `requires_human_review` is always true and
 /// the LLM must name the clusters before it becomes real (candidates-not-answers).
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct ProposedAllocation {
     /// The proposed components (Leiden communities).
     pub clusters: Vec<ProposedComponent>,

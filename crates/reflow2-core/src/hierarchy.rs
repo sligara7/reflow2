@@ -30,7 +30,8 @@ use crate::nodes::{edge, node};
 
 /// A decomposition level — mirrors `structure.yaml`'s `Component.level` enum,
 /// ordered low → high.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum Level {
     Component,
     Subsystem,
@@ -75,7 +76,8 @@ impl Level {
 }
 
 /// What kind of decomposition defect (gap-surfacing.md GS-11).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum HierarchyIssueKind {
     /// A link skips ≥2 levels (the carburetor-to-body problem).
     MissingIntermediateLevel,
@@ -97,7 +99,7 @@ impl HierarchyIssueKind {
 }
 
 /// A detected decomposition defect.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct HierarchyIssue {
     /// The kind of defect.
     pub kind: HierarchyIssueKind,

@@ -46,7 +46,8 @@ use crate::nodes::{edge, node};
 
 /// What a gap is about (docs/gap-surfacing.md taxonomy). Adding a detector is
 /// one variant + one branch, per storyflow's convention.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
 pub enum GapSource {
     // Phase-coverage
     /// Requirements/Capabilities exist, but no Components (WHERE).
@@ -104,7 +105,8 @@ impl GapSource {
 }
 
 /// The zoom level a gap is framed at (docs/gap-surfacing.md `scope`).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
 pub enum GapScope {
     /// Whole-project / lifecycle-level.
     Project,
@@ -121,7 +123,7 @@ pub enum GapScope {
 /// The user-facing `GapPrompt` (context-setter + plain question + hints +
 /// anchor) is produced later by the deferred PROMPT step; `evidence` is the
 /// auditable, jargon-carrying signal that backs this candidate.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct GapCandidate {
     /// Deterministic id: `gap:{hash(source + sorted affected ids)}`.
     pub id: String,
@@ -147,7 +149,7 @@ pub struct GapCandidate {
 /// (docs/gap-surfacing.md, the PROMPT half of DIAGNOSE→PROMPT). Produced from a
 /// [`GapCandidate`] via an [`LlmBackend`] — the first LLM-reasoning op wired
 /// through the pluggable boundary.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct GapPrompt {
     /// 1–2 sentences placing the user back in their own design.
     pub context_setter: String,

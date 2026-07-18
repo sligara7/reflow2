@@ -43,7 +43,7 @@ const SNAPSHOT_TYPES: &[&str] = &[
 ];
 
 /// Allocation health at a glance (from `evaluate_allocation`).
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct AllocationSummary {
     /// Components with at least one capability.
     pub component_count: usize,
@@ -56,7 +56,7 @@ pub struct AllocationSummary {
 }
 
 /// The rolled-up state of the design graph.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct GraphReport {
     /// `(node type, count)` for design types present, lifecycle order.
     pub node_counts: Vec<(&'static str, usize)>,

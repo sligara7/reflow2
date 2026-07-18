@@ -38,7 +38,8 @@ use crate::graph::DesignGraph;
 use crate::nodes::{edge, node};
 
 /// The kind of structural defect (docs/heal-process.md defect catalog).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum HealCategory {
     /// A node missing a golden-thread link it should have.
     OrphanNode,
@@ -72,7 +73,8 @@ impl HealCategory {
 }
 
 /// Defect severity (docs/heal-process.md).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum HealSeverity {
     /// Must fix.
     Critical,
@@ -83,7 +85,7 @@ pub enum HealSeverity {
 }
 
 /// A detected structural defect.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct HealIssue {
     /// Deterministic id: `heal:{hash(category + sorted affected ids)}`.
     pub id: String,
@@ -100,7 +102,8 @@ pub struct HealIssue {
 }
 
 /// How aggressively to heal (docs/heal-process.md strategies).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
 pub enum HealStrategy {
     /// CRITICAL only.
     Conservative,
@@ -142,7 +145,7 @@ impl Default for HealOptions {
 }
 
 /// A structural graph operation HEAL proposes.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub enum HealOp {
     /// Create an edge between two existing nodes.
     CreateEdge {
@@ -164,7 +167,7 @@ pub enum HealOp {
 
 /// An operation tagged with the issue it addresses (so post-repair verification
 /// can check exactly the defects the operations targeted).
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct HealOperation {
     /// Id of the [`HealIssue`] this operation resolves.
     pub issue_id: String,
@@ -175,18 +178,18 @@ pub struct HealOperation {
 /// A description of content the LLM healer must generate (deferred). Carrying
 /// the description — not the content — keeps HEAL honest: it never ships an
 /// un-generated fix as if it were done.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct GeneratedContentStub {
     /// Issue this would resolve.
     pub for_issue: String,
     /// What kind of node/content to generate (e.g. "Decision", "owner edge").
-    pub kind: &'static str,
+    pub kind: String,
     /// What the generator should produce.
     pub description: String,
 }
 
 /// An operation dropped from the proposal, with the reason (discipline 2).
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct SkippedOperation {
     /// The offending reference (issue id / node id).
     pub reference: String,
@@ -195,7 +198,7 @@ pub struct SkippedOperation {
 }
 
 /// A HEAL proposal (mirrors storyflow's `HealingProposalResponse`).
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct HealProposal {
     /// Project (or graph) being healed.
     pub target_id: String,
@@ -218,7 +221,7 @@ pub struct HealProposal {
 }
 
 /// The outcome of applying a proposal.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct HealReport {
     /// Whether any operations were applied.
     pub applied: bool,
@@ -501,7 +504,7 @@ impl DesignGraph {
                 // Everything else needs generated content → human review.
                 HealCategory::OrphanNode => generated_content.push(GeneratedContentStub {
                     for_issue: issue.id.clone(),
-                    kind: "owner edge",
+                    kind: "owner edge".to_string(),
                     description: format!(
                         "Propose the missing golden-thread link for {}",
                         issue.message
@@ -509,24 +512,24 @@ impl DesignGraph {
                 }),
                 HealCategory::Contradiction => generated_content.push(GeneratedContentStub {
                     for_issue: issue.id.clone(),
-                    kind: "Decision",
+                    kind: "Decision".to_string(),
                     description: format!("Propose a Decision reconciling {}", issue.message),
                 }),
                 HealCategory::UnresolvedSetup => generated_content.push(GeneratedContentStub {
                     for_issue: issue.id.clone(),
-                    kind: "entity",
+                    kind: "entity".to_string(),
                     description: format!("Propose the follow-through entity for {}", issue.message),
                 }),
                 HealCategory::DisconnectedCommunity | HealCategory::DeadEnd => generated_content
                     .push(GeneratedContentStub {
                         for_issue: issue.id.clone(),
-                        kind: "bridge",
+                        kind: "bridge".to_string(),
                         description: format!("Propose a bridging link for {}", issue.message),
                     }),
                 HealCategory::SinglePointOfFailure => {
                     generated_content.push(GeneratedContentStub {
                         for_issue: issue.id.clone(),
-                        kind: "redundancy",
+                        kind: "redundancy".to_string(),
                         description: format!("Propose redundancy for {}", issue.message),
                     })
                 }

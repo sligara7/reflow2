@@ -22,7 +22,8 @@ use crate::nodes::{Props, edge, node};
 
 /// Kind of [`DesignEpoch`](crate::nodes::node::DESIGN_EPOCH) —
 /// mirrors `temporal.yaml` `DesignEpoch.epoch_type`.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
 pub enum EpochType {
     /// A checksummed baseline (generalizes the P2→P3 Anchor).
     Baseline,
@@ -50,7 +51,8 @@ impl EpochType {
 }
 
 /// Why the design changed — mirrors `temporal.yaml` `ChangeEvent.change_type`.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
 pub enum ChangeType {
     /// A requirement added or widened after the baseline.
     RequirementCreep,
@@ -94,7 +96,8 @@ impl ChangeType {
 
 /// What a [`ChangeEvent`](crate::nodes::node::CHANGE_EVENT) did to a node —
 /// mirrors `temporal.yaml` `CHANGED.action`.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
 pub enum ChangeAction {
     /// The node was created by this change.
     Added,
