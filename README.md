@@ -8,8 +8,13 @@ nothing in the source projects is disturbed — all of them the author's own wor
 [chain_reflow](https://github.com/sligara7/chain_reflow), and
 [dynograph-foundation](https://github.com/sligara7/dynograph-foundation).
 
-**New here? Read [docs/overview.md](docs/overview.md) first** — it maps all the documents
-and how they fit together.
+**Want to USE reflow2 to design and build your own project** (with grok build or claude code)?
+→ **[consumer-template/](consumer-template/)** is the drop-in kit; start with
+**[consumer-template/SETUP.md](consumer-template/SETUP.md)** (build the server, connect your
+agent, verify). The rest of this README and the docs are about reflow2's own design.
+
+**New to the internals? Read [docs/overview.md](docs/overview.md) first** — it maps all the
+documents and how they fit together.
 
 ## Vision
 
@@ -110,7 +115,7 @@ Storyflow contributes six *universal graph processes* — the *cyclic engine* th
 on the graph regardless of phase. They map onto the coherence loop; see
 [docs/overview.md](docs/overview.md) for the full reconciliation.
 
-- **GENESIS** — bootstrap the graph from a brief *(acknowledged; not yet detailed)*
+- **GENESIS** — bootstrap the graph from a brief ([docs/genesis.md](docs/genesis.md))
 - **INGEST** — extraction ([docs/extraction-plan.md](docs/extraction-plan.md))
 - **DIAGNOSE → PROMPT** — find graph weaknesses & ask the user questions ([docs/gap-surfacing.md](docs/gap-surfacing.md))
 - **SYNTHESIZE** — graph → artifacts (docs, diagrams, as-built) *(acknowledged; not yet detailed)*
@@ -119,5 +124,10 @@ on the graph regardless of phase. They map onto the coherence loop; see
 
 ## Status
 
-Bootstrapping. Schema-first: the node/edge vocabulary is the foundation
-everything else builds on.
+The deterministic core and the **agent-native surface are built** — the full surface plan
+(persistence, ambient-agent LLM seam, the `reflow2-mcp` MCP server, consumer kit, GENESIS,
+artifact linking) is complete and cold-start-verified. See
+[docs/requirements-coverage.md](docs/requirements-coverage.md) for the living status matrix and
+[docs/surface-plan.md](docs/surface-plan.md) for what's built vs. the tracked future
+improvements (SP-3b ingest extraction, SP-6b as-built drift). To *use* it, see
+[consumer-template/](consumer-template/).
