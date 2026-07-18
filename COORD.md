@@ -50,7 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-20 → BL-19 remainder → BL-18 — @ajs — 2026-07-18 — export/import, backup-before-upgrade, staleness check
+- _(nothing claimed)_
 
 ## Blocked / waiting
 
@@ -60,6 +60,8 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- **v0.2.0 released and tagged** — @ajs — 2026-07-18 — `b69dc28`; frozen for real-use feedback
+- BL-20 export/import; BL-19 backup+backfill; BL-18 staleness check — @ajs — 2026-07-18 — `79f5d42`, `3a618e3`, `21e9e11`
 - BL-19 (stamp+check half): a graph records which reflow2 wrote it — @ajs — 2026-07-18 — `2764eec`
 - BL-21: report-friction skill; installer validates skill frontmatter — @ajs — 2026-07-18 — `31064f6`
 - BL-25: an answered question stays visible while its gap is open — @ajs — 2026-07-18 — `20b7943`
