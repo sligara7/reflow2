@@ -39,6 +39,24 @@ impl DesignGraph {
         })
     }
 
+    /// Open an on-disk design graph backed by RocksDB at `path`, configured
+    /// with the full reflow2 schema. This is the persistent surface backend:
+    /// the design survives across agent sessions (surface-plan.md, step 1),
+    /// where the in-memory backend is dev/test only.
+    ///
+    /// Delegates to the foundation's [`StorageEngine::new_rocksdb`], which is
+    /// present in the API regardless of the `rocksdb` feature: with the feature
+    /// off it returns a fail-loud error (no silent fallback to memory — AGENTS.md
+    /// rule 4), and the C++ `librocksdb-sys` compile stays opt-in. Also fails if
+    /// the embedded schema fails to merge or the store cannot be opened.
+    pub fn open_rocksdb(path: &str) -> Result<Self, DynoError> {
+        let schema = crate::schema::load_schema()?;
+        Ok(Self {
+            engine: StorageEngine::new_rocksdb(schema, path)?,
+            graph_id: DEFAULT_GRAPH_ID.to_string(),
+        })
+    }
+
     /// Use a non-default logical graph id (e.g. to host several designs in one
     /// storage instance). Chainable off a constructor.
     #[must_use]

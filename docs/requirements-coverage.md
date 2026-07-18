@@ -216,6 +216,19 @@ schema in `schema/*.yaml`.
 | IS-6 | Agent-native vs hosted consequence | ➖ | deferred *decision* |
 | IS-7 | Build order (1 store+schema → 2 det. core → 3 LLM → 4 surface) | 🟡 | **steps 1 + 2 complete; step 3 started** (LlmBackend + mock + first op); real backends + step 4 (surface) not started |
 
+### Agent-native surface — [surface-plan.md](surface-plan.md)
+
+Next-phase build order for the agent-native surface (the deferred surface decision, now made).
+
+| ID | Requirement | Status | Evidence / note |
+|----|-------------|--------|-----------------|
+| SP-1 | Persistence: `DesignGraph::open_rocksdb(path)`, feature-gated, fail-loud when off | ✅ | `graph::DesignGraph::open_rocksdb` delegates to `StorageEngine::new_rocksdb` · `tests/persistence.rs` (`open_rocksdb_without_feature_fails_loud` in the default suite; `rocksdb_round_trips_across_reopen` under `--features rocksdb`) |
+| SP-2 | `LlmBackend` = ambient-agent adapter (returns prompt+schema, takes back JSON) | ⬜ | deferred (surface-plan step 2) |
+| SP-3 | Surface layer: MCP server / CLI exposing core ops as tools | ⬜ | deferred (surface-plan step 3) |
+| SP-4 | Consumer `AGENTS.md` / skill for the softball repo | ⬜ | deferred (surface-plan step 4) |
+| SP-5 | GENESIS: bootstrap the graph from the opening brief | ⬜ | deferred (surface-plan step 5) |
+| SP-6 | Artifact linking wiring (`REALIZES`, provenance) to real files | ⬜ | deferred (surface-plan step 6) |
+
 ---
 
 ## Cross-cutting project rules — [AGENTS.md](../AGENTS.md)
