@@ -50,7 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- _(nothing claimed)_
+- BL-21 — @ajs — 2026-07-18 — report-friction skill + AGENTS.md trigger, .github/
 
 ## Blocked / waiting
 
