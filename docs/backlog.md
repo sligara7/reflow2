@@ -35,7 +35,7 @@ Three independent sources, which is why several items appear on more than one li
 
 | ID | Item | Why | Size |
 |---|---|---|---|
-| **BL-1** | **Schema discovery tool** | Trial agent brute-forced 14 edge-type guesses, then used `DEPENDS_ON` *"because it was the one that validated, which is precisely the kind of silent accommodation this project says it's against."* Its bogus `Release → Component` edges then polluted coupling output. | S |
+| **BL-1** | **Schema discovery tool** | Trial agent brute-forced 14 edge-type guesses, then used `DEPENDS_ON` *"because it was the one that validated, which is precisely the kind of silent accommodation this project says it's against."* The error *"tells me I'm wrong without telling me what's right."* | S |
 | **BL-2** | **Expose `contain_component`** | Exists in core, not on the surface, so an assembly hierarchy can't be modelled — and `hierarchy_issues` returns `[]` because it never has a hierarchy to check. | S |
 | **BL-3** | **`Requirement.status` reachable** | Already in the schema, defaulting to `proposed`. The trial agent wanted to mark requirements provisional and wrote "ASSUMED" into the statement text instead. | S |
 | **BL-4** | **Persist asked questions** | `gap_to_prompt` output evaporates, so the next session re-derives and re-asks. The trial agent's own framing: *"the stateless-agent problem reflow2 is supposed to solve."* Same gap the external user hit as "how do I pause and resume". | M |
@@ -85,6 +85,138 @@ third piece of evidence for the service side of the embedded-vs-service fork, al
 single-writer concurrency and this. Size **M–L**, and worth deciding the fork first.
 
 
+
+**BL-20 · Graph export / import, and versioned local backups** — *user, 2026-07-18.* Unblocks
+BL-19's migration half and, through it, BL-18.
+
+*Nothing exports today.* dynograph-foundation has no `export`/`dump`/`to_json` for graph data —
+only `Schema::from_json` for the schema itself. But every primitive is present: `scan_nodes`
+per type, `scan_outgoing_edges` / `scan_incoming_edges` per node, and `begin_batch` /
+`commit_batch` for an atomic restore. Walk the schema's node types (the same introspection BL-1
+added), scan, serialize; import replays under one batch. **Buildable entirely in reflow2 —
+no foundation bump**, which the pin discipline in AGENTS.md wants.
+
+*Why this is more than backup.* Export/import is the general migration path BL-19 lacks: dump
+with the old binary, load with the new one. That covers both a storage-format change in the
+foundation and an additive schema change, and it is far more robust than bespoke per-change
+backfill code. It also gets design portability (move a graph between machines, hand one to
+someone else) for free.
+
+*The versioned-backup layer.* A design graph is small — hundreds to low thousands of nodes, so
+tens of KB to a few MB as JSON. Cheap enough to snapshot on every session end or graph change and
+keep all of them. `git init` on the backup directory and a commit per snapshot gives point-in-time
+restore, a browsable history, and near-free packing, without a remote.
+
+Three constraints the design must respect:
+
+- **The export must be deterministic** — sorted keys, stable ordering. `HashMap` order is random,
+  so a naive dump rewrites the whole file every time: every commit becomes a fresh blob, diffs
+  become unreadable, and the main benefit of the git layer evaporates. Same discipline as
+  `vocabulary.rs`.
+- **Not `/tmp`.** systemd-tmpfiles clears it (on reboot, and by age), so backups there silently
+  disappear — the opposite of the goal. Use `~/.local/share/reflow2/` or a directory beside the
+  graph.
+- **This is not the temporal axis.** `DesignEpoch` / `Snapshot` / `ChangeEvent` record *why* the
+  design changed, semantically, inside the graph. This records the graph's bytes at a point in
+  time. Neither substitutes for the other: the temporal axis cannot recover a corrupted store, and
+  a snapshot cannot explain a requirement's history. Keep the two distinct in naming and docs so
+  no one later mistakes one for the other.
+
+Note `StoredNode` / `StoredEdge` do not derive `Serialize` — the orphan-rule workaround already
+exists as `NodeDto` / `EdgeDto` in `reflow2-mcp/src/dto.rs`, and would need to move to core.
+Size **M**.
+
+**BL-19 · The graph must survive an upgrade** — *user, 2026-07-18.* **Blocks BL-18**: an
+"you're out of date" nudge shipped before this exists drives users into an upgrade path with no
+migration story.
+
+*What is actually true today* (verified against dynograph-foundation v0.10.0). The schema lives
+in the **binary** — reflow2 embeds the ten YAMLs via `include_str!` and re-merges them on every
+open — while the RocksDB directory holds only nodes and edges. `new_rocksdb(schema, path)` takes
+the schema from the caller and **stamps nothing on disk**: not a schema version, not a foundation
+version. Validation runs on write, never on read.
+
+So the reassuring half first: **upgrading reflow2 does not delete anyone's graph.** The feared
+catastrophe is not the failure mode.
+
+*The quieter hazard is real, though.* The foundation's own test (`engine/tests.rs:1325`) pins the
+behaviour: add a required property with a default, and the default is applied **on create, not
+backfilled**. Existing nodes keep the old shape. A schema change therefore leaves mixed-vintage
+nodes with no error and no marker — detectors read `None` on old ones and a value on new ones.
+That is a silent drop, which AGENTS.md rule 4 forbids everywhere else in this codebase.
+
+*And the destructive case has no guard at all.* If dynograph-foundation changes its key encoding
+(`keys.rs`) or value serialization, an existing store may be misread — and because nothing stamps
+a version on the graph directory, there is no way to **detect** that a store predates the format,
+let alone refuse to open it.
+
+Wants, roughly in order of value: a version stamp written into the graph directory (schema
+version + foundation tag + reflow2 commit); a fail-loud check on open when it does not match what
+the binary expects — refuse rather than half-read; a backup-before-upgrade in
+`reflow2_init.py`; and only then a migration/backfill path for additive schema changes. The first
+two are **S** and buy the ability to say "your graph was written by an older reflow2" instead of
+silently misbehaving. Backfill is **M**.
+
+**BL-18 · Am I running the current reflow2?** — *user, 2026-07-18.* Extends the update half of
+BL-15, whose local machinery is already built and whose remaining gap this names precisely.
+
+`reflow2_init.py` stamps `.reflow2/kit-version.json` with `reflow2_version`, the short `commit`
+and `committed_at`, and `binary_is_stale()` compares source mtime against binary mtime. Every one
+of those checks is **local**: a consumer copy can tell that its binary predates its source, but
+never that its source predates upstream. That is the one an installed copy actually needs —
+the first external user's kit went stale in a day of skill fixes and nothing told him.
+
+The check is cheap because the stamp already exists: `git ls-remote` for the remote HEAD, compare
+against the stamped commit. No clone, no auth, one round-trip.
+
+*Where it fires is the open question.* `reflow2_init.py --check` is the obvious home but only
+helps someone who remembers to run it — the failure mode being fixed. Firing it from the MCP
+server's startup instructions puts it in front of the agent unprompted, at the cost of a network
+call per session; it must degrade silently when offline rather than blocking the loop, and must
+not turn into a nag once someone has *decided* to stay on an older build.
+
+*What it must not promise.* Unlike `claude update`, there is nothing to pull: the binary needs a
+~10-minute RocksDB build, so the check can only report staleness, not resolve it. A real
+`reflow2 update` needs published per-platform binaries — BL-15's still-open half, and a decision
+that belongs with the embedded-vs-service fork. Keep the two apart: this item is **S** and
+useful now; that one is **M–L** and gated on the fork.
+
+**BL-16 · Domain-appropriate artifacts — the non-coding design problem** — *user, 2026-07-18.*
+
+Coding is the *natural* domain here because agents are trained on it, so "design and build
+anything" is quietly load-tested only on its easiest case. Ask for a rocket and the question
+"what are the artifacts?" has no obvious answer. Ask for a 3D-printed object and one artifact
+should probably be an `.stl` — but nothing in reflow2 knows that, and the agent may not either.
+
+The gap is not the `Artifact` type, which is domain-neutral already. It is that **nothing helps
+the agent decide what set of artifacts a given design concept actually calls for.** For software
+it free-associates correctly from training; for a rocket it may need retrieval to find that the
+answer involves things like a mass budget, a trajectory sim, drawings, a test plan — and for
+hardware some artifacts are *physical*, which the as-built/drift machinery (`reconcile_artifacts`
+checksums files) has no notion of.
+
+Bears on P3 realization, on `unverified_capability` (what counts as verifying a weld?), and on
+BL-9's as-fielded view. Likely wants a per-domain artifact-kind prompt or a retrieval step at
+GENESIS, not a hardcoded taxonomy — the whole point is that the project type is a design output.
+Size **M–L**, and it is the sharpest test of the "design anything" claim we have.
+
+**BL-17 · Engineering principles as a separate, design-general file** — *user, 2026-07-18.*
+Ported from `~/dev_storyflow/PROTOCOL.md`, whose "⭐ Engineering Principles" section is the
+generalizable part (the fleet/bus/worker-pool/LEDGER/docker machinery around it is storyflow
+infrastructure with no analogue here — reflow2 has COORD.md and two people).
+
+Two of the seven are already reflow2 invariants: *no silent fallbacks* is AGENTS.md rule 4, and
+*no silent caps/truncation* is implemented as `truncated_beyond_depth` / `skipped_operations`.
+The four not yet written down here are **root-cause-before-fix** (name the mechanism, never
+pattern-match a fix onto a symptom), **done = end-to-end** (merged ≠ done), **verify your own
+claims by execution before reporting**, and **modular, no monoliths**.
+
+Keep them in their own file rather than inlining into AGENTS.md, exactly as suggested: they need
+tailoring away from coding. `PROTOCOL.md` phrases them for a web stack — "lens-exposed",
+Playwright on the real surface, `npm run check`, unit-vs-live tests. For a rocket or a document,
+"end-to-end" and "the real path" mean something else, and verification is a `Verification` node
+rather than a test run. A separate file can generalize; a section buried in AGENTS.md will drift
+back toward code. AGENTS.md then points at it. Size **S**.
 
 | ID | Item | Why | Size |
 |---|---|---|---|

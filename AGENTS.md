@@ -11,22 +11,41 @@
 Read this first. It tells you what this project is, how it's organized, and the rules to
 follow so your changes stay coherent with the design.
 
+**Per-crate files exist and the closest one wins**, per the convention. If you are editing inside
+a crate, read its file too — the build commands genuinely differ, and getting that wrong costs
+ten minutes of C++ compile:
+
+| Editing | Also read | Why it differs |
+|---|---|---|
+| `crates/reflow2-core/**` | [its AGENTS.md](crates/reflow2-core/AGENTS.md) | sub-second test path; core-only invariants |
+| `crates/reflow2-mcp/**` | [its AGENTS.md](crates/reflow2-mcp/AGENTS.md) | pays the RocksDB build; needs the smoke test |
+
 ## Commands
 
 Everything runs from the repo root. The core crate is `crates/reflow2-core`.
 
 ```bash
-# Build / test — ALWAYS pass --no-default-features for dev iteration:
-# it uses dynograph-storage's in-memory backend and skips the RocksDB C++
-# compile (~10 min). The whole suite runs in well under a second.
-cargo test --no-default-features
+# Build / test — for dev iteration ALWAYS scope to the core with -p AND pass
+# --no-default-features: that combination uses dynograph-storage's in-memory
+# backend and skips the RocksDB C++ compile (~10 min). Runs in well under a second.
+#
+# -p reflow2-core is load-bearing, not tidiness. Without it the workspace also
+# builds reflow2-mcp, which depends on reflow2-core with `features = ["rocksdb"]`
+# — an explicitly-enabled feature on a dependency edge, which --no-default-features
+# cannot switch off. Drop the -p and you get the C++ build you were avoiding.
+cargo test -p reflow2-core --no-default-features
 
-cargo test --no-default-features --test heal            # one integration-test file
-cargo test --no-default-features golden_thread_round_trips   # one test by name (substring)
-cargo test --no-default-features --lib                  # unit + doctests only
+cargo test -p reflow2-core --no-default-features --test heal          # one integration-test file
+cargo test -p reflow2-core --no-default-features golden_thread_round_trips  # one test by name
+cargo test -p reflow2-core --no-default-features --lib                # unit + doctests only
 
-cargo clippy --no-default-features --all-targets        # keep clippy-clean
+cargo clippy -p reflow2-core --no-default-features --all-targets      # keep clippy-clean
 cargo fmt                                               # and fmt-clean (cargo fmt --check in CI)
+
+# The full workspace, including the MCP surface. Pays the RocksDB compile once,
+# then it is cached. Run before pushing — the core-only gate cannot see
+# reflow2-mcp, where the tool surface and its tests live.
+cargo test --workspace
 
 # Schema validation (Python, no Rust toolchain needed). Must print "OK" after any
 # schema/*.yaml edit. Needs PyYAML; use whatever python3 has it.
@@ -44,10 +63,46 @@ python3 tools/reflow2_init.py /path/to/project           # set up, or update in 
 python3 tools/reflow2_init.py /path/to/project --check   # what would change
 ```
 
-A change is "done" only when `cargo test --no-default-features`, `cargo clippy
---no-default-features --all-targets`, and `cargo fmt --check` are all clean. Tests live
-beside the code as `crates/reflow2-core/tests/*.rs` (one file per module/concern) plus unit
-tests in `src/schema.rs` and doctests in `src/lib.rs`/`src/nodes.rs`.
+Tests live beside the code as `crates/reflow2-core/tests/*.rs` (one file per module/concern) plus
+unit tests in `src/schema.rs` and doctests in `src/lib.rs`/`src/nodes.rs`.
+
+## Working on this repo
+
+**Order of operations.** `git pull --rebase`, then claim your item on [COORD.md](COORD.md) and
+commit that line *before* the work — a claim nobody can see is not a claim. Then read
+[docs/backlog.md](docs/backlog.md) for what is open and why. COORD.md also covers resolving merge
+conflicts on the shared records without discarding anyone's work; read that before you hit one.
+
+**Branches.** `feat/<short-name>` off `main`, one per claimed item where practical.
+
+**A change is done when all of these are clean:**
+
+```bash
+cargo test --workspace                                   # both crates
+cargo clippy -p reflow2-core --no-default-features --all-targets
+cargo fmt --check
+python3 tools/validate_schema.py                         # after any schema/*.yaml edit
+python3 tools/smoke_mcp.py                               # after any tool-surface change
+```
+
+Compiling is not the finish line, and neither is a green unit test. Drive the thing you changed:
+the surface a user actually touches is the MCP binary, and three home-grown test layers once
+agreed with each other and were all wrong because each was a client we wrote.
+
+**Update the records in the same change, not afterwards** — this is the rule most often skipped,
+and the records are the project's memory:
+
+| Record | Update when |
+|---|---|
+| [CHANGELOG.md](CHANGELOG.md) | a user would notice |
+| [docs/requirements-coverage.md](docs/requirements-coverage.md) | a status moves |
+| [docs/backlog.md](docs/backlog.md) | an item is finished or discovered |
+| [docs/trials/](docs/trials/) | a real session went wrong — verbatim, append-only |
+| [COORD.md](COORD.md) | you start, and again when you finish |
+
+**Claims made in the records must be evidence-backed.** If a backlog entry asserts a consequence,
+it should be traceable to something someone observed — not inferred while writing the entry. When
+you cannot source it, say so or strike it.
 
 ## Architecture
 
@@ -109,6 +164,20 @@ joined by *traceability* edges) for HEAL's topology detectors.
 - **Structural topology detectors are selective.** A design's golden thread is tree-shaped,
   where every internal node is a naive articulation point — so `single_point_of_failure`
   only fires when a node separates ≥2 real subsystems (see `structure.rs`).
+- **Do not bump the dynograph-foundation pin as housekeeping.** The five foundation crates are
+  pinned by git tag in the workspace `Cargo.toml`. Moving that tag forces a full
+  `librocksdb-sys` C++ rebuild (~10 min) on **every** machine that pulls — yours, your
+  collaborators', and every consumer project. Bump it only when a reflow2 change actually needs
+  something the new tag provides, and say which capability in the commit message. "Latest is
+  probably better" is not a reason; a routine reflow2 update should cost a consumer nothing but a
+  text refresh.
+- **A foundation bump is a data-migration question, not just a version change.** Nothing is
+  stamped on the graph directory — not a schema version, not a foundation tag — and validation
+  runs on write, never on read. So a storage-format change (`keys.rs`, value serialization) could
+  misread an existing store with nothing to detect it, and an additive schema change leaves
+  mixed-vintage nodes rather than backfilling (the foundation's own `engine/tests.rs:1325` pins
+  that behaviour: defaults apply on create, not retroactively). Before any bump, ask what happens
+  to a graph written by the previous version. See **BL-19**.
 - **Deterministic ids.** Gap/heal issue ids are a stable FNV-1a hash of
   `source + sorted affected ids` (not `std` `DefaultHasher`) so they're reproducible for
   dedup/caching.

@@ -249,6 +249,12 @@ reported but not ergonomically closed. Generic `create_node` works, but the agen
 property names against a schema it cannot see, which in practice means the gap stays open and the
 agent learns to ignore gap output.
 
+**"A schema it cannot see" is now addressed (WS-6, BL-1).** `describe_schema` exposes the
+vocabulary — node types with their required properties, edge types with their legal endpoints —
+and failed `create_node` / `create_edge` calls name the alternatives rather than only the
+rejection. The typed-constructor gaps below are unchanged; what closed is the discovery problem
+that made the generic escape hatch unusable.
+
 | ID | The gap DETECT emits | Asking the user to record | Write side | Status |
 |----|----------------------|---------------------------|-----------|--------|
 | WS-1 | `build_without_verification`, `unverified_capability` | `Verification` (+ `VERIFIES`) | `verify.rs`: `add_verification`, `verifies`, `set_verification_status` + MCP tools | ✅ |
@@ -256,6 +262,7 @@ agent learns to ignore gap output.
 | WS-3 | HEAL `contradiction` → "Decision" content stub | `Decision` (+ `GOVERNED_BY`) | `graph.rs`: `add_decision`, `governed_by` + MCP tools | ✅ |
 | WS-4 | GS-9 compliance gaps (deferred) | `EnvironmentRule` (+ `OPERATES_IN`, `IMPOSES`, `COMPLIES_WITH`, `VIOLATES_RULE`) | none | ⬜ |
 | WS-5 | — (no detector asks for it) | `QualityGate` | none | ⬜ |
+| WS-6 | — (the write side's precondition: you cannot record what you cannot name) | the vocabulary itself — node types, their required properties, and which edge types join which endpoints | `vocabulary.rs`: `describe_vocabulary`, `describe_node_type`, `edge_types_between` + the `describe_schema` MCP tool; enriched `create_node` / `create_edge` failures | ✅ |
 
 Evidence for WS-1..3: `tests/write_side.rs` (12) asserts the round trip that matters — the gap
 fires, the user records what it asked for, the gap closes — plus

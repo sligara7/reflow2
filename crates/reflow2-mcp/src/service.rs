@@ -53,6 +53,104 @@ fn ser_err(e: serde_json::Error) -> McpError {
     McpError::internal_error(format!("failed to serialize result: {e}"), None)
 }
 
+/// A core error caused by the caller's arguments (an unknown type name), not by
+/// the server. Distinct from [`dyno_err`] so a typo doesn't read as a fault.
+fn params_err(e: DynoError) -> McpError {
+    McpError::invalid_params(e.to_string(), None)
+}
+
+/// How many alternatives a failed write lists before deferring to the tool.
+const MAX_SUGGESTIONS: usize = 12;
+
+/// Rewrite a failed `create_edge` into an error that says what *would* work.
+///
+/// The blind trial's complaint, verbatim: the error "tells me I'm wrong without
+/// telling me what's right", after fourteen guesses at connecting a `Release` to
+/// a `Component`. `describe_schema` only helps an agent that already knows to
+/// call it; naming the alternatives at the point of failure helps the one that
+/// doesn't — which is every agent meeting this schema for the first time.
+///
+/// Still fails loud (AGENTS.md rule 4). The point is a *better* rejection, not a
+/// softer one: nothing here makes a bad edge succeed.
+fn edge_error(g: &DesignGraph, from_type: &str, to_type: &str, e: DynoError) -> McpError {
+    let detail = match g.edge_types_between(from_type, to_type) {
+        Ok(q) => {
+            let mut s = format!("\n\n{}", q.note);
+            if !q.matches.is_empty() {
+                s.push_str("\n\nEdge types that accept this pair:");
+                for m in q.matches.iter().take(MAX_SUGGESTIONS) {
+                    let basis = if m.is_exact() { "exact" } else { "via *" };
+                    s.push_str(&format!(
+                        "\n  {} ({}) — {} -> {}",
+                        m.spec.edge_type,
+                        basis,
+                        m.spec.from.join("|"),
+                        m.spec.to.join("|")
+                    ));
+                    if let Some(h) = &m.spec.hint {
+                        // The hint is what lets the caller pick on meaning
+                        // rather than on whatever validates first.
+                        s.push_str(&format!("\n      {}", h.lines().next().unwrap_or(h)));
+                    }
+                }
+                // No silent truncation (AGENTS.md rule 4).
+                if q.matches.len() > MAX_SUGGESTIONS {
+                    s.push_str(&format!(
+                        "\n  … and {} more — call `describe_schema`.",
+                        q.matches.len() - MAX_SUGGESTIONS
+                    ));
+                }
+            }
+            s.push_str("\n\nCall `describe_schema` for the full vocabulary.");
+            s
+        }
+        // The endpoint types are themselves unknown, which is a better
+        // diagnosis than a list of edges would be. Surface it, don't swallow.
+        Err(inner) => {
+            format!("\n\n{inner}\nCall `describe_schema` to list the valid node types.")
+        }
+    };
+    McpError::invalid_params(format!("{e}{detail}"), None)
+}
+
+/// The `create_node` sibling of [`edge_error`]. Same failure recorded against
+/// node properties in `docs/requirements-coverage.md` (write-side coverage):
+/// "the agent must hand-type property names against a schema it cannot see".
+fn node_error(g: &DesignGraph, node_type: &str, e: DynoError) -> McpError {
+    let detail = match g.describe_node_type(node_type) {
+        // The type exists, so the failure is about its properties. List them,
+        // required first (the order `describe_node_type` already returns).
+        Ok(d) => {
+            let mut s = format!("\n\n{node_type} accepts:");
+            for p in d.spec.properties.iter().take(MAX_SUGGESTIONS) {
+                let req = if p.required { " (required)" } else { "" };
+                let values = match &p.values {
+                    Some(v) => format!(" — one of: {}", v.join(", ")),
+                    None => String::new(),
+                };
+                s.push_str(&format!("\n  {}: {}{}{}", p.name, p.prop_type, req, values));
+            }
+            if d.spec.properties.len() > MAX_SUGGESTIONS {
+                s.push_str(&format!(
+                    "\n  … and {} more — call `describe_schema`.",
+                    d.spec.properties.len() - MAX_SUGGESTIONS
+                ));
+            }
+            s
+        }
+        // The type itself is unknown: the useful answer is which types exist.
+        Err(_) => {
+            let v = g.describe_vocabulary();
+            let names: Vec<&str> = v.node_types.iter().map(|n| n.node_type.as_str()).collect();
+            format!("\n\nKnown node types: {}.", names.join(", "))
+        }
+    };
+    McpError::invalid_params(
+        format!("{e}{detail}\n\nCall `describe_schema` for the full vocabulary."),
+        None,
+    )
+}
+
 /// Return a payload as the tool result: structured JSON (no envelope) plus a
 /// text rendering, so clients that read either `structuredContent` or `content`
 /// both get the data. Returning a raw `CallToolResult` registers no output
@@ -174,6 +272,21 @@ pub struct CreateEdgeReq {
     pub to_id: String,
     #[serde(default)]
     pub props: Option<JsonValue>,
+}
+
+/// All fields optional: no args dumps the whole vocabulary, `node_type` focuses
+/// one type, `from`+`to` answers "what may connect these?".
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct DescribeSchemaReq {
+    /// Focus one node type: its properties plus the edges it can carry.
+    #[serde(default)]
+    pub node_type: Option<String>,
+    /// With `to`: which edge types may join this source type to that target.
+    #[serde(default)]
+    pub from: Option<String>,
+    /// With `from`: the target node type.
+    #[serde(default)]
+    pub to: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -986,10 +1099,10 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let props = parse_props(req.props)?;
         let mut g = self.graph.lock().await;
-        ok_json(NodeDto::from(
-            g.create_node(&req.node_type, &req.id, props)
-                .map_err(dyno_err)?,
-        ))
+        match g.create_node(&req.node_type, &req.id, props) {
+            Ok(n) => ok_json(NodeDto::from(n)),
+            Err(e) => Err(node_error(&g, &req.node_type, e)),
+        }
     }
 
     #[tool(description = "Create an edge of any schema type between typed endpoints.")]
@@ -999,17 +1112,47 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let props = parse_props(req.props)?;
         let mut g = self.graph.lock().await;
-        ok_json(EdgeDto::from(
-            g.create_edge(
-                &req.edge_type,
-                &req.from_type,
-                &req.from_id,
-                &req.to_type,
-                &req.to_id,
-                props,
-            )
-            .map_err(dyno_err)?,
-        ))
+        let edge = g.create_edge(
+            &req.edge_type,
+            &req.from_type,
+            &req.from_id,
+            &req.to_type,
+            &req.to_id,
+            props,
+        );
+        match edge {
+            Ok(e) => ok_json(EdgeDto::from(e)),
+            // Say what would have worked — see `edge_error`.
+            Err(e) => Err(edge_error(&g, &req.from_type, &req.to_type, e)),
+        }
+    }
+
+    #[tool(
+        description = "Discover the design vocabulary before writing to it: which node types \
+                       exist, which properties they require, and which edge types may join two \
+                       given types. Call this instead of guessing at create_node / create_edge. \
+                       No arguments returns everything; `node_type` focuses one type and the \
+                       edges it can carry; `from` + `to` together answer 'what may connect an X \
+                       to a Y?', ranking edge types that model the pair above ones that merely \
+                       accept it through a `*` wildcard."
+    )]
+    pub async fn describe_schema(
+        &self,
+        Parameters(req): Parameters<DescribeSchemaReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        match (&req.node_type, &req.from, &req.to) {
+            (None, None, None) => ok_json(g.describe_vocabulary()),
+            (Some(t), None, None) => ok_json(g.describe_node_type(t).map_err(params_err)?),
+            (None, Some(f), Some(t)) => ok_json(g.edge_types_between(f, t).map_err(params_err)?),
+            // A half-given pair is a mistake, not a request for everything.
+            _ => Err(McpError::invalid_params(
+                "describe_schema takes no arguments (the full vocabulary), `node_type` alone, \
+                 or `from` and `to` together — not a mix."
+                    .to_string(),
+                None,
+            )),
+        }
     }
 
     #[tool(description = "Fetch a node by type and id (null if absent).")]

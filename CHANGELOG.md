@@ -24,6 +24,25 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **`describe_schema`** — the design vocabulary is now discoverable instead of guessable. Ask
+  with no arguments for every node and edge type, with `node_type` for one type's properties and
+  the edges it can carry, or with `from` + `to` for the question an agent actually has: *what may
+  connect a Release to a Component?* A blind trial brute-forced fourteen edge types against
+  `create_edge` to answer that, then settled on `DEPENDS_ON` "because it was the one that
+  validated".
+
+  Matches distinguish an endpoint that **names** a type from one that accepts it through the `*`
+  wildcard, and say so in words. Without that distinction the tool would have handed back
+  `DEPENDS_ON` and reproduced the original mistake with better ergonomics — validating is not the
+  same as meaning what you intended.
+
+- **Rejected writes name the alternatives.** The trial's sharper complaint was that
+  `Unknown edge type: PACKAGES` "tells me I'm wrong without telling me what's right" — and a
+  discovery tool only helps an agent that already knows to call it. A failed `create_edge` now
+  lists the edge types that accept those endpoints, each with its schema hint; a failed
+  `create_node` lists the type's properties, or the known node types when the type itself is
+  unknown. Still fails loud: the rejection is better, not softer.
+
 - **`tools/reflow2_init.py`** — set up or update reflow2 in a project with one command. Installs
   the design environment only: agent instructions, skills, an MCP config with the binary path
   already resolved, and the graph directory. Creates no `src/`, build file or language choice —

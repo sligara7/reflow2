@@ -546,3 +546,167 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         "a failing check must reach the requirement it ultimately protects"
     );
 }
+
+// ---- describe_schema (BL-1) --------------------------------------------------
+//
+// The blind trial brute-forced fourteen edge types to connect a Release to a
+// Component, settled on DEPENDS_ON "because it was the one that validated", and
+// asked for exactly this tool. These assert the answer is both available and
+// honest: available without guessing, honest about wildcard-only matches.
+
+#[tokio::test]
+async fn describe_schema_returns_the_whole_vocabulary() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    let v = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+        node_type: None,
+        from: None,
+        to: None,
+    })));
+    assert_eq!(
+        v["node_types"].as_array().unwrap().len(),
+        26,
+        "every node type is discoverable"
+    );
+    assert_eq!(
+        v["edge_types"].as_array().unwrap().len(),
+        52,
+        "every edge type is discoverable"
+    );
+}
+
+#[tokio::test]
+async fn describe_schema_answers_the_directed_question() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    let q = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+        node_type: None,
+        from: Some("Capability".into()),
+        to: Some("Component".into()),
+    })));
+    assert!(
+        q["exact_matches"].as_u64().unwrap() >= 1,
+        "ALLOCATED_TO models Capability -> Component, got {q}"
+    );
+    assert_eq!(q["matches"][0]["from_match"], "exact", "exact ranks first");
+}
+
+/// The trial's own case. Nothing models Release -> Component, and the tool must
+/// say so rather than handing back the wildcard edge that happens to validate —
+/// that silent accommodation is what sent the trial down the wrong path.
+#[tokio::test]
+async fn release_to_component_is_reported_as_wildcard_only() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    let q = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+        node_type: None,
+        from: Some("Release".into()),
+        to: Some("Component".into()),
+    })));
+    assert_eq!(
+        q["exact_matches"].as_u64().unwrap(),
+        0,
+        "no edge type models this pair; if one is added, update this test"
+    );
+    let note = q["note"].as_str().unwrap();
+    assert!(
+        note.contains("wildcard") || note.contains("No edge type in this schema"),
+        "the caveat must be stated in words, got: {note}"
+    );
+}
+
+#[tokio::test]
+async fn describe_schema_focuses_one_node_type() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    let d = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+        node_type: Some("Component".into()),
+        from: None,
+        to: None,
+    })));
+    let outgoing = d["outgoing"].as_array().unwrap();
+    assert!(
+        outgoing.iter().any(|m| m["edge_type"] == "PROVIDES"),
+        "Component -> Interface must be discoverable from Component"
+    );
+    assert!(
+        d["properties"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|p| p["required"] == true),
+        "required properties must be visible before a create_node call"
+    );
+}
+
+#[tokio::test]
+async fn describe_schema_rejects_a_half_given_pair() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    // `from` without `to` is a mistake; silently dumping everything would hide it.
+    assert!(
+        s.describe_schema(Parameters(DescribeSchemaReq {
+            node_type: None,
+            from: Some("Release".into()),
+            to: None,
+        }))
+        .await
+        .is_err(),
+        "a half-specified query must fail loud"
+    );
+    // An unknown type name must not read as "exists, but connects to nothing".
+    assert!(
+        s.describe_schema(Parameters(DescribeSchemaReq {
+            node_type: Some("Relese".into()),
+            from: None,
+            to: None,
+        }))
+        .await
+        .is_err(),
+        "a typo must fail loud"
+    );
+}
+
+/// "The error tells me I'm wrong without telling me what's right" — the trial's
+/// sharpest complaint, and the half a discovery tool alone does not fix.
+#[tokio::test]
+async fn a_rejected_edge_names_the_alternatives() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    j!(s.add_project(Parameters(IdName {
+        id: "proj:x".into(),
+        name: "X".into()
+    })));
+    let err = s
+        .create_edge(Parameters(CreateEdgeReq {
+            edge_type: "PACKAGES".into(), // the trial's first guess
+            from_type: "Release".into(),
+            from_id: "rel:1".into(),
+            to_type: "Component".into(),
+            to_id: "cmp:1".into(),
+            props: None,
+        }))
+        .await
+        .expect_err("PACKAGES is not a schema edge type");
+    let msg = format!("{err}");
+    assert!(
+        msg.contains("PACKAGES"),
+        "the rejection must still name what was wrong, got: {msg}"
+    );
+    assert!(
+        msg.contains("describe_schema"),
+        "the rejection must point at the tool that answers it, got: {msg}"
+    );
+}
+
+#[tokio::test]
+async fn a_rejected_node_names_the_known_types() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    let err = s
+        .create_node(Parameters(CreateNodeReq {
+            node_type: "Widget".into(),
+            id: "w:1".into(),
+            props: None,
+        }))
+        .await
+        .expect_err("Widget is not a schema node type");
+    let msg = format!("{err}");
+    assert!(
+        msg.contains("Requirement") && msg.contains("Component"),
+        "an unknown node type must list the real ones, got: {msg}"
+    );
+}

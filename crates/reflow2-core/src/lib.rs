@@ -47,6 +47,7 @@ pub mod structure;
 pub mod surprises;
 pub mod temporal;
 pub mod verify;
+pub mod vocabulary;
 
 pub use agent::{AgentAnswer, AgentBackend, AgentPrompt, PromptCollector, prompt_id};
 pub use allocate::{
@@ -72,6 +73,10 @@ pub use report::{AllocationSummary, GraphReport};
 pub use schema::load_schema;
 pub use surprises::SurprisingConnection;
 pub use temporal::{ChangeAction, ChangeRecord, ChangeType, EpochType, parse_snapshot_state};
+pub use vocabulary::{
+    EdgeQuery, EdgeTypeMatch, EdgeTypeSpec, EndpointMatch, NodeTypeDetail, NodeTypeSpec,
+    PropertySpec, Vocabulary,
+};
 
 // Re-export the foundation types that appear in this crate's public API, so
 // callers don't need a direct dependency on dynograph-core / -storage.

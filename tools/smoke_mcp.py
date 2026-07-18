@@ -138,7 +138,7 @@ def run(binary: str, graph_path: str) -> int:
         "link_artifact", "reconcile_artifacts", "set_artifact_checksum",
         "add_verification", "verifies", "add_release", "add_environment",
         "deploy_to", "add_decision", "governed_by",
-        "detect_defects", "propose_heal",
+        "detect_defects", "propose_heal", "describe_schema",
     ):
         c.ok(f"tool exposed: {expected}", expected in names)
 
@@ -149,6 +149,42 @@ def run(binary: str, graph_path: str) -> int:
         "observed" in schema.get("properties", {}),
         list(schema.get("properties", {})),
     )
+
+    # The vocabulary must be discoverable before anything is written, because a
+    # blind trial that could not see it brute-forced fourteen edge types and then
+    # used the one that happened to validate. Checked here rather than only in
+    # cargo tests: every other layer is a client we wrote.
+    print("\n== schema discovery (BL-1) ==")
+    vocab = s.call("describe_schema", {})
+    c.ok("every node type is discoverable", len(vocab.get("node_types", [])) == 26,
+         len(vocab.get("node_types", [])))
+    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 52,
+         len(vocab.get("edge_types", [])))
+
+    exact = s.call("describe_schema", {"from": "Capability", "to": "Component"})
+    c.ok("a modelled pair reports an exact match", exact.get("exact_matches", 0) >= 1, exact.get("note"))
+
+    # The trial's own question. Nothing models Release -> Component; the answer
+    # must say so rather than handing back the wildcard edge that validates.
+    loose = s.call("describe_schema", {"from": "Release", "to": "Component"})
+    c.ok("an unmodelled pair reports no exact match", loose.get("exact_matches") == 0, loose.get("note"))
+    c.ok("and says so in words", "wildcard" in loose.get("note", "") or "No edge type" in loose.get("note", ""),
+         loose.get("note"))
+
+    node = s.call("describe_schema", {"node_type": "Component"})
+    c.ok("a node type lists the edges it can carry",
+         any(m["edge_type"] == "PROVIDES" for m in node.get("outgoing", [])))
+
+    # A rejection must say what would have worked — the trial's sharper complaint.
+    try:
+        s.call("create_edge", {
+            "edge_type": "PACKAGES", "from_type": "Release", "from_id": "rel:x",
+            "to_type": "Component", "to_id": "cmp:x",
+        })
+        c.ok("a bogus edge type is rejected", False, "it was accepted")
+    except RuntimeError as e:
+        c.ok("a bogus edge type is rejected", True)
+        c.ok("and the rejection points at describe_schema", "describe_schema" in str(e), str(e)[:200])
 
     print("\n== 0. GENESIS ==")
     g = s.call("genesis", {
