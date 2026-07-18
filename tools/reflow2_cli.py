@@ -52,6 +52,17 @@ DEFAULT_BIN = _default_bin()
 DEFAULT_GRAPH = os.environ.get("REFLOW2_GRAPH", ".reflow2/graph")
 
 
+def _unwrap(value):
+    """Undo the list envelope the server adds.
+
+    MCP requires `structuredContent` to be an object, so a tool returning a list
+    sends `{"count": n, "items": [...]}`. Callers want the list.
+    """
+    if isinstance(value, dict) and set(value) == {"count", "items"}:
+        return value["items"]
+    return value
+
+
 class Server:
     """A short-lived reflow2-mcp process spoken to over stdio JSON-RPC."""
 
@@ -117,7 +128,7 @@ class Server:
             text = blocks[0].get("text") if blocks else str(result)
             die(1, f"{tool}: {text}")
         if "structuredContent" in result:
-            return result["structuredContent"]
+            return _unwrap(result["structuredContent"])
         blocks = result.get("content") or []
         return json.loads(blocks[0]["text"]) if blocks else None
 

@@ -30,6 +30,17 @@ import sys
 import tempfile
 
 
+def _unwrap(value):
+    """Undo the list envelope the server adds.
+
+    MCP requires `structuredContent` to be an object, so a tool returning a list
+    sends `{"count": n, "items": [...]}`. Callers want the list.
+    """
+    if isinstance(value, dict) and set(value) == {"count", "items"}:
+        return value["items"]
+    return value
+
+
 class Server:
     """A running reflow2-mcp process, spoken to over stdio JSON-RPC."""
 
@@ -86,7 +97,7 @@ class Server:
         if result.get("isError"):
             raise RuntimeError(f"{tool}: tool error: {result.get('content')}")
         if "structuredContent" in result:
-            return result["structuredContent"]
+            return _unwrap(result["structuredContent"])
         return json.loads(result["content"][0]["text"])
 
     def close(self) -> None:

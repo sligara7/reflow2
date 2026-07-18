@@ -59,6 +59,22 @@ fn ser_err(e: serde_json::Error) -> McpError {
 /// schema (the wire format is the payload directly).
 fn ok_json<T: serde::Serialize>(value: T) -> Result<CallToolResult, McpError> {
     let v = serde_json::to_value(value).map_err(ser_err)?;
+    // MCP defines `structuredContent` as an **object**. A tool returning a bare
+    // JSON array is malformed, and a spec-compliant client rejects the call
+    // outright ("expected record, received array") — which silently took out
+    // detect_gaps, scan_nodes and detect_defects, i.e. most of the read surface
+    // and the tool the whole loop orbits.
+    //
+    // Wrapping happens here, at the one choke point every tool returns through,
+    // rather than at each call site: a list tool added later cannot reintroduce
+    // the bug by forgetting. `count` is included because an agent almost always
+    // wants it and would otherwise measure the array itself.
+    let v = if v.is_array() {
+        let count = v.as_array().map(Vec::len).unwrap_or(0);
+        json!({ "count": count, "items": v })
+    } else {
+        v
+    };
     let text = serde_json::to_string(&v).map_err(ser_err)?;
     let mut result = CallToolResult::structured(v);
     result.content = vec![ContentBlock::text(text)];

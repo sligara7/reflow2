@@ -20,6 +20,20 @@ macro_rules! j {
     };
 }
 
+// A tool returning a list sends `{"count": n, "items": [...]}` — MCP requires
+// `structuredContent` to be an object. `jl!` unwraps that envelope so a test
+// reads the list directly, and asserts the envelope is well formed on the way.
+macro_rules! jl {
+    ($call:expr) => {{
+        let env = j!($call);
+        assert!(
+            env.get("count").is_some() && env.get("items").is_some(),
+            "a list tool must return a {{count, items}} envelope, got {env}"
+        );
+        env["items"].clone()
+    }};
+}
+
 async fn seeded() -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_project(Parameters(IdName {
@@ -58,7 +72,7 @@ async fn golden_thread_and_reports() {
     let s = seeded().await;
 
     // The capability is unallocated → a gap should surface.
-    let gaps = j!(s.detect_gaps());
+    let gaps = jl!(s.detect_gaps());
     let arr = gaps.as_array().expect("gaps is a JSON array");
     assert!(
         arr.iter()
@@ -153,7 +167,7 @@ async fn genesis_bootstraps_then_detect_hands_off() {
     })));
 
     // Seeded P0/P1 with no P2 → DETECT's first-round structure gap fires.
-    let gaps = j!(s.detect_gaps());
+    let gaps = jl!(s.detect_gaps());
     assert!(
         gaps.as_array()
             .unwrap()
@@ -193,7 +207,7 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
     assert_eq!(link["completeness"], "complete");
 
     // cap:score is unrealized → the gap fires, naming it.
-    let gaps = j!(s.detect_gaps());
+    let gaps = jl!(s.detect_gaps());
     let unrealized: Vec<&serde_json::Value> = gaps
         .as_array()
         .unwrap()
@@ -230,7 +244,7 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
         fragment_id: None,
         checksum: None,
     })));
-    let gaps2 = j!(s.detect_gaps());
+    let gaps2 = jl!(s.detect_gaps());
     assert!(
         !gaps2
             .as_array()
@@ -244,7 +258,7 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
 #[tokio::test]
 async fn gap_to_prompt_collect_then_serve() {
     let s = seeded().await;
-    let gaps = j!(s.detect_gaps());
+    let gaps = jl!(s.detect_gaps());
     let gap = gaps
         .as_array()
         .unwrap()
@@ -315,7 +329,7 @@ async fn interface_tools_pair_both_sides_of_a_contract() {
     );
 
     // Both sides present → no interface-pairing question.
-    let gaps = j!(s.detect_gaps());
+    let gaps = jl!(s.detect_gaps());
     let sources: Vec<&str> = gaps
         .as_array()
         .expect("gaps array")
@@ -340,7 +354,7 @@ async fn a_contract_with_no_provider_surfaces_as_a_gap_over_the_surface() {
         to_id: "ifc:state".into()
     })));
 
-    let gaps = j!(s.detect_gaps());
+    let gaps = jl!(s.detect_gaps());
     let found = gaps
         .as_array()
         .expect("gaps array")
@@ -453,9 +467,9 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         checksum: Some("sha256:v1".into()),
     })));
 
-    let before: Vec<String> = j!(s.detect_gaps())
+    let before: Vec<String> = jl!(s.detect_gaps())
         .as_array()
-        .unwrap()
+        .expect("items is an array")
         .iter()
         .map(|g| g["gap_source"].as_str().unwrap_or("").to_string())
         .collect();
@@ -498,9 +512,9 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         status: Some("active".into()),
     })));
 
-    let after: Vec<String> = j!(s.detect_gaps())
+    let after: Vec<String> = jl!(s.detect_gaps())
         .as_array()
-        .unwrap()
+        .expect("items is an array")
         .iter()
         .map(|g| g["gap_source"].as_str().unwrap_or("").to_string())
         .collect();
