@@ -25,9 +25,16 @@ deliverable so the graph stays an honest as-built map — not just a plan.
 2. **For partial work**, set `completeness: "stub"` or `"partial"` so the graph reflects reality;
    update it later when the file is done.
 
-3. **Confirm the loop closed:** run `detect_gaps`. A capability with no realizing artifact shows
-   as `unrealized_capability`; after `link_artifact` it should be gone for that capability. If it
-   isn't, you linked the wrong target.
+3. **Confirm the loop closed:** run `detect_gaps` and look at the `affected_ids` of any
+   `unrealized_capability` gap — the capability you just linked should no longer be among them.
+   If it still is, you linked the wrong target.
+
+   **Expect the total gap count to go *up*, not down, after your first `link_artifact`.** That
+   detector stays silent until the project has at least one artifact, because "nothing is built
+   yet" is not a useful thing to say about a design that hasn't started building. Registering the
+   first file starts the build phase, and every *other* capability that has no artifact becomes a
+   legitimate gap. That is the design working, not a mistake — check the specific capability, not
+   the count.
 
 ## Reconcile: has the code drifted from the design?
 

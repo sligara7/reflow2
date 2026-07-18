@@ -36,7 +36,9 @@ fidelity?), that is a *gap* — surface it as a question, don't guess.
    capabilities/components the graph holds — nothing it doesn't. After creating each real file,
    register it with `link_artifact` (Artifact + provenance + `REALIZES` the capability it
    implements) **including a `checksum`**, so as-designed vs as-built stays honest and later
-   edits are detectable; re-run `detect_gaps` to confirm the `unrealized_capability` gap closed.
+   edits are detectable; re-run `detect_gaps` and check that the capability you linked is no
+   longer in an `unrealized_capability` gap's `affected_ids` — the *total* gap count will rise
+   after the first link, because that detector switches on once the build phase starts.
    When you return to a project or suspect files changed outside the loop, hash them and call
    `reconcile_artifacts` — its `propagation_seeds` walk the change back up to the Capability and
    Requirement behind it. (See the **link-artifacts** skill.)

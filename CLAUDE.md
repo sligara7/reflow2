@@ -33,6 +33,12 @@ cargo fmt                                               # and fmt-clean (cargo f
 # Schema validation (Python, no Rust toolchain needed). Must print "OK" after any
 # schema/*.yaml edit. Needs PyYAML; use whatever python3 has it.
 python3 tools/validate_schema.py
+
+# End-to-end smoke test of the MCP *binary* (stdio JSON-RPC, real RocksDB graph).
+# Covers what cargo test can't: the shipped surface, tool schemas, and the JSON an
+# agent actually receives. Needs `cargo build -p reflow2-mcp` first (RocksDB, ~10 min
+# cold). Stdlib-only Python; exits non-zero on any failed check.
+python3 tools/smoke_mcp.py
 ```
 
 A change is "done" only when `cargo test --no-default-features`, `cargo clippy

@@ -107,6 +107,20 @@ printf '%s\n' \
 If **Check 1** fails, the build didn't finish — re-run step 2 and read the error. If **2 or 3**
 fails after Check 1 passes, re-run and copy the full output (`2>&1`) for help.
 
+### Optional: the full loop check
+
+If the three checks pass but something later behaves oddly, run the deeper smoke test. It drives
+the same binary through the whole loop — capture intent, detect gaps, register a built file, edit
+it, catch the drift, follow it back to the requirement, find a dependency cycle, and reopen the
+graph to prove it persisted. Needs only Python 3 (no extra packages), and cleans up after itself:
+
+```bash
+python3 tools/smoke_mcp.py --bin target/release/reflow2-mcp
+```
+
+It prints a PASS/FAIL line per check and ends with `ALL CHECKS PASSED`. Anything that fails names
+the exact step, which is worth pasting if you ask for help.
+
 ## Notes
 
 - The graph directory (`./.reflow2/graph`) is created on first use. Commit it (or an export)
