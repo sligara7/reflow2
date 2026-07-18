@@ -4,6 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Read first
 
+- **[COORD.md](COORD.md)** — **the claim board. Read it before starting work and claim what you
+  take.** Two people work this repo with different agents; an unclaimed change is how two people
+  build the same thing.
 - **[AGENTS.md](AGENTS.md)** — what Reflow 2.0 is, the coherence-loop mental model, the
   module map, and the non-negotiable rules for changing the project. Start there for *why*.
 - **[docs/overview.md](docs/overview.md)** — maps every design doc and the reading order.

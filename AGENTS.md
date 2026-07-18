@@ -1,5 +1,10 @@
 # AGENTS.md — orientation for AI agents working on Reflow 2.0
 
+> **Working on reflow2 itself?** Read **[COORD.md](COORD.md)** first and claim what you take —
+> it is the shared board between the people and agents working this repo. Then
+> **[CLAUDE.md](CLAUDE.md)** for commands and code-level architecture,
+> **[docs/backlog.md](docs/backlog.md)** for what is open and why.
+
 Read this first. It tells you what this project is, how it's organized, and the rules to
 follow so your changes stay coherent with the design.
 

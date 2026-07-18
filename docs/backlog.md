@@ -13,6 +13,9 @@ Three records, three questions:
 Items point at their source rather than restating it. Sizes are rough: **S** ≈ an afternoon,
 **M** ≈ a day or two, **L** ≈ a real project.
 
+Each item has a stable id (**BL-n**). Claim one on the board in
+[../COORD.md](../COORD.md) before starting, so two people don't build the same thing.
+
 ## Evidence base
 
 Three independent sources, which is why several items appear on more than one list:
@@ -27,27 +30,27 @@ Three independent sources, which is why several items appear on more than one li
 
 ## Next up
 
-| # | Item | Why | Size |
+| ID | Item | Why | Size |
 |---|---|---|---|
-| 1 | **Schema discovery tool** | Trial agent brute-forced 14 edge-type guesses, then used `DEPENDS_ON` *"because it was the one that validated, which is precisely the kind of silent accommodation this project says it's against."* Its bogus `Release → Component` edges then polluted coupling output. | S |
-| 2 | **Expose `contain_component`** | Exists in core, not on the surface, so an assembly hierarchy can't be modelled — and `hierarchy_issues` returns `[]` because it never has a hierarchy to check. | S |
-| 3 | **`Requirement.status` reachable** | Already in the schema, defaulting to `proposed`. The trial agent wanted to mark requirements provisional and wrote "ASSUMED" into the statement text instead. | S |
-| 4 | **Persist asked questions** | `gap_to_prompt` output evaporates, so the next session re-derives and re-asks. The trial agent's own framing: *"the stateless-agent problem reflow2 is supposed to solve."* Same gap the external user hit as "how do I pause and resume". | M |
-| 5 | **Re-examine `single_point_of_failure`** | *"All 15 defects vanished at once when I added two bookkeeping edges. Nothing about actual fragility changed."* Use that case as the test. | M |
-| 6 | **Rename/split `unverified_capability`** | Fires per-Artifact despite the name, producing gaps titled "Nothing verifies reading.py". Semantically right, legibly wrong. | S |
+| **BL-1** | **Schema discovery tool** | Trial agent brute-forced 14 edge-type guesses, then used `DEPENDS_ON` *"because it was the one that validated, which is precisely the kind of silent accommodation this project says it's against."* Its bogus `Release → Component` edges then polluted coupling output. | S |
+| **BL-2** | **Expose `contain_component`** | Exists in core, not on the surface, so an assembly hierarchy can't be modelled — and `hierarchy_issues` returns `[]` because it never has a hierarchy to check. | S |
+| **BL-3** | **`Requirement.status` reachable** | Already in the schema, defaulting to `proposed`. The trial agent wanted to mark requirements provisional and wrote "ASSUMED" into the statement text instead. | S |
+| **BL-4** | **Persist asked questions** | `gap_to_prompt` output evaporates, so the next session re-derives and re-asks. The trial agent's own framing: *"the stateless-agent problem reflow2 is supposed to solve."* Same gap the external user hit as "how do I pause and resume". | M |
+| **BL-5** | **Re-examine `single_point_of_failure`** | *"All 15 defects vanished at once when I added two bookkeeping edges. Nothing about actual fragility changed."* Use that case as the test. | M |
+| **BL-6** | **Rename/split `unverified_capability`** | Fires per-Artifact despite the name, producing gaps titled "Nothing verifies reading.py". Semantically right, legibly wrong. | S |
 
 ## Bigger threads
 
-| Item | Why | Size |
-|---|---|---|
-| **`ingest` over MCP** (SP-3b) | The multi-pass extraction pipeline is unreachable agent-native, so provenance, fuzzy dedup and time-aware resolution never run. Needs a transactional prepare pass. Closely tied to #4 and to session continuity. | L |
-| **Session state / multi-project** | Select a graph per project; give agents memory across sessions. Core already supports `graph_id`; nothing exposes it. See the memory note and [reflow-audit.md](reflow-audit.md). | L |
-| **As-fielded view** | Audit item 2, and it needs **no new schema** — `operate.yaml` is fully defined and now writable (WS-2). `reconcile_deployment` as a sibling of `reconcile_artifacts`. Guard against the library-plugin false positive the audit flags. | M |
-| **Root-cause classification of drift** | `drift.rs` detects divergence with no notion of *why*, so no notion of which side is wrong. Reflow's seven-category taxonomy ends in a decision rule. Needs a scalar coherence score to gate on. | M |
-| **Path-cumulative budget analysis** | Three independent reflow tools reached for it. PROPAGATE walks impact but never accumulates a quantity along source→sink paths — the classic SE budget rollup (latency, mass, power, cost). | M |
-| **Concurrent multi-agent / team access** | Deliberate future effort. RocksDB is single-writer; this is the strongest argument for the service shape. | L |
-| **Advanced testing tiers** | Comprehension (partly answered by the blind trial), scale (all fixtures are 3–10 nodes), messy input, longitudinal. | M |
-| **`tools/` sweep follow-ups** | The remaining adopt-list items in [reflow-audit.md](reflow-audit.md): typed gap resolution strategies, abstraction-gap → strategy, document round-trip, MCP resources/prompts. | M |
+| ID | Item | Why | Size |
+|---|---|---|---|
+| **BL-7** | **`ingest` over MCP** (SP-3b) | The multi-pass extraction pipeline is unreachable agent-native, so provenance, fuzzy dedup and time-aware resolution never run. Needs a transactional prepare pass. Closely tied to #4 and to session continuity. | L |
+| **BL-8** | **Session state / multi-project** | Select a graph per project; give agents memory across sessions. Core already supports `graph_id`; nothing exposes it. See the memory note and [reflow-audit.md](reflow-audit.md). | L |
+| **BL-9** | **As-fielded view** | Audit item 2, and it needs **no new schema** — `operate.yaml` is fully defined and now writable (WS-2). `reconcile_deployment` as a sibling of `reconcile_artifacts`. Guard against the library-plugin false positive the audit flags. | M |
+| **BL-10** | **Root-cause classification of drift** | `drift.rs` detects divergence with no notion of *why*, so no notion of which side is wrong. Reflow's seven-category taxonomy ends in a decision rule. Needs a scalar coherence score to gate on. | M |
+| **BL-11** | **Path-cumulative budget analysis** | Three independent reflow tools reached for it. PROPAGATE walks impact but never accumulates a quantity along source→sink paths — the classic SE budget rollup (latency, mass, power, cost). | M |
+| **BL-12** | **Concurrent multi-agent / team access** | Deliberate future effort. RocksDB is single-writer; this is the strongest argument for the service shape. | L |
+| **BL-13** | **Advanced testing tiers** | Comprehension (partly answered by the blind trial), scale (all fixtures are 3–10 nodes), messy input, longitudinal. | M |
+| **BL-14** | **`tools/` sweep follow-ups** | The remaining adopt-list items in [reflow-audit.md](reflow-audit.md): typed gap resolution strategies, abstraction-gap → strategy, document round-trip, MCP resources/prompts. | M |
 
 ## Deliberate deferrals
 
