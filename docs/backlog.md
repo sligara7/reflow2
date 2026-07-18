@@ -39,7 +39,6 @@ Four independent sources, which is why several items appear on more than one lis
 | ID | Item | Why | Size |
 |---|---|---|---|
 | **BL-4** | **Persist asked questions** | `gap_to_prompt` output evaporates, so the next session re-derives and re-asks. The trial agent's own framing: *"the stateless-agent problem reflow2 is supposed to solve."* Same gap the external user hit as "how do I pause and resume". | M |
-| **BL-5** | **Re-examine `single_point_of_failure`** | *"All 15 defects vanished at once when I added two bookkeeping edges."* The self-host probe found the mechanism: it fires on **leaf** capabilities — *"every path between subsystems routes through `cap:ingest`"* — because the selectivity rule counts separated groups without asking whether they are substantial. `surprises.rs` already solved this with `MIN_COMMUNITY = 3`; `structure.rs` has no equivalent. 7 of 8 defects on a healthy 2-component design. | M |
 
 ## Closed
 
@@ -53,6 +52,14 @@ Kept as a short pointer so a stable id never dangles; the detail is in the CHANG
   overwritten — which also fixed a silent failure where a project that already had any MCP server
   never got reflow2 installed while the run reported success. Tables and the reasoning:
   [skills/README.md](skills/README.md).
+- **BL-5 · `single_point_of_failure` measured against the baseline** — done. Not the cause the
+  self-host probe guessed (it blamed the `≥2` threshold, by analogy with `surprises.rs`).
+  Reproducing the shape showed the real one: the test asked whether ≥2 non-trivial components
+  exist *after* removal, which assumes a connected design. One unrelated island already satisfies
+  that, so every articulation point elsewhere reported — and attaching the island cleared them all
+  at once, which is exactly the trial's *"15 defects vanished when I added two bookkeeping
+  edges."* It now asks whether removal **increases** the count. reflow2's own design: 8 defects → 2,
+  both true.
 - **BL-24 · A Component the Project contains is not floating** — done. `orphan_level` only
   recognised a *Component* parent, and the Project carries no `Component.level` because it sits
   above all of them — so the shape the tools lead you to (a Project holding a few subsystems)

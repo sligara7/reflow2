@@ -133,7 +133,25 @@ Both fixes were small and neither weakened detection: capabilities are still ask
 component nothing contains is still an orphan. What changed is that the two rules stopped
 demanding bookkeeping the design's author would not write.
 
-Still open from this probe: the 7 `single_point_of_failure` defects
-([BL-5](../backlog.md)). Those are HEAL's, not DETECT's, so they do not touch the gap list — but
-the mechanism is now known, and it is the same one `surprises.rs` solved with
-`MIN_COMMUNITY = 3`.
+**BL-5 too**, and the cause was not the one this probe guessed. Finding 2 above blamed the
+`≥2 nodes` threshold, by analogy with `surprises.rs`. Reproducing the shape in a test showed
+otherwise: two capabilities correctly *not* flagged became single points of failure the moment an
+unrelated second crate was added beside them. The test asked "are there ≥2 non-trivial components
+*after* removal?", which assumes the design was connected to begin with — one island already
+satisfies it, so every articulation point anywhere else reports. Measuring against the baseline
+fixes it.
+
+That is also the trial's *"15 defects vanished at once"* from the other side: those two
+bookkeeping edges attached an island, the count fell under the threshold, and the list cleared.
+
+Final state of reflow2's own design:
+
+| | gaps | defects |
+|---|---|---|
+| as probed | 25 | 8 |
+| after BL-23, BL-24, BL-5 | **1** | **2** |
+
+The one gap is `no_deploy_operate`, which is correct. Both defects are correct: `cmp:core` really
+does hold the subsystems together, and the MCP crate really is disconnected in the *design*
+network (it depends on the core in code, which is not a design edge — arguably a modelling gap in
+the probe rather than a finding about reflow2).

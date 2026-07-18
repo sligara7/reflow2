@@ -152,3 +152,57 @@ fn structural_defects_are_generative_and_gated_for_review() {
         "dead end should propose a bridging link for review"
     );
 }
+
+/// BL-5. The SPOF test used to ask "are there ≥2 non-trivial components after
+/// removing this node?" — which silently assumed the design was connected to
+/// start with. One unrelated island already satisfies it, so every articulation
+/// point elsewhere reported as a single point of failure with nothing about its
+/// fragility changed. Measuring against the baseline is the fix.
+///
+/// This is the blind trial's complaint from the other side: *"all 15 defects
+/// vanished at once when I added two bookkeeping edges."* Those edges attached
+/// an island, the count fell below the threshold, and the list cleared.
+#[test]
+fn an_unrelated_island_does_not_make_everything_a_single_point_of_failure() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_component("cmp:hub", "Hub", "holds both", None)
+        .unwrap();
+
+    // Two real subsystems, joined only through cmp:hub.
+    for cap in ["cap:a", "cap:b"] {
+        g.add_capability(cap, cap, "does a thing").unwrap();
+        g.allocate(cap, "cmp:hub").unwrap();
+        for i in 0..2 {
+            let r = format!("req:{cap}-{i}");
+            g.add_requirement(&r, &r, "s").unwrap();
+            g.satisfies(cap, &r).unwrap();
+        }
+    }
+    let spofs = |g: &DesignGraph| -> Vec<String> {
+        g.detect_defects()
+            .unwrap()
+            .iter()
+            .filter(|d| d.category == HealCategory::SinglePointOfFailure)
+            .flat_map(|d| d.affected_ids.clone())
+            .collect()
+    };
+    assert_eq!(
+        spofs(&g),
+        ["cmp:hub"],
+        "the hub genuinely holds two subsystems together"
+    );
+
+    // Add a second, entirely separate part of the design. Nothing about the
+    // first part's fragility changes, so nothing new should be flagged.
+    g.add_component("cmp:island", "Island", "unrelated", None)
+        .unwrap();
+    g.add_capability("cap:island", "Island cap", "d").unwrap();
+    g.allocate("cap:island", "cmp:island").unwrap();
+
+    assert_eq!(
+        spofs(&g),
+        ["cmp:hub"],
+        "an unrelated island must not turn the capabilities into single points of failure"
+    );
+}

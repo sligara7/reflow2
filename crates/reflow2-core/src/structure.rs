@@ -324,13 +324,30 @@ impl DesignGraph {
         Ok(cycles)
     }
 
-    /// Whether removing `node_id` would split the design into **≥2 non-trivial
-    /// subsystems** (each ≥2 nodes) — the selective SPOF test that ignores the
-    /// leaf-cutting every tree-internal node trivially does.
+    /// Whether removing `node_id` **creates** a split — leaving more non-trivial
+    /// subsystems (≥2 nodes each) than the design already had.
+    ///
+    /// Measured against the baseline, not against a fixed count, and that is the
+    /// whole of it. Asking "are there ≥2 non-trivial components after removal?"
+    /// silently assumed the design was connected to begin with. It usually is
+    /// not: one unrelated island of two nodes already satisfies the test, so
+    /// **every** articulation point anywhere else in the graph reports as a
+    /// single point of failure while nothing about its fragility is different.
+    ///
+    /// This is the defect the blind trial described from the other side — *"all
+    /// 15 defects vanished at once when I added two bookkeeping edges; nothing
+    /// about actual fragility changed."* Those edges attached the island. The
+    /// count fell below the threshold and the whole list cleared, which is the
+    /// same bug wearing the opposite sign.
+    ///
+    /// Modelling reflow2's own design showed it directly: two capabilities that
+    /// were correctly *not* flagged became single points of failure the moment a
+    /// disconnected second crate was added beside them.
     pub(crate) fn is_single_point_of_failure(&self, node_id: &str) -> Result<bool, DynoError> {
+        let baseline = self.build_network(None)?.nontrivial_component_count();
         Ok(self
             .build_network(Some(node_id))?
             .nontrivial_component_count()
-            >= 2)
+            > baseline)
     }
 }
