@@ -30,8 +30,8 @@ use tokio::sync::Mutex;
 use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
     AgentAnswer, AgentBackend, ChangeType, DesignGraph, Dimension, DynoError, EpochType,
-    GapCandidate, HealOptions, HealProposal, HealStrategy, PromptCollector, PropagateOptions,
-    Value,
+    GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy, PromptCollector,
+    PropagateOptions, Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -81,6 +81,26 @@ fn parse_props(props: Option<JsonValue>) -> Result<HashMap<String, Value>, McpEr
 }
 
 // ---- request shapes ---------------------------------------------------------
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct GenesisReq {
+    /// Stable Project id (e.g. `proj:softball`).
+    pub project_id: String,
+    /// Project name.
+    pub name: String,
+    /// Optional domain hint (software / hardware / document / …).
+    #[serde(default)]
+    pub domain: Option<String>,
+    /// Optional one-line "what success looks like".
+    #[serde(default)]
+    pub objective: Option<String>,
+    /// Project mode: `flexible` (default) or `rigid`.
+    #[serde(default)]
+    pub mode: Option<String>,
+    /// Bootstrap over an existing Project instead of a guarded no-op.
+    #[serde(default)]
+    pub rescan: bool,
+}
 
 #[derive(Debug, Deserialize, JsonSchema)]
 pub struct IdName {
@@ -263,6 +283,31 @@ impl ReflowService {
             graph: Arc::new(Mutex::new(DesignGraph::open_in_memory()?)),
             tool_router: Self::tool_router(),
         })
+    }
+
+    // ---- GENESIS (bootstrap the graph from a brief) ----
+
+    #[tool(
+        description = "Bootstrap the design graph: create the Project + a genesis Epoch anchor \
+                       and return a next-steps checklist. Guarded and idempotent — a no-op that \
+                       reports already_initialized if a Project exists (unless rescan). Call this \
+                       first, then seed the brief into Requirements/Capabilities via the add_* \
+                       tools and run detect_gaps."
+    )]
+    pub async fn genesis(
+        &self,
+        Parameters(req): Parameters<GenesisReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let opts = GenesisOptions {
+            project_id: req.project_id,
+            name: req.name,
+            domain: req.domain,
+            objective: req.objective,
+            mode: req.mode,
+            rescan: req.rescan,
+        };
+        let mut g = self.graph.lock().await;
+        ok_json(g.genesis(opts).map_err(dyno_err)?)
     }
 
     // ---- DETECT / analyze (deterministic, read-only) ----

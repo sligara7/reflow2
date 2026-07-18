@@ -30,7 +30,7 @@ the loop like this:
 
 | Universal process | Loop step(s) | reflow2 doc | Status |
 |---|---|---|---|
-| **GENESIS** — bootstrap the graph from a brief | seeds the first CHANGE | — | acknowledged; not yet detailed |
+| **GENESIS** — bootstrap the graph from a brief | seeds the first CHANGE | [genesis.md](genesis.md) | detailed (thin core op + skill; SP-5) |
 | **INGEST** — extract content/edits into the graph | CHANGE | [extraction-plan.md](extraction-plan.md), [artifact-linking.md](artifact-linking.md), [sme-augmentation.md](sme-augmentation.md) | detailed |
 | *(reflow2 addition)* — ripple along the golden thread | PROPAGATE | [impact-propagation.md](impact-propagation.md) | detailed |
 | **DIAGNOSE → PROMPT** — find weaknesses, ask the user | DETECT + SURFACE | [gap-surfacing.md](gap-surfacing.md) | detailed |

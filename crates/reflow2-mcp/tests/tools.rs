@@ -108,6 +108,63 @@ async fn heal_propose_then_apply_round_trips() {
 }
 
 #[tokio::test]
+async fn genesis_bootstraps_then_detect_hands_off() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+
+    // Bootstrap from a brief's framing.
+    let report = j!(s.genesis(Parameters(GenesisReq {
+        project_id: "proj:sb".into(),
+        name: "Softball Game".into(),
+        domain: Some("software".into()),
+        objective: Some("Physics-real softball for the nieces.".into()),
+        mode: Some("flexible".into()),
+        rescan: false,
+    })));
+    assert_eq!(report["created"], true);
+    assert_eq!(report["already_initialized"], false);
+    assert!(!report["next_steps"].as_array().unwrap().is_empty());
+
+    // A second genesis is a guarded no-op (no duplicate Project).
+    let again = j!(s.genesis(Parameters(GenesisReq {
+        project_id: "proj:dupe".into(),
+        name: "Dupe".into(),
+        domain: None,
+        objective: None,
+        mode: None,
+        rescan: false,
+    })));
+    assert_eq!(again["already_initialized"], true);
+    assert_eq!(again["created"], false);
+
+    // The skill's job: seed P0/P1 only (no Components), then DETECT hands off.
+    j!(s.add_requirement(Parameters(RequirementReq {
+        id: "req:physics".into(),
+        name: "Realistic physics".into(),
+        statement: "Ball flight must be plausible.".into()
+    })));
+    j!(s.add_capability(Parameters(DescribedReq {
+        id: "cap:flight".into(),
+        name: "Ball flight".into(),
+        description: "Simulate ball trajectory.".into()
+    })));
+    j!(s.satisfies(Parameters(EdgePairReq {
+        from_id: "cap:flight".into(),
+        to_id: "req:physics".into()
+    })));
+
+    // Seeded P0/P1 with no P2 → DETECT's first-round structure gap fires.
+    let gaps = j!(s.detect_gaps());
+    assert!(
+        gaps.as_array()
+            .unwrap()
+            .iter()
+            .any(|g| g["gap_source"] == "concept_without_design"),
+        "genesis seed depth (P0/P1, no components) should hand off to concept_without_design, \
+         got {gaps}"
+    );
+}
+
+#[tokio::test]
 async fn gap_to_prompt_collect_then_serve() {
     let s = seeded().await;
     let gaps = j!(s.detect_gaps());

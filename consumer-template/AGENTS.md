@@ -14,6 +14,10 @@ fidelity?), that is a *gap* — surface it as a question, don't guess.
 
 ## The loop
 
+0. **Bootstrap once (GENESIS).** On a brand-new project (empty graph), start with the **genesis**
+   skill: call the `genesis` tool to scaffold the Project + temporal anchor, seed the opening
+   brief into Requirements + Capabilities (P0/P1, *not* Components), capture deployment/platform
+   context as Requirements, then run `detect_gaps`. Skip this on an existing design.
 1. **Capture intent.** When the user gives a brief or a new idea, extract it into the graph:
    - `add_requirement` (what must be true), `add_capability` (what the system does),
      `add_component` (what part owns it).

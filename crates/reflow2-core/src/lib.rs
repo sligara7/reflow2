@@ -30,6 +30,7 @@ pub mod agent;
 pub mod allocate;
 pub mod detect;
 pub mod dimensions;
+pub mod genesis;
 pub mod graph;
 pub mod heal;
 pub mod hierarchy;
@@ -49,6 +50,7 @@ pub use allocate::{
 };
 pub use detect::{GapCandidate, GapPrompt, GapScope, GapSource};
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
+pub use genesis::{GENESIS_EPOCH_ID, GenesisOptions, GenesisReport};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
 pub use heal::{
     GeneratedContentStub, HealCategory, HealIssue, HealOp, HealOperation, HealOptions,
