@@ -279,11 +279,22 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("skipped_operations reported", "skipped_operations" in p, list(p))
 
     print("\n== 10. the design survives a restart ==")
+    first_gaps = sorted(g["id"] for g in s.call("detect_gaps"))
     s.close()
     s = Server(binary, graph_path)
     n = s.call("get_node", {"node_type": "Interface", "id": "ifc:state"})
     c.ok("graph reopened with its contents intact",
          n is not None and n.get("node_id") == "ifc:state", n)
+
+    # Cross-process determinism. A HashSet's iteration order is seeded per
+    # process, so anything derived from it (community detection, and every gap
+    # that follows) can differ between runs on an unchanged graph. That would
+    # make reviewing a gap pointless — the id it was accepted under might not
+    # come back — so it has to be checked here, where the processes are real.
+    second_gaps = sorted(g["id"] for g in s.call("detect_gaps"))
+    c.ok("the same graph gives the same gaps in a fresh process",
+         first_gaps == second_gaps,
+         f"{len(first_gaps)} vs {len(second_gaps)}")
     s.close()
 
     print("\n" + "=" * 62)

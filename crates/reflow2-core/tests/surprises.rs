@@ -210,3 +210,64 @@ fn provenance_nodes_stay_out_of_the_topology() {
         "a DriftEvent is not a design coupling"
     );
 }
+
+#[test]
+fn detection_is_stable_across_runs_on_an_unchanged_graph() {
+    // Guards against instability *within* a process (ordering that depends on
+    // iteration of an unsorted collection, floating-point tie-breaks, etc.).
+    //
+    // It cannot catch the original bug, and that is worth stating: Rust seeds a
+    // HashSet's hasher per **process**, so repeated calls inside one test see a
+    // consistent order and pass either way. The real regression test for that
+    // lives in `tools/smoke_mcp.py`, which runs the binary twice in separate
+    // processes and compares. Keep both.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for c in ["cap:a1", "cap:a2", "cap:a3", "cap:b1", "cap:b2", "cap:b3"] {
+        cap(&mut g, c);
+    }
+    dep(&mut g, "cap:a1", "cap:a2", 0.9);
+    dep(&mut g, "cap:a2", "cap:a3", 0.9);
+    dep(&mut g, "cap:a1", "cap:a3", 0.9);
+    dep(&mut g, "cap:b1", "cap:b2", 0.9);
+    dep(&mut g, "cap:b2", "cap:b3", 0.9);
+    dep(&mut g, "cap:b1", "cap:b3", 0.9);
+    dep(&mut g, "cap:a1", "cap:b1", 0.1);
+
+    let fingerprint = |g: &DesignGraph| -> Vec<String> {
+        let mut v: Vec<String> = g
+            .surprising_connections()
+            .unwrap()
+            .iter()
+            .map(|c| format!("{}|{}|{}", c.from_id, c.to_id, c.edge_type))
+            .collect();
+        v.sort();
+        v
+    };
+    let first = fingerprint(&g);
+    for _ in 0..8 {
+        assert_eq!(
+            first,
+            fingerprint(&g),
+            "same graph must give the same answer"
+        );
+    }
+
+    let mut gap_ids = |g: &DesignGraph| -> Vec<String> {
+        let mut v: Vec<String> = g
+            .detect_gaps()
+            .unwrap()
+            .iter()
+            .map(|c| c.id.clone())
+            .collect();
+        v.sort();
+        v
+    };
+    let first_gaps = gap_ids(&g);
+    for _ in 0..8 {
+        assert_eq!(
+            first_gaps,
+            gap_ids(&g),
+            "gap ids must be reproducible or a review cannot hold"
+        );
+    }
+}

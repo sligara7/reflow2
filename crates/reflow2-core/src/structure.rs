@@ -144,12 +144,20 @@ impl DesignGraph {
             .map(|(id, _)| id.as_str())
             .collect();
 
+        // Insertion order decides the dense node indices, and those decide how
+        // Leiden breaks ties between equal-modularity moves. `included` is a
+        // HashSet, and Rust seeds its hasher per *process* — so iterating it
+        // directly makes the community assignment (and therefore every gap
+        // derived from it) differ between runs on an unchanged graph. Sort.
+        let mut ordered: Vec<&str> = included.iter().copied().collect();
+        ordered.sort_unstable();
+
         let mut builder = GraphBuilder::new();
         // Add every included node so isolated ones still appear as components.
-        for id in &included {
+        for id in &ordered {
             builder.add_node(id);
         }
-        for id in &included {
+        for id in &ordered {
             for e in self.outgoing(id, None)? {
                 if is_traceability_edge(&e.edge_type) && included.contains(e.to_id.as_str()) {
                     builder
@@ -161,7 +169,7 @@ impl DesignGraph {
         let graph = builder.build(false); // undirected: structural coupling is symmetric
 
         let mut meta = vec![(String::new(), String::new()); graph.node_count()];
-        for id in &included {
+        for id in &ordered {
             if let Some(idx) = graph.idx_of(id) {
                 meta[idx] = (id.to_string(), index[*id].clone());
             }

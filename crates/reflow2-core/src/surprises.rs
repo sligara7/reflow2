@@ -112,7 +112,12 @@ impl DesignGraph {
             std::collections::HashSet::new();
         let mut pair_bridges: HashMap<(usize, usize), usize> = HashMap::new();
 
-        for (id, &c_from) in &community {
+        // Same reason as `build_network`: iterate in a stable order so the
+        // candidate list, the dedup set and the bridge counts do not depend on
+        // HashMap ordering.
+        let mut by_id: Vec<(&String, &usize)> = community.iter().collect();
+        by_id.sort_unstable_by(|a, b| a.0.cmp(b.0));
+        for (id, &c_from) in by_id {
             for e in self.outgoing(id, None)? {
                 if !LATERAL_COUPLING.contains(&e.edge_type.as_str()) || !net.contains(&e.to_id) {
                     continue;
