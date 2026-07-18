@@ -160,167 +160,20 @@ script from, which is true today because building the binary requires one. It st
 the moment someone wants reflow2 without cloning it: that needs published, per-platform binaries
 (and macOS raises signing questions), or a fetch-from-git mode in the installer. It remains the
 third piece of evidence for the service side of the embedded-vs-service fork, alongside
-single-writer concurrency and this. Size **M–L**, and worth deciding the fork first.
+single-writer concurrency and this. Size **M–L**.
 
+**The fork is decided** (2026-07-18, [surface-plan.md](surface-plan.md)): **repo-file, embedded**.
+So this is no longer gated — build published per-platform binaries, which is the packaging answer
+to a packaging problem. The service was weighed and set aside: its strongest argument
+(concurrency) is hypothetical while there is one writer, it would put the user's design graph on a
+machine they do not control, and it is permanent operational cost. The conditions that would
+reopen it are written down; "published binaries proved insufficient" is one of them, so this item
+is also the experiment that would justify revisiting.
 
-
-**BL-22 · Skills are not reliably discoverable** — done. The kit installed `.grok/skills/`
-  alone, the narrowest-reach of four harnesses, so a project opened in Claude Code had an
-  AGENTS.md naming seven skills the agent could not load. `reflow2_init.py` now installs to
-  `.claude/skills/` (read by Claude Code, OpenCode and Copilot) and `.grok/skills/`, and writes
-  `.mcp.json`, `opencode.json` and `.vscode/mcp.json` from one generator. Configs are merged, not
-  overwritten — which also fixed a silent failure where a project that already had any MCP server
-  never got reflow2 installed while the run reported success. Tables and the reasoning:
-  [skills/README.md](skills/README.md).
-- **BL-21 · The agent can report its own friction** — done. A `report-friction` skill plus the
-  trigger in the consumer AGENTS.md, since a skill alone is not reliably found (BL-22). Redaction
-  is the load-bearing part: a friction report naturally quotes the graph, and the graph is the
-  user's design, so the skill reports reflow2-shaped facts — tool, argument *shapes*, node
-  *types*, counts, masked errors — and asks before including anything of theirs. It never files
-  without asking, searches for duplicates first, and degrades to a local file when `gh` is absent
-  or the repo is unreachable, **which is the normal case: the repo is private**. Also folded skill
-  frontmatter validation into `reflow2_init.py`, because a malformed `name` makes a skill fail to
-  load with no error anywhere.
-- **BL-25 · An answered question stays visible while its gap is open** — done. `open_questions`
-  now returns two kinds: `asked` (still waiting) and `answered` **whose gap is still open**, with
-  the reply attached. Answering settles nothing by itself — either the answer gets written into
-  the design and the gap closes, or the gap is acknowledged; until one happens there is something
-  outstanding and the list says so. A question whose gap has closed or been acknowledged drops out
-  of the list but stays in the graph. Verified on reflow2's own design: the third session now sees
-  the question and the reply, and acknowledging takes it to **0 gaps, 0 outstanding, 1 reviewed**.
-- **BL-4 · Asked questions outlive the session** — done. `gap_to_prompt` was the only tool that
-  never touched the graph: it phrased a question, returned it, and forgot, so the next session
-  re-derived the same gap and asked again. Its serve pass now records a `Question` node at a
-  derived id (`question:{gap hash}`), `ASKS_ABOUT` the nodes the gap concerned, with the wording
-  the user actually saw. `open_questions` / `answer_question` / `withdraw_question` are on the
-  surface, and `where-am-i` reads them first. **New node type** — 27 node types, 53 edge types —
-  purely additive, so per BL-19 it is safe for existing graphs. Re-asking updates the wording but
-  cannot reopen an answered question; there is a test for that.
-- **BL-5 · `single_point_of_failure` measured against the baseline** — done. Not the cause the
-  self-host probe guessed (it blamed the `≥2` threshold, by analogy with `surprises.rs`).
-  Reproducing the shape showed the real one: the test asked whether ≥2 non-trivial components
-  exist *after* removal, which assumes a connected design. One unrelated island already satisfies
-  that, so every articulation point elsewhere reported — and attaching the island cleared them all
-  at once, which is exactly the trial's *"15 defects vanished when I added two bookkeeping
-  edges."* It now asks whether removal **increases** the count. reflow2's own design: 8 defects → 2,
-  both true.
-- **BL-24 · A Component the Project contains is not floating** — done. `orphan_level` only
-  recognised a *Component* parent, and the Project carries no `Component.level` because it sits
-  above all of them — so the shape the tools lead you to (a Project holding a few subsystems)
-  reported one false gap per subsystem. The Project now counts as a parent; a component nothing
-  contains is still an orphan, and there is a test for each direction. Together with BL-23 this
-  took reflow2's own design from **25 gaps to 1**, and that one is true.
-- **BL-23 · Per-file verification coverage is counted, not asked** — done. One `VERIFIES` edge
-  per source file was 22 of 25 gaps on reflow2's own design, on a crate whose capabilities are all
-  tested. The rule was not wrong, it was loud, and volume is what makes a list get skimmed.
-  `graph_report` now carries a `Verification coverage` line and the gap is gone. Measured on the
-  same 119-node graph: **25 gaps → 3**, of which one is true and two are BL-24.
-- **BL-6b · `unexpected_coupling` demoted to a signal** — done. The decisive fact was not the
-  trials but the spec: [gap-surfacing.md](gap-surfacing.md) names `orphan_node`, `dead_end`,
-  `disconnected_cluster` and `single_point_of_failure` as the structural gaps — this was never
-  among them, having been volunteered by the graph-analysis work. It is now reported by
-  `graph_report` under its own heading, which already existed, so no information was lost. Two
-  earlier rounds of tightening had not stopped it firing on correct architecture; an `Interface`
-  bridges two clusters by construction, so modelling contracts as instructed made the detector
-  penalise every one. `reviewed_gaps` now reports acknowledgements whose detector has been
-  retired rather than dropping them, since a trial had already accepted one.
-- **BL-2 · Expose `contain_component`** and **BL-3 · `Requirement.status` reachable** — done
-  `9ab3da3`. Both needed more than the entry said. BL-2 also had to expose `Component.level`:
-  shipping the containment alone would have flagged a false `level_mismatch` on every nesting,
-  since everything defaults to `component` — worse than the silence it replaced. BL-3 also had to
-  fix HEAL, which unlike DETECT ignored a `dropped` requirement, so marking one would have
-  silenced half the system while the other half kept nagging. Recorded as **WS-7**/**WS-8**.
-- **BL-6 · Split `unverified_capability`** — done `9ab3da3`. Artifacts now report as
-  `unverified_artifact` with wording of their own; detection is unchanged, because proving a
-  capability works still does not prove *this file* delivers it. The capability key is frozen
-  deliberately: gap ids hash it and acknowledgements are stored under the resulting id, so a
-  rename would silently expire every acknowledgement and orphan the Decision where neither
-  `detect_gaps` nor `reviewed_gaps` looks. A test pins both keys.
-- **BL-1 · Schema discovery tool** — done `9440929`, consumer kit `f00fac7`. `describe_schema`
-  plus rejections that name the alternatives. The design turned on one detail worth remembering:
-  `EdgeEndpoint::accepts()` returns true for the `*` wildcard, so the naive answer to the trial's
-  question would have been `DEPENDS_ON` — the very edge it chose and distrusted. Matches are
-  labelled exact vs wildcard for that reason. Recorded as **WS-6** in the coverage matrix.
-
-## Bigger threads
-
-**BL-15 · Project bootstrap and kit updates** — *from the external user, 2026-07-18.* "You should
-be able to launch a project from reflow, which bootstraps everything into a new repo... And maybe
-it adds a script for pulling in releases. You won't know up front what project type it is though."
-
-Two problems, and his caveat is the design.
-
-*Bootstrap.* Today the kit installs by three hand-run `cp`s, one of which needs the binary path
-edited in, plus a hidden `.grok/` that `cp *` misses. That should be one command.
-
-*The caveat is the product, not an obstacle.* You don't know the project type up front **because
-that is a design decision the loop is supposed to make.** So bootstrap only what is type-neutral
-— AGENTS.md, skills, MCP config, `.reflow2/`, `.gitignore`, a brief template — and deliberately
-scaffold no `src/` layout, build file, or language choice. Those come *out* of the design, and
-both blind trials produced exactly that: a structure that fitted what had been designed. A
-scaffold that guessed would commit a design decision before the design existed.
-
-*Updates are the sharper half, and currently absent.* The kit is copied, so a consumer's copy
-freezes at install time — the first external user's copy is already stale by a day of skill
-fixes and nothing tells him. Text (AGENTS.md + skills) is easy to refresh; the binary needs a
-~10-minute RocksDB build, so it wants either published release binaries or a pinned-version
-check. Bears directly on the embedded-vs-service fork: a service would make this disappear.
-
-**Bootstrap and in-place updates: done** (`tools/reflow2_init.py`) — one command installs or
-refreshes the design environment, resolves the binary path itself, records a kit version so
-staleness is detectable, and leaves the graph, user files and a customised `.mcp.json` alone.
-It installs no `src/`, build file or language choice, on purpose.
-
-**Update-skew detection: done.** `reflow2_init.py` now reports whether the *binary* is older
-than the source it was built from — the quiet failure where you pull, re-run init, and forget to
-rebuild, leaving current instructions driving an old server. SETUP.md documents the three-step
-update in the order that matters.
-
-**Still open — published releases.** Everything above assumes a reflow2 checkout to run the
-script from, which is true today because building the binary requires one. It stops being true
-the moment someone wants reflow2 without cloning it: that needs published, per-platform binaries
-(and macOS raises signing questions), or a fetch-from-git mode in the installer. It remains the
-third piece of evidence for the service side of the embedded-vs-service fork, alongside
-single-writer concurrency and this. Size **M–L**, and worth deciding the fork first.
-
-
-
-**BL-21 · Let the agent file its own friction** — *user, 2026-07-18.* Most agents can already run
-`gh`. When one hits something that does not work while *using* reflow2, it could open an issue on
-`github.com/sligara7/reflow2` instead of working around it silently.
-
-*Why this is more than convenience.* The three best sources in the Evidence base above are all
-friction logs — a blind trial, a Grok trial, a first external user — and each exists because
-someone happened to write down what fought them. That is a manual, lossy channel: it captures
-what a trial noticed in one sitting and nothing from ordinary use afterwards. Wiring it up turns
-every session into evidence and closes the loop the project already runs on by hand. The
-fourteen-guess finding (BL-1) is exactly the shape of thing that would arrive this way.
-
-Four things it has to get right, in order of how badly they bite:
-
-- **Design content must not leak.** A friction report naturally quotes the graph — requirement
-  text, component names, the brief. On a public tracker that publishes someone's design, possibly
-  a commercial or restricted one. This is the sharp edge: the agent must either redact to the
-  reflow2-shaped facts (which tool, which arguments, what it expected, what happened) or ask the
-  user before filing. Defaulting to "paste the context" would be a privacy incident dressed up as
-  helpfulness.
-- **Ask, don't auto-file.** An issue filed without the user knowing is an action taken in their
-  name, in public, under their GitHub identity. Propose, show the text, file on a yes.
-- **Duplicates.** Search open issues first; several users hitting one bug should thicken one
-  report, not open five. A `reflow2-version` / kit-commit label makes triage tractable and ties
-  into BL-18's stamp.
-- **Signal, not noise.** "I could not work out how to do X" is often a docs gap, which is still
-  worth knowing, but should be labelled as such rather than filed as a defect.
-
-*Put it in AGENTS.md, not only in a skill.* The obvious home is a `report-friction` skill in the
-consumer kit — and that is the one place an agent is least likely to find it. The Grok trial
-(§2, "Skills are files, not auto-injected") found the kit's seven skills absent from its
-`available_skills` list entirely and had to `Read` them by hand. Skills land in `.grok/skills/`;
-whether a harness surfaces them is harness-dependent and currently unreliable. AGENTS.md is read
-by convention, so the trigger belongs there, with the skill carrying the detail. Needs no server
-work either way. Size **S**; the redaction judgment is the part worth writing carefully. Pairs
-with **BL-13** (advanced testing tiers) — this is the longitudinal, real-use tier no fixture can
-simulate. **BL-22** is done, so a skill written now is actually reachable.
+> **Unblocked 2026-07-18.** BL-18, BL-19 and BL-20 were all waiting on the embedded-vs-service
+> fork. It is decided — **repo-file, embedded** ([surface-plan.md](surface-plan.md)) — so build
+> them for that shape. Export/import is now the migration story rather than a stopgap until a
+> service centralises it.
 
 **BL-20 · Graph export / import, and versioned local backups** — *user, 2026-07-18.* Unblocks
 BL-19's migration half and, through it, BL-18.
@@ -461,7 +314,7 @@ back toward code. AGENTS.md then points at it. Size **S**.
 | **BL-9** | **As-fielded view** | Audit item 2, and it needs **no new schema** — `operate.yaml` is fully defined and now writable (WS-2). `reconcile_deployment` as a sibling of `reconcile_artifacts`. Guard against the library-plugin false positive the audit flags. | M |
 | **BL-10** | **Root-cause classification of drift** | `drift.rs` detects divergence with no notion of *why*, so no notion of which side is wrong. Reflow's seven-category taxonomy ends in a decision rule. Needs a scalar coherence score to gate on. | M |
 | **BL-11** | **Path-cumulative budget analysis** | Three independent reflow tools reached for it. PROPAGATE walks impact but never accumulates a quantity along source→sink paths — the classic SE budget rollup (latency, mass, power, cost). | M |
-| **BL-12** | **Concurrent multi-agent / team access** | Deliberate future effort. RocksDB is single-writer; this is the strongest argument for the service shape. | L |
+| **BL-12** | **Concurrent multi-agent / team access** | Deliberate future effort, and the trigger for revisiting the embedded/service fork — *decided 2026-07-18 as repo-file*. RocksDB is single-writer and fails loud, so agents take turns; that is only a real cost once a **second writer actually exists**, which it does not. Reach for RocksDB read-only secondaries before a service if the need turns out to be "let me look while you work". | L |
 | **BL-13** | **Advanced testing tiers** | Comprehension (partly answered by the blind trial), scale (all fixtures are 3–10 nodes), messy input, longitudinal. | M |
 | **BL-14** | **`tools/` sweep follow-ups** | The remaining adopt-list items in [reflow-audit.md](reflow-audit.md): typed gap resolution strategies, abstraction-gap → strategy, document round-trip, MCP resources/prompts. | M |
 

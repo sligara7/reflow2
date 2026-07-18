@@ -77,18 +77,46 @@ Per [interaction-surfaces.md](interaction-surfaces.md), the consumers are coding
 - **Persistence = RocksDB.** The design must survive across sessions, so flip on
   `dynograph-storage`'s `rocksdb` feature; the in-memory backend is dev/test only.
 
-## Shared graph across two agents (open design point)
+## Shared graph across two agents — DECIDED 2026-07-18: repo-file
 
-grok build and claude code work the *same* design. So reflow2 must be a **shared** graph, not
-a per-session one. Two candidate shapes, to decide next session:
+The two candidate shapes were a **repo-file graph** (the RocksDB store lives beside the
+project; agents sync through git — simple, offline, manual merge) and a **small shared
+service** (a process both agents connect to over `/v1/*` — handles concurrency, but is
+infrastructure to run).
 
-- **Repo-file graph** — the RocksDB store (or an exported graph file) lives in the project
-  repo; both agents sync via git. Simple, offline, but concurrent-edit merge is manual.
-- **Small shared service** — a `dynograph-service`-style process both agents connect to over
-  `/v1/*`. Handles concurrency, but is infrastructure to run.
+**The repo-file shape is the decision.** It is not a deferral: the work that was waiting on
+this fork (BL-15 published releases, BL-18 staleness check, BL-19 version stamp, BL-20
+export/import) should now be built on the embedded assumption.
 
-Recommendation to weigh: start with the **repo-file** shape (matches the git-based dev flow;
-lowest infra) and move to a service only if concurrent editing demands it.
+### Why, against the three arguments for a service
+
+| Argument | Verdict |
+|---|---|
+| **Single-writer concurrency** (BL-12) | The strongest argument, and still hypothetical. Two people work this repo but only one writes the graph; the second is a consumer. It also fails *loud* — RocksDB's LOCK means a second server exits immediately, with no corruption and no split-brain. A real cost would be a real second writer, and there isn't one. |
+| **Distribution** (BL-15) | Real and recurring — everything assumes a checkout and a ten-minute RocksDB build. But that is a *packaging* problem, and published per-platform binaries answer it at **M**. A service is **L** plus permanent operational cost. |
+| **Migration** (BL-19/20) | Real. Export/import fixes it for the embedded shape too, and is already scoped as BL-20. A service would centralise it, but that is a side effect, not a reason. |
+
+Two costs specific to the service also weigh against it here: it puts the user's design graph
+on a machine they do not control — which sits badly beside the redaction discipline the
+friction-reporting skill takes seriously — and it is ongoing operational work for a project
+with one writer.
+
+### What would reopen it
+
+The core is surface-agnostic on purpose ([interaction-surfaces.md](interaction-surfaces.md)),
+so nothing here forecloses a service. Build one when **any** of these becomes true:
+
+1. **A second person actually writes to one graph** — not "might", but has tried and been
+   blocked by taking turns.
+2. **Someone wants reflow2 without a checkout, and published binaries have proved
+   insufficient** — the packaging answer has to fail before the infrastructure answer is
+   justified.
+3. **A team rather than two people needs shared access**, at which point read-only secondaries
+   stop being enough.
+
+The lighter middle option stays available and unbuilt: **RocksDB secondary/read-only mode**, so
+other agents can read a graph while one writes. Worth reaching for before a service if
+"let me look while you work" turns out to be the actual need.
 
 ## What must be built (next-phase build order)
 
@@ -121,13 +149,9 @@ embedding seam (semantic dedup/retrieval), generative-HEAL *content*.
 
 ## Open questions for the next session
 
-- Shared-graph shape: repo-file vs service (above). **New evidence (2026-07-18):** the repo-file
-  shape is *single-writer* — RocksDB's LOCK means only one `reflow2-mcp` can hold a graph, so a
-  second agent starting on the same path exits at once (loudly and cleanly — no corruption, no
-  split-brain). "grok build / claude code on a shared design" therefore holds only if they take
-  turns. **Concurrent multi-agent and whole-team access is a deliberate future effort**; it is the
-  strongest argument so far for the service shape, with RocksDB secondary/read-only mode for
-  readers as a lighter middle option.
+- ~~Shared-graph shape: repo-file vs service~~ — **decided 2026-07-18: repo-file** (above),
+  with the conditions that would reopen it written down. Single-writer remains true and remains
+  the strongest argument for a service; it stays hypothetical until a second writer exists.
 - MCP tool granularity: one coarse "run the loop" tool vs many fine-grained ops the agent
   orchestrates? (Leaning fine-grained — the agent orchestrates, per the loop.)
 - How the agent-native `LlmBackend` round-trips a "pass" (tool returns a prompt + schema; agent
