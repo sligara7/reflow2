@@ -190,14 +190,14 @@ schema in `schema/*.yaml`.
 
 | ID | Requirement | Status | Evidence / note |
 |----|-------------|--------|-----------------|
-| 3AX-1 | Model X / Y / Z + depth | 🟡 | X (edges, propagate/structure) ✅, Z (temporal) ✅, Y in schema (`Component.level`) 🟡, **depth/dimensions schema-only** |
+| 3AX-1 | Model X / Y / Z + depth | 🟡 | X (edges, propagate/structure/allocate) ✅, Z (temporal) ✅, depth (`dimensions` — drift/rollup) ✅; Y still schema-only (`Component.level`, no matryoshka code) 🟡 |
 | 3AX-2 | Add Axis Z | ✅ | `schema/temporal.yaml` + `temporal.rs` |
 | 3AX-3 | Epochs/facts/snapshots — never overwrite the past | ✅ | `record_change_preserves_pre_change_state` |
 | 3AX-4 | `DesignEpoch` (generalizes Anchor) | ✅ | `add_epoch` / `EpochType` |
 | 3AX-5 | `TemporalFact` valid_from/valid_to | 🟡 | schema ✅ + edge constants; **typed helpers/usage deferred** |
 | 3AX-6 | `Snapshot` cross-revision diff | ✅ | `snapshot_node` + `parse_snapshot_state` |
 | 3AX-7 | `ChangeEvent` + reason taxonomy + CHANGED + CAUSES | 🟡 | `ChangeType` taxonomy + `CHANGED` ✅; **`CAUSES`→ChangeEvent wiring deferred** |
-| 3AX-8 | `DimensionObservation` rollup | ⬜ | schema only |
+| 3AX-8 | `DimensionObservation` rollup + per-epoch drift | ✅ | `dimensions` module: `add_dimension_observation`, `dimension_drift`/`dimension_drifts` (`linear_regression_slope`), `rollup_assessment` (`mean`) · `tests/dimensions.rs` |
 | 3AX-9 | Formalize Axis Y `Component.level` | 🟡 | schema ✅; **level-based code deferred** |
 | 3AX-10 | Missing-intermediate-level detector | ⬜ | matryoshka |
 | 3AX-11 | Tight X edge set + wildcard inference + evidence/confidence | ✅ | schema design; respected by code |

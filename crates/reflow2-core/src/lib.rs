@@ -28,6 +28,7 @@
 
 pub mod allocate;
 pub mod detect;
+pub mod dimensions;
 pub mod graph;
 pub mod heal;
 pub mod ingest;
@@ -42,6 +43,7 @@ pub use allocate::{
     AllocationReport, ComponentScore, MisplacedCapability, ProposedAllocation, ProposedComponent,
 };
 pub use detect::{GapCandidate, GapPrompt, GapScope, GapSource};
+pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
 pub use heal::{
     GeneratedContentStub, HealCategory, HealIssue, HealOp, HealOperation, HealOptions,

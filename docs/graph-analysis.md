@@ -244,7 +244,10 @@ is high-value for both DETECT (flag it) and HEAL's creative-bridge healer (propo
    guard) → candidate components, scored against the current allocation
    (proposed vs current modularity) and gated `requires_human_review`; the LLM names the
    clusters. `max_flow_min_cut` boundaries remain a future addition.
-5. **Depth/drift analytics** — `dynograph-vector` stats over per-epoch `DimensionObservation`s
-   (`linear_regression_slope` drift, `centroid` rollup).
+5. **Depth/drift analytics** ✅ **done** — the `dimensions` module: `add_dimension_observation`
+   records per-epoch readings; `dimension_drift` / `dimension_drifts` compute quality drift
+   (`linear_regression_slope` over the ordered series, ranked most-declining-first) and the
+   `mean` rollup; `rollup_assessment` materializes the current `DimensionAssessment` (3AX-8).
+   Pure `dynograph-vector` stats, no embeddings.
 6. **DBSCAN / game-theory** — demand-pulled when a concrete need appears (feature-space
    clustering; design-tension analysis), not before.

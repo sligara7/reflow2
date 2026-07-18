@@ -28,6 +28,9 @@ pub mod node {
     pub const RELEASE: &str = "Release";
     pub const ENVIRONMENT: &str = "Environment";
     pub const RESOURCE: &str = "Resource";
+    // Cross-cutting · depth axis (dimensions.yaml)
+    pub const DIMENSION_ASSESSMENT: &str = "DimensionAssessment";
+    pub const DIMENSION_OBSERVATION: &str = "DimensionObservation";
     // Axis Z · change over time (temporal.yaml)
     pub const DESIGN_EPOCH: &str = "DesignEpoch";
     pub const TEMPORAL_FACT: &str = "TemporalFact";
@@ -81,6 +84,14 @@ pub mod edge {
     pub const DUPLICATES: &str = "DUPLICATES";
     /// `* → *` — a planned/anticipated need (may lack follow-through).
     pub const ANTICIPATES: &str = "ANTICIPATES";
+
+    // Depth axis (dimensions.yaml)
+    /// `DimensionAssessment → *` — links an assessment to the node it scores.
+    pub const ASSESSED_ON: &str = "ASSESSED_ON";
+    /// `* → DimensionObservation` — an entity carries a per-fragment reading.
+    pub const HAS_OBSERVATION: &str = "HAS_OBSERVATION";
+    /// `DimensionObservation → Fragment` — the fragment a reading came from.
+    pub const OBSERVED_IN: &str = "OBSERVED_IN";
 }
 
 use std::collections::HashMap;

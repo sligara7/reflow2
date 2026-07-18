@@ -32,6 +32,9 @@ dynograph-storage = { git = "https://github.com/sligara7/dynograph-foundation.gi
 dynograph-graph = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.10.0" }
 # Fuzzy string matching (jaro_winkler / token_sort_ratio) for INGEST cross-id dedup.
 dynograph-resolution = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.10.0" }
+# Pure vector + statistics math (mean, linear_regression_slope, …) for the depth
+# axis: DimensionObservation rollup + per-epoch quality drift. Embeddings-optional.
+dynograph-vector = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.10.0" }
 
 # For local cross-repo dev against an unreleased foundation, uncomment and point
 # each crate at ../dynograph-foundation/crates/*. Do not commit uncommented.
