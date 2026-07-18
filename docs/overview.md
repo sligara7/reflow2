@@ -47,6 +47,7 @@ the loop like this:
 - [operating-environment.md](operating-environment.md) — the environment's authoritative ruleset the design must comply with (Kennewick vs. Mars).
 - [artifact-linking.md](artifact-linking.md) — how real files (code, specs, docs, tests) and the note layer link to entities.
 - [interaction-surfaces.md](interaction-surfaces.md) — how a human drives the system (MCP/skills vs. hosted app vs. …) and the LLM-sourcing consequence; a deliberately deferred decision.
+- [surface-plan.md](surface-plan.md) — that decision, made: the **agent-native** surface (grok build / claude code on a shared graph) and the next-phase build order to make reflow2 drivable by a coding agent.
 - `../schema/*.yaml` — the 10 composable dynograph domains (26 node types, 52 edge types); run `../tools/validate_schema.py` to check them.
 
 ### 3 · Process — *how it runs (the coherence loop)*

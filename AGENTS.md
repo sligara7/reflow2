@@ -99,6 +99,7 @@ reading order (Vision → Design → Process → Heritage). Then:
 | know how a human drives it (and the LLM-sourcing tradeoff) | [docs/interaction-surfaces.md](docs/interaction-surfaces.md) |
 | confirm the build meets the docs (traceability) | [docs/requirements-coverage.md](docs/requirements-coverage.md) |
 | use the graph to *drive* design decisions (allocation, weights, analysis crates) | [docs/graph-analysis.md](docs/graph-analysis.md) |
+| make reflow2 drivable by a coding agent (the next build phase) | [docs/surface-plan.md](docs/surface-plan.md) |
 | see where ideas came from | [docs/reflow-v3-nuggets.md](docs/reflow-v3-nuggets.md), [docs/chain-reflow-nuggets.md](docs/chain-reflow-nuggets.md) |
 
 ## Rules for changing this project
