@@ -6,7 +6,8 @@
 > realizes, link_artifact}` (`src/artifact.rs`) + the `add_artifact` / `realizes` / `link_artifact`
 > MCP tools + the `link-artifacts` consumer skill materialize `Artifact` nodes and `REALIZES`
 > edges with provenance (recorded on a `Fragment` that `YIELDED` the Artifact). As-built **drift
-> detection** (the filesystem reconcile pass + `DriftEvent`) described below is deferred to SP-6b;
+> detection** (the reconcile pass + `DriftEvent`) described below is implemented in `drift.rs` (SP-6b),
+> with observations supplied by the caller rather than read from disk by the core;
 > `SPECIFIES`/`DOCUMENTS`/`PRODUCES` edges are reachable via the generic `create_edge` tool.
 
 How reflow2 ties the *actual work products* — code, design docs, dataflow charts,

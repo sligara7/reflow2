@@ -245,6 +245,16 @@ impl DesignGraph {
         )
     }
 
+    /// P2 · Structure — a contract between parts. `name` is required; `medium`
+    /// takes its schema default (`REST`).
+    ///
+    /// An Interface is the seam PROPAGATE crosses to reach the *other* side of
+    /// a change: one Component [`provides`](Self::provides) it, others
+    /// [`consume`](Self::consumes) it.
+    pub fn add_interface(&mut self, id: &str, name: &str) -> Result<StoredNode, DynoError> {
+        self.create_node(node::INTERFACE, id, Props::new().set("name", name))
+    }
+
     // ---- Typed golden-thread edges ----------------------------------------
 
     /// `Project CONTAINS child` — the containment spine (axis Y).
@@ -311,6 +321,42 @@ impl DesignGraph {
             capability_id,
             node::COMPONENT,
             component_id,
+            Props::new(),
+        )
+    }
+
+    /// `Component PROVIDES Interface` — the side of a contract that implements it.
+    pub fn provides(
+        &mut self,
+        component_id: &str,
+        interface_id: &str,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::PROVIDES,
+            node::COMPONENT,
+            component_id,
+            node::INTERFACE,
+            interface_id,
+            Props::new(),
+        )
+    }
+
+    /// `Component CONSUMES Interface` — the side of a contract that depends on it.
+    ///
+    /// This is the edge that makes "changed one side, forgot the other"
+    /// findable: from the provider, PROPAGATE reaches every consumer laterally
+    /// through the Interface.
+    pub fn consumes(
+        &mut self,
+        consumer_id: &str,
+        interface_id: &str,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::CONSUMES,
+            node::COMPONENT,
+            consumer_id,
+            node::INTERFACE,
+            interface_id,
             Props::new(),
         )
     }

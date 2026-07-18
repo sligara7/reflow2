@@ -187,6 +187,7 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
         completeness: None,
         provenance: None,
         fragment_id: None,
+        checksum: None,
     })));
     assert_eq!(link["provenance"], "authored");
     assert_eq!(link["completeness"], "complete");
@@ -227,6 +228,7 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
         completeness: None,
         provenance: None,
         fragment_id: None,
+        checksum: None,
     })));
     let gaps2 = j!(s.detect_gaps());
     assert!(
@@ -275,4 +277,156 @@ async fn gap_to_prompt_collect_then_serve() {
         "Which component owns ball flight?"
     );
     assert_eq!(served["prompt"]["rephrase_degraded"], false);
+}
+
+/// The interface layer over the surface: both sides of a contract, then the
+/// two things pairing them buys — impact that crosses the boundary, and a
+/// question when one side is missing.
+#[tokio::test]
+async fn interface_tools_pair_both_sides_of_a_contract() {
+    let s = seeded().await;
+    j!(s.add_component(Parameters(DescribedReq {
+        id: "cmp:ui".into(),
+        name: "Scoreboard UI".into(),
+        description: "Shows the score.".into()
+    })));
+    j!(s.add_interface(Parameters(IdName {
+        id: "ifc:state".into(),
+        name: "Game state feed".into()
+    })));
+    j!(s.provides(Parameters(EdgePairReq {
+        from_id: "cmp:physics".into(),
+        to_id: "ifc:state".into()
+    })));
+    j!(s.consumes(Parameters(EdgePairReq {
+        from_id: "cmp:ui".into(),
+        to_id: "ifc:state".into()
+    })));
+
+    // Changing the provider must surface the consumer on the far side.
+    let radius = j!(s.propagate_from(Parameters(PropagateFromReq {
+        seed_ids: vec!["cmp:physics".into()],
+        max_depth: None,
+    })));
+    let impacted = radius["impacted"].as_array().expect("impacted array");
+    assert!(
+        impacted.iter().any(|n| n["node_id"] == "cmp:ui"),
+        "the consumer must be in the blast radius, got {impacted:?}"
+    );
+
+    // Both sides present → no interface-pairing question.
+    let gaps = j!(s.detect_gaps());
+    let sources: Vec<&str> = gaps
+        .as_array()
+        .expect("gaps array")
+        .iter()
+        .filter_map(|g| g["gap_source"].as_str())
+        .collect();
+    assert!(
+        !sources.contains(&"unprovided_interface"),
+        "a fully paired contract is not a gap, got {sources:?}"
+    );
+}
+
+#[tokio::test]
+async fn a_contract_with_no_provider_surfaces_as_a_gap_over_the_surface() {
+    let s = seeded().await;
+    j!(s.add_interface(Parameters(IdName {
+        id: "ifc:state".into(),
+        name: "Game state feed".into()
+    })));
+    j!(s.consumes(Parameters(EdgePairReq {
+        from_id: "cmp:physics".into(),
+        to_id: "ifc:state".into()
+    })));
+
+    let gaps = j!(s.detect_gaps());
+    let found = gaps
+        .as_array()
+        .expect("gaps array")
+        .iter()
+        .any(|g| g["gap_source"] == "unprovided_interface");
+    assert!(
+        found,
+        "consumed-but-unprovided must reach the agent, got {gaps:?}"
+    );
+}
+
+/// As-built drift over the surface: register with a baseline, observe a change,
+/// and confirm it reaches the design node the file realizes.
+#[tokio::test]
+async fn reconcile_surfaces_a_code_change_back_to_the_design() {
+    let s = seeded().await;
+    j!(s.link_artifact(Parameters(LinkArtifactReq {
+        artifact_id: "art:flight".into(),
+        name: "BallFlight.cs".into(),
+        location: Some("src/BallFlight.cs".into()),
+        artifact_type: Some("code".into()),
+        target_type: "Capability".into(),
+        target_id: "cap:flight".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: Some("sha256:v1".into()),
+    })));
+
+    // Unchanged: no drift.
+    let clean = j!(s.reconcile_artifacts(Parameters(ReconcileArtifactsReq {
+        observed: vec![serde_json::json!({
+            "artifact_id": "art:flight", "present": true, "checksum": "sha256:v1"
+        })],
+        record_events: false,
+        exhaustive: false,
+        detected_at: None,
+    })));
+    assert_eq!(clean["findings"].as_array().unwrap().len(), 0);
+    assert_eq!(clean["unchanged"], 1);
+
+    // The agent edits the file; now the hash differs.
+    let drifted = j!(s.reconcile_artifacts(Parameters(ReconcileArtifactsReq {
+        observed: vec![serde_json::json!({
+            "artifact_id": "art:flight", "present": true, "checksum": "sha256:v2"
+        })],
+        record_events: true,
+        exhaustive: false,
+        detected_at: Some("2026-07-18T00:00:00Z".into()),
+    })));
+    let findings = drifted["findings"].as_array().expect("findings");
+    assert_eq!(findings.len(), 1);
+    assert_eq!(findings[0]["kind"], "checksum_change");
+    assert_eq!(
+        drifted["propagation_seeds"],
+        serde_json::json!(["cap:flight"]),
+        "the seeds must name the design the changed file realizes"
+    );
+
+    // Those seeds walk back up the thread to the requirement.
+    let radius = j!(s.propagate_from(Parameters(PropagateFromReq {
+        seed_ids: vec!["cap:flight".into()],
+        max_depth: None,
+    })));
+    assert!(
+        radius["impacted"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|n| n["node_id"] == "req:physics"),
+        "a code change must reach the requirement that justified it"
+    );
+
+    // Accepting the change clears the drift.
+    j!(s.set_artifact_checksum(Parameters(SetChecksumReq {
+        artifact_id: "art:flight".into(),
+        checksum: "sha256:v2".into(),
+    })));
+    let after = j!(s.reconcile_artifacts(Parameters(ReconcileArtifactsReq {
+        observed: vec![serde_json::json!({
+            "artifact_id": "art:flight", "present": true, "checksum": "sha256:v2"
+        })],
+        record_events: false,
+        exhaustive: false,
+        detected_at: None,
+    })));
+    assert_eq!(after["findings"].as_array().unwrap().len(), 0);
+    assert_eq!(after["unchanged"], 1);
 }

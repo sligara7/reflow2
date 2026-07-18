@@ -16,6 +16,7 @@ schema:
         artifact_type: { type: enum, values: [code, config, document, spec, diagram, model, drawing, test_result, binary, data, asset], default: code, indexed: true, description: "code=source; spec=machine-readable contract (OpenAPI/protobuf); diagram=dataflow/sequence/arch chart; document=design doc/ADR/readme; test_result=report/coverage; model/drawing=CAD." }
         location: { type: string, indexed: true, description: "File path, URI, content-hash, or physical identifier of the realized thing (the artifact lives outside the graph; this points to it)." }
         signature: { type: string, description: "Function/class signature, part number, or spec identifier." }
+        checksum: { type: string, description: "Content hash of the artifact as last reconciled with the design. The baseline drift detection compares against; a differing hash is a checksum_change DriftEvent. Opaque to reflow2 — the caller chooses the algorithm and supplies the value." }
         status: { type: enum, values: [planned, in_progress, realized, verified], default: realized, indexed: true }
         created_at: { type: string }
       embedding_field: description

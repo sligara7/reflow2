@@ -31,6 +31,7 @@ pub mod allocate;
 pub mod artifact;
 pub mod detect;
 pub mod dimensions;
+pub mod drift;
 pub mod genesis;
 pub mod graph;
 pub mod heal;
@@ -52,6 +53,7 @@ pub use allocate::{
 pub use artifact::{ArtifactLink, LinkArtifactOptions};
 pub use detect::{GapCandidate, GapPrompt, GapScope, GapSource};
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
+pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};
 pub use genesis::{GENESIS_EPOCH_ID, GenesisOptions, GenesisReport};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
 pub use heal::{

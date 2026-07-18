@@ -46,6 +46,7 @@ fn link_artifact_creates_artifact_fragment_and_edges_with_provenance() {
             completeness: None, // → default "complete"
             provenance: None,   // → default "authored"
             fragment_id: None,  // → "frag:art:ball"
+            checksum: None,     // → no drift baseline recorded
         })
         .expect("link_artifact");
 
@@ -86,6 +87,7 @@ fn link_artifact_fails_loud_on_missing_target() {
         completeness: None,
         provenance: None,
         fragment_id: None,
+        checksum: None,
     });
     assert!(
         err.is_err(),

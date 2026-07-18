@@ -20,26 +20,38 @@ fidelity?), that is a *gap* — surface it as a question, don't guess.
    context as Requirements, then run `detect_gaps`. Skip this on an existing design.
 1. **Capture intent.** When the user gives a brief or a new idea, extract it into the graph:
    - `add_requirement` (what must be true), `add_capability` (what the system does),
-     `add_component` (what part owns it).
+     `add_component` (what part owns it), `add_interface` (the contract where two components
+     meet — an API, event, data feed, save format, physical or human connection point).
    - Link the golden thread: `satisfies` (Capability→Requirement), `allocate`
-     (Capability→Component), `contains` (Project→child). Use `create_node`/`create_edge` for
-     any other schema type. Use stable ids: `req:…`, `cap:…`, `cmp:…`, `proj:…`.
+     (Capability→Component), `contains` (Project→child), and `provides`/`consumes`
+     (Component→Interface) for **both** sides of every contract. Use `create_node`/`create_edge`
+     for any other schema type. Use stable ids: `req:…`, `cap:…`, `cmp:…`, `ifc:…`, `proj:…`.
+   - Whenever two components talk to each other, model the Interface between them and record
+     both sides. An unrecorded contract is invisible: change one component later and nothing
+     will tell you the other one just broke.
 2. **DETECT gaps and ask.** Run `detect_gaps`. For each gap, call `gap_to_prompt` to turn it
    into a plain question (see the handshake below), ask the **user**, then write their answer
    back as a Requirement or a node property. Do this **before** building.
 3. **Build only what the graph specifies, and link the files back.** Implement the
    capabilities/components the graph holds — nothing it doesn't. After creating each real file,
    register it with `link_artifact` (Artifact + provenance + `REALIZES` the capability it
-   implements) so as-designed vs as-built stays honest; re-run `detect_gaps` to confirm the
-   `unrealized_capability` gap closed. (See the **link-artifacts** skill.)
+   implements) **including a `checksum`**, so as-designed vs as-built stays honest and later
+   edits are detectable; re-run `detect_gaps` to confirm the `unrealized_capability` gap closed.
+   When you return to a project or suspect files changed outside the loop, hash them and call
+   `reconcile_artifacts` — its `propagation_seeds` walk the change back up to the Capability and
+   Requirement behind it. (See the **link-artifacts** skill.)
 4. **On ANY change or new idea, check impact first.** Record it with `add_change_event`, then
    `propagate_change` (or `propagate_from` for a speculative "what would this touch?"). Update
    **only** the impacted capabilities/components/tests the blast radius names — then re-run
    `detect_gaps` to confirm nothing rotted.
-5. **Keep it healthy.** `graph_report` answers "what should I look at?". `detect_defects` →
-   `propose_heal` → `apply_heal` fixes structure the machine can. `hierarchy_issues`,
-   `surprising_connections`, `dimension_drifts` surface decomposition, coupling, and quality
-   drift.
+5. **Keep it healthy.** After any structural change, and before a build push, run the
+   **check-health** skill: `detect_defects` → `propose_heal` → `apply_heal`. It finds defects in
+   the design's *shape* rather than its meaning — circular dependencies, single points of
+   failure, disconnected clusters, duplicates. Only `duplicate` is machine-fixable; everything
+   else is a design decision `propose_heal` leaves in `generated_content` for the user, so read
+   `requires_human_review` and `skipped_operations` before acting. `graph_report` answers "what
+   should I look at?"; `hierarchy_issues`, `surprising_connections`, `dimension_drifts` surface
+   decomposition, coupling, and quality drift.
 
 ## The gap → question handshake (`gap_to_prompt`)
 
@@ -58,9 +70,11 @@ reflow2 phrases the question; **you** are the language model that fills it in:
   `graph_report_markdown`, `detect_defects`, `propose_heal`, `evaluate_allocation`,
   `propose_allocation`, `hierarchy_issues`, `surprising_connections`, `dimension_drifts`,
   `dimension_drift`.
-- **Build:** `add_project`, `add_requirement`, `add_capability`, `add_component`, `satisfies`,
-  `allocate`, `contains`, `create_node`, `create_edge`, `get_node`, `scan_nodes`,
-  `delete_node`, `apply_heal`.
+- **Build:** `add_project`, `add_requirement`, `add_capability`, `add_component`,
+  `add_interface`, `satisfies`, `allocate`, `contains`, `provides`, `consumes`, `create_node`,
+  `create_edge`, `get_node`, `scan_nodes`, `delete_node`, `apply_heal`.
+- **As-built:** `link_artifact`, `add_artifact`, `realizes`, `reconcile_artifacts`,
+  `set_artifact_checksum`.
 - **Change over time:** `add_epoch`, `add_change_event`, `record_change`.
 - **Ask the user:** `gap_to_prompt`.
 

@@ -28,7 +28,7 @@ is shared by anyone working on it.
 |---|---|
 | **SETUP.md** | **Start here** — build the server, connect your agent, verify it works |
 | `AGENTS.md` | Teaches the agent the reflow2 loop (goes in your project root) |
-| `.grok/skills/…` | Auto-triggering workflows (genesis, detect-and-ask, impact-check, …) |
+| `.grok/skills/…` | Auto-triggering workflows (genesis, capture-intent, detect-and-ask, impact-check, check-health, link-artifacts) |
 | `mcp.json` | The MCP server registration (grok build and claude code both read it) |
 
 > The rest of this repository (the `crates/`, `docs/`, `schema/` folders) is reflow2's own

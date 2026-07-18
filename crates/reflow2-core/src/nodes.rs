@@ -24,6 +24,7 @@ pub mod node {
     pub const FRAGMENT: &str = "Fragment";
     // P4 · Verification (verify.yaml)
     pub const VERIFICATION: &str = "Verification";
+    pub const DRIFT_EVENT: &str = "DriftEvent";
     // P5 · Operation (operate.yaml)
     pub const RELEASE: &str = "Release";
     pub const ENVIRONMENT: &str = "Environment";
@@ -46,6 +47,12 @@ pub mod edge {
     pub const SATISFIES: &str = "SATISFIES";
     /// `Capability → Component` — the WHAT→WHERE allocation binding.
     pub const ALLOCATED_TO: &str = "ALLOCATED_TO";
+    /// `Component → Interface` — the component that exposes a contract.
+    pub const PROVIDES: &str = "PROVIDES";
+    /// `* → Interface` — a Component/Actor that depends on a contract. Paired
+    /// with [`PROVIDES`]: an Interface consumed but never provided is a break
+    /// between two parts of the design, which is what [`crate::detect`] looks for.
+    pub const CONSUMES: &str = "CONSUMES";
     /// `Artifact → *` — an Artifact realizes a Capability/Component/Interface.
     pub const REALIZES: &str = "REALIZES";
     /// `Artifact → Interface/Capability/Component` — an Artifact defines the contract.

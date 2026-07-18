@@ -67,6 +67,13 @@ pub enum GapSource {
     UnrealizedCapability,
     /// A realized Capability/Artifact has no `Verification`.
     UnverifiedCapability,
+    // Interface pairing (the two sides of a contract)
+    /// An `Interface` something `CONSUMES` that no Component `PROVIDES` — a
+    /// break between two parts of the design.
+    UnprovidedInterface,
+    /// An `Interface` a Component `PROVIDES` that nothing `CONSUMES` — either a
+    /// deliberate public contract or a leftover.
+    UnconsumedInterface,
     // Graph-analysis (from the design network)
     /// A coupling edge bridges two otherwise-distant communities — a hidden
     /// coupling worth confirming (from `surprising_connections`).
@@ -95,6 +102,8 @@ impl GapSource {
             GapSource::UnallocatedCapability => "unallocated_capability",
             GapSource::UnrealizedCapability => "unrealized_capability",
             GapSource::UnverifiedCapability => "unverified_capability",
+            GapSource::UnprovidedInterface => "unprovided_interface",
+            GapSource::UnconsumedInterface => "unconsumed_interface",
             GapSource::UnexpectedCoupling => "unexpected_coupling",
             GapSource::DecliningDimension => "declining_dimension",
             GapSource::MissingIntermediateLevel => "missing_intermediate_level",
@@ -230,6 +239,7 @@ struct Population {
     requirements: usize,
     capabilities: usize,
     components: usize,
+    interfaces: usize,
     artifacts: usize,
     verifications: usize,
     operate: usize, // Release + Environment + Resource
@@ -241,6 +251,7 @@ impl DesignGraph {
             requirements: self.count_nodes(node::REQUIREMENT)?,
             capabilities: self.count_nodes(node::CAPABILITY)?,
             components: self.count_nodes(node::COMPONENT)?,
+            interfaces: self.count_nodes(node::INTERFACE)?,
             artifacts: self.count_nodes(node::ARTIFACT)?,
             verifications: self.count_nodes(node::VERIFICATION)?,
             operate: self.count_nodes(node::RELEASE)?
@@ -260,6 +271,7 @@ impl DesignGraph {
         self.detect_unallocated_capabilities(&pop, &mut gaps)?;
         self.detect_unrealized_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
+        self.detect_interface_pairing(&pop, &mut gaps)?;
         self.detect_unexpected_couplings(&mut gaps)?;
         self.detect_declining_dimensions(&mut gaps)?;
         self.detect_hierarchy_gaps(&mut gaps)?;
@@ -436,6 +448,74 @@ impl DesignGraph {
                     evidence: format!(
                         "Capability '{}' has 0 outgoing ALLOCATED_TO; project has {} component(s).",
                         cap.node_id, pop.components
+                    ),
+                });
+            }
+        }
+        Ok(())
+    }
+
+    // ---- Interface pairing (both sides of a contract) ----------------------
+
+    /// Both `PROVIDES` and `CONSUMES` point *at* the Interface, so an unpaired
+    /// contract is a missing incoming edge of one type.
+    ///
+    /// Identity here is the Interface node id, not a matched name string — so
+    /// this cannot fire on a naming mismatch the way a text-keyed check would.
+    fn detect_interface_pairing(
+        &self,
+        pop: &Population,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        if pop.interfaces == 0 {
+            return Ok(());
+        }
+        for iface in self.scan_nodes(node::INTERFACE)? {
+            let providers = self.incoming(&iface.node_id, Some(edge::PROVIDES))?;
+            let consumers = self.incoming(&iface.node_id, Some(edge::CONSUMES))?;
+            let name = node_name(&iface);
+
+            if providers.is_empty() && !consumers.is_empty() {
+                gaps.push(GapCandidate {
+                    id: gap_id(
+                        GapSource::UnprovidedInterface,
+                        std::slice::from_ref(&iface.node_id),
+                    ),
+                    gap_source: GapSource::UnprovidedInterface,
+                    scope: GapScope::Component,
+                    severity: 0.72,
+                    title: format!("Nothing supplies “{name}”, but {} part(s) rely on it", consumers.len()),
+                    description: format!(
+                        "{} part(s) expect “{name}” to be there, but no part of the design provides it — which one should?",
+                        consumers.len()
+                    ),
+                    affected_ids: vec![iface.node_id.clone()],
+                    suggested_depth: 3,
+                    evidence: format!(
+                        "Interface '{}' has 0 incoming PROVIDES and {} incoming CONSUMES.",
+                        iface.node_id,
+                        consumers.len()
+                    ),
+                });
+            } else if consumers.is_empty() && !providers.is_empty() {
+                gaps.push(GapCandidate {
+                    id: gap_id(
+                        GapSource::UnconsumedInterface,
+                        std::slice::from_ref(&iface.node_id),
+                    ),
+                    gap_source: GapSource::UnconsumedInterface,
+                    scope: GapScope::Component,
+                    severity: 0.35,
+                    title: format!("Nothing uses “{name}”"),
+                    description: format!(
+                        "“{name}” is offered but nothing in the design uses it — is it for outside users, or left over?"
+                    ),
+                    affected_ids: vec![iface.node_id.clone()],
+                    suggested_depth: 2,
+                    evidence: format!(
+                        "Interface '{}' has {} incoming PROVIDES and 0 incoming CONSUMES.",
+                        iface.node_id,
+                        providers.len()
                     ),
                 });
             }

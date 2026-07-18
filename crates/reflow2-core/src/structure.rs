@@ -20,10 +20,12 @@ use std::collections::{HashMap, HashSet};
 
 use dynograph_core::DynoError;
 use dynograph_graph::{
-    Graph, GraphBuilder, betweenness_centrality, connected_components, cut_structure, leiden,
+    Graph, GraphBuilder, betweenness_centrality, connected_components, cut_structure, find_cycle,
+    leiden, strongly_connected_components,
 };
 
 use crate::graph::DesignGraph;
+use crate::nodes::{edge, node};
 use crate::propagate::is_traceability_edge;
 
 /// Node types that are *not* part of the design's structural coupling and so are
@@ -161,6 +163,148 @@ impl DesignGraph {
     /// The design network over all design nodes.
     pub(crate) fn design_network(&self) -> Result<DesignNetwork, DynoError> {
         self.build_network(None)
+    }
+
+    /// The **dependency pairs** `(u, v)` meaning "u depends on v", deduplicated
+    /// and deterministically ordered.
+    ///
+    /// Only *homogeneous dependency* relations count. Mixing the golden thread's
+    /// other traceability edges (SATISFIES, ALLOCATED_TO, REALIZES, VERIFIES)
+    /// into one directed graph would manufacture "cycles" that are just the
+    /// thread closing on itself — Requirement ← Capability → Component is not a
+    /// circular dependency. This is the same selectivity lesson as
+    /// [`Self::is_single_point_of_failure`]: an unselective topology detector
+    /// fires everywhere and means nothing.
+    ///
+    /// Two relations qualify:
+    /// - a direct `DEPENDS_ON` edge, and
+    /// - a contract: if `c CONSUMES i` and `p PROVIDES i` then `c` depends on
+    ///   `p`. The `Interface` is the medium, so it collapses into a direct
+    ///   dependency between the two parts rather than appearing as a hop.
+    fn dependency_pairs(&self) -> Result<Vec<(String, String)>, DynoError> {
+        let index = self.node_type_index()?;
+        let mut ids: Vec<&str> = index.keys().map(String::as_str).collect();
+        ids.sort_unstable();
+
+        let mut pairs: HashSet<(String, String)> = HashSet::new();
+        for id in &ids {
+            for e in self.outgoing(id, Some(edge::DEPENDS_ON))? {
+                pairs.insert((e.from_id.clone(), e.to_id.clone()));
+            }
+        }
+        // Contracts: every consumer of an interface depends on its provider(s).
+        for id in &ids {
+            if index[*id] != node::INTERFACE {
+                continue;
+            }
+            let providers = self.incoming(id, Some(edge::PROVIDES))?;
+            let consumers = self.incoming(id, Some(edge::CONSUMES))?;
+            for c in &consumers {
+                for p in &providers {
+                    if c.from_id != p.from_id {
+                        pairs.insert((c.from_id.clone(), p.from_id.clone()));
+                    }
+                }
+            }
+        }
+        let mut pairs: Vec<(String, String)> = pairs.into_iter().collect();
+        pairs.sort();
+        Ok(pairs)
+    }
+
+    /// Circular dependencies: one representative cycle per independent cluster.
+    ///
+    /// Uses strongly-connected components rather than enumerating every
+    /// elementary cycle — enumeration is exponential in the worst case, and a
+    /// cluster of mutually-dependent parts is one defect to break, not one per
+    /// loop through it. Each returned path `[a, b, c]` is closed by `c → a`, and
+    /// is rotated to start at its lexicographically smallest id so the output is
+    /// stable run to run.
+    pub(crate) fn circular_dependencies(&self) -> Result<Vec<Vec<String>>, DynoError> {
+        let pairs = self.dependency_pairs()?;
+        if pairs.is_empty() {
+            return Ok(Vec::new());
+        }
+
+        let mut builder = GraphBuilder::new();
+        for (from, to) in &pairs {
+            builder.add_node(from);
+            builder.add_node(to);
+        }
+        for (from, to) in &pairs {
+            builder
+                .add_edge(from, to, 1.0)
+                .map_err(|e| DynoError::Query(format!("dependency network edge: {e}")))?;
+        }
+        let graph = builder.build(true); // directed: a dependency has a direction
+
+        let mut meta = vec![String::new(); graph.node_count()];
+        for (from, to) in &pairs {
+            for id in [from, to] {
+                if let Some(idx) = graph.idx_of(id) {
+                    meta[idx] = id.clone();
+                }
+            }
+        }
+
+        let mut cycles = Vec::new();
+
+        // A node that depends on itself is a degenerate cycle Tarjan reports as
+        // a singleton SCC — catch it explicitly rather than losing it.
+        for (from, to) in &pairs {
+            if from == to {
+                cycles.push(vec![from.clone()]);
+            }
+        }
+
+        for group in strongly_connected_components(&graph).groups() {
+            if group.len() < 2 {
+                continue;
+            }
+            let members: HashSet<usize> = group.iter().copied().collect();
+            // Rebuild just this cluster so `find_cycle` returns a path inside it.
+            let mut sub = GraphBuilder::new();
+            let mut sub_ids: Vec<&str> = group.iter().map(|&i| meta[i].as_str()).collect();
+            sub_ids.sort_unstable();
+            for id in &sub_ids {
+                sub.add_node(id);
+            }
+            for &i in &group {
+                for &(j, _) in graph.out_neighbors(i) {
+                    if members.contains(&j) {
+                        sub.add_edge(&meta[i], &meta[j], 1.0).map_err(|e| {
+                            DynoError::Query(format!("dependency subgraph edge: {e}"))
+                        })?;
+                    }
+                }
+            }
+            let sub_graph = sub.build(true);
+            if let Some(path) = find_cycle(&sub_graph) {
+                let mut ids: Vec<String> = path
+                    .iter()
+                    .map(|&i| {
+                        sub_ids
+                            .iter()
+                            .find(|id| sub_graph.idx_of(id) == Some(i))
+                            .map(|id| id.to_string())
+                            .unwrap_or_default()
+                    })
+                    .collect();
+                // Rotate to start at the smallest id — same cycle, stable text.
+                if let Some(start) = ids
+                    .iter()
+                    .enumerate()
+                    .min_by(|a, b| a.1.cmp(b.1))
+                    .map(|(i, _)| i)
+                {
+                    ids.rotate_left(start);
+                }
+                cycles.push(ids);
+            }
+        }
+
+        cycles.sort();
+        Ok(cycles)
     }
 
     /// Whether removing `node_id` would split the design into **≥2 non-trivial

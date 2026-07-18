@@ -55,6 +55,9 @@ pub enum HealCategory {
     SinglePointOfFailure,
     /// An isolated Component — nothing depends on it and it provides nothing.
     DeadEnd,
+    /// A set of parts that depend on each other in a loop, directly via
+    /// `DEPENDS_ON` or through the contracts they provide and consume.
+    CircularDependency,
 }
 
 impl HealCategory {
@@ -68,6 +71,7 @@ impl HealCategory {
             HealCategory::DisconnectedCommunity => "disconnected_community",
             HealCategory::SinglePointOfFailure => "single_point_of_failure",
             HealCategory::DeadEnd => "dead_end",
+            HealCategory::CircularDependency => "circular_dependency",
         }
     }
 }
@@ -438,6 +442,29 @@ impl DesignGraph {
             }
         }
 
+        // circular_dependency — parts that depend on each other in a loop, via
+        // DEPENDS_ON or through the contracts they provide/consume. Not
+        // auto-fixable: breaking a cycle is a design decision (introduce an
+        // interface, invert the dependency, go event-driven), so this is
+        // reported for a human to resolve rather than repaired.
+        for cycle in self.circular_dependencies()? {
+            let mut affected = cycle.clone();
+            affected.sort();
+            let path = if cycle.len() == 1 {
+                format!("'{}' depends on itself", cycle[0])
+            } else {
+                format!("{} → {}", cycle.join(" → "), cycle[0])
+            };
+            issues.push(HealIssue {
+                id: issue_id(HealCategory::CircularDependency, &affected),
+                category: HealCategory::CircularDependency,
+                severity: HealSeverity::Critical,
+                message: format!("circular dependency: {path}"),
+                suggested_fix_type: "break_cycle",
+                affected_ids: affected,
+            });
+        }
+
         // dead_end — an isolated Component (no traceability edges at all).
         for idx in 0..net.node_count() {
             if net.type_of(idx) == node::COMPONENT && net.degree(idx) == 0 {
@@ -533,6 +560,18 @@ impl DesignGraph {
                         description: format!("Propose redundancy for {}", issue.message),
                     })
                 }
+                // Breaking a cycle is a design decision, not a mechanical edit —
+                // which edge to invert, whether to introduce an interface, whether
+                // to go event-driven. Always human-reviewed, never auto-applied.
+                HealCategory::CircularDependency => generated_content.push(GeneratedContentStub {
+                    for_issue: issue.id.clone(),
+                    kind: "cycle break".to_string(),
+                    description: format!(
+                        "Propose how to break the loop for {} — invert one dependency, \
+                         introduce an interface, or make the link event-driven",
+                        issue.message
+                    ),
+                }),
             }
         }
 

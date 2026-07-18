@@ -52,6 +52,7 @@ a human message, and a `suggested_fix_type`.
 | `disconnected_community` | a cluster of nodes with no link to the rest of the design | warning | create bridging edge |
 | `weak_connection` | a subsystem hanging by a single edge | warning | create edge |
 | `single_point_of_failure` | a Component every path routes through | warning | add redundancy / note |
+| `circular_dependency` | parts that depend on each other in a loop — directly via `DEPENDS_ON`, or through the contracts they `PROVIDES`/`CONSUMES`. Reported per mutually-dependent cluster (an SCC), not per elementary cycle | critical | break the cycle (invert a dependency, introduce an interface, go event-driven) |
 | `missing_link` | two Components that clearly should share an `Interface` | info | create Interface + edges |
 | `contradiction` | two Requirements/Decisions joined by `CONTRADICTS` | warning | generate resolving Decision |
 | `unresolved_setup` | an `ANTICIPATES` with no follow-through — a planned need never built | info | generate Capability/Artifact |

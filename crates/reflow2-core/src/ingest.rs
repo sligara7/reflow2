@@ -43,10 +43,11 @@
 //! pluggable seam (see the interaction-surface decision). Also deferred: the
 //! **SME** augmentation pass,
 //! real parallelism (passes run sequentially here), per-pass timeout/retry,
-//! metrics, and the remaining passes (flows, actors, interfaces, decisions,
-//! artifacts, resources, dependencies, inference, dimensions, changes). This
+//! metrics, and the remaining passes (flows, actors, decisions,
+//! artifacts, resources, inference, dimensions, changes). This
 //! increment implements the spine:
-//! project/requirements/constraints/capabilities → components → satisfies.
+//! project/requirements/constraints/capabilities → components → interfaces →
+//! satisfies/dependencies.
 
 use std::collections::HashMap;
 
@@ -125,9 +126,9 @@ struct ExtractedCapability {
 /// The discovery gate — orthogonal booleans over what design content is present.
 /// Anchor-required: `true` only when a concrete instance is named (see the doc).
 ///
-/// Only `components` gates a pass in this increment. The other fields are the
-/// classifier's full contract and gate phase-2 passes **not yet built** (flows,
-/// interfaces, actors, decisions, artifacts, resources). They are kept — rather
+/// `components` and `interfaces` gate passes in this increment. The other fields
+/// are the classifier's full contract and gate phase-2 passes **not yet built**
+/// (flows, actors, decisions, artifacts, resources). They are kept — rather
 /// than narrowing the classifier — so the deferral is visible; it is recorded as
 /// Deferred in `docs/requirements-coverage.md`. `#[allow(dead_code)]` marks the
 /// gap explicitly instead of silently.
@@ -166,6 +167,31 @@ struct ExtractedComponent {
     /// Capability ids (from the phase-1 roster) allocated to this component.
     #[serde(default)]
     allocated_capability_ids: Vec<String>,
+}
+
+#[derive(Debug, Default, Deserialize)]
+struct InterfacesOut {
+    #[serde(default)]
+    interfaces: Vec<ExtractedInterface>,
+}
+
+/// A contract between parts, with both sides named in one pass — the provider
+/// and consumers are what the contract *is*, so splitting them across passes
+/// would invite one side to be extracted without the other.
+#[derive(Debug, Deserialize)]
+struct ExtractedInterface {
+    id: String,
+    name: String,
+    #[serde(default)]
+    medium: Option<String>,
+    #[serde(default)]
+    spec: Option<String>,
+    /// Component id (from the phase-2 roster) that exposes this contract.
+    #[serde(default)]
+    provided_by_component_id: Option<String>,
+    /// Component ids (from the phase-2 roster) that depend on this contract.
+    #[serde(default)]
+    consumed_by_component_ids: Vec<String>,
 }
 
 #[derive(Debug, Default, Deserialize)]
@@ -443,6 +469,27 @@ impl DesignGraph {
             Vec::new()
         };
 
+        // Interfaces are gated on components as well as on discovery: a contract
+        // needs two sides to connect, and both PROVIDES and CONSUMES land on a
+        // Component. Extracting them earlier would only manufacture unpaired
+        // contracts that DETECT would then ask about.
+        let cmp_roster = roster(components.iter().map(|c| (c.id.as_str(), c.name.as_str())));
+        let interfaces = if discovery.interfaces && !components.is_empty() {
+            run_pass::<InterfacesOut>(
+                backend,
+                "interfaces",
+                pass_prompt(
+                    input,
+                    r#"[pass:interfaces] Which contracts connect the components — APIs, events, data feeds, physical or human connection points? Return JSON {"interfaces":[{"id":"ifc:<slug>","name":"...","medium":"REST|gRPC|event|graphql|cli|library|data|mechanical|electrical|human","spec":"endpoint path, signature, or protocol detail","provided_by_component_id":"cmp:...","consumed_by_component_ids":["cmp:..."]}]} using only known component ids. Omit a side you cannot ground in the text rather than guessing it."#,
+                    Some(&cmp_roster),
+                ),
+                &mut errors,
+            )
+            .interfaces
+        } else {
+            Vec::new()
+        };
+
         // ---- EXTRACT · Phase 3 (edge passes over rosters) ----
         let req_roster = roster(
             requirements
@@ -559,6 +606,23 @@ impl DesignGraph {
                 .set("purpose", c.purpose.as_str());
             self.integrate_node(&mut st, node::COMPONENT, &c.id, props);
         }
+        for i in &interfaces {
+            let mut props = Props::new().set("name", i.name.as_str());
+            if let Some(m) = i.medium.as_deref() {
+                if MEDIUM_VALUES.contains(&m) {
+                    props = props.set("medium", m);
+                } else {
+                    st.warnings.push(format!(
+                        "interface '{}' medium '{m}' not a schema value; using the default",
+                        i.id
+                    ));
+                }
+            }
+            if let Some(s) = i.spec.as_deref() {
+                props = props.set("spec", s);
+            }
+            self.integrate_node(&mut st, node::INTERFACE, &i.id, props);
+        }
 
         // Edges: ALLOCATED_TO (capability -> component), SATISFIES (capability -> requirement).
         for c in &components {
@@ -570,6 +634,33 @@ impl DesignGraph {
                     cap_id,
                     node::COMPONENT,
                     &c.id,
+                    Props::new(),
+                );
+            }
+        }
+        // PROVIDES / CONSUMES — both sides of each contract. An interface whose
+        // provider or consumers the extraction could not ground stays unpaired
+        // on purpose: DETECT raises it as a question rather than ingest guessing.
+        for i in &interfaces {
+            if let Some(provider) = i.provided_by_component_id.as_deref() {
+                self.integrate_edge(
+                    &mut st,
+                    edge::PROVIDES,
+                    node::COMPONENT,
+                    provider,
+                    node::INTERFACE,
+                    &i.id,
+                    Props::new(),
+                );
+            }
+            for consumer in &i.consumed_by_component_ids {
+                self.integrate_edge(
+                    &mut st,
+                    edge::CONSUMES,
+                    node::COMPONENT,
+                    consumer,
+                    node::INTERFACE,
+                    &i.id,
                     Props::new(),
                 );
             }
@@ -941,6 +1032,18 @@ const PROVENANCE_VALUES: &[&str] = &[
     "imported",
 ];
 const PRIORITY_VALUES: &[&str] = &["low", "medium", "high", "critical"];
+const MEDIUM_VALUES: &[&str] = &[
+    "REST",
+    "gRPC",
+    "event",
+    "graphql",
+    "cli",
+    "library",
+    "data",
+    "mechanical",
+    "electrical",
+    "human",
+];
 const DEPENDENCY_TYPE_VALUES: &[&str] = &[
     "function_call",
     "data_flow",

@@ -86,6 +86,8 @@ the user's deploy/operate ask.
 | `unsatisfied_requirement` | a Requirement has no `SATISFIES` from any Capability/Component |
 | `unallocated_capability` | a Capability is not `ALLOCATED_TO` any Component |
 | `interfaceless_dependency` | two Components `DEPENDS_ON` each other with no `Interface` between them |
+| `unprovided_interface` | an `Interface` something `CONSUMES` that no Component `PROVIDES` — the two sides of a contract disagree |
+| `unconsumed_interface` | an `Interface` a Component `PROVIDES` that nothing `CONSUMES` — a deliberate public contract, or a leftover |
 | `unrealized_capability` | a Capability marked designed has no `Artifact` `REALIZES`-ing it |
 | `unverified_capability` | a realized Capability/Artifact has no `Verification` |
 

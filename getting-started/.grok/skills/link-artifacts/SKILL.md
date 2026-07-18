@@ -1,6 +1,6 @@
 ---
 name: link-artifacts
-description: Use right after you create or substantially change a real source file (Unity C#, a spec, a doc), to register it in the reflow2 graph as an Artifact that REALIZES the capability it implements. Keeps as-designed vs as-built honest and closes the unrealized_capability gap.
+description: Use right after you create or substantially change a real source file (Unity C#, a spec, a doc), to register it in the reflow2 graph as an Artifact that REALIZES the capability it implements — with a content hash so later edits are detectable. Also use to reconcile the design against what is actually on disk. Keeps as-designed vs as-built honest and closes the unrealized_capability gap.
 ---
 
 # Link real files back to the design
@@ -13,11 +13,14 @@ deliverable so the graph stays an honest as-built map — not just a plan.
    - `location` — the real path/URI (`src/Ball.cs`),
    - `artifact_type` — usually `code` (also `spec`, `document`, `diagram`, `model`),
    - `target_type` + `target_id` — the Capability (or Component) the file implements,
-   - `completeness` — `stub` / `partial` / `complete` (default `complete`).
+   - `completeness` — `stub` / `partial` / `complete` (default `complete`),
+   - `checksum` — a content hash of the file (e.g. `sha256:<hex>`; run `shasum -a 256 <file>`).
+     **Always supply this.** It is the baseline that makes a later edit detectable; without it
+     reflow2 can tell the file vanished but not that its contents changed.
 
    This atomically creates the Artifact, a provenance Fragment (so it's clear the file was
    authored, not just planned), and the `REALIZES` edge. It fails loud if the target capability
-   doesn't exist — create/So find it first.
+   doesn't exist — create or find it first.
 
 2. **For partial work**, set `completeness: "stub"` or `"partial"` so the graph reflects reality;
    update it later when the file is done.
@@ -25,6 +28,41 @@ deliverable so the graph stays an honest as-built map — not just a plan.
 3. **Confirm the loop closed:** run `detect_gaps`. A capability with no realizing artifact shows
    as `unrealized_capability`; after `link_artifact` it should be gone for that capability. If it
    isn't, you linked the wrong target.
+
+## Reconcile: has the code drifted from the design?
+
+Run this when you return to a project, before a build push, or any time you suspect files
+changed outside the loop (someone edited by hand, a merge landed, you refactored freely).
+
+4. Hash every registered artifact you can see, then call `reconcile_artifacts` with
+   `observed: [{ "artifact_id", "present": true|false, "checksum": "sha256:…" }]`. reflow2 does
+   **no file I/O** — you are the one who can see the disk, so you compute the hashes. Set
+   `exhaustive: true` only if you really did check every registered artifact; otherwise an
+   unlisted file is treated as unknown rather than missing, which is the honest reading.
+5. Read the findings:
+   - `checksum_change` — the file changed since it was registered. **This is the important one.**
+   - `missing_artifact` — the design says it exists; it doesn't.
+   - `undocumented_addition` — something is there that the design never mentioned.
+   - `no_baseline` — it can't be judged, because no hash was recorded or supplied. Fix by
+     re-registering with a `checksum`.
+6. **Follow the change back into the design.** The result's `propagation_seeds` are the design
+   nodes those files realize. Pass them to `propagate_from` — because `REALIZES` runs
+   artifact→capability, propagation walks *upstream*, so you see the Capability the changed code
+   serves and the Requirement behind it. Ask the user whether the design still says the right
+   thing:
+
+   > "`BallFlight.cs` changed since we last agreed on it. It implements *Ball flight*, which
+   > exists to satisfy *Realistic physics*. Does that requirement still describe what you want?"
+
+   This is the loop the original Reflow never closed: a change made in code reaching the intent
+   that justified it.
+7. **Record the outcome.** If the change is fine as-is, call `set_artifact_checksum` to accept
+   the new content as the baseline — otherwise the same drift is reported forever. If the change
+   means the design moved, run **capture-intent** to update it (and **impact-check** if it
+   touches anything else) *before* accepting the baseline.
+
+Pass `record_events: true` when you want the divergence written into the graph as a `DriftEvent`
+— useful for a drift you're not resolving now, since the event itself propagates into the design.
 
 Bare `add_artifact` + `realizes` exist for cases where you don't need provenance recorded, but
 prefer `link_artifact` — provenance is cheap and makes the as-built view trustworthy.

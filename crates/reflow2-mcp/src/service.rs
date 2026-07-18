@@ -31,7 +31,7 @@ use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
     AgentAnswer, AgentBackend, ChangeType, DesignGraph, Dimension, DynoError, EpochType,
     GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy, LinkArtifactOptions,
-    PromptCollector, PropagateOptions, Value,
+    ObservedArtifact, PromptCollector, PropagateOptions, ReconcileOptions, Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -200,6 +200,11 @@ pub struct LinkArtifactReq {
     pub provenance: Option<String>,
     #[serde(default)]
     pub fragment_id: Option<String>,
+    /// Content hash of the file as registered — the baseline `reconcile_artifacts`
+    /// compares against later. Supply it whenever you can; without it a content
+    /// change is reported as `no_baseline` instead of being caught.
+    #[serde(default)]
+    pub checksum: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -237,6 +242,30 @@ pub struct ProposeHealReq {
     /// Cap on structural operations; extras surface in `skipped_operations`.
     #[serde(default)]
     pub max_operations: Option<usize>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct ReconcileArtifactsReq {
+    /// What you observed, one entry per artifact you checked:
+    /// `{ "artifact_id", "present": bool, "checksum": "<hash>"? }`.
+    pub observed: Vec<JsonValue>,
+    /// Record a `DriftEvent` per divergence (default false — looking is not writing).
+    #[serde(default)]
+    pub record_events: bool,
+    /// Assert the observation list is a complete sweep, so registered artifacts
+    /// missing from it are reported as unobserved (default false).
+    #[serde(default)]
+    pub exhaustive: bool,
+    /// Timestamp for recorded events (reflow2 takes no clock).
+    #[serde(default)]
+    pub detected_at: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct SetChecksumReq {
+    pub artifact_id: String,
+    /// The accepted content hash — the new drift baseline.
+    pub checksum: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -538,6 +567,54 @@ impl ReflowService {
         ))
     }
 
+    #[tool(
+        description = "Create an Interface node — a contract between parts (an API, event, \
+                       data feed, CLI, library boundary, or physical/human connection point). \
+                       Model one whenever two Components talk to each other, then pair it with \
+                       `provides` and `consumes`: that pairing is what makes a change on one \
+                       side of a boundary surface the other side."
+    )]
+    pub async fn add_interface(
+        &self,
+        Parameters(req): Parameters<IdName>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.add_interface(&req.id, &req.name).map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record that a Component PROVIDES an Interface — it is the side that \
+                       implements the contract. `from_id` is the Component, `to_id` the Interface."
+    )]
+    pub async fn provides(
+        &self,
+        Parameters(req): Parameters<EdgePairReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.provides(&req.from_id, &req.to_id).map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record that a Component CONSUMES an Interface — it is the side that \
+                       depends on the contract. `from_id` is the Component, `to_id` the \
+                       Interface. Once both sides are recorded, `propagate_change` on either \
+                       Component reaches the other, and `detect_gaps` reports a contract that \
+                       is consumed but never provided."
+    )]
+    pub async fn consumes(
+        &self,
+        Parameters(req): Parameters<EdgePairReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.consumes(&req.from_id, &req.to_id).map_err(dyno_err)?,
+        ))
+    }
+
     #[tool(description = "Link a Project to a child node it CONTAINS.")]
     pub async fn contains(
         &self,
@@ -625,6 +702,51 @@ impl ReflowService {
         ok_json(g.apply_heal(&proposal).map_err(dyno_err)?)
     }
 
+    #[tool(
+        description = "Check the design against what was actually built. You supply what you \
+                       observed — for each registered artifact, whether it still exists and its \
+                       current content hash — and reflow2 reports the divergences: files that \
+                       vanished, files whose content changed since they were registered, and \
+                       files present but unknown to the design. reflow2 performs no file I/O; \
+                       compute the hashes yourself (any algorithm, used consistently). The \
+                       result's `propagation_seeds` are the design nodes the changes land on — \
+                       feed them to `propagate_from` to see what a code change means upstream."
+    )]
+    pub async fn reconcile_artifacts(
+        &self,
+        Parameters(req): Parameters<ReconcileArtifactsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let observed: Vec<ObservedArtifact> = req
+            .observed
+            .into_iter()
+            .map(serde_json::from_value)
+            .collect::<Result<_, _>>()
+            .map_err(|e| McpError::invalid_params(format!("invalid observation: {e}"), None))?;
+        let opts = ReconcileOptions {
+            record_events: req.record_events,
+            exhaustive: req.exhaustive,
+            detected_at: req.detected_at,
+        };
+        let mut g = self.graph.lock().await;
+        ok_json(g.reconcile_artifacts(&observed, &opts).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Accept an artifact's current content as the new drift baseline, after the \
+                       user has confirmed the change belongs in the design. Until you do this, \
+                       the same checksum_change is reported on every reconcile."
+    )]
+    pub async fn set_artifact_checksum(
+        &self,
+        Parameters(req): Parameters<SetChecksumReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.set_artifact_checksum(&req.artifact_id, &req.checksum)
+                .map_err(dyno_err)?,
+        ))
+    }
+
     // ---- Artifact linking (connect real files to the design) ----
 
     #[tool(
@@ -684,6 +806,7 @@ impl ReflowService {
             completeness: req.completeness,
             provenance: req.provenance,
             fragment_id: req.fragment_id,
+            checksum: req.checksum,
         };
         let mut g = self.graph.lock().await;
         ok_json(g.link_artifact(opts).map_err(dyno_err)?)

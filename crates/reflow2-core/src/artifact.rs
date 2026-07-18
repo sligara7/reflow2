@@ -17,8 +17,9 @@
 //! that `YIELDED` (action `created`) the Artifact. Bare [`add_artifact`] /
 //! [`realizes`](DesignGraph::realizes) skip the Fragment when provenance isn't needed.
 //!
-//! Scope: link-only. As-built drift detection (filesystem reconcile, `DriftEvent`)
-//! is deferred to SP-6b.
+//! Scope: the write side of the link, plus the drift **baseline** — an optional
+//! `checksum` recorded at link time. Comparing that baseline against observed
+//! reality is [`crate::drift`] (SP-6b).
 
 use dynograph_core::DynoError;
 use dynograph_storage::{StoredEdge, StoredNode};
@@ -53,6 +54,13 @@ pub struct LinkArtifactOptions {
     /// Provenance Fragment id (default `frag:<artifact_id>`).
     #[serde(default)]
     pub fragment_id: Option<String>,
+    /// Content hash of the file as registered — the baseline
+    /// [`reconcile_artifacts`](DesignGraph::reconcile_artifacts) compares
+    /// against later. Opaque to reflow2; the caller picks the algorithm. Without
+    /// it the artifact can still be checked for existence, but a content change
+    /// is reported as `no_baseline` rather than passing silently.
+    #[serde(default)]
+    pub checksum: Option<String>,
 }
 
 /// What [`DesignGraph::link_artifact`] created.
@@ -89,6 +97,29 @@ impl DesignGraph {
                 .set_opt("artifact_type", artifact_type)
                 .set_opt("location", location),
         )
+    }
+
+    /// Record (or update) an artifact's content hash — the drift baseline. Used
+    /// after reconciling a `checksum_change` the user accepted, so the next pass
+    /// compares against the new reality rather than re-reporting the same drift.
+    pub fn set_artifact_checksum(
+        &mut self,
+        artifact_id: &str,
+        checksum: &str,
+    ) -> Result<StoredNode, DynoError> {
+        let Some(existing) = self.get_node(node::ARTIFACT, artifact_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::ARTIFACT.to_string(),
+                node_id: artifact_id.to_string(),
+            });
+        };
+        let mut props = Props::new().set("checksum", checksum);
+        for (k, v) in &existing.properties {
+            if k != "checksum" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::ARTIFACT, artifact_id, props)
     }
 
     /// Link an `Artifact` to the entity it implements via `REALIZES`. `target_type`
@@ -171,11 +202,14 @@ impl DesignGraph {
                 .set("provenance", provenance),
         )?;
         // The Artifact itself.
-        self.add_artifact(
+        self.create_node(
+            node::ARTIFACT,
             &opts.artifact_id,
-            &opts.name,
-            opts.artifact_type.as_deref(),
-            opts.location.as_deref(),
+            Props::new()
+                .set("name", opts.name.as_str())
+                .set_opt("artifact_type", opts.artifact_type.as_deref())
+                .set_opt("location", opts.location.as_deref())
+                .set_opt("checksum", opts.checksum.as_deref()),
         )?;
         // Fragment YIELDED the Artifact (the provenance anchor).
         self.create_edge(

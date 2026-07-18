@@ -7,9 +7,11 @@ description: Use before building, and after capturing new intent, to find gaps i
 
 reflow2 surfaces the decisions a stateless agent would make silently. Turn them into questions.
 
-1. Call `detect_gaps`. It returns a list of `GapCandidate`s (unallocated capabilities,
-   unsatisfied requirements, phase-coverage holes, surprising couplings, …). If empty, the
-   design is coherent for now — proceed to build.
+1. Call `detect_gaps`. It returns a list of `GapCandidate`s ranked by severity — unsatisfied
+   requirements, unallocated capabilities, phase-coverage holes, **contracts with a missing
+   side** (`unprovided_interface` — something depends on it but nothing supplies it),
+   decomposition problems (`missing_intermediate_level`), surprising couplings, quality drift.
+   If empty, the design is coherent for now — proceed to build.
 2. For each gap worth resolving now, run the **gap_to_prompt handshake**:
    a. Call `gap_to_prompt` with `gap` = the GapCandidate and `answers: []`. It returns
       `{ "status": "needs_llm", "prompts": [{ "id", "prompt", "expect_json" }] }`.

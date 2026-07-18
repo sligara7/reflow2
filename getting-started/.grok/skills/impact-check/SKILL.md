@@ -20,6 +20,10 @@ change touches — use it first, edit second.
      these partial fields; nothing is dropped silently.
 3. Edit **only** the impacted capabilities/components/tests the radius names. Do not touch what
    isn't in it, and do not miss what is.
+   - Pay attention to anything reached **through an Interface** (a `via` chain containing
+     `PROVIDES`/`CONSUMES`). That is a component on the far side of a contract you are about to
+     change — the classic "fixed one side, forgot the other" break. If you change what a
+     contract carries, the consumers in the radius need editing too, not just the provider.
 4. If the change adds or removes intent, also run **capture-intent** to update the graph, then
    **detect-and-ask** for any new gaps.
 5. After editing, re-run `detect_gaps` (and optionally `graph_report`) to confirm the design is
