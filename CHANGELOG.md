@@ -193,6 +193,22 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **`single_point_of_failure` is measured against the baseline** (BL-5). The test asked whether ≥2
+  non-trivial subsystems remained *after* removing a node, which quietly assumed the design was
+  connected to begin with. One unrelated island of two nodes already satisfies that, so **every**
+  articulation point elsewhere in the graph reported as a single point of failure while nothing
+  about its fragility was different. It now asks whether removal *increases* the count.
+
+  This is the blind trial's *"all 15 defects vanished at once when I added two bookkeeping edges;
+  nothing about actual fragility changed"* seen from the other side — those edges attached an
+  island. On reflow2's own design: 8 structural defects → 2, and both survivors are correct.
+
+- **A Component the Project contains is no longer reported as floating** (BL-24). `orphan_level`
+  checked only for a *Component* parent, but a Project carries no `Component.level` — it sits
+  above all of them — so a Project holding a few subsystems raised one false gap per subsystem,
+  which is the shape `contains` produces. Containment by the Project now counts as a parent. A
+  component nothing contains at all is still an orphan.
+
 - **Every tool returns an object.** MCP defines `structuredContent` as an object, so seven
   list-returning tools — including `detect_gaps` — were malformed and rejected outright by
   spec-compliant clients. Lists now arrive as `{"count": n, "items": [...]}`. Found by a Grok
