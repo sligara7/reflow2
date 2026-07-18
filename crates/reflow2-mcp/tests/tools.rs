@@ -948,3 +948,56 @@ async fn asking_a_gap_records_the_question_it_asked() {
         .is_err()
     );
 }
+
+// ---- BL-20 · the design as a portable document -----------------------------
+
+#[tokio::test]
+async fn a_design_round_trips_through_export_and_import() {
+    let s = seeded().await;
+    let doc = j!(s.export_graph());
+    assert!(doc["nodes"].as_array().unwrap().len() >= 4);
+    assert!(
+        doc["stamp"]["node_types"].as_u64().unwrap() >= 27,
+        "it says what wrote it"
+    );
+
+    // A fresh graph, loaded from the document, holds the same design.
+    let fresh = ReflowService::in_memory().expect("in-memory service");
+    let report = j!(fresh.import_graph(Parameters(ImportGraphReq {
+        document: doc.clone(),
+    })));
+    assert_eq!(
+        report["nodes_written"].as_u64().unwrap(),
+        doc["nodes"].as_array().unwrap().len() as u64
+    );
+    assert!(
+        report["skipped_edges"].as_array().unwrap().is_empty(),
+        "a self-contained document imports whole, got {report}"
+    );
+
+    // Exporting it again gives the same document — the property that makes a
+    // backup directory diffable rather than a pile of fresh blobs.
+    let again = j!(fresh.export_graph());
+    assert_eq!(again["nodes"], doc["nodes"]);
+    assert_eq!(again["edges"], doc["edges"]);
+
+    // And it behaves the same, not merely serializes the same.
+    assert_eq!(
+        jl!(fresh.detect_gaps()).as_array().unwrap().len(),
+        jl!(s.detect_gaps()).as_array().unwrap().len(),
+        "a restored design must diagnose the same as the original"
+    );
+}
+
+#[tokio::test]
+async fn importing_something_that_is_not_an_export_fails_loud() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    assert!(
+        s.import_graph(Parameters(ImportGraphReq {
+            document: serde_json::json!({"nodes": "not a list"}),
+        }))
+        .await
+        .is_err(),
+        "a malformed document must be rejected, not partly applied"
+    );
+}

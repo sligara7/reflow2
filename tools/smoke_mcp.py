@@ -135,6 +135,7 @@ def run(binary: str, graph_path: str) -> int:
     for expected in (
         "genesis", "detect_gaps", "gap_to_prompt", "propagate_from",
         "contain_component", "set_requirement_status", "open_questions", "answer_question",
+        "export_graph", "import_graph",
         "add_interface", "provides", "consumes",
         "link_artifact", "reconcile_artifacts", "set_artifact_checksum",
         "add_verification", "verifies", "add_release", "add_environment",
@@ -446,6 +447,27 @@ def run(binary: str, graph_path: str) -> int:
          len(still) == 1 and still[0]["status"] == "answered", still)
     c.ok("and brings back what the user said",
          still[0].get("answer") == "Yes — deliberate.", still[0].get("answer"))
+
+    # BL-20: the whole design as a portable document. Exercised across a real
+    # process here, not just in-process: export, restore into a second graph in
+    # a separate server, and check it diagnoses the same. That is the migration
+    # path — export with the old build, import with the new.
+    doc = s.call("export_graph")
+    c.ok("the design exports whole",
+         len(doc["nodes"]) > 0 and doc["stamp"]["node_types"] > 0, doc.get("stamp"))
+    c.ok("and the export is byte-identical on a second run",
+         json.dumps(s.call("export_graph"), sort_keys=False) == json.dumps(doc, sort_keys=False))
+
+    restore_path = graph_path + "-restored"
+    r = Server(binary, restore_path)
+    rep = r.call("import_graph", {"document": doc})
+    c.ok("it imports whole into a fresh graph in another process",
+         rep["nodes_written"] == len(doc["nodes"]) and not rep["skipped_edges"], rep)
+    c.ok("and the restored design diagnoses the same",
+         len(r.call("detect_gaps")) == len(s.call("detect_gaps")))
+    c.ok("and re-exports to the same document",
+         r.call("export_graph")["nodes"] == doc["nodes"])
+    r.close()
 
     # BL-19: the graph carries a record of which reflow2 wrote it, beside the
     # store rather than inside it (RocksDB owns its own directory).

@@ -598,6 +598,12 @@ pub struct AgentAnswerReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+pub struct ImportGraphReq {
+    /// A document previously returned by `export_graph`.
+    pub document: JsonValue,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
 pub struct AnswerQuestionReq {
     /// The gap the question was asked about (`gap_id` from `open_questions`).
     pub gap_id: String,
@@ -1223,6 +1229,35 @@ impl ReflowService {
             // Say what would have worked — see `edge_error`.
             Err(e) => Err(edge_error(&g, &req.from_type, &req.to_type, e)),
         }
+    }
+
+    #[tool(
+        description = "The whole design as one portable document — every node and edge, sorted so \
+                       two exports of an unchanged graph are byte-identical. Use it to back the \
+                       design up, move it between machines, or migrate it across a reflow2 upgrade \
+                       (export with the old build, import with the new). It carries a stamp saying \
+                       which reflow2 wrote it."
+    )]
+    pub async fn export_graph(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        ok_json(g.export_graph().map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Load an exported design into this graph. Upsert, not replace: ids already \
+                       present are overwritten and anything not in the document is left alone, so \
+                       clear the graph first if you want a clean restore. Atomic — a document that \
+                       fails validation leaves the graph untouched rather than half-loaded. \
+                       Reports any edge whose endpoints were missing rather than dropping it."
+    )]
+    pub async fn import_graph(
+        &self,
+        Parameters(req): Parameters<ImportGraphReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let doc: reflow2_core::GraphExport = serde_json::from_value(req.document)
+            .map_err(|e| McpError::invalid_params(format!("not a reflow2 export: {e}"), None))?;
+        let mut g = self.graph.lock().await;
+        ok_json(g.import_graph(&doc).map_err(dyno_err)?)
     }
 
     #[tool(

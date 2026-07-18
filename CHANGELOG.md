@@ -17,6 +17,21 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The design exports to a portable document, and back** (BL-20). `export_graph` /
+  `import_graph`, in the core and on the tool surface. One mechanism doing three jobs: migration
+  across an upgrade (export with the old build, import with the new), backup, and moving a design
+  between machines.
+
+  Deterministic on purpose — node types, ids, edges and property keys are all sorted, which is why
+  the exported types use `BTreeMap` rather than the store's `HashMap`. Two exports of an unchanged
+  graph are byte-identical, so a backup directory under version control shows what changed *in the
+  design* rather than a fresh blob every run.
+
+  Import is upsert and atomic: ids already present are overwritten, anything absent from the
+  document is left alone, and a document that fails validation leaves the graph untouched rather
+  than half-loaded. An edge whose endpoints are missing is named in the report, never dropped
+  quietly. The document carries a `GraphStamp` saying which reflow2 wrote it.
+
 - **A graph records which reflow2 wrote it** (BL-19). `<graph>.meta.json` sits beside the store —
   never inside the directory RocksDB owns — holding the reflow2 version, schema version, and node
   and edge type counts. `open_rocksdb` reads it, compares, refreshes it, and the server reports any

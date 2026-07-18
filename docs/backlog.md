@@ -51,6 +51,14 @@ Kept as a short pointer so a stable id never dangles; the detail is in the CHANG
   overwritten — which also fixed a silent failure where a project that already had any MCP server
   never got reflow2 installed while the run reported success. Tables and the reasoning:
   [skills/README.md](skills/README.md).
+- **BL-20 · Graph export / import** — done. `export_graph` / `import_graph` in core and on the
+  surface. Deterministic throughout — node types, ids, edges and property keys all sorted, which
+  is why the exported types use `BTreeMap` rather than the store's `HashMap` — so two exports of
+  an unchanged graph are byte-identical and a backup directory under git shows *what changed in
+  the design* rather than a fresh blob each run. Import is upsert and atomic: a document that
+  fails validation leaves the graph untouched, and an edge whose endpoints are missing is named
+  rather than dropped. The document carries a `GraphStamp`, so it says which reflow2 wrote it.
+  This is the migration mechanism BL-19 wanted: export with the old build, import with the new.
 - **BL-21 · The agent can report its own friction** — done. A `report-friction` skill plus the
   trigger in the consumer AGENTS.md, since a skill alone is not reliably found (BL-22). Redaction
   is the load-bearing part: a friction report naturally quotes the graph, and the graph is the
@@ -220,46 +228,6 @@ ships.
 
 Size **M** for the write side plus a decision on traversal; **S** if it stops at recording which
 files matter and leaves impact alone.
-
-**BL-20 · Graph export / import, and versioned local backups** — *user, 2026-07-18.* Unblocks
-BL-19's migration half and, through it, BL-18.
-
-*Nothing exports today.* dynograph-foundation has no `export`/`dump`/`to_json` for graph data —
-only `Schema::from_json` for the schema itself. But every primitive is present: `scan_nodes`
-per type, `scan_outgoing_edges` / `scan_incoming_edges` per node, and `begin_batch` /
-`commit_batch` for an atomic restore. Walk the schema's node types (the same introspection BL-1
-added), scan, serialize; import replays under one batch. **Buildable entirely in reflow2 —
-no foundation bump**, which the pin discipline in AGENTS.md wants.
-
-*Why this is more than backup.* Export/import is the general migration path BL-19 lacks: dump
-with the old binary, load with the new one. That covers both a storage-format change in the
-foundation and an additive schema change, and it is far more robust than bespoke per-change
-backfill code. It also gets design portability (move a graph between machines, hand one to
-someone else) for free.
-
-*The versioned-backup layer.* A design graph is small — hundreds to low thousands of nodes, so
-tens of KB to a few MB as JSON. Cheap enough to snapshot on every session end or graph change and
-keep all of them. `git init` on the backup directory and a commit per snapshot gives point-in-time
-restore, a browsable history, and near-free packing, without a remote.
-
-Three constraints the design must respect:
-
-- **The export must be deterministic** — sorted keys, stable ordering. `HashMap` order is random,
-  so a naive dump rewrites the whole file every time: every commit becomes a fresh blob, diffs
-  become unreadable, and the main benefit of the git layer evaporates. Same discipline as
-  `vocabulary.rs`.
-- **Not `/tmp`.** systemd-tmpfiles clears it (on reboot, and by age), so backups there silently
-  disappear — the opposite of the goal. Use `~/.local/share/reflow2/` or a directory beside the
-  graph.
-- **This is not the temporal axis.** `DesignEpoch` / `Snapshot` / `ChangeEvent` record *why* the
-  design changed, semantically, inside the graph. This records the graph's bytes at a point in
-  time. Neither substitutes for the other: the temporal axis cannot recover a corrupted store, and
-  a snapshot cannot explain a requirement's history. Keep the two distinct in naming and docs so
-  no one later mistakes one for the other.
-
-Note `StoredNode` / `StoredEdge` do not derive `Serialize` — the orphan-rule workaround already
-exists as `NodeDto` / `EdgeDto` in `reflow2-mcp/src/dto.rs`, and would need to move to core.
-Size **M**.
 
 **BL-19 · The graph must survive an upgrade** — *user, 2026-07-18.* **Blocks BL-18**: an
 "you're out of date" nudge shipped before this exists drives users into an upgrade path with no
