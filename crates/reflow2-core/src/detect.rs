@@ -6,7 +6,7 @@
 //! language question the user answers is the **PROMPT** step (a `GapPrompt` with
 //! LLM rephrase + anchoring), deferred with the rest of the LLM-reasoning ops.
 //!
-//! This increment implements two fully-deterministic detector groups:
+//! Deterministic detector groups:
 //!
 //! - **Traceability** — a node is missing a golden-thread link it should have
 //!   (`unsatisfied_requirement`, `unallocated_capability`, `unrealized_capability`,
@@ -14,6 +14,10 @@
 //! - **Phase-coverage** — a whole lifecycle phase is absent
 //!   (`concept_without_design`, `design_without_build`, `build_without_verification`,
 //!   `no_deploy_operate`) — the doc's headline "you've done X but not Y".
+//! - **Graph-analysis** — findings from the design network surfaced as gaps:
+//!   `unexpected_coupling` (a lateral coupling bridging distant communities, from
+//!   `surprising_connections`) and `declining_dimension` (quality trending down,
+//!   from `dimension_drifts`).
 //!
 //! Two disciplines shape the design (docs/gap-surfacing.md):
 //!
@@ -27,12 +31,14 @@
 //!   the same gap is stable across runs for dedup/caching.
 //!
 //! Deferred to later increments (noted so they're not mistaken for done):
-//! structural gaps (need `dynograph-graph` centrality/components), quality/risk,
-//! compliance (the environment layer), decomposition/matryoshka (`Component.level`),
-//! SME considerations (LLM), and the whole PROMPT rephrase/anchor layer.
+//! remaining structural gaps (`orphan_node`/`dead_end` are detected in HEAL, not
+//! yet surfaced here), compliance (the environment layer), decomposition/
+//! matryoshka (`Component.level`), SME considerations (LLM), and the whole
+//! PROMPT rephrase/anchor layer (beyond `to_prompt`).
 
 use dynograph_core::DynoError;
 
+use crate::dimensions::DriftDirection;
 use crate::graph::DesignGraph;
 use crate::llm::{LlmBackend, LlmRequest};
 use crate::nodes::{edge, node};
@@ -59,6 +65,13 @@ pub enum GapSource {
     UnrealizedCapability,
     /// A realized Capability/Artifact has no `Verification`.
     UnverifiedCapability,
+    // Graph-analysis (from the design network)
+    /// A coupling edge bridges two otherwise-distant communities — a hidden
+    /// coupling worth confirming (from `surprising_connections`).
+    UnexpectedCoupling,
+    /// A node's quality on some dimension is trending down over epochs (from
+    /// `dimension_drifts`).
+    DecliningDimension,
 }
 
 impl GapSource {
@@ -73,6 +86,8 @@ impl GapSource {
             GapSource::UnallocatedCapability => "unallocated_capability",
             GapSource::UnrealizedCapability => "unrealized_capability",
             GapSource::UnverifiedCapability => "unverified_capability",
+            GapSource::UnexpectedCoupling => "unexpected_coupling",
+            GapSource::DecliningDimension => "declining_dimension",
         }
     }
 }
@@ -232,6 +247,8 @@ impl DesignGraph {
         self.detect_unallocated_capabilities(&pop, &mut gaps)?;
         self.detect_unrealized_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
+        self.detect_unexpected_couplings(&mut gaps)?;
+        self.detect_declining_dimensions(&mut gaps)?;
 
         gaps.sort_by(|a, b| {
             b.severity
@@ -485,6 +502,78 @@ impl DesignGraph {
                     });
                 }
             }
+        }
+        Ok(())
+    }
+
+    /// Surface hidden couplings (from `surprising_connections`) as gaps: a
+    /// coupling edge bridging two otherwise-distant communities is worth
+    /// confirming ("is this link intentional, or should the boundary change?").
+    fn detect_unexpected_couplings(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        for c in self.surprising_connections()? {
+            let affected = vec![c.from_id.clone(), c.to_id.clone()];
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::UnexpectedCoupling, &affected),
+                gap_source: GapSource::UnexpectedCoupling,
+                scope: GapScope::Capability,
+                // surprise is ~1..3; map into a mid-band severity.
+                severity: (c.surprise / 3.0).clamp(0.3, 0.85),
+                title: format!(
+                    "Unexpected coupling between '{}' and '{}'",
+                    c.from_id, c.to_id
+                ),
+                description: format!(
+                    "'{}' and '{}' sit in separate parts of the design yet are directly coupled — \
+                     is that intentional, or should the boundary or the link change?",
+                    c.from_id, c.to_id
+                ),
+                affected_ids: affected,
+                suggested_depth: 2,
+                evidence: format!(
+                    "{} edge bridges communities {}→{}; {} (surprise {:.2}).",
+                    c.edge_type,
+                    c.from_community,
+                    c.to_community,
+                    c.reasons.join(", "),
+                    c.surprise
+                ),
+            });
+        }
+        Ok(())
+    }
+
+    /// Surface declining quality (from `dimension_drifts`) as gaps: a node whose
+    /// score on some dimension is trending down over epochs.
+    fn detect_declining_dimensions(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        for d in self.dimension_drifts()? {
+            if d.direction != DriftDirection::Declining {
+                continue;
+            }
+            let dim = d.dimension.as_str();
+            // Distinct per (node, dimension): fold the dimension into the id hash
+            // while keeping affected_ids a clean node id.
+            let id = gap_id(
+                GapSource::DecliningDimension,
+                &[d.target_id.clone(), dim.to_string()],
+            );
+            gaps.push(GapCandidate {
+                id,
+                gap_source: GapSource::DecliningDimension,
+                scope: GapScope::Capability,
+                severity: (0.4 + d.slope.abs()).clamp(0.4, 0.9),
+                title: format!("{dim} of '{}' is declining", d.target_id),
+                description: format!(
+                    "The {dim} of '{}' has slipped from {:.2} to {:.2} over {} readings — \
+                     worth reviewing before it erodes further.",
+                    d.target_id, d.first_score, d.last_score, d.observation_count
+                ),
+                affected_ids: vec![d.target_id.clone()],
+                suggested_depth: 2,
+                evidence: format!(
+                    "{dim} drift slope {:.3} over {} observations (rollup {:.2}).",
+                    d.slope, d.observation_count, d.rollup_score
+                ),
+            });
         }
         Ok(())
     }

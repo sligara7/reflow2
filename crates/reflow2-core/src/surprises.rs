@@ -24,7 +24,14 @@ use std::collections::HashMap;
 use dynograph_core::DynoError;
 
 use crate::graph::DesignGraph;
-use crate::propagate::is_traceability_edge;
+
+/// Only **lateral coupling** edges can be "surprising" — the *vertical* golden-
+/// thread edges (SATISFIES / ALLOCATED_TO / REALIZES / VERIFIES …) are the
+/// design's intended cross-layer structure, so a cross-community one of those is
+/// expected, not surprising. Communities are still detected over the *full*
+/// design network (see [`DesignGraph::design_network`]); only which edges we
+/// *flag* is narrowed here.
+const LATERAL_COUPLING: &[&str] = &["DEPENDS_ON", "PROVIDES", "CONSUMES", "PART_OF_FLOW"];
 
 /// A coupling edge bridging two Leiden communities of the design network.
 #[derive(Debug, Clone)]
@@ -74,7 +81,7 @@ impl DesignGraph {
 
         for (id, &c_from) in &community {
             for e in self.outgoing(id, None)? {
-                if !is_traceability_edge(&e.edge_type) || !net.contains(&e.to_id) {
+                if !LATERAL_COUPLING.contains(&e.edge_type.as_str()) || !net.contains(&e.to_id) {
                     continue;
                 }
                 let Some(&c_to) = community.get(&e.to_id) else {

@@ -79,8 +79,8 @@ half (question phrasing, anchors) is LLM-gated and deferred.
 | GS-4 | `GapPrompt` shape | 🟡 | `GapPrompt` + `GapCandidate::to_prompt` via `LlmBackend` · `gap_becomes_a_plain_question_via_the_backend`; **`relevant_context` graph-slice deferred** |
 | GS-5 | Phase-coverage gaps | 🟡 | concept_without_design, design_without_build, build_without_verification, no_deploy_operate ✅; **no_decisions_recorded deferred** |
 | GS-6 | Traceability gaps | 🟡 | unsatisfied_requirement, unallocated_capability, unrealized_capability, unverified_capability ✅; **interfaceless_dependency deferred** |
-| GS-7 | Structural gaps (asked) | 🟡 | signals computed in HEAL (`orphan_node`, `dead_end`, `disconnected_community`, `single_point_of_failure`); **surfacing as questions deferred with PROMPT** |
-| GS-8 | Quality/risk gaps | ⬜ | `contradiction` detected in HEAL; the gap-surfacing forms (unmitigated_risk, unvalidated_causal_claim, dimension_blind_spot, violated_constraint) deferred |
+| GS-7 | Structural gaps (asked) | 🟡 | `unexpected_coupling` surfaced as a gap (from `surprising_connections`, a graph-analysis addition) · `an_unexpected_cross_community_coupling_is_surfaced_as_a_gap`; `orphan_node`/`dead_end`/`disconnected_community`/`single_point_of_failure` still computed in HEAL only |
+| GS-8 | Quality/risk gaps | 🟡 | `declining_dimension` surfaced as a gap (from `dimension_drifts`) · `a_declining_dimension_is_surfaced_as_a_gap...`; `contradiction` detected in HEAL; unmitigated_risk / unvalidated_causal_claim / dimension_blind_spot / violated_constraint still deferred |
 | GS-9 | Compliance gaps | ⬜ | needs the environment layer (EnvironmentRule / OPERATES_IN) |
 | GS-10 | SME gaps | ⬜ | LLM (SME augmentation) |
 | GS-11 | Decomposition/hierarchy gaps | ⬜ | needs `Component.level` analysis (see 3AX-9/10) |

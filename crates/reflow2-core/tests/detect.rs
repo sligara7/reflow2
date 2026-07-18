@@ -6,7 +6,7 @@
 //! complete thread yields nothing.
 
 use reflow2_core::nodes::{Props, edge, node};
-use reflow2_core::{DesignGraph, GapScope, GapSource};
+use reflow2_core::{DesignGraph, Dimension, GapScope, GapSource};
 
 fn sources(gaps: &[reflow2_core::GapCandidate]) -> Vec<GapSource> {
     gaps.iter().map(|g| g.gap_source).collect()
@@ -220,4 +220,97 @@ fn gap_ids_are_deterministic_across_runs() {
     let ids2: Vec<&str> = second.iter().map(|g| g.id.as_str()).collect();
     assert_eq!(ids1, ids2, "same graph state must yield identical gap ids");
     assert!(first.iter().all(|g| g.id.starts_with("gap:")));
+}
+
+#[test]
+fn an_unexpected_cross_community_coupling_is_surfaced_as_a_gap() {
+    // Two tightly-coupled triangles joined by one lateral bridge → the bridge
+    // is a hidden coupling DETECT should surface.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for c in ["cap:a1", "cap:a2", "cap:a3", "cap:b1", "cap:b2", "cap:b3"] {
+        g.add_capability(c, c, "does a thing").unwrap();
+    }
+    let dep = |g: &mut DesignGraph, from: &str, to: &str, w: f64| {
+        g.create_edge(
+            edge::DEPENDS_ON,
+            node::CAPABILITY,
+            from,
+            node::CAPABILITY,
+            to,
+            Props::new().set("weight", w),
+        )
+        .unwrap();
+    };
+    dep(&mut g, "cap:a1", "cap:a2", 0.9);
+    dep(&mut g, "cap:a2", "cap:a3", 0.9);
+    dep(&mut g, "cap:a1", "cap:a3", 0.9);
+    dep(&mut g, "cap:b1", "cap:b2", 0.9);
+    dep(&mut g, "cap:b2", "cap:b3", 0.9);
+    dep(&mut g, "cap:b1", "cap:b3", 0.9);
+    dep(&mut g, "cap:a1", "cap:b1", 0.1); // the bridge
+
+    let gaps = g.detect_gaps().unwrap();
+    let coupling: Vec<&reflow2_core::GapCandidate> = gaps
+        .iter()
+        .filter(|x| x.gap_source == GapSource::UnexpectedCoupling)
+        .collect();
+    assert_eq!(coupling.len(), 1);
+    assert_eq!(coupling[0].affected_ids, ["cap:a1", "cap:b1"]);
+}
+
+#[test]
+fn a_declining_dimension_is_surfaced_as_a_gap_but_an_improving_one_is_not() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_component("cmp:x", "X", "part").unwrap();
+    g.add_component("cmp:y", "Y", "part").unwrap();
+    // cmp:x maintainability sliding; cmp:y reliability improving.
+    g.add_dimension_observation(
+        "o1",
+        node::COMPONENT,
+        "cmp:x",
+        Dimension::Maintainability,
+        0.9,
+        "e01",
+        None,
+    )
+    .unwrap();
+    g.add_dimension_observation(
+        "o2",
+        node::COMPONENT,
+        "cmp:x",
+        Dimension::Maintainability,
+        0.5,
+        "e02",
+        None,
+    )
+    .unwrap();
+    g.add_dimension_observation(
+        "r1",
+        node::COMPONENT,
+        "cmp:y",
+        Dimension::Reliability,
+        0.4,
+        "e01",
+        None,
+    )
+    .unwrap();
+    g.add_dimension_observation(
+        "r2",
+        node::COMPONENT,
+        "cmp:y",
+        Dimension::Reliability,
+        0.9,
+        "e02",
+        None,
+    )
+    .unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    let declining: Vec<&reflow2_core::GapCandidate> = gaps
+        .iter()
+        .filter(|x| x.gap_source == GapSource::DecliningDimension)
+        .collect();
+    assert_eq!(declining.len(), 1, "only the declining dimension is a gap");
+    assert_eq!(declining[0].affected_ids, ["cmp:x"]);
+    assert!(declining[0].title.contains("maintainability"));
 }
