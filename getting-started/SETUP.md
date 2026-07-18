@@ -104,6 +104,15 @@ printf '%s\n' \
 ```
 
 **Three PASSes → you're ready** to register the server (step 3) and point your agent at the repo.
+
+### Starting a design
+
+Open your agent in the project folder and prompt it with **a short overview of what you're
+trying to design or build** — a paragraph is plenty, in your own words. That's the whole
+kickoff: reflow2 bootstraps from it and starts asking you about the parts you left out.
+
+You don't need to know systems engineering, and you don't need the brief to be complete. The
+gaps are the point — it will find them and ask.
 If **Check 1** fails, the build didn't finish — re-run step 2 and read the error. If **2 or 3**
 fails after Check 1 passes, re-run and copy the full output (`2>&1`) for help.
 
@@ -120,6 +129,23 @@ python3 tools/smoke_mcp.py --bin target/release/reflow2-mcp
 
 It prints a PASS/FAIL line per check and ends with `ALL CHECKS PASSED`. Anything that fails names
 the exact step, which is worth pasting if you ask for help.
+
+## Stopping and picking it up again
+
+**Just stop.** The design lives in `./.reflow2/graph` on disk, not in the agent's head, so
+closing the session loses nothing. There is no save step and nothing to flush.
+
+When you come back, open your agent in the same folder and ask it something like:
+
+> *"Where are we with this? Give me the overview, then let's carry on."*
+
+It will read the graph and tell you what the design says, what's been decided, and what's still
+open. Ask that any time you lose the thread mid-session too — you don't have to be resuming.
+
+If the agent asks *"shall we start building or keep filling in gaps?"* and you'd rather stop for
+the day, stopping is a perfectly good answer. Everything decided so far is already recorded.
+
+**One agent at a time** — see the note below.
 
 ## Notes
 

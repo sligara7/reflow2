@@ -57,8 +57,12 @@ the loop like this:
 - [gap-surfacing.md](gap-surfacing.md) — DIAGNOSE → PROMPT: turn weaknesses into constructive questions.
 - [heal-process.md](heal-process.md) — HEAL: propose and apply structural repairs.
 
-### 3½ · Status — *are we meeting the docs?*
-- [requirements-coverage.md](requirements-coverage.md) — traceability matrix: every doc requirement → the module + test that meets it, with an honest Met/Partial/Deferred status. A living document.
+### 3½ · Status — *where the project is*
+Three records, three questions — kept separate on purpose:
+- [requirements-coverage.md](requirements-coverage.md) — *are we meeting the docs?* Traceability matrix: every doc requirement → the module + test that meets it, with an honest Met/Partial/Deferred status. A living document.
+- [backlog.md](backlog.md) — *what next, and on what evidence?* Open work, sized, pointing at the trial findings and audit items behind it.
+- [../CHANGELOG.md](../CHANGELOG.md) — *what changed, and when?*
+- [trials/](trials/) — primary evidence from putting reflow2 in front of agents and users who had never seen it.
 
 ### 3¾ · Direction — *the prescriptive graph* (candidate, not yet built)
 - [graph-analysis.md](graph-analysis.md) — use graph-theory tools (`dynograph-graph`/`-vector`/`-cluster`/`-game`) to *make* design decisions, not just record them — e.g. allocate functions to services by cohesion/coupling instead of by domain. Starts with edge **weights**.

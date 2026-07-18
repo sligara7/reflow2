@@ -10,6 +10,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **[docs/requirements-coverage.md](docs/requirements-coverage.md)** — the living
   traceability matrix (doc requirement → module → test → Met/Partial/Deferred). Consult it
   to see what's built vs. deferred, and **update it in the same change that moves a status**.
+- **[docs/backlog.md](docs/backlog.md)** — what's open and why, with the evidence behind it.
+  **[CHANGELOG.md](CHANGELOG.md)** — what changed and when; add an entry for anything a user
+  would notice. **[docs/trials/](docs/trials/)** — primary evidence from real runs; append, never
+  tidy.
 
 This file covers the operational side: commands and code-level architecture.
 

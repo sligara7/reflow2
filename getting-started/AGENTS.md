@@ -14,6 +14,12 @@ fidelity?), that is a *gap* — surface it as a question, don't guess.
 
 ## The loop
 
+0a. **On an existing design, orient first.** If the graph already holds a Project, run the
+   **where-am-i** skill before anything else: read the graph and tell the user what the design
+   says, what has been decided, and what is still open. They cannot see the graph — this is the
+   only way they learn what a previous session concluded. Do it again whenever they ask "where
+   are we?".
+
 0. **Bootstrap once (GENESIS).** On a brand-new project (empty graph), start with the **genesis**
    skill: call the `genesis` tool to scaffold the Project + temporal anchor, seed the opening
    brief into Requirements + Capabilities (P0/P1, *not* Components), capture deployment/platform
@@ -85,6 +91,8 @@ reflow2 phrases the question; **you** are the language model that fills it in:
 - **Change over time:** `add_epoch`, `add_change_event`, `record_change`.
 - **Ask the user:** `gap_to_prompt`, `acknowledge_gap`, `reviewed_gaps`,
   `withdraw_gap_acknowledgement`.
+- **Report back:** `graph_report`, `graph_report_markdown` — raw material for the
+  **where-am-i** summary; rewrite it in the user's words rather than pasting it.
 
 Tool results are the payload directly (no wrapper). Partial-success fields (`unknown_seeds`,
 `skipped_operations`, `rephrase_degraded`, …) are always present — read them; nothing is
