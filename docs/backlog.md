@@ -35,13 +35,22 @@ Three independent sources, which is why several items appear on more than one li
 
 | ID | Item | Why | Size |
 |---|---|---|---|
-| **BL-1** | **Schema discovery tool** | Trial agent brute-forced 14 edge-type guesses, then used `DEPENDS_ON` *"because it was the one that validated, which is precisely the kind of silent accommodation this project says it's against."* The error *"tells me I'm wrong without telling me what's right."* | S |
 | **BL-2** | **Expose `contain_component`** | Exists in core, not on the surface, so an assembly hierarchy can't be modelled — and `hierarchy_issues` returns `[]` because it never has a hierarchy to check. | S |
 | **BL-3** | **`Requirement.status` reachable** | Already in the schema, defaulting to `proposed`. The trial agent wanted to mark requirements provisional and wrote "ASSUMED" into the statement text instead. | S |
 | **BL-4** | **Persist asked questions** | `gap_to_prompt` output evaporates, so the next session re-derives and re-asks. The trial agent's own framing: *"the stateless-agent problem reflow2 is supposed to solve."* Same gap the external user hit as "how do I pause and resume". | M |
 | **BL-5** | **Re-examine `single_point_of_failure`** | *"All 15 defects vanished at once when I added two bookkeeping edges. Nothing about actual fragility changed."* Use that case as the test. | M |
 | **BL-6b** | **Demote `unexpected_coupling` from a gap to a report-only signal** | Three independent reports now — both blind trials and the coupling work itself. Grok: *"that coupling **is** the product"* on the one real interface in a 3-component design. Community structure is not meaningful at this scale, so it should inform rather than demand attention. | S |
 | **BL-6** | **Rename/split `unverified_capability`** | Fires per-Artifact despite the name, producing gaps titled "Nothing verifies reading.py". Semantically right, legibly wrong. | S |
+
+## Closed
+
+Kept as a short pointer so a stable id never dangles; the detail is in the CHANGELOG.
+
+- **BL-1 · Schema discovery tool** — done `9440929`, consumer kit `f00fac7`. `describe_schema`
+  plus rejections that name the alternatives. The design turned on one detail worth remembering:
+  `EdgeEndpoint::accepts()` returns true for the `*` wildcard, so the naive answer to the trial's
+  question would have been `DEPENDS_ON` — the very edge it chose and distrusted. Matches are
+  labelled exact vs wildcard for that reason. Recorded as **WS-6** in the coverage matrix.
 
 ## Bigger threads
 

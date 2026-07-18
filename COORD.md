@@ -50,7 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- _(nothing claimed)_
+- BL-2, BL-3, BL-6 — @ajs — 2026-07-18 — hierarchy/graph write side, detect.rs, MCP tools
 
 ## Blocked / waiting
 
