@@ -31,7 +31,9 @@ fidelity?), that is a *gap* — surface it as a question, don't guess.
      will tell you the other one just broke.
 2. **DETECT gaps and ask.** Run `detect_gaps`. For each gap, call `gap_to_prompt` to turn it
    into a plain question (see the handshake below), ask the **user**, then write their answer
-   back as a Requirement or a node property. Do this **before** building.
+   back as a Requirement or a node property. Do this **before** building. If the user judges a
+   gap acceptable, record that with `acknowledge_gap` (+ their reason) so it moves to
+   `reviewed_gaps` — the open list must keep meaning "still needs attention".
 3. **Build only what the graph specifies, and link the files back.** Implement the
    capabilities/components the graph holds — nothing it doesn't. After creating each real file,
    register it with `link_artifact` (Artifact + provenance + `REALIZES` the capability it
@@ -81,7 +83,8 @@ reflow2 phrases the question; **you** are the language model that fills it in:
   `add_environment`, `add_resource`, `deploy_to`, `require_resource`.
 - **Decisions:** `add_decision`, `governed_by` — record why a choice was made, not just what.
 - **Change over time:** `add_epoch`, `add_change_event`, `record_change`.
-- **Ask the user:** `gap_to_prompt`.
+- **Ask the user:** `gap_to_prompt`, `acknowledge_gap`, `reviewed_gaps`,
+  `withdraw_gap_acknowledgement`.
 
 Tool results are the payload directly (no wrapper). Partial-success fields (`unknown_seeds`,
 `skipped_operations`, `rephrase_degraded`, …) are always present — read them; nothing is

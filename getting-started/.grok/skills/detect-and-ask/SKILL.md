@@ -35,7 +35,16 @@ reflow2 surfaces the decisions a stateless agent would make silently. Turn them 
 
    Never discard the answer. If none of these fit, `create_node`/`create_edge` take any schema
    type, but prefer the typed tool: it supplies the required properties for you.
-4. Re-run `detect_gaps` to confirm the gap is closed and nothing new opened.
+4. **If the user decides a gap is fine as it stands, say so in the graph.** Call
+   `acknowledge_gap` with the gap's `id`, its `affected_ids`, and the user's reason. It moves
+   into `reviewed_gaps` — recorded, not deleted — and the reason becomes a real Decision node
+   that outlives this session. Use it when a judgement has actually been made ("that coupling is
+   deliberate", "hardware is out of scope"), never to tidy up a list you haven't discussed.
+
+   This matters: an open list that can never reach zero gets skimmed, and a skimmed list is the
+   failure this whole workflow exists to prevent. `detect_gaps` should mean *still needs
+   attention*. If a review turns out to be wrong, `withdraw_gap_acknowledgement` puts it back.
+5. Re-run `detect_gaps` to confirm the gap is closed and nothing new opened.
 
 Do this **before** writing code. A gap answered now is a requirement traced forever; a gap
 guessed now is a silent decision that breaks later.

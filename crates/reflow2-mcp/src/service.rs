@@ -309,6 +309,22 @@ pub struct GovernedByReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+pub struct AcknowledgeGapReq {
+    /// The gap's `id`, exactly as `detect_gaps` reported it.
+    pub gap_id: String,
+    /// The gap's `affected_ids`, so the review is reachable from the design.
+    #[serde(default)]
+    pub affected_ids: Vec<String>,
+    /// Why this gap is acceptable. Recorded as the Decision's rationale.
+    pub reason: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct GapIdReq {
+    pub gap_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
 pub struct TypedIdReq {
     pub node_type: String,
     pub id: String,
@@ -726,6 +742,50 @@ impl ReflowService {
             g.contains(&req.project_id, &req.child_type, &req.child_id)
                 .map_err(dyno_err)?,
         ))
+    }
+
+    #[tool(
+        description = "Accept a gap the user has judged fine, recording WHY. It moves out of \
+                       `detect_gaps` into `reviewed_gaps` — not deleted, not hidden. Use this \
+                       once the user has actually decided something, so the open list means \
+                       \"still needs attention\"; a list that can never reach zero gets skimmed. \
+                       The reason is stored as a real Decision node in the graph, so it outlives \
+                       this session. If the gap's affected nodes later change, the review \
+                       expires and the gap returns for a fresh judgement."
+    )]
+    pub async fn acknowledge_gap(
+        &self,
+        Parameters(req): Parameters<AcknowledgeGapReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        let decision_id = g
+            .acknowledge_gap(&req.gap_id, &req.affected_ids, &req.reason)
+            .map_err(dyno_err)?;
+        ok_json(json!({ "acknowledged": req.gap_id, "decision_id": decision_id }))
+    }
+
+    #[tool(
+        description = "Gaps that were reviewed and accepted, each with the reason given. Worth \
+                       re-reading when the design shifts."
+    )]
+    pub async fn reviewed_gaps(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        ok_json(g.reviewed_gaps().map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Withdraw a gap's acceptance: the Decision is marked superseded (kept, not \
+                       deleted) and the gap returns to the open list."
+    )]
+    pub async fn withdraw_gap_acknowledgement(
+        &self,
+        Parameters(req): Parameters<GapIdReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        let existed = g
+            .withdraw_gap_acknowledgement(&req.gap_id)
+            .map_err(dyno_err)?;
+        ok_json(json!({ "gap_id": req.gap_id, "was_reviewed": existed }))
     }
 
     // ---- P4 Verification / P5 Operation / Decisions (the write side) ----

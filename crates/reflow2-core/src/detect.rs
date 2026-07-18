@@ -127,6 +127,24 @@ pub enum GapScope {
     Capability,
 }
 
+/// A gap the user has looked at and accepted, with the reason they gave.
+///
+/// Acknowledgement is stored as a [`Decision`](crate::nodes::node::DECISION) —
+/// the same node an engineer would write anyway — so the reason lives in the
+/// graph, propagates, and survives the session that made it. Nothing is hidden:
+/// a reviewed gap moves to [`reviewed_gaps`](DesignGraph::reviewed_gaps) rather
+/// than disappearing, because a list that silently shrinks is its own kind of
+/// dishonesty.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct ReviewedGap {
+    /// The gap itself, exactly as the detector reports it.
+    pub gap: GapCandidate,
+    /// Why it was accepted.
+    pub reason: String,
+    /// The `Decision` node recording the review.
+    pub decision_id: String,
+}
+
 /// A detected gap, ranked for surfacing (mirrors storyflow's `ScenarioCandidate`).
 ///
 /// The user-facing `GapPrompt` (context-setter + plain question + hints +
@@ -234,6 +252,16 @@ fn gap_id(source: GapSource, affected: &[String]) -> String {
     )
 }
 
+/// The `Decision` id that records a review of `gap_id`. Derived, so any session
+/// can find an existing review without an index — and so a gap whose affected
+/// set changes gets a *different* id, and with it a fresh judgement.
+fn ack_decision_id(gap_id: &str) -> String {
+    format!(
+        "decision:ack:{}",
+        gap_id.strip_prefix("gap:").unwrap_or(gap_id)
+    )
+}
+
 /// Population counts of the node types the detectors gate on.
 struct Population {
     requirements: usize,
@@ -260,9 +288,121 @@ impl DesignGraph {
         })
     }
 
-    /// Run all deterministic detectors and return gap candidates ranked
-    /// most-severe first (ties broken by id for a stable order).
+    /// Accept a gap: record *why* it is fine, and move it to the reviewed
+    /// bucket so the open list reflects what still needs attention.
+    ///
+    /// The review is a real `Decision` node — not a suppression flag — linked by
+    /// `GOVERNED_BY` to each node the gap was about, so it is reachable from the
+    /// design as well as from the gap. `affected_ids` should be the gap's own
+    /// `affected_ids`; endpoints that no longer exist are skipped rather than
+    /// authored as dangling edges.
+    ///
+    /// Idempotent: acknowledging the same gap twice updates the reason.
+    pub fn acknowledge_gap(
+        &mut self,
+        gap_id: &str,
+        affected_ids: &[String],
+        reason: &str,
+    ) -> Result<String, DynoError> {
+        let decision_id = ack_decision_id(gap_id);
+        self.create_node(
+            node::DECISION,
+            &decision_id,
+            crate::nodes::Props::new()
+                .set("name", format!("Reviewed: {gap_id}"))
+                .set("decision", format!("Accepted the gap {gap_id}."))
+                .set("rationale", reason)
+                .set("status", "accepted"),
+        )?;
+        for target in affected_ids {
+            let Some(node_type) = self.node_type_index()?.get(target).cloned() else {
+                continue; // the gap outlived the node — nothing to attach to
+            };
+            // A repeat acknowledgement re-creates the same edge; that is fine.
+            let _ = self.governed_by(&node_type, target, node::DECISION, &decision_id);
+        }
+        Ok(decision_id)
+    }
+
+    /// Withdraw a previously accepted gap: the `Decision` is marked
+    /// `superseded` (never deleted — the past is not overwritten) and the gap
+    /// returns to the open list.
+    pub fn withdraw_gap_acknowledgement(&mut self, gap_id: &str) -> Result<bool, DynoError> {
+        let decision_id = ack_decision_id(gap_id);
+        let Some(existing) = self.get_node(node::DECISION, &decision_id)? else {
+            return Ok(false);
+        };
+        let mut props = crate::nodes::Props::new().set("status", "superseded");
+        for (k, v) in &existing.properties {
+            if k != "status" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::DECISION, &decision_id, props)?;
+        Ok(true)
+    }
+
+    /// The accepted review for a gap, if there is one: `(decision id, reason)`.
+    /// A `superseded` or `rejected` Decision does not count — the gap is open again.
+    fn gap_acknowledgement(&self, gap_id: &str) -> Result<Option<(String, String)>, DynoError> {
+        let decision_id = ack_decision_id(gap_id);
+        let Some(node) = self.get_node(node::DECISION, &decision_id)? else {
+            return Ok(None);
+        };
+        if node.properties.get("status").and_then(|v| v.as_str()) != Some("accepted") {
+            return Ok(None);
+        }
+        let reason = node
+            .properties
+            .get("rationale")
+            .and_then(|v| v.as_str())
+            .unwrap_or("(no reason recorded)")
+            .to_string();
+        Ok(Some((decision_id, reason)))
+    }
+
+    /// Open gaps — everything the detectors found that has **not** been
+    /// reviewed and accepted, ranked most-severe first.
+    ///
+    /// Gaps you have accepted move to [`reviewed_gaps`](Self::reviewed_gaps).
+    /// That split is the point: a gap list that can never reach zero teaches
+    /// you to skim it, and a skimmed list is the failure this whole layer
+    /// exists to prevent.
     pub fn detect_gaps(&self) -> Result<Vec<GapCandidate>, DynoError> {
+        let mut open = Vec::new();
+        for gap in self.all_gaps()? {
+            if self.gap_acknowledgement(&gap.id)?.is_none() {
+                open.push(gap);
+            }
+        }
+        Ok(open)
+    }
+
+    /// Gaps that were reviewed and accepted, with the reason given for each.
+    ///
+    /// Worth re-reading when the design shifts: an acknowledgement is keyed to
+    /// the gap's identity, which is a hash of its source *and its affected
+    /// nodes* — so if the situation changes, the id changes, the old reason no
+    /// longer applies, and the gap reappears in [`detect_gaps`](Self::detect_gaps)
+    /// to be judged afresh.
+    pub fn reviewed_gaps(&self) -> Result<Vec<ReviewedGap>, DynoError> {
+        let mut reviewed = Vec::new();
+        for gap in self.all_gaps()? {
+            if let Some((decision_id, reason)) = self.gap_acknowledgement(&gap.id)? {
+                reviewed.push(ReviewedGap {
+                    gap,
+                    reason,
+                    decision_id,
+                });
+            }
+        }
+        Ok(reviewed)
+    }
+
+    /// Run all deterministic detectors and return gap candidates ranked
+    /// most-severe first (ties broken by id for a stable order), regardless of
+    /// whether they have been reviewed.
+    fn all_gaps(&self) -> Result<Vec<GapCandidate>, DynoError> {
         let pop = self.population()?;
         let mut gaps = Vec::new();
 

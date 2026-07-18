@@ -16,7 +16,7 @@ status. It reflects the deterministic, LLM-free core built so far (build-order s
 
 1. **This matrix** — the requirement→code→test mapping below. Requirement IDs (`[IP-1]`, …)
    are extracted from the process docs.
-2. **Automated gates** — `cargo test --no-default-features` (155 tests), `cargo clippy`,
+2. **Automated gates** — `cargo test --no-default-features` (163 tests), `cargo clippy`,
    `cargo fmt --check`, and `python3 tools/validate_schema.py` (schema conforms to
    dynograph-core). These are the executable evidence the matrix cells point at.
 3. **The deferral list** — everything marked ⬜/🟡 is a named, tracked gap; nothing that the
