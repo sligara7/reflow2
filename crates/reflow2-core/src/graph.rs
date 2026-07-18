@@ -230,18 +230,67 @@ impl DesignGraph {
         )
     }
 
-    /// P2 · Structure — a buildable part. `name` and `purpose` are required;
-    /// `kind`/`level` take their schema defaults (`module`/`component`).
+    /// Set a `Requirement`'s lifecycle status, preserving its other properties.
+    /// `status` ∈ `proposed` (the default) / `accepted` / `deferred` /
+    /// `dropped` / `met`.
+    ///
+    /// Kept separate from creation, like
+    /// [`set_verification_status`](crate::DesignGraph::set_verification_status):
+    /// a requirement's standing changes far more often than its wording, and
+    /// re-stating the statement to move it would invite drift between the two.
+    ///
+    /// This is what a blind trial reached for and could not find — it wrote the
+    /// word "ASSUMED" into the statement text instead, because status was in
+    /// the schema but nothing on the surface could set it. DETECT already reads
+    /// it: a `dropped` or `met` requirement stops raising
+    /// `unsatisfied_requirement`.
+    pub fn set_requirement_status(
+        &mut self,
+        requirement_id: &str,
+        status: &str,
+    ) -> Result<StoredNode, DynoError> {
+        let Some(existing) = self.get_node(node::REQUIREMENT, requirement_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::REQUIREMENT.to_string(),
+                node_id: requirement_id.to_string(),
+            });
+        };
+        let mut props = Props::new().set("status", status);
+        for (k, v) in &existing.properties {
+            if k != "status" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::REQUIREMENT, requirement_id, props)
+    }
+
+    /// P2 · Structure — a buildable part. `name` and `purpose` are required.
+    ///
+    /// `level` is the axis-Y decomposition rank (matryoshka) — `component`,
+    /// `subsystem`, `system`, `system_of_systems`, `enterprise` — and defaults
+    /// to `component`. It is optional but load-bearing: [`hierarchy_issues`]
+    /// compares the levels either side of a `CONTAINS` edge, so a design whose
+    /// components all sit at the default has no hierarchy to check, and one
+    /// that nests same-level components reports a `level_mismatch` for every
+    /// edge. Set it whenever a part is genuinely an assembly.
+    ///
+    /// `kind` still takes its schema default (`module`).
+    ///
+    /// [`hierarchy_issues`]: crate::DesignGraph::hierarchy_issues
     pub fn add_component(
         &mut self,
         id: &str,
         name: &str,
         purpose: &str,
+        level: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
         self.create_node(
             node::COMPONENT,
             id,
-            Props::new().set("name", name).set("purpose", purpose),
+            Props::new()
+                .set("name", name)
+                .set("purpose", purpose)
+                .set_opt("level", level),
         )
     }
 

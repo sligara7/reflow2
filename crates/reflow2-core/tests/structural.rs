@@ -21,7 +21,7 @@ fn linear_thread() -> DesignGraph {
     g.add_project("proj:x", "X").unwrap();
     g.add_requirement("req:a", "A", "need a").unwrap();
     g.add_capability("cap:a", "Cap A", "does a").unwrap();
-    g.add_component("cmp:a", "Cmp A", "part a").unwrap();
+    g.add_component("cmp:a", "Cmp A", "part a", None).unwrap();
     g.satisfies("cap:a", "req:a").unwrap();
     g.allocate("cap:a", "cmp:a").unwrap();
     g
@@ -47,8 +47,8 @@ fn a_node_bridging_two_subsystems_is_a_single_point_of_failure() {
     g.add_project("proj:x", "X").unwrap();
     g.add_capability("cap:hub", "Hub", "central capability")
         .unwrap();
-    g.add_component("cmp:a", "A", "part a").unwrap();
-    g.add_component("cmp:b", "B", "part b").unwrap();
+    g.add_component("cmp:a", "A", "part a", None).unwrap();
+    g.add_component("cmp:b", "B", "part b", None).unwrap();
     g.create_node(node::ARTIFACT, "art:a", Props::new().set("name", "a.rs"))
         .unwrap();
     g.create_node(node::ARTIFACT, "art:b", Props::new().set("name", "b.rs"))
@@ -95,7 +95,8 @@ fn a_separate_cluster_is_a_disconnected_community() {
     // Main thread + a detached 2-node island (cap:x—cmp:x) linked to nothing else.
     let mut g = linear_thread();
     g.add_capability("cap:x", "X", "island cap").unwrap();
-    g.add_component("cmp:x", "X part", "island part").unwrap();
+    g.add_component("cmp:x", "X part", "island part", None)
+        .unwrap();
     g.allocate("cap:x", "cmp:x").unwrap(); // island internally connected, externally not
 
     assert!(has(&g, HealCategory::DisconnectedCommunity));
@@ -120,7 +121,7 @@ fn a_fully_connected_thread_has_no_structural_defects() {
 #[test]
 fn an_isolated_component_is_a_dead_end() {
     let mut g = linear_thread();
-    g.add_component("cmp:orphan", "Orphan", "connected to nothing")
+    g.add_component("cmp:orphan", "Orphan", "connected to nothing", None)
         .unwrap();
     assert!(has(&g, HealCategory::DeadEnd));
     let dead: Vec<String> = g
@@ -136,7 +137,7 @@ fn an_isolated_component_is_a_dead_end() {
 #[test]
 fn structural_defects_are_generative_and_gated_for_review() {
     let mut g = linear_thread();
-    g.add_component("cmp:orphan", "Orphan", "connected to nothing")
+    g.add_component("cmp:orphan", "Orphan", "connected to nothing", None)
         .unwrap();
     let proposal = g
         .propose_heal(reflow2_core::HealOptions::default())

@@ -323,6 +323,19 @@ impl DesignGraph {
             }
         }
         for req in self.scan_nodes(node::REQUIREMENT)? {
+            // A requirement the user has dropped or already met is not an
+            // orphan to repair. DETECT skips these for the same reason
+            // (`detect_unsatisfied_requirements`); without the check here, one
+            // half of the system would go quiet while the other kept nagging
+            // about the same requirement — which reads as a broken tool.
+            let status = req
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                .unwrap_or("proposed");
+            if status == "dropped" || status == "met" {
+                continue;
+            }
             if self
                 .incoming(&req.node_id, Some(edge::SATISFIES))?
                 .is_empty()

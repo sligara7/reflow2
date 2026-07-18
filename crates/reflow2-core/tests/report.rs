@@ -32,8 +32,8 @@ fn report_aggregates_every_analysis_and_renders_markdown() {
     for c in ["cap:a1", "cap:a2", "cap:b1", "cap:b2"] {
         g.add_capability(c, c, "does a thing").unwrap();
     }
-    g.add_component("cmp:a", "A", "part a").unwrap();
-    g.add_component("cmp:b", "B", "part b").unwrap();
+    g.add_component("cmp:a", "A", "part a", None).unwrap();
+    g.add_component("cmp:b", "B", "part b", None).unwrap();
     g.satisfies("cap:a1", "req:r").unwrap();
     for (c, comp) in [
         ("cap:a1", "cmp:a"),

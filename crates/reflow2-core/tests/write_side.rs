@@ -23,7 +23,7 @@ fn built_thread() -> DesignGraph {
         .expect("req");
     g.add_capability("cap:score", "Scoring", "tracks the score")
         .expect("cap");
-    g.add_component("cmp:engine", "Score engine", "computes scores")
+    g.add_component("cmp:engine", "Score engine", "computes scores", None)
         .expect("cmp");
     g.satisfies("cap:score", "req:live").expect("satisfies");
     g.allocate("cap:score", "cmp:engine").expect("allocate");
@@ -73,23 +73,40 @@ fn recording_a_verification_closes_the_gap_that_asked_for_one() {
         "recording a verification must close the phase-level gap, got {sources:?}"
     );
 
-    // The detector covers Capabilities *and* Artifacts: verifying the capability
-    // clears it, and leaves the artifact's own coverage gap standing. That is
-    // correct — a test proving the capability works does not prove this
-    // particular file is the thing that does it.
-    let unverified: Vec<&str> = after
-        .iter()
-        .filter(|c| c.gap_source == GapSource::UnverifiedCapability)
-        .flat_map(|c| c.affected_ids.iter().map(String::as_str))
-        .collect();
+    // Capabilities and Artifacts are both covered, under separate sources since
+    // BL-6: verifying the capability clears its gap and leaves the artifact's
+    // own coverage gap standing. That is correct — a test proving the
+    // capability works does not prove this particular file is the thing that
+    // does it. The split changed how it is *labelled*, not what is detected,
+    // which is what these two assertions pin.
+    let affected = |src: GapSource| -> Vec<&str> {
+        after
+            .iter()
+            .filter(|c| c.gap_source == src)
+            .flat_map(|c| c.affected_ids.iter().map(String::as_str))
+            .collect()
+    };
     assert!(
-        !unverified.contains(&"cap:score"),
-        "the verified capability must no longer be flagged, got {unverified:?}"
+        affected(GapSource::UnverifiedCapability).is_empty(),
+        "the verified capability must no longer be flagged, got {:?}",
+        affected(GapSource::UnverifiedCapability)
     );
     assert_eq!(
-        unverified,
+        affected(GapSource::UnverifiedArtifact),
         vec!["art:score"],
-        "the unverified artifact should still be flagged"
+        "the unverified artifact should still be flagged, under its own source"
+    );
+
+    // The artifact gap must read as being about a file, not a behaviour — the
+    // legibility complaint BL-6 was filed for ("Nothing verifies reading.py").
+    let art_gap = after
+        .iter()
+        .find(|c| c.gap_source == GapSource::UnverifiedArtifact)
+        .expect("the artifact gap is present");
+    assert!(
+        art_gap.title.contains("No verification covers"),
+        "an artifact gap should not be titled like a capability, got {:?}",
+        art_gap.title
     );
 }
 
@@ -314,5 +331,84 @@ fn a_decision_without_its_content_fails_loud() {
         )
         .is_err(),
         "a Decision with no decision must fail loud"
+    );
+}
+
+/// BL-6 kept `unverified_capability`'s key deliberately: gap ids hash the
+/// source string, and an acknowledgement is stored as a Decision under the
+/// resulting id. Renaming it would silently expire every capability
+/// acknowledgement a user had made, with nothing to tell them why. This pins
+/// the key so a future tidy-up cannot do that by accident.
+#[test]
+fn the_capability_gap_key_is_frozen_because_acknowledgements_hang_off_it() {
+    assert_eq!(
+        GapSource::UnverifiedCapability.as_str(),
+        "unverified_capability"
+    );
+    assert_eq!(
+        GapSource::UnverifiedArtifact.as_str(),
+        "unverified_artifact"
+    );
+}
+
+/// BL-3. The trial wrote "ASSUMED" into a statement because nothing could set
+/// status. Setting it must move the field *and* keep the requirement's own
+/// wording intact — a status change must never cost the statement.
+#[test]
+fn setting_a_requirement_status_preserves_its_statement() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_requirement("req:r", "Offline", "Must work offline.")
+        .unwrap();
+
+    let updated = g.set_requirement_status("req:r", "deferred").unwrap();
+    assert_eq!(
+        updated.properties.get("status").and_then(|v| v.as_str()),
+        Some("deferred")
+    );
+    assert_eq!(
+        updated.properties.get("statement").and_then(|v| v.as_str()),
+        Some("Must work offline."),
+        "the statement must survive a status change"
+    );
+    assert!(
+        g.set_requirement_status("req:nope", "met").is_err(),
+        "unknown id fails loud"
+    );
+}
+
+/// A dropped requirement must go quiet in *both* halves. DETECT already
+/// skipped it; HEAL did not, so marking something dropped used to silence one
+/// and leave the other nagging about the same node — which reads as broken.
+#[test]
+fn a_dropped_requirement_is_ignored_by_detect_and_heal_alike() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_requirement("req:r", "Dropped thing", "We decided against this.")
+        .unwrap();
+    g.contains("proj:p", "Requirement", "req:r").unwrap();
+
+    let nags_heal = |g: &DesignGraph| {
+        g.detect_defects()
+            .unwrap()
+            .iter()
+            .any(|i| i.affected_ids.iter().any(|a| a == "req:r"))
+    };
+    let nags_detect = |g: &DesignGraph| {
+        g.detect_gaps()
+            .unwrap()
+            .iter()
+            .any(|c| c.affected_ids.iter().any(|a| a == "req:r"))
+    };
+
+    assert!(
+        nags_heal(&g),
+        "an unsatisfied requirement starts as a HEAL orphan"
+    );
+    g.set_requirement_status("req:r", "dropped").unwrap();
+    assert!(!nags_heal(&g), "HEAL must drop it too, not just DETECT");
+    assert!(
+        !nags_detect(&g),
+        "DETECT already skipped dropped requirements"
     );
 }

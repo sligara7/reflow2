@@ -98,7 +98,7 @@ fn graph_with_a_gap() -> DesignGraph {
     g.add_requirement("req:a", "A", "need a").unwrap();
     g.add_capability("cap:a", "Local caching", "serve reads on-device")
         .unwrap();
-    g.add_component("cmp:a", "Store", "kv store").unwrap();
+    g.add_component("cmp:a", "Store", "kv store", None).unwrap();
     g.satisfies("cap:a", "req:a").unwrap();
     g
 }

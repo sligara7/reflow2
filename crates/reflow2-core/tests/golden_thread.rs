@@ -46,6 +46,7 @@ fn golden_thread_round_trips() {
         "cmp:cache-store",
         "Cache Store",
         "On-device key/value store.",
+        None,
     )
     .expect("create Component");
 

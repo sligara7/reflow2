@@ -89,7 +89,8 @@ the user's deploy/operate ask.
 | `unprovided_interface` | an `Interface` something `CONSUMES` that no Component `PROVIDES` — the two sides of a contract disagree |
 | `unconsumed_interface` | an `Interface` a Component `PROVIDES` that nothing `CONSUMES` — a deliberate public contract, or a leftover |
 | `unrealized_capability` | a Capability marked designed has no `Artifact` `REALIZES`-ing it |
-| `unverified_capability` | a realized Capability/Artifact has no `Verification` |
+| `unverified_capability` | a realized Capability has no `Verification` |
+| `unverified_artifact` | an `Artifact` has no `Verification` covering it — split from `unverified_capability`, which reported both and so titled a file gap "Nothing verifies reading.py". Both are still detected: proving a capability works does not prove *this file* is what delivers it. The capability key is deliberately unchanged, because gap ids hash it and acknowledgements hang off the id |
 
 ### Structural gaps (shared signals with HEAL, but ASKED not fixed)
 `orphan_node`, `dead_end`, `disconnected_cluster`, `single_point_of_failure` — surfaced

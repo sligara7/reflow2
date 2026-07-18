@@ -14,7 +14,7 @@ fn dup_graph() -> DesignGraph {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:x", "X").unwrap(); // flexible by default
     g.add_requirement("req:r", "R", "need r").unwrap();
-    g.add_component("cmp:c", "C", "part c").unwrap();
+    g.add_component("cmp:c", "C", "part c", None).unwrap();
     g.add_capability("cap:a", "Cap A", "does a").unwrap();
     g.add_capability("cap:b", "Cap B", "also does a").unwrap();
     // cap:a is well-connected; cap:b is the redundant twin.
@@ -108,8 +108,8 @@ fn merge_carries_a_unique_edge_onto_the_survivor() {
     // cap:b has an allocation cap:a lacks — the merge must preserve it.
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:x", "X").unwrap();
-    g.add_component("cmp:c", "C", "part c").unwrap();
-    g.add_component("cmp:d", "D", "part d").unwrap();
+    g.add_component("cmp:c", "C", "part c", None).unwrap();
+    g.add_component("cmp:d", "D", "part d", None).unwrap();
     g.add_capability("cap:a", "Cap A", "does a").unwrap();
     g.add_capability("cap:b", "Cap B", "does a").unwrap();
     g.allocate("cap:a", "cmp:c").unwrap();
@@ -145,7 +145,7 @@ fn generative_fixes_require_human_review_and_are_not_applied() {
     // An orphan capability (no allocation) → generative owner fix.
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:x", "X").unwrap();
-    g.add_component("cmp:c", "C", "part c").unwrap();
+    g.add_component("cmp:c", "C", "part c", None).unwrap();
     g.add_capability("cap:lonely", "Lonely", "unallocated")
         .unwrap();
 

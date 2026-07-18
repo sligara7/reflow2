@@ -241,6 +241,29 @@ pub struct DescribedReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+pub struct RequirementStatusReq {
+    pub requirement_id: String,
+    /// `proposed` (default) / `accepted` / `deferred` / `dropped` / `met`.
+    pub status: String,
+}
+
+/// A Component, which unlike a Capability sits at a decomposition level.
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct ComponentReq {
+    pub id: String,
+    pub name: String,
+    /// What this part is for.
+    pub description: String,
+    /// Axis-Y decomposition rank: `component` (default), `subsystem`,
+    /// `system`, `system_of_systems`, `enterprise`. Set it whenever the part
+    /// is really an assembly — `hierarchy_issues` compares the levels either
+    /// side of a containment, so leaving everything at the default means there
+    /// is no hierarchy to check.
+    #[serde(default)]
+    pub level: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
 pub struct ContainsReq {
     pub project_id: String,
     /// Child node type (e.g. `Requirement`, `Capability`, `Component`).
@@ -779,14 +802,54 @@ impl ReflowService {
         ))
     }
 
-    #[tool(description = "Create a Component node.")]
-    pub async fn add_component(
+    #[tool(
+        description = "Set a Requirement's lifecycle status: `proposed` (the default) / \
+                       `accepted` / `deferred` / `dropped` / `met`. Use it to mark a requirement \
+                       provisional rather than writing that into the statement text. A `dropped` \
+                       or `met` requirement stops raising unsatisfied_requirement."
+    )]
+    pub async fn set_requirement_status(
         &self,
-        Parameters(req): Parameters<DescribedReq>,
+        Parameters(req): Parameters<RequirementStatusReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.graph.lock().await;
         ok_json(NodeDto::from(
-            g.add_component(&req.id, &req.name, &req.description)
+            g.set_requirement_status(&req.requirement_id, &req.status)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Create a Component node. Pass `level` when the part is an assembly \
+                       rather than a leaf (`subsystem`, `system`, `system_of_systems`, \
+                       `enterprise`; default `component`), then use contain_component to nest \
+                       it — that pair is what gives hierarchy_issues something to check."
+    )]
+    pub async fn add_component(
+        &self,
+        Parameters(req): Parameters<ComponentReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.add_component(&req.id, &req.name, &req.description, req.level.as_deref())
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Nest one Component inside another (parent CONTAINS child) — the assembly \
+                       spine. The parent should sit exactly one level above the child: nesting \
+                       two components at the same level is reported as a level_mismatch, and \
+                       skipping a level as a missing_intermediate_level. Set `level` on both via \
+                       add_component first, or every containment looks like a mismatch."
+    )]
+    pub async fn contain_component(
+        &self,
+        Parameters(req): Parameters<EdgePairReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.contain_component(&req.from_id, &req.to_id)
                 .map_err(dyno_err)?,
         ))
     }

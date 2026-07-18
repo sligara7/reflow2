@@ -14,7 +14,7 @@ fn project_with(components: &[(&str, &str)]) -> DesignGraph {
     let mut g = DesignGraph::open_in_memory().expect("open");
     g.add_project("proj:1", "Thing").expect("project");
     for (id, name) in components {
-        g.add_component(id, name, "does a thing")
+        g.add_component(id, name, "does a thing", None)
             .expect("component");
     }
     g
@@ -112,7 +112,7 @@ fn the_golden_thread_closing_on_itself_is_not_a_cycle() {
         .expect("req");
     g.add_capability("cap:1", "Speed", "goes fast")
         .expect("cap");
-    g.add_component("cmp:1", "Engine", "makes it go")
+    g.add_component("cmp:1", "Engine", "makes it go", None)
         .expect("cmp");
     g.satisfies("cap:1", "req:1").expect("satisfies");
     g.allocate("cap:1", "cmp:1").expect("allocate");

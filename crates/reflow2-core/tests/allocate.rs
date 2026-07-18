@@ -19,7 +19,8 @@ fn depends(g: &mut DesignGraph, from: &str, to: &str, weight: f64) {
 
 fn cap(g: &mut DesignGraph, id: &str, component: &str) {
     g.add_capability(id, id, "does a thing").unwrap();
-    g.add_component(component, component, "a part").unwrap();
+    g.add_component(component, component, "a part", None)
+        .unwrap();
     g.allocate(id, component).unwrap();
 }
 
@@ -119,8 +120,8 @@ fn multi_allocated_capabilities_are_surfaced() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_capability("cap:shared", "Shared", "in two places")
         .unwrap();
-    g.add_component("cmp:a", "A", "part a").unwrap();
-    g.add_component("cmp:b", "B", "part b").unwrap();
+    g.add_component("cmp:a", "A", "part a", None).unwrap();
+    g.add_component("cmp:b", "B", "part b", None).unwrap();
     g.allocate("cap:shared", "cmp:a").unwrap();
     g.allocate("cap:shared", "cmp:b").unwrap();
 
@@ -178,8 +179,8 @@ fn proposal_beats_a_miscohesive_current_allocation() {
     for c in ["cap:a1", "cap:a2", "cap:b1", "cap:b2"] {
         g.add_capability(c, c, "does a thing").unwrap();
     }
-    g.add_component("cmp:x", "X", "p").unwrap();
-    g.add_component("cmp:y", "Y", "p").unwrap();
+    g.add_component("cmp:x", "X", "p", None).unwrap();
+    g.add_component("cmp:y", "Y", "p", None).unwrap();
     g.allocate("cap:a1", "cmp:x").unwrap();
     g.allocate("cap:b1", "cmp:x").unwrap();
     g.allocate("cap:a2", "cmp:y").unwrap();

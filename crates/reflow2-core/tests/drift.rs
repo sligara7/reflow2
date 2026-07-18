@@ -18,7 +18,7 @@ fn built_thread() -> DesignGraph {
         .expect("req");
     g.add_capability("cap:score", "Scoring", "tracks the score")
         .expect("cap");
-    g.add_component("cmp:engine", "Score engine", "computes scores")
+    g.add_component("cmp:engine", "Score engine", "computes scores", None)
         .expect("cmp");
     g.satisfies("cap:score", "req:live").expect("satisfies");
     g.allocate("cap:score", "cmp:engine").expect("allocate");

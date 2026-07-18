@@ -32,7 +32,7 @@ fn baseline() -> DesignGraph {
     .unwrap();
     g.add_capability("cap:fast", "Fast path", "Serve hot reads quickly")
         .unwrap();
-    g.add_component("cmp:cache", "Cache", "In-memory cache")
+    g.add_component("cmp:cache", "Cache", "In-memory cache", None)
         .unwrap();
     g.create_node(
         node::ARTIFACT,

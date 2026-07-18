@@ -65,8 +65,22 @@ pub enum GapSource {
     UnallocatedCapability,
     /// A Capability has no `Artifact` `REALIZES`-ing it.
     UnrealizedCapability,
-    /// A realized Capability/Artifact has no `Verification`.
+    /// A Capability has no `Verification` proving the behaviour works.
+    ///
+    /// The key string stays `unverified_capability` even though this variant
+    /// once also covered Artifacts (see [`GapSource::UnverifiedArtifact`]).
+    /// Gap ids hash that string, and an acknowledgement is stored under the
+    /// resulting id — so changing it would silently expire every capability
+    /// acknowledgement a user has made.
     UnverifiedCapability,
+    /// An `Artifact` has no `Verification` covering it.
+    ///
+    /// Split from [`GapSource::UnverifiedCapability`], which reported both and
+    /// titled an artifact gap "Nothing verifies reading.py" — semantically
+    /// right, legibly wrong. The detection is unchanged: a test proving a
+    /// capability works still does not prove this particular file is the thing
+    /// that does it, so both are flagged.
+    UnverifiedArtifact,
     // Interface pairing (the two sides of a contract)
     /// An `Interface` something `CONSUMES` that no Component `PROVIDES` — a
     /// break between two parts of the design.
@@ -101,7 +115,11 @@ impl GapSource {
             GapSource::UnsatisfiedRequirement => "unsatisfied_requirement",
             GapSource::UnallocatedCapability => "unallocated_capability",
             GapSource::UnrealizedCapability => "unrealized_capability",
+            // Load-bearing: this string is hashed into the gap id, which keys
+            // the acknowledgement Decision. Renaming it expires every existing
+            // capability acknowledgement with nothing to tell the user why.
             GapSource::UnverifiedCapability => "unverified_capability",
+            GapSource::UnverifiedArtifact => "unverified_artifact",
             GapSource::UnprovidedInterface => "unprovided_interface",
             GapSource::UnconsumedInterface => "unconsumed_interface",
             GapSource::UnexpectedCoupling => "unexpected_coupling",
@@ -710,23 +728,43 @@ impl DesignGraph {
             return Ok(());
         }
         // Both Capabilities and Artifacts should carry a Verification once the
-        // verify phase exists.
+        // verify phase exists — a passing test for a capability does not prove
+        // that *this file* is what delivers it. They are reported under
+        // separate sources so each reads in its own terms: a capability is a
+        // behaviour you confirm, an artifact is a thing you cover.
         for node_type in [node::CAPABILITY, node::ARTIFACT] {
+            let source = if node_type == node::ARTIFACT {
+                GapSource::UnverifiedArtifact
+            } else {
+                GapSource::UnverifiedCapability
+            };
             for n in self.scan_nodes(node_type)? {
                 if self.incoming(&n.node_id, Some(edge::VERIFIES))?.is_empty() {
                     let name = node_name(&n);
+                    let (title, description) = if node_type == node::ARTIFACT {
+                        (
+                            format!("No verification covers “{name}”"),
+                            format!(
+                                "Nothing checks “{name}” itself. A capability it realizes may be \
+                                 proven, which does not show that this file is what delivers it."
+                            ),
+                        )
+                    } else {
+                        (
+                            format!("Nothing verifies “{name}”"),
+                            format!(
+                                "“{name}” has no verification proving it works — how will you \
+                                 confirm it?"
+                            ),
+                        )
+                    };
                     gaps.push(GapCandidate {
-                        id: gap_id(
-                            GapSource::UnverifiedCapability,
-                            std::slice::from_ref(&n.node_id),
-                        ),
-                        gap_source: GapSource::UnverifiedCapability,
+                        id: gap_id(source, std::slice::from_ref(&n.node_id)),
+                        gap_source: source,
                         scope: GapScope::Capability,
                         severity: 0.55,
-                        title: format!("Nothing verifies “{name}”"),
-                        description: format!(
-                            "“{name}” has no verification proving it works — how will you confirm it?"
-                        ),
+                        title,
+                        description,
                         affected_ids: vec![n.node_id.clone()],
                         suggested_depth: 2,
                         evidence: format!(

@@ -50,10 +50,11 @@ async fn seeded() -> ReflowService {
         name: "Ball flight".into(),
         description: "Simulate ball trajectory.".into()
     })));
-    j!(s.add_component(Parameters(DescribedReq {
+    j!(s.add_component(Parameters(ComponentReq {
         id: "cmp:physics".into(),
         name: "Physics engine".into(),
-        description: "Runs the sim.".into()
+        description: "Runs the sim.".into(),
+        level: None,
     })));
     j!(s.contains(Parameters(ContainsReq {
         project_id: "proj:sb".into(),
@@ -299,10 +300,11 @@ async fn gap_to_prompt_collect_then_serve() {
 #[tokio::test]
 async fn interface_tools_pair_both_sides_of_a_contract() {
     let s = seeded().await;
-    j!(s.add_component(Parameters(DescribedReq {
+    j!(s.add_component(Parameters(ComponentReq {
         id: "cmp:ui".into(),
         name: "Scoreboard UI".into(),
-        description: "Shows the score.".into()
+        description: "Shows the score.".into(),
+        level: None,
     })));
     j!(s.add_interface(Parameters(IdName {
         id: "ifc:state".into(),
@@ -709,4 +711,145 @@ async fn a_rejected_node_names_the_known_types() {
         msg.contains("Requirement") && msg.contains("Component"),
         "an unknown node type must list the real ones, got: {msg}"
     );
+}
+
+// ---- BL-2 · the assembly hierarchy (contain_component + level) ---------------
+//
+// hierarchy_issues shipped as a read tool with no writer to feed it: the level
+// could not be set and components could not be nested, so it returned [] for
+// want of input rather than because a design was healthy. These prove the
+// writer now feeds the reader, and — just as important — that a well-formed
+// hierarchy stays quiet.
+
+#[tokio::test]
+async fn a_well_formed_hierarchy_reports_no_issues() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    for (id, name, level) in [
+        ("cmp:sys", "Station", "system"),
+        ("cmp:sub", "Sensor suite", "subsystem"),
+        ("cmp:leaf", "Thermometer", "component"),
+    ] {
+        j!(s.add_component(Parameters(ComponentReq {
+            id: id.into(),
+            name: name.into(),
+            description: "part".into(),
+            level: Some(level.into()),
+        })));
+    }
+    j!(s.contain_component(Parameters(EdgePairReq {
+        from_id: "cmp:sys".into(),
+        to_id: "cmp:sub".into(),
+    })));
+    j!(s.contain_component(Parameters(EdgePairReq {
+        from_id: "cmp:sub".into(),
+        to_id: "cmp:leaf".into(),
+    })));
+
+    let issues = jl!(s.hierarchy_issues());
+    assert_eq!(
+        issues.as_array().unwrap().len(),
+        0,
+        "a clean system>subsystem>component spine has nothing to report, got {issues}"
+    );
+}
+
+#[tokio::test]
+async fn skipping_a_level_is_reported() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    for (id, level) in [("cmp:sys", "system"), ("cmp:leaf", "component")] {
+        j!(s.add_component(Parameters(ComponentReq {
+            id: id.into(),
+            name: id.into(),
+            description: "part".into(),
+            level: Some(level.into()),
+        })));
+    }
+    j!(s.contain_component(Parameters(EdgePairReq {
+        from_id: "cmp:sys".into(),
+        to_id: "cmp:leaf".into(),
+    })));
+
+    let issues = jl!(s.hierarchy_issues());
+    let arr = issues.as_array().unwrap();
+    assert_eq!(
+        arr.len(),
+        1,
+        "a system containing a part directly skips a level, got {issues}"
+    );
+    assert_eq!(arr[0]["kind"], "missing_intermediate_level");
+}
+
+/// The regression that makes BL-2 worth doing carefully: exposing
+/// contain_component *without* a way to set level would have flagged every
+/// containment as a level_mismatch, because everything defaults to `component`.
+#[tokio::test]
+async fn nesting_two_defaulted_components_is_a_mismatch_not_silence() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    for id in ["cmp:a", "cmp:b"] {
+        j!(s.add_component(Parameters(ComponentReq {
+            id: id.into(),
+            name: id.into(),
+            description: "part".into(),
+            level: None,
+        })));
+    }
+    j!(s.contain_component(Parameters(EdgePairReq {
+        from_id: "cmp:a".into(),
+        to_id: "cmp:b".into(),
+    })));
+
+    let arr = jl!(s.hierarchy_issues());
+    assert_eq!(
+        arr.as_array().unwrap()[0]["kind"],
+        "level_mismatch",
+        "same-level nesting must be called out — this is why level is on add_component"
+    );
+}
+
+// ---- BL-3 · requirement status ----------------------------------------------
+
+#[tokio::test]
+async fn marking_a_requirement_dropped_stops_the_nagging() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    j!(s.add_project(Parameters(IdName {
+        id: "proj:p".into(),
+        name: "P".into()
+    })));
+    j!(s.add_requirement(Parameters(RequirementReq {
+        id: "req:maybe".into(),
+        name: "Maybe".into(),
+        statement: "We might not do this.".into()
+    })));
+
+    let flagged = |v: &serde_json::Value| {
+        v.as_array().unwrap().iter().any(|c| {
+            c["affected_ids"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|a| a == "req:maybe")
+        })
+    };
+    // Asserted through HEAL, not DETECT: per-node traceability gaps are gated
+    // on the relevant phase existing (detect.rs's "no per-node floods on an
+    // early graph"), so a project with one requirement and nothing else gets
+    // phase-level nudges only. HEAL's orphan scan has no such gate — which is
+    // precisely the half that used to keep nagging after a drop.
+    assert!(
+        flagged(&jl!(s.detect_defects())),
+        "an unsatisfied requirement starts as a HEAL orphan"
+    );
+
+    let updated = j!(s.set_requirement_status(Parameters(RequirementStatusReq {
+        requirement_id: "req:maybe".into(),
+        status: "dropped".into(),
+    })));
+    assert_eq!(updated["properties"]["status"], "dropped");
+    assert_eq!(
+        updated["properties"]["statement"], "We might not do this.",
+        "a status change must not cost the statement"
+    );
+
+    assert!(!flagged(&jl!(s.detect_gaps())), "DETECT goes quiet");
+    assert!(!flagged(&jl!(s.detect_defects())), "and so must HEAL");
 }

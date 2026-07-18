@@ -14,9 +14,9 @@ use reflow2_core::propagate::PropagateOptions;
 fn two_sided_contract() -> DesignGraph {
     let mut g = DesignGraph::open_in_memory().expect("open");
     g.add_project("proj:1", "Scoreboard").expect("project");
-    g.add_component("comp:api", "Score API", "Serves scores")
+    g.add_component("comp:api", "Score API", "Serves scores", None)
         .expect("provider");
-    g.add_component("comp:ui", "Scoreboard UI", "Displays scores")
+    g.add_component("comp:ui", "Scoreboard UI", "Displays scores", None)
         .expect("consumer");
     g.add_interface("iface:scores", "Scores endpoint")
         .expect("interface");
@@ -74,7 +74,7 @@ fn interface_impact_is_symmetric() {
 fn consumed_but_unprovided_interface_is_a_gap() {
     let mut g = DesignGraph::open_in_memory().expect("open");
     g.add_project("proj:1", "Scoreboard").expect("project");
-    g.add_component("comp:ui", "Scoreboard UI", "Displays scores")
+    g.add_component("comp:ui", "Scoreboard UI", "Displays scores", None)
         .expect("consumer");
     g.add_interface("iface:scores", "Scores endpoint")
         .expect("interface");
@@ -98,7 +98,7 @@ fn consumed_but_unprovided_interface_is_a_gap() {
 fn provided_but_unconsumed_interface_is_a_softer_gap() {
     let mut g = DesignGraph::open_in_memory().expect("open");
     g.add_project("proj:1", "Scoreboard").expect("project");
-    g.add_component("comp:api", "Score API", "Serves scores")
+    g.add_component("comp:api", "Score API", "Serves scores", None)
         .expect("provider");
     g.add_interface("iface:scores", "Scores endpoint")
         .expect("interface");
@@ -145,9 +145,9 @@ fn interface_pairing_is_keyed_on_identity_not_name() {
     // detection reports the broken one.
     let mut g = DesignGraph::open_in_memory().expect("open");
     g.add_project("proj:1", "Scoreboard").expect("project");
-    g.add_component("comp:api", "Score API", "Serves scores")
+    g.add_component("comp:api", "Score API", "Serves scores", None)
         .expect("provider");
-    g.add_component("comp:ui", "Scoreboard UI", "Displays scores")
+    g.add_component("comp:ui", "Scoreboard UI", "Displays scores", None)
         .expect("consumer");
     g.add_interface("iface:a", "Scores endpoint").expect("a");
     g.add_interface("iface:b", "Scores endpoint").expect("b");

@@ -24,7 +24,7 @@ fn thread() -> DesignGraph {
         .unwrap();
     g.add_capability("cap:fast-path", "Fast path", "Serve hot reads quickly")
         .unwrap();
-    g.add_component("cmp:cache", "Cache", "In-memory cache")
+    g.add_component("cmp:cache", "Cache", "In-memory cache", None)
         .unwrap();
     g.create_node(
         node::ARTIFACT,
@@ -164,8 +164,13 @@ fn reactive_propagation_uses_change_event_targets_as_seeds() {
 fn inference_edges_propagate_as_causal_and_flag_risk() {
     let mut g = thread();
     // The capability RISKS a separate component (an inference/risk edge).
-    g.add_component("cmp:legacy", "Legacy store", "Old store being phased out")
-        .unwrap();
+    g.add_component(
+        "cmp:legacy",
+        "Legacy store",
+        "Old store being phased out",
+        None,
+    )
+    .unwrap();
     g.create_edge(
         "RISKS",
         node::CAPABILITY,
@@ -209,8 +214,8 @@ fn centrality_ranks_a_hub_impact_above_a_leaf_at_the_same_distance() {
     g.add_requirement("req:r", "R", "need").unwrap();
     g.add_capability("cap:hub", "Hub", "central").unwrap();
     g.add_capability("cap:leaf", "Leaf", "peripheral").unwrap();
-    g.add_component("cmp:1", "C1", "p1").unwrap();
-    g.add_component("cmp:2", "C2", "p2").unwrap();
+    g.add_component("cmp:1", "C1", "p1", None).unwrap();
+    g.add_component("cmp:2", "C2", "p2", None).unwrap();
     g.create_node(node::ARTIFACT, "art:1", Props::new().set("name", "a1"))
         .unwrap();
 

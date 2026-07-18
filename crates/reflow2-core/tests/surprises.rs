@@ -106,8 +106,8 @@ fn a_properly_modelled_contract_is_not_surprising() {
     dep(&mut g, "cap:b2", "cap:b3", 0.9);
     dep(&mut g, "cap:b1", "cap:b3", 0.9);
 
-    g.add_component("cmp:a", "A", "left").unwrap();
-    g.add_component("cmp:b", "B", "right").unwrap();
+    g.add_component("cmp:a", "A", "left", None).unwrap();
+    g.add_component("cmp:b", "B", "right", None).unwrap();
     g.allocate("cap:a1", "cmp:a").unwrap();
     g.allocate("cap:b1", "cmp:b").unwrap();
     g.add_interface("ifc:link", "The contract").unwrap();

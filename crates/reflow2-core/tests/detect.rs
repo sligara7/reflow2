@@ -48,7 +48,7 @@ fn traceability_fires_per_node_once_the_phase_exists() {
     g.add_requirement("req:a", "A", "Need A").unwrap();
     g.add_capability("cap:a", "Cap A", "Does A").unwrap();
     g.add_capability("cap:b", "Cap B", "Does B").unwrap();
-    g.add_component("cmp:x", "X", "Part X").unwrap();
+    g.add_component("cmp:x", "X", "Part X", None).unwrap();
     g.satisfies("cap:a", "req:a").unwrap();
     g.satisfies("cap:b", "req:a").unwrap();
     g.allocate("cap:a", "cmp:x").unwrap(); // cap:a allocated, cap:b not
@@ -90,7 +90,7 @@ fn unsatisfied_requirement_ranks_by_priority() {
     )
     .unwrap();
     g.add_capability("cap:x", "X", "does x").unwrap();
-    g.add_component("cmp:y", "Y", "part y").unwrap();
+    g.add_component("cmp:y", "Y", "part y", None).unwrap();
     g.allocate("cap:x", "cmp:y").unwrap();
 
     let gaps = g.detect_gaps().unwrap();
@@ -143,7 +143,7 @@ fn complete_thread_yields_no_traceability_gaps() {
     )
     .unwrap();
     g.add_capability("cap:a", "Cap A", "does a").unwrap();
-    g.add_component("cmp:a", "Cmp A", "part a").unwrap();
+    g.add_component("cmp:a", "Cmp A", "part a", None).unwrap();
     g.create_node(node::ARTIFACT, "art:a", Props::new().set("name", "a.rs"))
         .unwrap();
     g.create_node(
@@ -210,7 +210,7 @@ fn gap_ids_are_deterministic_across_runs() {
         let mut g = DesignGraph::open_in_memory().unwrap();
         g.add_requirement("req:a", "A", "need").unwrap();
         g.add_capability("cap:a", "Cap A", "does a").unwrap();
-        g.add_component("cmp:a", "Cmp A", "part a").unwrap();
+        g.add_component("cmp:a", "Cmp A", "part a", None).unwrap();
         // cap:a unallocated on purpose.
         g.detect_gaps().unwrap()
     };
@@ -261,8 +261,8 @@ fn an_unexpected_cross_community_coupling_is_surfaced_as_a_gap() {
 #[test]
 fn a_declining_dimension_is_surfaced_as_a_gap_but_an_improving_one_is_not() {
     let mut g = DesignGraph::open_in_memory().unwrap();
-    g.add_component("cmp:x", "X", "part").unwrap();
-    g.add_component("cmp:y", "Y", "part").unwrap();
+    g.add_component("cmp:x", "X", "part", None).unwrap();
+    g.add_component("cmp:y", "Y", "part", None).unwrap();
     // cmp:x maintainability sliding; cmp:y reliability improving.
     g.add_dimension_observation(
         "o1",

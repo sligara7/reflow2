@@ -95,6 +95,57 @@ single-writer concurrency and this. Size **M–L**, and worth deciding the fork 
 
 
 
+**BL-21 · Let the agent file its own friction** — *user, 2026-07-18.* Most agents can already run
+`gh`. When one hits something that does not work while *using* reflow2, it could open an issue on
+`github.com/sligara7/reflow2` instead of working around it silently.
+
+*Why this is more than convenience.* The three best sources in the Evidence base above are all
+friction logs — a blind trial, a Grok trial, a first external user — and each exists because
+someone happened to write down what fought them. That is a manual, lossy channel: it captures
+what a trial noticed in one sitting and nothing from ordinary use afterwards. Wiring it up turns
+every session into evidence and closes the loop the project already runs on by hand. The
+fourteen-guess finding (BL-1) is exactly the shape of thing that would arrive this way.
+
+Four things it has to get right, in order of how badly they bite:
+
+- **Design content must not leak.** A friction report naturally quotes the graph — requirement
+  text, component names, the brief. On a public tracker that publishes someone's design, possibly
+  a commercial or restricted one. This is the sharp edge: the agent must either redact to the
+  reflow2-shaped facts (which tool, which arguments, what it expected, what happened) or ask the
+  user before filing. Defaulting to "paste the context" would be a privacy incident dressed up as
+  helpfulness.
+- **Ask, don't auto-file.** An issue filed without the user knowing is an action taken in their
+  name, in public, under their GitHub identity. Propose, show the text, file on a yes.
+- **Duplicates.** Search open issues first; several users hitting one bug should thicken one
+  report, not open five. A `reflow2-version` / kit-commit label makes triage tractable and ties
+  into BL-18's stamp.
+- **Signal, not noise.** "I could not work out how to do X" is often a docs gap, which is still
+  worth knowing, but should be labelled as such rather than filed as a defect.
+
+*Put it in AGENTS.md, not only in a skill.* The obvious home is a `report-friction` skill in the
+consumer kit — and that is the one place an agent is least likely to find it. The Grok trial
+(§2, "Skills are files, not auto-injected") found the kit's seven skills absent from its
+`available_skills` list entirely and had to `Read` them by hand. Skills land in `.grok/skills/`;
+whether a harness surfaces them is harness-dependent and currently unreliable. AGENTS.md is read
+by convention, so the trigger belongs there, with the skill carrying the detail. Needs no server
+work either way. Size **S**; the redaction judgment is the part worth writing carefully. Pairs
+with **BL-13** (advanced testing tiers) — this is the longitudinal, real-use tier no fixture can
+simulate, and with **BL-22**, without which nobody reads the skill anyway.
+
+**BL-22 · Skills are not reliably discoverable** — *Grok trial §2, 2026-07-18; unfiled until now.*
+The kit installs seven skills under `.grok/skills/*/SKILL.md` and AGENTS.md points at them by
+name ("see the **genesis** skill"). Under opencode the agent's `available_skills` listed only
+that harness's own skills — none of reflow2's — so it discovered them by reading files after
+noticing the references. Its own suggestion: *"either register them as first-class skills or put
+the full loop only in AGENTS.md."*
+
+This is the recurring lesson wearing a third face: the capability exists, and the surface that
+should advertise it does not. It also caps the value of every skill written from here on,
+BL-21 included. Options are per-harness skill directories (`.claude/skills/` alongside
+`.grok/skills/`, which `reflow2_init.py` could install by detecting or asking), or folding the
+load-bearing instruction into AGENTS.md and letting skills be depth rather than dependency.
+Size **S** to install both directories; **M** if the answer is restructuring what lives where.
+
 **BL-20 · Graph export / import, and versioned local backups** — *user, 2026-07-18.* Unblocks
 BL-19's migration half and, through it, BL-18.
 

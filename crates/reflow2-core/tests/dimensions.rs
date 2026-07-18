@@ -13,7 +13,7 @@ fn obs(g: &mut DesignGraph, id: &str, target: &str, dim: Dimension, score: f64, 
 #[test]
 fn a_declining_dimension_is_detected_with_a_negative_slope() {
     let mut g = DesignGraph::open_in_memory().unwrap();
-    g.add_component("cmp:x", "X", "part").unwrap();
+    g.add_component("cmp:x", "X", "part", None).unwrap();
     obs(
         &mut g,
         "o1",
@@ -54,7 +54,7 @@ fn a_declining_dimension_is_detected_with_a_negative_slope() {
 #[test]
 fn an_improving_dimension_trends_up_and_a_flat_one_is_stable() {
     let mut g = DesignGraph::open_in_memory().unwrap();
-    g.add_component("cmp:up", "Up", "p").unwrap();
+    g.add_component("cmp:up", "Up", "p", None).unwrap();
     obs(&mut g, "u1", "cmp:up", Dimension::Reliability, 0.3, "e01");
     obs(&mut g, "u2", "cmp:up", Dimension::Reliability, 0.6, "e02");
     obs(&mut g, "u3", "cmp:up", Dimension::Reliability, 0.9, "e03");
@@ -67,7 +67,7 @@ fn an_improving_dimension_trends_up_and_a_flat_one_is_stable() {
     );
 
     let mut g2 = DesignGraph::open_in_memory().unwrap();
-    g2.add_component("cmp:flat", "Flat", "p").unwrap();
+    g2.add_component("cmp:flat", "Flat", "p", None).unwrap();
     obs(&mut g2, "f1", "cmp:flat", Dimension::Security, 0.5, "e01");
     obs(&mut g2, "f2", "cmp:flat", Dimension::Security, 0.5, "e02");
     assert_eq!(
@@ -82,7 +82,7 @@ fn an_improving_dimension_trends_up_and_a_flat_one_is_stable() {
 #[test]
 fn drift_is_scoped_to_the_named_dimension() {
     let mut g = DesignGraph::open_in_memory().unwrap();
-    g.add_component("cmp:x", "X", "p").unwrap();
+    g.add_component("cmp:x", "X", "p", None).unwrap();
     obs(
         &mut g,
         "m1",
@@ -112,8 +112,9 @@ fn drift_is_scoped_to_the_named_dimension() {
 #[test]
 fn drifts_rank_the_most_declining_first() {
     let mut g = DesignGraph::open_in_memory().unwrap();
-    g.add_component("cmp:sliding", "Sliding", "p").unwrap();
-    g.add_component("cmp:rising", "Rising", "p").unwrap();
+    g.add_component("cmp:sliding", "Sliding", "p", None)
+        .unwrap();
+    g.add_component("cmp:rising", "Rising", "p", None).unwrap();
     obs(
         &mut g,
         "d1",
@@ -157,7 +158,7 @@ fn drifts_rank_the_most_declining_first() {
 #[test]
 fn rollup_materializes_a_dimension_assessment() {
     let mut g = DesignGraph::open_in_memory().unwrap();
-    g.add_component("cmp:x", "X", "p").unwrap();
+    g.add_component("cmp:x", "X", "p", None).unwrap();
     obs(&mut g, "o1", "cmp:x", Dimension::Testability, 0.8, "e01");
     obs(&mut g, "o2", "cmp:x", Dimension::Testability, 0.6, "e02");
 

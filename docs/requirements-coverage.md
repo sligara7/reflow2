@@ -78,7 +78,7 @@ half (question phrasing, anchors) is LLM-gated and deferred.
 | GS-3 | `GapCandidate` shape | 🟡 | id/gap_source/scope/severity/title/description/affected_ids/suggested_depth/evidence ✅; **`anchor` deferred** |
 | GS-4 | `GapPrompt` shape | 🟡 | `GapPrompt` + `GapCandidate::to_prompt` via `LlmBackend` · `gap_becomes_a_plain_question_via_the_backend`; **`relevant_context` graph-slice deferred** |
 | GS-5 | Phase-coverage gaps | 🟡 | concept_without_design, design_without_build, build_without_verification, no_deploy_operate ✅; **no_decisions_recorded deferred** |
-| GS-6 | Traceability gaps | 🟡 | unsatisfied_requirement, unallocated_capability, unrealized_capability, unverified_capability ✅; **interfaceless_dependency deferred** |
+| GS-6 | Traceability gaps | 🟡 | unsatisfied_requirement, unallocated_capability, unrealized_capability, unverified_capability + unverified_artifact ✅ (split so a file gap stops reading like a behaviour gap; the capability key is frozen because gap ids hash it and acknowledgements hang off the id); **interfaceless_dependency deferred** |
 | GS-6b | Interface pairing gaps | ✅ | `unprovided_interface` / `unconsumed_interface` from `detect_interface_pairing` — keyed on Interface node identity, so a shared name cannot mask a break · `tests/interface.rs` |
 | GS-7 | Structural gaps (asked) | 🟡 | `unexpected_coupling` surfaced as a gap (from `surprising_connections`, a graph-analysis addition; **selective** since the 2026-07-18 blind trial — `PROVIDES`/`CONSUMES` are declared structure so contracts are collapsed to the components they couple rather than flagged, both communities must be ≥3 nodes to count as *parts* of the design, and provenance nodes (`Fragment`, `DriftEvent`) are excluded from the topology) · `an_unexpected_cross_community_coupling_is_surfaced_as_a_gap`; `orphan_node`/`dead_end`/`disconnected_community`/`single_point_of_failure` still computed in HEAL only |
 | GS-8 | Quality/risk gaps | 🟡 | `declining_dimension` surfaced as a gap (from `dimension_drifts`) · `a_declining_dimension_is_surfaced_as_a_gap...`; `contradiction` detected in HEAL; unmitigated_risk / unvalidated_causal_claim / dimension_blind_spot / violated_constraint still deferred |
@@ -262,6 +262,8 @@ that made the generic escape hatch unusable.
 | WS-3 | HEAL `contradiction` → "Decision" content stub | `Decision` (+ `GOVERNED_BY`) | `graph.rs`: `add_decision`, `governed_by` + MCP tools | ✅ |
 | WS-4 | GS-9 compliance gaps (deferred) | `EnvironmentRule` (+ `OPERATES_IN`, `IMPOSES`, `COMPLIES_WITH`, `VIOLATES_RULE`) | none | ⬜ |
 | WS-5 | — (no detector asks for it) | `QualityGate` | none | ⬜ |
+| WS-7 | — (the write side of axis Y) | `Component.level` + `Component CONTAINS Component` | `graph.rs`: `add_component(level)`, `contain_component` + MCP tools — `hierarchy_issues` previously had no writer and returned `[]` for want of input | ✅ |
+| WS-8 | `unsatisfied_requirement` (suppression side) | `Requirement.status` | `graph.rs`: `set_requirement_status` + MCP tool; HEAL's orphan scan now honours it too | ✅ |
 | WS-6 | — (the write side's precondition: you cannot record what you cannot name) | the vocabulary itself — node types, their required properties, and which edge types join which endpoints | `vocabulary.rs`: `describe_vocabulary`, `describe_node_type`, `edge_types_between` + the `describe_schema` MCP tool; enriched `create_node` / `create_edge` failures | ✅ |
 
 Evidence for WS-1..3: `tests/write_side.rs` (12) asserts the round trip that matters — the gap

@@ -134,6 +134,7 @@ def run(binary: str, graph_path: str) -> int:
     print(f"  {len(names)} tools exposed")
     for expected in (
         "genesis", "detect_gaps", "gap_to_prompt", "propagate_from",
+        "contain_component", "set_requirement_status",
         "add_interface", "provides", "consumes",
         "link_artifact", "reconcile_artifacts", "set_artifact_checksum",
         "add_verification", "verifies", "add_release", "add_environment",
@@ -185,6 +186,38 @@ def run(binary: str, graph_path: str) -> int:
     except RuntimeError as e:
         c.ok("a bogus edge type is rejected", True)
         c.ok("and the rejection points at describe_schema", "describe_schema" in str(e), str(e)[:200])
+
+    # BL-2/BL-3: the write side of the assembly hierarchy and of a requirement's
+    # standing. hierarchy_issues shipped as a reader with no writer, so it
+    # returned [] for want of input; status was in the schema but unwritable.
+    print("\n== decomposition and requirement status (BL-2, BL-3) ==")
+    for cid, lvl in (("cmp:station", "system"), ("cmp:suite", "subsystem"),
+                     ("cmp:probe", "component")):
+        s.call("add_component", {"id": cid, "name": cid, "description": "part",
+                                 "level": lvl})
+    s.call("contain_component", {"from_id": "cmp:station", "to_id": "cmp:suite"})
+    s.call("contain_component", {"from_id": "cmp:suite", "to_id": "cmp:probe"})
+    c.ok("a clean spine reports no hierarchy issues",
+         len(s.call("hierarchy_issues")) == 0, s.call("hierarchy_issues"))
+
+    # Skipping a level must be caught — proof the detector is fed, not just quiet.
+    s.call("add_component", {"id": "cmp:bolt", "name": "Bolt", "description": "p",
+                             "level": "component"})
+    s.call("contain_component", {"from_id": "cmp:station", "to_id": "cmp:bolt"})
+    kinds = [i["kind"] for i in s.call("hierarchy_issues")]
+    c.ok("skipping a level is reported", "missing_intermediate_level" in kinds, kinds)
+
+    s.call("add_requirement", {"id": "req:maybe", "name": "Maybe",
+                               "statement": "We might not do this."})
+    upd = s.call("set_requirement_status", {"requirement_id": "req:maybe",
+                                            "status": "dropped"})
+    c.ok("a requirement's status is writable",
+         upd["properties"]["status"] == "dropped", upd["properties"].get("status"))
+    c.ok("and its statement survives the change",
+         upd["properties"]["statement"] == "We might not do this.")
+    nagged = any("req:maybe" in d.get("affected_ids", [])
+                 for d in s.call("detect_defects"))
+    c.ok("a dropped requirement stops being nagged by HEAL too", not nagged)
 
     print("\n== 0. GENESIS ==")
     g = s.call("genesis", {

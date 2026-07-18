@@ -24,6 +24,34 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The assembly hierarchy is reachable** (BL-2). `contain_component` nests one Component inside
+  another, and `add_component` takes an optional `level`. Both were needed: `hierarchy_issues`
+  had shipped as a read tool with no writer to feed it, returning `[]` for want of input rather
+  than because a design was healthy. Exposing the containment alone would have been worse than
+  nothing — every component defaults to `component`, so each nesting would have reported a false
+  `level_mismatch`.
+
+- **`set_requirement_status`** (BL-3) — `proposed` / `accepted` / `deferred` / `dropped` / `met`.
+  The field was in the schema and read by DETECT, but nothing could write it, so a blind trial
+  put the word "ASSUMED" in the statement text instead.
+
+### Changed
+
+- **Artifact verification gaps read as being about files** (BL-6). `unverified_capability`
+  reported Capabilities *and* Artifacts, titling the latter "Nothing verifies reading.py" —
+  semantically right, legibly wrong, and independently noted by both blind trials. Artifacts now
+  report under `unverified_artifact` with wording of their own. Detection is unchanged: proving a
+  capability works still does not prove *this file* is what delivers it.
+
+  The `unverified_capability` key is deliberately untouched. Gap ids hash the source string and
+  acknowledgements are stored under the resulting id, so renaming it would have silently expired
+  every capability acknowledgement with nothing to tell the user why. A test now pins both keys.
+
+- **HEAL respects a dropped requirement.** DETECT skipped `dropped`/`met` requirements; HEAL's
+  orphan scan did not. Marking one dropped therefore silenced half the system and left the other
+  half nagging about the same node. Found while making `status` writable — the field was
+  unreachable, so the inconsistency had never been reachable either.
+
 - **`describe_schema`** — the design vocabulary is now discoverable instead of guessable. Ask
   with no arguments for every node and edge type, with `node_type` for one type's properties and
   the edges it can carry, or with `from` + `to` for the question an agent actually has: *what may
