@@ -60,7 +60,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
-- BL-5: SPOF measured against the baseline (self-host: 8 defects -> 2) — @ajs — 2026-07-18 — pending
+- BL-5: SPOF measured against the baseline (self-host: 8 defects -> 2) — @ajs — 2026-07-18 — `44e3e23`
 - BL-24: Project containment anchors a subsystem (self-host: 3 gaps -> 1) — @ajs — 2026-07-18 — `0bf157d`
 - BL-23: per-file coverage counted not asked (self-host probe: 25 gaps -> 3) — @ajs — 2026-07-18 — `7c5b702`
 - BL-6b: coupling demoted to a signal; retired acks stay visible — @ajs — 2026-07-18 — `f340fcb`
