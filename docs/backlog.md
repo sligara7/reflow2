@@ -18,7 +18,7 @@ Each item has a stable id (**BL-n**). Claim one on the board in
 
 ## Evidence base
 
-Three independent sources, which is why several items appear on more than one list:
+Four independent sources, which is why several items appear on more than one list:
 
 - **Blind trial, 2026-07-18** — an agent with no knowledge of reflow2's source designed and
   built a weather station through the consumer kit. Its friction log is the single richest
@@ -28,6 +28,9 @@ Three independent sources, which is why several items appear on more than one li
   one of them was a client we wrote. Notes: [trials/](trials/).
 - **macOS / grok build, 2026-07-18** — first real external user. Reached the design loop and
   asked for things the trial agent could not (it had no continuity across sessions to miss).
+- **Self-host probe, 2026-07-18** — reflow2's own design (119 nodes) pushed into a reflow2 graph
+  and interrogated. The first test above fixture scale, and the only one where we know the right
+  answer. Notes: [trials/2026-07-18-selfhost-probe.md](trials/2026-07-18-selfhost-probe.md).
 - **[reflow-audit.md](reflow-audit.md)** — the original Reflow's workflows and tools, with
   adopt/obsolete verdicts.
 
@@ -35,8 +38,10 @@ Three independent sources, which is why several items appear on more than one li
 
 | ID | Item | Why | Size |
 |---|---|---|---|
+| **BL-23** | **Cap the artifact-verification demand** | The self-host probe: 22 of 25 gaps (88%) were `unverified_artifact`, one per source file, on a crate whose capabilities are all tested. Not a bug — the detector wants an explicit `VERIFIES` edge per file — but it is bookkeeping no author would write, and volume is what makes a list get skimmed. BL-6 fixed the label, not the volume. Grok's proposal stands: only gap capabilities/requirements, or collapse artifact gaps under the capability they realize. | S |
+| **BL-24** | **A Component under a Project is not "floating"** | `orphan_level` fires on every top-level subsystem, because `hierarchy_issues` only recognises `Component CONTAINS Component` and the natural shape is a Project containing subsystems. One false gap per subsystem, for the modelling the tools lead you to. Found by the self-host probe; needed real top-level structure to show up. | S |
 | **BL-4** | **Persist asked questions** | `gap_to_prompt` output evaporates, so the next session re-derives and re-asks. The trial agent's own framing: *"the stateless-agent problem reflow2 is supposed to solve."* Same gap the external user hit as "how do I pause and resume". | M |
-| **BL-5** | **Re-examine `single_point_of_failure`** | *"All 15 defects vanished at once when I added two bookkeeping edges. Nothing about actual fragility changed."* Use that case as the test. | M |
+| **BL-5** | **Re-examine `single_point_of_failure`** | *"All 15 defects vanished at once when I added two bookkeeping edges."* The self-host probe found the mechanism: it fires on **leaf** capabilities — *"every path between subsystems routes through `cap:ingest`"* — because the selectivity rule counts separated groups without asking whether they are substantial. `surprises.rs` already solved this with `MIN_COMMUNITY = 3`; `structure.rs` has no equivalent. 7 of 8 defects on a healthy 2-component design. | M |
 
 ## Closed
 
