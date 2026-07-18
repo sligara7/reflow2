@@ -10,12 +10,21 @@ the agent what a change breaks.
 1. **Build the server + install prerequisites — [SETUP.md](SETUP.md).** One-time. It has a
    copy-paste block for **macOS** (installs everything from scratch) and for Debian/Ubuntu, then
    builds the `reflow2-mcp` binary and runs a 3-check **PASS/FAIL** verification. Do this first.
-2. **Copy this kit into your project** (from this folder, into your project at `$PROJECT`):
+2. **Set up your project** — one command, from the reflow2 repo:
    ```bash
-   cp AGENTS.md "$PROJECT/AGENTS.md"
-   cp -r .grok  "$PROJECT/.grok"        # the skills — a hidden dir; `cp *` would miss it
-   cp mcp.json  "$PROJECT/.mcp.json"    # then set "command" to the path SETUP.md printed
+   python3 tools/reflow2_init.py ~/projects/my-thing
    ```
+   It installs the agent instructions, the skills and an MCP config with the binary path already
+   filled in, and creates the folder the design graph lives in. The project directory is created
+   if it doesn't exist.
+
+   It deliberately creates **no `src/`, no build file, no language choice**. What kind of project
+   this is comes out of the design, not out of a scaffold — that's the whole idea.
+
+   **Re-run the same command any time to update.** The kit is copied into your project, so it
+   would otherwise freeze while reflow2 keeps moving. Re-running refreshes the instructions and
+   skills, leaves your design graph and your own files alone, and prints what changed. Use
+   `--check` first if you want to see it without writing anything.
 3. **Start your agent in your project** (grok build / claude code). It reads `AGENTS.md`, connects
    to the `reflow2` server, and drives the loop — starting by bootstrapping your idea (GENESIS).
 

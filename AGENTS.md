@@ -37,6 +37,11 @@ python3 tools/validate_schema.py
 # agent actually receives. Needs `cargo build -p reflow2-mcp` first (RocksDB, ~10 min
 # cold). Stdlib-only Python; exits non-zero on any failed check.
 python3 tools/smoke_mcp.py
+
+# Install or update reflow2 in a consumer project (the design environment only —
+# never a src/ layout or build file; project type is a design output, not an input).
+python3 tools/reflow2_init.py /path/to/project           # set up, or update in place
+python3 tools/reflow2_init.py /path/to/project --check   # what would change
 ```
 
 A change is "done" only when `cargo test --no-default-features`, `cargo clippy

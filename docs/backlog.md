@@ -67,7 +67,15 @@ fixes and nothing tells him. Text (AGENTS.md + skills) is easy to refresh; the b
 ~10-minute RocksDB build, so it wants either published release binaries or a pinned-version
 check. Bears directly on the embedded-vs-service fork: a service would make this disappear.
 
-Size: **M** for bootstrap, **M–L** for updates depending on the release story.
+**Bootstrap and in-place updates: done** (`tools/reflow2_init.py`) — one command installs or
+refreshes the design environment, resolves the binary path itself, records a kit version so
+staleness is detectable, and leaves the graph, user files and a customised `.mcp.json` alone.
+It installs no `src/`, build file or language choice, on purpose.
+
+**Still open:** the *release* story. Updating currently requires a reflow2 checkout to run the
+script from. A consumer with only a binary has no path. That wants either published release
+binaries or a fetch-from-git mode, and it bears on the embedded-vs-service fork — a service
+would remove the problem rather than solve it. Size **M–L**.
 
 
 

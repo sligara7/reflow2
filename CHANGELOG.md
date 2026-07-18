@@ -22,6 +22,15 @@ This file is the third view: *what changed, and when*.
   spec-compliant clients. Lists now arrive as `{"count": n, "items": [...]}`. Found by a Grok
   trial; three home-grown test layers missed it because each was a client we wrote.
 
+### Added
+
+- **`tools/reflow2_init.py`** — set up or update reflow2 in a project with one command. Installs
+  the design environment only: agent instructions, skills, an MCP config with the binary path
+  already resolved, and the graph directory. Creates no `src/`, build file or language choice —
+  what kind of project it is comes out of the design, not a scaffold. Re-running updates in
+  place, reports what changed, and never touches the design graph, your files, or a customised
+  `.mcp.json`.
+
 ### Changed
 
 - **`AGENTS.md` is now the primary instruction file**, per the [agents.md](https://agents.md)

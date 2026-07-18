@@ -105,6 +105,18 @@ printf '%s\n' \
 
 **Three PASSes → you're ready** to register the server (step 3) and point your agent at the repo.
 
+### Set up a project
+
+From the reflow2 repo:
+
+```bash
+python3 tools/reflow2_init.py ~/projects/my-thing
+```
+
+That installs everything the agent needs and points the MCP config at the binary you just built.
+Re-run it any time to pick up reflow2 updates — it won't touch your design graph or your own
+files. `--check` shows what would change without writing.
+
 ### Starting a design
 
 Open your agent in the project folder and prompt it with **a short overview of what you're
