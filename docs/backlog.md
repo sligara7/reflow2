@@ -147,27 +147,46 @@ BL-21 included.
 upstream sources kept beside it. Every harness looks somewhere different, and the kit installs
 the one location with the narrowest reach:
 
-| Harness | Reads | Sees the kit's skills |
+| Harness | Skills | MCP |
 |---|---|---|
-| Grok CLI | `.grok/skills/` | yes |
-| Claude Code | `.claude/skills/` | **no** |
-| Copilot / VS Code | `.github/skills/`, `.claude/skills/`, `.agents/skills/` | **no** |
+| Grok CLI | `.grok/skills/` ✅ | `.mcp.json` compat ✅ |
+| Claude Code | `.claude/skills/` ❌ | `.mcp.json` ✅ |
+| OpenCode | `.opencode/`, `.claude/`, `.agents/skills/` ❌ | `opencode.json` ❌ |
+| Copilot / VS Code | `.github/`, `.claude/`, `.agents/skills/` ❌ | `.vscode/mcp.json` ❌ |
 
 So this is not a vague portability worry: a project bootstrapped by `reflow2_init.py` and opened
 in **Claude Code** — the harness this repo is developed with — has an AGENTS.md naming seven
-skills the agent cannot load. The Grok trial hit the same wall from a third harness.
+skills the agent cannot load.
 
-*The fix is small.* `.claude/skills/` is read by Claude Code **and** Copilot/VS Code, so
-installing there alongside the existing `.grok/skills/` covers all three. `reflow2_init.py`
-already copies a tree; this is a second destination, not new machinery. The skills themselves are
-already spec-compliant (valid `name` matching the directory, real `description`) — only the
-location is wrong.
+*It also explains the trial finding rather than merely restating it.* OpenCode searches
+`.opencode/`, `.claude/` and `.agents/`; the kit wrote `.grok/`. The skills were not
+mis-registered, the directory was never on the search path.
 
-*Not a problem for MCP.* Grok loads `.mcp.json` as a compatibility source, so the kit's single
-`.mcp.json` already serves both. Skills have no such shim.
+*The fix is small.* `.claude/skills/` is read by Claude Code, OpenCode **and** Copilot — three of
+the four, two of which name it "Claude-compatible" outright. Installing there alongside the
+existing `.grok/skills/` covers everything. `reflow2_init.py` already copies a tree; this is a
+second destination, not new machinery. The skills are already spec-compliant — only the location
+is wrong. (`.agents/skills/` is the vendor-neutral name, but Claude Code does not read it, so it
+is strictly worse as a single choice.)
 
-Size **S**. Worth doing before BL-21, which otherwise writes a skill into a directory two of
-three harnesses ignore.
+*MCP is a second, smaller gap.* `.mcp.json` covers Claude Code and Grok, but OpenCode wants
+`opencode.json` and VS Code wants `.vscode/mcp.json`, with no compatibility shim in either.
+Whoever ran the Grok trial must have wired opencode by hand — friction the installer could
+remove. Same generator, three files.
+
+*One constraint on the skills themselves:* optional frontmatter fields differ per harness
+(OpenCode recognises only `name`/`description`/`license`/`compatibility`/`metadata`), so keeping
+reflow2's skills to `name` + `description` keeps one file working everywhere.
+
+*Deliberately not researched yet: OpenAI Codex and Google Antigravity.* Four harnesses were
+enough to show the convergence, and a fifth or sixth would either confirm `.claude/skills/` or
+add one more entry to a list the fix already iterates — it would not change the answer. The cheap
+moment to check is while implementing this, once installing to several destinations is
+mechanical. Worth noting that Codex is where the [agents.md](https://agents.md) convention comes
+from, so its instruction-file behaviour is likely already served; skills are the open question.
+
+Size **S** for the skills directory, **S** for the MCP configs. Worth doing before BL-21, which
+otherwise writes a skill into a directory three of four harnesses ignore.
 
 **BL-20 · Graph export / import, and versioned local backups** — *user, 2026-07-18.* Unblocks
 BL-19's migration half and, through it, BL-18.
