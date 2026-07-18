@@ -5,16 +5,32 @@ reflow2 runs as a local MCP server your agent talks to. One-time build, then it'
 ## 1. Install the build toolchain
 
 `reflow2-mcp` embeds RocksDB (via `librocksdb-sys`), which compiles C++ — so you need a C++
-toolchain plus `clang`/`cmake`. Also install Rust (`https://rustup.rs`) if you don't have it.
+toolchain plus `clang`/`cmake`, and the Rust toolchain. All one-time.
 
-### macOS
+### macOS (from scratch)
+
+Copy-paste this whole block into Terminal. Safe to re-run — steps you already have are no-ops.
 
 ```bash
-xcode-select --install                      # C/C++ toolchain
+# 1. Homebrew — the macOS package manager (skip if `brew --version` already works):
+if ! command -v brew >/dev/null; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
+fi
+
+# 2. Xcode command-line tools (C/C++ compiler). If a dialog pops up, click Install and wait:
+xcode-select --install 2>/dev/null || true
+
+# 3. Build dependencies + Rust:
 brew install cmake llvm pkg-config
-# If the RocksDB build can't find libclang, point it at Homebrew's llvm:
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+source "$HOME/.cargo/env"
+
+# 4. Let the RocksDB build find libclang (works on Apple Silicon and Intel):
 export LIBCLANG_PATH="$(brew --prefix llvm)/lib"
 ```
+
+Then continue to step 2 in the **same** Terminal window (so `LIBCLANG_PATH` is still set).
 
 ### Debian / Ubuntu / Lubuntu
 
@@ -30,8 +46,12 @@ cd reflow2
 cargo build -p reflow2-mcp --release        # first build compiles RocksDB (~10 min, then cached)
 ```
 
-The binary lands at `reflow2/target/release/reflow2-mcp`. Note that path (or copy it onto your
-`PATH`, e.g. `cp target/release/reflow2-mcp ~/.local/bin/`).
+The binary lands at `reflow2/target/release/reflow2-mcp`. Print its absolute path — you'll paste
+it into `.mcp.json` in the next step:
+
+```bash
+echo "$(pwd)/target/release/reflow2-mcp"
+```
 
 ## 3. Register the MCP server in your project
 
