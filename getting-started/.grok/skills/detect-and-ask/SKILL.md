@@ -34,7 +34,10 @@ reflow2 surfaces the decisions a stateless agent would make silently. Turn them 
    | a choice between real alternatives | `add_decision` + `governed_by` — record *why*, not just what |
 
    Never discard the answer. If none of these fit, `create_node`/`create_edge` take any schema
-   type, but prefer the typed tool: it supplies the required properties for you.
+   type, but prefer the typed tool: it supplies the required properties for you. Before reaching
+   for the generic pair, call `describe_schema` — `{"from": "X", "to": "Y"}` names the edge types
+   that may join two types and flags whether any actually models that pair or merely accepts it
+   through a `*` wildcard. Do not settle for the first edge type that validates; several will.
 4. **If the user decides a gap is fine as it stands, say so in the graph.** Call
    `acknowledge_gap` with the gap's `id`, its `affected_ids`, and the user's reason. It moves
    into `reviewed_gaps` — recorded, not deleted — and the reason becomes a real Decision node

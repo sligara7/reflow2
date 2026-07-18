@@ -30,8 +30,15 @@ fidelity?), that is a *gap* — surface it as a question, don't guess.
      meet — an API, event, data feed, save format, physical or human connection point).
    - Link the golden thread: `satisfies` (Capability→Requirement), `allocate`
      (Capability→Component), `contains` (Project→child), and `provides`/`consumes`
-     (Component→Interface) for **both** sides of every contract. Use `create_node`/`create_edge`
-     for any other schema type. Use stable ids: `req:…`, `cap:…`, `cmp:…`, `ifc:…`, `proj:…`.
+     (Component→Interface) for **both** sides of every contract. Use stable ids: `req:…`,
+     `cap:…`, `cmp:…`, `ifc:…`, `proj:…`.
+   - For any other schema type, **call `describe_schema` first, then `create_node`/`create_edge`.**
+     Ask `describe_schema {"from": "Release", "to": "Component"}` and it tells you which edge
+     types may join those two — and, just as importantly, whether any of them actually *models*
+     that pair or merely accepts it through a `*` wildcard. Never guess an edge type until one
+     validates: several will, and validating is not the same as meaning what you intended. If
+     nothing models the relationship, that is real information — leave the edge out rather than
+     asserting one that is wrong.
    - Whenever two components talk to each other, model the Interface between them and record
      both sides. An unrecorded contract is invisible: change one component later and nothing
      will tell you the other one just broke.
@@ -76,6 +83,10 @@ reflow2 phrases the question; **you** are the language model that fills it in:
 
 ## Tools (the `reflow2` MCP server)
 
+- **Discover the vocabulary:** `describe_schema` — no arguments for every node and edge type,
+  `{"node_type": "X"}` for one type's properties and the edges it can carry, or
+  `{"from": "X", "to": "Y"}` for what may join them. Call it before writing anything unusual;
+  it is cheaper than a guess and far cheaper than a wrong edge.
 - **Detect / analyze:** `detect_gaps`, `propagate_change`, `propagate_from`, `graph_report`,
   `graph_report_markdown`, `detect_defects`, `propose_heal`, `evaluate_allocation`,
   `propose_allocation`, `hierarchy_issues`, `surprising_connections`, `dimension_drifts`,
