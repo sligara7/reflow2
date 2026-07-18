@@ -17,7 +17,13 @@ Unity game).
 ## Use it
 
 1. Follow `SETUP.md` to build the `reflow2-mcp` binary and install the RocksDB toolchain.
-2. Copy `AGENTS.md`, `.grok/`, and `mcp.json` (→ `.mcp.json`) into your project repo.
+2. Copy `AGENTS.md`, `.grok/`, and `mcp.json` (→ `.mcp.json`) into your project repo. From this
+   directory, into your project at `$PROJECT`:
+   ```bash
+   cp AGENTS.md "$PROJECT/AGENTS.md"
+   cp -r .grok  "$PROJECT/.grok"        # the skills — a hidden dir; `cp *` would miss it
+   cp mcp.json  "$PROJECT/.mcp.json"    # then set "command" to your reflow2-mcp path
+   ```
 3. Start your agent (grok build / claude code) in that repo. It reads `AGENTS.md`, connects to
    the `reflow2` MCP server, and drives the loop. The design graph persists in
    `./.reflow2/graph` and travels with the repo (git-synced).
