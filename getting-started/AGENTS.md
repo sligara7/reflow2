@@ -96,10 +96,12 @@ reflow2 phrases the question; **you** are the language model that fills it in:
   spine). Set `level` on `add_component` — `component` (default), `subsystem`, `system`,
   `system_of_systems`, `enterprise` — and nest one level at a time; `hierarchy_issues` compares
   the levels either side and will otherwise report every nesting as a mismatch.
-- **Questions already asked:** `open_questions` returns the questions put to the user that are
-  still awaiting an answer, with the wording they saw. **Read it before `detect_gaps` at the start
-  of a session** — a question already asked should be followed up, not re-derived and asked again.
-  `answer_question` records what they said and closes it; `withdraw_question` retires one
+- **Questions already asked:** `open_questions` returns the questions put to the user that still
+  bear on something open, with the wording they saw. **Read it before `detect_gaps` at the start
+  of a session.** Two kinds: `status: asked` — they have not replied, so follow it up rather than
+  asking again; `status: answered` — they replied but the gap is still open, so either write their
+  answer into the design or `acknowledge_gap` if they judged it fine as it stands. Their reply
+  comes back with it. `answer_question` records what they said; `withdraw_question` retires one
   overtaken by events. `gap_to_prompt` records the question itself, so you do not have to.
 - **Requirement lifecycle:** `set_requirement_status` — `proposed` / `accepted` / `deferred` /
   `dropped` / `met`. Use it when a requirement is provisional or abandoned instead of writing

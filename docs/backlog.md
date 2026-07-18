@@ -38,7 +38,6 @@ Four independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
-| **BL-25** | **An answered question whose gap is still open is invisible** | Found by re-running the self-host probe minutes after BL-4 shipped. Ask about a gap and answer it; if the answer does not change the design, the gap stays open while the question moves to `status: answered`. So `open_questions` is empty, `reviewed_gaps` is empty, and a third session sees a bare open gap with no sign it was ever asked — and re-asks. That is BL-4's problem displaced one step. The record survives (`scan_nodes(Question)` has both the question and the answer) but nothing on the surface points there. Partly a usage gap — an answer meaning *"this is fine as it is"* should be followed by `acknowledge_gap` — but an agent will take the incomplete path, so the surface should make it recoverable rather than depending on correct use. | S |
 
 ## Closed
 
@@ -52,6 +51,13 @@ Kept as a short pointer so a stable id never dangles; the detail is in the CHANG
   overwritten — which also fixed a silent failure where a project that already had any MCP server
   never got reflow2 installed while the run reported success. Tables and the reasoning:
   [skills/README.md](skills/README.md).
+- **BL-25 · An answered question stays visible while its gap is open** — done. `open_questions`
+  now returns two kinds: `asked` (still waiting) and `answered` **whose gap is still open**, with
+  the reply attached. Answering settles nothing by itself — either the answer gets written into
+  the design and the gap closes, or the gap is acknowledged; until one happens there is something
+  outstanding and the list says so. A question whose gap has closed or been acknowledged drops out
+  of the list but stays in the graph. Verified on reflow2's own design: the third session now sees
+  the question and the reply, and acknowledging takes it to **0 gaps, 0 outstanding, 1 reviewed**.
 - **BL-4 · Asked questions outlive the session** — done. `gap_to_prompt` was the only tool that
   never touched the graph: it phrased a question, returned it, and forgot, so the next session
   re-derived the same gap and asked again. Its serve pass now records a `Question` node at a

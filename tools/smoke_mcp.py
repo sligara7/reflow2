@@ -435,9 +435,17 @@ def run(binary: str, graph_path: str) -> int:
          len(reopened) == 1, reopened)
     c.ok("and the exact wording the user saw survived",
          reopened == before_restart, {"before": before_restart, "after": reopened})
-    s.call("answer_question", {"gap_id": reopened[0]["gap_id"], "answer": "Yes — deliberate."})
-    c.ok("answering it in the new session closes it",
-         s.call("open_questions") == [])
+    answered_gap = reopened[0]["gap_id"]
+    s.call("answer_question", {"gap_id": answered_gap, "answer": "Yes — deliberate."})
+
+    # BL-25: answering does not by itself settle anything. While the gap is still
+    # open the question stays visible, marked answered and carrying the reply —
+    # otherwise a later session sees a bare open gap and asks all over again.
+    still = s.call("open_questions")
+    c.ok("an answered question stays visible while its gap is open",
+         len(still) == 1 and still[0]["status"] == "answered", still)
+    c.ok("and brings back what the user said",
+         still[0].get("answer") == "Yes — deliberate.", still[0].get("answer"))
 
     # Cross-process determinism. A HashSet's iteration order is seeded per
     # process, so anything derived from it (community detection, and every gap
@@ -448,6 +456,15 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("the same graph gives the same gaps in a fresh process",
          first_gaps == second_gaps,
          f"{len(first_gaps)} vs {len(second_gaps)}")
+
+    # Acknowledging is what settles an answered question — done after the
+    # determinism check above, which has to compare an unmutated graph.
+    ack_target = [g for g in s.call("detect_gaps") if g["id"] == answered_gap][0]
+    s.call("acknowledge_gap", {"gap_id": answered_gap,
+                               "affected_ids": ack_target["affected_ids"],
+                               "reason": "deliberate for v1"})
+    c.ok("acknowledging the gap leaves nothing outstanding",
+         s.call("open_questions") == [])
     s.close()
 
     print("\n" + "=" * 62)

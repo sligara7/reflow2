@@ -367,3 +367,64 @@ fn a_question_can_be_withdrawn_and_answering_an_unknown_one_fails_loud() {
         "answering a question nobody asked reports false rather than inventing one"
     );
 }
+
+/// BL-25. The self-host probe found this minutes after questions became
+/// persistent: answer a question in a way that does not change the design, and
+/// the gap stays open while the question goes quiet. A later session saw a bare
+/// open gap with no sign it had been asked, and asked again — the same failure
+/// BL-4 exists to prevent, displaced one step.
+#[test]
+fn an_answered_question_stays_visible_while_its_gap_is_open() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_capability("cap:x", "X", "does a thing").unwrap();
+
+    // A real, still-open gap to hang the question on.
+    let gap = g
+        .detect_gaps()
+        .unwrap()
+        .into_iter()
+        .next()
+        .expect("an early design has at least one gap");
+
+    g.record_asked_question(
+        &gap.id,
+        &gap.affected_ids,
+        "Is this deliberate?",
+        AskedQuestion::default(),
+    )
+    .unwrap();
+    assert_eq!(g.open_questions().unwrap()[0].status, "asked");
+
+    // They reply, but the reply does not change the design.
+    g.answer_question(&gap.id, "Yes — out of scope for v1.")
+        .unwrap();
+
+    let still = g.open_questions().unwrap();
+    assert_eq!(
+        still.len(),
+        1,
+        "the gap is still open, so the question it was asked about must stay visible"
+    );
+    assert_eq!(still[0].status, "answered");
+    assert_eq!(
+        still[0].answer, "Yes — out of scope for v1.",
+        "and what they said must come back with it, so it is not asked again"
+    );
+
+    // Acknowledging the gap is what actually settles it. Now there is nothing
+    // left to act on and the question drops out.
+    g.acknowledge_gap(&gap.id, &gap.affected_ids, "out of scope for v1")
+        .unwrap();
+    assert!(
+        g.open_questions().unwrap().is_empty(),
+        "a settled gap leaves nothing outstanding, got {:?}",
+        g.open_questions().unwrap()
+    );
+    assert!(
+        g.get_node(node::QUESTION, &format!("question:{}", &gap.id[4..]))
+            .unwrap()
+            .is_some(),
+        "and the question is still in the graph — dropped from the list, not deleted"
+    );
+}

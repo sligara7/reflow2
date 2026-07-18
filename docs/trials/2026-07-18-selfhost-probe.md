@@ -194,3 +194,22 @@ Partly this is incomplete usage: an answer meaning "this is fine as it is" shoul
 `acknowledge_gap`, which would move the gap to `reviewed_gaps` and close the loop properly. But an
 agent will take the path taken here, and the probe's value is precisely that it takes the path an
 agent would.
+
+
+### BL-25, fixed the same evening
+
+`open_questions` now keeps an answered question visible while its gap is still open, with the
+reply attached. Replaying the exact case on reflow2's own design:
+
+```
+A third session, the case the probe found:
+  detect_gaps    -> 1 open
+  open_questions -> 1
+     [answered] reflow2 has no Release or Environment modelled — deployed,...
+     they said   : It is a library you build from source; no deploy layer is intended yet.
+
+After acknowledging: 0 gaps, 0 outstanding, 1 reviewed
+```
+
+So the loop now closes on reflow2's own design: the one true gap is asked, answered, judged, and
+recorded — and the graph is left with nothing outstanding and a Decision saying why.

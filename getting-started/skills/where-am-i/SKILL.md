@@ -32,9 +32,13 @@ something they could read in under a minute:
 3. **The shape so far** — how many requirements, what the main parts are and how they connect.
    Name the parts, don't list node ids.
 4. **What you already asked them** — call `open_questions` first. These were put to them in an
-   earlier session, in the wording they saw, and are still waiting. Repeat that wording rather
-   than inventing a new phrasing for the same thing: being asked the same question twice, worded
-   differently, is how someone learns the tool is not listening.
+   earlier session, in the wording they saw. Repeat that wording rather than inventing a new
+   phrasing for the same thing: being asked the same question twice, worded differently, is how
+   someone learns the tool is not listening.
+   - `status: asked` — still waiting on them. Ask again *only* as a follow-up, not as if new.
+   - `status: answered` — they already told you, and it is still open. Say what they said back to
+     them and what it implies, rather than re-opening the question. Usually it means their answer
+     never got written into the design, or the gap should be acknowledged.
 5. **What's still open** — the *remaining* gaps that need them, phrased as the questions they are.
    Say how many there are and lead with the ones that actually block progress.
 6. **Where to go next** — the one or two things worth doing now, and offer the choice rather than

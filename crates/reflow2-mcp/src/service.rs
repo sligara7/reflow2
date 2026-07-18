@@ -1494,7 +1494,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Questions already put to the user that are still awaiting an answer,                        with the wording they saw. Read this at the start of a session before                        detect_gaps: a question already asked should be followed up, not                        re-derived and asked again."
+        description = "Questions already put to the user that still bear on something open, with the wording they saw. `status: asked` means they have not replied \u{2014} follow it up, do not ask again. `status: answered` means they replied but the gap is still open, so their answer needs writing into the design or the gap needs acknowledging; their reply comes back with it. Read this at the start of a session, before detect_gaps."
     )]
     pub async fn open_questions(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;

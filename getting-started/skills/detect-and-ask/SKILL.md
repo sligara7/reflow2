@@ -40,8 +40,13 @@ reflow2 surfaces the decisions a stateless agent would make silently. Turn them 
    through a `*` wildcard. Do not settle for the first edge type that validates; several will.
 4. **The question is recorded for you.** The serve pass of `gap_to_prompt` writes it into the
    graph, so a later session can see it was asked and in what words. When the user replies, call
-   `answer_question` with the gap id and their answer *as well as* writing the design nodes their
-   answer implies — the first records that the question is settled, the second is the design.
+   `answer_question` with the gap id and their answer *as well as* doing something about it — the
+   record alone changes nothing.
+
+   Their reply lands in one of two places. If it adds to the design, write the nodes it implies
+   and the gap closes on its own. If it means *"that is fine as it stands"*, call
+   `acknowledge_gap` — an answer is not an acknowledgement, and a gap left open with an answered
+   question against it will show up in `open_questions` until one or the other happens.
 5. **If the user decides a gap is fine as it stands, say so in the graph.** Call
    `acknowledge_gap` with the gap's `id`, its `affected_ids`, and the user's reason. It moves
    into `reviewed_gaps` — recorded, not deleted — and the reason becomes a real Decision node

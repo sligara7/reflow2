@@ -225,6 +225,13 @@ pub struct AskedRecord {
     pub context_setter: String,
     pub asked_at: String,
     pub rephrase_degraded: bool,
+    /// `asked` (still waiting) or `answered` (they replied, and the gap is
+    /// still open — so their answer has not been written into the design, or
+    /// the gap needs acknowledging).
+    pub status: String,
+    /// What they said, when `status` is `answered`.
+    #[serde(skip_serializing_if = "String::is_empty")]
+    pub answer: String,
 }
 
 /// A detected gap, ranked for surfacing (mirrors storyflow's `ScenarioCandidate`).
@@ -532,11 +539,30 @@ impl DesignGraph {
         Ok(true)
     }
 
-    /// Questions already put to the user and still awaiting an answer.
+    /// Questions already put to the user that still bear on something open.
     ///
-    /// The point of the whole item: a returning session reads this instead of
-    /// re-deriving and re-asking. Sorted by id so the order is stable.
+    /// Two kinds, distinguished by `status`:
+    ///
+    /// - `asked` — they have not replied yet. Follow it up; do not ask again.
+    /// - `answered` — they replied, **and the gap is still open**. Their answer
+    ///   has not been written into the design, or the gap needs acknowledging.
+    ///
+    /// The second kind exists because of what the self-host probe found
+    /// immediately after questions became persistent: answer a question in a way
+    /// that does not change the design — *"it is a library you build from
+    /// source; no deploy layer is intended"* — and the gap stays open while the
+    /// question goes quiet. A later session then saw a bare open gap with no
+    /// sign it had ever been asked, and asked again. That is the same failure
+    /// this whole item exists to prevent, displaced by one step.
+    ///
+    /// A question whose gap has since closed or been acknowledged is not
+    /// returned: there is nothing left to act on. It stays in the graph.
+    ///
+    /// Sorted by id, so the order is stable across sessions.
     pub fn open_questions(&self) -> Result<Vec<AskedRecord>, DynoError> {
+        let still_open: std::collections::HashSet<String> =
+            self.detect_gaps()?.into_iter().map(|g| g.id).collect();
+
         let mut out = Vec::new();
         for n in self.scan_nodes(node::QUESTION)? {
             let get = |k: &str| {
@@ -546,12 +572,21 @@ impl DesignGraph {
                     .unwrap_or_default()
                     .to_string()
             };
-            if get("status") != "asked" {
+            let status = get("status");
+            let gap_id = get("gap_id");
+            let live = match status.as_str() {
+                "asked" => true,
+                // Answered, but the thing it was about is still outstanding.
+                "answered" => still_open.contains(&gap_id),
+                // withdrawn, or anything a later version adds
+                _ => false,
+            };
+            if !live {
                 continue;
             }
             out.push(AskedRecord {
                 question_id: n.node_id.clone(),
-                gap_id: get("gap_id"),
+                gap_id,
                 question: get("question"),
                 context_setter: get("context_setter"),
                 asked_at: get("asked_at"),
@@ -560,6 +595,8 @@ impl DesignGraph {
                     .get("rephrase_degraded")
                     .and_then(dynograph_core::Value::as_bool)
                     .unwrap_or(false),
+                answer: get("answer"),
+                status,
             });
         }
         out.sort_by(|a, b| a.question_id.cmp(&b.question_id));

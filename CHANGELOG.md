@@ -17,6 +17,17 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **An answered question stays visible while its gap is open** (BL-25). `open_questions` returns
+  `asked` (still waiting) and `answered`-but-the-gap-is-still-open, the latter carrying the reply.
+  Answering settles nothing on its own: either the answer gets written into the design and the gap
+  closes, or the gap is acknowledged. Until one happens, something is outstanding and the list
+  says so.
+
+  Found by re-running the self-host probe minutes after BL-4 shipped. Answering *"it is a library
+  you build from source; no deploy layer is intended"* left the gap open and the question quiet,
+  so a third session saw a bare open gap with no sign it had been asked — and would have asked
+  again. BL-4's problem displaced one step.
+
 - **Questions outlive the session** (BL-4). `gap_to_prompt` phrased a question, returned it, and
   forgot — it was the only tool on the surface that never touched the graph. So the next session
   re-derived the same gap and asked the same thing again, which the blind trial called *"the

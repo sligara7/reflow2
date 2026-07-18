@@ -867,6 +867,12 @@ async fn asking_a_gap_records_the_question_it_asked() {
     let gaps = jl!(s.detect_gaps());
     let gap = gaps.as_array().unwrap()[0].clone();
     let gap_id = gap["id"].as_str().unwrap().to_string();
+    let gap_affected: Vec<String> = gap["affected_ids"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|v| v.as_str().unwrap().to_string())
+        .collect();
 
     // Nothing recorded before the question is put.
     assert!(jl!(s.open_questions()).as_array().unwrap().is_empty());
@@ -904,14 +910,32 @@ async fn asking_a_gap_records_the_question_it_asked() {
     );
     assert_eq!(arr[0]["asked_at"], "2026-07-18T10:00:00Z");
 
-    // Answering closes it.
+    // Answering records the reply. The question stays visible while its gap is
+    // still open, now marked `answered` and carrying what they said — otherwise
+    // a later session sees a bare open gap and asks all over again (BL-25).
     j!(s.answer_question(Parameters(AnswerQuestionReq {
         gap_id: gap_id.clone(),
         answer: "The physics engine.".into(),
     })));
+    let after = jl!(s.open_questions());
+    let a = after.as_array().unwrap();
+    assert_eq!(
+        a.len(),
+        1,
+        "still outstanding while the gap is open, got {after}"
+    );
+    assert_eq!(a[0]["status"], "answered");
+    assert_eq!(a[0]["answer"], "The physics engine.");
+
+    // Acknowledging the gap is what settles it; then there is nothing left.
+    j!(s.acknowledge_gap(Parameters(AcknowledgeGapReq {
+        gap_id: gap_id.clone(),
+        affected_ids: gap_affected.clone(),
+        reason: "the physics engine owns it".into(),
+    })));
     assert!(
         jl!(s.open_questions()).as_array().unwrap().is_empty(),
-        "an answered question stops being outstanding"
+        "a settled gap leaves nothing outstanding"
     );
 
     // Answering one nobody asked fails loud rather than inventing a record.
