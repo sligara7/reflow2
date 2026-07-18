@@ -58,6 +58,10 @@ the loop like this:
 - [gap-surfacing.md](gap-surfacing.md) — DIAGNOSE → PROMPT: turn weaknesses into constructive questions.
 - [heal-process.md](heal-process.md) — HEAL: propose and apply structural repairs.
 
+### 3¼ · Using v0.2.0
+- [upgrading-to-v0.2.0.md](upgrading-to-v0.2.0.md) — the three-step upgrade from an early install, in the order that matters.
+- [v0.2.0-what-we-dont-know.md](v0.2.0-what-we-dont-know.md) — the four questions only real use can answer. Written for whoever is about to use this in anger.
+
 ### 3½ · Status — *where the project is*
 Three records, three questions — kept separate on purpose:
 - [requirements-coverage.md](requirements-coverage.md) — *are we meeting the docs?* Traceability matrix: every doc requirement → the module + test that meets it, with an honest Met/Partial/Deferred status. A living document.

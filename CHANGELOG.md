@@ -13,7 +13,13 @@ Two companion records, deliberately kept separate:
 
 This file is the third view: *what changed, and when*.
 
-## [Unreleased]
+## [0.2.0] — 2026-07-18
+
+Fourteen backlog items, all of them findings from putting reflow2 in front of people and agents
+who had not seen it. Two upgrade documents ship with this release:
+[docs/upgrading-to-v0.2.0.md](docs/upgrading-to-v0.2.0.md) and
+[docs/v0.2.0-what-we-dont-know.md](docs/v0.2.0-what-we-dont-know.md) — the second is the more
+important of the two.
 
 ### Added
 
