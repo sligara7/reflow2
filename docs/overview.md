@@ -35,7 +35,7 @@ the loop like this:
 | *(reflow2 addition)* — ripple along the golden thread | PROPAGATE | [impact-propagation.md](impact-propagation.md) | detailed |
 | **DIAGNOSE → PROMPT** — find weaknesses, ask the user | DETECT + SURFACE | [gap-surfacing.md](gap-surfacing.md) | detailed |
 | **HEAL** — detect & repair structural defects | RESOLVE/HEAL | [heal-process.md](heal-process.md) | detailed |
-| **SYNTHESIZE** — graph → artifacts (docs, diagrams, as-built) | reporting side-output | — | acknowledged; not yet detailed |
+| **SYNTHESIZE** — graph → artifacts (docs, diagrams, as-built) | reporting side-output | — | first artifact built: the graph report (`report` module; see [graph-analysis.md](graph-analysis.md)) |
 
 ## Reading order
 

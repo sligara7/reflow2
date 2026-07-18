@@ -195,7 +195,7 @@ candidates (nothing built from this list yet).
 | **Extraction diagnostics** (missing / dangling / duplicate edges) | ✅ mostly | INGEST `dropped_edges` (phantom/dangling) + fuzzy dedup; could add an exact-duplicate-edge count |
 | **Surprising connections** — an edge bridging two otherwise-distant communities | ✅ **built** | `surprising_connections()` (`surprises` module): a coupling edge whose endpoints sit in different `leiden` communities, ranked by surprise (rarity = sole bridge; peripheral→hub) with explained `reasons`. Feeds DETECT (hidden coupling) / HEAL creative-bridge · `tests/surprises.rs` |
 | **Peripheral→hub** — a low-degree node unexpectedly reaching a high-degree hub | ⬜ **new** | A leaf capability wired straight to a god-component, skipping intermediate structure — ties to the matryoshka **`missing_intermediate_level`** gap (chain_reflow) and god-node dependence. Degree/level anomaly |
-| **Graph report** (highlights: key concepts, surprising connections, suggested questions) | ⬜ **new** | A **SYNTHESIZE** rollup artifact: communities/allocation + god-nodes + surprising couplings + DETECT gaps + suggested questions — the "what should I look at?" summary |
+| **Graph report** (highlights: key concepts, surprising connections, suggested questions) | ✅ **built** | `graph_report()` → `GraphReport` (`report` module): snapshot + top DETECT gaps + allocation health + surprising couplings + declining quality, rendered to Markdown via `to_markdown()` — the **SYNTHESIZE** "what should I look at?" artifact · `tests/report.rs` |
 
 The pattern worth borrowing wholesale is graphify's **"every edge is explained"** ethos and
 its **surprising-connection** analysis — the design-world analogue ("these two subsystems look

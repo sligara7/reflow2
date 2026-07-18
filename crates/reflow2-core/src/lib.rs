@@ -35,6 +35,7 @@ pub mod ingest;
 pub mod llm;
 pub mod nodes;
 pub mod propagate;
+pub mod report;
 pub mod schema;
 pub mod structure;
 pub mod surprises;
@@ -55,6 +56,7 @@ pub use llm::{
     LlmBackend, LlmError, LlmParams, LlmRequest, LlmResponse, MockLlmBackend, complete_json,
 };
 pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOptions};
+pub use report::{AllocationSummary, GraphReport};
 pub use schema::load_schema;
 pub use surprises::SurprisingConnection;
 pub use temporal::{ChangeAction, ChangeRecord, ChangeType, EpochType, parse_snapshot_state};
