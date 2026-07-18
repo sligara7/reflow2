@@ -16,7 +16,7 @@ GENESIS is deliberately split, consistent with the agent-native surface decision
   half. It guarantees the invariants and does **no LLM work**: it creates the Project scaffold,
   plants the genesis Epoch (the axis-Z anchor), and returns a `GenesisReport` with a next-steps
   checklist. Exposed as the `genesis` MCP tool.
-- **Skill** (`consumer-template/.grok/skills/genesis/`) — the LLM half, run agent-natively. The
+- **Skill** (`getting-started/.grok/skills/genesis/`) — the LLM half, run agent-natively. The
   ambient agent expands the brief into Requirements/Capabilities through the existing write tools
   (`add_requirement`, `add_capability`, `satisfies`, …) and drives the first DETECT round.
 

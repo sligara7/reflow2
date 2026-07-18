@@ -1,5 +1,10 @@
 # Reflow Redesign — "Design Anything, Build Anything"
 
+> ### 👉 Just want to use it? Read **[getting-started/SETUP.md](getting-started/SETUP.md)**.
+> The **[getting-started/](getting-started/)** folder is the complete, non-developer setup:
+> build the server, connect grok build / claude code, verify it works. Everything below is
+> about reflow2's own internals.
+
 A clean-room rebuild of Reflow's core idea
 ([github.com/sligara7/reflow2](https://github.com/sligara7/reflow2)), starting fresh so
 nothing in the source projects is disturbed — all of them the author's own work:
@@ -7,11 +12,6 @@ nothing in the source projects is disturbed — all of them the author's own wor
 [storyflow](https://github.com/sligara7/storyflow),
 [chain_reflow](https://github.com/sligara7/chain_reflow), and
 [dynograph-foundation](https://github.com/sligara7/dynograph-foundation).
-
-**Want to USE reflow2 to design and build your own project** (with grok build or claude code)?
-→ **[consumer-template/](consumer-template/)** is the drop-in kit; start with
-**[consumer-template/SETUP.md](consumer-template/SETUP.md)** (build the server, connect your
-agent, verify). The rest of this README and the docs are about reflow2's own design.
 
 **New to the internals? Read [docs/overview.md](docs/overview.md) first** — it maps all the
 documents and how they fit together.
@@ -130,4 +130,4 @@ artifact linking) is complete and cold-start-verified. See
 [docs/requirements-coverage.md](docs/requirements-coverage.md) for the living status matrix and
 [docs/surface-plan.md](docs/surface-plan.md) for what's built vs. the tracked future
 improvements (SP-3b ingest extraction, SP-6b as-built drift). To *use* it, see
-[consumer-template/](consumer-template/).
+[getting-started/](getting-started/).
