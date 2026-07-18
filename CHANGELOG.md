@@ -30,6 +30,15 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **Per-file verification coverage is counted, not asked** (BL-23). An `Artifact` with no
+  `VERIFIES` edge of its own no longer raises a gap; `graph_report` gains a *Verification
+  coverage* line instead (`7/7 capability(ies) verified; 0/22 artifact(s) carry a check of their
+  own`). Capabilities are unchanged — nothing proving a behaviour works is still a real gap.
+
+  The rule was not wrong, it was loud. Modelling reflow2's own design put it at 22 of 25 gaps, on
+  a crate whose capabilities are all tested, and a list that cannot reach zero teaches you to skim
+  it. On that same 119-node graph the change takes **25 gaps to 3**.
+
 - **A cross-community coupling is a signal, not a gap** (BL-6b). It no longer appears in
   `detect_gaps`; `graph_report` lists it under "Surprising couplings" as it already did, and
   `surprising_connections` returns it whole. Nothing was lost — it stopped demanding an answer.

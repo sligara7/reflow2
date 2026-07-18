@@ -73,12 +73,9 @@ fn recording_a_verification_closes_the_gap_that_asked_for_one() {
         "recording a verification must close the phase-level gap, got {sources:?}"
     );
 
-    // Capabilities and Artifacts are both covered, under separate sources since
-    // BL-6: verifying the capability clears its gap and leaves the artifact's
-    // own coverage gap standing. That is correct — a test proving the
-    // capability works does not prove this particular file is the thing that
-    // does it. The split changed how it is *labelled*, not what is detected,
-    // which is what these two assertions pin.
+    // Verifying the capability closes its gap. The artifact's own coverage is
+    // no longer *asked* about — one VERIFIES edge per source file is bookkeeping
+    // nobody writes, and it was 22 of 25 gaps on reflow2's own design (BL-23).
     let affected = |src: GapSource| -> Vec<&str> {
         after
             .iter()
@@ -91,22 +88,26 @@ fn recording_a_verification_closes_the_gap_that_asked_for_one() {
         "the verified capability must no longer be flagged, got {:?}",
         affected(GapSource::UnverifiedCapability)
     );
-    assert_eq!(
-        affected(GapSource::UnverifiedArtifact),
-        vec!["art:score"],
-        "the unverified artifact should still be flagged, under its own source"
+    assert!(
+        affected(GapSource::UnverifiedArtifact).is_empty(),
+        "per-file coverage is a signal, not a gap, got {:?}",
+        affected(GapSource::UnverifiedArtifact)
     );
 
-    // The artifact gap must read as being about a file, not a behaviour — the
-    // legibility complaint BL-6 was filed for ("Nothing verifies reading.py").
-    let art_gap = after
-        .iter()
-        .find(|c| c.gap_source == GapSource::UnverifiedArtifact)
-        .expect("the artifact gap is present");
+    // But it is still counted, and visible in the report.
+    let cov = g.verification_coverage().expect("coverage");
+    assert_eq!((cov.capabilities, cov.capabilities_verified), (1, 1));
+    assert_eq!(
+        (cov.artifacts, cov.artifacts_verified),
+        (1, 0),
+        "the artifact carries no check of its own, and the number says so"
+    );
     assert!(
-        art_gap.title.contains("No verification covers"),
-        "an artifact gap should not be titled like a capability, got {:?}",
-        art_gap.title
+        g.graph_report()
+            .unwrap()
+            .to_markdown()
+            .contains("Verification coverage"),
+        "the report must show where per-file coverage stands"
     );
 }
 
@@ -411,4 +412,49 @@ fn a_dropped_requirement_is_ignored_by_detect_and_heal_alike() {
         !nags_detect(&g),
         "DETECT already skipped dropped requirements"
     );
+}
+
+/// BL-23. The artifact rule was not wrong, it was loud: one VERIFIES edge per
+/// source file is bookkeeping nobody writes, and on reflow2's own design it was
+/// 22 of 25 gaps — on a crate whose capabilities are all tested. This pins the
+/// shape at small scale: many files under one verified capability produce no
+/// gaps at all, and the coverage number still tells you where you stand.
+#[test]
+fn many_files_under_a_verified_capability_raise_no_gaps() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_capability("cap:c", "Scoring", "tracks the score")
+        .unwrap();
+    for i in 0..12 {
+        g.link_artifact(LinkArtifactOptions {
+            artifact_id: format!("art:{i}"),
+            name: format!("file{i}.rs"),
+            location: None,
+            artifact_type: Some("code".into()),
+            target_type: node::CAPABILITY.into(),
+            target_id: "cap:c".into(),
+            completeness: None,
+            provenance: None,
+            fragment_id: None,
+            checksum: None,
+        })
+        .unwrap();
+    }
+    g.add_verification("ver:c", "Scoring tests", Some("test"), Some("unit"))
+        .unwrap();
+    g.verifies("ver:c", node::CAPABILITY, "cap:c").unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    assert!(
+        !gaps
+            .iter()
+            .any(|c| c.gap_source == GapSource::UnverifiedArtifact),
+        "12 files under one tested capability must not become 12 questions, got {:?}",
+        gaps.iter().map(|c| &c.title).collect::<Vec<_>>()
+    );
+
+    // The information is not lost — it is counted instead of asked.
+    let cov = g.verification_coverage().unwrap();
+    assert_eq!((cov.artifacts, cov.artifacts_verified), (12, 0));
+    assert_eq!((cov.capabilities, cov.capabilities_verified), (1, 1));
 }

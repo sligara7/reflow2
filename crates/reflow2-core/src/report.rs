@@ -42,6 +42,32 @@ const SNAPSHOT_TYPES: &[&str] = &[
     node::RESOURCE,
 ];
 
+/// How much of the design carries its own verification.
+///
+/// A *signal*, not a gap. An unverified Capability is asked about — nothing
+/// proves that behaviour works. A file with no `VERIFIES` edge of its own is
+/// merely worth knowing: demanding one per source file produced 22 of 25 gaps
+/// on reflow2's own design, all on a crate whose capabilities are tested
+/// (BL-23). The number is reported so anyone who does want per-file rigour can
+/// see where they stand.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct VerificationCoverage {
+    pub capabilities: usize,
+    /// Capabilities with at least one incoming `VERIFIES`.
+    pub capabilities_verified: usize,
+    pub artifacts: usize,
+    /// Artifacts with a `VERIFIES` edge of their own, as opposed to being
+    /// covered by the capability they realize.
+    pub artifacts_verified: usize,
+}
+
+impl VerificationCoverage {
+    /// True when there is nothing to report — no capabilities and no artifacts.
+    fn is_empty(&self) -> bool {
+        self.capabilities == 0 && self.artifacts == 0
+    }
+}
+
 /// Allocation health at a glance (from `evaluate_allocation`).
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct AllocationSummary {
@@ -76,6 +102,8 @@ pub struct GraphReport {
     pub surprising: Vec<SurprisingConnection>,
     /// Surprising couplings beyond the shown top.
     pub surprising_truncated: usize,
+    /// How much of the design carries its own verification (a signal, not a gap).
+    pub verification: VerificationCoverage,
     /// Declining quality dimensions, worst first (capped).
     pub declining: Vec<DimensionDrift>,
     /// Declining dimensions beyond the shown top.
@@ -83,6 +111,40 @@ pub struct GraphReport {
 }
 
 impl DesignGraph {
+    /// Count how much of the design carries its own verification.
+    ///
+    /// Deliberately a count and not a detector. Capabilities without a check
+    /// are a real gap and DETECT still raises one; artifacts without their own
+    /// check are worth *knowing* and not worth *asking* about, because the
+    /// answer is usually "the capability's tests cover it" (BL-23).
+    pub fn verification_coverage(&self) -> Result<VerificationCoverage, DynoError> {
+        let mut v = VerificationCoverage {
+            capabilities: 0,
+            capabilities_verified: 0,
+            artifacts: 0,
+            artifacts_verified: 0,
+        };
+        for (node_type, total, verified) in [
+            (
+                node::CAPABILITY,
+                &mut v.capabilities,
+                &mut v.capabilities_verified,
+            ),
+            (node::ARTIFACT, &mut v.artifacts, &mut v.artifacts_verified),
+        ] {
+            for n in self.scan_nodes(node_type)? {
+                *total += 1;
+                if !self
+                    .incoming(&n.node_id, Some(crate::nodes::edge::VERIFIES))?
+                    .is_empty()
+                {
+                    *verified += 1;
+                }
+            }
+        }
+        Ok(v)
+    }
+
     /// Build the [`GraphReport`] — a one-shot aggregation of the deterministic
     /// analyses. See the module docs.
     pub fn graph_report(&self) -> Result<GraphReport, DynoError> {
@@ -95,6 +157,8 @@ impl DesignGraph {
                 total_nodes += n;
             }
         }
+
+        let verification = self.verification_coverage()?;
 
         let mut gaps = self.detect_gaps()?;
         let gap_count = gaps.len();
@@ -137,6 +201,7 @@ impl DesignGraph {
             allocation,
             surprising,
             surprising_truncated,
+            verification,
             declining,
             declining_truncated,
         })
@@ -205,6 +270,17 @@ impl GraphReport {
             } else {
                 let _ = writeln!(m, "God-component(s): {}.\n", a.god_components.join(", "));
             }
+        }
+
+        // Verification coverage — reported, never demanded.
+        if !self.verification.is_empty() {
+            let v = &self.verification;
+            let _ = writeln!(m, "## Verification coverage\n");
+            let _ = writeln!(
+                m,
+                "{}/{} capability(ies) verified; {}/{} artifact(s) carry a check of their own.\n",
+                v.capabilities_verified, v.capabilities, v.artifacts_verified, v.artifacts
+            );
         }
 
         // Surprising couplings.

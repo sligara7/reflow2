@@ -90,7 +90,7 @@ the user's deploy/operate ask.
 | `unconsumed_interface` | an `Interface` a Component `PROVIDES` that nothing `CONSUMES` — a deliberate public contract, or a leftover |
 | `unrealized_capability` | a Capability marked designed has no `Artifact` `REALIZES`-ing it |
 | `unverified_capability` | a realized Capability has no `Verification` |
-| `unverified_artifact` | an `Artifact` has no `Verification` covering it — split from `unverified_capability`, which reported both and so titled a file gap "Nothing verifies reading.py". Both are still detected: proving a capability works does not prove *this file* is what delivers it. The capability key is deliberately unchanged, because gap ids hash it and acknowledgements hang off the id |
+| ~~`unverified_artifact`~~ | **retired** (BL-23). Per-file coverage is counted by `graph_report`'s *Verification coverage* line, not asked as a gap: one `VERIFIES` edge per source file is bookkeeping nobody writes, and it was 22 of 25 gaps on reflow2's own design. The key string is kept because acknowledgement ids hash it |
 
 ### Structural gaps (shared signals with HEAL, but ASKED not fixed)
 `orphan_node`, `dead_end`, `disconnected_cluster`, `single_point_of_failure` — surfaced

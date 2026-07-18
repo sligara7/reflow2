@@ -74,13 +74,18 @@ pub enum GapSource {
     /// resulting id — so changing it would silently expire every capability
     /// acknowledgement a user has made.
     UnverifiedCapability,
-    /// An `Artifact` has no `Verification` covering it.
+    /// **Retired as a gap.** Per-file verification coverage is counted by
+    /// [`DesignGraph::verification_coverage`] and reported by `graph_report`.
     ///
-    /// Split from [`GapSource::UnverifiedCapability`], which reported both and
-    /// titled an artifact gap "Nothing verifies reading.py" — semantically
-    /// right, legibly wrong. The detection is unchanged: a test proving a
-    /// capability works still does not prove this particular file is the thing
-    /// that does it, so both are flagged.
+    /// The reasoning for flagging it was sound — proving a capability works
+    /// does not prove *this file* is what delivers it — and the demand was
+    /// still wrong: one `VERIFIES` edge per source file is bookkeeping nobody
+    /// writes. Modelling reflow2's own design made it 22 of 25 gaps, on a crate
+    /// whose capabilities are all tested. A list that cannot reach zero teaches
+    /// you to skim it, which is the failure this layer exists to prevent.
+    ///
+    /// Kept, like [`GapSource::UnexpectedCoupling`], because acknowledgement
+    /// ids hash the key string.
     UnverifiedArtifact,
     // Interface pairing (the two sides of a contract)
     /// An `Interface` something `CONSUMES` that no Component `PROVIDES` — a
@@ -791,52 +796,40 @@ impl DesignGraph {
         if pop.verifications == 0 {
             return Ok(());
         }
-        // Both Capabilities and Artifacts should carry a Verification once the
-        // verify phase exists — a passing test for a capability does not prove
-        // that *this file* is what delivers it. They are reported under
-        // separate sources so each reads in its own terms: a capability is a
-        // behaviour you confirm, an artifact is a thing you cover.
-        for node_type in [node::CAPABILITY, node::ARTIFACT] {
-            let source = if node_type == node::ARTIFACT {
-                GapSource::UnverifiedArtifact
-            } else {
-                GapSource::UnverifiedCapability
-            };
-            for n in self.scan_nodes(node_type)? {
-                if self.incoming(&n.node_id, Some(edge::VERIFIES))?.is_empty() {
-                    let name = node_name(&n);
-                    let (title, description) = if node_type == node::ARTIFACT {
-                        (
-                            format!("No verification covers “{name}”"),
-                            format!(
-                                "Nothing checks “{name}” itself. A capability it realizes may be \
-                                 proven, which does not show that this file is what delivers it."
-                            ),
-                        )
-                    } else {
-                        (
-                            format!("Nothing verifies “{name}”"),
-                            format!(
-                                "“{name}” has no verification proving it works — how will you \
-                                 confirm it?"
-                            ),
-                        )
-                    };
-                    gaps.push(GapCandidate {
-                        id: gap_id(source, std::slice::from_ref(&n.node_id)),
-                        gap_source: source,
-                        scope: GapScope::Capability,
-                        severity: 0.55,
-                        title,
-                        description,
-                        affected_ids: vec![n.node_id.clone()],
-                        suggested_depth: 2,
-                        evidence: format!(
-                            "{node_type} '{}' has 0 incoming VERIFIES; project has {} verification(s).",
-                            n.node_id, pop.verifications
-                        ),
-                    });
-                }
+        // Capabilities only. An Artifact realizing a verified capability was
+        // once flagged too, on the reasoning that proving the behaviour does
+        // not prove *this file* delivers it. True, and unhelpful: the rule
+        // demanded one VERIFIES edge per source file, which nobody writes.
+        // Modelling reflow2's own design made it 22 of 25 gaps — 88% of the
+        // list, on a crate whose capabilities are all tested — and a list that
+        // cannot reach zero teaches you to skim it.
+        //
+        // The coverage is still counted, by `verification_coverage`, and
+        // reported by `graph_report`. It informs rather than demands, the same
+        // resolution `unexpected_coupling` reached (BL-6b).
+        for n in self.scan_nodes(node::CAPABILITY)? {
+            if self.incoming(&n.node_id, Some(edge::VERIFIES))?.is_empty() {
+                let name = node_name(&n);
+                gaps.push(GapCandidate {
+                    id: gap_id(
+                        GapSource::UnverifiedCapability,
+                        std::slice::from_ref(&n.node_id),
+                    ),
+                    gap_source: GapSource::UnverifiedCapability,
+                    scope: GapScope::Capability,
+                    severity: 0.55,
+                    title: format!("Nothing verifies \u{201c}{name}\u{201d}"),
+                    description: format!(
+                        "\u{201c}{name}\u{201d} has no verification proving it works — how will \
+                         you confirm it?"
+                    ),
+                    affected_ids: vec![n.node_id.clone()],
+                    suggested_depth: 2,
+                    evidence: format!(
+                        "Capability '{}' has 0 incoming VERIFIES; project has {} verification(s).",
+                        n.node_id, pop.verifications
+                    ),
+                });
             }
         }
         Ok(())

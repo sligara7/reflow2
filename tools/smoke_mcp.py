@@ -258,6 +258,12 @@ def run(binary: str, graph_path: str) -> int:
     # so it informs via graph_report instead of demanding an answer.
     c.ok("coupling is not reported as a gap",
          "unexpected_coupling" not in sources, sources)
+    # BL-23: per-file verification coverage is counted, not asked. One VERIFIES
+    # edge per source file was 22 of 25 gaps on reflow2's own design.
+    c.ok("per-file coverage is not reported as a gap",
+         "unverified_artifact" not in sources, sources)
+    cov = s.call("graph_report")["verification"]
+    c.ok("but the coverage number is in the report", cov["capabilities"] >= 1, cov)
     c.ok("but the coupling signal still reaches the report",
          "surprising" in s.call("graph_report"))
 
@@ -311,6 +317,10 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("the linked capability is no longer unrealized", "cap:flight" not in flagged, flagged)
     c.ok("the unbuilt one now is (build phase has begun)", "cap:display" in flagged, flagged)
     c.note("the first link_artifact switches this detector ON — total gap count rising is correct")
+
+    cov = s.call("graph_report")["verification"]
+    c.ok("coverage counts the registered file, without asking about it",
+         cov["artifacts"] >= 1 and cov["artifacts_verified"] == 0, cov)
 
     print("\n== 3b. answer the gaps DETECT raises (the write side) ==")
     before = {g["gap_source"] for g in s.call("detect_gaps")}
