@@ -175,6 +175,52 @@ is also the experiment that would justify revisiting.
 > them for that shape. Export/import is now the migration story rather than a stopgap until a
 > service centralises it.
 
+**BL-26 · Which files does the design depend on, and is `DOCUMENTS` traversable?** — *user,
+2026-07-18.* Prompted by the question "should every document in a repo be captured in the graph —
+what is the purpose of each file?"
+
+*Not every file.* [BL-23](#closed) is the caution: modelling 22 source files as Artifacts made
+them 88% of the gap list. Capturing everything is how a list becomes something people skim. The
+criterion is not "is it a file" but **"would something be wrong if this drifted out of step with
+the design?"** That splits a repo four ways:
+
+| Group | Example | Today |
+|---|---|---|
+| Produces the design | `crates/**/src/*.rs` | ✅ `Artifact` + `REALIZES` + checksum + `reconcile_artifacts` |
+| Describes the design | `docs/*.md`, README | ⚠️ `DOCUMENTS` is in the schema; nothing can create it |
+| Instructs agents | `AGENTS.md`, `COORD.md`, `.github/copilot-instructions.md` | ❌ nothing |
+| No design meaning | `Cargo.lock`, `target/`, generated output | should stay out — this is where the noise would come from |
+
+*The founding evidence is a failure reflow2 should have caught.* In one session on 2026-07-18:
+AGENTS.md's build command was found wrong and fixed; hours later, by accident,
+`.github/copilot-instructions.md` was found carrying **the same stale command**; and
+`docs/backlog.md` grew a duplicated section that nothing noticed until someone went looking. Two
+instruction files disagreeing about how to build the project is a coherence failure, and catching
+coherence failures is the entire point — it was missed because neither file is in any graph.
+
+*This is more than modelling more files.* Two things stand in the way:
+
+1. **`DOCUMENTS` has no write side.** It is declared in `schema/build.yaml` and named in
+   `nodes.rs`, with no constructor and no MCP tool — the recurring lesson below, for the ninth
+   time.
+2. **PROPAGATE does not traverse it.** `propagate.rs` lists `SPECIFIES`/`DOCUMENTS` as
+   *"intentionally not traversed in this increment"*, so even fully wired a change would not
+   ripple to the documents describing it. Making docs coherence-checked means **deciding
+   `DOCUMENTS` is traversable**, and deciding what that implies for blast radius — a change to a
+   Component reaching every doc that mentions it could be useful or could be the next flood.
+   Weigh it against BL-23 before switching it on.
+
+*The self-referential case is the best test available.* reflow2's own records — CHANGELOG,
+backlog, requirements-coverage, COORD — are a hand-maintained golden thread, and four separate
+lapses in one session went uncaught. The self-host probe already models
+`requirements-coverage.md`'s **contents** as 72 Requirements but not the **file** as an Artifact
+documenting them: the graph knows the requirements and not the document that is supposed to track
+them. Extending the probe to the instruction and record files would test this before any of it
+ships.
+
+Size **M** for the write side plus a decision on traversal; **S** if it stops at recording which
+files matter and leaves impact alone.
+
 **BL-20 · Graph export / import, and versioned local backups** — *user, 2026-07-18.* Unblocks
 BL-19's migration half and, through it, BL-18.
 
@@ -334,10 +380,16 @@ Not gaps — decisions, recorded so they aren't rediscovered as bugs.
 
 ## Recurring lesson
 
-Seven times in one session a capability existed in core and was unreachable or unadvertised on
-the surface: `Interface`, HEAL's skill, the `Verification`/operate write side,
-`contain_component`, `graph_id`, `Requirement.status`, and `graph_report` as an answer to
-"where am I". Items 1–3 above are all the same shape.
+A capability exists in core and is unreachable or unadvertised on the surface. Nine instances so
+far: `Interface`, HEAL's skill, the `Verification`/operate write side, `contain_component`,
+`graph_id`, `Requirement.status`, `graph_report` as an answer to "where am I", the whole
+`TemporalFact` / `ABOUT_ENTITY` / `VALID_FROM` / `VALID_TO` layer (schema-complete, zero Rust
+API), and `DOCUMENTS` (declared, named in `nodes.rs`, no constructor and no tool — BL-26).
 
 Before building something new, the higher-yield question is usually: **what does the core
 already do that nothing can reach?**
+
+The sibling lesson, learned the same way: a capability can also be unreachable because nothing
+*points at it*. The consumer kit's skills were installed where three of four harnesses never look
+(BL-22), and `describe_schema` would have been invisible to the people who needed it had the kit
+not been updated in the same change (BL-1). Shipping the code is not shipping the capability.
