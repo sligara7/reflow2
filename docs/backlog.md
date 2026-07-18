@@ -270,9 +270,17 @@ graph.
 The declared schema `version` was not usable as the signal — it is 1 in every domain and has never
 been bumped. Type counts are what actually move, and they caught the 26→27 change from BL-4.
 
-*Still open:* **backup-before-upgrade** in `reflow2_init.py`, and a **backfill** path for additive
-schema changes so old nodes gain new defaults rather than reading `None` (**M**, and it wants
-BL-20's export/import first).
+**Backup-before-upgrade is done.** `reflow2_init.py` exports the design to
+`.reflow2/backups/design-<utc>.json` before it changes anything — beside the graph, never `/tmp`,
+which systemd-tmpfiles clears. A failed export is reported and does not abort the update: the
+update may be exactly what fixes the binary that could not read the graph. `reflow2-mcp --export`
+prints the document to stdout, so a script can take a backup without speaking MCP.
+
+**Backfill is done, and it needed no new code.** Importing applies the *current* schema's
+defaults, so a document written before a property existed comes back carrying it. That is why
+export/import is the migration path rather than bespoke per-change code: export with the old
+build, import with the new, and mixed-vintage nodes resolve themselves. Pinned by
+`importing_an_old_document_backfills_new_defaults`.
 
 **BL-18 · Am I running the current reflow2?** — *user, 2026-07-18.* Extends the update half of
 BL-15, whose local machinery is already built and whose remaining gap this names precisely.

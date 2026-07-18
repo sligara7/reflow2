@@ -32,6 +32,16 @@ This file is the third view: *what changed, and when*.
   than half-loaded. An edge whose endpoints are missing is named in the report, never dropped
   quietly. The document carries a `GraphStamp` saying which reflow2 wrote it.
 
+- **The installer backs the design up before it changes anything** (BL-19). `reflow2_init.py`
+  exports to `.reflow2/backups/design-<utc>.json` — beside the graph, never `/tmp`, which
+  systemd-tmpfiles clears. A failed export is reported and does not abort the update, since the
+  update may be exactly what fixes the binary that could not read the graph. `reflow2-mcp --export`
+  prints the document to stdout so a script can back up without speaking MCP.
+
+  **Backfill needed no new code:** importing applies the current schema's defaults, so a document
+  written before a property existed comes back carrying it. Export with the old build, import with
+  the new, and mixed-vintage nodes resolve themselves.
+
 - **A graph records which reflow2 wrote it** (BL-19). `<graph>.meta.json` sits beside the store —
   never inside the directory RocksDB owns — holding the reflow2 version, schema version, and node
   and edge type counts. `open_rocksdb` reads it, compares, refreshes it, and the server reports any

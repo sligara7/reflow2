@@ -26,6 +26,7 @@ Standard library only.
 from __future__ import annotations
 
 import argparse
+import datetime
 import filecmp
 import re
 import json
@@ -289,6 +290,38 @@ def planned_changes(project: Path) -> list[str]:
     return changes
 
 
+def backup_graph(project: Path, binary: Path) -> str | None:
+    """Export the design before changing anything around it.
+
+    An update replaces the instructions and can precede a rebuilt binary with a
+    different schema. The graph itself is not touched by this script, but the
+    cheapest insurance against the *next* step going wrong is a copy taken
+    before this one — and the export is deterministic, so a backup directory
+    under version control shows what changed in the design rather than a fresh
+    blob each time.
+
+    Kept beside the graph, not in /tmp: systemd-tmpfiles clears that, which
+    would quietly throw away the thing being kept.
+    """
+    graph = project / ".reflow2" / "graph"
+    if not graph.exists():
+        return None  # nothing designed yet
+    out = subprocess.run(
+        [str(binary), "--graph-path", str(graph), "--export"],
+        capture_output=True, text=True, timeout=120,
+    )
+    if out.returncode != 0:
+        # Report rather than abort: a failed backup should not block an update
+        # that might be exactly what fixes the binary that could not read it.
+        first = (out.stderr or "").strip().splitlines()
+        return f"backup SKIPPED — could not export the graph: {first[0] if first else 'unknown error'}"
+    stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    dest = project / ".reflow2" / "backups" / f"design-{stamp}.json"
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(out.stdout)
+    return f"backed the design up to {dest.relative_to(project)}"
+
+
 def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
     if problems := check_skills():
         raise SystemExit(
@@ -296,6 +329,8 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
             + "\n  ".join(problems)
         )
     done = []
+    if note := backup_graph(project, binary):
+        done.append(note)
     for src, rel in FILES:
         dst = project / rel
         dst.parent.mkdir(parents=True, exist_ok=True)

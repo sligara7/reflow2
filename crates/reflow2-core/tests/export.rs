@@ -144,3 +144,47 @@ fn a_bad_document_imports_nothing() {
         "a failed import must leave nothing behind"
     );
 }
+
+/// BL-19's backfill half, and the reason export/import is the migration path
+/// rather than bespoke per-change code: importing applies the *current* schema's
+/// defaults, so a document written before a property existed comes back with it.
+///
+/// Without this, a schema change leaves mixed-vintage nodes — detectors reading
+/// `None` on old ones and a value on new ones, with no error and no marker.
+#[test]
+fn importing_an_old_document_backfills_new_defaults() {
+    // A Requirement as an older reflow2 would have exported it: no `status`,
+    // because the field was not being written yet.
+    let mut doc = a_design().export_graph().unwrap();
+    for n in &mut doc.nodes {
+        if n.node_id == "req:offline" {
+            n.properties.remove("status");
+            n.properties.remove("priority");
+        }
+    }
+    assert!(
+        !doc.nodes
+            .iter()
+            .any(|n| n.node_id == "req:offline" && n.properties.contains_key("status")),
+        "the document under test must genuinely lack the field"
+    );
+
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.import_graph(&doc).unwrap();
+
+    let req = g
+        .get_node(node::REQUIREMENT, "req:offline")
+        .unwrap()
+        .unwrap();
+    assert_eq!(
+        req.properties["status"].as_str(),
+        Some("proposed"),
+        "an old document must come back with the current schema's default, not a hole"
+    );
+    assert_eq!(req.properties["priority"].as_str(), Some("medium"));
+    assert_eq!(
+        req.properties["statement"].as_str(),
+        Some("Must work without a network."),
+        "and nothing it did carry may be lost in the process"
+    );
+}

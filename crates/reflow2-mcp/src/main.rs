@@ -18,6 +18,12 @@ struct Cli {
     /// Directory for the on-disk (RocksDB) design graph. Created if absent.
     #[arg(long, default_value = "./.reflow2/graph")]
     graph_path: String,
+
+    /// Print the whole design to stdout as a portable document and exit,
+    /// instead of serving. The same thing the `export_graph` tool returns —
+    /// available here so a script can back the design up without speaking MCP.
+    #[arg(long)]
+    export: bool,
 }
 
 #[tokio::main]
@@ -33,6 +39,18 @@ async fn main() -> anyhow::Result<()> {
 
     let cli = Cli::parse();
     tracing::info!(graph_path = %cli.graph_path, "opening reflow2 design graph");
+
+    // Export-and-exit runs before the server is built: a backup must be
+    // possible even when the caller has no intention of serving.
+    if cli.export {
+        let graph = reflow2_core::DesignGraph::open_rocksdb(&cli.graph_path)
+            .with_context(|| format!("failed to open design graph at {}", cli.graph_path))?;
+        let doc = graph
+            .export_graph()
+            .context("failed to export the design")?;
+        println!("{}", serde_json::to_string_pretty(&doc)?);
+        return Ok(());
+    }
 
     let (service, provenance) = ReflowService::new_reporting(&cli.graph_path)
         .with_context(|| format!("failed to open design graph at {}", cli.graph_path))?;
