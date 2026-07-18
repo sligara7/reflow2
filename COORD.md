@@ -50,7 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- _(nothing claimed)_
+- BL-5 — @ajs — 2026-07-18 — structure.rs single_point_of_failure selectivity
 
 ## Blocked / waiting
 
