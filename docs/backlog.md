@@ -282,7 +282,7 @@ export/import is the migration path rather than bespoke per-change code: export 
 build, import with the new, and mixed-vintage nodes resolve themselves. Pinned by
 `importing_an_old_document_backfills_new_defaults`.
 
-**BL-18 · Am I running the current reflow2?** — *user, 2026-07-18.* Extends the update half of
+**BL-18 · Am I running the current reflow2? — DONE** — *user, 2026-07-18.* Extends the update half of
 BL-15, whose local machinery is already built and whose remaining gap this names precisely.
 
 `reflow2_init.py` stamps `.reflow2/kit-version.json` with `reflow2_version`, the short `commit`
@@ -294,11 +294,17 @@ the first external user's kit went stale in a day of skill fixes and nothing tol
 The check is cheap because the stamp already exists: `git ls-remote` for the remote HEAD, compare
 against the stamped commit. No clone, no auth, one round-trip.
 
-*Where it fires is the open question.* `reflow2_init.py --check` is the obvious home but only
-helps someone who remembers to run it — the failure mode being fixed. Firing it from the MCP
-server's startup instructions puts it in front of the agent unprompted, at the cost of a network
-call per session; it must degrade silently when offline rather than blocking the loop, and must
-not turn into a nag once someone has *decided* to stay on an older build.
+**Done.** `reflow2_init.py` reports it on `--check` and after every install: `git ls-remote`
+against the remote HEAD, compared to the stamped commit. No clone, no fetch.
+
+*It fires where someone deliberately asks*, not on every server start. A network call per MCP
+session would be intrusive and would hang offline, and this script *is* the act of asking. Any
+failure — offline, no access, no git, slow network — reports "could not check" rather than
+silence, because **"I could not check" must never look like "you are up to date"**. It never
+blocks an install.
+
+When behind, it prints the three-step update in the order that matters, because doing them out of
+order leaves current instructions driving an old server.
 
 *What it must not promise.* Unlike `claude update`, there is nothing to pull: the binary needs a
 ~10-minute RocksDB build, so the check can only report staleness, not resolve it. A real

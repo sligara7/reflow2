@@ -128,6 +128,51 @@ def kit_version() -> dict:
     }
 
 
+REMOTE = "https://github.com/sligara7/reflow2.git"
+
+
+def upstream_head() -> str | None:
+    """The newest commit on the remote's default branch, or None.
+
+    `git ls-remote` needs no clone and no fetch. Returns None on any failure —
+    offline, no access, no git, slow network — because "I could not check" must
+    never look like "you are up to date", and must never block an install.
+    """
+    try:
+        out = subprocess.run(
+            ["git", "ls-remote", REMOTE, "HEAD"],
+            capture_output=True, text=True, timeout=15,
+        )
+        if out.returncode != 0 or not out.stdout.strip():
+            return None
+        return out.stdout.split()[0][:7]
+    except Exception:
+        return None
+
+
+def staleness(local_commit: str | None) -> str:
+    """One line on whether this checkout is behind the remote.
+
+    Deliberately not a nag and deliberately not automatic on every server start:
+    a network call per session would be intrusive and would hang offline. It runs
+    when someone deliberately asks — which is what this script is.
+    """
+    if local_commit is None:
+        return "checkout: unknown (no git metadata here)"
+    head = upstream_head()
+    if head is None:
+        return "upstream: could not check (offline, or no access to the repo)"
+    if head.startswith(local_commit) or local_commit.startswith(head):
+        return f"upstream: current ({local_commit})"
+    return (
+        f"upstream: BEHIND — this checkout is at {local_commit}, the remote is at {head}.\n"
+        f"  Update in this order, or your project gets current instructions on an old server:\n"
+        f"    1. git -C {REPO} pull --rebase\n"
+        f"    2. cargo build -p reflow2-mcp --release      # rebuild before re-running this\n"
+        f"    3. python3 {REPO}/tools/reflow2_init.py <your project>"
+    )
+
+
 def find_binary() -> Path | None:
     for build in ("release", "debug"):
         p = REPO / "target" / build / "reflow2-mcp"
@@ -403,6 +448,7 @@ def main() -> int:
             print(f"installed from reflow2 {previously.get('reflow2_version')} "
                   f"({previously.get('commit')})")
         print(f"now at reflow2 {kit_version()['reflow2_version']} ({kit_version()['commit']})")
+        print(staleness(kit_version().get("commit")))
         print()
         if changes:
             print(f"{len(changes)} change(s) a run would make:")
@@ -438,6 +484,7 @@ def main() -> int:
         print(f"Now: reflow2 {kit_version()['reflow2_version']} ({kit_version()['commit']})")
         print("\nYour design graph and your own files were not touched.")
     else:
+        print(f"{staleness(kit_version().get('commit'))}\n")
         print("Deliberately NOT created: src/, build files, language choice — what kind of")
         print("project this is comes out of the design, not out of a scaffold.")
         print()
