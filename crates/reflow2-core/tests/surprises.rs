@@ -252,7 +252,7 @@ fn detection_is_stable_across_runs_on_an_unchanged_graph() {
         );
     }
 
-    let mut gap_ids = |g: &DesignGraph| -> Vec<String> {
+    let gap_ids = |g: &DesignGraph| -> Vec<String> {
         let mut v: Vec<String> = g
             .detect_gaps()
             .unwrap()
