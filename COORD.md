@@ -60,7 +60,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
-- BL-19 (stamp+check half): a graph records which reflow2 wrote it — @ajs — 2026-07-18 — pending
+- BL-19 (stamp+check half): a graph records which reflow2 wrote it — @ajs — 2026-07-18 — `2764eec`
 - BL-21: report-friction skill; installer validates skill frontmatter — @ajs — 2026-07-18 — `31064f6`
 - BL-25: an answered question stays visible while its gap is open — @ajs — 2026-07-18 — `20b7943`
 - BL-4: asked questions outlive the session (new Question node type) — @ajs — 2026-07-18 — `be510b4`
