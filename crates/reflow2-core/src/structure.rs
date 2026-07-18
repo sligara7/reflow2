@@ -20,7 +20,7 @@ use std::collections::{HashMap, HashSet};
 
 use dynograph_core::DynoError;
 use dynograph_graph::{
-    Graph, GraphBuilder, betweenness_centrality, connected_components, cut_structure,
+    Graph, GraphBuilder, betweenness_centrality, connected_components, cut_structure, leiden,
 };
 
 use crate::graph::DesignGraph;
@@ -89,6 +89,26 @@ impl DesignNetwork {
             .enumerate()
             .map(|(idx, &s)| (self.id_of(idx).to_string(), s))
             .collect())
+    }
+
+    /// Leiden community label per node id (connected communities). Used to spot
+    /// coupling edges that bridge otherwise-distant communities.
+    pub(crate) fn communities(&self, resolution: f64) -> Result<HashMap<String, usize>, DynoError> {
+        let c = leiden(&self.graph, resolution)
+            .map_err(|e| DynoError::Query(format!("leiden: {e}")))?;
+        Ok((0..self.node_count())
+            .map(|i| (self.id_of(i).to_string(), c.labels[i]))
+            .collect())
+    }
+
+    /// Undirected degree of a node by id (0 if it isn't in the design network).
+    pub(crate) fn degree_of(&self, id: &str) -> usize {
+        self.graph.idx_of(id).map(|i| self.degree(i)).unwrap_or(0)
+    }
+
+    /// Whether a node participates in the design network.
+    pub(crate) fn contains(&self, id: &str) -> bool {
+        self.graph.idx_of(id).is_some()
     }
 
     /// Count of components with ≥2 nodes — the "non-trivial subsystems".

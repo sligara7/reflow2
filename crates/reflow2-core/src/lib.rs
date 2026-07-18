@@ -37,6 +37,7 @@ pub mod nodes;
 pub mod propagate;
 pub mod schema;
 pub mod structure;
+pub mod surprises;
 pub mod temporal;
 
 pub use allocate::{
@@ -55,6 +56,7 @@ pub use llm::{
 };
 pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOptions};
 pub use schema::load_schema;
+pub use surprises::SurprisingConnection;
 pub use temporal::{ChangeAction, ChangeRecord, ChangeType, EpochType, parse_snapshot_state};
 
 // Re-export the foundation types that appear in this crate's public API, so
