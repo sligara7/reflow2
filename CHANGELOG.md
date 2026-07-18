@@ -15,12 +15,18 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
-### Fixed
+### Added
 
-- **Every tool returns an object.** MCP defines `structuredContent` as an object, so seven
-  list-returning tools — including `detect_gaps` — were malformed and rejected outright by
-  spec-compliant clients. Lists now arrive as `{"count": n, "items": [...]}`. Found by a Grok
-  trial; three home-grown test layers missed it because each was a client we wrote.
+- **The assembly hierarchy is reachable** (BL-2). `contain_component` nests one Component inside
+  another, and `add_component` takes an optional `level`. Both were needed: `hierarchy_issues`
+  had shipped as a read tool with no writer to feed it, returning `[]` for want of input rather
+  than because a design was healthy. Exposing the containment alone would have been worse than
+  nothing — every component defaults to `component`, so each nesting would have reported a false
+  `level_mismatch`.
+
+- **`set_requirement_status`** (BL-3) — `proposed` / `accepted` / `deferred` / `dropped` / `met`.
+  The field was in the schema and read by DETECT, but nothing could write it, so a blind trial
+  put the word "ASSUMED" in the statement text instead.
 
 ### Changed
 
@@ -41,42 +47,6 @@ This file is the third view: *what changed, and when*.
   with `retired` set and no candidate, because a list that shrinks for reasons the user cannot
   see is the dishonesty the open/reviewed split exists to prevent. `ReviewedGap` gains `gap_id`
   and `retired`; `gap` is now optional.
-
-### Fixed
-
-- **The kit's skills reach every agent, not just one** (BL-22). Skills were installed to
-  `.grok/skills/` alone — the narrowest-reach of the four harnesses — so a project bootstrapped
-  by `reflow2_init.py` and opened in Claude Code had an AGENTS.md naming seven skills the agent
-  could not load. They now install to `.claude/skills/` (read by Claude Code, OpenCode **and**
-  Copilot/VS Code) as well as `.grok/skills/`.
-
-  This also explains a finding from the Grok trial that had looked like a subtle registration
-  problem: opencode searches `.opencode/`, `.claude/` and `.agents/`, and the kit had written
-  `.grok/`. The directory was never on the search path.
-
-- **MCP config for every agent, merged rather than overwritten.** `reflow2_init.py` now writes
-  `.mcp.json`, `opencode.json` and `.vscode/mcp.json` from one generator, since only Grok reads
-  another tool's format. All three are merged into: `opencode.json` is that tool's *entire*
-  config, and any project may already run other MCP servers — both must survive.
-
-  Merging fixes a silent failure in the process. The installer previously bailed out whenever
-  `.mcp.json` existed without a `reflow2` entry, so **any project already using one MCP server
-  never got reflow2 installed at all** — while the run still reported success.
-
-### Added
-
-- **The assembly hierarchy is reachable** (BL-2). `contain_component` nests one Component inside
-  another, and `add_component` takes an optional `level`. Both were needed: `hierarchy_issues`
-  had shipped as a read tool with no writer to feed it, returning `[]` for want of input rather
-  than because a design was healthy. Exposing the containment alone would have been worse than
-  nothing — every component defaults to `component`, so each nesting would have reported a false
-  `level_mismatch`.
-
-- **`set_requirement_status`** (BL-3) — `proposed` / `accepted` / `deferred` / `dropped` / `met`.
-  The field was in the schema and read by DETECT, but nothing could write it, so a blind trial
-  put the word "ASSUMED" in the statement text instead.
-
-### Changed
 
 - **Artifact verification gaps read as being about files** (BL-6). `unverified_capability`
   reported Capabilities *and* Artifacts, titling the latter "Nothing verifies reading.py" —
@@ -119,13 +89,37 @@ This file is the third view: *what changed, and when*.
   place, reports what changed, and never touches the design graph, your files, or a customised
   `.mcp.json`.
 
-### Changed
-
 - **`AGENTS.md` is now the primary instruction file**, per the [agents.md](https://agents.md)
   convention; `CLAUDE.md` is a pointer. The build commands previously lived only in `CLAUDE.md`,
   which non-Claude agents never read.
 - `COORD.md` claim board, `.gitattributes` union merge for the shared records, and pull-first in
   every entry point.
+
+### Fixed
+
+- **Every tool returns an object.** MCP defines `structuredContent` as an object, so seven
+  list-returning tools — including `detect_gaps` — were malformed and rejected outright by
+  spec-compliant clients. Lists now arrive as `{"count": n, "items": [...]}`. Found by a Grok
+  trial; three home-grown test layers missed it because each was a client we wrote.
+
+- **The kit's skills reach every agent, not just one** (BL-22). Skills were installed to
+  `.grok/skills/` alone — the narrowest-reach of the four harnesses — so a project bootstrapped
+  by `reflow2_init.py` and opened in Claude Code had an AGENTS.md naming seven skills the agent
+  could not load. They now install to `.claude/skills/` (read by Claude Code, OpenCode **and**
+  Copilot/VS Code) as well as `.grok/skills/`.
+
+  This also explains a finding from the Grok trial that had looked like a subtle registration
+  problem: opencode searches `.opencode/`, `.claude/` and `.agents/`, and the kit had written
+  `.grok/`. The directory was never on the search path.
+
+- **MCP config for every agent, merged rather than overwritten.** `reflow2_init.py` now writes
+  `.mcp.json`, `opencode.json` and `.vscode/mcp.json` from one generator, since only Grok reads
+  another tool's format. All three are merged into: `opencode.json` is that tool's *entire*
+  config, and any project may already run other MCP servers — both must survive.
+
+  Merging fixes a silent failure in the process. The installer previously bailed out whenever
+  `.mcp.json` existed without a `reflow2` entry, so **any project already using one MCP server
+  never got reflow2 installed at all** — while the run still reported success.
 
 ## [0.1.0] — 2026-07-18
 
