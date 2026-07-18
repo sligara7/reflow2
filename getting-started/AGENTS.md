@@ -77,6 +77,9 @@ reflow2 phrases the question; **you** are the language model that fills it in:
   `create_edge`, `get_node`, `scan_nodes`, `delete_node`, `apply_heal`.
 - **As-built:** `link_artifact`, `add_artifact`, `realizes`, `reconcile_artifacts`,
   `set_artifact_checksum`.
+- **Verify & operate:** `add_verification`, `verifies`, `set_verification_status`, `add_release`,
+  `add_environment`, `add_resource`, `deploy_to`, `require_resource`.
+- **Decisions:** `add_decision`, `governed_by` — record why a choice was made, not just what.
 - **Change over time:** `add_epoch`, `add_change_event`, `record_change`.
 - **Ask the user:** `gap_to_prompt`.
 

@@ -39,12 +39,14 @@ pub mod hierarchy;
 pub mod ingest;
 pub mod llm;
 pub mod nodes;
+pub mod operate;
 pub mod propagate;
 pub mod report;
 pub mod schema;
 pub mod structure;
 pub mod surprises;
 pub mod temporal;
+pub mod verify;
 
 pub use agent::{AgentAnswer, AgentBackend, AgentPrompt, PromptCollector, prompt_id};
 pub use allocate::{

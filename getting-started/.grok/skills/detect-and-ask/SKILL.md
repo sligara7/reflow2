@@ -21,8 +21,20 @@ reflow2 surfaces the decisions a stateless agent would make silently. Turn them 
       `{ "status": "ok", "prompt": { "question", "rephrase_degraded" } }`.
    d. Ask the **user** that `question`. (If `rephrase_degraded` is true, the raw wording is
       used — still ask it.)
-3. Take the user's answer and write it back into the graph: a new/updated `add_requirement`, a
-   node property via `create_node`, or a link (`satisfies`/`allocate`). Never discard it.
+3. Take the user's answer and write it back into the graph. There is a typed tool for every gap
+   the detector raises — use it rather than generic `create_node`:
+
+   | Gap | Record the answer with |
+   |---|---|
+   | `unsatisfied_requirement` / `unallocated_capability` | `add_capability` + `satisfies`, `allocate` |
+   | `unprovided_interface` | `add_interface` + `provides` / `consumes` |
+   | `unrealized_capability` | `link_artifact` (see **link-artifacts**) |
+   | `build_without_verification`, `unverified_capability` | `add_verification` + `verifies` |
+   | `no_deploy_operate` | `add_release`, `add_environment`, `deploy_to`, `add_resource`, `require_resource` |
+   | a choice between real alternatives | `add_decision` + `governed_by` — record *why*, not just what |
+
+   Never discard the answer. If none of these fit, `create_node`/`create_edge` take any schema
+   type, but prefer the typed tool: it supplies the required properties for you.
 4. Re-run `detect_gaps` to confirm the gap is closed and nothing new opened.
 
 Do this **before** writing code. A gap answered now is a requirement traced forever; a gap

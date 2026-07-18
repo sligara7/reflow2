@@ -255,6 +255,28 @@ impl DesignGraph {
         self.create_node(node::INTERFACE, id, Props::new().set("name", name))
     }
 
+    /// P2 · Structure — a recorded decision with its rationale (an ADR, in
+    /// software terms). `name` and `decision` are required; `rationale` is
+    /// optional but is the part worth having — HEAL raises a `contradiction`
+    /// when two nodes disagree with no Decision resolving them, and a Decision
+    /// without a reason does not actually resolve anything.
+    pub fn add_decision(
+        &mut self,
+        id: &str,
+        name: &str,
+        decision: &str,
+        rationale: Option<&str>,
+    ) -> Result<StoredNode, DynoError> {
+        self.create_node(
+            node::DECISION,
+            id,
+            Props::new()
+                .set("name", name)
+                .set("decision", decision)
+                .set_opt("rationale", rationale),
+        )
+    }
+
     // ---- Typed golden-thread edges ----------------------------------------
 
     /// `Project CONTAINS child` — the containment spine (axis Y).
@@ -321,6 +343,26 @@ impl DesignGraph {
             capability_id,
             node::COMPONENT,
             component_id,
+            Props::new(),
+        )
+    }
+
+    /// `node GOVERNED_BY Decision/DesignRule` — the node is shaped by a
+    /// recorded decision. `from_type` and `to_type` are required: the schema
+    /// allows any endpoints (`from: "*"`, `to: "*"`).
+    pub fn governed_by(
+        &mut self,
+        from_type: &str,
+        from_id: &str,
+        to_type: &str,
+        to_id: &str,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::GOVERNED_BY,
+            from_type,
+            from_id,
+            to_type,
+            to_id,
             Props::new(),
         )
     }

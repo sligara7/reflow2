@@ -19,6 +19,7 @@ pub mod node {
     // P2 · Structure (structure.yaml)
     pub const COMPONENT: &str = "Component";
     pub const INTERFACE: &str = "Interface";
+    pub const DECISION: &str = "Decision";
     // P3 · Realization (build.yaml)
     pub const ARTIFACT: &str = "Artifact";
     pub const FRAGMENT: &str = "Fragment";
@@ -47,6 +48,8 @@ pub mod edge {
     pub const SATISFIES: &str = "SATISFIES";
     /// `Capability → Component` — the WHAT→WHERE allocation binding.
     pub const ALLOCATED_TO: &str = "ALLOCATED_TO";
+    /// `* → Decision/DesignRule` — the node is shaped by a recorded decision.
+    pub const GOVERNED_BY: &str = "GOVERNED_BY";
     /// `Component → Interface` — the component that exposes a contract.
     pub const PROVIDES: &str = "PROVIDES";
     /// `* → Interface` — a Component/Actor that depends on a contract. Paired
@@ -70,11 +73,16 @@ pub mod edge {
     /// `Fragment → *` — the fragment that produced/updated a node (provenance).
     pub const YIELDED: &str = "YIELDED";
 
-    // Axis Z · change over time (temporal.yaml)
     /// `DesignEpoch → DesignEpoch` — one epoch comes before another (ordering).
     pub const PRECEDES: &str = "PRECEDES";
     /// `DesignEpoch → DesignEpoch` — one epoch nests inside a larger one.
     pub const CONTAINS_EPOCH: &str = "CONTAINS_EPOCH";
+    /// `Release → Environment` — a packaged version runs in an environment.
+    pub const DEPLOYED_TO: &str = "DEPLOYED_TO";
+    /// `* → Resource` — a Component or Release consumes a real-world resource.
+    pub const REQUIRES_RESOURCE: &str = "REQUIRES_RESOURCE";
+
+    // Axis Z · change over time (temporal.yaml)
     /// `* → DesignEpoch` — a Snapshot or ChangeEvent is pinned to its epoch.
     pub const AT_EPOCH: &str = "AT_EPOCH";
     /// `ChangeEvent → *` — the node a ChangeEvent added/modified/removed.

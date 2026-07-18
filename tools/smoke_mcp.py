@@ -125,6 +125,8 @@ def run(binary: str, graph_path: str) -> int:
         "genesis", "detect_gaps", "gap_to_prompt", "propagate_from",
         "add_interface", "provides", "consumes",
         "link_artifact", "reconcile_artifacts", "set_artifact_checksum",
+        "add_verification", "verifies", "add_release", "add_environment",
+        "deploy_to", "add_decision", "governed_by",
         "detect_defects", "propose_heal",
     ):
         c.ok(f"tool exposed: {expected}", expected in names)
@@ -194,6 +196,37 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("the linked capability is no longer unrealized", "cap:flight" not in flagged, flagged)
     c.ok("the unbuilt one now is (build phase has begun)", "cap:display" in flagged, flagged)
     c.note("the first link_artifact switches this detector ON — total gap count rising is correct")
+
+    print("\n== 3b. answer the gaps DETECT raises (the write side) ==")
+    before = {g["gap_source"] for g in s.call("detect_gaps")}
+    c.ok("verification gap is raised", "build_without_verification" in before, before)
+    c.ok("deploy/operate gap is raised", "no_deploy_operate" in before, before)
+
+    s.call("add_verification", {"id": "ver:flight", "name": "Ball flight tests",
+                                "method": "test", "level": "unit"})
+    s.call("verifies", {"verification_id": "ver:flight",
+                        "target_type": "Capability", "target_id": "cap:flight"})
+    s.call("add_release", {"id": "rel:v1", "name": "Smoke v1", "version": "1.0.0"})
+    s.call("add_environment", {"id": "env:prod", "name": "Production",
+                               "env_type": "production"})
+    s.call("deploy_to", {"release_id": "rel:v1", "environment_id": "env:prod",
+                         "status": "active"})
+    s.call("add_decision", {"id": "dec:engine", "name": "Custom physics",
+                            "decision": "Write our own physics rather than use a library.",
+                            "rationale": "Softball arcs need tuning a general engine won't give."})
+    s.call("governed_by", {"from_type": "Component", "from_id": "cmp:physics",
+                           "to_type": "Decision", "to_id": "dec:engine"})
+
+    after = {g["gap_source"] for g in s.call("detect_gaps")}
+    c.ok("verification gap closed", "build_without_verification" not in after, after)
+    c.ok("deploy/operate gap closed", "no_deploy_operate" not in after, after)
+
+    s.call("set_verification_status", {"verification_id": "ver:flight",
+                                       "status": "failing"})
+    radius = s.call("propagate_from", {"seed_ids": ["ver:flight"]})
+    c.ok("a failing check reaches the requirement it protects",
+         any(n["node_id"] == "req:physics" for n in radius["impacted"]),
+         [n["node_id"] for n in radius["impacted"]])
 
     print("\n== 4. reconcile: nothing changed ==")
     r = s.call("reconcile_artifacts", {"observed": [

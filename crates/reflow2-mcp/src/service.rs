@@ -208,6 +208,107 @@ pub struct LinkArtifactReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+pub struct VerificationReq {
+    pub id: String,
+    pub name: String,
+    /// `test` (default) / `review` / `simulation` / `inspection` / `measurement` / `analysis`.
+    #[serde(default)]
+    pub method: Option<String>,
+    /// `unit` (default) / `integration` / `system` / `acceptance`.
+    #[serde(default)]
+    pub level: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct VerificationStatusReq {
+    pub verification_id: String,
+    /// `planned` / `passing` / `failing` / `skipped` / `blocked`.
+    pub status: String,
+    #[serde(default)]
+    pub last_run_at: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct VerifiesReq {
+    pub verification_id: String,
+    /// Node type being verified (e.g. `Capability`, `Artifact`, `Component`).
+    pub target_type: String,
+    pub target_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct ReleaseReq {
+    pub id: String,
+    pub name: String,
+    #[serde(default)]
+    pub version: Option<String>,
+    /// `container` (default) / `package` / `binary` / `bundle` / `physical_build` / `publication`.
+    #[serde(default)]
+    pub unit_type: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct EnvironmentReq {
+    pub id: String,
+    pub name: String,
+    /// `production` (default) / `development` / `staging` / `field` / `lab` / `physical_site`.
+    #[serde(default)]
+    pub env_type: Option<String>,
+    /// Cloud region, host, physical site, or jurisdiction.
+    #[serde(default)]
+    pub location: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct ResourceReq {
+    pub id: String,
+    pub name: String,
+    /// Who supplies it (cloud provider, vendor, utility).
+    #[serde(default)]
+    pub provider: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct DeployToReq {
+    pub release_id: String,
+    pub environment_id: String,
+    /// `planned` / `active` / `rolled_back`.
+    #[serde(default)]
+    pub status: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct RequireResourceReq {
+    /// Source node type (e.g. `Component`, `Release`).
+    pub from_type: String,
+    pub from_id: String,
+    pub resource_id: String,
+    /// `optional` / `recommended` / `required`.
+    #[serde(default)]
+    pub criticality: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct DecisionReq {
+    pub id: String,
+    pub name: String,
+    /// What was decided.
+    pub decision: String,
+    /// Why — the part worth recording.
+    #[serde(default)]
+    pub rationale: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct GovernedByReq {
+    pub from_type: String,
+    pub from_id: String,
+    /// Usually `Decision` or `DesignRule`.
+    pub to_type: String,
+    pub to_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
 pub struct TypedIdReq {
     pub node_type: String,
     pub id: String,
@@ -623,6 +724,179 @@ impl ReflowService {
         let mut g = self.graph.lock().await;
         ok_json(EdgeDto::from(
             g.contains(&req.project_id, &req.child_type, &req.child_id)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    // ---- P4 Verification / P5 Operation / Decisions (the write side) ----
+
+    #[tool(
+        description = "Record a Verification — a check that something meets its intent: a test, a \
+                       review, a simulation, a physical inspection, a measurement. Answers the \
+                       `build_without_verification` and `unverified_capability` gaps. Pair it with \
+                       `verifies` to say what it checks."
+    )]
+    pub async fn add_verification(
+        &self,
+        Parameters(req): Parameters<VerificationReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.add_verification(
+                &req.id,
+                &req.name,
+                req.method.as_deref(),
+                req.level.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Set a Verification's outcome (planned/passing/failing/skipped/blocked), \
+                       preserving what the check is. A failing check is a live signal: \
+                       `propagate_from` it to see which capability and requirement it affects."
+    )]
+    pub async fn set_verification_status(
+        &self,
+        Parameters(req): Parameters<VerificationStatusReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.set_verification_status(
+                &req.verification_id,
+                &req.status,
+                req.last_run_at.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(description = "Link a Verification to what it checks (VERIFIES).")]
+    pub async fn verifies(
+        &self,
+        Parameters(req): Parameters<VerifiesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.verifies(&req.verification_id, &req.target_type, &req.target_id)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record a Release — a packaged, operable version: a container image, a \
+                       published package, a manufactured build. Part of answering the \
+                       `no_deploy_operate` gap."
+    )]
+    pub async fn add_release(
+        &self,
+        Parameters(req): Parameters<ReleaseReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.add_release(
+                &req.id,
+                &req.name,
+                req.version.as_deref(),
+                req.unit_type.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record an Environment — where a Release runs: a cloud region, a lab bench, \
+                       a physical site. More than a deploy target; it is the context whose rules \
+                       the design must satisfy."
+    )]
+    pub async fn add_environment(
+        &self,
+        Parameters(req): Parameters<EnvironmentReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.add_environment(
+                &req.id,
+                &req.name,
+                req.env_type.as_deref(),
+                req.location.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record a Resource the built thing needs — a database, a queue, a secret, a \
+                       GPU, power, bandwidth."
+    )]
+    pub async fn add_resource(
+        &self,
+        Parameters(req): Parameters<ResourceReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.add_resource(&req.id, &req.name, req.provider.as_deref())
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(description = "Deploy a Release to an Environment (planned/active/rolled_back).")]
+    pub async fn deploy_to(
+        &self,
+        Parameters(req): Parameters<DeployToReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.deploy_to(&req.release_id, &req.environment_id, req.status.as_deref())
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record that a Component or Release needs a Resource, with how critical it \
+                       is (optional/recommended/required)."
+    )]
+    pub async fn require_resource(
+        &self,
+        Parameters(req): Parameters<RequireResourceReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.require_resource(
+                &req.from_type,
+                &req.from_id,
+                &req.resource_id,
+                req.criticality.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record a Decision and why it was made (an ADR). Use this whenever the user \
+                       chooses between real alternatives — the rationale is what stops the choice \
+                       being silently reversed later. Link it with `governed_by`."
+    )]
+    pub async fn add_decision(
+        &self,
+        Parameters(req): Parameters<DecisionReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.add_decision(&req.id, &req.name, &req.decision, req.rationale.as_deref())
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(description = "Link a node to the Decision or DesignRule that shapes it (GOVERNED_BY).")]
+    pub async fn governed_by(
+        &self,
+        Parameters(req): Parameters<GovernedByReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.governed_by(&req.from_type, &req.from_id, &req.to_type, &req.to_id)
                 .map_err(dyno_err)?,
         ))
     }

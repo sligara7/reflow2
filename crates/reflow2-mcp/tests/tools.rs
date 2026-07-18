@@ -430,3 +430,105 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
     assert_eq!(after["findings"].as_array().unwrap().len(), 0);
     assert_eq!(after["unchanged"], 1);
 }
+
+/// The write side over the surface: DETECT asks for a Verification and a
+/// deployment, and the agent can now record both without generic create_node.
+#[tokio::test]
+async fn the_write_side_can_answer_what_detect_asks_for() {
+    let s = seeded().await;
+    j!(s.allocate(Parameters(EdgePairReq {
+        from_id: "cap:flight".into(),
+        to_id: "cmp:physics".into()
+    })));
+    j!(s.link_artifact(Parameters(LinkArtifactReq {
+        artifact_id: "art:flight".into(),
+        name: "BallFlight.cs".into(),
+        location: Some("src/BallFlight.cs".into()),
+        artifact_type: Some("code".into()),
+        target_type: "Capability".into(),
+        target_id: "cap:flight".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: Some("sha256:v1".into()),
+    })));
+
+    let before: Vec<String> = j!(s.detect_gaps())
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|g| g["gap_source"].as_str().unwrap_or("").to_string())
+        .collect();
+    assert!(
+        before.contains(&"build_without_verification".to_string()),
+        "{before:?}"
+    );
+    assert!(
+        before.contains(&"no_deploy_operate".to_string()),
+        "{before:?}"
+    );
+
+    // Answer both, using the typed tools.
+    j!(s.add_verification(Parameters(VerificationReq {
+        id: "ver:flight".into(),
+        name: "Ball flight tests".into(),
+        method: Some("test".into()),
+        level: Some("unit".into()),
+    })));
+    j!(s.verifies(Parameters(VerifiesReq {
+        verification_id: "ver:flight".into(),
+        target_type: "Capability".into(),
+        target_id: "cap:flight".into(),
+    })));
+    j!(s.add_release(Parameters(ReleaseReq {
+        id: "rel:v1".into(),
+        name: "Softball v1".into(),
+        version: Some("1.0.0".into()),
+        unit_type: Some("bundle".into()),
+    })));
+    j!(s.add_environment(Parameters(EnvironmentReq {
+        id: "env:itch".into(),
+        name: "itch.io".into(),
+        env_type: Some("production".into()),
+        location: None,
+    })));
+    j!(s.deploy_to(Parameters(DeployToReq {
+        release_id: "rel:v1".into(),
+        environment_id: "env:itch".into(),
+        status: Some("active".into()),
+    })));
+
+    let after: Vec<String> = j!(s.detect_gaps())
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|g| g["gap_source"].as_str().unwrap_or("").to_string())
+        .collect();
+    assert!(
+        !after.contains(&"build_without_verification".to_string()),
+        "the verification gap must close, got {after:?}"
+    );
+    assert!(
+        !after.contains(&"no_deploy_operate".to_string()),
+        "the deploy/operate gap must close, got {after:?}"
+    );
+
+    // And a failing check reaches the requirement behind it.
+    j!(s.set_verification_status(Parameters(VerificationStatusReq {
+        verification_id: "ver:flight".into(),
+        status: "failing".into(),
+        last_run_at: None,
+    })));
+    let radius = j!(s.propagate_from(Parameters(PropagateFromReq {
+        seed_ids: vec!["ver:flight".into()],
+        max_depth: None,
+    })));
+    assert!(
+        radius["impacted"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|n| n["node_id"] == "req:physics"),
+        "a failing check must reach the requirement it ultimately protects"
+    );
+}

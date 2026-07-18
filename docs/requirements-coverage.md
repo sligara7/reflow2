@@ -16,7 +16,7 @@ status. It reflects the deterministic, LLM-free core built so far (build-order s
 
 1. **This matrix** — the requirement→code→test mapping below. Requirement IDs (`[IP-1]`, …)
    are extracted from the process docs.
-2. **Automated gates** — `cargo test --no-default-features` (139 tests), `cargo clippy`,
+2. **Automated gates** — `cargo test --no-default-features` (152 tests), `cargo clippy`,
    `cargo fmt --check`, and `python3 tools/validate_schema.py` (schema conforms to
    dynograph-core). These are the executable evidence the matrix cells point at.
 3. **The deferral list** — everything marked ⬜/🟡 is a named, tracked gap; nothing that the
@@ -251,15 +251,21 @@ agent learns to ignore gap output.
 
 | ID | The gap DETECT emits | Asking the user to record | Write side | Status |
 |----|----------------------|---------------------------|-----------|--------|
-| WS-1 | `build_without_verification`, `unverified_capability` | `Verification` (+ `VERIFIES`) | none | ⬜ |
-| WS-2 | `no_deploy_operate` | `Release` / `Environment` / `Resource` (+ `DEPLOYED_TO`, `REQUIRES_RESOURCE`) | none | ⬜ |
-| WS-3 | HEAL `contradiction` → "Decision" content stub | `Decision` (+ `GOVERNED_BY`) | none | ⬜ |
+| WS-1 | `build_without_verification`, `unverified_capability` | `Verification` (+ `VERIFIES`) | `verify.rs`: `add_verification`, `verifies`, `set_verification_status` + MCP tools | ✅ |
+| WS-2 | `no_deploy_operate` | `Release` / `Environment` / `Resource` (+ `DEPLOYED_TO`, `REQUIRES_RESOURCE`) | `operate.rs`: `add_release`, `add_environment`, `add_resource`, `deploy_to`, `require_resource` + MCP tools | ✅ |
+| WS-3 | HEAL `contradiction` → "Decision" content stub | `Decision` (+ `GOVERNED_BY`) | `graph.rs`: `add_decision`, `governed_by` + MCP tools | ✅ |
 | WS-4 | GS-9 compliance gaps (deferred) | `EnvironmentRule` (+ `OPERATES_IN`, `IMPOSES`, `COMPLIES_WITH`, `VIOLATES_RULE`) | none | ⬜ |
-| WS-5 | — (schema-only, no detector either) | `QualityGate` | none | ⬜ |
+| WS-5 | — (no detector asks for it) | `QualityGate` | none | ⬜ |
 
-`Interface`/`PROVIDES`/`CONSUMES` were in this table until the interface layer landed; that fix is
-the template for the rest. WS-2 is the prerequisite for the as-fielded view (audit item 2) — the
-schema, propagation, and detection already exist, so the work *is* the write side.
+Evidence for WS-1..3: `tests/write_side.rs` (12) asserts the round trip that matters — the gap
+fires, the user records what it asked for, the gap closes — plus
+`reflow2-mcp/tests/tools.rs::the_write_side_can_answer_what_detect_asks_for` over the surface, and
+the typed tools are named per-gap in the `detect-and-ask` skill.
+
+**WS-4 and WS-5 stay deferred on purpose.** Nothing reads or asks for either type: GS-9 compliance
+detection is itself deferred, and `QualityGate` has no detector at all. Adding constructors for
+types nothing consumes would build the mirror image of the problem this section exists to record —
+a write side with no read side. Each should land with its detector, not before.
 
 ## Cross-cutting project rules — [AGENTS.md](../AGENTS.md)
 
