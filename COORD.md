@@ -100,7 +100,7 @@ recoverable state; a bad merge on `main` is not.
 - **A change is done** when `cargo test --no-default-features`, `cargo clippy
   --no-default-features --all-targets` and `cargo fmt --check` are clean, and
   `python3 tools/validate_schema.py` prints OK after any schema edit — see
-  [CLAUDE.md](CLAUDE.md).
+  [AGENTS.md](AGENTS.md).
 - **Update the records in the same change**, not afterwards: coverage matrix when a status moves,
   CHANGELOG when a user would notice, backlog when an item is finished or discovered.
 - **Findings from real use** (a trial, a session that went wrong) go in
