@@ -74,20 +74,38 @@ project root, create `.mcp.json` — **grok build and claude code both read this
 Alternatives for grok build: `grok mcp add`, or the in-session `/mcps` modal, or an entry in
 `~/.grok/config.toml` — all read the same server definition.
 
-## 4. Verify
+## 4. Verify the build works (before wiring up your agent)
 
-Start your agent in the project repo and ask it to list its tools, or run reflow2's own smoke
-check from the reflow2 repo:
+Run this checklist from the `reflow2` repo. Each line prints **PASS** or **FAIL** — you should
+see three PASSes. It uses a throwaway graph in `/tmp`, so it touches nothing else.
 
 ```bash
+BIN="$(pwd)/target/release/reflow2-mcp"          # the binary you built
+G="/tmp/reflow2-check"; rm -rf "$G"
+
+# Check 1 — the binary runs.
+"$BIN" --version >/dev/null 2>&1 && echo "PASS 1: binary runs" || echo "FAIL 1: binary won't run"
+
+# Check 2 — the server starts and lists its tools.
 printf '%s\n' \
- '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"smoke","version":"0"}}}' \
+ '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"check","version":"0"}}}' \
  '{"jsonrpc":"2.0","method":"notifications/initialized"}' \
  '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' \
- | ./target/release/reflow2-mcp --graph-path /tmp/reflow2-check | tail -1
+ | "$BIN" --graph-path "$G" 2>/dev/null | grep -q '"detect_gaps"' \
+ && echo "PASS 2: server lists its tools" || echo "FAIL 2: no tools listed"
+
+# Check 3 — a real write round-trips (bootstrap a project, read it back).
+printf '%s\n' \
+ '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"check","version":"0"}}}' \
+ '{"jsonrpc":"2.0","method":"notifications/initialized"}' \
+ '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"genesis","arguments":{"project_id":"proj:check","name":"Check"}}}' \
+ | "$BIN" --graph-path "$G" 2>/dev/null | grep -q '"created":true' \
+ && echo "PASS 3: create + persist works" || echo "FAIL 3: write did not work"
 ```
 
-You should see a JSON line listing ~30 tools (`detect_gaps`, `add_requirement`, …).
+**Three PASSes → you're ready** to register the server (step 3) and point your agent at the repo.
+If **Check 1** fails, the build didn't finish — re-run step 2 and read the error. If **2 or 3**
+fails after Check 1 passes, re-run and copy the full output (`2>&1`) for help.
 
 ## Notes
 
