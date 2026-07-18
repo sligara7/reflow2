@@ -26,6 +26,7 @@
 //! assert_eq!(g.count_nodes("Requirement").unwrap(), 1);
 //! ```
 
+pub mod agent;
 pub mod allocate;
 pub mod detect;
 pub mod dimensions;
@@ -42,6 +43,7 @@ pub mod structure;
 pub mod surprises;
 pub mod temporal;
 
+pub use agent::{AgentAnswer, AgentBackend, AgentPrompt, PromptCollector, prompt_id};
 pub use allocate::{
     AllocationReport, ComponentScore, MisplacedCapability, ProposedAllocation, ProposedComponent,
 };
