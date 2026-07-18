@@ -83,7 +83,7 @@ half (question phrasing, anchors) is LLM-gated and deferred.
 | GS-8 | Quality/risk gaps | 🟡 | `declining_dimension` surfaced as a gap (from `dimension_drifts`) · `a_declining_dimension_is_surfaced_as_a_gap...`; `contradiction` detected in HEAL; unmitigated_risk / unvalidated_causal_claim / dimension_blind_spot / violated_constraint still deferred |
 | GS-9 | Compliance gaps | ⬜ | needs the environment layer (EnvironmentRule / OPERATES_IN) |
 | GS-10 | SME gaps | ⬜ | LLM (SME augmentation) |
-| GS-11 | Decomposition/hierarchy gaps | ⬜ | needs `Component.level` analysis (see 3AX-9/10) |
+| GS-11 | Decomposition/hierarchy gaps | ✅ | `hierarchy_issues` → `missing_intermediate_level` / `level_mismatch` / `orphan_level`, surfaced as gaps by `detect_gaps` · `tests/hierarchy.rs` |
 | GS-12 | Adding a detector = one enum + one method | ✅ | `GapSource` + `detect_*` methods |
 | GS-13 | Detectors read computed signals; prove they fire | ✅ | detectors gated on type-population counts · `early_graph_..._not_per_node_floods`, `traceability_fires_per_node_once_the_phase_exists` |
 | GS-14 | Rank by composite severity | ✅ | severity sort · `unsatisfied_requirement_ranks_by_priority` |
@@ -190,7 +190,7 @@ schema in `schema/*.yaml`.
 
 | ID | Requirement | Status | Evidence / note |
 |----|-------------|--------|-----------------|
-| 3AX-1 | Model X / Y / Z + depth | 🟡 | X (edges, propagate/structure/allocate) ✅, Z (temporal) ✅, depth (`dimensions` — drift/rollup) ✅; Y still schema-only (`Component.level`, no matryoshka code) 🟡 |
+| 3AX-1 | Model X / Y / Z + depth | ✅ | X (edges, propagate/structure/allocate), Y (`hierarchy` — matryoshka over `Component.level`), Z (temporal), depth (`dimensions` — drift/rollup) all have code |
 | 3AX-2 | Add Axis Z | ✅ | `schema/temporal.yaml` + `temporal.rs` |
 | 3AX-3 | Epochs/facts/snapshots — never overwrite the past | ✅ | `record_change_preserves_pre_change_state` |
 | 3AX-4 | `DesignEpoch` (generalizes Anchor) | ✅ | `add_epoch` / `EpochType` |
@@ -198,8 +198,8 @@ schema in `schema/*.yaml`.
 | 3AX-6 | `Snapshot` cross-revision diff | ✅ | `snapshot_node` + `parse_snapshot_state` |
 | 3AX-7 | `ChangeEvent` + reason taxonomy + CHANGED + CAUSES | 🟡 | `ChangeType` taxonomy + `CHANGED` ✅; **`CAUSES`→ChangeEvent wiring deferred** |
 | 3AX-8 | `DimensionObservation` rollup + per-epoch drift | ✅ | `dimensions` module: `add_dimension_observation`, `dimension_drift`/`dimension_drifts` (`linear_regression_slope`), `rollup_assessment` (`mean`) · `tests/dimensions.rs` |
-| 3AX-9 | Formalize Axis Y `Component.level` | 🟡 | schema ✅; **level-based code deferred** |
-| 3AX-10 | Missing-intermediate-level detector | ⬜ | matryoshka |
+| 3AX-9 | Formalize Axis Y `Component.level` | ✅ | schema + `hierarchy` module (`Level` rank arithmetic); `CONTAINS` broadened to `Component` so the component spine is expressible |
+| 3AX-10 | Missing-intermediate-level detector | ✅ | `hierarchy_issues` `MissingIntermediateLevel` (CONTAINS/DEPENDS_ON skipping ≥2 levels) · `a_system_containing_a_part_directly_is_a_missing_intermediate` |
 | 3AX-11 | Tight X edge set + wildcard inference + evidence/confidence | ✅ | schema design; respected by code |
 
 ---

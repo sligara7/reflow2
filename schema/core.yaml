@@ -76,9 +76,12 @@ schema:
   edge_types:
 
     CONTAINS:
-      from: Project
+      from: ["Project", "Component"]
       to: "*"
-      extraction_hint: Ownership/containment from the Project down to any node.
+      extraction_hint: >
+        Ownership/containment: from the Project down to any node, and between
+        Components to express the axis-Y decomposition spine (a system CONTAINS
+        its subsystems CONTAINS its parts — see Component.level / matryoshka).
       properties:
         note: { type: string }
 

@@ -246,6 +246,24 @@ impl DesignGraph {
         )
     }
 
+    /// `parent Component CONTAINS child Component` — the component decomposition
+    /// spine (axis Y / matryoshka). Parent should be exactly one `Component.level`
+    /// above the child; see [`crate::hierarchy`].
+    pub fn contain_component(
+        &mut self,
+        parent_id: &str,
+        child_id: &str,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::CONTAINS,
+            node::COMPONENT,
+            parent_id,
+            node::COMPONENT,
+            child_id,
+            Props::new(),
+        )
+    }
+
     /// `Capability SATISFIES Requirement` — the traceability link that binds
     /// WHAT back to intent (the golden thread).
     pub fn satisfies(

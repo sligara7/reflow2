@@ -31,6 +31,7 @@ pub mod detect;
 pub mod dimensions;
 pub mod graph;
 pub mod heal;
+pub mod hierarchy;
 pub mod ingest;
 pub mod llm;
 pub mod nodes;
@@ -51,6 +52,7 @@ pub use heal::{
     GeneratedContentStub, HealCategory, HealIssue, HealOp, HealOperation, HealOptions,
     HealProposal, HealReport, HealSeverity, HealStrategy, SkippedOperation,
 };
+pub use hierarchy::{HierarchyIssue, HierarchyIssueKind, Level};
 pub use ingest::{DroppedEdge, IngestOptions, IngestReport, IngestStatus, PassError};
 pub use llm::{
     LlmBackend, LlmError, LlmParams, LlmRequest, LlmResponse, MockLlmBackend, complete_json,

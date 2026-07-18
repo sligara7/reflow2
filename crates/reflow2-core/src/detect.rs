@@ -40,6 +40,7 @@ use dynograph_core::DynoError;
 
 use crate::dimensions::DriftDirection;
 use crate::graph::DesignGraph;
+use crate::hierarchy::HierarchyIssueKind;
 use crate::llm::{LlmBackend, LlmRequest};
 use crate::nodes::{edge, node};
 
@@ -72,6 +73,13 @@ pub enum GapSource {
     /// A node's quality on some dimension is trending down over epochs (from
     /// `dimension_drifts`).
     DecliningDimension,
+    // Decomposition / hierarchy (axis Y — from `hierarchy_issues`)
+    /// A CONTAINS/DEPENDS_ON link skips ≥2 `Component.level`s.
+    MissingIntermediateLevel,
+    /// A CONTAINS whose parent is not strictly above its child.
+    LevelMismatch,
+    /// A subsystem-or-higher component with no parent above and no child below.
+    OrphanLevel,
 }
 
 impl GapSource {
@@ -88,6 +96,9 @@ impl GapSource {
             GapSource::UnverifiedCapability => "unverified_capability",
             GapSource::UnexpectedCoupling => "unexpected_coupling",
             GapSource::DecliningDimension => "declining_dimension",
+            GapSource::MissingIntermediateLevel => "missing_intermediate_level",
+            GapSource::LevelMismatch => "level_mismatch",
+            GapSource::OrphanLevel => "orphan_level",
         }
     }
 }
@@ -249,6 +260,7 @@ impl DesignGraph {
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
         self.detect_unexpected_couplings(&mut gaps)?;
         self.detect_declining_dimensions(&mut gaps)?;
+        self.detect_hierarchy_gaps(&mut gaps)?;
 
         gaps.sort_by(|a, b| {
             b.severity
@@ -573,6 +585,42 @@ impl DesignGraph {
                     "{dim} drift slope {:.3} over {} observations (rollup {:.2}).",
                     d.slope, d.observation_count, d.rollup_score
                 ),
+            });
+        }
+        Ok(())
+    }
+
+    /// Surface axis-Y decomposition defects (from `hierarchy_issues`) as gaps:
+    /// a missing intermediate level (carburetor-to-body), an inverted/flat
+    /// containment, or a floating mid-level component.
+    fn detect_hierarchy_gaps(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        for issue in self.hierarchy_issues()? {
+            let source = match issue.kind {
+                HierarchyIssueKind::MissingIntermediateLevel => GapSource::MissingIntermediateLevel,
+                HierarchyIssueKind::LevelMismatch => GapSource::LevelMismatch,
+                HierarchyIssueKind::OrphanLevel => GapSource::OrphanLevel,
+            };
+            // Missing-intermediate is the highest-value Y defect; rank it up.
+            let severity = match issue.kind {
+                HierarchyIssueKind::MissingIntermediateLevel => 0.7,
+                HierarchyIssueKind::LevelMismatch => 0.6,
+                HierarchyIssueKind::OrphanLevel => 0.45,
+            };
+            let title = match issue.kind {
+                HierarchyIssueKind::MissingIntermediateLevel => "Missing intermediate level",
+                HierarchyIssueKind::LevelMismatch => "Decomposition level mismatch",
+                HierarchyIssueKind::OrphanLevel => "Floating decomposition level",
+            };
+            gaps.push(GapCandidate {
+                id: gap_id(source, &issue.components),
+                gap_source: source,
+                scope: GapScope::Component,
+                severity,
+                title: title.to_string(),
+                description: issue.message.clone(),
+                affected_ids: issue.components,
+                suggested_depth: 2,
+                evidence: issue.message,
             });
         }
         Ok(())
