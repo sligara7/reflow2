@@ -31,9 +31,13 @@ something they could read in under a minute:
    heals itself." This is the answer to "what are your conclusions".
 3. **The shape so far** — how many requirements, what the main parts are and how they connect.
    Name the parts, don't list node ids.
-4. **What's still open** — the gaps that need *them*, phrased as the questions they are. Say how
-   many there are and lead with the ones that actually block progress.
-5. **Where to go next** — the one or two things worth doing now, and offer the choice rather than
+4. **What you already asked them** — call `open_questions` first. These were put to them in an
+   earlier session, in the wording they saw, and are still waiting. Repeat that wording rather
+   than inventing a new phrasing for the same thing: being asked the same question twice, worded
+   differently, is how someone learns the tool is not listening.
+5. **What's still open** — the *remaining* gaps that need them, phrased as the questions they are.
+   Say how many there are and lead with the ones that actually block progress.
+6. **Where to go next** — the one or two things worth doing now, and offer the choice rather than
    assuming: keep filling in the design, or start building.
 
 ## Keep it honest

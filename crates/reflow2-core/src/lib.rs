@@ -3,8 +3,8 @@
 //! Reflow 2.0 captures a design's whole lifecycle (concept → operations) in one
 //! knowledge graph and keeps it coherent when anything changes. This crate is
 //! the LLM-free foundation of that system: it stands up the graph **store**
-//! (dynograph-foundation) configured with the reflow2 **schema** (26 node
-//! types, 52 edge types across 10 domains) and exposes schema-validated CRUD
+//! (dynograph-foundation) configured with the reflow2 **schema** (27 node
+//! types, 53 edge types across 10 domains) and exposes schema-validated CRUD
 //! over the design graph.
 //!
 //! It is deliberately neutral to the interaction surface (MCP / CLI / hosted /
@@ -54,7 +54,7 @@ pub use allocate::{
     AllocationReport, ComponentScore, MisplacedCapability, ProposedAllocation, ProposedComponent,
 };
 pub use artifact::{ArtifactLink, LinkArtifactOptions};
-pub use detect::{GapCandidate, GapPrompt, GapScope, GapSource};
+pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, GapSource};
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};
 pub use genesis::{GENESIS_EPOCH_ID, GenesisOptions, GenesisReport};

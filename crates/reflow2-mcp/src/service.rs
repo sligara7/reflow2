@@ -29,9 +29,10 @@ use tokio::sync::Mutex;
 
 use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
-    AgentAnswer, AgentBackend, ChangeType, DesignGraph, Dimension, DynoError, EpochType,
-    GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy, LinkArtifactOptions,
-    ObservedArtifact, PromptCollector, PropagateOptions, ReconcileOptions, Value,
+    AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DesignGraph, Dimension, DynoError,
+    EpochType, GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy,
+    LinkArtifactOptions, ObservedArtifact, PromptCollector, PropagateOptions, ReconcileOptions,
+    Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -597,12 +598,28 @@ pub struct AgentAnswerReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+pub struct AnswerQuestionReq {
+    /// The gap the question was asked about (`gap_id` from `open_questions`).
+    pub gap_id: String,
+    /// What the user said, in their own words.
+    pub answer: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct WithdrawQuestionReq {
+    pub gap_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
 pub struct GapToPromptReq {
     /// A `GapCandidate` previously returned by `detect_gaps`.
     pub gap: JsonValue,
     /// Answers to a prior `needs_llm` round. Empty on the first (prepare) call.
     #[serde(default)]
     pub answers: Vec<AgentAnswerReq>,
+    /// Timestamp to record against the question, if you have one.
+    #[serde(default)]
+    pub asked_at: Option<String>,
 }
 
 // ---- tools ------------------------------------------------------------------
@@ -1451,7 +1468,69 @@ impl ReflowService {
         });
         let backend = AgentBackend::from_answers(answers);
         let prompt = gap.to_prompt(&backend);
-        ok_json(json!({ "status": "ok", "prompt": prompt }))
+
+        // Record that this was asked, and in what words. Until BL-4 this tool
+        // was the only one that never touched the graph: it phrased a question,
+        // returned it, and forgot — so the next session re-derived the same gap
+        // and asked again. Persisting here rather than in a separate call means
+        // the record cannot be forgotten by an agent that does not know to make
+        // it.
+        let mut g = self.graph.lock().await;
+        let question_id = g
+            .record_asked_question(
+                &gap.id,
+                &gap.affected_ids,
+                &prompt.question,
+                AskedQuestion {
+                    prompt_id: None,
+                    context_setter: Some(&prompt.context_setter),
+                    asked_at: req.asked_at.as_deref(),
+                    rephrase_degraded: prompt.rephrase_degraded,
+                },
+            )
+            .map_err(dyno_err)?;
+
+        ok_json(json!({ "status": "ok", "prompt": prompt, "question_id": question_id }))
+    }
+
+    #[tool(
+        description = "Questions already put to the user that are still awaiting an answer,                        with the wording they saw. Read this at the start of a session before                        detect_gaps: a question already asked should be followed up, not                        re-derived and asked again."
+    )]
+    pub async fn open_questions(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        ok_json(g.open_questions().map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Record what the user said in reply to a question, closing it. Write the                        design nodes their answer implies separately — this is the record that                        it was settled, not a substitute for the design."
+    )]
+    pub async fn answer_question(
+        &self,
+        Parameters(req): Parameters<AnswerQuestionReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        let found = g
+            .answer_question(&req.gap_id, &req.answer)
+            .map_err(dyno_err)?;
+        if !found {
+            return Err(McpError::invalid_params(
+                format!("no recorded question for gap {}", req.gap_id),
+                None,
+            ));
+        }
+        ok_json(json!({ "answered": true, "gap_id": req.gap_id }))
+    }
+
+    #[tool(
+        description = "Withdraw a question asked in error or overtaken by events. Kept in the                        graph, not deleted."
+    )]
+    pub async fn withdraw_question(
+        &self,
+        Parameters(req): Parameters<WithdrawQuestionReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        let found = g.withdraw_question(&req.gap_id).map_err(dyno_err)?;
+        ok_json(json!({ "withdrawn": found, "gap_id": req.gap_id }))
     }
 }
 

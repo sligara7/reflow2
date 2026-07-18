@@ -385,8 +385,8 @@ mod tests {
     #[test]
     fn vocabulary_covers_the_whole_schema() {
         let v = graph().describe_vocabulary();
-        assert_eq!(v.node_types.len(), 26, "all node types are listed");
-        assert_eq!(v.edge_types.len(), 52, "all edge types are listed");
+        assert_eq!(v.node_types.len(), 27, "all node types are listed");
+        assert_eq!(v.edge_types.len(), 53, "all edge types are listed");
     }
 
     #[test]

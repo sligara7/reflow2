@@ -134,7 +134,7 @@ def run(binary: str, graph_path: str) -> int:
     print(f"  {len(names)} tools exposed")
     for expected in (
         "genesis", "detect_gaps", "gap_to_prompt", "propagate_from",
-        "contain_component", "set_requirement_status",
+        "contain_component", "set_requirement_status", "open_questions", "answer_question",
         "add_interface", "provides", "consumes",
         "link_artifact", "reconcile_artifacts", "set_artifact_checksum",
         "add_verification", "verifies", "add_release", "add_environment",
@@ -157,9 +157,9 @@ def run(binary: str, graph_path: str) -> int:
     # cargo tests: every other layer is a client we wrote.
     print("\n== schema discovery (BL-1) ==")
     vocab = s.call("describe_schema", {})
-    c.ok("every node type is discoverable", len(vocab.get("node_types", [])) == 26,
+    c.ok("every node type is discoverable", len(vocab.get("node_types", [])) == 27,
          len(vocab.get("node_types", [])))
-    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 52,
+    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 53,
          len(vocab.get("edge_types", [])))
 
     exact = s.call("describe_schema", {"from": "Capability", "to": "Component"})
@@ -289,6 +289,17 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("an acknowledgement outliving its detector is still reported",
          len(retired) == 1 and "gap" not in retired[0], retired)
 
+    # Put a question on the record so the restart below can prove it survives.
+    asked_wording = "Is this coupling deliberate?"
+    prep = s.call("gap_to_prompt", {"gap": ack_gap, "answers": []})
+    s.call("gap_to_prompt", {
+        "gap": ack_gap,
+        "answers": [{"id": p["id"], "text": asked_wording} for p in prep["prompts"]],
+        "asked_at": "2026-07-18T10:00:00Z",
+    })
+    outstanding = s.call("open_questions")
+    c.ok("asking a gap records the question", len(outstanding) == 1, outstanding)
+
     s.call("withdraw_gap_acknowledgement", {"gap_id": ack_gap["id"]})
     s.call("withdraw_gap_acknowledgement", {"gap_id": "gap:deadbeefdeadbeef"})
     c.ok("withdrawing puts the gap back",
@@ -405,11 +416,28 @@ def run(binary: str, graph_path: str) -> int:
 
     print("\n== 10. the design survives a restart ==")
     first_gaps = sorted(g["id"] for g in s.call("detect_gaps"))
+    # Snapshot what is on the record right before the process ends, so the
+    # check after reopening is against reality rather than an assumption.
+    before_restart = s.call("open_questions")
+
     s.close()
     s = Server(binary, graph_path)
     n = s.call("get_node", {"node_type": "Interface", "id": "ifc:state"})
     c.ok("graph reopened with its contents intact",
          n is not None and n.get("node_id") == "ifc:state", n)
+
+    # BL-4: a question already put to the user must survive the restart, with
+    # the wording they saw. This is the whole point — before it, the next
+    # session re-derived the same gap and asked again, which the blind trial
+    # called "the stateless-agent problem reflow2 is supposed to solve".
+    reopened = s.call("open_questions")
+    c.ok("a question asked last session is still open in this one",
+         len(reopened) == 1, reopened)
+    c.ok("and the exact wording the user saw survived",
+         reopened == before_restart, {"before": before_restart, "after": reopened})
+    s.call("answer_question", {"gap_id": reopened[0]["gap_id"], "answer": "Yes — deliberate."})
+    c.ok("answering it in the new session closes it",
+         s.call("open_questions") == [])
 
     # Cross-process determinism. A HashSet's iteration order is seeded per
     # process, so anything derived from it (community detection, and every gap

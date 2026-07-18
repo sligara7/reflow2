@@ -12,6 +12,8 @@ pub mod node {
     pub const REQUIREMENT: &str = "Requirement";
     pub const CONSTRAINT: &str = "Constraint";
     pub const DESIGN_RULE: &str = "DesignRule";
+    /// A question already put to the user about a gap (and whether answered).
+    pub const QUESTION: &str = "Question";
     // P1 · Function (functional.yaml)
     pub const CAPABILITY: &str = "Capability";
     pub const FLOW: &str = "Flow";
@@ -43,6 +45,8 @@ pub mod node {
 /// Edge type names, matching `schema/*.yaml`.
 pub mod edge {
     /// `Project → *` — the decomposition (axis-Y) containment spine.
+    /// `Question → *` — the design nodes a question was raised about.
+    pub const ASKS_ABOUT: &str = "ASKS_ABOUT";
     pub const CONTAINS: &str = "CONTAINS";
     /// `* → *` — traceability: a Capability SATISFIES a Requirement.
     pub const SATISFIES: &str = "SATISFIES";

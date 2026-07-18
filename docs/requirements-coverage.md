@@ -264,6 +264,7 @@ that made the generic escape hatch unusable.
 | WS-5 | — (no detector asks for it) | `QualityGate` | none | ⬜ |
 | WS-7 | — (the write side of axis Y) | `Component.level` + `Component CONTAINS Component` | `graph.rs`: `add_component(level)`, `contain_component` + MCP tools — `hierarchy_issues` previously had no writer and returned `[]` for want of input | ✅ |
 | WS-8 | `unsatisfied_requirement` (suppression side) | `Requirement.status` | `graph.rs`: `set_requirement_status` + MCP tool; HEAL's orphan scan now honours it too | ✅ |
+| WS-9 | — (the loop's own memory) | a question already put to the user, and whether it was answered | `detect.rs`: `record_asked_question`, `answer_question`, `withdraw_question`, `open_questions` + MCP tools; written by `gap_to_prompt`'s serve pass so it cannot be forgotten (BL-4) | ✅ |
 | WS-6 | — (the write side's precondition: you cannot record what you cannot name) | the vocabulary itself — node types, their required properties, and which edge types join which endpoints | `vocabulary.rs`: `describe_vocabulary`, `describe_node_type`, `edge_types_between` + the `describe_schema` MCP tool; enriched `create_node` / `create_edge` failures | ✅ |
 
 Evidence for WS-1..3: `tests/write_side.rs` (12) asserts the round trip that matters — the gap

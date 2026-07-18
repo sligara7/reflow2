@@ -14,8 +14,9 @@ fidelity?), that is a *gap* — surface it as a question, don't guess.
 
 ## The loop
 
-0a. **On an existing design, orient first.** If the graph already holds a Project, run the
-   **where-am-i** skill before anything else: read the graph and tell the user what the design
+0a. **On an existing design, orient first.** Start with `open_questions` — anything there was
+   already put to the user and is still waiting, so follow it up rather than asking again. Then,
+   if the graph holds a Project, run the **where-am-i** skill: read the graph and tell the user what the design
    says, what has been decided, and what is still open. They cannot see the graph — this is the
    only way they learn what a previous session concluded. Do it again whenever they ask "where
    are we?".
@@ -95,6 +96,11 @@ reflow2 phrases the question; **you** are the language model that fills it in:
   spine). Set `level` on `add_component` — `component` (default), `subsystem`, `system`,
   `system_of_systems`, `enterprise` — and nest one level at a time; `hierarchy_issues` compares
   the levels either side and will otherwise report every nesting as a mismatch.
+- **Questions already asked:** `open_questions` returns the questions put to the user that are
+  still awaiting an answer, with the wording they saw. **Read it before `detect_gaps` at the start
+  of a session** — a question already asked should be followed up, not re-derived and asked again.
+  `answer_question` records what they said and closes it; `withdraw_question` retires one
+  overtaken by events. `gap_to_prompt` records the question itself, so you do not have to.
 - **Requirement lifecycle:** `set_requirement_status` — `proposed` / `accepted` / `deferred` /
   `dropped` / `met`. Use it when a requirement is provisional or abandoned instead of writing
   that into the statement text; `dropped` and `met` stop it being reported as unsatisfied.

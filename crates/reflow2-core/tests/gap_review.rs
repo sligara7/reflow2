@@ -7,8 +7,10 @@
 //! the parts that keep it honest: nothing is deleted, nothing is hidden, and an
 //! acknowledgement expires when the thing it was about changes.
 
+use reflow2_core::AskedQuestion;
 use reflow2_core::detect::GapSource;
 use reflow2_core::graph::DesignGraph;
+use reflow2_core::nodes::{edge, node};
 
 /// A design with a Requirement nothing satisfies — one reliable open gap.
 fn graph_with_a_gap() -> (DesignGraph, String, Vec<String>) {
@@ -238,5 +240,130 @@ fn an_acknowledgement_outliving_its_detector_is_reported_not_dropped() {
     assert!(
         g.reviewed_gaps().unwrap().iter().all(|r| r.gap_id != stale),
         "a withdrawn review leaves the list"
+    );
+}
+
+// ---- BL-4 · questions outlive the session ----------------------------------
+
+/// The blind trial: *"the graph has no memory that a question was asked and is
+/// awaiting an answer — so on my next session I'd re-derive the same gaps and
+/// re-ask the same questions, which is the stateless-agent problem reflow2 is
+/// supposed to solve."* It worked around this by hand-maintaining a Markdown
+/// file. This is the round trip that replaces it.
+#[test]
+fn an_asked_question_is_still_there_next_session() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_capability("cap:flight", "Ball flight", "sim")
+        .unwrap();
+
+    let gap_id = "gap:abc123";
+    let affected = vec!["cap:flight".to_string()];
+    g.record_asked_question(
+        gap_id,
+        &affected,
+        "Which part should own ball flight?",
+        AskedQuestion {
+            context_setter: Some("You described ball flight but nothing owns it."),
+            asked_at: Some("2026-07-18T10:00:00Z"),
+            ..Default::default()
+        },
+    )
+    .unwrap();
+
+    let open = g.open_questions().unwrap();
+    assert_eq!(open.len(), 1);
+    assert_eq!(open[0].gap_id, gap_id);
+    assert_eq!(
+        open[0].question, "Which part should own ball flight?",
+        "the wording the user saw must survive, not just the fact of asking"
+    );
+    assert_eq!(open[0].asked_at, "2026-07-18T10:00:00Z");
+
+    // Reachable from the design, not only from the gap.
+    let asked_about = g
+        .outgoing(&open[0].question_id, Some(edge::ASKS_ABOUT))
+        .unwrap();
+    assert_eq!(asked_about.len(), 1);
+    assert_eq!(asked_about[0].to_id, "cap:flight");
+}
+
+#[test]
+fn answering_closes_it_and_keeps_what_the_user_said() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.record_asked_question("gap:x", &[], "Where does it run?", AskedQuestion::default())
+        .unwrap();
+
+    assert!(g.answer_question("gap:x", "On a Raspberry Pi.").unwrap());
+    assert!(
+        g.open_questions().unwrap().is_empty(),
+        "an answered question is no longer awaiting an answer"
+    );
+
+    let node = g.get_node(node::QUESTION, "question:x").unwrap().unwrap();
+    assert_eq!(node.properties["status"].as_str(), Some("answered"));
+    assert_eq!(
+        node.properties["answer"].as_str(),
+        Some("On a Raspberry Pi."),
+        "the user's own words are kept"
+    );
+    assert_eq!(
+        node.properties["question"].as_str(),
+        Some("Where does it run?"),
+        "and so is what they were asked"
+    );
+}
+
+/// Re-asking must not quietly erase an answer already given — the failure mode
+/// would be a session overwriting what the last one learned.
+#[test]
+fn re_recording_an_answered_question_does_not_lose_the_answer() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.record_asked_question("gap:x", &[], "Where does it run?", AskedQuestion::default())
+        .unwrap();
+    g.answer_question("gap:x", "On a Raspberry Pi.").unwrap();
+
+    // A later session re-phrases the same gap and records it again.
+    g.record_asked_question(
+        "gap:x",
+        &[],
+        "What hardware does this run on?",
+        AskedQuestion::default(),
+    )
+    .unwrap();
+
+    let node = g.get_node(node::QUESTION, "question:x").unwrap().unwrap();
+    assert_eq!(
+        node.properties["status"].as_str(),
+        Some("answered"),
+        "it must not reopen"
+    );
+    assert_eq!(
+        node.properties["answer"].as_str(),
+        Some("On a Raspberry Pi."),
+        "and the answer must survive the re-phrasing"
+    );
+    assert!(g.open_questions().unwrap().is_empty());
+}
+
+#[test]
+fn a_question_can_be_withdrawn_and_answering_an_unknown_one_fails_loud() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.record_asked_question("gap:x", &[], "Still relevant?", AskedQuestion::default())
+        .unwrap();
+
+    assert!(g.withdraw_question("gap:x").unwrap());
+    assert!(g.open_questions().unwrap().is_empty());
+    assert!(
+        g.get_node(node::QUESTION, "question:x").unwrap().is_some(),
+        "withdrawn, not deleted — the past is not overwritten"
+    );
+
+    assert!(
+        !g.answer_question("gap:never-asked", "…").unwrap(),
+        "answering a question nobody asked reports false rather than inventing one"
     );
 }

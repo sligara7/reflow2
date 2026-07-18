@@ -11,7 +11,7 @@ the LLM-provider dependency — so the decision can be made late without reworki
 Everything in `schema/` and the process docs describes a **core** that knows nothing about
 how it's driven:
 
-- the **graph store** (dynograph-foundation) + the **schema** (26 node types, 52 edges);
+- the **graph store** (dynograph-foundation) + the **schema** (27 node types, 53 edges);
 - the **coherence-loop operations**: extraction, impact propagation, gap-surfacing, heal.
 
 A **surface** sits on top of the core and lets a human interact with it. Swapping surfaces

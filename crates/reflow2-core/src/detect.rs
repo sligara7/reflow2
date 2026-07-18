@@ -196,6 +196,37 @@ pub struct ReviewedGap {
     pub retired: Option<String>,
 }
 
+/// The optional detail carried alongside a question when it is recorded.
+///
+/// A struct rather than five positional arguments, because all of it is
+/// optional and a call site with five bare `None`s says nothing.
+#[derive(Debug, Clone, Default)]
+pub struct AskedQuestion<'a> {
+    /// Id of the LLM request that phrased it, so the same phrasing is
+    /// recognisable across sessions ([`crate::prompt_id`]).
+    pub prompt_id: Option<&'a str>,
+    /// The 1-2 sentences that placed the user back in their own design.
+    pub context_setter: Option<&'a str>,
+    /// When it was put to the user.
+    pub asked_at: Option<&'a str>,
+    /// True when phrasing fell back to the raw gap text. Recorded rather than
+    /// hidden: the question was still asked, and this says how well.
+    pub rephrase_degraded: bool,
+}
+
+/// A question already put to the user, as a later session finds it.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct AskedRecord {
+    pub question_id: String,
+    /// The gap it was asked about. Re-derivable, so it survives a restart.
+    pub gap_id: String,
+    /// The wording the user actually saw.
+    pub question: String,
+    pub context_setter: String,
+    pub asked_at: String,
+    pub rephrase_degraded: bool,
+}
+
 /// A detected gap, ranked for surfacing (mirrors storyflow's `ScenarioCandidate`).
 ///
 /// The user-facing `GapPrompt` (context-setter + plain question + hints +
@@ -306,6 +337,15 @@ fn gap_id(source: GapSource, affected: &[String]) -> String {
 /// The `Decision` id that records a review of `gap_id`. Derived, so any session
 /// can find an existing review without an index — and so a gap whose affected
 /// set changes gets a *different* id, and with it a fresh judgement.
+/// The `Question` id recording that `gap_id` was put to the user. Derived from
+/// the gap id for the same reason as [`ack_decision_id`]: a later session finds
+/// it without an index, and a gap whose affected set changes gets a different
+/// id — so a question about a situation that has moved on does not suppress the
+/// fresh one.
+fn asked_question_id(gap_id: &str) -> String {
+    format!("question:{}", gap_id.strip_prefix("gap:").unwrap_or(gap_id))
+}
+
 fn ack_decision_id(gap_id: &str) -> String {
     format!(
         "decision:ack:{}",
@@ -391,6 +431,139 @@ impl DesignGraph {
         }
         self.create_node(node::DECISION, &decision_id, props)?;
         Ok(true)
+    }
+
+    /// Record that a gap was actually put to the user, and in what words.
+    ///
+    /// `gap_to_prompt` phrases a question and returns it; until now nothing
+    /// kept it. The next session re-derived the same gap, re-phrased it, and
+    /// asked again — *"the stateless-agent problem reflow2 is supposed to
+    /// solve"*, in the blind trial's words. It worked around this by copying
+    /// questions into a Markdown file by hand.
+    ///
+    /// Stored as a real `Question` node at a derived id, `ASKS_ABOUT` the nodes
+    /// the gap concerned, so it is reachable from the design and not only from
+    /// the gap. Idempotent: asking again updates the wording rather than
+    /// stacking duplicates.
+    ///
+    /// This records that a question was *asked*, not that it was answered —
+    /// see [`answer_question`](Self::answer_question).
+    pub fn record_asked_question(
+        &mut self,
+        gap_id: &str,
+        affected_ids: &[String],
+        question: &str,
+        opts: AskedQuestion<'_>,
+    ) -> Result<String, DynoError> {
+        let question_id = asked_question_id(gap_id);
+        // Asking again must not erase an answer already given.
+        let existing = self.get_node(node::QUESTION, &question_id)?;
+        let mut props = crate::nodes::Props::new()
+            .set("question", question)
+            .set("gap_id", gap_id)
+            .set("rephrase_degraded", opts.rephrase_degraded)
+            .set_opt("prompt_id", opts.prompt_id)
+            .set_opt("context_setter", opts.context_setter)
+            .set_opt("asked_at", opts.asked_at);
+        props = match existing.as_ref().and_then(|n| n.properties.get("status")) {
+            Some(v) if v.as_str() == Some("answered") => {
+                let answer = existing
+                    .as_ref()
+                    .and_then(|n| n.properties.get("answer"))
+                    .and_then(dynograph_core::Value::as_str)
+                    .unwrap_or_default()
+                    .to_string();
+                props.set("status", "answered").set("answer", answer)
+            }
+            _ => props.set("status", "asked"),
+        };
+        self.create_node(node::QUESTION, &question_id, props)?;
+
+        for target in affected_ids {
+            let Some(node_type) = self.node_type_index()?.get(target).cloned() else {
+                continue; // the gap outlived the node — nothing to attach to
+            };
+            let _ = self.create_edge(
+                edge::ASKS_ABOUT,
+                node::QUESTION,
+                &question_id,
+                &node_type,
+                target,
+                crate::nodes::Props::new(),
+            );
+        }
+        Ok(question_id)
+    }
+
+    /// Record what the user said, closing an asked question.
+    ///
+    /// The answer text is kept verbatim. Whatever design nodes it produces are
+    /// written separately by the caller — this is the record that the question
+    /// was settled and by what, not a substitute for the design itself.
+    pub fn answer_question(&mut self, gap_id: &str, answer: &str) -> Result<bool, DynoError> {
+        self.set_question_status(gap_id, "answered", Some(answer))
+    }
+
+    /// Withdraw a question — asked in error, or overtaken by events. Kept, not
+    /// deleted: the past is not overwritten.
+    pub fn withdraw_question(&mut self, gap_id: &str) -> Result<bool, DynoError> {
+        self.set_question_status(gap_id, "withdrawn", None)
+    }
+
+    fn set_question_status(
+        &mut self,
+        gap_id: &str,
+        status: &str,
+        answer: Option<&str>,
+    ) -> Result<bool, DynoError> {
+        let question_id = asked_question_id(gap_id);
+        let Some(existing) = self.get_node(node::QUESTION, &question_id)? else {
+            return Ok(false);
+        };
+        let mut props = crate::nodes::Props::new()
+            .set("status", status)
+            .set_opt("answer", answer);
+        for (k, v) in &existing.properties {
+            if k != "status" && !(k == "answer" && answer.is_some()) {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::QUESTION, &question_id, props)?;
+        Ok(true)
+    }
+
+    /// Questions already put to the user and still awaiting an answer.
+    ///
+    /// The point of the whole item: a returning session reads this instead of
+    /// re-deriving and re-asking. Sorted by id so the order is stable.
+    pub fn open_questions(&self) -> Result<Vec<AskedRecord>, DynoError> {
+        let mut out = Vec::new();
+        for n in self.scan_nodes(node::QUESTION)? {
+            let get = |k: &str| {
+                n.properties
+                    .get(k)
+                    .and_then(dynograph_core::Value::as_str)
+                    .unwrap_or_default()
+                    .to_string()
+            };
+            if get("status") != "asked" {
+                continue;
+            }
+            out.push(AskedRecord {
+                question_id: n.node_id.clone(),
+                gap_id: get("gap_id"),
+                question: get("question"),
+                context_setter: get("context_setter"),
+                asked_at: get("asked_at"),
+                rephrase_degraded: n
+                    .properties
+                    .get("rephrase_degraded")
+                    .and_then(dynograph_core::Value::as_bool)
+                    .unwrap_or(false),
+            });
+        }
+        out.sort_by(|a, b| a.question_id.cmp(&b.question_id));
+        Ok(out)
     }
 
     /// The accepted review for a gap, if there is one: `(decision id, reason)`.

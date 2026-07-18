@@ -271,7 +271,8 @@ async fn gap_to_prompt_collect_then_serve() {
     // Prepare pass: no answers → needs_llm + prompts.
     let prep = j!(s.gap_to_prompt(Parameters(GapToPromptReq {
         gap: gap.clone(),
-        answers: vec![]
+        answers: vec![],
+        asked_at: None,
     })));
     assert_eq!(prep["status"], "needs_llm");
     let prompts = prep["prompts"].as_array().expect("prompts array");
@@ -284,7 +285,8 @@ async fn gap_to_prompt_collect_then_serve() {
         answers: vec![AgentAnswerReq {
             id: prompt_id,
             text: "Which component owns ball flight?".into()
-        }]
+        }],
+        asked_at: None,
     })));
     assert_eq!(served["status"], "ok");
     assert_eq!(
@@ -566,12 +568,12 @@ async fn describe_schema_returns_the_whole_vocabulary() {
     })));
     assert_eq!(
         v["node_types"].as_array().unwrap().len(),
-        26,
+        27,
         "every node type is discoverable"
     );
     assert_eq!(
         v["edge_types"].as_array().unwrap().len(),
-        52,
+        53,
         "every edge type is discoverable"
     );
 }
@@ -852,4 +854,73 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
 
     assert!(!flagged(&jl!(s.detect_gaps())), "DETECT goes quiet");
     assert!(!flagged(&jl!(s.detect_defects())), "and so must HEAL");
+}
+
+// ---- BL-4 · asked questions outlive the session -----------------------------
+
+/// gap_to_prompt used to be the only tool that never touched the graph: it
+/// phrased a question, returned it, and forgot. The serve pass now records what
+/// it asked, so a later session can follow up instead of re-deriving.
+#[tokio::test]
+async fn asking_a_gap_records_the_question_it_asked() {
+    let s = seeded().await;
+    let gaps = jl!(s.detect_gaps());
+    let gap = gaps.as_array().unwrap()[0].clone();
+    let gap_id = gap["id"].as_str().unwrap().to_string();
+
+    // Nothing recorded before the question is put.
+    assert!(jl!(s.open_questions()).as_array().unwrap().is_empty());
+
+    let prep = j!(s.gap_to_prompt(Parameters(GapToPromptReq {
+        gap: gap.clone(),
+        answers: vec![],
+        asked_at: None,
+    })));
+    let pid = prep["prompts"][0]["id"].as_str().unwrap().to_string();
+    let served = j!(s.gap_to_prompt(Parameters(GapToPromptReq {
+        gap,
+        answers: vec![AgentAnswerReq {
+            id: pid,
+            text: "Which part should own this?".into()
+        }],
+        asked_at: Some("2026-07-18T10:00:00Z".into()),
+    })));
+    assert!(
+        served["question_id"].is_string(),
+        "the record is reported back"
+    );
+
+    let open = jl!(s.open_questions());
+    let arr = open.as_array().unwrap();
+    assert_eq!(
+        arr.len(),
+        1,
+        "the question is now on the record, got {open}"
+    );
+    assert_eq!(arr[0]["gap_id"], gap_id.as_str());
+    assert_eq!(
+        arr[0]["question"], "Which part should own this?",
+        "the wording the user saw is what survives"
+    );
+    assert_eq!(arr[0]["asked_at"], "2026-07-18T10:00:00Z");
+
+    // Answering closes it.
+    j!(s.answer_question(Parameters(AnswerQuestionReq {
+        gap_id: gap_id.clone(),
+        answer: "The physics engine.".into(),
+    })));
+    assert!(
+        jl!(s.open_questions()).as_array().unwrap().is_empty(),
+        "an answered question stops being outstanding"
+    );
+
+    // Answering one nobody asked fails loud rather than inventing a record.
+    assert!(
+        s.answer_question(Parameters(AnswerQuestionReq {
+            gap_id: "gap:never".into(),
+            answer: "…".into(),
+        }))
+        .await
+        .is_err()
+    );
 }

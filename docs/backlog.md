@@ -38,7 +38,6 @@ Four independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
-| **BL-4** | **Persist asked questions** | `gap_to_prompt` output evaporates, so the next session re-derives and re-asks. The trial agent's own framing: *"the stateless-agent problem reflow2 is supposed to solve."* Same gap the external user hit as "how do I pause and resume". | M |
 
 ## Closed
 
@@ -52,6 +51,14 @@ Kept as a short pointer so a stable id never dangles; the detail is in the CHANG
   overwritten — which also fixed a silent failure where a project that already had any MCP server
   never got reflow2 installed while the run reported success. Tables and the reasoning:
   [skills/README.md](skills/README.md).
+- **BL-4 · Asked questions outlive the session** — done. `gap_to_prompt` was the only tool that
+  never touched the graph: it phrased a question, returned it, and forgot, so the next session
+  re-derived the same gap and asked again. Its serve pass now records a `Question` node at a
+  derived id (`question:{gap hash}`), `ASKS_ABOUT` the nodes the gap concerned, with the wording
+  the user actually saw. `open_questions` / `answer_question` / `withdraw_question` are on the
+  surface, and `where-am-i` reads them first. **New node type** — 27 node types, 53 edge types —
+  purely additive, so per BL-19 it is safe for existing graphs. Re-asking updates the wording but
+  cannot reopen an answered question; there is a test for that.
 - **BL-5 · `single_point_of_failure` measured against the baseline** — done. Not the cause the
   self-host probe guessed (it blamed the `≥2` threshold, by analogy with `surprises.rs`).
   Reproducing the shape showed the real one: the test asked whether ≥2 non-trivial components

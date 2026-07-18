@@ -38,7 +38,11 @@ reflow2 surfaces the decisions a stateless agent would make silently. Turn them 
    for the generic pair, call `describe_schema` — `{"from": "X", "to": "Y"}` names the edge types
    that may join two types and flags whether any actually models that pair or merely accepts it
    through a `*` wildcard. Do not settle for the first edge type that validates; several will.
-4. **If the user decides a gap is fine as it stands, say so in the graph.** Call
+4. **The question is recorded for you.** The serve pass of `gap_to_prompt` writes it into the
+   graph, so a later session can see it was asked and in what words. When the user replies, call
+   `answer_question` with the gap id and their answer *as well as* writing the design nodes their
+   answer implies — the first records that the question is settled, the second is the design.
+5. **If the user decides a gap is fine as it stands, say so in the graph.** Call
    `acknowledge_gap` with the gap's `id`, its `affected_ids`, and the user's reason. It moves
    into `reviewed_gaps` — recorded, not deleted — and the reason becomes a real Decision node
    that outlives this session. Use it when a judgement has actually been made ("we accept this requirement
@@ -47,7 +51,7 @@ reflow2 surfaces the decisions a stateless agent would make silently. Turn them 
    This matters: an open list that can never reach zero gets skimmed, and a skimmed list is the
    failure this whole workflow exists to prevent. `detect_gaps` should mean *still needs
    attention*. If a review turns out to be wrong, `withdraw_gap_acknowledgement` puts it back.
-5. Re-run `detect_gaps` to confirm the gap is closed and nothing new opened.
+6. Re-run `detect_gaps` to confirm the gap is closed and nothing new opened.
 
 Do this **before** writing code. A gap answered now is a requirement traced forever; a gap
 guessed now is a silent decision that breaks later.

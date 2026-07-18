@@ -1,7 +1,7 @@
 //! Load the reflow2 design vocabulary.
 //!
 //! The 10 composable schema domains in `schema/*.yaml` are the single source of
-//! truth for the node/edge vocabulary (26 node types, 52 edge types). They are
+//! truth for the node/edge vocabulary (27 node types, 53 edge types). They are
 //! embedded at compile time with `include_str!` so the core carries its own
 //! vocabulary — no runtime file IO, no working-directory dependence, and no
 //! second copy to drift out of sync. These are the exact files that
@@ -53,9 +53,9 @@ mod tests {
     #[test]
     fn all_domains_merge_and_validate() {
         let schema = load_schema().expect("the 10 domains must merge and validate");
-        // The vocabulary the docs and README commit to: 26 node types, 52 edges.
-        assert_eq!(schema.node_types.len(), 26, "expected 26 node types");
-        assert_eq!(schema.edge_types.len(), 52, "expected 52 edge types");
+        // The vocabulary the docs and README commit to: 27 node types, 52 edges.
+        assert_eq!(schema.node_types.len(), 27, "expected 27 node types");
+        assert_eq!(schema.edge_types.len(), 53, "expected 53 edge types");
     }
 
     #[test]

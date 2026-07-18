@@ -119,7 +119,7 @@ the interaction surface (MCP / CLI / hosted) and to any LLM provider; those plug
   RocksDB is opt-in; the core runs on the in-memory backend), `dynograph-graph` (pure
   graph-theory algorithms). To iterate against an unreleased foundation locally, uncomment
   the `[patch]` block in the root `Cargo.toml` — do not commit it uncommented.
-- The **schema is the vocabulary** (26 node types, 52 edge types across 10 `schema/*.yaml`
+- The **schema is the vocabulary** (27 node types, 53 edge types across 10 `schema/*.yaml`
   domains): the node/edge names are load-bearing. `src/schema.rs` embeds all ten YAML files
   via `include_str!` and merges them with `Schema::from_multiple_yamls` — the same files
   `tools/validate_schema.py` checks, so there is one source of truth. Terminology in code
@@ -273,7 +273,7 @@ yes). The core is built to be neutral to this; see
 an LLM provider into the core.
 
 - `schema/*.yaml` — 10 composable [dynograph-foundation](https://github.com/sligara7/dynograph-foundation)
-  schema domains (26 node types, 52 edge types). This is the foundation everything builds on.
+  schema domains (27 node types, 53 edge types). This is the foundation everything builds on.
 - `docs/*.md` — the vision, design, and process specifications.
 - `tools/validate_schema.py` — validates the schema against dynograph-core's rules.
 

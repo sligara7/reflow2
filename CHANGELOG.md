@@ -17,6 +17,25 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Questions outlive the session** (BL-4). `gap_to_prompt` phrased a question, returned it, and
+  forgot — it was the only tool on the surface that never touched the graph. So the next session
+  re-derived the same gap and asked the same thing again, which the blind trial called *"the
+  stateless-agent problem reflow2 is supposed to solve"*; it worked around it by copying questions
+  into a Markdown file by hand.
+
+  The serve pass now records a `Question` node at a derived id, `ASKS_ABOUT` the nodes the gap
+  concerned, keeping the wording the user actually saw. New tools: `open_questions` (still
+  awaiting an answer), `answer_question`, `withdraw_question`. The **where-am-i** skill reads them
+  before anything else and repeats the original wording — being asked the same question twice,
+  worded differently, is how someone learns the tool is not listening.
+
+  Re-asking updates the phrasing but cannot reopen an answered question, so a later session cannot
+  erase what an earlier one learned.
+
+  This adds the first new node type since the schema was written: **27 node types, 53 edge
+  types**. Purely additive — validation runs on write and no existing node carries the label — so
+  existing graphs are unaffected (BL-19).
+
 - **The assembly hierarchy is reachable** (BL-2). `contain_component` nests one Component inside
   another, and `add_component` takes an optional `level`. Both were needed: `hierarchy_issues`
   had shipped as a read tool with no writer to feed it, returning `[]` for want of input rather

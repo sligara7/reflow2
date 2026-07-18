@@ -73,6 +73,25 @@ schema:
         a coding/style convention, a preferred material, a methodology. Broader
         than a Constraint: a rule you picked, not a limit imposed on you.
 
+    Question:
+      properties:
+        question: { type: string, required: true, fulltext: true, description: "The question as it was actually put to the user, in their language." }
+        gap_id: { type: string, required: true, indexed: true, description: "The gap this was asked about. Deterministic, so a later session finds the question without an index." }
+        prompt_id: { type: string, indexed: true, description: "Id of the LLM request that phrased it, so identical phrasings are recognisable across sessions." }
+        context_setter: { type: string, fulltext: true, description: "The 1-2 sentences that placed the user back in their own design." }
+        rephrase_degraded: { type: bool, default: false, description: "True when phrasing fell back to the raw gap text — the question was still asked, and the record says how well." }
+        asked_at: { type: string, description: "When it was put to the user." }
+        answer: { type: string, fulltext: true, description: "What the user said, in their own words. The design nodes it produced are linked separately." }
+        status: { type: enum, values: [asked, answered, withdrawn], default: asked, indexed: true }
+      embedding_field: question
+      resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
+      extraction_hint: >
+        A question already put to the user about a gap, and whether they have
+        answered it. Not extracted from prose — authored by the DETECT→PROMPT
+        loop so that a later session can tell what has already been asked
+        instead of re-deriving and re-asking it. ASKS_ABOUT points at the nodes
+        the gap concerned.
+
   edge_types:
 
     CONTAINS:
@@ -94,6 +113,17 @@ schema:
       properties:
         coverage: { type: enum, values: [full, partial, planned] }
         evidence: { type: string }
+
+    ASKS_ABOUT:
+      from: Question
+      to: "*"
+      extraction_hint: >
+        The design nodes a question was raised about — the gap's affected set at
+        the moment it was asked. Lets a node say "someone has already been asked
+        about this", and lets an answered question stay reachable from the part
+        of the design it settled.
+      properties:
+        note: { type: string }
 
     CONSTRAINS:
       from: "*"
