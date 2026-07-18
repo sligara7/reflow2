@@ -111,8 +111,13 @@ lowest infra) and move to a service only if concurrent editing demands it.
 6. **Artifact linking wiring** — connect `Artifact`/`Fragment` nodes to the real Unity files
    the agent produces (`REALIZES`, provenance) so the loop closes on real code.
 
+**Status: steps 1–6 all complete** (see [requirements-coverage.md](requirements-coverage.md),
+SP-1…SP-6). Future improvements, tracked there: **SP-3b** (`ingest` programmatic LLM extraction
+with a transactional prepare pass) and **SP-6b** (as-built drift detection / filesystem
+reconcile + `DriftEvent`).
+
 Deferred still: real hosted LLM providers (not needed for agent-native), the optional
-embedding seam (semantic dedup/retrieval), generative-HEAL *content* (arrives with step 2).
+embedding seam (semantic dedup/retrieval), generative-HEAL *content*.
 
 ## Open questions for the next session
 

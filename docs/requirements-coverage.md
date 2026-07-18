@@ -229,6 +229,14 @@ Next-phase build order for the agent-native surface (the deferred surface decisi
 | SP-5 | GENESIS: bootstrap the graph from the opening brief | ✅ | `genesis::DesignGraph::genesis` (thin core op) + `genesis` MCP tool + `consumer-template/.grok/skills/genesis/` (agent-native brief-expansion) · [genesis.md](genesis.md) · `tests/genesis.rs`, `reflow2-mcp/tests/tools.rs::genesis_bootstraps_then_detect_hands_off`. Guarded/idempotent (no re-init clobber); seeds P0/P1 only → DETECT `concept_without_design` hand-off; deployment captured as Requirements. No schema change. |
 | SP-6 | Artifact linking wiring (`REALIZES`, provenance) to real files | ✅ | `artifact::DesignGraph::{add_artifact, realizes, link_artifact}` (link_artifact atomic: Artifact + provenance Fragment + `YIELDED` + `REALIZES`, fail-loud on missing target) + `add_artifact`/`realizes`/`link_artifact` MCP tools + `consumer-template/.grok/skills/link-artifacts/` · [artifact-linking.md](artifact-linking.md) · `tests/artifact.rs`, `reflow2-mcp/tests/tools.rs::link_artifact_closes_the_unrealized_capability_gap`. Added missing `edge::{SPECIFIES,DOCUMENTS,PRODUCES,ANNOTATES}` constants. **Link-only; as-built drift/DriftEvent deferred → SP-6b.** |
 
+**Future improvements (planned, not yet built).** The six-step surface plan (SP-1…SP-6) is
+complete; these deepen it and are tracked here so they aren't lost.
+
+| ID | Requirement | Status | Evidence / note |
+|----|-------------|--------|-----------------|
+| SP-3b | `ingest` programmatic LLM extraction over the MCP surface | ⬜ | needs a **transactional prepare pass** (`begin_batch`→collect→`discard_batch`) so the mutating collect pass rolls back, plus a unified serve-or-collect backend, then wire `ingest` as a multi-round handshake tool. Pairs with GENESIS. Today the agent extracts intent in-context and writes via GENESIS + `add_*`/`create_*` (EX-P2 artifact extraction also deferred). |
+| SP-6b | As-built drift detection / filesystem reconcile | ⬜ | scan `Artifact.location` on disk and emit `DriftEvent` (`missing_artifact` / `checksum_change` / `undocumented_addition` / `spec_mismatch` / `status_mismatch`) when the graph and reality diverge; surface as a gap. `DriftEvent` is schema-defined (`verify.yaml`) but has **zero Rust today**. Needs filesystem I/O + a drift detector + a `reconcile`/`list_drift` tool. |
+
 ---
 
 ## Cross-cutting project rules — [AGENTS.md](../AGENTS.md)
