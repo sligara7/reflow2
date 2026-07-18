@@ -71,6 +71,19 @@ fidelity?), that is a *gap* — surface it as a question, don't guess.
    should I look at?"; `hierarchy_issues`, `surprising_connections`, `dimension_drifts` surface
    decomposition, coupling, and quality drift.
 
+## If reflow2 gets in your way, say so
+
+reflow2 is early, and everything known about its weak points came from someone writing down what
+fought them. If a tool fails without telling you what would work, a gap fires on something you did
+correctly, or you cannot record something the design clearly contains — that is worth reporting,
+and you are the only one who saw it.
+
+Run the **report-friction** skill. It writes a report redacted of the user's design content and
+offers to file it; it never files anything without asking, and it does not interrupt the work —
+note the friction, carry on, raise it at a natural break. This is about **reflow2**, not about the
+project being designed: a missing requirement is a gap, a detector that cannot express the
+requirement is friction.
+
 ## The gap → question handshake (`gap_to_prompt`)
 
 reflow2 phrases the question; **you** are the language model that fills it in:

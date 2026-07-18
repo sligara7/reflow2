@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import filecmp
+import re
 import json
 import os
 import shutil
@@ -57,6 +58,46 @@ TREES = [
     (KIT / "skills", ".claude/skills"),
     (KIT / "skills", ".grok/skills"),
 ]
+
+
+# Frontmatter every harness agrees on. A skill whose `name` is malformed, or
+# does not match its directory, is **silently ignored** — no error anywhere, it
+# simply never loads. That is the failure this project forbids elsewhere, so the
+# installer refuses to ship one rather than letting it disappear quietly.
+SKILL_NAME = re.compile(r"[a-z0-9]+(-[a-z0-9]+)*")
+PORTABLE_FIELDS = {"name", "description", "license", "compatibility", "metadata"}
+
+
+def check_skills() -> list[str]:
+    """Problems that would make an installed skill fail to load."""
+    problems = []
+    root = KIT / "skills"
+    for d in sorted(p for p in root.iterdir() if p.is_dir()):
+        f = d / "SKILL.md"
+        if not f.exists():
+            problems.append(f"{d.name}: no SKILL.md (must be capitalised)")
+            continue
+        text = f.read_text()
+        m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+        if not m:
+            problems.append(f"{d.name}: no YAML frontmatter")
+            continue
+        fm = dict(re.findall(r"^(\w[\w-]*):\s*(.*)$", m.group(1), re.M))
+        name, desc = fm.get("name", ""), fm.get("description", "")
+        if not SKILL_NAME.fullmatch(name):
+            problems.append(f"{d.name}: name {name!r} is not lowercase-with-hyphens")
+        elif name != d.name:
+            problems.append(f"{d.name}: name {name!r} does not match the directory")
+        if not desc:
+            problems.append(f"{d.name}: no description — agents match on it to decide whether "
+                            f"to load the skill at all")
+        elif len(desc) > 1024:
+            problems.append(f"{d.name}: description is {len(desc)} chars (max 1024)")
+        extra = set(fm) - PORTABLE_FIELDS
+        if extra:
+            problems.append(f"{d.name}: {sorted(extra)} are not read by every harness "
+                            f"(OpenCode takes only {sorted(PORTABLE_FIELDS)})")
+    return problems
 
 
 def kit_version() -> dict:
@@ -249,6 +290,11 @@ def planned_changes(project: Path) -> list[str]:
 
 
 def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
+    if problems := check_skills():
+        raise SystemExit(
+            "refusing to install: these skills would be silently ignored by the agent\n  "
+            + "\n  ".join(problems)
+        )
     done = []
     for src, rel in FILES:
         dst = project / rel

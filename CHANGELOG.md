@@ -17,6 +17,22 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The agent can report friction with reflow2 itself** (BL-21). A `report-friction` skill, with
+  the trigger in the consumer `AGENTS.md` because a skill alone is not reliably discovered
+  (BL-22). Everything reflow2 knows about its own weak points came from staged trials; ordinary
+  use produces better evidence and was losing all of it.
+
+  Redaction is the load-bearing part. A friction report naturally quotes the graph, and the graph
+  is the user's design — so the skill reports reflow2-shaped facts (which tool, argument *shapes*,
+  node *types*, counts, errors with ids masked) and asks before including anything of theirs. It
+  never files without asking, searches for duplicates first, and falls back to writing a local
+  file when `gh` is unavailable or the repository is unreachable — which is the normal case, since
+  the repo is private.
+
+- **`reflow2_init.py` refuses to install a skill that would silently fail to load.** A malformed
+  `name`, one that does not match its directory, or a missing `description` makes a harness ignore
+  the skill with no error anywhere. The installer now names the problem instead.
+
 - **An answered question stays visible while its gap is open** (BL-25). `open_questions` returns
   `asked` (still waiting) and `answered`-but-the-gap-is-still-open, the latter carrying the reply.
   Answering settles nothing on its own: either the answer gets written into the design and the gap
