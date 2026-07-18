@@ -50,7 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- _(nothing claimed)_
+- BL-19 — @ajs — 2026-07-18 — graph version stamp + fail-loud open check
 
 ## Blocked / waiting
 
