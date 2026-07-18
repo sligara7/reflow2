@@ -45,6 +45,32 @@ Three independent sources, which is why several items appear on more than one li
 
 ## Bigger threads
 
+**BL-15 · Project bootstrap and kit updates** — *from the external user, 2026-07-18.* "You should
+be able to launch a project from reflow, which bootstraps everything into a new repo... And maybe
+it adds a script for pulling in releases. You won't know up front what project type it is though."
+
+Two problems, and his caveat is the design.
+
+*Bootstrap.* Today the kit installs by three hand-run `cp`s, one of which needs the binary path
+edited in, plus a hidden `.grok/` that `cp *` misses. That should be one command.
+
+*The caveat is the product, not an obstacle.* You don't know the project type up front **because
+that is a design decision the loop is supposed to make.** So bootstrap only what is type-neutral
+— AGENTS.md, skills, MCP config, `.reflow2/`, `.gitignore`, a brief template — and deliberately
+scaffold no `src/` layout, build file, or language choice. Those come *out* of the design, and
+both blind trials produced exactly that: a structure that fitted what had been designed. A
+scaffold that guessed would commit a design decision before the design existed.
+
+*Updates are the sharper half, and currently absent.* The kit is copied, so a consumer's copy
+freezes at install time — the first external user's copy is already stale by a day of skill
+fixes and nothing tells him. Text (AGENTS.md + skills) is easy to refresh; the binary needs a
+~10-minute RocksDB build, so it wants either published release binaries or a pinned-version
+check. Bears directly on the embedded-vs-service fork: a service would make this disappear.
+
+Size: **M** for bootstrap, **M–L** for updates depending on the release story.
+
+
+
 | ID | Item | Why | Size |
 |---|---|---|---|
 | **BL-7** | **`ingest` over MCP** (SP-3b) | The multi-pass extraction pipeline is unreachable agent-native, so provenance, fuzzy dedup and time-aware resolution never run. Needs a transactional prepare pass. Closely tied to #4 and to session continuity. | L |
