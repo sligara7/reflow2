@@ -17,11 +17,13 @@
 //!   child (inverted or same-level containment).
 //! - `orphan_level` — a subsystem-or-higher component with neither a
 //!   higher-level parent nor a lower-level child — a floating mid-level node.
+//!   A Project counts as a parent: it is the root of the containment spine,
+//!   above every level, and `contains` puts top-level parts directly under it.
 //!
 //! These feed DETECT (surfaced as gaps) and, per heal-process.md HEAL-14, are
 //! what HEAL would repair by proposing the *missing intermediate* Component.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use dynograph_core::{DynoError, Value};
 
@@ -84,6 +86,10 @@ pub enum HierarchyIssueKind {
     /// A `CONTAINS` whose parent is not strictly above its child.
     LevelMismatch,
     /// A subsystem-or-higher component with no parent above and no child below.
+    ///
+    /// Containment by the Project counts as a parent. Without that, the shape
+    /// the tools lead you to — a Project holding a few subsystems — reported one
+    /// orphan per subsystem, which is how reflow2's own design produced two.
     OrphanLevel,
 }
 
@@ -182,14 +188,27 @@ impl DesignGraph {
 
         // orphan_level: a subsystem-or-higher component with no higher-level
         // parent and no lower-level child on the CONTAINS spine.
+        //
+        // The Project anchors the spine. It carries no `Component.level` — it
+        // sits above all of them — so a subsystem it CONTAINS has a parent even
+        // though `levels` knows nothing about it. Reading only the Component
+        // side made every top-level part look floating: `contains` is exactly
+        // how a Project takes ownership of one.
+        let projects: HashSet<String> = self
+            .scan_nodes(node::PROJECT)?
+            .into_iter()
+            .map(|n| n.node_id)
+            .collect();
+
         for (id, &lvl) in &levels {
             if lvl.rank() < Level::Subsystem.rank() {
                 continue; // a bare component with no parent/child is normal
             }
             let has_higher_parent = self.incoming(id, Some(edge::CONTAINS))?.iter().any(|e| {
-                levels
-                    .get(&e.from_id)
-                    .is_some_and(|p| p.rank() > lvl.rank())
+                projects.contains(&e.from_id)
+                    || levels
+                        .get(&e.from_id)
+                        .is_some_and(|p| p.rank() > lvl.rank())
             });
             let has_lower_child = self
                 .outgoing(id, Some(edge::CONTAINS))?
@@ -200,7 +219,8 @@ impl DesignGraph {
                     kind: HierarchyIssueKind::OrphanLevel,
                     components: vec![id.clone()],
                     message: format!(
-                        "'{}' ({}) has no higher-level parent and no lower-level child",
+                        "'{}' ({}) is not contained by anything above it and contains \
+                         nothing below it",
                         id,
                         lvl.as_str()
                     ),

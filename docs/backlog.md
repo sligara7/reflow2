@@ -38,7 +38,6 @@ Four independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
-| **BL-24** | **A Component under a Project is not "floating"** | `orphan_level` fires on every top-level subsystem, because `hierarchy_issues` only recognises `Component CONTAINS Component` and the natural shape is a Project containing subsystems. One false gap per subsystem, for the modelling the tools lead you to. Found by the self-host probe; needed real top-level structure to show up. | S |
 | **BL-4** | **Persist asked questions** | `gap_to_prompt` output evaporates, so the next session re-derives and re-asks. The trial agent's own framing: *"the stateless-agent problem reflow2 is supposed to solve."* Same gap the external user hit as "how do I pause and resume". | M |
 | **BL-5** | **Re-examine `single_point_of_failure`** | *"All 15 defects vanished at once when I added two bookkeeping edges."* The self-host probe found the mechanism: it fires on **leaf** capabilities — *"every path between subsystems routes through `cap:ingest`"* — because the selectivity rule counts separated groups without asking whether they are substantial. `surprises.rs` already solved this with `MIN_COMMUNITY = 3`; `structure.rs` has no equivalent. 7 of 8 defects on a healthy 2-component design. | M |
 
@@ -54,6 +53,12 @@ Kept as a short pointer so a stable id never dangles; the detail is in the CHANG
   overwritten — which also fixed a silent failure where a project that already had any MCP server
   never got reflow2 installed while the run reported success. Tables and the reasoning:
   [skills/README.md](skills/README.md).
+- **BL-24 · A Component the Project contains is not floating** — done. `orphan_level` only
+  recognised a *Component* parent, and the Project carries no `Component.level` because it sits
+  above all of them — so the shape the tools lead you to (a Project holding a few subsystems)
+  reported one false gap per subsystem. The Project now counts as a parent; a component nothing
+  contains is still an orphan, and there is a test for each direction. Together with BL-23 this
+  took reflow2's own design from **25 gaps to 1**, and that one is true.
 - **BL-23 · Per-file verification coverage is counted, not asked** — done. One `VERIFIES` edge
   per source file was 22 of 25 gaps on reflow2's own design, on a crate whose capabilities are all
   tested. The rule was not wrong, it was loud, and volume is what makes a list get skimmed.

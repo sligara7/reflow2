@@ -50,7 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-24 — @ajs — 2026-07-18 — hierarchy.rs orphan_level rule
+- _(nothing claimed)_
 
 ## Blocked / waiting
 
@@ -60,6 +60,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-24: Project containment anchors a subsystem (self-host: 3 gaps -> 1) — @ajs — 2026-07-18 — pending
 - BL-23: per-file coverage counted not asked (self-host probe: 25 gaps -> 3) — @ajs — 2026-07-18 — `7c5b702`
 - BL-6b: coupling demoted to a signal; retired acks stay visible — @ajs — 2026-07-18 — `f340fcb`
 - BL-22: kit reaches every agent; MCP configs merged not overwritten — @ajs — 2026-07-18 — `9e9e765`

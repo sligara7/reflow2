@@ -118,3 +118,43 @@ fn hierarchy_defects_surface_as_detect_gaps() {
         "the missing intermediate should surface as a gap"
     );
 }
+
+/// BL-24. The shape the tools lead you to — a Project holding a couple of
+/// subsystems — used to report one `orphan_level` per subsystem, because the
+/// check only recognised a Component parent and the Project carries no level.
+/// Modelling reflow2's own design (two crates under one Project) produced two
+/// false gaps this way.
+#[test]
+fn a_subsystem_the_project_contains_is_anchored_not_floating() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    comp(&mut g, "cmp:core", "subsystem");
+    comp(&mut g, "cmp:surface", "subsystem");
+    g.contains("proj:p", node::COMPONENT, "cmp:core").unwrap();
+    g.contains("proj:p", node::COMPONENT, "cmp:surface")
+        .unwrap();
+
+    assert!(
+        kinds(&g).is_empty(),
+        "a Project is the root of the spine — what it contains has a parent, got {:?}",
+        g.hierarchy_issues().unwrap()
+    );
+}
+
+/// The other half: the detector must still catch a genuinely floating part.
+/// Anchoring on the Project cannot become "nothing is ever an orphan".
+#[test]
+fn a_subsystem_nothing_contains_is_still_an_orphan() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    comp(&mut g, "cmp:anchored", "subsystem");
+    comp(&mut g, "cmp:floating", "subsystem");
+    g.contains("proj:p", node::COMPONENT, "cmp:anchored")
+        .unwrap();
+    // cmp:floating is contained by nothing at all.
+
+    let issues = g.hierarchy_issues().unwrap();
+    assert_eq!(issues.len(), 1, "exactly the floating one, got {issues:?}");
+    assert_eq!(issues[0].kind, HierarchyIssueKind::OrphanLevel);
+    assert_eq!(issues[0].components, ["cmp:floating"]);
+}

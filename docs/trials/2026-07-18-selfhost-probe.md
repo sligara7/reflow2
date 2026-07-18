@@ -118,3 +118,22 @@ rule.
 Self-hosting is worth continuing, but the graph should not become authoritative until
 [BL-4](../backlog.md) lands — a design brain that forgets between sessions is worse than a
 document you can read.
+
+## Outcome, same day
+
+Re-run against the same 119-node graph after each fix:
+
+| | gaps | |
+|---|---|---|
+| as probed | 25 | 22 artifact-coverage, 2 orphan_level, 1 true |
+| after **BL-23** | 3 | per-file coverage became a `graph_report` statistic |
+| after **BL-24** | **1** | `no_deploy_operate` — correct; reflow2 has no operate layer |
+
+Both fixes were small and neither weakened detection: capabilities are still asked about, and a
+component nothing contains is still an orphan. What changed is that the two rules stopped
+demanding bookkeeping the design's author would not write.
+
+Still open from this probe: the 7 `single_point_of_failure` defects
+([BL-5](../backlog.md)). Those are HEAL's, not DETECT's, so they do not touch the gap list — but
+the mechanism is now known, and it is the same one `surprises.rs` solved with
+`MIN_COMMUNITY = 3`.
