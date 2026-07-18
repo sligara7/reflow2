@@ -41,8 +41,8 @@ reflow2 surfaces the decisions a stateless agent would make silently. Turn them 
 4. **If the user decides a gap is fine as it stands, say so in the graph.** Call
    `acknowledge_gap` with the gap's `id`, its `affected_ids`, and the user's reason. It moves
    into `reviewed_gaps` — recorded, not deleted — and the reason becomes a real Decision node
-   that outlives this session. Use it when a judgement has actually been made ("that coupling is
-   deliberate", "hardware is out of scope"), never to tidy up a list you haven't discussed.
+   that outlives this session. Use it when a judgement has actually been made ("we accept this requirement
+   will not be met in v1", "hardware is out of scope"), never to tidy up a list you haven't discussed.
 
    This matters: an open list that can never reach zero gets skimmed, and a skimmed list is the
    failure this whole workflow exists to prevent. `detect_gaps` should mean *still needs

@@ -223,9 +223,10 @@ fn gap_ids_are_deterministic_across_runs() {
 }
 
 #[test]
-fn an_unexpected_cross_community_coupling_is_surfaced_as_a_gap() {
-    // Two tightly-coupled triangles joined by one lateral bridge → the bridge
-    // is a hidden coupling DETECT should surface.
+fn a_cross_community_coupling_is_a_signal_not_a_gap() {
+    // Two tightly-coupled triangles joined by one lateral bridge. The bridge is
+    // a real finding — but a signal to report, not a question to answer, so it
+    // belongs in graph_report and not in the gap list (BL-6b).
     let mut g = DesignGraph::open_in_memory().unwrap();
     for c in ["cap:a1", "cap:a2", "cap:a3", "cap:b1", "cap:b2", "cap:b3"] {
         g.add_capability(c, c, "does a thing").unwrap();
@@ -249,13 +250,23 @@ fn an_unexpected_cross_community_coupling_is_surfaced_as_a_gap() {
     dep(&mut g, "cap:b1", "cap:b3", 0.9);
     dep(&mut g, "cap:a1", "cap:b1", 0.1); // the bridge
 
-    let gaps = g.detect_gaps().unwrap();
-    let coupling: Vec<&reflow2_core::GapCandidate> = gaps
-        .iter()
-        .filter(|x| x.gap_source == GapSource::UnexpectedCoupling)
-        .collect();
-    assert_eq!(coupling.len(), 1);
-    assert_eq!(coupling[0].affected_ids, ["cap:a1", "cap:b1"]);
+    // Not a gap: it fires on correct architecture. Both blind trials reported
+    // it doing so, and an Interface bridges two clusters by construction — so
+    // modelling contracts as the docs instruct made the detector penalise every
+    // one of them.
+    assert!(
+        !g.detect_gaps()
+            .unwrap()
+            .iter()
+            .any(|x| x.gap_source == GapSource::UnexpectedCoupling),
+        "a cross-community coupling must not demand an answer"
+    );
+
+    // Still reported, in full, where it informs instead of interrupting.
+    let report = g.graph_report().unwrap();
+    assert_eq!(report.surprising.len(), 1, "the signal itself must survive");
+    assert_eq!(report.surprising[0].from_id, "cap:a1");
+    assert_eq!(report.surprising[0].to_id, "cap:b1");
 }
 
 #[test]

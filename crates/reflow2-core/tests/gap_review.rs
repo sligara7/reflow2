@@ -50,7 +50,7 @@ fn an_accepted_gap_leaves_the_open_list_and_enters_the_reviewed_bucket() {
     let reviewed = g.reviewed_gaps().expect("reviewed");
     let entry = reviewed
         .iter()
-        .find(|r| r.gap.id == gap_id)
+        .find(|r| r.gap_id == gap_id)
         .expect("it must appear in the reviewed bucket, not vanish");
     assert_eq!(
         entry.reason,
@@ -105,7 +105,7 @@ fn withdrawing_a_review_reopens_the_gap() {
         !g.reviewed_gaps()
             .unwrap()
             .iter()
-            .any(|r| r.gap.id == gap_id),
+            .any(|r| r.gap_id == gap_id),
         "and take it out of the reviewed bucket"
     );
 }
@@ -174,7 +174,7 @@ fn re_acknowledging_updates_the_reason_rather_than_duplicating() {
         .expect("second");
 
     let reviewed = g.reviewed_gaps().expect("reviewed");
-    let entries: Vec<_> = reviewed.iter().filter(|r| r.gap.id == gap_id).collect();
+    let entries: Vec<_> = reviewed.iter().filter(|r| r.gap_id == gap_id).collect();
     assert_eq!(entries.len(), 1, "one review per gap");
     assert_eq!(entries[0].reason, "Better reason after discussion.");
 }
@@ -189,7 +189,54 @@ fn acknowledging_does_not_invent_edges_to_nodes_that_are_gone() {
         g.reviewed_gaps()
             .unwrap()
             .iter()
-            .any(|r| r.gap.id == gap_id),
+            .any(|r| r.gap_id == gap_id),
         "the review still applies even if one endpoint could not be linked"
+    );
+}
+
+/// BL-6b retired `unexpected_coupling` as a gap. At least one trial had already
+/// acknowledged one, so those reviews had to survive the change: an
+/// acknowledgement whose detector no longer exists is reported as retired,
+/// never silently dropped. A reviewed list that shrinks for reasons the user
+/// cannot see is the dishonesty this whole split exists to avoid.
+#[test]
+fn an_acknowledgement_outliving_its_detector_is_reported_not_dropped() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+
+    // Acknowledge a gap id no live detector will ever produce — exactly the
+    // state a graph is left in when a detector is retired under it.
+    let stale = "gap:deadbeefdeadbeef";
+    g.acknowledge_gap(
+        stale,
+        &["cap:x".to_string()],
+        "that coupling is the product",
+    )
+    .unwrap();
+
+    let reviewed = g.reviewed_gaps().unwrap();
+    let retired: Vec<_> = reviewed.iter().filter(|r| r.retired.is_some()).collect();
+    assert_eq!(retired.len(), 1, "the orphaned review must still be listed");
+    assert_eq!(retired[0].gap_id, stale);
+    assert_eq!(retired[0].reason, "that coupling is the product");
+    assert!(
+        retired[0].gap.is_none(),
+        "there is no live candidate to show, and none should be invented"
+    );
+    assert!(
+        retired[0]
+            .retired
+            .as_deref()
+            .unwrap()
+            .contains("No current detector"),
+        "the reason it is retired must be stated, got {:?}",
+        retired[0].retired
+    );
+
+    // Withdrawing still works, so the user is not stuck with it.
+    g.withdraw_gap_acknowledgement(stale).unwrap();
+    assert!(
+        g.reviewed_gaps().unwrap().iter().all(|r| r.gap_id != stale),
+        "a withdrawn review leaves the list"
     );
 }

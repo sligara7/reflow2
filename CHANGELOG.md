@@ -22,6 +22,26 @@ This file is the third view: *what changed, and when*.
   spec-compliant clients. Lists now arrive as `{"count": n, "items": [...]}`. Found by a Grok
   trial; three home-grown test layers missed it because each was a client we wrote.
 
+### Changed
+
+- **A cross-community coupling is a signal, not a gap** (BL-6b). It no longer appears in
+  `detect_gaps`; `graph_report` lists it under "Surprising couplings" as it already did, and
+  `surprising_connections` returns it whole. Nothing was lost — it stopped demanding an answer.
+
+  It fired on correct architecture. An `Interface` joins two clusters by construction, so
+  modelling every contract as AGENTS.md instructs made the detector penalise each one: ten of
+  thirteen gaps in one blind trial, and the other's verdict was *"that coupling **is** the
+  product"*. Two earlier rounds of tightening had not fixed it. It was also never in the gap
+  taxonomy — `docs/gap-surfacing.md` lists `orphan_node`, `dead_end`, `disconnected_cluster` and
+  `single_point_of_failure` — so this restores the spec rather than departing from it.
+
+- **`reviewed_gaps` reports acknowledgements that outlived their detector.** A trial had already
+  acknowledged a coupling, and retiring the gap would have made that judgement vanish from the
+  reviewed list while the `Decision` sat unreferenced in the graph. Such reviews are now listed
+  with `retired` set and no candidate, because a list that shrinks for reasons the user cannot
+  see is the dishonesty the open/reviewed split exists to prevent. `ReviewedGap` gains `gap_id`
+  and `retired`; `gap` is now optional.
+
 ### Fixed
 
 - **The kit's skills reach every agent, not just one** (BL-22). Skills were installed to

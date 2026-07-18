@@ -50,7 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-6b — @ajs — 2026-07-18 — detect.rs, surprises.rs, report.rs
+- _(nothing claimed)_
 
 ## Blocked / waiting
 
@@ -60,6 +60,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-6b: coupling demoted to a signal; retired acks stay visible — @ajs — 2026-07-18 — pending
 - BL-22: kit reaches every agent; MCP configs merged not overwritten — @ajs — 2026-07-18 — `9e9e765`
 - BL-2/BL-3/BL-6: assembly hierarchy, requirement status, artifact gap split — @ajs — 2026-07-18 — `9ab3da3`
 - BL-1 schema discovery + evidence-backed rejections; per-crate AGENTS.md — @ajs — 2026-07-18 — `9440929`

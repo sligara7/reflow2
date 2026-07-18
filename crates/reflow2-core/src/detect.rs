@@ -15,9 +15,10 @@
 //!   (`concept_without_design`, `design_without_build`, `build_without_verification`,
 //!   `no_deploy_operate`) — the doc's headline "you've done X but not Y".
 //! - **Graph-analysis** — findings from the design network surfaced as gaps:
-//!   `unexpected_coupling` (a lateral coupling bridging distant communities, from
-//!   `surprising_connections`) and `declining_dimension` (quality trending down,
-//!   from `dimension_drifts`).
+//!   `declining_dimension` (quality trending down, from `dimension_drifts`).
+//!   Cross-community coupling is deliberately *not* here: it is reported as a
+//!   signal by `graph_report`, because a gap demands an answer and that one
+//!   fires on correct architecture (see [`GapSource::UnexpectedCoupling`]).
 //!
 //! Two disciplines shape the design (docs/gap-surfacing.md):
 //!
@@ -89,8 +90,22 @@ pub enum GapSource {
     /// deliberate public contract or a leftover.
     UnconsumedInterface,
     // Graph-analysis (from the design network)
-    /// A coupling edge bridges two otherwise-distant communities — a hidden
-    /// coupling worth confirming (from `surprising_connections`).
+    /// **Retired as a gap.** A coupling edge bridging two otherwise-distant
+    /// communities is a *signal*, not a question: `graph_report` lists it under
+    /// "Surprising couplings" and `surprising_connections` returns it whole.
+    ///
+    /// It was never in the gap taxonomy — docs/gap-surfacing.md names
+    /// `orphan_node`, `dead_end`, `disconnected_cluster` and
+    /// `single_point_of_failure`, not this — and demanding an answer for it went
+    /// badly twice. Both blind trials reported the same thing: it fires on
+    /// correct architecture. An `Interface` joins two clusters *by
+    /// construction*, so modelling contracts as the docs instruct made the
+    /// detector penalise every one. Ten of thirteen gaps in one trial were this;
+    /// the other put it plainly — *"that coupling **is** the product"*.
+    ///
+    /// The variant and its key string stay because acknowledgement ids hash
+    /// them: removing them would strand every review someone has already made
+    /// (see [`DesignGraph::reviewed_gaps`], which reports those as retired).
     UnexpectedCoupling,
     /// A node's quality on some dimension is trending down over epochs (from
     /// `dimension_drifts`).
@@ -155,12 +170,25 @@ pub enum GapScope {
 /// dishonesty.
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct ReviewedGap {
-    /// The gap itself, exactly as the detector reports it.
-    pub gap: GapCandidate,
+    /// The gap itself, exactly as the detector reports it — absent when the
+    /// detector that raised it has since been retired (see `retired`).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub gap: Option<GapCandidate>,
     /// Why it was accepted.
     pub reason: String,
     /// The `Decision` node recording the review.
     pub decision_id: String,
+    /// The gap id this review was made against. Always present, including when
+    /// no live detector produces it any more.
+    pub gap_id: String,
+    /// Set when the review outlived its detector: the judgement was real and is
+    /// kept, but nothing raises that gap now, so there is no candidate to show.
+    ///
+    /// Reported rather than dropped. Silently omitting these would shrink the
+    /// reviewed list for a reason the user cannot see — the same dishonesty
+    /// this type exists to avoid.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub retired: Option<String>,
 }
 
 /// A detected gap, ranked for surfacing (mirrors storyflow's `ScenarioCandidate`).
@@ -405,15 +433,49 @@ impl DesignGraph {
     /// to be judged afresh.
     pub fn reviewed_gaps(&self) -> Result<Vec<ReviewedGap>, DynoError> {
         let mut reviewed = Vec::new();
+        let mut live = std::collections::HashSet::new();
         for gap in self.all_gaps()? {
             if let Some((decision_id, reason)) = self.gap_acknowledgement(&gap.id)? {
+                live.insert(gap.id.clone());
                 reviewed.push(ReviewedGap {
-                    gap,
+                    gap_id: gap.id.clone(),
+                    gap: Some(gap),
                     reason,
                     decision_id,
+                    retired: None,
                 });
             }
         }
+
+        // Acknowledgements whose detector no longer exists. `unexpected_coupling`
+        // was retired as a gap, and at least one trial had already accepted one —
+        // that judgement is real and stays visible, rather than vanishing because
+        // the code changed underneath it.
+        for d in self.scan_nodes(node::DECISION)? {
+            let Some(hash) = d.node_id.strip_prefix("decision:ack:") else {
+                continue;
+            };
+            let gap_id = format!("gap:{hash}");
+            if live.contains(&gap_id) {
+                continue;
+            }
+            let Some((decision_id, reason)) = self.gap_acknowledgement(&gap_id)? else {
+                continue;
+            };
+            reviewed.push(ReviewedGap {
+                gap: None,
+                reason,
+                decision_id,
+                gap_id,
+                retired: Some(
+                    "No current detector raises this gap. The decision is kept; nothing is \
+                     being suppressed by it."
+                        .to_string(),
+                ),
+            });
+        }
+
+        reviewed.sort_by(|a, b| a.gap_id.cmp(&b.gap_id));
         Ok(reviewed)
     }
 
@@ -430,7 +492,9 @@ impl DesignGraph {
         self.detect_unrealized_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
         self.detect_interface_pairing(&pop, &mut gaps)?;
-        self.detect_unexpected_couplings(&mut gaps)?;
+        // Deliberately absent: unexpected coupling. It is a *signal*, reported
+        // by `graph_report` and `surprising_connections`, not a gap demanding
+        // an answer — see `GapSource::UnexpectedCoupling`.
         self.detect_declining_dimensions(&mut gaps)?;
         self.detect_hierarchy_gaps(&mut gaps)?;
 
@@ -774,42 +838,6 @@ impl DesignGraph {
                     });
                 }
             }
-        }
-        Ok(())
-    }
-
-    /// Surface hidden couplings (from `surprising_connections`) as gaps: a
-    /// coupling edge bridging two otherwise-distant communities is worth
-    /// confirming ("is this link intentional, or should the boundary change?").
-    fn detect_unexpected_couplings(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
-        for c in self.surprising_connections()? {
-            let affected = vec![c.from_id.clone(), c.to_id.clone()];
-            gaps.push(GapCandidate {
-                id: gap_id(GapSource::UnexpectedCoupling, &affected),
-                gap_source: GapSource::UnexpectedCoupling,
-                scope: GapScope::Capability,
-                // surprise is ~1..3; map into a mid-band severity.
-                severity: (c.surprise / 3.0).clamp(0.3, 0.85),
-                title: format!(
-                    "Unexpected coupling between '{}' and '{}'",
-                    c.from_id, c.to_id
-                ),
-                description: format!(
-                    "'{}' and '{}' sit in separate parts of the design yet are directly coupled — \
-                     is that intentional, or should the boundary or the link change?",
-                    c.from_id, c.to_id
-                ),
-                affected_ids: affected,
-                suggested_depth: 2,
-                evidence: format!(
-                    "{} edge bridges communities {}→{}; {} (surprise {:.2}).",
-                    c.edge_type,
-                    c.from_community,
-                    c.to_community,
-                    c.reasons.join(", "),
-                    c.surprise
-                ),
-            });
         }
         Ok(())
     }

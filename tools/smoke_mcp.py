@@ -252,6 +252,41 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("gaps detected", len(gaps) > 0, sources)
     c.ok("a fully paired contract is not reported as a gap",
          "unprovided_interface" not in sources, sources)
+
+    # BL-6b: a cross-community coupling is a signal, not a question. It fires on
+    # correct architecture — an Interface bridges two clusters by construction —
+    # so it informs via graph_report instead of demanding an answer.
+    c.ok("coupling is not reported as a gap",
+         "unexpected_coupling" not in sources, sources)
+    c.ok("but the coupling signal still reaches the report",
+         "surprising" in s.call("graph_report"))
+
+    # The acknowledge → reviewed round trip, including the JSON an agent reads.
+    # Nothing covered this before, and BL-6b changed the shape of a ReviewedGap.
+    ack_gap = gaps[0]
+    s.call("acknowledge_gap", {"gap_id": ack_gap["id"],
+                               "affected_ids": ack_gap["affected_ids"],
+                               "reason": "deliberate for v1"})
+    open_ids = {g["id"] for g in s.call("detect_gaps")}
+    c.ok("an acknowledged gap leaves the open list", ack_gap["id"] not in open_ids)
+    reviewed = s.call("reviewed_gaps")
+    match = [r for r in reviewed if r["gap_id"] == ack_gap["id"]]
+    c.ok("and appears in reviewed_gaps with its reason",
+         len(match) == 1 and match[0]["reason"] == "deliberate for v1", reviewed)
+
+    # An acknowledgement whose detector no longer exists must still be listed,
+    # marked retired — a reviewed list that shrinks unexplained is the dishonesty
+    # the split exists to avoid.
+    s.call("acknowledge_gap", {"gap_id": "gap:deadbeefdeadbeef",
+                               "affected_ids": [], "reason": "coupling is the product"})
+    retired = [r for r in s.call("reviewed_gaps") if r.get("retired")]
+    c.ok("an acknowledgement outliving its detector is still reported",
+         len(retired) == 1 and "gap" not in retired[0], retired)
+
+    s.call("withdraw_gap_acknowledgement", {"gap_id": ack_gap["id"]})
+    s.call("withdraw_gap_acknowledgement", {"gap_id": "gap:deadbeefdeadbeef"})
+    c.ok("withdrawing puts the gap back",
+         ack_gap["id"] in {g["id"] for g in s.call("detect_gaps")})
     h1 = s.call("gap_to_prompt", {"gap": gaps[0], "answers": []})
     if c.ok("handshake asks the agent for phrasing", h1.get("status") == "needs_llm", h1):
         h2 = s.call("gap_to_prompt", {

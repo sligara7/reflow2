@@ -37,7 +37,6 @@ Three independent sources, which is why several items appear on more than one li
 |---|---|---|---|
 | **BL-4** | **Persist asked questions** | `gap_to_prompt` output evaporates, so the next session re-derives and re-asks. The trial agent's own framing: *"the stateless-agent problem reflow2 is supposed to solve."* Same gap the external user hit as "how do I pause and resume". | M |
 | **BL-5** | **Re-examine `single_point_of_failure`** | *"All 15 defects vanished at once when I added two bookkeeping edges. Nothing about actual fragility changed."* Use that case as the test. | M |
-| **BL-6b** | **Demote `unexpected_coupling` from a gap to a report-only signal** | Three independent reports now — both blind trials and the coupling work itself. Grok: *"that coupling **is** the product"* on the one real interface in a 3-component design. Community structure is not meaningful at this scale, so it should inform rather than demand attention. | S |
 
 ## Closed
 
@@ -51,6 +50,15 @@ Kept as a short pointer so a stable id never dangles; the detail is in the CHANG
   overwritten — which also fixed a silent failure where a project that already had any MCP server
   never got reflow2 installed while the run reported success. Tables and the reasoning:
   [skills/README.md](skills/README.md).
+- **BL-6b · `unexpected_coupling` demoted to a signal** — done. The decisive fact was not the
+  trials but the spec: [gap-surfacing.md](gap-surfacing.md) names `orphan_node`, `dead_end`,
+  `disconnected_cluster` and `single_point_of_failure` as the structural gaps — this was never
+  among them, having been volunteered by the graph-analysis work. It is now reported by
+  `graph_report` under its own heading, which already existed, so no information was lost. Two
+  earlier rounds of tightening had not stopped it firing on correct architecture; an `Interface`
+  bridges two clusters by construction, so modelling contracts as instructed made the detector
+  penalise every one. `reviewed_gaps` now reports acknowledgements whose detector has been
+  retired rather than dropping them, since a trial had already accepted one.
 - **BL-2 · Expose `contain_component`** and **BL-3 · `Requirement.status` reachable** — done
   `9ab3da3`. Both needed more than the entry said. BL-2 also had to expose `Component.level`:
   shipping the containment alone would have flagged a false `level_mismatch` on every nesting,
