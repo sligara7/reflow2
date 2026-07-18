@@ -50,7 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-1 Schema discovery tool — @ajs — 2026-07-18 — schema, API exposure
+- _(nothing claimed)_
 
 ## Blocked / waiting
 
@@ -60,6 +60,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-1 schema discovery + evidence-backed rejections; per-crate AGENTS.md — @ajs — 2026-07-18 — `9440929`
 - Answer the first external user (where-am-i skill, pause/resume, setup kickoff) — @ajs — 2026-07-18 — `ed818ae`
 - Records: CHANGELOG, backlog, trials — @ajs — 2026-07-18 — `ed818ae`
 - Gap review + cross-process determinism fix — @ajs — 2026-07-18 — `8a66afb`, `565c418`
