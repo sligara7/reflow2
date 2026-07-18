@@ -65,6 +65,7 @@ the loop like this:
 
 ### 4 · Heritage — *where the ideas came from*
 - [reflow-v3-nuggets.md](reflow-v3-nuggets.md) — ideas carried over from the original Reflow.
+- [reflow-audit.md](reflow-audit.md) — the deep pass behind it: all 25 workflows and all 51 tools, each with an adopt / obsoleted / do-not-port verdict, plus the cautions and rule-4 counter-examples found along the way.
 - [chain-reflow-nuggets.md](chain-reflow-nuggets.md) — ideas from Chain Reflow (matryoshka, causality, linking).
 
 ## Heritage & references

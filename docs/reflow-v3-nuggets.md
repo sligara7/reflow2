@@ -4,7 +4,9 @@
 
 Review of [github.com/sligara7/reflow](https://github.com/sligara7/reflow) (the first
 project — Nov/Dec 2025, now dormant),
-focused on `tools/`, `workflows/`, `workflow_steps/`. It was already
+focused on `tools/`, `workflows/`, `workflow_steps/`. **A full item-by-item pass over the same
+repo — every workflow and every tool, with adopt/obsolete/do-not-port verdicts — is in
+[reflow-audit.md](reflow-audit.md); it supersedes this summary where the two differ.** It was already
 "LLM-driven systems engineering with proactive drift prevention," framework-agnostic
 across UAF, systems biology, social networks, ecosystems. Several ideas are worth
 carrying into the redesign; a few directly *validate* choices we already made.

@@ -240,6 +240,27 @@ complete; these deepen it and are tracked here so they aren't lost.
 
 ---
 
+## Write-side coverage — can the user record what DETECT asks for?
+
+Surfaced by the [reflow audit](reflow-audit.md): reflow2's read side runs ahead of its write
+side. Several node types are counted by `detect.rs`, listed by `report.rs`, and classified by
+`propagate.rs`, but have **no typed constructor and no MCP tool** — so a gap demanding one can be
+reported but not ergonomically closed. Generic `create_node` works, but the agent must hand-type
+property names against a schema it cannot see, which in practice means the gap stays open and the
+agent learns to ignore gap output.
+
+| ID | The gap DETECT emits | Asking the user to record | Write side | Status |
+|----|----------------------|---------------------------|-----------|--------|
+| WS-1 | `build_without_verification`, `unverified_capability` | `Verification` (+ `VERIFIES`) | none | ⬜ |
+| WS-2 | `no_deploy_operate` | `Release` / `Environment` / `Resource` (+ `DEPLOYED_TO`, `REQUIRES_RESOURCE`) | none | ⬜ |
+| WS-3 | HEAL `contradiction` → "Decision" content stub | `Decision` (+ `GOVERNED_BY`) | none | ⬜ |
+| WS-4 | GS-9 compliance gaps (deferred) | `EnvironmentRule` (+ `OPERATES_IN`, `IMPOSES`, `COMPLIES_WITH`, `VIOLATES_RULE`) | none | ⬜ |
+| WS-5 | — (schema-only, no detector either) | `QualityGate` | none | ⬜ |
+
+`Interface`/`PROVIDES`/`CONSUMES` were in this table until the interface layer landed; that fix is
+the template for the rest. WS-2 is the prerequisite for the as-fielded view (audit item 2) — the
+schema, propagation, and detection already exist, so the work *is* the write side.
+
 ## Cross-cutting project rules — [AGENTS.md](../AGENTS.md)
 
 | Rule | Status | Evidence / note |
