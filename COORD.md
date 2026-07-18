@@ -16,6 +16,10 @@ a status report —
 
 ## For agents reading this
 
+**Before anything else: `git pull --rebase`.** A claim board you haven't pulled is a claim board
+from the past — you'll claim something that's already taken and find out at merge time. Pull,
+then read.
+
 **Before starting work:** read the In-progress list. If someone holds the item, or holds
 something that touches the same files, pick something else or say so — don't quietly work in
 parallel.
@@ -68,6 +72,27 @@ Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `g
 
 If an item has been claimed for **more than a week with no commits against it**, anyone may take
 it — leave a note on the line saying you did, rather than deleting the original claim.
+
+## When git conflicts
+
+It will happen — two people, one repo, and the shared records are the files you both touch most.
+
+**The rule that matters: never resolve a conflict by discarding the other side.** For an agent,
+"resolve the conflict" usually means picking a side — and here that silently deletes a
+teammate's claim, changelog entry or finding. Both sides are almost always correct; the job is
+to keep both, not to choose.
+
+| File | What to do |
+|---|---|
+| `COORD.md`, `CHANGELOG.md` | Resolved automatically — `.gitattributes` marks them `merge=union`, so both sides' lines are kept. If you *still* see a conflict, you both edited the same line: keep both meanings and tidy the wording. |
+| `docs/backlog.md`, `docs/requirements-coverage.md` | Usually you each touched different rows — keep both. If it's the **same** row, someone's status is newer than yours; check `git log -p` on that file and ask rather than overwriting. |
+| `docs/trials/*` | Append-only evidence. Keep both; never edit someone else's trial record. |
+| Source and tests | A real conflict here means the claims didn't work — two people edited the same module. Reconcile the *intent*, not just the text, and re-run the full gates before pushing. |
+| `Cargo.lock` | Regenerate rather than hand-merge: take either side, then `cargo build` and commit the result. |
+
+**If you cannot resolve it confidently, stop and say so.** Pushing a guess is how one person's
+afternoon gets quietly deleted. An unresolved conflict sitting in the working tree is a
+recoverable state; a bad merge on `main` is not.
 
 ## Conventions
 

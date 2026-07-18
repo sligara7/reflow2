@@ -1,0 +1,11 @@
+# Two people work this repo through git with different agents, so the shared
+# records get edited simultaneously more than anything else. For the two that
+# are pure append-per-line, take BOTH sides automatically rather than raising a
+# conflict — losing someone's claim or changelog entry is worse than a duplicate
+# line, which is visible and trivially tidied.
+#
+# Deliberately NOT applied to backlog.md or requirements-coverage.md: a clash
+# there usually means two people changed the same item's status, and that
+# genuinely needs a human to look.
+COORD.md    merge=union
+CHANGELOG.md merge=union

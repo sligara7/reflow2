@@ -2,8 +2,10 @@
 
 This repo already carries agent instructions in portable form. Read, in order:
 
-1. **[../COORD.md](../COORD.md)** — the claim board. Read it before starting work and claim what
-   you take; two people work this repo with different agents.
+0. **`git pull --rebase`** — before reading anything else. Two people work this repo through
+   git; a stale checkout means claiming work someone already holds.
+1. **[../COORD.md](../COORD.md)** — the claim board. Claim what you take, and follow its rules
+   for resolving merge conflicts (short version: never resolve by discarding the other side).
 2. **[../AGENTS.md](../AGENTS.md)** — what Reflow 2.0 is, the mental model, and the
    non-negotiable rules for changing it.
 3. **[../CLAUDE.md](../CLAUDE.md)** — commands and code-level architecture.

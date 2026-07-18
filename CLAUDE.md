@@ -4,9 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Read first
 
-- **[COORD.md](COORD.md)** — **the claim board. Read it before starting work and claim what you
-  take.** Two people work this repo with different agents; an unclaimed change is how two people
-  build the same thing.
+- **`git pull --rebase` first, then [COORD.md](COORD.md)** — the claim board. Two people work
+  this repo with different agents, so read it before starting and claim what you take. Pulling
+  first is not optional: a stale board means claiming something already taken. COORD.md also
+  says how to resolve a conflict without deleting someone's work.
 - **[AGENTS.md](AGENTS.md)** — what Reflow 2.0 is, the coherence-loop mental model, the
   module map, and the non-negotiable rules for changing the project. Start there for *why*.
 - **[docs/overview.md](docs/overview.md)** — maps every design doc and the reading order.

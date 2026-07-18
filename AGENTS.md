@@ -1,7 +1,9 @@
 # AGENTS.md — orientation for AI agents working on Reflow 2.0
 
-> **Working on reflow2 itself?** Read **[COORD.md](COORD.md)** first and claim what you take —
-> it is the shared board between the people and agents working this repo. Then
+> **Working on reflow2 itself?** Run **`git pull --rebase`**, then read **[COORD.md](COORD.md)**
+> and claim what you take — it is the shared board between the people and agents working this
+> repo, and a board you haven't pulled is out of date. It also covers resolving merge conflicts
+> without discarding anyone's work. Then
 > **[CLAUDE.md](CLAUDE.md)** for commands and code-level architecture,
 > **[docs/backlog.md](docs/backlog.md)** for what is open and why.
 
