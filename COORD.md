@@ -50,7 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- _(nothing claimed)_
+- BL-20 → BL-19 remainder → BL-18 — @ajs — 2026-07-18 — export/import, backup-before-upgrade, staleness check
 
 ## Blocked / waiting
 
