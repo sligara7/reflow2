@@ -74,6 +74,12 @@ project root, create `.mcp.json` — **grok build and claude code both read this
 Alternatives for grok build: `grok mcp add`, or the in-session `/mcps` modal, or an entry in
 `~/.grok/config.toml` — all read the same server definition.
 
+**Or skip all of it:** `python3 tools/reflow2_init.py /path/to/project` writes the config for
+every agent it knows about — `.mcp.json` (claude code, and grok build reads it too),
+`opencode.json`, and `.vscode/mcp.json` — with the binary path resolved, and installs the skills
+into every directory those agents search. It merges rather than overwrites, so other MCP servers
+and your own settings survive. Re-run it any time to update.
+
 ## 4. Verify the build works (before wiring up your agent)
 
 Run this checklist from the `reflow2` repo. Each line prints **PASS** or **FAIL** — you should

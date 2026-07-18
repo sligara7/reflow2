@@ -38,41 +38,40 @@ compatibility shim.
 | OpenCode | `opencode.json` — **no `.mcp.json` compatibility** |
 | Copilot / VS Code | `.vscode/mcp.json` |
 
-## What this means for reflow2 today
+## What the kit installs, and why (BL-22, done)
 
-The kit installs `.grok/skills/` and writes `.mcp.json`. Against the tables above:
+`reflow2_init.py` now writes skills to **every** directory some harness searches, and an MCP
+config in **every** format:
 
-| Harness | Sees the seven skills | Finds the MCP server |
+| Harness | Skills | MCP |
 |---|---|---|
-| Grok CLI | yes | yes (via `.mcp.json` compat) |
-| Claude Code | **no** | yes |
-| OpenCode | **no** | **no** (needs `opencode.json`) |
-| Copilot / VS Code | **no** | **no** (needs `.vscode/mcp.json`) |
+| Claude Code | `.claude/skills/` | `.mcp.json` |
+| OpenCode | `.claude/skills/` | `opencode.json` |
+| Copilot / VS Code | `.claude/skills/` | `.vscode/mcp.json` |
+| Grok CLI | `.grok/skills/` | `.mcp.json` (compat) |
 
-**Skills land in the least portable directory of the four.** So a project bootstrapped with
-`reflow2_init.py` and opened in Claude Code — the harness this repo is developed with — has an
-AGENTS.md naming seven skills the agent cannot load.
+The kit's source of truth is `getting-started/skills/`, harness-neutral, copied to each
+destination. Adding a harness is one line in `TREES` or `MCP_CONFIGS`.
 
-**This is what the Grok trial hit.** Its finding, *"Skills are files, not auto-injected … the
-available_skills list only listed `council` and `customize-opencode`"*, was not a subtle
-registration problem: opencode searches `.opencode/`, `.claude/` and `.agents/`, and the kit had
-written `.grok/`. The directory was simply not on the search path.
+**Before this, the kit installed `.grok/skills/` alone** — the narrowest-reach option — so a
+project opened in Claude Code had an AGENTS.md naming seven skills the agent could not load. It
+also explains the Grok trial's *"Skills are files, not auto-injected"*: opencode searches
+`.opencode/`, `.claude/` and `.agents/`, and the kit had written `.grok/`. Not a registration
+problem — the directory was never on the search path.
 
-**`.claude/skills/` is the single highest-value change**, covering Claude Code, OpenCode and
-Copilot at once. Adding it beside the existing `.grok/skills/` covers all four harnesses.
-`.agents/skills/` is the vendor-neutral name but Claude Code does not read it, so it is strictly
-worse as a single choice.
+**The configs are merged, never overwritten.** `opencode.json` is that tool's entire config
+(theme, model, permissions), and any project may already run other MCP servers; both must
+survive. Merging also fixed a silent failure: the installer used to bail whenever `.mcp.json`
+existed without a `reflow2` entry, so a project already using one MCP server never got reflow2
+at all — while the run reported success.
 
-**MCP is a second, smaller gap.** `.mcp.json` serves Claude Code and Grok, but OpenCode and
-VS Code each need their own file. Whoever ran the Grok trial must have wired `opencode.json` by
-hand — friction the installer could remove.
+A config whose `reflow2` entry points somewhere else is left alone and said so; `--force-mcp`
+repoints it. Malformed JSON is reported, never rewritten.
 
-Both are the recurring lesson in [backlog.md](../backlog.md): the capability exists and the
-surface that should advertise it does not. Tracked as **BL-22**.
-
-The kit's skills are otherwise spec-compliant — valid `name` matching the directory, a real
-`description`. Only the location is wrong. Worth knowing because a bad `name` (slashes, colons,
-dots, or a namespace prefix) makes a skill **silently fail to load**, with no error.
+The skills themselves were always spec-compliant — valid `name` matching the directory, a real
+`description` — which is why this was purely an install-path bug. Keep them that way: a bad
+`name` (slashes, colons, dots, or a namespace prefix) makes a skill **silently fail to load**,
+with no error anywhere.
 
 ## SKILL.md, the part that is actually a shared standard
 

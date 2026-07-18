@@ -35,17 +35,34 @@ Three independent sources, which is why several items appear on more than one li
 
 | ID | Item | Why | Size |
 |---|---|---|---|
-| **BL-2** | **Expose `contain_component`** | Exists in core, not on the surface, so an assembly hierarchy can't be modelled — and `hierarchy_issues` returns `[]` because it never has a hierarchy to check. | S |
-| **BL-3** | **`Requirement.status` reachable** | Already in the schema, defaulting to `proposed`. The trial agent wanted to mark requirements provisional and wrote "ASSUMED" into the statement text instead. | S |
 | **BL-4** | **Persist asked questions** | `gap_to_prompt` output evaporates, so the next session re-derives and re-asks. The trial agent's own framing: *"the stateless-agent problem reflow2 is supposed to solve."* Same gap the external user hit as "how do I pause and resume". | M |
 | **BL-5** | **Re-examine `single_point_of_failure`** | *"All 15 defects vanished at once when I added two bookkeeping edges. Nothing about actual fragility changed."* Use that case as the test. | M |
 | **BL-6b** | **Demote `unexpected_coupling` from a gap to a report-only signal** | Three independent reports now — both blind trials and the coupling work itself. Grok: *"that coupling **is** the product"* on the one real interface in a 3-component design. Community structure is not meaningful at this scale, so it should inform rather than demand attention. | S |
-| **BL-6** | **Rename/split `unverified_capability`** | Fires per-Artifact despite the name, producing gaps titled "Nothing verifies reading.py". Semantically right, legibly wrong. | S |
 
 ## Closed
 
 Kept as a short pointer so a stable id never dangles; the detail is in the CHANGELOG.
 
+- **BL-22 · Skills are not reliably discoverable** — done. The kit installed `.grok/skills/`
+  alone, the narrowest-reach of four harnesses, so a project opened in Claude Code had an
+  AGENTS.md naming seven skills the agent could not load. `reflow2_init.py` now installs to
+  `.claude/skills/` (read by Claude Code, OpenCode and Copilot) and `.grok/skills/`, and writes
+  `.mcp.json`, `opencode.json` and `.vscode/mcp.json` from one generator. Configs are merged, not
+  overwritten — which also fixed a silent failure where a project that already had any MCP server
+  never got reflow2 installed while the run reported success. Tables and the reasoning:
+  [skills/README.md](skills/README.md).
+- **BL-2 · Expose `contain_component`** and **BL-3 · `Requirement.status` reachable** — done
+  `9ab3da3`. Both needed more than the entry said. BL-2 also had to expose `Component.level`:
+  shipping the containment alone would have flagged a false `level_mismatch` on every nesting,
+  since everything defaults to `component` — worse than the silence it replaced. BL-3 also had to
+  fix HEAL, which unlike DETECT ignored a `dropped` requirement, so marking one would have
+  silenced half the system while the other half kept nagging. Recorded as **WS-7**/**WS-8**.
+- **BL-6 · Split `unverified_capability`** — done `9ab3da3`. Artifacts now report as
+  `unverified_artifact` with wording of their own; detection is unchanged, because proving a
+  capability works still does not prove *this file* delivers it. The capability key is frozen
+  deliberately: gap ids hash it and acknowledgements are stored under the resulting id, so a
+  rename would silently expire every acknowledgement and orphan the Decision where neither
+  `detect_gaps` nor `reviewed_gaps` looks. A test pins both keys.
 - **BL-1 · Schema discovery tool** — done `9440929`, consumer kit `f00fac7`. `describe_schema`
   plus rejections that name the alternatives. The design turned on one detail worth remembering:
   `EdgeEndpoint::accepts()` returns true for the `*` wildcard, so the naive answer to the trial's
@@ -130,63 +147,7 @@ whether a harness surfaces them is harness-dependent and currently unreliable. A
 by convention, so the trigger belongs there, with the skill carrying the detail. Needs no server
 work either way. Size **S**; the redaction judgment is the part worth writing carefully. Pairs
 with **BL-13** (advanced testing tiers) — this is the longitudinal, real-use tier no fixture can
-simulate, and with **BL-22**, without which nobody reads the skill anyway.
-
-**BL-22 · Skills are not reliably discoverable** — *Grok trial §2, 2026-07-18; unfiled until now.*
-The kit installs seven skills under `.grok/skills/*/SKILL.md` and AGENTS.md points at them by
-name ("see the **genesis** skill"). Under opencode the agent's `available_skills` listed only
-that harness's own skills — none of reflow2's — so it discovered them by reading files after
-noticing the references. Its own suggestion: *"either register them as first-class skills or put
-the full loop only in AGENTS.md."*
-
-This is the recurring lesson wearing a third face: the capability exists, and the surface that
-should advertise it does not. It also caps the value of every skill written from here on,
-BL-21 included.
-
-*The vendor docs settle it* — see [skills/README.md](skills/README.md), distilled from the three
-upstream sources kept beside it. Every harness looks somewhere different, and the kit installs
-the one location with the narrowest reach:
-
-| Harness | Skills | MCP |
-|---|---|---|
-| Grok CLI | `.grok/skills/` ✅ | `.mcp.json` compat ✅ |
-| Claude Code | `.claude/skills/` ❌ | `.mcp.json` ✅ |
-| OpenCode | `.opencode/`, `.claude/`, `.agents/skills/` ❌ | `opencode.json` ❌ |
-| Copilot / VS Code | `.github/`, `.claude/`, `.agents/skills/` ❌ | `.vscode/mcp.json` ❌ |
-
-So this is not a vague portability worry: a project bootstrapped by `reflow2_init.py` and opened
-in **Claude Code** — the harness this repo is developed with — has an AGENTS.md naming seven
-skills the agent cannot load.
-
-*It also explains the trial finding rather than merely restating it.* OpenCode searches
-`.opencode/`, `.claude/` and `.agents/`; the kit wrote `.grok/`. The skills were not
-mis-registered, the directory was never on the search path.
-
-*The fix is small.* `.claude/skills/` is read by Claude Code, OpenCode **and** Copilot — three of
-the four, two of which name it "Claude-compatible" outright. Installing there alongside the
-existing `.grok/skills/` covers everything. `reflow2_init.py` already copies a tree; this is a
-second destination, not new machinery. The skills are already spec-compliant — only the location
-is wrong. (`.agents/skills/` is the vendor-neutral name, but Claude Code does not read it, so it
-is strictly worse as a single choice.)
-
-*MCP is a second, smaller gap.* `.mcp.json` covers Claude Code and Grok, but OpenCode wants
-`opencode.json` and VS Code wants `.vscode/mcp.json`, with no compatibility shim in either.
-Whoever ran the Grok trial must have wired opencode by hand — friction the installer could
-remove. Same generator, three files.
-
-*One constraint on the skills themselves:* optional frontmatter fields differ per harness
-(OpenCode recognises only `name`/`description`/`license`/`compatibility`/`metadata`), so keeping
-reflow2's skills to `name` + `description` keeps one file working everywhere.
-
-*Deliberately not researched yet: OpenAI Codex and Google Antigravity.* Four harnesses were
-enough to show the convergence, and a fifth or sixth would either confirm `.claude/skills/` or
-add one more entry to a list the fix already iterates — it would not change the answer. The cheap
-moment to check is while implementing this, once installing to several destinations is
-mechanical. Worth noting that Codex is where the [agents.md](https://agents.md) convention comes
-from, so its instruction-file behaviour is likely already served; skills are the open question.
-
-Size **S** for the skills directory, **S** for the MCP configs. Worth doing before BL-21, which
-otherwise writes a skill into a directory three of four harnesses ignore.
+simulate. **BL-22** is done, so a skill written now is actually reachable.
 
 **BL-20 · Graph export / import, and versioned local backups** — *user, 2026-07-18.* Unblocks
 BL-19's migration half and, through it, BL-18.

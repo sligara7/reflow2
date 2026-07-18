@@ -43,8 +43,19 @@ STAMP = ".reflow2/kit-version.json"
 FILES = [
     (KIT / "AGENTS.md", "AGENTS.md"),
 ]
+
+# Skills go to every directory some harness actually searches. There is no
+# single location: `.claude/skills/` is read by Claude Code, OpenCode and
+# Copilot/VS Code (the latter two name it "Claude-compatible" outright), while
+# Grok CLI reads only `.grok/skills/`. Installing one of them means the other
+# harnesses see an AGENTS.md naming skills they cannot load — which is exactly
+# what happened: the kit shipped `.grok/` alone, so the Grok trial under
+# opencode found no reflow2 skills at all and had to read the files by hand.
+#
+# Adding a harness here is one line. See docs/skills/README.md for the tables.
 TREES = [
-    (KIT / ".grok", ".grok"),
+    (KIT / "skills", ".claude/skills"),
+    (KIT / "skills", ".grok/skills"),
 ]
 
 
@@ -108,6 +119,100 @@ def binary_is_stale(binary: Path) -> str | None:
     return None
 
 
+# Each harness names the server map differently and shapes the entry
+# differently, but they all describe the same stdio process. One generator,
+# several files — a project opened in a different tool should just work.
+#
+#   .mcp.json       Claude Code (Grok CLI also loads it as a compatibility
+#                   source, so this one file covers both)
+#   opencode.json   OpenCode — no .mcp.json compatibility
+#   .vscode/mcp.json  Copilot / VS Code — likewise
+#
+# `extract` pulls the binary path back out of an existing entry so a customised
+# config can be recognised and left alone.
+MCP_CONFIGS = [
+    {
+        "path": ".mcp.json",
+        "key": "mcpServers",
+        "entry": lambda b, g: {"command": str(b), "args": ["--graph-path", str(g)]},
+        "extract": lambda e: e.get("command"),
+        "extra": {},
+    },
+    {
+        "path": "opencode.json",
+        "key": "mcp",
+        "entry": lambda b, g: {
+            "type": "local",
+            "command": [str(b), "--graph-path", str(g)],
+            "enabled": True,
+        },
+        # OpenCode takes command+args as one array; the binary is its head.
+        "extract": lambda e: (e.get("command") or [None])[0],
+        "extra": {"$schema": "https://opencode.ai/config.json"},
+    },
+    {
+        "path": ".vscode/mcp.json",
+        "key": "servers",
+        "entry": lambda b, g: {"command": str(b), "args": ["--graph-path", str(g)]},
+        "extract": lambda e: e.get("command"),
+        "extra": {},
+    },
+]
+
+
+def write_mcp_config(project: Path, spec: dict, binary: Path, force: bool) -> str:
+    """Add or refresh reflow2's server entry, disturbing nothing else.
+
+    Merged rather than written whole, for two reasons. `opencode.json` is that
+    tool's *entire* config — theme, model, permissions — so overwriting it
+    would throw away settings that have nothing to do with us. And a project
+    may already run other MCP servers; they must survive.
+
+    Merging also fixes a silent failure: the previous version bailed out
+    whenever the file existed without a `reflow2` entry, so any project that
+    already used one MCP server never got reflow2 installed at all, while the
+    run still reported success.
+    """
+    path = project / spec["path"]
+    graph = project / ".reflow2" / "graph"
+    entry = spec["entry"](binary, graph)
+    label = spec["path"]
+
+    existing: dict = {}
+    if path.exists():
+        try:
+            existing = json.loads(path.read_text())
+        except json.JSONDecodeError:
+            return f"{label} is not valid JSON — left alone, fix it by hand"
+        if not isinstance(existing, dict):
+            return f"{label} is not a JSON object — left alone, fix it by hand"
+
+        current = existing.get(spec["key"], {}).get("reflow2")
+        if isinstance(current, dict) and not force:
+            pointed_at = spec["extract"](current)
+            if pointed_at and pointed_at != str(binary):
+                return (
+                    f"{label} LEFT ALONE — its reflow2 entry points at {pointed_at}, "
+                    f"not {binary} (re-run with --force-mcp to repoint it)"
+                )
+            if current == entry:
+                return f"{label} unchanged"
+
+    merged = dict(existing)
+    for k, v in spec["extra"].items():
+        merged.setdefault(k, v)
+    servers = dict(merged.get(spec["key"], {}))
+    servers["reflow2"] = entry
+    merged[spec["key"]] = servers
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(merged, indent=2) + "\n")
+    kept = [n for n in servers if n != "reflow2"]
+    if kept:
+        return f"{label} (reflow2 added; kept {', '.join(sorted(kept))})"
+    return label
+
+
 def planned_changes(project: Path) -> list[str]:
     """What a run would create or overwrite, without touching anything."""
     changes = []
@@ -127,8 +232,17 @@ def planned_changes(project: Path) -> list[str]:
                 changes.append(f"create  {label}")
             elif not filecmp.cmp(path, dst, shallow=False):
                 changes.append(f"update  {label}")
-    if not (project / ".mcp.json").exists():
-        changes.append("create  .mcp.json")
+    for spec in MCP_CONFIGS:
+        path = project / spec["path"]
+        if not path.exists():
+            changes.append(f"create  {spec['path']}")
+        else:
+            try:
+                current = json.loads(path.read_text()).get(spec["key"], {}).get("reflow2")
+            except (json.JSONDecodeError, AttributeError):
+                current = None
+            if current is None:
+                changes.append(f"update  {spec['path']} (add the reflow2 server)")
     if not (project / ".reflow2").exists():
         changes.append("create  .reflow2/")
     return changes
@@ -156,32 +270,8 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
 
     # MCP config, with the binary path already resolved — the step people
     # previously had to hand-edit, and the one most likely to be got wrong.
-    mcp = project / ".mcp.json"
-    config = {
-        "mcpServers": {
-            "reflow2": {
-                "command": str(binary),
-                "args": ["--graph-path", str(project / ".reflow2" / "graph")],
-            }
-        }
-    }
-    if mcp.exists() and not force_mcp:
-        # Never clobber a config someone has adjusted; say so instead.
-        try:
-            existing = json.loads(mcp.read_text())
-            cmd = existing.get("mcpServers", {}).get("reflow2", {}).get("command")
-            if cmd and cmd != str(binary):
-                done.append(
-                    f".mcp.json LEFT ALONE — it points at {cmd}, not {binary} "
-                    f"(re-run with --force-mcp to repoint it)"
-                )
-            else:
-                done.append(".mcp.json unchanged")
-        except json.JSONDecodeError:
-            done.append(".mcp.json is not valid JSON — left alone, fix it by hand")
-    else:
-        mcp.write_text(json.dumps(config, indent=2) + "\n")
-        done.append(".mcp.json")
+    for spec in MCP_CONFIGS:
+        done.append(write_mcp_config(project, spec, binary, force_mcp))
 
     (project / ".reflow2").mkdir(exist_ok=True)
     stamp = project / STAMP
