@@ -72,10 +72,17 @@ refreshes the design environment, resolves the binary path itself, records a kit
 staleness is detectable, and leaves the graph, user files and a customised `.mcp.json` alone.
 It installs no `src/`, build file or language choice, on purpose.
 
-**Still open:** the *release* story. Updating currently requires a reflow2 checkout to run the
-script from. A consumer with only a binary has no path. That wants either published release
-binaries or a fetch-from-git mode, and it bears on the embedded-vs-service fork — a service
-would remove the problem rather than solve it. Size **M–L**.
+**Update-skew detection: done.** `reflow2_init.py` now reports whether the *binary* is older
+than the source it was built from — the quiet failure where you pull, re-run init, and forget to
+rebuild, leaving current instructions driving an old server. SETUP.md documents the three-step
+update in the order that matters.
+
+**Still open — published releases.** Everything above assumes a reflow2 checkout to run the
+script from, which is true today because building the binary requires one. It stops being true
+the moment someone wants reflow2 without cloning it: that needs published, per-platform binaries
+(and macOS raises signing questions), or a fetch-from-git mode in the installer. It remains the
+third piece of evidence for the service side of the embedded-vs-service fork, alongside
+single-writer concurrency and this. Size **M–L**, and worth deciding the fork first.
 
 
 

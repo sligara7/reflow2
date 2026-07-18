@@ -117,6 +117,23 @@ That installs everything the agent needs and points the MCP config at the binary
 Re-run it any time to pick up reflow2 updates — it won't touch your design graph or your own
 files. `--check` shows what would change without writing.
 
+### Keeping up to date
+
+reflow2 moves; your project's copy of the kit doesn't. To pick up changes, from the reflow2 repo:
+
+```bash
+git pull                                    # 1. get the new reflow2
+cargo build -p reflow2-mcp --release        # 2. rebuild the server
+python3 tools/reflow2_init.py ~/projects/my-thing   # 3. refresh the project
+```
+
+**The order matters.** Doing 1 and 3 without 2 leaves your project with current instructions
+driving an old server — same tool names, different behaviour, and nothing obviously wrong until
+something misbehaves. `reflow2_init.py` checks for exactly that and warns you; run it with
+`--check` first if you'd rather look before touching anything.
+
+Your design graph and your own files are never touched by an update.
+
 ### Starting a design
 
 Open your agent in the project folder and prompt it with **a short overview of what you're

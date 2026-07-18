@@ -83,6 +83,31 @@ def find_binary() -> Path | None:
     return None
 
 
+def binary_is_stale(binary: Path) -> str | None:
+    """Is the built binary older than the source it was built from?
+
+    The quiet failure this catches: pull reflow2, re-run this script, forget to
+    rebuild. You end up with current instructions driving an old server — and
+    the mismatch is invisible until a tool behaves differently than the skills
+    say it will. (The array-shape fix is exactly that: same tool name, different
+    response.)
+    """
+    newest = 0.0
+    for root in (REPO / "crates", REPO / "schema"):
+        if not root.exists():
+            continue
+        for f in root.rglob("*"):
+            if f.is_file() and f.suffix in (".rs", ".yaml", ".toml"):
+                newest = max(newest, f.stat().st_mtime)
+    if newest > binary.stat().st_mtime:
+        return (
+            f"the binary at {binary} is older than the source it was built from.\n"
+            f"  Rebuild before using it:  cargo build -p reflow2-mcp --release\n"
+            f"  Otherwise your project has current instructions driving an old server."
+        )
+    return None
+
+
 def planned_changes(project: Path) -> list[str]:
     """What a run would create or overwrite, without touching anything."""
     changes = []
@@ -213,18 +238,29 @@ def main() -> int:
             for c in changes:
                 print(f"  {c}")
         else:
-            print("up to date — nothing to do.")
+            print("kit is up to date.")
+        if binary is None:
+            print("\nbinary: not built — cargo build -p reflow2-mcp --release")
+        elif (stale := binary_is_stale(binary)) is not None:
+            print(f"\nbinary: STALE — {stale}")
+        else:
+            print(f"\nbinary: current ({binary})")
         return 0
 
     updating = project.exists() and previously is not None
     project.mkdir(parents=True, exist_ok=True)
     done = install(project, binary, opts.force_mcp)
 
+    stale = binary_is_stale(binary)
+
     verb = "Updated" if updating else "Set up"
     print(f"{verb} reflow2 in {project}\n")
     for d in done:
         print(f"  {d}")
     print()
+
+    if stale:
+        print(f"WARNING: {stale}\n")
 
     if updating:
         print(f"Was: reflow2 {previously.get('reflow2_version')} ({previously.get('commit')})")
