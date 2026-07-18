@@ -125,6 +125,12 @@ the exact step, which is worth pasting if you ask for help.
 
 - The graph directory (`./.reflow2/graph`) is created on first use. Commit it (or an export)
   so the design syncs between people/agents via git.
+- **One agent at a time.** The graph is a RocksDB store and only one `reflow2-mcp` process can
+  hold it. If a second agent starts against the same `--graph-path`, it exits immediately with
+  `While lock file: .../LOCK: Resource temporarily unavailable`. That is the lock doing its job,
+  not a broken build — close the other agent (or point this one at a different graph) and retry.
+  Sharing a design *sequentially* works fine, including across machines via git; several agents
+  working the same graph at once is a future effort.
 - Logs go to stderr; stdout is the JSON-RPC channel — don't redirect stdout into logs.
 - Cross-platform: RocksDB builds on Windows too (MSVC + `cmake`), but only macOS and Linux are
   exercised today.

@@ -121,7 +121,13 @@ embedding seam (semantic dedup/retrieval), generative-HEAL *content*.
 
 ## Open questions for the next session
 
-- Shared-graph shape: repo-file vs service (above).
+- Shared-graph shape: repo-file vs service (above). **New evidence (2026-07-18):** the repo-file
+  shape is *single-writer* — RocksDB's LOCK means only one `reflow2-mcp` can hold a graph, so a
+  second agent starting on the same path exits at once (loudly and cleanly — no corruption, no
+  split-brain). "grok build / claude code on a shared design" therefore holds only if they take
+  turns. **Concurrent multi-agent and whole-team access is a deliberate future effort**; it is the
+  strongest argument so far for the service shape, with RocksDB secondary/read-only mode for
+  readers as a lighter middle option.
 - MCP tool granularity: one coarse "run the loop" tool vs many fine-grained ops the agent
   orchestrates? (Leaning fine-grained — the agent orchestrates, per the loop.)
 - How the agent-native `LlmBackend` round-trips a "pass" (tool returns a prompt + schema; agent
