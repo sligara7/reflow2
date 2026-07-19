@@ -82,7 +82,6 @@ Nine independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
-| **BL-5 (reopened)** | **`single_point_of_failure` still over-fires above fixture scale** | 22 of 36 defects on a real 96-node design. The original fix was measured on an 8-defect graph | M |
 | **BL-37** | **reflow2 cannot model a *process* — `Flow` has no write side, and edge roles are lost** | Found by modelling reflow2's own coherence loop in reflow2. The one type meant for an ordered process cannot be created; forward and backward edges are indistinguishable | M |
 | **BL-35** | **A design claim has no last-confirmed date, so "coherent" and "nobody looked" are indistinguishable** | The deepest of the phase items — an eroded graph and a genuinely coherent one both report quiet. Axis Z already holds the data | M |
 | **BL-36** | **`precedes` is unreachable, so the epoch chain cannot be drawn** | Recurring lesson, tenth instance — on the axis that exists to make history legible | S |
@@ -162,12 +161,27 @@ speaks through its children, which are flagged individually if disconnected. A c
 hosting nothing is the true case and still fires; there is a test for each direction. Defects on the
 design graph: **36 → 34**.
 
-**BL-5 reopened · `single_point_of_failure` above fixture scale** — *same trial.* 22 of 36 defects on
-a 96-node design, post-fix: nearly every requirement and mid-level capability is named. The
-[original fix](#closed) asked whether removal *increases* the count of non-trivial components and was
-measured taking reflow2's own graph from 8 defects to 2 — at 119 nodes modelled backwards, not at
-this shape. A golden thread is a tree, so most internal nodes still separate subsystems by that test.
-Needs a threshold that scales, or a different question. **M**.
+**BL-5, second pass · `single_point_of_failure` above fixture scale — DONE** — *the
+[self-host functional design trial](trials/2026-07-19-selfhost-functional-design.md).* 22 of 36
+defects on a 96-node design, post-first-fix: nearly every requirement and mid-level capability named.
+The [original fix](#closed) asked whether removal *increases* the count of non-trivial components,
+which is the right question about *topology* — and a golden thread is a tree, so most internal nodes
+still pass it. It turned out to need a different question, not a threshold: **only things that
+operate can fail.** The suggested fix is literally `add_redundancy`, and redundancy is only coherent
+for running parts — a second copy of a sentence adds no resilience, and a capability's failure *is*
+its component's failure, already reported there. An intent node being an articulation point is the
+golden thread working: every Requirement is *supposed* to be the hub of what satisfies it. SPOF
+candidates are now scoped to `Component` / `Interface` / `Resource` / `Environment`, on top of the
+existing separation test.
+
+Measured: **22 → 4**, and the survivors are exactly the ones judged plausible before the change —
+`cmp:service` (all agent access through one surface), `cmp:init` (the only installer), `cmp:export`
+and `ifc:graph-export` (the sole core→kit bridge). With this, **every one of the instrument's 16
+gaps and 14 defects is true** — the first instrument at zero known-false output. Two of the
+surviving defects are themselves worth noting: the `rel:v020 + env:dev` island is reflow2
+independently reporting [BL-34](#next-up)'s consequence, and the `cmp:verify` / `cmp:operate`
+islands found a genuine omission in the committed design model (the P4/P5 write side has no stated
+capability — fix the model, on the record, per [sharpening.md](sharpening.md) §2).
 
 **BL-37 · reflow2 cannot model a process** — *modelling the coherence loop itself, 2026-07-19
 (`tools/model_the_loop.py`, exported to [loop-model.json](loop-model.json), drawn in

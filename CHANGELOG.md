@@ -117,6 +117,17 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **`single_point_of_failure` only names things that can fail** (BL-5, second pass). The first fix
+  asked whether removal increases the count of non-trivial subsystems — the right question about
+  topology, measured at fixture scale. On the first real 96-node design it named 22 nodes, most of
+  them Requirements and Capabilities that are load-bearing *because* they are cross-cutting: a golden
+  thread converges on intent by design, so in a tree most internal nodes pass any purely topological
+  test. The missing filter was not a threshold but a category: the suggested fix is `add_redundancy`,
+  and redundancy is only coherent for things that operate. Candidates are now scoped to `Component`,
+  `Interface`, `Resource` and `Environment`. Measured: 22 → 4, the survivors being exactly the
+  plausible ones (`cmp:service`, `cmp:init`, `cmp:export`, `ifc:graph-export`) — and with it the
+  design-graph instrument reached zero known-false output.
+
 - **`unrealized_capability` accepts both shapes the schema allows at P3** (BL-38). `REALIZES` is
   declared `from: Artifact, to: "*"`, so "this file realizes the capability" and "this file realizes
   the module" are both valid, and `link_artifact` invites either — but the detector walked only the

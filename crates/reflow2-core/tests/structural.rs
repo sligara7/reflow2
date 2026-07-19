@@ -38,48 +38,49 @@ fn tree_shaped_thread_flags_no_single_point_of_failure() {
     );
 }
 
-#[test]
-fn a_node_bridging_two_subsystems_is_a_single_point_of_failure() {
-    // Two 2-node subsystems joined only through cap:hub:
-    //   cmp:a — cap:hub — cmp:b, plus each cmp has its own artifact so each side
-    //   is non-trivial (≥2 nodes) once cap:hub is removed.
+/// Two 2-node subsystems joined only through `hub_is_operational`'s choice of
+/// bridge — each side gets its own artifact so it stays non-trivial (≥2 nodes)
+/// once the bridge is removed.
+fn bridged_subsystems(operational_hub: bool) -> DesignGraph {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:x", "X").unwrap();
-    g.add_capability("cap:hub", "Hub", "central capability", None)
-        .unwrap();
     g.add_component("cmp:a", "A", "part a", None).unwrap();
     g.add_component("cmp:b", "B", "part b", None).unwrap();
     g.create_node(node::ARTIFACT, "art:a", Props::new().set("name", "a.rs"))
         .unwrap();
     g.create_node(node::ARTIFACT, "art:b", Props::new().set("name", "b.rs"))
         .unwrap();
-    // hub allocated to both components; each component's artifact realizes the hub
-    // — wait, keep the two sides distinct: artifacts hang off their components via
-    // REALIZES to the hub would recentralize. Instead connect each artifact to its
-    // side with DEPENDS_ON to the component (Interface-free structural link).
-    g.allocate("cap:hub", "cmp:a").unwrap();
-    g.allocate("cap:hub", "cmp:b").unwrap();
-    g.create_edge(
-        edge::DEPENDS_ON,
-        node::ARTIFACT,
-        "art:a",
-        node::COMPONENT,
-        "cmp:a",
-        Props::new(),
-    )
-    .unwrap();
-    g.create_edge(
-        edge::DEPENDS_ON,
-        node::ARTIFACT,
-        "art:b",
-        node::COMPONENT,
-        "cmp:b",
-        Props::new(),
-    )
-    .unwrap();
+    if operational_hub {
+        // The bridge is an Interface both sides meet at — a thing that runs.
+        g.add_interface("ifc:hub", "Shared contract").unwrap();
+        g.provides("cmp:a", "ifc:hub").unwrap();
+        g.consumes("cmp:b", "ifc:hub").unwrap();
+    } else {
+        // The bridge is a Capability both sides host — pure intent.
+        g.add_capability("cap:hub", "Hub", "central capability", None)
+            .unwrap();
+        g.allocate("cap:hub", "cmp:a").unwrap();
+        g.allocate("cap:hub", "cmp:b").unwrap();
+    }
+    for (art, cmp) in [("art:a", "cmp:a"), ("art:b", "cmp:b")] {
+        g.create_edge(
+            edge::DEPENDS_ON,
+            node::ARTIFACT,
+            art,
+            node::COMPONENT,
+            cmp,
+            Props::new(),
+        )
+        .unwrap();
+    }
+    g
+}
 
-    // Removing cap:hub leaves {cmp:a, art:a} and {cmp:b, art:b}: two subsystems.
-    assert!(has(&g, HealCategory::SinglePointOfFailure));
+#[test]
+fn an_interface_bridging_two_subsystems_is_a_single_point_of_failure() {
+    // Removing ifc:hub leaves {cmp:a, art:a} and {cmp:b, art:b}: two
+    // subsystems, severed by the failure of a thing that actually runs.
+    let g = bridged_subsystems(true);
     let spof: Vec<String> = g
         .detect_defects()
         .unwrap()
@@ -87,7 +88,24 @@ fn a_node_bridging_two_subsystems_is_a_single_point_of_failure() {
         .filter(|d| d.category == HealCategory::SinglePointOfFailure)
         .flat_map(|d| d.affected_ids)
         .collect();
-    assert_eq!(spof, ["cap:hub"]);
+    assert_eq!(spof, ["ifc:hub"]);
+}
+
+#[test]
+fn a_capability_bridging_two_subsystems_is_not_a_single_point_of_failure() {
+    // Same topology, but the hub is intent rather than a running part. BL-5's
+    // second pass: the suggested fix is add_redundancy, and redundancy is only
+    // coherent for things that operate — a capability's failure IS its
+    // component's failure, already reported there, and an intent node being an
+    // articulation point is the golden thread working. On reflow2's own
+    // 96-node design the topology test alone named 22 nodes, mostly
+    // Requirements and Capabilities that are load-bearing because they are
+    // cross-cutting.
+    let g = bridged_subsystems(false);
+    assert!(
+        !has(&g, HealCategory::SinglePointOfFailure),
+        "an intent hub must not be told to add_redundancy"
+    );
 }
 
 #[test]

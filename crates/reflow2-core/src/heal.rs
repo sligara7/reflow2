@@ -482,8 +482,31 @@ impl DesignGraph {
         }
 
         // single_point_of_failure — articulation points that actually separate
-        // ≥2 subsystems (not the leaf-cutting every tree-internal node does).
+        // ≥2 subsystems (not the leaf-cutting every tree-internal node does),
+        // and that name something which can *fail*.
+        //
+        // The second filter is what keeps this meaningful at real scale. A
+        // golden thread converges on intent by design — every Requirement is
+        // supposed to be the hub of what satisfies it — so on a 96-node design
+        // the topology test alone named 22 nodes, most of them Requirements and
+        // Capabilities that are load-bearing *because* they are cross-cutting.
+        // The suggested fix is `add_redundancy`, and redundancy is only a
+        // coherent idea for things that operate: a second copy of a sentence
+        // adds no resilience, and a capability's failure *is* its component's
+        // failure, already reported there. Intent nodes being articulation
+        // points is the thread working, not a defect (BL-5, second pass — the
+        // first fixed the island false-positive at fixture scale, and this
+        // shape only appears above it).
+        const OPERATIONAL_TYPES: &[&str] = &[
+            node::COMPONENT,
+            node::INTERFACE,
+            node::RESOURCE,
+            node::ENVIRONMENT,
+        ];
         for ap in net.articulation_points() {
+            if !OPERATIONAL_TYPES.contains(&net.type_of(ap)) {
+                continue;
+            }
             let id = net.id_of(ap).to_string();
             if self.is_single_point_of_failure(&id)? {
                 issues.push(HealIssue {

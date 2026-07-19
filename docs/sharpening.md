@@ -43,6 +43,13 @@ it reported 11 capabilities unbuilt and 22 nodes as single points of failure, an
 findings only because the code demonstrably ships and the topology is demonstrably fine.
 **Not once did reflow2 correctly report a problem with itself.** Do not expect it to.
 
+*Dated follow-up, later the same day.* After BL-38 and BL-5's second pass cleared the known-false
+output, the design-graph instrument reached **zero known-false**: all 16 gaps and 14 defects are
+true, including one — the `Release`/`Environment` island — that is reflow2 independently reporting
+BL-34's consequence, and two that found real omissions in the committed model. The claim above stays
+as the baseline it was; the lesson is that reflow2's self-reports become usable *exactly to the
+degree the noise has been paid down*, and the paydown is measurable.
+
 **So what is self-hosting actually for?** Two things, both real:
 
 - **It generates load nothing else does.** Three of today's items exist purely because someone tried
@@ -109,7 +116,7 @@ and record a baseline to move:
 | `tools/phase_trial.py` | Does the design carry weight after P2? | **8/13** — P3 4/4, P4 1/4, P5 0/2, thread 3/3 | BL-30, BL-9 |
 | `tools/erosion_trial.py` | After N fix cycles, does the design describe what shipped? | **2/7**, and `detect_gaps` returns `[]` on a design that is fiction | BL-33, BL-34 |
 | `tools/coherent_erosion_trial.py` | Is `designed == released` reachable, and does anything drive it? | **4/9** — reachable with discipline, nothing prompts it | BL-35, BL-36 |
-| `tools/build_design_graph.py` | What does reflow2 say about reflow2's own design? | 96 nodes, 16 gaps, 34 defects — the 11 false gaps and 2 false dead-ends fell to BL-38's fix (was 33/36); **22 SPOF defects still known false** | BL-5 |
+| `tools/build_design_graph.py` | What does reflow2 say about reflow2's own design? | 96 nodes, 16 gaps, 14 defects — **every output true** (was 33/36 with 13 false gaps and 24 false defects; BL-38 and BL-5's second pass cleared the noise) | — |
 
 `tools/smoke_mcp.py` stays the gate for the shipped surface; these four are the gate for whether the
 *loop* works. They exit non-zero by design and should not be wired into CI as pass/fail until the
