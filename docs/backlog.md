@@ -87,7 +87,6 @@ Nine independent sources, which is why several items appear on more than one lis
 | **BL-40** | **Viewpoints as pure projections (SYNTHESIZE held to a no-extrapolation standard)** | The graph stores the design; the agent only renders. `tools/render_views.py` is the seed — functional/structural/traceability views project cleanly today, and each confession it prints is a gap by definition. Direction: a viewpoint catalogue (UAF/DoDAF-informed), and rendering through the live MCP surface rather than the export. The author intends to expand this thread | M–L |
 | **BL-30** | **A failing test satisfies the check that asked for a test** | **S half done** — `failing_verification` fires at 0.8 and coverage counts passing only. The M half (`reconcile_verification`) remains. See below | ~~S~~ + M |
 | **BL-31** | **A `status` field is a claim nothing checks** | `status: verified` with nothing verifying, `status: met` with nothing satisfying — the graph never contradicts itself | S |
-| **BL-32** | **A running MCP server silently serves a stale surface** | Rebuild mid-session and the old tool surface keeps answering, with no indication. `smoke_mcp.py` cannot catch it by construction | S |
 | **BL-29** | **`apply_heal` trusts the proposal; merge loses data silently** | Mostly **done** — three of seven fixed; three remain, one deliberately deferred. See below | M |
 
 **BL-39 · A design cannot be loaded into a running session — DONE** — *found while trying to use the
@@ -380,16 +379,19 @@ these fields easy to write for the first time. A `status_contradicts_structure` 
 it belongs in DETECT — the answer is either "fix the status" or "fix the structure", which is a
 question for the user.
 
-**BL-32 · A running MCP server silently serves a stale surface** — *same trial, found by nearly
+**BL-32 · A running MCP server silently serves a stale surface — DONE** — *same trial, found by nearly
 running it against the wrong binary.* Rebuild `reflow2-mcp` mid-session and the already-running
 server keeps serving the surface it started with: tools added since are absent, detectors keep the
 old behaviour, and nothing says so. Distinct from [BL-18](#bigger-threads), which compares an
 installed kit against the remote HEAD — this is process-lifetime skew and hits agents and developers
 mid-session. `tools/smoke_mcp.py` cannot catch it by construction, since it spawns a fresh binary per
-run — the fourth "a client we wrote agreed with itself" in this repo's history. Cheap fix: the server
-already stamps a `GraphStamp`; have it also report its own build identity (version + binary mtime or
-commit) on `initialize` and in `graph_report`, so a client can see what it is actually talking to.
-Size **S**.
+run — the fourth "a client we wrote agreed with itself" in this repo's history. **Done.** `graph_report` carries `served_by` — the crate version compiled in, plus the binary's
+mtime (best-effort, `None` over a guess) — so a session can see it is talking to a binary older
+than the code around it, and the upgrade doc's step 4 makes checking it the post-restart ritual.
+The consistency check that pins it (handshake version == report version) immediately caught a
+pre-existing bug: `Implementation::from_build_env()` expands in **rmcp's** build env, so the server
+had introduced itself as the MCP *library's* version ("2.2.0") since the surface existed — the one
+field a client could see, wrong all along. It now reports its own name and version.
 
 
 **BL-29 · `apply_heal` trusts the proposal, and merge loses data silently** — *found 2026-07-19

@@ -15,6 +15,19 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+*(nothing yet)*
+
+## [0.3.0] — 2026-07-19
+
+The phase-coherence release. One day of using reflow2 on itself — trials that carried a design past
+P2 for the first time — answered the question that sank the original reflow: *after development,
+testing and release, does the design still describe what shipped?* Everything below exists to make
+"designed == released" measurable rather than aspirational, plus the adoption blockers (BL-27) and
+the integrity fixes found on the way. **Schema: 27 node types, 54 edge types** — the first
+edge-type growth since `GraphStamp` existed, so a graph written by this build is refused by older
+binaries, loudly. See [docs/upgrading-to-v0.3.0.md](docs/upgrading-to-v0.3.0.md); the breaking
+`set_artifact_checksum` contract is documented there too.
+
 ### Added
 
 - **The as-released view** (BL-34). `INCLUDES` (`Release → [Artifact, Component]`) is what the
@@ -175,6 +188,15 @@ This file is the third view: *what changed, and when*.
   — ask the user what the fix changed.
 
 ### Fixed
+
+- **The server says who it is** (BL-32). `graph_report` gains `served_by` — the reflow2 version the
+  binary was built from, and the binary's mtime — because an MCP session started before a rebuild
+  keeps serving the old surface with nothing to say so; that state is now visible from inside the
+  session, and the upgrade doc makes checking it the post-restart step. The consistency check
+  (handshake version must equal report version) caught a bug as old as the surface itself:
+  `Implementation::from_build_env()` reports the **rmcp library's** version, so every initialize
+  handshake had introduced this server as "2.2.0". It now introduces itself as `reflow2-mcp` at its
+  own version.
 
 - **A new drift is a new `DriftEvent`** (BL-33, the S sub-piece). The event id carried no notion of
   which state the artifact had drifted *to*, so a second drift hashed to the first one's id and was

@@ -47,6 +47,7 @@ class Server:
     def __init__(self, binary: str, graph_path: str) -> None:
         self.binary = binary
         self.graph_path = graph_path
+        self.handshake_result = None
         self._id = 0
         self.proc = subprocess.Popen(
             [binary, "--graph-path", graph_path],
@@ -85,6 +86,7 @@ class Server:
                 "clientInfo": {"name": "smoke_mcp", "version": "0"},
             },
         )
+        self.handshake_result = init
         self.rpc("notifications/initialized", {}, notify=True)
         return init
 
@@ -626,6 +628,19 @@ def run(binary: str, graph_path: str) -> int:
              for cl in led["claims"]), led)
     c.ok("and graph_report carries the confirmation rollup",
          "confirmation" in s.call("graph_report"))
+
+    # BL-32: the report names the reflow2 actually answering, so a session can
+    # notice it is talking to a binary older than the code around it. The
+    # handshake's server version and the report's must agree — they are the
+    # same binary.
+    init_version = (s.handshake_result or {}).get("result", {}).get(
+        "serverInfo", {}).get("version")
+    sb = s.call("graph_report").get("served_by", {})
+    c.ok("graph_report names the reflow2 serving it (BL-32)",
+         bool(sb.get("reflow2_version")), sb)
+    c.ok("and it matches the handshake's server version",
+         init_version == sb.get("reflow2_version"),
+         f"initialize={init_version} report={sb.get('reflow2_version')}")
 
     print("\n== 7b. the as-released view (BL-34) ==")
     s.call("release_includes", {"release_id": "rel:v1", "target_type": "Artifact",

@@ -37,6 +37,28 @@ use reflow2_core::{
 
 use crate::dto::{EdgeDto, NodeDto};
 
+/// Who is actually answering: the crate version this binary was built from,
+/// and when the binary itself was last modified. The stale-server failure
+/// (BL-32) is a session whose MCP server predates the code around it — new
+/// skills and instructions silently driving an old surface — and nothing at
+/// the surface said so. `version` is compile-time truth; `binary_mtime_unix`
+/// is best-effort (None rather than a guess when the exe cannot be inspected).
+fn served_by() -> serde_json::Value {
+    let mtime = std::env::current_exe().ok().and_then(|p| {
+        std::fs::metadata(p).ok().and_then(|m| {
+            m.modified().ok().and_then(|t| {
+                t.duration_since(std::time::UNIX_EPOCH)
+                    .ok()
+                    .map(|d| d.as_secs())
+            })
+        })
+    });
+    serde_json::json!({
+        "reflow2_version": env!("CARGO_PKG_VERSION"),
+        "binary_mtime_unix": mtime,
+    })
+}
+
 /// A JSON object, as a tool parameter type.
 ///
 /// Used wherever a parameter carries a structured value. Unlike `JsonValue`
@@ -837,10 +859,20 @@ impl ReflowService {
         ok_json(g.confirmation_ledger().map_err(dyno_err)?)
     }
 
-    #[tool(description = "The 'what should I look at?' rollup report (SYNTHESIZE).")]
+    #[tool(
+        description = "The 'what should I look at?' rollup report (SYNTHESIZE). Its `served_by` \
+                       block names the reflow2 actually answering — version and binary build \
+                       time — because an MCP server started before a rebuild keeps serving the \
+                       old surface with nothing to say so (BL-32): the session that finds a \
+                       mismatch between served_by and the repo should be restarted before \
+                       trusting anything else it reads."
+    )]
     pub async fn graph_report(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
-        ok_json(g.graph_report().map_err(dyno_err)?)
+        let mut report = serde_json::to_value(g.graph_report().map_err(dyno_err)?)
+            .map_err(|e| McpError::internal_error(e.to_string(), None))?;
+        report["served_by"] = served_by();
+        ok_json(report)
     }
 
     #[tool(description = "The graph report rendered as Markdown.")]
@@ -1858,8 +1890,17 @@ impl ReflowService {
 #[tool_handler(router = self.tool_router)]
 impl ServerHandler for ReflowService {
     fn get_info(&self) -> ServerInfo {
+        // NOT Implementation::from_build_env(): that macro expands in rmcp's
+        // own build env, so the server introduced itself as the MCP library's
+        // version ("2.2.0") rather than reflow2's — found by the smoke check
+        // that insists the handshake and graph_report.served_by agree (BL-32).
         ServerInfo::new(ServerCapabilities::builder().enable_tools().build())
-            .with_server_info(Implementation::from_build_env())
+            .with_server_info({
+                let mut info = Implementation::from_build_env();
+                info.name = env!("CARGO_PKG_NAME").to_string();
+                info.version = env!("CARGO_PKG_VERSION").to_string();
+                info
+            })
             .with_protocol_version(ProtocolVersion::V_2024_11_05)
             .with_instructions(
                 "reflow2 is the persistent, coherent design brain. The loop: capture intent as \

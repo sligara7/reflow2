@@ -58,8 +58,9 @@ the loop like this:
 - [gap-surfacing.md](gap-surfacing.md) — DIAGNOSE → PROMPT: turn weaknesses into constructive questions.
 - [heal-process.md](heal-process.md) — HEAL: propose and apply structural repairs.
 
-### 3¼ · Using v0.2.0
-- [upgrading-to-v0.2.0.md](upgrading-to-v0.2.0.md) — the three-step upgrade from an early install, in the order that matters.
+### 3¼ · Using the current release
+- [upgrading-to-v0.3.0.md](upgrading-to-v0.3.0.md) — **start here if you installed before 2026-07-19**: schema growth (older binaries refuse newer graphs), the two-sided accept contract, and the four-step order that matters.
+- [upgrading-to-v0.2.0.md](upgrading-to-v0.2.0.md) — the earlier step, for pre-2026-07-18 installs.
 - [v0.2.0-what-we-dont-know.md](v0.2.0-what-we-dont-know.md) — the four questions only real use can answer. Written for whoever is about to use this in anger.
 
 ### 3½ · Status — *where the project is*

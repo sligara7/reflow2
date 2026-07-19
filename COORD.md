@@ -52,7 +52,6 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
-- BL-32 + v0.3.0 prep: served_by in graph_report, upgrade doc, version bump — @ajs — since 2026-07-19 — service.rs, docs, Cargo.toml
 
 
 
@@ -75,13 +74,19 @@ Add yourself if you're new here.
   4. Run **check-health** and **detect-and-ask** — live counts should match
      `build_design_graph.py --analyse-only` (16 gaps, 34 defects at time of writing; see
      sharpening.md for current baselines).
-  5. Anything that diverges between the live surface and the instruments is a finding — record it in
+  5. Verify `graph_report.served_by.reflow2_version` says **0.3.0** — the new skew check, and the
+     proof the restart actually picked up the new binary.
+  6. Anything that diverges between the live surface and the instruments is a finding — record it in
      [docs/trials/](docs/trials/).
+  7. **Then cut the release:** `git tag v0.3.0 && git push origin v0.3.0`. The bump, CHANGELOG
+     section and upgrade doc are already on main — the tag is deliberately the last step, after the
+     live surface has been exercised.
 
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-32 done + v0.3.0 prepared: served_by, correct server identity, upgrade doc, bump — tag gated on the restart batch test — @ajs — 2026-07-19 — (this commit)
 - BL-34 done: INCLUDES + release_report + unreleased_component; schema 53→54 (phase 10/13, erosion 7/8, coherent 8/9) — @ajs — 2026-07-19 — (this commit)
 - BL-35 done: the confirmation ledger — drifting/confirmed/unexamined per claim (erosion 5/8, coherent 6/9) — @ajs — 2026-07-19 — (this commit)
 - BL-33 done: accept is two-sided; the second question is posed by the tool (erosion 4/8, coherent 5/9) — @ajs — 2026-07-19 — (this commit)
