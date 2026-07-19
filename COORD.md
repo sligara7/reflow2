@@ -60,13 +60,27 @@ Add yourself if you're new here.
 
 ## Blocked / waiting
 
-- _(nothing)_
+- **On-restart batch test** — blocked on restarting the editor session (BL-32: the live MCP server
+  predates every fix this session shipped, and holds the `.reflow2/graph` lock; the operator is
+  remote and cannot restart). Everything below is *already verified* by fresh-binary gates — this is
+  about exercising the **live surface**, first session that can:
+  1. `./target/debug/reflow2-mcp --graph-path .reflow2/graph --import docs/design/reflow2.json` —
+     load the real 96-node design over the genesis stub (BL-39's path, first real use).
+  2. Confirm the session's tool list carries this session's additions: `set_capability_status`,
+     `set_provenance`, and the BL-38/BL-27 detector behaviour.
+  3. Run **where-am-i** against the real design — it should narrate reflow2's actual state, not an
+     18-node stub.
+  4. Run **check-health** and **detect-and-ask** — live counts should match
+     `build_design_graph.py --analyse-only` (16 gaps, 34 defects at time of writing; see
+     sharpening.md for current baselines).
+  5. Anything that diverges between the live surface and the instruments is a finding — record it in
+     [docs/trials/](docs/trials/).
 
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
-- BL-38 done: both P3 shapes count as built; assemblies are not dead ends (design graph 33→16 gaps) — @ajs — 2026-07-19 — (this commit)
+- BL-38 done: both P3 shapes count as built; assemblies are not dead ends (design graph 33→16 gaps) — @ajs — 2026-07-19 — `e5635e1`
 - BL-39 done: `reflow2-mcp --import`, so a design can enter a graph without MCP — @ajs — 2026-07-19 — `dd7e2ac`
 - Trials: phase-coverage, erosion, coherent-erosion, self-host design; BL-30..38 raised — @ajs — 2026-07-19 — `e429039`..`f166047`
 - docs/sharpening.md: the standing method for improving reflow2 — @ajs — 2026-07-19 — `5617503`
