@@ -33,6 +33,15 @@ Every previous trial stops at or before P2:
 So the entire evidence base — every BL item argued from it — is drawn from the phases reflow1 was
 *already good at*. That is worth stating plainly: we had no data on the phases that failed.
 
+> **Correction, added after the [erosion trial](2026-07-19-erosion.md).** The P3 score below is
+> misleading and the probes were too weak. They test whether the graph notices a drift *event* —
+> one file, changed once, detected once. The failure that actually sank the original reflow is
+> cumulative: N rounds of test → fix → accept, after which the code is the truth and the design is
+> fiction, with no single step wrong. Detecting "this file changed" barely helps, because the answer
+> is always *"yes, I know, I fixed a bug."* Read P3 as **4/4 at detecting events, 0/2 at retaining
+> coherence across them** — the erosion trial scores that second axis, and the graph reports **zero
+> gaps** after full erosion and a release.
+
 ## Result
 
 ```

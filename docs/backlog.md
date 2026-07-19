@@ -40,6 +40,12 @@ Six independent sources, which is why several items appear on more than one list
   from **Claude Code** rather than grok build. The only source for BL-28: the harness difference is
   what exposed it. Otherwise mostly a replication of findings above, and its
   [notes](trials/2026-07-18-selfhost-genesis.md) mark which is which.
+- **Erosion trial, 2026-07-19** — the sharper half of the one below, and the closest thing we have
+  to a reproduction of how the original reflow failed. Five rounds of *test fails → fix code →
+  accept drift* on a coherent thread, then a release: afterwards the design describes a system that
+  no longer exists and reports **zero gaps**. The only source for BL-33/34. Notes:
+  [trials/2026-07-19-erosion.md](trials/2026-07-19-erosion.md); re-runnable via
+  `tools/erosion_trial.py`.
 - **Phase-coverage trial, 2026-07-19** — the first trial to go past P2. reflow2's own design carried
   through realization, verification and deploy, with divergences injected on purpose at each phase.
   Scored **P3 4/4, P4 1/4, P5 0/2, traceability 3/3**. The only source for BL-30/31/32 and the first
@@ -58,10 +64,58 @@ Six independent sources, which is why several items appear on more than one list
 
 | ID | Item | Why | Size |
 |---|---|---|---|
+| **BL-33** | **Accepting drift is one-sided, and the drift record overwrites itself** | *The* erosion mechanism: N legitimate fixes and the design is fiction while reporting zero gaps. Load-bearing — it is the step that runs N times | M |
+| **BL-34** | **No as-released view, and no vocabulary for one** | `DEPLOYED_TO` is the only edge `Release` has. "Does what shipped match what was designed?" is inexpressible, not merely unimplemented | M |
 | **BL-30** | **A failing test satisfies the check that asked for a test** | The later phases measure bookkeeping, not reality — this is reflow1's failure mode, reproduced and verified. See below | S + M |
 | **BL-31** | **A `status` field is a claim nothing checks** | `status: verified` with nothing verifying, `status: met` with nothing satisfying — the graph never contradicts itself | S |
 | **BL-32** | **A running MCP server silently serves a stale surface** | Rebuild mid-session and the old tool surface keeps answering, with no indication. `smoke_mcp.py` cannot catch it by construction | S |
 | **BL-29** | **`apply_heal` trusts the proposal; merge loses data silently** | Mostly **done** — three of seven fixed; three remain, one deliberately deferred. See below | M |
+
+**BL-33 · Accepting drift is one-sided; the drift record overwrites itself** — *[erosion
+trial](trials/2026-07-19-erosion.md), 2026-07-19. The mechanism behind the user's account of
+reflow1, and the load-bearing item of the three.*
+
+*The failure is not an event.* It is `write → test → fix → test → fix → … → release`, where every
+step is legitimate — a test failed, someone fixed the code — and nobody ever decides to diverge.
+Detecting "this file changed" barely helps, because the answer is always *"yes, I know, I fixed a
+bug."* **Verified:** five fix cycles on a coherent thread, the fourth quietly widening an
+idempotency window from 24h to 7 days, then a release. Afterwards `detect_gaps` returns **`[]`** —
+the design describes a system that no longer exists and reports perfect coherence, because what is
+measured is whether the bookkeeping is complete, never whether it is true.
+
+*Two halves.*
+
+**Accept is one-sided (M).** Each cycle ends at `set_artifact_checksum` — "an accepted change is the
+new baseline" — which updates the code-side baseline and **asks nothing about the design**. That is
+locally reasonable and globally fatal. Nothing ever poses the second half: *the code moved, should
+the design move too, or was the code wrong?* Accepting drift should be a **two-sided decision** that
+records which way it went — the capability description is updated to match what was built, or the
+divergence is marked a defect in the code. The third option, "accept the file, leave the design
+alone, say nothing," is the one that erodes and should not exist. Note this is the first thing in
+the codebase that would make a `ChangeEvent` originate from the *build* side rather than the design
+side, which is the right shape: a fix is a change, and CHANGE is a first-class axis.
+
+**The record overwrites itself (S).** `drift_event_id(artifact_id, kind)` carries no time or
+sequence, so every `checksum_change` on one artifact rewrites the same node — five drifts leave one
+`DriftEvent`. The single signal that would reveal erosion (*drifted five times, capability never
+revisited*) deletes itself on each occurrence. This contradicts AGENTS.md's own axis-Z invariant,
+**never overwrite the past**, which `temporal.rs` honours for design edits while the as-built side
+does not. "Drifted once" and "drifted twenty times" must not be the same graph, since the second is
+what means the design is gone.
+
+**BL-34 · There is no as-released view, and no vocabulary for one** — *same trial.* Checked two
+ways: **`DEPLOYED_TO` (Release → Environment) is the only edge in the schema involving `Release`.**
+Nothing links a Release to the Artifacts or Components it shipped, though `Release`'s own
+extraction hint says *"A packaged, operable version of some Components/Artifacts"* — the intent is
+prose with no edge to carry it. So *"does what we released match what we designed?"* is not an
+unimplemented query; it is inexpressible. reflow2 has as-designed and a partial as-built, and the
+third view — the one the user actually lives with — has no structure at all.
+
+Bigger than [BL-9](#bigger-threads)'s `reconcile_deployment`: a reconciler needs something to
+reconcile, so the containment edge comes first. Adding an edge *type* bumps `GraphStamp`'s edge
+count and makes older binaries refuse the graph ([BL-19](#bigger-threads)), so this one is not
+backward-compatible in the way BL-27's property additions were — worth pairing with any other
+schema growth rather than shipping alone. Size **M**.
 
 **BL-30 · The later phases measure bookkeeping, not reality** — *[phase-coverage
 trial](trials/2026-07-19-phase-coverage.md), 2026-07-19. The direct answer to "how do we know

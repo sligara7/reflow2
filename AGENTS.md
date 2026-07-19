@@ -59,6 +59,12 @@ python3 tools/validate_schema.py
 # going well and the later ones proceeding as if they hadn't.
 python3 tools/phase_trial.py
 
+# Erosion trial — the sharper question. Not "did a file change?" but: after N
+# rounds of test-fails/fix-code/accept, does the design still describe what
+# shipped? Currently 2/7, and it reports ZERO gaps on a design that has lost
+# touch with its code (BL-33, BL-34). Also non-zero exit by design.
+python3 tools/erosion_trial.py
+
 # End-to-end smoke test of the MCP *binary* (stdio JSON-RPC, real RocksDB graph).
 # Covers what cargo test can't: the shipped surface, tool schemas, and the JSON an
 # agent actually receives. Needs `cargo build -p reflow2-mcp` first (RocksDB, ~10 min
