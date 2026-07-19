@@ -603,6 +603,10 @@ pub struct SetChecksumReq {
     /// Optional note stored on the recorded claim (`design_holds` only).
     #[serde(default)]
     pub note: Option<String>,
+    /// Timestamp for the claim (reflow2 takes no clock). A dated claim is what
+    /// the confirmation ledger can report as "last checked at …".
+    #[serde(default)]
+    pub at: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -792,6 +796,20 @@ impl ReflowService {
         let seeds: Vec<&str> = req.seed_ids.iter().map(String::as_str).collect();
         let g = self.graph.lock().await;
         ok_json(g.propagate_from(&seeds, opts).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "The confirmation ledger (BL-35): for every capability with built \
+                       artifacts, when was its claim last checked against reality, and what was \
+                       the answer — drift events and whether each was resolved, accept claims \
+                       split into design_holds vs design_updated, design edits on the record, \
+                       and a state per capability: drifting (an observed divergence is \
+                       unanswered), confirmed (examined, with the claim history visible), or \
+                       unexamined (nobody has ever looked — NOT the same as confirmed)."
+    )]
+    pub async fn confirmation_ledger(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        ok_json(g.confirmation_ledger().map_err(dyno_err)?)
     }
 
     #[tool(description = "The 'what should I look at?' rollup report (SYNTHESIZE).")]
@@ -1531,6 +1549,7 @@ impl ReflowService {
                 &req.checksum,
                 disposition,
                 req.note.as_deref(),
+                req.at.as_deref(),
             )
             .map_err(dyno_err)?;
         ok_json(serde_json::json!({

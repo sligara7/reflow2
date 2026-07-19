@@ -453,6 +453,7 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
         change_type: None,
         design_change_event_id: None,
         note: Some("accepted after review: no behaviour change".into()),
+        at: Some("2026-07-19T12:00:00Z".into()),
     })));
     let after = j!(s.reconcile_artifacts(Parameters(ReconcileArtifactsReq {
         observed: vec![obj(&serde_json::json!({

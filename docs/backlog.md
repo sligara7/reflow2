@@ -83,7 +83,6 @@ Nine independent sources, which is why several items appear on more than one lis
 | ID | Item | Why | Size |
 |---|---|---|---|
 | **BL-37** | **reflow2 cannot model a *process* — `Flow` has no write side, and edge roles are lost** | Found by modelling reflow2's own coherence loop in reflow2. The one type meant for an ordered process cannot be created; forward and backward edges are indistinguishable | M |
-| **BL-35** | **A design claim has no last-confirmed date, so "coherent" and "nobody looked" are indistinguishable** | The deepest of the phase items — an eroded graph and a genuinely coherent one both report quiet. Axis Z already holds the data | M |
 | **BL-36** | **`precedes` is unreachable, so the epoch chain cannot be drawn** | Recurring lesson, tenth instance — on the axis that exists to make history legible | S |
 | **BL-34** | **No as-released view, and no vocabulary for one** | `DEPLOYED_TO` is the only edge `Release` has. "Does what shipped match what was designed?" is inexpressible, not merely unimplemented | M |
 | **BL-40** | **Viewpoints as pure projections (SYNTHESIZE held to a no-extrapolation standard)** | The graph stores the design; the agent only renders. `tools/render_views.py` is the seed — functional/structural/traceability views project cleanly today, and each confession it prints is a gap by definition. Direction: a viewpoint catalogue (UAF/DoDAF-informed), and rendering through the live MCP surface rather than the export. The author intends to expand this thread | M–L |
@@ -203,7 +202,7 @@ verified by attempting it:
 Size **M**: a `Flow` constructor and tool are **S**, but edge roles and process-aware diagnostics are
 the real content, and the cycle question needs a decision before code.
 
-**BL-35 · A design claim has no last-confirmed date** — *[coherent-erosion
+**BL-35 · A design claim has no last-confirmed date — DONE** — *[coherent-erosion
 trial](trials/2026-07-19-coherent-erosion.md), 2026-07-19. The deepest of the phase-coherence items.*
 
 *The good news first, because it changes what the rest of these are for.* The
@@ -234,13 +233,27 @@ confirmed against reality**. A description written at the baseline epoch and nev
 its artifact drifted five times is a different and worse state than the same description confirmed at
 the release epoch, and nothing tells them apart.
 
-Axis Z already holds the data: epochs are ordered and sequenced, snapshots are pinned to them, drift
-is dated. *Last confirmed at epoch N* versus *artifact last moved at epoch M* is subtraction. Nothing
-reads it that way. Fold in the related miss from the same trial: all six ChangeEvents carry
-`test_failure_fix` and propagating from any of them reaches the capability, because the artifact
-realizes it — so "five fixes, one of which changed what the system does" is the sentence a release
-review needs and cannot get. The distinction lives in what each ChangeEvent `CHANGED` and nothing
-surfaces it. Size **M**, and it is what makes the other phase items enforceable rather than advisory.
+**Done — as the confirmation ledger** (`confirm.rs`, `confirmation_ledger` on the surface, a
+rollup in `graph_report`). Per capability with built artifacts, three states that were previously
+one: **`drifting`** (an observed divergence is unanswered — also a persistent 0.75 gap,
+`unresolved_drift`, because the session that reconciled may not be the session that answers),
+**`confirmed`** (examined, with the claim history visible: design_holds vs design_updated counts,
+design edits, `last_claim_at` from dated claims), and **`unexamined`** (nobody has ever looked —
+*no longer the same as confirmed*, which was the whole point). Two supporting facts landed with it:
+`DriftEvent.resolved` — declared in the schema with `default: false` and never written by anything,
+the **twelfth** recurring-lesson instance — is now flipped by the accept that answers the drift; and
+an accept's `CHANGED` edge is marked `accepted_baseline: true`, so a disposition claim is
+distinguishable from ordinary change history on the same artifact.
+
+Deliberately *not* built: lie detection. Five `design_holds` claims with zero design edits is the
+erosion signature and the ledger makes it legible — but judging whether a specific claim was false
+is semantic, and a deterministic detector would fire on every stable design with cosmetic churn
+(the `unexpected_coupling` lesson). The ledger reports; the human judges.
+
+Measured: erosion **5/8** ("the design reports how the code moved and how each move was answered" —
+the signature line reads *5 drifts, 5 claims, 0 edits*), coherent-erosion **6/9** ("which fix moved
+the design" — *1 design-updating accept vs 4 design-holds, cycle 4 is the one, and the ledger says
+so*), smoke green with the full drift → gap → answer → ledger loop over the real binary.
 
 **BL-36 · `precedes` is unreachable, so the epoch chain cannot be drawn** — *same trial.*
 `DesignGraph::precedes` (`temporal.rs:181`) orders one epoch after another and has no MCP tool, so no
@@ -918,14 +931,16 @@ Not gaps — decisions, recorded so they aren't rediscovered as bugs.
 
 ## Recurring lesson
 
-A capability exists in core and is unreachable or unadvertised on the surface. Eleven instances so
+A capability exists in core and is unreachable or unadvertised on the surface. Twelve instances so
 far: `Interface`, HEAL's skill, the `Verification`/operate write side, `contain_component`,
 `graph_id`, `Requirement.status`, `graph_report` as an answer to "where am I", the whole
 `TemporalFact` / `ABOUT_ENTITY` / `VALID_FROM` / `VALID_TO` layer (schema-complete, zero Rust
 API), `DOCUMENTS` (declared, named in `nodes.rs`, no constructor and no tool — BL-26), and `precedes`
 (implemented in `temporal.rs`, no tool, so the epoch chain axis Z exists to record cannot be drawn by
 any client — BL-36), and `Flow` (fully specified with its own edge `PART_OF_FLOW`, no constructor,
-no tool — so no process can be modelled at all, BL-37).
+no tool — so no process can be modelled at all, BL-37), and `DriftEvent.resolved` (declared with
+`default: false`, written by nothing — every recorded divergence stayed "open" forever no matter
+what happened next; BL-35 made the accept flip it).
 
 Before building something new, the higher-yield question is usually: **what does the core
 already do that nothing can reach?**

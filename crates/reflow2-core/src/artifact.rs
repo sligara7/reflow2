@@ -160,6 +160,7 @@ impl DesignGraph {
         checksum: &str,
         disposition: DriftDisposition<'_>,
         note: Option<&str>,
+        at: Option<&str>,
     ) -> Result<(StoredNode, String), DynoError> {
         let Some(existing) = self.get_node(node::ARTIFACT, artifact_id)? else {
             return Err(DynoError::NodeNotFound {
@@ -182,12 +183,21 @@ impl DesignGraph {
                         ),
                         change_type,
                     )?;
-                    self.changed(
-                        &event_id,
-                        node::ARTIFACT,
-                        artifact_id,
-                        ChangeAction::Modified,
-                    )?;
+                    if let Some(at) = at {
+                        // The claim is worth more dated. Read-modify-write so the
+                        // event keeps its name and type.
+                        let ev = self
+                            .get_node(node::CHANGE_EVENT, &event_id)?
+                            .expect("just created");
+                        let mut props = Props::new().set("detected_at", at);
+                        for (k, v) in &ev.properties {
+                            if k != "detected_at" {
+                                props = props.set(k, v.clone());
+                            }
+                        }
+                        self.create_node(node::CHANGE_EVENT, &event_id, props)?;
+                    }
+                    self.accept_changed_edge(&event_id, artifact_id)?;
                 }
                 event_id
             }
@@ -201,15 +211,35 @@ impl DesignGraph {
                         node_id: change_event_id.to_string(),
                     });
                 }
-                self.changed(
-                    change_event_id,
-                    node::ARTIFACT,
-                    artifact_id,
-                    ChangeAction::Modified,
-                )?;
+                self.accept_changed_edge(change_event_id, artifact_id)?;
                 change_event_id.to_string()
             }
         };
+
+        // The accept answers the open drift on this artifact, so the schema's
+        // own lifecycle flag says so: `DriftEvent.resolved` was declared with
+        // `default: false` and, until BL-35, nothing ever wrote it — recorded
+        // divergences stayed "open" forever no matter what happened next.
+        for e in self.incoming(artifact_id, Some(edge::DEPENDS_ON))? {
+            let Some(ev) = self.get_node(node::DRIFT_EVENT, &e.from_id)? else {
+                continue; // DEPENDS_ON from something that isn't a DriftEvent
+            };
+            let already = ev
+                .properties
+                .get("resolved")
+                .and_then(dynograph_core::Value::as_bool)
+                .unwrap_or(false);
+            if already {
+                continue;
+            }
+            let mut props = Props::new().set("resolved", true);
+            for (k, v) in &ev.properties {
+                if k != "resolved" {
+                    props = props.set(k, v.clone());
+                }
+            }
+            self.create_node(node::DRIFT_EVENT, &ev.node_id, props)?;
+        }
 
         let mut props = Props::new().set("checksum", checksum);
         for (k, v) in &existing.properties {
@@ -219,6 +249,23 @@ impl DesignGraph {
         }
         let artifact = self.create_node(node::ARTIFACT, artifact_id, props)?;
         Ok((artifact, event_id))
+    }
+
+    /// The `CHANGED` edge an accept writes: marked `accepted_baseline: true`,
+    /// which is how the confirmation ledger tells a disposition claim from
+    /// ordinary change history on the same artifact.
+    fn accept_changed_edge(&mut self, event_id: &str, artifact_id: &str) -> Result<(), DynoError> {
+        self.create_edge(
+            edge::CHANGED,
+            node::CHANGE_EVENT,
+            event_id,
+            node::ARTIFACT,
+            artifact_id,
+            Props::new()
+                .set("action", ChangeAction::Modified.as_str())
+                .set("accepted_baseline", true),
+        )?;
+        Ok(())
     }
 
     /// Link an `Artifact` to the entity it implements via `REALIZES`. `target_type`

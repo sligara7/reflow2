@@ -319,6 +319,7 @@ fn accepting_a_change_updates_the_baseline_so_it_stops_reporting() {
             change_type: ChangeType::TestFailureFix,
         },
         None,
+        None,
     )
     .expect("accept");
 
@@ -414,6 +415,7 @@ fn successive_drifts_accumulate_instead_of_collapsing_into_one_event() {
                 change_type: ChangeType::TestFailureFix,
             },
             None,
+            None,
         )
         .unwrap();
     }
@@ -467,6 +469,7 @@ fn accepting_with_design_holds_puts_the_claim_on_axis_z() {
                 change_type: ChangeType::TestFailureFix,
             },
             Some("fix 3: edge case in rounding"),
+            Some("2026-07-19T03:00:00Z"),
         )
         .unwrap();
 
@@ -485,6 +488,7 @@ fn accepting_with_design_holds_puts_the_claim_on_axis_z() {
         DriftDisposition::DesignHolds {
             change_type: ChangeType::TestFailureFix,
         },
+        None,
         None,
     )
     .unwrap();
@@ -523,6 +527,7 @@ fn accepting_with_design_updated_ties_code_and_design_into_one_change() {
                 change_event_id: "chg:cap-widen",
             },
             None,
+            None,
         )
         .unwrap();
     assert_eq!(event_id, "chg:cap-widen");
@@ -551,6 +556,7 @@ fn a_phantom_design_update_reference_is_refused_and_nothing_moves() {
                 change_event_id: "chg:nope",
             },
             None,
+            None,
         )
         .expect_err("a dangling change_event_id must be refused");
     assert!(err.to_string().contains("chg:nope"), "got: {err}");
@@ -560,4 +566,118 @@ fn a_phantom_design_update_reference_is_refused_and_nothing_moves() {
         Some("sha256:aaa"),
         "a refused accept must not move the baseline"
     );
+}
+
+// ---- BL-35 · the confirmation ledger ---------------------------------------
+
+#[test]
+fn unexamined_confirmed_and_drifting_are_three_different_states() {
+    // The erosion finding was that "coherent" and "nobody looked" were
+    // indistinguishable. The ledger's whole job is that they no longer are.
+    let mut g = built_thread();
+    let opts = ReconcileOptions {
+        record_events: true,
+        exhaustive: false,
+        detected_at: Some("2026-07-19T01:00:00Z".into()),
+    };
+
+    // Nobody has looked yet.
+    let ledger = g.confirmation_ledger().unwrap();
+    assert_eq!(
+        (ledger.unexamined, ledger.confirmed, ledger.drifting),
+        (1, 0, 0),
+        "artifacts exist, no history: unexamined — NOT confirmed"
+    );
+
+    // Reality diverges, observed and recorded: drifting, and DETECT says so.
+    g.reconcile_artifacts(
+        &[ObservedArtifact {
+            artifact_id: "art:score".into(),
+            present: true,
+            checksum: Some("sha256:bbb".into()),
+        }],
+        &opts,
+    )
+    .unwrap();
+    let ledger = g.confirmation_ledger().unwrap();
+    assert_eq!(
+        (ledger.unexamined, ledger.confirmed, ledger.drifting),
+        (0, 0, 1)
+    );
+    let gaps = g.detect_gaps().unwrap();
+    assert!(
+        gaps.iter()
+            .any(|x| x.gap_source == reflow2_core::GapSource::UnresolvedDrift),
+        "an observed, unanswered divergence must be a persistent gap, got {:?}",
+        gaps.iter().map(|x| x.gap_source).collect::<Vec<_>>()
+    );
+
+    // The second question is answered: confirmed, gap cleared, claim counted.
+    g.set_artifact_checksum(
+        "art:score",
+        "sha256:bbb",
+        DriftDisposition::DesignHolds {
+            change_type: ChangeType::TestFailureFix,
+        },
+        None,
+        Some("2026-07-19T02:00:00Z"),
+    )
+    .unwrap();
+    let ledger = g.confirmation_ledger().unwrap();
+    assert_eq!(
+        (ledger.unexamined, ledger.confirmed, ledger.drifting),
+        (0, 1, 0)
+    );
+    let claim = &ledger.claims[0];
+    assert_eq!(claim.design_holds_claims, 1);
+    assert_eq!(claim.design_edits, 0);
+    assert_eq!(claim.last_claim_at.as_deref(), Some("2026-07-19T02:00:00Z"));
+    assert!(
+        !g.detect_gaps()
+            .unwrap()
+            .iter()
+            .any(|x| x.gap_source == reflow2_core::GapSource::UnresolvedDrift),
+        "answering the question clears the gap"
+    );
+}
+
+#[test]
+fn the_ledger_tells_a_design_updated_claim_from_a_design_holds_one() {
+    // Five design_holds with zero design edits and one design_updated that
+    // moved the capability are different confirmation histories — the exact
+    // difference between the eroded and coherent trial runs.
+    let mut g = built_thread();
+    g.add_epoch(
+        "epoch:fix",
+        "Fix",
+        reflow2_core::temporal::EpochType::Revision,
+        1,
+    )
+    .unwrap();
+    g.record_change(reflow2_core::temporal::ChangeRecord {
+        epoch_id: "epoch:fix",
+        change_event_id: "chg:cap-widen",
+        name: "Dedup window widened by the fix",
+        target_type: node::CAPABILITY,
+        target_id: "cap:score",
+        change_type: ChangeType::TestFailureFix,
+        action: reflow2_core::temporal::ChangeAction::Modified,
+    })
+    .unwrap();
+    g.set_artifact_checksum(
+        "art:score",
+        "sha256:bbb",
+        DriftDisposition::DesignUpdated {
+            change_event_id: "chg:cap-widen",
+        },
+        None,
+        None,
+    )
+    .unwrap();
+
+    let ledger = g.confirmation_ledger().unwrap();
+    let claim = &ledger.claims[0];
+    assert_eq!(claim.design_updated_claims, 1, "tied to a design edit");
+    assert_eq!(claim.design_holds_claims, 0);
+    assert_eq!(claim.design_edits, 1, "the capability moved, on the record");
 }

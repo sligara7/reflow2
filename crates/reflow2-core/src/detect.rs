@@ -102,6 +102,13 @@ pub enum GapSource {
     /// which is the reflow1 failure in miniature (BL-30, the phase-coverage
     /// trial's headline).
     FailingVerification,
+    /// A recorded divergence whose second question was never answered: a
+    /// `DriftEvent` with `resolved: false`. Reality moved, the movement was
+    /// *observed and written down* — and then nobody said what it meant.
+    /// Persistent on purpose: the session that reconciled may not be the
+    /// session that answers, and before this gap the open question lived only
+    /// in a tool result that scrolled away.
+    UnresolvedDrift,
     /// A Capability has no `Verification` proving the behaviour works.
     ///
     /// The key string stays `unverified_capability` even though this variant
@@ -177,6 +184,7 @@ impl GapSource {
             // the acknowledgement Decision. Renaming it expires every existing
             // capability acknowledgement with nothing to tell the user why.
             GapSource::FailingVerification => "failing_verification",
+            GapSource::UnresolvedDrift => "unresolved_drift",
             GapSource::UnverifiedCapability => "unverified_capability",
             GapSource::UnverifiedArtifact => "unverified_artifact",
             GapSource::UnprovidedInterface => "unprovided_interface",
@@ -776,6 +784,7 @@ impl DesignGraph {
         self.detect_unrealized_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
         self.detect_failing_verifications(&mut gaps)?;
+        self.detect_unresolved_drift(&mut gaps)?;
         self.detect_interface_pairing(&pop, &mut gaps)?;
         // Deliberately absent: unexpected coupling. It is a *signal*, reported
         // by `graph_report` and `surprising_connections`, not a gap demanding
@@ -1386,6 +1395,51 @@ impl DesignGraph {
                 evidence: format!(
                     "Verification '{}' has status=failing; a failing check is reality contradicting the design, not absence of a check.",
                     ver.node_id
+                ),
+            });
+        }
+        Ok(())
+    }
+
+    /// A `DriftEvent` still marked `resolved: false` — observed divergence
+    /// with no recorded answer. Severity 0.75: reality-contradiction family
+    /// (just below a failing check at 0.8, above every absence gap). Clears
+    /// when `set_artifact_checksum` accepts the artifact, which resolves its
+    /// open events (BL-33/BL-35).
+    fn detect_unresolved_drift(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        for ev in self.scan_nodes(node::DRIFT_EVENT)? {
+            let resolved = ev
+                .properties
+                .get("resolved")
+                .and_then(dynograph_core::Value::as_bool)
+                .unwrap_or(false);
+            if resolved {
+                continue;
+            }
+            let mut affected = vec![ev.node_id.clone()];
+            for e in self.outgoing(&ev.node_id, Some(edge::DEPENDS_ON))? {
+                affected.push(e.to_id);
+            }
+            affected.sort();
+            let summary = ev
+                .properties
+                .get("summary")
+                .and_then(dynograph_core::Value::as_str)
+                .unwrap_or("reality diverged from the design");
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::UnresolvedDrift, &affected),
+                gap_source: GapSource::UnresolvedDrift,
+                scope: GapScope::Capability,
+                severity: 0.75,
+                title: "A recorded divergence is waiting for its answer".to_string(),
+                description: format!(
+                    "{summary} — the code moved and nobody has said what it means. Accept the new baseline with a disposition (design_holds or design_updated), or fix the build back."
+                ),
+                affected_ids: affected,
+                suggested_depth: 2,
+                evidence: format!(
+                    "DriftEvent '{}' has resolved=false; the divergence was observed and written down, and the second question is unanswered.",
+                    ev.node_id
                 ),
             });
         }

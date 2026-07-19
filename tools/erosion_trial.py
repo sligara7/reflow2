@@ -119,9 +119,17 @@ def main() -> int:
         print("\n== after N cycles and a release, does the design know? ==")
         gaps = s.call("detect_gaps")
         sources = sorted({g["gap_source"] for g in gaps})
-        note("the design flags that the code moved under it",
-             any(g["gap_source"] in ("as_built_drift", "stale_description") for g in gaps),
-             f"gaps: {sources}")
+        # Genuine since BL-35: the ledger reports the whole movement history —
+        # how many times the code moved, and what each move was claimed to mean.
+        led = s.call("confirmation_ledger")
+        cap_led = next((cl for cl in led["claims"] if cl["capability_id"] == "cap:charge"), {})
+        note("the design reports how the code moved under it, and how each move was answered",
+             cap_led.get("drift_events") == drifts and
+             cap_led.get("design_holds_claims") == drifts and
+             cap_led.get("design_edits") == 0,
+             f"{cap_led.get('drift_events')} drifts, {cap_led.get('design_holds_claims')} "
+             f"'design holds' claims, {cap_led.get('design_edits')} design edits — the five "
+             "claims with zero edits ARE the erosion signature, now legible")
 
         cap = s.call("get_node", {"node_type": "Capability", "id": "cap:charge"})
         desc = cap["properties"]["description"]

@@ -115,6 +115,28 @@ This file is the third view: *what changed, and when*.
   cause nor the fix; it now reads *"another process already has the design graph open… stop that
   server and run this again."*
 
+### Added
+
+- **The confirmation ledger — when was each claim last checked against reality, and what was the
+  answer** (BL-35, the keystone of the phase-coherence thread). The erosion trials' founding
+  observation was that an eroded design and a genuinely coherent one both reported *quiet*:
+  structural completeness was all that was measured, and it is true in both graphs. `confirmation_ledger`
+  (core + MCP + a `graph_report` rollup) gives every capability with built artifacts one of three
+  states that used to be indistinguishable: **drifting** (an observed divergence is unanswered — and
+  a persistent `unresolved_drift` gap at 0.75, so the open question survives the session that found
+  it), **confirmed** (examined, with the claim history visible: design_holds vs design_updated
+  counts, design edits on the record, `last_claim_at` from dated claims), and **unexamined** (nobody
+  has ever looked — *not* the same as confirmed, which was the entire point).
+
+  Two schema facts made it clean: `DriftEvent.resolved` — declared with `default: false` and written
+  by nothing, the twelfth "unreachable capability" instance — is now flipped by the accept that
+  answers the drift; and an accept's `CHANGED` edge carries `accepted_baseline: true`, so a
+  disposition claim is distinguishable from ordinary change history. Deliberately not built: lie
+  detection — five `design_holds` claims with zero design edits is the erosion signature and the
+  ledger makes it legible, but judging a specific claim false is semantic, and a deterministic
+  detector would fire on every stable design with cosmetic churn. The ledger reports; the human
+  judges. Measured: erosion 4/8 → 5/8, coherent-erosion 5/9 → 6/9.
+
 ### Changed
 
 - **Accepting drift is a two-sided decision** (BL-33). `set_artifact_checksum` — "an accepted change

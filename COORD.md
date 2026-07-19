@@ -52,7 +52,6 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
-- BL-35: the confirmation ledger — when was each claim last checked against reality — @ajs — since 2026-07-19 — new confirm.rs, report, drift/artifact props
 
 
 
@@ -81,6 +80,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-35 done: the confirmation ledger — drifting/confirmed/unexamined per claim (erosion 5/8, coherent 6/9) — @ajs — 2026-07-19 — (this commit)
 - BL-33 done: accept is two-sided; the second question is posed by the tool (erosion 4/8, coherent 5/9) — @ajs — 2026-07-19 — (this commit)
 - BL-33 S sub-piece done: a new drift is a new event (5 drifts = 5 events; probe tightened) — @ajs — 2026-07-19 — (this commit)
 - BL-30 S half done: failing_verification at 0.8; coverage counts passing only (P4 1/4→2/4, erosion 2/7→3/7) — @ajs — 2026-07-19 — (this commit)

@@ -147,18 +147,17 @@ def main() -> int:
         note("every fix is on the record, typed as a test-failure fix",
              len(fixes) >= 5, f"{len(events)} ChangeEvent(s), {len(fixes)} test_failure_fix")
 
-        # Which fix moved the DESIGN, not just a file? Derivable from what each
-        # ChangeEvent CHANGED — all six are typed test_failure_fix, so the type
-        # alone cannot say.
-        design_movers = []
-        for e in events:
-            tgts = s.call("propagate_change", {"change_event_id": e["node_id"], "max_depth": 1})
-            if "cap:charge" in json.dumps(tgts):
-                design_movers.append(e["node_id"])
+        # Genuine since BL-35: the ledger classifies each accept claim by
+        # whether its event also moved a design node.
+        led = s.call("confirmation_ledger")
+        cap_led = next((cl for cl in led["claims"] if cl["capability_id"] == "cap:charge"), {})
         note("you can tell WHICH fix moved the design, not just a file",
-             design_movers == ["chg:cap4"],
-             f"change events that reached the capability: {design_movers} "
-             "(derivable from CHANGED edges; the change_type is identical for all six)")
+             cap_led.get("design_updated_claims") == 1 and
+             cap_led.get("design_holds_claims") == 4 and
+             cap_led.get("design_edits", 0) >= 1,
+             f"{cap_led.get('design_updated_claims')} design-updating accept vs "
+             f"{cap_led.get('design_holds_claims')} design-holds — cycle 4 is the one, "
+             "and the ledger says so")
 
         gaps = s.call("detect_gaps")
         note("and the graph is quiet, because it is genuinely coherent now",

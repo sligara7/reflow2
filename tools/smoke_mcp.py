@@ -574,6 +574,17 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("partial-result fields are present (no silent drops)",
          "unknown_seeds" in radius and "truncated_beyond_depth" in radius, list(radius))
 
+    print("\n== 6b. an observed divergence is a persistent gap until answered (BL-35) ==")
+    r = s.call("reconcile_artifacts", {
+        "observed": [{"artifact_id": "art:flight", "present": True, "checksum": "sha256:v2"}],
+        "record_events": True, "at": "2026-07-19T10:00:00Z"})
+    c.ok("the divergence is recorded", len(r.get("recorded_events", [])) == 1, r)
+    c.ok("and persists as a gap until the second question is answered",
+         any(g["gap_source"] == "unresolved_drift" for g in s.call("detect_gaps")),
+         sorted({g["gap_source"] for g in s.call("detect_gaps")}))
+    led = s.call("confirmation_ledger")
+    c.ok("the ledger says the capability is drifting", led["drifting"] >= 1, led)
+
     print("\n== 7. accepting the change is a two-sided decision (BL-33) ==")
     # The third option — accept the file, leave the design alone, say nothing —
     # is the one that erodes a design into fiction, so it does not exist.
@@ -588,7 +599,8 @@ def run(binary: str, graph_path: str) -> int:
     acc = s.call("set_artifact_checksum",
                  {"artifact_id": "art:flight", "checksum": "sha256:v2",
                   "disposition": "design_holds",
-                  "note": "edge-case fix; behaviour unchanged"})
+                  "note": "edge-case fix; behaviour unchanged",
+                  "at": "2026-07-19T12:00:00Z"})
     c.ok("an accept leaves its claim on axis Z",
          acc.get("change_event_id", "").startswith("chg:accept-"), acc)
     c.ok("and the claim is a real ChangeEvent",
@@ -597,6 +609,15 @@ def run(binary: str, graph_path: str) -> int:
     r = s.call("reconcile_artifacts", {"observed": [
         {"artifact_id": "art:flight", "present": True, "checksum": "sha256:v2"}]})
     c.ok("an accepted change is the new baseline", r["findings"] == [], r["findings"])
+    c.ok("answering the question clears the unresolved_drift gap",
+         not any(g["gap_source"] == "unresolved_drift" for g in s.call("detect_gaps")))
+    led = s.call("confirmation_ledger")
+    c.ok("the ledger now says confirmed — with the claim visible, not just a tick",
+         led["confirmed"] >= 1 and led["drifting"] == 0 and
+         any(cl["design_holds_claims"] >= 1 and cl["last_claim_at"]
+             for cl in led["claims"]), led)
+    c.ok("and graph_report carries the confirmation rollup",
+         "confirmation" in s.call("graph_report"))
 
     print("\n== 8. structural health: a cycle through contracts ==")
     s.call("add_interface", {"id": "ifc:score", "name": "Score input"})

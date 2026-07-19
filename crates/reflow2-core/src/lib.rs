@@ -29,6 +29,7 @@
 pub mod agent;
 pub mod allocate;
 pub mod artifact;
+pub mod confirm;
 pub mod detect;
 pub mod dimensions;
 pub mod drift;
@@ -56,6 +57,7 @@ pub use allocate::{
     AllocationReport, ComponentScore, MisplacedCapability, ProposedAllocation, ProposedComponent,
 };
 pub use artifact::{ArtifactLink, DriftDisposition, LinkArtifactOptions};
+pub use confirm::{ClaimConfirmation, ConfirmationLedger, ConfirmationState};
 pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, GapSource};
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};

@@ -117,6 +117,7 @@ schema:
       properties:
         action: { type: enum, values: [added, modified, removed] }
         field: { type: string, description: "Which property/edge changed, when scoped." }
+        accepted_baseline: { type: bool, default: false, description: "True when this edge records a drift-baseline accept (BL-33): the event carries the disposition claim the confirmation ledger reads. Ordinary change history stays false." }
 
     OCCURS_DURING:
       from: "*"

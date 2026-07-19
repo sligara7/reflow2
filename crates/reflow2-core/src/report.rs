@@ -68,6 +68,15 @@ impl VerificationCoverage {
     }
 }
 
+/// The confirmation rollup — counts only; the full ledger is
+/// [`DesignGraph::confirmation_ledger`].
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct ConfirmationSummary {
+    pub drifting: usize,
+    pub confirmed: usize,
+    pub unexamined: usize,
+}
+
 /// Allocation health at a glance (from `evaluate_allocation`).
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct AllocationSummary {
@@ -104,6 +113,11 @@ pub struct GraphReport {
     pub surprising_truncated: usize,
     /// How much of the design carries its own verification (a signal, not a gap).
     pub verification: VerificationCoverage,
+    /// Confirmation rollup (BL-35): of the capabilities with realizing
+    /// artifacts, how many are drifting / confirmed / **unexamined** — the
+    /// last being the state the original reflow died in: nobody looked, and
+    /// nothing could tell.
+    pub confirmation: Option<ConfirmationSummary>,
     /// Declining quality dimensions, worst first (capped).
     pub declining: Vec<DimensionDrift>,
     /// Declining dimensions beyond the shown top.
@@ -174,6 +188,16 @@ impl DesignGraph {
         }
 
         let verification = self.verification_coverage()?;
+        let ledger = self.confirmation_ledger()?;
+        let confirmation = if ledger.claims.is_empty() {
+            None
+        } else {
+            Some(ConfirmationSummary {
+                drifting: ledger.drifting,
+                confirmed: ledger.confirmed,
+                unexamined: ledger.unexamined,
+            })
+        };
 
         let mut gaps = self.detect_gaps()?;
         let gap_count = gaps.len();
@@ -217,6 +241,7 @@ impl DesignGraph {
             surprising,
             surprising_truncated,
             verification,
+            confirmation,
             declining,
             declining_truncated,
         })
@@ -285,6 +310,16 @@ impl GraphReport {
             } else {
                 let _ = writeln!(m, "God-component(s): {}.\n", a.god_components.join(", "));
             }
+        }
+
+        if let Some(c) = &self.confirmation {
+            let _ = writeln!(m, "## Confirmation\n");
+            let _ = writeln!(
+                m,
+                "{} drifting · {} confirmed · {} unexamined (capabilities with built artifacts; \
+                 unexamined = nobody has ever checked the claim against reality)\n",
+                c.drifting, c.confirmed, c.unexamined
+            );
         }
 
         // Verification coverage — reported, never demanded.

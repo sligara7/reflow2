@@ -124,8 +124,8 @@ and record a baseline to move:
 | Instrument | Asks | Baseline (2026-07-19) | Blocked on |
 |---|---|---|---|
 | `tools/phase_trial.py` | Does the design carry weight after P2? | **9/13** — P3 4/4, P4 2/4, P5 0/2, thread 3/3 (was 8/13; BL-30's S half caught the failing-verification probe) | BL-31, BL-30 (M), BL-9 |
-| `tools/erosion_trial.py` | After N fix cycles, does the design describe what shipped? | **4/8** (was 2/7; coverage distinguishes passing from present, every accept must answer the second question on the record, and three probes have been tightened from weak to genuine), and `detect_gaps` still returns `[]` on a design that is fiction — the remaining misses are BL-34/BL-35 territory | BL-33, BL-34 |
-| `tools/coherent_erosion_trial.py` | Is `designed == released` reachable, and does anything drive it? | **5/9** (was 4/9) — reachable, and the accept path now poses the second question itself (BL-33) | BL-34, BL-35, BL-36 |
+| `tools/erosion_trial.py` | After N fix cycles, does the design describe what shipped? | **5/8** (was 2/7 at baseline; the erosion signature — N claims, zero design edits — is now legible in the confirmation ledger), remaining misses are BL-34 territory | BL-33, BL-34 |
+| `tools/coherent_erosion_trial.py` | Is `designed == released` reachable, and does anything drive it? | **6/9** (was 4/9) — the accept poses the second question (BL-33) and the ledger tells which fix moved the design (BL-35) | BL-34, BL-36 |
 | `tools/build_design_graph.py` | What does reflow2 say about reflow2's own design? | 96 nodes, 16 gaps, 14 defects — **every output true** (was 33/36 with 13 false gaps and 24 false defects; BL-38 and BL-5's second pass cleared the noise) | — |
 
 `tools/smoke_mcp.py` stays the gate for the shipped surface; these four are the gate for whether the
