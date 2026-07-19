@@ -28,7 +28,7 @@
 //! missing_link (graph algorithms), missing_embedding, and every generative
 //! healer's actual content.
 
-use std::collections::HashMap;
+use std::collections::{BTreeSet, HashMap};
 
 use dynograph_core::DynoError;
 use dynograph_storage::StoredEdge;
@@ -149,7 +149,11 @@ impl Default for HealOptions {
 }
 
 /// A structural graph operation HEAL proposes.
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+///
+/// `PartialEq` is load-bearing: [`apply_heal`](DesignGraph::apply_heal) compares
+/// each incoming operation against the ones HEAL would produce from the graph as
+/// it stands, and refuses anything that does not match.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum HealOp {
     /// Create an edge between two existing nodes.
     CreateEdge {
@@ -171,7 +175,7 @@ pub enum HealOp {
 
 /// An operation tagged with the issue it addresses (so post-repair verification
 /// can check exactly the defects the operations targeted).
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct HealOperation {
     /// Id of the [`HealIssue`] this operation resolves.
     pub issue_id: String,
@@ -238,6 +242,15 @@ pub struct HealReport {
     /// Structural issue ids still detected after apply (should be empty when
     /// `verified`).
     pub unresolved_issue_ids: Vec<String>,
+    /// Everything a merge could not carry onto the survivor, with the reason.
+    ///
+    /// A merge keeps the survivor's own properties and re-points the removed
+    /// node's edges; it cannot keep both nodes' versions of the same thing. What
+    /// it therefore lets go — the removed node's properties, an edge whose other
+    /// endpoint is unknown, an edge triple both nodes already had — used to go
+    /// unreported, which is the silent drop rule 4 forbids. Empty on a merge that
+    /// lost nothing.
+    pub discarded: Vec<SkippedOperation>,
     /// Human-readable outcome.
     pub message: String,
 }
@@ -250,6 +263,37 @@ fn issue_id(category: HealCategory, affected: &[String]) -> String {
         "heal:{:016x}",
         fnv1a(&format!("{}|{}", category.as_str(), ids.join(",")))
     )
+}
+
+/// The merge a `duplicate` issue implies, or the reason it cannot be built.
+///
+/// Shared by [`propose_heal`](DesignGraph::propose_heal) and
+/// [`apply_heal`](DesignGraph::apply_heal) deliberately. Apply validates by
+/// re-deriving what HEAL would propose and matching against it, so if the two
+/// computed the operation separately they could drift, and a drift would make
+/// apply refuse legitimate proposals — or worse, sanction ones HEAL never made.
+fn merge_op_for(issue: &HealIssue, index: &HashMap<String, String>) -> Result<HealOp, String> {
+    let (keep, remove) = (&issue.affected_ids[0], &issue.affected_ids[1]);
+    let (Some(keep_type), Some(remove_type)) = (index.get(keep), index.get(remove)) else {
+        // An endpoint that can't be resolved to a real node must never become a
+        // phantom op (discipline 2).
+        return Err("duplicate endpoint does not resolve to a real node".into());
+    };
+    // `DUPLICATES` is declared `from: "*" to: "*"`, so `Requirement DUPLICATES
+    // Component` is schema-valid. Merging across types would re-point one type's
+    // edges onto another and be rejected mid-batch by edge validation, after
+    // earlier operations in the same proposal had already committed.
+    if keep_type != remove_type {
+        return Err(format!(
+            "cannot merge across node types ({keep_type} and {remove_type}) — a DUPLICATES edge joins two different kinds of thing"
+        ));
+    }
+    Ok(HealOp::Merge {
+        keep_type: keep_type.clone(),
+        keep_id: keep.clone(),
+        remove_type: remove_type.clone(),
+        remove_id: remove.clone(),
+    })
 }
 
 /// Order a pair of ids canonically so the smaller is kept on a merge — makes the
@@ -518,29 +562,16 @@ impl DesignGraph {
 
             match issue.category {
                 // The one content-free structural repair.
-                HealCategory::Duplicate => {
-                    let keep = &issue.affected_ids[0];
-                    let remove = &issue.affected_ids[1];
-                    match (index.get(keep), index.get(remove)) {
-                        (Some(keep_type), Some(remove_type)) => {
-                            operations.push(HealOperation {
-                                issue_id: issue.id.clone(),
-                                op: HealOp::Merge {
-                                    keep_type: keep_type.clone(),
-                                    keep_id: keep.clone(),
-                                    remove_type: remove_type.clone(),
-                                    remove_id: remove.clone(),
-                                },
-                            });
-                        }
-                        // An endpoint that can't be resolved to a real node must
-                        // never become a phantom op (discipline 2).
-                        _ => skipped_operations.push(SkippedOperation {
-                            reference: issue.id.clone(),
-                            reason: "duplicate endpoint does not resolve to a real node".into(),
-                        }),
-                    }
-                }
+                HealCategory::Duplicate => match merge_op_for(&issue, &index) {
+                    Ok(op) => operations.push(HealOperation {
+                        issue_id: issue.id.clone(),
+                        op,
+                    }),
+                    Err(reason) => skipped_operations.push(SkippedOperation {
+                        reference: issue.id.clone(),
+                        reason,
+                    }),
+                },
                 // Everything else needs generated content → human review.
                 HealCategory::OrphanNode => generated_content.push(GeneratedContentStub {
                     for_issue: issue.id.clone(),
@@ -622,12 +653,56 @@ impl DesignGraph {
         })
     }
 
+    /// Every structural operation HEAL sanctions for the graph as it stands.
+    ///
+    /// Deliberately ignores strategy and `max_operations`: those decide which
+    /// subset of legitimate operations a *proposal* carries, and validation only
+    /// asks whether an operation is legitimate at all.
+    fn sanctioned_operations(&self) -> Result<Vec<HealOperation>, DynoError> {
+        let index = self.node_type_index()?;
+        let mut ops = Vec::new();
+        for issue in self.detect_defects()? {
+            if issue.category == HealCategory::Duplicate
+                && let Ok(op) = merge_op_for(&issue, &index)
+            {
+                ops.push(HealOperation {
+                    issue_id: issue.id.clone(),
+                    op,
+                });
+            }
+        }
+        Ok(ops)
+    }
+
     /// Atomically apply a proposal's **structural** operations (the generative
     /// content is left for the deferred LLM healer + human review), then verify
     /// the addressed structural defects are gone (discipline 4).
     ///
     /// In `rigid` project mode nothing is applied — the proposal is returned as
     /// recorded-only (discipline 6).
+    ///
+    /// # The proposal is checked, not trusted
+    ///
+    /// Every operation must match one HEAL would produce from the graph as it
+    /// stands — same issue id, same operation. Anything else is refused **before
+    /// a single write**, so a rejected proposal leaves the graph untouched.
+    ///
+    /// This was not always so, and the gap was not theoretical: a hand-written
+    /// proposal carrying a made-up issue id and a `Merge` naming two capabilities
+    /// that no detector had called duplicates was applied, and deleted one of
+    /// them. `apply_heal` reads caller JSON straight off the MCP surface, so any
+    /// client could do it, and a merge has no snapshot and no undo.
+    ///
+    /// Propose-then-apply is described as the whole point — a proposal can be
+    /// reviewed, capped and audited before anything changes — but nothing bound
+    /// the applied proposal to one HEAL actually made. Note also that
+    /// `requires_human_review` is computed per *proposal* and is not consulted
+    /// here; it reports that generative stubs are present, and has never been a
+    /// gate on applying the structural half.
+    ///
+    /// Re-deriving costs one `detect_defects` pass and is what makes the
+    /// operation's meaning — *this defect is real right now* — true at the moment
+    /// of writing rather than at the moment of proposing.
     pub fn apply_heal(&mut self, proposal: &HealProposal) -> Result<HealReport, DynoError> {
         if self.project_mode()? == "rigid" {
             return Ok(HealReport {
@@ -640,12 +715,35 @@ impl DesignGraph {
                     .iter()
                     .map(|o| o.issue_id.clone())
                     .collect(),
+                discarded: Vec::new(),
                 message: "rigid project mode: proposal recorded, not auto-applied".into(),
             });
         }
 
+        // Refuse the whole proposal before mutating anything, so a rejected one
+        // never leaves the graph half-changed.
+        let sanctioned = self.sanctioned_operations()?;
+        for operation in &proposal.operations {
+            if !sanctioned.iter().any(|s| s == operation) {
+                let subject = match &operation.op {
+                    HealOp::Merge { remove_id, .. } => remove_id.clone(),
+                    HealOp::CreateEdge { from_id, .. } => from_id.clone(),
+                };
+                return Err(DynoError::Validation {
+                    node_type: subject,
+                    property: "operation".into(),
+                    message: format!(
+                        "operation for issue '{}' is not one HEAL proposes for this graph — \
+                         re-run propose_heal and apply that. Nothing was changed.",
+                        operation.issue_id
+                    ),
+                });
+            }
+        }
+
         let index = self.node_type_index()?;
         let mut applied = 0;
+        let mut discarded: Vec<SkippedOperation> = Vec::new();
         for operation in &proposal.operations {
             match &operation.op {
                 HealOp::Merge {
@@ -654,7 +752,13 @@ impl DesignGraph {
                     remove_type,
                     remove_id,
                 } => {
-                    self.merge_nodes(keep_type, keep_id, remove_type, remove_id, &index)?;
+                    discarded.extend(self.merge_nodes(
+                        keep_type,
+                        keep_id,
+                        remove_type,
+                        remove_id,
+                        &index,
+                    )?);
                     applied += 1;
                 }
                 HealOp::CreateEdge {
@@ -691,13 +795,22 @@ impl DesignGraph {
             .map(|id| id.to_string())
             .collect();
 
+        let message = if discarded.is_empty() {
+            format!("applied {applied} structural operation(s)")
+        } else {
+            format!(
+                "applied {applied} structural operation(s); {} thing(s) could not be carried across — see `discarded`",
+                discarded.len()
+            )
+        };
         Ok(HealReport {
             applied: applied > 0,
             blocked_by_mode: false,
             operations_applied: applied,
             verified: unresolved.is_empty(),
             unresolved_issue_ids: unresolved,
-            message: format!("applied {applied} structural operation(s)"),
+            discarded,
+            message,
         })
     }
 
@@ -712,10 +825,13 @@ impl DesignGraph {
         remove_type: &str,
         remove_id: &str,
         index: &HashMap<String, String>,
-    ) -> Result<(), DynoError> {
+    ) -> Result<Vec<SkippedOperation>, DynoError> {
         // Capture the edges to re-point before mutating anything.
         let outgoing = self.outgoing(remove_id, None)?;
         let incoming = self.incoming(remove_id, None)?;
+
+        let mut discarded =
+            self.merge_losses(keep_id, remove_type, remove_id, &outgoing, &incoming)?;
 
         self.begin_batch();
         match self.merge_repoint(
@@ -726,16 +842,93 @@ impl DesignGraph {
             &outgoing,
             &incoming,
             index,
+            &mut discarded,
         ) {
             Ok(()) => {
                 self.commit_batch()?;
-                Ok(())
+                Ok(discarded)
             }
             Err(e) => {
                 self.discard_batch();
                 Err(e)
             }
         }
+    }
+
+    /// What this merge will not be able to carry across, computed before it runs.
+    ///
+    /// Two kinds, both previously silent. The removed node's **properties** are
+    /// never carried — only its edges are — so its name, description and status
+    /// go with it. And where both nodes already had the same edge type to the
+    /// same neighbour, `create_edge` is an upsert keyed on
+    /// `(graph, type, from, to)`, so the removed node's edge properties land on
+    /// top of the survivor's rather than beside them.
+    fn merge_losses(
+        &self,
+        keep_id: &str,
+        remove_type: &str,
+        remove_id: &str,
+        outgoing: &[StoredEdge],
+        incoming: &[StoredEdge],
+    ) -> Result<Vec<SkippedOperation>, DynoError> {
+        let mut discarded = Vec::new();
+
+        if let Some(gone) = self.get_node(remove_type, remove_id)? {
+            let mut names: Vec<&String> = gone.properties.keys().collect();
+            names.sort();
+            if !names.is_empty() {
+                discarded.push(SkippedOperation {
+                    reference: remove_id.to_string(),
+                    reason: format!(
+                        "properties not carried onto '{keep_id}' (a merge keeps the survivor's own): {}",
+                        names
+                            .iter()
+                            .map(|k| k.as_str())
+                            .collect::<Vec<_>>()
+                            .join(", ")
+                    ),
+                });
+            }
+        }
+
+        let existing_out: BTreeSet<(String, String)> = self
+            .outgoing(keep_id, None)?
+            .into_iter()
+            .map(|e| (e.edge_type, e.to_id))
+            .collect();
+        let existing_in: BTreeSet<(String, String)> = self
+            .incoming(keep_id, None)?
+            .into_iter()
+            .map(|e| (e.edge_type, e.from_id))
+            .collect();
+
+        for e in outgoing {
+            if e.edge_type != edge::DUPLICATES
+                && !e.properties.is_empty()
+                && existing_out.contains(&(e.edge_type.clone(), e.to_id.clone()))
+            {
+                discarded.push(SkippedOperation {
+                    reference: format!("{remove_id} -{}-> {}", e.edge_type, e.to_id),
+                    reason: format!(
+                        "'{keep_id}' already has this edge; the merged edge's properties overwrite its own"
+                    ),
+                });
+            }
+        }
+        for e in incoming {
+            if e.edge_type != edge::DUPLICATES
+                && !e.properties.is_empty()
+                && existing_in.contains(&(e.edge_type.clone(), e.from_id.clone()))
+            {
+                discarded.push(SkippedOperation {
+                    reference: format!("{} -{}-> {remove_id}", e.from_id, e.edge_type),
+                    reason: format!(
+                        "'{keep_id}' already has this edge; the merged edge's properties overwrite its own"
+                    ),
+                });
+            }
+        }
+        Ok(discarded)
     }
 
     #[allow(clippy::too_many_arguments)]
@@ -748,6 +941,7 @@ impl DesignGraph {
         outgoing: &[StoredEdge],
         incoming: &[StoredEdge],
         index: &HashMap<String, String>,
+        discarded: &mut Vec<SkippedOperation>,
     ) -> Result<(), DynoError> {
         for e in outgoing {
             if e.edge_type == edge::DUPLICATES {
@@ -766,6 +960,16 @@ impl DesignGraph {
                     other,
                     e.properties.clone(),
                 )?;
+            } else {
+                // The other endpoint is not a node we know the type of, so the
+                // edge cannot be recreated. Dropping it silently would lose a
+                // relationship with nothing to say so.
+                discarded.push(SkippedOperation {
+                    reference: format!("{remove_id} -{}-> {other}", e.edge_type),
+                    reason: format!(
+                        "'{other}' is not a known node, so the edge could not be moved"
+                    ),
+                });
             }
         }
         for e in incoming {
@@ -785,6 +989,13 @@ impl DesignGraph {
                     keep_id,
                     e.properties.clone(),
                 )?;
+            } else {
+                discarded.push(SkippedOperation {
+                    reference: format!("{other} -{}-> {remove_id}", e.edge_type),
+                    reason: format!(
+                        "'{other}' is not a known node, so the edge could not be moved"
+                    ),
+                });
             }
         }
         // Deletes remove and every edge still attached to it (incl. DUPLICATES).

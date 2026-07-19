@@ -100,6 +100,17 @@ class Server:
             return _unwrap(result["structuredContent"])
         return json.loads(result["content"][0]["text"])
 
+    def call_expect_error(self, tool: str, args=None):
+        """Call a tool that should be refused; return the error text, or None if
+        it unexpectedly succeeded. A refusal that never arrives is the bug."""
+        resp = self.rpc("tools/call", {"name": tool, "arguments": args or {}})
+        if "error" in resp:
+            return str(resp["error"])
+        result = resp["result"]
+        if result.get("isError"):
+            return str(result.get("content"))
+        return None
+
     def close(self) -> None:
         self.proc.stdin.close()
         try:
@@ -564,6 +575,26 @@ def run(binary: str, graph_path: str) -> int:
          "cycle break" in [x["kind"] for x in p.get("generated_content", [])],
          [x["kind"] for x in p.get("generated_content", [])])
     c.ok("skipped_operations reported", "skipped_operations" in p, list(p))
+
+    # BL-29: apply_heal used to execute whatever it was handed. A proposal with
+    # a made-up issue id, naming two nodes no detector had called duplicates,
+    # was applied and deleted one of them. Driven over the real MCP path because
+    # that is exactly how a client reaches it — ApplyHealReq takes caller JSON.
+    print("\n== 9b. apply_heal refuses a proposal HEAL never made (BL-29) ==")
+    forged = {
+        "target_id": "proj:smoke", "summary": "forged", "strategy": "balanced",
+        "issues_addressed": [], "operations": [{
+            "issue_id": "heal:0000000000000000",
+            "op": {"Merge": {"keep_type": "Component", "keep_id": "cmp:board",
+                             "remove_type": "Component", "remove_id": "cmp:engine"}}}],
+        "generated_content": [], "skipped_operations": [],
+        "requires_human_review": True, "confidence": 0.0,
+    }
+    refused = s.call_expect_error("apply_heal", {"proposal": forged})
+    c.ok("a forged merge is refused", refused is not None and
+         "not one HEAL proposes" in str(refused), refused)
+    c.ok("and the node it named is still there",
+         s.call("get_node", {"node_type": "Component", "id": "cmp:engine"}) is not None)
 
     print("\n== 10. the design survives a restart ==")
     first_gaps = sorted(g["id"] for g in s.call("detect_gaps"))

@@ -47,40 +47,37 @@ Six independent sources, which is why several items appear on more than one list
 
 | ID | Item | Why | Size |
 |---|---|---|---|
-| **BL-29** | **`apply_heal` executes any proposal it is handed** | Verified by execution, 2026-07-19 — see below. An integrity-line issue (rule 4 and discipline 1), found while scoping duplicate detection | M |
+| **BL-29** | **`apply_heal` trusts the proposal; merge loses data silently** | Mostly **done** — three of seven fixed; three remain, one deliberately deferred. See below | M |
 
 **BL-29 · `apply_heal` trusts the proposal, and merge loses data silently** — *found 2026-07-19
 while scoping [BL-27](#bigger-threads)'s duplicate detection; the reason `possible_duplicate` is a
 DETECT gap and not a HEAL defect.*
 
-**Verified by running it.** A hand-crafted `HealProposal` — a made-up `issue_id`, a `Merge` naming
-two capabilities with no `DUPLICATES` edge, which `detect_defects` reported only as `OrphanNode` and
-never as a duplicate — was accepted and applied: `applied=true, operations_applied=1`, and the node
-was gone. `apply_heal` never re-derives or re-validates the issue; it reads `keep_id`/`remove_id`
-off the operation and deletes. `ApplyHealReq` deserializes caller JSON straight off the MCP surface,
-so this is reachable by any client, and there is no snapshot, no `ChangeEvent`, and no undo.
+**The headline was verified by running it, and is fixed.** A hand-crafted `HealProposal` — a made-up
+`issue_id`, a `Merge` naming two capabilities with no `DUPLICATES` edge, which `detect_defects`
+reported only as `OrphanNode` — was accepted and applied: `applied=true, operations_applied=1`, node
+gone. `ApplyHealReq` deserializes caller JSON straight off the MCP surface, so any client could do
+it, and a merge has no snapshot and no undo. `apply_heal` now re-derives what HEAL would propose for
+the graph as it stands and refuses anything that does not match, **before any write**. The
+issue→operation mapping is shared by propose and apply so the two cannot drift.
 
-The propose-then-apply split is described as the whole point — "a proposal can be reviewed, capped,
-and audited before anything changes" — but nothing binds the applied proposal to one HEAL actually
-produced. Related: `requires_human_review` is computed per-*proposal* and **`apply_heal` never reads
-it**, so the flag that reads like a safety gate is decorative.
+Related and worth remembering: `requires_human_review` is computed per-*proposal* and `apply_heal`
+has never read it. It reports that generative stubs exist; it is not and never was a gate on
+applying the structural half.
 
-*The rest is code-read, not yet reproduced* — recorded so it is not lost, and flagged as
-unverified per the evidence rule:
-
-| Hazard | Where |
+| Hazard | Status |
 |---|---|
-| `remove`'s node properties are discarded entirely — only edges are carried onto the survivor, so name/description/status vanish with no report | `merge_repoint` |
-| `create_edge` is an upsert keyed on `(graph, type, from, to)`, so where both nodes had the same edge triple, `remove`'s edge properties overwrite `keep`'s | `merge_repoint` |
-| Edges to nodes absent from the index are dropped with no `SkippedOperation` — a silent drop, which rule 4 forbids | `merge_repoint` |
-| The node-type index is built once before the loop, so chained merges (a↔b, b↔c) re-point onto a node that no longer exists, creating dangling adjacency | `apply_heal` |
-| Atomicity is per-operation, not per-proposal: a three-merge proposal failing on the second leaves the first committed | `apply_heal` |
-| `DUPLICATES` is declared `from: "*" to: "*"`, so `Requirement DUPLICATES Component` is schema-valid and yields a cross-type merge | `schema/inference.yaml` |
-| The survivor is chosen by lexicographic id (`canonical_pair`), not by connectivity or completeness — the better-connected node may be the one deleted | `heal.rs` |
+| A proposal HEAL never made is applied verbatim | ✅ fixed — refused before any write; stale proposals fail the same way |
+| `remove`'s node properties are discarded entirely, so name/description/status vanish with no report | ✅ fixed — reported in `HealReport.discarded` |
+| Edges to nodes absent from the index are dropped with no report | ✅ fixed — reported in `discarded` |
+| `create_edge` is an upsert on `(graph, type, from, to)`, so where both nodes had the same triple, `remove`'s edge properties overwrite `keep`'s | ✅ **reported**, not prevented — `discarded` names the collision. Preventing it means deciding which side wins, which is a merge-policy question, not a bug fix |
+| `DUPLICATES` declared `from: "*" to: "*"` yields a schema-valid cross-type merge | ✅ fixed in code — refused at proposal time with a reason. **The schema is still `*`/`*`**; narrowing it is the tighter fix and was left alone, since it would reject edges existing graphs may already hold |
+| The node-type index is built once before the loop, so chained merges (a↔b, b↔c) re-point onto a node that no longer exists | ⬜ open, **code-read and not reproduced**. Narrowed but not closed by the sanction check: HEAL can still emit two merges sharing a node in one proposal |
+| Atomicity is per-operation, not per-proposal: a three-merge proposal failing on the second leaves the first committed | ⬜ open, code-read. The cross-type guard removes the known way to trigger it |
+| The survivor is chosen by lexicographic id (`canonical_pair`), not by connectivity or completeness — the better-connected node may be the one deleted | ⬜ open by choice. Determinism is the current virtue and any "better" rule is a judgement about which node is more real; wants a decision, not a patch |
 
-Size **M**. The first item is the one that matters and probably wants apply to re-run detection and
-refuse an operation whose issue no longer holds; the silent-drop rows are each small and are
-straightforward rule-4 fixes.
+Remaining size **S–M**. The chained-merge case is the one worth doing next and wants a reproduction
+first — rebuild the index between operations, or refuse a proposal whose merges share a node.
 
 ## Closed
 

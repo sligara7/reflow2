@@ -1407,7 +1407,15 @@ impl ReflowService {
         ok_json(g.delete_node(&req.node_type, &req.id).map_err(dyno_err)?)
     }
 
-    #[tool(description = "Apply a reviewed HealProposal atomically (rigid mode = no-op).")]
+    #[tool(
+        description = "Apply a reviewed HealProposal atomically (rigid mode = no-op). Pass a \
+                       proposal `propose_heal` returned — every operation is checked against what \
+                       HEAL proposes for the graph as it stands now, and anything else is refused \
+                       before a single write, so hand-editing the proposal or reusing a stale one \
+                       fails rather than merging the wrong nodes. Merging deletes a node and \
+                       cannot be undone. Read `discarded` in the result: it lists what the merge \
+                       could not carry onto the survivor."
+    )]
     pub async fn apply_heal(
         &self,
         Parameters(req): Parameters<ApplyHealReq>,

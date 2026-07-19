@@ -6,7 +6,7 @@
 //! is gone. Generative fixes are gated behind `requires_human_review`.
 
 use reflow2_core::nodes::{Props, edge, node};
-use reflow2_core::{DesignGraph, HealCategory, HealOp, HealOptions, HealStrategy};
+use reflow2_core::{DesignGraph, HealCategory, HealOp, HealOptions, HealProposal, HealStrategy};
 
 /// Two capabilities marked as duplicates; `cap:a` also satisfies a requirement,
 /// so a correct merge must carry that edge onto the survivor.
@@ -251,5 +251,239 @@ fn max_operations_cap_surfaces_overflow_never_drops_it() {
         proposal.skipped_operations[0]
             .reason
             .contains("max_operations")
+    );
+}
+
+// ---- BL-29 · the proposal is checked, not trusted --------------------------
+
+/// Build a proposal the way an MCP client can: hand-written JSON, straight into
+/// `apply_heal`. This is the shape that deleted a node it had no business
+/// touching.
+fn hand_crafted(issue_id: &str, keep: &str, remove: &str) -> HealProposal {
+    serde_json::from_value(serde_json::json!({
+        "target_id": "proj:1",
+        "summary": "hand-written",
+        "strategy": "balanced",
+        "issues_addressed": [],
+        "operations": [{
+            "issue_id": issue_id,
+            "op": {"Merge": {
+                "keep_type": "Capability", "keep_id": keep,
+                "remove_type": "Capability", "remove_id": remove}}
+        }],
+        "generated_content": [],
+        "skipped_operations": [],
+        "requires_human_review": true,
+        "confidence": 0.0
+    }))
+    .expect("a client can send exactly this")
+}
+
+#[test]
+fn a_merge_no_detector_asked_for_is_refused() {
+    // Verified as a live defect before the fix: two capabilities with no
+    // DUPLICATES edge between them, which detect_defects reports only as
+    // orphans, were merged on request and one was deleted.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:1", "P").unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    g.add_capability("cap:keep", "Keeper", "survivor", None)
+        .unwrap();
+    g.add_capability("cap:doomed", "Doomed", "not a duplicate of anything", None)
+        .unwrap();
+    g.satisfies("cap:keep", "req:a").unwrap();
+    g.satisfies("cap:doomed", "req:a").unwrap();
+
+    assert!(
+        !g.detect_defects()
+            .unwrap()
+            .iter()
+            .any(|d| d.category == HealCategory::Duplicate),
+        "precondition: nothing calls these duplicates"
+    );
+
+    let err = g
+        .apply_heal(&hand_crafted("heal:madeup", "cap:keep", "cap:doomed"))
+        .expect_err("a proposal HEAL never made must be refused");
+    assert!(
+        err.to_string().contains("not one HEAL proposes"),
+        "got: {err}"
+    );
+
+    // And the refusal happened before any write.
+    assert!(
+        g.get_node(node::CAPABILITY, "cap:doomed")
+            .unwrap()
+            .is_some(),
+        "a refused proposal must leave the graph untouched"
+    );
+}
+
+#[test]
+fn a_real_issue_id_with_a_fabricated_operation_is_still_refused() {
+    // The subtler attack: quote an issue id that genuinely exists, but pair it
+    // with a merge of two other nodes.
+    let mut g = dup_graph();
+    g.add_capability("cap:bystander", "Bystander", "uninvolved", None)
+        .unwrap();
+    let real_id = g
+        .detect_defects()
+        .unwrap()
+        .into_iter()
+        .find(|d| d.category == HealCategory::Duplicate)
+        .unwrap()
+        .id;
+
+    let err = g
+        .apply_heal(&hand_crafted(&real_id, "cap:a", "cap:bystander"))
+        .expect_err("the issue id is real but the operation is not the one it implies");
+    assert!(
+        err.to_string().contains("not one HEAL proposes"),
+        "got: {err}"
+    );
+    assert!(
+        g.get_node(node::CAPABILITY, "cap:bystander")
+            .unwrap()
+            .is_some()
+    );
+}
+
+#[test]
+fn a_proposal_heal_actually_made_still_applies() {
+    // The guard must not break the real flow.
+    let mut g = dup_graph();
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    let report = g.apply_heal(&proposal).unwrap();
+
+    assert!(report.applied);
+    assert_eq!(report.operations_applied, 1);
+    assert!(report.verified);
+    assert!(g.get_node(node::CAPABILITY, "cap:b").unwrap().is_none());
+}
+
+#[test]
+fn a_proposal_goes_stale_when_the_defect_is_resolved_by_hand() {
+    // Propose, then remove the DUPLICATES edge by hand, then apply. The issue no
+    // longer holds, so the merge must not run on the strength of a stale
+    // proposal.
+    let mut g = dup_graph();
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    g.delete_edge(edge::DUPLICATES, "cap:a", "cap:b").unwrap();
+
+    let err = g
+        .apply_heal(&proposal)
+        .expect_err("the defect is gone, so its repair is no longer sanctioned");
+    assert!(
+        err.to_string().contains("not one HEAL proposes"),
+        "got: {err}"
+    );
+    assert!(g.get_node(node::CAPABILITY, "cap:b").unwrap().is_some());
+}
+
+// ---- BL-29 · a merge says what it could not carry --------------------------
+
+#[test]
+fn merge_reports_the_properties_it_could_not_keep() {
+    let mut g = dup_graph();
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    let report = g.apply_heal(&proposal).unwrap();
+
+    let lost = report
+        .discarded
+        .iter()
+        .find(|d| d.reference == "cap:b")
+        .unwrap_or_else(|| {
+            panic!(
+                "the removed node's properties vanished silently: {:?}",
+                report.discarded
+            )
+        });
+    assert!(
+        lost.reason.contains("description") && lost.reason.contains("name"),
+        "must name what was let go, got: {}",
+        lost.reason
+    );
+}
+
+#[test]
+fn a_merge_that_loses_nothing_reports_nothing() {
+    // The report must not cry wolf: a survivor with no colliding edges and a
+    // removed node carrying only what merges cleanly should stay quiet about
+    // edges, even though its own properties are always noted.
+    let mut g = dup_graph();
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    let report = g.apply_heal(&proposal).unwrap();
+
+    assert!(
+        !report
+            .discarded
+            .iter()
+            .any(|d| d.reason.contains("not a known node")),
+        "no edge should have been unmovable here: {:?}",
+        report.discarded
+    );
+}
+
+#[test]
+fn merge_reports_an_edge_whose_properties_are_overwritten() {
+    // Both capabilities are allocated to cmp:c, and the doomed one's edge
+    // carries a property. create_edge is an upsert on (type, from, to), so the
+    // survivor's version of that edge is overwritten rather than kept beside it.
+    let mut g = dup_graph();
+    g.create_edge(
+        edge::ALLOCATED_TO,
+        node::CAPABILITY,
+        "cap:b",
+        node::COMPONENT,
+        "cmp:c",
+        Props::new().set("rationale", "the doomed one's reason"),
+    )
+    .unwrap();
+
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    let report = g.apply_heal(&proposal).unwrap();
+
+    assert!(
+        report
+            .discarded
+            .iter()
+            .any(|d| d.reason.contains("overwrite")),
+        "an upsert collision must be reported, got: {:?}",
+        report.discarded
+    );
+}
+
+#[test]
+fn a_cross_type_merge_is_refused_rather_than_half_applied() {
+    // DUPLICATES is declared `from: "*" to: "*"`, so this edge is schema-valid.
+    // Merging across types would re-point one type's edges onto another and be
+    // rejected part-way through, after earlier operations had committed.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:1", "P").unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    g.add_capability("cap:a", "A", "does a", None).unwrap();
+    g.satisfies("cap:a", "req:a").unwrap();
+    g.create_edge(
+        edge::DUPLICATES,
+        node::REQUIREMENT,
+        "req:a",
+        node::CAPABILITY,
+        "cap:a",
+        Props::new(),
+    )
+    .unwrap();
+
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    assert!(
+        proposal.operations.is_empty(),
+        "a cross-type merge must never become an applicable operation"
+    );
+    assert!(
+        proposal
+            .skipped_operations
+            .iter()
+            .any(|s| s.reason.contains("across node types")),
+        "and it must say why, not vanish: {:?}",
+        proposal.skipped_operations
     );
 }

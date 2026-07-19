@@ -97,6 +97,38 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **`apply_heal` checks the proposal instead of trusting it** (BL-29). It used to execute whatever
+  it was handed. Verified before the fix: a hand-written proposal carrying a made-up issue id and a
+  `Merge` naming two capabilities that no detector had called duplicates was applied, and deleted
+  one of them — `applied=true, operations_applied=1`. `ApplyHealReq` deserializes caller JSON
+  straight off the MCP surface, so any client could do it, and a merge has no snapshot and no undo.
+
+  Propose-then-apply is described as the whole point — a proposal can be reviewed, capped and
+  audited before anything changes — but nothing bound the applied proposal to one HEAL actually
+  made. Now every operation must match one HEAL derives from the graph **as it stands**, and
+  anything else is refused before a single write, so a rejected proposal leaves the graph untouched.
+  A stale proposal fails the same way: resolve the defect by hand between propose and apply and the
+  merge no longer runs. The issue→operation mapping is shared by both sides rather than written
+  twice, so they cannot drift apart.
+
+  Worth knowing: `requires_human_review` is computed per *proposal* and `apply_heal` has never
+  consulted it. It reports that generative stubs are present; it was never a gate on applying the
+  structural half, and the check above is what actually guards that path.
+
+- **A merge says what it could not carry** (BL-29). `HealReport` gains `discarded`. A merge keeps
+  the survivor's own properties and re-points the removed node's edges, so three things were being
+  let go in silence — the removed node's properties (its name, description and status went with
+  it), an edge whose other endpoint was not a known node, and an edge triple both nodes already had,
+  where `create_edge` is an upsert so the removed node's edge properties overwrite the survivor's.
+  Each is now reported with the reason. That is rule 4: the loss is often the right call, but it may
+  not be silent.
+
+- **A cross-type merge is refused rather than half-applied** (BL-29). `DUPLICATES` is declared
+  `from: "*" to: "*"`, so `Requirement DUPLICATES Component` is schema-valid. Merging across types
+  re-points one type's edges onto another and gets rejected part-way through — after earlier
+  operations in the same proposal have already committed, since atomicity is per-operation. It is
+  now refused at proposal time and lands in `skipped_operations` with the reason.
+
 - **A gap that names nodes now outranks a phase nudge** (BL-27, the third of five blockers).
   `detect_gaps` ordered purely on severity, which compared two numbers that are not on the same
   scale: the phase-coverage nudges carry fixed literals (`concept_without_design` 0.70,
