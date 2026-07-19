@@ -65,6 +65,12 @@ python3 tools/phase_trial.py
 # touch with its code (BL-33, BL-34). Also non-zero exit by design.
 python3 tools/erosion_trial.py
 
+# The same cycle done right — the constructive counterpart. Proves designed ==
+# released is reachable today with axis-Z discipline (original intent survives in
+# a Snapshot), and that reflow2 gives the SAME verdict for the coherent graph and
+# the eroded one. That gap is BL-35.
+python3 tools/coherent_erosion_trial.py
+
 # End-to-end smoke test of the MCP *binary* (stdio JSON-RPC, real RocksDB graph).
 # Covers what cargo test can't: the shipped surface, tool schemas, and the JSON an
 # agent actually receives. Needs `cargo build -p reflow2-mcp` first (RocksDB, ~10 min

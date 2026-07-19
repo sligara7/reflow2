@@ -18,7 +18,7 @@ Each item has a stable id (**BL-n**). Claim one on the board in
 
 ## Evidence base
 
-Six independent sources, which is why several items appear on more than one list:
+Nine independent sources, which is why several items appear on more than one list:
 
 - **Blind trial, 2026-07-18** — an agent with no knowledge of reflow2's source designed and
   built a weather station through the consumer kit. Its friction log is the single richest
@@ -54,7 +54,14 @@ Six independent sources, which is why several items appear on more than one list
 - **[reflow-audit.md](reflow-audit.md)** — the original Reflow's workflows and tools, with
   adopt/obsolete verdicts.
 
-> **A bias worth naming.** Every source above except the phase-coverage trial stops at or before
+- **Coherent-erosion trial, 2026-07-19** — the constructive counterpart: the same five fix cycles run
+  *with* axis-Z discipline, the design following the build backwards. `designed == released` is
+  reachable today and the original intent survives in a Snapshot — but reflow2 returns the **same
+  verdict** for this graph and the eroded one. The only source for BL-35/36. Notes:
+  [trials/2026-07-19-coherent-erosion.md](trials/2026-07-19-coherent-erosion.md); re-runnable via
+  `tools/coherent_erosion_trial.py`.
+
+> **A bias worth naming.** Every source above except the three 2026-07-19 trials stops at or before
 > **P2**. The blind trials, both brownfield trials and both self-host runs all end at structure and
 > allocation — so until 2026-07-19 the entire evidence base came from the phases the original reflow
 > was *already good at*, and none from the phases where it failed. Weigh accordingly when an item
@@ -64,12 +71,59 @@ Six independent sources, which is why several items appear on more than one list
 
 | ID | Item | Why | Size |
 |---|---|---|---|
+| **BL-35** | **A design claim has no last-confirmed date, so "coherent" and "nobody looked" are indistinguishable** | The deepest of the phase items — an eroded graph and a genuinely coherent one both report quiet. Axis Z already holds the data | M |
+| **BL-36** | **`precedes` is unreachable, so the epoch chain cannot be drawn** | Recurring lesson, tenth instance — on the axis that exists to make history legible | S |
 | **BL-33** | **Accepting drift is one-sided, and the drift record overwrites itself** | *The* erosion mechanism: N legitimate fixes and the design is fiction while reporting zero gaps. Load-bearing — it is the step that runs N times | M |
 | **BL-34** | **No as-released view, and no vocabulary for one** | `DEPLOYED_TO` is the only edge `Release` has. "Does what shipped match what was designed?" is inexpressible, not merely unimplemented | M |
 | **BL-30** | **A failing test satisfies the check that asked for a test** | The later phases measure bookkeeping, not reality — this is reflow1's failure mode, reproduced and verified. See below | S + M |
 | **BL-31** | **A `status` field is a claim nothing checks** | `status: verified` with nothing verifying, `status: met` with nothing satisfying — the graph never contradicts itself | S |
 | **BL-32** | **A running MCP server silently serves a stale surface** | Rebuild mid-session and the old tool surface keeps answering, with no indication. `smoke_mcp.py` cannot catch it by construction | S |
 | **BL-29** | **`apply_heal` trusts the proposal; merge loses data silently** | Mostly **done** — three of seven fixed; three remain, one deliberately deferred. See below | M |
+
+**BL-35 · A design claim has no last-confirmed date** — *[coherent-erosion
+trial](trials/2026-07-19-coherent-erosion.md), 2026-07-19. The deepest of the phase-coherence items.*
+
+*The good news first, because it changes what the rest of these are for.* The
+[coherent-erosion trial](trials/2026-07-19-coherent-erosion.md) ran the same five fix cycles with
+axis-Z discipline — every fix a `record_change` at its own epoch, and the behaviour-changing fix also
+updating the **P1 capability**, the design following the build backwards. It works: the design ends
+describing what was actually built, **the original intent is still recoverable** from a Snapshot
+pinned to the baseline epoch, and every fix is on the record. `designed == released` is reachable
+today, and letting the build teach the design costs no intent because Z keeps the past. The
+vocabulary was already waiting for this loop — `ChangeType::TestFailureFix` is documented as *"a fix
+forced by a failed verification"* and `ChangeType::Resync` as *"a re-sync back to coherence."*
+
+*And the problem.* Run both versions and reflow2 returns **the same verdict**:
+
+| | eroded run | coherent run |
+|---|---|---|
+| design describes what shipped | no — fiction | yes |
+| `detect_gaps` | `[]` | quiet |
+| reflow2's verdict | **coherent** | **coherent** |
+
+The entire difference is developer virtue, which is exactly what does not survive cycle 40 of a
+release crunch — and exactly what the original reflow was relying on without knowing it.
+
+*The missing concept is a date on the design's own claims.* Structural completeness is all that is
+measured — is there a Capability, does something satisfy the Requirement, does an Artifact realize
+it — and every one of those is true in the eroded graph. What is absent is **when a claim was last
+confirmed against reality**. A description written at the baseline epoch and never revisited while
+its artifact drifted five times is a different and worse state than the same description confirmed at
+the release epoch, and nothing tells them apart.
+
+Axis Z already holds the data: epochs are ordered and sequenced, snapshots are pinned to them, drift
+is dated. *Last confirmed at epoch N* versus *artifact last moved at epoch M* is subtraction. Nothing
+reads it that way. Fold in the related miss from the same trial: all six ChangeEvents carry
+`test_failure_fix` and propagating from any of them reaches the capability, because the artifact
+realizes it — so "five fixes, one of which changed what the system does" is the sentence a release
+review needs and cannot get. The distinction lives in what each ChangeEvent `CHANGED` and nothing
+surfaces it. Size **M**, and it is what makes the other phase items enforceable rather than advisory.
+
+**BL-36 · `precedes` is unreachable, so the epoch chain cannot be drawn** — *same trial.*
+`DesignGraph::precedes` (`temporal.rs:181`) orders one epoch after another and has no MCP tool, so no
+consumer can build the `PRECEDES` chain; ordering survives only through the `sequence` integer. The
+**tenth** instance of the recurring lesson, and on the axis whose whole job is making history
+legible. Size **S**.
 
 **BL-33 · Accepting drift is one-sided; the drift record overwrites itself** — *[erosion
 trial](trials/2026-07-19-erosion.md), 2026-07-19. The mechanism behind the user's account of
@@ -88,8 +142,10 @@ measured is whether the bookkeeping is complete, never whether it is true.
 **Accept is one-sided (M).** Each cycle ends at `set_artifact_checksum` — "an accepted change is the
 new baseline" — which updates the code-side baseline and **asks nothing about the design**. That is
 locally reasonable and globally fatal. Nothing ever poses the second half: *the code moved, should
-the design move too, or was the code wrong?* Accepting drift should be a **two-sided decision** that
-records which way it went — the capability description is updated to match what was built, or the
+the design move too, or was the code wrong?* The [coherent-erosion trial](trials/2026-07-19-coherent-erosion.md) is
+the **specification** for what the "design moved" branch should write: a `record_change` at its own
+epoch, snapshotting the prior description, updating the P1 capability. Accepting drift should be a
+**two-sided decision** that records which way it went — the capability description is updated to match what was built, or the
 divergence is marked a defect in the code. The third option, "accept the file, leave the design
 alone, say nothing," is the one that erodes and should not exist. Note this is the first thing in
 the codebase that would make a `ChangeEvent` originate from the *build* side rather than the design
@@ -717,11 +773,13 @@ Not gaps — decisions, recorded so they aren't rediscovered as bugs.
 
 ## Recurring lesson
 
-A capability exists in core and is unreachable or unadvertised on the surface. Nine instances so
+A capability exists in core and is unreachable or unadvertised on the surface. Ten instances so
 far: `Interface`, HEAL's skill, the `Verification`/operate write side, `contain_component`,
 `graph_id`, `Requirement.status`, `graph_report` as an answer to "where am I", the whole
 `TemporalFact` / `ABOUT_ENTITY` / `VALID_FROM` / `VALID_TO` layer (schema-complete, zero Rust
-API), and `DOCUMENTS` (declared, named in `nodes.rs`, no constructor and no tool — BL-26).
+API), `DOCUMENTS` (declared, named in `nodes.rs`, no constructor and no tool — BL-26), and `precedes`
+(implemented in `temporal.rs`, no tool, so the epoch chain axis Z exists to record cannot be drawn by
+any client — BL-36).
 
 Before building something new, the higher-yield question is usually: **what does the core
 already do that nothing can reach?**
