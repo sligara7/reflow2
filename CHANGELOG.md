@@ -46,6 +46,33 @@ This file is the third view: *what changed, and when*.
   apply on create and are not backfilled; an export/import round trip resolves that, and there is
   a test pinning that provenance survives one.
 
+- **`possible_duplicate` — duplicate detection that computes something** (BL-27, the last of five
+  blockers). HEAL has had a `duplicate` category all along, and it fired on a `DUPLICATES` *edge* —
+  reporting a conclusion somebody had already reached and recorded. It computed nothing, so it could
+  never fire on a duplicate nobody had found, which is every duplicate an adoption pass exists to
+  discover. 3dtictactoe modelled two components holding an identical set of three capabilities, one
+  of them dead code with a subtly wrong victory check, and `detect_defects` returned eight defects
+  with no `duplicate` among them. That is `gap-surfacing.md`'s first discipline exactly — *detectors
+  read computed signals, not raw edge-name filters* — the trap it records as storyflow's biggest.
+
+  The computed rule is structural: two Components sharing at least two allocated Capabilities and at
+  least 80% of their sets by Jaccard overlap. Both thresholds are guards against the ordinary case —
+  two components providing the one capability they share is normal design, and a large component
+  containing a small one's whole set is not a duplicate of it.
+
+  **It asks rather than repairs, and that is the load-bearing decision.** `HealCategory::Duplicate`
+  maps to an applicable merge that `apply_heal` executes — deleting a node and re-pointing its
+  edges, with no snapshot and no undo. Merge is safe only because a human asserted the endpoints;
+  driving it from a heuristic would let the machine delete a component it merely suspects. A HEAL
+  issue also cannot be dismissed, where a gap can be acknowledged — and `unexpected_coupling` is the
+  cautionary tale of a detector firing on correct architecture with no way to stop it. So the two
+  compose: DETECT asks, the user confirms by drawing the `DUPLICATES` edge, HEAL merges. A pair
+  already carrying that edge is skipped, so nothing is reported twice.
+
+  This complements rather than replaces the semantic rule `heal-process.md` plans on
+  `resolution: fuzzy_then_vector`, which needs the deferred `EmbeddingBackend` and finds things
+  *described* alike where this finds things *wired* alike.
+
 - **`unmotivated_capability` — the direction DETECT was blind in** (BL-27, the fourth of five
   blockers). `detect_gaps` walked Requirement→Capability only, so a Capability satisfying no
   Requirement was never reported. Both brownfield trials ran the probe deliberately — ophyd seeded

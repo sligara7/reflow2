@@ -510,3 +510,226 @@ fn a_complete_thread_reports_no_orphan_capability() {
     let gaps = g.detect_gaps().unwrap();
     assert!(!sources(&gaps).contains(&GapSource::UnmotivatedCapability));
 }
+
+// ---- BL-27 · duplicate detection that actually computes something ----------
+
+/// 3dtictactoe's shape: two components holding an identical capability set,
+/// one of them dead code. `Board` and `GameState` each maintained their own
+/// grid and their own victory check; `Board` was exported and never
+/// instantiated, and its victory check was subtly wrong. `detect_defects`
+/// returned eight defects and none was `duplicate`, because HEAL's rule reads a
+/// DUPLICATES edge somebody has to have drawn first.
+fn redundant_pair() -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:play", "Play", "play a game")
+        .unwrap();
+    for c in ["cap:board-state", "cap:victory", "cap:draw"] {
+        g.add_capability(c, c, "does a thing", None).unwrap();
+        g.satisfies(c, "req:play").unwrap();
+    }
+    g.add_component("cmp:board-model", "Board", "holds the grid", None)
+        .unwrap();
+    g.add_component("cmp:game-engine", "GameState", "holds the grid", None)
+        .unwrap();
+    for c in ["cap:board-state", "cap:victory", "cap:draw"] {
+        g.allocate(c, "cmp:board-model").unwrap();
+        g.allocate(c, "cmp:game-engine").unwrap();
+    }
+    g
+}
+
+#[test]
+fn two_components_with_the_same_capabilities_are_reported() {
+    let g = redundant_pair();
+    let gaps = g.detect_gaps().unwrap();
+    let dup = gaps
+        .iter()
+        .find(|x| x.gap_source == GapSource::PossibleDuplicate)
+        .unwrap_or_else(|| panic!("no duplicate reported, got {:?}", sources(&gaps)));
+
+    assert_eq!(dup.affected_ids, ["cmp:board-model", "cmp:game-engine"]);
+    assert!((dup.severity - 0.70).abs() < f64::EPSILON);
+    assert!(
+        dup.evidence.contains("3 of 3"),
+        "evidence must show the overlap it measured, got: {}",
+        dup.evidence
+    );
+}
+
+#[test]
+fn a_duplicate_the_user_already_recorded_is_left_to_heal() {
+    // HEAL can actually repair a confirmed pair. Asking about it here too would
+    // be the DETECT/HEAL double-count three trials have complained about.
+    let mut g = redundant_pair();
+    g.create_edge(
+        edge::DUPLICATES,
+        node::COMPONENT,
+        "cmp:board-model",
+        node::COMPONENT,
+        "cmp:game-engine",
+        reflow2_core::nodes::Props::new(),
+    )
+    .unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    assert!(
+        !sources(&gaps).contains(&GapSource::PossibleDuplicate),
+        "got {:?}",
+        sources(&gaps)
+    );
+    // HEAL still has it, so the fact is not lost — just owned by the half that
+    // can repair it.
+    assert!(
+        g.detect_defects()
+            .unwrap()
+            .iter()
+            .any(|d| d.category == reflow2_core::heal::HealCategory::Duplicate)
+    );
+}
+
+#[test]
+fn one_shared_capability_is_not_a_duplicate() {
+    // Two components both providing the single capability they have in common
+    // is ordinary design. Without the two-shared floor this fires on it.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    g.add_capability("cap:shared", "Shared", "used in two places", None)
+        .unwrap();
+    g.satisfies("cap:shared", "req:a").unwrap();
+    g.add_component("cmp:a", "A", "part a", None).unwrap();
+    g.add_component("cmp:b", "B", "part b", None).unwrap();
+    g.allocate("cap:shared", "cmp:a").unwrap();
+    g.allocate("cap:shared", "cmp:b").unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    assert!(
+        !sources(&gaps).contains(&GapSource::PossibleDuplicate),
+        "got {:?}",
+        sources(&gaps)
+    );
+}
+
+#[test]
+fn a_big_component_containing_a_small_ones_whole_set_is_not_a_duplicate() {
+    // cmp:big has everything cmp:small has and three more. The intersection is
+    // cmp:small's entire set, so an intersection-only rule would accuse them;
+    // Jaccard (2/5 = 0.4) is what says they are different sizes of thing.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    for c in ["cap:1", "cap:2", "cap:3", "cap:4", "cap:5"] {
+        g.add_capability(c, c, "does a thing", None).unwrap();
+        g.satisfies(c, "req:a").unwrap();
+        g.allocate(c, "cmp:big").ok();
+    }
+    g.add_component("cmp:big", "Big", "does lots", None)
+        .unwrap();
+    g.add_component("cmp:small", "Small", "does little", None)
+        .unwrap();
+    for c in ["cap:1", "cap:2", "cap:3", "cap:4", "cap:5"] {
+        g.allocate(c, "cmp:big").unwrap();
+    }
+    for c in ["cap:1", "cap:2"] {
+        g.allocate(c, "cmp:small").unwrap();
+    }
+
+    let gaps = g.detect_gaps().unwrap();
+    assert!(
+        !sources(&gaps).contains(&GapSource::PossibleDuplicate),
+        "got {:?}",
+        sources(&gaps)
+    );
+}
+
+#[test]
+fn a_near_identical_pair_is_asked_about_but_ranks_lower() {
+    // Three of four shared (Jaccard 0.75)... below the floor. Four of five
+    // (0.80) is the weakest pair that fires, and it must not outrank an
+    // identical one.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    for c in ["cap:1", "cap:2", "cap:3", "cap:4", "cap:5"] {
+        g.add_capability(c, c, "does a thing", None).unwrap();
+        g.satisfies(c, "req:a").unwrap();
+    }
+    g.add_component("cmp:a", "A", "part a", None).unwrap();
+    g.add_component("cmp:b", "B", "part b", None).unwrap();
+    for c in ["cap:1", "cap:2", "cap:3", "cap:4"] {
+        g.allocate(c, "cmp:a").unwrap();
+        g.allocate(c, "cmp:b").unwrap();
+    }
+    g.allocate("cap:5", "cmp:a").unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    let dup = gaps
+        .iter()
+        .find(|x| x.gap_source == GapSource::PossibleDuplicate)
+        .unwrap_or_else(|| panic!("got {:?}", sources(&gaps)));
+    assert!((dup.severity - 0.58).abs() < f64::EPSILON);
+    assert!(dup.description.contains("nearly"));
+}
+
+#[test]
+fn an_unallocated_pair_of_components_is_not_a_duplicate() {
+    // Two components with no capabilities each have the empty set, which is
+    // trivially "identical". They must not be accused of duplicating each other.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    g.add_capability("cap:a", "A", "does a", None).unwrap();
+    g.satisfies("cap:a", "req:a").unwrap();
+    g.add_component("cmp:a", "A", "part a", None).unwrap();
+    g.add_component("cmp:b", "B", "part b", None).unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    assert!(
+        !sources(&gaps).contains(&GapSource::PossibleDuplicate),
+        "got {:?}",
+        sources(&gaps)
+    );
+}
+
+#[test]
+fn the_duplicate_gap_can_be_acknowledged_and_stays_dismissed() {
+    // The reason this is a gap and not a HEAL defect: a structural heuristic
+    // will sometimes be wrong, and the user needs a way to say so once.
+    let mut g = redundant_pair();
+    let dup = g
+        .detect_gaps()
+        .unwrap()
+        .into_iter()
+        .find(|x| x.gap_source == GapSource::PossibleDuplicate)
+        .unwrap();
+    g.acknowledge_gap(
+        &dup.id,
+        &dup.affected_ids,
+        "deliberately parallel implementations",
+    )
+    .unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    assert!(!sources(&gaps).contains(&GapSource::PossibleDuplicate));
+    assert!(
+        g.reviewed_gaps()
+            .unwrap()
+            .iter()
+            .any(|r| r.gap_id == dup.id)
+    );
+}
+
+#[test]
+fn the_duplicate_gap_id_does_not_depend_on_pair_order() {
+    // The id hashes the affected ids, so the pair needs one identity however it
+    // was walked — otherwise an acknowledgement silently stops matching.
+    let g = redundant_pair();
+    let once = g.detect_gaps().unwrap();
+    let twice = g.detect_gaps().unwrap();
+    let id_of = |v: &Vec<_>| {
+        v.iter()
+            .find(|x: &&reflow2_core::detect::GapCandidate| {
+                x.gap_source == GapSource::PossibleDuplicate
+            })
+            .unwrap()
+            .id
+            .clone()
+    };
+    assert_eq!(id_of(&once), id_of(&twice));
+}

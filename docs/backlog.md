@@ -47,6 +47,40 @@ Six independent sources, which is why several items appear on more than one list
 
 | ID | Item | Why | Size |
 |---|---|---|---|
+| **BL-29** | **`apply_heal` executes any proposal it is handed** | Verified by execution, 2026-07-19 — see below. An integrity-line issue (rule 4 and discipline 1), found while scoping duplicate detection | M |
+
+**BL-29 · `apply_heal` trusts the proposal, and merge loses data silently** — *found 2026-07-19
+while scoping [BL-27](#bigger-threads)'s duplicate detection; the reason `possible_duplicate` is a
+DETECT gap and not a HEAL defect.*
+
+**Verified by running it.** A hand-crafted `HealProposal` — a made-up `issue_id`, a `Merge` naming
+two capabilities with no `DUPLICATES` edge, which `detect_defects` reported only as `OrphanNode` and
+never as a duplicate — was accepted and applied: `applied=true, operations_applied=1`, and the node
+was gone. `apply_heal` never re-derives or re-validates the issue; it reads `keep_id`/`remove_id`
+off the operation and deletes. `ApplyHealReq` deserializes caller JSON straight off the MCP surface,
+so this is reachable by any client, and there is no snapshot, no `ChangeEvent`, and no undo.
+
+The propose-then-apply split is described as the whole point — "a proposal can be reviewed, capped,
+and audited before anything changes" — but nothing binds the applied proposal to one HEAL actually
+produced. Related: `requires_human_review` is computed per-*proposal* and **`apply_heal` never reads
+it**, so the flag that reads like a safety gate is decorative.
+
+*The rest is code-read, not yet reproduced* — recorded so it is not lost, and flagged as
+unverified per the evidence rule:
+
+| Hazard | Where |
+|---|---|
+| `remove`'s node properties are discarded entirely — only edges are carried onto the survivor, so name/description/status vanish with no report | `merge_repoint` |
+| `create_edge` is an upsert keyed on `(graph, type, from, to)`, so where both nodes had the same edge triple, `remove`'s edge properties overwrite `keep`'s | `merge_repoint` |
+| Edges to nodes absent from the index are dropped with no `SkippedOperation` — a silent drop, which rule 4 forbids | `merge_repoint` |
+| The node-type index is built once before the loop, so chained merges (a↔b, b↔c) re-point onto a node that no longer exists, creating dangling adjacency | `apply_heal` |
+| Atomicity is per-operation, not per-proposal: a three-merge proposal failing on the second leaves the first committed | `apply_heal` |
+| `DUPLICATES` is declared `from: "*" to: "*"`, so `Requirement DUPLICATES Component` is schema-valid and yields a cross-type merge | `schema/inference.yaml` |
+| The survivor is chosen by lexicographic id (`canonical_pair`), not by connectivity or completeness — the better-connected node may be the one deleted | `heal.rs` |
+
+Size **M**. The first item is the one that matters and probably wants apply to re-run detection and
+refuse an operation whose issue no longer holds; the silent-drop rows are each small and are
+straightforward rule-4 fixes.
 
 ## Closed
 
@@ -265,6 +299,36 @@ Provenance is exactly what separates them, which is the first thing to consume t
    that exist and is **S**. Not built here because it is a different detector answering a
    different question; recorded so it is not rediscovered as a bug.
 
+*Duplicate detection: HEAL's rule computed nothing.* **Fixed**, and the root cause is a fresh
+variant of the recurring lesson — not *unreachable on the surface* but **reachable and hollow**.
+`heal.rs` iterated existing `DUPLICATES` **edges**, so it reported a conclusion somebody had already
+reached and recorded, and could never fire on a duplicate nobody had found — which is every
+duplicate an adoption pass exists to discover. That is
+[gap-surfacing.md](gap-surfacing.md) discipline 1 verbatim, the trap it names as storyflow's
+biggest: *detectors read computed signals, not raw edge-name filters* — "the detector was DEAD on
+live data while looking correct."
+
+The computed half is `possible_duplicate`, and it landed in **DETECT, not HEAL**. Three reasons,
+and the first is the serious one: `HealCategory::Duplicate` maps to an *applicable* `HealOp::Merge`
+that `apply_heal` executes — deleting a node and re-pointing its edges, with no snapshot and no
+undo. Merge is content-free and safe only *because a human asserted the endpoints*; feeding a
+heuristic into that path would let the machine delete a component it merely suspects. Second, a
+HEAL issue cannot be dismissed — gaps can be acknowledged, defects cannot — and `unexpected_coupling`
+([BL-6b](#closed)) is the cautionary tale of a detector firing on correct architecture with no way
+to make it stop. Third, "are these the same thing?" is meaning, and the docs' own division is that
+HEAL fills structure while gap-surfacing elicits meaning.
+
+So they compose instead of overlapping: DETECT asks, the user confirms by drawing the `DUPLICATES`
+edge, and HEAL's existing merge — whose "endpoints known" precondition now genuinely holds —
+repairs it. A pair already carrying the edge is skipped, so nothing is double-counted.
+
+The rule is structural (≥2 shared capabilities, Jaccard ≥ 0.8 over allocation sets), which needs
+nothing deferred. [heal-process.md](heal-process.md) plans duplicate detection on
+`resolution: fuzzy_then_vector`; that needs the deferred `EmbeddingBackend` and finds a different
+population — things *described* alike, where this finds things *wired* alike. Complements, not
+rivals. Scoped to Components deliberately: two Capabilities satisfying one Requirement is
+decomposition, the normal case, and a rule there would fire on almost every correct design.
+
 *A skill alone would ship a graph that lies.* Five fixes gate it, and each is the recurring lesson
 below again:
 
@@ -272,7 +336,7 @@ below again:
 |---|---|---|
 | ~~`add_capability` hardcodes `status: "planned"`~~ — **done** | ophyd's 15 shipped, under-test capabilities made the graph "assert that a production system is entirely unbuilt". Optional `status` at creation plus `set_capability_status`; nothing hardcoded it, the constructor never set the property and took the schema default | S |
 | ~~`detect_gaps` walks Requirement→Capability only, so an **orphan Capability is never reported**~~ — **done (DETECT)** | "in greenfield that direction is rare… in brownfield it is the dominant direction of error" — a feature in production no requirement justifies is exactly what an adoption exercise is for. Now `unmotivated_capability`; see the note below on why HEAL was deliberately left alone | M |
-| No duplicate detection | did not fire on a textbook duplicate; "duplicate implementations are *the* characteristic brownfield defect" | M |
+| ~~No duplicate detection~~ — **done** | did not fire on a textbook duplicate; "duplicate implementations are *the* characteristic brownfield defect". Now `possible_duplicate`, computed from shared allocation sets and **asked** rather than repaired — see below | M |
 | ~~`concept_without_design` severity ordering~~ — **done** | above. Fixed by banding the sort rather than touching the detectors: a gap that names nodes outranks a project-level phase nudge, severity within each band | S |
 | ~~Provenance has nowhere to go~~ — **done** | ophyd smuggled `[EXTERNAL — …]` into statement text, "which is not queryable" | S |
 

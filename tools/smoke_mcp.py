@@ -339,6 +339,46 @@ def run(binary: str, graph_path: str) -> int:
                                   default=0.0),
          [(g["gap_source"], round(g["severity"], 2)) for g in gaps])
 
+    # BL-27: real duplicate detection. cmp:physics and cmp:ui below are given an
+    # identical capability set, which is 3dtictactoe's shape — two components
+    # each holding the same three capabilities, one of them dead code, where
+    # detect_defects returned 8 defects and none was `duplicate`. HEAL's rule
+    # reads a DUPLICATES edge somebody already drew, so it computes nothing.
+    # This is asked rather than repaired: apply_heal's merge deletes a node, and
+    # a heuristic must not drive that.
+    s.call("add_capability", {"id": "cap:dup-a", "name": "Grid state",
+                              "description": "Holds the grid."})
+    s.call("add_capability", {"id": "cap:dup-b", "name": "Victory check",
+                              "description": "Spots a win."})
+    s.call("add_component", {"id": "cmp:board", "name": "Board",
+                             "description": "First attempt, never instantiated."})
+    s.call("add_component", {"id": "cmp:engine", "name": "GameState",
+                             "description": "The one that shipped."})
+    for cap in ("cap:dup-a", "cap:dup-b"):
+        s.call("satisfies", {"from_id": cap, "to_id": "req:physics"})
+        for cmp_id in ("cmp:board", "cmp:engine"):
+            s.call("allocate", {"from_id": cap, "to_id": cmp_id})
+
+    dup_gaps = [g for g in s.call("detect_gaps")
+                if g["gap_source"] == "possible_duplicate"]
+    c.ok("two components with the same capabilities are reported (BL-27)",
+         len(dup_gaps) == 1, [g["title"] for g in dup_gaps])
+    c.ok("and it names both, so the user can answer it",
+         dup_gaps and dup_gaps[0]["affected_ids"] == ["cmp:board", "cmp:engine"],
+         dup_gaps[0]["affected_ids"] if dup_gaps else None)
+    c.ok("and shows the overlap it measured, not just a verdict",
+         dup_gaps and "2 of 2" in dup_gaps[0]["evidence"],
+         dup_gaps[0]["evidence"] if dup_gaps else None)
+    # It stays a question: HEAL must not have turned it into an applicable merge.
+    merge_ops = [o for o in s.call("propose_heal", {"strategy": "balanced"})["operations"]
+                 if o["op"].get("type") == "merge" or "Merge" in str(o["op"])]
+    c.ok("a suspected duplicate never becomes an applicable merge",
+         not any("cmp:board" in str(o) or "cmp:engine" in str(o) for o in merge_ops),
+         merge_ops)
+
+    gaps = s.call("detect_gaps")
+    sources = [g["gap_source"] for g in gaps]
+
     # BL-27: a gap that names nodes describes something wrong NOW; a phase
     # nudge describes what comes next. Never rank "next" above "broken" — an
     # agent works this list top-down, and three brownfield trials watched it do

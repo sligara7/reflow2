@@ -37,6 +37,8 @@
 //! matryoshka (`Component.level`), SME considerations (LLM), and the whole
 //! PROMPT rephrase/anchor layer (beyond `to_prompt`).
 
+use std::collections::{BTreeMap, BTreeSet};
+
 use dynograph_core::DynoError;
 
 use crate::dimensions::DriftDirection;
@@ -73,6 +75,17 @@ pub enum GapSource {
     /// missing requirement or dead code. Both are worth a question, and finding
     /// them is much of what an adoption exercise is *for*.
     UnmotivatedCapability,
+    /// Two Components carry the same set of Capabilities — probably two
+    /// implementations of one thing.
+    ///
+    /// Asked rather than repaired, and the distinction is load-bearing. HEAL's
+    /// `duplicate` fires on a `DUPLICATES` edge, which is a human's assertion,
+    /// and merge is safe *because* the endpoints were asserted. This is a
+    /// heuristic over allocation sets, and merging on a heuristic would delete a
+    /// component the machine merely suspects. So it asks — and if the user
+    /// confirms by drawing the `DUPLICATES` edge, HEAL's existing merge takes it
+    /// from there.
+    PossibleDuplicate,
     /// A Capability is not `ALLOCATED_TO` any Component.
     UnallocatedCapability,
     /// A Capability has no `Artifact` `REALIZES`-ing it.
@@ -145,6 +158,7 @@ impl GapSource {
             GapSource::NoDeployOperate => "no_deploy_operate",
             GapSource::UnsatisfiedRequirement => "unsatisfied_requirement",
             GapSource::UnmotivatedCapability => "unmotivated_capability",
+            GapSource::PossibleDuplicate => "possible_duplicate",
             GapSource::UnallocatedCapability => "unallocated_capability",
             GapSource::UnrealizedCapability => "unrealized_capability",
             // Load-bearing: this string is hashed into the gap id, which keys
@@ -744,6 +758,7 @@ impl DesignGraph {
         self.detect_phase_coverage(&pop, &mut gaps);
         self.detect_unsatisfied_requirements(&pop, &mut gaps)?;
         self.detect_unmotivated_capabilities(&pop, &mut gaps)?;
+        self.detect_possible_duplicates(&pop, &mut gaps)?;
         self.detect_unallocated_capabilities(&pop, &mut gaps)?;
         self.detect_unrealized_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
@@ -968,6 +983,152 @@ impl DesignGraph {
                         cap.node_id,
                         if inferred { "inferred" } else { "authored" },
                         pop.requirements
+                    ),
+                });
+            }
+        }
+        Ok(())
+    }
+
+    /// Two Components allocated the same (or nearly the same) Capabilities.
+    ///
+    /// # Why this is computed here and not in HEAL
+    ///
+    /// HEAL already has a `duplicate` category, and it fires on a `DUPLICATES`
+    /// edge — which means it reports a conclusion somebody already reached and
+    /// recorded. It computes nothing, so it cannot fire on a duplicate nobody
+    /// has found yet, which is every duplicate an adoption pass exists to
+    /// discover. 3dtictactoe modelled two components holding an identical set of
+    /// three capabilities, one of them dead code, and `detect_defects` returned
+    /// eight defects with no `duplicate` among them. That is
+    /// [gap-surfacing.md]'s first discipline exactly — *detectors read computed
+    /// signals, not raw edge-name filters* — the trap it says was storyflow's
+    /// biggest.
+    ///
+    /// The computed half lands in DETECT rather than HEAL for three reasons:
+    ///
+    /// 1. **Merge is only safe because the endpoints were asserted.** HEAL maps
+    ///    `duplicate` straight to an applicable [`HealOp::Merge`], which
+    ///    `apply_heal` executes — it deletes a node and re-points its edges.
+    ///    Feeding a heuristic into that path would let the machine delete a
+    ///    component it merely suspects is redundant.
+    /// 2. **A HEAL issue cannot be dismissed.** Gaps can be acknowledged and drop
+    ///    out of the open list; defects cannot. Any structural heuristic has
+    ///    false positives — two components legitimately sharing a capability set
+    ///    is a real design — and [`GapSource::UnexpectedCoupling`] is the
+    ///    cautionary tale of a detector that fired on correct architecture with
+    ///    no way to make it stop.
+    /// 3. **"Are these the same thing?" is meaning, not structure**, which is the
+    ///    division the docs draw: HEAL fills structure, gap-surfacing elicits
+    ///    meaning.
+    ///
+    /// So the two compose rather than duplicate: this asks, the user confirms by
+    /// drawing the `DUPLICATES` edge, and HEAL's existing merge — whose "endpoints
+    /// known" precondition now genuinely holds — repairs it. A pair already
+    /// joined by that edge is skipped here, so nothing is reported twice.
+    ///
+    /// # The rule, and why it is this one
+    ///
+    /// [heal-process.md] plans duplicate detection on dynograph's
+    /// `resolution: fuzzy_then_vector` — semantic similarity over names and
+    /// descriptions. That needs the `EmbeddingBackend`, a deliberate deferral, and
+    /// it would find a different population: things *described* alike. The
+    /// structural rule needs nothing deferred and finds things *wired* alike,
+    /// which is what the trial actually hit. They are complements, not rivals;
+    /// this is the deterministic half.
+    ///
+    /// Two guards against the obvious false positive. A pair must share **at
+    /// least two** capabilities, because two components both providing the one
+    /// capability they have in common is ordinary design, not redundancy; and
+    /// their sets must be at least 80% alike by Jaccard overlap, so a large
+    /// component that happens to contain a small one's whole set is not accused.
+    ///
+    /// Scoped to Components on purpose. Two Capabilities satisfying the same
+    /// Requirement is *decomposition* — the normal case, and a rule there would
+    /// fire on almost every correct design. Duplicate capabilities need the
+    /// semantic path.
+    ///
+    /// [gap-surfacing.md]: https://github.com/sligara7/reflow2/blob/main/docs/gap-surfacing.md
+    /// [heal-process.md]: https://github.com/sligara7/reflow2/blob/main/docs/heal-process.md
+    /// [`HealOp::Merge`]: crate::heal::HealOp::Merge
+    fn detect_possible_duplicates(
+        &self,
+        pop: &Population,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        /// Below this many shared capabilities, an overlap is ordinary design.
+        const MIN_SHARED: usize = 2;
+        /// Jaccard overlap below which two sets are merely related, not alike.
+        const MIN_JACCARD: f64 = 0.8;
+
+        if pop.components < 2 {
+            return Ok(());
+        }
+
+        // component id -> (display name, capabilities allocated to it). Sorted
+        // throughout so the pair walk below is deterministic. ALLOCATED_TO runs
+        // Capability -> Component, so the component is the `to` side.
+        let mut by_component: BTreeMap<String, (String, BTreeSet<String>)> = BTreeMap::new();
+        for cmp in self.scan_nodes(node::COMPONENT)? {
+            let caps: BTreeSet<String> = self
+                .incoming(&cmp.node_id, Some(edge::ALLOCATED_TO))?
+                .into_iter()
+                .map(|e| e.from_id)
+                .collect();
+            by_component.insert(cmp.node_id.clone(), (node_name(&cmp), caps));
+        }
+
+        // Pairs the user has already called duplicates belong to HEAL, which can
+        // actually repair them. Reporting them here as a question too would be
+        // the DETECT/HEAL double-count the trials have complained about.
+        let mut already_known: BTreeSet<(String, String)> = BTreeSet::new();
+        for id in by_component.keys() {
+            for e in self.outgoing(id, Some(edge::DUPLICATES))? {
+                already_known.insert(ordered_pair(&e.from_id, &e.to_id));
+            }
+            for e in self.incoming(id, Some(edge::DUPLICATES))? {
+                already_known.insert(ordered_pair(&e.from_id, &e.to_id));
+            }
+        }
+
+        let components: Vec<(&String, &(String, BTreeSet<String>))> = by_component.iter().collect();
+        for (i, (a_id, (a_name, a_caps))) in components.iter().enumerate() {
+            for (b_id, (b_name, b_caps)) in components.iter().skip(i + 1) {
+                let shared = a_caps.intersection(b_caps).count();
+                if shared < MIN_SHARED {
+                    continue;
+                }
+                let union = a_caps.union(b_caps).count();
+                #[allow(clippy::cast_precision_loss)]
+                let jaccard = shared as f64 / union as f64;
+                if jaccard < MIN_JACCARD {
+                    continue;
+                }
+                let pair = ordered_pair(a_id, b_id);
+                if already_known.contains(&pair) {
+                    continue;
+                }
+                let (keep, other) = pair;
+
+                let identical = a_caps == b_caps;
+                let affected = vec![keep.clone(), other.clone()];
+                gaps.push(GapCandidate {
+                    id: gap_id(GapSource::PossibleDuplicate, &affected),
+                    gap_source: GapSource::PossibleDuplicate,
+                    scope: GapScope::Component,
+                    // An identical set is the strong signal the trial hit; a
+                    // near-identical one is worth asking about but should not
+                    // outrank a requirement nothing satisfies.
+                    severity: if identical { 0.70 } else { 0.58 },
+                    title: format!("“{a_name}” and “{b_name}” may be the same thing"),
+                    description: format!(
+                        "“{a_name}” and “{b_name}” carry {} the same capabilities — are these two implementations of one thing, or genuinely separate?",
+                        if identical { "exactly" } else { "nearly" }
+                    ),
+                    affected_ids: affected,
+                    suggested_depth: 2,
+                    evidence: format!(
+                        "Components '{keep}' and '{other}' share {shared} of {union} allocated capabilities (Jaccard {jaccard:.2}); no DUPLICATES edge joins them."
                     ),
                 });
             }
@@ -1240,6 +1401,17 @@ impl DesignGraph {
 }
 
 /// The `name` property, falling back to the id.
+/// Order two ids so a pair has one identity regardless of which side it was
+/// found from — the gap id hashes them, so `(a, b)` and `(b, a)` must not be
+/// two different gaps about the same fact.
+fn ordered_pair(a: &str, b: &str) -> (String, String) {
+    if a <= b {
+        (a.to_string(), b.to_string())
+    } else {
+        (b.to_string(), a.to_string())
+    }
+}
+
 fn node_name(n: &dynograph_storage::StoredNode) -> String {
     n.properties
         .get("name")

@@ -54,6 +54,7 @@ Add yourself if you're new here.
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
 
 
+
 ## Blocked / waiting
 
 - _(nothing)_
@@ -62,7 +63,8 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
-- BL-27: unmotivated_capability, the direction DETECT was blind in — @ajs — 2026-07-18 — (this commit); 1 blocker left: duplicate detection
+- BL-27: possible_duplicate — all 5 adopt blockers now done; BL-29 raised — @ajs — 2026-07-19 — (this commit)
+- BL-27: unmotivated_capability, the direction DETECT was blind in — @ajs — 2026-07-18 — `d470860`
 - BL-27: 3 of 5 adopt blockers (capability status, provenance, gap ranking) — @ajs — 2026-07-18 — `83da659`, `3c157ab`
 - BL-28 typed tool params (fixes the ask half of DETECT from Claude Code) — @ajs — 2026-07-18 — `6dfdd61`
 - Self-host GENESIS trial; BL-28 raised, BL-27 widened — @ajs — 2026-07-18 — `2ea0db1` + revision
