@@ -65,8 +65,9 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
-- BL-39 done: `reflow2-mcp --import`, so a design can enter a graph without MCP — @ajs — 2026-07-19 — (this commit)
-- Phase-coverage trial (first past P2): P3 4/4, P4 1/4, P5 0/2; BL-30/31/32 raised — @ajs — 2026-07-19 — (this commit)
+- BL-39 done: `reflow2-mcp --import`, so a design can enter a graph without MCP — @ajs — 2026-07-19 — `dd7e2ac`
+- Trials: phase-coverage, erosion, coherent-erosion, self-host design; BL-30..38 raised — @ajs — 2026-07-19 — `e429039`..`f166047`
+- docs/sharpening.md: the standing method for improving reflow2 — @ajs — 2026-07-19 — `5617503`
 - BL-29: apply_heal checks the proposal; merge reports what it drops — @ajs — 2026-07-19 — `be6e18d`
 - BL-27: possible_duplicate — all 5 adopt blockers now done; BL-29 raised — @ajs — 2026-07-19 — `3410117`
 - BL-27: unmotivated_capability, the direction DETECT was blind in — @ajs — 2026-07-18 — `d470860`
