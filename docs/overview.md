@@ -41,6 +41,7 @@ the loop like this:
 
 ### 1 · Vision — *why*
 - [vision.md](vision.md) — the north star: one coherent graph, concept → operations, and the coherence loop with a worked example.
+- [partnership.md](partnership.md) — the three-party model: human, graph and LLM, each strong where another is weak — every known LLM failure mode mapped to the mechanism that checks it, and the uncovered ones named. The rule for new work: know which party a capability serves, and which checks it.
 
 ### 2 · Design — *what the graph is*
 - [three-axes.md](three-axes.md) — the X (network) / Y (decomposition) / Z (change-over-time) structure.

@@ -182,6 +182,14 @@ DECISIONS = [
      "renders viewpoints. If rendering requires extrapolation, something is missing inside "
      f"reflow2 — almost always. Decided 2026-07-19 ({SESSION}); render_views.py, BL-40.",
      ["cap:report"]),
+    ("dec:three-party-checks", "The LLM speaks, the graph remembers and counts, the human decides",
+     "Every capability is designed as a check one party places on another; none does another's job.",
+     "The parties are not interchangeable: the LLM cannot be trusted with arithmetic, memory or "
+     "its own confidence; the graph cannot judge meaning; the human cannot remember everything or "
+     "notice slow drift. The deterministic core computes, the graph carries claims and their "
+     "audit trail, questions route judgment to the human. docs/partnership.md maps each known LLM "
+     f"failure mode to its mechanism. Decided 2026-07-19 ({SESSION}).",
+     ["cap:detect", "cap:surface", "cap:change"]),
     ("dec:repo-file-embedded", "The graph lives as a repo file, embedded — not a service",
      "RocksDB directory beside the repo, exports as the durable, diffable record.",
      "The service's strongest argument (concurrency) is hypothetical while there is one writer; "

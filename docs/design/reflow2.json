@@ -394,6 +394,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:change",
       "properties": {},
+      "to_id": "dec:three-party-checks"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change",
+      "properties": {},
       "to_id": "dec:two-sided-accept"
     },
     {
@@ -413,6 +419,12 @@
       "from_id": "cap:detect",
       "properties": {},
       "to_id": "dec:passing-is-verified"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:detect",
+      "properties": {},
+      "to_id": "dec:three-party-checks"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -449,6 +461,12 @@
       "from_id": "cap:report",
       "properties": {},
       "to_id": "dec:views-are-projections"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:surface",
+      "properties": {},
+      "to_id": "dec:three-party-checks"
     },
     {
       "edge_type": "INCLUDES",
@@ -2054,6 +2072,16 @@
         "decision": "Per capability: drifting / confirmed / unexamined, with the disposition counts visible.",
         "name": "The confirmation ledger reports claim history, never judges a claim",
         "rationale": "Five design_holds claims with zero design edits is the erosion signature and the ledger makes it legible \u2014 but judging a specific claim false is semantic, and a deterministic detector would fire on every stable design with cosmetic churn (the unexpected_coupling lesson). Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); BL-35.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:three-party-checks",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Every capability is designed as a check one party places on another; none does another's job.",
+        "name": "The LLM speaks, the graph remembers and counts, the human decides",
+        "rationale": "The parties are not interchangeable: the LLM cannot be trusted with arithmetic, memory or its own confidence; the graph cannot judge meaning; the human cannot remember everything or notice slow drift. The deterministic core computes, the graph carries claims and their audit trail, questions route judgment to the human. docs/partnership.md maps each known LLM failure mode to its mechanism. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam).",
         "status": "accepted"
       }
     },
