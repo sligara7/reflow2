@@ -18,7 +18,7 @@ Each item has a stable id (**BL-n**). Claim one on the board in
 
 ## Evidence base
 
-Four independent sources, which is why several items appear on more than one list:
+Six independent sources, which is why several items appear on more than one list:
 
 - **Blind trial, 2026-07-18** — an agent with no knowledge of reflow2's source designed and
   built a weather station through the consumer kit. Its friction log is the single richest
@@ -47,12 +47,19 @@ Four independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
-| BL-28 | Every `JsonValue` tool parameter is unusable from Claude Code | 5 params across `gap_to_prompt`, `apply_heal`, `import_graph`, `create_node`, `create_edge` publish an untyped `{}` schema; Claude Code marshals the object as a string and the server rejects it. Takes out the ask half of DETECT, the apply half of HEAL, restore/migration, and all generic property-setting. Works on grok build, which is why no trial caught it. | S |
 
 ## Closed
 
 Kept as a short pointer so a stable id never dangles; the detail is in the CHANGELOG.
 
+- **BL-28 · Every `JsonValue` tool parameter was unusable from Claude Code** — done. Six params
+  (`gap_to_prompt.gap`, `apply_heal.proposal`, `import_graph.document`, `create_node.props`,
+  `create_edge.props`, `reconcile_artifacts.observed[]`) published an untyped schema, so each
+  client guessed: grok build sent an object, Claude Code sent a string, the string was rejected.
+  Now declared as JSON objects; a stringified object is still refused rather than accepted, since
+  taking both shapes would be the silent fallback rule 4 forbids. The regression guard asserts the
+  published schema (no advertised property without a type) — the behavioural layers were all green
+  while the bug was live. Detail: [trial](trials/2026-07-18-selfhost-genesis.md) §1.
 - **BL-22 · Skills are not reliably discoverable** — done. The kit installed `.grok/skills/`
   alone, the narrowest-reach of four harnesses, so a project opened in Claude Code had an
   AGENTS.md naming seven skills the agent could not load. `reflow2_init.py` now installs to
@@ -504,7 +511,7 @@ The sibling lesson, learned the same way: a capability can also be unreachable b
 not been updated in the same change (BL-1). Shipping the code is not shipping the capability.
 
 Third variant, from the [self-host genesis trial](trials/2026-07-18-selfhost-genesis.md): a
-capability can be unreachable **on one harness only**. BL-28's untyped `JsonValue` parameters work
+capability can be unreachable **on one harness only**. BL-28's untyped `JsonValue` parameters worked
 from grok build and fail from Claude Code, because a schema that declares no type leaves
 marshalling to the client and the two clients choose differently. The same shape appears on the
 response side (the array `structuredContent` bug, `delete_node`, `graph_report_markdown`). The

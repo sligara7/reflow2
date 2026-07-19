@@ -13,6 +13,30 @@ Two companion records, deliberately kept separate:
 
 This file is the third view: *what changed, and when*.
 
+## [Unreleased]
+
+### Fixed
+
+- **Every tool parameter declares a type** (BL-28). Six parameters — `gap_to_prompt.gap`,
+  `apply_heal.proposal`, `import_graph.document`, `create_node.props`, `create_edge.props` and
+  `reconcile_artifacts.observed[]` — were declared `serde_json::Value`, whose generated schema
+  says nothing about the type. A client with nothing to marshal against is free to guess, and the
+  clients guessed differently: grok build sent a JSON object, **Claude Code sent the object
+  serialized as a string**, and the string was rejected. From Claude Code that removed the ask
+  half of DETECT, the apply half of HEAL, graph restore/migration, and all property-setting on
+  generic CRUD — four of the six are named in skills the consumer kit installs.
+
+  The parameters are now declared as JSON objects, so the contract states what to send. The server
+  still rejects a stringified object rather than accepting both shapes: taking either would be the
+  silent fallback rule 4 forbids, and would hide the next client that marshals wrongly.
+
+  Found by running `/genesis` on reflow2 itself from Claude Code
+  ([trial](docs/trials/2026-07-18-selfhost-genesis.md)). Every existing layer was green throughout:
+  `tools/smoke_mcp.py` passed all six because it sends Python dicts, and the Rust integration tests
+  never cross the JSON boundary at all — the fourth and fifth instances of "a client we wrote"
+  agreeing with itself and being wrong. The guard added here asserts the *published schema* instead
+  (no advertised property without a type), which is the only layer that could have caught it.
+
 ## [0.2.0] — 2026-07-18
 
 Fourteen backlog items, all of them findings from putting reflow2 in front of people and agents

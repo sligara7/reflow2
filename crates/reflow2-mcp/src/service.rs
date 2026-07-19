@@ -24,7 +24,7 @@ use rmcp::{
 };
 use schemars::JsonSchema;
 use serde::Deserialize;
-use serde_json::{Value as JsonValue, json};
+use serde_json::{Map as JsonMap, Value as JsonValue, json};
 use tokio::sync::Mutex;
 
 use reflow2_core::temporal::ChangeRecord;
@@ -36,6 +36,14 @@ use reflow2_core::{
 };
 
 use crate::dto::{EdgeDto, NodeDto};
+
+/// A JSON object, as a tool parameter type.
+///
+/// Used wherever a parameter carries a structured value. Unlike `JsonValue`
+/// this generates `{"type": "object"}` in the published tool schema, so a
+/// client knows to send an object rather than guessing — see BL-28 and
+/// [`parse_struct_param`].
+type JsonObject = JsonMap<String, JsonValue>;
 
 /// The MCP service: one design graph behind a lock, plus the generated router.
 #[derive(Clone)]
@@ -187,12 +195,30 @@ fn parse_enum<T: serde::de::DeserializeOwned>(s: &str, what: &str) -> Result<T, 
 }
 
 /// Convert a JSON object of properties into the core's `HashMap<String, Value>`.
-fn parse_props(props: Option<JsonValue>) -> Result<HashMap<String, Value>, McpError> {
+fn parse_props(props: Option<JsonObject>) -> Result<HashMap<String, Value>, McpError> {
     match props {
-        None | Some(JsonValue::Null) => Ok(HashMap::new()),
-        Some(v) => serde_json::from_value(v)
+        None => Ok(HashMap::new()),
+        Some(map) => serde_json::from_value(JsonValue::Object(map))
             .map_err(|e| McpError::invalid_params(format!("invalid props object: {e}"), None)),
     }
+}
+
+/// Deserialize a tool parameter that carries a whole core struct back to us —
+/// a `GapCandidate`, a `HealProposal`, a `GraphExport`.
+///
+/// Taking [`JsonObject`] rather than a bare `JsonValue` is load-bearing, not
+/// tidiness (BL-28). `serde_json::Value`'s `JsonSchema` impl emits an *untyped*
+/// schema, so the published `inputSchema` told the client nothing about the
+/// parameter and each client was free to guess: grok build sent a JSON object,
+/// Claude Code sent the object serialized as a *string*, and the string was
+/// rejected here. Declaring the parameter as an object fixes the guess at the
+/// protocol layer, where it belongs. Struct-level validation stays below.
+fn parse_struct_param<T: serde::de::DeserializeOwned>(
+    value: JsonObject,
+    what: &str,
+) -> Result<T, McpError> {
+    serde_json::from_value(JsonValue::Object(value))
+        .map_err(|e| McpError::invalid_params(format!("invalid {what}: {e}"), None))
 }
 
 // ---- request shapes ---------------------------------------------------------
@@ -284,7 +310,7 @@ pub struct CreateNodeReq {
     pub id: String,
     /// Property object; validated against the schema.
     #[serde(default)]
-    pub props: Option<JsonValue>,
+    pub props: Option<JsonObject>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -295,7 +321,7 @@ pub struct CreateEdgeReq {
     pub to_type: String,
     pub to_id: String,
     #[serde(default)]
-    pub props: Option<JsonValue>,
+    pub props: Option<JsonObject>,
 }
 
 /// All fields optional: no args dumps the whole vocabulary, `node_type` focuses
@@ -518,7 +544,7 @@ pub struct ProposeHealReq {
 pub struct ReconcileArtifactsReq {
     /// What you observed, one entry per artifact you checked:
     /// `{ "artifact_id", "present": bool, "checksum": "<hash>"? }`.
-    pub observed: Vec<JsonValue>,
+    pub observed: Vec<JsonObject>,
     /// Record a `DriftEvent` per divergence (default false — looking is not writing).
     #[serde(default)]
     pub record_events: bool,
@@ -541,7 +567,7 @@ pub struct SetChecksumReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 pub struct ApplyHealReq {
     /// A `HealProposal` previously returned by `propose_heal`.
-    pub proposal: JsonValue,
+    pub proposal: JsonObject,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -600,7 +626,7 @@ pub struct AgentAnswerReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 pub struct ImportGraphReq {
     /// A document previously returned by `export_graph`.
-    pub document: JsonValue,
+    pub document: JsonObject,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -619,7 +645,7 @@ pub struct WithdrawQuestionReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 pub struct GapToPromptReq {
     /// A `GapCandidate` previously returned by `detect_gaps`.
-    pub gap: JsonValue,
+    pub gap: JsonObject,
     /// Answers to a prior `needs_llm` round. Empty on the first (prepare) call.
     #[serde(default)]
     pub answers: Vec<AgentAnswerReq>,
@@ -1254,8 +1280,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ImportGraphReq>,
     ) -> Result<CallToolResult, McpError> {
-        let doc: reflow2_core::GraphExport = serde_json::from_value(req.document)
-            .map_err(|e| McpError::invalid_params(format!("not a reflow2 export: {e}"), None))?;
+        let doc: reflow2_core::GraphExport = parse_struct_param(req.document, "reflow2 export")?;
         let mut g = self.graph.lock().await;
         ok_json(g.import_graph(&doc).map_err(dyno_err)?)
     }
@@ -1322,8 +1347,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ApplyHealReq>,
     ) -> Result<CallToolResult, McpError> {
-        let proposal: HealProposal = serde_json::from_value(req.proposal)
-            .map_err(|e| McpError::invalid_params(format!("invalid HealProposal: {e}"), None))?;
+        let proposal: HealProposal = parse_struct_param(req.proposal, "HealProposal")?;
         let mut g = self.graph.lock().await;
         ok_json(g.apply_heal(&proposal).map_err(dyno_err)?)
     }
@@ -1345,7 +1369,7 @@ impl ReflowService {
         let observed: Vec<ObservedArtifact> = req
             .observed
             .into_iter()
-            .map(serde_json::from_value)
+            .map(|o| serde_json::from_value(JsonValue::Object(o)))
             .collect::<Result<_, _>>()
             .map_err(|e| McpError::invalid_params(format!("invalid observation: {e}"), None))?;
         let opts = ReconcileOptions {
@@ -1501,8 +1525,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<GapToPromptReq>,
     ) -> Result<CallToolResult, McpError> {
-        let gap: GapCandidate = serde_json::from_value(req.gap)
-            .map_err(|e| McpError::invalid_params(format!("invalid GapCandidate: {e}"), None))?;
+        let gap: GapCandidate = parse_struct_param(req.gap, "GapCandidate")?;
 
         if req.answers.is_empty() {
             // Prepare pass: harvest the prompt the op would issue.

@@ -152,6 +152,37 @@ def run(binary: str, graph_path: str) -> int:
         list(schema.get("properties", {})),
     )
 
+    # BL-28. Every advertised parameter must declare a type.
+    #
+    # This asserts the *schema*, not behaviour through a client, and that
+    # distinction is the whole point. Five parameters were declared
+    # `serde_json::Value`, whose generated schema says nothing about the type;
+    # a client with nothing to marshal against is free to guess, and the
+    # clients disagreed — grok build sent a JSON object, Claude Code sent the
+    # object as a string, and the string was rejected. Every call below in this
+    # file passed a Python dict and stayed green throughout, because this file
+    # is also a client we wrote. Only the published contract catches it.
+    def untyped(sub) -> bool:
+        if not isinstance(sub, dict):
+            return False
+        return "type" not in sub and not any(
+            k in sub for k in ("$ref", "anyOf", "oneOf", "allOf", "enum", "const")
+        )
+
+    untyped_params = []
+    for t in tools:
+        for pname, pschema in (t["inputSchema"].get("properties") or {}).items():
+            if untyped(pschema):
+                untyped_params.append(f"{t['name']}.{pname}")
+            # An array of untyped items has the same defect one level down.
+            if isinstance(pschema, dict) and untyped(pschema.get("items")):
+                untyped_params.append(f"{t['name']}.{pname}[]")
+    c.ok(
+        "every advertised tool parameter declares a type (BL-28)",
+        not untyped_params,
+        untyped_params,
+    )
+
     # The vocabulary must be discoverable before anything is written, because a
     # blind trial that could not see it brute-forced fourteen edge types and then
     # used the one that happened to validate. Checked here rather than only in
@@ -289,6 +320,20 @@ def run(binary: str, graph_path: str) -> int:
     retired = [r for r in s.call("reviewed_gaps") if r.get("retired")]
     c.ok("an acknowledgement outliving its detector is still reported",
          len(retired) == 1 and "gap" not in retired[0], retired)
+
+    # BL-28: the fix is a typed schema, NOT a server that accepts both shapes.
+    # A stringified object must still be rejected — accepting it would be the
+    # silent fallback AGENTS.md rule 4 forbids, and would hide the next client
+    # that marshals wrongly.
+    stringly = s.rpc("tools/call", {
+        "name": "gap_to_prompt",
+        "arguments": {"gap": json.dumps(ack_gap), "answers": []},
+    })
+    c.ok(
+        "a stringified object is still rejected, not silently accepted (BL-28)",
+        "error" in stringly or stringly.get("result", {}).get("isError"),
+        stringly,
+    )
 
     # Put a question on the record so the restart below can prove it survives.
     asked_wording = "Is this coupling deliberate?"

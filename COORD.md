@@ -61,6 +61,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-28 typed tool params (fixes the ask half of DETECT from Claude Code) — @ajs — 2026-07-18 — (this commit)
 - Self-host GENESIS trial; BL-28 raised, BL-27 widened — @ajs — 2026-07-18 — `2ea0db1` + revision
 - Brownfield trial on 3dtictactoe; BL-27 raised from it and ophyd — @ajs — 2026-07-18 — `84aacb6`
 - Self-host: consumer kit installed into reflow2 itself — @ajs — 2026-07-18 — `98baf40`

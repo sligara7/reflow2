@@ -86,6 +86,16 @@ assert no advertised `inputSchema` property lacks a type — and it needs writin
 
 Filed as **BL-28**, widened from `gap_to_prompt` alone to the whole class.
 
+**Fixed the same session.** The six parameters (the five above plus
+`reconcile_artifacts.observed[]`, an untyped *array item* the first scan missed because it only
+checked top-level properties) are now declared as JSON objects. A stringified object is still
+rejected — accepting both shapes would be the silent fallback rule 4 forbids, and would hide the
+next client that marshals wrongly. The guard added to `tools/smoke_mcp.py` asserts the published
+schema rather than behaviour through a client, and was confirmed to fail when the bug is
+reintroduced. Two behavioural layers stayed green throughout the bug's life: the smoke test sends
+Python dicts, and the Rust integration tests call the handlers as Rust fns and never cross the JSON
+boundary at all.
+
 ## 2. CONFIRMS ophyd finding 14 — HEAL contradicts GENESIS, now at 18 nodes
 
 Seven of the 14 defects are `Capability 'X' is not allocated to any component`, one per seeded

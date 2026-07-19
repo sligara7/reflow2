@@ -34,6 +34,16 @@ macro_rules! jl {
     }};
 }
 
+/// A tool result as the JSON *object* a struct-carrying parameter now takes.
+///
+/// These tests call the handlers as Rust fns, so they never cross the JSON
+/// boundary where BL-28 lived — which is exactly why they stayed green while
+/// the published schema was unusable. `tools/smoke_mcp.py` asserts the schema
+/// itself; this helper only keeps the round trips compiling.
+fn obj(v: &serde_json::Value) -> serde_json::Map<String, serde_json::Value> {
+    v.as_object().expect("expected a JSON object").clone()
+}
+
 async fn seeded() -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_project(Parameters(IdName {
@@ -116,7 +126,7 @@ async fn heal_propose_then_apply_round_trips() {
 
     // Feed the proposal straight back to apply_heal.
     let report = j!(s.apply_heal(Parameters(ApplyHealReq {
-        proposal: proposal.clone()
+        proposal: obj(&proposal)
     })));
     assert!(report["applied"].is_boolean());
     assert!(report["blocked_by_mode"].is_boolean());
@@ -270,7 +280,7 @@ async fn gap_to_prompt_collect_then_serve() {
 
     // Prepare pass: no answers → needs_llm + prompts.
     let prep = j!(s.gap_to_prompt(Parameters(GapToPromptReq {
-        gap: gap.clone(),
+        gap: obj(&gap),
         answers: vec![],
         asked_at: None,
     })));
@@ -281,7 +291,7 @@ async fn gap_to_prompt_collect_then_serve() {
 
     // Serve pass: supply the agent's answer, get the finished question.
     let served = j!(s.gap_to_prompt(Parameters(GapToPromptReq {
-        gap,
+        gap: obj(&gap),
         answers: vec![AgentAnswerReq {
             id: prompt_id,
             text: "Which component owns ball flight?".into()
@@ -390,9 +400,9 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
 
     // Unchanged: no drift.
     let clean = j!(s.reconcile_artifacts(Parameters(ReconcileArtifactsReq {
-        observed: vec![serde_json::json!({
+        observed: vec![obj(&serde_json::json!({
             "artifact_id": "art:flight", "present": true, "checksum": "sha256:v1"
-        })],
+        }))],
         record_events: false,
         exhaustive: false,
         detected_at: None,
@@ -402,9 +412,9 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
 
     // The agent edits the file; now the hash differs.
     let drifted = j!(s.reconcile_artifacts(Parameters(ReconcileArtifactsReq {
-        observed: vec![serde_json::json!({
+        observed: vec![obj(&serde_json::json!({
             "artifact_id": "art:flight", "present": true, "checksum": "sha256:v2"
-        })],
+        }))],
         record_events: true,
         exhaustive: false,
         detected_at: Some("2026-07-18T00:00:00Z".into()),
@@ -438,9 +448,9 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
         checksum: "sha256:v2".into(),
     })));
     let after = j!(s.reconcile_artifacts(Parameters(ReconcileArtifactsReq {
-        observed: vec![serde_json::json!({
+        observed: vec![obj(&serde_json::json!({
             "artifact_id": "art:flight", "present": true, "checksum": "sha256:v2"
-        })],
+        }))],
         record_events: false,
         exhaustive: false,
         detected_at: None,
@@ -878,13 +888,13 @@ async fn asking_a_gap_records_the_question_it_asked() {
     assert!(jl!(s.open_questions()).as_array().unwrap().is_empty());
 
     let prep = j!(s.gap_to_prompt(Parameters(GapToPromptReq {
-        gap: gap.clone(),
+        gap: obj(&gap),
         answers: vec![],
         asked_at: None,
     })));
     let pid = prep["prompts"][0]["id"].as_str().unwrap().to_string();
     let served = j!(s.gap_to_prompt(Parameters(GapToPromptReq {
-        gap,
+        gap: obj(&gap),
         answers: vec![AgentAnswerReq {
             id: pid,
             text: "Which part should own this?".into()
@@ -964,7 +974,7 @@ async fn a_design_round_trips_through_export_and_import() {
     // A fresh graph, loaded from the document, holds the same design.
     let fresh = ReflowService::in_memory().expect("in-memory service");
     let report = j!(fresh.import_graph(Parameters(ImportGraphReq {
-        document: doc.clone(),
+        document: obj(&doc),
     })));
     assert_eq!(
         report["nodes_written"].as_u64().unwrap(),
@@ -994,7 +1004,7 @@ async fn importing_something_that_is_not_an_export_fails_loud() {
     let s = ReflowService::in_memory().expect("in-memory service");
     assert!(
         s.import_graph(Parameters(ImportGraphReq {
-            document: serde_json::json!({"nodes": "not a list"}),
+            document: obj(&serde_json::json!({"nodes": "not a list"})),
         }))
         .await
         .is_err(),
