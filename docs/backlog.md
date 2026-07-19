@@ -71,6 +71,7 @@ Nine independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
+| **BL-37** | **reflow2 cannot model a *process* — `Flow` has no write side, and edge roles are lost** | Found by modelling reflow2's own coherence loop in reflow2. The one type meant for an ordered process cannot be created; forward and backward edges are indistinguishable | M |
 | **BL-35** | **A design claim has no last-confirmed date, so "coherent" and "nobody looked" are indistinguishable** | The deepest of the phase items — an eroded graph and a genuinely coherent one both report quiet. Axis Z already holds the data | M |
 | **BL-36** | **`precedes` is unreachable, so the epoch chain cannot be drawn** | Recurring lesson, tenth instance — on the axis that exists to make history legible | S |
 | **BL-33** | **Accepting drift is one-sided, and the drift record overwrites itself** | *The* erosion mechanism: N legitimate fixes and the design is fiction while reporting zero gaps. Load-bearing — it is the step that runs N times | M |
@@ -79,6 +80,26 @@ Nine independent sources, which is why several items appear on more than one lis
 | **BL-31** | **A `status` field is a claim nothing checks** | `status: verified` with nothing verifying, `status: met` with nothing satisfying — the graph never contradicts itself | S |
 | **BL-32** | **A running MCP server silently serves a stale surface** | Rebuild mid-session and the old tool surface keeps answering, with no indication. `smoke_mcp.py` cannot catch it by construction | S |
 | **BL-29** | **`apply_heal` trusts the proposal; merge loses data silently** | Mostly **done** — three of seven fixed; three remain, one deliberately deferred. See below | M |
+
+**BL-37 · reflow2 cannot model a process** — *modelling the coherence loop itself, 2026-07-19
+(`tools/model_the_loop.py`, exported to [loop-model.json](loop-model.json), drawn in
+[loop-dag.html](loop-dag.html)).*
+
+Distinct from the self-host trials, which modelled reflow2's **product** — it has a detect
+capability, a component per module. This modelled reflow2's **process**: the DAG of how the phases
+feed each other, including the backward edges where the build teaches the design what it is. Its own
+operating model is a design, and *design anything* is the claim. Four things got in the way, all
+verified by attempting it:
+
+| Friction | Detail |
+|---|---|
+| **`Flow` has no write side** | Fully specified in `functional.yaml` — `flow_type: process/control_flow/decision_flow`, `entry_point`, `exit_point`, with `PART_OF_FLOW` running Capability → Flow — and there is no constructor in core and no MCP tool. `node::FLOW` appears only in `report.rs` (counted) and edge classification. **The one type meant for "an ordered process that links Capabilities end to end" cannot be created**, and this model is its exact use case. Recurring lesson, eleventh instance |
+| **Edge roles are lost** | Forward *feeds* and backward *forces a resync* both had to become `TRIGGERS`, declared `* → *` with no role property. The backward edges are the entire subject of the model and the graph cannot tell them from the forward ones. `PART_OF_FLOW` would not fix this either — it carries membership, not order or direction of influence |
+| **Cycles are invisible** | The loops are the point, and `circular_dependency` does not fire: it walks `DEPENDS_ON` and contracts, not `TRIGGERS`. A process model's cycles are its most important feature and nothing reads them. Note the tension — in a *product* a cycle is a defect, in a *process* it is the design, so this is not simply "add TRIGGERS to the walk" |
+| **The diagnostics are product-shaped** | `concept_without_design` fired on zero Components. A process has no Components, so the phase detectors assume the subject is a product. Execution evidence for [BL-16](#bigger-threads), which asks whether "design anything" survives contact with a non-software domain — here it does not survive contact with a non-*product* one |
+
+Size **M**: a `Flow` constructor and tool are **S**, but edge roles and process-aware diagnostics are
+the real content, and the cycle question needs a decision before code.
 
 **BL-35 · A design claim has no last-confirmed date** — *[coherent-erosion
 trial](trials/2026-07-19-coherent-erosion.md), 2026-07-19. The deepest of the phase-coherence items.*
@@ -773,13 +794,14 @@ Not gaps — decisions, recorded so they aren't rediscovered as bugs.
 
 ## Recurring lesson
 
-A capability exists in core and is unreachable or unadvertised on the surface. Ten instances so
+A capability exists in core and is unreachable or unadvertised on the surface. Eleven instances so
 far: `Interface`, HEAL's skill, the `Verification`/operate write side, `contain_component`,
 `graph_id`, `Requirement.status`, `graph_report` as an answer to "where am I", the whole
 `TemporalFact` / `ABOUT_ENTITY` / `VALID_FROM` / `VALID_TO` layer (schema-complete, zero Rust
 API), `DOCUMENTS` (declared, named in `nodes.rs`, no constructor and no tool — BL-26), and `precedes`
 (implemented in `temporal.rs`, no tool, so the epoch chain axis Z exists to record cannot be drawn by
-any client — BL-36).
+any client — BL-36), and `Flow` (fully specified with its own edge `PART_OF_FLOW`, no constructor,
+no tool — so no process can be modelled at all, BL-37).
 
 Before building something new, the higher-yield question is usually: **what does the core
 already do that nothing can reach?**

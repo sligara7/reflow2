@@ -33,7 +33,8 @@ the loop like this:
 | **GENESIS** — bootstrap the graph from a brief | seeds the first CHANGE | [genesis.md](genesis.md) | detailed (thin core op + skill; SP-5) |
 | **INGEST** — extract content/edits into the graph | CHANGE | [extraction-plan.md](extraction-plan.md), [artifact-linking.md](artifact-linking.md), [sme-augmentation.md](sme-augmentation.md) | detailed |
 | *(reflow2 addition)* — ripple along the golden thread | PROPAGATE | [impact-propagation.md](impact-propagation.md) | detailed |
-| **DIAGNOSE → PROMPT** — find weaknesses, ask the user | DETECT + SURFACE | [gap-surfacing.md](gap-surfacing.md) | detailed |
+| **DIAGNOSE → PROMPT** — find weaknesses, ask the user | DETECT + SURFACE | [loop-dag.html](loop-dag.html) | The coherence loop drawn as a DAG — the six phases, the backward feedback edges, and what reflow2 can do about each. Generated alongside [loop-model.json](loop-model.json) by `tools/model_the_loop.py` |
+| [gap-surfacing.md](gap-surfacing.md) | detailed |
 | **HEAL** — detect & repair structural defects | RESOLVE/HEAL | [heal-process.md](heal-process.md) | detailed |
 | **SYNTHESIZE** — graph → artifacts (docs, diagrams, as-built) | reporting side-output | — | first artifact built: the graph report (`report` module; see [graph-analysis.md](graph-analysis.md)) |
 

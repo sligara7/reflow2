@@ -1,0 +1,314 @@
+{
+  "edges": [
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:p0-intent",
+      "properties": {},
+      "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:p1-function",
+      "properties": {},
+      "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:p2-structure",
+      "properties": {},
+      "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:p3-realize",
+      "properties": {},
+      "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:p4-verify",
+      "properties": {},
+      "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:p5-operate",
+      "properties": {},
+      "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:reconcile",
+      "properties": {},
+      "to_id": "req:coherence-is-measurable"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:z-change",
+      "properties": {},
+      "to_id": "req:intent-preserved"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p0-intent",
+      "properties": {},
+      "to_id": "cap:p1-function"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p0-intent",
+      "properties": {},
+      "to_id": "cap:z-change"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p1-function",
+      "properties": {},
+      "to_id": "cap:p2-structure"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p1-function",
+      "properties": {},
+      "to_id": "cap:z-change"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p2-structure",
+      "properties": {},
+      "to_id": "cap:p3-realize"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p2-structure",
+      "properties": {},
+      "to_id": "cap:z-change"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p3-realize",
+      "properties": {},
+      "to_id": "cap:p1-function"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p3-realize",
+      "properties": {},
+      "to_id": "cap:p2-structure"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p3-realize",
+      "properties": {},
+      "to_id": "cap:p4-verify"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p3-realize",
+      "properties": {},
+      "to_id": "cap:z-change"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p4-verify",
+      "properties": {},
+      "to_id": "cap:p3-realize"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p4-verify",
+      "properties": {},
+      "to_id": "cap:p5-operate"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p4-verify",
+      "properties": {},
+      "to_id": "cap:z-change"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p5-operate",
+      "properties": {},
+      "to_id": "cap:p0-intent"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:p5-operate",
+      "properties": {},
+      "to_id": "cap:z-change"
+    }
+  ],
+  "graph_id": "reflow2",
+  "nodes": [
+    {
+      "node_id": "cap:p0-intent",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Turn what the user wants into Requirements.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "P0 \u00b7 Capture intent",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:p1-function",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Turn intent into Capabilities \u2014 the WHAT.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "P1 \u00b7 Decompose function",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:p2-structure",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Assign Capabilities to Components \u2014 the WHERE.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "P2 \u00b7 Allocate to structure",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:p3-realize",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Build Artifacts that deliver the Capabilities.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "P3 \u00b7 Realize",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:p4-verify",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Prove the Capabilities actually work.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "P4 \u00b7 Verify",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:p5-operate",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Ship it, run it, learn from it.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "P5 \u00b7 Release and operate",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:reconcile",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Compare what the design claims against what is actually built, tested and deployed.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Reconcile against reality",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:z-change",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Snapshot the prior state at an epoch, then edit. The past is kept, so the design may follow the build without losing intent.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Z \u00b7 Record the change",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "epoch:genesis",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "baseline",
+        "name": "Genesis",
+        "sequence": 0
+      }
+    },
+    {
+      "node_id": "proj:loop",
+      "node_type": "Project",
+      "properties": {
+        "domain": "process",
+        "mode": "flexible",
+        "name": "The reflow2 coherence loop",
+        "objective": "Keep every phase in agreement with what was released",
+        "status": "active"
+      }
+    },
+    {
+      "node_id": "req:coherence-is-measurable",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Coherence is measurable",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A design that matches reality must be distinguishable from one nobody checked.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:intent-preserved",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Original intent is never lost",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Updating the design to match the build must not erase what was first intended.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:released-eq-designed",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Released equals designed",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "At release, the design must describe what was actually released.",
+        "status": "proposed"
+      }
+    }
+  ],
+  "stamp": {
+    "edge_types": 53,
+    "node_types": 27,
+    "reflow2_version": "0.2.0",
+    "schema_version": 1
+  }
+}

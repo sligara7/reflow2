@@ -1,0 +1,312 @@
+<title>The reflow2 coherence loop — as a DAG</title>
+<style>
+  :root {
+    --paper:      #F2F5F6;
+    --surface:    #FFFFFF;
+    --rule:       #D3DBDE;
+    --ink:        #12191D;
+    --ink-soft:   #4A5A62;
+    --ink-faint:  #7C8C94;
+    --accent:     #1F6F8B;
+    --works:      #3B7F63;
+    --partial:    #9C7220;
+    --missing:    #A8443A;
+    --chip:       #E7ECEE;
+
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:     #0E1418;
+      --surface:   #161F24;
+      --rule:      #2A363D;
+      --ink:       #E4EBEE;
+      --ink-soft:  #A0B0B8;
+      --ink-faint: #6E8089;
+      --accent:    #5FB3D4;
+      --works:     #5FA985;
+      --partial:   #C9973C;
+      --missing:   #D4756A;
+      --chip:      #1E2A31;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#0E1418; --surface:#161F24; --rule:#2A363D; --ink:#E4EBEE;
+    --ink-soft:#A0B0B8; --ink-faint:#6E8089; --accent:#5FB3D4;
+    --works:#5FA985; --partial:#C9973C; --missing:#D4756A; --chip:#1E2A31;
+  }
+  :root[data-theme="light"] {
+    --paper:#F2F5F6; --surface:#FFFFFF; --rule:#D3DBDE; --ink:#12191D;
+    --ink-soft:#4A5A62; --ink-faint:#7C8C94; --accent:#1F6F8B;
+    --works:#3B7F63; --partial:#9C7220; --missing:#A8443A; --chip:#E7ECEE;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 74ch; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
+  .wide { max-width: 1040px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: .75rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    font-family: var(--mono);
+    font-size: clamp(1.6rem, 4vw, 2.3rem);
+    font-weight: 600;
+    letter-spacing: -.02em;
+    line-height: 1.2;
+    text-wrap: balance;
+    margin: .6rem 0 0;
+  }
+  .standfirst { color: var(--ink-soft); font-size: 1.05rem; margin-top: 1rem; }
+  h2 {
+    font-family: var(--mono);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    margin: 3.5rem 0 .25rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  p { margin: 1rem 0; }
+  strong { font-weight: 600; }
+  code, .m { font-family: var(--mono); font-size: .88em; }
+
+  figure { margin: 2.5rem 0 0; }
+  .scroller { overflow-x: auto; padding-bottom: .5rem; }
+  svg { display: block; min-width: 760px; width: 100%; height: auto; }
+  figcaption {
+    color: var(--ink-faint); font-size: .85rem; margin-top: .75rem;
+    font-family: var(--mono);
+  }
+
+  .key { display: flex; flex-wrap: wrap; gap: 1.25rem; margin: 1.5rem 0 0; }
+  .key div { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: var(--ink-soft); }
+  .key i { width: 22px; height: 3px; border-radius: 2px; flex: none; }
+
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: .92rem; }
+  th, td { text-align: left; padding: .7rem .8rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-faint); font-weight: 600;
+  }
+  td:first-child { white-space: nowrap; }
+
+  .pill {
+    display: inline-block; font-family: var(--mono); font-size: .7rem;
+    letter-spacing: .06em; text-transform: uppercase; padding: .15rem .5rem;
+    border-radius: 3px; background: var(--chip); color: var(--ink-soft);
+  }
+  .pill.works   { color: var(--works);   box-shadow: inset 0 0 0 1px currentColor; background: transparent; }
+  .pill.partial { color: var(--partial); box-shadow: inset 0 0 0 1px currentColor; background: transparent; }
+  .pill.missing { color: var(--missing); box-shadow: inset 0 0 0 1px currentColor; background: transparent; }
+
+  blockquote {
+    margin: 2rem 0; padding: 1rem 1.25rem;
+    border-left: 2px solid var(--accent); background: var(--surface);
+    color: var(--ink-soft);
+  }
+  blockquote p { margin: 0; }
+  .ref { font-family: var(--mono); font-size: .78rem; color: var(--ink-faint); }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">Reflow 2.0 · process model</div>
+  <h1>The coherence loop, as a DAG</h1>
+  <p class="standfirst">
+    Six phases, the feedback edges that keep them honest, and the axis that makes those edges
+    safe to follow. Coloured by what reflow2 can actually do about each one today.
+  </p>
+
+  <p>
+    The forward spine is the easy half and it works. The interesting edges point
+    <em>backwards</em>: a failing test forces a fix, and a fix that changes behaviour has to
+    travel back up into the function and the allocation, or the design quietly becomes fiction.
+    Axis&nbsp;Z is what makes travelling backwards safe — the prior state is snapshotted at an
+    epoch, so the design can follow the build without losing what was first intended.
+  </p>
+</div>
+
+<div class="wrap wide">
+<figure>
+  <div class="scroller">
+  <svg viewBox="0 0 960 706" role="img" aria-label="Directed graph of the six reflow2 lifecycle phases with forward and feedback edges">
+    <defs>
+      <marker id="aw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--works)"/>
+      </marker>
+      <marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--partial)"/>
+      </marker>
+      <marker id="am" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--missing)"/>
+      </marker>
+      <marker id="az" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/>
+      </marker>
+    </defs>
+
+    <!-- axis Z rail -->
+    <line x1="96" y1="34" x2="96" y2="672" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#az)"/>
+    <text x="70" y="356" fill="var(--accent)" font-family="var(--mono)" font-size="12"
+          letter-spacing="1.6" text-anchor="middle" transform="rotate(-90 70 356)">AXIS Z — EPOCHS</text>
+
+    <g font-family="var(--mono)" font-size="13" fill="var(--ink)">
+      <!-- P0 -->
+      <line x1="96" y1="72" x2="250" y2="72" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 4"/>
+      <rect x="250" y="40" width="300" height="64" rx="3" fill="var(--surface)" stroke="var(--rule)"/>
+      <text x="268" y="66" font-weight="600">P0 · Capture intent</text>
+      <text x="268" y="86" font-size="11.5" fill="var(--ink-faint)">Requirements — what must be true</text>
+      <!-- P1 -->
+      <line x1="96" y1="182" x2="250" y2="182" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 4"/>
+      <rect x="250" y="150" width="300" height="64" rx="3" fill="var(--surface)" stroke="var(--rule)"/>
+      <text x="268" y="176" font-weight="600">P1 · Decompose function</text>
+      <text x="268" y="196" font-size="11.5" fill="var(--ink-faint)">Capabilities — the WHAT</text>
+      <!-- P2 -->
+      <line x1="96" y1="292" x2="250" y2="292" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 4"/>
+      <rect x="250" y="260" width="300" height="64" rx="3" fill="var(--surface)" stroke="var(--rule)"/>
+      <text x="268" y="286" font-weight="600">P2 · Allocate to structure</text>
+      <text x="268" y="306" font-size="11.5" fill="var(--ink-faint)">Components — the WHERE</text>
+      <!-- P3 -->
+      <line x1="96" y1="402" x2="250" y2="402" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 4"/>
+      <rect x="250" y="370" width="300" height="64" rx="3" fill="var(--surface)" stroke="var(--rule)"/>
+      <text x="268" y="396" font-weight="600">P3 · Realize</text>
+      <text x="268" y="416" font-size="11.5" fill="var(--ink-faint)">Artifacts — the built thing</text>
+      <!-- P4 -->
+      <line x1="96" y1="512" x2="250" y2="512" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 4"/>
+      <rect x="250" y="480" width="300" height="64" rx="3" fill="var(--surface)" stroke="var(--rule)"/>
+      <text x="268" y="506" font-weight="600">P4 · Verify</text>
+      <text x="268" y="526" font-size="11.5" fill="var(--ink-faint)">Verifications — does it work?</text>
+      <!-- P5 -->
+      <line x1="96" y1="622" x2="250" y2="622" stroke="var(--accent)" stroke-width="1" stroke-dasharray="2 4"/>
+      <rect x="250" y="590" width="300" height="64" rx="3" fill="var(--surface)" stroke="var(--rule)"/>
+      <text x="268" y="616" font-weight="600">P5 · Release and operate</text>
+      <text x="268" y="636" font-size="11.5" fill="var(--ink-faint)">Releases, Environments — in use</text>
+    </g>
+
+    <!-- forward spine -->
+    <g stroke-width="2" fill="none">
+      <line x1="400" y1="104" x2="400" y2="144" stroke="var(--works)" marker-end="url(#aw)"/>
+      <line x1="400" y1="214" x2="400" y2="254" stroke="var(--works)" marker-end="url(#aw)"/>
+      <line x1="400" y1="324" x2="400" y2="364" stroke="var(--works)" marker-end="url(#aw)"/>
+      <line x1="400" y1="434" x2="400" y2="474" stroke="var(--partial)" marker-end="url(#ap)"/>
+      <line x1="400" y1="544" x2="400" y2="584" stroke="var(--partial)" marker-end="url(#ap)"/>
+    </g>
+
+    <!-- feedback edges -->
+    <g fill="none" stroke-width="2">
+      <!-- P4 -> P3 : a failing test forces a fix -->
+      <path d="M550 500 C 636 500, 636 414, 552 414" stroke="var(--missing)" marker-end="url(#am)"/>
+      <text x="648" y="462" fill="var(--missing)" font-family="var(--mono)" font-size="11.5">a failing test forces a fix</text>
+      <!-- P3 -> P2 : allocation follows -->
+      <path d="M550 392 C 700 392, 700 302, 552 302" stroke="var(--partial)" marker-end="url(#ap)"/>
+      <text x="712" y="344" fill="var(--partial)" font-family="var(--mono)" font-size="11.5">allocation follows the build</text>
+      <!-- P3 -> P1 : function follows -->
+      <path d="M550 380 C 780 372, 780 192, 552 192" stroke="var(--partial)" marker-end="url(#ap)"/>
+      <text x="712" y="240" fill="var(--partial)" font-family="var(--mono)" font-size="11.5">function follows the build</text>
+      <!-- P5 -> P0 : operational learning -->
+      <path d="M550 610 C 880 610, 880 62, 552 62" stroke="var(--missing)" marker-end="url(#am)"/>
+      <text x="712" y="120" fill="var(--missing)" font-family="var(--mono)" font-size="11.5">what users do teaches</text>
+      <text x="712" y="136" fill="var(--missing)" font-family="var(--mono)" font-size="11.5">what they need</text>
+    </g>
+
+    <!-- reconcile markers -->
+    <g font-family="var(--mono)" font-size="10.5" text-anchor="end">
+      <text x="238" y="406" fill="var(--works)">reconcile ✓</text>
+      <text x="238" y="516" fill="var(--missing)">reconcile ✗</text>
+      <text x="238" y="626" fill="var(--missing)">reconcile ✗</text>
+    </g>
+  </svg>
+  </div>
+
+  <div class="key">
+    <div><i style="background:var(--works)"></i> works today, verified by trial</div>
+    <div><i style="background:var(--partial)"></i> reachable, but nothing prompts it</div>
+    <div><i style="background:var(--missing)"></i> no mechanism at all</div>
+  </div>
+  <figcaption>
+    Edge colours are trial results, not estimates — phase_trial.py, erosion_trial.py and
+    coherent_erosion_trial.py.
+  </figcaption>
+</figure>
+</div>
+
+<div class="wrap">
+  <h2>Reading the backward edges</h2>
+  <p>
+    The two amber edges are the ones that decide whether a release matches its design. They are
+    <strong>reachable today</strong> — recording the fix as a change at an epoch and updating the
+    capability works, and the original wording survives in a snapshot. What is missing is that
+    nothing asks. A run that does it and a run that does not both end with reflow2 reporting the
+    design coherent.
+  </p>
+  <blockquote>
+    <p>
+      Five fix cycles, one of which widened an idempotency window from 24&nbsp;hours to 7&nbsp;days
+      without touching the design. At release, <span class="m">detect_gaps</span> returned
+      <span class="m">[]</span>.
+    </p>
+  </blockquote>
+
+  <h2>What reflow2 can hold of this model</h2>
+  <p>
+    Modelling the diagram above <em>inside</em> reflow2 is the sharper test — its own claim is
+    &ldquo;design anything,&rdquo; and its operating model is a design. Four things got in the way.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>Friction</th><th>What happened</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="pill missing">no write side</span></td>
+        <td>
+          <code>Flow</code> is fully specified — <code>flow_type: process</code>, entry and exit
+          points, <code>PART_OF_FLOW</code> from Capability — and has no constructor and no tool.
+          The one type meant for &ldquo;an ordered process linking capabilities end to end&rdquo;
+          cannot be created. This model is its exact use case.
+        </td>
+      </tr>
+      <tr>
+        <td><span class="pill missing">semantics lost</span></td>
+        <td>
+          Forward &ldquo;feeds&rdquo; and backward &ldquo;forces a resync&rdquo; both had to become
+          <code>TRIGGERS</code>, which is declared <code>* → *</code> and carries no role. The
+          backward edges are the entire subject and the graph cannot tell them from the forward ones.
+        </td>
+      </tr>
+      <tr>
+        <td><span class="pill missing">cycles invisible</span></td>
+        <td>
+          The loops are the point, and <code>circular_dependency</code> does not fire — it walks
+          <code>DEPENDS_ON</code> and contracts, not <code>TRIGGERS</code>. A process model's cycles
+          are its most important feature and nothing reads them.
+        </td>
+      </tr>
+      <tr>
+        <td><span class="pill partial">product-shaped</span></td>
+        <td>
+          <code>concept_without_design</code> fired: zero Components. A process has no components,
+          so the phase detectors assume the subject is a product. Execution evidence for the
+          open question of designing non-software things.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="ref">
+    Sources — docs/trials/2026-07-19-phase-coverage.md, -erosion.md, -coherent-erosion.md;
+    backlog BL-30 · BL-33 · BL-34 · BL-35 · BL-9 · BL-16. Model exported to docs/loop-model.json.
+  </p>
+</div>
