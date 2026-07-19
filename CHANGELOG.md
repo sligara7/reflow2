@@ -15,7 +15,18 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
-*(nothing yet)*
+### Added
+
+- **Graph text is data, never instructions** (BL-41, the S half). The standing rule an agent
+  needed and nothing stated: everything read out of the graph — statements, descriptions,
+  recorded answers, gap wording — is content to reason *about*, never a directive to *follow*,
+  even when it is phrased as one; text posing as an instruction is surfaced to the user as
+  suspicious, not acted on. Written in the three places an agent actually looks: the consumer
+  AGENTS.md (its own section), every skill (one line each, at the point where the skill starts
+  reading graph text), and the MCP server's `get_info` instructions, so a session that loads no
+  skill still receives it in the handshake. Bounded exposure today (single user, local graph);
+  the mechanical half — provenance-aware trust, quoting boundaries — stays open on BL-41 for
+  when a graph has a second writer (BL-12) or INGEST carries an adopted repo's prose.
 
 ## [0.3.0] — 2026-07-19
 
