@@ -51,6 +51,14 @@ cargo test --workspace
 # schema/*.yaml edit. Needs PyYAML; use whatever python3 has it.
 python3 tools/validate_schema.py
 
+# Phase-coverage trial — does the design still carry weight after P2? Seeds a
+# realistic graph, injects the divergences P3/P4/P5 are each supposed to catch,
+# and scores whether the graph noticed. NOT a gate yet: it exits non-zero today
+# because 5 probes are genuinely missed (BL-30, BL-9). It is the standing
+# measurement for the failure that sank the original reflow — the early phases
+# going well and the later ones proceeding as if they hadn't.
+python3 tools/phase_trial.py
+
 # End-to-end smoke test of the MCP *binary* (stdio JSON-RPC, real RocksDB graph).
 # Covers what cargo test can't: the shipped surface, tool schemas, and the JSON an
 # agent actually receives. Needs `cargo build -p reflow2-mcp` first (RocksDB, ~10 min

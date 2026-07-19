@@ -40,14 +40,78 @@ Six independent sources, which is why several items appear on more than one list
   from **Claude Code** rather than grok build. The only source for BL-28: the harness difference is
   what exposed it. Otherwise mostly a replication of findings above, and its
   [notes](trials/2026-07-18-selfhost-genesis.md) mark which is which.
+- **Phase-coverage trial, 2026-07-19** — the first trial to go past P2. reflow2's own design carried
+  through realization, verification and deploy, with divergences injected on purpose at each phase.
+  Scored **P3 4/4, P4 1/4, P5 0/2, traceability 3/3**. The only source for BL-30/31/32 and the first
+  execution evidence for BL-9. Notes: [trials/2026-07-19-phase-coverage.md](trials/2026-07-19-phase-coverage.md);
+  re-runnable via `tools/phase_trial.py`.
 - **[reflow-audit.md](reflow-audit.md)** — the original Reflow's workflows and tools, with
   adopt/obsolete verdicts.
+
+> **A bias worth naming.** Every source above except the phase-coverage trial stops at or before
+> **P2**. The blind trials, both brownfield trials and both self-host runs all end at structure and
+> allocation — so until 2026-07-19 the entire evidence base came from the phases the original reflow
+> was *already good at*, and none from the phases where it failed. Weigh accordingly when an item
+> cites "three independent trials": that usually means three independent trials *of the front half*.
 
 ## Next up
 
 | ID | Item | Why | Size |
 |---|---|---|---|
+| **BL-30** | **A failing test satisfies the check that asked for a test** | The later phases measure bookkeeping, not reality — this is reflow1's failure mode, reproduced and verified. See below | S + M |
+| **BL-31** | **A `status` field is a claim nothing checks** | `status: verified` with nothing verifying, `status: met` with nothing satisfying — the graph never contradicts itself | S |
+| **BL-32** | **A running MCP server silently serves a stale surface** | Rebuild mid-session and the old tool surface keeps answering, with no indication. `smoke_mcp.py` cannot catch it by construction | S |
 | **BL-29** | **`apply_heal` trusts the proposal; merge loses data silently** | Mostly **done** — three of seven fixed; three remain, one deliberately deferred. See below | M |
+
+**BL-30 · The later phases measure bookkeeping, not reality** — *[phase-coverage
+trial](trials/2026-07-19-phase-coverage.md), 2026-07-19. The direct answer to "how do we know
+reflow2 doesn't repeat reflow1?"*
+
+**Verified, three times, twice in isolation from the harness.** `build_without_verification` fires
+when a capability has no `Verification`. Attach one and set its status to `failing`, and the gap
+**closes**:
+
+```
+no verification at all      : ['build_without_verification', 'no_deploy_operate']
+a verification that FAILS   : ['no_deploy_operate']
+```
+
+The gap asks *"How will you confirm `<Capability>` actually works?"* — and is answered by a test
+proving it does not. The failure is invisible everywhere else too: with status written as `failing`,
+`detect_gaps`, `detect_defects` and `graph_report` are byte-identical to the `passing` case.
+
+The general form, and the reason this is the thread's most important item: **the P4/P5 detectors ask
+whether a node exists, never what it says.** A design that counts test nodes and ignores test results
+is precisely one you may as well have ignored once building started.
+
+Two pieces. **S** — a `failing`/`blocked` verification must raise its own gap and must not satisfy
+the coverage check; `verification_coverage` should count *passing* verifications. **M** —
+`reconcile_verification`, the P4 sibling of `reconcile_artifacts`: the agent supplies what the test
+run actually reported, and the graph says where that diverges from what it believed. Together with
+[BL-9](#bigger-threads)'s `reconcile_deployment` these are the missing feedback loops; the
+[trial](trials/2026-07-19-phase-coverage.md) shows the golden thread itself already works in both
+directions, so this is the whole of the gap.
+
+**BL-31 · A `status` field is a claim nothing checks** — *same trial.* `Capability.status` set to
+`verified` on a capability with no `VERIFIES` edge raises nothing. `unverified_capability` fires, but
+it fires either way — "this is unverified" is not "the design contradicts itself", and only the
+second is a coherence failure. Same for `Requirement.status = met` with nothing satisfying it, and
+`Component.status = realized` with no Artifact. Sharpened by [BL-27](#bigger-threads), which made
+these fields easy to write for the first time. A `status_contradicts_structure` detector, **S**, and
+it belongs in DETECT — the answer is either "fix the status" or "fix the structure", which is a
+question for the user.
+
+**BL-32 · A running MCP server silently serves a stale surface** — *same trial, found by nearly
+running it against the wrong binary.* Rebuild `reflow2-mcp` mid-session and the already-running
+server keeps serving the surface it started with: tools added since are absent, detectors keep the
+old behaviour, and nothing says so. Distinct from [BL-18](#bigger-threads), which compares an
+installed kit against the remote HEAD — this is process-lifetime skew and hits agents and developers
+mid-session. `tools/smoke_mcp.py` cannot catch it by construction, since it spawns a fresh binary per
+run — the fourth "a client we wrote agreed with itself" in this repo's history. Cheap fix: the server
+already stamps a `GraphStamp`; have it also report its own build identity (version + binary mtime or
+commit) on `initialize` and in `graph_report`, so a client can see what it is actually talking to.
+Size **S**.
+
 
 **BL-29 · `apply_heal` trusts the proposal, and merge loses data silently** — *found 2026-07-19
 while scoping [BL-27](#bigger-threads)'s duplicate detection; the reason `possible_duplicate` is a
@@ -576,7 +640,7 @@ back toward code. AGENTS.md then points at it. Size **S**.
 |---|---|---|---|
 | **BL-7** | **`ingest` over MCP** (SP-3b) | The multi-pass extraction pipeline is unreachable agent-native, so provenance, fuzzy dedup and time-aware resolution never run. Needs a transactional prepare pass. Closely tied to #4 and to session continuity. | L |
 | **BL-8** | **Session state / multi-project** | Select a graph per project; give agents memory across sessions. Core already supports `graph_id`; nothing exposes it. See the memory note and [reflow-audit.md](reflow-audit.md). | L |
-| **BL-9** | **As-fielded view** | Audit item 2, and it needs **no new schema** — `operate.yaml` is fully defined and now writable (WS-2). `reconcile_deployment` as a sibling of `reconcile_artifacts`. Guard against the library-plugin false positive the audit flags. | M |
+| **BL-9** | **As-fielded view** | Audit item 2, and it needs **no new schema** — `operate.yaml` is fully defined and now writable (WS-2). `reconcile_deployment` as a sibling of `reconcile_artifacts`. Guard against the library-plugin false positive the audit flags. **Now has execution evidence**: the [phase-coverage trial](trials/2026-07-19-phase-coverage.md) scored P5 **0/2** — a component in no release goes unreported and nothing can compare the design against what is deployed. Pair it with BL-30's `reconcile_verification`; they are the same missing feedback loop one phase apart. | M |
 | **BL-10** | **Root-cause classification of drift** | `drift.rs` detects divergence with no notion of *why*, so no notion of which side is wrong. Reflow's seven-category taxonomy ends in a decision rule. Needs a scalar coherence score to gate on. | M |
 | **BL-11** | **Path-cumulative budget analysis** | Three independent reflow tools reached for it. PROPAGATE walks impact but never accumulates a quantity along source→sink paths — the classic SE budget rollup (latency, mass, power, cost). | M |
 | **BL-12** | **Concurrent multi-agent / team access** | Deliberate future effort, and the trigger for revisiting the embedded/service fork — *decided 2026-07-18 as repo-file*. RocksDB is single-writer and fails loud, so agents take turns; that is only a real cost once a **second writer actually exists**, which it does not. Reach for RocksDB read-only secondaries before a service if the need turns out to be "let me look while you work". | L |
