@@ -16,9 +16,15 @@ it isn't, and are we running that?"**
 
 ## 1. What using reflow2 on itself can and cannot tell you
 
-Self-hosting looks circular, and in one specific respect it is: **if a capability is missing, its
-absence is exactly what the missing capability would have detected.** Not infinite regress — a hole
-that cannot see itself.
+The license for the whole method is one fact, best stated the way the project's author put it:
+**reflow2 is the one subject where we possess the expected value.** We know what it should do, and
+we can see what it actually does — so a mismatch is a defect, not a debate. On a user's design,
+"is this really a duplicate?" is a judgment call; here the right answer is known before the tool
+speaks. Everything else in this document is machinery around that one asymmetry.
+
+Self-hosting also looks circular, and in one specific respect it is: **if a capability is missing,
+its absence is exactly what the missing capability would have detected.** Not infinite regress — a
+hole that cannot see itself.
 
 That is not a guess. On 2026-07-19 twelve items were raised in one session. How each was actually
 found:
@@ -43,9 +49,9 @@ findings only because the code demonstrably ships and the topology is demonstrab
   to use reflow2 on reflow2 and hit a wall. A wall is observable from outside the system even when
   the blind spot is not. You cannot see your own blind spot; you can notice you keep bumping into
   the furniture.
-- **It is the only subject where we know the ground truth.** On a user's design, "is this really a
-  duplicate?" is a judgment call and a false positive is arguable. On this repo the answer is known,
-  so noise is unambiguous rather than debatable.
+- **It is the only subject where the expected value exists** — the asymmetry this section opened
+  with. Noise is unambiguous rather than debatable, so a false positive is immediately legible as a
+  defect.
 
 And one thing it is *not* for: **reflow2's silence is never evidence that reflow2 is healthy.** It can
 say what is missing. It cannot certify what is there.
@@ -135,10 +141,42 @@ There is also a standing bias to weigh. Until 2026-07-19 every trial stopped at 
 phases the original reflow was already good at — so an item citing "three independent trials" often
 means three trials of the front half. Check what a source actually exercised before leaning on it.
 
-## 6. So: is this the way?
+## 6. The cycle
 
-**Yes, as the standing regimen**, with the two constraints above. Concretely, when you change
-reflow2:
+The naive statement of the loop is: *use reflow2 on itself; we know what it should do and can see
+what it does; fix it until actual equals expected; move to the next thing.* That is the engine, and
+it is worth writing down because each of its three steps fails in a specific, observed way. The
+corrected cycle:
+
+**1. Attempt — including the things you would route around.** The naive loop assumes there is
+always an "actual" to observe. Often there is not: three of the twelve 2026-07-19 items (BL-36,
+BL-37, BL-39) were not mismatches but operations that could not be performed at all — no tool for
+`precedes`, no constructor for `Flow`, no way to import a design. Nothing to compare, and still a
+finding. **A wall produces no observation; count it anyway.** This is why scripts under-find:
+scripts route around friction, and the friction is the data.
+
+**2. Compare — knowing the expectation often forms on contact.** The naive loop reads *know
+expected → observe actual*. In practice it frequently runs *attempt → be surprised → then articulate
+what should have happened*. Nobody had written down what reflow2 should say about a failing test
+until it was watched saying nothing. "We know what it should do" is the step that quietly fails —
+you think you know, and you find the assumption only when it breaks. And sometimes the defect is
+invisible in any single run: the eroded graph and the coherent graph each returned a defensible
+`[]`; the defect *was that they matched* (BL-35), findable only by comparing two runs to each other.
+
+**3. Reconcile — deciding which side was wrong, on the record, before changing either.** "Fix
+reflow2 so actual = expected" has two solutions, and one is cheating: you can also fix the *model*
+until the tool goes quiet — §2's accommodation, which was nearly committed the first day this method
+was used. The honest form records the modelling decision and the output first, then rules on them.
+Sometimes the expectation is what was wrong; that is a finding too, and it goes in the trial record
+like any other.
+
+**4. Leave a probe behind, then move on.** The naive loop ends at "move to the next fix," and the
+evidence against that is one day old: BL-5 was fixed, measured 8 → 2 on the graph it was fixed
+against, and reopened the next day at 22 of 36 on a design with a different shape. It regressed
+silently because the measurement was taken *once*. A fix without a standing probe is an anecdote;
+the instruments in §4 exist so the next agent inherits the measurement.
+
+Concretely, when you change reflow2:
 
 1. Run the four instruments before and after. A number that moves is the claim; a number that moves
    the wrong way is the finding.
