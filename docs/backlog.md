@@ -40,6 +40,12 @@ Nine independent sources, which is why several items appear on more than one lis
   from **Claude Code** rather than grok build. The only source for BL-28: the harness difference is
   what exposed it. Otherwise mostly a replication of findings above, and its
   [notes](trials/2026-07-18-selfhost-genesis.md) mark which is which.
+- **Self-host functional design, 2026-07-19** — the first *durable* design graph of reflow2, 96 nodes,
+  committed as a deterministic export at [design/reflow2.json](design/reflow2.json) and analysed with
+  reflow2's own surface. Independently rediscovered five open backlog items, and found two detector
+  defects. Notes:
+  [trials/2026-07-19-selfhost-functional-design.md](trials/2026-07-19-selfhost-functional-design.md);
+  re-runnable via `tools/build_design_graph.py --analyse-only`.
 - **Erosion trial, 2026-07-19** — the sharper half of the one below, and the closest thing we have
   to a reproduction of how the original reflow failed. Five rounds of *test fails → fix code →
   accept drift* on a coherent thread, then a release: afterwards the design describes a system that
@@ -71,6 +77,8 @@ Nine independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
+| **BL-38** | **`unrealized_capability` fires on capabilities that are built; `dead_end` fires on pure containers** | Found by analysing reflow2's own design graph. Two schema-valid modellings, one accepted — 11 of 33 gaps were false | S |
+| **BL-5 (reopened)** | **`single_point_of_failure` still over-fires above fixture scale** | 22 of 36 defects on a real 96-node design. The original fix was measured on an 8-defect graph | M |
 | **BL-37** | **reflow2 cannot model a *process* — `Flow` has no write side, and edge roles are lost** | Found by modelling reflow2's own coherence loop in reflow2. The one type meant for an ordered process cannot be created; forward and backward edges are indistinguishable | M |
 | **BL-35** | **A design claim has no last-confirmed date, so "coherent" and "nobody looked" are indistinguishable** | The deepest of the phase items — an eroded graph and a genuinely coherent one both report quiet. Axis Z already holds the data | M |
 | **BL-36** | **`precedes` is unreachable, so the epoch chain cannot be drawn** | Recurring lesson, tenth instance — on the axis that exists to make history legible | S |
@@ -80,6 +88,38 @@ Nine independent sources, which is why several items appear on more than one lis
 | **BL-31** | **A `status` field is a claim nothing checks** | `status: verified` with nothing verifying, `status: met` with nothing satisfying — the graph never contradicts itself | S |
 | **BL-32** | **A running MCP server silently serves a stale surface** | Rebuild mid-session and the old tool surface keeps answering, with no indication. `smoke_mcp.py` cannot catch it by construction | S |
 | **BL-29** | **`apply_heal` trusts the proposal; merge loses data silently** | Mostly **done** — three of seven fixed; three remain, one deliberately deferred. See below | M |
+
+**BL-38 · The golden thread has two valid shapes at P3 and the detector accepts one** —
+*[self-host functional design](trials/2026-07-19-selfhost-functional-design.md), 2026-07-19.*
+
+Verified in isolation. `REALIZES` is declared `from: Artifact, to: "*"`, so both of these are
+schema-valid, and `link_artifact` invites either by taking any `target_type`:
+
+```
+Artifact REALIZES Component  : capability reported unrealized?  True
+…plus    REALIZES Capability : capability reported unrealized?  False
+```
+
+Modelling *the file realizes the module* — which is how code is actually organised — makes every
+capability report `unrealized_capability`, 11 of 33 gaps on reflow2's own design, for capabilities
+shipping in the binary that reported them. The connecting path exists and is not walked:
+`art:detect -REALIZES-> cmp:detect <-ALLOCATED_TO- cap:detect`. `detect_unrealized_capabilities` asks
+only for `incoming(cap, REALIZES)`; it should also accept an artifact realizing a component the
+capability is allocated to. As it stands the detector silently mandates one of two equally valid
+modellings and floods anyone who picks the other.
+
+Same trial, same item: **`dead_end` fires on a subsystem whose only edges are `CONTAINS`.** `cmp:mcp`
+and `cmp:kit` hold modules and report "not connected to anything", because PROPAGATE and the topology
+view deliberately exclude `CONTAINS` (*decomposition is not traceability*). Correct in general, and it
+makes a pure container — the standard way to express a subsystem — structurally invisible. Size **S**
+for both.
+
+**BL-5 reopened · `single_point_of_failure` above fixture scale** — *same trial.* 22 of 36 defects on
+a 96-node design, post-fix: nearly every requirement and mid-level capability is named. The
+[original fix](#closed) asked whether removal *increases* the count of non-trivial components and was
+measured taking reflow2's own graph from 8 defects to 2 — at 119 nodes modelled backwards, not at
+this shape. A golden thread is a tree, so most internal nodes still separate subsystems by that test.
+Needs a threshold that scales, or a different question. **M**.
 
 **BL-37 · reflow2 cannot model a process** — *modelling the coherence loop itself, 2026-07-19
 (`tools/model_the_loop.py`, exported to [loop-model.json](loop-model.json), drawn in

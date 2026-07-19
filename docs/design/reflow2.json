@@ -1,0 +1,2340 @@
+{
+  "edges": [
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:allocate",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:change",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:detect",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:dimensions",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:heal",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:heal",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:hierarchy",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:ingest",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:kit",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:kit",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:mcp-surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:portability",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:portability",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:propagate",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:questions",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:reconcile-built",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:report",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:stamp",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:vocabulary",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:init",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:service",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:skills",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:kit",
+      "properties": {},
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:kit",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:mcp",
+      "properties": {},
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cmp:core"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cmp:kit"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cmp:mcp"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:adopt-existing"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:agent-native"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:design-anything"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:golden-thread"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:intent-preserved"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:no-silent-fallback"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:survives-upgrade"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v020",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "PROVIDES",
+      "from_id": "cmp:core",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "PROVIDES",
+      "from_id": "cmp:export",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "PROVIDES",
+      "from_id": "cmp:service",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:allocate",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:dimensions",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:drift",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:export",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:graph",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:heal",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:hierarchy",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:ingest",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:init",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:operate",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:propagate",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:provenance",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:report",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:structure",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:temporal",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:verify",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:vocabulary",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:adopt",
+      "properties": {},
+      "to_id": "req:adopt-existing"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:allocate",
+      "properties": {},
+      "to_id": "req:golden-thread"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:change",
+      "properties": {},
+      "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:change",
+      "properties": {},
+      "to_id": "req:intent-preserved"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:detect",
+      "properties": {},
+      "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:detect",
+      "properties": {},
+      "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:dimensions",
+      "properties": {},
+      "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:freshness",
+      "properties": {},
+      "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:freshness",
+      "properties": {},
+      "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:heal",
+      "properties": {},
+      "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:heal",
+      "properties": {},
+      "to_id": "req:no-silent-fallback"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:hierarchy",
+      "properties": {},
+      "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:ingest",
+      "properties": {},
+      "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:kit",
+      "properties": {},
+      "to_id": "req:agent-native"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:mcp-surface",
+      "properties": {},
+      "to_id": "req:agent-native"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:model-process",
+      "properties": {},
+      "to_id": "req:design-anything"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:portability",
+      "properties": {},
+      "to_id": "req:survives-upgrade"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:propagate",
+      "properties": {},
+      "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:propagate",
+      "properties": {},
+      "to_id": "req:golden-thread"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:questions",
+      "properties": {},
+      "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:reconcile-built",
+      "properties": {},
+      "to_id": "req:golden-thread"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:reconcile-built",
+      "properties": {},
+      "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:reconcile-deployed",
+      "properties": {},
+      "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:reconcile-verified",
+      "properties": {},
+      "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:report",
+      "properties": {},
+      "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:stamp",
+      "properties": {},
+      "to_id": "req:survives-upgrade"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:surface",
+      "properties": {},
+      "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:vocabulary",
+      "properties": {},
+      "to_id": "req:agent-native"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:vocabulary",
+      "properties": {},
+      "to_id": "req:no-silent-fallback"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:allocate",
+      "properties": {},
+      "to_id": "cap:allocate"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:change",
+      "properties": {},
+      "to_id": "cap:change"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:detect",
+      "properties": {},
+      "to_id": "cap:detect"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:dimensions",
+      "properties": {},
+      "to_id": "cap:dimensions"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:heal",
+      "properties": {},
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:hierarchy",
+      "properties": {},
+      "to_id": "cap:hierarchy"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:ingest",
+      "properties": {},
+      "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:mcp-surface",
+      "properties": {},
+      "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:portability",
+      "properties": {},
+      "to_id": "cap:portability"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:propagate",
+      "properties": {},
+      "to_id": "cap:propagate"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:questions",
+      "properties": {},
+      "to_id": "cap:questions"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:reconcile-built",
+      "properties": {},
+      "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:report",
+      "properties": {},
+      "to_id": "cap:report"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:stamp",
+      "properties": {},
+      "to_id": "cap:stamp"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:surface",
+      "properties": {},
+      "to_id": "cap:surface"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:vocabulary",
+      "properties": {},
+      "to_id": "cap:vocabulary"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:allocate",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:detect",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:dimensions",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:drift",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:export",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:graph",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:heal",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:hierarchy",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:ingest",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:init",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:operate",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:propagate",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:provenance",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:report",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:service",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:structure",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:temporal",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:verify",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:vocabulary",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:vocabulary"
+    }
+  ],
+  "graph_id": "reflow2",
+  "nodes": [
+    {
+      "node_id": "art:allocate",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:d282035a162e3e56",
+        "location": "crates/reflow2-core/src/allocate.rs",
+        "name": "allocate.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:detect",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:fae4d3863e379805",
+        "location": "crates/reflow2-core/src/detect.rs",
+        "name": "detect.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:dimensions",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:fbe714849869c1d8",
+        "location": "crates/reflow2-core/src/dimensions.rs",
+        "name": "dimensions.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:drift",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:2f7c3bffe9acb423",
+        "location": "crates/reflow2-core/src/drift.rs",
+        "name": "drift.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:export",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:1957641d39c28842",
+        "location": "crates/reflow2-core/src/export.rs",
+        "name": "export.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:graph",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f68e39113071f8b1",
+        "location": "crates/reflow2-core/src/graph.rs",
+        "name": "graph.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:heal",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:eb511e1bb794ea00",
+        "location": "crates/reflow2-core/src/heal.rs",
+        "name": "heal.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:hierarchy",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:2f697a383b3c457d",
+        "location": "crates/reflow2-core/src/hierarchy.rs",
+        "name": "hierarchy.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:ingest",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:6b75bc576b6c891f",
+        "location": "crates/reflow2-core/src/ingest.rs",
+        "name": "ingest.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:init",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:fdc38fc9486a9aa1",
+        "location": "tools/reflow2_init.py",
+        "name": "reflow2_init.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:operate",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:06649741f888b36f",
+        "location": "crates/reflow2-core/src/operate.rs",
+        "name": "operate.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:propagate",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:3a429cd9945965ca",
+        "location": "crates/reflow2-core/src/propagate.rs",
+        "name": "propagate.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:provenance",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:d8275cc570cb9bb2",
+        "location": "crates/reflow2-core/src/provenance.rs",
+        "name": "provenance.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:report",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:b8ac91ee40bcd696",
+        "location": "crates/reflow2-core/src/report.rs",
+        "name": "report.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:service",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:bd01fd0adb41a87c",
+        "location": "crates/reflow2-mcp/src/service.rs",
+        "name": "service.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:structure",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:ee5ef7a4836a74ce",
+        "location": "crates/reflow2-core/src/structure.rs",
+        "name": "structure.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:temporal",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f9e9aed059f42db7",
+        "location": "crates/reflow2-core/src/temporal.rs",
+        "name": "temporal.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:verify",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:a6ed46c71a37ad6d",
+        "location": "crates/reflow2-core/src/verify.rs",
+        "name": "verify.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:vocabulary",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:299af0ce97e70ae9",
+        "location": "crates/reflow2-core/src/vocabulary.rs",
+        "name": "vocabulary.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:adopt",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Read requirements, functions and structure back out of a running system.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Recover a design from an existing system",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:allocate",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Score function-to-structure allocation; cluster coupling.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Analyse and propose allocation",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:change",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Snapshot prior state at an epoch, then edit \u2014 axis Z.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Record a change",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:detect",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Find what the design has not decided yet, ranked.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Detect gaps",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:dimensions",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Assess nodes on dimensions and detect decline.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Track quality over time",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:freshness",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Distinguish a design that matches reality from one nobody has checked.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say when a claim was last confirmed",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:heal",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Propose content-free structural fixes, then apply atomically.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Repair structure",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:hierarchy",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Find missing intermediates and level mismatches \u2014 axis Y.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Check decomposition levels",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:ingest",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Multi-pass LLM extraction with provenance.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Extract a design from freeform text",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:kit",
+      "node_type": "Capability",
+      "properties": {
+        "description": "One command sets up or refreshes the design environment.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Install into a consumer project",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:mcp-surface",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Every capability as a typed tool for an agent.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Serve the loop over MCP",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:model-process",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Represent an ordered flow of activities with roles on its edges.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Model a process, not only a product",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:portability",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Move a design across machines and versions.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Export and import a design",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:propagate",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Walk the golden thread to compute a blast radius.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Propagate impact",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:questions",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Questions outlive the session; answers stay visible.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Remember what was asked",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:reconcile-built",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Compare registered artifacts against observed files and report divergence.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Reconcile against what was built",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:reconcile-deployed",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Compare the design against what is actually deployed.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Reconcile against what is running",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:reconcile-verified",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Compare recorded verification status against a real test run.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Reconcile against what was proven",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:report",
+      "node_type": "Capability",
+      "properties": {
+        "description": "One rollup answering 'what should I look at?'.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say where the design stands",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:stamp",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Stamp and check, refusing a graph from the future.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say which reflow2 wrote a graph",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:surface",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Turn a gap into a question in the user's words.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Ask the user a plain question",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:vocabulary",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Tell a client what types exist and what may join them.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Describe the vocabulary",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:allocate",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "allocate",
+        "provenance": "authored",
+        "purpose": "The allocate module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:core",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "subsystem",
+        "name": "reflow2-core",
+        "provenance": "authored",
+        "purpose": "The deterministic, LLM-free coherence engine.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:detect",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "detect",
+        "provenance": "authored",
+        "purpose": "The detect module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:dimensions",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "dimensions",
+        "provenance": "authored",
+        "purpose": "The dimensions module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:drift",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "drift",
+        "provenance": "authored",
+        "purpose": "The drift module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:export",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "export",
+        "provenance": "authored",
+        "purpose": "The export module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:graph",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "graph",
+        "provenance": "authored",
+        "purpose": "The graph module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:heal",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "heal",
+        "provenance": "authored",
+        "purpose": "The heal module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:hierarchy",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "hierarchy",
+        "provenance": "authored",
+        "purpose": "The hierarchy module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:ingest",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "ingest",
+        "provenance": "authored",
+        "purpose": "The ingest module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:init",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "reflow2_init",
+        "provenance": "authored",
+        "purpose": "The reflow2_init module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:kit",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "subsystem",
+        "name": "consumer kit",
+        "provenance": "authored",
+        "purpose": "What gets installed into a project being designed.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:mcp",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "subsystem",
+        "name": "reflow2-mcp",
+        "provenance": "authored",
+        "purpose": "The agent-facing MCP surface over one graph.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:operate",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "operate",
+        "provenance": "authored",
+        "purpose": "The operate module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:propagate",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "propagate",
+        "provenance": "authored",
+        "purpose": "The propagate module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:provenance",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "provenance",
+        "provenance": "authored",
+        "purpose": "The provenance module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:report",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "report",
+        "provenance": "authored",
+        "purpose": "The report module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:service",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "service",
+        "provenance": "authored",
+        "purpose": "The service module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:skills",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "skills",
+        "provenance": "authored",
+        "purpose": "The skills module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:structure",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "structure",
+        "provenance": "authored",
+        "purpose": "The structure module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:temporal",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "temporal",
+        "provenance": "authored",
+        "purpose": "The temporal module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:verify",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "verify",
+        "provenance": "authored",
+        "purpose": "The verify module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:vocabulary",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "vocabulary",
+        "provenance": "authored",
+        "purpose": "The vocabulary module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "epoch:genesis",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "baseline",
+        "name": "Genesis",
+        "sequence": 0
+      }
+    },
+    {
+      "node_id": "env:dev",
+      "node_type": "Environment",
+      "properties": {
+        "env_type": "development",
+        "name": "Developer machine"
+      }
+    },
+    {
+      "node_id": "frag:art:allocate",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered allocate.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:detect",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered detect.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:dimensions",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered dimensions.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:drift",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered drift.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:export",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered export.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:graph",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered graph.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:heal",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered heal.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:hierarchy",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered hierarchy.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:ingest",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered ingest.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:init",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered reflow2_init.py"
+      }
+    },
+    {
+      "node_id": "frag:art:operate",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered operate.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:propagate",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered propagate.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:provenance",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered provenance.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:report",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered report.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:service",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered service.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:structure",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered structure.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:temporal",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered temporal.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:verify",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered verify.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:vocabulary",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered vocabulary.rs"
+      }
+    },
+    {
+      "node_id": "ifc:core-api",
+      "node_type": "Interface",
+      "properties": {
+        "medium": "REST",
+        "name": "DesignGraph API",
+        "provenance": "authored"
+      }
+    },
+    {
+      "node_id": "ifc:graph-export",
+      "node_type": "Interface",
+      "properties": {
+        "medium": "REST",
+        "name": "Design export document",
+        "provenance": "authored"
+      }
+    },
+    {
+      "node_id": "ifc:mcp-tools",
+      "node_type": "Interface",
+      "properties": {
+        "medium": "REST",
+        "name": "MCP tool surface",
+        "provenance": "authored"
+      }
+    },
+    {
+      "node_id": "proj:reflow2",
+      "node_type": "Project",
+      "properties": {
+        "domain": "software",
+        "mode": "flexible",
+        "name": "Reflow 2.0",
+        "objective": "Keep a design coherent from concept through operations",
+        "status": "active"
+      }
+    },
+    {
+      "node_id": "rel:v020",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.2.0",
+        "status": "planned",
+        "unit_type": "binary",
+        "version": "0.2.0"
+      }
+    },
+    {
+      "node_id": "req:adopt-existing",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "A system that already exists can be brought under design control",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Requirements, functions and structure can be recovered from a running system.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:agent-native",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "An agent can drive the whole loop",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Every capability is reachable from a coding agent over one surface.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:coherence",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Design stays coherent across its lifecycle",
+        "priority": "critical",
+        "provenance": "authored",
+        "statement": "When anything changes in any phase, the ripples are found and surfaced.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:design-anything",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Design anything, not only software",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Software, hardware, a document, a process \u2014 the vocabulary stays neutral.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:golden-thread",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Every artifact traces to the intent it serves",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Traceability runs from concept through operations without a break.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:intent-preserved",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "The past is never overwritten",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Updating the design to match the build must not erase what was intended.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:no-se-knowledge",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "The user never needs systems engineering",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "The graph carries the discipline; the user answers plain questions.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:no-silent-fallback",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "No silent fallbacks or drops",
+        "priority": "critical",
+        "provenance": "authored",
+        "statement": "Failures and skipped work are surfaced loudly, never swallowed.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:released-eq-designed",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Released equals designed",
+        "priority": "critical",
+        "provenance": "authored",
+        "statement": "At release the design must describe what was actually released.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:survives-upgrade",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "A design survives a reflow2 upgrade",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "An existing graph opens, or is refused loudly with what to do.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "ver:allocate",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "allocate.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:change",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "temporal.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:detect",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "detect.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:dimensions",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "dimensions.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:heal",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "heal.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:hierarchy",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "hierarchy.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:ingest",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "ingest.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:mcp-surface",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "tools.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:portability",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "export.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:propagate",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "propagate.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:questions",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "gap_review.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:reconcile-built",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "drift.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:report",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "report.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:stamp",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "provenance.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:surface",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "llm.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:vocabulary",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "write_side.rs",
+        "status": "passing"
+      }
+    }
+  ],
+  "stamp": {
+    "edge_types": 53,
+    "node_types": 27,
+    "reflow2_version": "0.2.0",
+    "schema_version": 1
+  }
+}

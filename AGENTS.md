@@ -51,6 +51,13 @@ cargo test --workspace
 # schema/*.yaml edit. Needs PyYAML; use whatever python3 has it.
 python3 tools/validate_schema.py
 
+# reflow2's own functional design, as a reflow2 graph (96 nodes). The export at
+# docs/design/reflow2.json is the durable record — .reflow2/ is gitignored, so
+# the JSON is what gets reviewed and diffed. Rebuild it after a design change;
+# --analyse-only re-imports the committed export and re-runs the analysis.
+python3 tools/build_design_graph.py
+python3 tools/build_design_graph.py --analyse-only
+
 # Phase-coverage trial — does the design still carry weight after P2? Seeds a
 # realistic graph, injects the divergences P3/P4/P5 are each supposed to catch,
 # and scores whether the graph noticed. NOT a gate yet: it exits non-zero today
