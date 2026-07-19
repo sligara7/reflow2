@@ -31,6 +31,11 @@ Four independent sources, which is why several items appear on more than one lis
 - **Self-host probe, 2026-07-18** — reflow2's own design (119 nodes) pushed into a reflow2 graph
   and interrogated. The first test above fixture scale, and the only one where we know the right
   answer. Notes: [trials/2026-07-18-selfhost-probe.md](trials/2026-07-18-selfhost-probe.md).
+- **Brownfield trials, 2026-07-18** — reflow2 pointed at two systems that already existed:
+  [ophyd-service](trials/2026-07-18-brownfield-ophyd-service.md) (399 files, ~110k LOC, requirements
+  inferred backward from code) and [3dtictactoe](trials/2026-07-18-brownfield-3dtictactoe.md)
+  (~20 files, no spec at all — the pure-inference case). The only source for BL-27, and the two
+  independently reproduce the same entry-point finding at a 20× size difference.
 - **[reflow-audit.md](reflow-audit.md)** — the original Reflow's workflows and tools, with
   adopt/obsolete verdicts.
 
@@ -130,6 +135,92 @@ Kept as a short pointer so a stable id never dangles; the detail is in the CHANG
   labelled exact vs wildcard for that reason. Recorded as **WS-6** in the coverage matrix.
 
 ## Bigger threads
+
+**BL-27 · Adopting a system that already exists** — *user, 2026-07-18.* "reflow2 was designed for
+greenfield projects... hoping a `/reverse-engineer` skill would allow you to fill in the graph
+based on what's already there." Two sub-problems named with it: codebases with no requirements
+documentation, and codebases too large to model in one pass.
+
+Both brownfield trials —
+[ophyd-service](trials/2026-07-18-brownfield-ophyd-service.md) (399 files, ~110k LOC) and
+[3dtictactoe](trials/2026-07-18-brownfield-3dtictactoe.md) (~20 files) — had to run GENESIS
+backwards, and both recorded the same entry-point finding independently. Call the skill **`adopt`**
+rather than `reverse-engineer`: producing the graph is one output, but the job is bringing an
+existing system under design control, and it is the sibling of `genesis`, not of a code tool.
+
+*The seeding order inverts, and one detector's ranking assumes it hasn't.* GENESIS deliberately
+stops before P2 so `concept_without_design` fires as the productive first gap ("how should this be
+structured?"). In brownfield the Components are the only thing that indisputably exists, so that
+detector fires at severity **0.7 — above the genuinely valuable gap at 0.6**, and an agent working
+the list top-down does the useless thing first. It reproduced on a 20-file project as well as a
+110k-LOC one, so it is a property of the path, not of scale. Not a wording fix: the gap-ordering
+logic is what assumes greenfield.
+
+*Requirements must not be inferred from the implementation.* A requirement backed out of the code
+that implements it is satisfied by construction, and a graph of those can never say anything.
+3dtictactoe is the controlled proof in the other direction: its one high-value finding —
+`game_mode='level_assigned'` validated, stored, and **never read again** — came from
+`description.txt`, a source *outside* the code, and turned on the discipline *do not create a
+`satisfies` edge you cannot point at code for*. That gives the division of labour:
+
+| Layer | Source | Note |
+|---|---|---|
+| Capability, Component, Interface | the code | satisfied-by-definition is fine — this is the *as-built* view ([reflow-v3-nuggets.md](reflow-v3-nuggets.md)) |
+| Requirement | anything **but** the implementation | the user; tests (a test is a written-down expectation); READMEs and spec files; issues and commit messages; config and deployment; and error handling, validation, retries and locking, where the unwritten NFRs live |
+
+Ophyd is the caution against trusting a found document: its traceability matrix was another org's
+PDR, 7 of 25 rows out of scope, and it **omitted device locking — arguably the system's central
+correctness property**. An agent seeding only the matrix produces a graph whose most important
+invariant is absent. A second caution from the same trial: inferring component *identity* from
+source comments produced a phantom external system, because stale naming outlives stale code.
+Structure from imports and calls; never from prose.
+
+*Scale is a granularity problem, not a context problem.* Neither trial ran out of context. Ophyd's
+~110k LOC modelled as **~78 nodes**: 124 REST endpoints → 9 Interfaces (one per OpenAPI contract,
+*not* per endpoint), 1,573 test functions → 8 Verifications, and the vendored queueserver fork —
+75k of the 110k LOC — deliberately left as **one opaque Component**. [BL-23](#closed) is why: one
+Artifact per source file made 22 of 25 gaps `unverified_artifact`, 88% noise from a *complete*
+model. The user's instinct to explore incrementally is right, but the first pass should be
+**breadth at deliberately coarse granularity over the whole repo**, because the payoff findings in
+both trials were structural and came from breadth, not depth — a *critical* `circular_dependency`
+between two ophyd services that the project's own architecture docs never name, surfaced only
+because both sides of two Interfaces were recorded, and 3dtictactoe's absent `satisfies` edge.
+Then deepen **on demand** — the subtree the user is actually working in — rather than by rotation,
+so coverage tracks value and there is a natural stopping point.
+
+*Incremental adoption is blocked until the frontier is modelled.* A partial graph emits gaps
+indistinguishable from real ones. Ophyd finding 6 states the general form: the tool "cannot yet
+tell 'no capability delivers this' from 'nobody has drawn the edge yet'." Finding 14 adds that the
+detectors have no notion of a graph mid-construction — following `check-health` literally would
+have fabricated Components over a graph whose real structure had simply not been entered yet, and
+the operator declined to run `apply_heal`. Marking unexplored regions so detectors stay quiet
+there is a **precondition** for the deepening stage, not a refinement of it. The
+opaque-Component treatment of the vendored fork is the existing precedent.
+
+*A skill alone would ship a graph that lies.* Five fixes gate it, and each is the recurring lesson
+below again:
+
+| Blocker | Evidence | Size |
+|---|---|---|
+| `add_capability` hardcodes `status: "planned"` | ophyd's 15 shipped, under-test capabilities made the graph "assert that a production system is entirely unbuilt" | S |
+| `detect_gaps` walks Requirement→Capability only, so an **orphan Capability is never reported** | "in greenfield that direction is rare… in brownfield it is the dominant direction of error" — a feature in production no requirement justifies is exactly what an adoption exercise is for. DETECT and HEAL are blind in the same direction | M |
+| No duplicate detection | did not fire on a textbook duplicate; "duplicate implementations are *the* characteristic brownfield defect" | M |
+| `concept_without_design` severity ordering | above | S |
+| Provenance has nowhere to go | ophyd smuggled `[EXTERNAL — …]` into statement text, "which is not queryable" | S |
+
+That last one has a cheap answer worth taking regardless. The schema's mechanism is
+`Fragment.provenance` (its enum already includes `inferred`) plus a `YIELDED` edge — the intended
+pattern, but 2 writes per node with no bulk tool. Adding a `provenance` **property** to the node
+types instead is backward-compatible: adding a node or edge *type* bumps `GraphStamp` and makes
+older binaries refuse the graph, but adding a property does not ([BL-19](#bigger-threads)).
+
+Related, for whoever picks this up: `import_graph` is the only bulk write path and is an atomic
+upsert, so an adopt pass should build the export document and import it once — 3dtictactoe spent
+~60 MCP calls on 33 nodes. And `reflow2_init.py` cannot install into a repo that already has its
+own `AGENTS.md`, which is every brownfield target and this one; it needs a `--skills-only` flag.
+
+Size **L** for the thread; the `adopt` skill itself is **M** once the two **S** blockers land, and
+the deepening stage is a separate **M** behind the frontier work.
 
 **BL-15 · Project bootstrap and kit updates** — *from the external user, 2026-07-18.* "You should
 be able to launch a project from reflow, which bootstraps everything into a new repo... And maybe
