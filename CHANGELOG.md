@@ -117,6 +117,21 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **A failing check is a gap, not a satisfaction** (BL-30, the S half). The erosion trial's headline:
+  `build_without_verification` asks *"how will you confirm this works?"* and was closed by a test
+  proving it does not — with `detect_gaps`, `detect_defects` and `graph_report` byte-identical
+  between the passing and failing cases. The later phases counted test nodes and ignored test
+  results, which is the reflow1 failure in miniature.
+
+  A `Verification` with `status: failing` now raises **`failing_verification`** at severity 0.8 —
+  above every absence-shaped gap, because a requirement nothing satisfies is work not started while a
+  failing check is work *proven broken* — anchored to both the check and what it checks, clearing
+  when the check goes green. The phase nudge still closes when a check exists; the difference is the
+  silence is filled with the right signal. And `verification_coverage` now counts a check that
+  **passes**, not one that exists: `planned`, `failing`, `skipped` and `blocked` all mean "not
+  currently confirmed". Measured: `phase_trial` P4 1/4 → 2/4, `erosion_trial` 2/7 → 3/7. The M half —
+  `reconcile_verification`, feeding real test results in — stays open.
+
 - **`single_point_of_failure` only names things that can fail** (BL-5, second pass). The first fix
   asked whether removal increases the count of non-trivial subsystems — the right question about
   topology, measured at fixture scale. On the first real 96-node design it named 22 nodes, most of

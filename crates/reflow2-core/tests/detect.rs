@@ -809,3 +809,100 @@ fn a_capability_in_an_unbuilt_component_is_still_reported() {
         "only the capability whose component nothing builds"
     );
 }
+
+// ---- BL-30 (S half) · a failing check is a gap, not a satisfaction ---------
+
+/// A built, checked thread whose one verification can be flipped per test.
+fn checked_thread(status: &str) -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "must work").unwrap();
+    g.add_capability(
+        "cap:a",
+        "Charge a card",
+        "charges once per key",
+        Some("realized"),
+    )
+    .unwrap();
+    g.satisfies("cap:a", "req:a").unwrap();
+    g.add_component("cmp:a", "A", "part", None).unwrap();
+    g.allocate("cap:a", "cmp:a").unwrap();
+    g.add_verification("ver:a", "charge tests", Some("test"), Some("unit"))
+        .unwrap();
+    g.verifies("ver:a", node::CAPABILITY, "cap:a").unwrap();
+    g.set_verification_status("ver:a", status, None).unwrap();
+    g
+}
+
+#[test]
+fn a_failing_verification_is_surfaced_and_outranks_everything_absent() {
+    // The erosion trial's headline: with status=failing, detect_gaps,
+    // detect_defects and graph_report were byte-identical to the passing case.
+    // The gap that asked "how will you confirm this works?" was closed by a
+    // test proving it does not.
+    let g = checked_thread("failing");
+    let gaps = g.detect_gaps().unwrap();
+    let failing = gaps
+        .iter()
+        .find(|x| x.gap_source == GapSource::FailingVerification)
+        .unwrap_or_else(|| panic!("a red check must be a gap, got {:?}", sources(&gaps)));
+
+    // Anchored to the check AND what it checks — the answerer needs to know
+    // what is broken, not only which test is red.
+    assert_eq!(failing.affected_ids, ["cap:a", "ver:a"]);
+    assert!((failing.severity - 0.8).abs() < f64::EPSILON);
+    assert_eq!(
+        gaps[0].gap_source,
+        GapSource::FailingVerification,
+        "work proven broken outranks work not started, got {:?}",
+        sources(&gaps)
+    );
+}
+
+#[test]
+fn a_passing_verification_raises_nothing_and_a_failing_one_is_the_only_difference() {
+    let pass = checked_thread("passing");
+    let fail = checked_thread("failing");
+    assert!(!sources(&pass.detect_gaps().unwrap()).contains(&GapSource::FailingVerification));
+    // The two graphs must no longer diagnose identically.
+    assert_ne!(
+        sources(&pass.detect_gaps().unwrap()),
+        sources(&fail.detect_gaps().unwrap()),
+        "passing and failing must be distinguishable — this is the erosion trial's probe"
+    );
+}
+
+#[test]
+fn coverage_counts_a_check_that_passes_not_one_that_exists() {
+    let pass = checked_thread("passing");
+    let fail = checked_thread("failing");
+    assert_eq!(
+        pass.verification_coverage().unwrap().capabilities_verified,
+        1
+    );
+    assert_eq!(
+        fail.verification_coverage().unwrap().capabilities_verified,
+        0,
+        "a failing check must not raise coverage — counting test nodes while ignoring test results is the reflow1 failure in miniature"
+    );
+    // planned / skipped / blocked are "not currently confirmed", not "verified".
+    for status in ["planned", "skipped", "blocked"] {
+        assert_eq!(
+            checked_thread(status)
+                .verification_coverage()
+                .unwrap()
+                .capabilities_verified,
+            0,
+            "status={status} is not confirmation"
+        );
+    }
+}
+
+#[test]
+fn fixing_the_build_clears_the_failing_gap() {
+    // The loop the gap exists to drive: red -> fix -> green -> quiet.
+    let mut g = checked_thread("failing");
+    assert!(sources(&g.detect_gaps().unwrap()).contains(&GapSource::FailingVerification));
+    g.set_verification_status("ver:a", "passing", None).unwrap();
+    assert!(!sources(&g.detect_gaps().unwrap()).contains(&GapSource::FailingVerification));
+    assert_eq!(g.verification_coverage().unwrap().capabilities_verified, 1);
+}

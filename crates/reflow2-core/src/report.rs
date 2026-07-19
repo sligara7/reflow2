@@ -134,11 +134,26 @@ impl DesignGraph {
         ] {
             for n in self.scan_nodes(node_type)? {
                 *total += 1;
-                if !self
-                    .incoming(&n.node_id, Some(crate::nodes::edge::VERIFIES))?
-                    .is_empty()
-                {
-                    *verified += 1;
+                // "Verified" means a check that PASSES, not a check that exists.
+                // Counting mere existence let a failing test raise coverage —
+                // the design counting test nodes while ignoring test results,
+                // which is the reflow1 failure in miniature (BL-30). `planned`,
+                // `failing`, `skipped` and `blocked` all mean "not currently
+                // confirmed".
+                for e in self.incoming(&n.node_id, Some(crate::nodes::edge::VERIFIES))? {
+                    let passing = self
+                        .get_node(node::VERIFICATION, &e.from_id)?
+                        .and_then(|v| {
+                            v.properties
+                                .get("status")
+                                .and_then(dynograph_core::Value::as_str)
+                                .map(|s| s == "passing")
+                        })
+                        .unwrap_or(false);
+                    if passing {
+                        *verified += 1;
+                        break;
+                    }
                 }
             }
         }

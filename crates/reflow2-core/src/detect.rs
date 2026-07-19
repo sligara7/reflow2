@@ -90,6 +90,18 @@ pub enum GapSource {
     UnallocatedCapability,
     /// A Capability has no `Artifact` `REALIZES`-ing it.
     UnrealizedCapability,
+    /// A `Verification` whose status says the thing it checks does not work.
+    ///
+    /// The one gap where reality has directly contradicted the design, which is
+    /// why it outranks everything that merely reports absence. Before it
+    /// existed, a failing test *satisfied* `build_without_verification` — the
+    /// gap asks "how will you confirm this works?" and was answered by a test
+    /// proving it does not — and `detect_gaps`, `detect_defects` and
+    /// `graph_report` were byte-identical between the passing and failing
+    /// cases. The later phases counted test nodes and ignored test results,
+    /// which is the reflow1 failure in miniature (BL-30, the phase-coverage
+    /// trial's headline).
+    FailingVerification,
     /// A Capability has no `Verification` proving the behaviour works.
     ///
     /// The key string stays `unverified_capability` even though this variant
@@ -164,6 +176,7 @@ impl GapSource {
             // Load-bearing: this string is hashed into the gap id, which keys
             // the acknowledgement Decision. Renaming it expires every existing
             // capability acknowledgement with nothing to tell the user why.
+            GapSource::FailingVerification => "failing_verification",
             GapSource::UnverifiedCapability => "unverified_capability",
             GapSource::UnverifiedArtifact => "unverified_artifact",
             GapSource::UnprovidedInterface => "unprovided_interface",
@@ -762,6 +775,7 @@ impl DesignGraph {
         self.detect_unallocated_capabilities(&pop, &mut gaps)?;
         self.detect_unrealized_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
+        self.detect_failing_verifications(&mut gaps)?;
         self.detect_interface_pairing(&pop, &mut gaps)?;
         // Deliberately absent: unexpected coupling. It is a *signal*, reported
         // by `graph_report` and `surprising_connections`, not a gap demanding
@@ -1311,6 +1325,71 @@ impl DesignGraph {
             }
         }
         Ok(false)
+    }
+
+    /// A `Verification` whose recorded status is `failing` — reality has
+    /// contradicted the design, which no absence-shaped gap can say.
+    ///
+    /// No population gate on purpose: a failing check is worth surfacing even
+    /// if it is the only Verification in the graph — *especially* then, since
+    /// its mere existence is what closes `build_without_verification`. That
+    /// closure is correct (the "how will you confirm this?" question *is*
+    /// answered) but it used to be the end of the story, leaving the failure
+    /// invisible everywhere. Now the silence is filled with the right signal
+    /// instead of the phase nudge staying open.
+    ///
+    /// Severity 0.8, above every absence gap: a requirement nothing satisfies
+    /// is work not started, but a failing verification is work *proven broken*,
+    /// and an agent working the list top-down should see it first.
+    fn detect_failing_verifications(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        let index = self.node_type_index()?;
+        for ver in self.scan_nodes(node::VERIFICATION)? {
+            let status = ver
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                .unwrap_or("planned");
+            if status != "failing" {
+                continue;
+            }
+            let name = node_name(&ver);
+            // Anchor the gap to what the check was checking, not only the
+            // check itself — the person answering needs to know what is broken.
+            let mut affected = vec![ver.node_id.clone()];
+            let mut target_names = Vec::new();
+            for e in self.outgoing(&ver.node_id, Some(edge::VERIFIES))? {
+                if let Some(t) = index.get(&e.to_id)
+                    && let Some(n) = self.get_node(t, &e.to_id)?
+                {
+                    target_names.push(node_name(&n));
+                }
+                affected.push(e.to_id);
+            }
+            affected.sort();
+            let what = if target_names.is_empty() {
+                "what it checks".to_string()
+            } else {
+                target_names.sort();
+                format!("“{}”", target_names.join("”, “"))
+            };
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::FailingVerification, &affected),
+                gap_source: GapSource::FailingVerification,
+                scope: GapScope::Capability,
+                severity: 0.8,
+                title: format!("“{name}” is failing"),
+                description: format!(
+                    "The check “{name}” is failing, so {what} is proven not to work as designed — fix the build, or the design no longer describes reality."
+                ),
+                affected_ids: affected,
+                suggested_depth: 2,
+                evidence: format!(
+                    "Verification '{}' has status=failing; a failing check is reality contradicting the design, not absence of a check.",
+                    ver.node_id
+                ),
+            });
+        }
+        Ok(())
     }
 
     fn detect_unverified_capabilities(

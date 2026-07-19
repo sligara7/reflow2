@@ -88,7 +88,7 @@ Nine independent sources, which is why several items appear on more than one lis
 | **BL-33** | **Accepting drift is one-sided, and the drift record overwrites itself** | *The* erosion mechanism: N legitimate fixes and the design is fiction while reporting zero gaps. Load-bearing — it is the step that runs N times | M |
 | **BL-34** | **No as-released view, and no vocabulary for one** | `DEPLOYED_TO` is the only edge `Release` has. "Does what shipped match what was designed?" is inexpressible, not merely unimplemented | M |
 | **BL-40** | **Viewpoints as pure projections (SYNTHESIZE held to a no-extrapolation standard)** | The graph stores the design; the agent only renders. `tools/render_views.py` is the seed — functional/structural/traceability views project cleanly today, and each confession it prints is a gap by definition. Direction: a viewpoint catalogue (UAF/DoDAF-informed), and rendering through the live MCP surface rather than the export. The author intends to expand this thread | M–L |
-| **BL-30** | **A failing test satisfies the check that asked for a test** | The later phases measure bookkeeping, not reality — this is reflow1's failure mode, reproduced and verified. See below | S + M |
+| **BL-30** | **A failing test satisfies the check that asked for a test** | **S half done** — `failing_verification` fires at 0.8 and coverage counts passing only. The M half (`reconcile_verification`) remains. See below | ~~S~~ + M |
 | **BL-31** | **A `status` field is a claim nothing checks** | `status: verified` with nothing verifying, `status: met` with nothing satisfying — the graph never contradicts itself | S |
 | **BL-32** | **A running MCP server silently serves a stale surface** | Rebuild mid-session and the old tool surface keeps answering, with no indication. `smoke_mcp.py` cannot catch it by construction | S |
 | **BL-29** | **`apply_heal` trusts the proposal; merge loses data silently** | Mostly **done** — three of seven fixed; three remain, one deliberately deferred. See below | M |
@@ -318,8 +318,16 @@ The general form, and the reason this is the thread's most important item: **the
 whether a node exists, never what it says.** A design that counts test nodes and ignores test results
 is precisely one you may as well have ignored once building started.
 
-Two pieces. **S** — a `failing`/`blocked` verification must raise its own gap and must not satisfy
-the coverage check; `verification_coverage` should count *passing* verifications. **M** —
+Two pieces. **S — done.** A `failing` verification now raises `failing_verification` at severity
+0.8 — above every absence-shaped gap, because a requirement nothing satisfies is work not started
+while a failing check is work *proven broken* — anchored to both the check and what it checks.
+`build_without_verification` still closes when the check exists (the "how will you confirm this?"
+question *is* answered); the difference is the silence is now filled with the right signal instead
+of nothing. And `verification_coverage` counts a check that **passes**, not one that exists —
+`planned`, `failing`, `skipped` and `blocked` all mean "not currently confirmed". Measured:
+`phase_trial` P4 1/4 → 2/4, `erosion_trial` 2/7 → 3/7 (whose coverage probe also went from a
+hardcoded fail to a genuine check). Passing and failing graphs are no longer byte-identical to
+DETECT, which was the headline miss. **M — open** —
 `reconcile_verification`, the P4 sibling of `reconcile_artifacts`: the agent supplies what the test
 run actually reported, and the graph says where that diverges from what it believed. Together with
 [BL-9](#bigger-threads)'s `reconcile_deployment` these are the missing feedback loops; the

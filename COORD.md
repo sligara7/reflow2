@@ -52,7 +52,6 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
-- BL-30 (S half): a failing verification is a gap, not a satisfaction — @ajs — since 2026-07-19 — detect.rs, report/coverage, tests
 
 
 
@@ -81,6 +80,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-30 S half done: failing_verification at 0.8; coverage counts passing only (P4 1/4→2/4, erosion 2/7→3/7) — @ajs — 2026-07-19 — (this commit)
 - BL-5 second pass done: SPOF scoped to operational types (22→4, instrument at zero known-false) — @ajs — 2026-07-19 — (this commit)
 - BL-38 done: both P3 shapes count as built; assemblies are not dead ends (design graph 33→16 gaps) — @ajs — 2026-07-19 — `e5635e1`
 - BL-39 done: `reflow2-mcp --import`, so a design can enter a graph without MCP — @ajs — 2026-07-19 — `dd7e2ac`

@@ -138,9 +138,17 @@ def main() -> int:
         note("you can ask 'does what shipped match what was designed?'", False,
              "there is no as-released view to compare against the as-designed one")
 
-        vc = s.call("graph_report")["verification"]
+        # Genuine check (was a hardcoded fail before BL-30): flip the one
+        # verification red and see whether coverage notices.
+        s.call("set_verification_status", {"verification_id": "ver:charge",
+                                           "status": "failing"})
+        red = s.call("graph_report")["verification"]
+        s.call("set_verification_status", {"verification_id": "ver:charge",
+                                           "status": "passing"})
+        green = s.call("graph_report")["verification"]
         note("verification coverage distinguishes 'passing' from 'merely present'",
-             False, f"coverage counts nodes: {vc}")
+             red["capabilities_verified"] == 0 and green["capabilities_verified"] == 1,
+             f"failing: {red['capabilities_verified']} verified, passing: {green['capabilities_verified']}")
 
     finally:
         s.close()

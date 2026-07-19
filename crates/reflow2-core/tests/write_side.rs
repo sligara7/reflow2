@@ -65,6 +65,9 @@ fn recording_a_verification_closes_the_gap_that_asked_for_one() {
         .expect("verification");
     g.verifies("ver:score", node::CAPABILITY, "cap:score")
         .expect("verifies");
+    // Coverage below counts a check that PASSES, not one that exists (BL-30).
+    g.set_verification_status("ver:score", "passing", None)
+        .expect("status");
 
     let after = g.detect_gaps().expect("detect");
     let sources: Vec<GapSource> = after.iter().map(|c| c.gap_source).collect();
@@ -443,6 +446,8 @@ fn many_files_under_a_verified_capability_raise_no_gaps() {
     g.add_verification("ver:c", "Scoring tests", Some("test"), Some("unit"))
         .unwrap();
     g.verifies("ver:c", node::CAPABILITY, "cap:c").unwrap();
+    // "Verified" in coverage means the check PASSES, not that it exists (BL-30).
+    g.set_verification_status("ver:c", "passing", None).unwrap();
 
     let gaps = g.detect_gaps().unwrap();
     assert!(

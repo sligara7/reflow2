@@ -519,6 +519,30 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("verification gap closed", "build_without_verification" not in after, after)
     c.ok("deploy/operate gap closed", "no_deploy_operate" not in after, after)
 
+    # BL-30 (S half): a check that FAILS must be a gap, not a satisfaction. The
+    # erosion trial found the gap "how will you confirm this works?" being
+    # closed by a test proving it does not, with the failure invisible in
+    # detect_gaps, detect_defects and graph_report alike.
+    s.call("set_verification_status", {"verification_id": "ver:flight",
+                                       "status": "failing"})
+    red_gaps = s.call("detect_gaps")
+    red = next((g for g in red_gaps if g["gap_source"] == "failing_verification"), None)
+    c.ok("a failing check is surfaced as a gap (BL-30)", red is not None,
+         sorted({g["gap_source"] for g in red_gaps}))
+    c.ok("and it names both the check and the thing it checks",
+         red is not None and red["affected_ids"] == ["cap:flight", "ver:flight"],
+         red["affected_ids"] if red else None)
+    c.ok("and it outranks every absence-shaped gap",
+         red is not None and red_gaps[0]["gap_source"] == "failing_verification",
+         [(g["gap_source"], round(g["severity"], 2)) for g in red_gaps[:3]])
+    c.ok("and coverage does not count the failing check as verification",
+         s.call("graph_report")["verification"]["capabilities_verified"] == 0)
+    s.call("set_verification_status", {"verification_id": "ver:flight",
+                                       "status": "passing"})
+    c.ok("green again: the gap clears and coverage counts it",
+         not any(g["gap_source"] == "failing_verification" for g in s.call("detect_gaps"))
+         and s.call("graph_report")["verification"]["capabilities_verified"] == 1)
+
     s.call("set_verification_status", {"verification_id": "ver:flight",
                                        "status": "failing"})
     radius = s.call("propagate_from", {"seed_ids": ["ver:flight"]})

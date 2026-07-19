@@ -31,7 +31,8 @@ reflow2 surfaces the decisions a stateless agent would make silently. Turn them 
    | `possible_duplicate` | if the user confirms they are one thing, draw the `DUPLICATES` edge with `create_edge` — **do not merge them yourself**; HEAL's `propose_heal`/`apply_heal` does that safely once the edge asserts it. If they say the two are deliberately separate, `acknowledge_gap` with their reason |
    | `unprovided_interface` | `add_interface` + `provides` / `consumes` |
    | `unrealized_capability` | `link_artifact` (see **link-artifacts**) |
-   | `build_without_verification`, `unverified_capability` | `add_verification` + `verifies` |
+   | `build_without_verification`, `unverified_capability` | `add_verification` + `verifies`, then `set_verification_status` with the real outcome — a check left at `planned` does not count as confirmation |
+   | `failing_verification` | fix the build (then `set_verification_status` → `passing`), or — if the *design* is what's wrong — update it on the record with `record_change`. Never resolve this by deleting the verification or hand-flipping the status without running the check: the gap is reality contradicting the design, and both honest answers change something real |
    | `no_deploy_operate` | `add_release`, `add_environment`, `deploy_to`, `add_resource`, `require_resource` |
    | a choice between real alternatives | `add_decision` + `governed_by` — record *why*, not just what |
 

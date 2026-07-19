@@ -91,6 +91,7 @@ the user's deploy/operate ask.
 | `unprovided_interface` | an `Interface` something `CONSUMES` that no Component `PROVIDES` — the two sides of a contract disagree |
 | `unconsumed_interface` | an `Interface` a Component `PROVIDES` that nothing `CONSUMES` — a deliberate public contract, or a leftover |
 | `unrealized_capability` | a Capability marked designed has no `Artifact` `REALIZES`-ing it |
+| `failing_verification` | a `Verification` with `status: failing` — reality contradicting the design, which no absence-shaped gap can say. Severity 0.8, above every absence gap: work proven broken outranks work not started. Anchored to the check *and* its targets. Note `build_without_verification` still closes when a check exists — the "how will you confirm?" question is answered; this gap is what fills the silence when the answer is "it doesn't" (BL-30) |
 | `unverified_capability` | a realized Capability has no `Verification` |
 | ~~`unverified_artifact`~~ | **retired** (BL-23). Per-file coverage is counted by `graph_report`'s *Verification coverage* line, not asked as a gap: one `VERIFIES` edge per source file is bookkeeping nobody writes, and it was 22 of 25 gaps on reflow2's own design. The key string is kept because acknowledgement ids hash it |
 
