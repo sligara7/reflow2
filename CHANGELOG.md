@@ -46,6 +46,28 @@ This file is the third view: *what changed, and when*.
   apply on create and are not backfilled; an export/import round trip resolves that, and there is
   a test pinning that provenance survives one.
 
+- **`unmotivated_capability` — the direction DETECT was blind in** (BL-27, the fourth of five
+  blockers). `detect_gaps` walked Requirement→Capability only, so a Capability satisfying no
+  Requirement was never reported. Both brownfield trials ran the probe deliberately — ophyd seeded
+  `cap:qserver-auth` with no `SATISFIES` and got 13 `unsatisfied_requirement` gaps and silence
+  about the orphan; 3dtictactoe did the same with `cap:draw-detection` and got four gaps, none
+  about it.
+
+  It matters because the two directions are not equally likely on the two paths. Capabilities are
+  normally created *from* requirements, so in greenfield an orphan is a half-finished thought.
+  Reading a system backwards inverts that: the capability is the thing that indisputably exists,
+  and one nothing justifies is either a requirement nobody wrote down or dead code.
+
+  Severity reads `Capability.provenance` rather than being fixed — 0.55 authored, 0.70 `inferred`.
+  Ophyd asked for this to outrank `unsatisfied_requirement` "on a brownfield graph", and no fixed
+  number can honour that qualifier; provenance is what tells the two readings apart, so the gap
+  leads the list exactly where the trial wanted it to and sits below the requirement gaps
+  otherwise. This is the first thing to consume the property added above.
+
+  HEAL was deliberately not given the symmetric check, and a graph with capabilities but zero
+  requirements still reports nothing — both are recorded in the backlog with the reasoning rather
+  than left to be rediscovered.
+
 ### Fixed
 
 - **A gap that names nodes now outranks a phase nudge** (BL-27, the third of five blockers).

@@ -53,6 +53,7 @@ Add yourself if you're new here.
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
 
+
 ## Blocked / waiting
 
 - _(nothing)_
@@ -61,7 +62,8 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
-- BL-27: 3 of 5 adopt blockers (capability status, provenance, gap ranking) — @ajs — 2026-07-18 — (this commit); 2 left: orphan Capability, duplicate detection
+- BL-27: unmotivated_capability, the direction DETECT was blind in — @ajs — 2026-07-18 — (this commit); 1 blocker left: duplicate detection
+- BL-27: 3 of 5 adopt blockers (capability status, provenance, gap ranking) — @ajs — 2026-07-18 — `83da659`, `3c157ab`
 - BL-28 typed tool params (fixes the ask half of DETECT from Claude Code) — @ajs — 2026-07-18 — `6dfdd61`
 - Self-host GENESIS trial; BL-28 raised, BL-27 widened — @ajs — 2026-07-18 — `2ea0db1` + revision
 - Brownfield trial on 3dtictactoe; BL-27 raised from it and ophyd — @ajs — 2026-07-18 — `84aacb6`

@@ -394,3 +394,119 @@ fn ranking_is_stable_across_runs() {
     let twice = sources(&g.detect_gaps().unwrap());
     assert_eq!(once, twice);
 }
+
+// ---- BL-27 · the direction DETECT was blind in -----------------------------
+
+#[test]
+fn a_capability_nothing_asked_for_is_reported() {
+    // 3dtictactoe's probe, verbatim in shape: the code detects draws but no
+    // requirement in description.txt ever asks for it. Four gaps came back and
+    // none was about the orphan. Ophyd ran the same probe on a service graph
+    // (cap:qserver-auth, no SATISFIES) and got 13 unsatisfied_requirement gaps
+    // and silence about the dangling capability.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:play", "Play a game", "two players take turns")
+        .unwrap();
+    g.add_capability("cap:turns", "Turn taking", "alternates players", None)
+        .unwrap();
+    g.add_capability("cap:draw", "Draw detection", "spots a full board", None)
+        .unwrap();
+    g.satisfies("cap:turns", "req:play").unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    let orphans: Vec<&str> = gaps
+        .iter()
+        .filter(|x| x.gap_source == GapSource::UnmotivatedCapability)
+        .flat_map(|x| x.affected_ids.iter().map(String::as_str))
+        .collect();
+
+    // Exactly cap:draw — cap:turns satisfies something, so it is not flagged.
+    assert_eq!(orphans, ["cap:draw"]);
+}
+
+#[test]
+fn an_inferred_orphan_outranks_an_unsatisfied_requirement() {
+    // Ophyd asked for this to outrank unsatisfied_requirement "on a brownfield
+    // graph". A capability read out of running code that no requirement
+    // justifies is a feature in production nobody asked for; that is the
+    // highest-value thing an adoption pass surfaces, so it leads the list.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "Stated need", "someone asked for this")
+        .unwrap();
+    g.add_capability(
+        "cap:ghost",
+        "Undocumented auth",
+        "authorises requests",
+        None,
+    )
+    .unwrap();
+    g.set_provenance(node::CAPABILITY, "cap:ghost", "inferred")
+        .unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    assert_eq!(
+        gaps[0].gap_source,
+        GapSource::UnmotivatedCapability,
+        "got {:?}",
+        sources(&gaps)
+    );
+    assert!((gaps[0].severity - 0.70).abs() < f64::EPSILON);
+}
+
+#[test]
+fn an_authored_orphan_ranks_below_the_requirement_gaps() {
+    // The greenfield reading of the same structure. A capability someone wrote
+    // down that satisfies nothing is a half-finished thought, not a discovery,
+    // and must not push the requirement gaps down the list.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "Stated need", "someone asked for this")
+        .unwrap();
+    g.add_capability("cap:half", "Half a thought", "does something", None)
+        .unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    let orphan = gaps
+        .iter()
+        .find(|x| x.gap_source == GapSource::UnmotivatedCapability)
+        .expect("still reported, just not first");
+    let unsat = gaps
+        .iter()
+        .find(|x| x.gap_source == GapSource::UnsatisfiedRequirement)
+        .expect("req:a is satisfied by nothing");
+
+    assert!((orphan.severity - 0.55).abs() < f64::EPSILON);
+    assert!(
+        orphan.severity < unsat.severity,
+        "an authored orphan must not outrank a real requirement gap"
+    );
+}
+
+#[test]
+fn no_orphan_capability_gaps_before_any_requirement_exists() {
+    // A graph seeded from code with no intent captured yet would otherwise emit
+    // one gap per capability — the per-node flood the project-level nudges exist
+    // to replace. The missing-intent case is a phase gap nothing reports yet.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for c in ["cap:a", "cap:b", "cap:c"] {
+        g.add_capability(c, c, "read out of the code", None)
+            .unwrap();
+    }
+
+    let gaps = g.detect_gaps().unwrap();
+    assert!(
+        !sources(&gaps).contains(&GapSource::UnmotivatedCapability),
+        "got {:?}",
+        sources(&gaps)
+    );
+}
+
+#[test]
+fn a_complete_thread_reports_no_orphan_capability() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.satisfies("cap:a", "req:a").unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    assert!(!sources(&gaps).contains(&GapSource::UnmotivatedCapability));
+}

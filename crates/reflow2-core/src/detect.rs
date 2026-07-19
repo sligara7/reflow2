@@ -62,6 +62,17 @@ pub enum GapSource {
     // Traceability
     /// A Requirement has no `SATISFIES` from any Capability.
     UnsatisfiedRequirement,
+    /// A Capability `SATISFIES` no Requirement — something exists that nothing
+    /// asked for.
+    ///
+    /// The mirror of [`GapSource::UnsatisfiedRequirement`], and the direction
+    /// DETECT was blind in. Capabilities are normally created *from*
+    /// requirements, so in greenfield an orphan is usually a half-finished
+    /// thought. Reading a system backwards inverts that: the capability is the
+    /// thing that indisputably exists, and one nothing justifies is either a
+    /// missing requirement or dead code. Both are worth a question, and finding
+    /// them is much of what an adoption exercise is *for*.
+    UnmotivatedCapability,
     /// A Capability is not `ALLOCATED_TO` any Component.
     UnallocatedCapability,
     /// A Capability has no `Artifact` `REALIZES`-ing it.
@@ -133,6 +144,7 @@ impl GapSource {
             GapSource::BuildWithoutVerification => "build_without_verification",
             GapSource::NoDeployOperate => "no_deploy_operate",
             GapSource::UnsatisfiedRequirement => "unsatisfied_requirement",
+            GapSource::UnmotivatedCapability => "unmotivated_capability",
             GapSource::UnallocatedCapability => "unallocated_capability",
             GapSource::UnrealizedCapability => "unrealized_capability",
             // Load-bearing: this string is hashed into the gap id, which keys
@@ -731,6 +743,7 @@ impl DesignGraph {
 
         self.detect_phase_coverage(&pop, &mut gaps);
         self.detect_unsatisfied_requirements(&pop, &mut gaps)?;
+        self.detect_unmotivated_capabilities(&pop, &mut gaps)?;
         self.detect_unallocated_capabilities(&pop, &mut gaps)?;
         self.detect_unrealized_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
@@ -881,6 +894,80 @@ impl DesignGraph {
                     evidence: format!(
                         "Requirement '{}' (priority={priority}) has 0 incoming SATISFIES; project has {} capability(ies).",
                         req.node_id, pop.capabilities
+                    ),
+                });
+            }
+        }
+        Ok(())
+    }
+
+    /// The mirror of [`Self::detect_unsatisfied_requirements`]: a Capability
+    /// that satisfies no Requirement.
+    ///
+    /// # Why severity reads `provenance`
+    ///
+    /// The ophyd trial asked for this to outrank `unsatisfied_requirement`
+    /// *"on a brownfield graph"* — and a fixed number cannot honour that
+    /// qualifier, because the same structure means different things on the two
+    /// paths. An `authored` capability nothing asked for is a half-finished
+    /// thought, worth mentioning after the requirement gaps. An `inferred` one
+    /// is a feature **in production** that no stated requirement justifies —
+    /// either a requirement nobody wrote down or dead code, and the single
+    /// highest-value thing an adoption pass can surface.
+    ///
+    /// `provenance` is what tells those apart, so the bump keys on it: 0.55
+    /// normally, 0.70 when inferred, which clears `unsatisfied_requirement`'s
+    /// 0.60 default exactly on the graph where the trial wanted it to and
+    /// nowhere else.
+    fn detect_unmotivated_capabilities(
+        &self,
+        pop: &Population,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        // Only meaningful once requirements exist to be motivated *by*. A graph
+        // with capabilities and no requirements at all is a different situation
+        // — intent has not been captured yet — and reporting it once per
+        // capability would be the per-node flood this layer exists to avoid.
+        // Nothing currently reports that project-level case; recorded in BL-27.
+        if pop.requirements == 0 {
+            return Ok(());
+        }
+        for cap in self.scan_nodes(node::CAPABILITY)? {
+            if self
+                .outgoing(&cap.node_id, Some(edge::SATISFIES))?
+                .is_empty()
+            {
+                let name = node_name(&cap);
+                let inferred = cap
+                    .properties
+                    .get("provenance")
+                    .and_then(dynograph_core::Value::as_str)
+                    == Some("inferred");
+                gaps.push(GapCandidate {
+                    id: gap_id(
+                        GapSource::UnmotivatedCapability,
+                        std::slice::from_ref(&cap.node_id),
+                    ),
+                    gap_source: GapSource::UnmotivatedCapability,
+                    scope: GapScope::Capability,
+                    severity: if inferred { 0.70 } else { 0.55 },
+                    title: format!("Nothing asked for capability “{name}”"),
+                    description: if inferred {
+                        format!(
+                            "“{name}” is built and running, but no requirement justifies it — is there a need nobody wrote down, or is this dead code?"
+                        )
+                    } else {
+                        format!(
+                            "“{name}” satisfies no requirement — what need does it serve, or should it go?"
+                        )
+                    },
+                    affected_ids: vec![cap.node_id.clone()],
+                    suggested_depth: 2,
+                    evidence: format!(
+                        "Capability '{}' (provenance={}) has 0 outgoing SATISFIES; project has {} requirement(s).",
+                        cap.node_id,
+                        if inferred { "inferred" } else { "authored" },
+                        pop.requirements
                     ),
                 });
             }

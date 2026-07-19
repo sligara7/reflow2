@@ -27,6 +27,7 @@ reflow2 surfaces the decisions a stateless agent would make silently. Turn them 
    | Gap | Record the answer with |
    |---|---|
    | `unsatisfied_requirement` / `unallocated_capability` | `add_capability` + `satisfies`, `allocate` |
+   | `unmotivated_capability` | `add_requirement` + `satisfies` if the user names the need it serves — **or** `delete_node` if they confirm it is dead. This gap has two honest answers and the wrong move is to invent a requirement from the capability's own description: a requirement backed out of the thing that implements it is satisfied by construction and can never contradict anything. Ask the user what asked for it |
    | `unprovided_interface` | `add_interface` + `provides` / `consumes` |
    | `unrealized_capability` | `link_artifact` (see **link-artifacts**) |
    | `build_without_verification`, `unverified_capability` | `add_verification` + `verifies` |

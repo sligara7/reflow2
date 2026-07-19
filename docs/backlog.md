@@ -241,13 +241,37 @@ the operator declined to run `apply_heal`. Marking unexplored regions so detecto
 there is a **precondition** for the deepening stage, not a refinement of it. The
 opaque-Component treatment of the vendored fork is the existing precedent.
 
+*The orphan-Capability fix, and two things it deliberately left alone.* `unmotivated_capability`
+is the mirror of `unsatisfied_requirement`, and its severity reads `Capability.provenance` — 0.55
+authored, 0.70 `inferred`. Ophyd asked for it to outrank `unsatisfied_requirement` *"on a
+brownfield graph"*, and a fixed number cannot honour that qualifier: the same structure means a
+half-finished thought on one path and a feature in production nobody asked for on the other.
+Provenance is exactly what separates them, which is the first thing to consume that property.
+
+1. **HEAL was not given the symmetric check**, though it is blind in the same direction. Two
+   reasons, and they should be revisited together rather than piecemeal. There is no mechanical
+   repair for "no requirement asked for this" — the proposal would be one more
+   `requires_human_review` stub on a graph where `propose_heal` already returns 0 applicable
+   operations and 14 awaiting generation. And DETECT/HEAL double-counting is *already* a recorded
+   complaint (ophyd 15 / 3dtictactoe 10, reproduced a third time in the self-host run); adding a
+   fifth pair would deepen it. This is the docs' own division — *HEAL fills structure; Gap
+   Surfacing elicits meaning* — and a missing requirement is meaning. If the double-count is fixed
+   first, revisit.
+2. **A graph with capabilities and zero requirements reports nothing**, because the detector is
+   gated on `requirements > 0` to avoid one gap per capability. That is the pure brownfield
+   starting state, and it is exactly ophyd finding 1's ask — *"the first gap should be about
+   missing intent, not missing structure"*. It wants a **phase-coverage** detector
+   (`design_without_intent`, project-scope, one nudge not N), which is the same shape as the four
+   that exist and is **S**. Not built here because it is a different detector answering a
+   different question; recorded so it is not rediscovered as a bug.
+
 *A skill alone would ship a graph that lies.* Five fixes gate it, and each is the recurring lesson
 below again:
 
 | Blocker | Evidence | Size |
 |---|---|---|
 | ~~`add_capability` hardcodes `status: "planned"`~~ — **done** | ophyd's 15 shipped, under-test capabilities made the graph "assert that a production system is entirely unbuilt". Optional `status` at creation plus `set_capability_status`; nothing hardcoded it, the constructor never set the property and took the schema default | S |
-| `detect_gaps` walks Requirement→Capability only, so an **orphan Capability is never reported** | "in greenfield that direction is rare… in brownfield it is the dominant direction of error" — a feature in production no requirement justifies is exactly what an adoption exercise is for. DETECT and HEAL are blind in the same direction | M |
+| ~~`detect_gaps` walks Requirement→Capability only, so an **orphan Capability is never reported**~~ — **done (DETECT)** | "in greenfield that direction is rare… in brownfield it is the dominant direction of error" — a feature in production no requirement justifies is exactly what an adoption exercise is for. Now `unmotivated_capability`; see the note below on why HEAL was deliberately left alone | M |
 | No duplicate detection | did not fire on a textbook duplicate; "duplicate implementations are *the* characteristic brownfield defect" | M |
 | ~~`concept_without_design` severity ordering~~ — **done** | above. Fixed by banding the sort rather than touching the detectors: a gap that names nodes outranks a project-level phase nudge, severity within each band | S |
 | ~~Provenance has nowhere to go~~ — **done** | ophyd smuggled `[EXTERNAL — …]` into statement text, "which is not queryable" | S |

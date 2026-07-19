@@ -84,6 +84,7 @@ the user's deploy/operate ask.
 | gap_source | Fires when… |
 |---|---|
 | `unsatisfied_requirement` | a Requirement has no `SATISFIES` from any Capability/Component |
+| `unmotivated_capability` | a Capability `SATISFIES` no Requirement — the mirror of the row above, and the direction DETECT was blind in. Rare in greenfield, where capabilities are created *from* requirements; **the dominant direction of error when reading a system backwards**, where an unjustified capability is either a requirement nobody wrote down or dead code. Severity reads `Capability.provenance`: 0.55 authored (a half-finished thought), 0.70 `inferred` (a feature in production nothing asked for) |
 | `unallocated_capability` | a Capability is not `ALLOCATED_TO` any Component |
 | `interfaceless_dependency` | two Components `DEPENDS_ON` each other with no `Interface` between them |
 | `unprovided_interface` | an `Interface` something `CONSUMES` that no Component `PROVIDES` — the two sides of a contract disagree |

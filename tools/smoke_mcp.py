@@ -322,6 +322,23 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("a fully paired contract is not reported as a gap",
          "unprovided_interface" not in sources, sources)
 
+    # BL-27: the direction DETECT was blind in. cap:shipped above satisfies no
+    # requirement — the probe both brownfield trials ran (3dtictactoe's
+    # cap:draw-detection, ophyd's cap:qserver-auth), where the orphan went
+    # unmentioned while the requirement gaps were all reported. It is marked
+    # inferred, so it reads as a feature in production nothing asked for and
+    # leads the list.
+    c.ok("a capability nothing asked for is reported (BL-27)",
+         "unmotivated_capability" in sources, sources)
+    orphan = next(g for g in gaps if g["gap_source"] == "unmotivated_capability")
+    c.ok("and it names the capability, not the project",
+         orphan["affected_ids"] == ["cap:shipped"], orphan["affected_ids"])
+    c.ok("an inferred orphan outranks an unsatisfied requirement",
+         orphan["severity"] > max((g["severity"] for g in gaps
+                                   if g["gap_source"] == "unsatisfied_requirement"),
+                                  default=0.0),
+         [(g["gap_source"], round(g["severity"], 2)) for g in gaps])
+
     # BL-27: a gap that names nodes describes something wrong NOW; a phase
     # nudge describes what comes next. Never rank "next" above "broken" — an
     # agent works this list top-down, and three brownfield trials watched it do
