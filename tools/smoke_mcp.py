@@ -156,6 +156,7 @@ def run(binary: str, graph_path: str) -> int:
         "detect_defects", "propose_heal", "describe_schema",
         "set_capability_status", "set_provenance",
         "release_includes", "release_report", "pin_at_epoch",
+        "add_flow", "part_of_flow", "flow_report",
     ):
         c.ok(f"tool exposed: {expected}", expected in names)
 
@@ -657,6 +658,35 @@ def run(binary: str, graph_path: str) -> int:
          s.call_expect_error("release_includes",
                              {"release_id": "rel:v1", "target_type": "Requirement",
                               "target_id": "req:physics"}) is not None)
+
+    print("\n== 7c. a process is modellable (BL-37) ==")
+    s.call("add_flow", {"id": "flow:play", "name": "A round of play",
+                        "flow_type": "process", "entry_point": "cap:flight"})
+    s.call("part_of_flow", {"capability_id": "cap:flight", "flow_id": "flow:play",
+                            "step_order": 1})
+    s.call("part_of_flow", {"capability_id": "cap:display", "flow_id": "flow:play",
+                            "step_order": 2})
+    s.call("create_edge", {"edge_type": "TRIGGERS", "from_type": "Capability",
+                           "from_id": "cap:flight", "to_type": "Capability",
+                           "to_id": "cap:display", "props": {"role": "feeds"}})
+    s.call("create_edge", {"edge_type": "TRIGGERS", "from_type": "Capability",
+                           "from_id": "cap:display", "to_type": "Capability",
+                           "to_id": "cap:flight", "props": {"role": "forces resync"}})
+    fr = s.call("flow_report", {"flow_id": "flow:play"})
+    c.ok("the flow reads back in step order",
+         [st["capability_id"] for st in fr["steps"]] == ["cap:flight", "cap:display"],
+         fr["steps"])
+    c.ok("transitions carry their meaning — forward and feedback are distinct",
+         {t["role"] for t in fr["transitions"]} == {"feeds", "forces resync"},
+         fr["transitions"])
+    c.ok("the process's cycle is reported, never judged",
+         fr["cycles"] == [["cap:display", "cap:flight"]]
+         and not any(set(d["affected_ids"]) == {"cap:flight", "cap:display"}
+                     for d in s.call("detect_defects")
+                     if d["category"] == "circular_dependency"),
+         fr["cycles"])
+    c.ok("a fully-stated flow confesses nothing", fr["confessions"] == [],
+         fr["confessions"])
 
     print("\n== 8. structural health: a cycle through contracts ==")
     s.call("add_interface", {"id": "ifc:score", "name": "Score input"})

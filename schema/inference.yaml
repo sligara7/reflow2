@@ -56,6 +56,12 @@ schema:
       properties:
         confidence: { type: float, range: [0.0, 1.0] }
         evidence: { type: string }
+        # BL-37: in a process model, forward "feeds" and backward "forces a
+        # resync" edges are both TRIGGERS — the role is what tells them apart,
+        # and it is the entire subject of a model of feedback. Free-form rather
+        # than an enum because process roles are domain-specific; flow_report
+        # displays it per transition.
+        role: { type: string, description: "What this trigger means in its process — e.g. 'feeds', 'forces resync'. Direction of influence, not just causation." }
       extraction_hint: Source is the event/condition that initiates target.
 
     CONTRADICTS:

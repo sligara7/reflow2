@@ -438,6 +438,7 @@ struct Population {
     capabilities: usize,
     components: usize,
     interfaces: usize,
+    flows: usize,
     artifacts: usize,
     verifications: usize,
     operate: usize, // Release + Environment + Resource
@@ -450,6 +451,7 @@ impl DesignGraph {
             capabilities: self.count_nodes(node::CAPABILITY)?,
             components: self.count_nodes(node::COMPONENT)?,
             interfaces: self.count_nodes(node::INTERFACE)?,
+            flows: self.count_nodes(node::FLOW)?,
             artifacts: self.count_nodes(node::ARTIFACT)?,
             verifications: self.count_nodes(node::VERIFICATION)?,
             operate: self.count_nodes(node::RELEASE)?
@@ -857,7 +859,12 @@ impl DesignGraph {
             });
         };
 
-        if pop.requirements + pop.capabilities > 0 && pop.components == 0 {
+        // A Flow counts as structure: a *process* design's WHERE is the flow
+        // its capabilities form, and it never grows Components at all. Without
+        // this, modelling reflow2's own coherence loop raised "no structure
+        // yet" over a fully-structured process — the phase detectors assuming
+        // every subject is a product (BL-37; the wider question is BL-16).
+        if pop.requirements + pop.capabilities > 0 && pop.components == 0 && pop.flows == 0 {
             push(
                 gaps,
                 GapSource::ConceptWithoutDesign,
@@ -866,7 +873,7 @@ impl DesignGraph {
                 "Concept defined, but no structure yet",
                 "You've defined what it does, but nothing about how it's structured into buildable parts.",
                 format!(
-                    "{} requirement(s) + {} capability(ies) exist; 0 Components.",
+                    "{} requirement(s) + {} capability(ies) exist; 0 Components, 0 Flows.",
                     pop.requirements, pop.capabilities
                 ),
             );

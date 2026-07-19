@@ -117,7 +117,8 @@ Five practices, each earned:
 
 ## 4. The instruments, and what "better" means
 
-Today's exercise left four runnable scripts. **They are the fitness function** — the numbers that say
+The 2026-07-19 exercise left four runnable scripts, and closing BL-37 added a fifth. **They are the
+fitness function** — the numbers that say
 whether reflow2 is getting better at the thing it claims to do. All are currently failing on purpose
 and record a baseline to move:
 
@@ -127,6 +128,7 @@ and record a baseline to move:
 | `tools/erosion_trial.py` | After N fix cycles, does the design describe what shipped? | **7/8** (was 2/7 at baseline) — the release records its manifest with cut-frozen checksums and the as-released diff is a query; the one remaining miss is the semantic description-vs-history judgement, deliberately not built | BL-33, BL-34 |
 | `tools/coherent_erosion_trial.py` | Is `designed == released` reachable, and does anything drive it? | **9/9 — the first instrument fully green** (was 4/9), every YES a genuine read; it stays in the table as a regression gate | — |
 | `tools/build_design_graph.py` | What does reflow2 say about reflow2's own design? | 96 nodes, 16 gaps, 14 defects — **every output true** (was 33/36 with 13 false gaps and 24 false defects; BL-38 and BL-5's second pass cleared the noise) | — |
+| `tools/model_the_loop.py` | Can reflow2 hold its own *process* — a model with feedback loops as the subject? | **0 frictions** (was 4: no Flow write side, roles lost, cycles invisible, product-shaped nudge — BL-37); stays as a regression gate, exits non-zero on any friction | — |
 
 `tools/smoke_mcp.py` stays the gate for the shipped surface; these four are the gate for whether the
 *loop* works. They exit non-zero by design and should not be wired into CI as pass/fail until the
@@ -195,7 +197,7 @@ the instruments in §4 exist so the next agent inherits the measurement.
 
 Concretely, when you change reflow2:
 
-1. Run the four instruments before and after. A number that moves is the claim; a number that moves
+1. Run the instruments in §4 before and after. A number that moves is the claim; a number that moves
    the wrong way is the finding.
 2. If you are adding a detector or a phase capability, add a **probe** for it to the relevant
    instrument, so the next agent inherits the measurement rather than the anecdote.

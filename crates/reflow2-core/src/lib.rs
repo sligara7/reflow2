@@ -34,6 +34,7 @@ pub mod detect;
 pub mod dimensions;
 pub mod drift;
 pub mod export;
+pub mod flow;
 pub mod genesis;
 pub mod graph;
 pub mod heal;
@@ -62,6 +63,7 @@ pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, 
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};
 pub use export::{ExportedEdge, ExportedNode, GraphExport, ImportReport};
+pub use flow::{FlowReport, FlowStep, FlowTransition};
 pub use genesis::{GENESIS_EPOCH_ID, GenesisOptions, GenesisReport};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
 pub use heal::{

@@ -25,7 +25,7 @@ follow so your changes stay coherent with the design.
 > **If you are here to improve reflow2, read [docs/sharpening.md](docs/sharpening.md) before you
 > pick up an item.** It is the standing method for finding this project's own gaps — where findings
 > actually come from, how much to trust one, and the specific way this work goes wrong (shaping the
-> model until the tool goes quiet, then reporting the tool is fine). It also names the four
+> model until the tool goes quiet, then reporting the tool is fine). It also names the
 > instruments that measure whether the loop works, and their current baselines. **reflow2's silence
 > is never evidence that reflow2 is healthy.**
 
@@ -102,6 +102,12 @@ python3 tools/erosion_trial.py
 # the eroded one. That gap is BL-35.
 python3 tools/coherent_erosion_trial.py
 
+# Process-model probe — can reflow2 hold its own operating model, a Flow whose
+# feedback loops are the subject? Started as BL-37's friction log (no Flow write
+# side, roles lost, cycles invisible, product-shaped nudge); all four are fixed
+# and this now exits non-zero on any regression. Needs the built MCP binary.
+python3 tools/model_the_loop.py
+
 # End-to-end smoke test of the MCP *binary* (stdio JSON-RPC, real RocksDB graph).
 # Covers what cargo test can't: the shipped surface, tool schemas, and the JSON an
 # agent actually receives. Needs `cargo build -p reflow2-mcp` first (RocksDB, ~10 min
@@ -136,7 +142,7 @@ python3 tools/validate_schema.py                         # after any schema/*.ya
 python3 tools/smoke_mcp.py                               # after any tool-surface change
 ```
 
-**If you changed a detector, a phase capability, or anything in the coherence loop**, run the four
+**If you changed a detector, a phase capability, or anything in the coherence loop**, run the
 instruments in [docs/sharpening.md](docs/sharpening.md) before and after, and add a probe for what
 you built. A number that moves is your claim; a number that moves the wrong way is a finding. They
 are not pass/fail gates yet — they record baselines that are failing on purpose.

@@ -83,7 +83,6 @@ Nine independent sources, which is why several items appear on more than one lis
 | ID | Item | Why | Size |
 |---|---|---|---|
 | **BL-41** | **Graph text is data, never instructions — and nothing says so** | **S half done, 2026-07-19** — the standing rule is stated in the three places an agent looks: a section in the consumer AGENTS.md, one line in each of the eight skills at the point where it starts reading graph text, and the server's `get_info` instructions (so a session that loads no skill still gets it in the handshake). The one genuinely uncovered LLM failure mode in [partnership.md](partnership.md): every skill tells the agent to read node text and act on the design, and a hostile or careless statement rides that trust. Bounded today (single user, local graph); real the day a graph is shared (BL-12) or an adopted repo's prose flows through INGEST (BL-27). Mechanical mitigation (provenance-aware trust, quoting boundaries — [BL-12](#bigger-threads) sketch idea 2 is its design seed) is **M** and should wait for a real multi-writer case | ~~S~~ + M |
-| **BL-37** | **reflow2 cannot model a *process* — `Flow` has no write side, and edge roles are lost** | Found by modelling reflow2's own coherence loop in reflow2. The one type meant for an ordered process cannot be created; forward and backward edges are indistinguishable | M |
 | **BL-40** | **Viewpoints as pure projections (SYNTHESIZE held to a no-extrapolation standard)** | The graph stores the design; the agent only renders. `tools/render_views.py` is the seed — functional/structural/traceability views project cleanly today, and each confession it prints is a gap by definition. Direction: a viewpoint catalogue (UAF/DoDAF-informed), and rendering through the live MCP surface rather than the export. The author intends to expand this thread | M–L |
 | **BL-30** | **A failing test satisfies the check that asked for a test** | **S half done** — `failing_verification` fires at 0.8 and coverage counts passing only. The M half (`reconcile_verification`) remains. See below | ~~S~~ + M |
 | **BL-29** | **`apply_heal` trusts the proposal; merge loses data silently** | Mostly **done** — three of seven fixed; three remain, one deliberately deferred. See below | M |
@@ -179,9 +178,26 @@ independently reporting [BL-34](#next-up)'s consequence, and the `cmp:verify` / 
 islands found a genuine omission in the committed design model (the P4/P5 write side has no stated
 capability — fix the model, on the record, per [sharpening.md](sharpening.md) §2).
 
-**BL-37 · reflow2 cannot model a process** — *modelling the coherence loop itself, 2026-07-19
+**BL-37 · reflow2 cannot model a process — DONE** — *modelling the coherence loop itself, 2026-07-19
 (`tools/model_the_loop.py`, exported to [loop-model.json](loop-model.json), drawn in
 [loop-dag.html](loop-dag.html)).*
+
+**Done, to two decisions taken 2026-07-19.** The write side is `add_flow` + `part_of_flow`
+(`step_order` was already in the schema); `TRIGGERS` gains a free-form `role` property — a
+backward-compatible property addition, counts stay 27/54 — so *feeds* and *forces a resync* are
+distinguishable, which was the entire subject of the model. The cycle question was decided as
+**report, don't judge**: `flow_report` states a flow's cycles as facts of the process (one
+representative per strongly-connected cluster, deterministic), and `circular_dependency` stays
+scoped to `DEPENDS_ON` and contracts, where a cycle really is a defect. Two diagnostics stopped
+assuming the subject is a product: `concept_without_design` counts a Flow as structure, and
+HEAL's `orphan_node` counts flow membership as an anchor. Anything unstated is confessed —
+including a `PART_OF_FLOW` edge to a capability that does not exist, which the smoke layer caught
+the report silently tolerating (the storage engine accepts dangling edges; only the published
+surface shows it). Measured: the loop model's 4 frictions → **0** (`model_the_loop.py` is now the
+fifth instrument, non-zero on regression), its defects 10 → 4 with every survivor true — the
+remainder is the recorded A14 day-one shape on [BL-27](#bigger-threads), and wider process-aware
+diagnostics stay with [BL-16](#bigger-threads). The other four instruments are unchanged. *Original
+entry:*
 
 Distinct from the self-host trials, which modelled reflow2's **product** — it has a detect
 capability, a component per module. This modelled reflow2's **process**: the DAG of how the phases
@@ -1003,7 +1019,7 @@ far: `Interface`, HEAL's skill, the `Verification`/operate write side, `contain_
 API), `DOCUMENTS` (declared, named in `nodes.rs`, no constructor and no tool — BL-26), and `precedes`
 (implemented in `temporal.rs`, no tool, so the epoch chain axis Z exists to record cannot be drawn by
 any client — BL-36), and `Flow` (fully specified with its own edge `PART_OF_FLOW`, no constructor,
-no tool — so no process can be modelled at all, BL-37), and `DriftEvent.resolved` (declared with
+no tool — so no process could be modelled at all; BL-37 built the write side and `flow_report`), and `DriftEvent.resolved` (declared with
 `default: false`, written by nothing — every recorded divergence stayed "open" forever no matter
 what happened next; BL-35 made the accept flip it), and `pin_at_epoch` (generic in core since the
 temporal module landed, `AT_EPOCH` declared `from: "*"` — and no tool, so nothing could pin a

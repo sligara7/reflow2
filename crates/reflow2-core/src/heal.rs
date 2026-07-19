@@ -16,7 +16,8 @@
 //! This increment implements HEAL's backbone with the fully-deterministic defect
 //! set:
 //!
-//! - `orphan_node` — a Capability not `ALLOCATED_TO`, an Artifact `REALIZES`-ing
+//! - `orphan_node` — a Capability not `ALLOCATED_TO` (nor `PART_OF_FLOW` — a
+//!   process step's anchor is its Flow, BL-37), an Artifact `REALIZES`-ing
 //!   nothing, a Requirement with no `SATISFIES`. Fix needs an *owner* → generative.
 //! - `contradiction` — a `CONTRADICTS` edge. Fix = a resolving Decision → generative.
 //! - `unresolved_setup` — an `ANTICIPATES` edge with no follow-through → generative.
@@ -344,6 +345,15 @@ impl DesignGraph {
             if self
                 .outgoing(&cap.node_id, Some(edge::ALLOCATED_TO))?
                 .is_empty()
+                // A step of a process is anchored by its Flow — PART_OF_FLOW
+                // is a traceability edge PROPAGATE walks, and a process's
+                // capabilities never gain Components at all (BL-37). Whether
+                // an *additionally* allocatable capability should still be
+                // asked WHERE is DETECT's `unallocated_capability` question,
+                // which stays population-gated and unchanged.
+                && self
+                    .outgoing(&cap.node_id, Some(edge::PART_OF_FLOW))?
+                    .is_empty()
             {
                 issues.push(orphan(
                     &cap.node_id,

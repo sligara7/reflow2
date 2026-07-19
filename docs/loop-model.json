@@ -1,6 +1,60 @@
 {
   "edges": [
     {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:p0-intent",
+      "properties": {
+        "step_order": 1,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:loop"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:p1-function",
+      "properties": {
+        "step_order": 2,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:loop"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:p2-structure",
+      "properties": {
+        "step_order": 3,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:loop"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:p3-realize",
+      "properties": {
+        "step_order": 4,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:loop"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:p4-verify",
+      "properties": {
+        "step_order": 5,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:loop"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:p5-operate",
+      "properties": {
+        "step_order": 6,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:loop"
+    },
+    {
       "edge_type": "SATISFIES",
       "from_id": "cap:p0-intent",
       "properties": {},
@@ -51,91 +105,125 @@
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p0-intent",
-      "properties": {},
+      "properties": {
+        "role": "feeds"
+      },
       "to_id": "cap:p1-function"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p0-intent",
-      "properties": {},
+      "properties": {
+        "role": "records"
+      },
       "to_id": "cap:z-change"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p1-function",
-      "properties": {},
+      "properties": {
+        "role": "feeds"
+      },
       "to_id": "cap:p2-structure"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p1-function",
-      "properties": {},
+      "properties": {
+        "role": "records"
+      },
       "to_id": "cap:z-change"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p2-structure",
-      "properties": {},
+      "properties": {
+        "role": "feeds"
+      },
       "to_id": "cap:p3-realize"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p2-structure",
-      "properties": {},
+      "properties": {
+        "role": "records"
+      },
       "to_id": "cap:z-change"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p3-realize",
-      "properties": {},
+      "properties": {
+        "evidence": "the fix changed behaviour: the FUNCTION must follow",
+        "role": "forces resync"
+      },
       "to_id": "cap:p1-function"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p3-realize",
-      "properties": {},
+      "properties": {
+        "evidence": "responsibility moved: the ALLOCATION must follow",
+        "role": "forces resync"
+      },
       "to_id": "cap:p2-structure"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p3-realize",
-      "properties": {},
+      "properties": {
+        "role": "feeds"
+      },
       "to_id": "cap:p4-verify"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p3-realize",
-      "properties": {},
+      "properties": {
+        "role": "records"
+      },
       "to_id": "cap:z-change"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p4-verify",
-      "properties": {},
+      "properties": {
+        "evidence": "a failing test forces a fix \u2014 the inner loop",
+        "role": "forces resync"
+      },
       "to_id": "cap:p3-realize"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p4-verify",
-      "properties": {},
+      "properties": {
+        "role": "feeds"
+      },
       "to_id": "cap:p5-operate"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p4-verify",
-      "properties": {},
+      "properties": {
+        "role": "records"
+      },
       "to_id": "cap:z-change"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p5-operate",
-      "properties": {},
+      "properties": {
+        "evidence": "what users actually do teaches what they actually need",
+        "role": "forces resync"
+      },
       "to_id": "cap:p0-intent"
     },
     {
       "edge_type": "TRIGGERS",
       "from_id": "cap:p5-operate",
-      "properties": {},
+      "properties": {
+        "role": "records"
+      },
       "to_id": "cap:z-change"
     }
   ],
@@ -255,6 +343,18 @@
       }
     },
     {
+      "node_id": "flow:loop",
+      "node_type": "Flow",
+      "properties": {
+        "description": "CHANGE \u2192 PROPAGATE \u2192 DETECT \u2192 SURFACE \u2192 RESOLVE/HEAL, phase by phase, with the build teaching the design backwards.",
+        "entry_point": "cap:p0-intent",
+        "exit_point": "cap:p5-operate",
+        "flow_type": "process",
+        "name": "The coherence loop",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "proj:loop",
       "node_type": "Project",
       "properties": {
@@ -306,9 +406,9 @@
     }
   ],
   "stamp": {
-    "edge_types": 53,
+    "edge_types": 54,
     "node_types": 27,
-    "reflow2_version": "0.2.0",
+    "reflow2_version": "0.3.0",
     "schema_version": 1
   }
 }

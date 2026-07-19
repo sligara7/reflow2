@@ -74,6 +74,9 @@ pub mod edge {
     pub const VERIFIES: &str = "VERIFIES";
     /// `* → *` — a node depends on another (a lateral structural coupling).
     pub const DEPENDS_ON: &str = "DEPENDS_ON";
+    /// `Capability → Flow` — a capability is a step of an ordered process
+    /// (`step_order` carries its position).
+    pub const PART_OF_FLOW: &str = "PART_OF_FLOW";
     /// `Fragment → *` — the fragment that produced/updated a node (provenance).
     pub const YIELDED: &str = "YIELDED";
 
@@ -112,6 +115,9 @@ pub mod edge {
     pub const DUPLICATES: &str = "DUPLICATES";
     /// `* → *` — a planned/anticipated need (may lack follow-through).
     pub const ANTICIPATES: &str = "ANTICIPATES";
+    /// `* → *` — source initiates target; in a process model the `role`
+    /// property says what the trigger *means* (feeds vs forces a resync).
+    pub const TRIGGERS: &str = "TRIGGERS";
 
     // Depth axis (dimensions.yaml)
     /// `DimensionAssessment → *` — links an assessment to the node it scores.

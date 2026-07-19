@@ -63,6 +63,13 @@ session, prose read out of an adopted codebase.
    - Whenever two components talk to each other, model the Interface between them and record
      both sides. An unrecorded contract is invisible: change one component later and nothing
      will tell you the other one just broke.
+   - When the user describes an **ordered process** — a user journey, an assembly sequence, an
+     operating loop — model it as a `Flow`: `add_flow`, then `part_of_flow` for each step with
+     its `step_order`. Join steps with `TRIGGERS` edges (`create_edge`), each carrying a `role`
+     property ("feeds", "forces resync"): in a process the backward edges are the point, and
+     without a role the graph cannot tell them from forward ones. `flow_report` reads it back —
+     its cycles are the process's design, not defects, and anything it confesses (an unmatched
+     entry point, unordered steps, unroled transitions) is a gap in the model to fix.
 2. **DETECT gaps and ask.** Run `detect_gaps`. For each gap, call `gap_to_prompt` to turn it
    into a plain question (see the handshake below), ask the **user**, then write their answer
    back as a Requirement or a node property. Do this **before** building. If the user judges a
@@ -138,7 +145,8 @@ reflow2 phrases the question; **you** are the language model that fills it in:
 - **Detect / analyze:** `detect_gaps`, `propagate_change`, `propagate_from`, `graph_report`,
   `graph_report_markdown`, `detect_defects`, `propose_heal`, `evaluate_allocation`,
   `propose_allocation`, `hierarchy_issues`, `surprising_connections`, `dimension_drifts`,
-  `dimension_drift`.
+  `dimension_drift`, `flow_report` (a process read back as facts — steps, roled transitions,
+  cycles reported never judged).
 - **Decomposition:** `contain_component` nests one Component inside another (the assembly
   spine). Set `level` on `add_component` — `component` (default), `subsystem`, `system`,
   `system_of_systems`, `enterprise` — and nest one level at a time; `hierarchy_issues` compares
@@ -165,8 +173,8 @@ reflow2 phrases the question; **you** are the language model that fills it in:
   once — it carries status and provenance at create time.
 - **Build:** `add_project`, `add_requirement`, `add_capability`, `add_component`,
   `contain_component`, `set_requirement_status`, `set_capability_status`, `set_provenance`,
-  `add_interface`, `satisfies`, `allocate`, `contains`, `provides`, `consumes`, `create_node`,
-  `create_edge`, `get_node`, `scan_nodes`, `delete_node`, `apply_heal`.
+  `add_interface`, `add_flow`, `part_of_flow`, `satisfies`, `allocate`, `contains`, `provides`,
+  `consumes`, `create_node`, `create_edge`, `get_node`, `scan_nodes`, `delete_node`, `apply_heal`.
 - **As-built:** `link_artifact`, `add_artifact`, `realizes`, `reconcile_artifacts`,
   `set_artifact_checksum` — the last is a **two-sided accept**: `disposition` is required
   (`design_holds`, or `design_updated` naming the `record_change` event behind it), because a

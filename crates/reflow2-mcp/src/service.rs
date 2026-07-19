@@ -517,6 +517,39 @@ pub struct PrecedesReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+pub struct AddFlowReq {
+    pub id: String,
+    pub name: String,
+    #[serde(default)]
+    pub description: Option<String>,
+    /// `process` (default) / `data_flow` / `control_flow` / `decision_flow` /
+    /// `capture` / `retrieval` / `generation`.
+    #[serde(default)]
+    pub flow_type: Option<String>,
+    /// Capability name or id where the flow begins.
+    #[serde(default)]
+    pub entry_point: Option<String>,
+    /// Capability name or id where the flow ends.
+    #[serde(default)]
+    pub exit_point: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct PartOfFlowReq {
+    pub capability_id: String,
+    pub flow_id: String,
+    /// Position of this capability within the flow. Steps without one are
+    /// listed after the ordered ones, and the flow report says so.
+    #[serde(default)]
+    pub step_order: Option<i64>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct FlowReportReq {
+    pub flow_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
 pub struct PinAtEpochReq {
     pub node_type: String,
     pub node_id: String,
@@ -1122,6 +1155,66 @@ impl ReflowService {
         ok_json(NodeDto::from(
             g.add_interface(&req.id, &req.name).map_err(dyno_err)?,
         ))
+    }
+
+    #[tool(
+        description = "Create a Flow — an ordered process linking Capabilities end to end (a \
+                       user journey, an assembly sequence, an operating loop). Attach each step \
+                       with `part_of_flow` (+ step_order); join steps with TRIGGERS edges via \
+                       `create_edge`, giving each a `role` property saying what the transition \
+                       means ('feeds', 'forces resync') — in a process the backward edges are \
+                       the point, and without a role they are indistinguishable from forward \
+                       ones. Read it back with `flow_report`."
+    )]
+    pub async fn add_flow(
+        &self,
+        Parameters(req): Parameters<AddFlowReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.add_flow(
+                &req.id,
+                &req.name,
+                req.description.as_deref(),
+                req.flow_type.as_deref(),
+                req.entry_point.as_deref(),
+                req.exit_point.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record that a Capability is a step of a Flow (PART_OF_FLOW), with its \
+                       position (`step_order`). A step without one is listed after the ordered \
+                       steps, and `flow_report` says so rather than inventing an order."
+    )]
+    pub async fn part_of_flow(
+        &self,
+        Parameters(req): Parameters<PartOfFlowReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.part_of_flow(&req.capability_id, &req.flow_id, req.step_order)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Read a Flow back as facts: steps in stated order, the TRIGGERS \
+                       transitions among them with their roles, and the cycles. Cycles are \
+                       REPORTED, never judged — a process's loops are its design, so they do \
+                       not appear in detect_defects (whose circular_dependency stays scoped to \
+                       DEPENDS_ON and contracts, where a cycle really is a defect). Anything \
+                       the model left unstated (an unmatched entry/exit point, steps without \
+                       step_order, transitions without a role) is confessed by name."
+    )]
+    pub async fn flow_report(
+        &self,
+        Parameters(req): Parameters<FlowReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        ok_json(g.flow_report(&req.flow_id).map_err(dyno_err)?)
     }
 
     #[tool(
