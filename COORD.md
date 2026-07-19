@@ -61,6 +61,8 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- Brownfield trial on 3dtictactoe; BL-27 raised from it and ophyd — @ajs — 2026-07-18 — `84aacb6`
+- Self-host: consumer kit installed into reflow2 itself — @ajs — 2026-07-18 — `98baf40`
 - **v0.2.0 released and tagged** — @ajs — 2026-07-18 — `b69dc28`; frozen for real-use feedback
 - BL-20 export/import; BL-19 backup+backfill; BL-18 staleness check — @ajs — 2026-07-18 — `79f5d42`, `3a618e3`, `21e9e11`
 - BL-19 (stamp+check half): a graph records which reflow2 wrote it — @ajs — 2026-07-18 — `2764eec`
