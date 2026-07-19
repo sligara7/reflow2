@@ -57,6 +57,8 @@ Add yourself if you're new here.
 
 
 
+- BL-38 unrealized_capability accepts both P3 shapes; dead_end on pure containers — @ajs — since 2026-07-19 — detect.rs, structure.rs, tests
+
 ## Blocked / waiting
 
 - _(nothing)_
