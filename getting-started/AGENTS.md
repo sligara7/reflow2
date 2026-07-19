@@ -1,5 +1,13 @@
 # AGENTS.md — build this project with reflow2 as the design brain
 
+> Installed by `reflow2_init.py`. **If this project already had its own `AGENTS.md`, this content
+> is in `REFLOW2.md` instead** — your file was left alone, because overwriting the instructions a
+> project actually runs on is not a thing an installer gets to do. Add a line to your `AGENTS.md`
+> pointing here so the agent reads both.
+>
+> This file is about designing *your* project. It is not the reflow2 development guide; that lives
+> in the reflow2 repo and is not installed.
+
 You are the builder. **reflow2 is the persistent, coherent design brain you don't have** — it
 outlives any context window and remembers the whole design (concept → operations). It is
 reached through the **`reflow2` MCP server** (tools listed below). You write every line of

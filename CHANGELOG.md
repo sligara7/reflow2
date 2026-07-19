@@ -97,6 +97,27 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **The installer no longer destroys a project's own `AGENTS.md`.** `reflow2_init.py` copied the kit's
+  `AGENTS.md` over whatever was there and reported it as an ordinary `AGENTS.md` line in the install
+  summary — no warning, no backup, no refusal. Verified on a scratch repo: a project's build
+  instructions were replaced and the run reported success. That is every brownfield target, and it is
+  the file a project actually runs on.
+
+  A destination the kit did not author is now left alone, and the kit content goes to `REFLOW2.md`
+  beside it; both `--check` and the install say so, and the kit's own header tells the reader where to
+  find it. Ownership is decided by the kit file's first heading rather than a marker, so kits
+  installed before this check are still recognised as ours and refresh in place. The greenfield path
+  is unchanged and repeat installs stay idempotent.
+
+  The BL-27 entry describing this understated it — it read "cannot install into a repo that already
+  has its own `AGENTS.md`", when in fact it did not refuse, it overwrote. Corrected there too.
+
+- **The repo's `AGENTS.md` now routes by audience.** Developing reflow2 and using reflow2 are
+  different jobs with different files, and nothing said so at the top of the one an agent lands on
+  first. It now opens with a two-row table: build reflow2 → this file plus `docs/sharpening.md`; design
+  your own project → the consumer kit, installed by `reflow2_init.py`, and the build commands here are
+  not for you.
+
 - **`apply_heal` checks the proposal instead of trusting it** (BL-29). It used to execute whatever
   it was handed. Verified before the fix: a hand-written proposal carrying a made-up issue id and a
   `Merge` naming two capabilities that no detector had called duplicates was applied, and deleted

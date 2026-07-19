@@ -46,6 +46,34 @@ FILES = [
     (KIT / "AGENTS.md", "AGENTS.md"),
 ]
 
+# Where kit content goes when the project already owns that filename. AGENTS.md
+# is the case that matters: every brownfield target has one, and it is the file
+# the project actually runs on.
+SIDECAR = {"AGENTS.md": "REFLOW2.md"}
+
+
+def foreign_owner(src: Path, dst: Path) -> str | None:
+    """Why `dst` must not be overwritten, or None if it is ours to manage.
+
+    A file we wrote (or an older version of it) is ours to refresh. A file the
+    project wrote is not, and clobbering it is a silent destruction of the
+    instructions the project runs on — reported, before this check existed, as an
+    ordinary `AGENTS.md` line in the install summary.
+
+    Identified by the kit's own first heading rather than a marker comment, so
+    kits installed before this check are still recognised as ours.
+    """
+    if not dst.exists():
+        return None
+    try:
+        head = src.read_text(encoding="utf-8").lstrip().splitlines()[0].strip()
+        existing = dst.read_text(encoding="utf-8").lstrip().splitlines()
+    except (OSError, UnicodeDecodeError, IndexError):
+        return "unreadable, so not safely replaceable"
+    if not existing:
+        return None
+    return None if existing[0].strip() == head else "it is not a reflow2 kit file"
+
 # Skills go to every directory some harness actually searches. There is no
 # single location: `.claude/skills/` is read by Claude Code, OpenCode and
 # Copilot/VS Code (the latter two name it "Claude-compatible" outright), while
@@ -305,7 +333,11 @@ def planned_changes(project: Path) -> list[str]:
     changes = []
     for src, rel in FILES:
         dst = project / rel
-        if not dst.exists():
+        if owner := foreign_owner(src, dst):
+            side = project / SIDECAR.get(rel, f"REFLOW2_{rel}")
+            verb = "create" if not side.exists() else "update"
+            changes.append(f"{verb}  {side.name}  (keeping your own {rel} — {owner})")
+        elif not dst.exists():
             changes.append(f"create  {rel}")
         elif not filecmp.cmp(src, dst, shallow=False):
             changes.append(f"update  {rel}")
@@ -379,6 +411,20 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
     for src, rel in FILES:
         dst = project / rel
         dst.parent.mkdir(parents=True, exist_ok=True)
+        if owner := foreign_owner(src, dst):
+            # The project has its own file here. Overwriting it destroys the
+            # instructions the project actually runs on — and AGENTS.md is
+            # exactly the file every brownfield target already has.
+            side = project / SIDECAR.get(rel, f"REFLOW2_{rel}")
+            changed = not side.exists() or not filecmp.cmp(src, side, shallow=False)
+            shutil.copy2(src, side)
+            done.append(
+                f"{side.name}  (kept your own {rel} — {owner}; "
+                f"add a line to it pointing at {side.name})"
+            )
+            if not changed:
+                done.pop()
+            continue
         changed = not dst.exists() or not filecmp.cmp(src, dst, shallow=False)
         shutil.copy2(src, dst)
         if changed:

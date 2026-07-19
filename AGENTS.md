@@ -1,5 +1,16 @@
-# AGENTS.md — orientation for AI agents working on Reflow 2.0
+# AGENTS.md — orientation for AI agents working **on** Reflow 2.0
 
+> ## Which are you doing?
+>
+> | You are… | Read | You are in the wrong place if… |
+> |---|---|---|
+> | **Building or improving reflow2 itself** — changing the Rust, the schema, the tool surface, the skills | **this file**, then [docs/sharpening.md](docs/sharpening.md) | — |
+> | **Using reflow2 to design your own project** | **[getting-started/AGENTS.md](getting-started/AGENTS.md)** — and you should not be reading it here. Run `python3 tools/reflow2_init.py /path/to/your/project`, which installs it into your repo along with the skills and MCP config | you are following the build commands below. They build *reflow2*; they have nothing to do with your project, and reflow2 deliberately installs no `src/` layout or build file, because your project type is a design *output* |
+>
+> Everything after this line is for the first case. The consumer kit lives in
+> [getting-started/](getting-started/) and is a separate document with a separate audience — it
+> never mentions cargo, and this file never mentions your design.
+>
 > **This is the primary instruction file for this repo** — it follows the
 > [agents.md](https://agents.md) convention, so every agent reads the same thing.
 >
