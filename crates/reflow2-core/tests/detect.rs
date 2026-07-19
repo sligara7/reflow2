@@ -6,7 +6,7 @@
 //! complete thread yields nothing.
 
 use reflow2_core::nodes::{Props, edge, node};
-use reflow2_core::{DesignGraph, Dimension, GapScope, GapSource};
+use reflow2_core::{DesignGraph, Dimension, GapScope, GapSource, LinkArtifactOptions};
 
 fn sources(gaps: &[reflow2_core::GapCandidate]) -> Vec<GapSource> {
     gaps.iter().map(|g| g.gap_source).collect()
@@ -732,4 +732,80 @@ fn the_duplicate_gap_id_does_not_depend_on_pair_order() {
             .clone()
     };
     assert_eq!(id_of(&once), id_of(&twice));
+}
+
+// ---- BL-38 · both P3 shapes count as "built" -------------------------------
+
+#[test]
+fn an_artifact_realizing_the_component_counts_as_building_its_capabilities() {
+    // The false positive that was 11 of 33 gaps on reflow2's own design:
+    // "the file realizes the module" is how code is actually organised, and
+    // the path art -REALIZES-> cmp <-ALLOCATED_TO- cap was present and unwalked.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    g.add_capability("cap:detect", "Detect gaps", "finds gaps", Some("realized"))
+        .unwrap();
+    g.satisfies("cap:detect", "req:a").unwrap();
+    g.add_component("cmp:detect", "detect", "the module", None)
+        .unwrap();
+    g.allocate("cap:detect", "cmp:detect").unwrap();
+    g.link_artifact(LinkArtifactOptions {
+        artifact_id: "art:detect".into(),
+        name: "detect.rs".into(),
+        location: Some("src/detect.rs".into()),
+        artifact_type: Some("code".into()),
+        target_type: node::COMPONENT.into(),
+        target_id: "cmp:detect".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: Some("sha256:aaa".into()),
+    })
+    .unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    assert!(
+        !sources(&gaps).contains(&GapSource::UnrealizedCapability),
+        "a capability whose owning component is built must not be reported unbuilt, got {:?}",
+        sources(&gaps)
+    );
+}
+
+#[test]
+fn a_capability_in_an_unbuilt_component_is_still_reported() {
+    // The exemption must not swallow the true case: artifacts exist elsewhere,
+    // but nothing realizes this capability OR the component that owns it.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    for (cap, cmp) in [("cap:built", "cmp:built"), ("cap:paper", "cmp:paper")] {
+        g.add_capability(cap, cap, "does a thing", None).unwrap();
+        g.satisfies(cap, "req:a").unwrap();
+        g.add_component(cmp, cmp, "a part", None).unwrap();
+        g.allocate(cap, cmp).unwrap();
+    }
+    g.link_artifact(LinkArtifactOptions {
+        artifact_id: "art:built".into(),
+        name: "built.rs".into(),
+        location: Some("src/built.rs".into()),
+        artifact_type: Some("code".into()),
+        target_type: node::COMPONENT.into(),
+        target_id: "cmp:built".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: Some("sha256:bbb".into()),
+    })
+    .unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    let unrealized: Vec<&str> = gaps
+        .iter()
+        .filter(|x| x.gap_source == GapSource::UnrealizedCapability)
+        .flat_map(|x| x.affected_ids.iter().map(String::as_str))
+        .collect();
+    assert_eq!(
+        unrealized,
+        ["cap:paper"],
+        "only the capability whose component nothing builds"
+    );
 }

@@ -109,7 +109,7 @@ and record a baseline to move:
 | `tools/phase_trial.py` | Does the design carry weight after P2? | **8/13** — P3 4/4, P4 1/4, P5 0/2, thread 3/3 | BL-30, BL-9 |
 | `tools/erosion_trial.py` | After N fix cycles, does the design describe what shipped? | **2/7**, and `detect_gaps` returns `[]` on a design that is fiction | BL-33, BL-34 |
 | `tools/coherent_erosion_trial.py` | Is `designed == released` reachable, and does anything drive it? | **4/9** — reachable with discipline, nothing prompts it | BL-35, BL-36 |
-| `tools/build_design_graph.py` | What does reflow2 say about reflow2's own design? | 96 nodes, 33 gaps, 36 defects — **11 gaps and 22 defects known false** | BL-38, BL-5 |
+| `tools/build_design_graph.py` | What does reflow2 say about reflow2's own design? | 96 nodes, 16 gaps, 34 defects — the 11 false gaps and 2 false dead-ends fell to BL-38's fix (was 33/36); **22 SPOF defects still known false** | BL-5 |
 
 `tools/smoke_mcp.py` stays the gate for the shipped surface; these four are the gate for whether the
 *loop* works. They exit non-zero by design and should not be wired into CI as pass/fail until the

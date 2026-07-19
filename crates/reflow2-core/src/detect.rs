@@ -1242,6 +1242,25 @@ impl DesignGraph {
         Ok(())
     }
 
+    /// A Capability nothing builds — where "builds" accepts **both** shapes the
+    /// schema allows at P3.
+    ///
+    /// `REALIZES` is declared `from: Artifact, to: "*"`, and `link_artifact`
+    /// takes any `target_type`, so a modeller can honestly say either *this
+    /// file realizes the capability* or *this file realizes the module* — the
+    /// second being how code is actually organised. This detector used to
+    /// accept only the first, which silently mandated one of two equally valid
+    /// modellings and flooded anyone who picked the other: 11 of 33 gaps on
+    /// reflow2's own design were "Nothing builds capability X" for capabilities
+    /// shipping in the binary that reported them.
+    ///
+    /// So a capability now also counts as realized when an artifact realizes a
+    /// **Component it is allocated to**: the path
+    /// `art -REALIZES-> cmp <-ALLOCATED_TO- cap` was present in every false
+    /// positive and simply not walked. The indirect form is the coarser claim —
+    /// the file builds the part that owns the capability, not the capability
+    /// itself — which is exactly the granularity BL-23 pushes designs toward
+    /// (one artifact per module, never per behaviour).
     fn detect_unrealized_capabilities(
         &self,
         pop: &Population,
@@ -1254,6 +1273,7 @@ impl DesignGraph {
             if self
                 .incoming(&cap.node_id, Some(edge::REALIZES))?
                 .is_empty()
+                && !self.realized_via_component(&cap.node_id)?
             {
                 let name = node_name(&cap);
                 gaps.push(GapCandidate {
@@ -1271,13 +1291,26 @@ impl DesignGraph {
                     affected_ids: vec![cap.node_id.clone()],
                     suggested_depth: 2,
                     evidence: format!(
-                        "Capability '{}' has 0 incoming REALIZES; project has {} artifact(s).",
+                        "Capability '{}' has 0 incoming REALIZES, and no artifact realizes any component it is allocated to; project has {} artifact(s).",
                         cap.node_id, pop.artifacts
                     ),
                 });
             }
         }
         Ok(())
+    }
+
+    /// Does any artifact realize a Component this capability is allocated to?
+    fn realized_via_component(&self, cap_id: &str) -> Result<bool, DynoError> {
+        for alloc in self.outgoing(cap_id, Some(edge::ALLOCATED_TO))? {
+            if !self
+                .incoming(&alloc.to_id, Some(edge::REALIZES))?
+                .is_empty()
+            {
+                return Ok(true);
+            }
+        }
+        Ok(false)
     }
 
     fn detect_unverified_capabilities(

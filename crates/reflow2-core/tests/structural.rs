@@ -207,3 +207,71 @@ fn an_unrelated_island_does_not_make_everything_a_single_point_of_failure() {
         "an unrelated island must not turn the capabilities into single points of failure"
     );
 }
+
+// ---- BL-38 · a pure container is not a dead end ----------------------------
+
+#[test]
+fn an_assembly_whose_only_edges_are_containment_is_not_a_dead_end() {
+    // cmp:mcp on reflow2's own design: a subsystem holding modules, reported
+    // "not connected to anything" because the design network excludes CONTAINS
+    // (decomposition is not traceability). An assembly speaks through its
+    // children.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.satisfies("cap:a", "req:a").unwrap();
+    g.add_component(
+        "cmp:parent",
+        "Subsystem",
+        "holds modules",
+        Some("subsystem"),
+    )
+    .unwrap();
+    g.add_component("cmp:leaf", "Module", "a module", None)
+        .unwrap();
+    g.contain_component("cmp:parent", "cmp:leaf").unwrap();
+    g.allocate("cap:a", "cmp:leaf").unwrap();
+
+    let defects = g.detect_defects().unwrap();
+    let dead: Vec<&str> = defects
+        .iter()
+        .filter(|d| d.category == reflow2_core::HealCategory::DeadEnd)
+        .flat_map(|d| d.affected_ids.iter().map(String::as_str))
+        .collect();
+    assert!(
+        dead.is_empty(),
+        "the container's connection flows through its child, got {dead:?}"
+    );
+}
+
+#[test]
+fn a_leaf_with_no_traceability_is_still_a_dead_end_even_inside_a_hierarchy() {
+    // The exemption is for assemblies only. A contained leaf that hosts
+    // nothing and provides nothing is the true case and must keep firing.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.satisfies("cap:a", "req:a").unwrap();
+    g.add_component(
+        "cmp:parent",
+        "Subsystem",
+        "holds modules",
+        Some("subsystem"),
+    )
+    .unwrap();
+    g.add_component("cmp:busy", "Busy", "hosts the capability", None)
+        .unwrap();
+    g.add_component("cmp:idle", "Idle", "hosts nothing", None)
+        .unwrap();
+    g.contain_component("cmp:parent", "cmp:busy").unwrap();
+    g.contain_component("cmp:parent", "cmp:idle").unwrap();
+    g.allocate("cap:a", "cmp:busy").unwrap();
+
+    let defects = g.detect_defects().unwrap();
+    let dead: Vec<&str> = defects
+        .iter()
+        .filter(|d| d.category == reflow2_core::HealCategory::DeadEnd)
+        .flat_map(|d| d.affected_ids.iter().map(String::as_str))
+        .collect();
+    assert_eq!(dead, ["cmp:idle"], "the idle leaf, not the assembly");
+}

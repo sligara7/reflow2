@@ -82,7 +82,6 @@ Nine independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
-| **BL-38** | **`unrealized_capability` fires on capabilities that are built; `dead_end` fires on pure containers** | Found by analysing reflow2's own design graph. Two schema-valid modellings, one accepted — 11 of 33 gaps were false | S |
 | **BL-5 (reopened)** | **`single_point_of_failure` still over-fires above fixture scale** | 22 of 36 defects on a real 96-node design. The original fix was measured on an 8-defect graph | M |
 | **BL-37** | **reflow2 cannot model a *process* — `Flow` has no write side, and edge roles are lost** | Found by modelling reflow2's own coherence loop in reflow2. The one type meant for an ordered process cannot be created; forward and backward edges are indistinguishable | M |
 | **BL-35** | **A design claim has no last-confirmed date, so "coherent" and "nobody looked" are indistinguishable** | The deepest of the phase items — an eroded graph and a genuinely coherent one both report quiet. Axis Z already holds the data | M |
@@ -133,7 +132,7 @@ the live graph, so before this they could only ever see a design the session its
 committed export, a backup, or a design built elsewhere is now one command away from being the graph
 the skills read — which is the point of a design that outlives the session.
 
-**BL-38 · The golden thread has two valid shapes at P3 and the detector accepts one** —
+**BL-38 · The golden thread has two valid shapes at P3 and the detector accepts one — DONE** —
 *[self-host functional design](trials/2026-07-19-selfhost-functional-design.md), 2026-07-19.*
 
 Verified in isolation. `REALIZES` is declared `from: Artifact, to: "*"`, so both of these are
@@ -147,16 +146,21 @@ Artifact REALIZES Component  : capability reported unrealized?  True
 Modelling *the file realizes the module* — which is how code is actually organised — makes every
 capability report `unrealized_capability`, 11 of 33 gaps on reflow2's own design, for capabilities
 shipping in the binary that reported them. The connecting path exists and is not walked:
-`art:detect -REALIZES-> cmp:detect <-ALLOCATED_TO- cap:detect`. `detect_unrealized_capabilities` asks
-only for `incoming(cap, REALIZES)`; it should also accept an artifact realizing a component the
-capability is allocated to. As it stands the detector silently mandates one of two equally valid
-modellings and floods anyone who picks the other.
+`art:detect -REALIZES-> cmp:detect <-ALLOCATED_TO- cap:detect`. `detect_unrealized_capabilities` asked
+only for `incoming(cap, REALIZES)`. **Fixed**: a capability also counts as realized when an artifact
+realizes a Component it is allocated to — the indirect form is the coarser claim (the file builds
+the part that owns the capability), which is exactly the granularity BL-23 pushes designs toward.
+Measured on the design graph: **33 gaps → 16**, and every surviving `unrealized_capability` is one
+of the five genuinely unbuilt capabilities — the graph now reports exactly the open backlog with
+zero noise. The true case is pinned: artifacts elsewhere, nothing realizing this capability or its
+component, still reported.
 
-Same trial, same item: **`dead_end` fires on a subsystem whose only edges are `CONTAINS`.** `cmp:mcp`
-and `cmp:kit` hold modules and report "not connected to anything", because PROPAGATE and the topology
-view deliberately exclude `CONTAINS` (*decomposition is not traceability*). Correct in general, and it
-makes a pure container — the standard way to express a subsystem — structurally invisible. Size **S**
-for both.
+Same trial, same item, also **fixed**: `dead_end` no longer fires on a subsystem whose only edges
+are `CONTAINS`. The design network's CONTAINS-exclusion stands (*decomposition is not
+traceability*); the exemption is scoped to **assemblies** — a component containing other components
+speaks through its children, which are flagged individually if disconnected. A contained *leaf*
+hosting nothing is the true case and still fires; there is a test for each direction. Defects on the
+design graph: **36 → 34**.
 
 **BL-5 reopened · `single_point_of_failure` above fixture scale** — *same trial.* 22 of 36 defects on
 a 96-node design, post-fix: nearly every requirement and mid-level capability is named. The

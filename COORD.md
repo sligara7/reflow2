@@ -57,7 +57,6 @@ Add yourself if you're new here.
 
 
 
-- BL-38 unrealized_capability accepts both P3 shapes; dead_end on pure containers — @ajs — since 2026-07-19 — detect.rs, structure.rs, tests
 
 ## Blocked / waiting
 
@@ -67,6 +66,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-38 done: both P3 shapes count as built; assemblies are not dead ends (design graph 33→16 gaps) — @ajs — 2026-07-19 — (this commit)
 - BL-39 done: `reflow2-mcp --import`, so a design can enter a graph without MCP — @ajs — 2026-07-19 — `dd7e2ac`
 - Trials: phase-coverage, erosion, coherent-erosion, self-host design; BL-30..38 raised — @ajs — 2026-07-19 — `e429039`..`f166047`
 - docs/sharpening.md: the standing method for improving reflow2 — @ajs — 2026-07-19 — `5617503`

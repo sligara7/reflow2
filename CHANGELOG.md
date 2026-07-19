@@ -117,6 +117,22 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **`unrealized_capability` accepts both shapes the schema allows at P3** (BL-38). `REALIZES` is
+  declared `from: Artifact, to: "*"`, so "this file realizes the capability" and "this file realizes
+  the module" are both valid, and `link_artifact` invites either — but the detector walked only the
+  first, silently mandating one of two equal modellings and flooding anyone who picked the other:
+  11 of 33 gaps on reflow2's own design were "Nothing builds capability X" for capabilities shipping
+  in the binary that reported them. A capability now also counts as realized when an artifact
+  realizes a Component it is allocated to (`art -REALIZES-> cmp <-ALLOCATED_TO- cap` — the path that
+  was present in every false positive and never walked). Measured: the design graph went from 33
+  gaps to 16, and every survivor is a genuinely unbuilt capability.
+
+- **`dead_end` no longer fires on a pure container** (BL-38). The design network excludes `CONTAINS`
+  on purpose — decomposition is not traceability — which made an assembly whose one job is holding
+  modules read as "not connected to anything". Assemblies are now exempt: they speak through their
+  children, which are flagged individually if disconnected. A contained leaf hosting nothing is the
+  true case and still fires.
+
 - **The installer no longer destroys a project's own `AGENTS.md`.** `reflow2_init.py` copied the kit's
   `AGENTS.md` over whatever was there and reported it as an ordinary `AGENTS.md` line in the install
   summary — no warning, no backup, no refusal. Verified on a scratch repo: a project's build

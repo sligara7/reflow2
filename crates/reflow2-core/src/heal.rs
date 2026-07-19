@@ -523,9 +523,28 @@ impl DesignGraph {
         }
 
         // dead_end — an isolated Component (no traceability edges at all).
+        //
+        // "Isolated" is judged in the design network, which excludes CONTAINS
+        // on purpose (decomposition is not traceability) — so a pure container,
+        // the standard way to express a subsystem, has degree 0 here while
+        // being exactly what it should be. An assembly speaks through its
+        // children: if they are disconnected they are flagged individually, and
+        // if they are connected the assembly is doing its one job. So a
+        // component that CONTAINS other components is exempt; a *leaf* with no
+        // traceability is a real dead end even inside a healthy hierarchy.
         for idx in 0..net.node_count() {
             if net.type_of(idx) == node::COMPONENT && net.degree(idx) == 0 {
                 let id = net.id_of(idx).to_string();
+                let mut is_assembly = false;
+                for e in self.outgoing(&id, Some(edge::CONTAINS))? {
+                    if self.get_node(node::COMPONENT, &e.to_id)?.is_some() {
+                        is_assembly = true;
+                        break;
+                    }
+                }
+                if is_assembly {
+                    continue;
+                }
                 issues.push(HealIssue {
                     id: issue_id(HealCategory::DeadEnd, std::slice::from_ref(&id)),
                     category: HealCategory::DeadEnd,
