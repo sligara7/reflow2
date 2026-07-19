@@ -11,6 +11,13 @@
 Read this first. It tells you what this project is, how it's organized, and the rules to
 follow so your changes stay coherent with the design.
 
+> **If you are here to improve reflow2, read [docs/sharpening.md](docs/sharpening.md) before you
+> pick up an item.** It is the standing method for finding this project's own gaps — where findings
+> actually come from, how much to trust one, and the specific way this work goes wrong (shaping the
+> model until the tool goes quiet, then reporting the tool is fine). It also names the four
+> instruments that measure whether the loop works, and their current baselines. **reflow2's silence
+> is never evidence that reflow2 is healthy.**
+
 **Per-crate files exist and the closest one wins**, per the convention. If you are editing inside
 a crate, read its file too — the build commands genuinely differ, and getting that wrong costs
 ten minutes of C++ compile:
@@ -111,6 +118,11 @@ cargo fmt --check
 python3 tools/validate_schema.py                         # after any schema/*.yaml edit
 python3 tools/smoke_mcp.py                               # after any tool-surface change
 ```
+
+**If you changed a detector, a phase capability, or anything in the coherence loop**, run the four
+instruments in [docs/sharpening.md](docs/sharpening.md) before and after, and add a probe for what
+you built. A number that moves is your claim; a number that moves the wrong way is a finding. They
+are not pass/fail gates yet — they record baselines that are failing on purpose.
 
 Compiling is not the finish line, and neither is a green unit test. Drive the thing you changed:
 the surface a user actually touches is the MCP binary, and three home-grown test layers once

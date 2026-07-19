@@ -67,6 +67,11 @@ Nine independent sources, which is why several items appear on more than one lis
   [trials/2026-07-19-coherent-erosion.md](trials/2026-07-19-coherent-erosion.md); re-runnable via
   `tools/coherent_erosion_trial.py`.
 
+> **How to weigh any of this: [sharpening.md](sharpening.md).** It records where findings actually
+> come from (reflow2's own output contributed to 2 of the 12 items raised on 2026-07-19, and both
+> required already knowing the answer), and the failure mode that would quietly invalidate the whole
+> evidence base — shaping the model until the tool goes quiet.
+>
 > **A bias worth naming.** Every source above except the three 2026-07-19 trials stops at or before
 > **P2**. The blind trials, both brownfield trials and both self-host runs all end at structure and
 > allocation — so until 2026-07-19 the entire evidence base came from the phases the original reflow

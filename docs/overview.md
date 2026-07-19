@@ -33,8 +33,7 @@ the loop like this:
 | **GENESIS** — bootstrap the graph from a brief | seeds the first CHANGE | [genesis.md](genesis.md) | detailed (thin core op + skill; SP-5) |
 | **INGEST** — extract content/edits into the graph | CHANGE | [extraction-plan.md](extraction-plan.md), [artifact-linking.md](artifact-linking.md), [sme-augmentation.md](sme-augmentation.md) | detailed |
 | *(reflow2 addition)* — ripple along the golden thread | PROPAGATE | [impact-propagation.md](impact-propagation.md) | detailed |
-| **DIAGNOSE → PROMPT** — find weaknesses, ask the user | DETECT + SURFACE | [loop-dag.html](loop-dag.html) | The coherence loop drawn as a DAG — the six phases, the backward feedback edges, and what reflow2 can do about each. Generated alongside [loop-model.json](loop-model.json) by `tools/model_the_loop.py` |
-| [gap-surfacing.md](gap-surfacing.md) | detailed |
+| **DIAGNOSE → PROMPT** — find weaknesses, ask the user | DETECT + SURFACE | [gap-surfacing.md](gap-surfacing.md) | detailed |
 | **HEAL** — detect & repair structural defects | RESOLVE/HEAL | [heal-process.md](heal-process.md) | detailed |
 | **SYNTHESIZE** — graph → artifacts (docs, diagrams, as-built) | reporting side-output | — | first artifact built: the graph report (`report` module; see [graph-analysis.md](graph-analysis.md)) |
 
@@ -69,6 +68,15 @@ Three records, three questions — kept separate on purpose:
 - [backlog.md](backlog.md) — *what next, and on what evidence?* Open work, sized, pointing at the trial findings and audit items behind it.
 - [../CHANGELOG.md](../CHANGELOG.md) — *what changed, and when?*
 - [trials/](trials/) — primary evidence from putting reflow2 in front of agents and users who had never seen it.
+- **[sharpening.md](sharpening.md) — *how this project finds its own gaps.*** The standing method for
+  evolving reflow2: what using it on itself can and cannot tell you, the failure mode that would
+  quietly invalidate the evidence base, and the four instruments that measure whether the loop works,
+  with their baselines. **Read this before picking up a backlog item.**
+- [loop-dag.html](loop-dag.html) — the coherence loop drawn as a DAG: the six phases, the backward
+  feedback edges, and what reflow2 can do about each. Generated with [loop-model.json](loop-model.json)
+  by `tools/model_the_loop.py`.
+- [design/reflow2.json](design/reflow2.json) — reflow2's own functional design as a reflow2 graph
+  (96 nodes), the durable record behind `tools/build_design_graph.py`.
 
 ### 3¾ · Direction — *the prescriptive graph* (candidate, not yet built)
 - [graph-analysis.md](graph-analysis.md) — use graph-theory tools (`dynograph-graph`/`-vector`/`-cluster`/`-game`) to *make* design decisions, not just record them — e.g. allocate functions to services by cohesion/coupling instead of by domain. Starts with edge **weights**.
