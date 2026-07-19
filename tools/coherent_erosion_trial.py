@@ -92,12 +92,14 @@ def main() -> int:
                 "name": f"Fix {i} to charge.py", "target_type": "Artifact",
                 "target_id": "art:charge", "change_type": "test_failure_fix",
                 "action": "modified"})
-            s.call("set_artifact_checksum", {"artifact_id": "art:charge",
-                                             "checksum": sha(code)})
 
-            # The one that changed behaviour must also move the FUNCTION (P1).
-            # This is the backwards step: the build teaches the design what it
-            # actually is. Z keeps the original, so this costs no intent.
+            # The one that changed behaviour must also move the FUNCTION (P1) —
+            # and it must move FIRST, because the accept below will reference
+            # this ChangeEvent, and a reference to an edit that has not happened
+            # is refused (BL-33: the claim "the design was updated" cannot stand
+            # with nothing behind it — the tool caught this trial doing exactly
+            # that in the wrong order). Z keeps the original, so the backwards
+            # update costs no intent.
             if widens:
                 s.call("record_change", {
                     "epoch_id": ep, "change_event_id": f"chg:cap{i}",
@@ -108,6 +110,17 @@ def main() -> int:
                 s.call("create_node", {"node_type": "Capability", "id": "cap:charge",
                                        "props": {"name": "Charge a card",
                                                  "description": BUILT}})
+
+            # Accept the new baseline, answering the second question: cycle 4
+            # ties the code accept to the design edit above (one change, both
+            # sides); the rest claim design_holds, dated and on the record.
+            s.call("set_artifact_checksum", {"artifact_id": "art:charge",
+                                             "checksum": sha(code),
+                                             **({"disposition": "design_updated",
+                                                 "design_change_event_id": f"chg:cap{i}"}
+                                                if widens else
+                                                {"disposition": "design_holds",
+                                                 "note": f"fix {i}: no behaviour change"})})
 
         print("\n== release, cut as its own epoch ==")
         s.call("add_epoch", {"id": "epoch:release", "name": "v1.0 release",
@@ -154,10 +167,15 @@ def main() -> int:
         # ---- Now the part that is NOT reachable with discipline alone. ------
         print("\n== what discipline could not buy ==")
         tools = [t["name"] for t in s.rpc("tools/list", {})["result"]["tools"]]
+        # Genuine since BL-33: the accept path itself poses the second question,
+        # so the design update is demanded at the exact moment it is needed.
+        refused = s.call_expect_error("set_artifact_checksum",
+                                      {"artifact_id": "art:charge",
+                                       "checksum": "sha256:probe"})
         note("anything PROMPTED the capability update (vs the developer volunteering it)",
-             any("resync" in t or "reconcile_design" in t for t in tools),
-             "an undisciplined run produces the erosion trial's result and reports zero gaps — "
-             "the difference between the two runs is entirely developer virtue")
+             refused is not None,
+             "set_artifact_checksum refuses a silent accept: disposition is required, "
+             "and design_updated must name the ChangeEvent behind it")
         note("the release records which epoch / which artifact versions it shipped",
              False, "Release has only DEPLOYED_TO; the release_cut epoch is not linked to it")
         note("you can diff as-designed against as-released at all",

@@ -29,8 +29,8 @@ use tokio::sync::Mutex;
 
 use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
-    AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DesignGraph, Dimension, DynoError,
-    EpochType, GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy,
+    AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DesignGraph, Dimension, DriftDisposition,
+    DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy,
     LinkArtifactOptions, ObservedArtifact, PromptCollector, PropagateOptions, ReconcileOptions,
     Value,
 };
@@ -585,6 +585,24 @@ pub struct SetChecksumReq {
     pub artifact_id: String,
     /// The accepted content hash — the new drift baseline.
     pub checksum: String,
+    /// The answer to the second question — required, because "accept the file,
+    /// leave the design alone, say nothing" is the option that erodes a design
+    /// (BL-33). `design_holds`: the change carries no design meaning (a
+    /// refactor, a fix restoring intended behaviour) — recorded as a dated
+    /// claim. `design_updated`: behaviour moved and the design moved with it —
+    /// pass `design_change_event_id` from the `record_change` that updated it.
+    pub disposition: String,
+    /// For `design_holds`: why the code moved (`test_failure_fix` (default) /
+    /// `refactor` / `performance_optimization` / …).
+    #[serde(default)]
+    pub change_type: Option<String>,
+    /// For `design_updated`: the ChangeEvent recorded when the design was
+    /// updated. Must exist — a dangling reference is refused.
+    #[serde(default)]
+    pub design_change_event_id: Option<String>,
+    /// Optional note stored on the recorded claim (`design_holds` only).
+    #[serde(default)]
+    pub note: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1455,19 +1473,70 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Accept an artifact's current content as the new drift baseline, after the \
-                       user has confirmed the change belongs in the design. Until you do this, \
-                       the same checksum_change is reported on every reconcile."
+        description = "Accept an artifact's current content as the new drift baseline — a \
+                       two-sided decision. `disposition` is required: `design_holds` (the change \
+                       carries no design meaning; recorded as a dated claim) or `design_updated` \
+                       (behaviour moved and the design moved with it; pass \
+                       `design_change_event_id` from the record_change that updated it, so code \
+                       and design are one change). Silent accept does not exist: it is how a \
+                       design erodes into fiction over N fix cycles while reporting zero gaps. \
+                       Until you accept, the same checksum_change is reported on every reconcile."
     )]
     pub async fn set_artifact_checksum(
         &self,
         Parameters(req): Parameters<SetChecksumReq>,
     ) -> Result<CallToolResult, McpError> {
+        let disposition = match req.disposition.as_str() {
+            "design_holds" => {
+                if req.design_change_event_id.is_some() {
+                    return Err(McpError::invalid_params(
+                        "design_change_event_id belongs to disposition=design_updated; \
+                         with design_holds it would be silently ignored, so it is refused",
+                        None,
+                    ));
+                }
+                let change_type: ChangeType = parse_enum(
+                    req.change_type.as_deref().unwrap_or("test_failure_fix"),
+                    "change type",
+                )?;
+                DriftDisposition::DesignHolds { change_type }
+            }
+            "design_updated" => {
+                let Some(event_id) = req.design_change_event_id.as_deref() else {
+                    return Err(McpError::invalid_params(
+                        "disposition=design_updated requires design_change_event_id — the \
+                         ChangeEvent recorded when the design was updated. Without it the claim \
+                         'the design was updated' would stand with nothing behind it",
+                        None,
+                    ));
+                };
+                DriftDisposition::DesignUpdated {
+                    change_event_id: event_id,
+                }
+            }
+            other => {
+                return Err(McpError::invalid_params(
+                    format!(
+                        "unknown disposition '{other}': pass `design_holds` (the change carries \
+                         no design meaning) or `design_updated` (the design moved with it)"
+                    ),
+                    None,
+                ));
+            }
+        };
         let mut g = self.graph.lock().await;
-        ok_json(NodeDto::from(
-            g.set_artifact_checksum(&req.artifact_id, &req.checksum)
-                .map_err(dyno_err)?,
-        ))
+        let (artifact, change_event_id) = g
+            .set_artifact_checksum(
+                &req.artifact_id,
+                &req.checksum,
+                disposition,
+                req.note.as_deref(),
+            )
+            .map_err(dyno_err)?;
+        ok_json(serde_json::json!({
+            "artifact": NodeDto::from(artifact),
+            "change_event_id": change_event_id,
+        }))
     }
 
     // ---- Artifact linking (connect real files to the design) ----

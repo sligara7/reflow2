@@ -26,6 +26,40 @@ use dynograph_storage::{StoredEdge, StoredNode};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};
+use crate::temporal::{ChangeAction, ChangeType};
+
+/// Which way an accepted drift went — the answer to the **second question**.
+///
+/// The code moved; that much is observed. Accepting the new baseline is a
+/// decision about what the movement *meant*, and the erosion trial showed why
+/// it cannot be silent: five legitimate fix cycles, each accepted with no
+/// question asked, left a design describing a system that no longer existed —
+/// while reporting zero gaps. The third option, "accept the file, leave the
+/// design alone, say nothing", is the one that erodes, so it does not exist:
+/// every accept states which of these it is, and the claim goes on axis Z.
+#[derive(Debug, Clone)]
+pub enum DriftDisposition<'a> {
+    /// The change carries no design meaning — a refactor, a cosmetic fix, a
+    /// bug fix restoring intended behaviour. This is itself a recorded claim:
+    /// a `ChangeEvent` is written saying the design was judged to still hold
+    /// against this checksum. The claim can be wrong, but it cannot be silent,
+    /// and it is dated — which is exactly what a later freshness check reads.
+    DesignHolds {
+        /// Why the code moved (usually [`ChangeType::TestFailureFix`] or
+        /// [`ChangeType::Refactor`]).
+        change_type: ChangeType,
+    },
+    /// The behaviour moved and the design moved with it. References the
+    /// `ChangeEvent` recorded (via
+    /// [`record_change`](DesignGraph::record_change)) when the design was
+    /// updated — the same event is linked to the artifact, so the code accept
+    /// and the design edit are one change on axis Z, not two coincidences.
+    DesignUpdated {
+        /// The existing `ChangeEvent` from the design-side update. Verified to
+        /// exist; a dangling reference is refused rather than recorded.
+        change_event_id: &'a str,
+    },
+}
 
 /// Inputs for [`DesignGraph::link_artifact`] — register a real file against the
 /// design with provenance. Serializable: it crosses the MCP boundary.
@@ -99,27 +133,92 @@ impl DesignGraph {
         )
     }
 
-    /// Record (or update) an artifact's content hash — the drift baseline. Used
-    /// after reconciling a `checksum_change` the user accepted, so the next pass
-    /// compares against the new reality rather than re-reporting the same drift.
+    /// Accept a drifted artifact's new content hash as the baseline — a
+    /// **two-sided decision**, never a silent update (BL-33).
+    ///
+    /// Updating the baseline answers "which state do we compare against next
+    /// time?". The [`DriftDisposition`] answers the question that used to go
+    /// unasked: *the code moved — did the design move too, or did it not need
+    /// to?* Both answers leave a `ChangeEvent` `CHANGED`-linked to the
+    /// artifact, so the accept is on axis Z either way:
+    ///
+    /// - [`DriftDisposition::DesignHolds`] writes a new event recording the
+    ///   claim that this change carried no design meaning, at a deterministic
+    ///   id (`chg:accept-…` hashed from artifact + checksum) so re-accepting
+    ///   the same state is idempotent.
+    /// - [`DriftDisposition::DesignUpdated`] links the **existing** event from
+    ///   the design-side [`record_change`](DesignGraph::record_change) to the
+    ///   artifact — one change, both sides. A `change_event_id` that does not
+    ///   exist is refused loudly: a phantom reference would let the claim
+    ///   "the design was updated" stand with nothing behind it.
+    ///
+    /// Returns the updated artifact and the id of the change event the accept
+    /// now hangs off.
     pub fn set_artifact_checksum(
         &mut self,
         artifact_id: &str,
         checksum: &str,
-    ) -> Result<StoredNode, DynoError> {
+        disposition: DriftDisposition<'_>,
+        note: Option<&str>,
+    ) -> Result<(StoredNode, String), DynoError> {
         let Some(existing) = self.get_node(node::ARTIFACT, artifact_id)? else {
             return Err(DynoError::NodeNotFound {
                 node_type: node::ARTIFACT.to_string(),
                 node_id: artifact_id.to_string(),
             });
         };
+
+        let event_id = match disposition {
+            DriftDisposition::DesignHolds { change_type } => {
+                let event_id = format!(
+                    "chg:accept-{:016x}",
+                    crate::detect::fnv1a(&format!("{artifact_id}|{checksum}"))
+                );
+                if self.get_node(node::CHANGE_EVENT, &event_id)?.is_none() {
+                    self.add_change_event(
+                        &event_id,
+                        note.unwrap_or(
+                            "Accepted a new baseline: the change carries no design meaning",
+                        ),
+                        change_type,
+                    )?;
+                    self.changed(
+                        &event_id,
+                        node::ARTIFACT,
+                        artifact_id,
+                        ChangeAction::Modified,
+                    )?;
+                }
+                event_id
+            }
+            DriftDisposition::DesignUpdated { change_event_id } => {
+                if self
+                    .get_node(node::CHANGE_EVENT, change_event_id)?
+                    .is_none()
+                {
+                    return Err(DynoError::NodeNotFound {
+                        node_type: node::CHANGE_EVENT.to_string(),
+                        node_id: change_event_id.to_string(),
+                    });
+                }
+                self.changed(
+                    change_event_id,
+                    node::ARTIFACT,
+                    artifact_id,
+                    ChangeAction::Modified,
+                )?;
+                change_event_id.to_string()
+            }
+        };
+
         let mut props = Props::new().set("checksum", checksum);
         for (k, v) in &existing.properties {
             if k != "checksum" {
                 props = props.set(k, v.clone());
             }
         }
-        self.create_node(node::ARTIFACT, artifact_id, props)
+        let artifact = self.create_node(node::ARTIFACT, artifact_id, props)?;
+        Ok((artifact, event_id))
     }
 
     /// Link an `Artifact` to the entity it implements via `REALIZES`. `target_type`

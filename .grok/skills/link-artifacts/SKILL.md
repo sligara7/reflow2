@@ -63,10 +63,18 @@ changed outside the loop (someone edited by hand, a merge landed, you refactored
 
    This is the loop the original Reflow never closed: a change made in code reaching the intent
    that justified it.
-7. **Record the outcome.** If the change is fine as-is, call `set_artifact_checksum` to accept
-   the new content as the baseline — otherwise the same drift is reported forever. If the change
-   means the design moved, run **capture-intent** to update it (and **impact-check** if it
-   touches anything else) *before* accepting the baseline.
+7. **Record the outcome — the accept is two-sided, and the tool insists.**
+   `set_artifact_checksum` requires a `disposition`:
+   - `design_holds` — the change carries no design meaning (a refactor, a fix restoring intended
+     behaviour). Your claim is recorded as a dated ChangeEvent; say why in `note`.
+   - `design_updated` — the behaviour moved, so the design moved with it. Update the design
+     *first* (run **capture-intent**, record it with `record_change` — and **impact-check** if it
+     touches anything else), then accept passing that ChangeEvent's id as
+     `design_change_event_id`. A reference to an edit that never happened is refused.
+
+   There is no third option on purpose: "accept the file, leave the design alone, say nothing" is
+   how a design erodes into fiction over N fix cycles while reporting zero gaps. When in doubt,
+   the honest answer is `design_updated` — ask the user what the fix changed.
 
 Pass `record_events: true` when you want the divergence written into the graph as a `DriftEvent`
 — useful for a drift you're not resolving now, since the event itself propagates into the design.

@@ -574,8 +574,26 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("partial-result fields are present (no silent drops)",
          "unknown_seeds" in radius and "truncated_beyond_depth" in radius, list(radius))
 
-    print("\n== 7. accepting the change clears the drift ==")
-    s.call("set_artifact_checksum", {"artifact_id": "art:flight", "checksum": "sha256:v2"})
+    print("\n== 7. accepting the change is a two-sided decision (BL-33) ==")
+    # The third option — accept the file, leave the design alone, say nothing —
+    # is the one that erodes a design into fiction, so it does not exist.
+    c.ok("a silent accept is refused",
+         s.call_expect_error("set_artifact_checksum",
+                             {"artifact_id": "art:flight", "checksum": "sha256:v2"}) is not None)
+    c.ok("claiming 'the design was updated' with nothing behind it is refused",
+         s.call_expect_error("set_artifact_checksum",
+                             {"artifact_id": "art:flight", "checksum": "sha256:v2",
+                              "disposition": "design_updated",
+                              "design_change_event_id": "chg:phantom"}) is not None)
+    acc = s.call("set_artifact_checksum",
+                 {"artifact_id": "art:flight", "checksum": "sha256:v2",
+                  "disposition": "design_holds",
+                  "note": "edge-case fix; behaviour unchanged"})
+    c.ok("an accept leaves its claim on axis Z",
+         acc.get("change_event_id", "").startswith("chg:accept-"), acc)
+    c.ok("and the claim is a real ChangeEvent",
+         s.call("get_node", {"node_type": "ChangeEvent",
+                             "id": acc["change_event_id"]}) is not None)
     r = s.call("reconcile_artifacts", {"observed": [
         {"artifact_id": "art:flight", "present": True, "checksum": "sha256:v2"}]})
     c.ok("an accepted change is the new baseline", r["findings"] == [], r["findings"])

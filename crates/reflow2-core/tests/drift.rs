@@ -4,11 +4,13 @@
 //! covers "changed one side of a boundary, forgot the other"; this covers "changed
 //! the code, and the systems-engineering layer never heard about it".
 
+use reflow2_core::DriftDisposition;
 use reflow2_core::LinkArtifactOptions;
 use reflow2_core::drift::{DriftKind, ObservedArtifact, ReconcileOptions};
 use reflow2_core::graph::DesignGraph;
-use reflow2_core::nodes::node;
+use reflow2_core::nodes::{edge, node};
 use reflow2_core::propagate::{ImpactDirection, PropagateOptions};
+use reflow2_core::temporal::ChangeType;
 
 /// A golden thread with one registered artifact carrying a checksum baseline.
 fn built_thread() -> DesignGraph {
@@ -310,8 +312,15 @@ fn accepting_a_change_updates_the_baseline_so_it_stops_reporting() {
     assert_eq!(before.findings.len(), 1);
 
     // The user reviewed the change and accepted it into the design.
-    g.set_artifact_checksum("art:score", "sha256:bbb")
-        .expect("accept");
+    g.set_artifact_checksum(
+        "art:score",
+        "sha256:bbb",
+        DriftDisposition::DesignHolds {
+            change_type: ChangeType::TestFailureFix,
+        },
+        None,
+    )
+    .expect("accept");
 
     let after = g
         .reconcile_artifacts(&[observed("art:score", true, Some("sha256:bbb"))], &opts)
@@ -398,7 +407,15 @@ fn successive_drifts_accumulate_instead_of_collapsing_into_one_event() {
             "cycle {i} records its event"
         );
         // Accept the drift, as the fix cycle does — next drift is a NEW one.
-        g.set_artifact_checksum("art:score", sum).unwrap();
+        g.set_artifact_checksum(
+            "art:score",
+            sum,
+            DriftDisposition::DesignHolds {
+                change_type: ChangeType::TestFailureFix,
+            },
+            None,
+        )
+        .unwrap();
     }
 
     let events = g.scan_nodes(node::DRIFT_EVENT).unwrap();
@@ -431,5 +448,116 @@ fn re_observing_the_same_unresolved_drift_does_not_pile_up_events() {
         g.scan_nodes(node::DRIFT_EVENT).unwrap().len(),
         1,
         "the same unresolved divergence, observed twice, is one event"
+    );
+}
+
+// ---- BL-33 (M half) · accepting drift is a two-sided decision --------------
+
+#[test]
+fn accepting_with_design_holds_puts_the_claim_on_axis_z() {
+    // The claim "this change carried no design meaning" can be wrong, but it
+    // can no longer be silent: it is a dated ChangeEvent linked to the
+    // artifact, which is what a later freshness check reads.
+    let mut g = built_thread();
+    let (_, event_id) = g
+        .set_artifact_checksum(
+            "art:score",
+            "sha256:bbb",
+            DriftDisposition::DesignHolds {
+                change_type: ChangeType::TestFailureFix,
+            },
+            Some("fix 3: edge case in rounding"),
+        )
+        .unwrap();
+
+    let event = g
+        .get_node(node::CHANGE_EVENT, &event_id)
+        .unwrap()
+        .expect("the accept must leave a record");
+    assert_eq!(
+        event.properties["change_type"].as_str(),
+        Some("test_failure_fix")
+    );
+    // Idempotent: re-accepting the same state is the same event, not a pile.
+    g.set_artifact_checksum(
+        "art:score",
+        "sha256:bbb",
+        DriftDisposition::DesignHolds {
+            change_type: ChangeType::TestFailureFix,
+        },
+        None,
+    )
+    .unwrap();
+    assert_eq!(g.scan_nodes(node::CHANGE_EVENT).unwrap().len(), 1);
+}
+
+#[test]
+fn accepting_with_design_updated_ties_code_and_design_into_one_change() {
+    // The coherent-erosion trial's discipline, now demanded by the tool: the
+    // design edit's own ChangeEvent is linked to the artifact, so the code
+    // accept and the design update are one change on axis Z.
+    let mut g = built_thread();
+    g.add_epoch(
+        "epoch:fix",
+        "Fix 4",
+        reflow2_core::temporal::EpochType::Revision,
+        1,
+    )
+    .unwrap();
+    g.record_change(reflow2_core::temporal::ChangeRecord {
+        epoch_id: "epoch:fix",
+        change_event_id: "chg:cap-widen",
+        name: "Dedup window widened to 7d by the fix",
+        target_type: node::CAPABILITY,
+        target_id: "cap:score",
+        change_type: ChangeType::TestFailureFix,
+        action: reflow2_core::temporal::ChangeAction::Modified,
+    })
+    .unwrap();
+
+    let (_, event_id) = g
+        .set_artifact_checksum(
+            "art:score",
+            "sha256:ccc",
+            DriftDisposition::DesignUpdated {
+                change_event_id: "chg:cap-widen",
+            },
+            None,
+        )
+        .unwrap();
+    assert_eq!(event_id, "chg:cap-widen");
+
+    // One event now CHANGED both the capability and the artifact.
+    let touched: Vec<String> = g
+        .outgoing("chg:cap-widen", Some(edge::CHANGED))
+        .unwrap()
+        .into_iter()
+        .map(|e| e.to_id)
+        .collect();
+    assert!(touched.contains(&"cap:score".to_string()));
+    assert!(touched.contains(&"art:score".to_string()));
+}
+
+#[test]
+fn a_phantom_design_update_reference_is_refused_and_nothing_moves() {
+    // "The design was updated" with nothing behind it is the erosion lie in a
+    // new costume — refused before the baseline moves.
+    let mut g = built_thread();
+    let err = g
+        .set_artifact_checksum(
+            "art:score",
+            "sha256:bbb",
+            DriftDisposition::DesignUpdated {
+                change_event_id: "chg:nope",
+            },
+            None,
+        )
+        .expect_err("a dangling change_event_id must be refused");
+    assert!(err.to_string().contains("chg:nope"), "got: {err}");
+    let art = g.get_node(node::ARTIFACT, "art:score").unwrap().unwrap();
+    assert_eq!(
+        art.properties["checksum"].as_str(),
+        Some("sha256:aaa"),
+        "a refused accept must not move the baseline"
     );
 }

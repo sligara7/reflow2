@@ -156,7 +156,9 @@ reflow2 phrases the question; **you** are the language model that fills it in:
   `add_interface`, `satisfies`, `allocate`, `contains`, `provides`, `consumes`, `create_node`,
   `create_edge`, `get_node`, `scan_nodes`, `delete_node`, `apply_heal`.
 - **As-built:** `link_artifact`, `add_artifact`, `realizes`, `reconcile_artifacts`,
-  `set_artifact_checksum`.
+  `set_artifact_checksum` — the last is a **two-sided accept**: `disposition` is required
+  (`design_holds`, or `design_updated` naming the `record_change` event behind it), because a
+  silent accept is how a design erodes into fiction. See the **link-artifacts** skill.
 - **Verify & operate:** `add_verification`, `verifies`, `set_verification_status`, `add_release`,
   `add_environment`, `add_resource`, `deploy_to`, `require_resource`.
 - **Decisions:** `add_decision`, `governed_by` — record why a choice was made, not just what.

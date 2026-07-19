@@ -97,7 +97,13 @@ def main() -> int:
                 "record_events": True, "at": f"2026-07-19T0{i}:00:00Z"})
             drifts += len(rec.get("findings", []))
             # "Yes, I know, I fixed a bug" — accept the new reality as baseline.
-            s.call("set_artifact_checksum", {"artifact_id": "art:charge", "checksum": sha(code)})
+            # BL-33: silent accept no longer exists; the careless answer is to
+            # claim design_holds every time — including cycle 4, where it is a
+            # lie. The lie is now dated and on the record.
+            s.call("set_artifact_checksum", {"artifact_id": "art:charge",
+                                             "checksum": sha(code),
+                                             "disposition": "design_holds",
+                                             "note": f"fix {i}: tests pass again"})
             s.call("set_verification_status", {"verification_id": "ver:charge", "status": "passing"})
         print(f"   {drifts} drift finding(s) raised and accepted across {args.cycles} cycles")
 
@@ -124,6 +130,13 @@ def main() -> int:
         note("anything flags a description contradicted by its own artifact's history", False
              if "24h" in desc else True,
              "nothing compares a description against what the code became")
+
+        accepts = [e for e in s.call("scan_nodes", {"node_type": "ChangeEvent"})
+                   if e["node_id"].startswith("chg:accept-")]
+        note("every accept had to answer the second question, on the record",
+             len(accepts) == drifts,
+             f"{len(accepts)} recorded accept claim(s) for {drifts} drift(s) — "
+             "cycle 4's 'design_holds' is a lie, but a dated, auditable one")
 
         # Tightened (was `> 0`, which one surviving event weakly satisfied while
         # four of five had collapsed into it): every drift must leave its own

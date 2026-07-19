@@ -115,6 +115,24 @@ This file is the third view: *what changed, and when*.
   cause nor the fix; it now reads *"another process already has the design graph open… stop that
   server and run this again."*
 
+### Changed
+
+- **Accepting drift is a two-sided decision** (BL-33). `set_artifact_checksum` — "an accepted change
+  is the new baseline" — updated the code-side baseline and asked nothing about the design. That is
+  the erosion mechanism verified by trial: run *test fails → fix → accept* N times, every step
+  locally reasonable, and the design is fiction while reporting zero gaps. The third option —
+  *accept the file, leave the design alone, say nothing* — no longer exists.
+
+  `disposition` is required. `design_holds` records a dated `ChangeEvent` claiming the change
+  carried no design meaning (idempotent per artifact+checksum; the claim can be wrong but not
+  silent). `design_updated` names the `record_change` event from the design-side edit and links it
+  to the artifact — one change, both sides, and the first `ChangeEvent` in the codebase that
+  originates from the build rather than the design. A phantom event reference is refused before the
+  baseline moves; the refusal caught the coherent-erosion trial itself accepting in the wrong order.
+  Measured: erosion 3/7 → 4/8, coherent-erosion 4/9 → 5/9. The `link-artifacts` skill and consumer
+  AGENTS.md teach the new contract, including: when in doubt, the honest answer is `design_updated`
+  — ask the user what the fix changed.
+
 ### Fixed
 
 - **A new drift is a new `DriftEvent`** (BL-33, the S sub-piece). The event id carried no notion of

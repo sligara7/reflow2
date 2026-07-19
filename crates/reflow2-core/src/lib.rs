@@ -55,7 +55,7 @@ pub use agent::{AgentAnswer, AgentBackend, AgentPrompt, PromptCollector, prompt_
 pub use allocate::{
     AllocationReport, ComponentScore, MisplacedCapability, ProposedAllocation, ProposedComponent,
 };
-pub use artifact::{ArtifactLink, LinkArtifactOptions};
+pub use artifact::{ArtifactLink, DriftDisposition, LinkArtifactOptions};
 pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, GapSource};
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};

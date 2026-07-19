@@ -449,6 +449,10 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
     j!(s.set_artifact_checksum(Parameters(SetChecksumReq {
         artifact_id: "art:flight".into(),
         checksum: "sha256:v2".into(),
+        disposition: "design_holds".into(),
+        change_type: None,
+        design_change_event_id: None,
+        note: Some("accepted after review: no behaviour change".into()),
     })));
     let after = j!(s.reconcile_artifacts(Parameters(ReconcileArtifactsReq {
         observed: vec![obj(&serde_json::json!({

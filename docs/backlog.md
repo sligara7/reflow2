@@ -85,7 +85,6 @@ Nine independent sources, which is why several items appear on more than one lis
 | **BL-37** | **reflow2 cannot model a *process* — `Flow` has no write side, and edge roles are lost** | Found by modelling reflow2's own coherence loop in reflow2. The one type meant for an ordered process cannot be created; forward and backward edges are indistinguishable | M |
 | **BL-35** | **A design claim has no last-confirmed date, so "coherent" and "nobody looked" are indistinguishable** | The deepest of the phase items — an eroded graph and a genuinely coherent one both report quiet. Axis Z already holds the data | M |
 | **BL-36** | **`precedes` is unreachable, so the epoch chain cannot be drawn** | Recurring lesson, tenth instance — on the axis that exists to make history legible | S |
-| **BL-33** | **Accepting drift is one-sided, and the drift record overwrites itself** | *The* erosion mechanism: N legitimate fixes and the design is fiction while reporting zero gaps. Load-bearing — it is the step that runs N times | M |
 | **BL-34** | **No as-released view, and no vocabulary for one** | `DEPLOYED_TO` is the only edge `Release` has. "Does what shipped match what was designed?" is inexpressible, not merely unimplemented | M |
 | **BL-40** | **Viewpoints as pure projections (SYNTHESIZE held to a no-extrapolation standard)** | The graph stores the design; the agent only renders. `tools/render_views.py` is the seed — functional/structural/traceability views project cleanly today, and each confession it prints is a gap by definition. Direction: a viewpoint catalogue (UAF/DoDAF-informed), and rendering through the live MCP surface rather than the export. The author intends to expand this thread | M–L |
 | **BL-30** | **A failing test satisfies the check that asked for a test** | **S half done** — `failing_verification` fires at 0.8 and coverage counts passing only. The M half (`reconcile_verification`) remains. See below | ~~S~~ + M |
@@ -249,7 +248,7 @@ consumer can build the `PRECEDES` chain; ordering survives only through the `seq
 **tenth** instance of the recurring lesson, and on the axis whose whole job is making history
 legible. Size **S**.
 
-**BL-33 · Accepting drift is one-sided; the drift record overwrites itself** — *[erosion
+**BL-33 · Accepting drift is one-sided; the drift record overwrites itself — DONE** — *[erosion
 trial](trials/2026-07-19-erosion.md), 2026-07-19. The mechanism behind the user's account of
 reflow1, and the load-bearing item of the three.*
 
@@ -266,10 +265,19 @@ measured is whether the bookkeeping is complete, never whether it is true.
 **Accept is one-sided (M).** Each cycle ends at `set_artifact_checksum` — "an accepted change is the
 new baseline" — which updates the code-side baseline and **asks nothing about the design**. That is
 locally reasonable and globally fatal. Nothing ever poses the second half: *the code moved, should
-the design move too, or was the code wrong?* The [coherent-erosion trial](trials/2026-07-19-coherent-erosion.md) is
-the **specification** for what the "design moved" branch should write: a `record_change` at its own
-epoch, snapshotting the prior description, updating the P1 capability. Accepting drift should be a
-**two-sided decision** that records which way it went — the capability description is updated to match what was built, or the
+the design move too, or was the code wrong?* **Done, to the coherent-erosion trial's specification.** `set_artifact_checksum` now requires a
+`DriftDisposition`: `design_holds` (the change carries no design meaning — recorded as a dated
+`ChangeEvent` claim, deterministic id so re-accepting the same state is idempotent) or
+`design_updated` (naming the `record_change` event from the design-side edit, which is then
+`CHANGED`-linked to the artifact — **one change, both sides**, the first `ChangeEvent` in the
+codebase originating from the build). A phantom `design_change_event_id` is refused before the
+baseline moves — and the refusal caught the coherent trial itself accepting before recording, live.
+The claim can still be wrong (the erosion trial's careless actor claims `design_holds` five times,
+including the lie), but it can no longer be silent: it is dated, typed and auditable, which is
+exactly what BL-35's freshness check reads. Measured: erosion 3/7 → **4/8** (new probe: every
+accept answers the second question), coherent-erosion 4/9 → **5/9** ("anything prompted the update"
+is now genuinely yes — the tool poses the question at the moment it matters). The principle it was
+meant to embody — the capability description is updated to match what was built, or the
 divergence is marked a defect in the code. The third option, "accept the file, leave the design
 alone, say nothing," is the one that erodes and should not exist. Note this is the first thing in
 the codebase that would make a `ChangeEvent` originate from the *build* side rather than the design
