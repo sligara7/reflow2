@@ -110,7 +110,7 @@ fn the_golden_thread_closing_on_itself_is_not_a_cycle() {
     g.add_project("proj:1", "Thing").expect("project");
     g.add_requirement("req:1", "Fast", "must be fast")
         .expect("req");
-    g.add_capability("cap:1", "Speed", "goes fast")
+    g.add_capability("cap:1", "Speed", "goes fast", None)
         .expect("cap");
     g.add_component("cmp:1", "Engine", "makes it go", None)
         .expect("cmp");

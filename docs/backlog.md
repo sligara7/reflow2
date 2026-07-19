@@ -231,17 +231,20 @@ below again:
 
 | Blocker | Evidence | Size |
 |---|---|---|
-| `add_capability` hardcodes `status: "planned"` | ophyd's 15 shipped, under-test capabilities made the graph "assert that a production system is entirely unbuilt" | S |
+| ~~`add_capability` hardcodes `status: "planned"`~~ — **done** | ophyd's 15 shipped, under-test capabilities made the graph "assert that a production system is entirely unbuilt". Optional `status` at creation plus `set_capability_status`; nothing hardcoded it, the constructor never set the property and took the schema default | S |
 | `detect_gaps` walks Requirement→Capability only, so an **orphan Capability is never reported** | "in greenfield that direction is rare… in brownfield it is the dominant direction of error" — a feature in production no requirement justifies is exactly what an adoption exercise is for. DETECT and HEAL are blind in the same direction | M |
 | No duplicate detection | did not fire on a textbook duplicate; "duplicate implementations are *the* characteristic brownfield defect" | M |
 | `concept_without_design` severity ordering | above | S |
-| Provenance has nowhere to go | ophyd smuggled `[EXTERNAL — …]` into statement text, "which is not queryable" | S |
+| ~~Provenance has nowhere to go~~ — **done** | ophyd smuggled `[EXTERNAL — …]` into statement text, "which is not queryable" | S |
 
-That last one has a cheap answer worth taking regardless. The schema's mechanism is
-`Fragment.provenance` (its enum already includes `inferred`) plus a `YIELDED` edge — the intended
-pattern, but 2 writes per node with no bulk tool. Adding a `provenance` **property** to the node
-types instead is backward-compatible: adding a node or edge *type* bumps `GraphStamp` and makes
-older binaries refuse the graph, but adding a property does not ([BL-19](#bigger-threads)).
+That last one had a cheap answer worth taking regardless, and it is taken. The schema's mechanism
+was `Fragment.provenance` (its enum already includes `inferred`) plus a `YIELDED` edge — the
+intended pattern, but 2 writes per node with no bulk tool. A `provenance` **property** on
+`Requirement` / `Capability` / `Component` / `Interface`, reusing that same enum, is
+backward-compatible: adding a node or edge *type* bumps `GraphStamp` and makes older binaries
+refuse the graph, but adding a property does not ([BL-19](#bigger-threads)). Confirmed — the counts
+stay at 27/53. `set_provenance` writes it incrementally and `import_graph` carries it at create
+time, which is the bulk path this thread already points an adopt pass at.
 
 Related, for whoever picks this up: `import_graph` is the only bulk write path and is an atomic
 upsert, so an adopt pass should build the export document and import it once — 3dtictactoe spent

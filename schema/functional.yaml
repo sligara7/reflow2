@@ -20,6 +20,7 @@ schema:
         is_entry_point: { type: bool, default: false, description: "A flow's starting capability." }
         is_exit_point: { type: bool, default: false, description: "A flow's terminal capability." }
         status: { type: enum, values: [planned, in_progress, realized, verified], default: planned, indexed: true }
+        provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this node entered the graph. Same vocabulary as Fragment.provenance." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
       extraction_hint: >

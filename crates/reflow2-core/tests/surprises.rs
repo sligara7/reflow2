@@ -5,7 +5,7 @@ use reflow2_core::DesignGraph;
 use reflow2_core::nodes::{Props, edge, node};
 
 fn cap(g: &mut DesignGraph, id: &str) {
-    g.add_capability(id, id, "does a thing").unwrap();
+    g.add_capability(id, id, "does a thing", None).unwrap();
 }
 
 fn dep(g: &mut DesignGraph, from: &str, to: &str, weight: f64) {

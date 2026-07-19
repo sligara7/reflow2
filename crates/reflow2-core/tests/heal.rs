@@ -15,8 +15,9 @@ fn dup_graph() -> DesignGraph {
     g.add_project("proj:x", "X").unwrap(); // flexible by default
     g.add_requirement("req:r", "R", "need r").unwrap();
     g.add_component("cmp:c", "C", "part c", None).unwrap();
-    g.add_capability("cap:a", "Cap A", "does a").unwrap();
-    g.add_capability("cap:b", "Cap B", "also does a").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.add_capability("cap:b", "Cap B", "also does a", None)
+        .unwrap();
     // cap:a is well-connected; cap:b is the redundant twin.
     g.satisfies("cap:a", "req:r").unwrap();
     g.allocate("cap:a", "cmp:c").unwrap();
@@ -110,8 +111,8 @@ fn merge_carries_a_unique_edge_onto_the_survivor() {
     g.add_project("proj:x", "X").unwrap();
     g.add_component("cmp:c", "C", "part c", None).unwrap();
     g.add_component("cmp:d", "D", "part d", None).unwrap();
-    g.add_capability("cap:a", "Cap A", "does a").unwrap();
-    g.add_capability("cap:b", "Cap B", "does a").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.add_capability("cap:b", "Cap B", "does a", None).unwrap();
     g.allocate("cap:a", "cmp:c").unwrap();
     g.allocate("cap:b", "cmp:d").unwrap(); // unique to cap:b
     g.create_edge(
@@ -146,7 +147,7 @@ fn generative_fixes_require_human_review_and_are_not_applied() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:x", "X").unwrap();
     g.add_component("cmp:c", "C", "part c", None).unwrap();
-    g.add_capability("cap:lonely", "Lonely", "unallocated")
+    g.add_capability("cap:lonely", "Lonely", "unallocated", None)
         .unwrap();
 
     let proposal = g.propose_heal(HealOptions::default()).unwrap();
@@ -212,7 +213,8 @@ fn max_operations_cap_surfaces_overflow_never_drops_it() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:x", "X").unwrap();
     for id in ["a", "b", "c", "d"] {
-        g.add_capability(&format!("cap:{id}"), id, "does").unwrap();
+        g.add_capability(&format!("cap:{id}"), id, "does", None)
+            .unwrap();
     }
     g.create_edge(
         edge::DUPLICATES,

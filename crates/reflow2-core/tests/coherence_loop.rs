@@ -30,7 +30,7 @@ fn baseline() -> DesignGraph {
             .set("status", "accepted"),
     )
     .unwrap();
-    g.add_capability("cap:fast", "Fast path", "Serve hot reads quickly")
+    g.add_capability("cap:fast", "Fast path", "Serve hot reads quickly", None)
         .unwrap();
     g.add_component("cmp:cache", "Cache", "In-memory cache", None)
         .unwrap();
@@ -174,8 +174,13 @@ fn full_coherence_loop() {
     )
     .unwrap();
     // ...and a redundant capability someone added in parallel.
-    g.add_capability("cap:fast-dup", "Fast path (dup)", "Serve hot reads quickly")
-        .unwrap();
+    g.add_capability(
+        "cap:fast-dup",
+        "Fast path (dup)",
+        "Serve hot reads quickly",
+        None,
+    )
+    .unwrap();
     g.create_edge(
         edge::DUPLICATES,
         node::CAPABILITY,

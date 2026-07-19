@@ -231,19 +231,64 @@ impl DesignGraph {
 
     /// P1 · Function — something the design can do. `name` and `description`
     /// are required.
+    ///
+    /// `status` ∈ `planned` (the default) / `in_progress` / `realized` /
+    /// `verified`. Optional at creation, and optional for a reason: on the
+    /// greenfield path a capability genuinely starts planned, so the default is
+    /// right and the caller should not have to say so.
+    ///
+    /// It is settable *at creation* because the brownfield path cannot use the
+    /// default at all. Adopting a system that already exists means recording
+    /// capabilities that already ship, and a graph that calls them all `planned`
+    /// asserts that a production system is entirely unbuilt — ophyd's 15 shipped,
+    /// under-test capabilities landed exactly that way. Correcting them
+    /// afterwards through [`set_capability_status`](Self::set_capability_status)
+    /// is two writes per node with no bulk tool, which is what an adoption pass
+    /// does least well.
     pub fn add_capability(
         &mut self,
         id: &str,
         name: &str,
         description: &str,
+        status: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
         self.create_node(
             node::CAPABILITY,
             id,
             Props::new()
                 .set("name", name)
-                .set("description", description),
+                .set("description", description)
+                .set_opt("status", status),
         )
+    }
+
+    /// Set a `Capability`'s lifecycle status, preserving its other properties.
+    /// `status` ∈ `planned` (the default) / `in_progress` / `realized` /
+    /// `verified`.
+    ///
+    /// The sibling of [`set_requirement_status`](Self::set_requirement_status)
+    /// and [`set_verification_status`](crate::DesignGraph::set_verification_status),
+    /// and it exists for the same reason: a capability's standing changes far
+    /// more often than its description, and re-stating the description to move
+    /// it would invite drift between the two.
+    pub fn set_capability_status(
+        &mut self,
+        capability_id: &str,
+        status: &str,
+    ) -> Result<StoredNode, DynoError> {
+        let Some(existing) = self.get_node(node::CAPABILITY, capability_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::CAPABILITY.to_string(),
+                node_id: capability_id.to_string(),
+            });
+        };
+        let mut props = Props::new().set("status", status);
+        for (k, v) in &existing.properties {
+            if k != "status" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::CAPABILITY, capability_id, props)
     }
 
     /// Set a `Requirement`'s lifecycle status, preserving its other properties.
@@ -278,6 +323,61 @@ impl DesignGraph {
             }
         }
         self.create_node(node::REQUIREMENT, requirement_id, props)
+    }
+
+    /// Record how a node entered the graph, preserving its other properties.
+    /// `provenance` ∈ `authored` (the default) / `planned` / `inferred` /
+    /// `healed` / `reconciled` / `imported` — the same vocabulary as
+    /// `Fragment.provenance`, deliberately, so there is one word for one idea.
+    ///
+    /// Accepted on `Requirement`, `Capability`, `Component` and `Interface`:
+    /// the four types an adoption pass reads back out of a system that already
+    /// exists. Any other type fails loud rather than silently doing nothing.
+    ///
+    /// `inferred` is the value that earns this property. A Requirement backed
+    /// out of the code that implements it is satisfied by construction, so it
+    /// can never contradict anything and a graph full of them says nothing —
+    /// but only if you can *tell*. Ophyd had nowhere to put that fact and wrote
+    /// `[EXTERNAL — …]` into the statement text, which is not queryable.
+    ///
+    /// For bulk adoption prefer [`import_graph`](Self::import_graph): it is the
+    /// one bulk write path, it carries arbitrary properties including this one,
+    /// and it applies them at create time rather than as a second write per node.
+    pub fn set_provenance(
+        &mut self,
+        node_type: &str,
+        node_id: &str,
+        provenance: &str,
+    ) -> Result<StoredNode, DynoError> {
+        const ACCEPTS_PROVENANCE: [&str; 4] = [
+            node::REQUIREMENT,
+            node::CAPABILITY,
+            node::COMPONENT,
+            node::INTERFACE,
+        ];
+        if !ACCEPTS_PROVENANCE.contains(&node_type) {
+            return Err(DynoError::Validation {
+                node_type: node_type.to_string(),
+                property: "provenance".to_string(),
+                message: format!(
+                    "no such property on `{node_type}`; it is declared on {}",
+                    ACCEPTS_PROVENANCE.join(", ")
+                ),
+            });
+        }
+        let Some(existing) = self.get_node(node_type, node_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node_type.to_string(),
+                node_id: node_id.to_string(),
+            });
+        };
+        let mut props = Props::new().set("provenance", provenance);
+        for (k, v) in &existing.properties {
+            if k != "provenance" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node_type, node_id, props)
     }
 
     /// P2 · Structure — a buildable part. `name` and `purpose` are required.

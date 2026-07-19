@@ -20,7 +20,7 @@ fn linear_thread() -> DesignGraph {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:x", "X").unwrap();
     g.add_requirement("req:a", "A", "need a").unwrap();
-    g.add_capability("cap:a", "Cap A", "does a").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
     g.add_component("cmp:a", "Cmp A", "part a", None).unwrap();
     g.satisfies("cap:a", "req:a").unwrap();
     g.allocate("cap:a", "cmp:a").unwrap();
@@ -45,7 +45,7 @@ fn a_node_bridging_two_subsystems_is_a_single_point_of_failure() {
     //   is non-trivial (≥2 nodes) once cap:hub is removed.
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:x", "X").unwrap();
-    g.add_capability("cap:hub", "Hub", "central capability")
+    g.add_capability("cap:hub", "Hub", "central capability", None)
         .unwrap();
     g.add_component("cmp:a", "A", "part a", None).unwrap();
     g.add_component("cmp:b", "B", "part b", None).unwrap();
@@ -94,7 +94,7 @@ fn a_node_bridging_two_subsystems_is_a_single_point_of_failure() {
 fn a_separate_cluster_is_a_disconnected_community() {
     // Main thread + a detached 2-node island (cap:x—cmp:x) linked to nothing else.
     let mut g = linear_thread();
-    g.add_capability("cap:x", "X", "island cap").unwrap();
+    g.add_capability("cap:x", "X", "island cap", None).unwrap();
     g.add_component("cmp:x", "X part", "island part", None)
         .unwrap();
     g.allocate("cap:x", "cmp:x").unwrap(); // island internally connected, externally not
@@ -171,7 +171,7 @@ fn an_unrelated_island_does_not_make_everything_a_single_point_of_failure() {
 
     // Two real subsystems, joined only through cmp:hub.
     for cap in ["cap:a", "cap:b"] {
-        g.add_capability(cap, cap, "does a thing").unwrap();
+        g.add_capability(cap, cap, "does a thing", None).unwrap();
         g.allocate(cap, "cmp:hub").unwrap();
         for i in 0..2 {
             let r = format!("req:{cap}-{i}");
@@ -197,7 +197,8 @@ fn an_unrelated_island_does_not_make_everything_a_single_point_of_failure() {
     // first part's fragility changes, so nothing new should be flagged.
     g.add_component("cmp:island", "Island", "unrelated", None)
         .unwrap();
-    g.add_capability("cap:island", "Island cap", "d").unwrap();
+    g.add_capability("cap:island", "Island cap", "d", None)
+        .unwrap();
     g.allocate("cap:island", "cmp:island").unwrap();
 
     assert_eq!(

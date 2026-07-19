@@ -16,7 +16,7 @@ fn built_thread() -> DesignGraph {
     g.add_project("proj:1", "Scoreboard").expect("project");
     g.add_requirement("req:live", "Live scores", "scores update live")
         .expect("req");
-    g.add_capability("cap:score", "Scoring", "tracks the score")
+    g.add_capability("cap:score", "Scoring", "tracks the score", None)
         .expect("cap");
     g.add_component("cmp:engine", "Score engine", "computes scores", None)
         .expect("cmp");
@@ -219,7 +219,7 @@ fn an_unregistered_file_is_an_undocumented_addition() {
 fn a_missing_baseline_is_surfaced_not_silently_passed() {
     let mut g = DesignGraph::open_in_memory().expect("open");
     g.add_project("proj:1", "Scoreboard").expect("project");
-    g.add_capability("cap:score", "Scoring", "tracks the score")
+    g.add_capability("cap:score", "Scoring", "tracks the score", None)
         .expect("cap");
     // Registered without a checksum — nothing to compare against later.
     g.link_artifact(LinkArtifactOptions {

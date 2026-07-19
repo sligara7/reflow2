@@ -119,8 +119,19 @@ reflow2 phrases the question; **you** are the language model that fills it in:
 - **Requirement lifecycle:** `set_requirement_status` — `proposed` / `accepted` / `deferred` /
   `dropped` / `met`. Use it when a requirement is provisional or abandoned instead of writing
   that into the statement text; `dropped` and `met` stop it being reported as unsatisfied.
+- **Capability lifecycle:** `set_capability_status` — `planned` / `in_progress` / `realized` /
+  `verified`. `add_capability` also takes `status` directly, which is what you want when recording
+  something that already exists: leaving it at the default describes a running system as unbuilt.
+- **Recording an existing system:** `set_provenance` on a `Requirement`, `Capability`, `Component`
+  or `Interface` — `authored` (someone stated it) / `inferred` (you read it out of the code) /
+  `planned` / `healed` / `reconciled` / `imported`. Mark inferred requirements as such. A
+  requirement backed out of the code that implements it is satisfied by construction, so it can
+  never contradict anything, and a reader has no other way to tell it apart from one a stakeholder
+  actually asked for. For a whole system at once, build the export document and `import_graph` it
+  once — it carries status and provenance at create time.
 - **Build:** `add_project`, `add_requirement`, `add_capability`, `add_component`,
-  `contain_component`, `set_requirement_status`, `add_interface`, `satisfies`, `allocate`, `contains`, `provides`, `consumes`, `create_node`,
+  `contain_component`, `set_requirement_status`, `set_capability_status`, `set_provenance`,
+  `add_interface`, `satisfies`, `allocate`, `contains`, `provides`, `consumes`, `create_node`,
   `create_edge`, `get_node`, `scan_nodes`, `delete_node`, `apply_heal`.
 - **As-built:** `link_artifact`, `add_artifact`, `realizes`, `reconcile_artifacts`,
   `set_artifact_checksum`.

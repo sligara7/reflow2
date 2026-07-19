@@ -20,7 +20,7 @@
 //! let mut g = DesignGraph::open_in_memory().unwrap();
 //! g.add_project("proj:demo", "Demo").unwrap();
 //! g.add_requirement("req:offline", "Offline", "Must run offline").unwrap();
-//! g.add_capability("cap:sync", "Local sync", "Sync data on-device").unwrap();
+//! g.add_capability("cap:sync", "Local sync", "Sync data on-device", None).unwrap();
 //! g.contains("proj:demo", reflow2_core::nodes::node::REQUIREMENT, "req:offline").unwrap();
 //! g.satisfies("cap:sync", "req:offline").unwrap();
 //! assert_eq!(g.count_nodes("Requirement").unwrap(), 1);

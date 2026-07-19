@@ -17,7 +17,7 @@ fn early_graph_gets_project_level_phase_nudges_not_per_node_floods() {
     // Only concept exists: one requirement + one capability, nothing downstream.
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_requirement("req:a", "A", "Need A").unwrap();
-    g.add_capability("cap:a", "Cap A", "Does A").unwrap();
+    g.add_capability("cap:a", "Cap A", "Does A", None).unwrap();
     g.satisfies("cap:a", "req:a").unwrap();
 
     let gaps = g.detect_gaps().unwrap();
@@ -46,8 +46,8 @@ fn traceability_fires_per_node_once_the_phase_exists() {
     // Components exist, so allocation is now expected. cap:b is unallocated.
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_requirement("req:a", "A", "Need A").unwrap();
-    g.add_capability("cap:a", "Cap A", "Does A").unwrap();
-    g.add_capability("cap:b", "Cap B", "Does B").unwrap();
+    g.add_capability("cap:a", "Cap A", "Does A", None).unwrap();
+    g.add_capability("cap:b", "Cap B", "Does B", None).unwrap();
     g.add_component("cmp:x", "X", "Part X", None).unwrap();
     g.satisfies("cap:a", "req:a").unwrap();
     g.satisfies("cap:b", "req:a").unwrap();
@@ -89,7 +89,7 @@ fn unsatisfied_requirement_ranks_by_priority() {
             .set("priority", "low"),
     )
     .unwrap();
-    g.add_capability("cap:x", "X", "does x").unwrap();
+    g.add_capability("cap:x", "X", "does x", None).unwrap();
     g.add_component("cmp:y", "Y", "part y", None).unwrap();
     g.allocate("cap:x", "cmp:y").unwrap();
 
@@ -123,7 +123,7 @@ fn dropped_or_met_requirements_are_not_flagged() {
             .set("status", "dropped"),
     )
     .unwrap();
-    g.add_capability("cap:x", "X", "does x").unwrap();
+    g.add_capability("cap:x", "X", "does x", None).unwrap();
 
     let gaps = g.detect_gaps().unwrap();
     assert!(!sources(&gaps).contains(&GapSource::UnsatisfiedRequirement));
@@ -142,7 +142,7 @@ fn complete_thread_yields_no_traceability_gaps() {
             .set("status", "accepted"),
     )
     .unwrap();
-    g.add_capability("cap:a", "Cap A", "does a").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
     g.add_component("cmp:a", "Cmp A", "part a", None).unwrap();
     g.create_node(node::ARTIFACT, "art:a", Props::new().set("name", "a.rs"))
         .unwrap();
@@ -209,7 +209,7 @@ fn gap_ids_are_deterministic_across_runs() {
     let build = || {
         let mut g = DesignGraph::open_in_memory().unwrap();
         g.add_requirement("req:a", "A", "need").unwrap();
-        g.add_capability("cap:a", "Cap A", "does a").unwrap();
+        g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
         g.add_component("cmp:a", "Cmp A", "part a", None).unwrap();
         // cap:a unallocated on purpose.
         g.detect_gaps().unwrap()
@@ -229,7 +229,7 @@ fn a_cross_community_coupling_is_a_signal_not_a_gap() {
     // belongs in graph_report and not in the gap list (BL-6b).
     let mut g = DesignGraph::open_in_memory().unwrap();
     for c in ["cap:a1", "cap:a2", "cap:a3", "cap:b1", "cap:b2", "cap:b3"] {
-        g.add_capability(c, c, "does a thing").unwrap();
+        g.add_capability(c, c, "does a thing", None).unwrap();
     }
     let dep = |g: &mut DesignGraph, from: &str, to: &str, w: f64| {
         g.create_edge(

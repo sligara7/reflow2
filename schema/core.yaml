@@ -37,6 +37,7 @@ schema:
         source: { type: string, description: "Who/what stated it — a user, a regulation, a stakeholder." }
         rationale: { type: string }
         status: { type: enum, values: [proposed, accepted, deferred, dropped, met], default: proposed, indexed: true }
+        provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this node entered the graph. Same vocabulary as Fragment.provenance. `inferred` is the load-bearing one: a requirement read back out of the code that implements it is satisfied by construction and can never contradict anything, so it must be distinguishable from one a stakeholder actually stated." }
       embedding_field: statement
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
       extraction_hint: >

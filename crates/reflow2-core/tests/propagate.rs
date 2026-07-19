@@ -22,8 +22,13 @@ fn thread() -> DesignGraph {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_requirement("req:latency", "Latency", "Respond within 200ms")
         .unwrap();
-    g.add_capability("cap:fast-path", "Fast path", "Serve hot reads quickly")
-        .unwrap();
+    g.add_capability(
+        "cap:fast-path",
+        "Fast path",
+        "Serve hot reads quickly",
+        None,
+    )
+    .unwrap();
     g.add_component("cmp:cache", "Cache", "In-memory cache", None)
         .unwrap();
     g.create_node(
@@ -212,8 +217,9 @@ fn centrality_ranks_a_hub_impact_above_a_leaf_at_the_same_distance() {
     // artifact) while cap:leaf connects to nothing else.
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_requirement("req:r", "R", "need").unwrap();
-    g.add_capability("cap:hub", "Hub", "central").unwrap();
-    g.add_capability("cap:leaf", "Leaf", "peripheral").unwrap();
+    g.add_capability("cap:hub", "Hub", "central", None).unwrap();
+    g.add_capability("cap:leaf", "Leaf", "peripheral", None)
+        .unwrap();
     g.add_component("cmp:1", "C1", "p1", None).unwrap();
     g.add_component("cmp:2", "C2", "p2", None).unwrap();
     g.create_node(node::ARTIFACT, "art:1", Props::new().set("name", "a1"))

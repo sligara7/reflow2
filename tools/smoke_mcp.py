@@ -141,6 +141,7 @@ def run(binary: str, graph_path: str) -> int:
         "add_verification", "verifies", "add_release", "add_environment",
         "deploy_to", "add_decision", "governed_by",
         "detect_defects", "propose_heal", "describe_schema",
+        "set_capability_status", "set_provenance",
     ):
         c.ok(f"tool exposed: {expected}", expected in names)
 
@@ -277,6 +278,42 @@ def run(binary: str, graph_path: str) -> int:
     s.call("consumes", {"from_id": "cmp:ui", "to_id": "ifc:state"})
     c.ok("contract recorded with both sides",
          s.call("get_node", {"node_type": "Interface", "id": "ifc:state"}) is not None)
+
+    # BL-27. Adopting a system that already exists needs to say two things a
+    # greenfield design never does: this already ships, and I inferred it rather
+    # than being told it. Both were unsayable, so ophyd's 15 shipped capabilities
+    # landed as `planned` — a graph asserting a production system is entirely
+    # unbuilt — and provenance got smuggled into statement text as `[EXTERNAL]`.
+    # Driven here through the real MCP path because that is where the last
+    # untyped-parameter bug hid from three test layers we wrote ourselves.
+    print("\n== 1b. brownfield: status and provenance at the surface (BL-27) ==")
+    s.call("add_capability", {"id": "cap:shipped", "name": "Device locking",
+                              "description": "Serialises device access.",
+                              "status": "realized"})
+    shipped = s.call("get_node", {"node_type": "Capability", "id": "cap:shipped"})
+    c.ok("a capability that already ships is not recorded as planned",
+         shipped["properties"].get("status") == "realized", shipped["properties"])
+    planned = s.call("get_node", {"node_type": "Capability", "id": "cap:flight"})
+    c.ok("an unstated status still defaults to planned",
+         planned["properties"].get("status") == "planned", planned["properties"])
+
+    s.call("set_capability_status", {"capability_id": "cap:display", "status": "in_progress"})
+    moved = s.call("get_node", {"node_type": "Capability", "id": "cap:display"})
+    c.ok("set_capability_status moves it and keeps the description",
+         moved["properties"].get("status") == "in_progress"
+         and moved["properties"].get("description") == "Show the score.",
+         moved["properties"])
+
+    s.call("set_provenance", {"node_type": "Requirement", "node_id": "req:physics",
+                              "provenance": "inferred"})
+    inferred = s.call("get_node", {"node_type": "Requirement", "id": "req:physics"})
+    c.ok("an inferred requirement says so in a queryable property",
+         inferred["properties"].get("provenance") == "inferred"
+         and "EXTERNAL" not in inferred["properties"].get("statement", ""),
+         inferred["properties"])
+    c.ok("provenance defaults to authored",
+         s.call("get_node", {"node_type": "Capability", "id": "cap:flight"})
+          ["properties"].get("provenance") == "authored")
 
     print("\n== 2. DETECT gaps, and the ask-the-user handshake ==")
     gaps = s.call("detect_gaps")

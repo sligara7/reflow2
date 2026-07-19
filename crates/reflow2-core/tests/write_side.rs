@@ -21,7 +21,7 @@ fn built_thread() -> DesignGraph {
     g.add_project("proj:1", "Scoreboard").expect("project");
     g.add_requirement("req:live", "Live scores", "scores update live")
         .expect("req");
-    g.add_capability("cap:score", "Scoring", "tracks the score")
+    g.add_capability("cap:score", "Scoring", "tracks the score", None)
         .expect("cap");
     g.add_component("cmp:engine", "Score engine", "computes scores", None)
         .expect("cmp");
@@ -423,7 +423,7 @@ fn a_dropped_requirement_is_ignored_by_detect_and_heal_alike() {
 fn many_files_under_a_verified_capability_raise_no_gaps() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:p", "P").unwrap();
-    g.add_capability("cap:c", "Scoring", "tracks the score")
+    g.add_capability("cap:c", "Scoring", "tracks the score", None)
         .unwrap();
     for i in 0..12 {
         g.link_artifact(LinkArtifactOptions {
@@ -457,4 +457,183 @@ fn many_files_under_a_verified_capability_raise_no_gaps() {
     let cov = g.verification_coverage().unwrap();
     assert_eq!((cov.artifacts, cov.artifacts_verified), (12, 0));
     assert_eq!((cov.capabilities, cov.capabilities_verified), (1, 1));
+}
+
+// ---- BL-27 · adopting a system that already exists -------------------------
+//
+// The graph has to be able to say two things a greenfield design never needs:
+// *this capability already ships*, and *I read this back out of the code rather
+// than being told it*. Both were unsayable, so an adoption pass produced a graph
+// that asserted a production system was entirely unbuilt (ophyd, 15 capabilities)
+// and smuggled `[EXTERNAL — …]` into statement text because provenance had
+// nowhere to go.
+
+#[test]
+fn a_capability_that_already_ships_can_say_so_at_creation() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability(
+        "cap:live",
+        "Device locking",
+        "serialises device access",
+        Some("realized"),
+    )
+    .unwrap();
+
+    let stored = g.get_node(node::CAPABILITY, "cap:live").unwrap().unwrap();
+    assert_eq!(
+        stored.properties.get("status").unwrap().as_str().unwrap(),
+        "realized",
+        "a capability recorded as already built must not read back as planned"
+    );
+}
+
+#[test]
+fn a_capability_left_unsaid_still_defaults_to_planned() {
+    // The greenfield path must not have to opt out of the correct default.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability("cap:new", "Ghost replay", "replays a lap", None)
+        .unwrap();
+
+    let stored = g.get_node(node::CAPABILITY, "cap:new").unwrap().unwrap();
+    assert_eq!(
+        stored.properties.get("status").unwrap().as_str().unwrap(),
+        "planned"
+    );
+}
+
+#[test]
+fn setting_a_capability_status_preserves_its_description() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability("cap:x", "Scoring", "tracks the score", None)
+        .unwrap();
+    g.set_capability_status("cap:x", "verified").unwrap();
+
+    let stored = g.get_node(node::CAPABILITY, "cap:x").unwrap().unwrap();
+    assert_eq!(
+        stored.properties.get("status").unwrap().as_str().unwrap(),
+        "verified"
+    );
+    assert_eq!(
+        stored
+            .properties
+            .get("description")
+            .unwrap()
+            .as_str()
+            .unwrap(),
+        "tracks the score",
+        "moving a capability's standing must not drop its wording"
+    );
+}
+
+#[test]
+fn status_on_a_missing_capability_fails_loud() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    assert!(g.set_capability_status("cap:nope", "realized").is_err());
+}
+
+#[test]
+fn an_unknown_capability_status_fails_loud_rather_than_defaulting() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    assert!(
+        g.add_capability("cap:x", "X", "does x", Some("shipped"))
+            .is_err(),
+        "`shipped` is not in the enum; accepting it silently would be a silent fallback"
+    );
+}
+
+#[test]
+fn a_requirement_read_out_of_the_code_can_be_marked_inferred() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement(
+        "req:lock",
+        "Device locking",
+        "only one client drives a device",
+    )
+    .unwrap();
+    g.set_provenance(node::REQUIREMENT, "req:lock", "inferred")
+        .unwrap();
+
+    let stored = g.get_node(node::REQUIREMENT, "req:lock").unwrap().unwrap();
+    assert_eq!(
+        stored
+            .properties
+            .get("provenance")
+            .unwrap()
+            .as_str()
+            .unwrap(),
+        "inferred"
+    );
+    assert_eq!(
+        stored
+            .properties
+            .get("statement")
+            .unwrap()
+            .as_str()
+            .unwrap(),
+        "only one client drives a device",
+        "provenance must be queryable, not smuggled into the statement text"
+    );
+}
+
+#[test]
+fn provenance_defaults_to_authored() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "Stated", "a stakeholder said so")
+        .unwrap();
+
+    let stored = g.get_node(node::REQUIREMENT, "req:a").unwrap().unwrap();
+    assert_eq!(
+        stored
+            .properties
+            .get("provenance")
+            .unwrap()
+            .as_str()
+            .unwrap(),
+        "authored"
+    );
+}
+
+#[test]
+fn provenance_on_a_type_that_has_no_such_property_fails_loud() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:1", "Thing").unwrap();
+    let err = g
+        .set_provenance(node::PROJECT, "proj:1", "inferred")
+        .expect_err(
+            "Project declares no provenance; silently doing nothing would be a silent drop",
+        );
+    assert!(
+        err.to_string().contains("Requirement"),
+        "the rejection must name where the property does live, got: {err}"
+    );
+}
+
+#[test]
+fn provenance_survives_an_export_import_round_trip() {
+    // import_graph is the one bulk write path, and the backlog points an adopt
+    // pass at it rather than at N setter calls — so it has to carry this.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability("cap:a", "Polling", "polls devices", Some("realized"))
+        .unwrap();
+    g.set_provenance(node::CAPABILITY, "cap:a", "inferred")
+        .unwrap();
+    let doc = g.export_graph().unwrap();
+
+    let mut fresh = DesignGraph::open_in_memory().unwrap();
+    fresh.import_graph(&doc).unwrap();
+
+    let stored = fresh.get_node(node::CAPABILITY, "cap:a").unwrap().unwrap();
+    assert_eq!(
+        stored
+            .properties
+            .get("provenance")
+            .unwrap()
+            .as_str()
+            .unwrap(),
+        "inferred"
+    );
+    assert_eq!(
+        stored.properties.get("status").unwrap().as_str().unwrap(),
+        "realized"
+    );
 }

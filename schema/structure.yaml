@@ -19,6 +19,7 @@ schema:
         tier: { type: enum, values: [strategic, operational, tactical], default: operational, indexed: true }
         location: { type: string, description: "Where it lives — a source dir, a physical location, a document path." }
         status: { type: enum, values: [planned, in_progress, realized, verified], default: planned, indexed: true }
+        provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this node entered the graph. Same vocabulary as Fragment.provenance." }
       embedding_field: purpose
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
       extraction_hint: >
@@ -33,6 +34,7 @@ schema:
         description: { type: string, fulltext: true }
         medium: { type: enum, values: [REST, gRPC, event, graphql, cli, library, data, mechanical, electrical, human], default: REST, indexed: true, description: "How the contract is carried." }
         spec: { type: string, description: "Endpoint path, signature, connector spec, or protocol detail." }
+        provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this node entered the graph. Same vocabulary as Fragment.provenance." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
       extraction_hint: >

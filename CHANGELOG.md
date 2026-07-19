@@ -15,6 +15,37 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A design can say what already exists, and what it inferred** (BL-27, two of five blockers on
+  adopting a system that already exists).
+
+  `add_capability` takes an optional `status`, and `set_capability_status` moves one afterwards —
+  the sibling of `set_requirement_status` and `set_verification_status`, for the same reason: a
+  capability's standing changes far more often than its description, and re-stating the
+  description to move it invites drift. Nothing hardcoded `planned`; the constructor simply never
+  set the property, so every capability took the schema default. On the greenfield path that
+  default is right and stays untouched — a new capability really is planned. On the brownfield
+  path it is unusable: ophyd's 15 shipped, under-test capabilities all landed `planned`, so the
+  graph asserted that a production system was entirely unbuilt. Settable **at creation** because
+  correcting it afterwards is two writes per node, which is what an adoption pass does least well.
+
+  `provenance` is now a property on `Requirement`, `Capability`, `Component` and `Interface` —
+  the four types an adoption pass reads back out of a running system — reusing
+  `Fragment.provenance`'s exact vocabulary (`authored` default / `planned` / `inferred` / `healed`
+  / `reconciled` / `imported`) so there is one word for one idea. `set_provenance` writes it, and
+  `import_graph` carries it at create time, which is the path an adopt pass should actually use.
+  `inferred` is the value that earns the property: a Requirement backed out of the code that
+  implements it is satisfied by construction, so it can never contradict anything and a graph full
+  of them says nothing — but only if a reader can tell. Ophyd had nowhere to put that and wrote
+  `[EXTERNAL — …]` into the statement text, which is not queryable.
+
+  Adding properties leaves the node and edge type counts at 27/53, so `GraphStamp` does not move
+  and existing graphs still open — the backward-compatibility argument BL-19 sets out, now
+  exercised. Existing nodes read `provenance` as absent rather than `authored`, since defaults
+  apply on create and are not backfilled; an export/import round trip resolves that, and there is
+  a test pinning that provenance survives one.
+
 ### Fixed
 
 - **Every tool parameter declares a type** (BL-28). Six parameters — `gap_to_prompt.gap`,

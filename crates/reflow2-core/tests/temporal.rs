@@ -111,7 +111,7 @@ fn added_change_takes_no_snapshot() {
     g.add_epoch("epoch:v1", "v1", EpochType::Baseline, 0)
         .unwrap();
     // A brand-new capability added at v1 — create it, then record the add.
-    g.add_capability("cap:new", "New cap", "A freshly added capability")
+    g.add_capability("cap:new", "New cap", "A freshly added capability", None)
         .unwrap();
     let (snapshot, _ce) = g
         .record_change(ChangeRecord {

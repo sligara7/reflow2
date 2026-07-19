@@ -18,7 +18,7 @@ fn graph_with_a_gap() -> (DesignGraph, String, Vec<String>) {
     g.add_project("proj:1", "Thing").expect("project");
     g.add_requirement("req:audit", "Audit trail", "every change is logged")
         .expect("req");
-    g.add_capability("cap:other", "Something else", "unrelated")
+    g.add_capability("cap:other", "Something else", "unrelated", None)
         .expect("cap");
 
     let gap = g
@@ -254,7 +254,7 @@ fn an_acknowledgement_outliving_its_detector_is_reported_not_dropped() {
 fn an_asked_question_is_still_there_next_session() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:p", "P").unwrap();
-    g.add_capability("cap:flight", "Ball flight", "sim")
+    g.add_capability("cap:flight", "Ball flight", "sim", None)
         .unwrap();
 
     let gap_id = "gap:abc123";
@@ -377,7 +377,8 @@ fn a_question_can_be_withdrawn_and_answering_an_unknown_one_fails_loud() {
 fn an_answered_question_stays_visible_while_its_gap_is_open() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:p", "P").unwrap();
-    g.add_capability("cap:x", "X", "does a thing").unwrap();
+    g.add_capability("cap:x", "X", "does a thing", None)
+        .unwrap();
 
     // A real, still-open gap to hang the question on.
     let gap = g

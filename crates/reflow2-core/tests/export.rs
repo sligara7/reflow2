@@ -8,7 +8,7 @@ fn a_design() -> DesignGraph {
     g.add_project("proj:p", "Weather station").unwrap();
     g.add_requirement("req:offline", "Offline", "Must work without a network.")
         .unwrap();
-    g.add_capability("cap:read", "Read sensors", "polls the sensors")
+    g.add_capability("cap:read", "Read sensors", "polls the sensors", None)
         .unwrap();
     g.add_component(
         "cmp:node",

@@ -85,7 +85,7 @@ fn graph_with_a_gap() -> DesignGraph {
     // A capability with no allocation → an `unallocated_capability` gap.
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_requirement("req:a", "A", "need a").unwrap();
-    g.add_capability("cap:a", "Local caching", "serve reads on-device")
+    g.add_capability("cap:a", "Local caching", "serve reads on-device", None)
         .unwrap();
     g.add_component("cmp:a", "Store", "kv store", None).unwrap();
     g.satisfies("cap:a", "req:a").unwrap();

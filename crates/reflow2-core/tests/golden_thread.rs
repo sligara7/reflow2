@@ -38,6 +38,7 @@ fn golden_thread_round_trips() {
         "cap:local-cache",
         "Local caching",
         "Persist and serve data entirely on-device.",
+        None,
     )
     .expect("create Capability");
 

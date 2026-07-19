@@ -5,7 +5,7 @@ use reflow2_core::{DesignGraph, LinkArtifactOptions};
 
 fn graph_with_capability() -> DesignGraph {
     let mut g = DesignGraph::open_in_memory().unwrap();
-    g.add_capability("cap:flight", "Ball flight", "Simulate trajectory.")
+    g.add_capability("cap:flight", "Ball flight", "Simulate trajectory.", None)
         .unwrap();
     g
 }

@@ -260,11 +260,17 @@ pub struct RequirementReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
-pub struct DescribedReq {
+pub struct CapabilityReq {
     pub id: String,
     pub name: String,
-    /// Capability description / component purpose.
+    /// What this capability does.
     pub description: String,
+    /// `planned` (default) / `in_progress` / `realized` / `verified`. Leave it
+    /// unset when designing forwards — a new capability really is planned.
+    /// Set it when recording a capability that already exists, so the graph
+    /// does not assert that a shipped system is entirely unbuilt.
+    #[serde(default)]
+    pub status: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -272,6 +278,23 @@ pub struct RequirementStatusReq {
     pub requirement_id: String,
     /// `proposed` (default) / `accepted` / `deferred` / `dropped` / `met`.
     pub status: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct CapabilityStatusReq {
+    pub capability_id: String,
+    /// `planned` (default) / `in_progress` / `realized` / `verified`.
+    pub status: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct ProvenanceReq {
+    /// `Requirement`, `Capability`, `Component` or `Interface`.
+    pub node_type: String,
+    pub node_id: String,
+    /// `authored` (default) / `planned` / `inferred` / `healed` /
+    /// `reconciled` / `imported`.
+    pub provenance: String,
 }
 
 /// A Component, which unlike a Capability sits at a decomposition level.
@@ -857,14 +880,18 @@ impl ReflowService {
         ))
     }
 
-    #[tool(description = "Create a Capability node.")]
+    #[tool(
+        description = "Create a Capability node. `status` defaults to `planned`; set it when \
+                       recording something that already exists, so adopting a running system \
+                       does not describe it as entirely unbuilt."
+    )]
     pub async fn add_capability(
         &self,
-        Parameters(req): Parameters<DescribedReq>,
+        Parameters(req): Parameters<CapabilityReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.graph.lock().await;
         ok_json(NodeDto::from(
-            g.add_capability(&req.id, &req.name, &req.description)
+            g.add_capability(&req.id, &req.name, &req.description, req.status.as_deref())
                 .map_err(dyno_err)?,
         ))
     }
@@ -882,6 +909,44 @@ impl ReflowService {
         let mut g = self.graph.lock().await;
         ok_json(NodeDto::from(
             g.set_requirement_status(&req.requirement_id, &req.status)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Set a Capability's lifecycle status: `planned` (the default) / \
+                       `in_progress` / `realized` / `verified`. Use it as a capability moves \
+                       through its life; to record one that already ships, pass `status` to \
+                       add_capability instead and save a write."
+    )]
+    pub async fn set_capability_status(
+        &self,
+        Parameters(req): Parameters<CapabilityStatusReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.set_capability_status(&req.capability_id, &req.status)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record how a node entered the graph: `authored` (the default, someone \
+                       stated it) / `planned` / `inferred` (read back out of an existing system) \
+                       / `healed` / `reconciled` / `imported`. Accepted on Requirement, \
+                       Capability, Component and Interface. Mark inferred requirements as such — \
+                       a requirement backed out of the code that implements it is satisfied by \
+                       construction and cannot contradict anything, and a reader has no other way \
+                       to tell. For bulk adoption prefer import_graph, which carries this at \
+                       create time."
+    )]
+    pub async fn set_provenance(
+        &self,
+        Parameters(req): Parameters<ProvenanceReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.set_provenance(&req.node_type, &req.node_id, &req.provenance)
                 .map_err(dyno_err)?,
         ))
     }

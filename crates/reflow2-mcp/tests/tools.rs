@@ -55,10 +55,11 @@ async fn seeded() -> ReflowService {
         name: "Realistic physics".into(),
         statement: "Ball flight must be plausible.".into()
     })));
-    j!(s.add_capability(Parameters(DescribedReq {
+    j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:flight".into(),
         name: "Ball flight".into(),
-        description: "Simulate ball trajectory.".into()
+        description: "Simulate ball trajectory.".into(),
+        status: None
     })));
     j!(s.add_component(Parameters(ComponentReq {
         id: "cmp:physics".into(),
@@ -167,10 +168,11 @@ async fn genesis_bootstraps_then_detect_hands_off() {
         name: "Realistic physics".into(),
         statement: "Ball flight must be plausible.".into()
     })));
-    j!(s.add_capability(Parameters(DescribedReq {
+    j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:flight".into(),
         name: "Ball flight".into(),
-        description: "Simulate ball trajectory.".into()
+        description: "Simulate ball trajectory.".into(),
+        status: None
     })));
     j!(s.satisfies(Parameters(EdgePairReq {
         from_id: "cap:flight".into(),
@@ -194,10 +196,11 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
     let s = ReflowService::in_memory().expect("in-memory service");
     // Two capabilities, neither realized yet.
     for (id, name) in [("cap:flight", "Ball flight"), ("cap:score", "Scoring")] {
-        j!(s.add_capability(Parameters(DescribedReq {
+        j!(s.add_capability(Parameters(CapabilityReq {
             id: id.into(),
             name: name.into(),
-            description: "…".into()
+            description: "…".into(),
+            status: None
         })));
     }
 

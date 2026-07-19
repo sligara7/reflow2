@@ -18,7 +18,7 @@ fn depends(g: &mut DesignGraph, from: &str, to: &str, weight: f64) {
 }
 
 fn cap(g: &mut DesignGraph, id: &str, component: &str) {
-    g.add_capability(id, id, "does a thing").unwrap();
+    g.add_capability(id, id, "does a thing", None).unwrap();
     g.add_component(component, component, "a part", None)
         .unwrap();
     g.allocate(id, component).unwrap();
@@ -118,7 +118,7 @@ fn a_hub_component_between_two_subsystems_is_a_god_component() {
 #[test]
 fn multi_allocated_capabilities_are_surfaced() {
     let mut g = DesignGraph::open_in_memory().unwrap();
-    g.add_capability("cap:shared", "Shared", "in two places")
+    g.add_capability("cap:shared", "Shared", "in two places", None)
         .unwrap();
     g.add_component("cmp:a", "A", "part a", None).unwrap();
     g.add_component("cmp:b", "B", "part b", None).unwrap();
@@ -135,7 +135,7 @@ fn proposes_clusters_matching_the_coupling_graph() {
     // allocation. Leiden should propose exactly the two triangles.
     let mut g = DesignGraph::open_in_memory().unwrap();
     for c in ["cap:a1", "cap:a2", "cap:a3", "cap:b1", "cap:b2", "cap:b3"] {
-        g.add_capability(c, c, "does a thing").unwrap();
+        g.add_capability(c, c, "does a thing", None).unwrap();
     }
     depends(&mut g, "cap:a1", "cap:a2", 0.9);
     depends(&mut g, "cap:a2", "cap:a3", 0.9);
@@ -177,7 +177,7 @@ fn proposal_beats_a_miscohesive_current_allocation() {
     // proposer should regroup them for a higher modularity.
     let mut g = DesignGraph::open_in_memory().unwrap();
     for c in ["cap:a1", "cap:a2", "cap:b1", "cap:b2"] {
-        g.add_capability(c, c, "does a thing").unwrap();
+        g.add_capability(c, c, "does a thing", None).unwrap();
     }
     g.add_component("cmp:x", "X", "p", None).unwrap();
     g.add_component("cmp:y", "Y", "p", None).unwrap();

@@ -30,7 +30,7 @@ fn report_aggregates_every_analysis_and_renders_markdown() {
     )
     .unwrap();
     for c in ["cap:a1", "cap:a2", "cap:b1", "cap:b2"] {
-        g.add_capability(c, c, "does a thing").unwrap();
+        g.add_capability(c, c, "does a thing", None).unwrap();
     }
     g.add_component("cmp:a", "A", "part a", None).unwrap();
     g.add_component("cmp:b", "B", "part b", None).unwrap();
