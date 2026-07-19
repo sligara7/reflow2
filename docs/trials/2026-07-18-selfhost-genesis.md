@@ -5,141 +5,201 @@ consumer kit — the real MCP binary, the real `.mcp.json`, the graph at `./.ref
 Claude Code. Not a harness: the same path a consumer gets.
 
 **Why this is different from [the self-host probe](2026-07-18-selfhost-probe.md).** That one was
-read-mostly, modelled in `/tmp` by a throwaway script we wrote, and it modelled the design
-*backwards* from `requirements-coverage.md` — 119 nodes, already structured. This one runs GENESIS
-*forwards*, from a brief, on a codebase that already exists, using the shipped skill and the
-shipped client. Different question: not "do the detectors scale?" but "does the entry point work?"
-
-**Confound, stated up front:** reflow2 is brownfield, and GENESIS is the greenfield entry point.
-Running it here is deliberately off-label — that is the thing under test ([BL-27](../backlog.md)).
-Findings 1–2 are about that mismatch and should be read as replication, not new discovery.
-Findings 3–5 are not about brownfield at all and would have fired on a greenfield project too.
+read-mostly, modelled in `/tmp` by a throwaway script we wrote, and modelled the design *backwards*
+from `requirements-coverage.md` — 119 nodes, already structured. This one runs GENESIS *forwards*,
+from a brief, using the shipped skill and a **shipped third-party client**. That last part is where
+the one new finding comes from.
 
 **Seeded:** 10 Requirements, 7 Capabilities, 12 SATISFIES, 17 CONTAINS, 0 Components (per the
-skill). 18 nodes. Requirements derived from `AGENTS.md`'s stated invariants and the deployment
-context the skill asks for; capabilities one per loop step plus store/artifacts/install.
+skill). 18 nodes.
+
+**Scope note, written after the fact.** The first draft of this document claimed five findings.
+Four were already recorded in earlier trials, which I had not read before writing. They are kept
+below as confirmations with attribution, not as discoveries, and one first-draft claim is retracted
+outright. The honest yield of this session is **one new finding (§1) and one retraction (§6)**.
+Recording the miss because the failure mode — a fresh trial re-reporting known findings as new —
+inflates the evidence base that BL items are argued from.
 
 ## What it said
 
 ```
 18 nodes · 3 gaps · 14 structural defects
 
-  0.70  concept_without_design      ← false here
-  0.65  build_without_verification  ← false here
-  0.60  unsatisfied_requirement     ← the only true one, ranked last
+  0.70  concept_without_design      ← artifact of seeding order (known: ophyd 1, 3dtictactoe 0+3)
+  0.65  build_without_verification  ← same class, second detector (new detail)
+  0.60  unsatisfied_requirement     ← on a deploy-context requirement (known: grok finding 9)
 
-   7  orphan_node (capability not allocated)   ← all 7 caused by following GENESIS
-   3  disconnected_community
-   3  single_point_of_failure
-   1  orphan_node (requirement unsatisfied)
+   7  orphan_node (capability not allocated)  ← known: ophyd finding 14
+   3  disconnected_community                  ← known: ophyd finding 14
+   3  single_point_of_failure                 ← known: BL-5
+   1  orphan_node (requirement unsatisfied)   ← double-count of gap 3 (known: ophyd 15, 3dtictactoe 10)
 ```
 
-## Findings
+Nothing in the list was actionable. See §6.
 
-### 1. Third independent replication of the BL-27 gap-ordering inversion — and it is worse than recorded
+---
 
-[BL-27](../backlog.md) records that in brownfield, `concept_without_design` fires at 0.7, above
-the genuinely valuable gap at 0.6, so an agent working top-down does the useless thing first. That
-reproduced here exactly, on a third codebase, at a third size — after ophyd-service (399 files)
-and 3dtictactoe (~20). It is a property of the path, confirmed.
+## 1. NEW — every `JsonValue` parameter on the tool surface is unusable from this client
 
-What is **new**: BL-27 names one detector. Two fire this way. `build_without_verification` (0.65)
-says "there's a design/build, but no way to confirm any of it actually works" — of a repo with 15
-integration-test files, unit tests, doctests, and a smoke test, whose AGENTS.md makes a green test
-run a precondition for calling a change done. Both false gaps outrank the one true gap.
+The input-side twin of the bug class ophyd found on the output side (findings 10 and 22) and the
+grok trial found on array responses (its finding 1). Nobody has looked at the parameters.
 
-So the top **two-thirds** of the list is wrong, not the top item. A fix scoped to
-`concept_without_design` alone would leave the agent's first action still useless. Both are
-`scope: phase` detectors that infer project maturity from node-type census — that shared inference
-is the defect, not either detector's wording or severity.
+Five tool parameters are declared `JsonValue` in `service.rs`. `JsonValue`'s `JsonSchema` impl
+emits an untyped `{}`, so the published `inputSchema` gives the client **no type to marshal
+against**. Claude Code sends the object as a JSON *string*; `serde_json::from_value` then gets
+`Value::String` and rejects it. Confirmed against the advertised `tools/list` — `gap` is the only
+property in its schema with no `type`, every sibling has one.
 
-### 2. HEAL contradicts GENESIS, and check-health is the skill that surfaces it
+All five, tested over the real MCP path:
 
-Seven of the 14 structural defects are `Capability 'X' is not allocated to any component` — one
-for every capability seeded. They exist because GENESIS step 2 says, in bold, **do not create
-Components yet**, deliberately, so that `concept_without_design` fires as the productive first
-question.
+| Tool | Param | Required | Error |
+|---|---|---|---|
+| `gap_to_prompt` | `gap` | yes | `invalid GapCandidate: … expected struct GapCandidate` |
+| `apply_heal` | `proposal` | yes | `invalid HealProposal: … expected struct HealProposal` |
+| `import_graph` | `document` | yes | `not a reflow2 export: … expected struct GraphExport` |
+| `create_node` | `props` | no | `invalid props object: … expected a map` |
+| `create_edge` | `props` | no | `invalid props object: … expected a map` |
 
-The two skills ship together and the natural order is genesis → check-health. Run that order and
-HEAL reports seven warnings against a graph that is exactly what GENESIS instructed. An agent that
-believes its tools will start allocating components to silence them — which is the guess GENESIS
-stopped it from making. An agent that doesn't will learn that HEAL warnings are ignorable, which is
-worse and permanent.
+From Claude Code that removes the **ask half of DETECT**, the **apply half of HEAL**, graph
+**restore/migration**, and all property-setting on generic CRUD. Four of the five are named in the
+skills the kit installs.
 
-Not a brownfield finding: this fires on any project on day one.
+**It is client-dependent, which is the actually interesting part.** The grok trial lists
+`gap_to_prompt` among tools that *work* over MCP and used it successfully — grok build marshals a
+nested object, Claude Code marshals a string. Both are behaving reasonably against a schema that
+declares nothing. So this is not a dead tool; it is **a tool that works on the harness we test on
+and fails on the one `req:driving-agent` names first**, with no signal that anything is wrong.
+`tools/smoke_mcp.py:295` passes `gap` as a Python dict and is green.
 
-### 3. `gap_to_prompt` is unusable from a real MCP client — the DETECT→ASK handshake is broken
+That is a sharper version of the lesson AGENTS.md already draws from three home-grown test layers:
+the smoke test is not just *a client we wrote*, it is a client whose marshalling choice happens to
+match one of the four supported harnesses.
 
-Blocker. Calling it from Claude Code fails on both a JSON-string and an object argument:
+**Fix:** derive `JsonSchema` on `GapCandidate` / `HealProposal` / `GraphExport` and declare the
+fields as those structs; `props` as an explicit map type. Do **not** make the server also accept a
+JSON string — that is a silent fallback and violates `req:no-silent-fallback`.
+
+**Test:** ophyd finding 22 already proposes a smoke test asserting every tool's *response* envelope
+validates. That proposal does not cover this: these are request schemas, and the failure is in the
+client's marshalling, not the server's output. The check that would have caught it is static —
+assert no advertised `inputSchema` property lacks a type — and it needs writing separately.
+
+Filed as **BL-28**, widened from `gap_to_prompt` alone to the whole class.
+
+## 2. CONFIRMS ophyd finding 14 — HEAL contradicts GENESIS, now at 18 nodes
+
+Seven of the 14 defects are `Capability 'X' is not allocated to any component`, one per seeded
+capability, caused entirely by GENESIS step 2's bolded **do not create Components yet**.
+
+[Ophyd finding 14](2026-07-18-brownfield-ophyd-service.md) already reports this precisely — 15 of
+its 35 defects were the same detector restating "0 Components exist," and it already draws the
+conclusion that following `check-health` literally would fabricate Components via `generate_owner`.
+It proposes suppressing allocation-orphan defects when Component count is 0, or having
+`graph_report` label the phase.
+
+What this run adds is only scale and sequencing: it reproduces at **18 nodes** (ophyd was 52), and
+it reproduces on the *greenfield* path, so finding 14's proposed fix should not be scoped to
+brownfield. The natural skill order genesis → check-health produces it on any project, day one.
+
+One detail ophyd finding 14 could not see, because it declined to run `propose_heal`: on this graph
+`propose_heal(balanced)` returns **0 structural operations and 14 awaiting generation**, all
+`requires_human_review: true`. Generation is gated on the deferred LLM backends. So
+`check-health`'s promise to "apply only the mechanical fixes" has, here, nothing whatever to apply
+— the HEAL loop end-to-end yields zero actionable output on a freshly-seeded graph.
+
+## 3. CONFIRMS BL-27 — third target, and a second detector in the same class
+
+The `concept_without_design` at 0.70 outranking the real gap at 0.60 is [BL-27](../backlog.md),
+already established by [ophyd finding 1](2026-07-18-brownfield-ophyd-service.md) and [3dtictactoe
+finding 3](2026-07-18-brownfield-3dtictactoe.md), which together already upgraded it from an
+observation to a property of the path. A third sighting adds little; recording it only because the
+target is reflow2 itself.
+
+The one detail worth carrying: **`build_without_verification` (0.65) fires in the same way**, and
+no prior trial names it in this role. It reports "no way to confirm any of it actually works" of a
+repo with 15 integration-test files, unit tests, doctests, and a smoke test whose green run
+AGENTS.md makes a precondition for calling a change done.
+
+Both are `scope: phase` detectors inferring maturity from a node-type census, and both are true
+about the *graph* while false about the *system* — 3dtictactoe finding 3's argument, extended one
+detector across. The consequence for BL-27 is narrow but real: a fix scoped to
+`concept_without_design` alone still leaves the top two-thirds of the first gap list unactionable.
+
+## 4. CONFIRMS aidrone finding 1 and ophyd finding 11 — and closes the last workaround
+
+[Aidrone finding 1](2026-07-18-greenfield-aidrone.md) reports "No way to set node properties at
+creation" (everything lands `priority=medium, kind=functional, status=proposed`) and [ophyd finding
+11](2026-07-18-brownfield-ophyd-service.md) reports `add_capability` hardcoding `status: planned`.
+Both reproduced exactly: all 10 requirements landed `priority: medium`, all 7 capabilities
+`planned` — for capabilities that ship in the binary the client is talking to.
+
+The new part is that **the documented escape hatch is closed by §1**. `create_node` takes a `props`
+map precisely so arbitrary properties can be set; it is one of the five broken params. Verified:
 
 ```
-MCP error -32602: invalid GapCandidate: invalid type: string "{...}", expected struct GapCandidate
+create_node(node_type="Requirement", props={"priority":"critical", …})
+→ invalid props object: … expected a map
 ```
 
-Root cause, `crates/reflow2-mcp/src/service.rs:621`:
+So from Claude Code there is **no path at all** to set a requirement's priority — not the typed
+constructor, not the generic one. That matters because `unsatisfied_requirement`'s own evidence
+string cites `priority=medium` as ranking input. The severity ordering reads a field no client on
+this harness can write, and every value it reads is a default nobody chose.
 
-```rust
-pub gap: JsonValue,
-```
+## 5. CONFIRMS BL-5 / blind trial — structural noise on a young graph
 
-`JsonValue`'s `JsonSchema` impl emits an untyped `{}` — the published tool schema declares no type
-for `gap`. A client with no type to marshal against sends the nested object as a **string**;
-`serde_json::from_value` at `service.rs:1504` then gets `Value::String` and rejects it. Nothing the
-caller can do from the client side.
+3 `disconnected_community` and 3 `single_point_of_failure` on 18 nodes, all `warning`. The SPOFs
+land on `req:coherence` and `req:no-silent-fallback` — load-bearing *because* they are
+cross-cutting, so the topology is right and "add redundancy" is wrong.
 
-This is the single most load-bearing tool in the loop. `detect_gaps` finds gaps; `gap_to_prompt` is
-how they become questions for the human — the whole of `req:human-decides`, and the entire second
-half of the `detect-and-ask` skill. It has presumably never worked from Claude Code.
+This is [BL-5](../backlog.md), reported in the blind trial and diagnosed in the [self-host
+probe](2026-07-18-selfhost-probe.md), whose "Outcome, same day" section supersedes the probe's own
+first guess: the test asks "are there ≥2 non-trivial components *after* removal?", which one island
+already satisfies, so every articulation point elsewhere reports. Nothing here refines that. Noted
+only to record that it still fires post-BL-5-fix at this size.
 
-**And it is the exact failure AGENTS.md warns about**, four lines under "Compiling is not the finish
-line": *"three home-grown test layers once agreed with each other and were all wrong because each
-was a client we wrote."* `tools/smoke_mcp.py:295` passes `gap` as a Python dict, which serializes to
-a JSON object, which works. The smoke test is green. It is a client we wrote.
+The 1 remaining `orphan_node` (requirement satisfied by nothing) is the same fact as gap 3 in HEAL
+vocabulary — [ophyd finding 15 / 3dtictactoe finding
+10](2026-07-18-brownfield-3dtictactoe.md), DETECT/HEAL
+double-counting, reproducing a third time.
 
-Fix is to give `gap` a real type — derive `JsonSchema` on `GapCandidate` and declare the field as
-that struct — not to make the server also accept strings, which would be a silent fallback and
-violates `req:no-silent-fallback`. The smoke test cannot catch the regression; the tool schema
-needs asserting directly (there is precedent — `smoke_mcp.py:148` already inspects
-`reconcile_artifacts`'s `inputSchema`).
+## 6. RETRACTED — "the only true gap"
 
-### 4. The typed constructors cannot express what GENESIS is told to capture
+The first draft called the 0.60 `unsatisfied_requirement` on `req:platform` the one true gap, and
+built the §3 headline on the contrast. That is wrong.
 
-`add_requirement` takes only `id`, `name`, `statement`. All ten requirements landed
-`priority: medium`, `status: proposed`, `concern: core`. `add_capability` takes only `id`, `name`,
-`description`; all seven landed `status: planned`.
+`req:platform` is a **deployment-context requirement**, created because GENESIS step 3 instructs
+the agent to capture platform / driving agent / invocation / persistence as Requirements. [Grok
+finding 9](2026-07-18-grok-trial-weather-station.md) already reports exactly this: those context
+requirements "felt forced," and each immediately creates an `unsatisfied_requirement` gap until
+acknowledged as meta — with a suggestion that they belong in Project properties or a distinct
+context node kind.
 
-Two consequences, one per direction:
+So the gap is a known artifact of the same skill that created the node, and **all three gaps in
+this round were artifacts of seeding, not observations about reflow2**. That is a stronger claim
+than the draft's, and it belongs to grok finding 9 and BL-27, not to this trial.
 
-- **Forwards (greenfield):** GENESIS step 3 says to capture deployment context — platform, driving
-  agent, invocation, persistence — because these "ripple into everything." They were captured as
-  requirements indistinguishable in priority from anything else. `unsatisfied_requirement`'s own
-  evidence string cites `priority=medium` as if it were a signal; here it is a default nobody set.
-  Severity ranking reads a field the seeding tools cannot write.
-- **Backwards (brownfield):** every capability reflow2 actually ships is recorded as `planned`.
-  There is no way through the typed surface to say "this exists and works," which is most of what
-  is true about an existing system.
+Worth noting the tension it exposes between two prior trials: aidrone finding 1 credits
+`unsatisfied_requirement` as the detector that "earned its keep — precise hit, no false positives
+across three rounds," while grok finding 9 has it firing on nodes the skill just told the agent to
+make. Both are right, about different node populations. Deciding whether deploy-context
+requirements are Requirements at all would resolve it, and that decision is unmade.
 
-### 5. Structural defects on a young graph are indistinguishable from real ones
-
-3 `disconnected_community` and 3 `single_point_of_failure` on an 18-node graph, all `warning`.
-The disconnected clusters are just requirement/capability pairs not yet joined to the rest — the
-normal shape of a graph seeded an hour ago. The SPOFs are on `req:coherence` and
-`req:no-silent-fallback`, which are load-bearing *because they are cross-cutting*: the topology
-reading is correct and the engineering conclusion ("add redundancy") is wrong.
-
-`structure.rs` is already documented as selective about SPOF to avoid exactly this class of noise
-on tree-shaped threads. That selectivity does not extend to graph age. Related to finding 1 — both
-are detectors inferring from a census without knowing what phase the design is in — but distinct:
-finding 1 is ordering, this is a floor on graph size below which topology means little.
+---
 
 ## Verdict
 
-GENESIS's mechanics work: scaffold, seed, contain, and detect all ran clean on the shipped path,
-and the golden thread came out coherent. The findings are on either side of it — what it tells the
-agent to do next (1, 2, 5) and what it can record while doing it (4).
+GENESIS's mechanics work: scaffold, seed, contain and detect all ran clean on the shipped path and
+the golden thread came out coherent. Of the six sections above, one is new.
 
-Finding 3 is the one to fix first, and it is not a brownfield finding: the ask half of the loop
-does not work from Claude Code at all, and our own test client is why we did not know.
+**§1 is the finding to act on**, and it is not a brownfield or a genesis finding — it is a
+tool-surface bug that silently removes four capabilities from one of the four supported harnesses,
+including the ask half of the loop. It was invisible to every prior trial because the two that ran
+over real MCP ran on grok build, whose marshalling happens to work.
+
+The rest of this session is evidence that the existing findings reproduce. That is worth something
+— ophyd finding 14 and BL-27 both gain a sighting on a third target — but it is not new
+information, and the first draft of this document presented it as though it were.
 
 ## Repro
 
@@ -149,4 +209,5 @@ python3 tools/reflow2_init.py .          # already done, commit 98baf40
 /genesis
 ```
 
-Graph left in place at `./.reflow2/graph` (18 nodes) for follow-up. No crate changes made.
+Graph left in place at `./.reflow2/graph` (18 nodes, unmodified by the §1 probes — every one of
+them failed before mutating). No crate changes made.

@@ -61,7 +61,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
-- Self-host GENESIS trial; BL-28 raised, BL-27 widened — @ajs — 2026-07-18 — (this commit)
+- Self-host GENESIS trial; BL-28 raised, BL-27 widened — @ajs — 2026-07-18 — `2ea0db1` + revision
 - Brownfield trial on 3dtictactoe; BL-27 raised from it and ophyd — @ajs — 2026-07-18 — `84aacb6`
 - Self-host: consumer kit installed into reflow2 itself — @ajs — 2026-07-18 — `98baf40`
 - **v0.2.0 released and tagged** — @ajs — 2026-07-18 — `b69dc28`; frozen for real-use feedback

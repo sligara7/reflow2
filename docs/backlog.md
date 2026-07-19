@@ -36,6 +36,10 @@ Four independent sources, which is why several items appear on more than one lis
   inferred backward from code) and [3dtictactoe](trials/2026-07-18-brownfield-3dtictactoe.md)
   (~20 files, no spec at all — the pure-inference case). The only source for BL-27, and the two
   independently reproduce the same entry-point finding at a 20× size difference.
+- **Self-host genesis, 2026-07-18** — `/genesis` run on reflow2 itself through the installed kit,
+  from **Claude Code** rather than grok build. The only source for BL-28: the harness difference is
+  what exposed it. Otherwise mostly a replication of findings above, and its
+  [notes](trials/2026-07-18-selfhost-genesis.md) mark which is which.
 - **[reflow-audit.md](reflow-audit.md)** — the original Reflow's workflows and tools, with
   adopt/obsolete verdicts.
 
@@ -43,7 +47,7 @@ Four independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
-| BL-28 | `gap_to_prompt` unusable from a real MCP client | The ask half of the loop is broken from Claude Code; `gap: JsonValue` publishes an untyped schema, clients send a string, the server rejects it. Our own smoke test passes a dict and stays green. | S |
+| BL-28 | Every `JsonValue` tool parameter is unusable from Claude Code | 5 params across `gap_to_prompt`, `apply_heal`, `import_graph`, `create_node`, `create_edge` publish an untyped `{}` schema; Claude Code marshals the object as a string and the server rejects it. Takes out the ask half of DETECT, the apply half of HEAL, restore/migration, and all generic property-setting. Works on grok build, which is why no trial caught it. | S |
 
 ## Closed
 
@@ -158,15 +162,21 @@ the list top-down does the useless thing first. It reproduced on a 20-file proje
 110k-LOC one, so it is a property of the path, not of scale. Not a wording fix: the gap-ordering
 logic is what assumes greenfield.
 
-*Two detectors, not one.* The self-host run found `build_without_verification` (0.65) firing the
-same way — "no way to confirm any of it actually works" of a repo with 15 test files and a smoke
-test — so the top **two** gaps outrank the one true gap, and a fix scoped to
-`concept_without_design` alone still leaves the agent's first action useless. Both are
-`scope: phase` detectors inferring project maturity from a node-type census; that shared inference
-is the thing to fix. The same run also found HEAL contradicting GENESIS — following "do not create
-Components yet" produces one `orphan_node` warning per seeded capability, so genesis → check-health
-reports seven defects against a graph that is exactly what genesis prescribed. That one is not
-brownfield-specific; it fires on any project on day one.
+*Two detectors, not one.* The [self-host run](trials/2026-07-18-selfhost-genesis.md) found
+`build_without_verification` (0.65) firing the same way — "no way to confirm any of it actually
+works" of a repo with 15 test files and a smoke test — so the top **two** gaps outrank the third,
+and a fix scoped to `concept_without_design` alone still leaves the agent's first action useless.
+Both are `scope: phase` detectors inferring project maturity from a node-type census; that shared
+inference is the thing to fix.
+
+*And the phase problem is not brownfield-only.* Ophyd A14 already reports HEAL emitting maximum
+noise on a mid-construction graph, and proposes suppressing allocation-orphan defects when
+Component count is 0. The self-host run reproduces that on the **greenfield** path at 18 nodes —
+following GENESIS's "do not create Components yet" yields one `orphan_node` per seeded capability,
+so genesis → check-health flags a graph that is exactly what genesis prescribed. So A14's fix
+should not be scoped to an `adopt` mode; it fires on any project on day one. Related: on that graph
+`propose_heal` returns 0 mechanical operations and 14 awaiting generation, so `check-health` has
+nothing to apply at all until the LLM backends land.
 
 *Requirements must not be inferred from the implementation.* A requirement backed out of the code
 that implements it is satisfied by construction, and a graph of those can never say anything.
@@ -492,3 +502,13 @@ The sibling lesson, learned the same way: a capability can also be unreachable b
 *points at it*. The consumer kit's skills were installed where three of four harnesses never look
 (BL-22), and `describe_schema` would have been invisible to the people who needed it had the kit
 not been updated in the same change (BL-1). Shipping the code is not shipping the capability.
+
+Third variant, from the [self-host genesis trial](trials/2026-07-18-selfhost-genesis.md): a
+capability can be unreachable **on one harness only**. BL-28's untyped `JsonValue` parameters work
+from grok build and fail from Claude Code, because a schema that declares no type leaves
+marshalling to the client and the two clients choose differently. The same shape appears on the
+response side (the array `structuredContent` bug, `delete_node`, `graph_report_markdown`). The
+generalisation: **anywhere the tool surface declines to state a type, a client is free to guess,
+and our test client's guess is not evidence.** `tools/smoke_mcp.py` is green on all five broken
+params. Asserting the *schema* — no advertised property without a type — is a different check from
+asserting behaviour through a client we wrote, and it is the one that catches this class.
