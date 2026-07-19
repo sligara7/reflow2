@@ -43,6 +43,44 @@ build anything** — not just software. It keeps Reflow's phase spine
    pattern — schema-driven, phase-aware, multi-pass, with graph-informed
    dedup.
 
+## "How do you know the LLM didn't just hallucinate something?"
+
+It's the first question anyone asks about a tool that works with an LLM, and it deserves a
+straight answer rather than reassurance. reflow2 is built as a **three-party system** — you, the
+graph, and the LLM — where each party checks the others, and the LLM is structurally barred from
+the jobs it is bad at. The honest version, objection by objection:
+
+**"It invents things."** Structurally, it can't land them. The graph's vocabulary is
+schema-enforced: an invented node type, edge type or property is *refused*, loudly, with the real
+alternatives named. Structural repairs execute only if the engine independently re-derives them
+from the graph at apply time — a hallucinated merge is rejected before a single write. And what the
+LLM *can* freely write — descriptions, statements, prose — is attributed, dated, and marked with
+provenance (`inferred` when it was read out of code rather than stated by you), so a claim is never
+just a sentence: it is a sentence with a paper trail.
+
+**"It forgets, and it drifts."** The graph is the memory, not the context window. Questions you
+were asked persist across sessions *in the exact words you saw*; decisions are recorded with their
+rationale; the same graph produces byte-identical exports and the same gaps in any session, on any
+machine. The deterministic core — not the LLM — does all counting, ranking and graph analysis, so
+there is no arithmetic to hallucinate.
+
+**"It just agrees with you."** The detectors don't negotiate. A gap re-fires every run until the
+structure actually changes or a *human* accepts it with a recorded reason — agreement has to leave
+a Decision node, not a pleasant sentence. When built code drifts from the design, accepting the new
+reality **requires** answering "did the design move too?" — the agreeable silent path was removed
+on purpose, because it is how a design erodes into fiction while reporting zero problems.
+
+**What it can't do — said plainly.** No mechanism here stops an LLM from writing a false sentence
+into a description. What the graph guarantees instead is that the sentence is *checkable*: the
+confirmation ledger shows, per capability, whether anyone has examined the claim against reality —
+and `unexamined` is a visible state, never silently equal to "fine." The judgment seat belongs to
+you; the machinery's job is making sure nothing reaches you unattributed, uncounted, or quietly
+forgotten.
+
+The full map — every known LLM failure mode against the mechanism that checks it, including the
+ones still uncovered — is **[docs/partnership.md](docs/partnership.md)**. It is kept honest the
+same way everything else here is: coverage is claimed only where a named mechanism enforces it.
+
 ## The design vocabulary
 
 Domain-neutral node types, layered by the phase they feed (26 types across 10 schema

@@ -2,6 +2,13 @@
 
 > Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the map.
 
+**Why this is upfront:** "how do you know it didn't hallucinate?" is the first question a tool
+that works with an LLM gets asked, and people arrive pre-conditioned — rightly or not — to
+distrust it. That is an adoption gate, not a nuance: credibility has to be established at the front
+door or the evaluation ends there. So the README answers the skeptic in their own words, and this
+document is the evidence behind that answer — with the uncovered cases named, because an
+overclaimed defense is itself a credibility failure.
+
 reflow2 is a three-party system, and the parties are not interchangeable: each is strong exactly
 where another is weak. Most of the architecture's load-bearing decisions are, in retrospect, checks
 one party places on another — this document names them as such, so the next mechanism is designed
