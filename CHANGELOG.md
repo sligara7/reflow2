@@ -117,6 +117,17 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **A new drift is a new `DriftEvent`** (BL-33, the S sub-piece). The event id carried no notion of
+  which state the artifact had drifted *to*, so a second drift hashed to the first one's id and was
+  silently skipped — five fix cycles left one event, and "drifted once" was indistinguishable from
+  "drifted five times, capability never revisited", erasing exactly the accumulation that reveals
+  erosion. The observed checksum is now part of a `checksum_change` event's identity ("the artifact
+  became X while the design believed Y"), so re-observing the same X dedups — the property the old id
+  existed for, kept — while a drift to X′ is a new event. State-shaped kinds stay keyed without it:
+  "still missing" re-observed is the same unresolved divergence. Axis Z's *never overwrite the past*
+  now holds on the as-built side, and `DriftFinding` reports the observed checksum. The erosion
+  trial retains 5 events for 5 drifts, with its probe tightened from `> 0` to an exact count.
+
 - **A failing check is a gap, not a satisfaction** (BL-30, the S half). The erosion trial's headline:
   `build_without_verification` asks *"how will you confirm this works?"* and was closed by a test
   proving it does not — with `detect_gaps`, `detect_defects` and `graph_report` byte-identical

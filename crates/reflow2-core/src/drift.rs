@@ -112,6 +112,11 @@ pub struct DriftFinding {
     /// Design nodes this artifact `REALIZES` — where the change lands in the
     /// design, and the seeds for backward propagation.
     pub realizes: Vec<String>,
+    /// The checksum observed this pass, when the observation carried one.
+    /// For a `checksum_change` this is part of the event's *identity*: the
+    /// event is "the artifact became X while the design believed Y", so a
+    /// later drift to a different X is a different event.
+    pub observed_checksum: Option<String>,
     /// The recorded `DriftEvent` node id, when `record_events` was set and this
     /// kind has a schema counterpart.
     pub event_id: Option<String>,
@@ -177,6 +182,7 @@ impl DesignGraph {
                         obs.artifact_id
                     ),
                     realizes: Vec::new(),
+                    observed_checksum: obs.checksum.clone(),
                     event_id: None,
                 });
                 continue;
@@ -193,6 +199,7 @@ impl DesignGraph {
                         obs.artifact_id
                     ),
                     realizes,
+                    observed_checksum: None,
                     event_id: None,
                 });
                 continue;
@@ -212,6 +219,7 @@ impl DesignGraph {
                         obs.artifact_id
                     ),
                     realizes,
+                    observed_checksum: obs.checksum.clone(),
                     event_id: None,
                 }),
                 // Either side missing → we cannot judge. Say so; never pass silently.
@@ -229,6 +237,7 @@ impl DesignGraph {
                             obs.artifact_id
                         ),
                         realizes,
+                        observed_checksum: None,
                         event_id: None,
                     });
                 }
@@ -258,7 +267,11 @@ impl DesignGraph {
         if options.record_events {
             for finding in &mut findings {
                 if let Some(drift_type) = finding.kind.drift_type() {
-                    let event_id = drift_event_id(&finding.artifact_id, finding.kind);
+                    let event_id = drift_event_id(
+                        &finding.artifact_id,
+                        finding.kind,
+                        finding.observed_checksum.as_deref(),
+                    );
                     self.write_drift_event(&event_id, finding, drift_type, options)?;
                     finding.event_id = Some(event_id);
                 }
@@ -332,11 +345,35 @@ impl DesignGraph {
 }
 
 /// Deterministic `DriftEvent` id, so re-running a reconcile over the same
-/// unresolved divergence does not pile up duplicates.
-fn drift_event_id(artifact_id: &str, kind: DriftKind) -> String {
+/// unresolved divergence does not pile up duplicates — while a **new**
+/// divergence gets a new event.
+///
+/// The line between those two is what the first version got wrong: with no
+/// discriminator, five successive drifts on one artifact collapsed into one
+/// `DriftEvent`, so "drifted once" and "drifted five times, capability never
+/// revisited" were the same graph — erasing exactly the accumulation that
+/// reveals erosion, and violating axis Z's *never overwrite the past* on the
+/// as-built side (BL-33; `temporal.rs` honours it for design edits).
+///
+/// For a `checksum_change` the observed checksum is part of the identity: the
+/// event is "the artifact became X while the design believed Y", so observing
+/// the same X twice is one event and a later drift to X′ is another. The
+/// state-shaped kinds (`missing_artifact`, `undocumented_addition`) stay keyed
+/// on artifact + kind alone — "still missing" re-observed is the same
+/// unresolved divergence, not a new one.
+fn drift_event_id(artifact_id: &str, kind: DriftKind, observed_checksum: Option<&str>) -> String {
+    let discriminator = match kind {
+        DriftKind::ChecksumChange => observed_checksum.unwrap_or(""),
+        _ => "",
+    };
     format!(
         "drift:{:016x}",
-        crate::detect::fnv1a(&format!("{}|{}", kind.as_str(), artifact_id))
+        crate::detect::fnv1a(&format!(
+            "{}|{}|{}",
+            kind.as_str(),
+            artifact_id,
+            discriminator
+        ))
     )
 }
 

@@ -363,3 +363,73 @@ fn findings_are_ranked_most_severe_first() {
         ]
     );
 }
+
+// ---- BL-33 (S sub-piece) · a new drift is a new event ----------------------
+
+#[test]
+fn successive_drifts_accumulate_instead_of_collapsing_into_one_event() {
+    // The erosion trial: five fix cycles left ONE DriftEvent, because the id
+    // carried no notion of which state the artifact had drifted to. "Drifted
+    // once" and "drifted five times, capability never revisited" were the same
+    // graph — erasing exactly the accumulation that reveals erosion.
+    let mut g = built_thread();
+    let opts = ReconcileOptions {
+        record_events: true,
+        exhaustive: false,
+        detected_at: Some("2026-07-19T01:00:00Z".into()),
+    };
+    for (i, sum) in ["sha256:b", "sha256:c", "sha256:d"].iter().enumerate() {
+        let report = g
+            .reconcile_artifacts(
+                &[ObservedArtifact {
+                    artifact_id: "art:score".into(),
+                    present: true,
+                    checksum: Some((*sum).into()),
+                }],
+                &ReconcileOptions {
+                    detected_at: Some(format!("2026-07-19T0{}:00:00Z", i + 1)),
+                    ..opts.clone()
+                },
+            )
+            .unwrap();
+        assert_eq!(
+            report.recorded_events.len(),
+            1,
+            "cycle {i} records its event"
+        );
+        // Accept the drift, as the fix cycle does — next drift is a NEW one.
+        g.set_artifact_checksum("art:score", sum).unwrap();
+    }
+
+    let events = g.scan_nodes(node::DRIFT_EVENT).unwrap();
+    assert_eq!(
+        events.len(),
+        3,
+        "three drifts to three different states must be three events — the past is not overwritten"
+    );
+}
+
+#[test]
+fn re_observing_the_same_unresolved_drift_does_not_pile_up_events() {
+    // The dedup the original id existed for, kept: same artifact, same observed
+    // state, reconciled twice — one event.
+    let mut g = built_thread();
+    let opts = ReconcileOptions {
+        record_events: true,
+        exhaustive: false,
+        detected_at: Some("2026-07-19T01:00:00Z".into()),
+    };
+    let obs = [ObservedArtifact {
+        artifact_id: "art:score".into(),
+        present: true,
+        checksum: Some("sha256:changed".into()),
+    }];
+    g.reconcile_artifacts(&obs, &opts).unwrap();
+    g.reconcile_artifacts(&obs, &opts).unwrap();
+
+    assert_eq!(
+        g.scan_nodes(node::DRIFT_EVENT).unwrap().len(),
+        1,
+        "the same unresolved divergence, observed twice, is one event"
+    );
+}

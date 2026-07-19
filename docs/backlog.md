@@ -275,13 +275,18 @@ alone, say nothing," is the one that erodes and should not exist. Note this is t
 the codebase that would make a `ChangeEvent` originate from the *build* side rather than the design
 side, which is the right shape: a fix is a change, and CHANGE is a first-class axis.
 
-**The record overwrites itself (S).** `drift_event_id(artifact_id, kind)` carries no time or
-sequence, so every `checksum_change` on one artifact rewrites the same node — five drifts leave one
-`DriftEvent`. The single signal that would reveal erosion (*drifted five times, capability never
-revisited*) deletes itself on each occurrence. This contradicts AGENTS.md's own axis-Z invariant,
-**never overwrite the past**, which `temporal.rs` honours for design edits while the as-built side
-does not. "Drifted once" and "drifted twenty times" must not be the same graph, since the second is
-what means the design is gone.
+**The record overwrites itself (S) — done.** The mechanism was subtler than first recorded: the id
+(`artifact | kind`, no discriminator) didn't overwrite, it **skipped** — `write_drift_event` returns
+early when the node exists, intended as dedup for re-observing the *same* unresolved divergence. The
+defect was that a **new** drift hashed to the same id and was silently dropped: five drifts left one
+event. Fixed by making the observed checksum part of a `checksum_change` event's identity — the
+event *is* "the artifact became X while the design believed Y", so re-observing the same X dedups
+and a later drift to X′ is a new event. State-shaped kinds (`missing_artifact`,
+`undocumented_addition`) stay keyed on artifact + kind: "still missing" re-observed is the same
+unresolved divergence. Measured: the erosion trial retains **5 events for 5 drifts**, and its probe
+was tightened from `> 0` (which one surviving event weakly satisfied) to an exact count. Axis Z's
+*never overwrite the past* now holds on the as-built side; "drifted once" and "drifted N times" are
+different graphs, which is the data BL-35's freshness computation needs.
 
 **BL-34 · There is no as-released view, and no vocabulary for one** — *same trial.* Checked two
 ways: **`DEPLOYED_TO` (Release → Environment) is the only edge in the schema involving `Release`.**

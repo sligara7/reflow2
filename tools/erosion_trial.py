@@ -125,9 +125,13 @@ def main() -> int:
              if "24h" in desc else True,
              "nothing compares a description against what the code became")
 
-        note("the graph records that this artifact drifted repeatedly",
-             len(s.call("scan_nodes", {"node_type": "DriftEvent"})) > 0,
-             f"{len(s.call('scan_nodes', {'node_type': 'DriftEvent'}))} DriftEvent(s) retained")
+        # Tightened (was `> 0`, which one surviving event weakly satisfied while
+        # four of five had collapsed into it): every drift must leave its own
+        # event, or "drifted once" and "drifted N times" are the same graph.
+        events = len(s.call("scan_nodes", {"node_type": "DriftEvent"}))
+        note("the graph records EVERY drift, not just the latest",
+             events == drifts,
+             f"{events} DriftEvent(s) retained for {drifts} drift(s)")
 
         rel_out = s.call("get_node", {"node_type": "Release", "id": "rel:1"})
         tools = [t["name"] for t in s.rpc("tools/list", {})["result"]["tools"]]
