@@ -35,6 +35,7 @@ const SNAPSHOT_TYPES: &[&str] = &[
     node::ACTOR,
     node::COMPONENT,
     node::INTERFACE,
+    node::DECISION,
     node::ARTIFACT,
     node::VERIFICATION,
     node::RELEASE,

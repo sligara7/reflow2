@@ -125,6 +125,68 @@ CAPABILITIES = [
      "planned", ["req:released-eq-designed", "req:coherence"]),
 ]
 
+# ---- Decisions. The distillate of the sessions that shaped the design. ----
+#
+# The graph is the distillate, not the tape: a session transcript is an
+# artifact outside the graph (every commit carries its Claude-Session URL, so
+# the raw context is one link from git log). What belongs IN the graph is what
+# was decided and why — where-am-i's "what's settled" reads exactly this, and
+# until 2026-07-19 it had nothing to read.
+SESSION = "https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam"
+DECISIONS = [
+    ("dec:ask-not-repair", "Suspected duplicates are asked, never merged",
+     "possible_duplicate is a DETECT gap; HEAL merges only on a human-drawn DUPLICATES edge.",
+     "apply_heal deletes a node with no undo, so merge is safe only because the endpoints were "
+     "asserted; a heuristic must not drive it. A gap can be acknowledged, a HEAL defect cannot "
+     f"be dismissed. Decided 2026-07-19 ({SESSION}); evidence: 3dtictactoe trial, BL-27/BL-29.",
+     ["cap:detect", "cap:heal"]),
+    ("dec:anchored-first", "A gap that names nodes outranks a phase nudge",
+     "detect_gaps sorts anchored gaps before project-level phase nudges, severity within each band.",
+     "A named gap says something is wrong NOW; a nudge says what comes next. Ranking 'next' above "
+     "'broken' made three brownfield trials do the useless thing first. Nudges are demoted, never "
+     f"suppressed. Decided 2026-07-19 ({SESSION}); evidence: gap-surfacing disciplines 3 and 8.",
+     ["cap:detect"]),
+    ("dec:operational-spof", "Only things that operate can be single points of failure",
+     "single_point_of_failure candidates are Components, Interfaces, Resources, Environments.",
+     "The suggested fix is add_redundancy, and redundancy is only coherent for running parts; a "
+     "golden thread converges on intent by design, so intent hubs are the thread working. 22 of "
+     f"22 false positives cleared, 4 true survivors. Decided 2026-07-19 ({SESSION}); BL-5.",
+     ["cap:heal"]),
+    ("dec:two-sided-accept", "Silent drift-accept does not exist",
+     "set_artifact_checksum requires a disposition: design_holds (a dated claim) or "
+     "design_updated (naming the design-side ChangeEvent, linked to the artifact).",
+     "'Accept the file, leave the design alone, say nothing' is how a design erodes into fiction "
+     "over N legitimate fix cycles while reporting zero gaps — the failure that sank the original "
+     f"reflow. Decided 2026-07-19 ({SESSION}); evidence: erosion trials, BL-33.",
+     ["cap:reconcile-built", "cap:change"]),
+    ("dec:passing-is-verified", "Verified means a check that passes, not one that exists",
+     "verification_coverage counts passing checks; a failing check is its own 0.8 gap.",
+     "A failing test used to satisfy the gap that asked for a test, and passing vs failing were "
+     "byte-identical to every diagnostic — counting test nodes while ignoring test results. "
+     f"Decided 2026-07-19 ({SESSION}); evidence: phase-coverage trial, BL-30.",
+     ["cap:detect"]),
+    ("dec:report-dont-judge", "The confirmation ledger reports claim history, never judges a claim",
+     "Per capability: drifting / confirmed / unexamined, with the disposition counts visible.",
+     "Five design_holds claims with zero design edits is the erosion signature and the ledger "
+     "makes it legible — but judging a specific claim false is semantic, and a deterministic "
+     "detector would fire on every stable design with cosmetic churn (the unexpected_coupling "
+     f"lesson). Decided 2026-07-19 ({SESSION}); BL-35.",
+     ["cap:freshness"]),
+    ("dec:views-are-projections", "A view is a projection of the graph; renderer fill-ins are defects",
+     "Renderers may only emit what the graph states; everything else is confessed as a finding.",
+     "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only "
+     "renders viewpoints. If rendering requires extrapolation, something is missing inside "
+     f"reflow2 — almost always. Decided 2026-07-19 ({SESSION}); render_views.py, BL-40.",
+     ["cap:report"]),
+    ("dec:repo-file-embedded", "The graph lives as a repo file, embedded — not a service",
+     "RocksDB directory beside the repo, exports as the durable, diffable record.",
+     "The service's strongest argument (concurrency) is hypothetical while there is one writer; "
+     "it would put the user's design on a machine they do not control and is permanent "
+     "operational cost. Reopening conditions are written down. Decided 2026-07-18 "
+     "(surface-plan.md); BL-12/BL-15 carry the consequences.",
+     ["cap:portability"]),
+]
+
 # ---- P2 · Structure. Coarse: crate -> module. -----------------------------
 SUBSYSTEMS = [
     ("cmp:core", "reflow2-core", "The deterministic, LLM-free coherence engine.", "subsystem"),
@@ -246,6 +308,12 @@ def build(s: Server) -> None:
         s.call("provides", {"from_id": provider, "to_id": iid})
         for c in consumers:
             s.call("consumes", {"from_id": c, "to_id": iid})
+    for did, name, decision, rationale, governs in DECISIONS:
+        s.call("add_decision", {"id": did, "name": name,
+                                "decision": decision, "rationale": rationale})
+        for target in governs:
+            s.call("governed_by", {"from_type": "Capability", "from_id": target,
+                                   "to_type": "Decision", "to_id": did})
     s.call("add_release", {"id": "rel:v020", "name": "v0.2.0", "version": "0.2.0",
                            "unit_type": "binary"})
     s.call("add_environment", {"id": "env:dev", "name": "Developer machine",

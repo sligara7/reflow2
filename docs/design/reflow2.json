@@ -391,6 +391,66 @@
       "to_id": "env:dev"
     },
     {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change",
+      "properties": {},
+      "to_id": "dec:two-sided-accept"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:detect",
+      "properties": {},
+      "to_id": "dec:anchored-first"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:detect",
+      "properties": {},
+      "to_id": "dec:ask-not-repair"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:detect",
+      "properties": {},
+      "to_id": "dec:passing-is-verified"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:freshness",
+      "properties": {},
+      "to_id": "dec:report-dont-judge"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:heal",
+      "properties": {},
+      "to_id": "dec:ask-not-repair"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:heal",
+      "properties": {},
+      "to_id": "dec:operational-spof"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:portability",
+      "properties": {},
+      "to_id": "dec:repo-file-embedded"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-built",
+      "properties": {},
+      "to_id": "dec:two-sided-accept"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:report",
+      "properties": {},
+      "to_id": "dec:views-are-projections"
+    },
+    {
       "edge_type": "PROVIDES",
       "from_id": "cmp:core",
       "properties": {
@@ -1007,7 +1067,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fae4d3863e379805",
+        "checksum": "sha256:c8ba3d975431f288",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -1029,7 +1089,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2f7c3bffe9acb423",
+        "checksum": "sha256:676d89b9e3be53bd",
         "location": "crates/reflow2-core/src/drift.rs",
         "name": "drift.rs",
         "status": "realized"
@@ -1062,7 +1122,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:eb511e1bb794ea00",
+        "checksum": "sha256:6c161bd00c8bbd30",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -1095,7 +1155,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fdc38fc9486a9aa1",
+        "checksum": "sha256:7a3aa60a911d249d",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
         "status": "realized"
@@ -1139,7 +1199,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b8ac91ee40bcd696",
+        "checksum": "sha256:0f9c51369a37ff27",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
         "status": "realized"
@@ -1150,7 +1210,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bd01fd0adb41a87c",
+        "checksum": "sha256:20f66c242883ac97",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -1783,6 +1843,86 @@
         "purpose": "The vocabulary module.",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "dec:anchored-first",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "detect_gaps sorts anchored gaps before project-level phase nudges, severity within each band.",
+        "name": "A gap that names nodes outranks a phase nudge",
+        "rationale": "A named gap says something is wrong NOW; a nudge says what comes next. Ranking 'next' above 'broken' made three brownfield trials do the useless thing first. Nudges are demoted, never suppressed. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: gap-surfacing disciplines 3 and 8.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:ask-not-repair",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "possible_duplicate is a DETECT gap; HEAL merges only on a human-drawn DUPLICATES edge.",
+        "name": "Suspected duplicates are asked, never merged",
+        "rationale": "apply_heal deletes a node with no undo, so merge is safe only because the endpoints were asserted; a heuristic must not drive it. A gap can be acknowledged, a HEAL defect cannot be dismissed. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: 3dtictactoe trial, BL-27/BL-29.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:operational-spof",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "single_point_of_failure candidates are Components, Interfaces, Resources, Environments.",
+        "name": "Only things that operate can be single points of failure",
+        "rationale": "The suggested fix is add_redundancy, and redundancy is only coherent for running parts; a golden thread converges on intent by design, so intent hubs are the thread working. 22 of 22 false positives cleared, 4 true survivors. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); BL-5.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:passing-is-verified",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "verification_coverage counts passing checks; a failing check is its own 0.8 gap.",
+        "name": "Verified means a check that passes, not one that exists",
+        "rationale": "A failing test used to satisfy the gap that asked for a test, and passing vs failing were byte-identical to every diagnostic \u2014 counting test nodes while ignoring test results. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: phase-coverage trial, BL-30.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:repo-file-embedded",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RocksDB directory beside the repo, exports as the durable, diffable record.",
+        "name": "The graph lives as a repo file, embedded \u2014 not a service",
+        "rationale": "The service's strongest argument (concurrency) is hypothetical while there is one writer; it would put the user's design on a machine they do not control and is permanent operational cost. Reopening conditions are written down. Decided 2026-07-18 (surface-plan.md); BL-12/BL-15 carry the consequences.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:report-dont-judge",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Per capability: drifting / confirmed / unexamined, with the disposition counts visible.",
+        "name": "The confirmation ledger reports claim history, never judges a claim",
+        "rationale": "Five design_holds claims with zero design edits is the erosion signature and the ledger makes it legible \u2014 but judging a specific claim false is semantic, and a deterministic detector would fire on every stable design with cosmetic churn (the unexpected_coupling lesson). Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); BL-35.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:two-sided-accept",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "set_artifact_checksum requires a disposition: design_holds (a dated claim) or design_updated (naming the design-side ChangeEvent, linked to the artifact).",
+        "name": "Silent drift-accept does not exist",
+        "rationale": "'Accept the file, leave the design alone, say nothing' is how a design erodes into fiction over N legitimate fix cycles while reporting zero gaps \u2014 the failure that sank the original reflow. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: erosion trials, BL-33.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:views-are-projections",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Renderers may only emit what the graph states; everything else is confessed as a finding.",
+        "name": "A view is a projection of the graph; renderer fill-ins are defects",
+        "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 \u2014 almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
+        "status": "accepted"
       }
     },
     {

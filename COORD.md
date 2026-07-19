@@ -69,7 +69,8 @@ Add yourself if you're new here.
   2. Confirm the session's tool list carries this session's additions: `set_capability_status`,
      `set_provenance`, and the BL-38/BL-27 detector behaviour.
   3. Run **where-am-i** against the real design — it should narrate reflow2's actual state, not an
-     18-node stub.
+     18-node stub — including "what's settled": the design graph now carries 8 Decision nodes
+     distilled from the 2026-07-19 session (each rationale links the session transcript).
   4. Run **check-health** and **detect-and-ask** — live counts should match
      `build_design_graph.py --analyse-only` (16 gaps, 34 defects at time of writing; see
      sharpening.md for current baselines).
