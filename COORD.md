@@ -56,6 +56,7 @@ Add yourself if you're new here.
 
 
 
+
 ## Blocked / waiting
 
 - _(nothing)_
@@ -64,6 +65,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-39 done: `reflow2-mcp --import`, so a design can enter a graph without MCP — @ajs — 2026-07-19 — (this commit)
 - Phase-coverage trial (first past P2): P3 4/4, P4 1/4, P5 0/2; BL-30/31/32 raised — @ajs — 2026-07-19 — (this commit)
 - BL-29: apply_heal checks the proposal; merge reports what it drops — @ajs — 2026-07-19 — `be6e18d`
 - BL-27: possible_duplicate — all 5 adopt blockers now done; BL-29 raised — @ajs — 2026-07-19 — `3410117`

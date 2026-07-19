@@ -24,6 +24,34 @@ struct Cli {
     /// available here so a script can back the design up without speaking MCP.
     #[arg(long)]
     export: bool,
+
+    /// Load a design from an exported document and exit, instead of serving.
+    /// Takes a path, or `-` for stdin, so `--export` on one machine pipes
+    /// straight into `--import` on another.
+    ///
+    /// Upsert, matching the `import_graph` tool: ids already present are
+    /// overwritten and anything absent from the document is left alone. Clearing
+    /// first is your decision, not a side effect of importing.
+    #[arg(long, value_name = "FILE")]
+    import: Option<String>,
+}
+
+/// Turn the RocksDB lock error into the sentence the operator needs.
+///
+/// The store is single-writer, so a running MCP server holds it exclusively —
+/// and the raw error ("IO error: While lock file: … Resource temporarily
+/// unavailable") does not say that, or say what to do. This is the failure a
+/// script hits when it tries to restore a design into a live session.
+fn explain_open_failure(err: &anyhow::Error, graph_path: &str) -> anyhow::Error {
+    let text = format!("{err:#}");
+    if text.contains("lock file") || text.contains("Resource temporarily unavailable") {
+        return anyhow::anyhow!(
+            "another process already has the design graph at {graph_path} open.\n\
+             The graph is single-writer, so the MCP server holds it exclusively while it runs.\n\
+             Stop that server (or close the editor session using it) and run this again."
+        );
+    }
+    anyhow::anyhow!("failed to open design graph at {graph_path}: {text}")
 }
 
 #[tokio::main]
@@ -40,15 +68,65 @@ async fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
     tracing::info!(graph_path = %cli.graph_path, "opening reflow2 design graph");
 
+    if cli.export && cli.import.is_some() {
+        anyhow::bail!("--export and --import do the opposite things; pass one, not both");
+    }
+
     // Export-and-exit runs before the server is built: a backup must be
     // possible even when the caller has no intention of serving.
     if cli.export {
         let graph = reflow2_core::DesignGraph::open_rocksdb(&cli.graph_path)
-            .with_context(|| format!("failed to open design graph at {}", cli.graph_path))?;
+            .map_err(|e| explain_open_failure(&e.into(), &cli.graph_path))?;
         let doc = graph
             .export_graph()
             .context("failed to export the design")?;
         println!("{}", serde_json::to_string_pretty(&doc)?);
+        return Ok(());
+    }
+
+    // Import-and-exit, the sibling of --export. Without it a design could be
+    // read out of a graph without speaking MCP but never written back, so a
+    // committed export, a backup, or a design built on another machine could
+    // only be restored by passing the whole document through the tool boundary.
+    if let Some(source) = cli.import {
+        let raw = if source == "-" {
+            std::io::read_to_string(std::io::stdin())
+                .context("failed to read the design from stdin")?
+        } else {
+            std::fs::read_to_string(&source)
+                .with_context(|| format!("failed to read the design from {source}"))?
+        };
+        let doc: reflow2_core::GraphExport = serde_json::from_str(&raw).with_context(|| {
+            let where_from = if source == "-" {
+                "stdin"
+            } else {
+                source.as_str()
+            };
+            format!("{where_from} is not a reflow2 export document")
+        })?;
+
+        let mut graph = reflow2_core::DesignGraph::open_rocksdb(&cli.graph_path)
+            .map_err(|e| explain_open_failure(&e.into(), &cli.graph_path))?;
+        let report = graph
+            .import_graph(&doc)
+            .context("failed to import the design")?;
+
+        // Say what landed, including what did not. An import that quietly
+        // skipped half a design would be the worst kind of success.
+        eprintln!(
+            "reflow2: imported {} node(s) and {} edge(s) into {}",
+            report.nodes_written, report.edges_written, cli.graph_path
+        );
+        if !report.skipped_edges.is_empty() {
+            eprintln!(
+                "reflow2: {} edge(s) had endpoints not in the document and not already in the \
+                 graph, so they were not written:",
+                report.skipped_edges.len()
+            );
+            for edge in &report.skipped_edges {
+                eprintln!("  {edge}");
+            }
+        }
         return Ok(());
     }
 

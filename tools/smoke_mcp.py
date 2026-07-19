@@ -650,6 +650,42 @@ def run(binary: str, graph_path: str) -> int:
          r.call("export_graph")["nodes"] == doc["nodes"])
     r.close()
 
+    # BL-39: --import, the sibling of --export. Without it a design could be
+    # read out without speaking MCP but never written back, so a committed
+    # export, a backup, or a design built elsewhere could only be restored by
+    # passing the whole document through the tool boundary — and the consumer
+    # skills, which run against the live graph, could only ever see a design the
+    # session itself built.
+    cli_path = graph_path + "-cli"
+    doc_file = graph_path + "-doc.json"
+    with open(doc_file, "w") as fh:
+        json.dump(doc, fh)
+    imp = subprocess.run([binary, "--graph-path", cli_path, "--import", doc_file],
+                         capture_output=True, text=True)
+    c.ok("a design imports from the command line, without speaking MCP",
+         imp.returncode == 0 and "imported" in imp.stderr, imp.stderr.strip()[-200:])
+    exp = subprocess.run([binary, "--graph-path", cli_path, "--export"],
+                         capture_output=True, text=True)
+    c.ok("and the CLI round trip is byte-identical",
+         exp.returncode == 0 and json.loads(exp.stdout) == doc)
+
+    # stdin, so `--export | ssh … --import -` works.
+    pipe = subprocess.run([binary, "--graph-path", graph_path + "-pipe", "--import", "-"],
+                          input=json.dumps(doc), capture_output=True, text=True)
+    c.ok("and it reads the document from stdin", pipe.returncode == 0, pipe.stderr.strip()[-160:])
+
+    # The failure an operator actually hits: a server already holds the graph.
+    # RocksDB is single-writer, and the raw error names neither the cause nor
+    # the fix.
+    held = subprocess.run([binary, "--graph-path", graph_path, "--import", doc_file],
+                          capture_output=True, text=True)
+    c.ok("a graph already open elsewhere is refused with what to do about it",
+         held.returncode != 0 and "single-writer" in held.stderr and "Stop that server" in held.stderr,
+         held.stderr.strip()[-200:])
+    c.ok("a document that is not an export is refused by name",
+         subprocess.run([binary, "--graph-path", graph_path + "-x", "--import", __file__],
+                        capture_output=True, text=True).returncode != 0)
+
     # BL-19: the graph carries a record of which reflow2 wrote it, beside the
     # store rather than inside it (RocksDB owns its own directory).
     import os

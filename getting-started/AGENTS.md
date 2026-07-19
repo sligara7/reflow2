@@ -79,6 +79,20 @@ fidelity?), that is a *gap* — surface it as a question, don't guess.
    should I look at?"; `hierarchy_issues`, `surprising_connections`, `dimension_drifts` surface
    decomposition, coupling, and quality drift.
 
+## Restoring a design
+
+The graph lives at `.reflow2/graph` and is **single-writer** — while your editor's MCP session is
+running it holds the graph exclusively. To restore a backup, or to load a design built on another
+machine, stop that session and run:
+
+```bash
+reflow2-mcp --graph-path .reflow2/graph --import .reflow2/backups/design-<utc>.json
+```
+
+It is an upsert: ids already present are overwritten, anything absent is left alone. `--export`
+writes one back out. If a session is still holding the graph the command says so rather than failing
+obscurely.
+
 ## If reflow2 gets in your way, say so
 
 reflow2 is early, and everything known about its weak points came from someone writing down what

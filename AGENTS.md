@@ -69,6 +69,12 @@ cargo test --workspace
 # schema/*.yaml edit. Needs PyYAML; use whatever python3 has it.
 python3 tools/validate_schema.py
 
+# Load a design into a graph without speaking MCP — the sibling of --export.
+# Upsert, so it layers onto whatever is there. Takes `-` for stdin, so an export
+# on one machine pipes into an import on another. The graph is single-writer:
+# stop any running MCP server first, and the error says so if you forget.
+./target/debug/reflow2-mcp --graph-path .reflow2/graph --import docs/design/reflow2.json
+
 # reflow2's own functional design, as a reflow2 graph (96 nodes). The export at
 # docs/design/reflow2.json is the durable record — .reflow2/ is gitignored, so
 # the JSON is what gets reviewed and diffed. Rebuild it after a design change;

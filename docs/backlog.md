@@ -82,7 +82,6 @@ Nine independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
-| **BL-39** | **A design cannot be loaded into a running session** | `--export` exists, `--import` does not, and the server holds the graph lock — so a design built anywhere else can only enter through `import_graph` as one inline tool argument | S |
 | **BL-38** | **`unrealized_capability` fires on capabilities that are built; `dead_end` fires on pure containers** | Found by analysing reflow2's own design graph. Two schema-valid modellings, one accepted — 11 of 33 gaps were false | S |
 | **BL-5 (reopened)** | **`single_point_of_failure` still over-fires above fixture scale** | 22 of 36 defects on a real 96-node design. The original fix was measured on an 8-defect graph | M |
 | **BL-37** | **reflow2 cannot model a *process* — `Flow` has no write side, and edge roles are lost** | Found by modelling reflow2's own coherence loop in reflow2. The one type meant for an ordered process cannot be created; forward and backward edges are indistinguishable | M |
@@ -95,7 +94,7 @@ Nine independent sources, which is why several items appear on more than one lis
 | **BL-32** | **A running MCP server silently serves a stale surface** | Rebuild mid-session and the old tool surface keeps answering, with no indication. `smoke_mcp.py` cannot catch it by construction | S |
 | **BL-29** | **`apply_heal` trusts the proposal; merge loses data silently** | Mostly **done** — three of seven fixed; three remain, one deliberately deferred. See below | M |
 
-**BL-39 · A design cannot be loaded into a running session** — *found while trying to use the
+**BL-39 · A design cannot be loaded into a running session — DONE** — *found while trying to use the
 consumer skills on reflow2's own 96-node design, 2026-07-19.*
 
 Three facts compose into a dead end, each reasonable alone:
@@ -115,10 +114,24 @@ consumer skills (`where-am-i`, `check-health`, `detect-and-ask`) can only ever s
 session itself built, which is exactly backwards for a tool whose selling point is that a design
 outlives the session.
 
-Cheap fix: `reflow2-mcp --import <file>` as the sibling of `--export`, plus a graph-path argument on
-`import_graph` or a documented "stop the server first" path. `reflow2_init.py` already restores
-backups this way conceptually and hits the same wall. Size **S**, and it unblocks using the kit on
-any design that was not born in the current process.
+**Done.** `reflow2-mcp --graph-path <dir> --import <file>` is the sibling of `--export`, and takes
+`-` for stdin so an export on one machine pipes into an import on another. Upsert, matching the
+tool. It reports what landed *and what did not* — an import that quietly skipped half a design would
+be the worst kind of success — so `skipped_edges` is printed by name.
+
+The lock stays, because single-writer is the storage model rather than an oversight, but it is no
+longer a mystery: the raw RocksDB error ("Resource temporarily unavailable") is translated into
+*"another process already has the design graph open… stop that server and run this again."* That was
+the actual friction — the failure gave neither the cause nor the fix.
+
+Verified end to end in `smoke_mcp.py`: reflow2's own 116-node design imports from a file and from
+stdin, the CLI round trip is byte-identical, a held graph is refused with the explanation, and a
+document that is not an export is refused by name.
+
+*What it unblocks.* The consumer skills (`where-am-i`, `check-health`, `detect-and-ask`) run against
+the live graph, so before this they could only ever see a design the session itself built. A
+committed export, a backup, or a design built elsewhere is now one command away from being the graph
+the skills read — which is the point of a design that outlives the session.
 
 **BL-38 · The golden thread has two valid shapes at P3 and the detector accepts one** —
 *[self-host functional design](trials/2026-07-19-selfhost-functional-design.md), 2026-07-19.*

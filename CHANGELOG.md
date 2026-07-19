@@ -95,6 +95,26 @@ This file is the third view: *what changed, and when*.
   requirements still reports nothing — both are recorded in the backlog with the reasoning rather
   than left to be rediscovered.
 
+### Added
+
+- **`reflow2-mcp --import` — a design can be loaded without speaking MCP** (BL-39). `--export` has
+  existed since BL-20, so a design could be read out of a graph by a script and never written back.
+  Combined with the store being single-writer, that sealed a session: a committed export, a backup,
+  or a design built on another machine could only enter through the `import_graph` *tool*, as one
+  inline argument — 42 KB for reflow2's own design. The practical effect was that the consumer skills,
+  which run against the live graph, could only ever see a design the session itself built. Backwards,
+  for a tool whose selling point is that a design outlives the session.
+
+  `--import <file>` is the sibling, and takes `-` for stdin so `--export` on one machine pipes into
+  `--import` on another. Upsert, matching the tool. It reports what landed **and what did not** — an
+  import that quietly skipped half a design would be the worst kind of success, so any edge whose
+  endpoints were missing is printed by name rather than dropped.
+
+  The lock stays — single-writer is the storage model, not an oversight — but it is no longer a
+  mystery. RocksDB's *"IO error: While lock file… Resource temporarily unavailable"* named neither the
+  cause nor the fix; it now reads *"another process already has the design graph open… stop that
+  server and run this again."*
+
 ### Fixed
 
 - **The installer no longer destroys a project's own `AGENTS.md`.** `reflow2_init.py` copied the kit's
