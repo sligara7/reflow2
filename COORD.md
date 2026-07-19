@@ -52,6 +52,7 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
+- BL-34: the as-released view — INCLUDES edge (schema 53→54), release_report — @ajs — since 2026-07-19 — schema/operate.yaml, operate.rs, detect.rs, trials
 
 
 
