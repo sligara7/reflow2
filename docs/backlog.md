@@ -934,9 +934,51 @@ back toward code. AGENTS.md then points at it. Size **S**.
 | **BL-9** | **As-fielded view** | Audit item 2, and it needs **no new schema** — `operate.yaml` is fully defined and now writable (WS-2). `reconcile_deployment` as a sibling of `reconcile_artifacts`. Guard against the library-plugin false positive the audit flags. **Now has execution evidence**: the [phase-coverage trial](trials/2026-07-19-phase-coverage.md) scored P5 **0/2** — a component in no release goes unreported and nothing can compare the design against what is deployed. Pair it with BL-30's `reconcile_verification`; they are the same missing feedback loop one phase apart. | M |
 | **BL-10** | **Root-cause classification of drift** | `drift.rs` detects divergence with no notion of *why*, so no notion of which side is wrong. Reflow's seven-category taxonomy ends in a decision rule. Needs a scalar coherence score to gate on. | M |
 | **BL-11** | **Path-cumulative budget analysis** | Three independent reflow tools reached for it. PROPAGATE walks impact but never accumulates a quantity along source→sink paths — the classic SE budget rollup (latency, mass, power, cost). | M |
-| **BL-12** | **Concurrent multi-agent / team access** | Deliberate future effort, and the trigger for revisiting the embedded/service fork — *decided 2026-07-18 as repo-file*. RocksDB is single-writer and fails loud, so agents take turns; that is only a real cost once a **second writer actually exists**, which it does not. Reach for RocksDB read-only secondaries before a service if the need turns out to be "let me look while you work". | L |
+| **BL-12** | **Concurrent multi-agent / team access** | Deliberate future effort, and the trigger for revisiting the embedded/service fork — *decided 2026-07-18 as repo-file*. RocksDB is single-writer and fails loud, so agents take turns; that is only a real cost once a **second writer actually exists**, which it does not. Reach for RocksDB read-only secondaries before a service if the need turns out to be "let me look while you work". **First design sketch below** — four consensus-mechanism ideas that survived a 2026-07-19 thought exercise. | L |
 | **BL-13** | **Advanced testing tiers** | Comprehension (partly answered by the blind trial), scale (all fixtures are 3–10 nodes), messy input, longitudinal. | M |
 | **BL-14** | **`tools/` sweep follow-ups** | The remaining adopt-list items in [reflow-audit.md](reflow-audit.md): typed gap resolution strategies, abstraction-gap → strategy, document round-trip, MCP resources/prompts. | M |
+
+**BL-12 · design notes — what crypto consensus mechanisms lend the multi-writer future** —
+*thought exercise, 2026-07-19, from the author's question: could XRP / Hedera hashgraph /
+Proof-of-Stake trust machinery extrapolate to reflow2?* These mechanisms all answer one question —
+*how do parties who cannot fully trust each other maintain a shared ledger without a referee?* —
+which is BL-12's question with different nouns: a human, an LLM, and a second human+LLM pair on one
+design. Four ideas survived contact with the analogy; the rest was vocabulary tourism.
+
+1. **Claims reference what the claimant had seen** (hashgraph's gossip-about-gossip). Hashgraph's
+   core move: never vote on truth — record who-knew-what-when as a DAG (each event hashes what its
+   author had already seen) and *compute* consensus deterministically. The confirmation ledger
+   already computes trust states from a claim DAG the same way. The extrapolation: every accept or
+   design edit carries the **export hash of the graph state it was made against**. Then the
+   question that kills shared designs becomes computable: was a conflicting claim made *in
+   ignorance of* mine (both honest on stale views — merge mechanically) or *in defiance of* it (a
+   real disagreement — route to the humans as a question)? COORD.md answers this socially today
+   ("pull before you claim"); the graph could answer it structurally. The best single idea here.
+2. **Trust topology per claim type** (XRP's Unique Node List). The supermajority half is
+   meaningless at n=2–4, but explicit per-claim-type trust maps cleanly, and exists in embryo:
+   `unmotivated_capability` already weights `inferred` (0.70) differently from `authored` (0.55).
+   Extrapolated: *who may assert what* — "verification status is only credible from a CI run,
+   never from the agent"; "a requirement moves to `accepted` only on the human's say-so". This is
+   also [BL-41](#next-up)'s mechanical half: text from a party not authorized for a claim type
+   simply does not count as that claim.
+3. **A finality boundary at release cuts** (ledger close). BL-34's frozen manifest is finality
+   without the word — a past release's contents cannot be rewritten. The extrapolation with teeth:
+   nothing before the last `release_cut` epoch may be *mutated*, only superseded. `temporal.rs`
+   snapshots the past but does not yet enforce its immutability.
+4. **Computed track records, shown not enforced** (Proof-of-Stake slashing, inverted). Nobody
+   bonds capital, but every party accrues a record the graph already holds — *five `design_holds`
+   claims, zero design edits* is a legible signature. Slashing softens to reputation: a party
+   whose claims keep being overturned has that history computed and displayed, never auto-punished
+   — judging a claim false is semantic, and automated slashing would seat the graph in the
+   judgment chair that `dec:report-dont-judge` reserves for the human.
+
+*Where the analogy breaks, so nobody rebuilds it wrong:* BFT is built for many anonymous
+adversaries; BL-12 has two-to-four named collaborators whose threat model is **error and drift,
+not malice**. Staking economics need a scarce resource nobody here has. And consensus mechanisms
+exist to *automate agreement*, while reflow2's philosophy routes disagreement to humans as
+questions — auto-resolving a design conflict by quorum would be sycophancy-by-majority, the wrong
+party in the judgment seat ([partnership.md](partnership.md)). Borrow from the *evidence* side
+(what was seen, who may claim, what is final); never from the *verdict* side.
 
 ## Deliberate deferrals
 
