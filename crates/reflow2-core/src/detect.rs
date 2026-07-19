@@ -109,6 +109,16 @@ pub enum GapSource {
     /// session that answers, and before this gap the open question lived only
     /// in a tool result that scrolled away.
     UnresolvedDrift,
+    /// A built Component that no Release includes — designed, built, and
+    /// shipping in nothing.
+    ///
+    /// Gated twice: releases must exist, and at least one `INCLUDES` edge must
+    /// exist somewhere — i.e. release contents are actually being modelled.
+    /// Without the second gate every built component would fire the day the
+    /// first Release node appeared, which is the mid-construction flood ophyd
+    /// A14 warns about: a graph whose release manifest simply has not been
+    /// entered yet is not a graph full of unshipped work.
+    UnreleasedComponent,
     /// A Capability has no `Verification` proving the behaviour works.
     ///
     /// The key string stays `unverified_capability` even though this variant
@@ -185,6 +195,7 @@ impl GapSource {
             // capability acknowledgement with nothing to tell the user why.
             GapSource::FailingVerification => "failing_verification",
             GapSource::UnresolvedDrift => "unresolved_drift",
+            GapSource::UnreleasedComponent => "unreleased_component",
             GapSource::UnverifiedCapability => "unverified_capability",
             GapSource::UnverifiedArtifact => "unverified_artifact",
             GapSource::UnprovidedInterface => "unprovided_interface",
@@ -785,6 +796,7 @@ impl DesignGraph {
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
         self.detect_failing_verifications(&mut gaps)?;
         self.detect_unresolved_drift(&mut gaps)?;
+        self.detect_unreleased_components(&mut gaps)?;
         self.detect_interface_pairing(&pop, &mut gaps)?;
         // Deliberately absent: unexpected coupling. It is a *signal*, reported
         // by `graph_report` and `surprising_connections`, not a gap demanding
@@ -1440,6 +1452,71 @@ impl DesignGraph {
                 evidence: format!(
                     "DriftEvent '{}' has resolved=false; the divergence was observed and written down, and the second question is unanswered.",
                     ev.node_id
+                ),
+            });
+        }
+        Ok(())
+    }
+
+    /// A built Component no Release includes (see
+    /// [`GapSource::UnreleasedComponent`] for the double gate).
+    fn detect_unreleased_components(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        let releases = self.scan_nodes(node::RELEASE)?;
+        if releases.is_empty() {
+            return Ok(());
+        }
+        let mut shipped: BTreeSet<String> = BTreeSet::new();
+        for rel in &releases {
+            for e in self.outgoing(&rel.node_id, Some(edge::INCLUDES))? {
+                shipped.insert(e.to_id);
+            }
+        }
+        if shipped.is_empty() {
+            // Releases exist but contents are not modelled — a different, whole-
+            // graph situation, not one gap per component.
+            return Ok(());
+        }
+        for cmp in self.scan_nodes(node::COMPONENT)? {
+            if shipped.contains(&cmp.node_id) {
+                continue;
+            }
+            // Built = an artifact realizes the component, or realizes a
+            // capability allocated to it (both P3 shapes, per BL-38).
+            let mut built_by: Vec<String> = self
+                .incoming(&cmp.node_id, Some(edge::REALIZES))?
+                .into_iter()
+                .map(|e| e.from_id)
+                .collect();
+            for alloc in self.incoming(&cmp.node_id, Some(edge::ALLOCATED_TO))? {
+                for e in self.incoming(&alloc.from_id, Some(edge::REALIZES))? {
+                    built_by.push(e.from_id);
+                }
+            }
+            if built_by.is_empty() {
+                continue; // not built — design_without_build's territory
+            }
+            if built_by.iter().any(|a| shipped.contains(a)) {
+                continue; // its build ships, even if the component node is unlisted
+            }
+            let name = node_name(&cmp);
+            gaps.push(GapCandidate {
+                id: gap_id(
+                    GapSource::UnreleasedComponent,
+                    std::slice::from_ref(&cmp.node_id),
+                ),
+                gap_source: GapSource::UnreleasedComponent,
+                scope: GapScope::Component,
+                severity: 0.5,
+                title: format!("“{name}” is built but ships in nothing"),
+                description: format!(
+                    "“{name}” is built, and no release includes it or anything that realizes it — is it part of a future release, or dead weight?"
+                ),
+                affected_ids: vec![cmp.node_id.clone()],
+                suggested_depth: 2,
+                evidence: format!(
+                    "Component '{}' has realizing artifacts; {} release(s) exist and model their contents, and none includes it.",
+                    cmp.node_id,
+                    releases.len()
                 ),
             });
         }

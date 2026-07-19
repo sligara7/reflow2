@@ -471,6 +471,31 @@ pub struct ResourceReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+pub struct ReleaseIncludesReq {
+    pub release_id: String,
+    /// `Artifact` or `Component`.
+    pub target_type: String,
+    pub target_id: String,
+    /// The artifact's content hash AS SHIPPED in this release — frozen at cut
+    /// time, so later baseline moves do not rewrite what a past release
+    /// contained.
+    #[serde(default)]
+    pub as_checksum: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct ReleaseReportReq {
+    pub release_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct PinAtEpochReq {
+    pub node_type: String,
+    pub node_id: String,
+    pub epoch_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
 pub struct DeployToReq {
     pub release_id: String,
     pub environment_id: String,
@@ -1271,6 +1296,63 @@ impl ReflowService {
             g.deploy_to(&req.release_id, &req.environment_id, req.status.as_deref())
                 .map_err(dyno_err)?,
         ))
+    }
+
+    #[tool(
+        description = "Record that a Release ships an Artifact or Component (INCLUDES) — the \
+                       as-released view. Pass as_checksum to freeze the artifact's content hash \
+                       as shipped: the artifact node's own checksum is the live drift baseline \
+                       and moves with every accept, so without the frozen copy a past release's \
+                       manifest would quietly rewrite itself. A Release with no INCLUDES edges \
+                       is a version number, not a manifest."
+    )]
+    pub async fn release_includes(
+        &self,
+        Parameters(req): Parameters<ReleaseIncludesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.release_includes(
+                &req.release_id,
+                &req.target_type,
+                &req.target_id,
+                req.as_checksum.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "The as-released view (BL-34): what a Release actually shipped — artifacts \
+                       with their frozen cut-time checksums, components, the capabilities that \
+                       build covers, the built capabilities it leaves out, and where it is \
+                       deployed. This is the query 'does what we released match what we \
+                       designed?' — compare capabilities_covered against the design's \
+                       capability list, and built_capabilities_not_covered is the diff."
+    )]
+    pub async fn release_report(
+        &self,
+        Parameters(req): Parameters<ReleaseReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        ok_json(g.release_report(&req.release_id).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Pin any node to a DesignEpoch (AT_EPOCH) — e.g. a Release to its \
+                       release_cut epoch, so the release and the design state it was cut from \
+                       are joined on axis Z. Generic: AT_EPOCH is declared from any type."
+    )]
+    pub async fn pin_at_epoch(
+        &self,
+        Parameters(req): Parameters<PinAtEpochReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        g.pin_at_epoch(&req.node_type, &req.node_id, &req.epoch_id)
+            .map_err(dyno_err)?;
+        ok_json(serde_json::json!({
+            "pinned": req.node_id, "at_epoch": req.epoch_id
+        }))
     }
 
     #[tool(

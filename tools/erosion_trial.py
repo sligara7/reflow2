@@ -154,14 +154,20 @@ def main() -> int:
              events == drifts,
              f"{events} DriftEvent(s) retained for {drifts} drift(s)")
 
-        rel_out = s.call("get_node", {"node_type": "Release", "id": "rel:1"})
-        tools = [t["name"] for t in s.rpc("tools/list", {})["result"]["tools"]]
+        # Genuine since BL-34: record the manifest, then ask the question.
+        s.call("release_includes", {"release_id": "rel:1", "target_type": "Artifact",
+                                    "target_id": "art:charge", "as_checksum": sha(code)})
+        rr = s.call("release_report", {"release_id": "rel:1"})
         note("the release records WHAT it contains",
-             any("release" in t and ("contain" in t or "includes" in t) for t in tools),
-             "DEPLOYED_TO (Release -> Environment) is the only edge Release has; "
-             "nothing links a Release to the Artifacts or Components it shipped")
-        note("you can ask 'does what shipped match what was designed?'", False,
-             "there is no as-released view to compare against the as-designed one")
+             rr["artifacts"] == [["art:charge", sha(code)]],
+             f"manifest: {rr['artifacts']} — checksum frozen at cut")
+        note("you can ask 'does what shipped match what was designed?'",
+             rr["capabilities_covered"] == ["cap:charge"]
+             and rr["built_capabilities_not_covered"] == [],
+             "release_report: covered=" + str(rr["capabilities_covered"]) +
+             " not_covered=" + str(rr["built_capabilities_not_covered"]) +
+             " — the STRUCTURAL answer is yes; whether the description still tells "
+             "the truth about the 7-day window is the ledger's 5-claims-0-edits line")
 
         # Genuine check (was a hardcoded fail before BL-30): flip the one
         # verification red and see whether coverage notices.

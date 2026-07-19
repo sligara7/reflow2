@@ -386,7 +386,7 @@ mod tests {
     fn vocabulary_covers_the_whole_schema() {
         let v = graph().describe_vocabulary();
         assert_eq!(v.node_types.len(), 27, "all node types are listed");
-        assert_eq!(v.edge_types.len(), 53, "all edge types are listed");
+        assert_eq!(v.edge_types.len(), 54, "all edge types are listed");
     }
 
     #[test]
@@ -415,26 +415,26 @@ mod tests {
         );
     }
 
-    /// The blind trial's actual question. It brute-forced fourteen guesses and
-    /// settled on `DEPENDS_ON` because it validated — this asserts we now say
-    /// plainly that nothing models the pair, rather than just handing back the
-    /// edge that happened to pass.
+    /// The blind trial's actual question, and its answer has a history. The
+    /// trial brute-forced fourteen guesses and settled on `DEPENDS_ON` because
+    /// it validated; BL-1 made the vocabulary say plainly that *nothing models
+    /// Release → Component*, and this test pinned that honest emptiness — with
+    /// the note "if one is added, update this test". BL-34 added one:
+    /// `INCLUDES` is the as-released containment the trial was reaching for
+    /// all along, so the right answer changed from a caveat to an exact fit.
     #[test]
-    fn release_to_component_reports_no_exact_fit() {
+    fn release_to_component_reports_the_as_released_edge() {
         let g = graph();
         let q = g.edge_types_between("Release", "Component").unwrap();
         assert_eq!(
-            q.exact_matches, 0,
-            "no edge type models Release -> Component; if one is added, update this test"
+            q.exact_matches, 1,
+            "INCLUDES models Release -> Component since BL-34"
         );
         assert!(
-            q.matches.iter().all(|m| !m.is_exact()),
-            "any match must be wildcard-based"
-        );
-        assert!(
-            q.note.contains("wildcard") || q.note.contains("No edge type in this schema"),
-            "the caveat must be stated in words, got: {}",
-            q.note
+            q.matches
+                .iter()
+                .any(|m| m.is_exact() && m.spec.edge_type == "INCLUDES"),
+            "the exact fit is INCLUDES"
         );
     }
 

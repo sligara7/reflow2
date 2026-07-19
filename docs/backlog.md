@@ -84,7 +84,6 @@ Nine independent sources, which is why several items appear on more than one lis
 |---|---|---|---|
 | **BL-37** | **reflow2 cannot model a *process* — `Flow` has no write side, and edge roles are lost** | Found by modelling reflow2's own coherence loop in reflow2. The one type meant for an ordered process cannot be created; forward and backward edges are indistinguishable | M |
 | **BL-36** | **`precedes` is unreachable, so the epoch chain cannot be drawn** | Recurring lesson, tenth instance — on the axis that exists to make history legible | S |
-| **BL-34** | **No as-released view, and no vocabulary for one** | `DEPLOYED_TO` is the only edge `Release` has. "Does what shipped match what was designed?" is inexpressible, not merely unimplemented | M |
 | **BL-40** | **Viewpoints as pure projections (SYNTHESIZE held to a no-extrapolation standard)** | The graph stores the design; the agent only renders. `tools/render_views.py` is the seed — functional/structural/traceability views project cleanly today, and each confession it prints is a gap by definition. Direction: a viewpoint catalogue (UAF/DoDAF-informed), and rendering through the live MCP surface rather than the export. The author intends to expand this thread | M–L |
 | **BL-30** | **A failing test satisfies the check that asked for a test** | **S half done** — `failing_verification` fires at 0.8 and coverage counts passing only. The M half (`reconcile_verification`) remains. See below | ~~S~~ + M |
 | **BL-31** | **A `status` field is a claim nothing checks** | `status: verified` with nothing verifying, `status: met` with nothing satisfying — the graph never contradicts itself | S |
@@ -309,7 +308,7 @@ was tightened from `> 0` (which one surviving event weakly satisfied) to an exac
 *never overwrite the past* now holds on the as-built side; "drifted once" and "drifted N times" are
 different graphs, which is the data BL-35's freshness computation needs.
 
-**BL-34 · There is no as-released view, and no vocabulary for one** — *same trial.* Checked two
+**BL-34 · There is no as-released view, and no vocabulary for one — DONE** — *same trial.* Checked two
 ways: **`DEPLOYED_TO` (Release → Environment) is the only edge in the schema involving `Release`.**
 Nothing links a Release to the Artifacts or Components it shipped, though `Release`'s own
 extraction hint says *"A packaged, operable version of some Components/Artifacts"* — the intent is
@@ -317,11 +316,23 @@ prose with no edge to carry it. So *"does what we released match what we designe
 unimplemented query; it is inexpressible. reflow2 has as-designed and a partial as-built, and the
 third view — the one the user actually lives with — has no structure at all.
 
-Bigger than [BL-9](#bigger-threads)'s `reconcile_deployment`: a reconciler needs something to
-reconcile, so the containment edge comes first. Adding an edge *type* bumps `GraphStamp`'s edge
-count and makes older binaries refuse the graph ([BL-19](#bigger-threads)), so this one is not
-backward-compatible in the way BL-27's property additions were — worth pairing with any other
-schema growth rather than shipping alone. Size **M**.
+**Done.** `INCLUDES` (`Release → [Artifact, Component]`) is edge type **54** — the first edge-type
+addition since the stamp existed, so the BL-19 mechanism now applies for real: a graph written by
+this schema is **refused by older binaries**, loudly, with what wrote it. The upgrade order in
+SETUP.md matters for the first time. `as_checksum` on the edge freezes the artifact's hash *as
+shipped*, because the artifact node's own checksum is the live drift baseline and moves with every
+accept — without the frozen copy a past release's manifest would quietly rewrite itself, the axis-Z
+sin again. Write side `release_includes`; read side `release_report` — shipped artifacts with
+cut-time checksums, capabilities covered (both P3 shapes), **`built_capabilities_not_covered` as
+the as-released diff**, deployments. A new gap, `unreleased_component` (0.5), fires for a built
+component no release includes — double-gated on releases existing *and* contents being modelled,
+so day one of the first Release node is not a flood (the ophyd-A14 lesson). `pin_at_epoch` is also
+on the surface now (thirteenth recurring-lesson instance: `AT_EPOCH` is `from: "*"` and the core
+fn existed with no tool), so a Release joins its `release_cut` epoch. Three pinned history tests
+flipped honestly: BL-1's own example pair — *"nothing models Release → Component"* — now has its
+exact fit, which is the trial's question answered two items later. Measured: phase **10/13** (P5
+1/2), erosion **7/8**, coherent-erosion **8/9** — the single remaining coherent miss is BL-36's
+`precedes`.
 
 **BL-30 · The later phases measure bookkeeping, not reality** — *[phase-coverage
 trial](trials/2026-07-19-phase-coverage.md), 2026-07-19. The direct answer to "how do we know
@@ -931,7 +942,7 @@ Not gaps — decisions, recorded so they aren't rediscovered as bugs.
 
 ## Recurring lesson
 
-A capability exists in core and is unreachable or unadvertised on the surface. Twelve instances so
+A capability exists in core and is unreachable or unadvertised on the surface. Thirteen instances so
 far: `Interface`, HEAL's skill, the `Verification`/operate write side, `contain_component`,
 `graph_id`, `Requirement.status`, `graph_report` as an answer to "where am I", the whole
 `TemporalFact` / `ABOUT_ENTITY` / `VALID_FROM` / `VALID_TO` layer (schema-complete, zero Rust
@@ -940,7 +951,9 @@ API), `DOCUMENTS` (declared, named in `nodes.rs`, no constructor and no tool —
 any client — BL-36), and `Flow` (fully specified with its own edge `PART_OF_FLOW`, no constructor,
 no tool — so no process can be modelled at all, BL-37), and `DriftEvent.resolved` (declared with
 `default: false`, written by nothing — every recorded divergence stayed "open" forever no matter
-what happened next; BL-35 made the accept flip it).
+what happened next; BL-35 made the accept flip it), and `pin_at_epoch` (generic in core since the
+temporal module landed, `AT_EPOCH` declared `from: "*"` — and no tool, so nothing could pin a
+Release to its own `release_cut` epoch; BL-34 exposed it).
 
 Before building something new, the higher-yield question is usually: **what does the core
 already do that nothing can reach?**

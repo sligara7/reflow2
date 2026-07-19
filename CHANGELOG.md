@@ -17,6 +17,25 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The as-released view** (BL-34). `INCLUDES` (`Release → [Artifact, Component]`) is what the
+  Release node's own description — "a packaged, operable version of some Components/Artifacts" —
+  lived without: the intent was prose with no edge to carry it, so *"does what we released match
+  what we designed?"* was inexpressible rather than unimplemented. `release_includes` records the
+  manifest, freezing each artifact's hash **as shipped** (`as_checksum`) so later baseline accepts
+  do not rewrite what a past release contained. `release_report` reads it back: shipped artifacts
+  with cut-time checksums, the capabilities that build covers (both P3 shapes), the **built
+  capabilities it leaves out — the as-released diff** — and deployments. `unreleased_component`
+  (0.5) fires for a built component no release includes, double-gated on releases existing *and*
+  contents being modelled so the first Release node is not a flood. `pin_at_epoch` joins the
+  surface (the core fn existed with no tool), so a Release links to its `release_cut` epoch.
+
+  **Upgrade note — this is the first schema-type growth since `GraphStamp` existed** (53 → 54 edge
+  types; node types stay 27). Additive, so this build opens every existing graph — but a graph
+  written by this build is *refused by older binaries*, loudly, naming what wrote it. Update in
+  SETUP.md's order: pull, rebuild, then restart the server. BL-1 footnote: the vocabulary's own
+  example of an unmodelled pair — "nothing models Release → Component" — now has its exact fit,
+  and the three tests that pinned the honest emptiness flipped to pin the answer.
+
 - **A design can say what already exists, and what it inferred** (BL-27, two of five blockers on
   adopting a system that already exists).
 

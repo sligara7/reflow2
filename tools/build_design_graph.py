@@ -316,6 +316,13 @@ def build(s: Server) -> None:
                                    "to_type": "Decision", "to_id": did})
     s.call("add_release", {"id": "rel:v020", "name": "v0.2.0", "version": "0.2.0",
                            "unit_type": "binary"})
+    # The as-released view (BL-34): v0.2.0 is the tagged repo, so every module
+    # artifact ships in it, checksum frozen at what was registered.
+    for cmp_id, path in ARTIFACTS.items():
+        s.call("release_includes", {
+            "release_id": "rel:v020", "target_type": "Artifact",
+            "target_id": f"art:{cmp_id.split(':')[1]}",
+            "as_checksum": sha(REPO / path)})
     s.call("add_environment", {"id": "env:dev", "name": "Developer machine",
                                "env_type": "development"})
     s.call("deploy_to", {"release_id": "rel:v020", "environment_id": "env:dev", "status": "active"})

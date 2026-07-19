@@ -62,6 +62,19 @@ schema:
       properties:
         status: { type: enum, values: [planned, active, rolled_back] }
 
+    INCLUDES:
+      from: Release
+      to: [Artifact, Component]
+      extraction_hint: >
+        What a Release actually ships. The Release node always claimed to be "a
+        packaged, operable version of some Components/Artifacts" — this is the
+        edge that claim lived without until BL-34, which is why "does what we
+        released match what we designed?" was inexpressible rather than merely
+        unimplemented. The as-released view is read off these edges; a Release
+        with none is a version number, not a manifest.
+      properties:
+        as_checksum: { type: string, description: "The artifact's content hash as shipped in THIS release — frozen at cut time, so later baseline moves do not rewrite what a past release contained." }
+
     REQUIRES_RESOURCE:
       from: "*"
       to: Resource

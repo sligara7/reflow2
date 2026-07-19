@@ -267,13 +267,28 @@ def run_p5(s: Server, p: Probes) -> None:
     s.call("add_environment", {"id": "env:dev", "name": "Developer machine", "env_type": "development"})
     s.call("deploy_to", {"release_id": "rel:v020", "environment_id": "env:dev", "status": "active"})
 
-    # Probe 8 — a component that ships in nothing.
+    # The release models its contents — everything built so far ships in it…
+    for name in ("detect.rs", "heal.rs", "drift.rs", "export.rs", "propagate.rs",
+                 "service.rs"):
+        s.call("release_includes", {"release_id": "rel:v020", "target_type": "Artifact",
+                                    "target_id": f"art:{name}"})
+
+    # Probe 8 — …except this: built, and in no release.
     s.call("add_component", {"id": "cmp:orphaned-build", "name": "Undeployed part",
                              "description": "Built, in no release."})
-    s.call("allocate", {"from_id": "cap:export", "to_id": "cmp:orphaned-build"})
+    s.call("add_capability", {"id": "cap:orphan-fn", "name": "Orphan function",
+                              "description": "Built but never shipped.",
+                              "status": "realized"})
+    s.call("satisfies", {"from_id": "cap:orphan-fn", "to_id": "req:coherence"})
+    s.call("allocate", {"from_id": "cap:orphan-fn", "to_id": "cmp:orphaned-build"})
+    s.call("link_artifact", {"artifact_id": "art:orphan", "name": "orphan.rs",
+                             "location": "src/orphan.rs", "artifact_type": "code",
+                             "target_type": "Component", "target_id": "cmp:orphaned-build",
+                             "checksum": "sha256:orphan"})
     gaps = s.call("detect_gaps")
-    named = any("cmp:orphaned-build" in g.get("affected_ids", []) for g in gaps)
-    p.score("P5", "a built component that no release contains", named,
+    named = [g for g in gaps if g["gap_source"] == "unreleased_component"
+             and "cmp:orphaned-build" in g.get("affected_ids", [])]
+    p.score("P5", "a built component that no release contains", bool(named),
             f"gap sources: {sorted({g['gap_source'] for g in gaps})}")
 
     # Probe 9 — reconciliation against what is actually deployed (BL-9).

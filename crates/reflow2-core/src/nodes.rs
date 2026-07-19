@@ -83,6 +83,7 @@ pub mod edge {
     pub const CONTAINS_EPOCH: &str = "CONTAINS_EPOCH";
     /// `Release → Environment` — a packaged version runs in an environment.
     pub const DEPLOYED_TO: &str = "DEPLOYED_TO";
+    pub const INCLUDES: &str = "INCLUDES";
     /// `* → Resource` — a Component or Release consumes a real-world resource.
     pub const REQUIRES_RESOURCE: &str = "REQUIRES_RESOURCE";
 

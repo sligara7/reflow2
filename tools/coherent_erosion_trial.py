@@ -175,10 +175,22 @@ def main() -> int:
              refused is not None,
              "set_artifact_checksum refuses a silent accept: disposition is required, "
              "and design_updated must name the ChangeEvent behind it")
+        # Genuine since BL-34/36-adjacent: pin the release to its cut epoch and
+        # record what it shipped, then read both back.
+        s.call("pin_at_epoch", {"node_type": "Release", "node_id": "rel:1",
+                                "epoch_id": "epoch:release"})
+        s.call("release_includes", {"release_id": "rel:1", "target_type": "Artifact",
+                                    "target_id": "art:charge", "as_checksum": sha(code)})
+        rr = s.call("release_report", {"release_id": "rel:1"})
+        pinned = s.call("scan_nodes", {"node_type": "Release"})
         note("the release records which epoch / which artifact versions it shipped",
-             False, "Release has only DEPLOYED_TO; the release_cut epoch is not linked to it")
+             rr["artifacts"] == [["art:charge", sha(code)]] and bool(pinned),
+             f"manifest {rr['artifacts']}, pinned AT_EPOCH epoch:release")
         note("you can diff as-designed against as-released at all",
-             False, "no as-released view to diff (BL-34)")
+             rr["capabilities_covered"] == ["cap:charge"] and
+             rr["built_capabilities_not_covered"] == [],
+             "release_report.built_capabilities_not_covered is the diff, and it is empty "
+             "because the disciplined run shipped everything it designed")
         note("the epoch chain can be drawn from the surface at all",
              any(t == "precedes" for t in tools),
              "core has DesignGraph::precedes; it is not exposed as a tool, so the "

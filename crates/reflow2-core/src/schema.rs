@@ -53,9 +53,13 @@ mod tests {
     #[test]
     fn all_domains_merge_and_validate() {
         let schema = load_schema().expect("the 10 domains must merge and validate");
-        // The vocabulary the docs and README commit to: 27 node types, 52 edges.
+        // The vocabulary the docs and README commit to. History: 26→27 nodes
+        // was BL-4 (Question), 53→54 edges is BL-34 (INCLUDES — the
+        // as-released view). Every bump moves GraphStamp, so a graph written
+        // by this schema is refused by older binaries — deliberate, loud, and
+        // worth a CHANGELOG entry each time (BL-19).
         assert_eq!(schema.node_types.len(), 27, "expected 27 node types");
-        assert_eq!(schema.edge_types.len(), 53, "expected 53 edge types");
+        assert_eq!(schema.edge_types.len(), 54, "expected 54 edge types");
     }
 
     #[test]

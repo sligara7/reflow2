@@ -451,6 +451,158 @@
       "to_id": "dec:views-are-projections"
     },
     {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:7a663ef94239c269"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:fbe714849869c1d8"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:676d89b9e3be53bd"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:1957641d39c28842"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:f68e39113071f8b1"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:6c161bd00c8bbd30"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:2f697a383b3c457d"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:6b75bc576b6c891f"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:7a3aa60a911d249d"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:feca736d9d86d965"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:3a429cd9945965ca"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:d8275cc570cb9bb2"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:6ad8c5bf53fca047"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:4ebd4a0a94e025a5"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:ee5ef7a4836a74ce"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:f9e9aed059f42db7"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:a6ed46c71a37ad6d"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v020",
+      "properties": {
+        "as_checksum": "sha256:86bc99c202396a5f"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
       "edge_type": "PROVIDES",
       "from_id": "cmp:core",
       "properties": {
@@ -1067,7 +1219,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c8ba3d975431f288",
+        "checksum": "sha256:7a663ef94239c269",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -1166,7 +1318,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:06649741f888b36f",
+        "checksum": "sha256:feca736d9d86d965",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
         "status": "realized"
@@ -1199,7 +1351,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0f9c51369a37ff27",
+        "checksum": "sha256:6ad8c5bf53fca047",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
         "status": "realized"
@@ -1210,7 +1362,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:20f66c242883ac97",
+        "checksum": "sha256:4ebd4a0a94e025a5",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -1254,7 +1406,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:299af0ce97e70ae9",
+        "checksum": "sha256:86bc99c202396a5f",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
         "status": "realized"
@@ -2472,7 +2624,7 @@
     }
   ],
   "stamp": {
-    "edge_types": 53,
+    "edge_types": 54,
     "node_types": 27,
     "reflow2_version": "0.2.0",
     "schema_version": 1

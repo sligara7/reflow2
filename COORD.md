@@ -52,7 +52,6 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
-- BL-34: the as-released view — INCLUDES edge (schema 53→54), release_report — @ajs — since 2026-07-19 — schema/operate.yaml, operate.rs, detect.rs, trials
 
 
 
@@ -82,6 +81,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-34 done: INCLUDES + release_report + unreleased_component; schema 53→54 (phase 10/13, erosion 7/8, coherent 8/9) — @ajs — 2026-07-19 — (this commit)
 - BL-35 done: the confirmation ledger — drifting/confirmed/unexamined per claim (erosion 5/8, coherent 6/9) — @ajs — 2026-07-19 — (this commit)
 - BL-33 done: accept is two-sided; the second question is posed by the tool (erosion 4/8, coherent 5/9) — @ajs — 2026-07-19 — (this commit)
 - BL-33 S sub-piece done: a new drift is a new event (5 drifts = 5 events; probe tightened) — @ajs — 2026-07-19 — (this commit)

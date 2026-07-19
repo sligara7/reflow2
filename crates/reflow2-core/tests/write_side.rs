@@ -642,3 +642,143 @@ fn provenance_survives_an_export_import_round_trip() {
         "realized"
     );
 }
+
+// ---- BL-34 · the as-released view ------------------------------------------
+
+#[test]
+fn a_release_records_what_it_ships_and_the_report_reads_it_back() {
+    let mut g = built_thread();
+    g.add_release("rel:v1", "v1.0", Some("1.0.0"), Some("binary"))
+        .unwrap();
+    g.release_includes("rel:v1", node::ARTIFACT, "art:score", Some("sha256:aaa"))
+        .unwrap();
+    g.add_environment("env:prod", "Production", Some("production"), None)
+        .unwrap();
+    g.deploy_to("rel:v1", "env:prod", Some("active")).unwrap();
+
+    let rep = g.release_report("rel:v1").unwrap();
+    assert_eq!(
+        rep.artifacts,
+        [("art:score".to_string(), Some("sha256:aaa".to_string()))]
+    );
+    assert_eq!(rep.capabilities_covered, ["cap:score"]);
+    assert!(rep.built_capabilities_not_covered.is_empty());
+    assert_eq!(
+        rep.deployed_to,
+        [("env:prod".to_string(), Some("active".to_string()))]
+    );
+}
+
+#[test]
+fn the_frozen_checksum_survives_a_later_baseline_move() {
+    // The artifact's own checksum is the live drift baseline and moves with
+    // every accept; what a PAST release shipped must not move with it.
+    let mut g = built_thread();
+    g.add_release("rel:v1", "v1.0", Some("1.0.0"), None)
+        .unwrap();
+    g.release_includes("rel:v1", node::ARTIFACT, "art:score", Some("sha256:aaa"))
+        .unwrap();
+    g.set_artifact_checksum(
+        "art:score",
+        "sha256:bbb",
+        reflow2_core::DriftDisposition::DesignHolds {
+            change_type: reflow2_core::temporal::ChangeType::Refactor,
+        },
+        None,
+        None,
+    )
+    .unwrap();
+
+    let rep = g.release_report("rel:v1").unwrap();
+    assert_eq!(
+        rep.artifacts[0].1.as_deref(),
+        Some("sha256:aaa"),
+        "the manifest of a past release does not rewrite itself"
+    );
+}
+
+#[test]
+fn a_built_capability_the_release_leaves_out_is_the_diff() {
+    // "Does what we released match what we designed?" — the previously
+    // inexpressible question, now a field.
+    let mut g = built_thread();
+    g.add_capability("cap:extra", "Extra", "also built", None)
+        .unwrap();
+    g.add_component("cmp:extra", "Extra part", "part", None)
+        .unwrap();
+    g.allocate("cap:extra", "cmp:extra").unwrap();
+    g.link_artifact(LinkArtifactOptions {
+        artifact_id: "art:extra".into(),
+        name: "Extra.cs".into(),
+        location: Some("src/Extra.cs".into()),
+        artifact_type: Some("code".into()),
+        target_type: node::CAPABILITY.into(),
+        target_id: "cap:extra".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: Some("sha256:eee".into()),
+    })
+    .unwrap();
+    g.add_release("rel:v1", "v1.0", None, None).unwrap();
+    g.release_includes("rel:v1", node::ARTIFACT, "art:score", None)
+        .unwrap();
+
+    let rep = g.release_report("rel:v1").unwrap();
+    assert_eq!(rep.capabilities_covered, ["cap:score"]);
+    assert_eq!(
+        rep.built_capabilities_not_covered,
+        ["cap:extra"],
+        "built, designed, not shipped — the as-released diff"
+    );
+}
+
+#[test]
+fn a_built_component_in_no_release_is_a_gap_once_contents_are_modelled() {
+    let mut g = built_thread();
+    // cmp:engine is built (art:score realizes cap:score allocated to it).
+    g.add_release("rel:v1", "v1.0", None, None).unwrap();
+
+    // Releases exist but model no contents: silence, not a per-component flood.
+    assert!(
+        !g.detect_gaps()
+            .unwrap()
+            .iter()
+            .any(|x| x.gap_source == GapSource::UnreleasedComponent),
+        "an unmodelled manifest is not evidence of unshipped work"
+    );
+
+    // Contents are modelled — and this component's build is not among them.
+    g.add_artifact("art:other", "other.bin", Some("binary"), None)
+        .unwrap();
+    g.release_includes("rel:v1", node::ARTIFACT, "art:other", None)
+        .unwrap();
+    let gaps = g.detect_gaps().unwrap();
+    let hit: Vec<&str> = gaps
+        .iter()
+        .filter(|x| x.gap_source == GapSource::UnreleasedComponent)
+        .flat_map(|x| x.affected_ids.iter().map(String::as_str))
+        .collect();
+    assert_eq!(hit, ["cmp:engine"], "built but ships in nothing");
+
+    // Including its realizing artifact clears it.
+    g.release_includes("rel:v1", node::ARTIFACT, "art:score", None)
+        .unwrap();
+    assert!(
+        !g.detect_gaps()
+            .unwrap()
+            .iter()
+            .any(|x| x.gap_source == GapSource::UnreleasedComponent)
+    );
+}
+
+#[test]
+fn a_release_cannot_include_a_requirement() {
+    let mut g = built_thread();
+    g.add_release("rel:v1", "v1.0", None, None).unwrap();
+    assert!(
+        g.release_includes("rel:v1", node::REQUIREMENT, "req:live", None)
+            .is_err(),
+        "a release ships built things, not intent"
+    );
+}

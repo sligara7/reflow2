@@ -153,6 +153,7 @@ def run(binary: str, graph_path: str) -> int:
         "deploy_to", "add_decision", "governed_by",
         "detect_defects", "propose_heal", "describe_schema",
         "set_capability_status", "set_provenance",
+        "release_includes", "release_report", "pin_at_epoch",
     ):
         c.ok(f"tool exposed: {expected}", expected in names)
 
@@ -203,15 +204,22 @@ def run(binary: str, graph_path: str) -> int:
     vocab = s.call("describe_schema", {})
     c.ok("every node type is discoverable", len(vocab.get("node_types", [])) == 27,
          len(vocab.get("node_types", [])))
-    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 53,
+    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 54,
          len(vocab.get("edge_types", [])))
 
     exact = s.call("describe_schema", {"from": "Capability", "to": "Component"})
     c.ok("a modelled pair reports an exact match", exact.get("exact_matches", 0) >= 1, exact.get("note"))
 
-    # The trial's own question. Nothing models Release -> Component; the answer
-    # must say so rather than handing back the wildcard edge that validates.
-    loose = s.call("describe_schema", {"from": "Release", "to": "Component"})
+    # The trial's own question, whose answer has a history: BL-1 made the
+    # vocabulary say plainly that nothing modelled Release -> Component, and
+    # BL-34 then added INCLUDES — the as-released containment the trial was
+    # reaching for all along.
+    rel = s.call("describe_schema", {"from": "Release", "to": "Component"})
+    c.ok("the trial's pair now has its exact fit (INCLUDES, BL-34)",
+         rel.get("exact_matches") == 1, rel.get("note"))
+    # A still-unmodelled pair must still say so rather than handing back the
+    # wildcard edge that validates.
+    loose = s.call("describe_schema", {"from": "Release", "to": "Requirement"})
     c.ok("an unmodelled pair reports no exact match", loose.get("exact_matches") == 0, loose.get("note"))
     c.ok("and says so in words", "wildcard" in loose.get("note", "") or "No edge type" in loose.get("note", ""),
          loose.get("note"))
@@ -618,6 +626,22 @@ def run(binary: str, graph_path: str) -> int:
              for cl in led["claims"]), led)
     c.ok("and graph_report carries the confirmation rollup",
          "confirmation" in s.call("graph_report"))
+
+    print("\n== 7b. the as-released view (BL-34) ==")
+    s.call("release_includes", {"release_id": "rel:v1", "target_type": "Artifact",
+                                "target_id": "art:flight", "as_checksum": "sha256:v2"})
+    rr = s.call("release_report", {"release_id": "rel:v1"})
+    c.ok("a release records WHAT it shipped, checksum frozen at cut",
+         rr["artifacts"] == [["art:flight", "sha256:v2"]], rr["artifacts"])
+    c.ok("and which capabilities that build covers",
+         "cap:flight" in rr["capabilities_covered"], rr["capabilities_covered"])
+    c.ok("and which built capabilities it leaves out — the as-released diff",
+         isinstance(rr["built_capabilities_not_covered"], list),
+         rr["built_capabilities_not_covered"])
+    c.ok("a release cannot include intent",
+         s.call_expect_error("release_includes",
+                             {"release_id": "rel:v1", "target_type": "Requirement",
+                              "target_id": "req:physics"}) is not None)
 
     print("\n== 8. structural health: a cycle through contracts ==")
     s.call("add_interface", {"id": "ifc:score", "name": "Score input"})

@@ -591,7 +591,7 @@ async fn describe_schema_returns_the_whole_vocabulary() {
     );
     assert_eq!(
         v["edge_types"].as_array().unwrap().len(),
-        53,
+        54,
         "every edge type is discoverable"
     );
 }
@@ -611,11 +611,13 @@ async fn describe_schema_answers_the_directed_question() {
     assert_eq!(q["matches"][0]["from_match"], "exact", "exact ranks first");
 }
 
-/// The trial's own case. Nothing models Release -> Component, and the tool must
-/// say so rather than handing back the wildcard edge that happens to validate —
-/// that silent accommodation is what sent the trial down the wrong path.
+/// The trial's own case, with a history. BL-1 made this tool say plainly that
+/// nothing modelled Release -> Component instead of handing back the wildcard
+/// edge that happened to validate; BL-34 then added `INCLUDES` — the
+/// as-released containment the trial was reaching for. A still-unmodelled pair
+/// keeps the honest caveat.
 #[tokio::test]
-async fn release_to_component_is_reported_as_wildcard_only() {
+async fn release_pairs_report_their_true_standing() {
     let s = ReflowService::in_memory().expect("in-memory service");
     let q = j!(s.describe_schema(Parameters(DescribeSchemaReq {
         node_type: None,
@@ -624,10 +626,20 @@ async fn release_to_component_is_reported_as_wildcard_only() {
     })));
     assert_eq!(
         q["exact_matches"].as_u64().unwrap(),
-        0,
-        "no edge type models this pair; if one is added, update this test"
+        1,
+        "INCLUDES models Release -> Component since BL-34"
     );
-    let note = q["note"].as_str().unwrap();
+    let loose = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+        node_type: None,
+        from: Some("Release".into()),
+        to: Some("Requirement".into()),
+    })));
+    assert_eq!(
+        loose["exact_matches"].as_u64().unwrap(),
+        0,
+        "a release ships built things, not intent; if an edge is added, update this test"
+    );
+    let note = loose["note"].as_str().unwrap();
     assert!(
         note.contains("wildcard") || note.contains("No edge type in this schema"),
         "the caveat must be stated in words, got: {note}"
