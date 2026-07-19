@@ -101,7 +101,17 @@ Five practices, each earned:
    and real usage hit it. Every wall is a finding. BL-37 and BL-39 exist for no other reason.
 4. **Ask the second question.** "Did a file change?" is nearly worthless — the answer is always *yes,
    I fixed a bug*. "Does the design still describe what shipped?" is the one that finds things.
-5. **Grade your own evidence.** Mark what you verified by execution versus what you read in the
+5. **Render, and confess.** The graph is the single source of truth and a view is a *projection*
+   of it — DoDAF/UAF-style: many viewpoints, one model. So a renderer may only draw what the graph
+   states, and **everything it needs but cannot find is a finding**: a modelling gap, a reflow2
+   gap, or a true design gap — never something for the agent to improvise past. If producing a
+   description of the design requires extrapolation, that is almost always a defect signal
+   pointing back at the graph. `tools/render_views.py` is the standing form: its first run
+   confessed exactly BL-37 (no flow view is expressible) and a committed-model gap (no capability
+   dependencies), and its own first draft had to be tightened when it produced zero confessions by
+   only asking questions the graph could already answer — the instrument-accommodation trap from
+   §4, live.
+6. **Grade your own evidence.** Mark what you verified by execution versus what you read in the
    code, in the same entry. Several BL-29 hazards are recorded as code-read and unreproduced, on
    purpose. A backlog that cannot tell the two apart rots.
 

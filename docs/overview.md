@@ -35,7 +35,7 @@ the loop like this:
 | *(reflow2 addition)* — ripple along the golden thread | PROPAGATE | [impact-propagation.md](impact-propagation.md) | detailed |
 | **DIAGNOSE → PROMPT** — find weaknesses, ask the user | DETECT + SURFACE | [gap-surfacing.md](gap-surfacing.md) | detailed |
 | **HEAL** — detect & repair structural defects | RESOLVE/HEAL | [heal-process.md](heal-process.md) | detailed |
-| **SYNTHESIZE** — graph → artifacts (docs, diagrams, as-built) | reporting side-output | — | first artifact built: the graph report (`report` module; see [graph-analysis.md](graph-analysis.md)) |
+| **SYNTHESIZE** — graph → artifacts (docs, diagrams, as-built) | reporting side-output | — | the graph report (`report` module), and **projected viewpoints** (`tools/render_views.py` → [design/views.html](design/views.html)): DoDAF-style functional/structural/traceability views drawn purely from the graph, with everything the graph cannot supply confessed — a renderer fill-in is a defect signal, not a job for the agent (BL-40, [sharpening.md](sharpening.md) §3.5) |
 
 ## Reading order
 

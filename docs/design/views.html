@@ -1,0 +1,176 @@
+<title>Reflow 2.0 — projected viewpoints</title>
+<style>
+  :root { --ink:#15211F; --paper:#F6F8F7; --card:#FFFFFF; --rule:#D8E0DD;
+           --accent:#1E6E5C; --warn:#9A4A32; --faint:#66756F; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#E3EAE7; --paper:#101615; --card:#182120; --rule:#2C3936;
+             --accent:#63BFA8; --warn:#D98B6F; --faint:#8AA09A; } }
+  :root[data-theme="dark"] { --ink:#E3EAE7; --paper:#101615; --card:#182120;
+    --rule:#2C3936; --accent:#63BFA8; --warn:#D98B6F; --faint:#8AA09A; }
+  :root[data-theme="light"] { --ink:#15211F; --paper:#F6F8F7; --card:#FFFFFF;
+    --rule:#D8E0DD; --accent:#1E6E5C; --warn:#9A4A32; --faint:#66756F; }
+  body { background:var(--paper); color:var(--ink);
+         font-family:system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.55; }
+  main { max-width:1080px; margin:0 auto; padding:3rem 1.25rem 5rem; }
+  h1 { font-size:1.55rem; letter-spacing:-.015em; margin:0; text-wrap:balance; }
+  .sub { color:var(--faint); margin:.5rem 0 0; max-width:70ch; }
+  h2 { font-size:1.05rem; margin:2.75rem 0 .25rem; color:var(--accent);
+       text-transform:uppercase; letter-spacing:.08em; font-weight:600; }
+  .vp { color:var(--faint); font-size:.85rem; margin:0 0 .9rem; }
+  section > div.card { background:var(--card); border:1px solid var(--rule);
+       border-radius:4px; padding:1rem; overflow-x:auto; }
+  table { border-collapse:collapse; width:100%; font-size:.9rem; }
+  th,td { text-align:left; padding:.55rem .7rem; border-bottom:1px solid var(--rule);
+          vertical-align:top; }
+  th { font-size:.72rem; text-transform:uppercase; letter-spacing:.09em;
+       color:var(--faint); }
+  em { color:var(--warn); font-style:normal; }
+  .confess { border-left:3px solid var(--warn); background:var(--card);
+             padding: .9rem 1.1rem; border-radius:0 4px 4px 0; }
+  .confess li { margin:.3rem 0; }
+  .confess p { margin:.2rem 0 .7rem; }
+  code { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.86em; }
+</style>
+<main>
+  <h1>Reflow 2.0 — projected viewpoints</h1>
+  <p class="sub">Every element below is projected from <code>reflow2.json</code> (116 nodes,
+  143 edges). Nothing is hand-drawn: the renderer may only emit what the graph states, and
+  everything it needed but could not find is confessed at the end — per the doctrine that a
+  fill-in during rendering is a defect in the model, not a job for the agent.</p>
+
+  <section><h2>Functional viewpoint</h2>
+  <p class="vp">≈ OV-5: what must be true, and what the system does about it. Capability status from the graph.</p>
+  <div class="card"><pre class="mermaid">flowchart LR
+  req_adopt_existing["A system that already exists can be brought under design control (medium)"]
+  req_agent_native["An agent can drive the whole loop (high)"]
+  req_coherence["Design stays coherent across its lifecycle (critical)"]
+  req_design_anything["Design anything, not only software (high)"]
+  req_golden_thread["Every artifact traces to the intent it serves (high)"]
+  req_intent_preserved["The past is never overwritten (high)"]
+  req_no_se_knowledge["The user never needs systems engineering (high)"]
+  req_no_silent_fallback["No silent fallbacks or drops (critical)"]
+  req_released_eq_designed["Released equals designed (critical)"]
+  req_survives_upgrade["A design survives a reflow2 upgrade (high)"]
+  cap_adopt("Recover a design from an existing system<br/><i>planned</i>")
+  cap_allocate("Analyse and propose allocation<br/><i>verified</i>")
+  cap_change("Record a change<br/><i>verified</i>")
+  cap_detect("Detect gaps<br/><i>verified</i>")
+  cap_dimensions("Track quality over time<br/><i>realized</i>")
+  cap_freshness("Say when a claim was last confirmed<br/><i>planned</i>")
+  cap_heal("Repair structure<br/><i>verified</i>")
+  cap_hierarchy("Check decomposition levels<br/><i>verified</i>")
+  cap_ingest("Extract a design from freeform text<br/><i>realized</i>")
+  cap_kit("Install into a consumer project<br/><i>verified</i>")
+  cap_mcp_surface("Serve the loop over MCP<br/><i>verified</i>")
+  cap_model_process("Model a process, not only a product<br/><i>planned</i>")
+  cap_portability("Export and import a design<br/><i>verified</i>")
+  cap_propagate("Propagate impact<br/><i>verified</i>")
+  cap_questions("Remember what was asked<br/><i>verified</i>")
+  cap_reconcile_built("Reconcile against what was built<br/><i>verified</i>")
+  cap_reconcile_deployed("Reconcile against what is running<br/><i>planned</i>")
+  cap_reconcile_verified("Reconcile against what was proven<br/><i>planned</i>")
+  cap_report("Say where the design stands<br/><i>verified</i>")
+  cap_stamp("Say which reflow2 wrote a graph<br/><i>verified</i>")
+  cap_surface("Ask the user a plain question<br/><i>verified</i>")
+  cap_vocabulary("Describe the vocabulary<br/><i>verified</i>")
+  cap_adopt -->|satisfies| req_adopt_existing
+  cap_allocate -->|satisfies| req_golden_thread
+  cap_change -->|satisfies| req_coherence
+  cap_change -->|satisfies| req_intent_preserved
+  cap_detect -->|satisfies| req_coherence
+  cap_detect -->|satisfies| req_no_se_knowledge
+  cap_dimensions -->|satisfies| req_coherence
+  cap_freshness -->|satisfies| req_coherence
+  cap_freshness -->|satisfies| req_released_eq_designed
+  cap_heal -->|satisfies| req_coherence
+  cap_heal -->|satisfies| req_no_silent_fallback
+  cap_hierarchy -->|satisfies| req_coherence
+  cap_ingest -->|satisfies| req_no_se_knowledge
+  cap_kit -->|satisfies| req_agent_native
+  cap_mcp_surface -->|satisfies| req_agent_native
+  cap_model_process -->|satisfies| req_design_anything
+  cap_portability -->|satisfies| req_survives_upgrade
+  cap_propagate -->|satisfies| req_coherence
+  cap_propagate -->|satisfies| req_golden_thread
+  cap_questions -->|satisfies| req_no_se_knowledge
+  cap_reconcile_built -->|satisfies| req_golden_thread
+  cap_reconcile_built -->|satisfies| req_released_eq_designed
+  cap_reconcile_deployed -->|satisfies| req_released_eq_designed
+  cap_reconcile_verified -->|satisfies| req_released_eq_designed
+  cap_report -->|satisfies| req_no_se_knowledge
+  cap_stamp -->|satisfies| req_survives_upgrade
+  cap_surface -->|satisfies| req_no_se_knowledge
+  cap_vocabulary -->|satisfies| req_agent_native
+  cap_vocabulary -->|satisfies| req_no_silent_fallback</pre></div></section>
+
+  <section><h2>Structural viewpoint</h2>
+  <p class="vp">≈ SV-1: parts, their containment, and the contracts between them — both sides of each interface.</p>
+  <div class="card"><pre class="mermaid">flowchart TB
+  subgraph cmp_core["reflow2-core"]
+    cmp_allocate["allocate"]
+    cmp_detect["detect"]
+    cmp_dimensions["dimensions"]
+    cmp_drift["drift"]
+    cmp_export["export"]
+    cmp_graph["graph"]
+    cmp_heal["heal"]
+    cmp_hierarchy["hierarchy"]
+    cmp_ingest["ingest"]
+    cmp_operate["operate"]
+    cmp_propagate["propagate"]
+    cmp_provenance["provenance"]
+    cmp_report["report"]
+    cmp_structure["structure"]
+    cmp_temporal["temporal"]
+    cmp_verify["verify"]
+    cmp_vocabulary["vocabulary"]
+  end
+  subgraph cmp_kit["consumer kit"]
+    cmp_init["reflow2_init"]
+    cmp_skills["skills"]
+  end
+  subgraph cmp_mcp["reflow2-mcp"]
+    cmp_service["service"]
+  end
+  ifc_core_api{{"DesignGraph API"}}
+  ifc_graph_export{{"Design export document"}}
+  ifc_mcp_tools{{"MCP tool surface"}}
+  cmp_core -->|provides| ifc_core_api
+  cmp_export -->|provides| ifc_graph_export
+  cmp_service -->|provides| ifc_mcp_tools
+  ifc_graph_export -->|consumed by| cmp_init
+  ifc_core_api -->|consumed by| cmp_service
+  ifc_mcp_tools -->|consumed by| cmp_skills</pre></div></section>
+
+  <section><h2>Traceability viewpoint</h2>
+  <p class="vp">≈ SV-5: function → structure → build → proof, one row per capability.</p>
+  <div class="card"><table><thead><tr><th>Capability</th><th>Allocated to</th><th>Realized by</th><th>Verified by</th></tr></thead><tbody><tr><td>Recover a design from an existing system</td><td><em>unallocated</em></td><td><em>none</em></td><td><em>none</em></td></tr>
+<tr><td>Analyse and propose allocation</td><td>allocate</td><td>allocate.rs</td><td>allocate.rs <i>(passing)</i></td></tr>
+<tr><td>Record a change</td><td>temporal</td><td>temporal.rs</td><td>temporal.rs <i>(passing)</i></td></tr>
+<tr><td>Detect gaps</td><td>detect</td><td>detect.rs</td><td>detect.rs <i>(passing)</i></td></tr>
+<tr><td>Track quality over time</td><td>dimensions</td><td>dimensions.rs</td><td>dimensions.rs <i>(passing)</i></td></tr>
+<tr><td>Say when a claim was last confirmed</td><td><em>unallocated</em></td><td><em>none</em></td><td><em>none</em></td></tr>
+<tr><td>Repair structure</td><td>heal, structure</td><td>heal.rs, structure.rs</td><td>heal.rs <i>(passing)</i></td></tr>
+<tr><td>Check decomposition levels</td><td>hierarchy</td><td>hierarchy.rs</td><td>hierarchy.rs <i>(passing)</i></td></tr>
+<tr><td>Extract a design from freeform text</td><td>ingest</td><td>ingest.rs</td><td>ingest.rs <i>(passing)</i></td></tr>
+<tr><td>Install into a consumer project</td><td>reflow2_init, skills</td><td>reflow2_init.py</td><td><em>none</em></td></tr>
+<tr><td>Serve the loop over MCP</td><td>service</td><td>service.rs</td><td>tools.rs <i>(passing)</i></td></tr>
+<tr><td>Model a process, not only a product</td><td><em>unallocated</em></td><td><em>none</em></td><td><em>none</em></td></tr>
+<tr><td>Export and import a design</td><td>export, graph</td><td>export.rs, graph.rs</td><td>export.rs <i>(passing)</i></td></tr>
+<tr><td>Propagate impact</td><td>propagate</td><td>propagate.rs</td><td>propagate.rs <i>(passing)</i></td></tr>
+<tr><td>Remember what was asked</td><td>detect</td><td>detect.rs</td><td>gap_review.rs <i>(passing)</i></td></tr>
+<tr><td>Reconcile against what was built</td><td>drift</td><td>drift.rs</td><td>drift.rs <i>(passing)</i></td></tr>
+<tr><td>Reconcile against what is running</td><td><em>unallocated</em></td><td><em>none</em></td><td><em>none</em></td></tr>
+<tr><td>Reconcile against what was proven</td><td><em>unallocated</em></td><td><em>none</em></td><td><em>none</em></td></tr>
+<tr><td>Say where the design stands</td><td>report</td><td>report.rs</td><td>report.rs <i>(passing)</i></td></tr>
+<tr><td>Say which reflow2 wrote a graph</td><td>provenance</td><td>provenance.rs</td><td>provenance.rs <i>(passing)</i></td></tr>
+<tr><td>Ask the user a plain question</td><td>detect</td><td>detect.rs</td><td>llm.rs <i>(passing)</i></td></tr>
+<tr><td>Describe the vocabulary</td><td>vocabulary</td><td>vocabulary.rs</td><td>write_side.rs <i>(passing)</i></td></tr></tbody></table></div></section>
+
+  <section><h2>What the graph could not tell this renderer</h2>
+  <div class="confess">
+  <p>2 item(s). Each is a modelling gap, a reflow2 gap, or a true design gap — never
+  something to improvise past.</p>
+  <ul><li>an operational-flow viewpoint (≈ OV-5b/OV-6: activities in order) — the graph holds no Flow nodes and no PART_OF_FLOW edges; `Flow` is fully specified in the schema and has no write side (BL-37), so no design can currently express one</li>
+<li>the functional dependency ordering between capabilities — no Capability -DEPENDS_ON-&gt; Capability edges exist, so the functional view shows a set, not a flow — and evaluate_allocation is inert for the same reason (a committed-model gap, on the record per sharpening.md §2)</li></ul></div></section>
+</main>
