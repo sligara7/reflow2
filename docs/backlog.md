@@ -43,6 +43,7 @@ Four independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
+| BL-28 | `gap_to_prompt` unusable from a real MCP client | The ask half of the loop is broken from Claude Code; `gap: JsonValue` publishes an untyped schema, clients send a string, the server rejects it. Our own smoke test passes a dict and stays green. | S |
 
 ## Closed
 
@@ -141,10 +142,11 @@ greenfield projects... hoping a `/reverse-engineer` skill would allow you to fil
 based on what's already there." Two sub-problems named with it: codebases with no requirements
 documentation, and codebases too large to model in one pass.
 
-Both brownfield trials —
-[ophyd-service](trials/2026-07-18-brownfield-ophyd-service.md) (399 files, ~110k LOC) and
-[3dtictactoe](trials/2026-07-18-brownfield-3dtictactoe.md) (~20 files) — had to run GENESIS
-backwards, and both recorded the same entry-point finding independently. Call the skill **`adopt`**
+All three brownfield trials —
+[ophyd-service](trials/2026-07-18-brownfield-ophyd-service.md) (399 files, ~110k LOC),
+[3dtictactoe](trials/2026-07-18-brownfield-3dtictactoe.md) (~20 files) and
+[reflow2 on itself](trials/2026-07-18-selfhost-genesis.md) — had to run GENESIS
+backwards, and each recorded the same entry-point finding independently. Call the skill **`adopt`**
 rather than `reverse-engineer`: producing the graph is one output, but the job is bringing an
 existing system under design control, and it is the sibling of `genesis`, not of a code tool.
 
@@ -155,6 +157,16 @@ detector fires at severity **0.7 — above the genuinely valuable gap at 0.6**, 
 the list top-down does the useless thing first. It reproduced on a 20-file project as well as a
 110k-LOC one, so it is a property of the path, not of scale. Not a wording fix: the gap-ordering
 logic is what assumes greenfield.
+
+*Two detectors, not one.* The self-host run found `build_without_verification` (0.65) firing the
+same way — "no way to confirm any of it actually works" of a repo with 15 test files and a smoke
+test — so the top **two** gaps outrank the one true gap, and a fix scoped to
+`concept_without_design` alone still leaves the agent's first action useless. Both are
+`scope: phase` detectors inferring project maturity from a node-type census; that shared inference
+is the thing to fix. The same run also found HEAL contradicting GENESIS — following "do not create
+Components yet" produces one `orphan_node` warning per seeded capability, so genesis → check-health
+reports seven defects against a graph that is exactly what genesis prescribed. That one is not
+brownfield-specific; it fires on any project on day one.
 
 *Requirements must not be inferred from the implementation.* A requirement backed out of the code
 that implements it is satisfied by construction, and a graph of those can never say anything.
