@@ -52,6 +52,7 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
+- BL-27 S-blockers (capability status, phase-detector severity, provenance property) — @ajs — since 2026-07-18 — add_capability surface, gap severity/ordering, schema node props
 
 ## Blocked / waiting
 
