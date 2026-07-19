@@ -906,3 +906,63 @@ fn fixing_the_build_clears_the_failing_gap() {
     assert!(!sources(&g.detect_gaps().unwrap()).contains(&GapSource::FailingVerification));
     assert_eq!(g.verification_coverage().unwrap().capabilities_verified, 1);
 }
+
+// ---- BL-31 · a status is a claim the structure must back -------------------
+
+#[test]
+fn a_verified_claim_with_no_passing_check_is_a_contradiction() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    g.add_capability("cap:a", "A", "does a", Some("verified"))
+        .unwrap();
+    g.satisfies("cap:a", "req:a").unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    let hit = gaps
+        .iter()
+        .find(|x| x.gap_source == GapSource::StatusContradiction)
+        .unwrap_or_else(|| panic!("got {:?}", sources(&gaps)));
+    assert_eq!(hit.affected_ids, ["cap:a"]);
+
+    // A planned check does not back the claim; a passing one does.
+    g.add_verification("ver:a", "checks", Some("test"), Some("unit"))
+        .unwrap();
+    g.verifies("ver:a", node::CAPABILITY, "cap:a").unwrap();
+    assert!(
+        sources(&g.detect_gaps().unwrap()).contains(&GapSource::StatusContradiction),
+        "a check that has not passed proves nothing"
+    );
+    g.set_verification_status("ver:a", "passing", None).unwrap();
+    assert!(!sources(&g.detect_gaps().unwrap()).contains(&GapSource::StatusContradiction));
+}
+
+#[test]
+fn a_met_requirement_nothing_satisfies_is_caught_by_the_only_detector_that_can() {
+    // `met` silences unsatisfied_requirement on purpose, so before BL-31 a
+    // lying `met` was invisible to everything.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.create_node(
+        node::REQUIREMENT,
+        "req:met",
+        Props::new()
+            .set("name", "Done, allegedly")
+            .set("statement", "must work")
+            .set("status", "met"),
+    )
+    .unwrap();
+    g.add_capability("cap:x", "X", "does x", None).unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    assert!(
+        !sources(&gaps).contains(&GapSource::UnsatisfiedRequirement),
+        "met suppresses the absence gap — that is the design"
+    );
+    let hit = gaps
+        .iter()
+        .find(|x| x.gap_source == GapSource::StatusContradiction)
+        .unwrap_or_else(|| panic!("got {:?}", sources(&gaps)));
+    assert_eq!(hit.affected_ids, ["req:met"]);
+
+    g.satisfies("cap:x", "req:met").unwrap();
+    assert!(!sources(&g.detect_gaps().unwrap()).contains(&GapSource::StatusContradiction));
+}

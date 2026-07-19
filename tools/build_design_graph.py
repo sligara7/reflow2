@@ -112,8 +112,12 @@ CAPABILITIES = [
      "verified", ["req:no-se-knowledge"]),
     ("cap:mcp-surface", "Serve the loop over MCP", "Every capability as a typed tool for an agent.",
      "verified", ["req:agent-native"]),
+    # `realized`, not `verified`: nothing automated checks the installer, and
+    # status_contradiction caught the original `verified` claim the moment the
+    # detector existed — the second true self-report, and this one was a lie in
+    # our own committed model. Ruled per sharpening.md §2: the status was wrong.
     ("cap:kit", "Install into a consumer project", "One command sets up or refreshes the design environment.",
-     "verified", ["req:agent-native"]),
+     "realized", ["req:agent-native"]),
     ("cap:adopt", "Recover a design from an existing system",
      "Read requirements, functions and structure back out of a running system.",
      "planned", ["req:adopt-existing"]),

@@ -511,6 +511,12 @@ pub struct ReleaseReportReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+pub struct PrecedesReq {
+    pub earlier_epoch: String,
+    pub later_epoch: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
 pub struct PinAtEpochReq {
     pub node_type: String,
     pub node_id: String,
@@ -1368,6 +1374,24 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         ok_json(g.release_report(&req.release_id).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Order one DesignEpoch after another (earlier PRECEDES later) — the chain \
+                       axis Z exists to record. Epochs also carry a `sequence` integer, but the \
+                       explicit edge is what makes the history walkable as a graph rather than \
+                       sortable as a list."
+    )]
+    pub async fn precedes(
+        &self,
+        Parameters(req): Parameters<PrecedesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        g.precedes(&req.earlier_epoch, &req.later_epoch)
+            .map_err(dyno_err)?;
+        ok_json(serde_json::json!({
+            "earlier": req.earlier_epoch, "later": req.later_epoch
+        }))
     }
 
     #[tool(

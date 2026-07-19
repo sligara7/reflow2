@@ -189,6 +189,18 @@ binaries, loudly. See [docs/upgrading-to-v0.3.0.md](docs/upgrading-to-v0.3.0.md)
 
 ### Fixed
 
+- **A status is a claim the structure must back** (BL-31). `status_contradiction` (0.70) fires on a
+  Capability `verified` that no passing check verifies, and on a Requirement `met` that nothing
+  satisfies — the latter previously invisible to everything, because `met` silences
+  `unsatisfied_requirement` by design. Its first catch was this repo's own design graph: `cap:kit`
+  claimed `verified` and nothing automated checks the installer; the status was ruled wrong and
+  downgraded on the record.
+
+- **The epoch chain is drawable** (BL-36). The `precedes` tool orders one `DesignEpoch` after
+  another — the core fn existed with no tool, on the axis whose whole job is making history
+  legible. The coherent-erosion instrument draws the chain per fix cycle, walks it back out of the
+  export, and with it reached 9/9 — the first instrument fully green.
+
 - **The server says who it is** (BL-32). `graph_report` gains `served_by` — the reflow2 version the
   binary was built from, and the binary's mtime — because an MCP session started before a rebuild
   keeps serving the old surface with nothing to say so; that state is now visible from inside the

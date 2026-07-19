@@ -80,6 +80,7 @@ def main() -> int:
             ep = f"epoch:fix{i}"
             s.call("add_epoch", {"id": ep, "name": f"Fix {i}", "epoch_type": "revision",
                                  "sequence": i})
+            s.call("precedes", {"earlier_epoch": prev, "later_epoch": ep})
             prev = ep
 
             widens = (i == 4)
@@ -125,6 +126,7 @@ def main() -> int:
         print("\n== release, cut as its own epoch ==")
         s.call("add_epoch", {"id": "epoch:release", "name": "v1.0 release",
                              "epoch_type": "release_cut", "sequence": 6})
+        s.call("precedes", {"earlier_epoch": prev, "later_epoch": "epoch:release"})
         s.call("add_release", {"id": "rel:1", "name": "v1.0", "version": "1.0"})
         s.call("add_environment", {"id": "env:prod", "name": "Production",
                                    "env_type": "production"})
@@ -191,10 +193,21 @@ def main() -> int:
              rr["built_capabilities_not_covered"] == [],
              "release_report.built_capabilities_not_covered is the diff, and it is empty "
              "because the disciplined run shipped everything it designed")
+        # Genuine since BL-36: the chain was drawn above, cycle by cycle. Walk
+        # it back out of the export and check it is the one continuous path
+        # from baseline to release cut.
+        doc = s.call("export_graph")
+        succ = {e["from_id"]: e["to_id"] for e in doc["edges"]
+                if e["edge_type"] == "PRECEDES"}
+        walked, cur = ["epoch:baseline"], "epoch:baseline"
+        while cur in succ and len(walked) < 20:
+            cur = succ[cur]
+            walked.append(cur)
+        expected = (["epoch:baseline"] + [f"epoch:fix{i}" for i in range(1, 6)]
+                    + ["epoch:release"])
         note("the epoch chain can be drawn from the surface at all",
-             any(t == "precedes" for t in tools),
-             "core has DesignGraph::precedes; it is not exposed as a tool, so the "
-             "PRECEDES ordering of epochs is unreachable from any client")
+             walked == expected,
+             "PRECEDES walk: " + " -> ".join(walked))
 
     finally:
         s.close()

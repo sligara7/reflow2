@@ -93,6 +93,7 @@ the user's deploy/operate ask.
 | `unrealized_capability` | a Capability marked designed has no `Artifact` `REALIZES`-ing it |
 | `failing_verification` | a `Verification` with `status: failing` — reality contradicting the design, which no absence-shaped gap can say. Severity 0.8, above every absence gap: work proven broken outranks work not started. Anchored to the check *and* its targets. Note `build_without_verification` still closes when a check exists — the "how will you confirm?" question is answered; this gap is what fills the silence when the answer is "it doesn't" (BL-30) |
 | `unverified_capability` | a realized Capability has no `Verification` |
+| `status_contradiction` | a status making a claim the structure denies: Capability `verified` with no *passing* check, or Requirement `met` with nothing satisfying it — the latter otherwise invisible, since `met` silences `unsatisfied_requirement` by design. Severity 0.70 (self-contradiction: below reality-contradiction, above absence). Scoped to the unambiguous cases; `realized`-without-artifact is already an absence gap (BL-31) |
 | ~~`unverified_artifact`~~ | **retired** (BL-23). Per-file coverage is counted by `graph_report`'s *Verification coverage* line, not asked as a gap: one `VERIFIES` edge per source file is bookkeeping nobody writes, and it was 22 of 25 gaps on reflow2's own design. The key string is kept because acknowledgement ids hash it |
 
 ### Structural gaps (shared signals with HEAL, but ASKED not fixed)

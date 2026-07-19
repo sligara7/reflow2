@@ -123,9 +123,9 @@ and record a baseline to move:
 
 | Instrument | Asks | Baseline (2026-07-19) | Blocked on |
 |---|---|---|---|
-| `tools/phase_trial.py` | Does the design carry weight after P2? | **10/13** — P3 4/4, P4 2/4, P5 1/2, thread 3/3 (was 8/13 at baseline) | BL-31, BL-30 (M), BL-9 |
+| `tools/phase_trial.py` | Does the design carry weight after P2? | **11/13** — P3 4/4, P4 3/4, P5 1/2, thread 3/3 (was 8/13 at baseline) | BL-30 (M), BL-9 |
 | `tools/erosion_trial.py` | After N fix cycles, does the design describe what shipped? | **7/8** (was 2/7 at baseline) — the release records its manifest with cut-frozen checksums and the as-released diff is a query; the one remaining miss is the semantic description-vs-history judgement, deliberately not built | BL-33, BL-34 |
-| `tools/coherent_erosion_trial.py` | Is `designed == released` reachable, and does anything drive it? | **8/9** (was 4/9) — release pinned to its cut epoch with a frozen manifest, and the as-designed/as-released diff is empty because the disciplined run shipped what it designed | BL-36 |
+| `tools/coherent_erosion_trial.py` | Is `designed == released` reachable, and does anything drive it? | **9/9 — the first instrument fully green** (was 4/9), every YES a genuine read; it stays in the table as a regression gate | — |
 | `tools/build_design_graph.py` | What does reflow2 say about reflow2's own design? | 96 nodes, 16 gaps, 14 defects — **every output true** (was 33/36 with 13 false gaps and 24 false defects; BL-38 and BL-5's second pass cleared the noise) | — |
 
 `tools/smoke_mcp.py` stays the gate for the shipped surface; these four are the gate for whether the

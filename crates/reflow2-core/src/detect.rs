@@ -119,6 +119,17 @@ pub enum GapSource {
     /// A14 warns about: a graph whose release manifest simply has not been
     /// entered yet is not a graph full of unshipped work.
     UnreleasedComponent,
+    /// A lifecycle status making a claim the graph's own structure denies:
+    /// a Capability `verified` that no passing check verifies, or a
+    /// Requirement `met` that nothing satisfies.
+    ///
+    /// The design disagreeing with itself — distinct from absence (nothing
+    /// recorded yet) and from reality-contradiction (a check failing). BL-27
+    /// made these fields easy to write for the first time, which is exactly
+    /// when unchecked claims start accumulating; and a `met` requirement is
+    /// otherwise *invisible* — that status silences `unsatisfied_requirement`
+    /// on purpose, so nothing else can catch it lying.
+    StatusContradiction,
     /// A Capability has no `Verification` proving the behaviour works.
     ///
     /// The key string stays `unverified_capability` even though this variant
@@ -196,6 +207,9 @@ impl GapSource {
             GapSource::FailingVerification => "failing_verification",
             GapSource::UnresolvedDrift => "unresolved_drift",
             GapSource::UnreleasedComponent => "unreleased_component",
+            // Must match the serde snake_case of the variant: clients match on
+            // the serialized name, and gap ids hash this string.
+            GapSource::StatusContradiction => "status_contradiction",
             GapSource::UnverifiedCapability => "unverified_capability",
             GapSource::UnverifiedArtifact => "unverified_artifact",
             GapSource::UnprovidedInterface => "unprovided_interface",
@@ -797,6 +811,7 @@ impl DesignGraph {
         self.detect_failing_verifications(&mut gaps)?;
         self.detect_unresolved_drift(&mut gaps)?;
         self.detect_unreleased_components(&mut gaps)?;
+        self.detect_status_contradictions(&mut gaps)?;
         self.detect_interface_pairing(&pop, &mut gaps)?;
         // Deliberately absent: unexpected coupling. It is a *signal*, reported
         // by `graph_report` and `surprising_connections`, not a gap demanding
@@ -1517,6 +1532,97 @@ impl DesignGraph {
                     "Component '{}' has realizing artifacts; {} release(s) exist and model their contents, and none includes it.",
                     cmp.node_id,
                     releases.len()
+                ),
+            });
+        }
+        Ok(())
+    }
+
+    /// Statuses whose claims the structure denies (see
+    /// [`GapSource::StatusContradiction`]). Scoped to the two unambiguous
+    /// cases — `verified` without a passing check, `met` with nothing
+    /// satisfying — because weaker claims (`realized` without an artifact) are
+    /// already absence gaps, and double-reporting them would be the
+    /// DETECT/HEAL double-count in a new costume.
+    fn detect_status_contradictions(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        for cap in self.scan_nodes(node::CAPABILITY)? {
+            if cap
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                != Some("verified")
+            {
+                continue;
+            }
+            let mut proven = false;
+            for e in self.incoming(&cap.node_id, Some(edge::VERIFIES))? {
+                if let Some(v) = self.get_node(node::VERIFICATION, &e.from_id)?
+                    && v.properties
+                        .get("status")
+                        .and_then(dynograph_core::Value::as_str)
+                        == Some("passing")
+                {
+                    proven = true;
+                    break;
+                }
+            }
+            if proven {
+                continue;
+            }
+            let name = node_name(&cap);
+            gaps.push(GapCandidate {
+                id: gap_id(
+                    GapSource::StatusContradiction,
+                    std::slice::from_ref(&cap.node_id),
+                ),
+                gap_source: GapSource::StatusContradiction,
+                scope: GapScope::Capability,
+                severity: 0.70,
+                title: format!("“{name}” claims verified, and nothing proves it"),
+                description: format!(
+                    "“{name}” has status `verified`, but no passing check verifies it — either run and record the check, or the status is overstating what is known."
+                ),
+                affected_ids: vec![cap.node_id.clone()],
+                suggested_depth: 2,
+                evidence: format!(
+                    "Capability '{}' has status=verified and no incoming VERIFIES from a Verification with status=passing.",
+                    cap.node_id
+                ),
+            });
+        }
+        for req in self.scan_nodes(node::REQUIREMENT)? {
+            if req
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                != Some("met")
+            {
+                continue;
+            }
+            if !self
+                .incoming(&req.node_id, Some(edge::SATISFIES))?
+                .is_empty()
+            {
+                continue;
+            }
+            let name = node_name(&req);
+            gaps.push(GapCandidate {
+                id: gap_id(
+                    GapSource::StatusContradiction,
+                    std::slice::from_ref(&req.node_id),
+                ),
+                gap_source: GapSource::StatusContradiction,
+                scope: GapScope::Project,
+                severity: 0.70,
+                title: format!("“{name}” claims met, and nothing satisfies it"),
+                description: format!(
+                    "“{name}” has status `met`, but no capability satisfies it — and `met` silences the unsatisfied-requirement check, so nothing else can catch this. Link what meets it, or the status is a claim with nothing behind it."
+                ),
+                affected_ids: vec![req.node_id.clone()],
+                suggested_depth: 2,
+                evidence: format!(
+                    "Requirement '{}' has status=met and 0 incoming SATISFIES; `met` suppresses unsatisfied_requirement by design, so this is the only detector that can see it.",
+                    req.node_id
                 ),
             });
         }

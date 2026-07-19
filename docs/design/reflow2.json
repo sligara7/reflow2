@@ -462,7 +462,7 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v020",
       "properties": {
-        "as_checksum": "sha256:7a663ef94239c269"
+        "as_checksum": "sha256:538dc98cad03af92"
       },
       "to_id": "art:detect"
     },
@@ -566,7 +566,7 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v020",
       "properties": {
-        "as_checksum": "sha256:08a2a1fd1d551b5d"
+        "as_checksum": "sha256:d29c79f8fbfc2e53"
       },
       "to_id": "art:service"
     },
@@ -1219,7 +1219,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7a663ef94239c269",
+        "checksum": "sha256:538dc98cad03af92",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -1362,7 +1362,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:08a2a1fd1d551b5d",
+        "checksum": "sha256:d29c79f8fbfc2e53",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -1538,7 +1538,7 @@
         "is_exit_point": false,
         "name": "Install into a consumer project",
         "provenance": "authored",
-        "status": "verified",
+        "status": "realized",
         "tier": "operational"
       }
     },

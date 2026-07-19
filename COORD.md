@@ -52,7 +52,6 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
-- BL-36 then BL-31 (session close-out) — @ajs — since 2026-07-19 — service.rs precedes tool; detect.rs status contradictions
 
 
 
@@ -87,6 +86,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-36 + BL-31 done: precedes tool (coherent 9/9, first fully green); status_contradiction, whose first catch was our own cap:kit (phase 11/13) — @ajs — 2026-07-19 — (this commit)
 - BL-32 done + v0.3.0 prepared: served_by, correct server identity, upgrade doc, bump — tag gated on the restart batch test — @ajs — 2026-07-19 — (this commit)
 - BL-34 done: INCLUDES + release_report + unreleased_component; schema 53→54 (phase 10/13, erosion 7/8, coherent 8/9) — @ajs — 2026-07-19 — (this commit)
 - BL-35 done: the confirmation ledger — drifting/confirmed/unexamined per claim (erosion 5/8, coherent 6/9) — @ajs — 2026-07-19 — (this commit)

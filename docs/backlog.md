@@ -83,10 +83,8 @@ Nine independent sources, which is why several items appear on more than one lis
 | ID | Item | Why | Size |
 |---|---|---|---|
 | **BL-37** | **reflow2 cannot model a *process* — `Flow` has no write side, and edge roles are lost** | Found by modelling reflow2's own coherence loop in reflow2. The one type meant for an ordered process cannot be created; forward and backward edges are indistinguishable | M |
-| **BL-36** | **`precedes` is unreachable, so the epoch chain cannot be drawn** | Recurring lesson, tenth instance — on the axis that exists to make history legible | S |
 | **BL-40** | **Viewpoints as pure projections (SYNTHESIZE held to a no-extrapolation standard)** | The graph stores the design; the agent only renders. `tools/render_views.py` is the seed — functional/structural/traceability views project cleanly today, and each confession it prints is a gap by definition. Direction: a viewpoint catalogue (UAF/DoDAF-informed), and rendering through the live MCP surface rather than the export. The author intends to expand this thread | M–L |
 | **BL-30** | **A failing test satisfies the check that asked for a test** | **S half done** — `failing_verification` fires at 0.8 and coverage counts passing only. The M half (`reconcile_verification`) remains. See below | ~~S~~ + M |
-| **BL-31** | **A `status` field is a claim nothing checks** | `status: verified` with nothing verifying, `status: met` with nothing satisfying — the graph never contradicts itself | S |
 | **BL-29** | **`apply_heal` trusts the proposal; merge loses data silently** | Mostly **done** — three of seven fixed; three remain, one deliberately deferred. See below | M |
 
 **BL-39 · A design cannot be loaded into a running session — DONE** — *found while trying to use the
@@ -253,11 +251,12 @@ the signature line reads *5 drifts, 5 claims, 0 edits*), coherent-erosion **6/9*
 the design" — *1 design-updating accept vs 4 design-holds, cycle 4 is the one, and the ledger says
 so*), smoke green with the full drift → gap → answer → ledger loop over the real binary.
 
-**BL-36 · `precedes` is unreachable, so the epoch chain cannot be drawn** — *same trial.*
-`DesignGraph::precedes` (`temporal.rs:181`) orders one epoch after another and has no MCP tool, so no
-consumer can build the `PRECEDES` chain; ordering survives only through the `sequence` integer. The
-**tenth** instance of the recurring lesson, and on the axis whose whole job is making history
-legible. Size **S**.
+**BL-36 · `precedes` is unreachable, so the epoch chain cannot be drawn — DONE** — the `precedes`
+tool orders one epoch after another, and the coherent-erosion trial now draws the chain cycle by
+cycle and walks it back out of the export: `baseline → fix1 … fix5 → release`. With it the coherent
+instrument reached **9/9 — the first instrument fully green**, every YES a genuine read. (Its probe
+was nearly shipped as a hardcoded `True` and caught in review — the instrument-accommodation trap
+from [sharpening.md](sharpening.md) §4, live again.)
 
 **BL-33 · Accepting drift is one-sided; the drift record overwrites itself — DONE** — *[erosion
 trial](trials/2026-07-19-erosion.md), 2026-07-19. The mechanism behind the user's account of
@@ -370,7 +369,17 @@ run actually reported, and the graph says where that diverges from what it belie
 [trial](trials/2026-07-19-phase-coverage.md) shows the golden thread itself already works in both
 directions, so this is the whole of the gap.
 
-**BL-31 · A `status` field is a claim nothing checks** — *same trial.* `Capability.status` set to
+**BL-31 · A `status` field is a claim nothing checks — DONE** — `status_contradiction` (0.70,
+self-contradiction family: below reality-contradiction at 0.75/0.8, above absence). Scoped to the
+two unambiguous cases — a Capability `verified` that no *passing* check verifies, and a Requirement
+`met` that nothing satisfies. The second matters doubly: `met` silences `unsatisfied_requirement`
+by design, so before this a lying `met` was invisible to everything. Deliberately not extended to
+`realized`-without-artifact, which is already an absence gap — double-reporting would be the
+DETECT/HEAL double-count in a new costume. **Its first catch was our own model**: `cap:kit` claimed
+`verified` in the committed design graph and nothing automated checks the installer — ruled per
+[sharpening.md](sharpening.md) §2 (the status was wrong, downgraded to `realized` on the record),
+the second true self-report and the first lie caught in our own graph. Measured: phase **11/13**
+(P4 3/4). *Original entry:* — *same trial.* `Capability.status` set to
 `verified` on a capability with no `VERIFIES` edge raises nothing. `unverified_capability` fires, but
 it fires either way — "this is unverified" is not "the design contradicts itself", and only the
 second is a coherence failure. Same for `Requirement.status = met` with nothing satisfying it, and
