@@ -325,3 +325,72 @@ fn a_declining_dimension_is_surfaced_as_a_gap_but_an_improving_one_is_not() {
     assert_eq!(declining[0].affected_ids, ["cmp:x"]);
     assert!(declining[0].title.contains("maintainability"));
 }
+
+// ---- BL-27 · ranking: "broken now" outranks "what comes next" --------------
+
+#[test]
+fn a_named_gap_outranks_a_phase_nudge_that_scores_higher() {
+    // The brownfield shape, reproduced at fixture scale. GENESIS seeds P0/P1
+    // and stops, so `concept_without_design` fires at its literal 0.70 while
+    // `unsatisfied_requirement` computes 0.5 + 0.10 (default `medium`) = 0.60.
+    // Ordering on severity alone put the artifact of seeding order on top and
+    // the actionable finding below it — three trials reported that, and the
+    // cost is that an agent working the list top-down does the useless thing
+    // first.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:orphan", "Track authorization", "someone must sign off")
+        .unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    let first = &gaps[0];
+
+    assert_eq!(
+        first.gap_source,
+        GapSource::UnsatisfiedRequirement,
+        "the anchored gap must come first, got {:?}",
+        sources(&gaps)
+    );
+    assert!(
+        first.severity < gaps.last().unwrap().severity,
+        "and it must win despite scoring lower — that is the whole point"
+    );
+    assert!(
+        sources(&gaps).contains(&GapSource::ConceptWithoutDesign),
+        "the phase nudge is demoted, never suppressed"
+    );
+}
+
+#[test]
+fn the_phase_nudge_still_leads_when_nothing_specific_is_wrong() {
+    // The greenfield day-one case the aidrone trial recorded as working:
+    // GENESIS seeds P0/P1, every requirement is satisfied, and the productive
+    // first question really is "how should this be structured?". Demoting the
+    // nudge must not cost us that.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "Need A").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.satisfies("cap:a", "req:a").unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    assert_eq!(
+        gaps[0].gap_source,
+        GapSource::ConceptWithoutDesign,
+        "with nothing anchored to report, the nudge is still the first thing asked, got {:?}",
+        sources(&gaps)
+    );
+}
+
+#[test]
+fn ranking_is_stable_across_runs() {
+    // Gap ids are deterministic and the sort must be too, or a session-to-session
+    // diff of the list is noise.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:x", "X", "need x").unwrap();
+    g.add_requirement("req:y", "Y", "need y").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+
+    let once = sources(&g.detect_gaps().unwrap());
+    let twice = sources(&g.detect_gaps().unwrap());
+    assert_eq!(once, twice);
+}

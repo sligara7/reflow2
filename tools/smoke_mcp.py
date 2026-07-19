@@ -322,6 +322,17 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("a fully paired contract is not reported as a gap",
          "unprovided_interface" not in sources, sources)
 
+    # BL-27: a gap that names nodes describes something wrong NOW; a phase
+    # nudge describes what comes next. Never rank "next" above "broken" — an
+    # agent works this list top-down, and three brownfield trials watched it do
+    # the useless thing first. Asserted on the ordered JSON an agent actually
+    # receives, not just in the Rust sort.
+    anchored = [i for i, g in enumerate(gaps) if g["affected_ids"]]
+    unanchored = [i for i, g in enumerate(gaps) if not g["affected_ids"]]
+    c.ok("every anchored gap outranks every phase nudge (BL-27)",
+         not anchored or not unanchored or max(anchored) < min(unanchored),
+         [(g["gap_source"], round(g["severity"], 2), len(g["affected_ids"])) for g in gaps])
+
     # BL-6b: a cross-community coupling is a signal, not a question. It fires on
     # correct architecture — an Interface bridges two clusters by construction —
     # so it informs via graph_report instead of demanding an answer.

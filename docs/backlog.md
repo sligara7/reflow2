@@ -161,20 +161,35 @@ backwards, and each recorded the same entry-point finding independently. Call th
 rather than `reverse-engineer`: producing the graph is one output, but the job is bringing an
 existing system under design control, and it is the sibling of `genesis`, not of a code tool.
 
-*The seeding order inverts, and one detector's ranking assumes it hasn't.* GENESIS deliberately
+*The seeding order inverts, and the gap ranking assumed it hadn't.* **Fixed.** GENESIS deliberately
 stops before P2 so `concept_without_design` fires as the productive first gap ("how should this be
 structured?"). In brownfield the Components are the only thing that indisputably exists, so that
-detector fires at severity **0.7 — above the genuinely valuable gap at 0.6**, and an agent working
-the list top-down does the useless thing first. It reproduced on a 20-file project as well as a
-110k-LOC one, so it is a property of the path, not of scale. Not a wording fix: the gap-ordering
-logic is what assumes greenfield.
+detector fired at severity **0.7 — above the genuinely valuable gap at 0.6** — and an agent working
+the list top-down did the useless thing first. It reproduced on a 20-file project as well as a
+110k-LOC one, so it is a property of the path, not of scale. The
+[self-host run](trials/2026-07-18-selfhost-genesis.md) added `build_without_verification` (0.65)
+firing the same way — "no way to confirm any of it actually works" of a repo with 15 test files and
+a smoke test — so the top **two** gaps outranked the third.
 
-*Two detectors, not one.* The [self-host run](trials/2026-07-18-selfhost-genesis.md) found
-`build_without_verification` (0.65) firing the same way — "no way to confirm any of it actually
-works" of a repo with 15 test files and a smoke test — so the top **two** gaps outrank the third,
-and a fix scoped to `concept_without_design` alone still leaves the agent's first action useless.
-Both are `scope: phase` detectors inferring project maturity from a node-type census; that shared
-inference is the thing to fix.
+*The fix was not the one this entry originally proposed*, and the difference is worth keeping.
+The entry blamed the shared maturity inference — both are `scope: phase` detectors reading a
+node-type census — and called that the thing to fix. But the inference is *correct about the
+graph*: `components == 0` is true, and the [aidrone trial](trials/2026-07-18-greenfield-aidrone.md)
+recorded the greenfield behaviour as **worth not regressing** ("the skill and the detector agree,
+the gap arrives as a question rather than a complaint"). Suppressing the detector would have broken
+a case a trial called correct.
+
+The real defect was comparing two incommensurable numbers. Phase nudges carry fixed literals;
+`unsatisfied_requirement` computes `0.5 + priority_bump`, which for the default `medium` is exactly
+the 0.60 the trials saw — and until [BL-28](#closed) no client on one major harness could write
+`priority` at all, so the losing number was a default nobody chose.
+[gap-surfacing.md](gap-surfacing.md) already had the distinction: discipline 8 names *retroactive*
+(gap-driven) versus *proactive* ("here's what comes next") and puts phase-coverage in the proactive
+group, and discipline 3 says concrete beats abstract. So the sort now bands on **anchoring**: a gap
+naming nodes describes something wrong *now* and outranks a project-level nudge about what comes
+*next*, with severity ordering within each band. Greenfield/brownfield-neutral, and the nudge is
+demoted rather than suppressed — with nothing anchored to report it is still the first thing asked.
+Pinned in both directions by `tests/detect.rs` and over the real MCP path in `smoke_mcp.py`.
 
 *And the phase problem is not brownfield-only.* Ophyd A14 already reports HEAL emitting maximum
 noise on a mid-construction graph, and proposes suppressing allocation-orphan defects when
@@ -234,7 +249,7 @@ below again:
 | ~~`add_capability` hardcodes `status: "planned"`~~ — **done** | ophyd's 15 shipped, under-test capabilities made the graph "assert that a production system is entirely unbuilt". Optional `status` at creation plus `set_capability_status`; nothing hardcoded it, the constructor never set the property and took the schema default | S |
 | `detect_gaps` walks Requirement→Capability only, so an **orphan Capability is never reported** | "in greenfield that direction is rare… in brownfield it is the dominant direction of error" — a feature in production no requirement justifies is exactly what an adoption exercise is for. DETECT and HEAL are blind in the same direction | M |
 | No duplicate detection | did not fire on a textbook duplicate; "duplicate implementations are *the* characteristic brownfield defect" | M |
-| `concept_without_design` severity ordering | above | S |
+| ~~`concept_without_design` severity ordering~~ — **done** | above. Fixed by banding the sort rather than touching the detectors: a gap that names nodes outranks a project-level phase nudge, severity within each band | S |
 | ~~Provenance has nowhere to go~~ — **done** | ophyd smuggled `[EXTERNAL — …]` into statement text, "which is not queryable" | S |
 
 That last one had a cheap answer worth taking regardless, and it is taken. The schema's mechanism

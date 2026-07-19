@@ -48,6 +48,27 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **A gap that names nodes now outranks a phase nudge** (BL-27, the third of five blockers).
+  `detect_gaps` ordered purely on severity, which compared two numbers that are not on the same
+  scale: the phase-coverage nudges carry fixed literals (`concept_without_design` 0.70,
+  `build_without_verification` 0.65) while `unsatisfied_requirement` computes `0.5 + priority_bump`
+  — 0.60 for the default `medium`, and until BL-28 no client on one major harness could write
+  `priority` at all, so the losing number was a default nobody chose. Three brownfield trials
+  watched the consequence independently at a 20× size difference: the top gap was an artifact of
+  GENESIS's own seeding order, the actionable one sat below it, and an agent working the list
+  top-down did the useless thing first.
+
+  The sort now bands on anchoring before severity. A gap that names nodes describes something wrong
+  **now**; a project-level phase nudge describes what comes **next**, and `gap-surfacing.md`
+  already drew that line — discipline 8 puts phase-coverage in the *proactive* group, discipline 3
+  says concrete beats abstract.
+
+  The phase detectors themselves are unchanged, deliberately. Their inference is correct about the
+  graph, and the aidrone trial recorded the greenfield behaviour as worth not regressing — GENESIS
+  seeds P0/P1 and stops, the nudge fires, "the skill and the detector agree." It is demoted, never
+  suppressed: with nothing anchored to report it is still the first thing the user sees. Both
+  directions are pinned by tests, and the ordering is asserted over the real MCP path.
+
 - **Every tool parameter declares a type** (BL-28). Six parameters — `gap_to_prompt.gap`,
   `apply_heal.proposal`, `import_graph.document`, `create_node.props`, `create_edge.props` and
   `reconcile_artifacts.observed[]` — were declared `serde_json::Value`, whose generated schema

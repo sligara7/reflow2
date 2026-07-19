@@ -695,8 +695,36 @@ impl DesignGraph {
     }
 
     /// Run all deterministic detectors and return gap candidates ranked
-    /// most-severe first (ties broken by id for a stable order), regardless of
-    /// whether they have been reviewed.
+    /// **anchored gaps first, then most-severe** (ties broken by id for a stable
+    /// order), regardless of whether they have been reviewed.
+    ///
+    /// # Why anchoring outranks severity
+    ///
+    /// [`gap-surfacing.md`] names two modes: *retroactive* (gap-driven — "fix
+    /// what's thin") and *proactive* ("you're at the design stage; here's what
+    /// comes next"), and puts the phase-coverage nudges in the proactive one. A
+    /// gap that names nodes is a statement about something wrong **now**; a
+    /// phase nudge is a statement about what comes **next**. Ranking "next"
+    /// above "broken" is what an agent working the list top-down pays for.
+    ///
+    /// Ordering on severity alone did exactly that, because the two kinds are
+    /// not on a comparable scale. `concept_without_design` is the literal 0.70;
+    /// `unsatisfied_requirement` is computed as `0.5 + priority_bump`, which for
+    /// the default `medium` priority is 0.60 — and until BL-28 no client on one
+    /// major harness could write `priority` at all, so the losing number was a
+    /// default nobody chose. Three brownfield trials reported the consequence
+    /// independently at a 20× size difference: the top gap was an artifact of
+    /// seeding order, and the actionable one sat below it.
+    ///
+    /// This deliberately does **not** suppress the phase detectors, which would
+    /// break the case the [aidrone trial] recorded as working: GENESIS seeds
+    /// P0/P1 and stops, `concept_without_design` fires, "the skill and the
+    /// detector agree, the gap arrives as a question rather than a complaint."
+    /// On a graph with nothing anchored yet it is still the first thing the user
+    /// sees. It only yields once there is something specific to say.
+    ///
+    /// [`gap-surfacing.md`]: https://github.com/sligara7/reflow2/blob/main/docs/gap-surfacing.md
+    /// [aidrone trial]: https://github.com/sligara7/reflow2/blob/main/docs/trials/2026-07-18-greenfield-aidrone.md
     fn all_gaps(&self) -> Result<Vec<GapCandidate>, DynoError> {
         let pop = self.population()?;
         let mut gaps = Vec::new();
@@ -714,9 +742,15 @@ impl DesignGraph {
         self.detect_hierarchy_gaps(&mut gaps)?;
 
         gaps.sort_by(|a, b| {
-            b.severity
-                .partial_cmp(&a.severity)
-                .unwrap_or(std::cmp::Ordering::Equal)
+            // `false` sorts before `true`, so "has anchors" comes first.
+            a.affected_ids
+                .is_empty()
+                .cmp(&b.affected_ids.is_empty())
+                .then(
+                    b.severity
+                        .partial_cmp(&a.severity)
+                        .unwrap_or(std::cmp::Ordering::Equal),
+                )
                 .then(a.id.cmp(&b.id))
         });
         Ok(gaps)
