@@ -722,6 +722,31 @@ upsert, so an adopt pass should build the export document and import it once —
 ~60 MCP calls on 33 nodes. And `reflow2_init.py` cannot install into a repo that already has its
 own `AGENTS.md`, which is every brownfield target and this one; it needs a `--skills-only` flag.
 
+*The accepted reverse-engineering lifecycle, mapped* — *user, 2026-07-19, from research into
+standard practice.* Across hardware and software the accepted process is two stages —
+**redocumentation** (break the existing product down) and **design recovery** (deduce the
+original concepts) — through five steps: information gathering → disassembly/scanning →
+analysis (static *and* dynamic) → modeling & reconstruction → validation. The user's framing
+of the hard case: large codebases with no requirements and no record of why choices were made —
+*"you only get what you see."* The mapping onto what this thread already holds, and what it
+exposes:
+
+| RE lifecycle step | reflow2 mechanism | Status |
+|---|---|---|
+| **Information gathering** | The division-of-labour table above: requirements from anything *but* the implementation; found documents trusted per the ophyd caution (its PDR omitted the system's central invariant); sources recorded as Fragments with provenance — the provenance viewpoint renders exactly this ledger | mechanisms landed (BL-27 blockers, BL-40) |
+| **Disassembly / scanning** | For source-available software the disassembler is the repo read: structure from imports and calls, never prose (the phantom-component caution); breadth at deliberately coarse granularity (ophyd: 110k LOC → ~78 nodes, vendored fork opaque); one `import_graph` for the bulk write | discipline recorded above; the skill must encode it |
+| **Analysis — static** | allocation/coupling/`possible_duplicate`/`hierarchy_issues` over the scanned structure | landed |
+| **Analysis — dynamic** | **the gap this framework exposes.** All three brownfield trials were static-only. The receptors now exist: run the tests → `set_verification_status` from real outcomes (and BL-30's open `reconcile_verification` is the typed way in); run the thing → `reconcile_deployment` observations (BL-9). An adopt pass needs a "run it and record what you saw" phase, and BL-30's M half graduates from nice-to-have to an adopt precursor | partially landed; BL-30 M is the missing piece |
+| **Modeling & reconstruction** | The graph *is* the model. Design recovery deliberately terminates at the human: a requirement inferred from its implementation is satisfied by construction, so recovered intent is marked `inferred` and `unmotivated_capability` routes "why does this exist?" to the person — recovered rationale lands as Decisions, provenance-marked. *You only get what you see* becomes a property of the graph: it confesses what it cannot know instead of improvising past it | landed (the projection doctrine, BL-40) |
+| **Validation** | **the second exposure — the current plan ends at "deepen on demand" with no closing step.** The validator is the reconcile family plus the detectors: checksums match (`reconcile_artifacts`), tests agree (P4), deployments agree (`reconcile_deployment`), and every gap the model fires is either true of the system or an error in the model — which is precisely how the trials scored themselves. The skill should end by running it and reporting the verdict | mechanisms landed; the skill must close the loop |
+
+The two-stage split lands on an existing line: **redocumentation** is the as-built layer
+(Capability/Component/Interface from code — satisfied-by-definition is fine there), and
+**design recovery** is the intent layer, where the *"never infer a requirement from the
+implementation"* discipline is exactly the stage boundary. reflow2's position, sharpened by
+this mapping: redocumentation is automatable; design recovery is question-generation — the
+machine drafts, marks provenance, and asks; it never fills in the why.
+
 Size **L** for the thread; the `adopt` skill itself is **M** once the two **S** blockers land, and
 the deepening stage is a separate **M** behind the frontier work.
 
