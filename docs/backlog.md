@@ -851,12 +851,25 @@ than the source it was built from — the quiet failure where you pull, re-run i
 rebuild, leaving current instructions driving an old server. SETUP.md documents the three-step
 update in the order that matters.
 
-**Still open — published releases.** Everything above assumes a reflow2 checkout to run the
-script from, which is true today because building the binary requires one. It stops being true
-the moment someone wants reflow2 without cloning it: that needs published, per-platform binaries
-(and macOS raises signing questions), or a fetch-from-git mode in the installer. It remains the
-third piece of evidence for the service side of the embedded-vs-service fork, alongside
-single-writer concurrency and this. Size **M–L**.
+~~**Still open — published releases.**~~ **Built 2026-07-20** (the first release run is the
+verification): `.github/workflows/release.yml` builds `reflow2-mcp` for linux-x86_64 /
+macos-arm64 / macos-x86_64 on every version tag (or a dispatch naming an existing tag — the
+tag must match Cargo.toml's version or the kit job refuses), packages the consumer kit as a
+tarball in the same `tools/` + `getting-started/` sibling layout the init script resolves,
+stamps it with `KIT_VERSION.json` (a tarball's stand-in for git metadata), and attaches
+everything plus sha256 checksums to the GitHub release under **version-less asset names**, so
+`tools/install.sh` needs no API parsing. The installer prefers `gh release download` (repo is
+private; unauthenticated curl is the path that starts working the day it isn't), verifies
+checksums or says plainly that it could not, installs to `~/.local/bin` + `~/.local/share/
+reflow2/kit`, and re-running it replaces binary and kit *together* — the BL-32/BL-18 skew pair
+cannot open between them. `reflow2_init.py` grew the three checkout-independences: `--binary` /
+PATH fallback, `KIT_VERSION.json`, and installed-mode update advice (re-run the installer, not
+git pull + cargo build). Verified end to end from a simulated tarball: install, idempotent
+re-run, `--check`, brownfield/greenfield branching all correct. macOS note: unsigned binaries
+are fine through the installer (curl sets no quarantine xattr); browser downloads would hit
+Gatekeeper — signing stays open if that path ever matters. **Follow-up (S–M, deliberate):**
+embed the kit in the binary (`include_str!` is already the schema's pattern) so `reflow2-mcp
+init` replaces the Python script entirely and one artifact carries everything.
 
 **The fork is decided** (2026-07-18, [surface-plan.md](surface-plan.md)): **repo-file, embedded**.
 So this is no longer gated — build published per-platform binaries, which is the packaging answer

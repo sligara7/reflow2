@@ -2,6 +2,31 @@
 
 reflow2 runs as a local MCP server your agent talks to. One-time build, then it's just a binary.
 
+## 0. The no-build path: install a prebuilt release
+
+If a [GitHub release](https://github.com/sligara7/reflow2/releases) exists for your platform
+(Linux x86_64, macOS arm64/x86_64), you need **no toolchain at all** — no Rust, no C++, no
+~10-minute RocksDB compile:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sligara7/reflow2/main/tools/install.sh | sh
+```
+
+It installs the `reflow2-mcp` binary to `~/.local/bin` and the consumer kit to
+`~/.local/share/reflow2/kit`, verifies checksums, and prints the exact next command. While the
+repo is **private**, the download needs your GitHub auth — install the
+[GitHub CLI](https://cli.github.com) (`gh auth login`) first and the script uses it
+automatically. Then set up any project with:
+
+```bash
+python3 ~/.local/share/reflow2/kit/tools/reflow2_init.py <your-project> --binary ~/.local/bin/reflow2-mcp
+```
+
+To update later, re-run the installer — it replaces the binary and kit **together** (the skew
+a mismatched pair causes is exactly what `served_by` exists to catch) and never touches your
+design graphs. Everything below is the from-source path: for contributors, unsupported
+platforms, or running ahead of the latest release.
+
 ## 1. Install the build toolchain
 
 `reflow2-mcp` embeds RocksDB (via `librocksdb-sys`), which compiles C++ — so you need a C++

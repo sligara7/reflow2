@@ -151,7 +151,20 @@ def check_skills() -> list[str]:
 
 
 def kit_version() -> dict:
-    """Identify the kit so a later run can tell whether it moved."""
+    """Identify the kit so a later run can tell whether it moved.
+
+    Two homes, one answer: in a checkout, Cargo.toml + git metadata; in an
+    installed release kit (BL-15), the KIT_VERSION.json the release workflow
+    wrote — a tarball has no git history, and the stamp is what stands in
+    for it.
+    """
+    stamp = REPO / "KIT_VERSION.json"
+    if stamp.exists():
+        try:
+            return json.loads(stamp.read_text())
+        except json.JSONDecodeError:
+            pass  # fall through and report what can still be known
+
     def git(*args: str) -> str | None:
         try:
             out = subprocess.run(
@@ -200,12 +213,13 @@ def upstream_head() -> str | None:
 
 
 def staleness(local_commit: str | None) -> str:
-    """One line on whether this checkout is behind the remote.
+    """One line on whether this kit is behind the remote.
 
     Deliberately not a nag and deliberately not automatic on every server start:
     a network call per session would be intrusive and would hang offline. It runs
     when someone deliberately asks — which is what this script is.
     """
+    installed = kit_version().get("source") == "release-tarball"
     if local_commit is None:
         return "checkout: unknown (no git metadata here)"
     head = upstream_head()
@@ -213,6 +227,16 @@ def staleness(local_commit: str | None) -> str:
         return "upstream: could not check (offline, or no access to the repo)"
     if head.startswith(local_commit) or local_commit.startswith(head):
         return f"upstream: current ({local_commit})"
+    if installed:
+        # An installed kit has no checkout to pull; the update is the installer,
+        # which replaces the binary and the kit together — the skew BL-32/BL-18
+        # exist to catch cannot open between them.
+        return (
+            f"upstream: BEHIND — this kit is at {local_commit}, the repo is at {head}.\n"
+            f"  A release may not exist for every commit; to update to the newest release,\n"
+            f"  re-run the installer (it replaces the binary and the kit together, and\n"
+            f"  never touches your design graphs)."
+        )
     return (
         f"upstream: BEHIND — this checkout is at {local_commit}, the remote is at {head}.\n"
         f"  Update in this order, or your project gets current instructions on an old server:\n"
@@ -222,11 +246,19 @@ def staleness(local_commit: str | None) -> str:
     )
 
 
-def find_binary() -> Path | None:
+def find_binary(override: str | None = None) -> Path | None:
+    """The reflow2-mcp binary: an explicit --binary wins, then a checkout's
+    target/ dirs, then PATH — the installed-kit case, where there is no
+    checkout at all (BL-15)."""
+    if override:
+        p = Path(override).expanduser().resolve()
+        return p if p.exists() else None
     for build in ("release", "debug"):
         p = REPO / "target" / build / "reflow2-mcp"
         if p.exists():
             return p
+    if which := shutil.which("reflow2-mcp"):
+        return Path(which)
     return None
 
 
@@ -601,6 +633,9 @@ def main() -> int:
                     help="report what would change; write nothing")
     ap.add_argument("--force-mcp", action="store_true",
                     help="rewrite .mcp.json even if it was customised")
+    ap.add_argument("--binary", metavar="PATH",
+                    help="path to the reflow2-mcp binary (default: this "
+                         "checkout's target/, then PATH)")
     opts = ap.parse_args()
 
     project = Path(opts.project).expanduser().resolve()
@@ -608,14 +643,20 @@ def main() -> int:
         print(f"error: kit not found at {KIT}", file=sys.stderr)
         return 1
 
-    binary = find_binary()
+    binary = find_binary(opts.binary)
     if binary is None and not opts.check:
-        print(
-            "error: reflow2-mcp is not built yet.\n"
-            "  cargo build -p reflow2-mcp --release\n"
-            "(first build compiles RocksDB — around ten minutes, then cached)",
-            file=sys.stderr,
-        )
+        if opts.binary:
+            print(f"error: no binary at {opts.binary}", file=sys.stderr)
+        else:
+            print(
+                "error: reflow2-mcp was not found (not built in this checkout, "
+                "not on PATH).\n"
+                "  From a checkout:  cargo build -p reflow2-mcp --release\n"
+                "  (first build compiles RocksDB — around ten minutes, then cached)\n"
+                "  Or install a prebuilt binary with tools/install.sh, then pass "
+                "--binary if it is not on PATH.",
+                file=sys.stderr,
+            )
         return 1
 
     existing = project / STAMP

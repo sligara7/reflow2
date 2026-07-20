@@ -1,0 +1,130 @@
+# Release binaries — BL-15's published-binaries half.
+#
+# On every version tag (or a manual dispatch naming an existing tag), build the
+# reflow2-mcp binary for each supported platform and attach it to the GitHub
+# release, together with the consumer kit as a tarball. This is what lets
+# someone run reflow2 WITHOUT a checkout: the binary is prebuilt (no ~14-minute
+# RocksDB compile), and the kit tarball carries `tools/reflow2_init.py` +
+# `getting-started/` in the same sibling layout the script expects from the
+# repo.
+#
+# Asset names are deliberately version-less (`reflow2-mcp-linux-x86_64.tar.gz`)
+# so the installer can use the stable `releases/latest/download/<asset>` URL
+# with no API parsing; the version lives in the release tag and in
+# KIT_VERSION.json inside the kit tarball.
+
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to build a release for (e.g. v0.4.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  binaries:
+    name: binary (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # ubuntu-22.04, not -latest: the binary links the runner's glibc, so
+          # building on the oldest supported runner keeps it runnable on more
+          # machines than it was built on — never fewer.
+          - name: linux-x86_64
+            runner: ubuntu-22.04
+          - name: macos-arm64
+            runner: macos-14
+          - name: macos-x86_64
+            runner: macos-13
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: release-${{ matrix.name }}
+      - name: Build
+        run: cargo build --release -p reflow2-mcp
+      - name: Package
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          tar -C target/release -czf "dist/reflow2-mcp-${{ matrix.name }}.tar.gz" reflow2-mcp
+      - uses: actions/upload-artifact@v4
+        with:
+          name: binary-${{ matrix.name }}
+          path: dist/*
+          if-no-files-found: error
+
+  kit:
+    name: consumer kit
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+      - name: Package the kit
+        run: |
+          set -euo pipefail
+          TAG="${{ inputs.tag || github.ref_name }}"
+          VERSION="$(grep -m1 '^version' Cargo.toml | cut -d'"' -f2)"
+          COMMIT="$(git rev-parse --short HEAD)"
+          COMMITTED_AT="$(git log -1 --format=%cI)"
+          # The tag must name the version it ships — a v0.5.0 tag on a Cargo.toml
+          # that says 0.4.0 would publish a kit that lies about its binary.
+          if [ "v${VERSION}" != "${TAG}" ]; then
+            echo "tag ${TAG} does not match Cargo.toml version ${VERSION}" >&2
+            exit 1
+          fi
+          # Same sibling layout as the repo: reflow2_init.py resolves the kit
+          # as ../getting-started relative to itself, and a version stamp file
+          # stands in for the git metadata a tarball does not have.
+          mkdir -p kit-stage/reflow2-kit/tools
+          cp tools/reflow2_init.py kit-stage/reflow2-kit/tools/
+          cp -r getting-started kit-stage/reflow2-kit/
+          printf '{"reflow2_version": "%s", "commit": "%s", "committed_at": "%s", "source": "release-tarball"}\n' \
+            "$VERSION" "$COMMIT" "$COMMITTED_AT" > kit-stage/reflow2-kit/KIT_VERSION.json
+          mkdir -p dist
+          tar -C kit-stage -czf dist/reflow2-kit.tar.gz reflow2-kit
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kit
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    name: publish release
+    needs: [binaries, kit]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Checksums
+        run: |
+          set -euo pipefail
+          cd dist
+          sha256sum ./*.tar.gz > checksums.txt
+          cat checksums.txt
+      - name: Create or update the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          set -euo pipefail
+          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+              --title "$TAG" --notes "See CHANGELOG.md for what changed."
+          fi
+          # --clobber: a re-run replaces assets rather than failing on them.
+          gh release upload "$TAG" --repo "$GITHUB_REPOSITORY" --clobber dist/*

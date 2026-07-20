@@ -17,6 +17,17 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **reflow2 without a checkout: published release binaries and a one-line installer** (BL-15's
+  last open half). Every version tag now builds `reflow2-mcp` for Linux x86_64 and macOS
+  arm64/x86_64 and attaches the binaries, the consumer kit tarball, and sha256 checksums to
+  the GitHub release. `tools/install.sh` (`curl … | sh`) detects the platform, downloads via
+  `gh` while the repo is private (plain curl the day it isn't), verifies checksums, installs
+  to `~/.local/bin` and `~/.local/share/reflow2/kit`, and prints the exact next command;
+  re-running it updates binary and kit together, never touching design graphs.
+  `reflow2_init.py` now works from the installed kit: `--binary`/PATH resolution,
+  `KIT_VERSION.json` in place of git metadata, and update advice that names the installer
+  instead of `git pull` + `cargo build`. SETUP.md leads with the no-build path.
+
 - **A file that *describes* the design can finally say so: the `documents` tool** (BL-26's
   write side; the recurring lesson's ninth instance closed). `DOCUMENTS` was declared in the
   schema from the start — design docs, ADRs, READMEs, diagrams, instruction files — with no
