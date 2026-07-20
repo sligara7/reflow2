@@ -164,7 +164,18 @@ def main() -> int:
                 "The feedback loops are INVISIBLE as loops — flow_report returned no cycles "
                 "for a deliberately cyclic process (BL-37's third friction).")
         else:
-            print(f"   cycles (reported, never judged): {flow['cycles']}")
+            for c in flow["cycles"]:
+                caught = ", ".join(x.removeprefix("cap:") for x in c["members"])
+                walk = " -> ".join(x.removeprefix("cap:") for x in c["path"])
+                print(f"   cycle (reported, never judged): {{{caught}}}")
+                print(f"     one walk through it: {walk}")
+            # F7: the walk may be shorter than the cluster, and on this very
+            # model it omitted the hand-off to the human — the reason the
+            # process is a loop at all. The report must name both.
+            missed = [x for c in flow["cycles"] for x in c["members"] if x not in c["path"]]
+            if missed:
+                print(f"     (the walk omits {', '.join(missed)} — "
+                      f"which is why members is the honest answer)")
         defects = s.call("detect_defects")
         if any(d["category"] == "circular_dependency" for d in defects):
             friction.append(

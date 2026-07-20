@@ -17,6 +17,16 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **A flow's cycle now reports every step caught in it, not just one walk through it** (F7, the
+  storyflow trial). `flow_report`'s `cycles` carries `members` — the full strongly-connected
+  cluster — alongside `path`, the representative closed walk, because they are different claims.
+  The walk can be shorter than the cluster, and on storyflow it omitted `p-prompt`: the hand-off
+  to the human, and the entire reason that process is a loop rather than a line. reflow2's own
+  loop model is worse still — the cluster is six phases and the walk is three — and
+  `model_the_loop.py` now prints which members the walk leaves out, so the probe demonstrates
+  the failure it was built from. The behaviour was always correct; only the report was wrong,
+  which is the no-silent-truncation rule reaching a field nobody thought of as truncated.
+
 - **`single_point_of_failure` no longer flags shared libraries** (F6, the storyflow trial —
   7 of 15 components → **5**, and the two that went were the only impossible ones). A library
   imported by every service is a *perfect* articulation point, and the suggested repair,

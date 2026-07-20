@@ -708,7 +708,7 @@ def run(binary: str, graph_path: str) -> int:
          {t["role"] for t in fr["transitions"]} == {"feeds", "forces resync"},
          fr["transitions"])
     c.ok("the process's cycle is reported, never judged",
-         fr["cycles"] == [["cap:display", "cap:flight"]]
+         [c["members"] for c in fr["cycles"]] == [["cap:display", "cap:flight"]]
          and not any(set(d["affected_ids"]) == {"cap:flight", "cap:display"}
                      for d in s.call("detect_defects")
                      if d["category"] == "circular_dependency"),

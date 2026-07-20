@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- F7 (a representative cycle hides the edge that made it a loop) — @ajs — since 2026-07-20 — flow.rs, smoke, model_the_loop
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
 
@@ -87,6 +86,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- F7 done: flow cycles report members + path (storyflow's cluster kept p-prompt, the human hand-off, that the walk dropped); adopt trial's F1-F7 all closed — @ajs — 2026-07-20 — (this commit)
 - F6 done: SPOF skips components coupled only by a library contract (storyflow 7 of 15 -> 5); medium default keeps today's behaviour — @ajs — 2026-07-20 — (this commit)
 - BL-27 F1/F2 done: pointer reaches every instruction-file convention (CLAUDE.md et al); next-steps branches on the project, not our own artifact — @ajs — 2026-07-20 — (this commit)
 - BL-42 + BL-43 done: adopt's noise floor halved on the same graph (82 -> 57 outputs, every true finding kept); graph_report counts every node — @ajs — 2026-07-20 — (this commit)

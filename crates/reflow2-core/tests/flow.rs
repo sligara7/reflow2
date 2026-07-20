@@ -108,10 +108,9 @@ fn process_cycles_are_reported_never_judged() {
     triggers(&mut g, "cap:verify", "cap:build", Some("forces resync"));
 
     let rep = g.flow_report("flow:loop").expect("report");
-    assert_eq!(
-        rep.cycles,
-        vec![vec!["cap:build".to_string(), "cap:verify".to_string()]]
-    );
+    assert_eq!(rep.cycles.len(), 1);
+    assert_eq!(rep.cycles[0].members, ["cap:build", "cap:verify"]);
+    assert_eq!(rep.cycles[0].path, ["cap:build", "cap:verify"]);
 
     let defects = g.detect_defects().expect("defects");
     assert!(
@@ -127,7 +126,9 @@ fn a_self_trigger_is_a_degenerate_cycle_not_a_silent_drop() {
     let mut g = process_with(&[("cap:a", "A", Some(1))]);
     triggers(&mut g, "cap:a", "cap:a", Some("retries"));
     let rep = g.flow_report("flow:loop").expect("report");
-    assert_eq!(rep.cycles, vec![vec!["cap:a".to_string()]]);
+    assert_eq!(rep.cycles.len(), 1);
+    assert_eq!(rep.cycles[0].members, ["cap:a"]);
+    assert_eq!(rep.cycles[0].path, ["cap:a"]);
 }
 
 #[test]
@@ -236,4 +237,40 @@ fn a_flow_member_has_a_home_and_a_loose_capability_is_asked_about_once() {
 fn a_missing_flow_fails_loud() {
     let g = DesignGraph::open_in_memory().expect("open");
     assert!(g.flow_report("flow:nope").is_err());
+}
+
+/// F7, from the storyflow trial: a representative walk can omit the very
+/// step that made the process a loop. The cluster is the honest answer to
+/// "what is caught in this?", and it is reported separately from the walk.
+#[test]
+fn a_cycle_reports_every_member_not_just_one_walk_through_it() {
+    // a → b → c → a, and a shortcut b → a. The shortcut is a valid 2-step
+    // cycle, so a representative walk may return {a, b} and never mention c
+    // — which on a real model was the hand-off to the human.
+    let mut g = process_with(&[
+        ("cap:a", "A", Some(1)),
+        ("cap:b", "B", Some(2)),
+        ("cap:c", "C", Some(3)),
+    ]);
+    triggers(&mut g, "cap:a", "cap:b", Some("feeds"));
+    triggers(&mut g, "cap:b", "cap:c", Some("feeds"));
+    triggers(&mut g, "cap:c", "cap:a", Some("returns"));
+    triggers(&mut g, "cap:b", "cap:a", Some("returns early"));
+
+    let rep = g.flow_report("flow:loop").expect("report");
+    assert_eq!(rep.cycles.len(), 1, "one cluster");
+    assert_eq!(
+        rep.cycles[0].members,
+        ["cap:a", "cap:b", "cap:c"],
+        "every step caught in the loop is named, whatever walk was chosen"
+    );
+    assert!(
+        rep.cycles[0].path.len() >= 2
+            && rep.cycles[0]
+                .path
+                .iter()
+                .all(|s| rep.cycles[0].members.contains(s)),
+        "the walk is a real walk inside the cluster: {:?}",
+        rep.cycles[0].path
+    );
 }

@@ -93,6 +93,28 @@ pub struct FlowTransition {
     pub role: Option<String>,
 }
 
+/// One loop in a process: every step caught in it, and one walk through it.
+///
+/// The two are reported separately because they are different claims, and
+/// conflating them misleads. A strongly-connected cluster says *these steps
+/// can all reach each other*; a representative path is one closed walk, and a
+/// cluster of N steps often has a shorter cycle inside it.
+///
+/// The storyflow trial made the cost concrete (F7): the six-process model's
+/// cluster held four steps, and the returned path omitted `p-prompt` — the
+/// hand-off to the human, and the entire reason the process is a loop rather
+/// than a line. The behaviour was correct and the report was still wrong,
+/// which is its own lesson: a true statement presented as the whole truth is
+/// a way of lying quietly.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct FlowCycle {
+    /// Every step in the cluster — all mutually reachable, sorted.
+    pub members: Vec<String>,
+    /// One closed walk through the cluster, rotated to its smallest id so the
+    /// output is stable. **May omit members**; `members` is the full answer.
+    pub path: Vec<String>,
+}
+
 /// What a flow says, read back as facts — steps, transitions, cycles.
 ///
 /// Cycles are the point, not a problem: a process model's loops are its
@@ -112,10 +134,9 @@ pub struct FlowReport {
     /// Edges leaving the flow are out of its scope, not dropped: this report
     /// is about the process, and its boundary is the membership.
     pub transitions: Vec<FlowTransition>,
-    /// One representative cycle per strongly-connected cluster of members,
-    /// each path closed by last → first, rotated to its smallest id so the
-    /// output is stable. Reported as fact; never a defect.
-    pub cycles: Vec<Vec<String>>,
+    /// The process's loops, one entry per strongly-connected cluster of
+    /// members. Reported as fact; never a defect.
+    pub cycles: Vec<FlowCycle>,
     /// What the projection could not honestly render — an unmatched
     /// entry/exit point, steps with no stated order, transitions with no
     /// stated role. Per the projection doctrine, a confession is a gap in the
@@ -263,7 +284,7 @@ impl DesignGraph {
 /// One representative cycle per strongly-connected cluster of the transition
 /// graph, plus degenerate self-triggers. Paths are rotated to start at their
 /// smallest id so the output is byte-stable run to run.
-fn cycles_among(transitions: &[FlowTransition]) -> Vec<Vec<String>> {
+fn cycles_among(transitions: &[FlowTransition]) -> Vec<FlowCycle> {
     let mut cycles = Vec::new();
     if transitions.is_empty() {
         return cycles;
@@ -276,7 +297,10 @@ fn cycles_among(transitions: &[FlowTransition]) -> Vec<Vec<String>> {
     }
     for t in transitions {
         if t.from_id == t.to_id {
-            cycles.push(vec![t.from_id.clone()]);
+            cycles.push(FlowCycle {
+                members: vec![t.from_id.clone()],
+                path: vec![t.from_id.clone()],
+            });
             continue;
         }
         // Endpoints were added above; a duplicate edge is fine for SCC purposes.
@@ -331,9 +355,14 @@ fn cycles_among(transitions: &[FlowTransition]) -> Vec<Vec<String>> {
             {
                 ids.rotate_left(start);
             }
-            cycles.push(ids);
+            cycles.push(FlowCycle {
+                // The cluster's full membership — the honest answer to "what
+                // is caught in this loop?". The walk below may be shorter.
+                members: sub_ids.iter().map(|s| (*s).to_string()).collect(),
+                path: ids,
+            });
         }
     }
-    cycles.sort();
+    cycles.sort_by(|a, b| a.members.cmp(&b.members));
     cycles
 }

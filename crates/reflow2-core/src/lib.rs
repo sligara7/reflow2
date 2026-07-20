@@ -69,7 +69,7 @@ pub use export::{ExportedEdge, ExportedNode, GraphExport, ImportReport};
 pub use fielded::{
     FieldedDriftKind, FieldedFinding, FieldedOptions, FieldedReport, ObservedEnvironment,
 };
-pub use flow::{FlowReport, FlowStep, FlowTransition};
+pub use flow::{FlowCycle, FlowReport, FlowStep, FlowTransition};
 pub use genesis::{GENESIS_EPOCH_ID, GenesisOptions, GenesisReport};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
 pub use heal::{
