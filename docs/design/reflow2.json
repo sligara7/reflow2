@@ -1264,7 +1264,7 @@
     },
     {
       "edge_type": "DEPLOYED_TO",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "status": "active"
       },
@@ -1350,7 +1350,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:1c729eee5b67e7dc"
       },
@@ -1358,7 +1358,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:d282035a162e3e56"
       },
@@ -1366,7 +1366,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:5ba629988c416b39"
       },
@@ -1374,7 +1374,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:c68b6e51f89b5caf"
       },
@@ -1382,7 +1382,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:5e77e752c0c60d06"
       },
@@ -1390,7 +1390,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:a25ed6b6f633a3aa"
       },
@@ -1398,7 +1398,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:fbe714849869c1d8"
       },
@@ -1406,7 +1406,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:676d89b9e3be53bd"
       },
@@ -1414,7 +1414,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:74c0459e03ad38ce"
       },
@@ -1422,7 +1422,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:1957641d39c28842"
       },
@@ -1430,7 +1430,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:58f501423e219105"
       },
@@ -1438,7 +1438,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:e2e94e52eb601d53"
       },
@@ -1446,7 +1446,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:8196df94f5775161"
       },
@@ -1454,7 +1454,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:b5c23526bb7d45f5"
       },
@@ -1462,7 +1462,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:7fd0af4d731e0f22"
       },
@@ -1470,7 +1470,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:2f697a383b3c457d"
       },
@@ -1478,7 +1478,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:6b75bc576b6c891f"
       },
@@ -1486,7 +1486,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:bf20da9bb9d606de"
       },
@@ -1494,7 +1494,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:6869d93e97fc9393"
       },
@@ -1502,7 +1502,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:54a1679022bb86b4"
       },
@@ -1510,7 +1510,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:c93add83eac73087"
       },
@@ -1518,7 +1518,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:feca736d9d86d965"
       },
@@ -1526,7 +1526,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:fd2798d2ecea28c8"
       },
@@ -1534,7 +1534,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:d8275cc570cb9bb2"
       },
@@ -1542,7 +1542,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:383cd220f7f1b639"
       },
@@ -1550,7 +1550,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:d2f251dfcb8193df"
       },
@@ -1558,7 +1558,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:72844178f36569d8"
       },
@@ -1566,7 +1566,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:8fb4dc8eb7c490fb"
       },
@@ -1574,7 +1574,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:b1cec4ec107ef2b1"
       },
@@ -1582,7 +1582,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:f9e9aed059f42db7"
       },
@@ -1590,7 +1590,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:824287d5a22bd960"
       },
@@ -1598,7 +1598,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:86bc99c202396a5f"
       },
@@ -1606,7 +1606,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v030",
+      "from_id": "rel:v040",
       "properties": {},
       "to_id": "cmp:skills"
     },
@@ -4114,13 +4114,13 @@
       }
     },
     {
-      "node_id": "rel:v030",
+      "node_id": "rel:v040",
       "node_type": "Release",
       "properties": {
-        "name": "v0.3.0",
+        "name": "v0.4.0",
         "status": "planned",
         "unit_type": "binary",
-        "version": "0.3.0"
+        "version": "0.4.0"
       }
     },
     {

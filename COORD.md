@@ -79,10 +79,12 @@ Add yourself if you're new here.
      disconnected pair; the critical circular_dependency was fixed and its clearance is part of
      the baseline). Live counts will differ by exactly the stub-survivor deltas — anything
      *else* that diverges is a finding for [docs/trials/](docs/trials/).
-  3. Verify `served_by.binary_mtime_unix` matches the on-disk binary (the skew check proper).
-  4. **Then cut the release:** `git tag v0.3.0 && git push origin v0.3.0`. The bump, CHANGELOG
-     section and upgrade doc are already on main — the tag is deliberately the last step, after
-     the live surface has been exercised.
+  3. Verify `served_by` says **0.4.0** and `binary_mtime_unix` matches the on-disk binary (the
+     skew check proper). The tool list should carry `delete_edge` — new surface this round.
+  4. **Then cut the release:** `git tag -a v0.4.0 && git push origin v0.4.0`. The bump and
+     CHANGELOG section are already on main; no schema change, so no upgrade doc. (v0.3.0 was
+     tagged 2026-07-20 at 36adb2e, the commit that prepared it — its content boundary — per
+     the option-1 decision.)
 
 ## Recently finished
 

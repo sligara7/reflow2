@@ -80,7 +80,7 @@ python3 tools/test_init.py
 # stop any running MCP server first, and the error says so if you forget.
 ./target/debug/reflow2-mcp --graph-path .reflow2/graph --import docs/design/reflow2.json
 
-# reflow2's own functional design, as a reflow2 graph (173 nodes). The export at
+# reflow2's own functional design, as a reflow2 graph (175 nodes). The export at
 # docs/design/reflow2.json is the durable record — .reflow2/ is gitignored, so
 # the JSON is what gets reviewed and diffed. Rebuild it after a design change;
 # --analyse-only re-imports the committed export and re-runs the analysis.

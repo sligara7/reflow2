@@ -474,27 +474,28 @@ def build(s: Server) -> None:
         for target in governs:
             s.call("governed_by", {"from_type": "Capability", "from_id": target,
                                    "to_type": "Decision", "to_id": did})
-    # v0.3.0, not v0.2.0: the workspace version moved and several modelled
-    # modules (flow, budget) did not exist at v0.2.0 — freezing today's
-    # checksums under that tag would assert files into a release that never
-    # carried them. Status `built` until the tag is pushed (COORD step 7).
-    s.call("add_release", {"id": "rel:v030", "name": "v0.3.0", "version": "0.3.0",
+    # The release the CURRENT checksums belong to. v0.3.0 is tagged at 36adb2e
+    # (2026-07-19) and several files on main have moved since — freezing
+    # today's checksums under that tag would assert content into a release
+    # that never carried it (the same lie this block once told about v0.2.0).
+    # Status `built` until the tag is pushed (COORD's post-restart step).
+    s.call("add_release", {"id": "rel:v040", "name": "v0.4.0", "version": "0.4.0",
                            "unit_type": "binary", "status": "built"})
     # The as-released view (BL-34): checksum frozen at what is on main now.
     for cmp_id, path in ARTIFACTS.items():
         s.call("release_includes", {
-            "release_id": "rel:v030", "target_type": "Artifact",
+            "release_id": "rel:v040", "target_type": "Artifact",
             "target_id": f"art:{cmp_id.split(':')[1]}",
             "as_checksum": sha(REPO / path)})
     # The skills tree ships too — the kit installs it into consumer projects.
     # Without this line the graph truthfully complained "built but ships in
     # nothing" (unreleased_component, first fired 2026-07-20).
-    s.call("release_includes", {"release_id": "rel:v030",
+    s.call("release_includes", {"release_id": "rel:v040",
                                 "target_type": "Component",
                                 "target_id": "cmp:skills"})
     s.call("add_environment", {"id": "env:dev", "name": "Developer machine",
                                "env_type": "development"})
-    s.call("deploy_to", {"release_id": "rel:v030", "environment_id": "env:dev", "status": "active"})
+    s.call("deploy_to", {"release_id": "rel:v040", "environment_id": "env:dev", "status": "active"})
 
 
 def analyse(s: Server) -> None:

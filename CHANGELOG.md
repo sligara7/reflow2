@@ -15,6 +15,16 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+*(nothing yet)*
+
+## [0.4.0] — 2026-07-20
+
+The tool surface changed shape (`delete_edge`), which is what moves the minor pre-1.0. The
+schema did **not** change (still 27 node types / 54 edge types), so no stamp moves and a
+v0.3.0 binary still opens a graph this version wrote — upgrading is `git pull` and a rebuild,
+nothing else. The v0.3.0 tag sits at the commit that prepared it (36adb2e, 2026-07-19);
+everything after rides here.
+
 ### Added
 
 - **The loop can now change its mind on the record: `revise-design` and `retire-from-design`
