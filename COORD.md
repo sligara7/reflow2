@@ -50,6 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- BL-15 published binaries (release CI + installer + kit-from-tarball; embed-in-binary deferred) — @ajs — since 2026-07-20 — .github/workflows/, tools/install.sh, tools/reflow2_init.py, SETUP.md
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
 
