@@ -53,6 +53,13 @@ schema:
         concern: { type: enum, values: [core, logistics, sustainment, safety, security, cost, schedule, manufacturability, usability, environmental, other], default: core, indexed: true, description: "Cross-cutting concern (ILS facet). Lets logistics/sustainment limits be filtered without a separate node type." }
         priority: { type: enum, values: [low, medium, high, critical], default: medium, indexed: true }
         rationale: { type: string }
+        # BL-11: a numeric budget. `quantity` names what is budgeted with its
+        # unit ("mass_kg", "latency_ms", "cost_usd"); `limit` is the number;
+        # `direction` says which side violates. Contributions live on the
+        # CONSTRAINS edges to the parts that spend the budget.
+        quantity: { type: string, indexed: true, description: "Unit-bearing name of the budgeted quantity — e.g. mass_kg, latency_ms, power_w, cost_usd." }
+        limit: { type: float, description: "The budget number, in the quantity's unit." }
+        direction: { type: enum, values: [maximum, minimum], default: maximum, description: "maximum = total must stay at or under the limit; minimum = at or over." }
       embedding_field: statement
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
       extraction_hint: >
@@ -134,3 +141,8 @@ schema:
         Constraint/DesignRule, target = what it limits.
       properties:
         note: { type: string }
+        # BL-11: this target's share of the source Constraint's budget, in the
+        # Constraint's quantity unit. An edge without one is REPORTED by
+        # budget_report, never silently treated as zero.
+        contribution: { type: float, description: "This target's spend against the budget, in the Constraint's quantity unit." }
+        basis: { type: enum, values: [estimated, evidence, measured], default: estimated, description: "How the contribution was set — mirrors the coupling weight_basis rigor." }

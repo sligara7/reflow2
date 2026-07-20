@@ -292,10 +292,19 @@ def run_p5(s: Server, p: Probes) -> None:
             f"gap sources: {sorted({g['gap_source'] for g in gaps})}")
 
     # Probe 9 — reconciliation against what is actually deployed (BL-9).
-    tools = [t["name"] for t in s.rpc("tools/list", {})["result"]["tools"]]
-    has = any("deploy" in t and "reconcile" in t for t in tools)
-    p.score("P5", "a way to reconcile the design against what is really deployed", has,
-            "no reconcile_deployment on the surface (BL-9)" if not has else "")
+    # The declaration says v0.2.0 is active on the dev machine; the observation
+    # says nothing runs there. CAUGHT only if detect_gaps names the divergence
+    # without being told where to look.
+    r = s.call("reconcile_deployment", {
+        "observed": [{"environment_id": "env:dev", "running": []}],
+        "record_events": True})
+    gaps = s.call("detect_gaps")
+    named = [g for g in gaps if g["gap_source"] == "unresolved_drift"
+             and "env:dev" in g.get("affected_ids", [])
+             and "rel:v020" in g.get("affected_ids", [])]
+    p.score("P5", "a way to reconcile the design against what is really deployed",
+            bool(r["findings"]) and bool(named),
+            f"findings={len(r['findings'])}, gap sources: {sorted({g['gap_source'] for g in gaps})}")
 
 
 def run_thread(s: Server, p: Probes, files: dict[str, pathlib.Path]) -> None:

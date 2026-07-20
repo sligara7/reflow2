@@ -29,11 +29,13 @@
 pub mod agent;
 pub mod allocate;
 pub mod artifact;
+pub mod budget;
 pub mod confirm;
 pub mod detect;
 pub mod dimensions;
 pub mod drift;
 pub mod export;
+pub mod fielded;
 pub mod flow;
 pub mod genesis;
 pub mod graph;
@@ -58,11 +60,15 @@ pub use allocate::{
     AllocationReport, ComponentScore, MisplacedCapability, ProposedAllocation, ProposedComponent,
 };
 pub use artifact::{ArtifactLink, DriftDisposition, LinkArtifactOptions};
+pub use budget::{BudgetContributor, BudgetReport, BudgetVerdict};
 pub use confirm::{ClaimConfirmation, ConfirmationLedger, ConfirmationState};
 pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, GapSource};
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};
 pub use export::{ExportedEdge, ExportedNode, GraphExport, ImportReport};
+pub use fielded::{
+    FieldedDriftKind, FieldedFinding, FieldedOptions, FieldedReport, ObservedEnvironment,
+};
 pub use flow::{FlowReport, FlowStep, FlowTransition};
 pub use genesis::{GENESIS_EPOCH_ID, GenesisOptions, GenesisReport};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};

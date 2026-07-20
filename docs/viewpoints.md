@@ -40,8 +40,8 @@ mapping is there so a viewpoint-trained reader knows where to look, not to claim
 | **Decisions** | *(no clean DoDAF box — the record of why, which DoDAF leaves to AV-1 prose)* | `Decision` (`decision`, `rationale`, `status`) + incoming `GOVERNED_BY` | ✅ rendered |
 | **Evolution / epoch timeline** | SV-8 proper (axis Z) | `DesignEpoch` ordered by `PRECEDES` (solid arrows) or `sequence` (dotted, labelled with its source — the two are cross-checked and a disagreement is confessed); what happened at each via `AT_EPOCH` / `OCCURS_DURING`; a ChangeEvent pinned to no epoch is confessed as the axis-Z discipline broken | ✅ rendered |
 | **Provenance** | AV-2-ish | `provenance` per `Requirement` / `Capability` / `Component` / `Interface` (unstated origins confessed, `inferred` listed by name), `Fragment` + `YIELDED` with the action taken (a mute Fragment and a dangling YIELDED are confessed) | ✅ rendered |
-| **As-fielded** | actual deployment reality | needs `reconcile_deployment` — nothing records what is *really* running | ⬜ blocked on [BL-9](backlog.md#bigger-threads) |
-| **Measures / budgets** | SV-7 | needs path-cumulative rollups (latency, mass, power, cost) | ⬜ blocked on [BL-11](backlog.md#bigger-threads) |
+| **As-fielded** | actual deployment reality | `DEPLOYED_TO` declarations per `Environment` (a statusless declaration is confessed), plus every unresolved deployment `DriftEvent` recorded by `reconcile_deployment` (BL-9) — only Releases run, only Environments host | ✅ rendered |
+| **Measures / budgets** | SV-7 | budget `Constraint`s (`quantity`/`limit`/`direction`) with their `CONSTRAINS` spenders, stated totals and an honest verdict — `incomplete` when any contribution is unstated (BL-11); `budget_report` is the typed read side and carries the worst-path analysis | ✅ rendered |
 
 ## Rules for adding a viewpoint
 

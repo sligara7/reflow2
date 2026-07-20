@@ -43,7 +43,11 @@ schema:
         name: { type: string, required: true, indexed: true }
         summary: { type: string, fulltext: true }
         severity: { type: enum, values: [low, medium, high, critical], default: medium, indexed: true }
-        drift_type: { type: enum, values: [missing_artifact, spec_mismatch, undocumented_addition, status_mismatch, checksum_change], indexed: true }
+        # The deployment_* values are the P5 kinds (BL-9): the as-fielded
+        # divergence between what DEPLOYED_TO declares and what is observed
+        # actually running. Additive enum growth — validation runs on write,
+        # so older graphs stay readable and the stamp is unchanged.
+        drift_type: { type: enum, values: [missing_artifact, spec_mismatch, undocumented_addition, status_mismatch, checksum_change, deployment_missing, deployment_undeclared, deployment_contradicted], indexed: true }
         detected_at: { type: string }
         resolved: { type: bool, default: false, indexed: true }
       embedding_field: summary

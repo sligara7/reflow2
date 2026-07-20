@@ -550,6 +550,73 @@ pub struct FlowReportReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+pub struct ObservedEnvironmentReq {
+    pub environment_id: String,
+    /// Release ids actually running there. An empty list is a positive
+    /// statement — nothing runs here — not missing evidence.
+    #[serde(default)]
+    pub running: Vec<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct ReconcileDeploymentReq {
+    /// One entry per environment you actually looked at. Environments not
+    /// listed are not evidence of anything.
+    pub observed: Vec<ObservedEnvironmentReq>,
+    /// Write a DriftEvent per divergence (off = look before you write).
+    #[serde(default)]
+    pub record_events: bool,
+    /// The observation covers every environment: declared-active deployments
+    /// in unlisted environments are reported as unobserved.
+    #[serde(default)]
+    pub exhaustive: bool,
+    /// Timestamp for recorded events (the server takes no clock).
+    #[serde(default)]
+    pub detected_at: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct AddConstraintReq {
+    pub id: String,
+    pub name: String,
+    pub statement: String,
+    /// `technical` (default) / `business` / `operational` / `physical` /
+    /// `regulatory` / `budget` / `schedule`.
+    #[serde(default)]
+    pub category: Option<String>,
+    /// For a numeric budget: unit-bearing name, e.g. `mass_kg`, `latency_ms`.
+    #[serde(default)]
+    pub quantity: Option<String>,
+    /// The budget number, in the quantity's unit.
+    #[serde(default)]
+    pub limit: Option<f64>,
+    /// `maximum` (default: total must stay at or under) / `minimum`.
+    #[serde(default)]
+    pub direction: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct ConstrainsReq {
+    pub constraint_id: String,
+    /// The spender's node type — anything can spend (Component mass,
+    /// Interface latency, Resource cost).
+    pub target_type: String,
+    pub target_id: String,
+    /// This target's spend, in the Constraint's quantity unit. Omitted =
+    /// participates but unstated; budget_report reports it, never zeroes it.
+    #[serde(default)]
+    pub contribution: Option<f64>,
+    /// `estimated` (default) / `evidence` / `measured`.
+    #[serde(default)]
+    pub basis: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct BudgetReportReq {
+    pub constraint_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
 pub struct PinAtEpochReq {
     pub node_type: String,
     pub node_id: String,
@@ -1467,6 +1534,112 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         ok_json(g.release_report(&req.release_id).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Compare what is observed RUNNING against what DEPLOYED_TO declares — the \
+                       as-fielded reconcile, sibling of reconcile_artifacts one phase later \
+                       (BL-9). Supply one entry per environment you actually looked at, listing \
+                       the releases running there (empty list = nothing runs, a positive \
+                       statement). Reports deployment_missing (declared active, not running), \
+                       deployment_undeclared (running, never declared) and \
+                       deployment_contradicted (running while declared planned/rolled_back), \
+                       plus ids the design has never heard of. Only Releases run and only \
+                       Environments host — components and libraries never produce drift here. \
+                       With record_events each divergence becomes a persistent DriftEvent (and \
+                       an unresolved_drift gap) that a later reconcile resolves automatically \
+                       when the divergence is gone; the design-side fix is deploy_to with the \
+                       true status."
+    )]
+    pub async fn reconcile_deployment(
+        &self,
+        Parameters(req): Parameters<ReconcileDeploymentReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let observed: Vec<reflow2_core::ObservedEnvironment> = req
+            .observed
+            .into_iter()
+            .map(|o| reflow2_core::ObservedEnvironment {
+                environment_id: o.environment_id,
+                running: o.running,
+            })
+            .collect();
+        let options = reflow2_core::FieldedOptions {
+            record_events: req.record_events,
+            exhaustive: req.exhaustive,
+            detected_at: req.detected_at,
+        };
+        let mut g = self.graph.lock().await;
+        ok_json(
+            g.reconcile_deployment(&observed, &options)
+                .map_err(dyno_err)?,
+        )
+    }
+
+    #[tool(
+        description = "Create a Constraint — a limit the design must respect, vs a Requirement \
+                       which is a goal to achieve. For a numeric budget (BL-11) set `quantity` \
+                       (unit-bearing name like mass_kg / latency_ms / cost_usd), `limit`, and \
+                       `direction` (maximum = stay at or under, the default). Then attach the \
+                       spenders with `constrains` and read the rollup with `budget_report`."
+    )]
+    pub async fn add_constraint(
+        &self,
+        Parameters(req): Parameters<AddConstraintReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.add_constraint(
+                &req.id,
+                &req.name,
+                &req.statement,
+                req.category.as_deref(),
+                req.quantity.as_deref(),
+                req.limit,
+                req.direction.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record that a Constraint CONSTRAINS a target, with the target's \
+                       `contribution` to the budget (in the Constraint's quantity unit) and the \
+                       `basis` for the number (estimated/evidence/measured). An edge without a \
+                       contribution is reported by budget_report as unstated — never treated as \
+                       zero."
+    )]
+    pub async fn constrains(
+        &self,
+        Parameters(req): Parameters<ConstrainsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.constrains(
+                &req.constraint_id,
+                &req.target_type,
+                &req.target_id,
+                req.contribution,
+                req.basis.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Roll a budget Constraint up (BL-11): total of stated contributions vs \
+                       the limit, the worst dependency path among contributors (the \
+                       path-cumulative rollup — end-to-end latency, mass down a chain), basis \
+                       coverage (estimated vs measured), and an honest verdict — `incomplete` \
+                       when any contribution is unstated, because a partial sum passed off as a \
+                       total is how budgets lie. Contributors with no stated number are listed, \
+                       never zeroed."
+    )]
+    pub async fn budget_report(
+        &self,
+        Parameters(req): Parameters<BudgetReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        ok_json(g.budget_report(&req.constraint_id).map_err(dyno_err)?)
     }
 
     #[tool(

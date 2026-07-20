@@ -153,6 +153,7 @@ def run(binary: str, graph_path: str) -> int:
         "link_artifact", "reconcile_artifacts", "set_artifact_checksum",
         "add_verification", "verifies", "add_release", "add_environment",
         "deploy_to", "add_decision", "governed_by",
+        "reconcile_deployment", "add_constraint", "constrains", "budget_report",
         "detect_defects", "propose_heal", "describe_schema",
         "set_capability_status", "set_provenance",
         "release_includes", "release_report", "pin_at_epoch",
@@ -687,6 +688,54 @@ def run(binary: str, graph_path: str) -> int:
          fr["cycles"])
     c.ok("a fully-stated flow confesses nothing", fr["confessions"] == [],
          fr["confessions"])
+
+    print("\n== 7d. the as-fielded reconcile (BL-9) ==")
+    fr = s.call("reconcile_deployment", {
+        "observed": [{"environment_id": "env:prod", "running": ["rel:v1"]}]})
+    c.ok("declaration and reality agreeing is not drift",
+         fr["findings"] == [] and fr["agreements"] == 1, fr)
+    fr = s.call("reconcile_deployment", {
+        "observed": [{"environment_id": "env:prod", "running": []}],
+        "record_events": True, "detected_at": "2026-07-19T00:00:00Z"})
+    c.ok("declared active but not running is deployment_missing",
+         [f["kind"] for f in fr["findings"]] == ["deployment_missing"], fr["findings"])
+    c.ok("and it nags as a persistent gap",
+         any(g["gap_source"] == "unresolved_drift"
+             and "env:prod" in g["affected_ids"] for g in s.call("detect_gaps")))
+    s.call("deploy_to", {"release_id": "rel:v1", "environment_id": "env:prod",
+                         "status": "rolled_back"})
+    fr2 = s.call("reconcile_deployment", {
+        "observed": [{"environment_id": "env:prod", "running": []}]})
+    c.ok("correcting the declaration and re-observing resolves the event",
+         fr2["resolved_events"] == fr["recorded_events"]
+         and not any(g["gap_source"] == "unresolved_drift"
+                     and "env:prod" in g["affected_ids"] for g in s.call("detect_gaps")),
+         fr2)
+    fr = s.call("reconcile_deployment", {
+        "observed": [{"environment_id": "env:ghost", "running": ["rel:v1"]}]})
+    c.ok("an unknown environment is reported, not skipped",
+         fr["unknown_ids"] == ["env:ghost"], fr)
+
+    print("\n== 7e. a budget rolls up honestly (BL-11) ==")
+    s.call("add_constraint", {"id": "con:mass", "name": "Mass budget",
+                              "statement": "Stay under 100 kg.", "category": "budget",
+                              "quantity": "mass_kg", "limit": 100.0})
+    s.call("constrains", {"constraint_id": "con:mass", "target_type": "Component",
+                          "target_id": "cmp:ui", "contribution": 40.0,
+                          "basis": "measured"})
+    s.call("constrains", {"constraint_id": "con:mass", "target_type": "Component",
+                          "target_id": "cmp:physics"})
+    br = s.call("budget_report", {"constraint_id": "con:mass"})
+    c.ok("an unstated contribution makes the verdict incomplete, never zero",
+         br["verdict"] == "incomplete" and br["unstated"] == ["cmp:physics"], br)
+    s.call("constrains", {"constraint_id": "con:mass", "target_type": "Component",
+                          "target_id": "cmp:physics", "contribution": 35.0})
+    br = s.call("budget_report", {"constraint_id": "con:mass"})
+    c.ok("fully stated, the budget reaches a verdict",
+         br["verdict"] == "within" and br["total"] == 75.0, br)
+    c.ok("and says what the numbers rest on",
+         br["basis_coverage"].get("measured") == 1
+         and br["basis_coverage"].get("estimated") == 1, br["basis_coverage"])
 
     print("\n== 8. structural health: a cycle through contracts ==")
     s.call("add_interface", {"id": "ifc:score", "name": "Score input"})

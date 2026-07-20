@@ -625,6 +625,123 @@ def view_provenance(g: Graph) -> str:
     return summary + inferred_line + frag_table
 
 
+def view_fielded(g: Graph) -> str:
+    """The as-fielded viewpoint (BL-9): what each environment is declared to
+    host, and every unanswered divergence between declaration and observation
+    recorded by `reconcile_deployment`."""
+    envs = sorted(g.of_type("Environment"), key=lambda n: n["node_id"])
+    if not envs:
+        return ('<p class="vp">Nothing to project: the graph holds no Environment. '
+                "Declarations are written with <code>deploy_to</code>; observations are "
+                "reconciled with <code>reconcile_deployment</code>.</p>")
+
+    deployed: dict[str, list[tuple[str, str | None]]] = {}
+    for e in g.edges_of("DEPLOYED_TO"):
+        st = e["properties"].get("status")
+        deployed.setdefault(e["to_id"], []).append(
+            (e["from_id"], st if isinstance(st, str) else None))
+
+    drift: dict[str, list[str]] = {}
+    for n in g.of_type("DriftEvent"):
+        dt = n["properties"].get("drift_type")
+        if not (isinstance(dt, str) and dt.startswith("deployment_")):
+            continue
+        if n["properties"].get("resolved") is True:
+            continue
+        summary = n["properties"].get("summary")
+        for e in g.edges:
+            if e["edge_type"] == "DEPENDS_ON" and e["from_id"] == n["node_id"] \
+                    and g.nodes.get(e["to_id"], {}).get("node_type") == "Environment":
+                drift.setdefault(e["to_id"], []).append(
+                    esc(summary if isinstance(summary, str) else n["node_id"]))
+
+    rows = []
+    for env in envs:
+        eid = env["node_id"]
+        cells = []
+        for rel, st in sorted(deployed.get(eid, [])):
+            if st is None:
+                confess(f"the deployment status of `{rel}` in `{eid}`",
+                        "DEPLOYED_TO carries no `status` — planned, active and rolled "
+                        "back cannot be told apart, which is the fact this view exists "
+                        "to show")
+                st = "?"
+            cells.append(f"{esc(g.name(rel))} <i>({esc(st)})</i>")
+        drift_cell = "; ".join(sorted(drift.get(eid, []))) or "—"
+        rows.append("<tr><td>{}</td><td>{}</td><td>{}</td></tr>".format(
+            esc(g.name(eid)),
+            ", ".join(cells) or "<em>nothing declared</em>",
+            drift_cell if drift_cell == "—" else f"<em>{drift_cell}</em>",
+        ))
+    return ("<table><thead><tr><th>Environment</th><th>Declared deployments</th>"
+            "<th>Unanswered fielded divergence</th></tr></thead><tbody>"
+            + "\n".join(rows) + "</tbody></table>")
+
+
+def view_budgets(g: Graph) -> str:
+    """The measures viewpoint (BL-11): each budget Constraint, its spenders,
+    the stated total against the limit, and an honest verdict — `incomplete`
+    whenever a contribution is unstated."""
+    cons = sorted(g.of_type("Constraint"), key=lambda n: n["node_id"])
+    if not cons:
+        return ('<p class="vp">Nothing to project: the graph holds no Constraint. '
+                "A budget is a Constraint with a <code>quantity</code> and a "
+                "<code>limit</code>, spent through <code>constrains</code> edges; "
+                "<code>budget_report</code> is the typed read side (path analysis "
+                "included).</p>")
+
+    spends: dict[str, list[dict]] = {}
+    for e in g.edges_of("CONSTRAINS"):
+        spends.setdefault(e["from_id"], []).append(e)
+
+    blocks = []
+    for c in cons:
+        cid = c["node_id"]
+        quantity = g.prop(cid, "quantity")
+        limit = c["properties"].get("limit")
+        edges = sorted(spends.get(cid, []), key=lambda e: e["to_id"])
+        if quantity is None and limit is None and not edges:
+            blocks.append(f'<h3>{html.escape(g.name(cid))}</h3>'
+                          f'<p class="vp">{esc(g.prop(cid, "statement") or "")} '
+                          "<i>(a limit in prose — no numeric budget stated)</i></p>")
+            continue
+
+        rows, total, unstated = [], 0.0, []
+        for e in edges:
+            contrib = e["properties"].get("contribution")
+            basis = e["properties"].get("basis")
+            if isinstance(contrib, (int, float)):
+                total += float(contrib)
+                shown = f"{contrib}"
+            else:
+                unstated.append(e["to_id"])
+                confess(f"the spend of `{e['to_id']}` against `{cid}`",
+                        "its CONSTRAINS edge states no `contribution` — the rollup "
+                        "verdict is incomplete, never a quietly partial sum")
+                shown = "<em>unstated</em>"
+            rows.append("<tr><td>{}</td><td>{}</td><td>{}</td></tr>".format(
+                esc(g.name(e["to_id"])), shown,
+                esc(basis) if isinstance(basis, str) else "estimated"))
+
+        direction = g.prop(cid, "direction") or "maximum"
+        if limit is None:
+            verdict = "<em>ungated — no limit stated</em>"
+        elif unstated:
+            verdict = "<em>incomplete — see the confessions</em>"
+        else:
+            ok = total >= float(limit) if direction == "minimum" else total <= float(limit)
+            verdict = "within" if ok else "<em>exceeded</em>"
+        head = esc(g.name(cid)) + (f" <small>({esc(quantity)})</small>" if quantity else "")
+        blocks.append(
+            f"<h3>{head}</h3>"
+            "<table><thead><tr><th>Spender</th><th>Contribution</th><th>Basis</th></tr>"
+            f"</thead><tbody>{''.join(rows)}</tbody></table>"
+            f'<p class="vp">stated total: {total}'
+            + (f" · limit ({esc(direction)}): {limit}" if limit is not None else "")
+            + f" · verdict: {verdict} · worst-path analysis: <code>budget_report</code></p>")
+    return "\n".join(blocks)
+
+
 PAGE = """<title>{title} — projected viewpoints</title>
 <style>
   :root {{ --ink:#15211F; --paper:#F6F8F7; --card:#FFFFFF; --rule:#D8E0DD;
@@ -706,6 +823,19 @@ PAGE = """<title>{title} — projected viewpoints</title>
   recorded sources (Fragments) with what each yielded.</p>
   <div class="card">{provenance}</div></section>
 
+  <section><h2>As-fielded viewpoint</h2>
+  <p class="vp">What each environment is declared to host, and every unanswered divergence
+  between declaration and observed reality (<code>reconcile_deployment</code>, BL-9). Only
+  Releases run and only Environments host — parts shipping inside a release are invisible here
+  by construction.</p>
+  <div class="card">{fielded}</div></section>
+
+  <section><h2>Measures viewpoint</h2>
+  <p class="vp">≈ SV-7: budgets — a Constraint's quantity and limit, its spenders, and an honest
+  verdict (BL-11). An unstated contribution makes the verdict incomplete, never a quietly
+  partial sum.</p>
+  <div class="card">{budgets}</div></section>
+
   <section><h2>What the graph could not tell this renderer</h2>
   <div class="confess">
   <p>{n_confessions} item(s). Each is a modelling gap, a reflow2 gap, or a true design gap — never
@@ -769,6 +899,8 @@ def main() -> int:
     decisions = view_decisions(g)
     evolution = view_evolution(g)
     provenance = view_provenance(g)
+    fielded = view_fielded(g)
+    budgets = view_budgets(g)
 
     dedup = sorted(set(CONFESSIONS))
     page = PAGE.format(
@@ -780,6 +912,7 @@ def main() -> int:
         structural=structural, traceability=traceability,
         released=released, decisions=decisions,
         evolution=evolution, provenance=provenance,
+        fielded=fielded, budgets=budgets,
         n_confessions=len(dedup),
         confessions="\n".join(f"<li>{html.escape(c)}</li>" for c in dedup) or "<li>nothing — every view was fully specified</li>",
     )

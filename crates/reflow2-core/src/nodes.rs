@@ -50,6 +50,9 @@ pub mod edge {
     pub const CONTAINS: &str = "CONTAINS";
     /// `* → *` — traceability: a Capability SATISFIES a Requirement.
     pub const SATISFIES: &str = "SATISFIES";
+    /// `Constraint/DesignRule → *` — a limit binds a target; for a budget
+    /// Constraint the edge carries the target's `contribution` (BL-11).
+    pub const CONSTRAINS: &str = "CONSTRAINS";
     /// `Capability → Component` — the WHAT→WHERE allocation binding.
     pub const ALLOCATED_TO: &str = "ALLOCATED_TO";
     /// `* → Decision/DesignRule` — the node is shaped by a recorded decision.

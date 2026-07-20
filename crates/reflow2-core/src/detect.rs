@@ -1460,15 +1460,27 @@ impl DesignGraph {
                 .get("summary")
                 .and_then(dynograph_core::Value::as_str)
                 .unwrap_or("reality diverged from the design");
+            // The answer differs by which reality diverged: build-side drift
+            // is answered by the two-sided accept; fielded drift (BL-9) by
+            // correcting the DEPLOYED_TO declaration — or the deployment —
+            // and reconciling again, which resolves the event on agreement.
+            let is_fielded = ev
+                .properties
+                .get("drift_type")
+                .and_then(dynograph_core::Value::as_str)
+                .is_some_and(|t| t.starts_with("deployment_"));
+            let advice = if is_fielded {
+                "the fielded state and the declaration disagree and nobody has said which is right. Fix the declaration (deploy_to with the true status) or fix the deployment, then reconcile_deployment again."
+            } else {
+                "the code moved and nobody has said what it means. Accept the new baseline with a disposition (design_holds or design_updated), or fix the build back."
+            };
             gaps.push(GapCandidate {
                 id: gap_id(GapSource::UnresolvedDrift, &affected),
                 gap_source: GapSource::UnresolvedDrift,
                 scope: GapScope::Capability,
                 severity: 0.75,
                 title: "A recorded divergence is waiting for its answer".to_string(),
-                description: format!(
-                    "{summary} — the code moved and nobody has said what it means. Accept the new baseline with a disposition (design_holds or design_updated), or fix the build back."
-                ),
+                description: format!("{summary} — {advice}"),
                 affected_ids: affected,
                 suggested_depth: 2,
                 evidence: format!(

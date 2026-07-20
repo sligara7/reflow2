@@ -70,6 +70,12 @@ session, prose read out of an adopted codebase.
      without a role the graph cannot tell them from forward ones. `flow_report` reads it back —
      its cycles are the process's design, not defects, and anything it confesses (an unmatched
      entry point, unordered steps, unroled transitions) is a gap in the model to fix.
+   - When the user states a **numeric limit** — a mass budget, an end-to-end latency, a cost
+     cap — record it as a Constraint: `add_constraint` with `quantity` (unit-bearing:
+     `mass_kg`, `latency_ms`), `limit` and `direction`, then attach each spender with
+     `constrains` (+ its `contribution` and `basis`). `budget_report` answers whether it fits —
+     honestly: an unstated contribution makes the verdict `incomplete`, never a quietly
+     partial sum.
 2. **DETECT gaps and ask.** Run `detect_gaps`. For each gap, call `gap_to_prompt` to turn it
    into a plain question (see the handshake below), ask the **user**, then write their answer
    back as a Requirement or a node property. Do this **before** building. If the user judges a
@@ -146,7 +152,8 @@ reflow2 phrases the question; **you** are the language model that fills it in:
   `graph_report_markdown`, `detect_defects`, `propose_heal`, `evaluate_allocation`,
   `propose_allocation`, `hierarchy_issues`, `surprising_connections`, `dimension_drifts`,
   `dimension_drift`, `flow_report` (a process read back as facts — steps, roled transitions,
-  cycles reported never judged).
+  cycles reported never judged), `budget_report` (a budget rolled up honestly — total, worst
+  dependency path, and `incomplete` when any contribution is unstated).
 - **Decomposition:** `contain_component` nests one Component inside another (the assembly
   spine). Set `level` on `add_component` — `component` (default), `subsystem`, `system`,
   `system_of_systems`, `enterprise` — and nest one level at a time; `hierarchy_issues` compares
@@ -173,14 +180,18 @@ reflow2 phrases the question; **you** are the language model that fills it in:
   once — it carries status and provenance at create time.
 - **Build:** `add_project`, `add_requirement`, `add_capability`, `add_component`,
   `contain_component`, `set_requirement_status`, `set_capability_status`, `set_provenance`,
-  `add_interface`, `add_flow`, `part_of_flow`, `satisfies`, `allocate`, `contains`, `provides`,
-  `consumes`, `create_node`, `create_edge`, `get_node`, `scan_nodes`, `delete_node`, `apply_heal`.
+  `add_interface`, `add_flow`, `part_of_flow`, `add_constraint`, `constrains`, `satisfies`,
+  `allocate`, `contains`, `provides`, `consumes`, `create_node`, `create_edge`, `get_node`,
+  `scan_nodes`, `delete_node`, `apply_heal`.
 - **As-built:** `link_artifact`, `add_artifact`, `realizes`, `reconcile_artifacts`,
   `set_artifact_checksum` — the last is a **two-sided accept**: `disposition` is required
   (`design_holds`, or `design_updated` naming the `record_change` event behind it), because a
   silent accept is how a design erodes into fiction. See the **link-artifacts** skill.
 - **Verify & operate:** `add_verification`, `verifies`, `set_verification_status`, `add_release`,
-  `add_environment`, `add_resource`, `deploy_to`, `require_resource`.
+  `add_environment`, `add_resource`, `deploy_to`, `require_resource`, `release_includes`,
+  `release_report`, `reconcile_deployment` — the last compares what you *observed running* per
+  environment against what `deploy_to` declared; a recorded divergence nags as a gap until the
+  declaration or the deployment is fixed and a later observation agrees.
 - **Decisions:** `add_decision`, `governed_by` — record why a choice was made, not just what.
 - **Change over time:** `add_epoch`, `add_change_event`, `record_change`.
 - **Ask the user:** `gap_to_prompt`, `acknowledge_gap`, `reviewed_gaps`,

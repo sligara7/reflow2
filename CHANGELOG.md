@@ -17,6 +17,38 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The as-fielded reconcile** (BL-9). `reconcile_deployment` is the P5 sibling of
+  `reconcile_artifacts`, one phase later: not *does the code match the design?* but *does what is
+  **running** match what the design declares?* The caller supplies per-environment observations
+  (an empty `running` list is a positive statement); the graph compares them against
+  `DEPLOYED_TO` and reports `deployment_missing` (declared active, not running),
+  `deployment_undeclared` (running, never declared) and `deployment_contradicted` (running while
+  declared planned/rolled back). Unknown ids are reported, a partial observation is never read
+  as absence, and `exhaustive` names the declarations the observation could not see. Only
+  Releases run and only Environments host, so the original reflow's library-plugin false
+  positive — every component expected to appear as a running thing — is impossible by
+  construction. Recorded divergences are persistent `unresolved_drift` gaps (with
+  deployment-appropriate advice) that a later agreeing observation resolves automatically; the
+  design-side answer is `deploy_to` with the true status. The phase-coverage trial's P5 probe
+  now injects a real divergence instead of checking the tool exists — **P5 2/2, phase trial
+  12/13**; the one remaining miss is BL-30's `reconcile_verification`, the last of the three
+  feedback loops. New `DriftEvent.drift_type` values are additive enum growth (validation runs
+  on write; the stamp is unchanged). The **as-fielded viewpoint** joins the catalogue.
+
+- **Budgets — the path-cumulative quantity rollup** (BL-11). The vocabulary was waiting: a
+  `Constraint` (which had **no write side** — the fourteenth recurring-lesson instance) now
+  carries `quantity` (unit-bearing name: `mass_kg`, `latency_ms`), `limit` and `direction`, and
+  each `CONSTRAINS` edge carries the target's `contribution` and its `basis`
+  (estimated/evidence/measured — the coupling-weight rigor ladder). `add_constraint` and
+  `constrains` are the write side; `budget_report` rolls it up: the stated total against the
+  limit, basis coverage, the worst dependency path among contributors (contracts collapsed —
+  end-to-end latency, mass down a chain), and an honest verdict. The discipline is
+  graph-analysis's: an unstated contribution is **never zero** — it makes the verdict
+  `incomplete` and is listed by name, because a partial sum passed off as a total is how budgets
+  lie. No limit → `ungated`, not passing; a cycle among contributors refuses the path claim by
+  name. The **measures viewpoint** (≈ SV-7) joins the catalogue, closing its last ⬜ row — all
+  ten viewpoints now render.
+
 - **Evolution and provenance viewpoints** (BL-40, second increment — the catalogue's last two
   projectable rows). **Evolution** (≈ SV-8 proper, axis Z): the epoch chain drawn from what is
   stated — solid arrows for `PRECEDES`, dotted arrows labelled `sequence` when only the property
