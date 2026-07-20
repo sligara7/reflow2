@@ -143,11 +143,18 @@ fn merge_carries_a_unique_edge_onto_the_survivor() {
 
 #[test]
 fn generative_fixes_require_human_review_and_are_not_applied() {
-    // An orphan capability (no allocation) → generative owner fix.
+    // An Artifact that realizes nothing → generative owner fix.
+    //
+    // This used to use an unallocated Capability, until BL-42 removed that
+    // check from HEAL: DETECT already asks `unallocated_capability`, and
+    // reporting it here as well was the same finding twice (20 of 31 defects
+    // on the storyflow trial). The Artifact orphan is the one HEAL keeps,
+    // because DETECT has no counterpart for it — and it still exercises what
+    // this test is actually about: a generative fix is gated, never applied.
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:x", "X").unwrap();
     g.add_component("cmp:c", "C", "part c", None).unwrap();
-    g.add_capability("cap:lonely", "Lonely", "unallocated", None)
+    g.add_artifact("art:loose", "loose.rs", Some("code"), Some("src/loose.rs"))
         .unwrap();
 
     let proposal = g.propose_heal(HealOptions::default()).unwrap();

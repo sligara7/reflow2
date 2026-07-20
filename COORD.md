@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-42 + BL-43 — @ajs — since 2026-07-20 — detect.rs, heal.rs, report.rs
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
 
@@ -87,6 +86,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-42 + BL-43 done: adopt's noise floor halved on the same graph (82 -> 57 outputs, every true finding kept); graph_report counts every node — @ajs — 2026-07-20 — (this commit)
 - Adopt trial on storyflow (2643 files) done: 5 true findings about storyflow, 4 about reflow2; BL-42/BL-43 raised — @ajs — 2026-07-20 — (this commit)
 - BL-27 step 3 done: the adopt skill — the RE lifecycle operational, ninth kit skill; next brownfield trial should run through it — @ajs — 2026-07-19 — (this commit)
 - BL-30 done (M half): reconcile_verification completes the reconcile family — phase trial 13/13, first fully-green run, now a regression gate — @ajs — 2026-07-19 — (this commit)

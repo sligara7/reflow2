@@ -1008,3 +1008,78 @@ fn an_empty_graph_has_no_intent_to_miss() {
     g.add_project("proj:1", "Empty").unwrap();
     assert!(!sources(&g.detect_gaps().unwrap()).contains(&GapSource::DesignWithoutIntent));
 }
+
+/// BL-42, from the storyflow adopt trial: a system that is entirely built,
+/// modelled with deliberately coarse artifacts, must not be asked "what
+/// builds this?" once per capability. The signal is the modeller's own claim
+/// — a component marked `realized` asserts it exists — not a guess from
+/// topology, and the number survives as `graph_report.realization`.
+#[test]
+fn a_component_claiming_to_be_built_is_not_asked_what_builds_it() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:1", "Adopted").unwrap();
+    // One modelled artifact somewhere, so the detector is switched on at all.
+    g.add_component("cmp:modelled", "Modelled", "has a file", None)
+        .unwrap();
+    g.add_capability("cap:modelled", "M", "modelled", None)
+        .unwrap();
+    g.allocate("cap:modelled", "cmp:modelled").unwrap();
+    g.add_artifact("art:m", "m.rs", Some("code"), Some("src/m.rs"))
+        .unwrap();
+    g.realizes("art:m", node::COMPONENT, "cmp:modelled", None)
+        .unwrap();
+
+    // A shipped component whose files were never modelled.
+    g.create_node(
+        node::COMPONENT,
+        "cmp:shipped",
+        Props::new()
+            .set("name", "Shipped")
+            .set("purpose", "in production")
+            .set("status", "realized"),
+    )
+    .unwrap();
+    g.add_capability("cap:shipped", "S", "already ships", None)
+        .unwrap();
+    g.allocate("cap:shipped", "cmp:shipped").unwrap();
+
+    let unrealized: Vec<String> = g
+        .detect_gaps()
+        .unwrap()
+        .into_iter()
+        .filter(|x| x.gap_source == GapSource::UnrealizedCapability)
+        .flat_map(|x| x.affected_ids)
+        .collect();
+    assert!(
+        unrealized.is_empty(),
+        "a component asserting it is built states coverage, not a gap: {unrealized:?}"
+    );
+
+    let coverage = g.realization_coverage().unwrap();
+    assert_eq!(coverage.capabilities, 2);
+    assert_eq!(coverage.realized, 1);
+    assert_eq!(
+        coverage.built_but_unmodelled, 1,
+        "the question is dropped but the number is kept"
+    );
+
+    // …and the moment the same component is only *planned*, the question is
+    // right again and comes back.
+    g.create_node(
+        node::COMPONENT,
+        "cmp:shipped",
+        Props::new()
+            .set("name", "Shipped")
+            .set("purpose", "in production")
+            .set("status", "planned"),
+    )
+    .unwrap();
+    let unrealized: Vec<String> = g
+        .detect_gaps()
+        .unwrap()
+        .into_iter()
+        .filter(|x| x.gap_source == GapSource::UnrealizedCapability)
+        .flat_map(|x| x.affected_ids)
+        .collect();
+    assert_eq!(unrealized, ["cap:shipped"]);
+}

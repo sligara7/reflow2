@@ -1229,13 +1229,22 @@ impl DesignGraph {
         pop: &Population,
         gaps: &mut Vec<GapCandidate>,
     ) -> Result<(), DynoError> {
-        if pop.components == 0 {
+        // A Flow is structure too (BL-37), so a process design can ask this
+        // question without ever growing a Component. Before BL-42 removed
+        // HEAL's duplicate orphan check, a loose capability on a flow-only
+        // graph was covered there; now this is the only place that asks, so
+        // the gate has to admit it.
+        if pop.components == 0 && pop.flows == 0 {
             return Ok(());
         }
         for cap in self.scan_nodes(node::CAPABILITY)? {
             if self
                 .outgoing(&cap.node_id, Some(edge::ALLOCATED_TO))?
                 .is_empty()
+                // A step of a process is owned by its Flow — that IS its home.
+                && self
+                    .outgoing(&cap.node_id, Some(edge::PART_OF_FLOW))?
+                    .is_empty()
             {
                 let name = node_name(&cap);
                 gaps.push(GapCandidate {
@@ -1253,8 +1262,8 @@ impl DesignGraph {
                     affected_ids: vec![cap.node_id.clone()],
                     suggested_depth: 2,
                     evidence: format!(
-                        "Capability '{}' has 0 outgoing ALLOCATED_TO; project has {} component(s).",
-                        cap.node_id, pop.components
+                        "Capability '{}' has 0 outgoing ALLOCATED_TO and 0 PART_OF_FLOW; project has {} component(s) and {} flow(s).",
+                        cap.node_id, pop.components, pop.flows
                     ),
                 });
             }
@@ -1362,6 +1371,26 @@ impl DesignGraph {
                 .incoming(&cap.node_id, Some(edge::REALIZES))?
                 .is_empty()
                 && !self.realized_via_component(&cap.node_id)?
+                // …and nobody has already *asserted* that the owning component
+                // is built. This is the BL-42 fix, and the signal is a claim
+                // the modeller made rather than a guess from topology.
+                //
+                // "What gets built for this?" is a real forward-looking
+                // question while a component is `planned` or `in_progress`.
+                // Once a component is marked `realized`, the modeller has said
+                // *this already exists* — an absent artifact then describes
+                // the coverage of the artifact layer, not a hole in the
+                // design. The storyflow adopt trial made that distinction
+                // expensive: 13 of 51 gaps, every one produced by following
+                // the adopt skill's own instruction to model artifacts
+                // coarsely over a system that is entirely built.
+                //
+                // Same bargain as BL-23: the question is dropped and the
+                // number is kept (`realization` in `graph_report`), so
+                // per-file rigour is still visible to anyone who wants it. No
+                // threshold and no proportion — BL-5's lesson was that a loud
+                // detector needs a different *question*, not a tuned number.
+                && !self.owner_claims_built(&cap.node_id)?
             {
                 let name = node_name(&cap);
                 gaps.push(GapCandidate {
@@ -1386,6 +1415,35 @@ impl DesignGraph {
             }
         }
         Ok(())
+    }
+
+    /// Has the modeller already asserted that this capability's owning
+    /// component exists — `status: realized` or `verified`?
+    ///
+    /// An unallocated capability is `false`: there is no owner to have made
+    /// the claim, and `unallocated_capability` asks the prior question anyway.
+    pub(crate) fn owner_claims_built(&self, cap_id: &str) -> Result<bool, DynoError> {
+        for alloc in self.outgoing(cap_id, Some(edge::ALLOCATED_TO))? {
+            let claimed = self
+                .get_node(node::COMPONENT, &alloc.to_id)?
+                .and_then(|c| {
+                    c.properties
+                        .get("status")
+                        .and_then(dynograph_core::Value::as_str)
+                        .map(|s| s == "realized" || s == "verified")
+                })
+                .unwrap_or(false);
+            if claimed {
+                return Ok(true);
+            }
+        }
+        Ok(false)
+    }
+
+    /// Is this capability built, in either P3 shape (BL-38)?
+    pub(crate) fn capability_is_realized(&self, cap_id: &str) -> Result<bool, DynoError> {
+        Ok(!self.incoming(cap_id, Some(edge::REALIZES))?.is_empty()
+            || self.realized_via_component(cap_id)?)
     }
 
     /// Does any artifact realize a Component this capability is allocated to?

@@ -340,29 +340,28 @@ impl DesignGraph {
         let index = self.node_type_index()?;
         let mut issues = Vec::new();
 
-        // orphan_node — missing golden-thread links.
-        for cap in self.scan_nodes(node::CAPABILITY)? {
-            if self
-                .outgoing(&cap.node_id, Some(edge::ALLOCATED_TO))?
-                .is_empty()
-                // A step of a process is anchored by its Flow — PART_OF_FLOW
-                // is a traceability edge PROPAGATE walks, and a process's
-                // capabilities never gain Components at all (BL-37). Whether
-                // an *additionally* allocatable capability should still be
-                // asked WHERE is DETECT's `unallocated_capability` question,
-                // which stays population-gated and unchanged.
-                && self
-                    .outgoing(&cap.node_id, Some(edge::PART_OF_FLOW))?
-                    .is_empty()
-            {
-                issues.push(orphan(
-                    &cap.node_id,
-                    "Capability",
-                    "is not allocated to any component",
-                    "generate_owner",
-                ));
-            }
-        }
+        // orphan_node — missing golden-thread links, scoped to the ones DETECT
+        // does not already ask about.
+        //
+        // A Capability with no `ALLOCATED_TO` and a Requirement with nothing
+        // `SATISFIES`-ing it used to be reported here *as well as* by
+        // `unallocated_capability` and `unsatisfied_requirement` — the same
+        // finding twice, in two lists, in two vocabularies. Four independent
+        // trials complained (ophyd 15, 3dtictactoe 10, the self-host run, and
+        // storyflow where it became **20 of 31 defects** — the dominant noise
+        // source in the output, BL-42).
+        //
+        // Removing them here rather than there follows the docs' own division:
+        // *HEAL fills structure; gap-surfacing elicits meaning.* "Who should
+        // own this?" and "what asked for this?" are meaning, they are
+        // questions for a human, and they were never repairable — both mapped
+        // to a `generate_owner` stub that `apply_heal` can never apply, so
+        // they only ever inflated the defect count and the
+        // awaiting-generation pile.
+        //
+        // What stays: an Artifact realizing nothing. DETECT has no counterpart
+        // (its P3 detectors ask about capabilities, not files), so dropping it
+        // would lose the finding entirely.
         for art in self.scan_nodes(node::ARTIFACT)? {
             if self
                 .outgoing(&art.node_id, Some(edge::REALIZES))?
@@ -372,32 +371,6 @@ impl DesignGraph {
                     &art.node_id,
                     "Artifact",
                     "realizes nothing",
-                    "generate_owner",
-                ));
-            }
-        }
-        for req in self.scan_nodes(node::REQUIREMENT)? {
-            // A requirement the user has dropped or already met is not an
-            // orphan to repair. DETECT skips these for the same reason
-            // (`detect_unsatisfied_requirements`); without the check here, one
-            // half of the system would go quiet while the other kept nagging
-            // about the same requirement — which reads as a broken tool.
-            let status = req
-                .properties
-                .get("status")
-                .and_then(dynograph_core::Value::as_str)
-                .unwrap_or("proposed");
-            if status == "dropped" || status == "met" {
-                continue;
-            }
-            if self
-                .incoming(&req.node_id, Some(edge::SATISFIES))?
-                .is_empty()
-            {
-                issues.push(orphan(
-                    &req.node_id,
-                    "Requirement",
-                    "is satisfied by nothing",
                     "generate_owner",
                 ));
             }

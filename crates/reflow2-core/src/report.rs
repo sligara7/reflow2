@@ -69,6 +69,27 @@ impl VerificationCoverage {
     }
 }
 
+/// How much of the design has something built for it.
+///
+/// The counting half of BL-42, and the same bargain as
+/// [`VerificationCoverage`]: `unrealized_capability` asks only where the build
+/// demonstrably arrived and skipped a capability. Capabilities in a region the
+/// artifact layer has not reached at all are **counted here, never asked
+/// about** — the storyflow adopt trial turned that question into 13 of 51
+/// gaps, every one a consequence of modelling artifacts coarsely on purpose.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct RealizationCoverage {
+    pub capabilities: usize,
+    /// Capabilities with an artifact realizing them, or realizing a component
+    /// they are allocated to (both P3 shapes, per BL-38).
+    pub realized: usize,
+    /// Capabilities with no artifact, whose owning component is nonetheless
+    /// marked `realized` — the modeller asserts these exist and simply has
+    /// not modelled a file for them. Not a gap: a statement about how much
+    /// of a built system the artifact layer covers.
+    pub built_but_unmodelled: usize,
+}
+
 /// The confirmation rollup — counts only; the full ledger is
 /// [`DesignGraph::confirmation_ledger`].
 #[derive(Debug, Clone, serde::Serialize)]
@@ -96,7 +117,14 @@ pub struct AllocationSummary {
 pub struct GraphReport {
     /// `(node type, count)` for design types present, lifecycle order.
     pub node_counts: Vec<(&'static str, usize)>,
-    /// Total design nodes in the snapshot.
+    /// `(node type, count)` for every *other* populated type — provenance
+    /// (`Fragment`), questions, drift events, axis-Z machinery, dimension
+    /// readings. Itemised rather than omitted: these are real nodes, and a
+    /// total that skipped them made a 122-node graph report 109 (BL-43).
+    pub other_counts: Vec<(String, usize)>,
+    /// Design nodes only — the sum of `node_counts`.
+    pub design_nodes: usize,
+    /// **Every** node in the graph: `design_nodes` plus `other_counts`.
     pub total_nodes: usize,
     /// Total open gaps (DETECT).
     pub gap_count: usize,
@@ -114,6 +142,9 @@ pub struct GraphReport {
     pub surprising_truncated: usize,
     /// How much of the design carries its own verification (a signal, not a gap).
     pub verification: VerificationCoverage,
+    /// How much of the design has something built for it, and how much the
+    /// artifact layer does not reach (a signal, not a gap — BL-42).
+    pub realization: RealizationCoverage,
     /// Confirmation rollup (BL-35): of the capabilities with realizing
     /// artifacts, how many are drifting / confirmed / **unexamined** — the
     /// last being the state the original reflow died in: nobody looked, and
@@ -175,20 +206,68 @@ impl DesignGraph {
         Ok(v)
     }
 
+    /// Count how much of the design has something built for it — and how much
+    /// the artifact layer simply does not reach. See [`RealizationCoverage`].
+    pub fn realization_coverage(&self) -> Result<RealizationCoverage, DynoError> {
+        let mut c = RealizationCoverage {
+            capabilities: 0,
+            realized: 0,
+            built_but_unmodelled: 0,
+        };
+        for cap in self.scan_nodes(node::CAPABILITY)? {
+            c.capabilities += 1;
+            if self.capability_is_realized(&cap.node_id)? {
+                c.realized += 1;
+            } else if self.owner_claims_built(&cap.node_id)? {
+                c.built_but_unmodelled += 1;
+            }
+        }
+        Ok(c)
+    }
+
     /// Build the [`GraphReport`] — a one-shot aggregation of the deterministic
     /// analyses. See the module docs.
     pub fn graph_report(&self) -> Result<GraphReport, DynoError> {
         let mut node_counts = Vec::new();
-        let mut total_nodes = 0;
+        let mut design_nodes = 0;
         for &t in SNAPSHOT_TYPES {
             let n = self.count_nodes(t)?;
             if n > 0 {
                 node_counts.push((t, n));
-                total_nodes += n;
+                design_nodes += n;
             }
         }
 
+        // Everything the design-layer itemisation above does not cover:
+        // provenance (`Fragment`), the asked-question record, drift events,
+        // axis-Z machinery, dimension readings. Counted from the *schema*
+        // rather than a second hardcoded list, so a node type added later
+        // cannot go missing from the total the way `Fragment` did.
+        //
+        // The storyflow adopt trial imported 122 nodes and was told 109
+        // (BL-43): `total_nodes` summed the snapshot list only, so the whole
+        // provenance ledger — the thing that makes a recovered claim
+        // checkable — was invisible to the surface an agent reads first. A
+        // count that silently omits a type is a quiet lie about the size of
+        // the design, which is rule 6 (no silent caps) applied to reporting.
+        let mut other_counts = Vec::new();
+        let mut other_nodes = 0;
+        let mut schema_types: Vec<String> = self.schema().node_types.keys().cloned().collect();
+        schema_types.sort();
+        for t in schema_types {
+            if SNAPSHOT_TYPES.contains(&t.as_str()) {
+                continue;
+            }
+            let n = self.count_nodes(&t)?;
+            if n > 0 {
+                other_nodes += n;
+                other_counts.push((t, n));
+            }
+        }
+        let total_nodes = design_nodes + other_nodes;
+
         let verification = self.verification_coverage()?;
+        let realization = self.realization_coverage()?;
         let ledger = self.confirmation_ledger()?;
         let confirmation = if ledger.claims.is_empty() {
             None
@@ -233,6 +312,9 @@ impl DesignGraph {
 
         Ok(GraphReport {
             node_counts,
+            other_counts,
+            design_nodes,
+            realization,
             total_nodes,
             gap_count,
             defect_count,
@@ -271,10 +353,26 @@ impl GraphReport {
             let _ = writeln!(
                 m,
                 "{} design nodes across {} type(s): {}.\n",
-                self.total_nodes,
+                self.design_nodes,
                 self.node_counts.len(),
                 breakdown
             );
+            if !self.other_counts.is_empty() {
+                let other = self
+                    .other_counts
+                    .iter()
+                    .map(|(t, n)| format!("{t} {n}"))
+                    .collect::<Vec<_>>()
+                    .join(", ");
+                let _ = writeln!(
+                    m,
+                    "Plus {} supporting node(s) — provenance, questions, history: {}. \
+                     **{} nodes in total.**\n",
+                    self.total_nodes - self.design_nodes,
+                    other,
+                    self.total_nodes
+                );
+            }
             let _ = writeln!(
                 m,
                 "{} open gap(s), {} structural defect(s).\n",

@@ -862,14 +862,24 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
                 .any(|a| a == "req:maybe")
         })
     };
-    // Asserted through HEAL, not DETECT: per-node traceability gaps are gated
-    // on the relevant phase existing (detect.rs's "no per-node floods on an
-    // early graph"), so a project with one requirement and nothing else gets
-    // phase-level nudges only. HEAL's orphan scan has no such gate — which is
-    // precisely the half that used to keep nagging after a drop.
+    // Asserted through DETECT, which is now the only side that asks: BL-42
+    // removed HEAL's duplicate orphan scan over requirements (the same finding
+    // in two lists, 20 of 31 defects on the storyflow trial). Per-node
+    // traceability is gated on the relevant phase existing, so a capability
+    // has to exist for the question to be meaningful at all.
+    j!(s.add_capability(Parameters(CapabilityReq {
+        id: "cap:other".into(),
+        name: "Other".into(),
+        description: "does something else".into(),
+        status: None,
+    })));
     assert!(
-        flagged(&jl!(s.detect_defects())),
-        "an unsatisfied requirement starts as a HEAL orphan"
+        flagged(&jl!(s.detect_gaps())),
+        "an unsatisfied requirement is asked about — once, by DETECT"
+    );
+    assert!(
+        !flagged(&jl!(s.detect_defects())),
+        "and never doubled as a HEAL defect"
     );
 
     let updated = j!(s.set_requirement_status(Parameters(RequirementStatusReq {

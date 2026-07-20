@@ -391,6 +391,11 @@ fn a_dropped_requirement_is_ignored_by_detect_and_heal_alike() {
     g.add_requirement("req:r", "Dropped thing", "We decided against this.")
         .unwrap();
     g.contains("proj:p", "Requirement", "req:r").unwrap();
+    // A capability elsewhere, so the question is meaningful: on a graph with
+    // no capabilities at all, "nothing satisfies this" is answered by the
+    // project-level `concept_without_design` nudge, not per requirement.
+    g.add_capability("cap:other", "Other", "does something else", None)
+        .unwrap();
 
     let nags_heal = |g: &DesignGraph| {
         g.detect_defects()
@@ -405,16 +410,23 @@ fn a_dropped_requirement_is_ignored_by_detect_and_heal_alike() {
             .any(|c| c.affected_ids.iter().any(|a| a == "req:r"))
     };
 
+    // BL-42 moved where this is asked. HEAL used to raise an unsatisfied
+    // requirement as an `orphan_node` alongside DETECT's
+    // `unsatisfied_requirement` — one finding in two lists, which four trials
+    // complained about and which reached 20 of 31 defects on storyflow. The
+    // requirement question now lives only in DETECT, so HEAL is silent about
+    // req:r from the start rather than needing its own status check.
     assert!(
-        nags_heal(&g),
-        "an unsatisfied requirement starts as a HEAL orphan"
+        !nags_heal(&g),
+        "requirements are DETECT's question; HEAL never doubles it"
+    );
+    assert!(
+        nags_detect(&g),
+        "an unsatisfied requirement is still asked about — once"
     );
     g.set_requirement_status("req:r", "dropped").unwrap();
-    assert!(!nags_heal(&g), "HEAL must drop it too, not just DETECT");
-    assert!(
-        !nags_detect(&g),
-        "DETECT already skipped dropped requirements"
-    );
+    assert!(!nags_detect(&g), "a dropped requirement stops being asked");
+    assert!(!nags_heal(&g), "and HEAL still says nothing");
 }
 
 /// BL-23. The artifact rule was not wrong, it was loud: one VERIFIES edge per

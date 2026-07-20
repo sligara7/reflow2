@@ -112,3 +112,34 @@ fn an_empty_graph_reports_empty() {
     assert!(r.allocation.is_none());
     assert!(r.to_markdown().contains("Empty graph"));
 }
+
+/// BL-43, from the storyflow adopt trial: the import wrote 122 nodes and the
+/// report said 109 — the 13 missing were exactly the Fragments, because
+/// `total_nodes` summed a hardcoded design-layer list. A count that silently
+/// omits a node type is a quiet lie about the size of the design.
+#[test]
+fn the_total_counts_every_node_including_the_provenance_layer() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_requirement("req:r", "R", "need it").unwrap();
+    g.create_node(
+        node::FRAGMENT,
+        "frag:src",
+        Props::new().set("title", "the note it came from"),
+    )
+    .unwrap();
+
+    let rep = g.graph_report().unwrap();
+    assert_eq!(rep.design_nodes, 2, "Project + Requirement");
+    assert_eq!(rep.total_nodes, 3, "…and the Fragment is a node too");
+    assert_eq!(
+        rep.other_counts,
+        vec![("Fragment".to_string(), 1)],
+        "what the design-layer itemisation does not cover is named, not dropped"
+    );
+
+    // And it is visible to a reader, not just to a field.
+    let md = rep.to_markdown();
+    assert!(md.contains("Fragment 1"), "{md}");
+    assert!(md.contains("3 nodes in total"), "{md}");
+}

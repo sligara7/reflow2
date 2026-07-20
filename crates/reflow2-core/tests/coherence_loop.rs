@@ -225,8 +225,19 @@ fn full_coherence_loop() {
         }
         _ => unreachable!(),
     }
-    // The unmet-need orphan is generative → the proposal is gated for review.
-    assert!(proposal.requires_human_review);
+    // Flipped honestly by BL-42. HEAL used to raise the unsatisfied
+    // requirement as an orphan too — a generative stub that gated the whole
+    // proposal for review while duplicating what DETECT already asked
+    // (asserted above). With the double-count removed, this proposal is
+    // purely mechanical: one merge, nothing to generate, nothing to gate.
+    assert!(
+        !proposal.requires_human_review,
+        "the only remaining operation is a content-free merge"
+    );
+    assert!(
+        proposal.generated_content.is_empty(),
+        "the unmet need is DETECT's question now, not a HEAL stub"
+    );
 
     let report = g.apply_heal(&proposal).unwrap();
     assert!(report.applied);

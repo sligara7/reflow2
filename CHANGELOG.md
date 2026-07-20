@@ -15,6 +15,38 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **The adopt pass's noise floor** (BL-42), both halves, measured on the same 122-node storyflow
+  graph that found them: **gaps 51 → 38, defects 31 → 19, total output 82 → 57 — with every true
+  finding preserved**, including the `generation_plus ↔ media_service` cycle.
+
+  `unrealized_capability` now reads a claim the modeller already made instead of guessing from
+  topology: a component marked `realized` **asserts that it exists**, so a missing artifact there
+  describes how far the artifact layer reaches, not a hole in the design. A `planned` or
+  `in_progress` component still gets the forward-looking question, so designing forwards is
+  unchanged. The count survives as `graph_report.realization` — the same bargain BL-23 struck:
+  drop the question, keep the number. There is deliberately no threshold or proportion; BL-5's
+  lesson was that a loud detector needs a different *question*, not a tuned number.
+
+  HEAL's `orphan_node` no longer covers Requirements or Capabilities. DETECT already asks both
+  (`unsatisfied_requirement`, `unallocated_capability`), they were never repairable — each mapped
+  to a `generate_owner` stub `apply_heal` can never apply — and the docs' own division puts
+  meaning in gap-surfacing and structure in HEAL. Four independent trials complained about this
+  double-count (ophyd 15, 3dtictactoe 10, the self-host run, and storyflow where it was **20 of
+  31 defects**). The Artifact orphan stays: DETECT has no counterpart for a file that realizes
+  nothing. Closing the gap also required teaching `unallocated_capability` that a `Flow` is
+  structure (BL-37), or a loose capability on a process-only graph would have gone silent
+  entirely. On reflow2's own design graph, defects fell 14 → 9.
+
+- **`graph_report` counted only the node types it chose to itemise** (BL-43). The storyflow import
+  wrote 122 nodes and the report said 109; the 13 missing were exactly the Fragments — the whole
+  provenance ledger, invisible to the surface an agent reads first. `total_nodes` is now every
+  node in the graph, counted from the **schema** rather than a second hardcoded list, so a node
+  type added later cannot silently drop out the way `Fragment` did. `design_nodes` keeps the
+  lifecycle-ordered itemisation, and a new `other_counts` names everything outside it — in the
+  payload and in the Markdown. Rule 6 (no silent caps) applied to reporting.
+
 ### Added
 
 - **The `adopt` skill** (BL-27) — genesis's sibling, pointed backwards: bring a system that

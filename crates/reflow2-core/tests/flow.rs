@@ -192,14 +192,33 @@ fn a_flow_counts_as_structure_for_the_phase_nudge() {
     );
 }
 
-/// A step of a process is anchored by its Flow: `PART_OF_FLOW` is a
-/// golden-thread link, so a flow member with no allocation is not an orphan —
-/// while a capability attached to nothing still is.
+/// A step of a process is anchored by its Flow, and a capability attached to
+/// nothing is not.
+///
+/// The question moved in BL-42: HEAL used to report this as an `orphan_node`
+/// *as well as* DETECT reporting `unallocated_capability`, the same finding
+/// twice. It is now asked once, by DETECT — which also means the gate there
+/// had to learn that a Flow is structure, or a loose capability on a
+/// flow-only graph would have gone silent entirely.
 #[test]
-fn a_flow_member_is_not_an_orphan_but_a_loose_capability_still_is() {
+fn a_flow_member_has_a_home_and_a_loose_capability_is_asked_about_once() {
     let mut g = process_with(&[("cap:step", "Step", Some(1))]);
     g.add_capability("cap:loose", "Loose", "attached to nothing", None)
         .expect("cap");
+
+    let asked: Vec<String> = g
+        .detect_gaps()
+        .expect("gaps")
+        .into_iter()
+        .filter(|c| c.gap_source == GapSource::UnallocatedCapability)
+        .flat_map(|c| c.affected_ids)
+        .collect();
+    assert_eq!(
+        asked,
+        ["cap:loose"],
+        "the flow member has a home; the loose one is asked about"
+    );
+
     let orphans: Vec<String> = g
         .detect_defects()
         .expect("defects")
@@ -208,12 +227,8 @@ fn a_flow_member_is_not_an_orphan_but_a_loose_capability_still_is() {
         .flat_map(|d| d.affected_ids)
         .collect();
     assert!(
-        !orphans.contains(&"cap:step".to_string()),
-        "a process step's anchor is its flow"
-    );
-    assert!(
-        orphans.contains(&"cap:loose".to_string()),
-        "an unattached capability is still an orphan"
+        orphans.is_empty(),
+        "and never reported a second time as a defect: {orphans:?}"
     );
 }
 
