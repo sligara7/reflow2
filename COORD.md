@@ -52,6 +52,7 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
+- Self-model standing probe — @ajs — since 2026-07-20 — tools/build_design_graph.py, docs/design/reflow2.json (self-adopt run found the model 15 of 33 source files short, 5 statuses stale, and 0 DEPENDS_ON edges; teaching the builder to derive structure from source and reconcile against disk)
 
 
 
