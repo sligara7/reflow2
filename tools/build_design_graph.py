@@ -26,6 +26,7 @@ import argparse
 import hashlib
 import json
 import pathlib
+import re
 import shutil
 import sys
 import tempfile
@@ -86,12 +87,21 @@ CAPABILITIES = [
     ("cap:reconcile-built", "Reconcile against what was built",
      "Compare registered artifacts against observed files and report divergence.",
      "verified", ["req:released-eq-designed", "req:golden-thread"]),
+    # Both were `planned` until 2026-07-20, when the self-adopt run found them
+    # shipped, MCP-exposed and tested — 15 of the 16 gaps that model produced
+    # were pointing at the model, not the system. Ruled per sharpening.md §2.
     ("cap:reconcile-verified", "Reconcile against what was proven",
      "Compare recorded verification status against a real test run.",
-     "planned", ["req:released-eq-designed"]),
+     "verified", ["req:released-eq-designed"]),
     ("cap:reconcile-deployed", "Reconcile against what is running",
      "Compare the design against what is actually deployed.",
-     "planned", ["req:released-eq-designed"]),
+     "verified", ["req:released-eq-designed"]),
+    ("cap:budget", "Roll up a budget against a constraint",
+     "Sum contributions along the thread; refuse a total it cannot honestly compute.",
+     "verified", ["req:no-silent-fallback", "req:golden-thread"]),
+    ("cap:genesis", "Bootstrap a design from a brief",
+     "Seed a project, its requirements and capabilities, refusing to clobber an existing graph.",
+     "verified", ["req:no-se-knowledge"]),
     ("cap:vocabulary", "Describe the vocabulary", "Tell a client what types exist and what may join them.",
      "verified", ["req:agent-native", "req:no-silent-fallback"]),
     ("cap:portability", "Export and import a design", "Move a design across machines and versions.",
@@ -118,15 +128,19 @@ CAPABILITIES = [
     # our own committed model. Ruled per sharpening.md §2: the status was wrong.
     ("cap:kit", "Install into a consumer project", "One command sets up or refreshes the design environment.",
      "realized", ["req:agent-native"]),
+    # `realized`, not `verified`: the skill exists and was exercised once (the
+    # 2026-07-20 storyflow trial), but nothing automated checks it.
     ("cap:adopt", "Recover a design from an existing system",
      "Read requirements, functions and structure back out of a running system.",
-     "planned", ["req:adopt-existing"]),
+     "realized", ["req:adopt-existing"]),
     ("cap:model-process", "Model a process, not only a product",
      "Represent an ordered flow of activities with roles on its edges.",
-     "planned", ["req:design-anything"]),
+     "verified", ["req:design-anything"]),
+    # `realized`, not `verified`: confirm.rs ships and confirmation_ledger is an
+    # MCP tool, but it is the one core module with no test file of its own.
     ("cap:freshness", "Say when a claim was last confirmed",
      "Distinguish a design that matches reality from one nobody has checked.",
-     "planned", ["req:released-eq-designed", "req:coherence"]),
+     "realized", ["req:released-eq-designed", "req:coherence"]),
 ]
 
 # ---- Decisions. The distillate of the sessions that shaped the design. ----
@@ -221,9 +235,25 @@ MODULES = [
     ("cmp:ingest", "ingest", "cmp:core", ["cap:ingest"]),
     ("cmp:report", "report", "cmp:core", ["cap:report"]),
     ("cmp:graph", "graph", "cmp:core", ["cap:portability"]),
-    ("cmp:verify", "verify", "cmp:core", []),
+    ("cmp:verify", "verify", "cmp:core", ["cap:reconcile-verified"]),
     ("cmp:operate", "operate", "cmp:core", []),
+    # Added 2026-07-20: the self-adopt run found 15 of 33 source files carried
+    # no Component and no Artifact, which is what made five shipped
+    # capabilities read as unbuilt.
+    ("cmp:confirm", "confirm", "cmp:core", ["cap:freshness"]),
+    ("cmp:fielded", "fielded", "cmp:core", ["cap:reconcile-deployed"]),
+    ("cmp:flow", "flow", "cmp:core", ["cap:model-process"]),
+    ("cmp:artifact", "artifact", "cmp:core", ["cap:reconcile-built"]),
+    ("cmp:budget", "budget", "cmp:core", ["cap:budget"]),
+    ("cmp:genesis", "genesis", "cmp:core", ["cap:genesis"]),
+    ("cmp:llm", "llm", "cmp:core", ["cap:surface"]),
+    ("cmp:agent", "agent", "cmp:core", ["cap:surface"]),
+    ("cmp:surprises", "surprises", "cmp:core", ["cap:report"]),
+    ("cmp:schema", "schema", "cmp:core", ["cap:vocabulary"]),
+    ("cmp:nodes", "nodes", "cmp:core", []),
     ("cmp:service", "service", "cmp:mcp", ["cap:mcp-surface"]),
+    ("cmp:main", "main", "cmp:mcp", ["cap:mcp-surface"]),
+    ("cmp:dto", "dto", "cmp:mcp", ["cap:mcp-surface"]),
     ("cmp:init", "reflow2_init", "cmp:kit", ["cap:kit"]),
     ("cmp:skills", "skills", "cmp:kit", ["cap:kit"]),
 ]
@@ -247,7 +277,20 @@ ARTIFACTS = {  # component -> source path
     "cmp:graph": "crates/reflow2-core/src/graph.rs",
     "cmp:verify": "crates/reflow2-core/src/verify.rs",
     "cmp:operate": "crates/reflow2-core/src/operate.rs",
+    "cmp:confirm": "crates/reflow2-core/src/confirm.rs",
+    "cmp:fielded": "crates/reflow2-core/src/fielded.rs",
+    "cmp:flow": "crates/reflow2-core/src/flow.rs",
+    "cmp:artifact": "crates/reflow2-core/src/artifact.rs",
+    "cmp:budget": "crates/reflow2-core/src/budget.rs",
+    "cmp:genesis": "crates/reflow2-core/src/genesis.rs",
+    "cmp:llm": "crates/reflow2-core/src/llm.rs",
+    "cmp:agent": "crates/reflow2-core/src/agent.rs",
+    "cmp:surprises": "crates/reflow2-core/src/surprises.rs",
+    "cmp:schema": "crates/reflow2-core/src/schema.rs",
+    "cmp:nodes": "crates/reflow2-core/src/nodes.rs",
     "cmp:service": "crates/reflow2-mcp/src/service.rs",
+    "cmp:main": "crates/reflow2-mcp/src/main.rs",
+    "cmp:dto": "crates/reflow2-mcp/src/dto.rs",
     "cmp:init": "tools/reflow2_init.py",
 }
 VERIFICATIONS = {  # capability -> test file
@@ -267,7 +310,17 @@ VERIFICATIONS = {  # capability -> test file
     "cap:ingest": "crates/reflow2-core/tests/ingest.rs",
     "cap:surface": "crates/reflow2-core/tests/llm.rs",
     "cap:mcp-surface": "crates/reflow2-mcp/tests/tools.rs",
+    # Added 2026-07-20 with the self-adopt corrections: these suites existed
+    # and passed all along; the model simply never recorded them.
+    "cap:reconcile-verified": "crates/reflow2-core/tests/verify_drift.rs",
+    "cap:reconcile-deployed": "crates/reflow2-core/tests/fielded.rs",
+    "cap:model-process": "crates/reflow2-core/tests/flow.rs",
+    "cap:budget": "crates/reflow2-core/tests/budget.rs",
+    "cap:genesis": "crates/reflow2-core/tests/genesis.rs",
 }
+# Capabilities that ship without an automated check — the honest remainder the
+# gap list SHOULD carry: cap:kit (nothing tests the installer), cap:adopt (a
+# skill, exercised manually once), cap:freshness (confirm.rs has no test file).
 # Contracts between subsystems.
 INTERFACES = [
     ("ifc:core-api", "DesignGraph API", "cmp:core", ["cmp:service"]),
@@ -278,6 +331,73 @@ INTERFACES = [
 
 def sha(p: pathlib.Path) -> str:
     return "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest()[:16] if p.exists() else "sha256:absent"
+
+
+# ---- DEPENDS_ON, derived from source — never from prose -------------------
+#
+# The 2026-07-20 self-adopt run found the model carried zero DEPENDS_ON edges,
+# which made circular_dependencies structurally blind: the real
+# structure<->propagate cycle (both sides are `impl DesignGraph` blocks, so
+# rustc never flags it) was invisible to the very detector built to find it.
+#
+# Two signals, because either alone under-reports:
+#   1. `use crate::<module>` / `crate::<module>::` — explicit imports.
+#   2. `self.<method>(` where <method> is defined in exactly one OTHER module's
+#      `impl DesignGraph` block. Rust needs no `use` for inherent methods, and
+#      it is precisely these that carry the cycle.
+# Ambiguous method names (defined in more than one module) are skipped, and
+# skipped loudly — a guessed edge is worse than a missing one.
+
+_FN = re.compile(r"^\s*(?:pub(?:\((?:crate|super)\))?\s+)?(?:async\s+)?fn\s+([a-z_][a-z0-9_]*)", re.M)
+_USE = re.compile(r"use\s+crate::([a-z_][a-z0-9_]*)")
+_PATH = re.compile(r"crate::([a-z_][a-z0-9_]*)::")
+_SELF = re.compile(r"self\.([a-z_][a-z0-9_]*)\s*\(")
+_BLOCK = re.compile(r"/\*.*?\*/", re.S)
+
+
+def _strip_comments(text: str) -> str:
+    # Load-bearing: detect.rs carries a rustdoc intra-doc link
+    # (`/// [HealOp::Merge]: crate::heal::HealOp::Merge`). Matched raw, that
+    # line fabricates a detect<->heal cycle that does not exist in the code.
+    text = _BLOCK.sub(" ", text)
+    out = []
+    for line in text.splitlines():
+        if line.lstrip().startswith("//"):
+            continue
+        i = line.find("//")
+        while i != -1:
+            if i > 0 and line[i - 1] == ":":  # keep `https://` in literals
+                i = line.find("//", i + 2)
+                continue
+            line = line[:i]
+            break
+        out.append(line)
+    return "\n".join(out)
+
+
+def derive_depends_on() -> tuple[list[tuple[str, str]], list[str]]:
+    """(module-name pairs a->b, skipped-ambiguity notes) for reflow2-core."""
+    src = REPO / "crates/reflow2-core/src"
+    mods = {p.stem: _strip_comments(p.read_text())
+            for p in sorted(src.glob("*.rs")) if p.stem != "lib"}
+    owner: dict[str, set[str]] = {}
+    for name, text in mods.items():
+        for m in _FN.finditer(text):
+            owner.setdefault(m.group(1), set()).add(name)
+    pairs: set[tuple[str, str]] = set()
+    skipped: list[str] = []
+    for name, text in mods.items():
+        for rx in (_USE, _PATH):
+            for m in rx.finditer(text):
+                if m.group(1) in mods and m.group(1) != name:
+                    pairs.add((name, m.group(1)))
+        for m in _SELF.finditer(text):
+            owners = owner.get(m.group(1), set()) - {name}
+            if len(owners) == 1:
+                pairs.add((name, owners.pop()))
+            elif len(owners) > 1:
+                skipped.append(f"{name}.{m.group(1)}() -> {sorted(owners)}")
+    return sorted(pairs), sorted(set(skipped))
 
 
 def build(s: Server) -> None:
@@ -303,12 +423,41 @@ def build(s: Server) -> None:
         s.call("contain_component", {"from_id": parent, "to_id": cid})
         for c in caps:
             s.call("allocate", {"from_id": c, "to_id": cid})
+    # Structure from imports and calls, never from prose (adopt discipline).
+    by_stem = {name: cid for cid, name, _parent, _caps in MODULES}
+    pairs, skipped = derive_depends_on()
+    unmapped = sorted({m for pair in pairs for m in pair if m not in by_stem})
+    if unmapped:  # a module on disk the model doesn't carry — say so, loudly
+        print(f"NOT MODELLED (no Component; DEPENDS_ON edges dropped): {unmapped}")
+    for a, b in pairs:
+        if a in by_stem and b in by_stem:
+            s.call("create_edge", {
+                "edge_type": "DEPENDS_ON",
+                "from_type": "Component", "from_id": by_stem[a],
+                "to_type": "Component", "to_id": by_stem[b],
+                "props": {"dependency_type": "function_call",
+                          "weight_basis": "evidence"}})
+    if skipped:
+        print(f"ambiguous self-calls skipped (defined in >1 module): {len(skipped)}")
+        for line in skipped:
+            print(f"  {line}")
     for cmp_id, path in ARTIFACTS.items():
         p = REPO / path
         s.call("link_artifact", {"artifact_id": f"art:{cmp_id.split(':')[1]}",
                                  "name": pathlib.Path(path).name, "location": path,
                                  "artifact_type": "code", "target_type": "Component",
                                  "target_id": cmp_id, "checksum": sha(p)})
+    # cap:adopt is realized by a skill, not a module: the five-phase reverse-
+    # engineering workflow lives in the kit and runs in the agent. Linking it
+    # keeps `realized` honest; nothing automated verifies it, and that gap
+    # should stay open.
+    s.call("allocate", {"from_id": "cap:adopt", "to_id": "cmp:skills"})
+    s.call("link_artifact", {"artifact_id": "art:adopt-skill",
+                             "name": "adopt/SKILL.md",
+                             "location": "getting-started/skills/adopt/SKILL.md",
+                             "artifact_type": "document", "target_type": "Capability",
+                             "target_id": "cap:adopt",
+                             "checksum": sha(REPO / "getting-started/skills/adopt/SKILL.md")})
     for cap, path in VERIFICATIONS.items():
         vid = f"ver:{cap.split(':')[1]}"
         s.call("add_verification", {"id": vid, "name": pathlib.Path(path).name,
@@ -326,18 +475,27 @@ def build(s: Server) -> None:
         for target in governs:
             s.call("governed_by", {"from_type": "Capability", "from_id": target,
                                    "to_type": "Decision", "to_id": did})
-    s.call("add_release", {"id": "rel:v020", "name": "v0.2.0", "version": "0.2.0",
-                           "unit_type": "binary"})
-    # The as-released view (BL-34): v0.2.0 is the tagged repo, so every module
-    # artifact ships in it, checksum frozen at what was registered.
+    # v0.3.0, not v0.2.0: the workspace version moved and several modelled
+    # modules (flow, budget) did not exist at v0.2.0 — freezing today's
+    # checksums under that tag would assert files into a release that never
+    # carried them. Status `built` until the tag is pushed (COORD step 7).
+    s.call("add_release", {"id": "rel:v030", "name": "v0.3.0", "version": "0.3.0",
+                           "unit_type": "binary", "status": "built"})
+    # The as-released view (BL-34): checksum frozen at what is on main now.
     for cmp_id, path in ARTIFACTS.items():
         s.call("release_includes", {
-            "release_id": "rel:v020", "target_type": "Artifact",
+            "release_id": "rel:v030", "target_type": "Artifact",
             "target_id": f"art:{cmp_id.split(':')[1]}",
             "as_checksum": sha(REPO / path)})
+    # The skills tree ships too — the kit installs it into consumer projects.
+    # Without this line the graph truthfully complained "built but ships in
+    # nothing" (unreleased_component, first fired 2026-07-20).
+    s.call("release_includes", {"release_id": "rel:v030",
+                                "target_type": "Component",
+                                "target_id": "cmp:skills"})
     s.call("add_environment", {"id": "env:dev", "name": "Developer machine",
                                "env_type": "development"})
-    s.call("deploy_to", {"release_id": "rel:v020", "environment_id": "env:dev", "status": "active"})
+    s.call("deploy_to", {"release_id": "rel:v030", "environment_id": "env:dev", "status": "active"})
 
 
 def analyse(s: Server) -> None:
@@ -373,6 +531,40 @@ def analyse(s: Server) -> None:
 
     cov = rep["verification"]
     print(f"\n-- verification coverage --\n  {cov}")
+
+    # -- reconcile the model against the filesystem --------------------------
+    # The probe the 2026-07-20 self-adopt run showed was missing: 15 of 33
+    # source files had no Artifact and nothing here could say so. Sweep scope
+    # is the product (both crates' src trees + the kit installer) — trial
+    # scripts under tools/ are instruments, deliberately out of scope.
+    swept = sorted(
+        p for pat in ("crates/reflow2-core/src/*.rs", "crates/reflow2-mcp/src/*.rs")
+        for p in REPO.glob(pat)
+        if p.name != "lib.rs"  # pure re-export shims; not a meaningful unit
+    ) + [REPO / "tools/reflow2_init.py"]
+    arts = s.call("scan_nodes", {"node_type": "Artifact"})
+    if isinstance(arts, dict):  # CLI path envelopes lists; smoke_mcp does not
+        arts = arts["items"]
+    by_loc = {a["properties"].get("location"): a["node_id"]
+              for a in arts if a["properties"].get("location")}
+    observed, unregistered = [], []
+    for p in swept:
+        loc = p.relative_to(REPO).as_posix()
+        if loc in by_loc:
+            observed.append({"artifact_id": by_loc[loc], "present": True,
+                             "checksum": sha(p)})
+        else:
+            unregistered.append(loc)
+            observed.append({"artifact_id": f"art:unmodelled:{loc}",
+                             "present": True, "checksum": sha(p)})
+    drift = s.call("reconcile_artifacts", {"observed": observed, "exhaustive": True})
+    findings = drift.get("findings", [])
+    print(f"\n-- reconcile vs filesystem: {len(findings)} finding(s), "
+          f"{len(swept)} files swept --")
+    for f in findings:
+        print(f"  {f.get('kind', '?'):24} {f.get('artifact_id', '?')}")
+    if not findings:
+        print("  model and filesystem agree")
 
 
 def main() -> int:

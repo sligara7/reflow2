@@ -81,7 +81,7 @@ Three records, three questions — kept separate on purpose:
   feedback edges, and what reflow2 can do about each. Generated with [loop-model.json](loop-model.json)
   by `tools/model_the_loop.py`.
 - [design/reflow2.json](design/reflow2.json) — reflow2's own functional design as a reflow2 graph
-  (96 nodes), the durable record behind `tools/build_design_graph.py`.
+  (173 nodes), the durable record behind `tools/build_design_graph.py`.
 
 ### 3¾ · Direction — *the prescriptive graph* (candidate, not yet built)
 - [graph-analysis.md](graph-analysis.md) — use graph-theory tools (`dynograph-graph`/`-vector`/`-cluster`/`-game`) to *make* design decisions, not just record them — e.g. allocate functions to services by cohesion/coupling instead of by domain. Starts with edge **weights**.

@@ -15,6 +15,42 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **The self-model now derives structure from source and reconciles against the filesystem**
+  (the 2026-07-20 self-adopt run). Turning the `adopt` skill on reflow2 itself found that 15 of
+  the committed model's 16 gaps pointed at the *model*: five shipped, MCP-exposed, tested
+  capabilities (`reconcile-verified`, `reconcile-deployed`, `model-process`, `freshness`,
+  `adopt`) still said `planned`, 15 of 33 source files carried no Component or Artifact, and
+  the graph held **zero DEPENDS_ON edges** — so `circular_dependencies` was structurally blind:
+  a detector cannot walk edges nobody drew. Ruled per sharpening.md §2 (model wrong, not
+  system) and fixed in `tools/build_design_graph.py` as standing probes rather than one-off
+  edits:
+
+  - **DEPENDS_ON is derived from imports and calls, never from prose.** Two signals: `use
+    crate::` paths, and `self.method()` calls resolved against which module's
+    `impl DesignGraph` block defines the method — Rust needs no `use` for inherent methods,
+    and it is exactly these that carry cycles rustc never flags. Comments are stripped first
+    (a rustdoc intra-doc link in `detect.rs` otherwise fabricates a detect↔heal cycle that
+    does not exist), and a method name defined in more than one module is skipped loudly,
+    never guessed. 74 evidence-based edges; with them in place **reflow2 reports its own
+    `cmp:propagate ↔ cmp:structure` cycle as a critical defect** — the first structural truth
+    about itself it has ever surfaced unprompted.
+  - **The build now ends by reconciling the model against the filesystem** — a full sweep of
+    both crates' src trees plus the installer through `reconcile_artifacts` (`exhaustive`,
+    unswept-file entries included), so an unmodelled source file or a stale checksum is a
+    printed drift finding on every rebuild, not a discovery someone has to re-make.
+  - The release manifest moved to `rel:v030` (v0.2.0 never contained `flow.rs` or `budget.rs`;
+    freezing today's checksums under that tag would assert files into a release that never
+    carried them) and now `INCLUDES` the skills tree, which closed a true
+    `unreleased_component` complaint. `cap:adopt` is allocated to `cmp:skills` and realized by
+    `adopt/SKILL.md` — a capability whose implementation is a skill, stated as such.
+
+  The graph is now 173 nodes / 324 edges (was 125/175), the export stays byte-identical across
+  rebuilds, and the gap list is down to three — `cap:kit`, `cap:freshness`, `cap:adopt`, each
+  genuinely unverified — every one a thing to build, none a modelling error. Gaps fell 16 → 3
+  because the model was corrected, not because any probe was loosened.
+
 ### Fixed
 
 - **A flow's cycle now reports every step caught in it, not just one walk through it** (F7, the

@@ -52,7 +52,6 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
-- Self-model standing probe — @ajs — since 2026-07-20 — tools/build_design_graph.py, docs/design/reflow2.json (self-adopt run found the model 15 of 33 source files short, 5 statuses stale, and 0 DEPENDS_ON edges; teaching the builder to derive structure from source and reconcile against disk)
 
 
 
@@ -96,6 +95,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- Self-model standing probe done: build_design_graph.py derives DEPENDS_ON from source and reconciles vs disk; graph 125→173 nodes, gaps 16→3 (all true), and reflow2 now reports its own propagate↔structure cycle as critical — @ajs — 2026-07-20 — (this commit)
 - F7 done: flow cycles report members + path (storyflow's cluster kept p-prompt, the human hand-off, that the walk dropped); adopt trial's F1-F7 all closed — @ajs — 2026-07-20 — (this commit)
 - F6 done: SPOF skips components coupled only by a library contract (storyflow 7 of 15 -> 5); medium default keeps today's behaviour — @ajs — 2026-07-20 — (this commit)
 - BL-27 F1/F2 done: pointer reaches every instruction-file convention (CLAUDE.md et al); next-steps branches on the project, not our own artifact — @ajs — 2026-07-20 — (this commit)

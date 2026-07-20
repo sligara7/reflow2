@@ -2,11 +2,27 @@
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:adopt",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:allocate",
       "properties": {
         "weight_basis": "estimated"
       },
       "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:budget",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:budget"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -31,6 +47,22 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:freshness",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:genesis",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:genesis"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -86,7 +118,31 @@
       "properties": {
         "weight_basis": "estimated"
       },
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:mcp-surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:mcp-surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:model-process",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:flow"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -126,7 +182,31 @@
       "properties": {
         "weight_basis": "estimated"
       },
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:reconcile-built",
+      "properties": {
+        "weight_basis": "estimated"
+      },
       "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:reconcile-deployed",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:reconcile-verified",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:verify"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -135,6 +215,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:report",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:surprises"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -150,7 +238,31 @@
       "properties": {
         "weight_basis": "estimated"
       },
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
       "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:vocabulary",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:schema"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -188,7 +300,31 @@
       "edge_type": "CONTAINS",
       "from_id": "cmp:core",
       "properties": {},
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
       "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:confirm"
     },
     {
       "edge_type": "CONTAINS",
@@ -218,6 +354,24 @@
       "edge_type": "CONTAINS",
       "from_id": "cmp:core",
       "properties": {},
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
       "to_id": "cmp:graph"
     },
     {
@@ -237,6 +391,18 @@
       "from_id": "cmp:core",
       "properties": {},
       "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:nodes"
     },
     {
       "edge_type": "CONTAINS",
@@ -266,7 +432,19 @@
       "edge_type": "CONTAINS",
       "from_id": "cmp:core",
       "properties": {},
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
       "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:surprises"
     },
     {
       "edge_type": "CONTAINS",
@@ -297,6 +475,18 @@
       "from_id": "cmp:kit",
       "properties": {},
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:mcp",
+      "properties": {},
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:mcp",
+      "properties": {},
+      "to_id": "cmp:main"
     },
     {
       "edge_type": "CONTAINS",
@@ -383,8 +573,738 @@
       "to_id": "req:survives-upgrade"
     },
     {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:agent",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:agent",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:allocate",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:allocate",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:artifact",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:artifact",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:artifact",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:artifact",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:budget",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:budget",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:confirm",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:confirm",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:detect",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:detect",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:detect",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:detect",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:detect",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:detect",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:dimensions",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:dimensions",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:drift",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:drift",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:drift",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:export",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:export",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:export",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:fielded",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:fielded",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:fielded",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:flow",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:flow",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:genesis",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:genesis",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:genesis",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:graph",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:graph",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:graph",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:heal",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:heal",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:heal",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:heal",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:heal",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:hierarchy",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:hierarchy",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:ingest",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:ingest",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:ingest",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:ingest",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:operate",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:operate",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:propagate",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:propagate",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:propagate",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:report",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:report",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:report",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:report",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:report",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:report",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:report",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:report",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:structure",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:structure",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:structure",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:surprises",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:surprises",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:surprises",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:temporal",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:temporal",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:verify",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:verify",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:verify",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:vocabulary",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
       "edge_type": "DEPLOYED_TO",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
         "status": "active"
       },
@@ -470,7 +1390,15 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:1c729eee5b67e7dc"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
       "properties": {
         "as_checksum": "sha256:d282035a162e3e56"
       },
@@ -478,15 +1406,39 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
-        "as_checksum": "sha256:538dc98cad03af92"
+        "as_checksum": "sha256:5ba629988c416b39"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:c68b6e51f89b5caf"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:5e77e752c0c60d06"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:a25ed6b6f633a3aa"
       },
       "to_id": "art:detect"
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
         "as_checksum": "sha256:fbe714849869c1d8"
       },
@@ -494,7 +1446,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
         "as_checksum": "sha256:676d89b9e3be53bd"
       },
@@ -502,7 +1454,15 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:74c0459e03ad38ce"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
       "properties": {
         "as_checksum": "sha256:1957641d39c28842"
       },
@@ -510,7 +1470,31 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:58f501423e219105"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:e2e94e52eb601d53"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
       "properties": {
         "as_checksum": "sha256:f68e39113071f8b1"
       },
@@ -518,15 +1502,15 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
-        "as_checksum": "sha256:6c161bd00c8bbd30"
+        "as_checksum": "sha256:7fd0af4d731e0f22"
       },
       "to_id": "art:heal"
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
         "as_checksum": "sha256:2f697a383b3c457d"
       },
@@ -534,7 +1518,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
         "as_checksum": "sha256:6b75bc576b6c891f"
       },
@@ -542,15 +1526,39 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
-        "as_checksum": "sha256:7a3aa60a911d249d"
+        "as_checksum": "sha256:bf20da9bb9d606de"
       },
       "to_id": "art:init"
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:54a1679022bb86b4"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:7fed68bfef7c6889"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
       "properties": {
         "as_checksum": "sha256:feca736d9d86d965"
       },
@@ -558,7 +1566,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
         "as_checksum": "sha256:3a429cd9945965ca"
       },
@@ -566,7 +1574,7 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
         "as_checksum": "sha256:d8275cc570cb9bb2"
       },
@@ -574,31 +1582,47 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
-        "as_checksum": "sha256:6ad8c5bf53fca047"
+        "as_checksum": "sha256:383cd220f7f1b639"
       },
       "to_id": "art:report"
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
-        "as_checksum": "sha256:d29c79f8fbfc2e53"
+        "as_checksum": "sha256:d2f251dfcb8193df"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:93368377171fa72a"
       },
       "to_id": "art:service"
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
-        "as_checksum": "sha256:ee5ef7a4836a74ce"
+        "as_checksum": "sha256:59da933a6d0f5d5f"
       },
       "to_id": "art:structure"
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
       "properties": {
         "as_checksum": "sha256:f9e9aed059f42db7"
       },
@@ -606,19 +1630,25 @@
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
-        "as_checksum": "sha256:a6ed46c71a37ad6d"
+        "as_checksum": "sha256:824287d5a22bd960"
       },
       "to_id": "art:verify"
     },
     {
       "edge_type": "INCLUDES",
-      "from_id": "rel:v020",
+      "from_id": "rel:v030",
       "properties": {
         "as_checksum": "sha256:86bc99c202396a5f"
       },
       "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v030",
+      "properties": {},
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "PROVIDES",
@@ -646,11 +1676,51 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:adopt-skill",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:adopt"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:agent",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:allocate",
       "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:artifact",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:budget",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:confirm",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:confirm"
     },
     {
       "edge_type": "REALIZES",
@@ -678,11 +1748,43 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:dto",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:export",
       "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:fielded",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:flow",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:genesis",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:genesis"
     },
     {
       "edge_type": "REALIZES",
@@ -726,6 +1828,30 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:llm",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:main",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:nodes",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:operate",
       "properties": {
         "completeness": "complete"
@@ -758,6 +1884,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:schema",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:service",
       "properties": {
         "completeness": "complete"
@@ -771,6 +1905,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:surprises",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:surprises"
     },
     {
       "edge_type": "REALIZES",
@@ -807,6 +1949,18 @@
       "from_id": "cap:allocate",
       "properties": {},
       "to_id": "req:golden-thread"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:budget",
+      "properties": {},
+      "to_id": "req:golden-thread"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:budget",
+      "properties": {},
+      "to_id": "req:no-silent-fallback"
     },
     {
       "edge_type": "SATISFIES",
@@ -849,6 +2003,12 @@
       "from_id": "cap:freshness",
       "properties": {},
       "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:genesis",
+      "properties": {},
+      "to_id": "req:no-se-knowledge"
     },
     {
       "edge_type": "SATISFIES",
@@ -978,6 +2138,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:budget",
+      "properties": {},
+      "to_id": "cap:budget"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:change",
       "properties": {},
       "to_id": "cap:change"
@@ -993,6 +2159,12 @@
       "from_id": "ver:dimensions",
       "properties": {},
       "to_id": "cap:dimensions"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:genesis",
+      "properties": {},
+      "to_id": "cap:genesis"
     },
     {
       "edge_type": "VERIFIES",
@@ -1020,6 +2192,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:model-process",
+      "properties": {},
+      "to_id": "cap:model-process"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:portability",
       "properties": {},
       "to_id": "cap:portability"
@@ -1041,6 +2219,18 @@
       "from_id": "ver:reconcile-built",
       "properties": {},
       "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:reconcile-deployed",
+      "properties": {},
+      "to_id": "cap:reconcile-deployed"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:reconcile-verified",
+      "properties": {},
+      "to_id": "cap:reconcile-verified"
     },
     {
       "edge_type": "VERIFIES",
@@ -1068,11 +2258,51 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:adopt-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:agent",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:allocate",
       "properties": {
         "action": "created"
       },
       "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:artifact",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:budget",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:confirm",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:confirm"
     },
     {
       "edge_type": "YIELDED",
@@ -1100,11 +2330,43 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:dto",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:export",
       "properties": {
         "action": "created"
       },
       "to_id": "art:export"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:fielded",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:flow",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:genesis",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:genesis"
     },
     {
       "edge_type": "YIELDED",
@@ -1148,6 +2410,30 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:llm",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:main",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:nodes",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:operate",
       "properties": {
         "action": "created"
@@ -1180,6 +2466,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:schema",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:service",
       "properties": {
         "action": "created"
@@ -1193,6 +2487,14 @@
         "action": "created"
       },
       "to_id": "art:structure"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:surprises",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:surprises"
     },
     {
       "edge_type": "YIELDED",
@@ -1222,6 +2524,28 @@
   "graph_id": "reflow2",
   "nodes": [
     {
+      "node_id": "art:adopt-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:ef54ecabcaf64bc5",
+        "location": "getting-started/skills/adopt/SKILL.md",
+        "name": "adopt/SKILL.md",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:agent",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:1c729eee5b67e7dc",
+        "location": "crates/reflow2-core/src/agent.rs",
+        "name": "agent.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:allocate",
       "node_type": "Artifact",
       "properties": {
@@ -1233,11 +2557,44 @@
       }
     },
     {
+      "node_id": "art:artifact",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:5ba629988c416b39",
+        "location": "crates/reflow2-core/src/artifact.rs",
+        "name": "artifact.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:budget",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:c68b6e51f89b5caf",
+        "location": "crates/reflow2-core/src/budget.rs",
+        "name": "budget.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:confirm",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:5e77e752c0c60d06",
+        "location": "crates/reflow2-core/src/confirm.rs",
+        "name": "confirm.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:detect",
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:538dc98cad03af92",
+        "checksum": "sha256:a25ed6b6f633a3aa",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -1266,6 +2623,17 @@
       }
     },
     {
+      "node_id": "art:dto",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:74c0459e03ad38ce",
+        "location": "crates/reflow2-mcp/src/dto.rs",
+        "name": "dto.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:export",
       "node_type": "Artifact",
       "properties": {
@@ -1273,6 +2641,39 @@
         "checksum": "sha256:1957641d39c28842",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:fielded",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:58f501423e219105",
+        "location": "crates/reflow2-core/src/fielded.rs",
+        "name": "fielded.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:flow",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:e2e94e52eb601d53",
+        "location": "crates/reflow2-core/src/flow.rs",
+        "name": "flow.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:genesis",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:8196df94f5775161",
+        "location": "crates/reflow2-core/src/genesis.rs",
+        "name": "genesis.rs",
         "status": "realized"
       }
     },
@@ -1292,7 +2693,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6c161bd00c8bbd30",
+        "checksum": "sha256:7fd0af4d731e0f22",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -1325,9 +2726,42 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7a3aa60a911d249d",
+        "checksum": "sha256:bf20da9bb9d606de",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:llm",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:6869d93e97fc9393",
+        "location": "crates/reflow2-core/src/llm.rs",
+        "name": "llm.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:main",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:54a1679022bb86b4",
+        "location": "crates/reflow2-mcp/src/main.rs",
+        "name": "main.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:nodes",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:7fed68bfef7c6889",
+        "location": "crates/reflow2-core/src/nodes.rs",
+        "name": "nodes.rs",
         "status": "realized"
       }
     },
@@ -1369,9 +2803,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6ad8c5bf53fca047",
+        "checksum": "sha256:383cd220f7f1b639",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:schema",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:d2f251dfcb8193df",
+        "location": "crates/reflow2-core/src/schema.rs",
+        "name": "schema.rs",
         "status": "realized"
       }
     },
@@ -1380,7 +2825,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d29c79f8fbfc2e53",
+        "checksum": "sha256:93368377171fa72a",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -1391,9 +2836,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ee5ef7a4836a74ce",
+        "checksum": "sha256:59da933a6d0f5d5f",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:surprises",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:b1cec4ec107ef2b1",
+        "location": "crates/reflow2-core/src/surprises.rs",
+        "name": "surprises.rs",
         "status": "realized"
       }
     },
@@ -1413,7 +2869,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a6ed46c71a37ad6d",
+        "checksum": "sha256:824287d5a22bd960",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
         "status": "realized"
@@ -1439,7 +2895,7 @@
         "is_exit_point": false,
         "name": "Recover a design from an existing system",
         "provenance": "authored",
-        "status": "planned",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -1451,6 +2907,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Analyse and propose allocation",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:budget",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Sum contributions along the thread; refuse a total it cannot honestly compute.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Roll up a budget against a constraint",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -1504,7 +2973,20 @@
         "is_exit_point": false,
         "name": "Say when a claim was last confirmed",
         "provenance": "authored",
-        "status": "planned",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:genesis",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Seed a project, its requirements and capabilities, refusing to clobber an existing graph.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Bootstrap a design from a brief",
+        "provenance": "authored",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -1582,7 +3064,7 @@
         "is_exit_point": false,
         "name": "Model a process, not only a product",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -1647,7 +3129,7 @@
         "is_exit_point": false,
         "name": "Reconcile against what is running",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -1660,7 +3142,7 @@
         "is_exit_point": false,
         "name": "Reconcile against what was proven",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -1717,6 +3199,19 @@
       }
     },
     {
+      "node_id": "cmp:agent",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "agent",
+        "provenance": "authored",
+        "purpose": "The agent module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:allocate",
       "node_type": "Component",
       "properties": {
@@ -1725,6 +3220,45 @@
         "name": "allocate",
         "provenance": "authored",
         "purpose": "The allocate module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:artifact",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "artifact",
+        "provenance": "authored",
+        "purpose": "The artifact module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:budget",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "budget",
+        "provenance": "authored",
+        "purpose": "The budget module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:confirm",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "confirm",
+        "provenance": "authored",
+        "purpose": "The confirm module.",
         "status": "planned",
         "tier": "operational"
       }
@@ -1782,6 +3316,19 @@
       }
     },
     {
+      "node_id": "cmp:dto",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "dto",
+        "provenance": "authored",
+        "purpose": "The dto module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:export",
       "node_type": "Component",
       "properties": {
@@ -1790,6 +3337,45 @@
         "name": "export",
         "provenance": "authored",
         "purpose": "The export module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:fielded",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "fielded",
+        "provenance": "authored",
+        "purpose": "The fielded module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:flow",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "flow",
+        "provenance": "authored",
+        "purpose": "The flow module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:genesis",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "genesis",
+        "provenance": "authored",
+        "purpose": "The genesis module.",
         "status": "planned",
         "tier": "operational"
       }
@@ -1873,6 +3459,32 @@
       }
     },
     {
+      "node_id": "cmp:llm",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "llm",
+        "provenance": "authored",
+        "purpose": "The llm module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:main",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "main",
+        "provenance": "authored",
+        "purpose": "The main module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:mcp",
       "node_type": "Component",
       "properties": {
@@ -1881,6 +3493,19 @@
         "name": "reflow2-mcp",
         "provenance": "authored",
         "purpose": "The agent-facing MCP surface over one graph.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:nodes",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "nodes",
+        "provenance": "authored",
+        "purpose": "The nodes module.",
         "status": "planned",
         "tier": "operational"
       }
@@ -1938,6 +3563,19 @@
       }
     },
     {
+      "node_id": "cmp:schema",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "schema",
+        "provenance": "authored",
+        "purpose": "The schema module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:service",
       "node_type": "Component",
       "properties": {
@@ -1972,6 +3610,19 @@
         "name": "structure",
         "provenance": "authored",
         "purpose": "The structure module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:surprises",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "surprises",
+        "provenance": "authored",
+        "purpose": "The surprises module.",
         "status": "planned",
         "tier": "operational"
       }
@@ -2123,6 +3774,26 @@
       }
     },
     {
+      "node_id": "frag:art:adopt-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered adopt/SKILL.md"
+      }
+    },
+    {
+      "node_id": "frag:art:agent",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered agent.rs"
+      }
+    },
+    {
       "node_id": "frag:art:allocate",
       "node_type": "Fragment",
       "properties": {
@@ -2130,6 +3801,36 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered allocate.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:artifact",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered artifact.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:budget",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered budget.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:confirm",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered confirm.rs"
       }
     },
     {
@@ -2163,6 +3864,16 @@
       }
     },
     {
+      "node_id": "frag:art:dto",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered dto.rs"
+      }
+    },
+    {
       "node_id": "frag:art:export",
       "node_type": "Fragment",
       "properties": {
@@ -2170,6 +3881,36 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered export.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:fielded",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered fielded.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:flow",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered flow.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:genesis",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered genesis.rs"
       }
     },
     {
@@ -2223,6 +3964,36 @@
       }
     },
     {
+      "node_id": "frag:art:llm",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered llm.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:main",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered main.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:nodes",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered nodes.rs"
+      }
+    },
+    {
       "node_id": "frag:art:operate",
       "node_type": "Fragment",
       "properties": {
@@ -2263,6 +4034,16 @@
       }
     },
     {
+      "node_id": "frag:art:schema",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered schema.rs"
+      }
+    },
+    {
       "node_id": "frag:art:service",
       "node_type": "Fragment",
       "properties": {
@@ -2280,6 +4061,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered structure.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:surprises",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered surprises.rs"
       }
     },
     {
@@ -2351,13 +4142,13 @@
       }
     },
     {
-      "node_id": "rel:v020",
+      "node_id": "rel:v030",
       "node_type": "Release",
       "properties": {
-        "name": "v0.2.0",
+        "name": "v0.3.0",
         "status": "planned",
         "unit_type": "binary",
-        "version": "0.2.0"
+        "version": "0.3.0"
       }
     },
     {
@@ -2501,6 +4292,16 @@
       }
     },
     {
+      "node_id": "ver:budget",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "budget.rs",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:change",
       "node_type": "Verification",
       "properties": {
@@ -2527,6 +4328,16 @@
         "level": "integration",
         "method": "test",
         "name": "dimensions.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:genesis",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "genesis.rs",
         "status": "passing"
       }
     },
@@ -2571,6 +4382,16 @@
       }
     },
     {
+      "node_id": "ver:model-process",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "flow.rs",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:portability",
       "node_type": "Verification",
       "properties": {
@@ -2607,6 +4428,26 @@
         "level": "integration",
         "method": "test",
         "name": "drift.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:reconcile-deployed",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "fielded.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:reconcile-verified",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "verify_drift.rs",
         "status": "passing"
       }
     },
