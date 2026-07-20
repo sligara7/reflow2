@@ -119,21 +119,22 @@ Five practices, each earned:
 ## 4. The instruments, and what "better" means
 
 The 2026-07-19 exercise left four runnable scripts, and closing BL-37 added a fifth. **They are the
-fitness function** — the numbers that say
-whether reflow2 is getting better at the thing it claims to do. All are currently failing on purpose
-and record a baseline to move:
+fitness function** — the numbers that say whether reflow2 is getting better at the thing it claims
+to do. Three are now fully green and act as regression gates; the two still failing record a
+baseline to move, on purpose:
 
 | Instrument | Asks | Baseline (2026-07-19) | Blocked on |
 |---|---|---|---|
-| `tools/phase_trial.py` | Does the design carry weight after P2? | **11/13** — P3 4/4, P4 3/4, P5 1/2, thread 3/3 (was 8/13 at baseline) | BL-30 (M), BL-9 |
+| `tools/phase_trial.py` | Does the design carry weight after P2? | **13/13 — fully green, exits 0** (was 8/13 at baseline): the last two probes were closed by BL-9 (`reconcile_deployment`) and BL-30's `reconcile_verification`, and both now *inject* a divergence rather than checking a tool exists. Works as a regression gate | — |
 | `tools/erosion_trial.py` | After N fix cycles, does the design describe what shipped? | **7/8** (was 2/7 at baseline) — the release records its manifest with cut-frozen checksums and the as-released diff is a query; the one remaining miss is the semantic description-vs-history judgement, deliberately not built | BL-33, BL-34 |
 | `tools/coherent_erosion_trial.py` | Is `designed == released` reachable, and does anything drive it? | **9/9 — the first instrument fully green** (was 4/9), every YES a genuine read; it stays in the table as a regression gate | — |
 | `tools/build_design_graph.py` | What does reflow2 say about reflow2's own design? | 96 nodes, 16 gaps, 14 defects — **every output true** (was 33/36 with 13 false gaps and 24 false defects; BL-38 and BL-5's second pass cleared the noise) | — |
 | `tools/model_the_loop.py` | Can reflow2 hold its own *process* — a model with feedback loops as the subject? | **0 frictions** (was 4: no Flow write side, roles lost, cycles invisible, product-shaped nudge — BL-37); stays as a regression gate, exits non-zero on any friction | — |
 
-`tools/smoke_mcp.py` stays the gate for the shipped surface; these four are the gate for whether the
-*loop* works. They exit non-zero by design and should not be wired into CI as pass/fail until the
-items above land.
+`tools/smoke_mcp.py` stays the gate for the shipped surface; these five are the gate for whether the
+*loop* works. The green ones (`phase_trial`, `coherent_erosion_trial`, `model_the_loop`) exit 0 and
+may be treated as pass/fail regression gates; `erosion_trial` and the design-graph baselines still
+exit non-zero by design and record numbers to move, not failures to fix silently.
 
 > **A score can improve two ways, and only one is progress.** When a number moves, check whether the
 > tool got better or the trial got easier. Loosening a probe to make a baseline go green is

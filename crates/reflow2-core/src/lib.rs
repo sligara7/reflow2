@@ -87,6 +87,9 @@ pub use report::{AllocationSummary, GraphReport};
 pub use schema::load_schema;
 pub use surprises::SurprisingConnection;
 pub use temporal::{ChangeAction, ChangeRecord, ChangeType, EpochType, parse_snapshot_state};
+pub use verify::{
+    ObservedVerification, VerificationDriftReport, VerificationFinding, VerifyReconcileOptions,
+};
 pub use vocabulary::{
     EdgeQuery, EdgeTypeMatch, EdgeTypeSpec, EndpointMatch, NodeTypeDetail, NodeTypeSpec,
     PropertySpec, Vocabulary,

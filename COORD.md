@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-30 M half (reconcile_verification) — @ajs — since 2026-07-19 — verify.rs, service.rs, phase_trial P4
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
 
@@ -87,6 +86,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-30 done (M half): reconcile_verification completes the reconcile family — phase trial 13/13, first fully-green run, now a regression gate — @ajs — 2026-07-19 — (this commit)
 - BL-27 step 1 done: three conversion fixes in reflow2_init.py (pointer line, gitignore, branched next-steps) + design_without_intent at 0.72 — @ajs — 2026-07-19 — (this commit)
 - BL-9 + BL-11 done: reconcile_deployment (P5 2/2, phase 12/13) and budget_report (Constraint write side, fourteenth recurring-lesson instance); all ten viewpoints render — @ajs — 2026-07-19 — (this commit)
 - BL-40 second increment done: evolution + provenance views — 8 views rendered, every projectable catalogue row done; core read-tool step stays open — @ajs — 2026-07-19 — (this commit)

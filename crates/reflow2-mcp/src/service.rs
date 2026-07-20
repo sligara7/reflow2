@@ -550,6 +550,31 @@ pub struct FlowReportReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+pub struct ObservedVerificationReq {
+    pub verification_id: String,
+    /// What the run reported: `passed` / `failed` / `skipped`. Anything else
+    /// is rejected by name; the rest of the batch still processes.
+    pub outcome: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct ReconcileVerificationReq {
+    /// One entry per check the run actually executed. Checks not listed are
+    /// not evidence of anything.
+    pub observed: Vec<ObservedVerificationReq>,
+    /// Write a DriftEvent per divergence (off = look before you write).
+    #[serde(default)]
+    pub record_events: bool,
+    /// The run covered every check: recorded passing/failing claims it did
+    /// not include are reported as unobserved.
+    #[serde(default)]
+    pub exhaustive: bool,
+    /// Timestamp for recorded events (the server takes no clock).
+    #[serde(default)]
+    pub detected_at: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
 pub struct ObservedEnvironmentReq {
     pub environment_id: String,
     /// Release ids actually running there. An empty list is a positive
@@ -1534,6 +1559,42 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         ok_json(g.release_report(&req.release_id).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Compare what a real test run REPORTED against what each Verification \
+                       records — the P4 reconcile, last of the three feedback loops (BL-30): \
+                       reconcile_artifacts asks about the code, this about the outcomes, \
+                       reconcile_deployment about what runs. Supply one entry per check the \
+                       run executed ('passed'/'failed'/'skipped'). A recorded 'passing' that \
+                       the run failed is the dangerous direction and sorts first — the design \
+                       believed proven what is actually broken. With record_events each \
+                       divergence is a persistent DriftEvent (and unresolved_drift gap), \
+                       auto-resolved when a later run agrees; the design-side answer is \
+                       set_verification_status with what the run actually said."
+    )]
+    pub async fn reconcile_verification(
+        &self,
+        Parameters(req): Parameters<ReconcileVerificationReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let observed: Vec<reflow2_core::ObservedVerification> = req
+            .observed
+            .into_iter()
+            .map(|o| reflow2_core::ObservedVerification {
+                verification_id: o.verification_id,
+                outcome: o.outcome,
+            })
+            .collect();
+        let options = reflow2_core::VerifyReconcileOptions {
+            record_events: req.record_events,
+            exhaustive: req.exhaustive,
+            detected_at: req.detected_at,
+        };
+        let mut g = self.graph.lock().await;
+        ok_json(
+            g.reconcile_verification(&observed, &options)
+                .map_err(dyno_err)?,
+        )
     }
 
     #[tool(

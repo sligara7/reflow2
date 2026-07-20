@@ -252,13 +252,18 @@ def run_p4(s: Server, p: Probes, files: dict[str, pathlib.Path]) -> None:
     p.score("P4", "a FAILING verification is surfaced as a problem", named,
             f"gap sources now: {sorted({g['gap_source'] for g in gaps})}")
 
-    # Probe 7 — reconciliation: the graph says passed, the test run says failed.
-    # There is no reconcile_verification; this checks whether anything else notices.
-    tools = [t["name"] for t in s.rpc("tools/list", {})["result"]["tools"]]
+    # Probe 7 — reconciliation: the graph says passing, the run says failed.
+    # CAUGHT only if detect_gaps names the divergence without being told where
+    # to look. (ver:detect is recorded passing above.)
+    r = s.call("reconcile_verification", {
+        "observed": [{"verification_id": "ver:detect", "outcome": "failed"}],
+        "record_events": True})
+    gaps = s.call("detect_gaps")
+    named = [g for g in gaps if g["gap_source"] == "unresolved_drift"
+             and "ver:detect" in g.get("affected_ids", [])]
     p.score("P4", "a way to reconcile recorded status against a real test run",
-            any("verif" in t and "reconcile" in t for t in tools),
-            "no reconcile_verification on the surface" if not any(
-                "verif" in t and "reconcile" in t for t in tools) else "")
+            bool(r["findings"]) and bool(named),
+            f"findings={len(r['findings'])}, gap sources: {sorted({g['gap_source'] for g in gaps})}")
 
 
 def run_p5(s: Server, p: Probes) -> None:

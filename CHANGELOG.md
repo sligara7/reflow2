@@ -17,6 +17,22 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The P4 reconcile — the last feedback loop closes, and the phase trial goes fully green**
+  (BL-30's M half). `reconcile_verification` completes the family: `reconcile_artifacts` asks
+  about the code, this asks about the *outcomes*, `reconcile_deployment` about what runs. The
+  caller supplies what a real run reported per check (`passed`/`failed`/`skipped` — anything
+  else is rejected by name and the batch survives); the graph names every divergence from what
+  it believed. "Recorded passing, run reported failed" — believed proven, actually broken, the
+  reflow1 failure in miniature — sorts first and records at severity high. Divergences are
+  persistent `unresolved_drift` gaps with P4-appropriate advice, auto-resolved when a later run
+  agrees; event identity is the (declared, observed) pair, so a check that flaps leaves its
+  history visible per axis Z. A partial run is never read as absence; `exhaustive` names the
+  passing/failing claims the run did not cover. The phase trial's P4 probe now injects the
+  divergence, and the instrument reached **13/13 — fully green and exits 0 for the first
+  time**: the standing measurement for the failure that sank the original reflow now passes,
+  and works as a regression gate. This is also adoption's dynamic-analysis receptor (BL-27's
+  RE-lifecycle mapping).
+
 - **Converting an existing project actually works end to end** (BL-27, the conversion step —
   probed against a brownfield-shaped repo before and after). Three installer fixes in
   `reflow2_init.py`: the project's own `AGENTS.md` gains **one marked pointer line** to

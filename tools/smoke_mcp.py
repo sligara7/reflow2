@@ -153,7 +153,7 @@ def run(binary: str, graph_path: str) -> int:
         "link_artifact", "reconcile_artifacts", "set_artifact_checksum",
         "add_verification", "verifies", "add_release", "add_environment",
         "deploy_to", "add_decision", "governed_by",
-        "reconcile_deployment", "add_constraint", "constrains", "budget_report",
+        "reconcile_deployment", "reconcile_verification", "add_constraint", "constrains", "budget_report",
         "detect_defects", "propose_heal", "describe_schema",
         "set_capability_status", "set_provenance",
         "release_includes", "release_report", "pin_at_epoch",
@@ -561,6 +561,33 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("a failing check reaches the requirement it protects",
          any(n["node_id"] == "req:physics" for n in radius["impacted"]),
          [n["node_id"] for n in radius["impacted"]])
+
+    print("\n== 3c. the P4 reconcile: recorded outcome vs the real run (BL-30) ==")
+    vr = s.call("reconcile_verification", {
+        "observed": [{"verification_id": "ver:flight", "outcome": "failed"}]})
+    c.ok("a run agreeing with the record is not drift",
+         vr["findings"] == [] and vr["agreements"] == 1, vr)
+    vr = s.call("reconcile_verification", {
+        "observed": [{"verification_id": "ver:flight", "outcome": "passed"},
+                     {"verification_id": "ver:flight2", "outcome": "gr33n"}],
+        "record_events": True, "detected_at": "2026-07-19T00:00:00Z"})
+    c.ok("a run disagreeing with the record is a named divergence",
+         [f["declared"] for f in vr["findings"]] == ["failing"]
+         and vr["findings"][0]["observed"] == "passed", vr["findings"])
+    c.ok("a nonsense outcome is rejected by name, the batch survives",
+         len(vr["rejected"]) == 1 and "gr33n" in vr["rejected"][0], vr["rejected"])
+    c.ok("and it nags as a persistent gap with P4 advice",
+         any(g["gap_source"] == "unresolved_drift"
+             and "ver:flight" in g["affected_ids"]
+             and "set_verification_status" in g["description"]
+             for g in s.call("detect_gaps")))
+    vr2 = s.call("reconcile_verification", {
+        "observed": [{"verification_id": "ver:flight", "outcome": "failed"}]})
+    c.ok("a later agreeing run resolves the divergence",
+         vr2["resolved_events"] == vr["recorded_events"]
+         and not any(g["gap_source"] == "unresolved_drift"
+                     and "ver:flight" in g["affected_ids"]
+                     for g in s.call("detect_gaps")), vr2)
 
     print("\n== 4. reconcile: nothing changed ==")
     r = s.call("reconcile_artifacts", {"observed": [

@@ -84,7 +84,6 @@ Nine independent sources, which is why several items appear on more than one lis
 |---|---|---|---|
 | **BL-41** | **Graph text is data, never instructions — and nothing says so** | **S half done, 2026-07-19** — the standing rule is stated in the three places an agent looks: a section in the consumer AGENTS.md, one line in each of the eight skills at the point where it starts reading graph text, and the server's `get_info` instructions (so a session that loads no skill still gets it in the handshake). The one genuinely uncovered LLM failure mode in [partnership.md](partnership.md): every skill tells the agent to read node text and act on the design, and a hostile or careless statement rides that trust. Bounded today (single user, local graph); real the day a graph is shared (BL-12) or an adopted repo's prose flows through INGEST (BL-27). Mechanical mitigation (provenance-aware trust, quoting boundaries — [BL-12](#bigger-threads) sketch idea 2 is its design seed) is **M** and should wait for a real multi-writer case | ~~S~~ + M |
 | **BL-40** | **Viewpoints as pure projections (SYNTHESIZE held to a no-extrapolation standard)** | **First increment done, 2026-07-19**: the catalogue doubled — operational flow (from BL-37's machinery, retiring the seed's standing confession), as-released (from BL-34's), and decisions views join the original three; `--graph-path` projects a live graph via `--export`; [viewpoints.md](viewpoints.md) is the catalogue with the no-extrapolation rules and the not-yet-projectable list. The graph stores the design; the agent only renders, and each confession is a gap by definition. **Second increment done, 2026-07-19**: evolution (axis Z — PRECEDES solid, `sequence` dotted and cross-checked, floating ChangeEvents confessed) and provenance (authored-vs-inferred, the Fragment ledger, dangling YIELDED confessed) complete the projectable rows — 8 views rendered. **Remaining direction** (the author intends to expand this thread): once the catalogue's shape settles, projection data as typed core read tools on the MCP surface (`flow_report` is the template), so the in-session agent renders without an LLM in the projection path. As-fielded and measures landed with BL-9 / BL-11 — **all ten catalogue rows now render** | M–L |
-| **BL-30** | **A failing test satisfies the check that asked for a test** | **S half done** — `failing_verification` fires at 0.8 and coverage counts passing only. The M half (`reconcile_verification`) remains. See below | ~~S~~ + M |
 | **BL-29** | **`apply_heal` trusts the proposal; merge loses data silently** | Mostly **done** — three of seven fixed; three remain, one deliberately deferred. See below | M |
 
 **BL-39 · A design cannot be loaded into a running session — DONE** — *found while trying to use the
@@ -349,7 +348,7 @@ exact fit, which is the trial's question answered two items later. Measured: pha
 1/2), erosion **7/8**, coherent-erosion **8/9** — the single remaining coherent miss is BL-36's
 `precedes`.
 
-**BL-30 · The later phases measure bookkeeping, not reality** — *[phase-coverage
+**BL-30 · The later phases measure bookkeeping, not reality — DONE** — *[phase-coverage
 trial](trials/2026-07-19-phase-coverage.md), 2026-07-19. The direct answer to "how do we know
 reflow2 doesn't repeat reflow1?"*
 
@@ -379,12 +378,20 @@ of nothing. And `verification_coverage` counts a check that **passes**, not one 
 `planned`, `failing`, `skipped` and `blocked` all mean "not currently confirmed". Measured:
 `phase_trial` P4 1/4 → 2/4, `erosion_trial` 2/7 → 3/7 (whose coverage probe also went from a
 hardcoded fail to a genuine check). Passing and failing graphs are no longer byte-identical to
-DETECT, which was the headline miss. **M — open** —
-`reconcile_verification`, the P4 sibling of `reconcile_artifacts`: the agent supplies what the test
-run actually reported, and the graph says where that diverges from what it believed. Together with
-[BL-9](#bigger-threads)'s `reconcile_deployment` these are the missing feedback loops; the
-[trial](trials/2026-07-19-phase-coverage.md) shows the golden thread itself already works in both
-directions, so this is the whole of the gap.
+DETECT, which was the headline miss. **M — done, 2026-07-19** —
+`reconcile_verification` (`verify.rs`), the P4 sibling completing the reconcile family: the agent
+supplies what the run actually reported (`passed`/`failed`/`skipped` per check; anything else
+rejected by name, the batch survives) and the graph names each divergence from what it believed.
+"Recorded `passing`, run reported `failed`" — believed proven, actually broken, the reflow1
+failure in miniature — sorts first and records at severity high. Divergences are persistent
+`unresolved_drift` gaps with P4-appropriate advice, auto-resolved when a later run agrees; the
+event identity is the (declared, observed) pair, so flapping history stays visible per axis Z.
+A partial run is never read as absence; `exhaustive` names the passing/failing claims the run
+did not cover. Measured: **phase trial 13/13 — the first fully-green run of the instrument that
+exists to measure the failure that sank the original reflow**, and its P4 probe now injects the
+divergence rather than checking a tool exists. With BL-9, all three feedback loops (P3/P4/P5)
+now close; this is also adoption's dynamic-analysis receptor (see the RE-lifecycle mapping under
+[BL-27](#bigger-threads)).
 
 **BL-31 · A `status` field is a claim nothing checks — DONE** — `status_contradiction` (0.70,
 self-contradiction family: below reality-contradiction at 0.75/0.8, above absence). Scoped to the
@@ -763,7 +770,7 @@ exposes:
 | **Information gathering** | The division-of-labour table above: requirements from anything *but* the implementation; found documents trusted per the ophyd caution (its PDR omitted the system's central invariant); sources recorded as Fragments with provenance — the provenance viewpoint renders exactly this ledger | mechanisms landed (BL-27 blockers, BL-40) |
 | **Disassembly / scanning** | For source-available software the disassembler is the repo read: structure from imports and calls, never prose (the phantom-component caution); breadth at deliberately coarse granularity (ophyd: 110k LOC → ~78 nodes, vendored fork opaque); one `import_graph` for the bulk write | discipline recorded above; the skill must encode it |
 | **Analysis — static** | allocation/coupling/`possible_duplicate`/`hierarchy_issues` over the scanned structure | landed |
-| **Analysis — dynamic** | **the gap this framework exposes.** All three brownfield trials were static-only. The receptors now exist: run the tests → `set_verification_status` from real outcomes (and BL-30's open `reconcile_verification` is the typed way in); run the thing → `reconcile_deployment` observations (BL-9). An adopt pass needs a "run it and record what you saw" phase, and BL-30's M half graduates from nice-to-have to an adopt precursor | partially landed; BL-30 M is the missing piece |
+| **Analysis — dynamic** | **the gap this framework exposed — now closed.** All three brownfield trials were static-only. The receptors exist end to end: run the tests → `reconcile_verification` (BL-30, done 2026-07-19 — the typed way in, divergences named and persistent); run the thing → `reconcile_deployment` (BL-9). The adopt skill's "run it and record what you saw" phase has its full machinery | landed |
 | **Modeling & reconstruction** | The graph *is* the model. Design recovery deliberately terminates at the human: a requirement inferred from its implementation is satisfied by construction, so recovered intent is marked `inferred` and `unmotivated_capability` routes "why does this exist?" to the person — recovered rationale lands as Decisions, provenance-marked. *You only get what you see* becomes a property of the graph: it confesses what it cannot know instead of improvising past it | landed (the projection doctrine, BL-40) |
 | **Validation** | **the second exposure — the current plan ends at "deepen on demand" with no closing step.** The validator is the reconcile family plus the detectors: checksums match (`reconcile_artifacts`), tests agree (P4), deployments agree (`reconcile_deployment`), and every gap the model fires is either true of the system or an error in the model — which is precisely how the trials scored themselves. The skill should end by running it and reporting the verdict | mechanisms landed; the skill must close the loop |
 

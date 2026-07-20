@@ -1495,13 +1495,15 @@ impl DesignGraph {
             // is answered by the two-sided accept; fielded drift (BL-9) by
             // correcting the DEPLOYED_TO declaration — or the deployment —
             // and reconciling again, which resolves the event on agreement.
-            let is_fielded = ev
+            let drift_type = ev
                 .properties
                 .get("drift_type")
                 .and_then(dynograph_core::Value::as_str)
-                .is_some_and(|t| t.starts_with("deployment_"));
-            let advice = if is_fielded {
+                .unwrap_or("");
+            let advice = if drift_type.starts_with("deployment_") {
                 "the fielded state and the declaration disagree and nobody has said which is right. Fix the declaration (deploy_to with the true status) or fix the deployment, then reconcile_deployment again."
+            } else if drift_type == "status_mismatch" {
+                "the recorded outcome and the real run disagree. Set the status to what the run actually reported (set_verification_status), or fix the thing under test, then reconcile_verification again."
             } else {
                 "the code moved and nobody has said what it means. Accept the new baseline with a disposition (design_holds or design_updated), or fix the build back."
             };

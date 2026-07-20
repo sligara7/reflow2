@@ -189,9 +189,12 @@ reflow2 phrases the question; **you** are the language model that fills it in:
   silent accept is how a design erodes into fiction. See the **link-artifacts** skill.
 - **Verify & operate:** `add_verification`, `verifies`, `set_verification_status`, `add_release`,
   `add_environment`, `add_resource`, `deploy_to`, `require_resource`, `release_includes`,
-  `release_report`, `reconcile_deployment` — the last compares what you *observed running* per
-  environment against what `deploy_to` declared; a recorded divergence nags as a gap until the
-  declaration or the deployment is fixed and a later observation agrees.
+  `release_report`, `reconcile_verification`, `reconcile_deployment` — the last two feed
+  *reality* back in: what a real test run reported per check, and what you observed running per
+  environment, each compared against what the design records. A recorded divergence nags as a
+  gap until the record or the reality is fixed and a later observation agrees. **After any real
+  test run, call `reconcile_verification` with the outcomes** — a status written once and
+  believed forever is how a design erodes into fiction.
 - **Decisions:** `add_decision`, `governed_by` — record why a choice was made, not just what.
 - **Change over time:** `add_epoch`, `add_change_event`, `record_change`.
 - **Ask the user:** `gap_to_prompt`, `acknowledge_gap`, `reviewed_gaps`,

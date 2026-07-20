@@ -84,16 +84,19 @@ python3 tools/build_design_graph.py --analyse-only
 
 # Phase-coverage trial — does the design still carry weight after P2? Seeds a
 # realistic graph, injects the divergences P3/P4/P5 are each supposed to catch,
-# and scores whether the graph noticed. NOT a gate yet: it exits non-zero today
-# because 5 probes are genuinely missed (BL-30, BL-9). It is the standing
-# measurement for the failure that sank the original reflow — the early phases
-# going well and the later ones proceeding as if they hadn't.
+# and scores whether the graph noticed. 13/13 as of 2026-07-19 (BL-30 and BL-9
+# closed the last two probes) — fully green and exits 0, so it now works as a
+# regression gate. It remains the standing measurement for the failure that
+# sank the original reflow — the early phases going well and the later ones
+# proceeding as if they hadn't.
 python3 tools/phase_trial.py
 
 # Erosion trial — the sharper question. Not "did a file change?" but: after N
 # rounds of test-fails/fix-code/accept, does the design still describe what
-# shipped? Currently 2/7, and it reports ZERO gaps on a design that has lost
-# touch with its code (BL-33, BL-34). Also non-zero exit by design.
+# shipped? 7/8 (was 2/7): the one remaining miss is the semantic
+# description-vs-history judgement, deliberately not built (the ledger
+# reports; the human judges). Non-zero exit by design until that decision
+# changes.
 python3 tools/erosion_trial.py
 
 # The same cycle done right — the constructive counterpart. Proves designed ==
