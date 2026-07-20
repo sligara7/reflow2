@@ -72,10 +72,19 @@ Add yourself if you're new here.
      18-node stub — including "what's settled": the design graph now carries 8 Decision nodes
      distilled from the 2026-07-19 session (each rationale links the session transcript).
   4. Run **check-health** and **detect-and-ask** — live counts should match
-     `build_design_graph.py --analyse-only` (16 gaps, 34 defects at time of writing; see
-     sharpening.md for current baselines).
+     `build_design_graph.py --analyse-only` — **16 gaps, 9 defects** as of 2026-07-20 (the
+     defect count fell 14 → 9 when BL-42 removed HEAL's double-count; older notes saying 34 or
+     14 are stale, and reading a pass as a failure would be the worst outcome of this test).
   5. Verify `graph_report.served_by.reflow2_version` says **0.3.0** — the new skew check, and the
-     proof the restart actually picked up the new binary.
+     proof the restart actually picked up the new binary. The report should also now carry
+     `design_nodes` / `other_counts` / `realization` (BL-42, BL-43); if any is missing, the
+     session is still on an old server. The pre-restart session of 2026-07-19/20 was serving an
+     18-node genesis stub with none of these — two days behind — which is what made this test
+     necessary.
+  5b. Confirm the tool list carries the surface built since: `add_flow`, `part_of_flow`,
+     `flow_report`, `reconcile_verification`, `reconcile_deployment`, `add_constraint`,
+     `constrains`, `budget_report`, `release_includes`, `release_report`, `precedes`,
+     `pin_at_epoch`, `set_capability_status`, `set_provenance`.
   6. Anything that diverges between the live surface and the instruments is a finding — record it in
      [docs/trials/](docs/trials/).
   7. **Then cut the release:** `git tag v0.3.0 && git push origin v0.3.0`. The bump, CHANGELOG

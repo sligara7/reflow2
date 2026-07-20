@@ -44,7 +44,7 @@ findings only because the code demonstrably ships and the topology is demonstrab
 **Not once did reflow2 correctly report a problem with itself.** Do not expect it to.
 
 *Dated follow-up, later the same day.* After BL-38 and BL-5's second pass cleared the known-false
-output, the design-graph instrument reached **zero known-false**: all 16 gaps and 14 defects are
+output, the design-graph instrument reached **zero known-false**: all 16 gaps and 9 defects are
 true, including one — the `Release`/`Environment` island — that is reflow2 independently reporting
 BL-34's consequence, and two that found real omissions in the committed model. The claim above stays
 as the baseline it was; the lesson is that reflow2's self-reports become usable *exactly to the
@@ -128,7 +128,7 @@ baseline to move, on purpose:
 | `tools/phase_trial.py` | Does the design carry weight after P2? | **13/13 — fully green, exits 0** (was 8/13 at baseline): the last two probes were closed by BL-9 (`reconcile_deployment`) and BL-30's `reconcile_verification`, and both now *inject* a divergence rather than checking a tool exists. Works as a regression gate | — |
 | `tools/erosion_trial.py` | After N fix cycles, does the design describe what shipped? | **7/8** (was 2/7 at baseline) — the release records its manifest with cut-frozen checksums and the as-released diff is a query; the one remaining miss is the semantic description-vs-history judgement, deliberately not built | BL-33, BL-34 |
 | `tools/coherent_erosion_trial.py` | Is `designed == released` reachable, and does anything drive it? | **9/9 — the first instrument fully green** (was 4/9), every YES a genuine read; it stays in the table as a regression gate | — |
-| `tools/build_design_graph.py` | What does reflow2 say about reflow2's own design? | 96 nodes, 16 gaps, 14 defects — **every output true** (was 33/36 with 13 false gaps and 24 false defects; BL-38 and BL-5's second pass cleared the noise) | — |
+| `tools/build_design_graph.py` | What does reflow2 say about reflow2's own design? | 96 nodes, 16 gaps, **9 defects** (14 → 9 when BL-42 removed HEAL's requirement/capability double-count) — **every output true** (was 33/36 with 13 false gaps and 24 false defects; BL-38 and BL-5's second pass cleared the noise) | — |
 | `tools/model_the_loop.py` | Can reflow2 hold its own *process* — a model with feedback loops as the subject? | **0 frictions** (was 4: no Flow write side, roles lost, cycles invisible, product-shaped nudge — BL-37); stays as a regression gate, exits non-zero on any friction | — |
 
 `tools/smoke_mcp.py` stays the gate for the shipped surface; these five are the gate for whether the
