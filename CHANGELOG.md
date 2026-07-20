@@ -15,7 +15,24 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
-*(nothing yet)*
+### Fixed
+
+- **A chained duplicate (a↔b, b↔c) can no longer corrupt the graph through `apply_heal`**
+  (BL-29's last reproducible hazard, now reproduced and closed). Both merges are individually
+  sanctioned — each `DUPLICATES` edge is real — but applying them in one proposal writes to a
+  node the earlier merge deleted; the storage layer accepts the dangling edge, so the graph
+  corrupted silently while the report claimed `verified: true`. (`propose_heal`'s own output
+  only avoided this by luck of issue-id hash ordering.) Three changes, each pinned by a test:
+  `propose_heal` emits one merge per chain and defers the rest with the reason stated
+  (`skipped_operations`, never silent); `apply_heal` refuses any proposal — including a
+  hand-built one — whose merges share a node, before a single write; and a merge now
+  re-points a `DUPLICATES` edge to a *third* node onto the survivor, so the chain's
+  still-unresolved claim (b↔c) survives as a↔c and the propose/apply loop converges — one
+  round per link — instead of the user's assertion vanishing with the merged node.
+- **A real edge joining the two nodes being merged is reported, not silently dropped.** It
+  cannot be re-pointed (it would become a self-loop), so it dies with the merge — that loss
+  now appears in `HealReport.discarded` like every other. The pair's own `DUPLICATES` edge
+  stays silent: resolving it is the merge's purpose.
 
 ## [0.4.0] — 2026-07-20
 

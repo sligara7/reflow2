@@ -1943,7 +1943,11 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         let result = g
-            .search_design(&req.query, req.node_type.as_deref(), req.limit.unwrap_or(10))
+            .search_design(
+                &req.query,
+                req.node_type.as_deref(),
+                req.limit.unwrap_or(10),
+            )
             .map_err(dyno_err)?;
         ok_json(result)
     }

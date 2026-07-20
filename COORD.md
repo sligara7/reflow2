@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-29 remainder (chained merges + per-proposal atomicity) — @ajs — since 2026-07-20 — crates/reflow2-core/src/heal.rs, tests
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
 
@@ -77,6 +76,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-29 chained-merge hazard reproduced and fixed: sanctioned merges sharing a node corrupted the graph silently with `verified=true` (dangling edges accepted by storage); propose now defers chain links, apply refuses shared-node proposals pre-write, third-party DUPLICATES claims survive a merge; pair-edge drops reported. BL-29 done to a decision (survivor rule). Also: fmt fixes to search.rs/service.rs that slipped past the previous session's gate — @ajs — 2026-07-20 — (this commit)
 
 - Restart batch test live half done: real design imported over the stub (CLI path, 180 nodes/332 edges), skew check PASS via raw-stdio probe (served_by 0.4.0, mtime match, delete_edge+search_design present), deltas verified stub-survivor-shaped, **v0.4.0 tagged and pushed** — @ajs — 2026-07-20 — (this commit)
 

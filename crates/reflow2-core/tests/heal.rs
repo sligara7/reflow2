@@ -6,7 +6,9 @@
 //! is gone. Generative fixes are gated behind `requires_human_review`.
 
 use reflow2_core::nodes::{Props, edge, node};
-use reflow2_core::{DesignGraph, HealCategory, HealOp, HealOptions, HealProposal, HealStrategy};
+use reflow2_core::{
+    DesignGraph, HealCategory, HealOp, HealOperation, HealOptions, HealProposal, HealStrategy,
+};
 
 /// Two capabilities marked as duplicates; `cap:a` also satisfies a requirement,
 /// so a correct merge must carry that edge onto the survivor.
@@ -492,5 +494,218 @@ fn a_cross_type_merge_is_refused_rather_than_half_applied() {
             .any(|s| s.reason.contains("across node types")),
         "and it must say why, not vanish: {:?}",
         proposal.skipped_operations
+    );
+}
+
+// ---- BL-29 · chained merges ------------------------------------------------
+
+/// a↔b and b↔c both DUPLICATES, with the chain's far end carrying the only
+/// copy of a real edge. Two merges, each individually sanctioned, sharing
+/// `cap:b` — applied together in the wrong order, the second used to re-point
+/// `cap:c`'s edges onto the already-deleted `cap:b`, and the storage layer
+/// accepted the dangling edge while the report said `verified`.
+fn chained_graph() -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_component("cmp:d", "D", "part d", None).unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.add_capability("cap:b", "Cap B", "does a", None).unwrap();
+    g.add_capability("cap:c", "Cap C", "does a", None).unwrap();
+    g.allocate("cap:c", "cmp:d").unwrap(); // unique to the chain's far end
+    for (x, y) in [("cap:a", "cap:b"), ("cap:b", "cap:c")] {
+        g.create_edge(
+            edge::DUPLICATES,
+            node::CAPABILITY,
+            x,
+            node::CAPABILITY,
+            y,
+            Props::new(),
+        )
+        .unwrap();
+    }
+    g
+}
+
+/// The sanctioned merge op for a detected duplicate pair, exactly as a client
+/// could hand-build it.
+fn merge_op(g: &DesignGraph, keep: &str, remove: &str) -> HealOperation {
+    let issue = g
+        .detect_defects()
+        .unwrap()
+        .into_iter()
+        .filter(|i| i.category == HealCategory::Duplicate)
+        .find(|i| i.affected_ids == vec![keep.to_string(), remove.to_string()])
+        .expect("the duplicate issue exists");
+    HealOperation {
+        issue_id: issue.id,
+        op: HealOp::Merge {
+            keep_type: "Capability".into(),
+            keep_id: keep.into(),
+            remove_type: "Capability".into(),
+            remove_id: remove.into(),
+        },
+    }
+}
+
+fn hand_proposal(ops: Vec<HealOperation>) -> HealProposal {
+    HealProposal {
+        target_id: "proj:x".into(),
+        strategy: HealStrategy::Balanced,
+        issues_addressed: vec![],
+        operations: ops,
+        generated_content: vec![],
+        skipped_operations: vec![],
+        confidence: 0.9,
+        requires_human_review: false,
+        summary: "hand-built".into(),
+    }
+}
+
+#[test]
+fn a_chained_duplicate_is_split_across_rounds_and_converges() {
+    let mut g = chained_graph();
+
+    // Round 1: only one link of the chain is applicable; the other is deferred
+    // with the reason stated, never silently dropped.
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    assert_eq!(
+        proposal.operations.len(),
+        1,
+        "one merge per chain per round: {:?}",
+        proposal.operations
+    );
+    assert!(
+        proposal
+            .skipped_operations
+            .iter()
+            .any(|s| s.reason.contains("chained duplicate")),
+        "the deferred link must say why: {:?}",
+        proposal.skipped_operations
+    );
+
+    // Propose/apply rounds resolve the whole chain.
+    let mut rounds = 0;
+    loop {
+        let proposal = g.propose_heal(HealOptions::default()).unwrap();
+        if proposal.operations.is_empty() {
+            break;
+        }
+        let report = g.apply_heal(&proposal).unwrap();
+        assert!(report.applied);
+        rounds += 1;
+        assert!(rounds <= 3, "the chain must converge, not oscillate");
+    }
+    assert_eq!(rounds, 2, "a two-link chain takes exactly two rounds");
+
+    // Converged: one survivor holding the far end's unique allocation, no
+    // duplicate left, and every remaining edge anchored on a live node.
+    assert!(g.get_node(node::CAPABILITY, "cap:a").unwrap().is_some());
+    assert!(g.get_node(node::CAPABILITY, "cap:b").unwrap().is_none());
+    assert!(g.get_node(node::CAPABILITY, "cap:c").unwrap().is_none());
+    let allocs = g.incoming("cmp:d", Some(edge::ALLOCATED_TO)).unwrap();
+    assert_eq!(allocs.len(), 1);
+    assert_eq!(allocs[0].from_id, "cap:a");
+    assert!(
+        !g.detect_defects()
+            .unwrap()
+            .iter()
+            .any(|i| i.category == HealCategory::Duplicate),
+        "the whole chain must be resolved"
+    );
+}
+
+#[test]
+fn sanctioned_merges_sharing_a_node_are_refused_before_any_write() {
+    // Each op alone is exactly what HEAL sanctions, so op-matching passes both;
+    // ordered (a,b) first, applying them used to delete cap:b and then re-point
+    // cap:c's edges onto it — the reproduced corruption this guard exists for.
+    let mut g = chained_graph();
+    let ops = vec![
+        merge_op(&g, "cap:a", "cap:b"),
+        merge_op(&g, "cap:b", "cap:c"),
+    ];
+
+    let err = g
+        .apply_heal(&hand_proposal(ops))
+        .expect_err("merges sharing a node must be refused");
+    assert!(
+        err.to_string().contains("no longer exists"),
+        "the refusal must explain the hazard, got: {err}"
+    );
+
+    // Refused before any write: the whole chain is still there.
+    assert!(g.get_node(node::CAPABILITY, "cap:b").unwrap().is_some());
+    assert!(g.get_node(node::CAPABILITY, "cap:c").unwrap().is_some());
+    let allocs = g.incoming("cmp:d", Some(edge::ALLOCATED_TO)).unwrap();
+    assert_eq!(allocs.len(), 1);
+    assert_eq!(allocs[0].from_id, "cap:c");
+}
+
+#[test]
+fn merging_the_middle_of_a_chain_repoints_the_duplicate_claim() {
+    // Apply only (a,b) — sanctioned, and legal on its own. cap:b carried the
+    // user's still-unresolved claim `b DUPLICATES c`; the merge must leave that
+    // claim behind as a↔c, not let it vanish with b.
+    let mut g = chained_graph();
+    let proposal = hand_proposal(vec![merge_op(&g, "cap:a", "cap:b")]);
+    let report = g.apply_heal(&proposal).unwrap();
+    assert_eq!(report.operations_applied, 1);
+
+    let mut dup_partners: Vec<String> = g
+        .outgoing("cap:a", Some(edge::DUPLICATES))
+        .unwrap()
+        .into_iter()
+        .map(|e| e.to_id)
+        .chain(
+            g.incoming("cap:a", Some(edge::DUPLICATES))
+                .unwrap()
+                .into_iter()
+                .map(|e| e.from_id),
+        )
+        .collect();
+    dup_partners.sort();
+    assert_eq!(
+        dup_partners,
+        vec!["cap:c".to_string()],
+        "the chain's unresolved half must survive as a DUPLICATES on the survivor"
+    );
+
+    // And the next round finds and can resolve it.
+    assert!(
+        g.detect_defects()
+            .unwrap()
+            .iter()
+            .any(|i| i.category == HealCategory::Duplicate
+                && i.affected_ids == vec!["cap:a".to_string(), "cap:c".to_string()]),
+        "re-detection must see the re-pointed claim"
+    );
+}
+
+#[test]
+fn an_edge_joining_the_merging_pair_is_reported_not_silently_dropped() {
+    // A real (non-DUPLICATES) edge between the two nodes being merged cannot be
+    // re-pointed — it would become a self-loop — so it dies with the merge. That
+    // is a genuine loss and must appear in `discarded`.
+    let mut g = dup_graph();
+    g.create_edge(
+        edge::TRIGGERS,
+        node::CAPABILITY,
+        "cap:a",
+        node::CAPABILITY,
+        "cap:b",
+        Props::new(),
+    )
+    .unwrap();
+
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    let report = g.apply_heal(&proposal).unwrap();
+
+    assert!(
+        report
+            .discarded
+            .iter()
+            .any(|d| d.reference.contains("TRIGGERS") && d.reason.contains("self-loop")),
+        "the pair-joining edge must be named in discarded: {:?}",
+        report.discarded
     );
 }

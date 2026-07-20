@@ -50,7 +50,9 @@ mod featured {
     #[test]
     fn search_finds_nodes_by_their_own_words() {
         let g = thread();
-        let result = g.search_design("persists across sessions", None, 10).expect("search");
+        let result = g
+            .search_design("persists across sessions", None, 10)
+            .expect("search");
         assert!(result.stale.is_empty(), "a fresh graph has no index drift");
         assert_eq!(
             result.hits.first().map(|h| h.node_id.as_str()),
@@ -108,13 +110,17 @@ mod featured {
         )
         .expect("revise");
 
-        let new = g.search_design("tally", Some("Capability"), 10).expect("search");
+        let new = g
+            .search_design("tally", Some("Capability"), 10)
+            .expect("search");
         assert_eq!(
             new.hits.first().map(|h| h.node_id.as_str()),
             Some("cap:score"),
             "found by the revised wording"
         );
-        let old = g.search_design("score", Some("Capability"), 10).expect("search");
+        let old = g
+            .search_design("score", Some("Capability"), 10)
+            .expect("search");
         assert!(
             old.hits.iter().all(|h| h.node_id != "cap:score"),
             "no longer found by wording it no longer carries: {old:?}"
@@ -125,7 +131,10 @@ mod featured {
     fn reindex_reports_how_many_nodes_it_indexed() {
         let g = thread();
         let n = g.reindex_search().expect("reindex");
-        assert!(n >= 3, "project + requirement + capability at least, got {n}");
+        assert!(
+            n >= 3,
+            "project + requirement + capability at least, got {n}"
+        );
         // And search still works after a rebuild.
         let result = g.search_design("persists", None, 10).expect("search");
         assert!(!result.hits.is_empty());

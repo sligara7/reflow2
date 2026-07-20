@@ -248,9 +248,10 @@ pub struct HealReport {
     /// A merge keeps the survivor's own properties and re-points the removed
     /// node's edges; it cannot keep both nodes' versions of the same thing. What
     /// it therefore lets go — the removed node's properties, an edge whose other
-    /// endpoint is unknown, an edge triple both nodes already had — used to go
-    /// unreported, which is the silent drop rule 4 forbids. Empty on a merge that
-    /// lost nothing.
+    /// endpoint is unknown, an edge triple both nodes already had, a
+    /// non-DUPLICATES edge joining the merging pair (re-pointing it would make a
+    /// self-loop) — used to go unreported, which is the silent drop rule 4
+    /// forbids. Empty on a merge that lost nothing.
     pub discarded: Vec<SkippedOperation>,
     /// Human-readable outcome.
     pub message: String,
@@ -587,6 +588,12 @@ impl DesignGraph {
         let mut operations = Vec::new();
         let mut generated_content = Vec::new();
         let mut skipped_operations = Vec::new();
+        // Nodes already committed to a merge in THIS proposal. A chained
+        // duplicate (a↔b, b↔c) implies two merges sharing a node, and applying
+        // both in one pass writes to a node the earlier merge deleted — so the
+        // second link is deferred to the next propose/apply round instead.
+        let mut merge_kept: BTreeSet<String> = BTreeSet::new();
+        let mut merge_removed: BTreeSet<String> = BTreeSet::new();
 
         for issue in self.detect_defects()? {
             if !options.strategy.addresses(issue.severity) {
@@ -597,10 +604,35 @@ impl DesignGraph {
             match issue.category {
                 // The one content-free structural repair.
                 HealCategory::Duplicate => match merge_op_for(&issue, &index) {
-                    Ok(op) => operations.push(HealOperation {
-                        issue_id: issue.id.clone(),
-                        op,
-                    }),
+                    Ok(op) => {
+                        let HealOp::Merge {
+                            keep_id, remove_id, ..
+                        } = &op
+                        else {
+                            unreachable!("merge_op_for only builds Merge ops")
+                        };
+                        let overlap = [keep_id, remove_id]
+                            .into_iter()
+                            .find(|id| merge_removed.contains(*id))
+                            .or_else(|| merge_kept.contains(remove_id).then_some(remove_id));
+                        if let Some(node_id) = overlap {
+                            skipped_operations.push(SkippedOperation {
+                                reference: issue.id.clone(),
+                                reason: format!(
+                                    "chained duplicate: '{node_id}' is already part of another merge \
+                                     in this proposal — apply this proposal, then re-run propose_heal \
+                                     for the rest of the chain"
+                                ),
+                            });
+                        } else {
+                            merge_kept.insert(keep_id.clone());
+                            merge_removed.insert(remove_id.clone());
+                            operations.push(HealOperation {
+                                issue_id: issue.id.clone(),
+                                op,
+                            });
+                        }
+                    }
                     Err(reason) => skipped_operations.push(SkippedOperation {
                         reference: issue.id.clone(),
                         reason,
@@ -737,6 +769,11 @@ impl DesignGraph {
     /// Re-deriving costs one `detect_defects` pass and is what makes the
     /// operation's meaning — *this defect is real right now* — true at the moment
     /// of writing rather than at the moment of proposing.
+    ///
+    /// Sanctioning is per-operation, so it cannot see that two individually
+    /// legitimate merges share a node — the chained-duplicate shape a↔b, b↔c.
+    /// A separate guard refuses such a proposal outright; `propose_heal` never
+    /// emits one, so the chain resolves one propose/apply round per link.
     pub fn apply_heal(&mut self, proposal: &HealProposal) -> Result<HealReport, DynoError> {
         if self.project_mode()? == "rigid" {
             return Ok(HealReport {
@@ -752,6 +789,47 @@ impl DesignGraph {
                 discarded: Vec::new(),
                 message: "rigid project mode: proposal recorded, not auto-applied".into(),
             });
+        }
+
+        // A node a merge deletes must not appear in any other operation of the
+        // same proposal. Each operation can be individually sanctioned — on a
+        // chain a↔b, b↔c both merges are — yet applying both writes to a node
+        // the earlier merge deleted. The storage layer accepts the dangling
+        // edge, so the graph corrupts silently while the report says
+        // `verified` (reproduced before this guard existed: `cap:c`'s edges
+        // re-pointed onto the already-deleted `cap:b`). `propose_heal` defers
+        // the second link of a chain; this refuses the hand-built proposal
+        // that carries both anyway.
+        for (i, a) in proposal.operations.iter().enumerate() {
+            let HealOp::Merge { remove_id, .. } = &a.op else {
+                continue;
+            };
+            for (j, b) in proposal.operations.iter().enumerate() {
+                if i == j {
+                    continue;
+                }
+                let touches = match &b.op {
+                    HealOp::Merge {
+                        keep_id: k,
+                        remove_id: r,
+                        ..
+                    } => k == remove_id || r == remove_id,
+                    HealOp::CreateEdge { from_id, to_id, .. } => {
+                        from_id == remove_id || to_id == remove_id
+                    }
+                };
+                if touches {
+                    return Err(DynoError::Validation {
+                        node_type: remove_id.clone(),
+                        property: "operation".into(),
+                        message: format!(
+                            "two operations in this proposal touch '{remove_id}', which one of them \
+                             deletes — the later one would write to a node that no longer exists. \
+                             Apply one link of the chain, then re-run propose_heal. Nothing was changed."
+                        ),
+                    });
+                }
+            }
         }
 
         // Refuse the whole proposal before mutating anything, so a rejected one
@@ -849,9 +927,13 @@ impl DesignGraph {
     }
 
     /// Merge `remove` into `keep`: re-point `remove`'s edges onto `keep`, then
-    /// delete `remove`. Atomic (one batch). `DUPLICATES` edges and edges to
-    /// `keep`/`remove` themselves are skipped so no self-loop or dangling edge
-    /// is produced.
+    /// delete `remove`. Atomic (one batch). Edges between the pair themselves
+    /// are dropped so no self-loop is produced — the pair's own `DUPLICATES`
+    /// edge silently (resolving it is the merge's purpose), anything else with
+    /// a `discarded` entry. A `DUPLICATES` edge to a *third* node is re-pointed
+    /// like any other edge: on a chain a↔b, b↔c, merging b away must leave
+    /// a↔c behind, or the user's still-unresolved duplicate claim about c
+    /// would vanish with b.
     fn merge_nodes(
         &mut self,
         keep_type: &str,
@@ -937,7 +1019,11 @@ impl DesignGraph {
             .collect();
 
         for e in outgoing {
-            if e.edge_type != edge::DUPLICATES
+            // Pair-joining edges are never re-pointed (see merge_repoint), so
+            // they cannot collide; everything else — DUPLICATES to a third
+            // node included — moves and can.
+            if e.to_id != keep_id
+                && e.to_id != remove_id
                 && !e.properties.is_empty()
                 && existing_out.contains(&(e.edge_type.clone(), e.to_id.clone()))
             {
@@ -950,7 +1036,8 @@ impl DesignGraph {
             }
         }
         for e in incoming {
-            if e.edge_type != edge::DUPLICATES
+            if e.from_id != keep_id
+                && e.from_id != remove_id
                 && !e.properties.is_empty()
                 && existing_in.contains(&(e.edge_type.clone(), e.from_id.clone()))
             {
@@ -978,12 +1065,21 @@ impl DesignGraph {
         discarded: &mut Vec<SkippedOperation>,
     ) -> Result<(), DynoError> {
         for e in outgoing {
-            if e.edge_type == edge::DUPLICATES {
-                continue;
-            }
             let other = &e.to_id;
             if other == keep_id || other == remove_id {
-                continue; // avoid self-loop / edge to the node being deleted
+                // The edge joins the merging pair (or loops), so it cannot be
+                // re-pointed without becoming a self-loop. The pair's
+                // DUPLICATES edge is what this merge resolves; anything else
+                // was a real relationship and must not vanish silently.
+                if e.edge_type != edge::DUPLICATES {
+                    discarded.push(SkippedOperation {
+                        reference: format!("{remove_id} -{}-> {other}", e.edge_type),
+                        reason: format!(
+                            "the edge joins the merging pair, so re-pointing it would make a self-loop on '{keep_id}'; it is not kept"
+                        ),
+                    });
+                }
+                continue;
             }
             if let Some(to_type) = index.get(other) {
                 self.create_edge(
@@ -1007,11 +1103,16 @@ impl DesignGraph {
             }
         }
         for e in incoming {
-            if e.edge_type == edge::DUPLICATES {
-                continue;
-            }
             let other = &e.from_id;
             if other == keep_id || other == remove_id {
+                if e.edge_type != edge::DUPLICATES {
+                    discarded.push(SkippedOperation {
+                        reference: format!("{other} -{}-> {remove_id}", e.edge_type),
+                        reason: format!(
+                            "the edge joins the merging pair, so re-pointing it would make a self-loop on '{keep_id}'; it is not kept"
+                        ),
+                    });
+                }
                 continue;
             }
             if let Some(from_type) = index.get(other) {
