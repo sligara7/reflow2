@@ -106,7 +106,8 @@ Five practices, each earned:
    states, and **everything it needs but cannot find is a finding**: a modelling gap, a reflow2
    gap, or a true design gap — never something for the agent to improvise past. If producing a
    description of the design requires extrapolation, that is almost always a defect signal
-   pointing back at the graph. `tools/render_views.py` is the standing form: its first run
+   pointing back at the graph. The catalogue and the rules for adding a view live in
+   [viewpoints.md](viewpoints.md). `tools/render_views.py` is the standing form: its first run
    confessed exactly BL-37 (no flow view is expressible) and a committed-model gap (no capability
    dependencies), and its own first draft had to be tightened when it produced zero confessions by
    only asking questions the graph could already answer — the instrument-accommodation trap from

@@ -8,18 +8,28 @@ missing details, that is a sign something is missing or wrong inside reflow2** �
 not a prompt to improvise. This is the SYNTHESIZE process held to a
 no-extrapolation standard, and it makes every renderer a probe.
 
-So this script has one hard rule: it may only emit what the export document
-states. Anything a viewpoint *needs* but the graph cannot supply goes on the
+So this script has one hard rule: it may only emit what the graph states.
+Anything a viewpoint *needs* but the graph cannot supply goes on the
 CONFESSIONS list, printed loudly and rendered into the page — because each entry
 is either a modelling gap or a reflow2 gap, and hiding it is exactly the
 extrapolation the doctrine forbids.
 
-Views (DoDAF-flavoured, adapted to reflow2's vocabulary):
+The catalogue lives in docs/viewpoints.md. Views rendered here (DoDAF-flavoured,
+adapted to reflow2's vocabulary):
   - Functional (≈ OV-5-ish): Requirement ← SATISFIES ← Capability, with status.
+  - Operational flow (≈ OV-5b/OV-6-ish): Flow steps in order, TRIGGERS
+    transitions with their roles, cycles reported never judged (BL-37).
   - Structural (≈ SV-1-ish): Component containment + PROVIDES/CONSUMES Interfaces.
   - Traceability (≈ SV-5-ish): Capability → Component → Artifact → Verification.
+  - As-released (≈ SV-8-ish): what each Release shipped, checksums frozen at
+    cut, the as-released diff (BL-34).
+  - Decisions (no clean DoDAF box — the record of *why*, which DoDAF leaves to
+    AV-1 prose): Decision + GOVERNED_BY, rationale and standing.
 
 Run:  python3 tools/render_views.py [export.json] [-o out.html]
+      python3 tools/render_views.py --graph-path .reflow2/graph   # live graph,
+        via `reflow2-mcp --export`; the graph is single-writer, so stop any
+        running MCP session first (the error says so if you forget).
 """
 
 from __future__ import annotations
@@ -28,6 +38,7 @@ import argparse
 import html
 import json
 import pathlib
+import subprocess
 import sys
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
@@ -95,6 +106,150 @@ def view_functional(g: Graph) -> str:
         if e["from_id"] in g.nodes and e["to_id"] in g.nodes:
             out.append(f"  {mid(e['from_id'])} -->|satisfies| {mid(e['to_id'])}")
     return "\n".join(out)
+
+
+def _sccs(nodes: list[str], arcs: list[tuple[str, str]]) -> list[list[str]]:
+    """Strongly-connected components (iterative Tarjan), deterministic order.
+
+    Mirrors `flow_report`'s contract: one entry per cluster of ≥2, plus
+    degenerate self-arcs; each rotated to its smallest member.
+    """
+    idx: dict[str, int] = {}
+    low: dict[str, int] = {}
+    on: set[str] = set()
+    stack: list[str] = []
+    out: list[list[str]] = []
+    succ: dict[str, list[str]] = {n: [] for n in nodes}
+    for a, b in arcs:
+        if a == b:
+            out.append([a])
+        else:
+            succ[a].append(b)
+    counter = [0]
+
+    def strong(v: str) -> None:
+        work = [(v, 0)]
+        while work:
+            node, pi = work.pop()
+            if pi == 0:
+                idx[node] = low[node] = counter[0]
+                counter[0] += 1
+                stack.append(node)
+                on.add(node)
+            recurse = False
+            for i in range(pi, len(succ[node])):
+                w = succ[node][i]
+                if w not in idx:
+                    work.append((node, i + 1))
+                    work.append((w, 0))
+                    recurse = True
+                    break
+                if w in on:
+                    low[node] = min(low[node], idx[w])
+            if recurse:
+                continue
+            if low[node] == idx[node]:
+                comp = []
+                while True:
+                    w = stack.pop()
+                    on.discard(w)
+                    comp.append(w)
+                    if w == node:
+                        break
+                if len(comp) >= 2:
+                    comp.sort()
+                    out.append(comp)
+            if work:
+                parent = work[-1][0]
+                low[parent] = min(low[parent], low[node])
+
+    for n in sorted(nodes):
+        if n not in idx:
+            strong(n)
+    return sorted(out)
+
+
+def view_flows(g: Graph) -> str | None:
+    """Flow steps in stated order, roled transitions, cycles as facts (BL-37)."""
+    flows = sorted(g.of_type("Flow"), key=lambda n: n["node_id"])
+    if not flows:
+        confess("an operational-flow viewpoint (≈ OV-5b/OV-6: activities in order)",
+                "the graph holds no Flow nodes. The vocabulary can express one "
+                "(add_flow / part_of_flow / TRIGGERS.role, BL-37), so this is a "
+                "modelling gap: either the design has no ordered process, or "
+                "nobody has modelled it")
+        return None
+
+    membership: dict[str, list[dict]] = {}
+    for e in g.edges_of("PART_OF_FLOW"):
+        membership.setdefault(e["to_id"], []).append(e)
+
+    blocks: list[str] = []
+    for f in flows:
+        fid = f["node_id"]
+        members = membership.get(fid, [])
+        if not members:
+            confess(f"the steps of flow `{fid}`",
+                    "no PART_OF_FLOW edge reaches it — a process with no stated steps")
+            continue
+
+        def order_of(e: dict):
+            v = e["properties"].get("step_order")
+            return (0, v, e["from_id"]) if isinstance(v, int) else (1, 0, e["from_id"])
+
+        unordered = sum(1 for e in members if not isinstance(e["properties"].get("step_order"), int))
+        if unordered and len(members) > 1:
+            confess(f"the position of {unordered} step(s) in `{fid}`",
+                    "no `step_order` on their PART_OF_FLOW edge; listed after the "
+                    "ordered ones in id order, because the graph never said where they go")
+        member_ids = {e["from_id"] for e in members}
+        for e in members:
+            if e["from_id"] not in g.nodes:
+                confess(f"the capability behind step `{e['from_id']}` of `{fid}`",
+                        "a PART_OF_FLOW edge names it and no Capability node exists")
+
+        out = ["flowchart LR"]
+        for e in sorted(members, key=order_of):
+            so = e["properties"].get("step_order")
+            label = esc(g.name(e["from_id"]))
+            out.append(f'  {mid(e["from_id"])}["{f"{so}. " if isinstance(so, int) else ""}{label}"]')
+
+        arcs: list[tuple[str, str]] = []
+        unroled = 0
+        for e in sorted(g.edges_of("TRIGGERS"), key=lambda e: (e["from_id"], e["to_id"])):
+            if e["from_id"] in member_ids and e["to_id"] in member_ids:
+                role = e["properties"].get("role")
+                if not isinstance(role, str):
+                    unroled += 1
+                    out.append(f"  {mid(e['from_id'])} --> {mid(e['to_id'])}")
+                else:
+                    out.append(f"  {mid(e['from_id'])} -->|{esc(role)}| {mid(e['to_id'])}")
+                arcs.append((e["from_id"], e["to_id"]))
+        if unroled:
+            confess(f"what {unroled} transition(s) in `{fid}` mean",
+                    "no `role` on the TRIGGERS edge — forward and feedback are "
+                    "indistinguishable there, which for a process is the load-bearing fact")
+
+        for which in ("entry_point", "exit_point"):
+            v = g.prop(fid, which)
+            if v is not None and v not in member_ids and not any(
+                    g.prop(m, "name") == v for m in member_ids):
+                confess(f"the {which} `{v}` of `{fid}`",
+                        "it matches no member of the flow")
+
+        # An SCC states mutual reachability, not a walk order — rendering it
+        # with arrows would assert a path the graph never stated. Braces only.
+        cycles = _sccs(sorted(member_ids), arcs)
+        cyc_line = ("<p class=\"vp\">cycles (reported, never judged — each a cluster of "
+                    "mutually reachable steps): "
+                    + "; ".join("{ " + ", ".join(esc(g.name(n)) for n in c) + " }" for c in cycles)
+                    + "</p>") if cycles else ""
+        ftype = g.prop(fid, "flow_type")
+        blocks.append(
+            f'<h3>{html.escape(g.name(fid))}'
+            + (f' <small>({html.escape(ftype)})</small>' if ftype else "")
+            + f'</h3><div class="card"><pre class="mermaid">{chr(10).join(out)}</pre></div>{cyc_line}')
+    return "\n".join(blocks) if blocks else None
 
 
 def view_structural(g: Graph) -> str:
@@ -175,6 +330,125 @@ def view_traceability(g: Graph) -> str:
             + "\n".join(rows) + "</tbody></table>")
 
 
+def view_released(g: Graph) -> str:
+    """What each Release shipped, checksums frozen at cut, deployments,
+    and the as-released diff (BL-34). Both P3 shapes count as built."""
+    releases = sorted(g.of_type("Release"), key=lambda n: n["node_id"])
+    if not releases:
+        return ('<p class="vp">Nothing to project: the graph holds no Release. '
+                "(The phase detectors ask about this as <code>no_deploy_operate</code>; "
+                "absence is the graph's honest statement, not a rendering gap.)</p>")
+
+    realizes: dict[str, list[str]] = {}
+    for e in g.edges_of("REALIZES"):
+        realizes.setdefault(e["to_id"], []).append(e["from_id"])
+    alloc: dict[str, list[str]] = {}
+    for e in g.edges_of("ALLOCATED_TO"):
+        alloc.setdefault(e["from_id"], []).append(e["to_id"])
+
+    blocks = []
+    for r in releases:
+        rid = r["node_id"]
+        version = g.prop(rid, "version")
+        head = esc(g.name(rid)) + (f" <small>({esc(version)})</small>" if version else "")
+        includes = [e for e in g.edges_of("INCLUDES") if e["from_id"] == rid]
+        if not includes:
+            confess(f"what `{rid}` shipped",
+                    "the Release exists and no INCLUDES edge records its contents "
+                    "(reflow2 reports the same shape as `unreleased_component`)")
+            blocks.append(f"<h3>{head}</h3><p class=\"vp\"><em>contents not modelled</em></p>")
+            continue
+
+        shipped_art: set[str] = set()
+        art_rows = []
+        cmp_cells = []
+        for e in sorted(includes, key=lambda e: e["to_id"]):
+            tid = e["to_id"]
+            if g.nodes.get(tid, {}).get("node_type") == "Artifact":
+                shipped_art.add(tid)
+                frozen = e["properties"].get("as_checksum")
+                if not isinstance(frozen, str):
+                    confess(f"the shipped hash of `{tid}` in `{rid}`",
+                            "INCLUDES carries no `as_checksum`, so what the release "
+                            "actually contained cannot be told from the artifact's "
+                            "moving baseline")
+                    frozen = "?"
+                art_rows.append(f"<tr><td>{esc(g.name(tid))}</td>"
+                                f"<td><code>{html.escape(frozen)}</code></td></tr>")
+            else:
+                cmp_cells.append(esc(g.name(tid)))
+
+        covered, not_covered = [], []
+        for c in sorted(g.of_type("Capability"), key=lambda n: n["node_id"]):
+            cid = c["node_id"]
+            building = list(realizes.get(cid, []))
+            for c2 in alloc.get(cid, []):
+                building.extend(realizes.get(c2, []))
+            if not building:
+                continue
+            (covered if any(a in shipped_art for a in building) else not_covered).append(cid)
+
+        deploys = [e for e in g.edges_of("DEPLOYED_TO") if e["from_id"] == rid]
+        dep_cells = []
+        for e in sorted(deploys, key=lambda e: e["to_id"]):
+            st = e["properties"].get("status")
+            dep_cells.append(esc(g.name(e["to_id"])) + (f" <i>({esc(st)})</i>" if isinstance(st, str) else ""))
+
+        diff = (", ".join(esc(g.name(c)) for c in not_covered)
+                if not_covered else "none — every built capability shipped")
+        blocks.append(
+            f"<h3>{head}</h3>"
+            "<table><thead><tr><th>Shipped artifact</th><th>Checksum at cut</th></tr></thead>"
+            f"<tbody>{''.join(art_rows)}</tbody></table>"
+            + (f'<p class="vp">components included: {", ".join(cmp_cells)}</p>' if cmp_cells else "")
+            + f'<p class="vp">capabilities covered: {len(covered)} · '
+            f"<b>built but not shipped (the as-released diff):</b> {diff}</p>"
+            + (f'<p class="vp">deployed to: {", ".join(dep_cells)}</p>' if dep_cells
+               else '<p class="vp">deployed to: <em>nowhere the graph records</em></p>'))
+    return "\n".join(blocks)
+
+
+def view_decisions(g: Graph) -> str:
+    """The record of why: Decision + GOVERNED_BY. What was decided, the
+    rationale, its standing, and which parts of the design it governs."""
+    decisions = sorted(g.of_type("Decision"), key=lambda n: n["node_id"])
+    if not decisions:
+        return ('<p class="vp">Nothing to project: the graph records no Decision. '
+                "Choices were made — they always are — but none is on the record, "
+                "so nothing here to render.</p>")
+
+    governs: dict[str, list[str]] = {}
+    for e in g.edges_of("GOVERNED_BY"):
+        governs.setdefault(e["to_id"], []).append(e["from_id"])
+
+    rows = []
+    for d in decisions:
+        did = d["node_id"]
+        decided = g.prop(did, "decision")
+        if decided is None:
+            confess(f"what `{did}` decided", "no `decision` property, which the schema requires")
+            decided = "?"
+        rationale = g.prop(did, "rationale")
+        if rationale is None:
+            confess(f"why `{did}` was decided",
+                    "no `rationale` — a decision without its why is a conclusion, not a record")
+            rationale = "<em>not recorded</em>"
+        else:
+            rationale = esc(rationale)
+        status = g.prop(did, "status") or "accepted"
+        ruled = governs.get(did, [])
+        if not ruled:
+            confess(f"what `{did}` governs",
+                    "no GOVERNED_BY edge reaches it — a decision attached to nothing it decides")
+        rows.append(
+            "<tr><td><b>{}</b><br/>{}</td><td>{}</td><td><i>{}</i></td><td>{}</td></tr>".format(
+                esc(g.name(did)), esc(decided), rationale, esc(status),
+                ", ".join(esc(g.name(n)) for n in sorted(ruled)) or "<em>nothing</em>",
+            ))
+    return ("<table><thead><tr><th>Decision</th><th>Why</th><th>Standing</th>"
+            "<th>Governs</th></tr></thead><tbody>" + "\n".join(rows) + "</tbody></table>")
+
+
 PAGE = """<title>{title} — projected viewpoints</title>
 <style>
   :root {{ --ink:#15211F; --paper:#F6F8F7; --card:#FFFFFF; --rule:#D8E0DD;
@@ -193,8 +467,10 @@ PAGE = """<title>{title} — projected viewpoints</title>
   .sub {{ color:var(--faint); margin:.5rem 0 0; max-width:70ch; }}
   h2 {{ font-size:1.05rem; margin:2.75rem 0 .25rem; color:var(--accent);
        text-transform:uppercase; letter-spacing:.08em; font-weight:600; }}
-  .vp {{ color:var(--faint); font-size:.85rem; margin:0 0 .9rem; }}
-  section > div.card {{ background:var(--card); border:1px solid var(--rule);
+  h3 {{ font-size:.95rem; margin:1.2rem 0 .4rem; }}
+  h3 small {{ color:var(--faint); font-weight:400; }}
+  .vp {{ color:var(--faint); font-size:.85rem; margin:.35rem 0 .9rem; }}
+  div.card {{ background:var(--card); border:1px solid var(--rule);
        border-radius:4px; padding:1rem; overflow-x:auto; }}
   table {{ border-collapse:collapse; width:100%; font-size:.9rem; }}
   th,td {{ text-align:left; padding:.55rem .7rem; border-bottom:1px solid var(--rule);
@@ -213,11 +489,17 @@ PAGE = """<title>{title} — projected viewpoints</title>
   <p class="sub">Every element below is projected from <code>{source}</code> ({n_nodes} nodes,
   {n_edges} edges). Nothing is hand-drawn: the renderer may only emit what the graph states, and
   everything it needed but could not find is confessed at the end — per the doctrine that a
-  fill-in during rendering is a defect in the model, not a job for the agent.</p>
+  fill-in during rendering is a defect in the model, not a job for the agent. The catalogue:
+  <code>docs/viewpoints.md</code>.</p>
 
   <section><h2>Functional viewpoint</h2>
   <p class="vp">≈ OV-5: what must be true, and what the system does about it. Capability status from the graph.</p>
   <div class="card"><pre class="mermaid">{functional}</pre></div></section>
+
+  <section><h2>Operational flow viewpoint</h2>
+  <p class="vp">≈ OV-5b/OV-6: activities in stated order, transitions labelled with what they
+  mean. A process's cycles are its design — listed as facts, never defects (BL-37).</p>
+  {flows}</section>
 
   <section><h2>Structural viewpoint</h2>
   <p class="vp">≈ SV-1: parts, their containment, and the contracts between them — both sides of each interface.</p>
@@ -226,6 +508,16 @@ PAGE = """<title>{title} — projected viewpoints</title>
   <section><h2>Traceability viewpoint</h2>
   <p class="vp">≈ SV-5: function → structure → build → proof, one row per capability.</p>
   <div class="card">{traceability}</div></section>
+
+  <section><h2>As-released viewpoint</h2>
+  <p class="vp">≈ SV-8: what actually shipped, hashes frozen at cut so history cannot rewrite
+  itself, and the diff against what was built (BL-34).</p>
+  <div class="card">{released}</div></section>
+
+  <section><h2>Decision viewpoint</h2>
+  <p class="vp">No clean DoDAF box — the record of <i>why</i>, which DoDAF leaves to AV-1 prose.
+  Each decision, its rationale, and what it governs.</p>
+  <div class="card">{decisions}</div></section>
 
   <section><h2>What the graph could not tell this renderer</h2>
   <div class="confess">
@@ -236,50 +528,73 @@ PAGE = """<title>{title} — projected viewpoints</title>
 """
 
 
+def load_document(args: argparse.Namespace) -> tuple[dict, str]:
+    """The export document, from a file or from a live graph directory."""
+    if args.graph_path:
+        binary = pathlib.Path(args.bin)
+        if not binary.exists():
+            sys.exit(f"no binary at {binary} — build it: cargo build -p reflow2-mcp")
+        proc = subprocess.run(
+            [str(binary), "--graph-path", args.graph_path, "--export"],
+            capture_output=True, text=True,
+        )
+        if proc.returncode != 0:
+            # The binary's own message is the good one (lock → stop the server).
+            sys.exit(proc.stderr.strip() or "export failed with no message")
+        return json.loads(proc.stdout), f"live graph at {args.graph_path}"
+    p = pathlib.Path(args.export)
+    return json.loads(p.read_text()), p.name
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("export", nargs="?", default=str(REPO / "docs/design/reflow2.json"))
+    ap.add_argument("--graph-path", default=None,
+                    help="project a live graph directory instead of an export file "
+                         "(runs `reflow2-mcp --export`; single-writer — stop any "
+                         "running MCP session first)")
+    ap.add_argument("--bin", default=str(REPO / "target/debug/reflow2-mcp"))
     ap.add_argument("-o", "--out", default=str(REPO / "docs/design/views.html"))
     args = ap.parse_args()
 
-    doc = json.loads(pathlib.Path(args.export).read_text())
+    doc, source = load_document(args)
     g = Graph(doc)
     projects = g.of_type("Project")
     title = g.name(projects[0]["node_id"]) if projects else "(no Project node)"
     if not projects:
         confess("a title for the page", "the graph holds no Project node")
 
-    # The viewpoint a UAF/DoDAF reader asks for first: activities in order
-    # (≈ OV-5b/OV-6). Projectable only if the graph can express an ordered
-    # process — which is exactly what BL-37 found it cannot.
-    if not g.of_type("Flow") and not g.edges_of("PART_OF_FLOW"):
-        confess("an operational-flow viewpoint (≈ OV-5b/OV-6: activities in order)",
-                "the graph holds no Flow nodes and no PART_OF_FLOW edges; `Flow` is fully "
-                "specified in the schema and has no write side (BL-37), so no design can "
-                "currently express one")
     if not any(g.nodes.get(e["from_id"], {}).get("node_type") == "Capability"
                and g.nodes.get(e["to_id"], {}).get("node_type") == "Capability"
-               for e in g.edges_of("DEPENDS_ON")):
+               for e in g.edges_of("DEPENDS_ON")) and not g.of_type("Flow"):
+        # A Flow also states capability ordering, so this only fires when the
+        # graph expresses no ordering of any kind.
         confess("the functional dependency ordering between capabilities",
                 "no Capability -DEPENDS_ON-> Capability edges exist, so the functional view "
                 "shows a set, not a flow — and evaluate_allocation is inert for the same "
                 "reason (a committed-model gap, on the record per sharpening.md §2)")
 
     functional = view_functional(g)
+    flows = view_flows(g)
     structural = view_structural(g)
     traceability = view_traceability(g)
+    released = view_released(g)
+    decisions = view_decisions(g)
 
     dedup = sorted(set(CONFESSIONS))
     page = PAGE.format(
         title=html.escape(title),
-        source=html.escape(str(pathlib.Path(args.export).name)),
+        source=html.escape(source),
         n_nodes=len(doc["nodes"]), n_edges=len(doc["edges"]),
-        functional=functional, structural=structural, traceability=traceability,
+        functional=functional,
+        flows=flows or '<p class="vp">Nothing to project — see the confession below.</p>',
+        structural=structural, traceability=traceability,
+        released=released, decisions=decisions,
         n_confessions=len(dedup),
         confessions="\n".join(f"<li>{html.escape(c)}</li>" for c in dedup) or "<li>nothing — every view was fully specified</li>",
     )
     pathlib.Path(args.out).write_text(page)
-    print(f"wrote {args.out}")
+    print(f"wrote {args.out}  (projected from {source})")
     print(f"\n== confessions: {len(dedup)} ==")
     for c in dedup:
         print(f"  - {c}")

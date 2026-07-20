@@ -17,6 +17,24 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The viewpoint catalogue doubled, and got a home** (BL-40, first increment). Three views join
+  functional/structural/traceability in `tools/render_views.py`, all pure projections:
+  **operational flow** (≈ OV-5b/OV-6 — steps in stated order, transitions labelled with their
+  `role`, cycles rendered as clusters of mutually reachable steps, reported never judged; the
+  seed's standing confession "no flow view is expressible" is now answerable because BL-37 made
+  it so), **as-released** (≈ SV-8 — what each Release shipped with checksums frozen at cut, the
+  built-but-not-shipped diff, deployments), and **decisions** (the record of *why*: rationale,
+  standing, and what each decision governs). `--graph-path` projects a live graph directory via
+  `reflow2-mcp --export`, so views no longer require a hand-managed export file — with the
+  single-writer rule surfaced honestly when a session holds the graph.
+  [docs/viewpoints.md](docs/viewpoints.md) is the catalogue: the DoDAF/UAF-informed mapping, the
+  no-extrapolation rules for adding a view, and what is deliberately not yet projectable
+  (evolution timeline, as-fielded/BL-9, measures/BL-11, provenance). Two of its rules were
+  learned writing this increment: an SCC rendered as an arrowed path asserts an order the graph
+  never stated, and a `PART_OF_FLOW` edge to a missing node must be confessed, not drawn.
+  Measured on the committed design graph: 2 confessions, both true and both already on the
+  record; on the loop model: 0 — the first fully-projectable graph.
+
 - **A process is modellable** (BL-37). Found by modelling reflow2's own coherence loop in reflow2:
   the one type meant for "an ordered process linking Capabilities end to end" could not be created
   — `Flow` was fully specified in the schema with no constructor and no tool, the eleventh

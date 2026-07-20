@@ -102,6 +102,13 @@ python3 tools/erosion_trial.py
 # the eroded one. That gap is BL-35.
 python3 tools/coherent_erosion_trial.py
 
+# Project the design as viewpoints — functional / operational-flow / structural /
+# traceability / as-released / decisions, DoDAF-informed (docs/viewpoints.md).
+# Pure projections: anything a view needs that the graph cannot supply is
+# CONFESSED, and every confession is a finding (BL-40). Also a probe.
+python3 tools/render_views.py                        # the committed design export
+python3 tools/render_views.py --graph-path <dir>     # a live graph (stop the server first)
+
 # Process-model probe — can reflow2 hold its own operating model, a Flow whose
 # feedback loops are the subject? Started as BL-37's friction log (no Flow write
 # side, roles lost, cycles invisible, product-shaped nudge); all four are fixed

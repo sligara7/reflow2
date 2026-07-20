@@ -35,7 +35,7 @@ the loop like this:
 | *(reflow2 addition)* — ripple along the golden thread | PROPAGATE | [impact-propagation.md](impact-propagation.md) | detailed |
 | **DIAGNOSE → PROMPT** — find weaknesses, ask the user | DETECT + SURFACE | [gap-surfacing.md](gap-surfacing.md) | detailed |
 | **HEAL** — detect & repair structural defects | RESOLVE/HEAL | [heal-process.md](heal-process.md) | detailed |
-| **SYNTHESIZE** — graph → artifacts (docs, diagrams, as-built) | reporting side-output | — | the graph report (`report` module), and **projected viewpoints** (`tools/render_views.py` → [design/views.html](design/views.html)): DoDAF-style functional/structural/traceability views drawn purely from the graph, with everything the graph cannot supply confessed — a renderer fill-in is a defect signal, not a job for the agent (BL-40, [sharpening.md](sharpening.md) §3.5) |
+| **SYNTHESIZE** — graph → artifacts (docs, diagrams, as-built) | reporting side-output | [viewpoints.md](viewpoints.md) | the graph report (`report` module), and **projected viewpoints** (`tools/render_views.py` → [design/views.html](design/views.html)): six DoDAF-informed views — functional, operational flow, structural, traceability, as-released, decisions — drawn purely from the graph, with everything the graph cannot supply confessed — a renderer fill-in is a defect signal, not a job for the agent (BL-40, [sharpening.md](sharpening.md) §3.5); the catalogue and the rules for adding a view live in [viewpoints.md](viewpoints.md) |
 
 ## Reading order
 
@@ -58,6 +58,9 @@ the loop like this:
 - [impact-propagation.md](impact-propagation.md) — PROPAGATE: walk the golden thread to find a change's blast radius.
 - [gap-surfacing.md](gap-surfacing.md) — DIAGNOSE → PROMPT: turn weaknesses into constructive questions.
 - [heal-process.md](heal-process.md) — HEAL: propose and apply structural repairs.
+- [viewpoints.md](viewpoints.md) — SYNTHESIZE: the viewpoint catalogue (DoDAF/UAF-informed), the
+  no-extrapolation projection doctrine, and the rules for adding a view — every renderer is a
+  probe, and what it cannot project it confesses.
 
 ### 3¼ · Using the current release
 - [upgrading-to-v0.3.0.md](upgrading-to-v0.3.0.md) — **start here if you installed before 2026-07-19**: schema growth (older binaries refuse newer graphs), the two-sided accept contract, and the four-step order that matters.
