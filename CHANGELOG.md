@@ -15,6 +15,16 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+*(nothing yet)*
+
+## [0.5.0] — 2026-07-20
+
+The tool surface changed shape again (`documents`, the 78th tool), which is what moves the
+minor pre-1.0. The schema did **not** change (still 27 node types / 54 edge types): no stamp
+moves, older binaries still open a graph this version wrote, upgrading is a rebuild — or, new
+with this release, downloading the prebuilt binary, because **this is the first version with
+published release binaries.**
+
 ### Added
 
 - **reflow2 without a checkout: published release binaries and a one-line installer** (BL-15's

@@ -77,6 +77,8 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- v0.5.0 cut (user approved): surface changed shape (`documents`), CHANGELOG section moved out of Unreleased, no schema change so no upgrade doc; the tag push is the first live run of release.yml — binaries + kit for the no-checkout path. NOTE for next session: served_by will say 0.5.0 now, not 0.4.0 — @ajs — 2026-07-20 — (this commit)
+
 - BL-15 published binaries built: release.yml (3 platforms + kit tarball + checksums, version-less asset names), install.sh (gh-first for the private repo, checksum-verified, binary+kit replaced together), reflow2_init.py checkout-independent (--binary/PATH, KIT_VERSION.json, installer update advice); SETUP.md leads with the no-build path. Verified from a simulated tarball end to end; the real release run against v0.4.0 is the remaining verification. Embed-kit-in-binary stays as the S-M follow-up — @ajs — 2026-07-20 — (this commit)
 
 - BL-26 S half done: `documents` core fn + MCP tool (78th), endpoints fail-loud (storage accepts dangling edges — the check is the only one there is), doc_kind carried; link-artifacts skill states the record-this-file criterion, mirrors refreshed. The traversal decision (M half) stays open and wants the user — @ajs — 2026-07-20 — (this commit)
