@@ -719,8 +719,33 @@ time, which is the bulk path this thread already points an adopt pass at.
 
 Related, for whoever picks this up: `import_graph` is the only bulk write path and is an atomic
 upsert, so an adopt pass should build the export document and import it once — 3dtictactoe spent
-~60 MCP calls on 33 nodes. And `reflow2_init.py` cannot install into a repo that already has its
-own `AGENTS.md`, which is every brownfield target and this one; it needs a `--skills-only` flag.
+~60 MCP calls on 33 nodes.
+
+*The conversion step itself, probed for real* — *2026-07-19, installing into a scratch repo shaped
+like every brownfield target (own `AGENTS.md`, own `.mcp.json`, source tree).* The earlier note
+here — "cannot install into a repo that already has its own AGENTS.md; needs `--skills-only`" —
+is **stale and corrected**: the sidecar path works. The install lands clean: the project's
+`AGENTS.md` untouched, kit instructions to `REFLOW2.md`, skills to all four harness locations,
+the existing `.mcp.json` merged not overwritten. Three real defects remain, and they are the
+"initial steps of converting a project" work:
+
+1. **Nothing points at `REFLOW2.md`** — the pointer line the sidecar depends on is asked for
+   *inside* `REFLOW2.md*`, the one file nobody reads without the pointer, and the install output
+   never mentions it. BL-22's sibling lesson verbatim: shipping the file is not shipping the
+   capability. The installer already merges the user's `.mcp.json`, so appending one marked,
+   idempotent pointer line to their `AGENTS.md` is the same rule — append + report, never
+   overwrite.
+2. **`.reflow2/` is not gitignored** — the installer has no `.gitignore` handling at all, so a
+   converted repo starts tracking a RocksDB directory (binaries and a lock file). Append or
+   create, idempotent, reported.
+3. **The closing "Next:" text is greenfield-only** — it tells a brownfield user to describe what
+   they want to build and says the agent "reads AGENTS.md", which in the sidecar case is the one
+   file that says nothing about reflow2. It should branch: brief → genesis, or existing system →
+   the adopt path.
+
+With those three, converting a project is: build/point at the binary (BL-15's published-binaries
+gap is the remaining wall for machines without a checkout), run `reflow2_init.py`, open the
+agent. Then the graph is empty and everything after that *is* this thread's skill.
 
 *The accepted reverse-engineering lifecycle, mapped* — *user, 2026-07-19, from research into
 standard practice.* Across hardware and software the accepted process is two stages —
