@@ -60,35 +60,24 @@ Add yourself if you're new here.
 
 ## Blocked / waiting
 
-- **On-restart batch test** — blocked on restarting the editor session (BL-32 skew, second
-  round: the 2026-07-20 restart cleared the first skew and the session then verified served_by
-  0.3.0, `design_nodes`/`realization` present, and the full tool surface incl. `add_flow`,
-  `reconcile_verification`, `budget_report`, `set_capability_status`, `set_provenance` — old
-  steps 2/5/5b PASS. But that session's commits rebuilt the binary again, so the live server is
-  once more one restart behind, and the live half below should run on a fresh server, not a
-  stale one). Remaining, first session after the next restart:
-  1. `./target/debug/reflow2-mcp --graph-path .reflow2/graph --import docs/design/reflow2.json`
-     — load the real design (now **175 nodes**) over the genesis stub, *before* the MCP server
-     starts holding the lock (BL-39's path). Upsert: the 11 stub-only genesis nodes
-     (`req:platform`, `req:persistence`, `req:deterministic-core`, `cap:store`, `cap:install`,
-     `cap:artifacts`, …) survive — they carry authored intent the committed model lacks, so
-     reconciling them is where-am-i/detect-and-ask work WITH the user, not a delete.
-  2. Run **where-am-i** — it should narrate the real design incl. 9 Decisions, then
-     **check-health** / **detect-and-ask**. Instrument baseline as of 2026-07-20 evening:
-     **1 gap** (cap:adopt unverified — deliberate), **4 defects** (3 SPOF warnings + 1
-     disconnected pair; the critical circular_dependency was fixed and its clearance is part of
-     the baseline). Live counts will differ by exactly the stub-survivor deltas — anything
-     *else* that diverges is a finding for [docs/trials/](docs/trials/).
-  3. Verify `served_by` says **0.4.0** and `binary_mtime_unix` matches the on-disk binary (the
-     skew check proper). The tool list should carry `delete_edge` — new surface this round.
-  4. **Then cut the release:** `git tag -a v0.4.0 && git push origin v0.4.0`. The bump and
-     CHANGELOG section are already on main; no schema change, so no upgrade doc. (v0.3.0 was
-     tagged 2026-07-20 at 36adb2e, the commit that prepared it — its content boundary — per
-     the option-1 decision.)
+- **Stub-survivor reconciliation** — blocked on restarting the editor session (the 2026-07-20
+  midday session killed the stale 0.3.0 server to free the lock, ran the CLI import — 180
+  nodes/332 edges over the genesis stub — and verified the fresh binary over raw stdio:
+  served_by **0.4.0**, `binary_mtime_unix` matches disk, `delete_edge`+`search_design` in the
+  77-tool surface; **v0.4.0 tagged**. Gap/defect deltas vs the evening baseline were *exactly*
+  stub-survivor-shaped — 10 extra gaps all on `req:platform`/`cap:store`/`cap:artifacts`/
+  `cap:install`, 2 extra disconnected clusters anchored on stub caps — so no trial finding.
+  But the kill left this session serverless, so the human half remains). First session after
+  the next restart: **where-am-i**, then **detect-and-ask**/**check-health** to reconcile the
+  stub-survivor nodes WITH the user (they carry authored intent the committed model lacks —
+  reconcile, don't delete). Then the standalone-repo conversation (counterpart Decision with
+  reopening conditions, CRUD skills, and search are all in place for it).
 
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- Restart batch test live half done: real design imported over the stub (CLI path, 180 nodes/332 edges), skew check PASS via raw-stdio probe (served_by 0.4.0, mtime match, delete_edge+search_design present), deltas verified stub-survivor-shaped, **v0.4.0 tagged and pushed** — @ajs — 2026-07-20 — (this commit)
 
 - Full-text search done: `fulltext` feature enabled (schema carried the flags all along — recurring-lesson #17, this time even the annotations were unreachable capability), search.rs core op + search_design MCP tool + reindex-at-open, search-before-add in capture-intent and find-the-node in revise/retire skills; gates green incl. smoke_mcp against the fresh binary. NOTE: the feature flip re-fingerprints librocksdb-sys — budget ~14 min for the one-time rebuild — @ajs — 2026-07-20 — (this commit)
 - CRUD skill closure done: revise-design + retire-from-design skills (update/delete were the kit's missing verbs), delete_edge MCP tool (+ tools.rs test — a wrong edge no longer costs an endpoint node), stale skill mirrors refreshed, create_node merge semantics finally written down — @ajs — 2026-07-20 — (this commit)
