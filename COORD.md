@@ -60,27 +60,28 @@ Add yourself if you're new here.
 
 ## Blocked / waiting
 
-- **Stub-survivor reconciliation** — blocked on restarting the editor session (the 2026-07-20
-  midday session killed the stale 0.3.0 server to free the lock, ran the CLI import — 180
-  nodes/332 edges over the genesis stub — and verified the fresh binary over raw stdio:
-  served_by **0.4.0**, `binary_mtime_unix` matches disk, `delete_edge`+`search_design` in the
-  77-tool surface; **v0.4.0 tagged**. Gap/defect deltas vs the evening baseline were *exactly*
-  stub-survivor-shaped — 10 extra gaps all on `req:platform`/`cap:store`/`cap:artifacts`/
-  `cap:install`, 2 extra disconnected clusters anchored on stub caps — so no trial finding.
-  But the kill left this session serverless, so the human half remains). First session after
-  the next restart: **where-am-i**, then **detect-and-ask**/**check-health** to reconcile the
-  stub-survivor nodes WITH the user (they carry authored intent the committed model lacks —
-  reconcile, don't delete). Then the standalone-repo conversation (counterpart Decision with
-  reopening conditions, CRUD skills, and search are all in place for it).
+- **Release follow-up (small)** — after run 29785834848 publishes v0.5.0 (still `queued` on
+  GitHub as of the 2026-07-20 evening session): dispatch release.yml once more
+  (`gh workflow run release.yml -f tag=v0.5.0`) so the kit's KIT_VERSION.json stamps a commit
+  that exists in the REWRITTEN history (the first run staged the kit pre-rewrite — contents
+  identical, stamp cosmetically stale). Then BL-15 verification is fully closed.
 
-- **Release follow-up (small)** — after run 29785834848 publishes v0.5.0: dispatch release.yml
-  once more (`gh workflow run release.yml -f tag=v0.5.0`) so the kit's KIT_VERSION.json stamps
-  a commit that exists in the REWRITTEN history (the first run staged the kit pre-rewrite —
-  contents identical, stamp cosmetically stale). Then BL-15 verification is fully closed.
+- **v0.5.0 Release node** — the graph's as-released model stops at rel:v040 while
+  req:released-eq-designed is critical; wants a session with add_release + release_includes +
+  release_report, wiring the {env:dev, rel:v040} island in the same pass. Raised by the
+  self-adopt live session. Then the standalone-repo conversation (counterpart Decision with
+  reopening conditions, CRUD skills, and search are all in place for it).
 
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- **Stub-survivor reconciliation done — first live self-adopt session, 0 gaps**: where-am-i →
+  detect-and-ask with the user (all 4 decisions theirs: 3 merges, cap:store wired, req:platform
+  satisfied by cap:kit, storyflow trial recorded as cap:adopt's proof), HEAL merges under the
+  survivor rule, gaps 11→0, defects 6→4, dec:merge-survivor-provenance landed, export refreshed
+  (197n/370e, stamp 0.5.0). 5 findings about reflow2 itself → BL-46..BL-50;
+  trial: docs/trials/2026-07-20-self-adopt-live.md — @ajs — 2026-07-20 — (this commit)
 
 - **HISTORY REWRITTEN 2026-07-20 (@bro: action needed)** — repo went public (Apache-2.0); five real-system trial records (storyflow x2, ophyd-service, aidrone, 3dtictactoe) were scrubbed from ALL history before anyone cloned. Every SHA changed; tags moved. Update your clone with: `git fetch origin && git checkout main && git reset --hard origin/main` (stash local work first), or re-clone. Private trial records now live in gitignored docs/trials-private/ (ask @ajs for copies); public trials (self-host, erosion, phase-coverage, weather-station) stay — @ajs — 2026-07-20 — (this commit)
 

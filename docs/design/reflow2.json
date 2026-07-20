@@ -242,6 +242,22 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:store",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:store",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:surface",
       "properties": {
         "weight_basis": "estimated"
@@ -279,6 +295,90 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:276837cbe7db075f",
+      "properties": {},
+      "to_id": "req:platform"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:634fc0554d9ccfc6",
+      "properties": {},
+      "to_id": "cap:store"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:7bdb8b6cce42d588",
+      "properties": {},
+      "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:c54e80b55a3273a9",
+      "properties": {},
+      "to_id": "cap:adopt"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:c7c58ee8f8328d68",
+      "properties": {},
+      "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stub-survivor-reconciliation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:adopt"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stub-survivor-reconciliation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stub-survivor-reconciliation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stub-survivor-reconciliation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:store"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stub-survivor-reconciliation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:intent-preserved"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stub-survivor-reconciliation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:platform"
     },
     {
       "edge_type": "CONSUMES",
@@ -512,6 +612,48 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:change"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:detect"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:propagate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:store"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cmp:core"
     },
     {
@@ -542,6 +684,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:as-built-honest"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:coherence"
     },
     {
@@ -554,13 +702,37 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:deterministic-core"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:driving-agent"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:golden-thread"
     },
     {
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:human-decides"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:intent-preserved"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:invocation"
     },
     {
       "edge_type": "CONTAINS",
@@ -573,6 +745,18 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:no-silent-fallback"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:persistence"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:platform"
     },
     {
       "edge_type": "CONTAINS",
@@ -1373,6 +1557,12 @@
       "to_id": "dec:three-party-checks"
     },
     {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:heal",
+      "properties": {},
+      "to_id": "dec:merge-survivor-provenance"
+    },
+    {
       "edge_type": "INCLUDES",
       "from_id": "rel:v040",
       "properties": {
@@ -1984,6 +2174,12 @@
       "edge_type": "SATISFIES",
       "from_id": "cap:detect",
       "properties": {},
+      "to_id": "req:human-decides"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:detect",
+      "properties": {},
       "to_id": "req:no-se-knowledge"
     },
     {
@@ -2042,6 +2238,24 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:kit",
+      "properties": {},
+      "to_id": "req:driving-agent"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:kit",
+      "properties": {},
+      "to_id": "req:invocation"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:kit",
+      "properties": {},
+      "to_id": "req:platform"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:mcp-surface",
       "properties": {},
       "to_id": "req:agent-native"
@@ -2075,6 +2289,12 @@
       "from_id": "cap:questions",
       "properties": {},
       "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:reconcile-built",
+      "properties": {},
+      "to_id": "req:as-built-honest"
     },
     {
       "edge_type": "SATISFIES",
@@ -2126,6 +2346,24 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:store",
+      "properties": {},
+      "to_id": "req:deterministic-core"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:store",
+      "properties": {},
+      "to_id": "req:no-silent-fallback"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:store",
+      "properties": {},
+      "to_id": "req:persistence"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:surface",
       "properties": {},
       "to_id": "req:no-se-knowledge"
@@ -2141,6 +2379,12 @@
       "from_id": "cap:vocabulary",
       "properties": {},
       "to_id": "req:no-silent-fallback"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:adopt-storyflow",
+      "properties": {},
+      "to_id": "cap:adopt"
     },
     {
       "edge_type": "VERIFIES",
@@ -2273,6 +2517,12 @@
       "from_id": "ver:stamp",
       "properties": {},
       "to_id": "cap:stamp"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:store",
+      "properties": {},
+      "to_id": "cap:store"
     },
     {
       "edge_type": "VERIFIES",
@@ -2944,7 +3194,7 @@
         "is_exit_point": false,
         "name": "Recover a design from an existing system",
         "provenance": "authored",
-        "status": "realized",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -2978,7 +3228,7 @@
       "node_id": "cap:change",
       "node_type": "Capability",
       "properties": {
-        "description": "Snapshot prior state at an epoch, then edit \u2014 axis Z.",
+        "description": "Snapshot prior state at an epoch, then edit — axis Z.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Record a change",
@@ -3056,7 +3306,7 @@
       "node_id": "cap:hierarchy",
       "node_type": "Capability",
       "properties": {
-        "description": "Find missing intermediates and level mismatches \u2014 axis Y.",
+        "description": "Find missing intermediates and level mismatches — axis Y.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Check decomposition levels",
@@ -3082,7 +3332,7 @@
       "node_id": "cap:kit",
       "node_type": "Capability",
       "properties": {
-        "description": "One command sets up or refreshes the design environment.",
+        "description": "One command sets up or refreshes the design environment: installs the MCP server registration and the skill kit across four agent harnesses (Claude Code, grok build, OpenCode, Copilot), merging existing configuration rather than overwriting it. Ships as published binaries with a checksum-verified install.sh, so Linux and macOS consumers do not pay a RocksDB rebuild for a routine update.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Install into a consumer project",
@@ -3160,7 +3410,7 @@
       "node_id": "cap:reconcile-built",
       "node_type": "Capability",
       "properties": {
-        "description": "Compare registered artifacts against observed files and report divergence.",
+        "description": "Real files are registered as checksummed Artifacts realizing capabilities, then compared against what is observed on disk — divergence between as-designed and as-built is reported, never assumed.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Reconcile against what was built",
@@ -3235,6 +3485,19 @@
       }
     },
     {
+      "node_id": "cap:store",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A typed vocabulary of node and edge types, validated on write, over a pluggable graph storage backend — the foundation everything else hangs off.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Schema-validated graph store",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:surface",
       "node_type": "Capability",
       "properties": {
@@ -3258,6 +3521,14 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "chg:stub-survivor-reconciliation",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Reconcile genesis-stub survivor nodes with the committed model (user-approved 2026-07-20): merge cap:install→cap:kit, cap:artifacts→cap:reconcile-built, req:past-preserved→req:intent-preserved; wire cap:store; satisfy req:platform via cap:kit; verify cap:adopt from the storyflow trial"
       }
     },
     {
@@ -3762,6 +4033,16 @@
       }
     },
     {
+      "node_id": "dec:merge-survivor-provenance",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "When HEAL merges DUPLICATES-asserted nodes, the survivor is picked by provenance rank (authored > planned > imported > reconciled > inferred > healed); node id breaks ties. Pre-provenance graphs are unchanged.",
+        "name": "Merge survivor is chosen by provenance, id breaks ties",
+        "rationale": "User decided option 2 for BL-29 (2026-07-20): provenance is the closest thing the graph has to 'who asserted this and how deliberately'. Refinement from the 2026-07-20 self-adopt live session: a node with UNSET provenance defaults to authored, which made two genesis stubs tie against authored+verified survivors and nearly win on alphabetical id — set provenance explicitly on both sides before proposing a merge, and consider ranking unset below authored in a future revision.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:operational-spof",
       "node_type": "Decision",
       "properties": {
@@ -3777,7 +4058,7 @@
       "properties": {
         "decision": "verification_coverage counts passing checks; a failing check is its own 0.8 gap.",
         "name": "Verified means a check that passes, not one that exists",
-        "rationale": "A failing test used to satisfy the gap that asked for a test, and passing vs failing were byte-identical to every diagnostic \u2014 counting test nodes while ignoring test results. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: phase-coverage trial, BL-30.",
+        "rationale": "A failing test used to satisfy the gap that asked for a test, and passing vs failing were byte-identical to every diagnostic — counting test nodes while ignoring test results. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: phase-coverage trial, BL-30.",
         "status": "accepted"
       }
     },
@@ -3786,7 +4067,7 @@
       "node_type": "Decision",
       "properties": {
         "decision": "RocksDB directory beside the repo, exports as the durable, diffable record.",
-        "name": "The graph lives as a repo file, embedded \u2014 not a service",
+        "name": "The graph lives as a repo file, embedded — not a service",
         "rationale": "The service's strongest argument (concurrency) is hypothetical while there is one writer; it would put the user's design on a machine they do not control and is permanent operational cost. Reopening conditions are written down. Decided 2026-07-18 (surface-plan.md); BL-12/BL-15 carry the consequences.",
         "status": "accepted"
       }
@@ -3797,7 +4078,7 @@
       "properties": {
         "decision": "Per capability: drifting / confirmed / unexamined, with the disposition counts visible.",
         "name": "The confirmation ledger reports claim history, never judges a claim",
-        "rationale": "Five design_holds claims with zero design edits is the erosion signature and the ledger makes it legible \u2014 but judging a specific claim false is semantic, and a deterministic detector would fire on every stable design with cosmetic churn (the unexpected_coupling lesson). Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); BL-35.",
+        "rationale": "Five design_holds claims with zero design edits is the erosion signature and the ledger makes it legible — but judging a specific claim false is semantic, and a deterministic detector would fire on every stable design with cosmetic churn (the unexpected_coupling lesson). Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); BL-35.",
         "status": "accepted"
       }
     },
@@ -3817,7 +4098,7 @@
       "properties": {
         "decision": "set_artifact_checksum requires a disposition: design_holds (a dated claim) or design_updated (naming the design-side ChangeEvent, linked to the artifact).",
         "name": "Silent drift-accept does not exist",
-        "rationale": "'Accept the file, leave the design alone, say nothing' is how a design erodes into fiction over N legitimate fix cycles while reporting zero gaps \u2014 the failure that sank the original reflow. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: erosion trials, BL-33.",
+        "rationale": "'Accept the file, leave the design alone, say nothing' is how a design erodes into fiction over N legitimate fix cycles while reporting zero gaps — the failure that sank the original reflow. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: erosion trials, BL-33.",
         "status": "accepted"
       }
     },
@@ -3827,7 +4108,7 @@
       "properties": {
         "decision": "Renderers may only emit what the graph states; everything else is confessed as a finding.",
         "name": "A view is a projection of the graph; renderer fill-ins are defects",
-        "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 \u2014 almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
+        "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 — almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
         "status": "accepted"
       }
     },
@@ -4227,6 +4508,66 @@
       }
     },
     {
+      "node_id": "question:276837cbe7db075f",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Covered — link it. The v0.5.0 published binaries (3 platforms via release.yml) plus install.sh are exactly this promise; draw SATISFIES from cap:kit and fold the no-rebuild intent into its description.",
+        "context_setter": "Nothing satisfies requirement “Runs on Linux and macOS developer machines”",
+        "gap_id": "gap:276837cbe7db075f",
+        "question": "You promised reflow2 works on both Linux and Mac laptops without users sitting through a long rebuild for every update — but nothing in the design currently claims to deliver that promise. Is it actually covered by the published binaries and install work you just finished, still on the to-do list, or no longer a promise you're making?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:634fc0554d9ccfc6",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Keep it and wire it up: promote to authored, allocate to the schema/graph/storage components, add a Verification backed by the real test suite. It is the foundation, not a stub artifact.",
+        "context_setter": "Nothing verifies “Schema-validated graph store”",
+        "gap_id": "gap:634fc0554d9ccfc6",
+        "question": "How will you prove the design store only ever keeps valid, well-formed records — or is this the same store your design already describes and tests elsewhere under a different name?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:7bdb8b6cce42d588",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Same thing as the authored 'Reconcile against what was built' — merge them (user: \"go with your recommendation on all the duplicates\"). Keep the stub's write-side wording (checksummed registration) in the survivor.",
+        "context_setter": "Nothing verifies “Artifact reconciliation”",
+        "gap_id": "gap:7bdb8b6cce42d588",
+        "question": "How will you check that comparing the recorded files against what's really on disk actually works — or is this the same ability your design already covers and tests under the name 'reconcile against what was built'?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:c54e80b55a3273a9",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Record the storyflow brownfield adopt trial (2643 files, 5 true findings) as the proof, with its real outcome; this session's self-adopt run is a second data point.",
+        "context_setter": "Nothing verifies “Recover a design from an existing system”",
+        "gap_id": "gap:c54e80b55a3273a9",
+        "question": "You've now tried recovering a design from an existing codebase on several real projects — what would count as proof that this works well enough to rely on, and should one of those trial runs be recorded as that proof?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:c7c58ee8f8328d68",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Same thing as the authored 'Install into a consumer project' — merge them (user: \"go with your recommendation on all the duplicates\"). Keep the four-harness / merge-not-overwrite detail in the survivor.",
+        "context_setter": "Nothing verifies “Consumer install kit”",
+        "gap_id": "gap:c7c58ee8f8328d68",
+        "question": "How will you confirm the one-command setup really installs everything into a user's project without breaking their existing configuration — or is this the same ability your design already covers and tests under the name 'install into a consumer project'?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
       "node_id": "rel:v040",
       "node_type": "Release",
       "properties": {
@@ -4263,6 +4604,18 @@
       }
     },
     {
+      "node_id": "req:as-built-honest",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "As-designed vs as-built divergence is detectable",
+        "priority": "medium",
+        "statement": "Real files on disk are registered as checksummed Artifacts realizing capabilities, so drift between the design and the build is visible rather than assumed.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:coherence",
       "node_type": "Requirement",
       "properties": {
@@ -4284,8 +4637,32 @@
         "name": "Design anything, not only software",
         "priority": "high",
         "provenance": "authored",
-        "statement": "Software, hardware, a document, a process \u2014 the vocabulary stays neutral.",
+        "statement": "Software, hardware, a document, a process — the vocabulary stays neutral.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:deterministic-core",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "The core is deterministic and LLM-free",
+        "priority": "medium",
+        "statement": "The runtime core must be free of LLM and provider dependencies and neutral to the interaction surface; LLM reasoning enters only behind a sync, object-safe seam.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:driving-agent",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "The driving agents are coding agents, not humans",
+        "priority": "medium",
+        "statement": "The primary consumers are Claude Code and grok build (plus OpenCode/Copilot), which reach the system as MCP tools plus an installed skill kit. The human is reached only through the agent.",
+        "status": "proposed"
       }
     },
     {
@@ -4302,6 +4679,18 @@
       }
     },
     {
+      "node_id": "req:human-decides",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Gaps become questions, not guesses",
+        "priority": "medium",
+        "statement": "Where the design is underspecified, the system must ask the human in plain language and record the answer, rather than silently choosing a default.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:intent-preserved",
       "node_type": "Requirement",
       "properties": {
@@ -4310,8 +4699,20 @@
         "name": "The past is never overwritten",
         "priority": "high",
         "provenance": "authored",
-        "statement": "Updating the design to match the build must not erase what was intended.",
+        "statement": "Updating the design to match the build must not erase what was intended: changes are recorded as events against epochs with node snapshots, so prior design state remains recoverable.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:invocation",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Invoked as an MCP server over stdio",
+        "priority": "medium",
+        "statement": "The user-facing surface is the reflow2-mcp binary spoken to over stdio, installed into a consumer project by tools/reflow2_init.py, which merges rather than overwrites existing agent configuration.",
+        "status": "proposed"
       }
     },
     {
@@ -4341,6 +4742,31 @@
       }
     },
     {
+      "node_id": "req:persistence",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "The design persists in-repo alongside the code",
+        "priority": "medium",
+        "statement": "The graph lives at ./.reflow2/graph inside the consumer project, so the design travels with the repo; export/import is deterministic so a backup under git shows what actually changed.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:platform",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Runs on Linux and macOS developer machines",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Target platforms are Linux and macOS. Consumers must not pay a RocksDB C++ rebuild for a routine reflow2 update; the core runs on an in-memory backend with RocksDB opt-in.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:released-eq-designed",
       "node_type": "Requirement",
       "properties": {
@@ -4364,6 +4790,17 @@
         "provenance": "authored",
         "statement": "An existing graph opens, or is refused loudly with what to do.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "ver:adopt-storyflow",
+      "node_type": "Verification",
+      "properties": {
+        "last_run_at": "2026-07-20",
+        "level": "acceptance",
+        "method": "test",
+        "name": "Brownfield adopt trial on storyflow (2643 files): full RE lifecycle through the adopt skill, 5 true findings about storyflow, 4 about reflow2",
+        "status": "passing"
       }
     },
     {
@@ -4587,6 +5024,17 @@
       }
     },
     {
+      "node_id": "ver:store",
+      "node_type": "Verification",
+      "properties": {
+        "last_run_at": "2026-07-20",
+        "level": "unit",
+        "method": "test",
+        "name": "Schema validation and graph-store round-trip suite (cargo test --no-default-features: schema, nodes, graph, storage tests)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:surface",
       "node_type": "Verification",
       "properties": {
@@ -4610,7 +5058,7 @@
   "stamp": {
     "edge_types": 54,
     "node_types": 27,
-    "reflow2_version": "0.3.0",
+    "reflow2_version": "0.5.0",
     "schema_version": 1
   }
 }

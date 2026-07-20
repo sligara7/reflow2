@@ -1236,6 +1236,62 @@ repo could publish its own MCP tool surface as the first ICD. Related: BL-8 (mul
 BL-12 (multi-writer), BL-16 (domains), BL-44 (claims). Decision conversation with the user
 before any code; this entry is the prep.
 
+**BL-46 · `create_node` on an existing node replaces the whole property object** — *self-adopt
+live session, [trials/2026-07-20-self-adopt-live.md](trials/2026-07-20-self-adopt-live.md).* Size **S**.
+
+Folding merged wording into `cap:kit`'s description via `create_node` silently reset
+`status: verified → planned`; on `req:intent-preserved` it also reset `priority: high → medium`
+and `status: accepted → proposed`. The props object supplied replaces the stored one, with
+schema defaults filling every omitted property — so the only safe "edit one property" call is
+one that re-supplies all of them, which nothing tells the caller. Either merge supplied props
+over stored ones, or refuse a partial props object on an existing node loudly. The typed
+setters (`set_capability_status` et al.) were the recovery path; the generic writer should not
+be a trap the typed tools exist to undo.
+
+**BL-47 · Unset provenance must not tie with `authored` in merge survivor selection** —
+*self-adopt live session.* Size **S**.
+
+The genesis stubs carried no `provenance`, which reads as the default `authored`; HEAL's
+survivor rule saw a tie against the real authored nodes and fell through to the id tiebreak,
+proposing to keep stub `cap:install` and **delete the authored, verified `cap:kit`** (same for
+`cap:artifacts` over `cap:reconcile-built`). Caught only because the proposal was reviewed
+before apply. An explicitly-set value and an absent-value default should not rank equal:
+rank unset below `authored`, or require explicit provenance on both endpoints of a DUPLICATES
+merge. Refinement is recorded on `dec:merge-survivor-provenance` in the design graph. Related:
+the merge also lets a re-pointed edge's properties overwrite the survivor's same edge (the
+ChangeEvent's `action: removed` clobbered `modified`) — it is reported in `discarded`, but
+report-then-clobber is the wrong half of two-sided accept.
+
+**BL-48 · `graph_report_markdown` returns malformed `structuredContent`** — *self-adopt live
+session.* Size **S**.
+
+From Claude Code the tool fails client-side schema validation: `structuredContent` arrives as a
+string where the MCP result contract wants a record. The fifteenth recurring-lesson instance in
+the making — the capability exists and one harness cannot reach it — and the same
+response-side shape as the original array `structuredContent` bug. `tools/smoke_mcp.py` should
+assert the result envelope, not only the payload.
+
+**BL-49 · Unbounded read-tool results overflow the agent boundary** — *self-adopt live
+session.* Size **M**.
+
+`propagate_change` returned 70k chars (142 impacted nodes), `export_graph` 93k — both
+overflowed the tool-result budget and were readable only through the harness's spill-to-file
+fallback plus `jq`. A blast radius nobody can read inside the loop is a blast radius that
+doesn't get read. Wants a `summary`/`max_nodes` mode (counts by distance, the distance-1 ring,
+risk crossings — exactly what a session actually uses) with the full dump behind an explicit
+flag; export likely wants a path-writing variant instead of a payload.
+
+**BL-50 · Tool-boundary paper cuts from the self-adopt live session** — grouped, each **S**.
+
+(1) `DUPLICATES.confidence: 1` rejected with "expected Float, got int" — every LLM writes `1`;
+accept integer literals for float params. (2) `add_change_event` cannot declare what it
+changed — the CHANGED edges must be drawn one generic `create_edge` at a time, and
+`describe_schema from/to` ranks CHANGED in the wildcard bucket (its to-side is `*`), so the one
+edge type that models the pair is presented as if it merely accepts it. An `affected` list on
+`add_change_event`, or an exact-match hint for CHANGED, closes the gap. (3) The kit's
+"where-am-i at session start" ritual is convention with no mechanism; a documented SessionStart
+hook recipe in the consumer kit would make it real for harnesses that support hooks.
+
 ## Deliberate deferrals
 
 Not gaps — decisions, recorded so they aren't rediscovered as bugs.
