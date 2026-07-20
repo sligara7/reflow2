@@ -41,10 +41,15 @@ session, prose read out of an adopted codebase.
    only way they learn what a previous session concluded. Do it again whenever they ask "where
    are we?".
 
-0. **Bootstrap once (GENESIS).** On a brand-new project (empty graph), start with the **genesis**
+0. **Bootstrap once.** On a brand-new project (empty graph), start with the **genesis**
    skill: call the `genesis` tool to scaffold the Project + temporal anchor, seed the opening
    brief into Requirements + Capabilities (P0/P1, *not* Components), capture deployment/platform
    context as Requirements, then run `detect_gaps`. Skip this on an existing design.
+   **If the system already exists** — a codebase you were pointed at, with little or no
+   requirements documentation — use the **adopt** skill instead: genesis's sibling, pointed
+   backwards. It recovers the design from what was built (breadth-first coarse scan, static +
+   dynamic analysis, intent from sources outside the code, validation against the original)
+   instead of building toward a brief.
 1. **Capture intent.** When the user gives a brief or a new idea, extract it into the graph:
    - `add_requirement` (what must be true), `add_capability` (what the system does),
      `add_component` (what part owns it), `add_interface` (the contract where two components

@@ -17,6 +17,20 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The `adopt` skill** (BL-27) — genesis's sibling, pointed backwards: bring a system that
+  already exists under design control. The ninth kit skill, structured as the accepted
+  reverse-engineering lifecycle (gather → scan → analyze static+dynamic → recover → validate),
+  with every trial-earned discipline encoded: intent never inferred from the implementation
+  that satisfies it; structure from imports and calls, never prose; breadth-first coarse
+  granularity over the whole repo (one Interface per contract, a vendored mass as one opaque
+  Component) with one atomic `import_graph`; found documents weighed before trusted; the test
+  suite actually *run* and fed to `reconcile_verification`; recovered rationale as
+  provenance-marked Decisions, found limits as budget Constraints, found processes as Flows;
+  and a closing validation pass holding every finding to "true of the system, or an error in
+  the model". The installer's brownfield next-steps message and the consumer AGENTS.md now
+  point at it. Deliberately not yet included: incremental deepening, which stays behind the
+  frontier-marking work on BL-27.
+
 - **The P4 reconcile — the last feedback loop closes, and the phase trial goes fully green**
   (BL-30's M half). `reconcile_verification` completes the family: `reconcile_artifacts` asks
   about the code, this asks about the *outcomes*, `reconcile_deployment` about what runs. The

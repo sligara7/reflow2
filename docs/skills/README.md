@@ -2,7 +2,7 @@
 
 > Part of the **Reflow 2.0** design docs — see **[overview.md](../overview.md)** for the map.
 
-reflow2 ships a consumer kit: agent instructions, seven skills, and an MCP config, installed by
+reflow2 ships a consumer kit: agent instructions, nine skills, and an MCP config, installed by
 `tools/reflow2_init.py`. Whether an agent ever sees them depends entirely on **which directory
 they land in**, and every harness looks in a different place.
 

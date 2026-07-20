@@ -781,7 +781,22 @@ implementation"* discipline is exactly the stage boundary. reflow2's position, s
 this mapping: redocumentation is automatable; design recovery is question-generation — the
 machine drafts, marks provenance, and asks; it never fills in the why.
 
-Size **L** for the thread; the `adopt` skill itself is **M** once the two **S** blockers land, and
+*The `adopt` skill itself — built, 2026-07-19.* Nine skills now ship in the kit. It is the
+five-phase RE lifecycle above made operational: gather (sources as Fragments with trust
+weighed), scan (breadth-first coarse, structure from imports never prose, one `import_graph`),
+analyze (static detectors + the dynamic receptors — run the tests into
+`reconcile_verification`, observe deployments into `reconcile_deployment`), recover (intent
+only from outside the code, `design_without_intent` and `unmotivated_capability` as the
+question engine, rationale as provenance-marked Decisions, found limits as budget Constraints,
+found processes as Flows), validate (the reconcile family agreeing + every remaining
+gap true-of-the-system or a model error). Its close states the doctrine: *adopt is done when
+the graph and the system agree and every remaining gap is acknowledged or genuinely open —
+a system adopted honestly usually should have open gaps.* The installer's brownfield
+next-steps and the consumer AGENTS.md step 0 both point at it. **Not yet exercised on a real
+system** — the next brownfield trial should run through this skill, which is also what the
+still-open deepening/frontier work (below) is waiting behind.
+
+Size **L** for the thread; the `adopt` skill itself is ~~**M** once the two **S** blockers land~~ **done**, and
 the deepening stage is a separate **M** behind the frontier work.
 
 **BL-15 · Project bootstrap and kit updates** — *from the external user, 2026-07-18.* "You should
