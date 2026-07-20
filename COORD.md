@@ -52,6 +52,7 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
+- CRUD skill closure — @ajs — since 2026-07-20 — new skills revise-design + retire-from-design in getting-started/skills/ (+ mirror refresh: adopt mirrors are stale, missing F6's medium paragraph), delete_edge MCP tool in reflow2-mcp/src/service.rs, docs/skills/README.md count
 
 
 
