@@ -15,6 +15,34 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **The loop can now change its mind on the record: `revise-design` and `retire-from-design`
+  skills, and a `delete_edge` tool.** The kit's skills covered create (genesis,
+  capture-intent, link-artifacts) and read (where-am-i, check-health, detect-and-ask), and
+  impact-check covered the moment *before* an update — but no skill walked the update itself,
+  and nothing at all covered removal. The primitives existed and were undocumented: an
+  existing id passed to `create_node` **merges** (revised props overwrite, the rest survive),
+  which is how revision is expressed — established by probe this session, written down
+  nowhere until now.
+
+  - **revise-design** — impact first, then `record_change` BEFORE the edit (the snapshot must
+    capture the node still saying the old thing), then the edit via create-as-merge / the
+    typed status setters / edge tools, then re-detect for the second-order rot a reasonable
+    edit leaves behind.
+  - **retire-from-design** — forces the fork that matters: design history (was real, now
+    over) is *retired* — `record_change` with `deprecation`, `status: dropped`, an
+    `OBSOLETES` from the successor — while a modelling mistake (never should have existed)
+    is *deleted* with no ceremony. Confusing the two either erases the past or embalms a typo.
+  - **`delete_edge`** (MCP tool) — retract one mis-drawn assertion; both endpoints survive.
+    Until now the only way to remove a wrong edge over MCP was to delete one of its endpoint
+    nodes — instance #16 of "the core can, the surface can't" (`DesignGraph::delete_edge`
+    existed all along). A link that WAS true and stopped being true is history, not an error;
+    the tool description says so.
+
+  Found because the kit's mirror copies in this repo were themselves stale (missing F6's
+  `medium` paragraph) — refreshed, and docs/skills/README.md now says eleven skills.
+
 ### Changed
 
 - **The self-model now derives structure from source and reconciles against the filesystem**

@@ -1560,7 +1560,7 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v030",
       "properties": {
-        "as_checksum": "sha256:93368377171fa72a"
+        "as_checksum": "sha256:72844178f36569d8"
       },
       "to_id": "art:service"
     },
@@ -2797,7 +2797,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:93368377171fa72a",
+        "checksum": "sha256:72844178f36569d8",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"

@@ -369,6 +369,14 @@ pub struct CreateEdgeReq {
     pub props: Option<JsonObject>,
 }
 
+/// One edge, addressed the way the store addresses it: type + both endpoint ids.
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct DeleteEdgeReq {
+    pub edge_type: String,
+    pub from_id: String,
+    pub to_id: String,
+}
+
 /// All fields optional: no args dumps the whole vocabulary, `node_type` focuses
 /// one type, `from`+`to` answers "what may connect these?".
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1906,6 +1914,25 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.graph.lock().await;
         ok_json(g.delete_node(&req.node_type, &req.id).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Delete one edge by type and endpoint ids (true if it existed). For \
+                       retracting a link that was drawn in error — a wrongly-asserted SATISFIES, \
+                       an allocation that never happened. A link that WAS true and stopped being \
+                       true is design history, not an error: record it (record_change) rather \
+                       than erasing it. Until this tool existed the only way to remove a wrong \
+                       edge over MCP was to delete one of its endpoints."
+    )]
+    pub async fn delete_edge(
+        &self,
+        Parameters(req): Parameters<DeleteEdgeReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(
+            g.delete_edge(&req.edge_type, &req.from_id, &req.to_id)
+                .map_err(dyno_err)?,
+        )
     }
 
     #[tool(

@@ -1041,3 +1041,54 @@ async fn importing_something_that_is_not_an_export_fails_loud() {
         "a malformed document must be rejected, not partly applied"
     );
 }
+
+#[tokio::test]
+async fn a_wrong_edge_can_be_retracted_without_deleting_its_endpoints() {
+    // Until delete_edge existed the only way to remove a mis-drawn link over
+    // MCP was to delete one of its endpoint nodes — destroying a real design
+    // node to fix a wrong assertion about it.
+    let s = seeded().await;
+
+    // The seeded SATISFIES edge is visible to detect: no unsatisfied gap.
+    let gaps = jl!(s.detect_gaps());
+    let unsatisfied = |gaps: &serde_json::Value| {
+        gaps.as_array()
+            .unwrap()
+            .iter()
+            .filter(|g| g["gap_source"] == "unsatisfied_requirement")
+            .count()
+    };
+    assert_eq!(unsatisfied(&gaps), 0, "the thread starts intact");
+
+    let existed = j!(s.delete_edge(Parameters(DeleteEdgeReq {
+        edge_type: "SATISFIES".into(),
+        from_id: "cap:flight".into(),
+        to_id: "req:physics".into(),
+    })));
+    assert_eq!(existed, serde_json::json!(true));
+
+    // Both endpoints survive; only the assertion between them is gone —
+    // and detect sees the thread it severed.
+    assert!(
+        j!(s.get_node(Parameters(TypedIdReq {
+            node_type: "Requirement".into(),
+            id: "req:physics".into()
+        })))
+        .is_object(),
+        "the requirement must survive the retraction"
+    );
+    let after = jl!(s.detect_gaps());
+    assert_eq!(
+        unsatisfied(&after),
+        1,
+        "with the edge retracted the requirement is unsatisfied again"
+    );
+
+    // Retracting an edge that is not there says so, without inventing work.
+    let second = j!(s.delete_edge(Parameters(DeleteEdgeReq {
+        edge_type: "SATISFIES".into(),
+        from_id: "cap:flight".into(),
+        to_id: "req:physics".into(),
+    })));
+    assert_eq!(second, serde_json::json!(false));
+}

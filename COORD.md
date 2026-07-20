@@ -52,7 +52,6 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
-- CRUD skill closure — @ajs — since 2026-07-20 — new skills revise-design + retire-from-design in getting-started/skills/ (+ mirror refresh: adopt mirrors are stale, missing F6's medium paragraph), delete_edge MCP tool in reflow2-mcp/src/service.rs, docs/skills/README.md count
 
 
 
@@ -89,6 +88,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- CRUD skill closure done: revise-design + retire-from-design skills (update/delete were the kit's missing verbs), delete_edge MCP tool (+ tools.rs test — a wrong edge no longer costs an endpoint node), stale skill mirrors refreshed, create_node merge semantics finally written down — @ajs — 2026-07-20 — (this commit)
 - Cycle break + true-gap closure done: propagate↔structure cycle broken (shared vocabulary moved to nodes.rs/graph.rs, verified gone by the probe that found it AND by the rebuilt self-model); confirm.rs and reflow2_init.py each got their first test suite; self-model now 175 nodes, 1 gap (cap:adopt, deliberate), 4 warnings, 0 critical — @ajs — 2026-07-20 — (this commit)
 - Self-model standing probe done: build_design_graph.py derives DEPENDS_ON from source and reconciles vs disk; graph 125→173 nodes, gaps 16→3 (all true), and reflow2 now reports its own propagate↔structure cycle as critical — @ajs — 2026-07-20 — (this commit)
 - F7 done: flow cycles report members + path (storyflow's cluster kept p-prompt, the human hand-off, that the walk dropped); adopt trial's F1-F7 all closed — @ajs — 2026-07-20 — (this commit)

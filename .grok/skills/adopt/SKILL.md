@@ -51,7 +51,11 @@ recorded.
   one `Verification` per suite or test area, never per test function; one `Artifact` per
   meaningful unit, not per file; a vendored or generated mass = **one opaque Component**.
 - **Both sides of every contract** (`provides` / `consumes`) — this is where the structural
-  findings come from.
+  findings come from. **State each contract's `medium`** (`REST`, `event`, `graphql`, `cli`,
+  **`library`**, `data`, `mechanical`, …): it is what separates a call across a boundary from a
+  package linked into its callers. A shared library is imported by everything, so it looks
+  exactly like a hub — and "add redundancy" is meaningless for it. Marking it `library` is how
+  the graph knows.
 - **Statuses honest, provenance marked**: what ships is `realized` (or `verified` only where a
   passing check will actually back it), and everything read out of the artifact carries
   `provenance: inferred`. A graph that calls a production system `planned` asserts it is
