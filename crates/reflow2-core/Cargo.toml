@@ -27,3 +27,10 @@ default = []
 # feature. When off, `DesignGraph::open_rocksdb` fails loud (foundation
 # contract), rather than silently falling back to memory.
 rocksdb = ["dynograph-storage/rocksdb"]
+# BM25 full-text search over the schema's `fulltext:` properties (Tantivy via
+# dynograph-text — pure Rust, no C++, but a real dependency tree, so it stays
+# off the sub-second core iteration path). The engine mirrors node writes into
+# the index automatically; the schema has carried the `fulltext:` flags since
+# it was written. When off, `DesignGraph::search_design` fails loud rather
+# than silently returning nothing.
+fulltext = ["dynograph-storage/fulltext"]

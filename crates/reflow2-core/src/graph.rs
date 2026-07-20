@@ -86,6 +86,15 @@ impl DesignGraph {
         &self.graph_id
     }
 
+    /// Crate-internal access to the storage engine, for modules that wrap an
+    /// engine capability not already surfaced as a `DesignGraph` method
+    /// (currently only `search`). Feature-gated with its one user so the
+    /// default build stays warning-free.
+    #[cfg(feature = "fulltext")]
+    pub(crate) fn engine(&self) -> &StorageEngine {
+        &self.engine
+    }
+
     /// The merged schema backing this graph.
     pub fn schema(&self) -> &Schema {
         self.engine.schema()

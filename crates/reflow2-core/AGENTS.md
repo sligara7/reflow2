@@ -18,6 +18,12 @@ cargo test -p reflow2-core --no-default-features --lib            # unit + docte
 cargo test -p reflow2-core --no-default-features --test heal      # one integration file
 cargo test -p reflow2-core --no-default-features golden_thread    # by name (substring)
 
+# The `fulltext` feature (Tantivy — pure Rust, no C++, but a real dependency
+# tree, so it stays off the fast path above). tests/search.rs has two arms,
+# like persistence.rs: the default build proves absence fails loud; this runs
+# the real BM25 round trip.
+cargo test -p reflow2-core --no-default-features --features fulltext --test search
+
 cargo clippy -p reflow2-core --no-default-features --all-targets
 cargo fmt
 

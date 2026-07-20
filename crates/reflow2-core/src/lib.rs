@@ -49,6 +49,7 @@ pub mod propagate;
 pub mod provenance;
 pub mod report;
 pub mod schema;
+pub mod search;
 pub mod structure;
 pub mod surprises;
 pub mod temporal;
@@ -85,6 +86,7 @@ pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOp
 pub use provenance::{GraphStamp, Provenance};
 pub use report::{AllocationSummary, GraphReport};
 pub use schema::load_schema;
+pub use search::{SearchHit, SearchResult};
 pub use surprises::SurprisingConnection;
 pub use temporal::{ChangeAction, ChangeRecord, ChangeType, EpochType, parse_snapshot_state};
 pub use verify::{

@@ -52,7 +52,6 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
-- Full-text search over the design — @ajs — since 2026-07-20 — enable dynograph-storage's `fulltext` feature (schema has carried `fulltext:` flags all along, nothing served them — recurring-lesson #17), new core module search.rs + search_design MCP tool, search-before-add lines in capture-intent/revise/retire skills
 
 
 
@@ -91,6 +90,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- Full-text search done: `fulltext` feature enabled (schema carried the flags all along — recurring-lesson #17, this time even the annotations were unreachable capability), search.rs core op + search_design MCP tool + reindex-at-open, search-before-add in capture-intent and find-the-node in revise/retire skills; gates green incl. smoke_mcp against the fresh binary. NOTE: the feature flip re-fingerprints librocksdb-sys — budget ~14 min for the one-time rebuild — @ajs — 2026-07-20 — (this commit)
 - CRUD skill closure done: revise-design + retire-from-design skills (update/delete were the kit's missing verbs), delete_edge MCP tool (+ tools.rs test — a wrong edge no longer costs an endpoint node), stale skill mirrors refreshed, create_node merge semantics finally written down — @ajs — 2026-07-20 — (this commit)
 - Cycle break + true-gap closure done: propagate↔structure cycle broken (shared vocabulary moved to nodes.rs/graph.rs, verified gone by the probe that found it AND by the rebuilt self-model); confirm.rs and reflow2_init.py each got their first test suite; self-model now 175 nodes, 1 gap (cap:adopt, deliberate), 4 warnings, 0 critical — @ajs — 2026-07-20 — (this commit)
 - Self-model standing probe done: build_design_graph.py derives DEPENDS_ON from source and reconciles vs disk; graph 125→173 nodes, gaps 16→3 (all true), and reflow2 now reports its own propagate↔structure cycle as critical — @ajs — 2026-07-20 — (this commit)

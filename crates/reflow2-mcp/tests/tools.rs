@@ -1092,3 +1092,45 @@ async fn a_wrong_edge_can_be_retracted_without_deleting_its_endpoints() {
     })));
     assert_eq!(second, serde_json::json!(false));
 }
+
+#[tokio::test]
+async fn search_finds_the_design_by_its_own_words() {
+    // The retrieval gap the surface carried from day one: get_node needs the
+    // id, scan_nodes reads a whole type — nothing answered "which node talks
+    // about X?". That made finding-by-content the LLM's job, the seat-swap
+    // partnership.md forbids.
+    let s = seeded().await;
+
+    let result = j!(s.search_design(Parameters(SearchDesignReq {
+        query: "ball flight plausible".into(),
+        node_type: None,
+        limit: None,
+    })));
+    let hits = result["hits"].as_array().expect("hits list");
+    assert!(
+        hits.iter().any(|h| h["node_id"] == "req:physics"),
+        "the requirement stating those words is found: {result}"
+    );
+    assert!(
+        result["stale"].as_array().unwrap().is_empty(),
+        "a live graph has no index drift"
+    );
+    assert_eq!(result["limit"], 10, "the default bound is visible");
+
+    // Scoped to a type it narrows; scoped to the wrong type it is honestly empty.
+    let caps = j!(s.search_design(Parameters(SearchDesignReq {
+        query: "flight".into(),
+        node_type: Some("Capability".into()),
+        limit: Some(5),
+    })));
+    let cap_hits = caps["hits"].as_array().unwrap();
+    assert!(!cap_hits.is_empty(), "cap:flight mentions flight: {caps}");
+    assert!(cap_hits.iter().all(|h| h["node_type"] == "Capability"));
+
+    let none = j!(s.search_design(Parameters(SearchDesignReq {
+        query: "zeppelin".into(),
+        node_type: None,
+        limit: None,
+    })));
+    assert!(none["hits"].as_array().unwrap().is_empty());
+}

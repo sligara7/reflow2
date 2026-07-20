@@ -191,7 +191,11 @@ reflow2 phrases the question; **you** are the language model that fills it in:
   `contain_component`, `set_requirement_status`, `set_capability_status`, `set_provenance`,
   `add_interface`, `add_flow`, `part_of_flow`, `add_constraint`, `constrains`, `satisfies`,
   `allocate`, `contains`, `provides`, `consumes`, `create_node`, `create_edge`, `get_node`,
-  `scan_nodes`, `delete_node`, `apply_heal`.
+  `scan_nodes`, `delete_node`, `delete_edge`, `apply_heal`.
+- **Find:** `search_design` — keyword search over every node's name/statement/description,
+  for when you don't know the id: mapping the user's words to their node, and checking
+  whether a requirement like the one you are about to add already exists. Finding by content
+  is the graph's job; do not scan whole types into context to eyeball them.
 - **As-built:** `link_artifact`, `add_artifact`, `realizes`, `reconcile_artifacts`,
   `set_artifact_checksum` — the last is a **two-sided accept**: `disposition` is required
   (`design_holds`, or `design_updated` naming the `record_change` event behind it), because a

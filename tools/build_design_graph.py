@@ -104,6 +104,13 @@ CAPABILITIES = [
      "verified", ["req:no-se-knowledge"]),
     ("cap:vocabulary", "Describe the vocabulary", "Tell a client what types exist and what may join them.",
      "verified", ["req:agent-native", "req:no-silent-fallback"]),
+    # 2026-07-20: the schema carried `fulltext:` flags from day one and the
+    # foundation implemented the index; nothing enabled or served it —
+    # recurring-lesson instance #17. Finding by content is the graph's job
+    # (partnership.md), not the LLM's.
+    ("cap:search", "Find design nodes by what they say",
+     "BM25 keyword search over every fulltext property, ranked, type-scopable.",
+     "verified", ["req:agent-native", "req:no-se-knowledge"]),
     ("cap:portability", "Export and import a design", "Move a design across machines and versions.",
      "verified", ["req:survives-upgrade"]),
     ("cap:stamp", "Say which reflow2 wrote a graph", "Stamp and check, refusing a graph from the future.",
@@ -247,6 +254,7 @@ MODULES = [
     ("cmp:agent", "agent", "cmp:core", ["cap:surface"]),
     ("cmp:surprises", "surprises", "cmp:core", ["cap:report"]),
     ("cmp:schema", "schema", "cmp:core", ["cap:vocabulary"]),
+    ("cmp:search", "search", "cmp:core", ["cap:search"]),
     ("cmp:nodes", "nodes", "cmp:core", []),
     ("cmp:service", "service", "cmp:mcp", ["cap:mcp-surface"]),
     ("cmp:main", "main", "cmp:mcp", ["cap:mcp-surface"]),
@@ -284,6 +292,7 @@ ARTIFACTS = {  # component -> source path
     "cmp:agent": "crates/reflow2-core/src/agent.rs",
     "cmp:surprises": "crates/reflow2-core/src/surprises.rs",
     "cmp:schema": "crates/reflow2-core/src/schema.rs",
+    "cmp:search": "crates/reflow2-core/src/search.rs",
     "cmp:nodes": "crates/reflow2-core/src/nodes.rs",
     "cmp:service": "crates/reflow2-mcp/src/service.rs",
     "cmp:main": "crates/reflow2-mcp/src/main.rs",
@@ -316,6 +325,7 @@ VERIFICATIONS = {  # capability -> test file
     "cap:genesis": "crates/reflow2-core/tests/genesis.rs",
     "cap:freshness": "crates/reflow2-core/tests/confirm.rs",
     "cap:kit": "tools/test_init.py",
+    "cap:search": "crates/reflow2-core/tests/search.rs",
 }
 # The one capability that ships without an automated check — the honest
 # remainder the gap list SHOULD carry: cap:adopt is a skill, exercised on a

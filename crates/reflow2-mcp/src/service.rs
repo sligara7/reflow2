@@ -377,6 +377,21 @@ pub struct DeleteEdgeReq {
     pub to_id: String,
 }
 
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct SearchDesignReq {
+    /// Keywords to search for — tokenized BM25 over every node's name,
+    /// statement and description (not substring or regex). Use the words the
+    /// design would use: "persistence", "dedup window", "latency budget".
+    pub query: String,
+    /// Restrict hits to one node type (e.g. "Requirement"); omit for all.
+    #[serde(default)]
+    pub node_type: Option<String>,
+    /// Maximum hits to return, best first (default 10). The result echoes it —
+    /// hits.len() == limit means there may be more.
+    #[serde(default)]
+    pub limit: Option<usize>,
+}
+
 /// All fields optional: no args dumps the whole vocabulary, `node_type` focuses
 /// one type, `from`+`to` answers "what may connect these?".
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -899,6 +914,11 @@ impl ReflowService {
     /// would only partly understand.
     pub fn new_reporting(path: &str) -> Result<(Self, Option<String>), DynoError> {
         let (graph, provenance) = DesignGraph::open_rocksdb_with_provenance(path)?;
+        // The full-text index is a derived sidecar; a graph written by a
+        // binary built before the `fulltext` feature has nodes the index never
+        // saw, and a silently-partial search reads as "the design says
+        // nothing about that". One bounded rebuild at open closes that hole.
+        graph.reindex_search()?;
         Ok((
             Self {
                 graph: Arc::new(Mutex::new(graph)),
@@ -1905,6 +1925,27 @@ impl ReflowService {
         let g = self.graph.lock().await;
         let nodes = g.scan_nodes(&req.node_type).map_err(dyno_err)?;
         ok_json(nodes.into_iter().map(NodeDto::from).collect::<Vec<_>>())
+    }
+
+    #[tool(
+        description = "Find design nodes by what they say, when you don't know their ids — \
+                       'what does the design say about persistence?', 'is there already a \
+                       requirement about latency?'. BM25 keyword search over every node's \
+                       name/statement/description, ranked, optionally scoped to one node type. \
+                       Search BEFORE creating a node that might already exist, and to map the \
+                       user's words to the node they mean. Result reports its own bounds: \
+                       hits.len() == limit means there may be more, and a non-empty `stale` \
+                       list means the index has drifted from the store."
+    )]
+    pub async fn search_design(
+        &self,
+        Parameters(req): Parameters<SearchDesignReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        let result = g
+            .search_design(&req.query, req.node_type.as_deref(), req.limit.unwrap_or(10))
+            .map_err(dyno_err)?;
+        ok_json(result)
     }
 
     #[tool(description = "Delete a node by type and id (true if it existed).")]

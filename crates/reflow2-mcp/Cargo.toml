@@ -16,7 +16,7 @@ path = "src/main.rs"
 # The deterministic core, with on-disk persistence on: the design must survive
 # across agent sessions (surface-plan.md, repo-file shape). This pulls the
 # librocksdb-sys C++ compile — a one-time, cached cost.
-reflow2-core = { path = "../reflow2-core", features = ["rocksdb"] }
+reflow2-core = { path = "../reflow2-core", features = ["rocksdb", "fulltext"] }
 
 # Official Rust MCP SDK. `server`+`macros` give the #[tool]/#[tool_router]
 # surface; `transport-io` gives the stdio transport grok build / claude code

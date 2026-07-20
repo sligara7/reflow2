@@ -226,6 +226,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:search",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:stamp",
       "properties": {
         "weight_basis": "estimated"
@@ -433,6 +441,12 @@
       "from_id": "cmp:core",
       "properties": {},
       "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:search"
     },
     {
       "edge_type": "CONTAINS",
@@ -1154,6 +1168,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:search",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "cmp:structure",
       "properties": {
         "dependency_type": "function_call",
@@ -1456,7 +1480,7 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v040",
       "properties": {
-        "as_checksum": "sha256:b5c23526bb7d45f5"
+        "as_checksum": "sha256:328b25be480771fb"
       },
       "to_id": "art:graph"
     },
@@ -1560,7 +1584,15 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v040",
       "properties": {
-        "as_checksum": "sha256:72844178f36569d8"
+        "as_checksum": "sha256:c421c3496192d22d"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v040",
+      "properties": {
+        "as_checksum": "sha256:06a920acb1904585"
       },
       "to_id": "art:service"
     },
@@ -1852,6 +1884,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:search",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:service",
       "properties": {
         "completeness": "complete"
@@ -2068,6 +2108,18 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:search",
+      "properties": {},
+      "to_id": "req:agent-native"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:search",
+      "properties": {},
+      "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:stamp",
       "properties": {},
       "to_id": "req:survives-upgrade"
@@ -2209,6 +2261,12 @@
       "from_id": "ver:report",
       "properties": {},
       "to_id": "cap:report"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:search",
+      "properties": {},
+      "to_id": "cap:search"
     },
     {
       "edge_type": "VERIFIES",
@@ -2446,6 +2504,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:search",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:service",
       "properties": {
         "action": "created"
@@ -2654,7 +2720,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b5c23526bb7d45f5",
+        "checksum": "sha256:328b25be480771fb",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -2793,11 +2859,22 @@
       }
     },
     {
+      "node_id": "art:search",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:c421c3496192d22d",
+        "location": "crates/reflow2-core/src/search.rs",
+        "name": "search.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:service",
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:72844178f36569d8",
+        "checksum": "sha256:06a920acb1904585",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -3126,6 +3203,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Say where the design stands",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:search",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BM25 keyword search over every fulltext property, ranked, type-scopable.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Find design nodes by what they say",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -3543,6 +3633,19 @@
         "name": "schema",
         "provenance": "authored",
         "purpose": "The schema module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:search",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "search",
+        "provenance": "authored",
+        "purpose": "The search module.",
         "status": "planned",
         "tier": "operational"
       }
@@ -4016,6 +4119,16 @@
       }
     },
     {
+      "node_id": "frag:art:search",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered search.rs"
+      }
+    },
+    {
       "node_id": "frag:art:service",
       "node_type": "Fragment",
       "properties": {
@@ -4450,6 +4563,16 @@
         "level": "integration",
         "method": "test",
         "name": "report.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:search",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "search.rs",
         "status": "passing"
       }
     },

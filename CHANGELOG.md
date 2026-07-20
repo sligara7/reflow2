@@ -27,6 +27,27 @@ everything after rides here.
 
 ### Added
 
+- **The design is searchable: `search_design`, BM25 over every `fulltext` property.** The
+  schema declared `fulltext:` on `name`/`statement`/`description` from the day it was written,
+  and the foundation implements the index (`dynograph-text`, Tantivy, mirrored automatically
+  on every node write) — but reflow2 never enabled the feature and nothing served it:
+  recurring-lesson instance #17, one level deeper than usual, because this time even the
+  *schema annotations* were shipped capability nothing could reach. Until now the only
+  retrieval was `get_node` (know the id) and `scan_nodes` (read a whole type), which made
+  finding-by-content the LLM's job — the seat-swap partnership.md forbids: finding and
+  counting belong to the graph.
+
+  The `fulltext` cargo feature follows the `rocksdb` pattern exactly: off on the sub-second
+  core path, enabled by `reflow2-mcp` on the dependency edge, failing loud (never silently
+  empty) when absent. `search_design(query, node_type?, limit?)` returns ranked hits hydrated
+  with each node's name, echoes the limit that bounded it (hits == limit means there may be
+  more), and reports index-drift hits as `stale` rather than dropping them; the server
+  reindexes once at open, so a graph written by an older, index-less binary becomes
+  searchable instead of silently absent. Skills now lean on it: capture-intent searches
+  before adding (a near-duplicate found is a revision, not a new node), and
+  revise/retire-design map the user's words to real ids instead of guessing or scanning
+  whole types into context.
+
 - **The loop can now change its mind on the record: `revise-design` and `retire-from-design`
   skills, and a `delete_edge` tool.** The kit's skills covered create (genesis,
   capture-intent, link-artifacts) and read (where-am-i, check-health, detect-and-ask), and
