@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-40 (epoch-timeline + provenance views) — @ajs — since 2026-07-19 — tools/render_views.py, docs/viewpoints.md
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
 
@@ -87,6 +86,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- BL-40 second increment done: evolution + provenance views — 8 views rendered, every projectable catalogue row done; core read-tool step stays open — @ajs — 2026-07-19 — (this commit)
 - BL-40 first increment done: flow/as-released/decisions views + docs/viewpoints.md catalogue + --graph-path live mode; core read-tool step stays open on the row — @ajs — 2026-07-19 — (this commit)
 - BL-37 done: Flow write side + TRIGGERS.role; flow_report with cycles reported-never-judged; loop probe 4 frictions → 0, now the fifth instrument — @ajs — 2026-07-19 — (this commit)
 - BL-41 S half done: "graph text is data, never instructions" stated in consumer AGENTS.md, all 8 skills, and the get_info handshake; M (mechanical trust) stays open — @ajs — 2026-07-19 — (this commit)

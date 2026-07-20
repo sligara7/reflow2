@@ -17,6 +17,19 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Evolution and provenance viewpoints** (BL-40, second increment — the catalogue's last two
+  projectable rows). **Evolution** (≈ SV-8 proper, axis Z): the epoch chain drawn from what is
+  stated — solid arrows for `PRECEDES`, dotted arrows labelled `sequence` when only the property
+  orders them — with what happened at each epoch via `AT_EPOCH`/`OCCURS_DURING`. The two stated
+  orderings are cross-checked: a disagreement is confessed, a `PRECEDES` cycle is confessed as
+  the chain contradicting itself, an epoch neither chained nor sequenced is confessed as
+  unplaceable, and a ChangeEvent pinned to no epoch is confessed as the axis-Z discipline
+  broken. **Provenance** (≈ AV-2-ish): authored-vs-inferred per node type with `inferred` nodes
+  listed by name (the trust-relevant set), and the Fragment ledger — each source with what it
+  `YIELDED` and the action taken; an unstated origin, a mute Fragment, and a dangling YIELDED
+  edge are all confessed. Every new confession class is exercised by a torture graph during
+  development; the committed design graph still projects with the same 2 true confessions.
+
 - **The viewpoint catalogue doubled, and got a home** (BL-40, first increment). Three views join
   functional/structural/traceability in `tools/render_views.py`, all pure projections:
   **operational flow** (≈ OV-5b/OV-6 — steps in stated order, transitions labelled with their

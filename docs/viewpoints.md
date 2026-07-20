@@ -38,10 +38,10 @@ mapping is there so a viewpoint-trained reader knows where to look, not to claim
 | **Traceability** | SV-5 | `ALLOCATED_TO`, `REALIZES` (both P3 shapes), `VERIFIES` with outcome | ✅ rendered |
 | **As-released** | SV-8-ish | `Release` `INCLUDES` with `as_checksum` frozen at cut, `DEPLOYED_TO`, and the built-but-not-shipped diff | ✅ rendered (BL-34) |
 | **Decisions** | *(no clean DoDAF box — the record of why, which DoDAF leaves to AV-1 prose)* | `Decision` (`decision`, `rationale`, `status`) + incoming `GOVERNED_BY` | ✅ rendered |
-| **Evolution / epoch timeline** | SV-8 proper (axis Z) | `DesignEpoch` + `PRECEDES` chain + `ChangeEvent` / `Snapshot` | ⬜ projectable since BL-36 (`precedes` reachable); not yet rendered — the natural next view |
+| **Evolution / epoch timeline** | SV-8 proper (axis Z) | `DesignEpoch` ordered by `PRECEDES` (solid arrows) or `sequence` (dotted, labelled with its source — the two are cross-checked and a disagreement is confessed); what happened at each via `AT_EPOCH` / `OCCURS_DURING`; a ChangeEvent pinned to no epoch is confessed as the axis-Z discipline broken | ✅ rendered |
+| **Provenance** | AV-2-ish | `provenance` per `Requirement` / `Capability` / `Component` / `Interface` (unstated origins confessed, `inferred` listed by name), `Fragment` + `YIELDED` with the action taken (a mute Fragment and a dangling YIELDED are confessed) | ✅ rendered |
 | **As-fielded** | actual deployment reality | needs `reconcile_deployment` — nothing records what is *really* running | ⬜ blocked on [BL-9](backlog.md#bigger-threads) |
 | **Measures / budgets** | SV-7 | needs path-cumulative rollups (latency, mass, power, cost) | ⬜ blocked on [BL-11](backlog.md#bigger-threads) |
-| **Provenance** | AV-2-ish | `Fragment` + `YIELDED`, `provenance` properties | ⬜ data exists in self-host graphs; not yet rendered |
 
 ## Rules for adding a viewpoint
 

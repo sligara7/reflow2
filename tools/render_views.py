@@ -449,6 +449,182 @@ def view_decisions(g: Graph) -> str:
             "<th>Governs</th></tr></thead><tbody>" + "\n".join(rows) + "</tbody></table>")
 
 
+def view_evolution(g: Graph) -> str:
+    """Axis Z as a viewpoint: the epoch chain, and what happened at each.
+
+    Order comes only from what is stated: `PRECEDES` edges (drawn solid) or the
+    `sequence` property (drawn dotted, labelled with its source). When both
+    exist they are checked against each other — a disagreement is a confession,
+    and a `PRECEDES` cycle is the chain contradicting itself.
+    """
+    epochs = sorted(g.of_type("DesignEpoch"), key=lambda n: n["node_id"])
+    if not epochs:
+        return ('<p class="vp">Nothing to project: the graph records no DesignEpoch. '
+                "Axis Z's write side is <code>add_epoch</code> / <code>record_change</code>; "
+                "a design with no epochs has no recorded history to draw.</p>")
+
+    eids = {e["node_id"] for e in epochs}
+    prec = [(e["from_id"], e["to_id"]) for e in g.edges_of("PRECEDES")
+            if e["from_id"] in eids and e["to_id"] in eids]
+
+    def seq_of(eid: str):
+        v = g.nodes[eid]["properties"].get("sequence")
+        return v if isinstance(v, int) else None
+
+    # The chain contradicting itself is a model contradiction, stated as such.
+    for cluster in _sccs(sorted(eids), prec):
+        confess("a consistent order for the epoch chain",
+                "PRECEDES forms a cycle among { " + ", ".join(cluster) + " } — "
+                "the chain contradicts itself")
+
+    # Where both orderings are stated, they must agree.
+    for a, b in sorted(prec):
+        sa, sb = seq_of(a), seq_of(b)
+        if sa is not None and sb is not None and sa >= sb:
+            confess(f"which of `{a}` and `{b}` comes first",
+                    f"PRECEDES says {a} → {b} but their sequence numbers say "
+                    f"{sa} ≥ {sb} — the two stated orderings disagree")
+
+    if len(epochs) > 1:
+        chained = {x for pair in prec for x in pair}
+        unplaced = [e["node_id"] for e in epochs
+                    if seq_of(e["node_id"]) is None and e["node_id"] not in chained]
+        if unplaced:
+            confess("the position of epoch(s) " + ", ".join(f"`{e}`" for e in unplaced),
+                    "no PRECEDES edge and no sequence number — the timeline cannot "
+                    "place them, so they are listed after the ordered ones in id order")
+
+    # Deterministic display order: sequence first (stated), then id.
+    def display_key(n: dict):
+        s = seq_of(n["node_id"])
+        return (0, s, n["node_id"]) if s is not None else (1, 0, n["node_id"])
+
+    ordered = sorted(epochs, key=display_key)
+
+    out = ["flowchart LR"]
+    for e in ordered:
+        eid = e["node_id"]
+        etype = g.prop(eid, "epoch_type") or ""
+        out.append(f'  {mid(eid)}["{esc(g.name(eid))}'
+                   f'{f"<br/><i>{esc(etype)}</i>" if etype else ""}"]')
+    if prec:
+        for a, b in sorted(prec):
+            out.append(f"  {mid(a)} -->|precedes| {mid(b)}")
+    else:
+        # No chain edges: the dotted arrow renders the `sequence` ordering and
+        # says so — order from a stated property, drawn with its source named.
+        seq_sorted = [e["node_id"] for e in ordered if seq_of(e["node_id"]) is not None]
+        for a, b in zip(seq_sorted, seq_sorted[1:]):
+            out.append(f"  {mid(a)} -.->|sequence| {mid(b)}")
+
+    # What happened at each epoch: anything pinned or occurring there.
+    at: dict[str, list[str]] = {}
+    for et in ("AT_EPOCH", "OCCURS_DURING"):
+        for e in g.edges_of(et):
+            if e["to_id"] in eids and e["from_id"] in g.nodes:
+                src = g.nodes[e["from_id"]]
+                kind = src["node_type"]
+                extra = src["properties"].get("change_type")
+                label = esc(g.name(e["from_id"])) + f" <i>({kind}" + \
+                    (f": {esc(extra)}" if isinstance(extra, str) else "") + ")</i>"
+                at.setdefault(e["to_id"], []).append(label)
+
+    pinned_events = {e["from_id"] for et in ("AT_EPOCH", "OCCURS_DURING")
+                     for e in g.edges_of(et) if e["to_id"] in eids}
+    floating = [n["node_id"] for n in g.of_type("ChangeEvent")
+                if n["node_id"] not in pinned_events]
+    if floating:
+        confess("when " + ", ".join(f"`{c}`" for c in sorted(floating)) + " happened",
+                "the ChangeEvent is pinned to no epoch (no AT_EPOCH / OCCURS_DURING) — "
+                "a change floating off the timeline is the axis-Z discipline broken")
+
+    rows = "".join(
+        "<tr><td>{}<br/><i>{}</i></td><td>{}</td></tr>".format(
+            esc(g.name(e["node_id"])), esc(g.prop(e["node_id"], "epoch_type") or ""),
+            ", ".join(sorted(at.get(e["node_id"], []))) or "<em>nothing recorded here</em>",
+        ) for e in ordered)
+    single = ('<p class="vp">One epoch and nothing after it: axis Z has recorded no '
+              "evolution yet. The write side is <code>record_change</code>; the chain is "
+              "drawn by <code>precedes</code>.</p>") if len(epochs) == 1 else ""
+    return (f'<div class="card"><pre class="mermaid">{chr(10).join(out)}</pre></div>{single}'
+            "<table><thead><tr><th>Epoch</th><th>What happened there</th></tr></thead>"
+            f"<tbody>{rows}</tbody></table>")
+
+
+def view_provenance(g: Graph) -> str:
+    """Where the design came from: `provenance` per node, and the Fragments
+    that yielded nodes (`YIELDED`, with the action taken)."""
+    typed = ("Requirement", "Capability", "Component", "Interface")
+    counts: dict[str, dict[str, int]] = {}
+    unstated: list[str] = []
+    inferred: list[str] = []
+    for t in typed:
+        for n in g.of_type(t):
+            p = n["properties"].get("provenance")
+            if not isinstance(p, str):
+                unstated.append(n["node_id"])
+                p = "unstated"
+            elif p == "inferred":
+                inferred.append(n["node_id"])
+            counts.setdefault(t, {})
+            counts[t][p] = counts[t].get(p, 0) + 1
+    if unstated:
+        confess("the origin of " + ", ".join(f"`{n}`" for n in sorted(unstated)),
+                "no `provenance` property — authored by a stakeholder and inferred "
+                "from an implementation are different kinds of truth, and these "
+                "nodes state neither")
+
+    all_provs = sorted({p for c in counts.values() for p in c})
+    header = "".join(f"<th>{html.escape(p)}</th>" for p in all_provs)
+    body = "".join(
+        f"<tr><td>{t}</td>" + "".join(
+            f"<td>{counts.get(t, {}).get(p, 0) or ''}</td>" for p in all_provs) + "</tr>"
+        for t in typed if counts.get(t))
+    summary = (f"<table><thead><tr><th>Type</th>{header}</tr></thead>"
+               f"<tbody>{body}</tbody></table>") if counts else \
+        '<p class="vp">Nothing to project: no Requirement / Capability / Component / Interface.</p>'
+
+    inferred_line = ('<p class="vp"><b>Marked inferred</b> (read out of an implementation — '
+                     "satisfied by construction, so they can never contradict anything): "
+                     + ", ".join(esc(g.name(n)) for n in sorted(inferred)) + "</p>"
+                     ) if inferred else \
+        '<p class="vp">Nothing is marked <i>inferred</i>.</p>'
+
+    frags = sorted(g.of_type("Fragment"), key=lambda n: n["node_id"])
+    yielded: dict[str, list[tuple[str, str]]] = {}
+    for e in g.edges_of("YIELDED"):
+        action = e["properties"].get("action")
+        yielded.setdefault(e["from_id"], []).append(
+            (e["to_id"], action if isinstance(action, str) else ""))
+        if e["from_id"] in g.nodes and e["to_id"] not in g.nodes:
+            confess(f"what fragment `{e['from_id']}` yielded",
+                    f"YIELDED names `{e['to_id']}` and no such node exists — a dangling "
+                    "provenance claim")
+    frag_rows = []
+    for f in frags:
+        fid = f["node_id"]
+        got = yielded.get(fid, [])
+        if not got:
+            confess(f"what `{fid}` produced",
+                    "a recorded source with no YIELDED edge — either it truly yielded "
+                    "nothing, or the provenance link was never drawn")
+        cells = ", ".join(
+            (esc(g.name(t)) if t in g.nodes else f"<em>{esc(t)}?</em>")
+            + (f" <i>({esc(a)})</i>" if a else "") for t, a in sorted(got))
+        title = g.prop(fid, "title") or g.name(fid)
+        ftype = g.prop(fid, "fragment_type") or ""
+        fprov = g.prop(fid, "provenance") or ""
+        frag_rows.append(f"<tr><td>{esc(title)}</td><td>{esc(ftype)}</td>"
+                         f"<td>{esc(fprov)}</td><td>{cells or '<em>nothing</em>'}</td></tr>")
+    frag_table = ("<h3>Sources (Fragments) and what they yielded</h3>"
+                  "<table><thead><tr><th>Fragment</th><th>Kind</th><th>Provenance</th>"
+                  "<th>Yielded</th></tr></thead><tbody>" + "".join(frag_rows)
+                  + "</tbody></table>") if frags else \
+        '<p class="vp">No Fragments: nothing records <i>which source</i> produced the nodes above.</p>'
+
+    return summary + inferred_line + frag_table
+
+
 PAGE = """<title>{title} — projected viewpoints</title>
 <style>
   :root {{ --ink:#15211F; --paper:#F6F8F7; --card:#FFFFFF; --rule:#D8E0DD;
@@ -519,6 +695,17 @@ PAGE = """<title>{title} — projected viewpoints</title>
   Each decision, its rationale, and what it governs.</p>
   <div class="card">{decisions}</div></section>
 
+  <section><h2>Evolution viewpoint</h2>
+  <p class="vp">≈ SV-8 proper (axis Z): the epoch chain and what happened at each. Solid arrows
+  are stated PRECEDES edges; dotted arrows render the stated <code>sequence</code> numbers and
+  say so. The two orderings are checked against each other.</p>
+  {evolution}</section>
+
+  <section><h2>Provenance viewpoint</h2>
+  <p class="vp">≈ AV-2-ish: where the design came from — authored vs inferred per node, and the
+  recorded sources (Fragments) with what each yielded.</p>
+  <div class="card">{provenance}</div></section>
+
   <section><h2>What the graph could not tell this renderer</h2>
   <div class="confess">
   <p>{n_confessions} item(s). Each is a modelling gap, a reflow2 gap, or a true design gap — never
@@ -580,6 +767,8 @@ def main() -> int:
     traceability = view_traceability(g)
     released = view_released(g)
     decisions = view_decisions(g)
+    evolution = view_evolution(g)
+    provenance = view_provenance(g)
 
     dedup = sorted(set(CONFESSIONS))
     page = PAGE.format(
@@ -590,6 +779,7 @@ def main() -> int:
         flows=flows or '<p class="vp">Nothing to project — see the confession below.</p>',
         structural=structural, traceability=traceability,
         released=released, decisions=decisions,
+        evolution=evolution, provenance=provenance,
         n_confessions=len(dedup),
         confessions="\n".join(f"<li>{html.escape(c)}</li>" for c in dedup) or "<li>nothing — every view was fully specified</li>",
     )
