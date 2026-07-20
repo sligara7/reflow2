@@ -15,6 +15,16 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **A merge's survivor is now chosen by provenance, with id as the tiebreak** (the BL-29
+  survivor decision, taken by the user). A merge keeps only the survivor's properties, so the
+  choice decides whose words are kept — and the old lexicographic-id rule could let an
+  `inferred` stub delete an `authored` node's text. The rank follows how directly a human
+  stands behind the text: `authored` > `planned` > `imported` > `reconciled` > `inferred` >
+  `healed`; equal rank falls back to the smaller id, so the choice stays fully deterministic
+  and graphs without the property (the schema default is `authored`) behave exactly as before.
+
 ### Fixed
 
 - **A chained duplicate (a↔b, b↔c) can no longer corrupt the graph through `apply_heal`**

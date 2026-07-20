@@ -298,17 +298,80 @@ fn merge_op_for(issue: &HealIssue, index: &HashMap<String, String>) -> Result<He
     })
 }
 
-/// Order a pair of ids canonically so the smaller is kept on a merge — makes the
-/// choice deterministic regardless of which way the `DUPLICATES` edge points.
-fn canonical_pair(a: &str, b: &str) -> (String, String) {
-    if a <= b {
-        (a.to_string(), b.to_string())
-    } else {
-        (b.to_string(), a.to_string())
+/// Rank of a `provenance` value for the merge-survivor choice: lower survives.
+///
+/// The ordering encodes how directly a human stands behind the node's text —
+/// because a merge keeps only the survivor's properties, so this choice decides
+/// whose words are kept and whose go to `discarded`. `authored` and `planned`
+/// are things a person actually said; `imported` came through a found document
+/// (trusted per the ophyd caution — its PDR omitted the system's central
+/// invariant); `reconciled` was written back from observed reality by a
+/// machine; `inferred` is the machine's guess from the implementation; `healed`
+/// is machine-generated fill. The machine's guess must never delete the
+/// human's words.
+fn provenance_rank(provenance: &str) -> u8 {
+    match provenance {
+        "authored" => 0,
+        "planned" => 1,
+        "imported" => 2,
+        "reconciled" => 3,
+        "inferred" => 4,
+        "healed" => 5,
+        // The schema validates the enum, so this arm is unreachable for stored
+        // values — but an unknown word must never outrank a known one.
+        _ => u8::MAX,
     }
 }
 
 impl DesignGraph {
+    /// Which of a duplicate pair a merge keeps: **stronger provenance survives;
+    /// equal provenance falls back to the smaller id** (the BL-29 survivor
+    /// decision, taken by the user 2026-07-20 — option 2 of the recorded
+    /// alternatives). Returns `(keep, remove)`.
+    ///
+    /// Provenance is what the choice is *for*: a merge keeps only the
+    /// survivor's properties, and before this the lexicographically smaller id
+    /// won regardless — so on an adopted graph an `inferred` stub could delete
+    /// an `authored` node's words. The fallback keeps the choice fully
+    /// deterministic regardless of which way the `DUPLICATES` edge points; a
+    /// node without the property (or whose type does not carry it) counts as
+    /// `authored`, the schema default, so pre-provenance graphs behave exactly
+    /// as before.
+    fn merge_survivor(
+        &self,
+        index: &HashMap<String, String>,
+        a: &str,
+        b: &str,
+    ) -> Result<(String, String), DynoError> {
+        let rank_of = |id: &str| -> Result<u8, DynoError> {
+            let Some(node_type) = index.get(id) else {
+                // Unresolvable endpoint: rank is moot — merge_op_for refuses
+                // the pair before an operation is built.
+                return Ok(provenance_rank("authored"));
+            };
+            Ok(self
+                .get_node(node_type, id)?
+                .and_then(|n| {
+                    n.properties
+                        .get("provenance")
+                        .and_then(dynograph_core::Value::as_str)
+                        .map(provenance_rank)
+                })
+                .unwrap_or(provenance_rank("authored")))
+        };
+        let (rank_a, rank_b) = (rank_of(a)?, rank_of(b)?);
+        let a_survives = match rank_a.cmp(&rank_b) {
+            std::cmp::Ordering::Less => true,
+            std::cmp::Ordering::Greater => false,
+            std::cmp::Ordering::Equal => a <= b,
+        };
+        if a_survives {
+            Ok((a.to_string(), b.to_string()))
+        } else {
+            Ok((b.to_string(), a.to_string()))
+        }
+    }
+
     /// The project's `mode` (`flexible` / `rigid`), or `flexible` if unset. In
     /// `rigid` mode HEAL only proposes; it never auto-applies (discipline 6).
     fn project_mode(&self) -> Result<String, DynoError> {
@@ -392,7 +455,7 @@ impl DesignGraph {
 
         // duplicate — a DUPLICATES edge (fixable by merge).
         for e in self.all_edges_of_type(edge::DUPLICATES, &index)? {
-            let (keep, remove) = canonical_pair(&e.from_id, &e.to_id);
+            let (keep, remove) = self.merge_survivor(&index, &e.from_id, &e.to_id)?;
             let affected = vec![keep, remove];
             issues.push(HealIssue {
                 id: issue_id(HealCategory::Duplicate, &affected),

@@ -709,3 +709,105 @@ fn an_edge_joining_the_merging_pair_is_reported_not_silently_dropped() {
         report.discarded
     );
 }
+
+// ---- BL-29 · the survivor rule: provenance wins, id breaks ties ------------
+
+#[test]
+fn an_authored_node_survives_a_merge_with_an_inferred_one_regardless_of_id() {
+    // cap:a would win the id tiebreak; it is the machine's guess, so the
+    // authored cap:z survives instead — the guess must never delete the
+    // human's words.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_component("cmp:c", "C", "part c", None).unwrap();
+    g.add_capability("cap:a", "Guessed", "read out of the code", None)
+        .unwrap();
+    g.add_capability("cap:z", "Stated", "what the stakeholder said", None)
+        .unwrap();
+    g.set_provenance(node::CAPABILITY, "cap:a", "inferred")
+        .unwrap();
+    g.allocate("cap:a", "cmp:c").unwrap();
+    g.create_edge(
+        edge::DUPLICATES,
+        node::CAPABILITY,
+        "cap:a",
+        node::CAPABILITY,
+        "cap:z",
+        Props::new(),
+    )
+    .unwrap();
+
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    match &proposal.operations[0].op {
+        HealOp::Merge {
+            keep_id, remove_id, ..
+        } => {
+            assert_eq!(keep_id, "cap:z", "authored survives");
+            assert_eq!(remove_id, "cap:a", "the inferred twin is merged away");
+        }
+        other => panic!("expected a Merge, got {other:?}"),
+    }
+
+    let report = g.apply_heal(&proposal).unwrap();
+    assert!(report.verified);
+    assert!(g.get_node(node::CAPABILITY, "cap:z").unwrap().is_some());
+    assert!(g.get_node(node::CAPABILITY, "cap:a").unwrap().is_none());
+    // The guess's structure still carries over to the surviving words.
+    let allocs = g.outgoing("cap:z", Some(edge::ALLOCATED_TO)).unwrap();
+    assert_eq!(allocs.len(), 1);
+    assert_eq!(allocs[0].to_id, "cmp:c");
+}
+
+#[test]
+fn equal_provenance_falls_back_to_the_smaller_id() {
+    // dup_graph's pair carries the schema default — both authored — so the
+    // pre-decision rule still decides: cap:a survives. This is also the
+    // behaviour of every graph written before the property existed.
+    let g = dup_graph();
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    match &proposal.operations[0].op {
+        HealOp::Merge {
+            keep_id, remove_id, ..
+        } => {
+            assert_eq!(keep_id, "cap:a");
+            assert_eq!(remove_id, "cap:b");
+        }
+        other => panic!("expected a Merge, got {other:?}"),
+    }
+}
+
+#[test]
+fn the_provenance_order_is_graded_not_binary() {
+    // Neither node is authored: the machine's guess (inferred) still outranks
+    // machine-generated fill (healed), so cap:z survives its smaller-id twin.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_capability("cap:a", "Filled", "generated", None)
+        .unwrap();
+    g.add_capability("cap:z", "Guessed", "read out of the code", None)
+        .unwrap();
+    g.set_provenance(node::CAPABILITY, "cap:a", "healed")
+        .unwrap();
+    g.set_provenance(node::CAPABILITY, "cap:z", "inferred")
+        .unwrap();
+    g.create_edge(
+        edge::DUPLICATES,
+        node::CAPABILITY,
+        "cap:a",
+        node::CAPABILITY,
+        "cap:z",
+        Props::new(),
+    )
+    .unwrap();
+
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    match &proposal.operations[0].op {
+        HealOp::Merge {
+            keep_id, remove_id, ..
+        } => {
+            assert_eq!(keep_id, "cap:z");
+            assert_eq!(remove_id, "cap:a");
+        }
+        other => panic!("expected a Merge, got {other:?}"),
+    }
+}
