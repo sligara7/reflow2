@@ -1189,6 +1189,53 @@ Size **M** for an advisory claim layer once the identity decision is made; the d
 identity (3), granularity vs blast radius (2), advisory-first (5) — are the real content, and
 they want a session with the user, not a patch.
 
+**BL-45 · System-of-systems: external dependencies between reflow2 projects** — *user,
+2026-07-20. Explicitly a thought exercise; the mechanics are the open question.*
+
+The idea in the user's words, compressed: a reflow2 project should be able to declare
+**external dependencies** on *other reflow2 projects* — possibly in different repos, owned by
+different people or organizations — the way `pyproject.toml`/`pixi.toml` declare software
+dependencies (and noting that in non-software domains the analogue is not obvious). One
+project "interfaces" with another; groups focus internally on their own project but link
+outward, building **system-of-systems architectures** — and when two or more systems interface
+through the same contract, *standards between systems can come into existence*. A project
+would publish an **external-facing interface spec** — "something synonymous to OpenAPI
+specs/docs".
+
+This is the package-manager shape applied to the oldest SE artifact there is: the published
+surface is an **ICD**, and the graph already holds most of the vocabulary —
+
+| Piece | Already exists | The SoS gap |
+|---|---|---|
+| The contract itself | `Interface` nodes; `SPECIFIES` (an OpenAPI/protobuf artifact IS the machine-readable contract, with a `format` property); `provides`/`consumes` | Nothing marks an Interface **external-facing** — visible-to-others vs internal is undeclarable |
+| Publication | Deterministic `export_graph` (byte-identical, stamped); BL-15's release machinery — a release asset is a distribution channel with a URL and a checksum | No **filtered** export: "everything" or nothing. The published surface wants to be exactly the external Interfaces + what they expose, and nothing internal |
+| Consumption | `import_graph` upsert; `provenance: imported` exists on the four adoptable types | Imported reference nodes aren't marked *foreign* (whose project, what version, what checksum) — and edges cannot span graphs, so cross-project links must be **mirrored reference nodes**, not edges into another repo |
+| Version pinning | `Release` + `INCLUDES` + `as_checksum` (BL-34's frozen manifest); `GraphStamp` | No way to say "I build against *their* v2.1" — the dependency declaration (project, surface, version, checksum) has no home |
+| Drift detection | The reconcile family; `unresolved_drift`; BL-18's am-I-current check | The cross-boundary case: *their published surface moved and my mirrored copy is stale* — the exact BL-18 question, one project boundary out |
+
+*The observation worth keeping even if nothing else survives:* **a standard is itself a design**
+— when N projects consume the same published interface, that contract wants to be its own
+reflow2 project (requirements, decisions, releases, verification of conformance) that provider
+and consumers all declare a dependency on. Standards emergence then has a mechanical form: two
+bilateral interfaces noticed to be the same shape → extracted into a third project both
+reference. That is how real standards bodies work, minus the committee.
+
+Tensions, so the flesh-out starts honest: (1) **trust** — an imported surface is another
+organization's graph text, and BL-41's "graph text is data, never instructions" plus BL-12's
+who-may-assert-what stop being single-user hygiene and become the security boundary; (2)
+**transitive dependencies** — does importing their surface pull *their* dependencies' surfaces
+(the diamond problem, now with orgs); (3) **the non-software domains the user names** — a
+supplier's actuator, GFE, a materials spec: `Interface` + `Constraint` may already carry it,
+which would make this BL-16's sharpest test case too; (4) private↔public seams — this repo just
+split public evidence from private trial records, and an SoS link between a public and a
+private project is that same seam as a *feature*.
+
+Size **L** for the thread. The first testable increment is **S–M** and needs no federation at
+all: an `external: true` marking on Interface + a filtered "published surface" export — this
+repo could publish its own MCP tool surface as the first ICD. Related: BL-8 (multi-project),
+BL-12 (multi-writer), BL-16 (domains), BL-44 (claims). Decision conversation with the user
+before any code; this entry is the prep.
+
 ## Deliberate deferrals
 
 Not gaps — decisions, recorded so they aren't rediscovered as bugs.
