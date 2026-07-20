@@ -35,8 +35,8 @@
 </style>
 <main>
   <h1>Reflow 2.0 — projected viewpoints</h1>
-  <p class="sub">Every element below is projected from <code>reflow2.json</code> (173 nodes,
-  325 edges). Nothing is hand-drawn: the renderer may only emit what the graph states, and
+  <p class="sub">Every element below is projected from <code>reflow2.json</code> (175 nodes,
+  323 edges). Nothing is hand-drawn: the renderer may only emit what the graph states, and
   everything it needed but could not find is confessed at the end — per the doctrine that a
   fill-in during rendering is a defect in the model, not a job for the agent. The catalogue:
   <code>docs/viewpoints.md</code>.</p>
@@ -60,12 +60,12 @@
   cap_change("Record a change<br/><i>verified</i>")
   cap_detect("Detect gaps<br/><i>verified</i>")
   cap_dimensions("Track quality over time<br/><i>realized</i>")
-  cap_freshness("Say when a claim was last confirmed<br/><i>realized</i>")
+  cap_freshness("Say when a claim was last confirmed<br/><i>verified</i>")
   cap_genesis("Bootstrap a design from a brief<br/><i>verified</i>")
   cap_heal("Repair structure<br/><i>verified</i>")
   cap_hierarchy("Check decomposition levels<br/><i>verified</i>")
   cap_ingest("Extract a design from freeform text<br/><i>realized</i>")
-  cap_kit("Install into a consumer project<br/><i>realized</i>")
+  cap_kit("Install into a consumer project<br/><i>verified</i>")
   cap_mcp_surface("Serve the loop over MCP<br/><i>verified</i>")
   cap_model_process("Model a process, not only a product<br/><i>verified</i>")
   cap_portability("Export and import a design<br/><i>verified</i>")
@@ -176,12 +176,12 @@
 <tr><td>Record a change</td><td>temporal</td><td>temporal.rs</td><td>temporal.rs <i>(passing)</i></td></tr>
 <tr><td>Detect gaps</td><td>detect</td><td>detect.rs</td><td>detect.rs <i>(passing)</i></td></tr>
 <tr><td>Track quality over time</td><td>dimensions</td><td>dimensions.rs</td><td>dimensions.rs <i>(passing)</i></td></tr>
-<tr><td>Say when a claim was last confirmed</td><td>confirm</td><td>confirm.rs</td><td><em>none</em></td></tr>
+<tr><td>Say when a claim was last confirmed</td><td>confirm</td><td>confirm.rs</td><td>confirm.rs <i>(passing)</i></td></tr>
 <tr><td>Bootstrap a design from a brief</td><td>genesis</td><td>genesis.rs</td><td>genesis.rs <i>(passing)</i></td></tr>
 <tr><td>Repair structure</td><td>heal, structure</td><td>heal.rs, structure.rs</td><td>heal.rs <i>(passing)</i></td></tr>
 <tr><td>Check decomposition levels</td><td>hierarchy</td><td>hierarchy.rs</td><td>hierarchy.rs <i>(passing)</i></td></tr>
 <tr><td>Extract a design from freeform text</td><td>ingest</td><td>ingest.rs</td><td>ingest.rs <i>(passing)</i></td></tr>
-<tr><td>Install into a consumer project</td><td>reflow2_init, skills</td><td>reflow2_init.py</td><td><em>none</em></td></tr>
+<tr><td>Install into a consumer project</td><td>reflow2_init, skills</td><td>reflow2_init.py</td><td>test_init.py <i>(passing)</i></td></tr>
 <tr><td>Serve the loop over MCP</td><td>dto, main, service</td><td>dto.rs, main.rs, service.rs</td><td>tools.rs <i>(passing)</i></td></tr>
 <tr><td>Model a process, not only a product</td><td>flow</td><td>flow.rs</td><td>flow.rs <i>(passing)</i></td></tr>
 <tr><td>Export and import a design</td><td>export, graph</td><td>export.rs, graph.rs</td><td>export.rs <i>(passing)</i></td></tr>
@@ -198,7 +198,7 @@
   <section><h2>As-released viewpoint</h2>
   <p class="vp">≈ SV-8: what actually shipped, hashes frozen at cut so history cannot rewrite
   itself, and the diff against what was built (BL-34).</p>
-  <div class="card"><h3>v0.3.0 <small>(0.3.0)</small></h3><table><thead><tr><th>Shipped artifact</th><th>Checksum at cut</th></tr></thead><tbody><tr><td>agent.rs</td><td><code>sha256:1c729eee5b67e7dc</code></td></tr><tr><td>allocate.rs</td><td><code>sha256:d282035a162e3e56</code></td></tr><tr><td>artifact.rs</td><td><code>sha256:5ba629988c416b39</code></td></tr><tr><td>budget.rs</td><td><code>sha256:c68b6e51f89b5caf</code></td></tr><tr><td>confirm.rs</td><td><code>sha256:5e77e752c0c60d06</code></td></tr><tr><td>detect.rs</td><td><code>sha256:a25ed6b6f633a3aa</code></td></tr><tr><td>dimensions.rs</td><td><code>sha256:fbe714849869c1d8</code></td></tr><tr><td>drift.rs</td><td><code>sha256:676d89b9e3be53bd</code></td></tr><tr><td>dto.rs</td><td><code>sha256:74c0459e03ad38ce</code></td></tr><tr><td>export.rs</td><td><code>sha256:1957641d39c28842</code></td></tr><tr><td>fielded.rs</td><td><code>sha256:58f501423e219105</code></td></tr><tr><td>flow.rs</td><td><code>sha256:e2e94e52eb601d53</code></td></tr><tr><td>genesis.rs</td><td><code>sha256:8196df94f5775161</code></td></tr><tr><td>graph.rs</td><td><code>sha256:f68e39113071f8b1</code></td></tr><tr><td>heal.rs</td><td><code>sha256:7fd0af4d731e0f22</code></td></tr><tr><td>hierarchy.rs</td><td><code>sha256:2f697a383b3c457d</code></td></tr><tr><td>ingest.rs</td><td><code>sha256:6b75bc576b6c891f</code></td></tr><tr><td>reflow2_init.py</td><td><code>sha256:bf20da9bb9d606de</code></td></tr><tr><td>llm.rs</td><td><code>sha256:6869d93e97fc9393</code></td></tr><tr><td>main.rs</td><td><code>sha256:54a1679022bb86b4</code></td></tr><tr><td>nodes.rs</td><td><code>sha256:7fed68bfef7c6889</code></td></tr><tr><td>operate.rs</td><td><code>sha256:feca736d9d86d965</code></td></tr><tr><td>propagate.rs</td><td><code>sha256:3a429cd9945965ca</code></td></tr><tr><td>provenance.rs</td><td><code>sha256:d8275cc570cb9bb2</code></td></tr><tr><td>report.rs</td><td><code>sha256:383cd220f7f1b639</code></td></tr><tr><td>schema.rs</td><td><code>sha256:d2f251dfcb8193df</code></td></tr><tr><td>service.rs</td><td><code>sha256:93368377171fa72a</code></td></tr><tr><td>structure.rs</td><td><code>sha256:59da933a6d0f5d5f</code></td></tr><tr><td>surprises.rs</td><td><code>sha256:b1cec4ec107ef2b1</code></td></tr><tr><td>temporal.rs</td><td><code>sha256:f9e9aed059f42db7</code></td></tr><tr><td>verify.rs</td><td><code>sha256:824287d5a22bd960</code></td></tr><tr><td>vocabulary.rs</td><td><code>sha256:86bc99c202396a5f</code></td></tr></tbody></table><p class="vp">components included: skills</p><p class="vp">capabilities covered: 23 · <b>built but not shipped (the as-released diff):</b> Recover a design from an existing system</p><p class="vp">deployed to: Developer machine <i>(active)</i></p></div></section>
+  <div class="card"><h3>v0.3.0 <small>(0.3.0)</small></h3><table><thead><tr><th>Shipped artifact</th><th>Checksum at cut</th></tr></thead><tbody><tr><td>agent.rs</td><td><code>sha256:1c729eee5b67e7dc</code></td></tr><tr><td>allocate.rs</td><td><code>sha256:d282035a162e3e56</code></td></tr><tr><td>artifact.rs</td><td><code>sha256:5ba629988c416b39</code></td></tr><tr><td>budget.rs</td><td><code>sha256:c68b6e51f89b5caf</code></td></tr><tr><td>confirm.rs</td><td><code>sha256:5e77e752c0c60d06</code></td></tr><tr><td>detect.rs</td><td><code>sha256:a25ed6b6f633a3aa</code></td></tr><tr><td>dimensions.rs</td><td><code>sha256:fbe714849869c1d8</code></td></tr><tr><td>drift.rs</td><td><code>sha256:676d89b9e3be53bd</code></td></tr><tr><td>dto.rs</td><td><code>sha256:74c0459e03ad38ce</code></td></tr><tr><td>export.rs</td><td><code>sha256:1957641d39c28842</code></td></tr><tr><td>fielded.rs</td><td><code>sha256:58f501423e219105</code></td></tr><tr><td>flow.rs</td><td><code>sha256:e2e94e52eb601d53</code></td></tr><tr><td>genesis.rs</td><td><code>sha256:8196df94f5775161</code></td></tr><tr><td>graph.rs</td><td><code>sha256:b5c23526bb7d45f5</code></td></tr><tr><td>heal.rs</td><td><code>sha256:7fd0af4d731e0f22</code></td></tr><tr><td>hierarchy.rs</td><td><code>sha256:2f697a383b3c457d</code></td></tr><tr><td>ingest.rs</td><td><code>sha256:6b75bc576b6c891f</code></td></tr><tr><td>reflow2_init.py</td><td><code>sha256:bf20da9bb9d606de</code></td></tr><tr><td>llm.rs</td><td><code>sha256:6869d93e97fc9393</code></td></tr><tr><td>main.rs</td><td><code>sha256:54a1679022bb86b4</code></td></tr><tr><td>nodes.rs</td><td><code>sha256:c93add83eac73087</code></td></tr><tr><td>operate.rs</td><td><code>sha256:feca736d9d86d965</code></td></tr><tr><td>propagate.rs</td><td><code>sha256:fd2798d2ecea28c8</code></td></tr><tr><td>provenance.rs</td><td><code>sha256:d8275cc570cb9bb2</code></td></tr><tr><td>report.rs</td><td><code>sha256:383cd220f7f1b639</code></td></tr><tr><td>schema.rs</td><td><code>sha256:d2f251dfcb8193df</code></td></tr><tr><td>service.rs</td><td><code>sha256:93368377171fa72a</code></td></tr><tr><td>structure.rs</td><td><code>sha256:8fb4dc8eb7c490fb</code></td></tr><tr><td>surprises.rs</td><td><code>sha256:b1cec4ec107ef2b1</code></td></tr><tr><td>temporal.rs</td><td><code>sha256:f9e9aed059f42db7</code></td></tr><tr><td>verify.rs</td><td><code>sha256:824287d5a22bd960</code></td></tr><tr><td>vocabulary.rs</td><td><code>sha256:86bc99c202396a5f</code></td></tr></tbody></table><p class="vp">components included: skills</p><p class="vp">capabilities covered: 23 · <b>built but not shipped (the as-released diff):</b> Recover a design from an existing system</p><p class="vp">deployed to: Developer machine <i>(active)</i></p></div></section>
 
   <section><h2>Decision viewpoint</h2>
   <p class="vp">No clean DoDAF box — the record of <i>why</i>, which DoDAF leaves to AV-1 prose.

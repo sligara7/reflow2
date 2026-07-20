@@ -744,16 +744,6 @@
     },
     {
       "edge_type": "DEPENDS_ON",
-      "from_id": "cmp:detect",
-      "properties": {
-        "dependency_type": "function_call",
-        "optional": false,
-        "weight_basis": "evidence"
-      },
-      "to_id": "cmp:propagate"
-    },
-    {
-      "edge_type": "DEPENDS_ON",
       "from_id": "cmp:dimensions",
       "properties": {
         "dependency_type": "function_call",
@@ -811,16 +801,6 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:graph"
-    },
-    {
-      "edge_type": "DEPENDS_ON",
-      "from_id": "cmp:export",
-      "properties": {
-        "dependency_type": "function_call",
-        "optional": false,
-        "weight_basis": "evidence"
-      },
-      "to_id": "cmp:propagate"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -971,16 +951,6 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:nodes"
-    },
-    {
-      "edge_type": "DEPENDS_ON",
-      "from_id": "cmp:heal",
-      "properties": {
-        "dependency_type": "function_call",
-        "optional": false,
-        "weight_basis": "evidence"
-      },
-      "to_id": "cmp:propagate"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -1201,16 +1171,6 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:nodes"
-    },
-    {
-      "edge_type": "DEPENDS_ON",
-      "from_id": "cmp:structure",
-      "properties": {
-        "dependency_type": "function_call",
-        "optional": false,
-        "weight_basis": "evidence"
-      },
-      "to_id": "cmp:propagate"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -1496,7 +1456,7 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v030",
       "properties": {
-        "as_checksum": "sha256:f68e39113071f8b1"
+        "as_checksum": "sha256:b5c23526bb7d45f5"
       },
       "to_id": "art:graph"
     },
@@ -1552,7 +1512,7 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v030",
       "properties": {
-        "as_checksum": "sha256:7fed68bfef7c6889"
+        "as_checksum": "sha256:c93add83eac73087"
       },
       "to_id": "art:nodes"
     },
@@ -1568,7 +1528,7 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v030",
       "properties": {
-        "as_checksum": "sha256:3a429cd9945965ca"
+        "as_checksum": "sha256:fd2798d2ecea28c8"
       },
       "to_id": "art:propagate"
     },
@@ -1608,7 +1568,7 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v030",
       "properties": {
-        "as_checksum": "sha256:59da933a6d0f5d5f"
+        "as_checksum": "sha256:8fb4dc8eb7c490fb"
       },
       "to_id": "art:structure"
     },
@@ -2162,6 +2122,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:freshness",
+      "properties": {},
+      "to_id": "cap:freshness"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:genesis",
       "properties": {},
       "to_id": "cap:genesis"
@@ -2183,6 +2149,12 @@
       "from_id": "ver:ingest",
       "properties": {},
       "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:kit",
+      "properties": {},
+      "to_id": "cap:kit"
     },
     {
       "edge_type": "VERIFIES",
@@ -2682,7 +2654,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f68e39113071f8b1",
+        "checksum": "sha256:b5c23526bb7d45f5",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -2759,7 +2731,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7fed68bfef7c6889",
+        "checksum": "sha256:c93add83eac73087",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
         "status": "realized"
@@ -2781,7 +2753,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3a429cd9945965ca",
+        "checksum": "sha256:fd2798d2ecea28c8",
         "location": "crates/reflow2-core/src/propagate.rs",
         "name": "propagate.rs",
         "status": "realized"
@@ -2836,7 +2808,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:59da933a6d0f5d5f",
+        "checksum": "sha256:8fb4dc8eb7c490fb",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
         "status": "realized"
@@ -2973,7 +2945,7 @@
         "is_exit_point": false,
         "name": "Say when a claim was last confirmed",
         "provenance": "authored",
-        "status": "realized",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -3038,7 +3010,7 @@
         "is_exit_point": false,
         "name": "Install into a consumer project",
         "provenance": "authored",
-        "status": "realized",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -4332,6 +4304,16 @@
       }
     },
     {
+      "node_id": "ver:freshness",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "confirm.rs",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:genesis",
       "node_type": "Verification",
       "properties": {
@@ -4368,6 +4350,16 @@
         "level": "integration",
         "method": "test",
         "name": "ingest.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:kit",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "test_init.py",
         "status": "passing"
       }
     },
