@@ -52,6 +52,7 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
+- Full-text search over the design — @ajs — since 2026-07-20 — enable dynograph-storage's `fulltext` feature (schema has carried `fulltext:` flags all along, nothing served them — recurring-lesson #17), new core module search.rs + search_design MCP tool, search-before-add lines in capture-intent/revise/retire skills
 
 
 
