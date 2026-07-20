@@ -883,8 +883,8 @@ the design?"** That splits a repo four ways:
 | Group | Example | Today |
 |---|---|---|
 | Produces the design | `crates/**/src/*.rs` | ✅ `Artifact` + `REALIZES` + checksum + `reconcile_artifacts` |
-| Describes the design | `docs/*.md`, README | ⚠️ `DOCUMENTS` is in the schema; nothing can create it |
-| Instructs agents | `AGENTS.md`, `COORD.md`, `.github/copilot-instructions.md` | ❌ nothing |
+| Describes the design | `docs/*.md`, README | ✅ **write side done 2026-07-20**: `documents` (core fn + MCP tool, `doc_kind` carried, both endpoints checked — the storage engine accepts dangling edges, so the fail-loud check is the only one there is) |
+| Instructs agents | `AGENTS.md`, `COORD.md`, `.github/copilot-instructions.md` | ✅ same mechanism: `artifact_type=document`, `doc_kind=agent_instructions`; the link-artifacts skill states the criterion and the boundary against `SPECIFIES` |
 | No design meaning | `Cargo.lock`, `target/`, generated output | should stay out — this is where the noise would come from |
 
 *The founding evidence is a failure reflow2 should have caught.* In one session on 2026-07-18:
@@ -896,10 +896,11 @@ coherence failures is the entire point — it was missed because neither file is
 
 *This is more than modelling more files.* Two things stand in the way:
 
-1. **`DOCUMENTS` has no write side.** It is declared in `schema/build.yaml` and named in
-   `nodes.rs`, with no constructor and no MCP tool — the recurring lesson below, for the ninth
-   time.
-2. **PROPAGATE does not traverse it.** `propagate.rs` lists `SPECIFIES`/`DOCUMENTS` as
+1. ~~**`DOCUMENTS` has no write side.**~~ **Done 2026-07-20** — `documents` core fn + MCP tool
+   (78th on the surface), endpoints fail-loud, `doc_kind` carried; pinned in core, over the
+   tool surface, and the ghost-endpoint refusal in both. Was the recurring lesson's ninth
+   instance, now closed.
+2. **PROPAGATE does not traverse it — still open, and it is the M half.** `propagate.rs` lists `SPECIFIES`/`DOCUMENTS` as
    *"intentionally not traversed in this increment"*, so even fully wired a change would not
    ripple to the documents describing it. Making docs coherence-checked means **deciding
    `DOCUMENTS` is traversable**, and deciding what that implies for blast radius — a change to a
@@ -914,8 +915,10 @@ documenting them: the graph knows the requirements and not the document that is 
 them. Extending the probe to the instruction and record files would test this before any of it
 ships.
 
-Size **M** for the write side plus a decision on traversal; **S** if it stops at recording which
-files matter and leaves impact alone.
+Size: ~~**S**~~ the write side is **done** (2026-07-20) — recording which files matter is now
+possible, and the self-referential test (this repo's own records as DOCUMENTS artifacts) is
+unblocked. **M remains**: the traversal decision — whether a change ripples to every doc that
+mentions it — weighed against BL-23's flood lesson, and it wants the user.
 
 **BL-19 · The graph must survive an upgrade** — *user, 2026-07-18.* **Blocks BL-18**: an
 "you're out of date" nudge shipped before this exists drives users into an upgrade path with no
@@ -1164,7 +1167,8 @@ A capability exists in core and is unreachable or unadvertised on the surface. F
 far: `Interface`, HEAL's skill, the `Verification`/operate write side, `contain_component`,
 `graph_id`, `Requirement.status`, `graph_report` as an answer to "where am I", the whole
 `TemporalFact` / `ABOUT_ENTITY` / `VALID_FROM` / `VALID_TO` layer (schema-complete, zero Rust
-API), `DOCUMENTS` (declared, named in `nodes.rs`, no constructor and no tool — BL-26), and `precedes`
+API), `DOCUMENTS` (declared, named in `nodes.rs`, no constructor and no tool — closed 2026-07-20
+by BL-26's write side), and `precedes`
 (implemented in `temporal.rs`, no tool, so the epoch chain axis Z exists to record cannot be drawn by
 any client — BL-36), and `Flow` (fully specified with its own edge `PART_OF_FLOW`, no constructor,
 no tool — so no process could be modelled at all; BL-37 built the write side and `flow_report`), and `DriftEvent.resolved` (declared with

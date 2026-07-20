@@ -107,3 +107,79 @@ fn artifact_missing_name_fails_loud() {
     );
     assert!(err.is_err(), "Artifact requires name; must be rejected");
 }
+
+// ---- BL-26 · the DOCUMENTS write side ---------------------------------------
+
+#[test]
+fn documents_links_a_doc_to_what_it_describes() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_component("cmp:core", "Core", "the core crate", None)
+        .unwrap();
+    g.add_artifact(
+        "art:agents-md",
+        "AGENTS.md",
+        Some("document"),
+        Some("AGENTS.md"),
+    )
+    .unwrap();
+
+    let e = g
+        .documents(
+            "art:agents-md",
+            node::COMPONENT,
+            "cmp:core",
+            Some("agent_instructions"),
+        )
+        .unwrap();
+    assert_eq!(e.edge_type, edge::DOCUMENTS);
+    assert_eq!(
+        e.properties["doc_kind"].as_str(),
+        Some("agent_instructions")
+    );
+
+    let docs = g.incoming("cmp:core", Some(edge::DOCUMENTS)).unwrap();
+    assert_eq!(docs.len(), 1);
+    assert_eq!(docs[0].from_id, "art:agents-md");
+}
+
+#[test]
+fn documents_can_describe_the_project_itself() {
+    // A README or instruction file usually describes the whole project; the
+    // wildcard target (`to: "*"`) is the point of the declaration.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_artifact(
+        "art:readme",
+        "README.md",
+        Some("document"),
+        Some("README.md"),
+    )
+    .unwrap();
+
+    let e = g
+        .documents("art:readme", node::PROJECT, "proj:x", Some("readme"))
+        .unwrap();
+    assert_eq!(e.to_id, "proj:x");
+}
+
+#[test]
+fn documents_refuses_a_missing_endpoint_rather_than_dangling() {
+    // The storage engine accepts a dangling edge without complaint (BL-29's
+    // reproduction proved it), so this refusal is the only check there is.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_component("cmp:core", "Core", "the core crate", None)
+        .unwrap();
+    g.add_artifact("art:doc", "doc.md", Some("document"), Some("docs/doc.md"))
+        .unwrap();
+
+    g.documents("art:ghost", node::COMPONENT, "cmp:core", None)
+        .expect_err("a missing artifact must be refused by name");
+    g.documents("art:doc", node::COMPONENT, "cmp:ghost", None)
+        .expect_err("a missing target must be refused by name");
+    assert!(
+        g.incoming("cmp:core", Some(edge::DOCUMENTS))
+            .unwrap()
+            .is_empty(),
+        "a refused link must leave no edge behind"
+    );
+}

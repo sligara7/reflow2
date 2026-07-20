@@ -15,6 +15,21 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A file that *describes* the design can finally say so: the `documents` tool** (BL-26's
+  write side; the recurring lesson's ninth instance closed). `DOCUMENTS` was declared in the
+  schema from the start — design docs, ADRs, READMEs, diagrams, instruction files — with no
+  constructor and no tool, which is why two instruction files disagreeing about the build
+  command went uncatchable: neither file was in any graph. `documents(artifact, target_type,
+  target_id, doc_kind?)` closes that, failing loud when either endpoint is missing (the
+  storage engine accepts dangling edges, so this check is the only one there is). The
+  link-artifacts skill now states the criterion — record a file when something would be
+  *wrong* if it drifted out of step with the design; keep generated files out — and the
+  boundary against `REALIZES` (implementation) and `SPECIFIES` (machine-readable contract).
+  Whether PROPAGATE should traverse `DOCUMENTS` — blast radius reaching every doc that
+  mentions a node — stays an open decision on BL-26, deliberately.
+
 ### Changed
 
 - **A merge's survivor is now chosen by provenance, with id as the tiebreak** (the BL-29

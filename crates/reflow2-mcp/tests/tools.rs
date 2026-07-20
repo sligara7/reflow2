@@ -1134,3 +1134,42 @@ async fn search_finds_the_design_by_its_own_words() {
     })));
     assert!(none["hits"].as_array().unwrap().is_empty());
 }
+
+#[tokio::test]
+async fn documents_links_a_doc_over_the_surface_and_refuses_a_ghost() {
+    // BL-26's write side: the coherence failure it exists for is two
+    // instruction files disagreeing about the build — uncatchable while no
+    // graph knows the files exist.
+    let s = seeded().await;
+    j!(s.add_artifact(Parameters(AddArtifactReq {
+        id: "art:readme".into(),
+        name: "README.md".into(),
+        artifact_type: Some("document".into()),
+        location: Some("README.md".into()),
+    })));
+
+    let edge = j!(s.documents(Parameters(DocumentsReq {
+        artifact_id: "art:readme".into(),
+        target_type: "Project".into(),
+        target_id: "proj:sb".into(),
+        doc_kind: Some("readme".into()),
+    })));
+    assert_eq!(edge["edge_type"], "DOCUMENTS");
+    assert_eq!(edge["from_id"], "art:readme");
+    assert_eq!(edge["to_id"], "proj:sb");
+
+    // A missing endpoint is refused by name, never a dangling edge.
+    let err = s
+        .documents(Parameters(DocumentsReq {
+            artifact_id: "art:ghost".into(),
+            target_type: "Project".into(),
+            target_id: "proj:sb".into(),
+            doc_kind: None,
+        }))
+        .await
+        .expect_err("a ghost artifact must be refused");
+    assert!(
+        err.to_string().contains("art:ghost"),
+        "the refusal must name the missing node, got: {err}"
+    );
+}

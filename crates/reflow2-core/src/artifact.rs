@@ -287,6 +287,56 @@ impl DesignGraph {
         )
     }
 
+    /// Link an `Artifact` to the entity it *describes* via `DOCUMENTS` — a
+    /// design doc, ADR, README, instruction file or diagram that explains a
+    /// node without implementing it (that would be `REALIZES`) and without
+    /// being its machine-readable contract (that would be `SPECIFIES`).
+    ///
+    /// This is BL-26's criterion made recordable: a file belongs in the graph
+    /// when something would be *wrong* if it drifted out of step with the
+    /// design — two instruction files disagreeing about the build command is a
+    /// coherence failure, and it went uncaught because neither file was in any
+    /// graph. Not every file: modelling all 22 source files of a crate was 88%
+    /// of a gap list once (BL-23), and capturing everything is how a list gets
+    /// skimmed.
+    ///
+    /// `target_type` is required because `DOCUMENTS` accepts any target
+    /// (`to: "*"`). `doc_kind` names what kind of document — `design_doc` /
+    /// `adr` / `readme` / `runbook` / `agent_instructions` / a diagram kind.
+    /// Both endpoints must already exist: the storage engine accepts a dangling
+    /// edge without complaint, so failing loud here is the only check there is.
+    /// PROPAGATE deliberately does not traverse `DOCUMENTS` yet — whether a
+    /// change should ripple to every doc that mentions it is BL-26's open
+    /// decision, not an oversight.
+    pub fn documents(
+        &mut self,
+        artifact_id: &str,
+        target_type: &str,
+        target_id: &str,
+        doc_kind: Option<&str>,
+    ) -> Result<StoredEdge, DynoError> {
+        if self.get_node(node::ARTIFACT, artifact_id)?.is_none() {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::ARTIFACT.to_string(),
+                node_id: artifact_id.to_string(),
+            });
+        }
+        if self.get_node(target_type, target_id)?.is_none() {
+            return Err(DynoError::NodeNotFound {
+                node_type: target_type.to_string(),
+                node_id: target_id.to_string(),
+            });
+        }
+        self.create_edge(
+            edge::DOCUMENTS,
+            node::ARTIFACT,
+            artifact_id,
+            target_type,
+            target_id,
+            Props::new().set_opt("doc_kind", doc_kind),
+        )
+    }
+
     /// Register a real file against the design **with provenance**, atomically:
     /// create the Artifact + a provenance Fragment that `YIELDED` it + the
     /// `REALIZES` edge to its target.

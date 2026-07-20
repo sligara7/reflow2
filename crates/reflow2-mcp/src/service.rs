@@ -431,6 +431,18 @@ pub struct RealizesReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+pub struct DocumentsReq {
+    pub artifact_id: String,
+    /// Node type the artifact describes (e.g. `Component`, `Interface`, `Project`).
+    pub target_type: String,
+    pub target_id: String,
+    /// What kind of document: `design_doc` / `adr` / `readme` / `runbook` /
+    /// `agent_instructions` / `dataflow` / `sequence_diagram` / `arch_diagram`.
+    #[serde(default)]
+    pub doc_kind: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
 pub struct LinkArtifactReq {
     pub artifact_id: String,
     pub name: String,
@@ -2129,6 +2141,30 @@ impl ReflowService {
                 &req.target_type,
                 &req.target_id,
                 req.completeness.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Link an Artifact to the node it DOCUMENTS (describes without \
+                       implementing): a design doc, ADR, README, runbook, instruction file \
+                       or diagram. Record a file this way when something would be WRONG if it \
+                       drifted out of step with the design — not every file. Fails loud if \
+                       either endpoint is missing. Distinct from REALIZES (implementation) \
+                       and SPECIFIES (machine-readable contract)."
+    )]
+    pub async fn documents(
+        &self,
+        Parameters(req): Parameters<DocumentsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.documents(
+                &req.artifact_id,
+                &req.target_type,
+                &req.target_id,
+                req.doc_kind.as_deref(),
             )
             .map_err(dyno_err)?,
         ))

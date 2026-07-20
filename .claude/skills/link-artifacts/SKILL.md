@@ -84,3 +84,13 @@ Pass `record_events: true` when you want the divergence written into the graph a
 
 Bare `add_artifact` + `realizes` exist for cases where you don't need provenance recorded, but
 prefer `link_artifact` — provenance is cheap and makes the as-built view trustworthy.
+
+Not every file *implements* something. A design doc, ADR, README, runbook or agent-instruction
+file (AGENTS.md, CLAUDE.md) **describes** the design instead: register it with `add_artifact`
+(artifact_type `document`) and link it with `documents` (+ `doc_kind`), not `realizes`. The
+criterion for whether a file belongs in the graph at all: **would something be wrong if it
+drifted out of step with the design?** Two instruction files disagreeing about the build
+command is exactly the coherence failure this exists to catch — and generated files, lockfiles
+and build output should stay out, because a graph that captures everything is a list that gets
+skimmed. A machine-readable contract (OpenAPI, protobuf, JSON-schema) is neither: that is
+`SPECIFIES`, on the interface it defines.
