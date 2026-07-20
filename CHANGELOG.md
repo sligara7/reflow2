@@ -17,6 +17,25 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **The installer now meets projects as they actually are** (BL-27, F1/F2 from the storyflow
+  trial). The pointer line goes into **every** instruction-file convention a project already has
+  — `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`, `.cursorrules`,
+  `.windsurfrules` — pointing at wherever reflow2's own instructions landed, never at itself.
+  The previous fix protected `AGENTS.md` alone, so storyflow (which carries `CLAUDE.md` and no
+  `AGENTS.md`, the commonest shape in the wild) got a fresh `AGENTS.md` and the file its agent
+  reads first never mentioned reflow2 — the whole kit invisible on the primary path.
+
+  And the closing next-steps message now branches on **the project** — a bounded source-file
+  count, with the evidence stated — rather than on whether reflow2 happened to write a sidecar.
+  A repo with code is pointed at `adopt`; an empty directory still gets `genesis`; and an
+  *update* whose graph is still empty gets the adopt hint too, which is the case that would
+  otherwise repeat the failure for anyone who installed before the skill existed. Before this,
+  a 2,643-file system was told to describe, in a paragraph, what it wanted to build.
+
+  Verified against four shapes rather than the one the earlier fix assumed — `CLAUDE.md` only,
+  foreign `AGENTS.md` plus `CLAUDE.md`, empty directory, and a re-run for idempotency — plus the
+  real storyflow repo, where `--check` named the single missing change and the run applied it.
+
 - **The adopt pass's noise floor** (BL-42), both halves, measured on the same 122-node storyflow
   graph that found them: **gaps 51 → 38, defects 31 → 19, total output 82 → 57 — with every true
   finding preserved**, including the `generation_plus ↔ media_service` cycle.

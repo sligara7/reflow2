@@ -51,6 +51,27 @@ FILES = [
 # the project actually runs on.
 SIDECAR = {"AGENTS.md": "REFLOW2.md"}
 
+# Every instruction-file convention an agent might read *first*. The pointer
+# line goes into all of these that exist, not just the one whose name we
+# happen to use ourselves.
+#
+# Found the hard way: storyflow carries CLAUDE.md and no AGENTS.md, so the
+# installer saw nothing to protect, wrote a fresh AGENTS.md, and left the file
+# Claude Code actually reads with no mention of reflow2 — the whole kit
+# invisible on the primary path. The earlier fix protected precisely the wrong
+# filename, because the fixture it was built from had an AGENTS.md, because
+# that is what the backlog note had recorded. A fixture built from the recorded
+# problem reproduces the recorded problem, not the real one
+# (docs/trials/2026-07-20-adopt-storyflow.md, F1).
+INSTRUCTION_FILES = [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    ".github/copilot-instructions.md",
+    ".cursorrules",
+    ".windsurfrules",
+]
+
 
 def foreign_owner(src: Path, dst: Path) -> str | None:
     """Why `dst` must not be overwritten, or None if it is ours to manage.
@@ -334,18 +355,73 @@ POINTER_LINE = (
 )
 
 
-def ensure_pointer(agents_md: Path, side_name: str) -> str | None:
-    """Append one marked pointer line to the project's own instruction file,
-    unless it already mentions the sidecar. Returns a report line, or None."""
-    text = agents_md.read_text()
-    if side_name in text:
+def pointer_targets(project: Path, reflow2_doc: str) -> list[Path]:
+    """The project's own instruction files that should point at reflow2's.
+
+    Every convention in [`INSTRUCTION_FILES`] that exists, except the file
+    reflow2's own instructions live in — a file must not point at itself.
+    """
+    return [
+        project / rel
+        for rel in INSTRUCTION_FILES
+        if rel != reflow2_doc and (project / rel).exists()
+    ]
+
+
+def ensure_pointer(instruction_file: Path, reflow2_doc: str) -> str | None:
+    """Append one marked pointer line to an instruction file the project owns,
+    unless it already mentions reflow2's. Returns a report line, or None."""
+    text = instruction_file.read_text()
+    if reflow2_doc in text:
         return None
-    line = POINTER_LINE.format(side=side_name)
-    agents_md.write_text(text.rstrip("\n") + "\n\n" + line + "\n")
+    line = POINTER_LINE.format(side=reflow2_doc)
+    instruction_file.write_text(text.rstrip("\n") + "\n\n" + line + "\n")
     return (
-        f"{agents_md.name}  (appended one marked line pointing at {side_name} — "
-        f"without it the agent never learns reflow2 exists)"
+        f"{instruction_file.name}  (appended one marked line pointing at "
+        f"{reflow2_doc} — without it an agent reading this file never learns "
+        f"reflow2 exists)"
     )
+
+
+# What counts as evidence that this project is a system that already exists,
+# as opposed to an empty directory about to become one. Used to decide which
+# next steps to print — genesis, or adopt.
+#
+# Keyed on the project rather than on our own install artifacts: the earlier
+# version branched on "did we write a sidecar?", so storyflow — 2,643 source
+# files, months of history — was told to describe what it wanted to build,
+# and the adopt skill was never mentioned (F2, same trial).
+SOURCE_SUFFIXES = {
+    ".py", ".rs", ".ts", ".tsx", ".js", ".jsx", ".go", ".java", ".rb", ".c",
+    ".cc", ".cpp", ".h", ".hpp", ".cs", ".swift", ".kt", ".php", ".scala",
+    ".ex", ".exs", ".sh", ".sql", ".svelte", ".vue",
+}
+SKIP_DIRS = {
+    ".git", ".reflow2", "node_modules", "target", "build", "dist", "venv",
+    ".venv", "__pycache__", ".claude", ".grok", ".vscode", ".github",
+}
+
+
+def existing_system(project: Path, cap: int = 25) -> str | None:
+    """Why this looks like a system that already exists, or None.
+
+    Counts source files, stopping at `cap` — the question is "is there
+    substantial code here?", not "how much", and a full walk of a large repo
+    is a slow way to answer a yes/no.
+    """
+    found = 0
+    for path in project.rglob("*"):
+        if any(part in SKIP_DIRS for part in path.parts):
+            continue
+        if path.is_file() and path.suffix in SOURCE_SUFFIXES:
+            found += 1
+            if found >= cap:
+                break
+    if found >= cap:
+        return f"{cap}+ source files"
+    if found:
+        return f"{found} source file(s)"
+    return None
 
 
 def ensure_gitignore(project: Path) -> str | None:
@@ -378,8 +454,6 @@ def planned_changes(project: Path) -> list[str]:
             if not side.exists() or not filecmp.cmp(src, side, shallow=False):
                 verb = "create" if not side.exists() else "update"
                 changes.append(f"{verb}  {side.name}  (keeping your own {rel} — {owner})")
-            if side.name not in dst.read_text():
-                changes.append(f"append  one marked pointer line to your {rel} (→ {side.name})")
         elif not dst.exists():
             changes.append(f"create  {rel}")
         elif not filecmp.cmp(src, dst, shallow=False):
@@ -405,6 +479,14 @@ def planned_changes(project: Path) -> list[str]:
                 current = None
             if current is None:
                 changes.append(f"update  {spec['path']} (add the reflow2 server)")
+    reflow2_doc = "REFLOW2.md" if (project / "REFLOW2.md").exists() or any(
+        foreign_owner(src, project / rel) for src, rel in FILES if rel == "AGENTS.md"
+    ) else "AGENTS.md"
+    for target in pointer_targets(project, reflow2_doc):
+        if reflow2_doc not in target.read_text():
+            changes.append(
+                f"append  one marked pointer line to your {target.name} (→ {reflow2_doc})"
+            )
     if not (project / ".reflow2").exists():
         changes.append("create  .reflow2/")
     gi = project / ".gitignore"
@@ -456,6 +538,9 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
     done = []
     if note := backup_graph(project, binary):
         done.append(note)
+    # Where reflow2's own instructions end up: AGENTS.md normally, REFLOW2.md
+    # when the project already owns that filename.
+    reflow2_doc = "AGENTS.md"
     for src, rel in FILES:
         dst = project / rel
         dst.parent.mkdir(parents=True, exist_ok=True)
@@ -468,13 +553,7 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
             shutil.copy2(src, side)
             if changed:
                 done.append(f"{side.name}  (kept your own {rel} — {owner})")
-            # A sidecar nobody points at is invisible: the agent reads the
-            # project's own file and never learns reflow2 exists (the BL-22
-            # lesson — shipping the file is not shipping the capability). One
-            # marked line is appended, same rule as the merged MCP configs:
-            # add and report, never overwrite. Idempotent by content.
-            if pointer := ensure_pointer(dst, side.name):
-                done.append(pointer)
+            reflow2_doc = side.name
             continue
         changed = not dst.exists() or not filecmp.cmp(src, dst, shallow=False)
         shutil.copy2(src, dst)
@@ -495,6 +574,15 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
     # previously had to hand-edit, and the one most likely to be got wrong.
     for spec in MCP_CONFIGS:
         done.append(write_mcp_config(project, spec, binary, force_mcp))
+
+    # A file nobody points at is invisible: an agent reads the project's own
+    # instructions and never learns reflow2 exists (BL-22's lesson — shipping
+    # the file is not shipping the capability). Every instruction file the
+    # project already has gets one marked line, same rule as the merged MCP
+    # configs: add and report, never overwrite. Idempotent by content.
+    for target in pointer_targets(project, reflow2_doc):
+        if pointer := ensure_pointer(target, reflow2_doc):
+            done.append(pointer)
 
     (project / ".reflow2").mkdir(exist_ok=True)
     if note := ensure_gitignore(project):
@@ -582,21 +670,42 @@ def main() -> int:
         print(f"Was: reflow2 {previously.get('reflow2_version')} ({previously.get('commit')})")
         print(f"Now: reflow2 {kit_version()['reflow2_version']} ({kit_version()['commit']})")
         print("\nYour design graph and your own files were not touched.")
+        # An update on an existing system whose graph is still empty is
+        # someone who installed before `adopt` shipped, or who never started.
+        # Saying nothing leaves them exactly where F2 left storyflow.
+        graph = project / ".reflow2" / "graph"
+        if existing_system(project) and not graph.exists():
+            doc = "REFLOW2.md" if (project / "REFLOW2.md").exists() else "AGENTS.md"
+            print(
+                f"\nThe design graph is still empty. For a system that already exists, "
+                f"run the\n  **adopt** skill — it recovers the design from what was built. "
+                f"See {doc}."
+            )
     else:
         print(f"{staleness(kit_version().get('commit'))}\n")
         # The two starting states want opposite advice: a greenfield project
         # begins with a brief; an existing one begins with what already exists,
         # and telling its owner to "describe what you want to build" points
-        # them down the wrong path (BL-27's conversion probe).
-        if (project / "REFLOW2.md").exists():
-            print("This project already had its own AGENTS.md, so the reflow2 instructions")
-            print("are in REFLOW2.md and your file gained one pointer line — nothing else.")
+        # them down the wrong path.
+        #
+        # Branch on the PROJECT, not on our own install artifacts. The first
+        # version asked "did we write a sidecar?", which is a fact about
+        # reflow2 — so storyflow (2,643 source files, months of history, no
+        # AGENTS.md) was told to describe what it wanted to build, and never
+        # heard of the adopt skill (F2,
+        # docs/trials/2026-07-20-adopt-storyflow.md).
+        reflow2_doc = "REFLOW2.md" if (project / "REFLOW2.md").exists() else "AGENTS.md"
+        if evidence := existing_system(project):
+            print(f"This looks like a system that already exists ({evidence}).")
+            if (project / "REFLOW2.md").exists():
+                print("Your own AGENTS.md was left alone — reflow2's instructions are in")
+                print("REFLOW2.md, and your instruction file(s) gained one pointer line.")
             print()
             print("Next: open your agent here and run the **adopt** skill — genesis's sibling")
             print("  for a system that already exists. It recovers the design from what was")
             print("  built: a breadth-first coarse scan, static and dynamic analysis, intent")
-            print("  only from sources OUTSIDE the implementation, then validation against")
-            print("  the original. See REFLOW2.md.")
+            print(f"  only from sources OUTSIDE the implementation, then validation against")
+            print(f"  the original. See {reflow2_doc}.")
         else:
             print("Deliberately NOT created: src/, build files, language choice — what kind of")
             print("project this is comes out of the design, not out of a scaffold.")

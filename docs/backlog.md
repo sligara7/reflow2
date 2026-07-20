@@ -751,16 +751,23 @@ greenfield unregressed, `--check` consistent):
 
 1. ~~**Nothing points at `REFLOW2.md`**~~ — BL-22's sibling lesson verbatim: shipping the file
    is not shipping the capability. Fixed by the same rule as the merged MCP configs: one
-   marked pointer line appended to the project's own `AGENTS.md`, idempotent by content,
-   reported — never overwritten.
+   marked pointer line appended to the project's own instruction file, idempotent by content,
+   reported — never overwritten. **Widened 2026-07-20** after the storyflow trial found the
+   first fix protected the wrong filename: the pointer now goes into *every* convention the
+   project has (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, copilot-instructions, cursor/windsurf
+   rules), because storyflow carries `CLAUDE.md` and no `AGENTS.md`, so the installer saw
+   nothing to protect and left the file Claude Code reads first with no mention of reflow2.
 2. ~~**`.reflow2/` is not gitignored**~~ — the installer had no `.gitignore` handling at all,
    so a converted repo started tracking a RocksDB directory. Now appended or created,
    idempotent, with the reason in the comment: the graph is machine-local state; the durable
    record is an export.
-3. ~~**The closing "Next:" text is greenfield-only**~~ — now branches: brief → genesis for a
-   fresh directory; for a repo that had its own `AGENTS.md`, it says where the instructions
-   went, what was appended, and that an existing system starts by recording what is actually
-   there (statuses honest, provenance `inferred`, requirements from outside the code).
+3. ~~**The closing "Next:" text is greenfield-only**~~ — now branches on **the project**
+   (a bounded source-file count), not on whether reflow2 wrote a sidecar. A repo with code
+   gets the `adopt` path with its evidence stated; an empty directory gets genesis; and an
+   *update* whose graph is still empty gets the adopt hint too — the case that would
+   otherwise repeat the failure for anyone who installed before the skill shipped.
+   **Rewritten 2026-07-20**: the first version keyed off our own install artifact, so
+   storyflow — 2,643 files — was told to describe what it wanted to build.
 
 Converting a project is now: build/point at the binary (BL-15's published-binaries gap is the
 remaining wall for machines without a checkout), run `reflow2_init.py`, open the agent. Then
