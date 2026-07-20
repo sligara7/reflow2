@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- F6 (single_point_of_failure above fixture scale) — @ajs — since 2026-07-20 — structure.rs, adopt skill
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
 
@@ -87,6 +86,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- F6 done: SPOF skips components coupled only by a library contract (storyflow 7 of 15 -> 5); medium default keeps today's behaviour — @ajs — 2026-07-20 — (this commit)
 - BL-27 F1/F2 done: pointer reaches every instruction-file convention (CLAUDE.md et al); next-steps branches on the project, not our own artifact — @ajs — 2026-07-20 — (this commit)
 - BL-42 + BL-43 done: adopt's noise floor halved on the same graph (82 -> 57 outputs, every true finding kept); graph_report counts every node — @ajs — 2026-07-20 — (this commit)
 - Adopt trial on storyflow (2643 files) done: 5 true findings about storyflow, 4 about reflow2; BL-42/BL-43 raised — @ajs — 2026-07-20 — (this commit)

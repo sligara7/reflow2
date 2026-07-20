@@ -343,6 +343,51 @@ impl DesignGraph {
     /// Modelling reflow2's own design showed it directly: two capabilities that
     /// were correctly *not* flagged became single points of failure the moment a
     /// disconnected second crate was added beside them.
+    /// Does this component couple to the rest of the design **only** through
+    /// contracts carried by a library — that is, linked into its consumers
+    /// rather than called across a boundary at run time?
+    ///
+    /// The third pass at `single_point_of_failure`, and the same lesson one
+    /// level down. BL-5's second pass scoped candidates to types that operate,
+    /// because redundancy is meaningless for a sentence. But `Component`
+    /// covers both a running service and a shared library, and on storyflow —
+    /// 15 components, 7 flagged — the false ones were exactly the libraries:
+    /// `dag_transport` and `type_registry` are imported by every service, so
+    /// they are perfect articulation points, and *you cannot run two copies of
+    /// a library to survive its failure*. The suggested fix, `add_redundancy`,
+    /// is not merely unhelpful there; it is incoherent.
+    ///
+    /// Topology cannot tell the two apart: a library API and a service API are
+    /// the same shape in the graph. The discriminator is a statement the
+    /// modeller makes — `Interface.medium` — and it defaults to `REST`, so a
+    /// design that says nothing keeps today's behaviour exactly. **Silence has
+    /// to be earned by an explicit `library`**, which is the right direction
+    /// for a detector: never quiet by default (sharpening.md §4).
+    ///
+    /// A component providing a mix still counts: if anything it exposes is
+    /// carried at run time, it is a thing that can fail at run time.
+    pub(crate) fn couples_only_as_a_library(&self, node_id: &str) -> Result<bool, DynoError> {
+        let provided = self.outgoing(node_id, Some(edge::PROVIDES))?;
+        if provided.is_empty() {
+            return Ok(false);
+        }
+        for e in provided {
+            let by_library = self
+                .get_node(node::INTERFACE, &e.to_id)?
+                .and_then(|i| {
+                    i.properties
+                        .get("medium")
+                        .and_then(dynograph_core::Value::as_str)
+                        .map(|m| m == "library")
+                })
+                .unwrap_or(false);
+            if !by_library {
+                return Ok(false);
+            }
+        }
+        Ok(true)
+    }
+
     pub(crate) fn is_single_point_of_failure(&self, node_id: &str) -> Result<bool, DynoError> {
         let baseline = self.build_network(None)?.nontrivial_component_count();
         Ok(self

@@ -67,7 +67,11 @@ session, prose read out of an adopted codebase.
      asserting one that is wrong.
    - Whenever two components talk to each other, model the Interface between them and record
      both sides. An unrecorded contract is invisible: change one component later and nothing
-     will tell you the other one just broke.
+     will tell you the other one just broke. Set its **`medium`** (`REST`, `event`, `graphql`,
+     `cli`, `library`, `data`, `mechanical`, …) via `create_node` when it is not a plain HTTP
+     API — in particular mark a shared package `library`, because a library linked into its
+     callers cannot fail on its own, and the structural detectors need to know that to avoid
+     calling it a single point of failure.
    - When the user describes an **ordered process** — a user journey, an assembly sequence, an
      operating loop — model it as a `Flow`: `add_flow`, then `part_of_flow` for each step with
      its `step_order`. Join steps with `TRIGGERS` edges (`create_edge`), each carrying a `role`

@@ -293,3 +293,68 @@ fn a_leaf_with_no_traceability_is_still_a_dead_end_even_inside_a_hierarchy() {
         .collect();
     assert_eq!(dead, ["cmp:idle"], "the idle leaf, not the assembly");
 }
+
+// ---- F6 · a library is not a runtime single point of failure ---------------
+
+/// From the storyflow trial: a shared library is imported by every service,
+/// which makes it a perfect articulation point and a nonsense candidate —
+/// you cannot run a second copy of a library to survive its failure, so the
+/// suggested `add_redundancy` is not merely unhelpful but incoherent.
+///
+/// Topology cannot tell a library API from a service API; the discriminator
+/// is a statement the modeller makes. `Interface.medium` defaults to a
+/// runtime medium, so a design that says nothing behaves exactly as before —
+/// silence has to be earned by an explicit `library`.
+#[test]
+fn a_library_hub_is_not_a_runtime_single_point_of_failure() {
+    // The hub provides two contracts, each with its own group of consumers,
+    // so the hub COMPONENT is the cut vertex. (With one shared contract the
+    // Interface is the articulation point instead — a distinction the
+    // fixture has to get right to be testing what it claims.)
+    let build = |medium: &str| {
+        let mut g = DesignGraph::open_in_memory().unwrap();
+        g.add_project("proj:p", "P").unwrap();
+        g.add_component("cmp:hub", "Hub", "the shared thing", None)
+            .unwrap();
+        for side in ["a", "b"] {
+            let ifc = format!("ifc:{side}");
+            g.create_node(
+                node::INTERFACE,
+                &ifc,
+                Props::new()
+                    .set("name", format!("{side} contract"))
+                    .set("medium", medium),
+            )
+            .unwrap();
+            g.provides("cmp:hub", &ifc).unwrap();
+            for i in 0..2 {
+                let c = format!("cmp:{side}{i}");
+                g.add_component(&c, &c, "a consumer", None).unwrap();
+                g.consumes(&c, &ifc).unwrap();
+            }
+        }
+        g
+    };
+    let flagged = |g: &DesignGraph| -> Vec<String> {
+        g.detect_defects()
+            .unwrap()
+            .into_iter()
+            .filter(|d| d.category == HealCategory::SinglePointOfFailure)
+            .flat_map(|d| d.affected_ids)
+            .collect()
+    };
+
+    // Carried at run time (the default medium): a true single point of failure.
+    assert!(
+        flagged(&build("REST")).contains(&"cmp:hub".to_string()),
+        "a service every path routes through is genuinely fragile"
+    );
+
+    // The same topology, stated as a library: linked into its consumers, so
+    // it cannot fail on its own and redundancy means nothing.
+    let linked = flagged(&build("library"));
+    assert!(
+        !linked.contains(&"cmp:hub".to_string()),
+        "you cannot run two copies of a library: {linked:?}"
+    );
+}

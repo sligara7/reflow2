@@ -491,6 +491,15 @@ impl DesignGraph {
                 continue;
             }
             let id = net.id_of(ap).to_string();
+            // …and among components, only the ones that can fail *at run time*.
+            // A shared library is imported by everything, which makes it a
+            // perfect articulation point and a nonsense candidate: you cannot
+            // run a second copy of a library to survive its failure. Keyed on
+            // the contract's stated medium, which defaults to a runtime one —
+            // see `couples_only_as_a_library` (F6, the storyflow trial).
+            if self.couples_only_as_a_library(&id)? {
+                continue;
+            }
             if self.is_single_point_of_failure(&id)? {
                 issues.push(HealIssue {
                     id: issue_id(HealCategory::SinglePointOfFailure, std::slice::from_ref(&id)),

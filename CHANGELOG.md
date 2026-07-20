@@ -17,6 +17,26 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **`single_point_of_failure` no longer flags shared libraries** (F6, the storyflow trial —
+  7 of 15 components → **5**, and the two that went were the only impossible ones). A library
+  imported by every service is a *perfect* articulation point, and the suggested repair,
+  `add_redundancy`, is incoherent for it: you cannot run a second copy of a library to survive
+  its failure.
+
+  BL-5's second pass scoped candidates to node *types* that operate — only things that operate
+  can fail. This is the same lesson one level down: `Component` covers both a running service
+  and a linked library, and topology cannot tell them apart because a library API and a service
+  API are the same shape in the graph. The discriminator has to be stated, and the schema
+  already had it — `Interface.medium`, whose values include `library`. A component whose
+  contracts are *all* carried by a library is coupled at build time, not run time, so it is not
+  a runtime failure unit. A mix still counts: anything carried at run time makes it a thing that
+  can fail at run time.
+
+  **The default is `REST`, so a design that says nothing is unchanged** — silence has to be
+  earned by an explicit `library`, which is the right direction for a detector that must never
+  go quiet by default. The `adopt` skill and the consumer AGENTS.md now both say to state
+  `medium`, because a fix nobody writes the signal for is not a fix.
+
 - **The installer now meets projects as they actually are** (BL-27, F1/F2 from the storyflow
   trial). The pointer line goes into **every** instruction-file convention a project already has
   — `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`, `.cursorrules`,
