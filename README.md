@@ -169,3 +169,7 @@ artifact linking) is complete and cold-start-verified. See
 [docs/surface-plan.md](docs/surface-plan.md) for what's built vs. the tracked future
 improvements (SP-3b ingest extraction, SP-6b as-built drift). To *use* it, see
 [getting-started/](getting-started/).
+
+## License
+
+Apache-2.0 — see [LICENSE](LICENSE). Copyright 2026 Anthony Sligar.
