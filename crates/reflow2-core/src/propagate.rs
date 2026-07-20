@@ -24,95 +24,14 @@ use dynograph_core::DynoError;
 
 use crate::graph::DesignGraph;
 use crate::nodes::edge;
-
-/// The semantic direction of an impact hop (docs/impact-propagation.md,
-/// "Direction matters").
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
-#[serde(rename_all = "snake_case")]
-pub enum ImpactDirection {
-    /// Realization: "what did this node's existence justify or shape?"
-    Downstream,
-    /// Rationale: "what intent does this node serve, that may now be unmet?"
-    Upstream,
-    /// Peers/contracts: "what shares a contract or depends sideways?"
-    Lateral,
-    /// Inference: "what did this cause / enable / risk?"
-    Causal,
-}
-
-impl ImpactDirection {
-    /// A short, stable label.
-    pub fn as_str(self) -> &'static str {
-        match self {
-            ImpactDirection::Downstream => "downstream",
-            ImpactDirection::Upstream => "upstream",
-            ImpactDirection::Lateral => "lateral",
-            ImpactDirection::Causal => "causal",
-        }
-    }
-}
+use crate::nodes::structural_rule;
+// Re-exported from the shared vocabulary base (see the note on the enum there):
+// `reflow2_core::propagate::ImpactDirection` stays a valid public path.
+pub use crate::nodes::ImpactDirection;
 
 /// Risk edges whose crossing amplifies severity — kept verbatim from Reflow's
 /// `risk_rel_types` (docs/impact-propagation.md, "Ranking the blast radius").
 const RISK_EDGES: &[&str] = &["RISKS", "BLOCKS", "CONTRADICTS", "VIOLATES", "MASKS"];
-
-/// How a structural edge propagates impact when walked **forward** (along an
-/// outgoing edge) vs **backward** (along an incoming edge). `None` on a side
-/// means impact does not propagate that way, so the traversal never crosses it
-/// (and can therefore always explain why a node is in the blast radius).
-struct EdgeRule {
-    forward: Option<ImpactDirection>,
-    backward: Option<ImpactDirection>,
-}
-
-/// The structural golden-thread direction table (docs/impact-propagation.md).
-/// Inference edges are not here — they are classified as [`Causal`] at runtime
-/// from `schema.inference_edge_types()`. Structural edges not listed (e.g.
-/// SPECIFIES, DOCUMENTS, temporal bookkeeping) are intentionally not traversed
-/// in this increment.
-///
-/// [`Causal`]: ImpactDirection::Causal
-/// Whether an edge type is a structural traceability edge (the design network's
-/// coupling edges — the same set PROPAGATE walks, excluding CONTAINS). Shared
-/// with [`crate::structure`] so the impact walk and the topology analysis agree
-/// on what "connected in the design" means.
-pub(crate) fn is_traceability_edge(edge_type: &str) -> bool {
-    structural_rule(edge_type).is_some()
-}
-
-fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
-    use ImpactDirection::{Downstream, Lateral, Upstream};
-    let (fwd, bwd) = match edge_type {
-        // Note: CONTAINS (decomposition, axis Y) is deliberately *not* here.
-        // It is not a traceability edge; propagating along it would make the
-        // Project a hub that short-circuits every sibling to ~2 hops. The doc's
-        // impact diagram omits it too.
-        //
-        // Traceability: Capability SATISFIES Requirement. From the requirement
-        // (incoming) you reach the realizer that may now be wrong (downstream);
-        // from the capability (outgoing) you reach the intent it serves (upstream).
-        "SATISFIES" => (Some(Upstream), Some(Downstream)),
-        // A node CONSTRAINS another it shapes.
-        "CONSTRAINS" => (Some(Downstream), Some(Upstream)),
-        // WHAT→WHERE: Capability ALLOCATED_TO Component.
-        "ALLOCATED_TO" => (Some(Downstream), Some(Upstream)),
-        // Realization: Artifact REALIZES Capability/Component/Interface.
-        "REALIZES" => (Some(Upstream), Some(Downstream)),
-        // Verification VERIFIES its target; a moved target staled it.
-        "VERIFIES" => (Some(Upstream), Some(Downstream)),
-        // Governance: source GOVERNED_BY a Decision/DesignRule.
-        "GOVERNED_BY" => (Some(Upstream), Some(Downstream)),
-        // Contracts / dependencies — sideways.
-        "PROVIDES" | "CONSUMES" | "DEPENDS_ON" | "PART_OF_FLOW" => (Some(Lateral), Some(Lateral)),
-        // Operation chain.
-        "DEPLOYED_TO" | "REQUIRES_RESOURCE" => (Some(Downstream), Some(Upstream)),
-        _ => return None,
-    };
-    Some(EdgeRule {
-        forward: fwd,
-        backward: bwd,
-    })
-}
 
 /// One hop in an impact chain — the edge that carried impact to a node, and how.
 #[derive(Debug, Clone, serde::Serialize)]
@@ -197,26 +116,6 @@ struct Neighbor {
 }
 
 impl DesignGraph {
-    /// Build an id→type index over the whole project subgraph. Edge adjacency
-    /// carries only endpoint ids; this resolves a node's type (and confirms it
-    /// exists — dangling edges to absent nodes are excluded from the radius).
-    ///
-    /// Assumes node ids are unique across types within a graph (reflow2's typed-
-    /// prefix id convention, e.g. `req:`, `cap:`); on a collision the first
-    /// type scanned wins.
-    pub(crate) fn node_type_index(&self) -> Result<HashMap<String, String>, DynoError> {
-        let mut index = HashMap::new();
-        let types: Vec<String> = self.schema().node_types.keys().cloned().collect();
-        for node_type in types {
-            for node in self.scan_nodes(&node_type)? {
-                index
-                    .entry(node.node_id)
-                    .or_insert_with(|| node_type.clone());
-            }
-        }
-        Ok(index)
-    }
-
     /// Classified neighbors of `node_id` across every propagating edge, in a
     /// deterministic order (outgoing then incoming, each in adjacency-key order).
     fn impact_neighbors(

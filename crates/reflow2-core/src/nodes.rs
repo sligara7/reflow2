@@ -179,3 +179,94 @@ impl From<Props> for HashMap<String, Value> {
         p.0
     }
 }
+
+/// The semantic direction of an impact hop (docs/impact-propagation.md,
+/// "Direction matters").
+///
+/// Lives here rather than in [`crate::propagate`] because the golden-thread
+/// rule table below is shared vocabulary: PROPAGATE walks it, `structure`'s
+/// topology analysis filters by it, and keeping it in the zero-dependency base
+/// is what lets those two modules agree on "connected in the design" without
+/// depending on each other (they used to form the crate's one real module
+/// cycle — invisible to rustc because both sides are `impl DesignGraph`
+/// blocks, and reported by reflow2's own self-model on 2026-07-20).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ImpactDirection {
+    /// Realization: "what did this node's existence justify or shape?"
+    Downstream,
+    /// Rationale: "what intent does this node serve, that may now be unmet?"
+    Upstream,
+    /// Peers/contracts: "what shares a contract or depends sideways?"
+    Lateral,
+    /// Inference: "what did this cause / enable / risk?"
+    Causal,
+}
+
+impl ImpactDirection {
+    /// A short, stable label.
+    pub fn as_str(self) -> &'static str {
+        match self {
+            ImpactDirection::Downstream => "downstream",
+            ImpactDirection::Upstream => "upstream",
+            ImpactDirection::Lateral => "lateral",
+            ImpactDirection::Causal => "causal",
+        }
+    }
+}
+
+/// How a structural edge propagates impact when walked **forward** (along an
+/// outgoing edge) vs **backward** (along an incoming edge). `None` on a side
+/// means impact does not propagate that way, so the traversal never crosses it
+/// (and can therefore always explain why a node is in the blast radius).
+pub(crate) struct EdgeRule {
+    pub(crate) forward: Option<ImpactDirection>,
+    pub(crate) backward: Option<ImpactDirection>,
+}
+
+/// The structural golden-thread direction table (docs/impact-propagation.md).
+/// Inference edges are not here — they are classified as
+/// [`Causal`](ImpactDirection::Causal) at runtime from
+/// `schema.inference_edge_types()`. Structural edges not listed (e.g.
+/// SPECIFIES, DOCUMENTS, temporal bookkeeping) are intentionally not traversed.
+pub(crate) fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
+    use ImpactDirection::{Downstream, Lateral, Upstream};
+    let (fwd, bwd) = match edge_type {
+        // Note: CONTAINS (decomposition, axis Y) is deliberately *not* here.
+        // It is not a traceability edge; propagating along it would make the
+        // Project a hub that short-circuits every sibling to ~2 hops. The doc's
+        // impact diagram omits it too.
+        //
+        // Traceability: Capability SATISFIES Requirement. From the requirement
+        // (incoming) you reach the realizer that may now be wrong (downstream);
+        // from the capability (outgoing) you reach the intent it serves (upstream).
+        "SATISFIES" => (Some(Upstream), Some(Downstream)),
+        // A node CONSTRAINS another it shapes.
+        "CONSTRAINS" => (Some(Downstream), Some(Upstream)),
+        // WHAT→WHERE: Capability ALLOCATED_TO Component.
+        "ALLOCATED_TO" => (Some(Downstream), Some(Upstream)),
+        // Realization: Artifact REALIZES Capability/Component/Interface.
+        "REALIZES" => (Some(Upstream), Some(Downstream)),
+        // Verification VERIFIES its target; a moved target staled it.
+        "VERIFIES" => (Some(Upstream), Some(Downstream)),
+        // Governance: source GOVERNED_BY a Decision/DesignRule.
+        "GOVERNED_BY" => (Some(Upstream), Some(Downstream)),
+        // Contracts / dependencies — sideways.
+        "PROVIDES" | "CONSUMES" | "DEPENDS_ON" | "PART_OF_FLOW" => (Some(Lateral), Some(Lateral)),
+        // Operation chain.
+        "DEPLOYED_TO" | "REQUIRES_RESOURCE" => (Some(Downstream), Some(Upstream)),
+        _ => return None,
+    };
+    Some(EdgeRule {
+        forward: fwd,
+        backward: bwd,
+    })
+}
+
+/// Whether an edge type is a structural traceability edge (the design network's
+/// coupling edges — the same set PROPAGATE walks, excluding CONTAINS). Used by
+/// both [`crate::propagate`] and [`crate::structure`] so the impact walk and
+/// the topology analysis agree on what "connected in the design" means.
+pub(crate) fn is_traceability_edge(edge_type: &str) -> bool {
+    structural_rule(edge_type).is_some()
+}

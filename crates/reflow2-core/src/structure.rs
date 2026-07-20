@@ -3,7 +3,7 @@
 //!
 //! The **design network** is the undirected graph of design nodes connected by
 //! *traceability* edges (the same coupling set PROPAGATE walks — see
-//! [`crate::propagate::is_traceability_edge`] — which excludes CONTAINS so the
+//! [`crate::nodes::is_traceability_edge`] — which excludes CONTAINS so the
 //! Project isn't an artificial hub). Bookkeeping node types (Project, temporal,
 //! dimensions) are excluded: they aren't part of the design's structural
 //! coupling.
@@ -25,8 +25,8 @@ use dynograph_graph::{
 };
 
 use crate::graph::DesignGraph;
+use crate::nodes::is_traceability_edge;
 use crate::nodes::{edge, node};
-use crate::propagate::is_traceability_edge;
 
 /// Node types that are *not* part of the design's structural coupling and so are
 /// excluded from the design network.

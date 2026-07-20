@@ -169,6 +169,29 @@ impl DesignGraph {
         self.engine.scan_nodes(&self.graph_id, node_type)
     }
 
+    /// Build an id→type index over the whole project subgraph. Edge adjacency
+    /// carries only endpoint ids; this resolves a node's type (and confirms it
+    /// exists — e.g. dangling edges to absent nodes are excluded from a blast
+    /// radius). Shared plumbing for `propagate`, `structure`, `heal`, `export`.
+    ///
+    /// Assumes node ids are unique across types within a graph (reflow2's typed-
+    /// prefix id convention, e.g. `req:`, `cap:`); on a collision the first
+    /// type scanned wins.
+    pub(crate) fn node_type_index(
+        &self,
+    ) -> Result<std::collections::HashMap<String, String>, DynoError> {
+        let mut index = std::collections::HashMap::new();
+        let types: Vec<String> = self.schema().node_types.keys().cloned().collect();
+        for node_type in types {
+            for node in self.scan_nodes(&node_type)? {
+                index
+                    .entry(node.node_id)
+                    .or_insert_with(|| node_type.clone());
+            }
+        }
+        Ok(index)
+    }
+
     /// Delete a node and every edge attached to it. Returns whether it existed.
     pub fn delete_node(&mut self, node_type: &str, id: &str) -> Result<bool, DynoError> {
         self.engine.delete_node(&self.graph_id, node_type, id)
