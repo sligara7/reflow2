@@ -73,6 +73,11 @@ Add yourself if you're new here.
   reconcile, don't delete). Then the standalone-repo conversation (counterpart Decision with
   reopening conditions, CRUD skills, and search are all in place for it).
 
+- **Release follow-up (small)** — after run 29785834848 publishes v0.5.0: dispatch release.yml
+  once more (`gh workflow run release.yml -f tag=v0.5.0`) so the kit's KIT_VERSION.json stamps
+  a commit that exists in the REWRITTEN history (the first run staged the kit pre-rewrite —
+  contents identical, stamp cosmetically stale). Then BL-15 verification is fully closed.
+
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
