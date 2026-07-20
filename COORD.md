@@ -86,6 +86,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- Adopt trial on storyflow (2643 files) done: 5 true findings about storyflow, 4 about reflow2; BL-42/BL-43 raised — @ajs — 2026-07-20 — (this commit)
 - BL-27 step 3 done: the adopt skill — the RE lifecycle operational, ninth kit skill; next brownfield trial should run through it — @ajs — 2026-07-19 — (this commit)
 - BL-30 done (M half): reconcile_verification completes the reconcile family — phase trial 13/13, first fully-green run, now a regression gate — @ajs — 2026-07-19 — (this commit)
 - BL-27 step 1 done: three conversion fixes in reflow2_init.py (pointer line, gitignore, branched next-steps) + design_without_intent at 0.72 — @ajs — 2026-07-19 — (this commit)
