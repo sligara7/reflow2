@@ -52,7 +52,6 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
-- Break the propagate↔structure cycle + close the true self-model gaps — @ajs — since 2026-07-20 — crates/reflow2-core/src/{propagate,structure,nodes,graph}.rs, new tests/confirm.rs, tools/build_design_graph.py
 
 
 
@@ -61,41 +60,35 @@ Add yourself if you're new here.
 
 ## Blocked / waiting
 
-- **On-restart batch test** — blocked on restarting the editor session (BL-32: the live MCP server
-  predates every fix this session shipped, and holds the `.reflow2/graph` lock; the operator is
-  remote and cannot restart). Everything below is *already verified* by fresh-binary gates — this is
-  about exercising the **live surface**, first session that can:
-  1. `./target/debug/reflow2-mcp --graph-path .reflow2/graph --import docs/design/reflow2.json` —
-     load the real 96-node design over the genesis stub (BL-39's path, first real use).
-  2. Confirm the session's tool list carries this session's additions: `set_capability_status`,
-     `set_provenance`, and the BL-38/BL-27 detector behaviour.
-  3. Run **where-am-i** against the real design — it should narrate reflow2's actual state, not an
-     18-node stub — including "what's settled": the design graph now carries 8 Decision nodes
-     distilled from the 2026-07-19 session (each rationale links the session transcript).
-  4. Run **check-health** and **detect-and-ask** — live counts should match
-     `build_design_graph.py --analyse-only` — **16 gaps, 9 defects** as of 2026-07-20 (the
-     defect count fell 14 → 9 when BL-42 removed HEAL's double-count; older notes saying 34 or
-     14 are stale, and reading a pass as a failure would be the worst outcome of this test).
-  5. Verify `graph_report.served_by.reflow2_version` says **0.3.0** — the new skew check, and the
-     proof the restart actually picked up the new binary. The report should also now carry
-     `design_nodes` / `other_counts` / `realization` (BL-42, BL-43); if any is missing, the
-     session is still on an old server. The pre-restart session of 2026-07-19/20 was serving an
-     18-node genesis stub with none of these — two days behind — which is what made this test
-     necessary.
-  5b. Confirm the tool list carries the surface built since: `add_flow`, `part_of_flow`,
-     `flow_report`, `reconcile_verification`, `reconcile_deployment`, `add_constraint`,
-     `constrains`, `budget_report`, `release_includes`, `release_report`, `precedes`,
-     `pin_at_epoch`, `set_capability_status`, `set_provenance`.
-  6. Anything that diverges between the live surface and the instruments is a finding — record it in
-     [docs/trials/](docs/trials/).
-  7. **Then cut the release:** `git tag v0.3.0 && git push origin v0.3.0`. The bump, CHANGELOG
-     section and upgrade doc are already on main — the tag is deliberately the last step, after the
-     live surface has been exercised.
+- **On-restart batch test** — blocked on restarting the editor session (BL-32 skew, second
+  round: the 2026-07-20 restart cleared the first skew and the session then verified served_by
+  0.3.0, `design_nodes`/`realization` present, and the full tool surface incl. `add_flow`,
+  `reconcile_verification`, `budget_report`, `set_capability_status`, `set_provenance` — old
+  steps 2/5/5b PASS. But that session's commits rebuilt the binary again, so the live server is
+  once more one restart behind, and the live half below should run on a fresh server, not a
+  stale one). Remaining, first session after the next restart:
+  1. `./target/debug/reflow2-mcp --graph-path .reflow2/graph --import docs/design/reflow2.json`
+     — load the real design (now **175 nodes**) over the genesis stub, *before* the MCP server
+     starts holding the lock (BL-39's path). Upsert: the 11 stub-only genesis nodes
+     (`req:platform`, `req:persistence`, `req:deterministic-core`, `cap:store`, `cap:install`,
+     `cap:artifacts`, …) survive — they carry authored intent the committed model lacks, so
+     reconciling them is where-am-i/detect-and-ask work WITH the user, not a delete.
+  2. Run **where-am-i** — it should narrate the real design incl. 9 Decisions, then
+     **check-health** / **detect-and-ask**. Instrument baseline as of 2026-07-20 evening:
+     **1 gap** (cap:adopt unverified — deliberate), **4 defects** (3 SPOF warnings + 1
+     disconnected pair; the critical circular_dependency was fixed and its clearance is part of
+     the baseline). Live counts will differ by exactly the stub-survivor deltas — anything
+     *else* that diverges is a finding for [docs/trials/](docs/trials/).
+  3. Verify `served_by.binary_mtime_unix` matches the on-disk binary (the skew check proper).
+  4. **Then cut the release:** `git tag v0.3.0 && git push origin v0.3.0`. The bump, CHANGELOG
+     section and upgrade doc are already on main — the tag is deliberately the last step, after
+     the live surface has been exercised.
 
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- Cycle break + true-gap closure done: propagate↔structure cycle broken (shared vocabulary moved to nodes.rs/graph.rs, verified gone by the probe that found it AND by the rebuilt self-model); confirm.rs and reflow2_init.py each got their first test suite; self-model now 175 nodes, 1 gap (cap:adopt, deliberate), 4 warnings, 0 critical — @ajs — 2026-07-20 — (this commit)
 - Self-model standing probe done: build_design_graph.py derives DEPENDS_ON from source and reconciles vs disk; graph 125→173 nodes, gaps 16→3 (all true), and reflow2 now reports its own propagate↔structure cycle as critical — @ajs — 2026-07-20 — (this commit)
 - F7 done: flow cycles report members + path (storyflow's cluster kept p-prompt, the human hand-off, that the walk dropped); adopt trial's F1-F7 all closed — @ajs — 2026-07-20 — (this commit)
 - F6 done: SPOF skips components coupled only by a library contract (storyflow 7 of 15 -> 5); medium default keeps today's behaviour — @ajs — 2026-07-20 — (this commit)
