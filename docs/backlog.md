@@ -866,6 +866,35 @@ machine they do not control, and it is permanent operational cost. The condition
 reopen it are written down; "published binaries proved insufficient" is one of them, so this item
 is also the experiment that would justify revisiting.
 
+*Distribution mechanics, distilled from a 2026-07-20 discussion (user + brother + outside
+research), so the build of this item starts where the thinking stopped.* The standalone-repo
+proposal blends three questions with different answers:
+
+1. **Where the code lives — already answered.** reflow2 *is* a standalone repo; a consumer
+   project carries none of its code, `.reflow2/` is gitignored, the committed export is small
+   JSON. The real residue is (2) and the kit files — and the kit files are the product's UX,
+   which must live where harnesses look (BL-22's lesson).
+2. **Where the binary comes from — this item.** The stack's advantage: Rust+RocksDB compiles to
+   a zero-dependency native binary — no Node, no Python, no toolchain. Plan: CI builds
+   per-platform binaries on each tag (v0.4.0 exists to publish); a `curl | sh` installer
+   (rustup/uv pattern) that detects platform and drops `reflow2-mcp` on PATH; `cargo install
+   --git` as the zero-infrastructure path for Rust developers; macOS signing still an open
+   question. **Embed the kit in the binary** (`include_str!` is already the schema's pattern) so
+   `reflow2-mcp init` replaces the checkout-bound `reflow2_init.py` and one artifact carries
+   everything — then a consumer `.mcp.json` says `"command": "reflow2-mcp"`, no checkout
+   anywhere, and kit updates ride binary updates (which also simplifies BL-18's staleness story
+   to one version instead of three).
+3. **Where the graph lives — the only genuinely open question, deliberately NOT this item.**
+   The proposal's global `~/.reflow/` + per-project thin reference. Note before the queued
+   Decision conversation: the live RocksDB dir is already machine-local working state; what
+   `req:persistence` actually protects is *the durable record travels with the project*, which
+   a global graph dir preserves iff exports stay committed in-project. What it costs:
+   discoverability and the backup-beside-the-graph story. What it does **not** buy:
+   concurrency — stdio servers spawn per client and the single-writer lock is per graph either
+   way; a "global server" is only a global binary. `--graph-path` already makes the thin
+   pattern available today; the question is only the default. Test against
+   `dec:repo-file-embedded`'s reopening conditions, on the record.
+
 > **Unblocked 2026-07-18.** BL-18, BL-19 and BL-20 were all waiting on the embedded-vs-service
 > fork. It is decided — **repo-file, embedded** ([surface-plan.md](surface-plan.md)) — so build
 > them for that shape. Export/import is now the migration story rather than a stopgap until a
