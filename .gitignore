@@ -9,3 +9,8 @@ __pycache__/
 /.reflow2/
 /.mcp.json
 
+
+# Trial records about real systems (storyflow, ophyd-service, personal projects)
+# stay out of the public repo: they describe designs that are not reflow2's to
+# publish. Kept locally; the public evidence base is the reflow2-self trials.
+/docs/trials-private/

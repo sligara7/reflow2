@@ -50,8 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials/2026-07-18-brownfield-ophyd-service.md (findings log; no code yet)
-- Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials/2026-07-18-greenfield-aidrone.md (running findings log; design lives in ~/projects/aidrone)
+- Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
+- Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
 
 
@@ -76,6 +76,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- **HISTORY REWRITTEN 2026-07-20 (@bro: action needed)** — repo went public (Apache-2.0); five real-system trial records (storyflow x2, ophyd-service, aidrone, 3dtictactoe) were scrubbed from ALL history before anyone cloned. Every SHA changed; tags moved. Update your clone with: `git fetch origin && git checkout main && git reset --hard origin/main` (stash local work first), or re-clone. Private trial records now live in gitignored docs/trials-private/ (ask @ajs for copies); public trials (self-host, erosion, phase-coverage, weather-station) stay — @ajs — 2026-07-20 — (this commit)
 
 - v0.5.0 cut (user approved): surface changed shape (`documents`), CHANGELOG section moved out of Unreleased, no schema change so no upgrade doc; the tag push is the first live run of release.yml — binaries + kit for the no-checkout path. NOTE for next session: served_by will say 0.5.0 now, not 0.4.0 — @ajs — 2026-07-20 — (this commit)
 
