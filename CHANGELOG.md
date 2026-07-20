@@ -17,6 +17,26 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Converting an existing project actually works end to end** (BL-27, the conversion step —
+  probed against a brownfield-shaped repo before and after). Three installer fixes in
+  `reflow2_init.py`: the project's own `AGENTS.md` gains **one marked pointer line** to
+  `REFLOW2.md` (append and report, never overwrite — same rule as the merged MCP configs;
+  without it the agent read the one file that never mentions reflow2 and the whole kit was
+  invisible, BL-22's lesson again); **`.reflow2/` is gitignored** (appended or created,
+  idempotent — the installer previously had no `.gitignore` handling, so converted repos
+  started tracking a RocksDB directory); and the closing **next-steps text branches** —
+  brief → genesis for a fresh directory, record-what-exists for an adopted one, instead of
+  pointing every brownfield user down the greenfield path. `--check` previews all of it.
+
+- **`design_without_intent`** (BL-27) — the fifth phase-coverage nudge, for the pure brownfield
+  starting state: capabilities and components seeded from code with zero requirements
+  previously reported *nothing at all*, because `unmotivated_capability` is deliberately gated
+  on requirements existing. One project-level nudge at 0.72 (the top of the nudge band — on an
+  adopted system the first question is *what is this for*, not *how is it structured*), gone
+  the moment one requirement is stated, with wording that directs intent to sources outside
+  the implementation — a requirement inferred from the code it describes is satisfied by
+  construction and can never contradict anything.
+
 - **The as-fielded reconcile** (BL-9). `reconcile_deployment` is the P5 sibling of
   `reconcile_artifacts`, one phase later: not *does the code match the design?* but *does what is
   **running** match what the design declares?* The caller supplies per-environment observations

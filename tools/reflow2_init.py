@@ -328,6 +328,46 @@ def write_mcp_config(project: Path, spec: dict, binary: Path, force: bool) -> st
     return label
 
 
+POINTER_LINE = (
+    "> **reflow2 is installed here.** The design graph is this project's memory — read "
+    "[{side}]({side}) and consult it before writing or changing code."
+)
+
+
+def ensure_pointer(agents_md: Path, side_name: str) -> str | None:
+    """Append one marked pointer line to the project's own instruction file,
+    unless it already mentions the sidecar. Returns a report line, or None."""
+    text = agents_md.read_text()
+    if side_name in text:
+        return None
+    line = POINTER_LINE.format(side=side_name)
+    agents_md.write_text(text.rstrip("\n") + "\n\n" + line + "\n")
+    return (
+        f"{agents_md.name}  (appended one marked line pointing at {side_name} — "
+        f"without it the agent never learns reflow2 exists)"
+    )
+
+
+def ensure_gitignore(project: Path) -> str | None:
+    """Keep the graph directory out of version control: it is machine-local
+    RocksDB state (binary files and a lock); the durable, reviewable record is
+    an export. Appends or creates, idempotent, reported. Returns None when
+    `.reflow2` is already covered."""
+    gi = project / ".gitignore"
+    if gi.exists():
+        if any(".reflow2" in line for line in gi.read_text().splitlines()):
+            return None
+        gi.write_text(
+            gi.read_text().rstrip("\n")
+            + "\n\n# reflow2's local design graph (machine state; the durable record is an export)\n.reflow2/\n"
+        )
+        return ".gitignore  (added .reflow2/ — the graph is machine-local state)"
+    gi.write_text(
+        "# reflow2's local design graph (machine state; the durable record is an export)\n.reflow2/\n"
+    )
+    return ".gitignore  (created, ignoring .reflow2/ — the graph is machine-local state)"
+
+
 def planned_changes(project: Path) -> list[str]:
     """What a run would create or overwrite, without touching anything."""
     changes = []
@@ -335,8 +375,11 @@ def planned_changes(project: Path) -> list[str]:
         dst = project / rel
         if owner := foreign_owner(src, dst):
             side = project / SIDECAR.get(rel, f"REFLOW2_{rel}")
-            verb = "create" if not side.exists() else "update"
-            changes.append(f"{verb}  {side.name}  (keeping your own {rel} — {owner})")
+            if not side.exists() or not filecmp.cmp(src, side, shallow=False):
+                verb = "create" if not side.exists() else "update"
+                changes.append(f"{verb}  {side.name}  (keeping your own {rel} — {owner})")
+            if side.name not in dst.read_text():
+                changes.append(f"append  one marked pointer line to your {rel} (→ {side.name})")
         elif not dst.exists():
             changes.append(f"create  {rel}")
         elif not filecmp.cmp(src, dst, shallow=False):
@@ -364,6 +407,11 @@ def planned_changes(project: Path) -> list[str]:
                 changes.append(f"update  {spec['path']} (add the reflow2 server)")
     if not (project / ".reflow2").exists():
         changes.append("create  .reflow2/")
+    gi = project / ".gitignore"
+    if not gi.exists():
+        changes.append("create  .gitignore  (ignoring .reflow2/)")
+    elif not any(".reflow2" in line for line in gi.read_text().splitlines()):
+        changes.append("append  .reflow2/ to .gitignore")
     return changes
 
 
@@ -418,12 +466,15 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
             side = project / SIDECAR.get(rel, f"REFLOW2_{rel}")
             changed = not side.exists() or not filecmp.cmp(src, side, shallow=False)
             shutil.copy2(src, side)
-            done.append(
-                f"{side.name}  (kept your own {rel} — {owner}; "
-                f"add a line to it pointing at {side.name})"
-            )
-            if not changed:
-                done.pop()
+            if changed:
+                done.append(f"{side.name}  (kept your own {rel} — {owner})")
+            # A sidecar nobody points at is invisible: the agent reads the
+            # project's own file and never learns reflow2 exists (the BL-22
+            # lesson — shipping the file is not shipping the capability). One
+            # marked line is appended, same rule as the merged MCP configs:
+            # add and report, never overwrite. Idempotent by content.
+            if pointer := ensure_pointer(dst, side.name):
+                done.append(pointer)
             continue
         changed = not dst.exists() or not filecmp.cmp(src, dst, shallow=False)
         shutil.copy2(src, dst)
@@ -446,6 +497,8 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
         done.append(write_mcp_config(project, spec, binary, force_mcp))
 
     (project / ".reflow2").mkdir(exist_ok=True)
+    if note := ensure_gitignore(project):
+        done.append(note)
     stamp = project / STAMP
     stamp.write_text(json.dumps(kit_version(), indent=2) + "\n")
     return done
@@ -531,12 +584,26 @@ def main() -> int:
         print("\nYour design graph and your own files were not touched.")
     else:
         print(f"{staleness(kit_version().get('commit'))}\n")
-        print("Deliberately NOT created: src/, build files, language choice — what kind of")
-        print("project this is comes out of the design, not out of a scaffold.")
-        print()
-        print("Next: open your agent here and tell it, in a paragraph, what you want to build.")
-        print("  It reads AGENTS.md, connects to reflow2, and starts asking you about the")
-        print("  parts you left out. The brief does not need to be complete — that is the point.")
+        # The two starting states want opposite advice: a greenfield project
+        # begins with a brief; an existing one begins with what already exists,
+        # and telling its owner to "describe what you want to build" points
+        # them down the wrong path (BL-27's conversion probe).
+        if (project / "REFLOW2.md").exists():
+            print("This project already had its own AGENTS.md, so the reflow2 instructions")
+            print("are in REFLOW2.md and your file gained one pointer line — nothing else.")
+            print()
+            print("Next: open your agent here. For a system that already exists, the graph")
+            print("  starts empty on purpose — begin by recording what is actually there")
+            print("  (capabilities and components from the code, with honest statuses and")
+            print("  provenance 'inferred'), and requirements only from sources OUTSIDE the")
+            print("  implementation: READMEs, tests, issues, configs. See REFLOW2.md.")
+        else:
+            print("Deliberately NOT created: src/, build files, language choice — what kind of")
+            print("project this is comes out of the design, not out of a scaffold.")
+            print()
+            print("Next: open your agent here and tell it, in a paragraph, what you want to build.")
+            print("  It reads AGENTS.md, connects to reflow2, and starts asking you about the")
+            print("  parts you left out. The brief does not need to be complete — that is the point.")
     return 0
 
 

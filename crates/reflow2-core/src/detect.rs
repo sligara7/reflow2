@@ -53,6 +53,10 @@ use crate::nodes::{edge, node};
 #[serde(rename_all = "snake_case")]
 pub enum GapSource {
     // Phase-coverage
+    /// Capabilities/Components exist, but not one Requirement says why —
+    /// the pure brownfield starting state (BL-27): structure recorded from
+    /// code, intent never stated, so nothing can ever contradict anything.
+    DesignWithoutIntent,
     /// Requirements/Capabilities exist, but no Components (WHERE).
     ConceptWithoutDesign,
     /// Components exist, but no Artifacts realize them.
@@ -192,6 +196,7 @@ impl GapSource {
     /// Stable snake_case key (used in the gap id hash and for display).
     pub fn as_str(self) -> &'static str {
         match self {
+            GapSource::DesignWithoutIntent => "design_without_intent",
             GapSource::ConceptWithoutDesign => "concept_without_design",
             GapSource::DesignWithoutBuild => "design_without_build",
             GapSource::BuildWithoutVerification => "build_without_verification",
@@ -859,6 +864,32 @@ impl DesignGraph {
             });
         };
 
+        // The pure brownfield starting state (BL-27, ophyd finding 1): a graph
+        // seeded from what exists holds capabilities and components and not
+        // one requirement — and before this fired nothing at all, because
+        // `unmotivated_capability` is gated on requirements > 0 to avoid one
+        // gap per capability. One project-level nudge, not N: the first gap on
+        // an adopted system should be about missing intent, not missing
+        // structure. Requirements must come from OUTSIDE the implementation
+        // (a requirement inferred from the code it describes is satisfied by
+        // construction), which is what the wording asks for.
+        if pop.capabilities + pop.components > 0 && pop.requirements == 0 {
+            push(
+                gaps,
+                GapSource::DesignWithoutIntent,
+                0.72,
+                3,
+                "Structure recorded, but no stated intent",
+                "The graph knows what this system has and does, but not one requirement says \
+                 what it is for or what must be true of it. Record intent from sources outside \
+                 the implementation — what people asked for, READMEs, tests, issues, configs — \
+                 so the structure has something to be checked against.",
+                format!(
+                    "{} capability(ies) + {} component(s) exist; 0 Requirements.",
+                    pop.capabilities, pop.components
+                ),
+            );
+        }
         // A Flow counts as structure: a *process* design's WHERE is the flow
         // its capabilities form, and it never grows Components at all. Without
         // this, modelling reflow2's own coherence loop raised "no structure

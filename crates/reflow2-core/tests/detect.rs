@@ -966,3 +966,45 @@ fn a_met_requirement_nothing_satisfies_is_caught_by_the_only_detector_that_can()
     g.satisfies("cap:x", "req:met").unwrap();
     assert!(!sources(&g.detect_gaps().unwrap()).contains(&GapSource::StatusContradiction));
 }
+
+/// The pure brownfield starting state (BL-27): structure seeded from code,
+/// zero requirements — which previously reported nothing at all, because
+/// `unmotivated_capability` is gated on requirements existing. One nudge,
+/// not one gap per capability, and it yields the moment intent is stated.
+#[test]
+fn structure_with_zero_requirements_raises_one_intent_nudge() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:1", "Adopted").unwrap();
+    for i in 0..4 {
+        g.add_capability(
+            &format!("cap:{i}"),
+            "C",
+            "found in the code",
+            Some("realized"),
+        )
+        .unwrap();
+    }
+    g.add_component("cmp:core", "Core", "the code", None)
+        .unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    let hits: Vec<_> = gaps
+        .iter()
+        .filter(|x| x.gap_source == GapSource::DesignWithoutIntent)
+        .collect();
+    assert_eq!(hits.len(), 1, "one project-level nudge, never one per node");
+
+    g.add_requirement("req:why", "Why it exists", "From the README, not the code.")
+        .unwrap();
+    assert!(
+        !sources(&g.detect_gaps().unwrap()).contains(&GapSource::DesignWithoutIntent),
+        "stated intent answers the nudge"
+    );
+}
+
+#[test]
+fn an_empty_graph_has_no_intent_to_miss() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:1", "Empty").unwrap();
+    assert!(!sources(&g.detect_gaps().unwrap()).contains(&GapSource::DesignWithoutIntent));
+}

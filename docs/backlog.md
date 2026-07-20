@@ -659,13 +659,14 @@ Provenance is exactly what separates them, which is the first thing to consume t
    fifth pair would deepen it. This is the docs' own division — *HEAL fills structure; Gap
    Surfacing elicits meaning* — and a missing requirement is meaning. If the double-count is fixed
    first, revisit.
-2. **A graph with capabilities and zero requirements reports nothing**, because the detector is
-   gated on `requirements > 0` to avoid one gap per capability. That is the pure brownfield
-   starting state, and it is exactly ophyd finding 1's ask — *"the first gap should be about
-   missing intent, not missing structure"*. It wants a **phase-coverage** detector
-   (`design_without_intent`, project-scope, one nudge not N), which is the same shape as the four
-   that exist and is **S**. Not built here because it is a different detector answering a
-   different question; recorded so it is not rediscovered as a bug.
+2. ~~**A graph with capabilities and zero requirements reports nothing**~~ — **built,
+   2026-07-19**: `design_without_intent`, the fifth phase-coverage nudge, at 0.72 — the top
+   nudge on an adopted graph, exactly ophyd finding 1's ask (*"the first gap should be about
+   missing intent, not missing structure"*). One project-level nudge, never one per
+   capability; it yields the moment a requirement exists; the wording directs intent to
+   sources **outside** the implementation, per this thread's core discipline. Verified over
+   the live binary: on a capabilities-plus-component graph with zero requirements the gap
+   list leads with the anchored gap, then this at the top of the nudge band.
 
 *Duplicate detection: HEAL's rule computed nothing.* **Fixed**, and the root cause is a fresh
 variant of the recurring lesson — not *unreachable on the surface* but **reachable and hollow**.
@@ -726,26 +727,27 @@ like every brownfield target (own `AGENTS.md`, own `.mcp.json`, source tree).* T
 here — "cannot install into a repo that already has its own AGENTS.md; needs `--skills-only`" —
 is **stale and corrected**: the sidecar path works. The install lands clean: the project's
 `AGENTS.md` untouched, kit instructions to `REFLOW2.md`, skills to all four harness locations,
-the existing `.mcp.json` merged not overwritten. Three real defects remain, and they are the
-"initial steps of converting a project" work:
+the existing `.mcp.json` merged not overwritten. Three real defects were found — **all three
+fixed 2026-07-19**, verified by re-running the probe (fresh install, second-run idempotency,
+greenfield unregressed, `--check` consistent):
 
-1. **Nothing points at `REFLOW2.md`** — the pointer line the sidecar depends on is asked for
-   *inside* `REFLOW2.md*`, the one file nobody reads without the pointer, and the install output
-   never mentions it. BL-22's sibling lesson verbatim: shipping the file is not shipping the
-   capability. The installer already merges the user's `.mcp.json`, so appending one marked,
-   idempotent pointer line to their `AGENTS.md` is the same rule — append + report, never
-   overwrite.
-2. **`.reflow2/` is not gitignored** — the installer has no `.gitignore` handling at all, so a
-   converted repo starts tracking a RocksDB directory (binaries and a lock file). Append or
-   create, idempotent, reported.
-3. **The closing "Next:" text is greenfield-only** — it tells a brownfield user to describe what
-   they want to build and says the agent "reads AGENTS.md", which in the sidecar case is the one
-   file that says nothing about reflow2. It should branch: brief → genesis, or existing system →
-   the adopt path.
+1. ~~**Nothing points at `REFLOW2.md`**~~ — BL-22's sibling lesson verbatim: shipping the file
+   is not shipping the capability. Fixed by the same rule as the merged MCP configs: one
+   marked pointer line appended to the project's own `AGENTS.md`, idempotent by content,
+   reported — never overwritten.
+2. ~~**`.reflow2/` is not gitignored**~~ — the installer had no `.gitignore` handling at all,
+   so a converted repo started tracking a RocksDB directory. Now appended or created,
+   idempotent, with the reason in the comment: the graph is machine-local state; the durable
+   record is an export.
+3. ~~**The closing "Next:" text is greenfield-only**~~ — now branches: brief → genesis for a
+   fresh directory; for a repo that had its own `AGENTS.md`, it says where the instructions
+   went, what was appended, and that an existing system starts by recording what is actually
+   there (statuses honest, provenance `inferred`, requirements from outside the code).
 
-With those three, converting a project is: build/point at the binary (BL-15's published-binaries
-gap is the remaining wall for machines without a checkout), run `reflow2_init.py`, open the
-agent. Then the graph is empty and everything after that *is* this thread's skill.
+Converting a project is now: build/point at the binary (BL-15's published-binaries gap is the
+remaining wall for machines without a checkout), run `reflow2_init.py`, open the agent. Then
+the graph is empty and everything after that *is* this thread's skill. The first gap an
+adopted graph raises is `design_without_intent` — built the same day, see below.
 
 *The accepted reverse-engineering lifecycle, mapped* — *user, 2026-07-19, from research into
 standard practice.* Across hardware and software the accepted process is two stages —
