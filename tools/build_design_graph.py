@@ -122,12 +122,11 @@ CAPABILITIES = [
      "verified", ["req:no-se-knowledge"]),
     ("cap:mcp-surface", "Serve the loop over MCP", "Every capability as a typed tool for an agent.",
      "verified", ["req:agent-native"]),
-    # `realized`, not `verified`: nothing automated checks the installer, and
-    # status_contradiction caught the original `verified` claim the moment the
-    # detector existed — the second true self-report, and this one was a lie in
-    # our own committed model. Ruled per sharpening.md §2: the status was wrong.
+    # `realized` from 2026-07-19 (status_contradiction caught the original
+    # `verified` claim — a lie in our own committed model) until 2026-07-20,
+    # when tools/test_init.py gave the claim something real to stand on.
     ("cap:kit", "Install into a consumer project", "One command sets up or refreshes the design environment.",
-     "realized", ["req:agent-native"]),
+     "verified", ["req:agent-native"]),
     # `realized`, not `verified`: the skill exists and was exercised once (the
     # 2026-07-20 storyflow trial), but nothing automated checks it.
     ("cap:adopt", "Recover a design from an existing system",
@@ -316,10 +315,11 @@ VERIFICATIONS = {  # capability -> test file
     "cap:budget": "crates/reflow2-core/tests/budget.rs",
     "cap:genesis": "crates/reflow2-core/tests/genesis.rs",
     "cap:freshness": "crates/reflow2-core/tests/confirm.rs",
+    "cap:kit": "tools/test_init.py",
 }
-# Capabilities that ship without an automated check — the honest remainder the
-# gap list SHOULD carry: cap:kit (nothing tests the installer) and cap:adopt
-# (a skill, exercised manually once).
+# The one capability that ships without an automated check — the honest
+# remainder the gap list SHOULD carry: cap:adopt is a skill, exercised on a
+# real system once (storyflow, 2026-07-20) but checked by no machine.
 # Contracts between subsystems.
 INTERFACES = [
     ("ifc:core-api", "DesignGraph API", "cmp:core", ["cmp:service"]),

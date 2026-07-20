@@ -69,6 +69,11 @@ cargo test --workspace
 # schema/*.yaml edit. Needs PyYAML; use whatever python3 has it.
 python3 tools/validate_schema.py
 
+# The installer's own suite (stdlib only, hermetic — no network, no binary).
+# Run after any tools/reflow2_init.py change; it is what lets the self-model
+# call cap:kit verified.
+python3 tools/test_init.py
+
 # Load a design into a graph without speaking MCP — the sibling of --export.
 # Upsert, so it layers onto whatever is there. Takes `-` for stdin, so an export
 # on one machine pipes into an import on another. The graph is single-writer:
