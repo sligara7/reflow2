@@ -136,11 +136,9 @@ CAPABILITIES = [
     ("cap:model-process", "Model a process, not only a product",
      "Represent an ordered flow of activities with roles on its edges.",
      "verified", ["req:design-anything"]),
-    # `realized`, not `verified`: confirm.rs ships and confirmation_ledger is an
-    # MCP tool, but it is the one core module with no test file of its own.
     ("cap:freshness", "Say when a claim was last confirmed",
      "Distinguish a design that matches reality from one nobody has checked.",
-     "realized", ["req:released-eq-designed", "req:coherence"]),
+     "verified", ["req:released-eq-designed", "req:coherence"]),
 ]
 
 # ---- Decisions. The distillate of the sessions that shaped the design. ----
@@ -317,10 +315,11 @@ VERIFICATIONS = {  # capability -> test file
     "cap:model-process": "crates/reflow2-core/tests/flow.rs",
     "cap:budget": "crates/reflow2-core/tests/budget.rs",
     "cap:genesis": "crates/reflow2-core/tests/genesis.rs",
+    "cap:freshness": "crates/reflow2-core/tests/confirm.rs",
 }
 # Capabilities that ship without an automated check — the honest remainder the
-# gap list SHOULD carry: cap:kit (nothing tests the installer), cap:adopt (a
-# skill, exercised manually once), cap:freshness (confirm.rs has no test file).
+# gap list SHOULD carry: cap:kit (nothing tests the installer) and cap:adopt
+# (a skill, exercised manually once).
 # Contracts between subsystems.
 INTERFACES = [
     ("ifc:core-api", "DesignGraph API", "cmp:core", ["cmp:service"]),
