@@ -1088,6 +1088,60 @@ questions — auto-resolving a design conflict by quorum would be sycophancy-by-
 party in the judgment seat ([partnership.md](partnership.md)). Borrow from the *evidence* side
 (what was seen, who may claim, what is final); never from the *verdict* side.
 
+**BL-44 · Node-level claims — parallel work on one design** — *user, 2026-07-20. Concept-only by
+their own framing; the details are the work.*
+
+The idea in the user's words: an agent **claims the nodes in the graph it is working**. A task
+strictly internal to a node claims only that node; work on an interface — an edge between two or
+more nodes — claims **all affected nodes**. Anyone else may work any unclaimed node, and
+"theoretically, their work should not interfere."
+
+What this is: [COORD.md](../COORD.md)'s claim board moved *into the graph*, at node granularity.
+COORD coordinates two humans over files, socially ("commit the claim line before the work");
+this coordinates N agents over design nodes, and the graph can compute what COORD relies on
+people to do. It is BL-12's first concrete write-side mechanism sketch, and it composes with the
+consensus notes above rather than replacing them.
+
+Tensions to resolve before building — the flesh-out list, so whoever picks this up starts where
+the thinking stopped:
+
+1. **Claims partition intent, not I/O.** The store is single-writer (BL-12), so simultaneous
+   *writes* still take turns whatever the claims say. The claim layer is what would make
+   fast-alternating writers *safe*; whether the alternation itself is acceptable (one server,
+   short turns) or needs read-only secondaries is still BL-12's storage question, unchanged.
+2. **"Should not interfere" is a claim PROPAGATE exists to check.** A change internal to a node
+   can still ripple — blast radius is `propagate_change`'s whole subject, and
+   `surprising_connections` exists because the graph's edges under-state real coupling. So a
+   node claim may need to be *sized* by the blast radius at claim time (claim the propagation
+   frontier, not the node), or at least validated against it — and the interference the graph
+   has not drawn an edge for yet is precisely what it cannot protect anyone from. The
+   edge-work rule (claim all endpoint nodes) is the user's own instance of this at depth 1.
+3. **A claim needs an identity to belong to, and the graph has none.** No Person/Agent node
+   type exists. Whatever carries it — a `Claim` node with `CLAIMS` edges (first-class,
+   axis-Z-recordable, expirable) over a bare property on the claimed node (invisible to
+   history) — this introduces *who* into the schema for the first time, which is the same
+   missing piece BL-12's sketch idea 2 (who may assert what) and BL-41's mechanical half both
+   need. One identity mechanism should serve all three; building it for claims alone would be
+   the recurring lesson in reverse.
+4. **Stale claims.** COORD's rule is "a week with no commits, anyone may take it." The graph
+   equivalent wants to be *computable*: a claim that records the epoch or export-hash it was
+   made against (sketch idea 1 above) goes stale by fact, not by calendar — the graph moved
+   under it, or its holder stopped moving the graph.
+5. **Advisory or enforced?** Refusing a write to a node another agent claims is tempting and is
+   also the graph seating itself in the judgment chair. The repo's own doctrine
+   (`dec:report-dont-judge`, disagreement routed to humans as questions) argues for advisory
+   first: the write lands, the claim violation is *reported* — loudly, to both holders — and
+   enforcement waits for evidence that reporting wasn't enough.
+
+Prior art to mine: COORD.md itself (claim-before-work, one line per claim, merge=union — each
+has a graph analogue), and the ophyd/storyflow adoption discipline of marking unexplored
+frontier (a claim is "mine, in progress"; a frontier mark is "nobody's, not yet real" — the two
+partitions should not be confused, and both quiet the detectors differently).
+
+Size **M** for an advisory claim layer once the identity decision is made; the decisions —
+identity (3), granularity vs blast radius (2), advisory-first (5) — are the real content, and
+they want a session with the user, not a patch.
+
 ## Deliberate deferrals
 
 Not gaps — decisions, recorded so they aren't rediscovered as bugs.
