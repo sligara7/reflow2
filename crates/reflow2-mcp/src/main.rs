@@ -130,8 +130,12 @@ async fn main() -> anyhow::Result<()> {
         return Ok(());
     }
 
+    // The serve path is the MOST common place to hit the single-writer lock —
+    // a second editor session against the same graph — so it needs the same
+    // plain explanation --export/--import already get, not a raw RocksDB error
+    // (BL-57).
     let (service, provenance) = ReflowService::new_reporting(&cli.graph_path)
-        .with_context(|| format!("failed to open design graph at {}", cli.graph_path))?;
+        .map_err(|e| explain_open_failure(&e.into(), &cli.graph_path))?;
 
     // Say it on stderr as well as the log: an operator running this by hand
     // sees stderr, and "which reflow2 wrote this graph" is exactly the question

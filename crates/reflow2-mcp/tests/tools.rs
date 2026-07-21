@@ -999,7 +999,10 @@ async fn asking_a_gap_records_the_question_it_asked() {
 #[tokio::test]
 async fn a_design_round_trips_through_export_and_import() {
     let s = seeded().await;
-    let doc = j!(s.export_graph(Parameters(ExportGraphToReq { path: None })));
+    let doc = j!(s.export_graph(Parameters(ExportGraphToReq {
+        path: None,
+        overwrite: None
+    })));
     assert!(doc["nodes"].as_array().unwrap().len() >= 4);
     assert!(
         doc["stamp"]["node_types"].as_u64().unwrap() >= 27,
@@ -1022,7 +1025,10 @@ async fn a_design_round_trips_through_export_and_import() {
 
     // Exporting it again gives the same document — the property that makes a
     // backup directory diffable rather than a pile of fresh blobs.
-    let again = j!(fresh.export_graph(Parameters(ExportGraphToReq { path: None })));
+    let again = j!(fresh.export_graph(Parameters(ExportGraphToReq {
+        path: None,
+        overwrite: None
+    })));
     assert_eq!(again["nodes"], doc["nodes"]);
     assert_eq!(again["edges"], doc["edges"]);
 
@@ -1082,8 +1088,8 @@ async fn a_wrong_edge_can_be_retracted_without_deleting_its_endpoints() {
         j!(s.get_node(Parameters(TypedIdReq {
             node_type: "Requirement".into(),
             id: "req:physics".into()
-        })))
-        .is_object(),
+        })))["node"]["node_id"]
+            == "req:physics",
         "the requirement must survive the retraction"
     );
     let after = jl!(s.detect_gaps());
@@ -1298,16 +1304,25 @@ async fn export_graph_writes_a_deterministic_file_when_asked() {
         std::env::temp_dir().join(format!("reflow2-export-test-{}.json", std::process::id()));
     let path_str = path.to_str().expect("utf8 path").to_string();
 
+    std::fs::remove_file(&path).ok(); // start clean
     let receipt = j!(s.export_graph(Parameters(ExportGraphToReq {
-        path: Some(path_str.clone())
+        path: Some(path_str.clone()),
+        overwrite: None,
     })));
-    assert_eq!(receipt["path"], path_str.as_str());
+    // The receipt reports the resolved (canonicalized) path — same file.
+    assert_eq!(
+        std::fs::canonicalize(receipt["path"].as_str().unwrap()).unwrap(),
+        std::fs::canonicalize(&path).unwrap()
+    );
     let on_disk = std::fs::read_to_string(&path).expect("file written");
     assert_eq!(receipt["bytes"].as_u64().unwrap() as usize, on_disk.len());
 
     // The file is the same document the payload variant returns…
     let doc: serde_json::Value = serde_json::from_str(&on_disk).expect("valid JSON");
-    let payload = j!(s.export_graph(Parameters(ExportGraphToReq { path: None })));
+    let payload = j!(s.export_graph(Parameters(ExportGraphToReq {
+        path: None,
+        overwrite: None
+    })));
     assert_eq!(
         doc["nodes"], payload["nodes"],
         "file and payload carry the same design"
@@ -1317,9 +1332,22 @@ async fn export_graph_writes_a_deterministic_file_when_asked() {
         payload["nodes"].as_array().unwrap().len()
     );
 
-    // …and writing an unchanged graph again is byte-identical (diffable backups).
+    // BL-57: a second write to the same path is REFUSED without overwrite —
+    // a stray or injected path cannot silently clobber an existing file.
+    assert!(
+        s.export_graph(Parameters(ExportGraphToReq {
+            path: Some(path_str.clone()),
+            overwrite: None,
+        }))
+        .await
+        .is_err(),
+        "overwriting an existing file must be refused unless opted in"
+    );
+
+    // …with overwrite, an unchanged graph writes byte-identically (diffable backups).
     j!(s.export_graph(Parameters(ExportGraphToReq {
-        path: Some(path_str.clone())
+        path: Some(path_str.clone()),
+        overwrite: Some(true),
     })));
     let again = std::fs::read_to_string(&path).expect("file written twice");
     assert_eq!(on_disk, again, "two exports of an unchanged graph match");
@@ -1485,7 +1513,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         node_type: "Resource".into(),
         id: "res:gpu".into(),
     })));
-    assert_eq!(requires["node_id"], "res:gpu");
+    assert_eq!(requires["node"]["node_id"], "res:gpu");
 
     // --- realization ---
     j!(s.add_artifact(Parameters(AddArtifactReq {
@@ -1554,12 +1582,10 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         node_type: "Component".into(),
         id: "cmp:typo".into(),
     })));
-    // get_node on an absent id returns a null-ish result, never an error.
-    // (Shape is `{value: null}` today via the scalar wrap; BL-57 renames it to
-    // `{node: null}` — update this line when that lands.)
+    // get_node returns one named shape both ways (BL-57): `{node: null}` absent.
     assert!(
-        gone["value"].is_null(),
-        "absent node reads as null, got {gone}"
+        gone["node"].is_null(),
+        "absent node reads as {{node: null}}, got {gone}"
     );
 }
 
@@ -1600,4 +1626,51 @@ async fn an_asked_question_can_be_withdrawn() {
         jl!(s.open_questions()).as_array().unwrap().is_empty(),
         "the withdrawn question is off the open list"
     );
+}
+
+// ---- BL-57 · the tool boundary tells the truth about whose fault an error is -
+
+#[tokio::test]
+async fn a_caller_mistake_is_invalid_params_not_a_server_fault() {
+    // dyno_err used to map every core error to internal_error, so a typo'd id
+    // read as "the server broke" instead of "you passed a bad id". A missing
+    // capability is the caller's mistake — it must be invalid_params.
+    let s = seeded().await;
+    let err = s
+        .set_capability_status(Parameters(CapabilityStatusReq {
+            capability_id: "cap:ghost".into(),
+            status: "verified".into(),
+        }))
+        .await
+        .expect_err("a missing capability must be an error");
+    assert_eq!(
+        err.code,
+        rmcp::model::ErrorCode::INVALID_PARAMS,
+        "a caller's typo is invalid_params, not internal_error: {err:?}"
+    );
+}
+
+#[tokio::test]
+async fn export_refuses_to_overwrite_without_opt_in() {
+    // BL-57: a stray or injected path must not silently clobber an existing
+    // file. (The happy path + overwrite=true is covered in the deterministic
+    // -file test; this pins the refusal is invalid_params, a caller matter.)
+    let s = seeded().await;
+    let path = std::env::temp_dir().join(format!("reflow2-guard-{}.json", std::process::id()));
+    let p = path.to_str().unwrap().to_string();
+    std::fs::write(&path, "pretend this is precious\n").expect("seed a file");
+    let err = s
+        .export_graph(Parameters(ExportGraphToReq {
+            path: Some(p),
+            overwrite: None,
+        }))
+        .await
+        .expect_err("overwriting an existing file must be refused");
+    assert_eq!(err.code, rmcp::model::ErrorCode::INVALID_PARAMS);
+    assert_eq!(
+        std::fs::read_to_string(&path).unwrap(),
+        "pretend this is precious\n",
+        "the existing file is untouched"
+    );
+    std::fs::remove_file(&path).ok();
 }

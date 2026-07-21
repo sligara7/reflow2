@@ -1419,7 +1419,22 @@ refuse-unless-`--wipe`. (b) On any mid-run failure the spawned servers are orpha
 test under a warn-storm; all four trial harnesses inherit both via the shared class. Wants a
 context-manager Server that drains stderr and kills the child.
 
-**BL-57 · Tool-boundary honesty batch** — *deep review.* Size **M**. (a) `dyno_err` maps
+**BL-57 · Tool-boundary honesty batch — DONE 2026-07-21** — *deep review.* Size **M**. All
+seven fixed: (a) `dyno_err` is variant-aware at the one choke point — caller-shaped errors
+(NodeNotFound/Unknown*/Validation/EdgeValidation/InvalidEdge/InvalidKeySegment/EdgeNotFound)
+→ invalid_params, genuine faults → internal_error; ~60 tools stop blaming the server for a
+caller's typo. (b) Every request struct (65) carries `deny_unknown_fields`, so a typo'd
+optional param is rejected — schemars now publishes additionalProperties:false, and a smoke
+check asserts none regress; it immediately caught a real latent bug (the smoke suite passed
+`at` to reconcile_artifacts, silently ignored — the field is `detected_at`). (c) export_graph
+refuses to overwrite an existing file without `overwrite:true`, uses invalid_params for an
+unwritable caller path, and reports the canonicalized path. (d) The serve path now gets
+`explain_open_failure`, so the everyday two-session lock collision reads plainly. (e) get_node
+returns one named `{node: <obj|null>}` shape both ways (was bare-object vs {value:null}) —
+strengthening smoke checks that were previously always-true. (f) resolved by category:
+"remove-if-present" tools (delete_*, both withdraws) report a boolean — withdraw_gap_ack
+aligned from `was_reviewed` to `withdrawn`; answer_question correctly errors (a silent
+{answered:false} would be the drop the project forbids), now documented in its description. (a) `dyno_err` maps
 every core error to `internal_error`; ~60 of 78 tools report caller typos as server faults —
 make it variant-aware at the one choke point (`NodeNotFound`/`Unknown*`/`Validation`/
 `InvalidEdge` → invalid_params). (b) No request struct declares `deny_unknown_fields`, so a

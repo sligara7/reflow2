@@ -76,8 +76,37 @@ pub struct ReflowService {
 
 // ---- error / result helpers -------------------------------------------------
 
+/// Map a core error to the right MCP error class at the one choke point every
+/// tool returns through (BL-57). ~60 of 78 tools route a caller's mistake — a
+/// typo'd id, an unknown type name, a status that isn't a valid enum — through
+/// here; reporting all of them as `internal_error` blamed the *server* for the
+/// *caller's* typo, the inverse of the crate's error-taxonomy rule. Variants
+/// caused by the arguments become `invalid_params`; genuine faults stay
+/// `internal_error`.
 fn dyno_err(e: DynoError) -> McpError {
-    McpError::internal_error(e.to_string(), None)
+    match e {
+        // Caused by what the caller supplied — a bad id, type, edge, value, or
+        // key segment. These are the caller's to fix.
+        DynoError::NodeNotFound { .. }
+        | DynoError::EdgeNotFound { .. }
+        | DynoError::InvalidEdge { .. }
+        | DynoError::UnknownNodeType(_)
+        | DynoError::UnknownEdgeType(_)
+        | DynoError::Validation { .. }
+        | DynoError::EdgeValidation { .. }
+        | DynoError::InvalidKeySegment { .. } => McpError::invalid_params(e.to_string(), None),
+        // Genuine server faults — storage, serialization, a schema that failed
+        // to load (open-time, not caller input), extraction/resolution/query.
+        // `DynoError` is `#[non_exhaustive]`: an unclassified new variant
+        // defaults here rather than blaming the caller for what we can't read.
+        DynoError::Schema(_)
+        | DynoError::Storage(_)
+        | DynoError::Query(_)
+        | DynoError::Resolution(_)
+        | DynoError::Extraction(_)
+        | DynoError::Serialization(_) => McpError::internal_error(e.to_string(), None),
+        _ => McpError::internal_error(e.to_string(), None),
+    }
 }
 
 fn ser_err(e: serde_json::Error) -> McpError {
@@ -261,6 +290,7 @@ fn parse_struct_param<T: serde::de::DeserializeOwned>(
 // ---- request shapes ---------------------------------------------------------
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct GenesisReq {
     /// Stable Project id (e.g. `proj:softball`).
     pub project_id: String,
@@ -281,6 +311,7 @@ pub struct GenesisReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct IdName {
     /// Stable node id (e.g. `req:offline`).
     pub id: String,
@@ -289,6 +320,7 @@ pub struct IdName {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct RequirementReq {
     pub id: String,
     pub name: String,
@@ -297,6 +329,7 @@ pub struct RequirementReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct CapabilityReq {
     pub id: String,
     pub name: String,
@@ -311,6 +344,7 @@ pub struct CapabilityReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct RequirementStatusReq {
     pub requirement_id: String,
     /// `proposed` (default) / `accepted` / `deferred` / `dropped` / `met`.
@@ -318,6 +352,7 @@ pub struct RequirementStatusReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct CapabilityStatusReq {
     pub capability_id: String,
     /// `planned` (default) / `in_progress` / `realized` / `verified`.
@@ -325,6 +360,7 @@ pub struct CapabilityStatusReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ProvenanceReq {
     /// `Requirement`, `Capability`, `Component` or `Interface`.
     pub node_type: String,
@@ -336,6 +372,7 @@ pub struct ProvenanceReq {
 
 /// A Component, which unlike a Capability sits at a decomposition level.
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ComponentReq {
     pub id: String,
     pub name: String,
@@ -351,6 +388,7 @@ pub struct ComponentReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ContainsReq {
     pub project_id: String,
     /// Child node type (e.g. `Requirement`, `Capability`, `Component`).
@@ -359,12 +397,14 @@ pub struct ContainsReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct EdgePairReq {
     pub from_id: String,
     pub to_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct CreateNodeReq {
     pub node_type: String,
     pub id: String,
@@ -374,6 +414,7 @@ pub struct CreateNodeReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct CreateEdgeReq {
     pub edge_type: String,
     pub from_type: String,
@@ -386,6 +427,7 @@ pub struct CreateEdgeReq {
 
 /// One edge, addressed the way the store addresses it: type + both endpoint ids.
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct DeleteEdgeReq {
     pub edge_type: String,
     pub from_id: String,
@@ -393,6 +435,7 @@ pub struct DeleteEdgeReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct SearchDesignReq {
     /// Keywords to search for — tokenized BM25 over every node's name,
     /// statement and description (not substring or regex). Use the words the
@@ -410,6 +453,7 @@ pub struct SearchDesignReq {
 /// All fields optional: no args dumps the whole vocabulary, `node_type` focuses
 /// one type, `from`+`to` answers "what may connect these?".
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct DescribeSchemaReq {
     /// Focus one node type: its properties plus the edges it can carry.
     #[serde(default)]
@@ -423,6 +467,7 @@ pub struct DescribeSchemaReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AddArtifactReq {
     pub id: String,
     pub name: String,
@@ -435,6 +480,7 @@ pub struct AddArtifactReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct RealizesReq {
     pub artifact_id: String,
     /// Node type the artifact realizes (e.g. `Capability`, `Component`).
@@ -446,6 +492,7 @@ pub struct RealizesReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct DocumentsReq {
     pub artifact_id: String,
     /// Node type the artifact describes (e.g. `Component`, `Interface`, `Project`).
@@ -458,6 +505,7 @@ pub struct DocumentsReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct LinkArtifactReq {
     pub artifact_id: String,
     pub name: String,
@@ -482,6 +530,7 @@ pub struct LinkArtifactReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct VerificationReq {
     pub id: String,
     pub name: String,
@@ -494,6 +543,7 @@ pub struct VerificationReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct VerificationStatusReq {
     pub verification_id: String,
     /// `planned` / `passing` / `failing` / `skipped` / `blocked`.
@@ -503,6 +553,7 @@ pub struct VerificationStatusReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct VerifiesReq {
     pub verification_id: String,
     /// Node type being verified (e.g. `Capability`, `Artifact`, `Component`).
@@ -511,6 +562,7 @@ pub struct VerifiesReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ReleaseReq {
     pub id: String,
     pub name: String,
@@ -522,6 +574,7 @@ pub struct ReleaseReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct EnvironmentReq {
     pub id: String,
     pub name: String,
@@ -534,6 +587,7 @@ pub struct EnvironmentReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ResourceReq {
     pub id: String,
     pub name: String,
@@ -543,6 +597,7 @@ pub struct ResourceReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ReleaseIncludesReq {
     pub release_id: String,
     /// `Artifact` or `Component`.
@@ -556,17 +611,20 @@ pub struct ReleaseIncludesReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ReleaseReportReq {
     pub release_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct PrecedesReq {
     pub earlier_epoch: String,
     pub later_epoch: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AddFlowReq {
     pub id: String,
     pub name: String,
@@ -585,6 +643,7 @@ pub struct AddFlowReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct PartOfFlowReq {
     pub capability_id: String,
     pub flow_id: String,
@@ -595,11 +654,13 @@ pub struct PartOfFlowReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct FlowReportReq {
     pub flow_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ObservedVerificationReq {
     pub verification_id: String,
     /// What the run reported: `passed` / `failed` / `skipped`. Anything else
@@ -608,6 +669,7 @@ pub struct ObservedVerificationReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ReconcileVerificationReq {
     /// One entry per check the run actually executed. Checks not listed are
     /// not evidence of anything.
@@ -625,6 +687,7 @@ pub struct ReconcileVerificationReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ObservedEnvironmentReq {
     pub environment_id: String,
     /// Release ids actually running there. An empty list is a positive
@@ -634,6 +697,7 @@ pub struct ObservedEnvironmentReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ReconcileDeploymentReq {
     /// One entry per environment you actually looked at. Environments not
     /// listed are not evidence of anything.
@@ -651,6 +715,7 @@ pub struct ReconcileDeploymentReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AddConstraintReq {
     pub id: String,
     pub name: String,
@@ -671,6 +736,7 @@ pub struct AddConstraintReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ConstrainsReq {
     pub constraint_id: String,
     /// The spender's node type — anything can spend (Component mass,
@@ -687,11 +753,13 @@ pub struct ConstrainsReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct BudgetReportReq {
     pub constraint_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct PinAtEpochReq {
     pub node_type: String,
     pub node_id: String,
@@ -699,6 +767,7 @@ pub struct PinAtEpochReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct DeployToReq {
     pub release_id: String,
     pub environment_id: String,
@@ -708,6 +777,7 @@ pub struct DeployToReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct RequireResourceReq {
     /// Source node type (e.g. `Component`, `Release`).
     pub from_type: String,
@@ -719,6 +789,7 @@ pub struct RequireResourceReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct DecisionReq {
     pub id: String,
     pub name: String,
@@ -730,6 +801,7 @@ pub struct DecisionReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct GovernedByReq {
     pub from_type: String,
     pub from_id: String,
@@ -739,6 +811,7 @@ pub struct GovernedByReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AcknowledgeGapReq {
     /// The gap's `id`, exactly as `detect_gaps` reported it.
     pub gap_id: String,
@@ -750,22 +823,26 @@ pub struct AcknowledgeGapReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct GapIdReq {
     pub gap_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct TypedIdReq {
     pub node_type: String,
     pub id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ScanReq {
     pub node_type: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct PropagateFromReq {
     /// Seed node ids to propagate impact from.
     pub seed_ids: Vec<String>,
@@ -781,6 +858,7 @@ pub struct PropagateFromReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct PropagateChangeReq {
     /// The ChangeEvent to propagate from.
     pub change_event_id: String,
@@ -796,15 +874,23 @@ pub struct PropagateChangeReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ExportGraphToReq {
     /// Write the export to this file (deterministic sorted-key JSON, diffable
     /// under git) and return only {path, bytes, nodes, edges, stamp}. Omit to
     /// get the whole document as the result payload.
     #[serde(default)]
     pub path: Option<String>,
+    /// Allow `path` to replace an existing file. Off by default: an export
+    /// writes freely to a new path but refuses to clobber an existing one
+    /// unless you say so, so a stray or injected path cannot silently destroy
+    /// a file (BL-57).
+    #[serde(default)]
+    pub overwrite: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ProposeHealReq {
     /// `conservative` | `balanced` | `aggressive` (default `balanced`).
     #[serde(default)]
@@ -815,6 +901,7 @@ pub struct ProposeHealReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ReconcileArtifactsReq {
     /// What you observed, one entry per artifact you checked:
     /// `{ "artifact_id", "present": bool, "checksum": "<hash>"? }`.
@@ -832,6 +919,7 @@ pub struct ReconcileArtifactsReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct SetChecksumReq {
     pub artifact_id: String,
     /// The accepted content hash — the new drift baseline.
@@ -861,18 +949,21 @@ pub struct SetChecksumReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ApplyHealReq {
     /// A `HealProposal` previously returned by `propose_heal`.
     pub proposal: JsonObject,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ProposeAllocationReq {
     /// Leiden resolution (higher = more, smaller clusters).
     pub resolution: f64,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct DimensionDriftReq {
     pub target_id: String,
     /// Quality dimension key (e.g. `reliability`, `security`).
@@ -880,6 +971,7 @@ pub struct DimensionDriftReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AddEpochReq {
     pub id: String,
     pub name: String,
@@ -889,6 +981,7 @@ pub struct AddEpochReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AddChangeEventReq {
     pub id: String,
     pub name: String,
@@ -903,6 +996,7 @@ pub struct AddChangeEventReq {
 
 /// One node an event changed, for `add_change_event`'s `affected` list.
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AffectedNodeReq {
     /// The changed node's type (e.g. `Requirement`, `Artifact`).
     pub node_type: String,
@@ -914,6 +1008,7 @@ pub struct AffectedNodeReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct RecordChangeReq {
     pub epoch_id: String,
     pub change_event_id: String,
@@ -929,6 +1024,7 @@ pub struct RecordChangeReq {
 /// One filled answer from the ambient agent (mirrors core `AgentAnswer` with a
 /// JsonSchema for the tool boundary).
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AgentAnswerReq {
     /// The `AgentPrompt.id` this answers.
     pub id: String,
@@ -937,12 +1033,14 @@ pub struct AgentAnswerReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ImportGraphReq {
     /// A document previously returned by `export_graph`.
     pub document: JsonObject,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AnswerQuestionReq {
     /// The gap the question was asked about (`gap_id` from `open_questions`).
     pub gap_id: String,
@@ -951,11 +1049,13 @@ pub struct AnswerQuestionReq {
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct WithdrawQuestionReq {
     pub gap_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct GapToPromptReq {
     /// A `GapCandidate` previously returned by `detect_gaps`.
     pub gap: JsonObject,
@@ -1505,7 +1605,9 @@ impl ReflowService {
         let existed = g
             .withdraw_gap_acknowledgement(&req.gap_id)
             .map_err(dyno_err)?;
-        ok_json(json!({ "gap_id": req.gap_id, "was_reviewed": existed }))
+        // `withdrawn`, matching withdraw_question and delete_* (BL-57): every
+        // "remove it if present" tool reports the same boolean shape.
+        ok_json(json!({ "gap_id": req.gap_id, "withdrawn": existed }))
     }
 
     // ---- P4 Verification / P5 Operation / Decisions (the write side) ----
@@ -1955,16 +2057,37 @@ impl ReflowService {
         let Some(path) = req.path else {
             return ok_json(export);
         };
+        // Refuse to clobber an existing file unless the caller opts in. Graph
+        // text is untrusted (the server's own instructions say so), so a stray
+        // or injected `path` pointing at a real file must not silently destroy
+        // it (BL-57). A new path writes freely.
+        let target = std::path::Path::new(&path);
+        if target.exists() && !req.overwrite.unwrap_or(false) {
+            return Err(McpError::invalid_params(
+                format!(
+                    "{path} already exists — refusing to overwrite it. Pass overwrite=true \
+                     to replace it, or choose a path that does not exist."
+                ),
+                None,
+            ));
+        }
         // Through `serde_json::Value` so keys serialize sorted (its object is a
         // BTreeMap) — the same convention as the committed design export, so a
         // file this writes diffs cleanly against one written before it.
         let v = serde_json::to_value(&export).map_err(ser_err)?;
         let text = format!("{}\n", serde_json::to_string_pretty(&v).map_err(ser_err)?);
-        std::fs::write(&path, &text).map_err(|e| {
-            McpError::internal_error(format!("cannot write export to {path}: {e}"), None)
+        std::fs::write(target, &text).map_err(|e| {
+            // A path the caller supplied that cannot be written is the caller's
+            // mistake, not a server fault.
+            McpError::invalid_params(format!("cannot write export to {path}: {e}"), None)
         })?;
+        // Report where it actually landed: a relative path resolves against the
+        // server's cwd, which the calling agent cannot see.
+        let resolved = std::fs::canonicalize(target)
+            .map(|p| p.display().to_string())
+            .unwrap_or(path);
         ok_json(json!({
-            "path": path,
+            "path": resolved,
             "bytes": text.len(),
             "nodes": export.nodes.len(),
             "edges": export.edges.len(),
@@ -2023,7 +2146,11 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         let node = g.get_node(&req.node_type, &req.id).map_err(dyno_err)?;
-        ok_json(node.map(NodeDto::from))
+        // One named shape both ways (BL-57): `{node: {...}}` when present,
+        // `{node: null}` when absent. Before, present returned a bare object
+        // and absent returned `{value: null}` (the scalar wrap) — two shapes,
+        // so an agent branching on the result read the absent case wrong.
+        ok_json(json!({ "node": node.map(NodeDto::from) }))
     }
 
     #[tool(description = "List all nodes of a type.")]
@@ -2467,7 +2594,12 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Record what the user said in reply to a question, closing it. Write the                        design nodes their answer implies separately — this is the record that                        it was settled, not a substitute for the design."
+        description = "Record what the user said in reply to a question, closing it. Write the \
+                       design nodes their answer implies separately — this is the record that \
+                       it was settled, not a substitute for the design. Precondition: the gap \
+                       must already have a recorded question (from gap_to_prompt's serve pass); \
+                       answering one that was never asked is refused, not silently accepted — \
+                       distinct from the withdraw_* tools, which no-op on an absent record."
     )]
     pub async fn answer_question(
         &self,

@@ -224,6 +224,23 @@ def run(binary: str, graph_path: str) -> int:
         untyped_params,
     )
 
+    # BL-57. Every tool's input schema must forbid unknown properties, so a
+    # typo'd optional param (`ful` for `full`, `at` for `detected_at`) is
+    # REJECTED at the boundary instead of silently swallowed and the tool
+    # quietly doing something else. `deny_unknown_fields` on the request struct
+    # makes schemars publish `additionalProperties: false`; this asserts none
+    # regressed. A no-arg tool (empty object) is exempt.
+    open_schemas = []
+    for t in tools:
+        sch = t["inputSchema"]
+        if sch.get("properties") and sch.get("additionalProperties") is not False:
+            open_schemas.append(t["name"])
+    c.ok(
+        "every tool schema forbids unknown params (BL-57 · additionalProperties:false)",
+        not open_schemas,
+        open_schemas,
+    )
+
     # The vocabulary must be discoverable before anything is written, because a
     # blind trial that could not see it brute-forced fourteen edge types and then
     # used the one that happened to validate. Checked here rather than only in
@@ -333,7 +350,7 @@ def run(binary: str, graph_path: str) -> int:
     s.call("provides", {"from_id": "cmp:physics", "to_id": "ifc:state"})
     s.call("consumes", {"from_id": "cmp:ui", "to_id": "ifc:state"})
     c.ok("contract recorded with both sides",
-         s.call("get_node", {"node_type": "Interface", "id": "ifc:state"}) is not None)
+         s.call("get_node", {"node_type": "Interface", "id": "ifc:state"})["node"] is not None)
 
     # BL-27. Adopting a system that already exists needs to say two things a
     # greenfield design never does: this already ships, and I inferred it rather
@@ -346,15 +363,15 @@ def run(binary: str, graph_path: str) -> int:
     s.call("add_capability", {"id": "cap:shipped", "name": "Device locking",
                               "description": "Serialises device access.",
                               "status": "realized"})
-    shipped = s.call("get_node", {"node_type": "Capability", "id": "cap:shipped"})
+    shipped = s.call("get_node", {"node_type": "Capability", "id": "cap:shipped"})["node"]
     c.ok("a capability that already ships is not recorded as planned",
          shipped["properties"].get("status") == "realized", shipped["properties"])
-    planned = s.call("get_node", {"node_type": "Capability", "id": "cap:flight"})
+    planned = s.call("get_node", {"node_type": "Capability", "id": "cap:flight"})["node"]
     c.ok("an unstated status still defaults to planned",
          planned["properties"].get("status") == "planned", planned["properties"])
 
     s.call("set_capability_status", {"capability_id": "cap:display", "status": "in_progress"})
-    moved = s.call("get_node", {"node_type": "Capability", "id": "cap:display"})
+    moved = s.call("get_node", {"node_type": "Capability", "id": "cap:display"})["node"]
     c.ok("set_capability_status moves it and keeps the description",
          moved["properties"].get("status") == "in_progress"
          and moved["properties"].get("description") == "Show the score.",
@@ -362,13 +379,13 @@ def run(binary: str, graph_path: str) -> int:
 
     s.call("set_provenance", {"node_type": "Requirement", "node_id": "req:physics",
                               "provenance": "inferred"})
-    inferred = s.call("get_node", {"node_type": "Requirement", "id": "req:physics"})
+    inferred = s.call("get_node", {"node_type": "Requirement", "id": "req:physics"})["node"]
     c.ok("an inferred requirement says so in a queryable property",
          inferred["properties"].get("provenance") == "inferred"
          and "EXTERNAL" not in inferred["properties"].get("statement", ""),
          inferred["properties"])
     c.ok("provenance defaults to authored",
-         s.call("get_node", {"node_type": "Capability", "id": "cap:flight"})
+         s.call("get_node", {"node_type": "Capability", "id": "cap:flight"})["node"]
           ["properties"].get("provenance") == "authored")
 
     print("\n== 2. DETECT gaps, and the ask-the-user handshake ==")
@@ -692,7 +709,7 @@ def run(binary: str, graph_path: str) -> int:
     print("\n== 6b. an observed divergence is a persistent gap until answered (BL-35) ==")
     r = s.call("reconcile_artifacts", {
         "observed": [{"artifact_id": "art:flight", "present": True, "checksum": "sha256:v2"}],
-        "record_events": True, "at": "2026-07-19T10:00:00Z"})
+        "record_events": True, "detected_at": "2026-07-19T10:00:00Z"})
     c.ok("the divergence is recorded", len(r.get("recorded_events", [])) == 1, r)
     c.ok("and persists as a gap until the second question is answered",
          any(g["gap_source"] == "unresolved_drift" for g in s.call("detect_gaps")),
@@ -720,7 +737,7 @@ def run(binary: str, graph_path: str) -> int:
          acc.get("change_event_id", "").startswith("chg:accept-"), acc)
     c.ok("and the claim is a real ChangeEvent",
          s.call("get_node", {"node_type": "ChangeEvent",
-                             "id": acc["change_event_id"]}) is not None)
+                             "id": acc["change_event_id"]})["node"] is not None)
     r = s.call("reconcile_artifacts", {"observed": [
         {"artifact_id": "art:flight", "present": True, "checksum": "sha256:v2"}]})
     c.ok("an accepted change is the new baseline", r["findings"] == [], r["findings"])
@@ -882,7 +899,7 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("a forged merge is refused", refused is not None and
          "not one HEAL proposes" in str(refused), refused)
     c.ok("and the node it named is still there",
-         s.call("get_node", {"node_type": "Component", "id": "cmp:engine"}) is not None)
+         s.call("get_node", {"node_type": "Component", "id": "cmp:engine"})["node"] is not None)
 
     # BL-62: generic CRUD, scan, and search over the REAL stdio boundary.
     # These were tested only Rust-side (tests/tools.rs) — the exact blind spot
@@ -901,9 +918,9 @@ def run(binary: str, graph_path: str) -> int:
          any(h["node_id"] == "req:crud" for h in hits), hits)
     d1 = s.call("delete_node", {"node_type": "Requirement", "id": "req:crud"})
     c.ok("delete_node removes it and names the outcome", d1.get("deleted") is True, d1)
-    absent = s.call("get_node", {"node_type": "Requirement", "id": "req:crud"})
-    c.ok("get_node on the deleted id reads as absent, not an error",
-         absent is None or absent.get("value") is None, absent)
+    absent = s.call("get_node", {"node_type": "Requirement", "id": "req:crud"})["node"]
+    c.ok("get_node on the deleted id reads as {node: null}, not an error",
+         absent is None, absent)
 
     print("\n== 10. the design survives a restart ==")
     first_gaps = sorted(g["id"] for g in s.call("detect_gaps"))
@@ -913,7 +930,7 @@ def run(binary: str, graph_path: str) -> int:
 
     s.close()
     s = Server(binary, graph_path)
-    n = s.call("get_node", {"node_type": "Interface", "id": "ifc:state"})
+    n = s.call("get_node", {"node_type": "Interface", "id": "ifc:state"})["node"]
     c.ok("graph reopened with its contents intact",
          n is not None and n.get("node_id") == "ifc:state", n)
 

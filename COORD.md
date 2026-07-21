@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-57 tool-boundary honesty batch — @ajs — since 2026-07-21 — crates/reflow2-mcp (service.rs/main.rs), tools/smoke_mcp.py + tests/tools.rs
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -74,6 +73,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-57 done (all 7): dyno_err variant-aware (caller mistakes → invalid_params, ~60 tools, one choke point, Schema stays internal since it's open-time); deny_unknown_fields on all 65 request structs + smoke additionalProperties:false guard — IMMEDIATELY caught a real latent bug (smoke passed `at` to reconcile_artifacts, silently ignored; field is detected_at); export_graph overwrite guard + resolved-path + invalid_params for unwritable; serve path gets explain_open_failure; get_node one named {node} shape both ways (rippled 17 consumers, 0 skills — strengthened previously-always-true smoke checks); withdraw_gap_ack `was_reviewed`→`withdrawn`; answer_question keeps erroring (doctrine: no silent drop) + documented. 4 new tests (taxonomy code-assert, overwrite guard, +the BL-62 ones adjusted). Gates all green; drift accepted (chg:bl57-tool-boundary-honesty); export 218n/445e. Remaining review: BL-56b, BL-58, BL-59 — @ajs — 2026-07-21 — (this commit)
 
 - BL-61 + BL-62 done: skill_lint's `_`-filter dropped so single-word tool names (allocate/satisfies/genesis/…) are checked — 11 tools were exempt; allowlist +58 single-word non-tool terms, unused-guard keeps it exact, negative-tested (renamed single-word tool → exit 1). BL-62: all 14 uncovered tools now tested — 2 tools.rs tests (temporal/resource/realization/analysis/delete walk + ask→withdraw) → tools.rs 31→33, and smoke §9c drives create_node/scan_nodes/search_design/delete_node/get_node over REAL stdio (the blind spot smoke exists for). Pure tests+lint, no registered-artifact drift. Gates: workspace 39 green, fmt/skill_lint clean, smoke ALL PASS. Remaining review items: BL-56b, BL-57, BL-58, BL-59 — @ajs — 2026-07-21 — (this commit)
 

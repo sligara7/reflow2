@@ -15,6 +15,26 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **The tool boundary now reports whose fault an error is** (BL-57): a caller's mistake — a
+  typo'd id, an unknown type, a bad enum value — returns `invalid_params`, not
+  `internal_error`. Fixed at the one choke point (`dyno_err`), so ~60 tools stop blaming the
+  server for the caller's typo.
+- **A typo'd optional parameter is now rejected, not silently swallowed** (BL-57): every tool
+  request declares `deny_unknown_fields`, so the published schema carries
+  `additionalProperties: false`. `full` misspelled as `ful`, or `detected_at` as `at`, is
+  refused at the boundary instead of quietly doing nothing. (This immediately caught a latent
+  bug where the smoke suite had been passing an ignored `at` to `reconcile_artifacts`.)
+- **`export_graph` refuses to overwrite an existing file** unless `overwrite: true` is passed,
+  and reports the resolved absolute path — a stray or injected `path` can no longer silently
+  clobber a file.
+- **`get_node` returns one shape both ways** (BL-57): `{node: {…}}` when present, `{node:
+  null}` when absent (was a bare object vs `{value: null}`).
+- **The everyday two-session lock collision reads plainly** (BL-57): starting a second server
+  on the same graph now gets the single-writer explanation, like `--export`/`--import` already
+  did, not a raw RocksDB error.
+
 ### Testing
 
 - **The skill lint now checks single-word tool names** (BL-61): an underscore-only filter had
