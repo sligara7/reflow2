@@ -1620,6 +1620,54 @@ Both BL-64 and BL-65 deliberately reuse propagate + detect-and-ask rather than i
 subsystems; the genuinely new part in each is *vocabulary* (a lifecycle state; a Risk node),
 which is a design decision for the user — hence "concept, needs the user."
 
+**BL-66 · Design coherence as a consumer CI gate (shift-left the golden thread)** — *user,
+commercial-practice analysis (DevOps/shift-left), 2026-07-21.* Actionable; size **S–M**.
+
+DevOps' deepest principle is that verification runs on **every commit**, not at a milestone
+gate. reflow2 gave *itself* CI (BL-52), but a **consumer** project has no documented, one-step
+way to run reflow2's detectors as a build gate on its own commits — so the golden thread is
+checked periodically (a session), not continuously. Every piece already exists: the CLI
+(`reflow2-mcp --import/--export`, `reflow2_cli.py`), `reconcile_artifacts` (caller supplies the
+observed hashes — a CI step computes them), `detect_gaps`, the two-sided drift accept. What is
+missing is the *assembly*: a single `reflow2 check` verb (or a documented pipeline step) that
+(a) recomputes artifact hashes from disk, (b) reconciles against the committed export, (c) runs
+`detect_gaps`, and (d) **exits non-zero** when a design drifts from its build with no two-sided
+accept, or a new critical/anchored gap appears — fail-loud, never a silent pass. Ship it as a
+consumer skill + a copy-paste CI snippet (the SessionStart-hook pattern from BL-50 (3) is the
+model). Decisions: what severity fails the build (unaccepted `checksum_change`? a new critical
+gap? a regressed `unrealized_capability`?), and read-from-committed-export vs open the live
+`.reflow2/graph` (single-writer) in CI. This makes everything reflow2 already does
+*continuous*, which is the whole point of the frictionless-cadence thread ([BL-51], [BL-15]).
+
+**BL-67 · Requirements as live measured objectives — SLO/SLI reconciliation (as-operating)** —
+*user, commercial-practice analysis (SRE), 2026-07-21.* Concept; size **M–L**; needs the user
+on the vocabulary call.
+
+SRE's move is that a spec is not a static statement (MTBF) but a **live objective** (SLO)
+measured by **live indicators** (SLIs) against an **error budget**. This is the one commercial
+practice that genuinely *extends what reflow2 can be* — from design ↔ built ↔ fielded, to design
+↔ **running reality**: *is the deployed system meeting its measured objectives right now?* And
+it reuses reflow2's own architecture almost entirely:
+- **The SLO is a `Verification(method=measurement)`** with a target — the schema already has
+  `method: measurement` and a `passing`/`failing` status. No new node type strictly required.
+- **A new reconcile-family op, `reconcile_operating`** — the caller (a monitoring system,
+  Prometheus, a CI probe) supplies observed SLI values exactly the way `reconcile_artifacts`
+  supplies checksums (the "core does no I/O, the surface observes" seam); reflow2 compares
+  against the SLO target, sets the Verification `passing`/`failing`, records the divergence, and
+  `propagation_seeds` walk **up** the thread to the Capability/Requirement — the as-fielded
+  pattern, one axis further.
+- **The error budget is a `Constraint`** (`direction: maximum`, `quantity` = the budgeted
+  metric) whose contribution is the live-consumed budget — `budget_report` already rolls this up.
+- **`dimension_drift`** already detects an SLI *trend* declining over time, and `cap:freshness`'s
+  confirmation ledger is already SRE-adjacent ("a claim nobody re-checked is stale"). An
+  **as-operating** viewpoint would join the as-designed/built/fielded/verified set in
+  `render_views`.
+
+So the vocabulary decision for the user is small — "is an SLO a measurement-Verification with a
+target, or does it deserve its own node?" — and most of the machinery (reconcile seam, Constraint
+budget, dimensions, freshness) is already there. Closes the loop from intent all the way to the
+telemetry of the running system.
+
 ## Deliberate deferrals
 
 Not gaps — decisions, recorded so they aren't rediscovered as bugs.
