@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- CI + skill lint — @ajs — since 2026-07-20 — .github/workflows/ci.yml (new), tools/skill_lint.py (new), AGENTS.md gates note, backlog
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -74,6 +73,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-52 done — first CI + skill lint: ci.yml (core job: fast gates incl. clippy -D warnings both crates, schema, test_init, skill lint; full job: workspace + smoke_mcp + phase_trial + model_the_loop + coherent_erosion against the real binary, rust-cache'd). tools/skill_lint.py checks the skills' CONTRACT (tool refs resolve vs the #[tool] set with a both-ways allowlist, mirrors byte-identical, frontmatter, BL-41 rule) — deliberately no LLM evals, trials stay the semantic evidence. All green locally + negative-tested; ver:skill-lint added (passing) VERIFIES cmp:skills; export 212n/435e. Watch the first live run — @ajs — 2026-07-20 — (this commit)
 
 - v0.5.0 Release node done: rel:v050 with all 34 artifacts frozen at tag v0.5.0 + cmp:skills, deployed active on env:dev; release_report answers released==designed with 26/26 capabilities covered and an empty not-covered diff; rel:v040 retired, its deployment withdrawn (rolled_back — the sanctioned "declaration withdrawn" vocabulary per reconcile_deployment's own correction path). ROOT-CAUSE FIX: INCLUDES joined the traceability table (nodes.rs) — the {env:dev, rel:v040} island existed because every release was outside the design network by construction; pinned by structural + propagate tests. build_design_graph.py now freezes release checksums from git tags, never the working tree (v0.4.0 manifest verified 33/33 against its tag first). Axis-Z: epoch:v050-cut + epoch:v050-hardening added, five floating ChangeEvents pinned (render_views confession cleared). ALSO from user mid-session: req:frictionless-update captured (Claude-Code-style one-liner install / one-word update / frequent minor cadence) → BL-51. Export 211n/434e, gaps 0 — @ajs — 2026-07-20 — (this commit)
 

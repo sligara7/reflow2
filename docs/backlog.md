@@ -1346,6 +1346,27 @@ now that the repo is public and BL-15's machinery exists:
   cutting often and keeping CHANGELOG sections small. Nothing to build — but the one-word
   update is what makes a frequent cadence tolerable to consumers, so it gates the practice.
 
+**BL-52 · CI enforces the gates; skills get contract lint — DONE 2026-07-20** — *user asked
+"do we have legitimate CI tests for the skills?"; the answer was that there was no CI at all.*
+Size **S + M**.
+
+`.github/workflows/ci.yml` (the repo's first CI): a fast core job — core tests on the
+in-memory backend, clippy `-D warnings` both crates, fmt, schema validation, the installer
+suite, skill lint — and a full job that pays the cached RocksDB build for `cargo test
+--workspace`, then drives the REAL binary: `smoke_mcp`, `phase_trial` (13/13 gate),
+`model_the_loop`, `coherent_erosion_trial`. `erosion_trial` deliberately excluded (non-zero by
+design until the ledger-judgement decision changes). `tools/skill_lint.py` checks what a skill
+has that IS mechanically checkable — its contract with the surface: every backtick tool name
+resolves against the served `#[tool]` set (with a committed, both-ways-enforced allowlist for
+field/gap/enum terms, so a tool rename leaving prose behind fails loudly and the list cannot
+rot), mirrors byte-identical to `getting-started/skills/` (the recurring "stale mirrors"
+chore, now a gate), frontmatter valid, and BL-41's standing rule present in all 11 skills.
+**Deliberately NOT built: LLM-driven skill evals** — a synthetic eval is another client we
+write (the three-agreeing-clients lesson); semantic skill quality stays evidenced by real-use
+trials per sharpening.md. Verified: all checks green on the current tree, negative test
+confirms a bogus tool ref fails with exit 1, and the first live CI run on GitHub is the
+end-to-end proof.
+
 ## Deliberate deferrals
 
 Not gaps — decisions, recorded so they aren't rediscovered as bugs.

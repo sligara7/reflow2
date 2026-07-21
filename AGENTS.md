@@ -155,7 +155,16 @@ cargo clippy -p reflow2-core --no-default-features --all-targets
 cargo fmt --check
 python3 tools/validate_schema.py                         # after any schema/*.yaml edit
 python3 tools/smoke_mcp.py                               # after any tool-surface change
+python3 tools/skill_lint.py                              # after any skill or tool-surface edit
 ```
+
+**CI enforces these on every push** (`.github/workflows/ci.yml`): a fast core job
+(core tests, clippy `-D warnings`, fmt, schema, installer suite, skill lint) and a full job
+(workspace tests, the smoke test and the exit-zero instruments against the real binary). Green
+locally but red in CI means your local run skipped a gate — believe CI. The skill lint checks
+the skills' *contract* (served tool names, mirrors byte-identical, frontmatter, the standing
+rule); their semantic quality stays evidenced by trials, per docs/sharpening.md — deliberately
+no LLM evals in CI.
 
 **If you changed a detector, a phase capability, or anything in the coherence loop**, run the
 instruments in [docs/sharpening.md](docs/sharpening.md) before and after, and add a probe for what

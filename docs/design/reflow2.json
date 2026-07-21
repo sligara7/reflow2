@@ -3031,6 +3031,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:skill-lint",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:stamp",
       "properties": {},
       "to_id": "cap:stamp"
@@ -5683,6 +5689,17 @@
         "level": "integration",
         "method": "test",
         "name": "search.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:skill-lint",
+      "node_type": "Verification",
+      "properties": {
+        "last_run_at": "2026-07-20",
+        "level": "integration",
+        "method": "analysis",
+        "name": "skill_lint.py — the skills' contract with the served surface (tool refs resolve, mirrors byte-identical, frontmatter, standing rule), enforced in CI on every push",
         "status": "passing"
       }
     },
