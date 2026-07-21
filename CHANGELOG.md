@@ -1,8 +1,24 @@
 # Changelog
 
 Notable changes to Reflow 2.0. Format follows [Keep a Changelog](https://keepachangelog.com);
-versions follow [semver](https://semver.org) — pre-1.0, so the minor number moves when the
-graph model or the tool surface changes shape.
+versions follow [semver](https://semver.org), pre-1.0.
+
+## Versioning — which bucket does a change go in?
+
+Decide at cut time by the **highest** bucket present in `[Unreleased]`:
+
+| Bucket | What goes in | What a consumer does |
+|---|---|---|
+| **Patch** `0.6.x` | Bug fixes, doc fixes, tests, refactors, perf — **and behavior changes that make a silent failure *loud*** (a fix, not a new contract) | Updates blindly; skills and calls unchanged |
+| **Minor** `0.x.0` | A change to the **shape** of the tool surface (new/changed params, changed result shapes) or the **schema / graph model** (new node/edge type, new required prop); new capabilities or skills | May need to notice; a schema change also needs an upgrade doc |
+| **Major** `1.0` | Deferred until a stability commitment — the design surface promising compatibility | — |
+
+The load-bearing distinction: a behavior change is a **patch** when it only turns a swallowed
+failure into a loud one (e.g. a tool that returned an empty result on a typo now errors — a bug
+fix); it is a **minor** when the input or output **structure** changes (e.g. `get_node`'s result
+reshaped, or a param that was silently ignored now rejected). A **schema change** is always at
+least minor and additionally pulls in the upgrade-doc + foundation-migration checklist in
+[AGENTS.md](AGENTS.md).
 
 Two companion records, deliberately kept separate:
 
