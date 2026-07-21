@@ -45,6 +45,7 @@ schema:
         target_id: { type: string, required: true, indexed: true, description: "Node this snapshot captures." }
         target_type: { type: string, indexed: true, description: "Label of the captured node (Component, Capability, Requirement...)." }
         state: { type: string, description: "JSON of the node's property bag at the epoch." }
+        edges: { type: string, description: "JSON array of the node's design edges at the epoch (direction, edge_type, other endpoint, edge properties), sorted for byte-stable exports. Bookkeeping neighbours (history, provenance, observations, questions) are excluded: an edge move is a design change and must be recoverable (BL-63), the audit trail is not. Absent on snapshots taken before BL-63." }
         captured_at: { type: string }
       extraction_hint: >
         The state of a node captured at a specific DesignEpoch — how a Component

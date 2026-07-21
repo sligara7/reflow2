@@ -88,7 +88,10 @@ pub use report::{AllocationSummary, GraphReport};
 pub use schema::load_schema;
 pub use search::{SearchHit, SearchResult};
 pub use surprises::SurprisingConnection;
-pub use temporal::{ChangeAction, ChangeRecord, ChangeType, EpochType, parse_snapshot_state};
+pub use temporal::{
+    ChangeAction, ChangeRecord, ChangeType, EpochType, SnapshotEdge, parse_snapshot_edges,
+    parse_snapshot_state,
+};
 pub use verify::{
     ObservedVerification, VerificationDriftReport, VerificationFinding, VerifyReconcileOptions,
 };

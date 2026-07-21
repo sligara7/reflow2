@@ -6,7 +6,8 @@
 
 use reflow2_core::nodes::{edge, node};
 use reflow2_core::{
-    ChangeAction, ChangeRecord, ChangeType, DesignGraph, EpochType, parse_snapshot_state,
+    ChangeAction, ChangeRecord, ChangeType, DesignGraph, EpochType, SnapshotEdge,
+    parse_snapshot_edges, parse_snapshot_state,
 };
 
 #[test]
@@ -174,5 +175,149 @@ fn snapshot_state_keys_are_sorted_for_byte_stable_exports() {
     assert_eq!(
         keys, sorted,
         "snapshot state keys must be sorted, got {keys:?}"
+    );
+}
+
+// ---- BL-63 · a snapshot captures edges, so an edge move keeps its history ----
+
+/// The reallocation demo that raised BL-63: "Service A does X, Y, Z" → later,
+/// Z moves to Service B. Before BL-63 the snapshot held only cap:z's
+/// properties, so a lazy reallocation (delete_edge + allocate, no Decision)
+/// left Z on B with no trace it was ever on A. The snapshot must carry the
+/// lost `ALLOCATED_TO`.
+#[test]
+fn a_reallocation_keeps_the_old_owner_in_the_snapshot() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_component("cmp:a", "Service A", "did X, Y, Z", None)
+        .unwrap();
+    g.add_component("cmp:b", "Service B", "takes Z", None)
+        .unwrap();
+    g.add_capability("cap:z", "Reconcile", "does Z", None)
+        .unwrap();
+    g.allocate("cap:z", "cmp:a").unwrap();
+    g.add_epoch("epoch:v2", "reallocation", EpochType::Revision, 1)
+        .unwrap();
+
+    // The right-way sequence: record first (snapshot while cap:z still says
+    // the OLD thing), then move the edge.
+    let (snapshot, _ce) = g
+        .record_change(ChangeRecord {
+            epoch_id: "epoch:v2",
+            change_event_id: "chg:move-z",
+            name: "Z moves from A to B",
+            change_type: ChangeType::ScopeChange,
+            target_type: node::CAPABILITY,
+            target_id: "cap:z",
+            action: ChangeAction::Modified,
+        })
+        .unwrap();
+    g.delete_edge(edge::ALLOCATED_TO, "cap:z", "cmp:a").unwrap();
+    g.allocate("cap:z", "cmp:b").unwrap();
+
+    let snapshot = snapshot.expect("Modified must snapshot");
+    let edges = parse_snapshot_edges(&snapshot).unwrap();
+    let old_owner: Vec<&SnapshotEdge> = edges
+        .iter()
+        .filter(|e| e.edge_type == "ALLOCATED_TO" && e.direction == "out")
+        .collect();
+    assert_eq!(
+        old_owner.len(),
+        1,
+        "the snapshot must hold the pre-move allocation: {edges:?}"
+    );
+    assert_eq!(
+        old_owner[0].other_id, "cmp:a",
+        "A once owned Z, on the record"
+    );
+    assert_eq!(old_owner[0].other_type, node::COMPONENT);
+
+    // The live graph says B owns Z now — history did not freeze the present.
+    let live = g.outgoing("cap:z", Some(edge::ALLOCATED_TO)).unwrap();
+    assert_eq!(live.len(), 1);
+    assert_eq!(live[0].to_id, "cmp:b");
+}
+
+/// A snapshot captures design structure, not the audit trail: re-snapshotting
+/// a node must not accumulate `HAS_SNAPSHOT`/`AT_EPOCH`/`CHANGED` edges from
+/// earlier rounds of history — and the captured list must be deterministically
+/// ordered (byte-stable exports, the BL-58 discipline).
+#[test]
+fn snapshot_edges_exclude_bookkeeping_and_are_sorted() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_requirement("req:r", "R", "must hold").unwrap();
+    g.add_capability("cap:c", "C", "does it", None).unwrap();
+    g.add_component("cmp:m", "M", "hosts it", None).unwrap();
+    g.satisfies("cap:c", "req:r").unwrap();
+    g.allocate("cap:c", "cmp:m").unwrap();
+    g.add_epoch("epoch:1", "e1", EpochType::Baseline, 0)
+        .unwrap();
+    g.add_epoch("epoch:2", "e2", EpochType::Revision, 1)
+        .unwrap();
+
+    // First round of history: snapshot + change event against cap:c.
+    g.record_change(ChangeRecord {
+        epoch_id: "epoch:1",
+        change_event_id: "chg:first",
+        name: "first edit",
+        change_type: ChangeType::Refactor,
+        target_type: node::CAPABILITY,
+        target_id: "cap:c",
+        action: ChangeAction::Modified,
+    })
+    .unwrap();
+
+    // Second snapshot: cap:c now carries HAS_SNAPSHOT (to the first snapshot)
+    // and an incoming CHANGED (from chg:first). Neither may be captured.
+    let snap2 = g
+        .snapshot_node("epoch:2", node::CAPABILITY, "cap:c")
+        .unwrap();
+    let edges = parse_snapshot_edges(&snap2).unwrap();
+    let types: Vec<&str> = edges.iter().map(|e| e.edge_type.as_str()).collect();
+    assert!(
+        !types.contains(&"HAS_SNAPSHOT") && !types.contains(&"CHANGED"),
+        "bookkeeping edges leaked into the snapshot: {types:?}"
+    );
+    // What it must hold: the design edges — SATISFIES out, ALLOCATED_TO out,
+    // CONTAINS in (from the project).
+    assert!(types.contains(&"SATISFIES") && types.contains(&"ALLOCATED_TO"));
+
+    // Deterministic order: sorted by (direction, edge_type, other_id).
+    let keys: Vec<(&str, &str, &str)> = edges
+        .iter()
+        .map(|e| {
+            (
+                e.direction.as_str(),
+                e.edge_type.as_str(),
+                e.other_id.as_str(),
+            )
+        })
+        .collect();
+    let mut sorted = keys.clone();
+    sorted.sort_unstable();
+    assert_eq!(keys, sorted, "snapshot edges must be sorted: {keys:?}");
+}
+
+/// A snapshot taken before BL-63 has no `edges` property. That is an empty
+/// capture, not an error — the history was not recorded then, and inventing
+/// one would overwrite the past with a guess.
+#[test]
+fn a_pre_bl63_snapshot_reads_as_no_edges_not_an_error() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let old_snap = g
+        .create_node(
+            node::SNAPSHOT,
+            "snap:old",
+            reflow2_core::nodes::Props::new()
+                .set("target_id", "req:x")
+                .set("target_type", node::REQUIREMENT)
+                .set("state", "{\"name\":\"X\"}"),
+        )
+        .unwrap();
+    let edges = parse_snapshot_edges(&old_snap).unwrap();
+    assert!(
+        edges.is_empty(),
+        "absent edges must read as empty: {edges:?}"
     );
 }

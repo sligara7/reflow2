@@ -634,6 +634,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:bl63-snapshot-edges",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:bl69-spof-cut-vertices",
       "properties": {
         "accepted_baseline": true,
@@ -4091,7 +4100,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a297a0b311b1ef16",
+        "checksum": "sha256:3a6dd54d084e1e41",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
         "status": "realized"
@@ -4585,6 +4594,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "BL-58: core silent-failure batch — ingest re-ingest merges instead of resetting (upsert), snapshots serialize sorted for byte-stable exports, propagate_change errors on a missing event instead of returning empty, apply_heal is one atomic batch across all operations, swallowed edge-creation errors now surface, budget rejects non-finite contributions and reports a provable overrun instead of Incomplete, integer widening rejects the i64::MAX saturation edge, truncated_beyond_depth documented as the frontier lower-bound, drift skips the dangling edge for undocumented additions, missing-intermediate gaps get distinct ids per edge type, a reused ingest fragment_id is refused, node_type_index scans in sorted order"
+      }
+    },
+    {
+      "node_id": "chg:bl63-snapshot-edges",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-63: snapshots capture design edges — an edge move keeps its history. Snapshot.edges (optional, sorted, bookkeeping excluded) added beside state; parse_snapshot_edges/SnapshotEdge in core; CRUD skills updated to record-first-then-delete."
       }
     },
     {

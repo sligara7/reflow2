@@ -31,6 +31,26 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **Snapshots capture edges, so an edge move keeps its history** (BL-63). `snapshot_node` (and
+  therefore `record_change`) now stores the node's design edges — direction, edge type, the
+  other endpoint and the edge's properties, sorted for byte-stable exports — in a new optional
+  `Snapshot.edges` property beside `state`. A large class of design change is an edge move, not
+  a property edit: a re-allocation deletes `ALLOCATED_TO` one component and draws it to
+  another, and before this the only durable record of the old owner was a hand-authored
+  Decision — a lazy reallocation left no trace. Edges touching bookkeeping nodes (snapshots,
+  change events, epochs, drift, provenance, questions) are excluded: a snapshot captures design
+  structure, not the audit trail, and would otherwise grow with its own history. New
+  `parse_snapshot_edges` / `SnapshotEdge` in the core API; a snapshot taken before this change
+  has no `edges` property and reads as an empty capture, not an error. The revise-design and
+  retire-from-design skills now say edges are captured, and revise-design's links guidance
+  drops its pre-BL-63 workaround ("leave a formerly-true edge") for the honest sequence:
+  record first, then delete. **Schema note for the next cut**: `Snapshot.edges` is a new
+  *optional* property — existing graphs open unchanged and old snapshots stay readable — but a
+  schema change makes the next release minor (0.7.0), and its upgrade doc should say exactly
+  this.
+
 ### Fixed
 
 - **`single_point_of_failure` measures connectivity on the as-built operational network**

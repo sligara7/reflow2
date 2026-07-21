@@ -15,10 +15,44 @@
 //! [`DesignEpoch`]: crate::nodes::node::DESIGN_EPOCH
 
 use dynograph_core::{DynoError, Value};
-use dynograph_storage::StoredNode;
+use dynograph_storage::{StoredEdge, StoredNode};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};
+
+/// Node types whose edges are *bookkeeping about* the design rather than part
+/// of it — history, provenance, observation, questions. A snapshot captures a
+/// node's design structure, not its audit trail: including these would make
+/// every snapshot grow with each prior snapshot (its own `HAS_SNAPSHOT`
+/// edges), and a diff across epochs would drown in meta-history (BL-63).
+const BOOKKEEPING_TYPES: &[&str] = &[
+    node::DESIGN_EPOCH,
+    node::SNAPSHOT,
+    node::CHANGE_EVENT,
+    node::TEMPORAL_FACT,
+    node::DIMENSION_ASSESSMENT,
+    node::DIMENSION_OBSERVATION,
+    node::FRAGMENT,
+    node::DRIFT_EVENT,
+    node::QUESTION,
+];
+
+/// One edge of a snapshotted node, as captured into the Snapshot's `edges`
+/// property (BL-63). `direction` is from the snapshotted node's point of view:
+/// `"out"` means the node was the edge's source, `"in"` its target.
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+pub struct SnapshotEdge {
+    /// `"out"` or `"in"`, relative to the snapshotted node.
+    pub direction: String,
+    /// The edge type (e.g. `ALLOCATED_TO`).
+    pub edge_type: String,
+    /// Node type of the other endpoint.
+    pub other_type: String,
+    /// Node id of the other endpoint.
+    pub other_id: String,
+    /// The edge's properties, key-sorted for byte-stable serialization.
+    pub properties: std::collections::BTreeMap<String, Value>,
+}
 
 /// Kind of [`DesignEpoch`](crate::nodes::node::DESIGN_EPOCH) —
 /// mirrors `temporal.yaml` `DesignEpoch.epoch_type`.
@@ -215,6 +249,14 @@ impl DesignGraph {
     /// `Snapshot` pinned to `epoch_id`, wired `node -HAS_SNAPSHOT-> snapshot`
     /// and `snapshot -AT_EPOCH-> epoch`.
     ///
+    /// The snapshot holds the node's **properties** (`state`) and its **design
+    /// edges** (`edges`, BL-63): a large class of design change is an edge
+    /// move, not a property edit — a re-allocation deletes `ALLOCATED_TO` one
+    /// component and draws it to another — and before BL-63 the only durable
+    /// record of the old owner was a hand-authored Decision. Edges touching
+    /// bookkeeping nodes (history, provenance, observations, questions) are
+    /// excluded: a snapshot captures design structure, not the audit trail.
+    ///
     /// Call this *before* overwriting the node, so the snapshot preserves the
     /// pre-change state. Fails loud if the target node does not exist — you
     /// cannot snapshot what was never there (AGENTS.md rule 4).
@@ -242,6 +284,55 @@ impl DesignGraph {
         let state = serde_json::to_string(&sorted)
             .map_err(|e| DynoError::Serialization(format!("snapshot state for {node_id}: {e}")))?;
 
+        // Capture the node's design edges (BL-63). The type index resolves the
+        // other endpoint's type both to record it and to exclude bookkeeping
+        // neighbours; an edge whose endpoint has no type is dangling and is
+        // skipped, matching the drift module's precedent (BL-58).
+        let index = self.node_type_index()?;
+        let mut edges: Vec<SnapshotEdge> = Vec::new();
+        for (stored, direction) in self
+            .outgoing(node_id, None)?
+            .iter()
+            .map(|e| (e, "out"))
+            .chain(self.incoming(node_id, None)?.iter().map(|e| (e, "in")))
+        {
+            let StoredEdge {
+                from_id,
+                to_id,
+                edge_type,
+                properties,
+                ..
+            } = stored;
+            let other_id = if direction == "out" { to_id } else { from_id };
+            let Some(other_type) = index.get(other_id) else {
+                continue; // dangling edge — nothing to capture on that side
+            };
+            if BOOKKEEPING_TYPES.contains(&other_type.as_str()) {
+                continue;
+            }
+            edges.push(SnapshotEdge {
+                direction: direction.to_string(),
+                edge_type: edge_type.clone(),
+                other_type: other_type.clone(),
+                other_id: other_id.clone(),
+                properties: properties
+                    .iter()
+                    .map(|(k, v)| (k.clone(), v.clone()))
+                    .collect(),
+            });
+        }
+        // Deterministic order for byte-stable exports (same discipline as
+        // `state` above).
+        edges.sort_by(|a, b| {
+            (&a.direction, &a.edge_type, &a.other_id).cmp(&(
+                &b.direction,
+                &b.edge_type,
+                &b.other_id,
+            ))
+        });
+        let edges_json = serde_json::to_string(&edges)
+            .map_err(|e| DynoError::Serialization(format!("snapshot edges for {node_id}: {e}")))?;
+
         let snap_id = snapshot_id(epoch_id, node_id);
         let snapshot = self.create_node(
             node::SNAPSHOT,
@@ -249,7 +340,8 @@ impl DesignGraph {
             Props::new()
                 .set("target_id", node_id)
                 .set("target_type", node_type)
-                .set("state", state),
+                .set("state", state)
+                .set("edges", edges_json),
         )?;
 
         self.create_edge(
@@ -363,4 +455,16 @@ pub fn parse_snapshot_state(
         })?;
     serde_json::from_str(state)
         .map_err(|e| DynoError::Serialization(format!("parse snapshot state: {e}")))
+}
+
+/// Read the `edges` JSON a [`snapshot_node`](DesignGraph::snapshot_node) stored
+/// back into typed [`SnapshotEdge`]s. A snapshot taken before BL-63 has no
+/// `edges` property; that is an empty capture, not an error — the edge history
+/// simply was not recorded then, and pretending otherwise would invent a past.
+pub fn parse_snapshot_edges(snapshot: &StoredNode) -> Result<Vec<SnapshotEdge>, DynoError> {
+    let Some(edges) = snapshot.properties.get("edges").and_then(Value::as_str) else {
+        return Ok(Vec::new());
+    };
+    serde_json::from_str(edges)
+        .map_err(|e| DynoError::Serialization(format!("parse snapshot edges: {e}")))
 }

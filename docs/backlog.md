@@ -1545,8 +1545,26 @@ drives create_node/scan_nodes/search_design/delete_node/get_node over the real s
 — the blind spot smoke exists for. (export_graph overwrite guard is BL-57's, tested there when
 it lands; get_node's absent shape is pinned to today's `{value:null}` with a BL-57 pointer.)
 
-**BL-63 · Snapshots capture properties but not edges, so a re-allocation loses its history** —
-*user question + live demo, 2026-07-21 (promoted from BL-58 idea I4).* Size **M**.
+**BL-63 · Snapshots capture properties but not edges, so a re-allocation loses its history —
+DONE 2026-07-21** — *user question + live demo, 2026-07-21 (promoted from BL-58 idea I4).*
+Size ~~M~~.
+
+**Built**: `snapshot_node` captures the node's design edges into a new optional
+`Snapshot.edges` property beside `state` — direction, edge type, other endpoint (id and type),
+and the edge's properties, sorted for byte-stable exports (the BL-58 discipline). Bookkeeping
+neighbours (Snapshot/ChangeEvent/DesignEpoch/TemporalFact/dimensions/Fragment/DriftEvent/
+Question) are excluded — a snapshot captures design structure, not the audit trail, and would
+otherwise grow with each prior snapshot of the same node. `parse_snapshot_edges` +
+`SnapshotEdge` join the core API; a pre-BL-63 snapshot reads as an empty capture, never an
+error. **One deliberate deviation from the entry's lean**: full capture (bookkeeping excluded)
+rather than changed-edges scope — at snapshot time the caller cannot know which edges the
+coming edit will touch, capture is cheap at design scale (a hub is a few KB), and the exclusion
+list bounds the noise; simpler than an opt-in split and loses nothing. Tests pin the demo shape
+end-to-end (lazy reallocation: the snapshot alone now proves "A once owned Z"), bookkeeping
+exclusion + deterministic order, and old-snapshot tolerance. The revise-design links guidance
+dropped its pre-BL-63 workaround ("leave a formerly-true edge") for record-first-then-delete,
+and both CRUD skills say edges are captured. Schema: `Snapshot.edges` optional → next cut is
+minor per the versioning policy.
 
 `snapshot_node` serializes a node's **properties** into `Snapshot.state`; it captures none of
 the node's **edges**. Axis Z's promise is that the past is recoverable, and for a node whose

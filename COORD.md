@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-63 snapshots capture edges — @ajs — since 2026-07-21 — crates/reflow2-core/src/temporal.rs, tests, skills honesty notes
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -76,6 +75,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-63 done: snapshots capture design edges (new optional Snapshot.edges beside state; sorted; bookkeeping neighbours excluded so a snapshot never accumulates its own history) — a lazy reallocation now leaves "A once owned Z" recoverable from the snapshot alone, no hand-authored Decision needed. parse_snapshot_edges/SnapshotEdge in core; pre-BL-63 snapshots read as empty capture, not error. Deviation from the entry's lean, reasoned in backlog: full-capture-with-exclusions, not changed-edges scope. revise-design's "leave a formerly-true edge" workaround replaced with record-first-then-delete; both CRUD skills updated (3 mirrors, kit refreshed to 0.6.1). Schema +1 optional prop → next cut is 0.7.0. Gates: workspace green, clippy/fmt/schema/skill-lint/test_init clean, all instruments at baselines incl. coherent 9/9 (its snapshot reader unaffected — state shape unchanged). Drift accepted two-sided (chg:bl63-snapshot-edges). NOTE: a session started before this build snapshots without edges — restart before relying on it live — @ajs — 2026-07-21 — (this commit)
 
 - BL-69 done: SPOF connectivity moved to the as-built operational network (ops types + realizing artifacts) — the design network's intent edges donated mass (cmp:flow fired on stranding its own capability/artifact/verification cluster) and phantom connectivity (cmp:export, a true cut vertex, hid behind a SATISFIES chain). Candidates enumerate from the same network; all prior selectivity lessons kept (baseline-relative, non-trivial, operational-candidates, library filter). Self-graph measured before→after: {flow, service} → {graph, export, ifc:graph-export, service} — the false positive out, three true findings in (service already accepted via dec:service-spof-accepted; other three await disposition). 2 regression tests + island fixture rebuilt operational; workspace + all instruments at baselines; drift accepted two-sided (chg:bl69-spof-cut-vertices; plus art:artifact's missed BL-26 accept recorded late via chg:bl26-documents-write-side). Export 242n/480e. NOTE: a session started before this build serves the old detector — restart before relying on it live — @ajs — 2026-07-21 — (this commit)
 
