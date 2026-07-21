@@ -31,7 +31,14 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
-### Fixed (BL-58 · core silent-failure batch, for 0.6.1)
+## [0.6.1] — 2026-07-21
+
+A patch release: correctness and doctrine fixes only, no tool-surface or schema shape change,
+so it updates in place and an existing design opens unchanged. The headline is the **core
+silent-failure batch** (BL-58) — a dozen places where a failure could be swallowed or a value
+silently reset are now loud or correct.
+
+### Fixed (BL-58 · core silent-failure batch)
 
 - **A re-ingest no longer resets properties it did not mention** — matched-evolved integration
   merges (`upsert_node`) instead of replacing, so a status or provenance set separately
