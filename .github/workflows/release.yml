@@ -39,26 +39,37 @@ jobs:
           # machines than it was built on — never fewer.
           - name: linux-x86_64
             runner: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
           - name: macos-arm64
             runner: macos-14
+            target: aarch64-apple-darwin
+          # macos-x86_64 is CROSS-COMPILED on the Apple-Silicon runner rather
+          # than built natively on macos-13. GitHub's macos-13 (Intel) runners
+          # are chronically scarce — a queued x86_64 job stalled the v0.5.0
+          # release for 11h and never cleared. Apple's clang cross-compiles
+          # C++ (librocksdb-sys) to x86_64 natively, so macos-14 produces the
+          # Intel binary in seconds without touching the scarce runner pool.
           - name: macos-x86_64
-            runner: macos-13
+            runner: macos-14
+            target: x86_64-apple-darwin
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ inputs.tag || github.ref }}
       - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
       - uses: Swatinem/rust-cache@v2
         with:
           shared-key: release-${{ matrix.name }}
       - name: Build
-        run: cargo build --release -p reflow2-mcp
+        run: cargo build --release -p reflow2-mcp --target ${{ matrix.target }}
       - name: Package
         run: |
           set -euo pipefail
           mkdir -p dist
-          tar -C target/release -czf "dist/reflow2-mcp-${{ matrix.name }}.tar.gz" reflow2-mcp
+          tar -C "target/${{ matrix.target }}/release" -czf "dist/reflow2-mcp-${{ matrix.name }}.tar.gz" reflow2-mcp
       - uses: actions/upload-artifact@v4
         with:
           name: binary-${{ matrix.name }}
