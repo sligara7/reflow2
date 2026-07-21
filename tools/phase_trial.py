@@ -319,8 +319,12 @@ def run_thread(s: Server, p: Probes, files: dict[str, pathlib.Path]) -> None:
     seeds = rec.get("propagation_seeds") or []
     p.score("thread", "a changed file yields seeds to propagate from", bool(seeds), f"seeds: {seeds}")
 
+    # full=True: these probes ask about nodes several hops out, and the
+    # default result is the BL-49 summary (counts + the distance-1 ring),
+    # which only names the first hop.
     if seeds:
-        blast = s.call("propagate_from", {"seed_ids": seeds, "max_depth": 6})
+        blast = s.call("propagate_from",
+                       {"seed_ids": seeds, "max_depth": 6, "full": True})
         reached = {n["node_id"] if isinstance(n, dict) else n
                    for n in (blast.get("impacted") or blast.get("nodes") or [])}
         txt = json.dumps(blast)
@@ -328,7 +332,8 @@ def run_thread(s: Server, p: Probes, files: dict[str, pathlib.Path]) -> None:
                 "req:" in txt, f"reached {len(reached)} node(s)")
 
     # And the reverse: intent -> code.
-    blast = s.call("propagate_from", {"seed_ids": ["req:coherence"], "max_depth": 6})
+    blast = s.call("propagate_from",
+                   {"seed_ids": ["req:coherence"], "max_depth": 6, "full": True})
     p.score("thread", "a change to intent reaches the FILES that implement it",
             "art:" in json.dumps(blast),
             "requirement -> artifact traversal")

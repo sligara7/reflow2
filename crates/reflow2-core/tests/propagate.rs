@@ -323,3 +323,34 @@ fn summary_counts_every_band_and_keeps_ring_and_risk_crossings() {
         radius.truncated_beyond_depth
     );
 }
+
+#[test]
+fn a_changed_artifact_reaches_the_release_that_ships_it() {
+    // INCLUDES joined the direction table with the v0.5.0 release modelling:
+    // a changed artifact means the next cut differs, so the release belongs
+    // in the blast radius — and before this, every release was invisible to
+    // impact entirely.
+    let mut g = thread();
+    g.create_node(node::RELEASE, "rel:v1", Props::new().set("name", "v1"))
+        .unwrap();
+    g.create_edge(
+        edge::INCLUDES,
+        node::RELEASE,
+        "rel:v1",
+        node::ARTIFACT,
+        "art:cache-rs",
+        Props::new(),
+    )
+    .unwrap();
+
+    let radius = g
+        .propagate_from(&["art:cache-rs"], PropagateOptions::default())
+        .unwrap();
+    let rel = find(&radius, "rel:v1");
+    assert_eq!(rel.distance, 1);
+    assert_eq!(
+        rel.direction,
+        ImpactDirection::Downstream,
+        "the release is a downstream packaging of its contents"
+    );
+}

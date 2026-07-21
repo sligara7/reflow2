@@ -358,3 +358,55 @@ fn a_library_hub_is_not_a_runtime_single_point_of_failure() {
         "you cannot run two copies of a library: {linked:?}"
     );
 }
+
+#[test]
+fn a_release_and_its_environment_are_not_an_island() {
+    // Found modelling v0.4.0: DEPLOYED_TO joined the Release to its
+    // Environment and INCLUDES joined it to nothing, so every release was a
+    // 2-node disconnected community by construction. INCLUDES is traceability
+    // (the as-released packaging of the artifact), and the pair must join the
+    // design network through it.
+    let mut g = linear_thread();
+    g.create_node(node::ARTIFACT, "art:a", Props::new().set("name", "a.rs"))
+        .unwrap();
+    g.create_edge(
+        edge::REALIZES,
+        node::ARTIFACT,
+        "art:a",
+        node::CAPABILITY,
+        "cap:a",
+        Props::new(),
+    )
+    .unwrap();
+    g.create_node(node::RELEASE, "rel:v1", Props::new().set("name", "v1"))
+        .unwrap();
+    g.create_node(
+        node::ENVIRONMENT,
+        "env:dev",
+        Props::new().set("name", "dev"),
+    )
+    .unwrap();
+    g.create_edge(
+        edge::INCLUDES,
+        node::RELEASE,
+        "rel:v1",
+        node::ARTIFACT,
+        "art:a",
+        Props::new(),
+    )
+    .unwrap();
+    g.create_edge(
+        edge::DEPLOYED_TO,
+        node::RELEASE,
+        "rel:v1",
+        node::ENVIRONMENT,
+        "env:dev",
+        Props::new(),
+    )
+    .unwrap();
+
+    assert!(
+        !has(&g, HealCategory::DisconnectedCommunity),
+        "a release shipping a design artifact is part of the design network"
+    );
+}

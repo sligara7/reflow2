@@ -1322,6 +1322,30 @@ getting-started/AGENTS.md step 0a — the where-am-i ritual lands in the session
 startup on harnesses with hooks; the rest keep the written convention. Not auto-installed:
 writing into a consumer's `settings.json` is not a thing the installer gets to do.
 
+**BL-51 · Frictionless install and update — the Claude Code model** — *user, 2026-07-20.*
+Size **S + M**, priority deliberately low ("may not be important right now... can we get there
+eventually").
+
+The user named the target explicitly: Claude Code installs with one `curl -fsSL <url> | bash`
+from a stable public URL, updates with a single `claude update`, and ships frequent, very minor
+versions so updating is routine rather than an event. "I like frequent and very minor updates
+(it is very iterative)." Recorded as `req:frictionless-update` (proposed, low), partially
+satisfied by the install capability with the delta on the edge's evidence. The concrete gaps,
+now that the repo is public and BL-15's machinery exists:
+
+- **(S) A stable public one-liner.** `install.sh` is already checksum-verified and pulls
+  published binaries; what is missing is the documented, tested
+  `curl -fsSL https://raw.githubusercontent.com/sligara7/reflow2/main/install.sh | bash`
+  path (or a short redirect domain later) in SETUP.md and the README, exercised by a probe.
+- **(M) One-word update.** Today updating is "rerun the installer" or
+  `reflow2_init.py <project>` in place. Wants `reflow2-mcp update` (or a thin `reflow2`
+  wrapper verb) that re-runs the checksum-verified fetch and swaps binary + kit together —
+  the staleness detection half already exists (`served_by`/BL-32, `KIT_VERSION.json`/BL-18),
+  so this is the acting half.
+- **(cadence, no code) Frequent minor cuts.** release.yml makes a cut cheap; the practice is
+  cutting often and keeping CHANGELOG sections small. Nothing to build — but the one-word
+  update is what makes a frequent cadence tolerable to consumers, so it gates the practice.
+
 ## Deliberate deferrals
 
 Not gaps — decisions, recorded so they aren't rediscovered as bugs.

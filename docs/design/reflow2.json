@@ -327,6 +327,42 @@
       "to_id": "cap:kit"
     },
     {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl48-bl49-tool-surface",
+      "properties": {},
+      "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl50-tool-boundary",
+      "properties": {},
+      "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:merge-integrity-bl47-bl46",
+      "properties": {},
+      "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:stub-survivor-reconciliation",
+      "properties": {},
+      "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:v050-as-released",
+      "properties": {},
+      "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v050",
+      "properties": {},
+      "to_id": "epoch:v050-cut"
+    },
+    {
       "edge_type": "CHANGED",
       "from_id": "chg:bl48-bl49-tool-surface",
       "properties": {
@@ -478,6 +514,33 @@
         "action": "modified"
       },
       "to_id": "req:platform"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:v050-as-released",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:v050-as-released",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "rel:v040"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:v050-as-released",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "rel:v050"
     },
     {
       "edge_type": "CONSUMES",
@@ -808,6 +871,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:driving-agent"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:frictionless-update"
     },
     {
       "edge_type": "CONTAINS",
@@ -1615,8 +1684,25 @@
       "to_id": "art:service"
     },
     {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:ef7573d05677f7e3",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:nodes"
+    },
+    {
       "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v040",
+      "properties": {
+        "status": "rolled_back"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v050",
       "properties": {
         "status": "active"
       },
@@ -1973,6 +2059,284 @@
     {
       "edge_type": "INCLUDES",
       "from_id": "rel:v040",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:ef54ecabcaf64bc5"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:1c729eee5b67e7dc"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:4d3f6e1093dc2564"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:c68b6e51f89b5caf"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:5e77e752c0c60d06"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:a25ed6b6f633a3aa"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:fbe714849869c1d8"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:676d89b9e3be53bd"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:74c0459e03ad38ce"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:1957641d39c28842"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:58f501423e219105"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:e2e94e52eb601d53"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:328b25be480771fb"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:2f778205ea735815"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:2f697a383b3c457d"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:6b75bc576b6c891f"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:6c4a5b9cdeec6e79"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:54a1679022bb86b4"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:c93add83eac73087"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:feca736d9d86d965"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:fd2798d2ecea28c8"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:d8275cc570cb9bb2"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:383cd220f7f1b639"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:d2f251dfcb8193df"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:c421c3496192d22d"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:dd075fc2b016c95c"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:8fb4dc8eb7c490fb"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:f9e9aed059f42db7"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:824287d5a22bd960"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
+      "properties": {
+        "as_checksum": "sha256:86bc99c202396a5f"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v050",
       "properties": {},
       "to_id": "cmp:skills"
     },
@@ -2385,6 +2749,15 @@
       "from_id": "cap:kit",
       "properties": {},
       "to_id": "req:driving-agent"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:kit",
+      "properties": {
+        "coverage": "partial",
+        "evidence": "install.sh is checksum-verified and pulls published binaries (no rebuild), and reflow2_init.py updates a project in place — but the installer is not yet reachable from a stable public one-liner URL, there is no single self-update command, and the release cadence is not yet frequent-and-minor. The delta is the backlog's frictionless-update item."
+      },
+      "to_id": "req:frictionless-update"
     },
     {
       "edge_type": "SATISFIES",
@@ -3191,7 +3564,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c93add83eac73087",
+        "checksum": "sha256:ed67a002f4a0c5da",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
         "status": "realized"
@@ -3697,6 +4070,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Reconcile genesis-stub survivor nodes with the committed model (user-approved 2026-07-20): merge cap:install→cap:kit, cap:artifacts→cap:reconcile-built, req:past-preserved→req:intent-preserved; wire cap:store; satisfy req:platform via cap:kit; verify cap:adopt from the storyflow trial"
+      }
+    },
+    {
+      "node_id": "chg:v050-as-released",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "name": "v0.5.0 as-released model: rel:v050 recorded (33 artifacts frozen at tag v0.5.0 + the skills tree), deployed active on the developer machine; rel:v040 retired and its deployment declaration withdrawn (upgraded in place); INCLUDES joined the traceability table so a release is part of the design network rather than an island"
       }
     },
     {
@@ -4290,6 +4671,24 @@
       }
     },
     {
+      "node_id": "epoch:v050-cut",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.5.0 release cut (2026-07-20)",
+        "sequence": 1
+      }
+    },
+    {
+      "node_id": "epoch:v050-hardening",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Post-v0.5.0 hardening: self-adopt reconciliation, BL-46..50, the as-released model (2026-07-20)",
+        "sequence": 2
+      }
+    },
+    {
       "node_id": "drift:2df9aeb2250d9b16",
       "node_type": "DriftEvent",
       "properties": {
@@ -4347,6 +4746,18 @@
         "resolved": true,
         "severity": "medium",
         "summary": "'art:service' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:ef7573d05677f7e3",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-20",
+        "drift_type": "checksum_change",
+        "name": "art:nodes drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:nodes' has changed since it was registered against the design"
       }
     },
     {
@@ -4799,10 +5210,23 @@
       "node_id": "rel:v040",
       "node_type": "Release",
       "properties": {
+        "description": "Superseded by v0.5.0 on the developer machine (deployment declaration withdrawn as rolled_back, 2026-07-20 — the binary was upgraded in place, not reverted).",
         "name": "v0.4.0",
-        "status": "planned",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.4.0"
+      }
+    },
+    {
+      "node_id": "rel:v050",
+      "node_type": "Release",
+      "properties": {
+        "created_at": "2026-07-20",
+        "description": "First release cut from the public repo; first live run of release.yml (3-platform binaries + kit tarball, checksum-verified install.sh). Surface change from v0.4.0: documents tool; graph model unchanged.",
+        "name": "v0.5.0",
+        "status": "deployed",
+        "unit_type": "binary",
+        "version": "0.5.0"
       }
     },
     {
@@ -4894,6 +5318,19 @@
         "provenance": "authored",
         "statement": "The primary consumers are Claude Code and grok build (plus OpenCode/Copilot), which reach the system as MCP tools plus an installed skill kit. The human is reached only through the agent.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:frictionless-update",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Install is one command, update is one word",
+        "priority": "low",
+        "provenance": "authored",
+        "statement": "A consumer installs reflow2 with a single command from a stable public URL (curl | bash or the platform equivalent) and updates with a single short command; releases are frequent and very minor, so updating is routine and cheap rather than an event. Modeled on the Claude Code installer/update experience the user named as the target (2026-07-20).",
+        "status": "proposed"
       }
     },
     {

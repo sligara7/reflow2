@@ -28,6 +28,12 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **A Release is part of the design network** — INCLUDES joined the propagate/structure
+  traceability table (same shape as REALIZES: the contents are the source of truth, the
+  release a downstream packaging). A changed artifact now reaches the releases that ship it
+  in a blast radius, and a Release + Environment pair is no longer a disconnected island by
+  construction — found modelling v0.4.0, where the graph's own HEAL reported `{env:dev,
+  rel:v040}` as a 2-node disconnected community.
 - **Integer literals are accepted for float-typed properties** (BL-50): `confidence: 1` now
   widens losslessly to `1.0` at the core write seam instead of being refused with "expected
   Float, got int". JSON has one number type; every client writes the bare integer. Range

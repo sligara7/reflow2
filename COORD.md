@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- v0.5.0 Release node (from Blocked/waiting) — @ajs — since 2026-07-20 — self-model graph (add_release/release_includes/release_report), env:dev+rel:v040 island wiring, export refresh
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -67,15 +66,15 @@ Add yourself if you're new here.
   that exists in the REWRITTEN history (the first run staged the kit pre-rewrite — contents
   identical, stamp cosmetically stale). Then BL-15 verification is fully closed.
 
-- **v0.5.0 Release node** — the graph's as-released model stops at rel:v040 while
-  req:released-eq-designed is critical; wants a session with add_release + release_includes +
-  release_report, wiring the {env:dev, rel:v040} island in the same pass. Raised by the
-  self-adopt live session. Then the standalone-repo conversation (counterpart Decision with
-  reopening conditions, CRUD skills, and search are all in place for it).
+- **Standalone-repo conversation** — was gated on the v0.5.0 Release node (done 2026-07-20);
+  counterpart Decision with reopening conditions, CRUD skills, and search are all in place
+  for it. Wants the user.
 
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- v0.5.0 Release node done: rel:v050 with all 34 artifacts frozen at tag v0.5.0 + cmp:skills, deployed active on env:dev; release_report answers released==designed with 26/26 capabilities covered and an empty not-covered diff; rel:v040 retired, its deployment withdrawn (rolled_back — the sanctioned "declaration withdrawn" vocabulary per reconcile_deployment's own correction path). ROOT-CAUSE FIX: INCLUDES joined the traceability table (nodes.rs) — the {env:dev, rel:v040} island existed because every release was outside the design network by construction; pinned by structural + propagate tests. build_design_graph.py now freezes release checksums from git tags, never the working tree (v0.4.0 manifest verified 33/33 against its tag first). Axis-Z: epoch:v050-cut + epoch:v050-hardening added, five floating ChangeEvents pinned (render_views confession cleared). ALSO from user mid-session: req:frictionless-update captured (Claude-Code-style one-liner install / one-word update / frequent minor cadence) → BL-51. Export 211n/434e, gaps 0 — @ajs — 2026-07-20 — (this commit)
 
 - BL-50 done (all three): int literals widen to schema floats at the core write seam (range check kept, foundation untouched); add_change_event takes `affected` and draws CHANGED atomically — refuse-first, write-whole; describe_schema counts half-exact matches so CHANGED reads as the modelled fit; delete_node/delete_edge return {deleted} (bare-bool envelope, caught by BL-48's choke-point wrap); SessionStart hook recipe documented in the kit's step 0a. Workspace 39 suites green, smoke ALL PASS incl. 9 new checks; drift on art:graph/art:vocabulary/art:service accepted two-sided (chg:bl50-tool-boundary), export 205n/386e, gaps 0. Same restart caveat: a session predating this build serves the old surface — @ajs — 2026-07-20 — (this commit)
 

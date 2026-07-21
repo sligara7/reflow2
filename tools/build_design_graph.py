@@ -28,6 +28,7 @@ import json
 import pathlib
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 
@@ -119,10 +120,13 @@ CAPABILITIES = [
      "verified", ["req:golden-thread"]),
     ("cap:hierarchy", "Check decomposition levels", "Find missing intermediates and level mismatches — axis Y.",
      "verified", ["req:coherence"]),
+    # Both moved realized -> verified 2026-07-20 (user-directed sweep): their
+    # suites were run live (dimensions 6/6, ingest 16/16) with VERIFIES edges
+    # already in place.
     ("cap:dimensions", "Track quality over time", "Assess nodes on dimensions and detect decline.",
-     "realized", ["req:coherence"]),
+     "verified", ["req:coherence"]),
     ("cap:ingest", "Extract a design from freeform text", "Multi-pass LLM extraction with provenance.",
-     "realized", ["req:no-se-knowledge"]),
+     "verified", ["req:no-se-knowledge"]),
     ("cap:questions", "Remember what was asked", "Questions outlive the session; answers stay visible.",
      "verified", ["req:no-se-knowledge"]),
     ("cap:report", "Say where the design stands", "One rollup answering 'what should I look at?'.",
@@ -484,28 +488,64 @@ def build(s: Server) -> None:
         for target in governs:
             s.call("governed_by", {"from_type": "Capability", "from_id": target,
                                    "to_type": "Decision", "to_id": did})
-    # The release the CURRENT checksums belong to. v0.3.0 is tagged at 36adb2e
-    # (2026-07-19) and several files on main have moved since — freezing
-    # today's checksums under that tag would assert content into a release
-    # that never carried it (the same lie this block once told about v0.2.0).
-    # Status `built` until the tag is pushed (COORD's post-restart step).
-    s.call("add_release", {"id": "rel:v040", "name": "v0.4.0", "version": "0.4.0",
-                           "unit_type": "binary", "status": "built"})
-    # The as-released view (BL-34): checksum frozen at what is on main now.
-    for cmp_id, path in ARTIFACTS.items():
-        s.call("release_includes", {
-            "release_id": "rel:v040", "target_type": "Artifact",
-            "target_id": f"art:{cmp_id.split(':')[1]}",
-            "as_checksum": sha(REPO / path)})
-    # The skills tree ships too — the kit installs it into consumer projects.
-    # Without this line the graph truthfully complained "built but ships in
-    # nothing" (unreleased_component, first fired 2026-07-20).
-    s.call("release_includes", {"release_id": "rel:v040",
-                                "target_type": "Component",
-                                "target_id": "cmp:skills"})
+    # Releases are frozen at their git tags — never hashed from the working
+    # tree. Two earlier versions of this block hashed the CURRENT files under a
+    # tag's name, asserting content into a release that never carried it;
+    # `git show tag:path` is the only honest source for "as shipped".
+    def sha_at(tag: str, path: str) -> str:
+        r = subprocess.run(["git", "show", f"{tag}:{path}"],
+                           capture_output=True, cwd=REPO)
+        if r.returncode != 0:
+            raise SystemExit(
+                f"{path} does not exist at tag {tag} — refusing to invent a checksum")
+        return "sha256:" + hashlib.sha256(r.stdout).hexdigest()[:16]
+
+    RELEASES = [
+        ("rel:v040", "v0.4.0", "0.4.0", "retired",
+         "Superseded by v0.5.0 on the developer machine (deployment declaration "
+         "withdrawn as rolled_back, 2026-07-20 — the binary was upgraded in "
+         "place, not reverted).", []),
+        ("rel:v050", "v0.5.0", "0.5.0", "deployed",
+         "First release cut from the public repo; first live run of release.yml "
+         "(3-platform binaries + kit tarball, checksum-verified install.sh). "
+         "Surface change from v0.4.0: documents tool; graph model unchanged.",
+         ["art:adopt-skill"]),
+    ]
+    EXTRA_RELEASE_ARTIFACTS = {
+        "art:adopt-skill": "getting-started/skills/adopt/SKILL.md",
+    }
     s.call("add_environment", {"id": "env:dev", "name": "Developer machine",
                                "env_type": "development"})
-    s.call("deploy_to", {"release_id": "rel:v040", "environment_id": "env:dev", "status": "active"})
+    for rid, tag, version, status, description, extras in RELEASES:
+        s.call("add_release", {"id": rid, "name": tag, "version": version,
+                               "unit_type": "binary"})
+        s.call("create_node", {"node_type": "Release", "id": rid,
+                               "props": {"status": status,
+                                         "description": description}})
+        # The as-released view (BL-34): the manifest, frozen at the tag.
+        for cmp_id, path in ARTIFACTS.items():
+            s.call("release_includes", {
+                "release_id": rid, "target_type": "Artifact",
+                "target_id": f"art:{cmp_id.split(':')[1]}",
+                "as_checksum": sha_at(tag, path)})
+        for art_id in extras:
+            s.call("release_includes", {
+                "release_id": rid, "target_type": "Artifact",
+                "target_id": art_id,
+                "as_checksum": sha_at(tag, EXTRA_RELEASE_ARTIFACTS[art_id])})
+        # The skills tree ships too — the kit installs it into consumer
+        # projects. Without this line the graph truthfully complained "built
+        # but ships in nothing" (unreleased_component, first fired 2026-07-20).
+        s.call("release_includes", {"release_id": rid,
+                                    "target_type": "Component",
+                                    "target_id": "cmp:skills"})
+    # v0.4.0 ran here until v0.5.0 replaced it in place; rolled_back is the
+    # sanctioned vocabulary for "the active declaration is withdrawn" (the
+    # reconcile_deployment correction path uses exactly this).
+    s.call("deploy_to", {"release_id": "rel:v040", "environment_id": "env:dev",
+                         "status": "rolled_back"})
+    s.call("deploy_to", {"release_id": "rel:v050", "environment_id": "env:dev",
+                         "status": "active"})
 
 
 def analyse(s: Server) -> None:

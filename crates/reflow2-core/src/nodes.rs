@@ -255,6 +255,15 @@ pub(crate) fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
         "PROVIDES" | "CONSUMES" | "DEPENDS_ON" | "PART_OF_FLOW" => (Some(Lateral), Some(Lateral)),
         // Operation chain.
         "DEPLOYED_TO" | "REQUIRES_RESOURCE" => (Some(Downstream), Some(Upstream)),
+        // As-released packaging: Release INCLUDES Artifact/Component. Same
+        // shape as REALIZES — the contents are the source of truth, the
+        // release a downstream packaging of them: a changed artifact ripples
+        // to the releases that ship it (the next cut differs), and from a
+        // release you reach what it packaged. Absent from this table, every
+        // Release+Environment pair was a disconnected island in the design
+        // network — DEPLOYED_TO joined them to each other and INCLUDES joined
+        // them to nothing (found modelling v0.4.0, fixed for v0.5.0).
+        "INCLUDES" => (Some(Upstream), Some(Downstream)),
         _ => return None,
     };
     Some(EdgeRule {
