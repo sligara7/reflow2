@@ -1568,6 +1568,58 @@ decisions to make:
 Not a silent-drop fix like BL-58 — the current behaviour is honest, just incomplete; this
 completes axis-Z coverage for the edge dimension of change.
 
+**BL-64 · The lifecycle stops at Operation — no disposal / retirement phase** — *user, UAF
+lifecycle-breadth analysis, 2026-07-21.* Concept; size **M–L**; needs the user on vocabulary.
+
+reflow2's phase spine is P0 Intent → P5 Operation, full stop. UAF's sixth phase — decommission:
+retirement timelines, data-migration pathways, unwinding dependencies, sunsetting the
+capabilities a system provided to *others* — has no representation (node-type probe: no
+`Disposal`/`Retirement`/lifecycle-state construct). Do not confuse with the `retire-from-design`
+skill: that retires something from the *model*; this is about modelling the *system's* end of
+life.
+
+The insight that makes this cheap: **reflow2 already has the retirement-impact engine** —
+`propagate_from` answers "what breaks if we remove X." What's missing is (a) the *vocabulary*
+to say "this Component/Capability/Release is planned for retirement" (a `lifecycle_state`:
+`active` / `sunsetting` / `retired` / `disposed`, or a first-class phase), (b) a *detector* —
+"a node marked `sunsetting` still has active dependents / consumers who were never told" (the
+retirement analog of `unsatisfied_requirement`), reusing the detect-and-ask loop, and (c)
+modelling the *replacement/migration* (which capability supersedes it, where the data goes) as
+Decisions + `EVOLVES_INTO`/`OBSOLETES` — the same pattern BL-63 showed is how ownership history
+should be recorded. Interim mitigation (cheap, do first): document that the removal blast radius
+(`propagate_from` with a removal framing) *is* the retirement impact-check today.
+
+**BL-65 · Risk & security are inference edges, not a lifecycle-spanning concern** — *user, UAF
++ DevSecOps analysis, 2026-07-21.* Concept; size **L**; needs the user on vocabulary.
+
+Two commercial/defense lineages converge on the same gap. **UAF** embeds Security & Risk
+viewpoints at *every* phase (concept → design → field), never bolted on. **DevSecOps** makes
+that continuous and automated — SAST/SCA on every commit, security as a shift-left gate, not an
+end-of-line compliance check. reflow2 has neither shape: risk exists only as inference *edges*
+(`RISKS`, `MITIGATES`, `BLOCKS`), there is no `Risk` / `Threat` / `Control` / `SecurityAsset`
+node (node-type probe confirms), and — the load-bearing gap — **the coherence loop has no
+detector for the *absence* of a risk/security assessment.** It flags an unsatisfied requirement;
+it never flags "this capability crosses a trust boundary or handles sensitive data and no risk
+was assessed here." The seed exists: `EnvironmentRule` + `COMPLIES_WITH` / `VIOLATES_RULE` is a
+compliance layer, and `cap:freshness`'s confirmation ledger is the pattern for "a claim nobody
+has re-checked."
+
+Fix, three layers: (a) **a first-class `Risk` node** (likelihood / impact / status), linked via
+`RISKS` / `MITIGATES` to what it threatens and `CONSTRAINS` to what bounds it — optionally
+`Threat` / `Control` for a fuller security model. (b) **A cross-cutting detector** —
+`unassessed_risk`: a node past a phase gate, crossing a boundary or marked sensitive, with no
+linked risk assessment, fires a gap through the *existing* detect-and-ask loop (this is the UAF
+"every phase" principle expressed as reflow2's native "detect the silence" move). (c) **Continuous
+automated governance** (the DevSecOps angle): compliance/security is reconciled the same way
+artifacts are — a caller (CI, a scanner) supplies observations, reflow2 reports drift, and a
+**security-debt ledger** (mirroring the confirmation ledger) shows what is `assessed` /
+`drifting` / `unexamined` per node. Interim: document that `RISKS`/`MITIGATES` + `EnvironmentRule`
+are today's tools and that reflow2 does not yet detect their *absence*.
+
+Both BL-64 and BL-65 deliberately reuse propagate + detect-and-ask rather than inventing
+subsystems; the genuinely new part in each is *vocabulary* (a lifecycle state; a Risk node),
+which is a design decision for the user — hence "concept, needs the user."
+
 ## Deliberate deferrals
 
 Not gaps — decisions, recorded so they aren't rediscovered as bugs.
