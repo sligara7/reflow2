@@ -1269,24 +1269,37 @@ removed node's `action: removed` overwrote the survivor's `modified` after being
 Semantics pinned on `dec:merge-survivor-provenance`; the unset slot is unit-pinned at the
 `provenance_rank` seam because today's API cannot build a vintage node.
 
-**BL-48 · `graph_report_markdown` returns malformed `structuredContent`** — *self-adopt live
-session.* Size **S**.
+**BL-48 · `graph_report_markdown` returns malformed `structuredContent` — DONE 2026-07-20** —
+*self-adopt live session.* Size **S**.
 
-From Claude Code the tool fails client-side schema validation: `structuredContent` arrives as a
-string where the MCP result contract wants a record. The fifteenth recurring-lesson instance in
-the making — the capability exists and one harness cannot reach it — and the same
-response-side shape as the original array `structuredContent` bug. `tools/smoke_mcp.py` should
-assert the result envelope, not only the payload.
+From Claude Code the tool failed client-side schema validation: `structuredContent` arrived as a
+string where the MCP result contract wants a record — the fifteenth recurring-lesson instance
+(the capability exists and one harness cannot reach it), and the same response-side shape as the
+original array `structuredContent` bug. **Fixed at both layers**: the tool now returns the
+report as plain text content with no `structuredContent` (a prose document has no structure to
+declare — `ok_markdown`), and `ok_json` — the choke point every other tool returns through —
+wraps any remaining scalar as `{value}` so no future tool can leak one. `smoke_mcp.py` now
+asserts the envelope on **every** call it makes (`structuredContent`, when present, must be an
+object) and fetches the Markdown report over the real wire — the check that would have caught
+this the day it shipped. Reproduced live in this session before fixing (the tool failed as the
+first call of a where-am-i pass).
 
-**BL-49 · Unbounded read-tool results overflow the agent boundary** — *self-adopt live
-session.* Size **M**.
+**BL-49 · Unbounded read-tool results overflow the agent boundary — DONE 2026-07-20** —
+*self-adopt live session.* Size **M**.
 
 `propagate_change` returned 70k chars (142 impacted nodes), `export_graph` 93k — both
 overflowed the tool-result budget and were readable only through the harness's spill-to-file
 fallback plus `jq`. A blast radius nobody can read inside the loop is a blast radius that
-doesn't get read. Wants a `summary`/`max_nodes` mode (counts by distance, the distance-1 ring,
-risk crossings — exactly what a session actually uses) with the full dump behind an explicit
-flag; export likely wants a path-writing variant instead of a payload.
+doesn't get read. **Both propagate tools now answer with a summary by default** — counts by
+distance (every impacted node in a band, `total_impacted` checked against the full walk in
+tests), the distance-1 ring with the edge that reached each node, risk crossings at any
+distance, `unknown_seeds`/`truncated_beyond_depth` carried through — with the full per-node
+`via` dump behind `full: true`. The summary is computed in core (`BlastRadius::summarize`), not
+shaped at the surface. **`export_graph` takes an optional `path`**: it writes the document as
+deterministic sorted-key JSON (byte-identical on an unchanged graph — pinned in tests) and
+returns a `{path, bytes, nodes, edges, stamp}` receipt instead of the payload. The impact-check
+skill teaches the summary-first contract. `max_nodes` was not added: the summary removes the
+size driver (hop chains), and a cap on the ring would be a silent truncation with extra steps.
 
 **BL-50 · Tool-boundary paper cuts from the self-adopt live session** — grouped, each **S**.
 

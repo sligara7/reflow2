@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-48 + BL-49 — @ajs — since 2026-07-20 — crates/reflow2-mcp (service.rs/tools.rs), tools/smoke_mcp.py; report envelope + bounded read-tool results
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -76,6 +75,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-48 + BL-49 done: graph_report_markdown returns prose as text (ok_json wraps any scalar — the string twin of the array envelope bug), propagate defaults to a core-computed summary (full dump behind full=true), export_graph writes a deterministic file on request; smoke_mcp asserts the result envelope on every call + drives all three over real stdio; impact-check skill teaches summary-first; drift on art:propagate/art:service accepted two-sided (chg:bl48-bl49-tool-surface), export 201n/380e, gaps 0. Side effect: reflow2_init.py rerun for the mirror refresh did the full self-host conversion — REFLOW2.md + pointer lines committed, per-machine MCP configs (opencode.json, .vscode/mcp.json) gitignored. NOTE: a session started before this build serves the old shapes — restart before relying on summary/path live — @ajs — 2026-07-20 — (this commit)
 
 - Proposed-requirement sweep + capability verification done (user-directed): all 6 proposed requirements evidence-checked against the repo and accepted (deterministic-core, invocation, persistence, driving-agent, human-decides, as-built-honest — statements match reality verbatim, provenance now explicit `authored`); cap:dimensions + cap:ingest realized→verified on live runs of their suites (6/6, 16/16), VERIFIES edges already in place; gaps stay 0; export refreshed (198n/376e). Requirement statuses now: 17 accepted, 0 proposed — @ajs — 2026-07-20 — (this commit)
 

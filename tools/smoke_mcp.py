@@ -99,8 +99,32 @@ class Server:
         if result.get("isError"):
             raise RuntimeError(f"{tool}: tool error: {result.get('content')}")
         if "structuredContent" in result:
-            return _unwrap(result["structuredContent"])
+            sc = result["structuredContent"]
+            # MCP defines structuredContent as an object. A bare string is the
+            # BL-48 shape (graph_report_markdown), a bare array the BL-27-era
+            # one — both pass every Rust-side test and fail a real client, so
+            # the envelope is asserted here, where the real wire format lands.
+            if not isinstance(sc, dict):
+                raise AssertionError(
+                    f"{tool}: structuredContent must be a JSON object, "
+                    f"got {type(sc).__name__}")
+            return _unwrap(sc)
         return json.loads(result["content"][0]["text"])
+
+    def call_text(self, tool: str, args=None) -> str:
+        """Call a tool that returns prose; return its text content. Asserts it
+        does NOT put the prose in structuredContent (BL-48)."""
+        resp = self.rpc("tools/call", {"name": tool, "arguments": args or {}})
+        if "error" in resp:
+            raise RuntimeError(f"{tool}: JSON-RPC error: {resp['error']}")
+        result = resp["result"]
+        if result.get("isError"):
+            raise RuntimeError(f"{tool}: tool error: {result.get('content')}")
+        if "structuredContent" in result:
+            raise AssertionError(
+                f"{tool}: a prose tool must not send structuredContent, "
+                f"got {str(result['structuredContent'])[:120]}")
+        return result["content"][0]["text"]
 
     def call_expect_error(self, tool: str, args=None):
         """Call a tool that should be refused; return the error text, or None if
@@ -557,10 +581,21 @@ def run(binary: str, graph_path: str) -> int:
 
     s.call("set_verification_status", {"verification_id": "ver:flight",
                                        "status": "failing"})
-    radius = s.call("propagate_from", {"seed_ids": ["ver:flight"]})
+    radius = s.call("propagate_from", {"seed_ids": ["ver:flight"], "full": True})
     c.ok("a failing check reaches the requirement it protects",
          any(n["node_id"] == "req:physics" for n in radius["impacted"]),
          [n["node_id"] for n in radius["impacted"]])
+
+    # BL-49: without full=True the same walk answers with a summary a session
+    # can actually read — every node still counted, hop chains withheld.
+    brief = s.call("propagate_from", {"seed_ids": ["ver:flight"]})
+    c.ok("the default blast radius is a summary, not the dump (BL-49)",
+         "impacted" not in brief and "counts_by_distance" in brief, list(brief))
+    c.ok("and the summary counts every node the full walk found",
+         brief["total_impacted"] == len(radius["impacted"]),
+         {"summary": brief.get("total_impacted"), "full": len(radius["impacted"])})
+    c.ok("and the distance-1 ring names the edge that reached each node",
+         all("edge_type" in n for n in brief["direct_ring"]), brief["direct_ring"])
 
     print("\n== 3c. the P4 reconcile: recorded outcome vs the real run (BL-30) ==")
     vr = s.call("reconcile_verification", {
@@ -606,7 +641,7 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("a DriftEvent was recorded", len(r["recorded_events"]) == 1, r["recorded_events"])
 
     print("\n== 6. the change reaches the intent behind it ==")
-    radius = s.call("propagate_from", {"seed_ids": r["propagation_seeds"]})
+    radius = s.call("propagate_from", {"seed_ids": r["propagation_seeds"], "full": True})
     reached = {n["node_id"]: n["direction"] for n in radius["impacted"]}
     c.ok("reaches the requirement", "req:physics" in reached, list(reached))
     c.ok("and reaches it upstream", reached.get("req:physics") == "upstream", reached)
@@ -664,6 +699,10 @@ def run(binary: str, graph_path: str) -> int:
     # same binary.
     init_version = (s.handshake_result or {}).get("result", {}).get(
         "serverInfo", {}).get("version")
+    md = s.call_text("graph_report_markdown")
+    c.ok("the Markdown report arrives as text a client accepts (BL-48)",
+         md.lstrip().startswith("#"), md[:80])
+
     sb = s.call("graph_report").get("served_by", {})
     c.ok("graph_report names the reflow2 serving it (BL-32)",
          bool(sb.get("reflow2_version")), sb)
@@ -846,6 +885,17 @@ def run(binary: str, graph_path: str) -> int:
          len(doc["nodes"]) > 0 and doc["stamp"]["node_types"] > 0, doc.get("stamp"))
     c.ok("and the export is byte-identical on a second run",
          json.dumps(s.call("export_graph"), sort_keys=False) == json.dumps(doc, sort_keys=False))
+
+    # BL-49: the same document written to a file instead of the payload — a
+    # backup wants to be a file, and on a large design the payload overflows
+    # what a session can read.
+    export_file = graph_path + "-export.json"
+    receipt = s.call("export_graph", {"path": export_file})
+    with open(export_file) as fh:
+        on_disk = json.load(fh)
+    c.ok("export writes to a file on request, and reports what it wrote (BL-49)",
+         receipt.get("nodes") == len(doc["nodes"]) and on_disk["nodes"] == doc["nodes"],
+         receipt)
 
     restore_path = graph_path + "-restored"
     r = Server(binary, restore_path)

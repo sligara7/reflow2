@@ -19,3 +19,5 @@ load-bearing: `reflow2-mcp` enables the `rocksdb` feature on the dependency edge
 `--no-default-features` cannot switch off, so dropping it costs a ten-minute C++ build. The
 done-gate above is `--workspace` on purpose — the core-only command cannot see the MCP surface at
 all.
+
+> **reflow2 is installed here.** The design graph is this project's memory — read [REFLOW2.md](REFLOW2.md) and consult it before writing or changing code.

@@ -4,10 +4,13 @@ __pycache__/
 # Rust
 /target
 
-# Self-host: reflow2's own graph is a RocksDB directory, and .mcp.json carries an
-# absolute path to a local debug build. Both are per-machine, not shared state.
+# Self-host: reflow2's own graph is a RocksDB directory, and the agent MCP
+# configs (.mcp.json, opencode.json, .vscode/mcp.json) carry absolute paths to a
+# local build. All are per-machine, not shared state.
 /.reflow2/
 /.mcp.json
+/opencode.json
+/.vscode/mcp.json
 
 
 # Trial records about real systems (storyflow, ophyd-service, personal projects)

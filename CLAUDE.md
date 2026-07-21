@@ -12,3 +12,5 @@ Order:
 1. **`git pull --rebase`**, then **[COORD.md](COORD.md)** — the claim board. Claim what you take.
 2. **[AGENTS.md](AGENTS.md)** — commands, architecture, invariants.
 3. **[docs/backlog.md](docs/backlog.md)** — what is open and why.
+
+> **reflow2 is installed here.** The design graph is this project's memory — read [REFLOW2.md](REFLOW2.md) and consult it before writing or changing code.

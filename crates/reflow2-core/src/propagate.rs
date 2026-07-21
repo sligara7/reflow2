@@ -18,7 +18,7 @@
 //! It only computes and tags — turning tags into questions is SURFACE and
 //! repair is HEAL (discipline 5: feed the loop, don't fix).
 
-use std::collections::{HashMap, HashSet, VecDeque};
+use std::collections::{BTreeMap, HashMap, HashSet, VecDeque};
 
 use dynograph_core::DynoError;
 
@@ -93,6 +93,109 @@ impl BlastRadius {
     pub fn was_truncated(&self) -> bool {
         self.truncated_beyond_depth > 0
     }
+
+    /// Compress the radius to what a session reads first (BL-49): counts per
+    /// distance band, the distance-1 ring, and every risk crossing. Nothing is
+    /// hidden — every impacted node is counted in a band and
+    /// `truncated_beyond_depth` is carried through — but the per-node `via`
+    /// chains, which dominate the payload on a large design, are only in the
+    /// full [`BlastRadius`].
+    pub fn summarize(&self) -> BlastRadiusSummary {
+        let mut bands: BTreeMap<usize, usize> = BTreeMap::new();
+        for n in &self.impacted {
+            *bands.entry(n.distance).or_insert(0) += 1;
+        }
+        let direct_ring = self
+            .impacted
+            .iter()
+            .filter(|n| n.distance == 1)
+            .map(|n| {
+                let hop = n
+                    .via
+                    .last()
+                    .expect("a distance-1 node is reached by exactly one hop");
+                RingNode {
+                    node_id: n.node_id.clone(),
+                    node_type: n.node_type.clone(),
+                    direction: n.direction,
+                    edge_type: hop.edge_type.clone(),
+                    is_risk: hop.is_risk,
+                }
+            })
+            .collect();
+        let risk_crossings = self
+            .impacted
+            .iter()
+            .filter(|n| n.crosses_risk_edge)
+            .map(|n| RiskCrossing {
+                node_id: n.node_id.clone(),
+                node_type: n.node_type.clone(),
+                distance: n.distance,
+            })
+            .collect();
+        BlastRadiusSummary {
+            seeds: self.seeds.clone(),
+            unknown_seeds: self.unknown_seeds.clone(),
+            total_impacted: self.impacted.len(),
+            counts_by_distance: bands
+                .into_iter()
+                .map(|(distance, count)| DistanceBand { distance, count })
+                .collect(),
+            direct_ring,
+            risk_crossings,
+            max_depth: self.max_depth,
+            truncated_beyond_depth: self.truncated_beyond_depth,
+        }
+    }
+}
+
+/// How many impacted nodes sit `distance` hops out.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct DistanceBand {
+    pub distance: usize,
+    pub count: usize,
+}
+
+/// A node in the distance-1 ring, with the single hop that reached it.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct RingNode {
+    pub node_id: String,
+    pub node_type: String,
+    pub direction: ImpactDirection,
+    pub edge_type: String,
+    pub is_risk: bool,
+}
+
+/// A node whose impact chain crossed a risk edge, wherever it sits.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct RiskCrossing {
+    pub node_id: String,
+    pub node_type: String,
+    pub distance: usize,
+}
+
+/// [`BlastRadius`] compressed for reading inside a session; see
+/// [`BlastRadius::summarize`].
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct BlastRadiusSummary {
+    /// Seed node ids the propagation started from.
+    pub seeds: Vec<String>,
+    /// Seeds that were not found as real nodes (surfaced, never silently
+    /// dropped).
+    pub unknown_seeds: Vec<String>,
+    /// Every impacted node is counted here, whatever its distance.
+    pub total_impacted: usize,
+    /// Node counts per hop distance, nearest first.
+    pub counts_by_distance: Vec<DistanceBand>,
+    /// The nodes one hop from a seed — the ring a session acts on.
+    pub direct_ring: Vec<RingNode>,
+    /// Every node reached across a risk edge, at any distance.
+    pub risk_crossings: Vec<RiskCrossing>,
+    /// The depth bound the traversal used.
+    pub max_depth: usize,
+    /// Count of further nodes reachable beyond `max_depth` — reported, not
+    /// hidden.
+    pub truncated_beyond_depth: usize,
 }
 
 /// Options for a propagation run.

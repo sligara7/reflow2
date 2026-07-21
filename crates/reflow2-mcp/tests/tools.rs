@@ -100,7 +100,8 @@ async fn golden_thread_and_reports() {
     // Speculative propagate from the requirement — partial field present.
     let radius = j!(s.propagate_from(Parameters(PropagateFromReq {
         seed_ids: vec!["req:physics".into()],
-        max_depth: None
+        max_depth: None,
+        full: None
     })));
     assert!(
         radius["unknown_seeds"].is_array(),
@@ -110,7 +111,8 @@ async fn golden_thread_and_reports() {
     // Unknown seed is reported, never silently dropped.
     let radius2 = j!(s.propagate_from(Parameters(PropagateFromReq {
         seed_ids: vec!["nope:x".into()],
-        max_depth: Some(3)
+        max_depth: Some(3),
+        full: None
     })));
     assert_eq!(radius2["unknown_seeds"][0], "nope:x");
 }
@@ -338,6 +340,7 @@ async fn interface_tools_pair_both_sides_of_a_contract() {
     let radius = j!(s.propagate_from(Parameters(PropagateFromReq {
         seed_ids: vec!["cmp:physics".into()],
         max_depth: None,
+        full: Some(true),
     })));
     let impacted = radius["impacted"].as_array().expect("impacted array");
     assert!(
@@ -435,6 +438,7 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
     let radius = j!(s.propagate_from(Parameters(PropagateFromReq {
         seed_ids: vec!["cap:flight".into()],
         max_depth: None,
+        full: Some(true),
     })));
     assert!(
         radius["impacted"]
@@ -558,6 +562,7 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
     let radius = j!(s.propagate_from(Parameters(PropagateFromReq {
         seed_ids: vec!["ver:flight".into()],
         max_depth: None,
+        full: Some(true),
     })));
     assert!(
         radius["impacted"]
@@ -994,7 +999,7 @@ async fn asking_a_gap_records_the_question_it_asked() {
 #[tokio::test]
 async fn a_design_round_trips_through_export_and_import() {
     let s = seeded().await;
-    let doc = j!(s.export_graph());
+    let doc = j!(s.export_graph(Parameters(ExportGraphToReq { path: None })));
     assert!(doc["nodes"].as_array().unwrap().len() >= 4);
     assert!(
         doc["stamp"]["node_types"].as_u64().unwrap() >= 27,
@@ -1017,7 +1022,7 @@ async fn a_design_round_trips_through_export_and_import() {
 
     // Exporting it again gives the same document — the property that makes a
     // backup directory diffable rather than a pile of fresh blobs.
-    let again = j!(fresh.export_graph());
+    let again = j!(fresh.export_graph(Parameters(ExportGraphToReq { path: None })));
     assert_eq!(again["nodes"], doc["nodes"]);
     assert_eq!(again["edges"], doc["edges"]);
 
@@ -1207,4 +1212,113 @@ async fn create_node_on_an_existing_id_merges_instead_of_resetting() {
         "a property the caller did not name must survive the edit"
     );
     assert_eq!(n["properties"]["name"], "Ball flight");
+}
+
+// ---- BL-48 · a prose tool must not put a string in structuredContent -------
+//
+// MCP defines `structuredContent` as an object; a bare string is rejected by a
+// spec-compliant client, which made graph_report_markdown — the report a
+// session reads first — unreachable from Claude Code while every Rust-side
+// test stayed green.
+
+#[tokio::test]
+async fn markdown_report_is_text_content_with_no_structured_payload() {
+    let s = seeded().await;
+    let result = s.graph_report_markdown().await.expect("tool ok");
+    assert!(
+        result.structured_content.is_none(),
+        "a Markdown document has no structure to declare"
+    );
+    let text = &result.content[0].as_text().expect("text content").text;
+    assert!(
+        text.contains('#'),
+        "the rendered report should be Markdown, got {text:?}"
+    );
+}
+
+// ---- BL-49 · a blast radius must be readable inside the loop ----------------
+
+#[tokio::test]
+async fn propagate_defaults_to_a_summary_that_counts_everything() {
+    let s = seeded().await;
+    let summary = j!(s.propagate_from(Parameters(PropagateFromReq {
+        seed_ids: vec!["req:physics".into()],
+        max_depth: None,
+        full: None
+    })));
+    assert!(
+        summary.get("impacted").is_none(),
+        "the default result must not carry per-node hop chains"
+    );
+    let total = summary["total_impacted"].as_u64().expect("total_impacted");
+    let banded: u64 = summary["counts_by_distance"]
+        .as_array()
+        .expect("counts_by_distance")
+        .iter()
+        .map(|b| b["count"].as_u64().unwrap())
+        .sum();
+    assert_eq!(total, banded, "every impacted node is counted in a band");
+    let ring = summary["direct_ring"].as_array().expect("direct_ring");
+    assert!(
+        ring.iter().any(|n| n["node_id"] == "cap:flight"),
+        "the capability satisfying the seed requirement sits one hop out, got {ring:?}"
+    );
+    assert!(
+        ring.iter().all(|n| n["edge_type"].is_string()),
+        "each ring node names the edge that reached it"
+    );
+    assert!(summary["risk_crossings"].is_array(), "field always present");
+    assert!(
+        summary["truncated_beyond_depth"].is_u64(),
+        "truncation stays reported in the summary"
+    );
+
+    // The full dump stays reachable, explicitly.
+    let radius = j!(s.propagate_from(Parameters(PropagateFromReq {
+        seed_ids: vec!["req:physics".into()],
+        max_depth: None,
+        full: Some(true)
+    })));
+    let impacted = radius["impacted"].as_array().expect("impacted");
+    assert_eq!(impacted.len() as u64, total, "same radius, both shapes");
+    assert!(
+        impacted.iter().all(|n| n["via"].is_array()),
+        "the full dump explains every impact"
+    );
+}
+
+#[tokio::test]
+async fn export_graph_writes_a_deterministic_file_when_asked() {
+    let s = seeded().await;
+    let path =
+        std::env::temp_dir().join(format!("reflow2-export-test-{}.json", std::process::id()));
+    let path_str = path.to_str().expect("utf8 path").to_string();
+
+    let receipt = j!(s.export_graph(Parameters(ExportGraphToReq {
+        path: Some(path_str.clone())
+    })));
+    assert_eq!(receipt["path"], path_str.as_str());
+    let on_disk = std::fs::read_to_string(&path).expect("file written");
+    assert_eq!(receipt["bytes"].as_u64().unwrap() as usize, on_disk.len());
+
+    // The file is the same document the payload variant returns…
+    let doc: serde_json::Value = serde_json::from_str(&on_disk).expect("valid JSON");
+    let payload = j!(s.export_graph(Parameters(ExportGraphToReq { path: None })));
+    assert_eq!(
+        doc["nodes"], payload["nodes"],
+        "file and payload carry the same design"
+    );
+    assert_eq!(
+        receipt["nodes"].as_u64().unwrap() as usize,
+        payload["nodes"].as_array().unwrap().len()
+    );
+
+    // …and writing an unchanged graph again is byte-identical (diffable backups).
+    j!(s.export_graph(Parameters(ExportGraphToReq {
+        path: Some(path_str.clone())
+    })));
+    let again = std::fs::read_to_string(&path).expect("file written twice");
+    assert_eq!(on_disk, again, "two exports of an unchanged graph match");
+
+    std::fs::remove_file(&path).ok();
 }

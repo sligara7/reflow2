@@ -201,6 +201,13 @@ fn ok_json<T: serde::Serialize>(value: T) -> Result<CallToolResult, McpError> {
     let v = if v.is_array() {
         let count = v.as_array().map(Vec::len).unwrap_or(0);
         json!({ "count": count, "items": v })
+    } else if !v.is_object() {
+        // The same contract violated the same way, one shape over (BL-48): a
+        // bare string in `structuredContent` is as malformed as a bare array,
+        // and it took out graph_report_markdown — the tool a session reads
+        // first. Any remaining scalar gets an object envelope here so a future
+        // tool cannot leak one; prose belongs in `ok_markdown` instead.
+        json!({ "value": v })
     } else {
         v
     };
@@ -208,6 +215,14 @@ fn ok_json<T: serde::Serialize>(value: T) -> Result<CallToolResult, McpError> {
     let mut result = CallToolResult::structured(v);
     result.content = vec![ContentBlock::text(text)];
     Ok(result)
+}
+
+/// Return a prose document (Markdown) as the tool result: text content only,
+/// no `structuredContent`. A document has no structure to declare, and putting
+/// the string where MCP wants an object is exactly how graph_report_markdown
+/// became unreachable from a spec-compliant client (BL-48).
+fn ok_markdown(text: String) -> CallToolResult {
+    CallToolResult::success(vec![ContentBlock::text(text)])
 }
 
 /// Parse a snake_case enum key (the schema vocabulary) into a core enum.
@@ -757,13 +772,36 @@ pub struct PropagateFromReq {
     /// Max traversal depth (default 5).
     #[serde(default)]
     pub max_depth: Option<usize>,
+    /// `true` returns every impacted node with its full hop chain. The default
+    /// is a summary — counts by distance, the distance-1 ring, risk crossings —
+    /// because the full dump on a large design overflows what a session can
+    /// read, and every band is still counted in the summary.
+    #[serde(default)]
+    pub full: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
 pub struct PropagateChangeReq {
+    /// The ChangeEvent to propagate from.
     pub change_event_id: String,
+    /// Max traversal depth (default 5).
     #[serde(default)]
     pub max_depth: Option<usize>,
+    /// `true` returns every impacted node with its full hop chain. The default
+    /// is a summary — counts by distance, the distance-1 ring, risk crossings —
+    /// because the full dump on a large design overflows what a session can
+    /// read, and every band is still counted in the summary.
+    #[serde(default)]
+    pub full: Option<bool>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct ExportGraphToReq {
+    /// Write the export to this file (deterministic sorted-key JSON, diffable
+    /// under git) and return only {path, bytes, nodes, edges, stamp}. Omit to
+    /// get the whole document as the result payload.
+    #[serde(default)]
+    pub path: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -988,7 +1026,11 @@ impl ReflowService {
         ok_json(g.detect_gaps().map_err(dyno_err)?)
     }
 
-    #[tool(description = "Blast radius of a recorded ChangeEvent along the golden thread.")]
+    #[tool(
+        description = "Blast radius of a recorded ChangeEvent along the golden thread. Returns \
+                       a summary (counts by distance, the distance-1 ring, risk crossings); \
+                       pass full=true for every impacted node with its hop chain."
+    )]
     pub async fn propagate_change(
         &self,
         Parameters(req): Parameters<PropagateChangeReq>,
@@ -997,13 +1039,21 @@ impl ReflowService {
             max_depth: req.max_depth.unwrap_or(5),
         };
         let g = self.graph.lock().await;
-        ok_json(
-            g.propagate_change(&req.change_event_id, opts)
-                .map_err(dyno_err)?,
-        )
+        let radius = g
+            .propagate_change(&req.change_event_id, opts)
+            .map_err(dyno_err)?;
+        if req.full.unwrap_or(false) {
+            ok_json(radius)
+        } else {
+            ok_json(radius.summarize())
+        }
     }
 
-    #[tool(description = "Speculative blast radius from seed node ids (what would this touch?).")]
+    #[tool(
+        description = "Speculative blast radius from seed node ids (what would this touch?). \
+                       Returns a summary (counts by distance, the distance-1 ring, risk \
+                       crossings); pass full=true for every impacted node with its hop chain."
+    )]
     pub async fn propagate_from(
         &self,
         Parameters(req): Parameters<PropagateFromReq>,
@@ -1013,7 +1063,12 @@ impl ReflowService {
         };
         let seeds: Vec<&str> = req.seed_ids.iter().map(String::as_str).collect();
         let g = self.graph.lock().await;
-        ok_json(g.propagate_from(&seeds, opts).map_err(dyno_err)?)
+        let radius = g.propagate_from(&seeds, opts).map_err(dyno_err)?;
+        if req.full.unwrap_or(false) {
+            ok_json(radius)
+        } else {
+            ok_json(radius.summarize())
+        }
     }
 
     #[tool(
@@ -1050,7 +1105,7 @@ impl ReflowService {
     pub async fn graph_report_markdown(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         let report = g.graph_report().map_err(dyno_err)?;
-        ok_json(report.to_markdown())
+        Ok(ok_markdown(report.to_markdown()))
     }
 
     #[tool(description = "Detect structural defects the machine can repair (HEAL).")]
@@ -1870,11 +1925,34 @@ impl ReflowService {
                        two exports of an unchanged graph are byte-identical. Use it to back the \
                        design up, move it between machines, or migrate it across a reflow2 upgrade \
                        (export with the old build, import with the new). It carries a stamp saying \
-                       which reflow2 wrote it."
+                       which reflow2 wrote it. Pass `path` to write the document to a file instead \
+                       of returning it — on a large design the payload overflows what a session \
+                       can read, and a backup wants to be a file anyway."
     )]
-    pub async fn export_graph(&self) -> Result<CallToolResult, McpError> {
+    pub async fn export_graph(
+        &self,
+        Parameters(req): Parameters<ExportGraphToReq>,
+    ) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
-        ok_json(g.export_graph().map_err(dyno_err)?)
+        let export = g.export_graph().map_err(dyno_err)?;
+        let Some(path) = req.path else {
+            return ok_json(export);
+        };
+        // Through `serde_json::Value` so keys serialize sorted (its object is a
+        // BTreeMap) — the same convention as the committed design export, so a
+        // file this writes diffs cleanly against one written before it.
+        let v = serde_json::to_value(&export).map_err(ser_err)?;
+        let text = format!("{}\n", serde_json::to_string_pretty(&v).map_err(ser_err)?);
+        std::fs::write(&path, &text).map_err(|e| {
+            McpError::internal_error(format!("cannot write export to {path}: {e}"), None)
+        })?;
+        ok_json(json!({
+            "path": path,
+            "bytes": text.len(),
+            "nodes": export.nodes.len(),
+            "edges": export.edges.len(),
+            "stamp": serde_json::to_value(&export.stamp).map_err(ser_err)?,
+        }))
     }
 
     #[tool(

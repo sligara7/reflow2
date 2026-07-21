@@ -17,6 +17,26 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **`propagate_change` / `propagate_from` answer with a summary by default** (BL-49, from the
+  self-adopt live session): counts by distance, the distance-1 ring with the edge that reached
+  each node, risk crossings at any distance, and the usual `unknown_seeds` /
+  `truncated_beyond_depth` partial fields. The full per-node dump with `via` hop chains is
+  behind `full: true`. On the self-model a blast radius came back as 70k characters nobody
+  could read inside a session — a blast radius that doesn't get read doesn't get acted on.
+- **`export_graph` writes to a file on request** (BL-49): pass `path` and it writes the
+  document as deterministic sorted-key JSON (byte-identical for an unchanged graph, diffable
+  under git) and returns a small `{path, bytes, nodes, edges, stamp}` receipt instead of the
+  ~90k-char payload.
+
+### Fixed
+
+- **`graph_report_markdown` is reachable again from spec-compliant clients** (BL-48). It put
+  its Markdown into `structuredContent` as a bare string, where the MCP contract wants an
+  object — the same response-side shape as the v0.2-era array bug, and it made the report a
+  session reads first fail outright from Claude Code. Prose now travels as text content only,
+  `ok_json` wraps any remaining scalar so no tool can leak one, and `smoke_mcp.py` asserts the
+  result envelope on every call it makes.
+
 - **`create_node` on an existing id now merges instead of replacing** (BL-46, from the
   self-adopt live session). The props you pass overwrite; every stored property you omit
   survives. Previously the supplied object replaced everything and schema defaults

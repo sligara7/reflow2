@@ -439,3 +439,5 @@ reflow2 (a single Rust core, no fleet). They **override speed — timing bends t
   framework packs, root-cause change classification.
 - **dynograph-foundation** → the schema-driven graph store (RocksDB + HNSW + BM25 +
   fuzzy/vector resolution) reflow2 targets.
+
+> **reflow2 is installed here.** The design graph is this project's memory — read [REFLOW2.md](REFLOW2.md) and consult it before writing or changing code.

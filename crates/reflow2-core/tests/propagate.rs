@@ -264,3 +264,62 @@ fn centrality_ranks_a_hub_impact_above_a_leaf_at_the_same_distance() {
     // ...so it ranks first.
     assert!(pos("cap:hub") < pos("cap:leaf"));
 }
+
+#[test]
+fn summary_counts_every_band_and_keeps_ring_and_risk_crossings() {
+    // BL-49: the summary is what a session reads by default, so it must count
+    // everything the full radius holds — a summary that hides nodes would be a
+    // silent cap.
+    let mut g = thread();
+    g.add_component(
+        "cmp:legacy",
+        "Legacy store",
+        "Old store being phased out",
+        None,
+    )
+    .unwrap();
+    g.create_edge(
+        "RISKS",
+        node::CAPABILITY,
+        "cap:fast-path",
+        node::COMPONENT,
+        "cmp:legacy",
+        Props::new(),
+    )
+    .unwrap();
+
+    let radius = g
+        .propagate_from(&["req:latency"], PropagateOptions::default())
+        .unwrap();
+    let summary = radius.summarize();
+
+    assert_eq!(summary.total_impacted, radius.impacted.len());
+    let banded: usize = summary.counts_by_distance.iter().map(|b| b.count).sum();
+    assert_eq!(
+        banded, summary.total_impacted,
+        "every impacted node sits in exactly one distance band"
+    );
+
+    // The distance-1 ring is the capability, reached over SATISFIES.
+    assert_eq!(summary.direct_ring.len(), 1);
+    assert_eq!(summary.direct_ring[0].node_id, "cap:fast-path");
+    assert_eq!(summary.direct_ring[0].edge_type, "SATISFIES");
+    assert!(!summary.direct_ring[0].is_risk);
+
+    // The risk crossing survives the compression, at its true distance.
+    assert!(
+        summary
+            .risk_crossings
+            .iter()
+            .any(|r| r.node_id == "cmp:legacy" && r.distance == 2),
+        "a path across RISKS must stay visible in the summary"
+    );
+
+    // Bookkeeping carries through — the summary never hides the bound.
+    assert_eq!(summary.seeds, radius.seeds);
+    assert_eq!(summary.max_depth, radius.max_depth);
+    assert_eq!(
+        summary.truncated_beyond_depth,
+        radius.truncated_beyond_depth
+    );
+}
