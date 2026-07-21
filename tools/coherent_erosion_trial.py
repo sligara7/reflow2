@@ -135,7 +135,7 @@ def main() -> int:
 
         print("\n== is the end state coherent, and is the past intact? ==")
         desc = s.call("get_node", {"node_type": "Capability",
-                                   "id": "cap:charge"})["properties"]["description"]
+                                   "id": "cap:charge"})["node"]["properties"]["description"]
         note("the design now describes what was actually built", desc == BUILT, desc)
 
         snaps = s.call("scan_nodes", {"node_type": "Snapshot"})

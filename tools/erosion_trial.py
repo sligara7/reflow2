@@ -94,7 +94,7 @@ def main() -> int:
             rec = s.call("reconcile_artifacts", {
                 "observed": [{"artifact_id": "art:charge", "present": True,
                               "checksum": sha(code)}],
-                "record_events": True, "at": f"2026-07-19T0{i}:00:00Z"})
+                "record_events": True, "detected_at": f"2026-07-19T0{i}:00:00Z"})
             drifts += len(rec.get("findings", []))
             # "Yes, I know, I fixed a bug" — accept the new reality as baseline.
             # BL-33: silent accept no longer exists; the careless answer is to
@@ -131,7 +131,7 @@ def main() -> int:
              f"'design holds' claims, {cap_led.get('design_edits')} design edits — the five "
              "claims with zero edits ARE the erosion signature, now legible")
 
-        cap = s.call("get_node", {"node_type": "Capability", "id": "cap:charge"})
+        cap = s.call("get_node", {"node_type": "Capability", "id": "cap:charge"})["node"]
         desc = cap["properties"]["description"]
         note("the capability description still says 24h (now false)",
              "24h" in desc, desc)
