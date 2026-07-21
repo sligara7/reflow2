@@ -1668,6 +1668,73 @@ target, or does it deserve its own node?" — and most of the machinery (reconci
 budget, dimensions, freshness) is already there. Closes the loop from intent all the way to the
 telemetry of the running system.
 
+**BL-68 · Readiness-driven roadmapping — derive the delivery timeline, don't declare it**
+(keystone) — *user, Space Force acquisitions/SE, 2026-07-21.* Concept; size **L**; the most
+ambitious item on the board. Needs the user on vocabulary. Unifies and gives purpose to
+[BL-64] (lifecycle phasing), [BL-65] (risk), and [BL-67] (the modelled future).
+
+The problem, in the user's words: on real programs, "people didn't understand which *epoch* a
+design would be delivered on." Roadmaps are drawn as slides, disconnected from the actual
+maturity of the enabling technology, so the delivery timeline is an assertion nobody can defend.
+Meanwhile a design is not static under incremental development — **Version A is achievable today
+because its enabling tech is at acceptable TRL/MRL; Version X is a decade out because a key
+technology is immature now and expected to mature later.** The LLM's job is to help the user say
+"*here is what we can build today, and here is the improved version 10 years out — that is the
+roadmap*," and to make that claim traceable.
+
+Three parts:
+
+- **(1) Readiness and the -ilities as first-class scored risk factors that GATE achievability.**
+  TRL, MRL, affordability, maintainability, reliability — all *risk factors in a design choice*,
+  same family as BL-65 (a low TRL *is* a risk). reflow2 already scores `maturity`/`reliability`/
+  `maintainability` as `DimensionAssessment`s, but a dimension only *trends*; it does not *gate*.
+  New: a readiness assessment (TRL/MRL 1–9) whose being below threshold marks a design increment
+  **not buildable yet** — and a **forecast** of that score over time (TRL 3 now, 7 expected 2035)
+  so the timeline can be computed forward.
+- **(2) Design increments/alternatives as comparable first-class entities.** reflow2 models
+  *one* coherent design; source selection and incremental development need a *family* of
+  candidates (Version A vs X) that share requirements but differ in what is achievable when,
+  each scored on TRL/MRL/-ilities. Today the only trace of this is `Decision.alternatives` — an
+  opaque prose string ("options considered and why they lost"). New: increments/options as
+  living nodes you can score, propagate through, and pin to epochs.
+- **(3) The derived roadmap — the insight that is reflow2's to claim.** Because the golden thread
+  runs capability → component → enabling technology, and each technology carries a readiness
+  score with a forecast, **the epoch an increment can deliver on is *computable*, not declared**:
+  it is the epoch by which every enabling technology on its thread reaches acceptable TRL/MRL.
+  `propagate` already walks that thread; feeding it readiness turns "which epoch delivers which
+  design" from an opinion into a traceable output — *"this increment is 2036 because THIS
+  technology is TRL 3 today, projected 7 in 2035, and the capability cannot close without it."*
+  That is exactly the legibility the user's programs lacked.
+
+**The spine (state this in any design of the feature): the roadmap is a risk-burndown schedule.**
+Each epoch is the point where enough readiness risk has retired to make the next increment
+achievable; readiness maturing *is* the risk clearing. This single framing unifies BL-65 (risk),
+BL-67 (the future), and this item: the roadmap is *when the risk clears*.
+
+Worked example (the user's): "refuel a satellite by laser" → capabilities {high-power lasing,
+beam pointing/tracking, power→light conversion, thermal management} → each traces to components
+and technologies with a TRL. Today's design = the increment whose whole thread is mature now;
+the 10-year design = the increment gated on (e.g.) high-efficiency power→laser conversion
+maturing TRL 3 → 7. reflow2 propagates the gate and can name why the later increment is later.
+
+Seeded vs new — **seeded**: the `maturity`/`reliability`/`maintainability` dimensions, the
+temporal axis (epochs, `ANTICIPATES`, `EVOLVES_INTO`), propagate + the thread, the
+`Decision.alternatives` prose. **New**: TRL/MRL as a *gating* readiness assessment; a readiness
+*forecast* over time (the quantitative form of BL-67's "model the future"); increments/
+alternatives as first-class comparable nodes; and the derived-roadmap computation.
+
+Vocabulary decisions that are the user's to make (why this is concept, not spec):
+1. Is an increment/alternative a **new node type**, a variant of `Release` (Releases are
+   as-*built*; these are as-*planned* candidates — lean: new node), or a scoped sub-graph?
+2. Is readiness a **new assessment kind** with gate-semantics, or a `trl`/`mrl` addition to the
+   dimension enum? (Lean: its own construct, precisely because it *gates* rather than *trends*.)
+3. How is a readiness **forecast over time** modelled so the roadmap computes forward
+   (a TemporalFact series on the technology? a projected `DimensionObservation` per epoch?).
+
+Why it matters: no roadmapping tool today *derives and defends* the delivery timeline from the
+real readiness of the technology — they assert it. reflow2's thread + propagate makes derivation
+possible, which is a capability, not a viewpoint.
+
 ## Deliberate deferrals
 
 Not gaps — decisions, recorded so they aren't rediscovered as bugs.

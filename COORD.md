@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-64..67 capture (UAF lifecycle-breadth + commercial-practice: disposal, risk/security, coherence-as-CI, SLO reconciliation) — @ajs — since 2026-07-21 — docs/backlog.md (concept/some actionable)
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -76,6 +75,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- Design-analysis capture BL-64..68 (concept items, no code): from a session comparing reflow2 against UAF's full acquisition lifecycle and modern commercial practice. BL-64 disposal/retirement (missing P6), BL-65 risk/security as a lifecycle-spanning concern + DevSecOps continuous governance, BL-66 design-coherence as a consumer CI gate (actionable S-M), BL-67 SLO/telemetry reconciliation (as-operating fidelity), BL-68 readiness-driven roadmapping (KEYSTONE — TRL/MRL/-ilities gate achievability; derive the delivery timeline from readiness × the thread; "the roadmap is a risk-burndown schedule"; unifies 64/65/67). All reuse propagate + detect-and-ask + the reconcile seam; the new part in each is vocabulary, a user design decision. Nothing built — @ajs — 2026-07-21 — (this commit)
 
 - BL-58 DONE (all 12 items, for 0.6.1) + versioning policy written into CHANGELOG. Fixes: ingest upsert (BL-46 on ingest path), snapshot BTreeMap determinism, propagate_change existence check, apply_heal one atomic batch (merge_nodes made batch-free — it was the only caller), swallowed edge errors surfaced (detect/ingest/fielded), budget non-finite rejection + provable-overrun + total_cmp, i64::MAX widen guard, truncated_beyond_depth honest doc, drift dangling-edge skip, per-edge gap ids for missing-intermediate, ingest fragment_id reuse refused, node_type_index sorted. 10 registered artifacts drifted → accepted two-sided (chg:bl58-silent-failure-batch); export 229n/466e, gaps 0. Gates: 39 workspace suites, clippy clean, smoke + phase_trial + model_the_loop + coherent_erosion + build_design_graph all green. Versioning policy: patch=fixes/silent-failure-loud, minor=surface/schema shape change; this batch is all patch → next cut is 0.6.1. Remaining review: BL-59 (perf), BL-56b (harness leaks) — @ajs — 2026-07-21 — (this commit)
 
