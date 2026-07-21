@@ -553,7 +553,7 @@ impl DesignGraph {
         // ≥2 subsystems (not the leaf-cutting every tree-internal node does),
         // and that name something which can *fail*.
         //
-        // The second filter is what keeps this meaningful at real scale. A
+        // The candidate filter is what keeps this meaningful at real scale. A
         // golden thread converges on intent by design — every Requirement is
         // supposed to be the hub of what satisfies it — so on a 96-node design
         // the topology test alone named 22 nodes, most of them Requirements and
@@ -565,17 +565,23 @@ impl DesignGraph {
         // points is the thread working, not a defect (BL-5, second pass — the
         // first fixed the island false-positive at fixture scale, and this
         // shape only appears above it).
-        const OPERATIONAL_TYPES: &[&str] = &[
-            node::COMPONENT,
-            node::INTERFACE,
-            node::RESOURCE,
-            node::ENVIRONMENT,
-        ];
-        for ap in net.articulation_points() {
-            if !OPERATIONAL_TYPES.contains(&net.type_of(ap)) {
+        //
+        // Candidates and connectivity both come from the *operational* network
+        // (BL-69, the fourth pass): intent nodes not only must not be flagged,
+        // they must not participate in the connectivity being measured. On the
+        // full design network they donated mass (a component's own intent
+        // cluster counted as a severed "subsystem") and phantom connectivity (a
+        // real cut vertex stayed silent because its severed parts remained
+        // joined through a SATISFIES chain). Artifacts are members of that
+        // network — a stranded part with its file is a real severed subsystem —
+        // but never candidates: the operational thing to make redundant is the
+        // part, not the file.
+        let op_net = self.operational_network(None)?;
+        for ap in op_net.articulation_points() {
+            if !crate::structure::OPERATIONAL_TYPES.contains(&op_net.type_of(ap)) {
                 continue;
             }
-            let id = net.id_of(ap).to_string();
+            let id = op_net.id_of(ap).to_string();
             // …and among components, only the ones that can fail *at run time*.
             // A shared library is imported by everything, which makes it a
             // perfect articulation point and a nonsense candidate: you cannot

@@ -1747,38 +1747,49 @@ Why it matters: no roadmapping tool today *derives and defends* the delivery tim
 real readiness of the technology — they assert it. reflow2's thread + propagate makes derivation
 possible, which is a capability, not a viewpoint.
 
-**BL-69 · `single_point_of_failure` reports community bridges, not graph cut vertices** — *self-host
-review, 2026-07-21, while dispositioning the two SPOF warnings on reflow2's own graph.* Size **S–M**.
+**BL-69 · `single_point_of_failure` measured connectivity on the wrong graph — DONE 2026-07-21** —
+*self-host review, 2026-07-21, while dispositioning the two SPOF warnings on reflow2's own graph.*
+Size **S–M**. ~~S–M~~
 
-`detect_defects` flags `cmp:flow` and `cmp:service` as single points of failure ("every path
-between subsystems routes through X"). An independent articulation-point (Tarjan) analysis of the
-Component+Interface dependency graph (`DEPENDS_ON` / `CONSUMES` / `PROVIDES`, undirected) tells a
-different story: the true cut vertices are `cmp:service`, `cmp:export`, `cmp:graph` (plus the three
-interfaces). So the detector is **wrong on both sides**:
+Raised because `detect_defects` flagged `cmp:flow` and `cmp:service`, while an independent
+articulation-point (Tarjan) analysis of the operational dependency graph said the true cut
+vertices were `cmp:service`, `cmp:export`, `cmp:graph` — wrong in both directions at once. The
+entry's first diagnosis (community bridges) was wrong about the mechanism; reading the source
+corrected it: the detector already ran a genuine removal-splits-the-graph test, baseline-relative
+(BL-5 pass 1) with operational candidates (pass 2) and the library filter (pass 3, F6) — but it
+measured connectivity on the **full design network**, where intent edges are wrong in both
+directions at once:
 
-- **Over-reports.** `cmp:flow` is *not* a cut vertex — it depends only on `cmp:graph` and
-  `cmp:nodes`, and ~20 sibling modules (`allocate`, `budget`, `confirm`, `dimensions`, `hierarchy`,
-  …) share that exact shape without being flagged. Removing `cmp:flow` disconnects nothing. It is
-  flagged only because it bridges two communities of the modularity partition (which sits at a
-  suspiciously perfect 1.00, so communities are very fine-grained). A community bridge is not an
-  availability SPOF.
-- **Under-reports.** `cmp:export` and `cmp:graph` *are* genuine cut vertices (remove `cmp:export`
-  and `cmp:init` loses `ifc:graph-export`; remove `cmp:graph` and `schema`/`search`/`vocabulary`
-  isolate) and the detector does **not** flag them.
+- **They donate mass.** Removing `cmp:flow` strands its own intent cluster (`cap:model-process` +
+  `art:flow` + verification) — ≥2 nodes, so the non-trivial filter passed and a healthily-modelled
+  leaf module fired. The severed "subsystem" was made of sentences.
+- **They donate phantom connectivity.** Removing `cmp:export` severs `cmp:init`+`ifc:graph-export`
+  operationally, but the design network kept them "connected" through
+  `art:init REALIZES cap:kit SATISFIES …` — a path that carries nothing at run time — so a real
+  cut vertex stayed silent.
 
-The "between subsystems" phrasing means community partition, not the `CONTAINS` subsystems and not
-connectivity — all of `flow`/`graph`/`nodes` live inside `cmp:core`, so `cmp:flow` cannot bridge
-the real subsystems at all. And `surprising_connections` *already* reports these community bridges
-(`cmp:flow → cmp:graph`, sole bridge) under an accurate name — so `single_point_of_failure` is
-re-emitting that signal under a scarier label while missing the connectivity question its own name
-promises. This is BL-5 / `dec:operational-spof` a further turn: that pass cleared 22 false
-positives by restricting *candidates* to operational nodes and kept "4 true survivors," but the
-survivors were never checked against articulation-point semantics — restricting the candidate set
-does not make the *test* correct. **Fix:** compute `single_point_of_failure` as a real cut vertex
-(removal disconnects the operable component/interface graph), or drop it and let the existing
-`surprising_coupling` carry the community-bridge signal it already carries. Either way `cmp:service`
-stays flagged — correctly, and now answered on the record by `dec:service-spof-accepted` (the single
-MCP door is an intentional SPOF per `req:invocation`) — and `cmp:flow` stops firing.
+**The fix (the fourth pass at this detector, and the same selectivity lesson one level deeper):**
+connectivity and candidate enumeration both moved to the **as-built operational network** —
+Components/Interfaces/Resources/Environments plus the Artifacts realizing them, joined by the
+traceability edges that hold between such nodes. Intent nodes not only must not be *flagged*
+(pass 2); they must not *participate in the connectivity being measured*. Artifacts are members
+(a stranded part with its file is a real severed subsystem — the fixture for the pinned
+interface-bridge test had already padded its subsystems with artifacts to pass the non-trivial
+filter, so this codifies what the doctrine already practiced) but never candidates. Every prior
+lesson kept: baseline-relative, non-trivial ≥2, library exclusion.
+
+**Measured on reflow2's own graph** (`build_design_graph.py --analyse-only`, before → after):
+SPOF `{cmp:flow, cmp:service}` → `{cmp:graph, cmp:export, ifc:graph-export, cmp:service}`.
+`cmp:flow` stops firing; its community-bridge signal stays in `surprising_connections` under its
+accurate name. Three findings are new-and-true: `cmp:export` and `ifc:graph-export` are the only
+route from the kit's converter (`cmp:init`) to the design, and `cmp:graph` genuinely strands
+`schema`/`search`/`vocabulary` (each with its file) plus the whole export chain. `cmp:service`
+stays, answered by `dec:service-spof-accepted`; the other three await disposition. The defect
+count *rising* 2 → 4 while the false positive leaves is the fix: the count was previously wrong
+in both directions. Two regression tests pin the two shapes (intent-cluster stranding must not
+fire; a cut vertex hidden by intent edges must); the island-immunity fixture was rebuilt with
+operational subsystems, preserving its lesson. All 14 structural tests, workspace suites, and the
+instruments (phase 13/13, erosion 7/8, coherent 9/9, model_the_loop, smoke) at their baselines.
 
 **BL-70 · Parallel alternatives — AoA branches held open until a decision point** — *user,
 source-selection practice (analysis of alternatives / DOTMLPF-P), 2026-07-21.* Concept; size

@@ -382,6 +382,105 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-17017303d729e5ee",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-1769110d3c26b53e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-27f611941c80b9ae",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-29fe3c16d641f3ba",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-3d017e3cb13d7350",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-45cbb7f75b11086a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-5bc5cc883edf7682",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-6bf23f6f04f775a1",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-7d9bce8ed9339737",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-eccdea423f3e687e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl26-documents-write-side",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:bl48-bl49-tool-surface",
       "properties": {
         "accepted_baseline": true,
@@ -532,6 +631,24 @@
         "action": "modified"
       },
       "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl69-spof-cut-vertices",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl69-spof-cut-vertices",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:structure"
     },
     {
       "edge_type": "CHANGED",
@@ -2061,6 +2178,12 @@
       "from_id": "cmp:heal",
       "properties": {},
       "to_id": "dec:merge-survivor-provenance"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:service",
+      "properties": {},
+      "to_id": "dec:service-spof-accepted"
     },
     {
       "edge_type": "INCLUDES",
@@ -3642,7 +3765,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5ba629988c416b39",
+        "checksum": "sha256:4d3f6e1093dc2564",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
         "status": "realized"
@@ -3774,7 +3897,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b48ea911ce1a3fe0",
+        "checksum": "sha256:2f75755ae2cd98d4",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -3928,7 +4051,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8fb4dc8eb7c490fb",
+        "checksum": "sha256:cf17239c87df16a3",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
         "status": "realized"
@@ -4317,6 +4440,104 @@
       }
     },
     {
+      "node_id": "chg:accept-17017303d729e5ee",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-21",
+        "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-1769110d3c26b53e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-21",
+        "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-27f611941c80b9ae",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-21",
+        "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-29fe3c16d641f3ba",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-21",
+        "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-3d017e3cb13d7350",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-21",
+        "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-45cbb7f75b11086a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-21",
+        "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-5bc5cc883edf7682",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-21",
+        "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-6bf23f6f04f775a1",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-21",
+        "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-7d9bce8ed9339737",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-21",
+        "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-eccdea423f3e687e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-21",
+        "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:bl26-documents-write-side",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-26 (recorded late): the DOCUMENTS write side — artifact.rs gained the documents() constructor so a descriptive file can say what it explains. The design moved with the code in commit 2d86ccb (2026-07-20); this event records the design side that session omitted, found by the 2026-07-21 reconcile sweep."
+      }
+    },
+    {
       "node_id": "chg:bl48-bl49-tool-surface",
       "node_type": "ChangeEvent",
       "properties": {
@@ -4346,6 +4567,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "BL-58: core silent-failure batch — ingest re-ingest merges instead of resetting (upsert), snapshots serialize sorted for byte-stable exports, propagate_change errors on a missing event instead of returning empty, apply_heal is one atomic batch across all operations, swallowed edge-creation errors now surface, budget rejects non-finite contributions and reports a provable overrun instead of Incomplete, integer widening rejects the i64::MAX saturation edge, truncated_beyond_depth documented as the frontier lower-bound, drift skips the dangling edge for undocumented additions, missing-intermediate gaps get distinct ids per edge type, a reused ingest fragment_id is refused, node_type_index scans in sorted order"
+      }
+    },
+    {
+      "node_id": "chg:bl69-spof-cut-vertices",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "BL-69: SPOF measured on the as-built operational network"
       }
     },
     {
@@ -4928,6 +5157,16 @@
         "decision": "Per capability: drifting / confirmed / unexamined, with the disposition counts visible.",
         "name": "The confirmation ledger reports claim history, never judges a claim",
         "rationale": "Five design_holds claims with zero design edits is the erosion signature and the ledger makes it legible — but judging a specific claim false is semantic, and a deterministic detector would fire on every stable design with cosmetic churn (the unexpected_coupling lesson). Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); BL-35.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:service-spof-accepted",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "cmp:service is the sole bridge between the reflow2-mcp subsystem and both the core and the kit, and it stays that way. The single_point_of_failure warning on it is accepted as intentional, not resolved by adding redundancy.",
+        "name": "The single MCP service is an accepted single point of failure",
+        "rationale": "req:invocation mandates one reflow2-mcp binary spoken to over stdio as the entire user-facing surface; a redundant second service would contradict that 'one door' design and buys nothing while there is a single local writer (dec:repo-file-embedded). Articulation-point analysis of the component/interface dependency graph (2026-07-21 self-host review) confirms cmp:service is a genuine cut vertex — removing it disconnects the MCP surface — so the finding is true, and the right disposition is to accept it rather than fix it. Contrast cmp:flow, flagged by the same detector but NOT a cut vertex (BL-69). Redundancy is the wrong fix; this SPOF is the architecture working as intended.",
         "status": "accepted"
       }
     },
@@ -6210,7 +6449,7 @@
   "stamp": {
     "edge_types": 54,
     "node_types": 27,
-    "reflow2_version": "0.5.0",
+    "reflow2_version": "0.6.0",
     "schema_version": 1
   }
 }

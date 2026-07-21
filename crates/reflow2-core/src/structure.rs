@@ -49,6 +49,24 @@ const NON_DESIGN_TYPES: &[&str] = &[
     "DriftEvent",
 ];
 
+/// Node types that operate — things whose failure at run time is a coherent
+/// idea, and so the only sanctioned `single_point_of_failure` candidates
+/// (`dec:operational-spof`, BL-5 second pass).
+pub(crate) const OPERATIONAL_TYPES: &[&str] = &[
+    node::COMPONENT,
+    node::INTERFACE,
+    node::RESOURCE,
+    node::ENVIRONMENT,
+];
+
+/// Whether a node type belongs to the **as-built operational network** — the
+/// graph `single_point_of_failure` measures connectivity on: the operational
+/// types plus the Artifacts that realize them (a stranded part together with
+/// its file is a real severed subsystem; a stranded sentence is not).
+fn is_operational_member(node_type: &str) -> bool {
+    OPERATIONAL_TYPES.contains(&node_type) || node_type == node::ARTIFACT
+}
+
 /// A `dynograph-graph` view of the design network plus the id/type of each dense
 /// node index (the algorithms return index-keyed results to map back).
 pub(crate) struct DesignNetwork {
@@ -135,12 +153,21 @@ impl DesignGraph {
     /// Build the design network, optionally excluding one node id (used to test
     /// what a node's removal would disconnect).
     fn build_network(&self, exclude: Option<&str>) -> Result<DesignNetwork, DynoError> {
+        self.build_network_of(exclude, |ty| !NON_DESIGN_TYPES.contains(&ty))
+    }
+
+    /// Build a network over the node types `member` admits, optionally
+    /// excluding one node id. Edges are the traceability set, restricted to
+    /// pairs whose endpoints are both members.
+    fn build_network_of(
+        &self,
+        exclude: Option<&str>,
+        member: impl Fn(&str) -> bool,
+    ) -> Result<DesignNetwork, DynoError> {
         let index = self.node_type_index()?;
         let included: HashSet<&str> = index
             .iter()
-            .filter(|(id, ty)| {
-                !NON_DESIGN_TYPES.contains(&ty.as_str()) && exclude != Some(id.as_str())
-            })
+            .filter(|(id, ty)| member(ty.as_str()) && exclude != Some(id.as_str()))
             .map(|(id, _)| id.as_str())
             .collect();
 
@@ -180,6 +207,20 @@ impl DesignGraph {
     /// The design network over all design nodes.
     pub(crate) fn design_network(&self) -> Result<DesignNetwork, DynoError> {
         self.build_network(None)
+    }
+
+    /// The **as-built operational network**: operational nodes (Components,
+    /// Interfaces, Resources, Environments) plus the Artifacts realizing them,
+    /// joined by the traceability edges that hold between such nodes
+    /// (`DEPENDS_ON`, `PROVIDES`/`CONSUMES`, `REALIZES`, `DEPLOYED_TO`,
+    /// `REQUIRES_RESOURCE`). This is the graph on which "what does this
+    /// node's failure sever?" is a coherent question — intent nodes are out,
+    /// because a Requirement provides no connectivity at run time.
+    pub(crate) fn operational_network(
+        &self,
+        exclude: Option<&str>,
+    ) -> Result<DesignNetwork, DynoError> {
+        self.build_network_of(exclude, is_operational_member)
     }
 
     /// The **dependency pairs** `(u, v)` meaning "u depends on v", deduplicated
@@ -325,14 +366,15 @@ impl DesignGraph {
     }
 
     /// Whether removing `node_id` **creates** a split — leaving more non-trivial
-    /// subsystems (≥2 nodes each) than the design already had.
+    /// subsystems (≥2 nodes each) than the design already had — measured on the
+    /// **as-built operational network**, not the full design network.
     ///
-    /// Measured against the baseline, not against a fixed count, and that is the
-    /// whole of it. Asking "are there ≥2 non-trivial components after removal?"
-    /// silently assumed the design was connected to begin with. It usually is
-    /// not: one unrelated island of two nodes already satisfies the test, so
-    /// **every** articulation point anywhere else in the graph reports as a
-    /// single point of failure while nothing about its fragility is different.
+    /// Measured against the baseline, not against a fixed count. Asking "are
+    /// there ≥2 non-trivial components after removal?" silently assumed the
+    /// design was connected to begin with. It usually is not: one unrelated
+    /// island of two nodes already satisfies the test, so **every** articulation
+    /// point anywhere else in the graph reports as a single point of failure
+    /// while nothing about its fragility is different.
     ///
     /// This is the defect the blind trial described from the other side — *"all
     /// 15 defects vanished at once when I added two bookkeeping edges; nothing
@@ -343,6 +385,18 @@ impl DesignGraph {
     /// Modelling reflow2's own design showed it directly: two capabilities that
     /// were correctly *not* flagged became single points of failure the moment a
     /// disconnected second crate was added beside them.
+    ///
+    /// **Why the operational network (BL-69, the fourth pass).** Connectivity
+    /// used to be measured on the full design network, where intent edges are
+    /// wrong in both directions at once. They donate *mass*: a component whose
+    /// capability, artifact and verification hang off it strands that intent
+    /// cluster on removal, so a healthily-modelled leaf module fired — the
+    /// severed "subsystem" was made of sentences. And they donate *phantom
+    /// connectivity*: a genuine operational cut vertex stayed silent because
+    /// the parts it severs remained "connected" through a SATISFIES chain — a
+    /// path that carries nothing at run time. Found dispositioning reflow2's
+    /// own two warnings (2026-07-21): `cmp:flow` fired on the first defect
+    /// while `cmp:export`, a true cut vertex, hid behind the second.
     /// Does this component couple to the rest of the design **only** through
     /// contracts carried by a library — that is, linked into its consumers
     /// rather than called across a boundary at run time?
@@ -389,9 +443,9 @@ impl DesignGraph {
     }
 
     pub(crate) fn is_single_point_of_failure(&self, node_id: &str) -> Result<bool, DynoError> {
-        let baseline = self.build_network(None)?.nontrivial_component_count();
+        let baseline = self.operational_network(None)?.nontrivial_component_count();
         Ok(self
-            .build_network(Some(node_id))?
+            .operational_network(Some(node_id))?
             .nontrivial_component_count()
             > baseline)
     }

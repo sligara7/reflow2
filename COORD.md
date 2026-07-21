@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-69 SPOF as true cut vertices — @ajs — since 2026-07-21 — crates/reflow2-core/src/structure.rs (or heal.rs), tests
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -76,6 +75,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-69 done: SPOF connectivity moved to the as-built operational network (ops types + realizing artifacts) — the design network's intent edges donated mass (cmp:flow fired on stranding its own capability/artifact/verification cluster) and phantom connectivity (cmp:export, a true cut vertex, hid behind a SATISFIES chain). Candidates enumerate from the same network; all prior selectivity lessons kept (baseline-relative, non-trivial, operational-candidates, library filter). Self-graph measured before→after: {flow, service} → {graph, export, ifc:graph-export, service} — the false positive out, three true findings in (service already accepted via dec:service-spof-accepted; other three await disposition). 2 regression tests + island fixture rebuilt operational; workspace + all instruments at baselines; drift accepted two-sided (chg:bl69-spof-cut-vertices; plus art:artifact's missed BL-26 accept recorded late via chg:bl26-documents-write-side). Export 242n/480e. NOTE: a session started before this build serves the old detector — restart before relying on it live — @ajs — 2026-07-21 — (this commit)
 
 - Design-analysis capture BL-64..68 (concept items, no code): from a session comparing reflow2 against UAF's full acquisition lifecycle and modern commercial practice. BL-64 disposal/retirement (missing P6), BL-65 risk/security as a lifecycle-spanning concern + DevSecOps continuous governance, BL-66 design-coherence as a consumer CI gate (actionable S-M), BL-67 SLO/telemetry reconciliation (as-operating fidelity), BL-68 readiness-driven roadmapping (KEYSTONE — TRL/MRL/-ilities gate achievability; derive the delivery timeline from readiness × the thread; "the roadmap is a risk-burndown schedule"; unifies 64/65/67). All reuse propagate + detect-and-ask + the reconcile seam; the new part in each is vocabulary, a user design decision. Nothing built — @ajs — 2026-07-21 — (this commit)
 

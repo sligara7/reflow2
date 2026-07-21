@@ -187,15 +187,32 @@ fn an_unrelated_island_does_not_make_everything_a_single_point_of_failure() {
     g.add_component("cmp:hub", "Hub", "holds both", None)
         .unwrap();
 
-    // Two real subsystems, joined only through cmp:hub.
-    for cap in ["cap:a", "cap:b"] {
-        g.add_capability(cap, cap, "does a thing", None).unwrap();
-        g.allocate(cap, "cmp:hub").unwrap();
-        for i in 0..2 {
-            let r = format!("req:{cap}-{i}");
-            g.add_requirement(&r, &r, "s").unwrap();
-            g.satisfies(cap, &r).unwrap();
-        }
+    // Two real subsystems (a running part with its file), joined only
+    // through cmp:hub.
+    for side in ["a", "b"] {
+        let c = format!("cmp:{side}");
+        g.add_component(&c, &c, "a part", None).unwrap();
+        g.create_edge(
+            edge::DEPENDS_ON,
+            node::COMPONENT,
+            &c,
+            node::COMPONENT,
+            "cmp:hub",
+            Props::new(),
+        )
+        .unwrap();
+        let art = format!("art:{side}");
+        g.create_node(node::ARTIFACT, &art, Props::new().set("name", art.as_str()))
+            .unwrap();
+        g.create_edge(
+            edge::REALIZES,
+            node::ARTIFACT,
+            &art,
+            node::COMPONENT,
+            &c,
+            Props::new(),
+        )
+        .unwrap();
     }
     let spofs = |g: &DesignGraph| -> Vec<String> {
         g.detect_defects()
@@ -215,14 +232,168 @@ fn an_unrelated_island_does_not_make_everything_a_single_point_of_failure() {
     // first part's fragility changes, so nothing new should be flagged.
     g.add_component("cmp:island", "Island", "unrelated", None)
         .unwrap();
-    g.add_capability("cap:island", "Island cap", "d", None)
-        .unwrap();
-    g.allocate("cap:island", "cmp:island").unwrap();
+    g.create_node(
+        node::ARTIFACT,
+        "art:island",
+        Props::new().set("name", "island.rs"),
+    )
+    .unwrap();
+    g.create_edge(
+        edge::REALIZES,
+        node::ARTIFACT,
+        "art:island",
+        node::COMPONENT,
+        "cmp:island",
+        Props::new(),
+    )
+    .unwrap();
 
     assert_eq!(
         spofs(&g),
         ["cmp:hub"],
-        "an unrelated island must not turn the capabilities into single points of failure"
+        "an unrelated island must not turn other nodes into single points of failure"
+    );
+}
+
+// ---- BL-69 · connectivity is measured on the operational network -----------
+
+/// The `cmp:flow` shape from reflow2's own graph: a leaf module whose
+/// capability, artifact and verification hang off it. On the full design
+/// network, removing the module strands that intent cluster (≥2 nodes, so the
+/// non-trivial filter passed) and the module fired as a single point of
+/// failure — a healthily-modelled leaf punished for having its thread
+/// recorded. The severed "subsystem" was made of sentences.
+#[test]
+fn an_intent_cluster_hanging_off_one_component_is_not_a_single_point_of_failure() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    // A minimal operational spine so cmp:leaf attaches to something real.
+    g.add_component("cmp:hub", "Hub", "the spine", None)
+        .unwrap();
+    g.add_component("cmp:leaf", "Leaf", "a leaf module", None)
+        .unwrap();
+    g.create_edge(
+        edge::DEPENDS_ON,
+        node::COMPONENT,
+        "cmp:leaf",
+        node::COMPONENT,
+        "cmp:hub",
+        Props::new(),
+    )
+    .unwrap();
+    // The leaf's intent cluster: capability + verification + the capability's
+    // artifact — connected to the rest of the design only through cmp:leaf.
+    g.add_capability("cap:leaf", "Leaf cap", "what the leaf does", None)
+        .unwrap();
+    g.allocate("cap:leaf", "cmp:leaf").unwrap();
+    g.create_node(
+        node::ARTIFACT,
+        "art:leaf",
+        Props::new().set("name", "leaf.rs"),
+    )
+    .unwrap();
+    g.create_edge(
+        edge::REALIZES,
+        node::ARTIFACT,
+        "art:leaf",
+        node::CAPABILITY,
+        "cap:leaf",
+        Props::new(),
+    )
+    .unwrap();
+
+    let spofs: Vec<String> = g
+        .detect_defects()
+        .unwrap()
+        .into_iter()
+        .filter(|d| d.category == HealCategory::SinglePointOfFailure)
+        .flat_map(|d| d.affected_ids)
+        .collect();
+    assert!(
+        spofs.is_empty(),
+        "stranding your own intent cluster is modelling, not fragility: {spofs:?}"
+    );
+}
+
+/// The `cmp:export` shape from reflow2's own graph: a genuine operational cut
+/// vertex that the old test could not see, because the parts it severs stayed
+/// "connected" to the rest through a SATISFIES chain — intent edges carrying
+/// phantom connectivity that exists on no runtime path.
+#[test]
+fn a_cut_vertex_hidden_by_intent_edges_is_still_a_single_point_of_failure() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_component("cmp:core", "Core", "the main body", None)
+        .unwrap();
+    g.create_node(
+        node::ARTIFACT,
+        "art:core",
+        Props::new().set("name", "core.rs"),
+    )
+    .unwrap();
+    g.create_edge(
+        edge::REALIZES,
+        node::ARTIFACT,
+        "art:core",
+        node::COMPONENT,
+        "cmp:core",
+        Props::new(),
+    )
+    .unwrap();
+    // The bridge: consumers reach the core only through it.
+    g.add_component("cmp:bridge", "Bridge", "sole route", None)
+        .unwrap();
+    g.create_edge(
+        edge::DEPENDS_ON,
+        node::COMPONENT,
+        "cmp:bridge",
+        node::COMPONENT,
+        "cmp:core",
+        Props::new(),
+    )
+    .unwrap();
+    g.add_interface("ifc:door", "The bridge's contract")
+        .unwrap();
+    g.provides("cmp:bridge", "ifc:door").unwrap();
+    g.add_component("cmp:consumer", "Consumer", "behind the door", None)
+        .unwrap();
+    g.consumes("cmp:consumer", "ifc:door").unwrap();
+    g.create_node(
+        node::ARTIFACT,
+        "art:consumer",
+        Props::new().set("name", "consumer.rs"),
+    )
+    .unwrap();
+    g.create_edge(
+        edge::REALIZES,
+        node::ARTIFACT,
+        "art:consumer",
+        node::COMPONENT,
+        "cmp:consumer",
+        Props::new(),
+    )
+    .unwrap();
+    // The intent bypass that used to hide the bridge: consumer and core both
+    // satisfy the same requirement through their capabilities, so on the full
+    // design network the consumer stays "connected" without the bridge.
+    g.add_requirement("req:shared", "Shared", "one intent")
+        .unwrap();
+    for (cap, cmp) in [("cap:core", "cmp:core"), ("cap:consumer", "cmp:consumer")] {
+        g.add_capability(cap, cap, "d", None).unwrap();
+        g.allocate(cap, cmp).unwrap();
+        g.satisfies(cap, "req:shared").unwrap();
+    }
+
+    let spofs: Vec<String> = g
+        .detect_defects()
+        .unwrap()
+        .into_iter()
+        .filter(|d| d.category == HealCategory::SinglePointOfFailure)
+        .flat_map(|d| d.affected_ids)
+        .collect();
+    assert!(
+        spofs.contains(&"cmp:bridge".to_string()),
+        "a SATISFIES chain is not a runtime path; the bridge is a real SPOF: {spofs:?}"
     );
 }
 

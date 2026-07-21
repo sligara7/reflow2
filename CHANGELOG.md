@@ -31,6 +31,21 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **`single_point_of_failure` measures connectivity on the as-built operational network**
+  (BL-69). It used to measure removal-splits on the full design network, where intent edges are
+  wrong in both directions at once: a leaf component whose capability/artifact/verification hang
+  off it fired (the severed "subsystem" was made of sentences), while a genuine operational cut
+  vertex stayed silent because the parts it severs remained "connected" through a SATISFIES
+  chain — a path that carries nothing at run time. Connectivity (and candidate enumeration) now
+  runs on Components/Interfaces/Resources/Environments plus the Artifacts realizing them; all
+  prior selectivity lessons (baseline-relative islands, non-trivial subsystems, intent-node and
+  library exclusions) are unchanged. On reflow2's own design: `cmp:flow` (false) stops firing;
+  `cmp:export`, `ifc:graph-export` and `cmp:graph` (true, previously hidden) now report alongside
+  the already-accepted `cmp:service`. A defect list can grow when the detector stops lying —
+  that is the fix working, not a regression.
+
 ## [0.6.1] — 2026-07-21
 
 A patch release: correctness and doctrine fixes only, no tool-surface or schema shape change,
