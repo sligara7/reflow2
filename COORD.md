@@ -50,6 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- BL-50 (three S paper cuts) — @ajs — since 2026-07-20 — int-as-float coercion (core write path), add_change_event affected list + CHANGED ranking (service.rs/agent.rs), SessionStart hook recipe (getting-started)
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
