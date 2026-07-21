@@ -1783,8 +1783,12 @@ SPOF `{cmp:flow, cmp:service}` → `{cmp:graph, cmp:export, ifc:graph-export, cm
 `cmp:flow` stops firing; its community-bridge signal stays in `surprising_connections` under its
 accurate name. Three findings are new-and-true: `cmp:export` and `ifc:graph-export` are the only
 route from the kit's converter (`cmp:init`) to the design, and `cmp:graph` genuinely strands
-`schema`/`search`/`vocabulary` (each with its file) plus the whole export chain. `cmp:service`
-stays, answered by `dec:service-spof-accepted`; the other three await disposition. The defect
+`schema`/`search`/`vocabulary` (each with its file) plus the whole export chain. All four are now
+answered on the record: `cmp:service` by `dec:service-spof-accepted`, `cmp:graph` by
+`dec:graph-spof-accepted` (the single store handle is the architecture, and a second one would be
+two write paths to one store), and the `cmp:export`+`ifc:graph-export` chain by
+`dec:export-door-spof-accepted` (one canonical, deterministic portability format is the feature;
+a second export path would be a second source of truth). The defect
 count *rising* 2 → 4 while the false positive leaves is the fix: the count was previously wrong
 in both directions. Two regression tests pin the two shapes (intent-cluster stranding must not
 fire; a cut vertex hidden by intent edges must); the island-immunity fixture was rebuilt with

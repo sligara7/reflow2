@@ -2175,6 +2175,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:export",
+      "properties": {},
+      "to_id": "dec:export-door-spof-accepted"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:graph",
+      "properties": {},
+      "to_id": "dec:graph-spof-accepted"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:heal",
       "properties": {},
       "to_id": "dec:merge-survivor-provenance"
@@ -2184,6 +2196,12 @@
       "from_id": "cmp:service",
       "properties": {},
       "to_id": "dec:service-spof-accepted"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "ifc:graph-export",
+      "properties": {},
+      "to_id": "dec:export-door-spof-accepted"
     },
     {
       "edge_type": "INCLUDES",
@@ -5107,6 +5125,26 @@
         "decision": "possible_duplicate is a DETECT gap; HEAL merges only on a human-drawn DUPLICATES edge.",
         "name": "Suspected duplicates are asked, never merged",
         "rationale": "apply_heal deletes a node with no undo, so merge is safe only because the endpoints were asserted; a heuristic must not drive it. A gap can be acknowledged, a HEAL defect cannot be dismissed. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: 3dtictactoe trial, BL-27/BL-29.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:export-door-spof-accepted",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "cmp:export and ifc:graph-export are the only route from a design to the kit converter (cmp:init) and to any other machine or reflow2 version, and they stay that way. Both single_point_of_failure warnings are accepted as intentional, not resolved by adding a second export path.",
+        "name": "The export document is an accepted single door, so its chain is an accepted SPOF",
+        "rationale": "dec:repo-file-embedded made the deterministic export the durable, diffable record, and req:survives-upgrade makes export-with-the-old-build / import-with-the-new THE migration mechanism — a single door is the feature, because a second export path would be a second source of truth for what the design is, and byte-identical determinism (req:persistence: a backup under git shows what actually changed) is only a meaningful promise about one format. The detector is right that severing this chain cuts cmp:init off from the design; that fragility is the price of one canonical portability format, knowingly paid. Accepted 2026-07-21 while dispositioning BL-69's corrected findings; sibling of dec:service-spof-accepted and dec:graph-spof-accepted.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:graph-spof-accepted",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "cmp:graph is the single store handle everything else hangs off, and it stays that way. The single_point_of_failure warning on it is accepted as intentional, not resolved by adding redundancy.",
+        "name": "The graph handle is an accepted single point of failure",
+        "rationale": "The architecture is explicit (AGENTS.md): DesignGraph is 'the single handle everything else hangs off' — one schema-validated CRUD surface so every coherence-loop module speaks to one store one way. Removing it strands schema, search and vocabulary (each with its file) plus the export chain, which is the BL-69 detector telling the truth about the spine. Redundancy is incoherent here twice over: these are modules compiled into one binary (they cannot fail independently of cmp:graph at run time — the same reasoning as the F6 library filter, which cannot see cmp:graph only because it provides no Interface node), and a second graph handle would mean two write paths to one store, exactly the incoherence the single handle exists to prevent. Accepted 2026-07-21 while dispositioning BL-69's corrected findings; sibling of dec:service-spof-accepted.",
         "status": "accepted"
       }
     },
