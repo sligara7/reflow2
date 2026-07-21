@@ -15,6 +15,26 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed (from the 2026-07-21 deep review)
+
+- **A self-loop `DUPLICATES` edge no longer drives HEAL to delete the node** (BL-53,
+  critical): `x DUPLICATES x` built a sanctioned merge whose re-pointing skipped every edge
+  and whose delete then removed the survivor itself — with no undo, reported as success. It
+  is now refused at derivation, covering propose and apply alike.
+- **The installer proves ownership before refreshing a file** (BL-54): a per-file hash
+  manifest in the install stamp. Your edits to an installed AGENTS.md or skill are kept and
+  reported (`LEFT ALONE`), never overwritten; files the kit no longer ships are pruned only
+  when untouched; a malformed MCP config reports left-alone instead of crashing mid-install;
+  `--check` and the real run now agree.
+- **`install.sh` cannot die silently anymore** (BL-55): a release without `checksums.txt`
+  reaches the honest "NOT verified" note instead of a message-less exit, and a binary that
+  cannot execute on your platform fails loudly with the build-from-source recipe instead of
+  printing success.
+- **A partial release upload can no longer become `releases/latest`** (BL-55): release.yml
+  drafts first, uploads, asserts every expected asset is attached, then publishes.
+- **`smoke_mcp.py --graph-path` refuses to delete an existing directory** unless `--wipe` is
+  passed (BL-56) — pointing it at a live design graph used to destroy it before any prompt.
+
 ### Added
 
 - **`add_change_event` can declare what it changed** (BL-50): an optional `affected` list

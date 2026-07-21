@@ -858,3 +858,46 @@ fn the_provenance_order_is_graded_not_binary() {
         other => panic!("expected a Merge, got {other:?}"),
     }
 }
+
+#[test]
+fn a_self_loop_duplicates_edge_never_becomes_a_merge() {
+    // BL-53: `x DUPLICATES x` drove a sanctioned merge that deleted the node
+    // itself (re-pointing skipped every edge, the delete removed the survivor),
+    // reported as applied/verified. It must be refused at derivation, which
+    // covers propose and apply alike.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability("cap:a", "A", "does a", None).unwrap();
+    g.create_edge(
+        "DUPLICATES",
+        node::CAPABILITY,
+        "cap:a",
+        node::CAPABILITY,
+        "cap:a",
+        Props::new(),
+    )
+    .unwrap();
+
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    assert!(
+        !proposal
+            .operations
+            .iter()
+            .any(|op| matches!(&op.op, HealOp::Merge { .. })),
+        "a self-loop must not produce a merge operation"
+    );
+    assert!(
+        proposal
+            .skipped_operations
+            .iter()
+            .any(|s| s.reason.contains("cannot duplicate itself")),
+        "the refusal must be reported, not silent: {:?}",
+        proposal.skipped_operations
+    );
+
+    // Applying the (merge-free) proposal must leave the node standing.
+    g.apply_heal(&proposal).unwrap();
+    assert!(
+        g.get_node(node::CAPABILITY, "cap:a").unwrap().is_some(),
+        "the node must survive"
+    );
+}

@@ -276,6 +276,17 @@ fn issue_id(category: HealCategory, affected: &[String]) -> String {
 /// apply refuse legitimate proposals — or worse, sanction ones HEAL never made.
 fn merge_op_for(issue: &HealIssue, index: &HashMap<String, String>) -> Result<HealOp, String> {
     let (keep, remove) = (&issue.affected_ids[0], &issue.affected_ids[1]);
+    // `x DUPLICATES x` is schema-valid (`* -> *`) and used to build a merge
+    // whose re-pointing skips every edge ("already on the survivor") and whose
+    // final delete then removed the survivor itself — a sanctioned self-merge
+    // deleted the node and all its edges with no undo, reporting success
+    // (BL-53). This guard covers propose AND apply: both derive through here.
+    if keep == remove {
+        return Err(format!(
+            "'{keep}' cannot duplicate itself — a self-loop DUPLICATES edge is a \
+             modelling error to delete (delete_edge), not a merge to apply"
+        ));
+    }
     let (Some(keep_type), Some(remove_type)) = (index.get(keep), index.get(remove)) else {
         // An endpoint that can't be resolved to a real node must never become a
         // phantom op (discipline 2).

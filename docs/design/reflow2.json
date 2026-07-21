@@ -340,6 +340,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:deep-review-tier1",
+      "properties": {},
+      "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:merge-integrity-bl47-bl46",
       "properties": {},
       "to_id": "epoch:v050-hardening"
@@ -406,6 +412,24 @@
         "action": "modified"
       },
       "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:deep-review-tier1",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:deep-review-tier1",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
     },
     {
       "edge_type": "CHANGED",
@@ -1676,6 +1700,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "drift:9bf38bf9034329af",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "drift:ecbe745913715150",
       "properties": {
         "optional": false,
@@ -1691,6 +1724,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:f7bf5e47116ee992",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:heal"
     },
     {
       "edge_type": "DEPLOYED_TO",
@@ -3504,7 +3546,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b7df07e69374cc45",
+        "checksum": "sha256:b69c5f6682770736",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -3537,7 +3579,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bf20da9bb9d606de",
+        "checksum": "sha256:1a020de7ccdcc36c",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
         "status": "realized"
@@ -4060,6 +4102,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-50: three tool-boundary paper cuts closed — integer literals widen losslessly to schema floats at the core write seam (confidence: 1 accepted, range check kept), add_change_event takes an affected list and draws its CHANGED edges atomically (delete results named {deleted}), describe_schema counts half-exact edges so CHANGED reads as the modelled fit; kit documents a SessionStart hook making the where-am-i ritual mechanical"
+      }
+    },
+    {
+      "node_id": "chg:deep-review-tier1",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Deep-review tier-1 fixes (BL-53..56): HEAL refuses self-loop DUPLICATES merges (a sanctioned self-merge deleted the node with no undo); the installer proves file ownership by hash manifest — user edits are kept and reported, obsolete kit files pruned only when untouched, malformed configs left alone without crashing; install.sh fails loud instead of silently or falsely succeeding; release publishes only after every asset is verified attached; the smoke harness refuses to wipe an existing graph directory without --wipe"
       }
     },
     {
@@ -4743,6 +4793,18 @@
       }
     },
     {
+      "node_id": "drift:9bf38bf9034329af",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:init drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:init' has changed since it was registered against the design"
+      }
+    },
+    {
       "node_id": "drift:ecbe745913715150",
       "node_type": "DriftEvent",
       "properties": {
@@ -4764,6 +4826,18 @@
         "resolved": true,
         "severity": "medium",
         "summary": "'art:nodes' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:f7bf5e47116ee992",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:heal drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:heal' has changed since it was registered against the design"
       }
     },
     {

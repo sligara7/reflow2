@@ -122,9 +122,26 @@ jobs:
           TAG: ${{ inputs.tag || github.ref_name }}
         run: |
           set -euo pipefail
+          # Draft first, publish last: a non-draft release flips releases/latest
+          # the moment it exists, so a failure mid-upload used to leave a live
+          # "latest" with checksums.txt and no binaries — install.sh users got
+          # 404s until someone noticed (BL-55). A draft is invisible to /latest
+          # until every asset is verified present.
+          created_draft=""
           if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --draft \
               --title "$TAG" --notes "See CHANGELOG.md for what changed."
+            created_draft=1
           fi
           # --clobber: a re-run replaces assets rather than failing on them.
           gh release upload "$TAG" --repo "$GITHUB_REPOSITORY" --clobber dist/*
+          # Every expected asset must be attached before this goes live.
+          for asset in reflow2-mcp-linux-x86_64.tar.gz reflow2-mcp-macos-arm64.tar.gz \
+                       reflow2-mcp-macos-x86_64.tar.gz reflow2-kit.tar.gz checksums.txt; do
+            gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets \
+              -q '.assets[].name' | grep -qx "$asset" \
+              || { echo "missing asset after upload: $asset" >&2; exit 1; }
+          done
+          if [ -n "$created_draft" ]; then
+            gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false
+          fi

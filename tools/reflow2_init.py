@@ -28,6 +28,7 @@ from __future__ import annotations
 import argparse
 import datetime
 import filecmp
+import hashlib
 import re
 import json
 import os
@@ -355,7 +356,11 @@ def write_mcp_config(project: Path, spec: dict, binary: Path, force: bool) -> st
         if not isinstance(existing, dict):
             return f"{label} is not a JSON object — left alone, fix it by hand"
 
-        current = existing.get(spec["key"], {}).get("reflow2")
+        servers_val = existing.get(spec["key"], {})
+        if not isinstance(servers_val, dict):
+            return (f"{label} has a non-object {spec['key']!r} value — "
+                    f"left alone, fix it by hand")
+        current = servers_val.get("reflow2")
         if isinstance(current, dict) and not force:
             pointed_at = spec["extract"](current)
             if pointed_at and pointed_at != str(binary):
@@ -506,10 +511,14 @@ def planned_changes(project: Path) -> list[str]:
             changes.append(f"create  {spec['path']}")
         else:
             try:
-                current = json.loads(path.read_text()).get(spec["key"], {}).get("reflow2")
-            except (json.JSONDecodeError, AttributeError):
-                current = None
-            if current is None:
+                obj = json.loads(path.read_text())
+                servers_val = obj.get(spec["key"], {}) if isinstance(obj, dict) else None
+            except json.JSONDecodeError:
+                obj, servers_val = None, None
+            if obj is None or not isinstance(servers_val, dict):
+                changes.append(f"skip    {spec['path']} (malformed — the run "
+                               f"will leave it alone)")
+            elif servers_val.get("reflow2") is None:
                 changes.append(f"update  {spec['path']} (add the reflow2 server)")
     reflow2_doc = "REFLOW2.md" if (project / "REFLOW2.md").exists() or any(
         foreign_owner(src, project / rel) for src, rel in FILES if rel == "AGENTS.md"
@@ -561,6 +570,48 @@ def backup_graph(project: Path, binary: Path) -> str | None:
     return f"backed the design up to {dest.relative_to(project)}"
 
 
+
+def file_sha(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def installed_manifest(project: Path) -> dict:
+    """What the last install wrote, rel path -> sha256.
+
+    Empty for pre-manifest installs (or an unreadable stamp) — those fall back
+    to the older heading-based ownership check and gain a manifest on this
+    write, so the clobber window closes after one update (BL-54).
+    """
+    try:
+        data = json.loads((project / STAMP).read_text())
+    except (OSError, json.JSONDecodeError):
+        return {}
+    files = data.get("installed_files") if isinstance(data, dict) else None
+    return files if isinstance(files, dict) else {}
+
+
+def place_kit_file(src: Path, dst: Path, rel: str, old_manifest: dict,
+                   new_manifest: dict, done: list, label: str | None = None) -> bool:
+    """Write one kit-owned file, refusing to clobber local edits (BL-54).
+
+    Ownership is proven by the manifest: the file is ours to refresh only when
+    its current content matches what the kit last installed. A mismatch means
+    the user edited it — the edit is kept and reported, never overwritten.
+    """
+    recorded = old_manifest.get(rel)
+    if dst.exists() and recorded is not None and file_sha(dst) != recorded:
+        new_manifest[rel] = recorded  # still on the books; keep tracking it
+        done.append(f"{rel}  LEFT ALONE — differs from what the kit installed "
+                    f"(your edits); delete the file to accept the kit copy")
+        return False
+    changed = not dst.exists() or not filecmp.cmp(src, dst, shallow=False)
+    shutil.copy2(src, dst)
+    new_manifest[rel] = file_sha(dst)
+    if changed:
+        done.append(label or rel)
+    return True
+
+
 def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
     if problems := check_skills():
         raise SystemExit(
@@ -573,34 +624,57 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
     # Where reflow2's own instructions end up: AGENTS.md normally, REFLOW2.md
     # when the project already owns that filename.
     reflow2_doc = "AGENTS.md"
+    old_manifest = installed_manifest(project)
+    new_manifest: dict = {}
     for src, rel in FILES:
         dst = project / rel
         dst.parent.mkdir(parents=True, exist_ok=True)
-        if owner := foreign_owner(src, dst):
-            # The project has its own file here. Overwriting it destroys the
-            # instructions the project actually runs on — and AGENTS.md is
-            # exactly the file every brownfield target already has.
-            side = project / SIDECAR.get(rel, f"REFLOW2_{rel}")
-            changed = not side.exists() or not filecmp.cmp(src, side, shallow=False)
-            shutil.copy2(src, side)
-            if changed:
-                done.append(f"{side.name}  (kept your own {rel} — {owner})")
+        owner = foreign_owner(src, dst)
+        recorded = old_manifest.get(rel)
+        if not owner and dst.exists() and recorded is not None and file_sha(dst) != recorded:
+            owner = "it differs from what the kit installed (your local edits)"
+        if owner:
+            # The project (or the user's edits) own this path. Overwriting it
+            # destroys the instructions the project actually runs on — and
+            # AGENTS.md is exactly the file every brownfield target has.
+            side_rel = SIDECAR.get(rel, f"REFLOW2_{rel}")
+            side = project / side_rel
+            # The sidecar obeys the same rule: a project may already own a
+            # file at the sidecar path too (BL-54).
+            if side.exists() and foreign_owner(src, side) \
+                    and old_manifest.get(side_rel) is None:
+                done.append(f"{side_rel}  LEFT ALONE — the project has its own "
+                            f"file here too; the kit's {rel} was not installed")
+            else:
+                place_kit_file(src, side, side_rel, old_manifest, new_manifest,
+                               done, label=f"{side_rel}  (kept your own {rel} — {owner})")
             reflow2_doc = side.name
             continue
-        changed = not dst.exists() or not filecmp.cmp(src, dst, shallow=False)
-        shutil.copy2(src, dst)
-        if changed:
-            done.append(rel)
+        place_kit_file(src, dst, rel, old_manifest, new_manifest, done)
     for src, rel in TREES:
         for path in sorted(src.rglob("*")):
             if path.is_dir():
                 continue
+            file_rel = str(Path(rel) / path.relative_to(src))
             dst = project / rel / path.relative_to(src)
             dst.parent.mkdir(parents=True, exist_ok=True)
-            changed = not dst.exists() or not filecmp.cmp(path, dst, shallow=False)
-            shutil.copy2(path, dst)
-            if changed:
-                done.append(str(Path(rel) / path.relative_to(src)))
+            place_kit_file(path, dst, file_rel, old_manifest, new_manifest, done)
+    # Files a previous kit shipped that this one no longer does are pruned —
+    # but only when untouched since we wrote them (BL-54): an edited copy is
+    # kept, loudly. Without this, a renamed skill lived on forever downstream.
+    for rel, recorded in sorted(old_manifest.items()):
+        if rel in new_manifest:
+            continue
+        stale = project / rel
+        if not stale.exists():
+            continue
+        if file_sha(stale) == recorded:
+            stale.unlink()
+            done.append(f"{rel}  removed (no longer shipped by the kit)")
+        else:
+            new_manifest[rel] = recorded
+            done.append(f"{rel}  no longer shipped by the kit, but it has "
+                        f"your edits — left in place")
 
     # MCP config, with the binary path already resolved — the step people
     # previously had to hand-edit, and the one most likely to be got wrong.
@@ -620,7 +694,9 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
     if note := ensure_gitignore(project):
         done.append(note)
     stamp = project / STAMP
-    stamp.write_text(json.dumps(kit_version(), indent=2) + "\n")
+    stamp_data = kit_version()
+    stamp_data["installed_files"] = dict(sorted(new_manifest.items()))
+    stamp.write_text(json.dumps(stamp_data, indent=2) + "\n")
     return done
 
 

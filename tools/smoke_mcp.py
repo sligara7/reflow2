@@ -1034,6 +1034,8 @@ def main() -> int:
                     help="graph directory (default: a fresh temp dir, removed afterwards)")
     ap.add_argument("--keep-graph", action="store_true",
                     help="do not delete the graph directory on exit")
+    ap.add_argument("--wipe", action="store_true",
+                    help="allow --graph-path to delete an EXISTING directory")
     args = ap.parse_args()
 
     binary = os.path.abspath(args.bin)
@@ -1042,8 +1044,16 @@ def main() -> int:
         return 1
 
     graph_path = args.graph_path or tempfile.mkdtemp(prefix="reflow2-smoke-")
-    if args.graph_path:
-        shutil.rmtree(graph_path, ignore_errors=True)  # always start clean
+    if args.graph_path and os.path.exists(graph_path):
+        # The test wipes its graph dir. Deleting whatever directory the user
+        # happened to name — a live .reflow2/graph, say — destroyed a real
+        # design with no prompt (BL-56). An existing path now needs --wipe.
+        if not args.wipe:
+            print(f"{graph_path} already exists and the smoke test would DELETE it.\n"
+                  f"Pass --wipe if that is genuinely what you want, or omit "
+                  f"--graph-path to use a fresh temp dir.")
+            return 1
+        shutil.rmtree(graph_path, ignore_errors=True)
 
     try:
         return run(binary, graph_path)

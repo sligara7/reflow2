@@ -1367,6 +1367,128 @@ trials per sharpening.md. Verified: all checks green on the current tree, negati
 confirms a bogus tool ref fails with exit 1, and the first live CI run on GitHub is the
 end-to-end proof.
 
+**BL-53 · A self-loop DUPLICATES edge makes HEAL delete the node — DONE 2026-07-21** —
+*deep review (verified in source).* Size **S**, was **critical**. Fixed: equal endpoints
+are refused in `merge_op_for` with a reason naming delete_edge as the correction — one
+guard covers propose and apply, which both derive through it; regression test pins the
+node's survival end to end.
+`merge_op_for` (heal.rs) guards unresolvable endpoints and cross-type merges but not
+`keep == remove`. `x DUPLICATES x` is schema-valid (`*→*`); the merge repoints nothing
+(every edge "already points at the survivor") and then `delete_node(x)` removes the survivor
+and all its edges, while the report says applied/verified. Merges have no snapshot and no
+undo. Fix: refuse equal endpoints in `merge_op_for` (covers propose AND apply, which both
+derive through it) + a regression test.
+
+**BL-54 · The installer can destroy user content and die mid-run — DONE 2026-07-21** —
+*deep review.* Size **M**. All four fixed: install now records a per-file sha256 manifest
+in the stamp; ownership is proven by hash (edited kit files are LEFT ALONE with a report,
+never overwritten; delete the file to accept the kit copy); the sidecar obeys the same
+rule; files the kit no longer ships are pruned only when untouched; non-dict server values
+report left-alone instead of crashing, and --check agrees with the run. Pre-manifest
+installs keep the old heading heuristic for exactly one update, then the manifest closes
+the window. Three regression tests. Four related defects in `reflow2_init.py`: (a) kit-file ownership is judged by
+first-heading match, so a consumer's edits to an installed AGENTS.md or skill are clobbered
+on update and reported as a routine refresh; (b) the `REFLOW2.md` sidecar is itself written
+with no ownership check; (c) files removed from the kit are never pruned downstream, so
+stale skills load forever; (d) a non-dict `mcpServers` value raises AttributeError mid-run,
+leaving a partial install — and `--check` promises a write the real run refuses. Fix: a
+per-file hash manifest recorded in the install stamp — "ours to refresh" = hash matches what
+we installed; anything else sidecars with a report; the manifest also enables pruning; plus
+the type-check `--check` already has.
+
+**BL-55 · First-contact integrity: install.sh and the release flow — DONE 2026-07-21** —
+*deep review (mechanism verified live).* Size **S + S**. Fixed: `try_download` returns
+instead of exiting, so a missing checksums.txt reaches the honest-skip message; a binary
+that cannot execute now fails loudly with the build-from-source recipe instead of printing
+success; release.yml creates a draft, uploads, asserts all five assets present, then
+publishes — a partial upload can no longer become `releases/latest`. (a) `install.sh`: a missing
+`checksums.txt` silently kills the whole install — `download()`'s `fail` exits the script
+even inside an `if`, and the call site's `2>/dev/null` swallows the message; the "checksums
+NOT verified" honest-skip branch is unreachable. Also a binary that cannot execute still
+prints "installed:". (b) `release.yml` creates the release live before uploading assets, so
+a partial upload leaves `releases/latest` with checksums and no binaries. Fix: a
+non-exiting `try_download` for the optional asset + a loud warn when `--version` fails;
+draft → upload → assert four assets → publish.
+
+**BL-56 · Destructive and leaky defaults in the test harnesses** — *deep review.* Size
+**S + S**. **(a) DONE 2026-07-21**: `--graph-path` now refuses an existing directory
+unless `--wipe` is passed. (b) orphaned servers + undrained stderr pipe still open. (a) `smoke_mcp.py --graph-path` rmtree's whatever directory it is given, before
+any prompt — pointing it at a live `.reflow2/graph` destroys a real design. Wants
+refuse-unless-`--wipe`. (b) On any mid-run failure the spawned servers are orphaned
+(no try/finally around `Server`), and stderr is a never-drained PIPE that can deadlock the
+test under a warn-storm; all four trial harnesses inherit both via the shared class. Wants a
+context-manager Server that drains stderr and kills the child.
+
+**BL-57 · Tool-boundary honesty batch** — *deep review.* Size **M**. (a) `dyno_err` maps
+every core error to `internal_error`; ~60 of 78 tools report caller typos as server faults —
+make it variant-aware at the one choke point (`NodeNotFound`/`Unknown*`/`Validation`/
+`InvalidEdge` → invalid_params). (b) No request struct declares `deny_unknown_fields`, so a
+typo'd optional param (`ful`, `record_events`, `path`) is silently swallowed and the tool
+quietly does something else — add it everywhere, and a smoke check that every published
+inputSchema carries `additionalProperties: false`. (c) `export_graph path:` writes/overwrites
+any path with no guard — require `overwrite: true` or refuse non-export targets. (d) The
+serve path bypasses `explain_open_failure`, so the everyday two-session lock collision gets a
+raw RocksDB error. (e) `get_node` absent returns `{value: null}` vs a bare object when
+present — one named shape both ways. (f) Sibling tools disagree on missing records
+(error vs `{withdrawn:false}` vs `{was_reviewed:false}`) — pick the boolean-report style.
+(g) `parse_enum` and the ~17 typed edge tools reject without naming what would have worked.
+
+**BL-58 · Core silent-failure batch** — *deep review.* Size **M–L** (each piece S).
+(a) ingest matched-evolved uses `create_node` replace — the BL-46 reset failure, still live;
+route through `upsert_node` merge. (b) `snapshot_node` serializes a HashMap — snapshot bytes
+are process-random, breaking byte-identical exports of identical history; BTreeMap it.
+(c) `propagate_change` on a nonexistent ChangeEvent returns an empty radius
+indistinguishable from "impacts nothing" — check existence. (d) `apply_heal` batches per-op,
+so a mid-proposal failure commits earlier merges while the error implies nothing happened —
+one batch, or a partial-application report. (e) `let _ =`/`.is_ok()` swallow edge-creation
+failures in `acknowledge_gap`, `record_asked_question`, ingest provenance edges, and
+`ensure_epoch` treats a read *error* as "exists" — swallow only already-exists.
+(f) budget: a provable Exceeded is masked as Incomplete when any contribution is unstated;
+NaN contributions can panic `max_by` — reject non-finite at the write seam and decide the
+provable side first. (g) `widen_ints_for_float_props` i64::MAX saturation edge.
+(h) `truncated_beyond_depth` counts one ring, docs claim all — make the number or the doc
+honest. (i) drift's `undocumented_addition` writes a dangling DEPENDS_ON to a node that
+doesn't exist. (j) duplicate gap ids when CONTAINS and DEPENDS_ON level-skips share a pair —
+fold edge type into the hash. (k) `IngestOptions::default()` reuses `frag:ingest`, letting a
+second run overwrite the first's snapshots — make fragment_id required. (l) sort
+`node_type_index` type order; surface id collisions.
+
+**BL-59 · Analysis-pass efficiency at adopt scale** — *deep review.* Size **M**. The SPOF
+check rebuilds the full design network (with a whole-graph type scan) twice per articulation
+candidate and recomputes the invariant baseline per candidate; `graph_report` runs detectors
+redundantly (`dimension_drifts` twice); every `propagate_from` recomputes betweenness
+centrality (O(V·E)). Storyflow-scale adopt (2,643 files) is where this bites. Fix: one
+`AnalysisContext { node_type_index, design_network }` threaded through a detect pass;
+centrality lazy or cached on a mutation counter. Also: paging (`limit` echoed in result) on
+`scan_nodes` / `detect_gaps` / `confirmation_ledger`, the BL-49 convention extended.
+
+**BL-60 · Docs truth pass — the instruction files describe the pre-surface era** — *deep
+review.* Size **M** (writing only), **critical for new readers**. AGENTS.md "Current
+state" still says no surface/service/LLM wiring exists and the interaction surface is an
+open decision (78 tools ship); the module list omits two-thirds of src/ and calls GENESIS
+unbuilt; the foundation pin is quoted v0.9.4 vs the manifest's v0.10.0; "53 edge types"
+survives in four places vs the schema's 54; coverage matrix IS-7 says "not started" vs SP-3
+✅ in the same file; `interaction-surfaces.md` carries no superseded label and overview.md
+still routes to it as a live decision; README says 26 node types (omits Question), its
+layout tree shows a docs-and-schema repo, and `../tools/` link is broken from root; SETUP.md
+still says the repo is private and tells users to commit the graph the installer
+force-gitignores (pick one story); getting-started/README lists 8 of 11 skills; skills:
+link-artifacts step 6 needs `full: true`, detect-and-ask's dead-capability branch should
+route through retire-from-design, check-health's apply gate self-contradicts; "(180 nodes)"
+in three places vs 212; upgrading-to-v0.2.0 docs lack the breadcrumb.
+
+**BL-61 · skill_lint is blind to single-word tool names** — *deep review, same day the lint
+shipped.* Size **S**. The `"_" in term` filter means `allocate`, `satisfies`, `genesis`,
+`documents`, `precedes`… are never checked — the rename-leaves-prose-behind case the lint
+exists for. Drop the filter; extend the allowlist with legitimate single-word terms.
+
+**BL-62 · Surface test-coverage gaps** — *deep review.* Size **M**. 14 of 78 tools have no
+coverage in tests/tools.rs or smoke_mcp.py (add_epoch, add_resource, delete_node,
+dimension_drift(s), evaluate_allocation, pin_at_epoch, precedes, propose_allocation,
+realizes, record_change, require_resource, surprising_connections, withdraw_question); plus
+untested behaviors: get_node absent shape, export_graph overwrite, and
+create_node/scan_nodes/search_design over real stdio.
+
 ## Deliberate deferrals
 
 Not gaps — decisions, recorded so they aren't rediscovered as bugs.

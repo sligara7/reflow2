@@ -69,12 +69,34 @@ script uses it automatically. 'Could not download' never means 'up to date'."
   fi
 }
 
+# Like download(), but returns nonzero instead of exiting — for an OPTIONAL
+# asset. download()'s fail exits the whole script even when the call sits in an
+# `if` condition, so using it for checksums.txt silently killed the install on
+# any release without one, with the error swallowed by the caller's 2>/dev/null
+# (BL-55). The honest-skip branch below was unreachable dead code.
+try_download() {
+  # $1 = asset name; lands in $tmp/$1
+  if command -v gh > /dev/null 2>&1; then
+    if [ "$VERSION" = "latest" ]; then
+      gh release download --repo "$REPO" --pattern "$1" --dir "$tmp" 2> /dev/null
+    else
+      gh release download "$VERSION" --repo "$REPO" --pattern "$1" --dir "$tmp" 2> /dev/null
+    fi
+  else
+    if [ "$VERSION" = "latest" ]; then
+      curl -fsSL -o "$tmp/$1" "https://github.com/$REPO/releases/latest/download/$1" 2> /dev/null
+    else
+      curl -fsSL -o "$tmp/$1" "https://github.com/$REPO/releases/download/$VERSION/$1" 2> /dev/null
+    fi
+  fi
+}
+
 say "reflow2: downloading $bin_asset and $kit_asset ($VERSION) from $REPO ..."
 download "$bin_asset"
 download "$kit_asset"
 
 # ---- verify (best effort, honest about skipping) ----------------------------
-if download "checksums.txt" 2> /dev/null; then
+if try_download "checksums.txt"; then
   (
     cd "$tmp"
     if command -v sha256sum > /dev/null 2>&1; then
@@ -104,10 +126,18 @@ rm -rf "$KIT_DIR/kit"
 mv "$KIT_DIR/kit.new" "$KIT_DIR/kit"
 
 installed_version="$("$BIN_DIR/reflow2-mcp" --version 2> /dev/null || true)"
+# A binary that cannot execute (wrong arch, glibc too new) must not report
+# success with a blank version — that is a swallowed error (BL-55).
+if [ -z "$installed_version" ]; then
+  fail "the installed binary failed to run ('$BIN_DIR/reflow2-mcp --version' produced nothing) —
+likely a platform mismatch (wrong architecture, or the binary needs a newer glibc).
+Build from source instead:
+  git clone https://github.com/$REPO && cd reflow2 && cargo build --release -p reflow2-mcp"
+fi
 
 say ""
 say "installed:"
-say "  binary  $BIN_DIR/reflow2-mcp  ${installed_version:+($installed_version)}"
+say "  binary  $BIN_DIR/reflow2-mcp  ($installed_version)"
 say "  kit     $KIT_DIR/kit"
 
 case ":$PATH:" in

@@ -215,5 +215,62 @@ class InstallerTest(unittest.TestCase):
         )
 
 
+class ManifestTest(InstallerTest):
+    """BL-54: ownership is proven by the install manifest, not guessed."""
+
+    def test_user_edited_skill_survives_an_update(self):
+        p = self.project()
+        self.install(p)
+        skill = p / ".claude/skills/adopt/SKILL.md"
+        original = skill.read_text()
+        skill.write_text(original + "\nMy local house rule.\n")
+
+        done = self.install(p)
+
+        self.assertIn("My local house rule.", skill.read_text(),
+                      "a user's edit to an installed file must survive an update")
+        self.assertTrue(any("LEFT ALONE" in d and "adopt/SKILL.md" in d for d in done),
+                        f"the withheld refresh must be reported: {done}")
+        # Deleting the file accepts the kit copy on the next run.
+        skill.unlink()
+        self.install(p)
+        self.assertEqual(skill.read_text(), original)
+
+    def test_a_file_the_kit_no_longer_ships_is_pruned_only_when_untouched(self):
+        p = self.project()
+        self.install(p)
+        stamp = json.loads((p / ".reflow2/kit-version.json").read_text())
+        # Simulate two files a previous kit shipped: one untouched, one edited.
+        gone = p / ".claude/skills/old-skill/SKILL.md"
+        gone.parent.mkdir(parents=True)
+        gone.write_text("obsolete kit content\n")
+        edited = p / ".claude/skills/old-edited/SKILL.md"
+        edited.parent.mkdir(parents=True)
+        edited.write_text("obsolete but edited\n")
+        stamp["installed_files"][".claude/skills/old-skill/SKILL.md"] = \
+            init.file_sha(gone)
+        stamp["installed_files"][".claude/skills/old-edited/SKILL.md"] = \
+            init.file_sha(edited)
+        (p / ".reflow2/kit-version.json").write_text(json.dumps(stamp))
+        edited.write_text("obsolete but edited BY THE USER\n")
+
+        done = self.install(p)
+
+        self.assertFalse(gone.exists(), "an untouched obsolete kit file is pruned")
+        self.assertTrue(edited.exists(), "an edited obsolete file is kept")
+        self.assertTrue(any("removed (no longer shipped" in d for d in done), done)
+        self.assertTrue(any("your edits — left in place" in d for d in done), done)
+
+    def test_a_non_object_servers_value_is_left_alone_not_a_crash(self):
+        p = self.project()
+        (p / ".mcp.json").write_text(json.dumps({"mcpServers": ["not", "a", "dict"]}))
+
+        done = self.install(p)  # must not raise
+
+        self.assertEqual(json.loads((p / ".mcp.json").read_text())["mcpServers"],
+                         ["not", "a", "dict"], "the malformed file is untouched")
+        self.assertTrue(any("left alone" in d and ".mcp.json" in d for d in done), done)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

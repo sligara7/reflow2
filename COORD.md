@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- Deep-review intake (BL-53..62) + tier-1 fixes — @ajs — since 2026-07-21 — docs/backlog.md, heal.rs, reflow2_init.py + test_init.py, install.sh, smoke_mcp.py, release.yml
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -74,6 +73,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- Deep review (4 parallel reviewers, criticals verified in source) → BL-53..62 raised; tier-1 FIXED same day: BL-53 HEAL self-loop merge-deletes-node (guard in merge_op_for, covers propose+apply), BL-54 installer hash-manifest ownership (edits LEFT ALONE, obsolete files pruned when untouched, non-dict config no longer crashes, --check agrees; 12 new test_init cases → 21), BL-55 install.sh silent death + false success fixed and release.yml drafts-then-publishes with asset assertion, BL-56a smoke --graph-path needs --wipe. Open tiers: BL-56b harness leaks, BL-57 boundary honesty, BL-58 core silent-failure batch, BL-59 adopt-scale perf, BL-60 docs truth pass (AGENTS.md "Current state" is fiction — critical for new readers), BL-61 skill-lint single-word blind spot, BL-62 coverage gaps. Gates all green; drift accepted (chg:deep-review-tier1); export 215n/440e — @ajs — 2026-07-21 — (this commit)
 
 - BL-52 done — first CI + skill lint: ci.yml (core job: fast gates incl. clippy -D warnings both crates, schema, test_init, skill lint; full job: workspace + smoke_mcp + phase_trial + model_the_loop + coherent_erosion against the real binary, rust-cache'd). tools/skill_lint.py checks the skills' CONTRACT (tool refs resolve vs the #[tool] set with a both-ways allowlist, mirrors byte-identical, frontmatter, BL-41 rule) — deliberately no LLM evals, trials stay the semantic evidence. All green locally + negative-tested; ver:skill-lint added (passing) VERIFIES cmp:skills; export 212n/435e. Watch the first live run — @ajs — 2026-07-20 — (this commit)
 
