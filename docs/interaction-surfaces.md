@@ -1,17 +1,26 @@
-# Interaction Surfaces & LLM Sourcing — a deliberately deferred decision
+# Interaction Surfaces & LLM Sourcing — the option analysis (decision since made)
 
 > Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+>
+> **⚠️ Superseded on the decision, kept for the analysis.** When this was written, *how* a
+> human drives reflow2 was deliberately left open. That decision was **made on 2026-07-18 —
+> the agent-native MCP surface** — and built and shipped at v0.5.0. See
+> **[surface-plan.md](surface-plan.md)** for the decision and build order, and
+> `docs/requirements-coverage.md` (SP-1…SP-6) for what shipped. This doc remains a useful
+> record of *why* agent-native won and what the alternatives cost; read it as history, not as
+> an open question.
 
-*How* a human drives Reflow 2.0 is intentionally left open. This doc explains why that
-choice can wait, what the options are, and the one architectural consequence it carries —
-the LLM-provider dependency — so the decision can be made late without reworking the core.
+*How* a human drives Reflow 2.0 was intentionally left open when this was written. This doc
+explains why that choice could wait, what the options were, and the one architectural
+consequence it carries — the LLM-provider dependency — so the decision could be made late
+without reworking the core.
 
 ## Principle: the core is surface-agnostic
 
 Everything in `schema/` and the process docs describes a **core** that knows nothing about
 how it's driven:
 
-- the **graph store** (dynograph-foundation) + the **schema** (27 node types, 53 edges);
+- the **graph store** (dynograph-foundation) + the **schema** (27 node types, 54 edges);
 - the **coherence-loop operations**: extraction, impact propagation, gap-surfacing, heal.
 
 A **surface** sits on top of the core and lets a human interact with it. Swapping surfaces

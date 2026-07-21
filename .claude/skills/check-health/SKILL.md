@@ -58,8 +58,13 @@ Read the whole proposal, not just the operations:
 
 ## 3. Apply only the mechanical part
 
-If there are `operations` and `requires_human_review` is false, call `apply_heal` with the
-proposal. It applies atomically and then re-checks its own work.
+If there are `operations`, call `apply_heal` with the proposal. It applies the mechanical
+operations atomically and re-checks its own work — and it leaves the `generated_content`
+defects untouched for the human. `requires_human_review` being true does **not** mean you
+should withhold the mechanical merge: it only signals that there is *also* judgement work in
+`generated_content` (step 4). `apply_heal` never acts on that half, so applying the operations
+and then bringing the rest to the user is the correct sequence. (The only thing that stops a
+mechanical apply is **rigid** mode — reported as `blocked_by_mode`.)
 
 **Pass the proposal back exactly as you received it.** Every operation is checked against what HEAL
 proposes for the graph as it stands, and anything else is refused before a single write. So do not
@@ -78,8 +83,9 @@ Read the `HealReport` back:
   whose properties were overwritten. Usually that is fine, but it is a real loss and the user
   should hear about anything that looks like it mattered.
 
-If `requires_human_review` is true, **do not call `apply_heal` expecting it to resolve those
-issues** — the generative half is not built. Go to step 4.
+If `requires_human_review` is true there is judgement work left over — the generative half is
+not built, so `apply_heal` will not have resolved the `generated_content` issues (it only ever
+applies the mechanical `operations`). Go to step 4 to bring those to the user.
 
 ## 4. Bring the judgement calls to the user
 

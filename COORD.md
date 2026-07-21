@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-60 docs truth pass — @ajs — since 2026-07-21 — AGENTS.md, README.md, docs/*.md (overview, requirements-coverage, surface-plan, interaction-surfaces), getting-started/*, skills
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -74,6 +73,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-60 docs truth pass DONE: the primary instruction files no longer describe the pre-surface era. AGENTS.md "Current state" rewritten to v0.5.0 (surface shipped + decided, full 30-module list, GENESIS/INGEST built, two crates, v0.10.0 pin, 54 edges, INCLUDES traceable); README (27 types + Question, real layout tree, path fix); requirements-coverage (IS-5/6/7 → ✅, preamble/deferral/numerals); surface-plan + interaction-surfaces superseded banners; overview routing + private-repo delinking; SETUP public-repo + commit-an-export; getting-started/README all 11 skills; 3 skill contradictions fixed (link-artifacts full:true, detect-and-ask→retire, check-health apply gate — verified against heal.rs:849 "requires_human_review is not consulted"). skill_lint allowlist += blocked_by_mode (the lint caught my own new field ref). Pure docs — no graph writes, no artifact drift. Gates: skill_lint/test_init/validate_schema green — @ajs — 2026-07-21 — (this commit)
 
 - Deep review (4 parallel reviewers, criticals verified in source) → BL-53..62 raised; tier-1 FIXED same day: BL-53 HEAL self-loop merge-deletes-node (guard in merge_op_for, covers propose+apply), BL-54 installer hash-manifest ownership (edits LEFT ALONE, obsolete files pruned when untouched, non-dict config no longer crashes, --check agrees; 12 new test_init cases → 21), BL-55 install.sh silent death + false success fixed and release.yml drafts-then-publishes with asset assertion, BL-56a smoke --graph-path needs --wipe. Open tiers: BL-56b harness leaks, BL-57 boundary honesty, BL-58 core silent-failure batch, BL-59 adopt-scale perf, BL-60 docs truth pass (AGENTS.md "Current state" is fiction — critical for new readers), BL-61 skill-lint single-word blind spot, BL-62 coverage gaps. Gates all green; drift accepted (chg:deep-review-tier1); export 215n/440e — @ajs — 2026-07-21 — (this commit)
 

@@ -15,6 +15,17 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Docs
+
+- **The instruction files now describe v0.5.0, not the pre-surface era** (BL-60). AGENTS.md's
+  "Current state" section told readers to assume no MCP surface, service, or LLM wiring
+  existed — while 78 tools ship; it, the README, and the coverage matrix are corrected
+  (surface shipped and decided; two crates; foundation pin v0.10.0; 27 node / 54 edge types;
+  the full module list; INCLUDES in the traceability set). surface-plan.md and
+  interaction-surfaces.md carry "superseded / decision made" banners; SETUP.md drops the
+  stale "repo is private" note and the commit-the-graph contradiction (commit an export);
+  three skills whose steps contradicted current tool behavior are fixed.
+
 ### Fixed (from the 2026-07-21 deep review)
 
 - **A self-loop `DUPLICATES` edge no longer drives HEAL to delete the node** (BL-53,

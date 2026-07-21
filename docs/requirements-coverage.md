@@ -9,16 +9,19 @@ docs?"* as an auditable table rather than a judgment call, and — per the proje
 **no-silent-drops** discipline — every unmet requirement is named, not omitted.
 
 **This is a living status document.** Update it in the same change that moves a requirement's
-status. It reflects the deterministic, LLM-free core built so far (build-order steps 1–2 of
-[interaction-surfaces.md](interaction-surfaces.md)).
+status. It reflects **v0.5.0**: the deterministic core, the agent-native MCP surface, and the
+consumer kit are all built and shipping; the surface decision it once called deferred was
+made (agent-native MCP, [surface-plan.md](surface-plan.md)) and delivered.
 
 ## How coverage is confirmed
 
 1. **This matrix** — the requirement→code→test mapping below. Requirement IDs (`[IP-1]`, …)
    are extracted from the process docs.
-2. **Automated gates** — `cargo test --no-default-features` (163 tests), `cargo clippy`,
-   `cargo fmt --check`, and `python3 tools/validate_schema.py` (schema conforms to
-   dynograph-core). These are the executable evidence the matrix cells point at.
+2. **Automated gates** — `cargo test --workspace` (both crates; the core suite alone is
+   300-plus tests), `cargo clippy`, `cargo fmt --check`, `python3 tools/validate_schema.py`
+   (schema conforms to dynograph-core), `python3 tools/smoke_mcp.py` (the shipped binary over
+   real stdio), and `python3 tools/skill_lint.py`. CI (`.github/workflows/ci.yml`) runs them
+   on every push. These are the executable evidence the matrix cells point at.
 3. **The deferral list** — everything marked ⬜/🟡 is a named, tracked gap; nothing that the
    docs require is silently treated as done.
 
@@ -31,10 +34,11 @@ is a silent stub, which this project treats as the same integrity breach as a si
 **Legend:** ✅ Met · 🟡 Partial (core met, a stated facet deferred) · ⬜ Deferred (not yet
 built) · ➖ N/A here (a deferred *decision* or a facet gated on the surface/LLM choice).
 
-Deferred items cluster on three fronts, all expected at this stage: **the `LlmBackend` and
-its ops** (extraction/INGEST, SME, question phrasing, generative heal content — build-order
-step 3), **the interaction surface** (a deliberately deferred decision), and a few
-**schema-present-but-no-code-yet** areas (dimensions/depth, `Component.level` matryoshka).
+What remains deferred, post-surface: **external `LlmBackend` provider backends** (unneeded on
+the agent-native route — the ambient coding agent is the LLM), **SME augmentation** and
+**generative heal content**, the **`ingest` MCP handshake** (SP-3b), and a few
+**schema-present-but-thin-code** areas (`Component.level` matryoshka depth). The interaction
+surface is no longer among them — it shipped.
 
 ---
 
@@ -215,9 +219,9 @@ schema in `schema/*.yaml`.
 | IS-2 | Core = store + schema + loop ops | ✅ | schema + storage + propagate/detect/heal (deterministic loop ops) |
 | IS-3 | Split deterministic vs LLM ops | ✅ | everything built is deterministic; LLM ops explicitly deferred |
 | IS-4 | `LlmBackend` trait for LLM ops | 🟡 | `llm::LlmBackend` (object-safe, sync) + `MockLlmBackend` + `complete_json`; first op (`to_prompt`) wired · `tests/llm.rs`. Agent-native backend now real (`agent::AgentBackend`, SP-2). **Real *external* provider backends still deferred (not needed for agent-native, IS-6)** |
-| IS-5 | Candidate surfaces preserved | ➖ | deferred *decision* (documented, not code) |
-| IS-6 | Agent-native vs hosted consequence | ➖ | deferred *decision* |
-| IS-7 | Build order (1 store+schema → 2 det. core → 3 LLM → 4 surface) | 🟡 | **steps 1–3 complete for the agent-native route** (persistence SP-1; deterministic core; LlmBackend + mock + agent-native adapter SP-2); step 4 (the MCP surface, SP-3) not started; external providers deferred |
+| IS-5 | Candidate surfaces preserved | ✅ | decision made (agent-native MCP); the option analysis is kept in interaction-surfaces.md |
+| IS-6 | Agent-native vs hosted consequence | ✅ | agent-native chosen → no external LLM provider needed (the consequence this row names) |
+| IS-7 | Build order (1 store+schema → 2 det. core → 3 LLM → 4 surface) | ✅ | **all four steps done for the agent-native route**: persistence (SP-1), deterministic core, LlmBackend + agent-native adapter (SP-2), and the MCP surface (SP-3 — `reflow2-mcp`, ~78 tools); external providers remain deferred (not needed agent-native) |
 
 ### Agent-native surface — [surface-plan.md](surface-plan.md)
 
@@ -227,7 +231,7 @@ Next-phase build order for the agent-native surface (the deferred surface decisi
 |----|-------------|--------|-----------------|
 | SP-1 | Persistence: `DesignGraph::open_rocksdb(path)`, feature-gated, fail-loud when off | ✅ | `graph::DesignGraph::open_rocksdb` delegates to `StorageEngine::new_rocksdb` · `tests/persistence.rs` (`open_rocksdb_without_feature_fails_loud` in the default suite; `rocksdb_round_trips_across_reopen` under `--features rocksdb`) |
 | SP-2 | `LlmBackend` = ambient-agent adapter (returns prompt+schema, takes back JSON) | ✅ | `agent::{PromptCollector, AgentBackend, AgentPrompt, AgentAnswer, prompt_id}` — collect-then-serve handshake (prepare pass harvests prompts, agent fills, serve pass replays under determinism); fail-loud on desync + `unused_answers` accounting · `tests/agent.rs`. `LlmBackend` unchanged (sync/object-safe). **Content-dependent multi-turn ops need repeated rounds (documented).** |
-| SP-3 | Surface layer: MCP server / CLI exposing core ops as tools | ✅ | `reflow2-mcp` crate — rmcp 2.x stdio server (`ReflowService`) exposing ~30 fine-grained tools over a RocksDB graph (`--graph-path`): DETECT/analyze (detect_gaps, propagate_*, graph_report, heal detect/propose, allocate, hierarchy, surprises, dimensions), build (add_*/create_*/CRUD/apply_heal, incl. `add_interface`/`provides`/`consumes` so a contract's two sides are modelled from the surface, not only from `ingest`), CHANGE (epoch/change_event/record_change), and the `gap_to_prompt` collect-then-serve handshake (SP-2). No-envelope, no-silent-fallback results · `tests/tools.rs`. **`ingest` handshake deferred → SP-3b.** |
+| SP-3 | Surface layer: MCP server / CLI exposing core ops as tools | ✅ | `reflow2-mcp` crate — rmcp 2.x stdio server (`ReflowService`) exposing ~78 fine-grained tools over a RocksDB graph (`--graph-path`): DETECT/analyze (detect_gaps, propagate_*, graph_report, heal detect/propose, allocate, hierarchy, surprises, dimensions), build (add_*/create_*/CRUD/apply_heal, incl. `add_interface`/`provides`/`consumes` so a contract's two sides are modelled from the surface, not only from `ingest`), CHANGE (epoch/change_event/record_change), and the `gap_to_prompt` collect-then-serve handshake (SP-2). No-envelope, no-silent-fallback results · `tests/tools.rs`. **`ingest` handshake deferred → SP-3b.** |
 | SP-4 | Consumer `AGENTS.md` / skill for the softball repo | ✅ | `getting-started/` — drop-in `AGENTS.md` (the loop), `SETUP.md` (macOS + Debian toolchain, build, verify), `mcp.json`, and `skills/{genesis,capture-intent,detect-and-ask,link-artifacts,impact-check,check-health}/SKILL.md` (installed to both `.claude/skills/` and `.grok/skills/` — BL-22) — one per loop step, incl. **check-health** covering the HEAL step (`detect_defects`→`propose_heal`→`apply_heal`), which had MCP tools but no skill to invoke them. Distinct from this repo's dev AGENTS.md. Grok Build reads Claude-style `.mcp.json` (confirmed); OpenCode and VS Code need their own files, which `reflow2_init.py` now writes too (BL-22). **Not yet exercised in a real softball repo.** |
 | SP-5 | GENESIS: bootstrap the graph from the opening brief | ✅ | `genesis::DesignGraph::genesis` (thin core op) + `genesis` MCP tool + `getting-started/skills/genesis/` (agent-native brief-expansion) · [genesis.md](genesis.md) · `tests/genesis.rs`, `reflow2-mcp/tests/tools.rs::genesis_bootstraps_then_detect_hands_off`. Guarded/idempotent (no re-init clobber); seeds P0/P1 only → DETECT `concept_without_design` hand-off; deployment captured as Requirements. No schema change. |
 | SP-6 | Artifact linking wiring (`REALIZES`, provenance) to real files | ✅ | `artifact::DesignGraph::{add_artifact, realizes, link_artifact}` (link_artifact atomic: Artifact + provenance Fragment + `YIELDED` + `REALIZES`, fail-loud on missing target) + `add_artifact`/`realizes`/`link_artifact` MCP tools + `getting-started/skills/link-artifacts/` · [artifact-linking.md](artifact-linking.md) · `tests/artifact.rs`, `reflow2-mcp/tests/tools.rs::link_artifact_closes_the_unrealized_capability_gap`. Added missing `edge::{SPECIFIES,DOCUMENTS,PRODUCES,ANNOTATES}` constants. **Link-only; drift comparison lives in `drift.rs` (SP-6b), with the `checksum` baseline recorded here.** |

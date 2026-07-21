@@ -57,9 +57,11 @@ changed outside the loop (someone edited by hand, a merge landed, you refactored
      re-registering with a `checksum`.
 6. **Follow the change back into the design.** The result's `propagation_seeds` are the design
    nodes those files realize. Pass them to `propagate_from` — because `REALIZES` runs
-   artifact→capability, propagation walks *upstream*, so you see the Capability the changed code
-   serves and the Requirement behind it. Ask the user whether the design still says the right
-   thing:
+   artifact→capability, propagation walks *upstream*, toward the Capability the changed code
+   serves and the Requirement behind it. The default result is a summary (the distance-1 ring
+   plus counts); the Requirement usually sits two hops up, so pass `full: true` to see it named
+   in the `impacted` list rather than only counted. Ask the user whether the design still says
+   the right thing:
 
    > "`BallFlight.cs` changed since we last agreed on it. It implements *Ball flight*, which
    > exists to satisfy *Realistic physics*. Does that requirement still describe what you want?"

@@ -31,7 +31,7 @@ AGENTS.md.
    | Gap | Record the answer with |
    |---|---|
    | `unsatisfied_requirement` / `unallocated_capability` | `add_capability` + `satisfies`, `allocate` |
-   | `unmotivated_capability` | `add_requirement` + `satisfies` if the user names the need it serves — **or** `delete_node` if they confirm it is dead. This gap has two honest answers and the wrong move is to invent a requirement from the capability's own description: a requirement backed out of the thing that implements it is satisfied by construction and can never contradict anything. Ask the user what asked for it |
+   | `unmotivated_capability` | `add_requirement` + `satisfies` if the user names the need it serves — **or**, if they confirm it is dead, hand off to the **retire-from-design** skill (which forces the "was this ever true?" question and retires-on-the-record vs. deletes-a-mistake, rather than a bare `delete_node` that erases the history and every attached edge with no undo). The wrong move is to invent a requirement from the capability's own description: a requirement backed out of the thing that implements it is satisfied by construction and can never contradict anything. Ask the user what asked for it |
    | `possible_duplicate` | if the user confirms they are one thing, draw the `DUPLICATES` edge with `create_edge` — **do not merge them yourself**; HEAL's `propose_heal`/`apply_heal` does that safely once the edge asserts it. If they say the two are deliberately separate, `acknowledge_gap` with their reason |
    | `unprovided_interface` | `add_interface` + `provides` / `consumes` |
    | `unrealized_capability` | `link_artifact` (see **link-artifacts**) |

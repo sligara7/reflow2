@@ -1462,8 +1462,16 @@ centrality (O(V·E)). Storyflow-scale adopt (2,643 files) is where this bites. F
 centrality lazy or cached on a mutation counter. Also: paging (`limit` echoed in result) on
 `scan_nodes` / `detect_gaps` / `confirmation_ledger`, the BL-49 convention extended.
 
-**BL-60 · Docs truth pass — the instruction files describe the pre-surface era** — *deep
-review.* Size **M** (writing only), **critical for new readers**. AGENTS.md "Current
+**BL-60 · Docs truth pass — DONE 2026-07-21** — *deep review.* Size **M** (writing only),
+was **critical for new readers**. Fixed across AGENTS.md (Current state rewritten to v0.5.0
+reality — surface shipped, full module list, GENESIS built, two crates, v0.10.0 pin, 54
+edges, INCLUDES in the traceability set), README (27 types + Question, layout tree shows the
+real repo, path fix), requirements-coverage (IS-5/6/7 → ✅, preamble + deferral list
+refreshed, tool/test/schema numerals), surface-plan + interaction-surfaces (superseded
+banners), overview (routing + private-repo delinking + heritage table), SETUP (public repo,
+commit-an-export story), getting-started/README (all 11 skills), and three skill
+contradictions (link-artifacts full:true, detect-and-ask → retire-from-design, check-health
+apply gate). skill_lint allowlist gained blocked_by_mode. All gates green. AGENTS.md "Current
 state" still says no surface/service/LLM wiring exists and the interaction surface is an
 open decision (78 tools ship); the module list omits two-thirds of src/ and calls GENESIS
 unbuilt; the foundation pin is quoted v0.9.4 vs the manifest's v0.10.0; "53 edge types"

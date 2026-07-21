@@ -1,5 +1,7 @@
 # Upgrading from an early v0.1.0 install to v0.2.0
 
+> Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
+
 If you set reflow2 up before 2026-07-18, this is the whole procedure. It takes about fifteen
 minutes, most of it waiting for a compile.
 

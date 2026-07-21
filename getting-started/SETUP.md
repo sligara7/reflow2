@@ -13,10 +13,10 @@ curl -fsSL https://raw.githubusercontent.com/sligara7/reflow2/main/tools/install
 ```
 
 It installs the `reflow2-mcp` binary to `~/.local/bin` and the consumer kit to
-`~/.local/share/reflow2/kit`, verifies checksums, and prints the exact next command. While the
-repo is **private**, the download needs your GitHub auth — install the
-[GitHub CLI](https://cli.github.com) (`gh auth login`) first and the script uses it
-automatically. Then set up any project with:
+`~/.local/share/reflow2/kit`, verifies checksums, and prints the exact next command. The repo
+is public, so plain `curl` works with no authentication — you only need the
+[GitHub CLI](https://cli.github.com) (`gh auth login`) if you fork it privately. Then set up
+any project with:
 
 ```bash
 python3 ~/.local/share/reflow2/kit/tools/reflow2_init.py <your-project> --binary ~/.local/bin/reflow2-mcp
@@ -209,8 +209,11 @@ the day, stopping is a perfectly good answer. Everything decided so far is alrea
 
 ## Notes
 
-- The graph directory (`./.reflow2/graph`) is created on first use. Commit it (or an export)
-  so the design syncs between people/agents via git.
+- The graph directory (`./.reflow2/graph`) is a machine-local RocksDB store, created on first
+  use — the installer gitignores `.reflow2/`, so **don't commit the directory**. To share a
+  design via git, commit an **export**: `reflow2-mcp --graph-path .reflow2/graph --export >
+  design.json` produces a deterministic, diffable JSON your teammate loads with `--import`.
+  The export is the durable record; the RocksDB dir is a local cache of it.
 - **One agent at a time.** The graph is a RocksDB store and only one `reflow2-mcp` process can
   hold it. If a second agent starts against the same `--graph-path`, it exits immediately with
   `While lock file: .../LOCK: Resource temporarily unavailable`. That is the lock doing its job,

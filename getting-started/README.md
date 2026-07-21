@@ -37,7 +37,7 @@ is shared by anyone working on it.
 |---|---|
 | **SETUP.md** | **Start here** — build the server, connect your agent, verify it works |
 | `AGENTS.md` | Teaches the agent the reflow2 loop (goes in your project root) |
-| `skills/…` | Auto-triggering workflows (genesis, where-am-i, capture-intent, detect-and-ask, impact-check, check-health, link-artifacts, report-friction). Installed into **both** `.claude/skills/` and `.grok/skills/`, because every agent searches a different place — see [docs/skills/README.md](../docs/skills/README.md) |
+| `skills/…` | The 11 auto-triggering workflows: genesis, adopt, capture-intent, where-am-i, detect-and-ask, impact-check, check-health, link-artifacts, revise-design, retire-from-design, report-friction. `adopt` is the one for a system that already exists. Installed into **both** `.claude/skills/` and `.grok/skills/`, because every agent searches a different place — see [docs/skills/README.md](../docs/skills/README.md) |
 | `mcp.json` | A reference copy of the server registration. `reflow2_init.py` writes the real ones — `.mcp.json`, `opencode.json` and `.vscode/mcp.json` — with the binary path already filled in |
 
 > The rest of this repository (the `crates/`, `docs/`, `schema/` folders) is reflow2's own

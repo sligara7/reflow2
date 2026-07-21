@@ -52,6 +52,7 @@ NON_TOOL_TERMS = {
     "affected_ids",
     "artifact_id",
     "artifact_type",
+    "blocked_by_mode",
     "build_without_verification",
     "change_type",
     "checksum_change",

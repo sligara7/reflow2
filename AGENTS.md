@@ -80,7 +80,7 @@ python3 tools/test_init.py
 # stop any running MCP server first, and the error says so if you forget.
 ./target/debug/reflow2-mcp --graph-path .reflow2/graph --import docs/design/reflow2.json
 
-# reflow2's own functional design, as a reflow2 graph (180 nodes). The export at
+# reflow2's own functional design, as a reflow2 graph (~215 nodes). The export at
 # docs/design/reflow2.json is the durable record — .reflow2/ is gitignored, so
 # the JSON is what gets reviewed and diffed. Rebuild it after a design change;
 # --analyse-only re-imports the committed export and re-runs the analysis.
@@ -192,20 +192,22 @@ you cannot source it, say so or strike it.
 
 ## Architecture
 
-Reflow 2.0 is a graph-backed engine that keeps a design coherent across its lifecycle. The
-one runtime crate, `reflow2-core`, is the **deterministic, LLM-free core** — build-order
-steps 1–2 of [docs/interaction-surfaces.md](docs/interaction-surfaces.md). It is neutral to
-the interaction surface (MCP / CLI / hosted) and to any LLM provider; those plug in last.
+Reflow 2.0 is a graph-backed engine that keeps a design coherent across its lifecycle. Two
+crates: **`reflow2-core`** is the deterministic, LLM-free coherence engine; **`reflow2-mcp`**
+is the thin agent-native surface over it — the `reflow2-mcp` stdio binary a consumer actually
+runs (the surface decision was made and built; see below). The core stays neutral to the
+interaction surface (MCP / CLI / hosted) and to any LLM provider — those plug in at the seam,
+not the centre.
 
 ### The store and schema (the foundation)
 
 - The graph store is **[dynograph-foundation](https://github.com/sligara7/dynograph-foundation)**,
-  consumed as library crates **by git tag** (`v0.9.4` in the workspace `Cargo.toml`):
-  `dynograph-core` (schema + `Value`), `dynograph-storage` (`default-features = false` so
-  RocksDB is opt-in; the core runs on the in-memory backend), `dynograph-graph` (pure
-  graph-theory algorithms). To iterate against an unreleased foundation locally, uncomment
-  the `[patch]` block in the root `Cargo.toml` — do not commit it uncommented.
-- The **schema is the vocabulary** (27 node types, 53 edge types across 10 `schema/*.yaml`
+  consumed as library crates **by git tag** (see the workspace `Cargo.toml` for the pinned tag;
+  `v0.10.0` at time of writing): `dynograph-core` (schema + `Value`), `dynograph-storage`
+  (`default-features = false` so RocksDB is opt-in; the core runs on the in-memory backend),
+  `dynograph-graph` (pure graph-theory algorithms). To iterate against an unreleased foundation
+  locally, uncomment the `[patch]` block in the root `Cargo.toml` — do not commit it uncommented.
+- The **schema is the vocabulary** (27 node types, 54 edge types across 10 `schema/*.yaml`
   domains): the node/edge names are load-bearing. `src/schema.rs` embeds all ten YAML files
   via `include_str!` and merges them with `Schema::from_multiple_yamls` — the same files
   `tools/validate_schema.py` checks, so there is one source of truth. Terminology in code
@@ -246,7 +248,9 @@ joined by *traceability* edges) for HEAL's topology detectors.
   proposal, and mutation separate.
 - **PROPAGATE / structure exclude `CONTAINS`.** Decomposition is not traceability; including
   it makes the Project a hub that short-circuits distances. Impact and topology traverse the
-  shared traceability set (`propagate::is_traceability_edge`).
+  shared traceability set (`nodes::is_traceability_edge`). `INCLUDES` (Release → Artifact/
+  Component) *is* in that set as of the v0.5.0 as-released work — a changed artifact reaches
+  the releases that ship it, and a Release+Environment pair is no longer a disconnected island.
 - **Structural topology detectors are selective.** A design's golden thread is tree-shaped,
   where every internal node is a naive articulation point — so `single_point_of_failure`
   only fires when a node separates ≥2 real subsystems (see `structure.rs`).
@@ -274,11 +278,14 @@ joined by *traceability* edges) for HEAL's topology detectors.
 
 ### What's deliberately not here yet
 
-Anything gated on the two deferred decisions — real LLM provider backends and the
-interaction surface — plus the LLM-reasoning processes (INGEST/extraction, SME, GENESIS,
-generative HEAL content) and a few schema-present-but-no-code areas (dimensions/depth,
-`Component.level` matryoshka). See the coverage matrix for the exact deferral list; don't
-assume a service, API, or running system exists.
+One decision remains deferred — **real LLM provider backends** (unneeded on the agent-native
+route: the ambient coding agent *is* the LLM). Still unbuilt: **SME augmentation**,
+**generative HEAL content** (proposals stay review-gated stubs), the optional **embedding
+seam** (semantic dedup/retrieval), and the `ingest` handshake over MCP (SP-3b — the in-session
+agent extracts intent and writes via GENESIS + `add_*`/`create_*` today). See the coverage
+matrix for the exact deferral list. Everything else in the loop — the MCP surface, GENESIS,
+INGEST's core, the consumer kit, search, the reconcile family — is built and shipping as of
+v0.5.0.
 
 ---
 
@@ -317,50 +324,42 @@ Three complementary lenses on the graph: **phases** (P0–P5 lifecycle), **three
 
 ## Current state (important)
 
-This project is **early implementation**. The docs + schema remain the source of truth;
-runtime code has begun with the **deterministic, LLM-free core** (build-order steps 1–2 of
-[docs/interaction-surfaces.md](docs/interaction-surfaces.md)). Do not assume any surface,
-service, or LLM wiring exists yet — none does.
+**Shipping at v0.5.0.** The deterministic core, the agent-native MCP surface, and the consumer
+kit are all built, released as prebuilt binaries, and cold-start-verified. The interaction
+surface — once an open question — was **decided (agent-native MCP, 2026-07-18)** and built;
+`docs/requirements-coverage.md` is the living status matrix. Do not re-litigate the surface
+decision or assume the surface doesn't exist — it is the binary a consumer runs, and
+`tools/smoke_mcp.py` drives it end to end.
 
-- `crates/reflow2-core/` — Rust crate implementing the deterministic coherence-loop
-  spine so far. Modules: `schema` (loads the 10 domains into one merged dynograph
-  `Schema`), `graph` (`DesignGraph` over `dynograph-storage`, in-memory backend, schema-
-  validated CRUD + typed golden-thread constructors), `temporal` (axis Z — `DesignEpoch` /
-  `ChangeEvent` / `Snapshot` and `record_change`, the **CHANGE** step: snapshot the past,
-  never overwrite), `propagate` (**PROPAGATE** — direction-classified bounded BFS over the
-  golden thread → an explained `BlastRadius`; reactive from a `ChangeEvent` or speculative
-  from seeds), `detect` (**DETECT** — deterministic gap detectors → ranked `GapCandidate`s;
-  traceability + phase-coverage groups, gated on type-population counts), `heal` (**HEAL** —
-  detect structural defects → a `HealProposal` (propose, never mutate) → atomic `apply_heal`
-  with post-repair verification; mode-aware (rigid = propose-only), strategy-filtered,
-  human-review-gated for generative fixes; content-free duplicate-merge is the applied
-  repair), `structure` (a `dynograph-graph` view of the design network powering HEAL's
-  graph-topology defects: `disconnected_community`, *selective* `single_point_of_failure`,
-  `dead_end` — selective because a golden thread is tree-shaped, where every internal node
-  is a naive articulation point), `llm` (the pluggable `LlmBackend` seam — object-safe, sync
-  — + `MockLlmBackend` + `complete_json`; the LLM boundary the core holds as `&dyn`), `ingest`
-  (**INGEST** — freeform text → graph via the `LlmBackend`: phase-gated extraction passes,
-  provenance Fragment, time-aware resolution with matched-evolved snapshots, fuzzy cross-id
-  dedup), `allocate` (**graph-analysis** — `evaluate_allocation` scores the current
-  function→service allocation; `propose_allocation` clusters the weighted coupling graph with
-  Leiden). Consumes `dynograph-foundation` by git tag (`v0.10.0`): `dynograph-core`,
-  `dynograph-storage` (`default-features = false` so the RocksDB C++ build stays opt-in),
-  `dynograph-graph` + `dynograph-resolution` (pure, no features) — mirrors the predecessor
-  `ir2`. Fast dev/test build: `cargo test --no-default-features`. Keep it green, clippy-clean,
-  and `cargo fmt`-ed. Not yet built: real `LlmBackend` provider backends + the interaction
-  surface (deferred decision), the optional embedding seam (semantic dedup/retrieval), HEAL's
-  generative healer content, SME, GENESIS.
+- `crates/reflow2-core/` — the deterministic, LLM-free coherence engine. Each coherence-loop
+  step and each analysis is its own module (30 files); the load-bearing ones: `schema` (merges
+  the 10 domains), `graph` (`DesignGraph`: schema-validated CRUD + typed golden-thread
+  constructors + `upsert_node`), `nodes` (the `node::`/`edge::` name constants + the
+  traceability-edge table), `temporal` (**CHANGE** — epochs, snapshots, `record_change`),
+  `propagate` (**PROPAGATE** — direction-classified bounded BFS → an explained `BlastRadius`,
+  summary-by-default with `full` for the dump), `detect` (**DETECT** — ranked `GapCandidate`s),
+  `heal` + `structure` (**HEAL** — propose-never-mutate → atomic `apply_heal`; topology defects
+  over the design network), `llm` (the sync object-safe `LlmBackend` seam + `MockLlmBackend`),
+  `ingest` (**INGEST** — freeform text → graph via `LlmBackend`), `genesis` (**GENESIS** —
+  bootstrap from a brief), `allocate`/`hierarchy`/`dimensions`/`budget`/`surprises`
+  (graph-analysis), `confirm`/`drift`/`fielded`/`verify` (the reconcile + confirmation-ledger
+  family), `artifact`/`operate`/`flow`/`provenance`/`report`/`search`/`vocabulary`/`export`
+  (as-built linking, releases/environments, process flows, provenance, the rollup report,
+  BM25 search, schema discovery, portable export/import). Fast dev/test build:
+  `cargo test -p reflow2-core --no-default-features`.
+- `crates/reflow2-mcp/` — the agent-native MCP stdio server (`service.rs`, ~78 tools; `dto.rs`;
+  `main.rs`). Thin: every tool locks the graph, calls one core op, returns. It carries the
+  `rocksdb` feature on its dependency edge, so it pays the C++ build; see its own AGENTS.md.
 
-**Open decision (deliberately deferred):** the *interaction surface* — MCP/skills for a
-coding agent, a hosted web app, a CLI, or a library — is not yet chosen. It plugs in last
-and determines whether an external LLM provider is needed (agent-native = no; hosted =
-yes). The core is built to be neutral to this; see
-[docs/interaction-surfaces.md](docs/interaction-surfaces.md). Don't hard-wire a surface or
-an LLM provider into the core.
+Still unbuilt (see "What's deliberately not here yet" above and the coverage matrix): external
+LLM provider backends (deferred — unneeded agent-native), SME, generative HEAL content, the
+embedding seam, and the `ingest` MCP handshake (SP-3b).
 
 - `schema/*.yaml` — 10 composable [dynograph-foundation](https://github.com/sligara7/dynograph-foundation)
-  schema domains (27 node types, 53 edge types). This is the foundation everything builds on.
-- `docs/*.md` — the vision, design, and process specifications.
+  schema domains (27 node types, 54 edge types). This is the foundation everything builds on.
+- `docs/*.md` — the vision, design, and process specifications; `docs/overview.md` maps them.
+- `getting-started/` — the consumer kit installed into a project being designed (never a build
+  file). `tools/reflow2_init.py` installs it; `install.sh` fetches the released binaries.
 - `tools/validate_schema.py` — validates the schema against dynograph-core's rules.
 
 ## Where to look

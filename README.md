@@ -85,8 +85,8 @@ same way everything else here is: coverage is claimed only where a named mechani
 
 ## The design vocabulary
 
-Domain-neutral node types, layered by the phase they feed (26 types across 10 schema
-domains; see [docs/overview.md](docs/overview.md) and `../tools/validate_schema.py`):
+Domain-neutral node types, layered by the phase they feed (27 types across 10 schema
+domains; see [docs/overview.md](docs/overview.md) and `tools/validate_schema.py`):
 
 | Phase / layer | Nodes |
 |-------|-------|
@@ -98,11 +98,11 @@ domains; see [docs/overview.md](docs/overview.md) and `../tools/validate_schema.
 | P5 · Operation | `Release`, `Environment`, `Resource` |
 | Operating environment | `EnvironmentRule` |
 | Axis Z · change over time | `DesignEpoch`, `TemporalFact`, `Snapshot`, `ChangeEvent` |
-| Cross-cutting | `DimensionAssessment`, `DimensionObservation` |
+| Cross-cutting | `DimensionAssessment`, `DimensionObservation`, `Question` |
 
 **Structural edges:** CONTAINS, PROVIDES, CONSUMES, ALLOCATED_TO, REALIZES,
 VERIFIES, DEPENDS_ON, SATISFIES, PART_OF_FLOW, DEPLOYED_TO, REQUIRES_RESOURCE,
-GOVERNED_BY.
+GOVERNED_BY, INCLUDES.
 
 **Inference ("why") edges** (wildcard endpoints): CAUSES, ENABLES, BLOCKS,
 TRIGGERS, CONTRADICTS, VALIDATES, VIOLATES, RISKS, MITIGATES, EVOLVES_INTO,
@@ -112,31 +112,24 @@ OBSOLETES, DUPLICATES, CONSTRAINS, ANTICIPATES, MASKS.
 
 ```
 reflow2/
-  README.md
-  schema/            # composable dynograph schema domains (one concern each)
-    core.yaml        #   P0 — intent, constraints, rules
-    functional.yaml  #   P1 — capabilities, flows, actors
-    structure.yaml   #   P2 — components, interfaces, decisions
-    build.yaml       #   P3 — artifacts, fragments
-    verify.yaml      #   P4 — verifications, gates, drift
-    operate.yaml     #   P5 — releases, environments, resources
-    environment.yaml #   operating environment + its authoritative ruleset (codes/laws)
-    temporal.yaml    #   axis Z — epochs, time-bounded facts, snapshots, change events
-    inference.yaml   #   the "why" edge layer
-    dimensions.yaml  #   quality-axis assessments + per-epoch observations
-  docs/
-    overview.md          # START HERE — maps all docs and how they fit together
-    vision.md            # north star: one coherent graph, concept → operations
-    three-axes.md        # X (network) / Y (nesting) / Z (change over time)
-    extraction-plan.md   # how phase-aware extraction populates the graph (INGEST)
-    artifact-linking.md  # link real files (code, specs, docs, tests) to entities
-    sme-augmentation.md  # LLM-as-SME surfaces considerations the user didn't state
-    impact-propagation.md# ripple a change along the golden thread (PROPAGATE)
-    gap-surfacing.md     # find graph weaknesses, ask the user questions (DIAGNOSE→PROMPT)
-    heal-process.md      # self-repair of the design graph (HEAL)
-    operating-environment.md # the environment's ruleset the design must comply with
-    reflow-v3-nuggets.md # ideas carried over from an earlier prototype (see Heritage)
-    chain-reflow-nuggets.md # more of the same (matryoshka, causality, creative linking)
+  crates/
+    reflow2-core/    # the deterministic, LLM-free coherence engine (30 modules)
+    reflow2-mcp/     # the agent-native MCP stdio server (~78 tools) — the binary you run
+  schema/            # 10 composable dynograph schema domains (27 node / 54 edge types)
+    core / functional / structure / build / verify / operate
+    environment / temporal / inference / dimensions
+  getting-started/   # the consumer kit installed into a project being designed
+    SETUP.md         #   install + connect a coding agent + verify
+    AGENTS.md        #   how an agent drives reflow2 to design YOUR project
+    skills/          #   the 11 skills (genesis, adopt, capture-intent, where-am-i, …)
+    install.sh       #   fetch the released binaries, checksum-verified
+  tools/             # reflow2_init.py (installer), smoke_mcp.py + the trial harnesses,
+                     #   build_design_graph.py (reflow2's own design), validate_schema.py
+  docs/              # vision, design, and process specs — START at docs/overview.md
+    overview.md · vision.md · three-axes.md · surface-plan.md · partnership.md
+    requirements-coverage.md · backlog.md · impact-propagation.md · heal-process.md · …
+  AGENTS.md          # the primary instruction file for working ON reflow2
+  CHANGELOG.md · COORD.md
 ```
 
 ## Three structural axes

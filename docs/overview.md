@@ -23,10 +23,9 @@ that keeps everything in agreement.
 ## The coherence loop and the six universal processes
 
 The **coherence loop** — `CHANGE → PROPAGATE → DETECT → SURFACE → RESOLVE/HEAL →
-COHERENCE` — is reflow2's operating loop. Storyflow
-([github.com/sligara7/storyflow](https://github.com/sligara7/storyflow)) contributed the
-insight that a small set of **universal processes** recur in every domain; they map onto
-the loop like this:
+COHERENCE` — is reflow2's operating loop. Storyflow (an earlier prototype of the author's,
+a private repo) contributed the insight that a small set of **universal processes** recur in
+every domain; they map onto the loop like this:
 
 | Universal process | Loop step(s) | reflow2 doc | Status |
 |---|---|---|---|
@@ -47,10 +46,10 @@ the loop like this:
 - [three-axes.md](three-axes.md) — the X (network) / Y (decomposition) / Z (change-over-time) structure.
 - [operating-environment.md](operating-environment.md) — the environment's authoritative ruleset the design must comply with (Kennewick vs. Mars).
 - [artifact-linking.md](artifact-linking.md) — how real files (code, specs, docs, tests) and the note layer link to entities.
-- [interaction-surfaces.md](interaction-surfaces.md) — how a human drives the system (MCP/skills vs. hosted app vs. …) and the LLM-sourcing consequence; a deliberately deferred decision.
+- [interaction-surfaces.md](interaction-surfaces.md) — how a human drives the system (MCP/skills vs. hosted app vs. …) and the LLM-sourcing consequence. **The decision it framed has since been made and built** (agent-native MCP — see surface-plan.md); kept as the option analysis.
 - [skills/README.md](skills/README.md) — where the consumer kit's skills and MCP config have to be installed for each harness to find them, distilled from the Claude Code / Grok / Copilot docs kept alongside it. Reading it is how we learned the kit's skills are invisible to two of the three (BL-22).
 - [surface-plan.md](surface-plan.md) — that decision, made: the **agent-native** surface (grok build / claude code on a shared graph) and the next-phase build order to make reflow2 drivable by a coding agent.
-- `../schema/*.yaml` — the 10 composable dynograph domains (27 node types, 53 edge types); run `../tools/validate_schema.py` to check them.
+- `../schema/*.yaml` — the 10 composable dynograph domains (27 node types, 54 edge types); run `../tools/validate_schema.py` to check them.
 
 ### 3 · Process — *how it runs (the coherence loop)*
 - [extraction-plan.md](extraction-plan.md) — INGEST: the phase-aware multi-pass extraction pipeline.
@@ -81,7 +80,7 @@ Three records, three questions — kept separate on purpose:
   feedback edges, and what reflow2 can do about each. Generated with [loop-model.json](loop-model.json)
   by `tools/model_the_loop.py`.
 - [design/reflow2.json](design/reflow2.json) — reflow2's own functional design as a reflow2 graph
-  (180 nodes), the durable record behind `tools/build_design_graph.py`.
+  (~215 nodes), the durable record behind `tools/build_design_graph.py`.
 
 ### 3¾ · Direction — *the prescriptive graph* (candidate, not yet built)
 - [graph-analysis.md](graph-analysis.md) — use graph-theory tools (`dynograph-graph`/`-vector`/`-cluster`/`-game`) to *make* design decisions, not just record them — e.g. allocate functions to services by cohesion/coupling instead of by domain. Starts with edge **weights**.
@@ -93,18 +92,18 @@ Three records, three questions — kept separate on purpose:
 
 ## Heritage & references
 
-All the projects reflow2 draws on are the author's own work under
-**[github.com/sligara7](https://github.com/sligara7)**:
+reflow2 is a clean-room rebuild of ideas the author developed across several earlier
+prototypes. Those prototypes are **private repos** — the names below trace where an idea came
+from, not links you can follow. The one public ancestor, `dynograph-foundation`, is a real
+dependency and is linked.
 
-| Repo | What reflow2 takes from it |
+| Source | What reflow2 takes from it |
 |---|---|
-| [reflow2](https://github.com/sligara7/reflow2) | this project (the clean-room rebuild) |
-| [integrated_reflow](https://github.com/sligara7/integrated_reflow) | the prior graph+MCP iteration this redesign grew out of |
-| [storyflow](https://github.com/sligara7/storyflow) | the extraction pipeline, universal processes, cosmology/ruleset, SME analysis, notes, three axes |
-| [dynograph-foundation](https://github.com/sligara7/dynograph-foundation) | the schema-driven graph **store** (and `dynograph-extract`) reflow2 builds on |
-| [chain_reflow](https://github.com/sligara7/chain_reflow) | matryoshka nesting, correlation-vs-causation, creative linking, system-of-systems |
-| [reflow](https://github.com/sligara7/reflow) | the original systems-engineering workflow: phases, as-designed/built/fielded, framework packs |
-| [dev_storyflow](https://github.com/sligara7/dev_storyflow) | storyflow's design docs (five universal processes, entity model) |
+| this repo | the clean-room rebuild (grew out of an earlier graph+MCP iteration, `integrated_reflow`) |
+| storyflow *(private)* | the extraction pipeline, universal processes, cosmology/ruleset, SME analysis, notes, three axes |
+| [dynograph-foundation](https://github.com/sligara7/dynograph-foundation) | the schema-driven graph **store** reflow2 builds on (the one public ancestor) |
+| chain_reflow *(private)* | matryoshka nesting, correlation-vs-causation, creative linking, system-of-systems |
+| reflow *(private)* | the original systems-engineering workflow: phases, as-designed/built/fielded, framework packs |
 
 **Third-party exceptions** (dependencies, not conceptual content): dynograph-foundation
 builds on external Rust crates (RocksDB, Tantivy for BM25, an HNSW vector index, serde);

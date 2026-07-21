@@ -2,11 +2,11 @@
 
 > Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
 
-> **Status: decision + plan for the next build phase.** The deterministic core is built and
-> tested; this doc records the deliberately-deferred **interaction-surface** decision
-> ([interaction-surfaces.md](interaction-surfaces.md)) now that a concrete use case forces it,
-> and lays out what has to exist for a coding agent to drive reflow2 end-to-end. No surface
-> code exists yet.
+> **Status: decision record — built as of v0.3.0, shipping at v0.5.0.** This doc records the
+> **interaction-surface** decision ([interaction-surfaces.md](interaction-surfaces.md)) — the
+> agent-native MCP surface — and the build order that followed it. Steps 1–6 are all complete;
+> the `reflow2-mcp` server, the consumer kit, and the skills all ship. Read it as the decision
+> and its plan; `docs/requirements-coverage.md` (SP-1…SP-6) is the living what-shipped matrix.
 
 ## The trial use case (what forced the decision)
 
