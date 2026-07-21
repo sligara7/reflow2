@@ -60,11 +60,13 @@ Add yourself if you're new here.
 
 ## Blocked / waiting
 
-- **Release follow-up (small)** — after run 29785834848 publishes v0.5.0 (still `queued` on
-  GitHub as of the 2026-07-20 evening session): dispatch release.yml once more
-  (`gh workflow run release.yml -f tag=v0.5.0`) so the kit's KIT_VERSION.json stamps a commit
-  that exists in the REWRITTEN history (the first run staged the kit pre-rewrite — contents
-  identical, stamp cosmetically stale). Then BL-15 verification is fully closed.
+- **~~Release follow-up (v0.5.0 re-dispatch)~~ SUPERSEDED 2026-07-21** — v0.5.0's release run
+  (29785834848) sat stuck in GitHub's macos-x86_64 queue for 11h and never published any
+  binaries, so v0.5.0 never actually reached a user. Rather than re-dispatch a stale, buggy
+  build (main was 27 commits ahead with the deep-review criticals — HEAL node-deletion,
+  installer clobber, install.sh silent death), **v0.6.0 was cut from current main** instead
+  (user-approved). The stuck v0.5.0 run was cancelled. BL-15 verification rides on the v0.6.0
+  release run under the new draft-then-publish release.yml.
 
 - **Standalone-repo conversation** — was gated on the v0.5.0 Release node (done 2026-07-20);
   counterpart Decision with reopening conditions, CRUD skills, and search are all in place

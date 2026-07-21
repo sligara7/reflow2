@@ -15,6 +15,16 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.6.0] — 2026-07-21
+
+The first release cut from the public repo, and the one to actually reach a downstream user:
+v0.5.0 was tagged but its binaries never published (a stuck CI runner), and the whole
+2026-07-21 deep-review batch has landed since — including fixes for a HEAL bug that could
+delete a node, an installer that could clobber a user's edits, and an `install.sh` that could
+die silently. Several agent-facing tool shapes changed (`get_node`, `delete_*`, `propagate`'s
+default, new params on `add_change_event`/`export_graph`), which is why this is a minor bump,
+not a patch. No graph-model or schema change, so an existing design opens unchanged.
+
 ### Changed
 
 - **The tool boundary now reports whose fault an error is** (BL-57): a caller's mistake — a
