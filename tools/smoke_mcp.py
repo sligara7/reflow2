@@ -884,6 +884,27 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("and the node it named is still there",
          s.call("get_node", {"node_type": "Component", "id": "cmp:engine"}) is not None)
 
+    # BL-62: generic CRUD, scan, and search over the REAL stdio boundary.
+    # These were tested only Rust-side (tests/tools.rs) — the exact blind spot
+    # smoke_mcp exists for: a client we wrote agreeing with the server we wrote.
+    print("\n== 9c. generic CRUD / scan / search over real stdio (BL-62) ==")
+    made = s.call("create_node", {"node_type": "Requirement", "id": "req:crud",
+                                  "props": {"name": "CRUD probe",
+                                            "statement": "reachable over stdio"}})
+    c.ok("create_node lands a typed node over stdio",
+         made["node_id"] == "req:crud" and made["properties"]["name"] == "CRUD probe", made)
+    reqs = s.call("scan_nodes", {"node_type": "Requirement"})
+    c.ok("scan_nodes lists them (envelope unwrapped)",
+         any(n["node_id"] == "req:crud" for n in reqs), [n["node_id"] for n in reqs])
+    hits = s.call("search_design", {"query": "CRUD probe reachable"})["hits"]
+    c.ok("search_design finds a node by its own words",
+         any(h["node_id"] == "req:crud" for h in hits), hits)
+    d1 = s.call("delete_node", {"node_type": "Requirement", "id": "req:crud"})
+    c.ok("delete_node removes it and names the outcome", d1.get("deleted") is True, d1)
+    absent = s.call("get_node", {"node_type": "Requirement", "id": "req:crud"})
+    c.ok("get_node on the deleted id reads as absent, not an error",
+         absent is None or absent.get("value") is None, absent)
+
     print("\n== 10. the design survives a restart ==")
     first_gaps = sorted(g["id"] for g in s.call("detect_gaps"))
     # Snapshot what is on the record right before the process ends, so the

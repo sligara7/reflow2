@@ -15,6 +15,19 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Testing
+
+- **The skill lint now checks single-word tool names** (BL-61): an underscore-only filter had
+  exempted `allocate`, `satisfies`, `genesis`, and 8 other served tools from the "does this
+  tool still exist?" check — a rename would have left the skills' prose pointing at a dead
+  tool with the lint still green. Filter dropped; allowlist extended to the legitimate
+  single-word non-tool terms; a renamed single-word tool now fails.
+- **The 14 tools that had no test coverage now have some** (BL-62): the temporal (epochs,
+  precedes, pin, record_change), resource, realization, allocation-analysis, dimension-drift,
+  and delete families are exercised in `tests/tools.rs`, and a new `smoke_mcp.py` section
+  drives `create_node`/`scan_nodes`/`search_design`/`delete_node`/`get_node` over the real
+  stdio boundary — the blind spot the smoke test exists to close.
+
 ### Docs
 
 - **The instruction files now describe v0.5.0, not the pre-surface era** (BL-60). AGENTS.md's

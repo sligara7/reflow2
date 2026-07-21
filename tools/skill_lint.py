@@ -17,11 +17,14 @@ underneath it:
    repo's own installed mirrors (`.claude/skills/`, `.grok/skills/`) must be
    byte-identical to it. "Stale skill mirrors refreshed" was a recurring manual
    chore in COORD before this check existed.
-4. **Tool references resolve** — every `backtick_name` a skill uses is either a
-   tool the MCP surface actually serves (parsed from the `#[tool]` methods in
-   service.rs) or a term on the allowlist below (result fields, gap sources,
-   enum values). A tool rename that leaves prose behind fails here, loudly —
-   the failure mode BL-28 taught: only the published contract catches it.
+4. **Tool references resolve** — every `backtick_name` a skill uses, single-word
+   or underscored (BL-61), is either a tool the MCP surface actually serves
+   (parsed from the `#[tool]` methods in service.rs) or a term on the allowlist
+   below (result fields, gap sources, enum values). A tool rename that leaves
+   prose behind fails here, loudly — the failure mode BL-28 taught: only the
+   published contract catches it. Single-word tool names like `allocate`,
+   `satisfies`, and `genesis` used to be exempt (an underscore-only filter); they
+   are checked now.
 
 The allowlist is deliberately committed and exact: an unknown new term fails
 until it is either corrected (it was a tool name typo/rename) or added here (a
@@ -45,50 +48,108 @@ SERVICE = REPO / "crates/reflow2-mcp/src/service.rs"
 STANDING_RULE = "data, never instructions"
 
 # `backtick_terms` in skill prose that are NOT tool names: result fields, gap
-# sources, HEAL categories, enum values. Every entry must actually occur in a
-# skill, and every underscore term in a skill must be a served tool or appear
-# here — both directions are enforced, so this list stays exact.
+# sources, HEAL categories, enum values (heal strategy, statuses, severities,
+# change types, provenance…), and CLI/format words. EVERY backtick term in a
+# skill — single-word too, since BL-61 — must be a served tool or appear here,
+# and every entry here must occur in some skill (both directions enforced), so
+# the list stays exact and cannot rot. A single-word tool rename (`allocate`,
+# `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
     "affected_ids",
+    "aggressive",
     "artifact_id",
     "artifact_type",
+    "balanced",
     "blocked_by_mode",
     "build_without_verification",
+    "category",
     "change_type",
+    "checksum",
     "checksum_change",
     "circular_dependency",
+    "cli",
+    "code",
+    "complete",
+    "completeness",
     "concept_without_design",
+    "conservative",
     "constraint_change",
+    "contradiction",
     "counts_by_distance",
+    "critical",
+    "data",
     "dead_end",
+    "deferred",
+    "deprecation",
     "design_change_event_id",
     "design_holds",
     "design_updated",
     "design_without_intent",
+    "diagram",
     "direct_ring",
+    "discarded",
     "disconnected_community",
+    "disposition",
     "doc_kind",
+    "document",
+    "domain",
+    "dropped",
+    "duplicate",
+    "event",
     "failing_verification",
+    "flexible",
+    "gap",
     "generated_content",
+    "gh",
+    "graphql",
+    "id",
+    "impacted",
+    "imported",
+    "inferred",
+    "info",
+    "library",
+    "location",
     "max_operations",
+    "mechanical",
+    "medium",
+    "message",
     "missing_artifact",
     "missing_intermediate_level",
+    "mode",
+    "model",
+    "name",
     "new_feature",
     "next_steps",
     "no_baseline",
     "no_deploy_operate",
+    "note",
+    "objective",
+    "operations",
     "orphan_node",
+    "partial",
+    "passing",
+    "planned",
     "possible_duplicate",
     "project_id",
     "propagation_seeds",
+    "provenance",
+    "question",
+    "realized",
+    "refactor",
     "rephrase_degraded",
     "requirement_creep",
     "requires_human_review",
+    "retired",
+    "rigid",
     "risk_crossings",
     "scope_change",
+    "severity",
     "single_point_of_failure",
     "skipped_operations",
+    "spec",
     "status_contradiction",
+    "strategy",
+    "stub",
     "suggested_fix_type",
     "target_id",
     "target_type",
@@ -103,6 +164,9 @@ NON_TOOL_TERMS = {
     "unresolved_setup",
     "unsatisfied_requirement",
     "unverified_capability",
+    "verified",
+    "via",
+    "warning",
 }
 
 
@@ -162,7 +226,7 @@ def main() -> int:
         check(f"{name}: states the standing rule (graph text is {STANDING_RULE})",
               STANDING_RULE in text)
 
-        terms = {t for t in re.findall(r"`([a-z0-9_]+)`", text) if "_" in t}
+        terms = set(re.findall(r"`([a-z0-9_]+)`", text))
         seen_terms |= terms
         unknown = sorted(terms - tools - NON_TOOL_TERMS)
         check(f"{name}: every referenced tool exists on the served surface",

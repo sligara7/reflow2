@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-61 skill-lint single-word blind spot + BL-62 surface coverage gaps — @ajs — since 2026-07-21 — tools/skill_lint.py, crates/reflow2-mcp/tests/tools.rs, tools/smoke_mcp.py
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -74,6 +73,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-61 + BL-62 done: skill_lint's `_`-filter dropped so single-word tool names (allocate/satisfies/genesis/…) are checked — 11 tools were exempt; allowlist +58 single-word non-tool terms, unused-guard keeps it exact, negative-tested (renamed single-word tool → exit 1). BL-62: all 14 uncovered tools now tested — 2 tools.rs tests (temporal/resource/realization/analysis/delete walk + ask→withdraw) → tools.rs 31→33, and smoke §9c drives create_node/scan_nodes/search_design/delete_node/get_node over REAL stdio (the blind spot smoke exists for). Pure tests+lint, no registered-artifact drift. Gates: workspace 39 green, fmt/skill_lint clean, smoke ALL PASS. Remaining review items: BL-56b, BL-57, BL-58, BL-59 — @ajs — 2026-07-21 — (this commit)
 
 - BL-60 docs truth pass DONE: the primary instruction files no longer describe the pre-surface era. AGENTS.md "Current state" rewritten to v0.5.0 (surface shipped + decided, full 30-module list, GENESIS/INGEST built, two crates, v0.10.0 pin, 54 edges, INCLUDES traceable); README (27 types + Question, real layout tree, path fix); requirements-coverage (IS-5/6/7 → ✅, preamble/deferral/numerals); surface-plan + interaction-surfaces superseded banners; overview routing + private-repo delinking; SETUP public-repo + commit-an-export; getting-started/README all 11 skills; 3 skill contradictions fixed (link-artifacts full:true, detect-and-ask→retire, check-health apply gate — verified against heal.rs:849 "requires_human_review is not consulted"). skill_lint allowlist += blocked_by_mode (the lint caught my own new field ref). Pure docs — no graph writes, no artifact drift. Gates: skill_lint/test_init/validate_schema green — @ajs — 2026-07-21 — (this commit)
 

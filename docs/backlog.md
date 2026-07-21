@@ -1485,17 +1485,26 @@ link-artifacts step 6 needs `full: true`, detect-and-ask's dead-capability branc
 route through retire-from-design, check-health's apply gate self-contradicts; "(180 nodes)"
 in three places vs 212; upgrading-to-v0.2.0 docs lack the breadcrumb.
 
-**BL-61 · skill_lint is blind to single-word tool names** — *deep review, same day the lint
-shipped.* Size **S**. The `"_" in term` filter means `allocate`, `satisfies`, `genesis`,
+**BL-61 · skill_lint is blind to single-word tool names — DONE 2026-07-21** — *deep review,
+same day the lint shipped.* Size **S**. The `"_" in term` filter exempted `allocate`,
+`satisfies`, `genesis`, `documents`, `precedes`, `provides`, `realizes`, `verifies`,
+`consumes`, `contains`, `constrains` — 11 served tools, 10 referenced in skills, none checked.
+Filter dropped; the allowlist gained the ~58 legitimate single-word non-tool terms (statuses,
+enum values, field names, CLI/format words), the both-ways unused-guard keeping it exact.
+Negative-tested: a renamed single-word tool now fails the lint (exit 1). The `"_" in term` filter means `allocate`, `satisfies`, `genesis`,
 `documents`, `precedes`… are never checked — the rename-leaves-prose-behind case the lint
 exists for. Drop the filter; extend the allowlist with legitimate single-word terms.
 
-**BL-62 · Surface test-coverage gaps** — *deep review.* Size **M**. 14 of 78 tools have no
+**BL-62 · Surface test-coverage gaps — DONE 2026-07-21** — *deep review.* Size **M**. 14 of 78 tools have no
 coverage in tests/tools.rs or smoke_mcp.py (add_epoch, add_resource, delete_node,
 dimension_drift(s), evaluate_allocation, pin_at_epoch, precedes, propose_allocation,
 realizes, record_change, require_resource, surprising_connections, withdraw_question); plus
-untested behaviors: get_node absent shape, export_graph overwrite, and
-create_node/scan_nodes/search_design over real stdio.
+untested behaviors: get_node absent shape, and create_node/scan_nodes/search_design over real
+stdio. **All 14 now covered**: two tests/tools.rs tests (a temporal/resource/realization/
+analysis/delete walk + an ask→withdraw question round trip) and a smoke_mcp `§9c` section that
+drives create_node/scan_nodes/search_design/delete_node/get_node over the real stdio boundary
+— the blind spot smoke exists for. (export_graph overwrite guard is BL-57's, tested there when
+it lands; get_node's absent shape is pinned to today's `{value:null}` with a BL-57 pointer.)
 
 ## Deliberate deferrals
 

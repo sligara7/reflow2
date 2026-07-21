@@ -1409,3 +1409,195 @@ async fn change_event_declares_what_it_changed_atomically() {
         "the affected nodes are the propagation seeds, got {seeds:?}"
     );
 }
+
+// ---- BL-62 · coverage for tools that had none -------------------------------
+//
+// These 14 tools were never called from tests/tools.rs or smoke_mcp.py — a tool
+// nobody drives is a tool whose result contract nobody checks. One walk exercises
+// the temporal, resource, realization, analysis, and delete families; the
+// question and get_node cases follow.
+
+#[tokio::test]
+async fn temporal_resource_and_realization_tools_round_trip() {
+    let s = seeded().await;
+
+    // --- temporal: epochs, ordering, pinning, recorded change ---
+    j!(s.add_epoch(Parameters(AddEpochReq {
+        id: "epoch:v1".into(),
+        name: "First cut".into(),
+        epoch_type: "baseline".into(),
+        sequence: 0,
+    })));
+    j!(s.add_epoch(Parameters(AddEpochReq {
+        id: "epoch:v2".into(),
+        name: "Second cut".into(),
+        epoch_type: "revision".into(),
+        sequence: 1,
+    })));
+    j!(s.precedes(Parameters(PrecedesReq {
+        earlier_epoch: "epoch:v1".into(),
+        later_epoch: "epoch:v2".into(),
+    })));
+    let pinned = j!(s.pin_at_epoch(Parameters(PinAtEpochReq {
+        node_type: "Capability".into(),
+        node_id: "cap:flight".into(),
+        epoch_id: "epoch:v2".into(),
+    })));
+    assert_eq!(
+        pinned["pinned"], "cap:flight",
+        "pin reports what it pinned: {pinned}"
+    );
+
+    j!(s.add_change_event(Parameters(AddChangeEventReq {
+        id: "chg:tune".into(),
+        name: "Tune the model".into(),
+        change_type: "refactor".into(),
+        affected: None,
+    })));
+    // record_change snapshots the prior state before applying — the axis-Z write.
+    let rec = j!(s.record_change(Parameters(RecordChangeReq {
+        epoch_id: "epoch:v2".into(),
+        change_event_id: "chg:tune".into(),
+        name: "cap:flight description reworded".into(),
+        target_type: "Capability".into(),
+        target_id: "cap:flight".into(),
+        change_type: "refactor".into(),
+        action: "modified".into(),
+    })));
+    assert!(
+        rec.is_object(),
+        "record_change returns a structured result: {rec}"
+    );
+
+    // --- resources ---
+    j!(s.add_resource(Parameters(ResourceReq {
+        id: "res:gpu".into(),
+        name: "GPU pool".into(),
+        provider: Some("cloud".into()),
+    })));
+    j!(s.require_resource(Parameters(RequireResourceReq {
+        from_type: "Component".into(),
+        from_id: "cmp:physics".into(),
+        resource_id: "res:gpu".into(),
+        criticality: Some("required".into()),
+    })));
+    let requires = j!(s.get_node(Parameters(TypedIdReq {
+        node_type: "Resource".into(),
+        id: "res:gpu".into(),
+    })));
+    assert_eq!(requires["node_id"], "res:gpu");
+
+    // --- realization ---
+    j!(s.add_artifact(Parameters(AddArtifactReq {
+        id: "art:flight-rs".into(),
+        name: "flight.rs".into(),
+        artifact_type: Some("code".into()),
+        location: Some("src/flight.rs".into()),
+    })));
+    j!(s.realizes(Parameters(RealizesReq {
+        artifact_id: "art:flight-rs".into(),
+        target_type: "Capability".into(),
+        target_id: "cap:flight".into(),
+        completeness: Some("complete".into()),
+    })));
+
+    // --- analysis tools (must return well-formed results, not error) ---
+    let alloc = j!(s.evaluate_allocation());
+    assert!(
+        alloc.is_object(),
+        "evaluate_allocation returns a scored object: {alloc}"
+    );
+    let proposal = j!(s.propose_allocation(Parameters(ProposeAllocationReq { resolution: 1.0 })));
+    assert!(
+        proposal.is_object(),
+        "propose_allocation returns clusters: {proposal}"
+    );
+    let surprises = j!(s.surprising_connections());
+    assert!(
+        surprises.get("count").is_some() && surprises.get("items").is_some(),
+        "surprising_connections returns a {{count, items}} envelope: {surprises}"
+    );
+
+    // --- dimension drift: no observations seeded (no MCP tool writes them), so
+    //     the tools must report an honest "nothing to trend", never error. ---
+    let drift = j!(s.dimension_drift(Parameters(DimensionDriftReq {
+        target_id: "cap:flight".into(),
+        dimension: "reliability".into(),
+    })));
+    assert!(
+        drift.is_object(),
+        "dimension_drift returns a result even with no data: {drift}"
+    );
+    let drifts = jl!(s.dimension_drifts());
+    assert!(
+        drifts.as_array().unwrap().is_empty(),
+        "no observations → no drifts: {drifts}"
+    );
+
+    // --- delete_node: the survivor of a mistake, removed; result names it. ---
+    j!(s.add_component(Parameters(ComponentReq {
+        id: "cmp:typo".into(),
+        name: "Typo".into(),
+        description: "created by mistake".into(),
+        level: None,
+    })));
+    let deleted = j!(s.delete_node(Parameters(TypedIdReq {
+        node_type: "Component".into(),
+        id: "cmp:typo".into(),
+    })));
+    assert_eq!(
+        deleted["deleted"],
+        serde_json::json!(true),
+        "delete_node names the outcome"
+    );
+    let gone = j!(s.get_node(Parameters(TypedIdReq {
+        node_type: "Component".into(),
+        id: "cmp:typo".into(),
+    })));
+    // get_node on an absent id returns a null-ish result, never an error.
+    // (Shape is `{value: null}` today via the scalar wrap; BL-57 renames it to
+    // `{node: null}` — update this line when that lands.)
+    assert!(
+        gone["value"].is_null(),
+        "absent node reads as null, got {gone}"
+    );
+}
+
+#[tokio::test]
+async fn an_asked_question_can_be_withdrawn() {
+    let s = seeded().await;
+    let gaps = jl!(s.detect_gaps());
+    let gap = gaps.as_array().unwrap()[0].clone();
+    let gap_id = gap["id"].as_str().unwrap().to_string();
+
+    // Ask it (collect-then-serve records the question).
+    let prep = j!(s.gap_to_prompt(Parameters(GapToPromptReq {
+        gap: obj(&gap),
+        answers: vec![],
+        asked_at: None,
+    })));
+    let pid = prep["prompts"][0]["id"].as_str().unwrap().to_string();
+    j!(s.gap_to_prompt(Parameters(GapToPromptReq {
+        gap: obj(&gap),
+        answers: vec![AgentAnswerReq {
+            id: pid,
+            text: "Who owns this?".into()
+        }],
+        asked_at: Some("2026-07-21T00:00:00Z".into()),
+    })));
+    assert_eq!(jl!(s.open_questions()).as_array().unwrap().len(), 1);
+
+    // Withdraw it — the question leaves the open list.
+    let withdrawn = j!(s.withdraw_question(Parameters(WithdrawQuestionReq {
+        gap_id: gap_id.clone(),
+    })));
+    assert_eq!(
+        withdrawn["withdrawn"],
+        serde_json::json!(true),
+        "withdraw reports success: {withdrawn}"
+    );
+    assert!(
+        jl!(s.open_questions()).as_array().unwrap().is_empty(),
+        "the withdrawn question is off the open list"
+    );
+}
