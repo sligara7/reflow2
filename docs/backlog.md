@@ -1533,6 +1533,41 @@ drives create_node/scan_nodes/search_design/delete_node/get_node over the real s
 — the blind spot smoke exists for. (export_graph overwrite guard is BL-57's, tested there when
 it lands; get_node's absent shape is pinned to today's `{value:null}` with a BL-57 pointer.)
 
+**BL-63 · Snapshots capture properties but not edges, so a re-allocation loses its history** —
+*user question + live demo, 2026-07-21 (promoted from BL-58 idea I4).* Size **M**.
+
+`snapshot_node` serializes a node's **properties** into `Snapshot.state`; it captures none of
+the node's **edges**. Axis Z's promise is that the past is recoverable, and for a node whose
+*properties* changed that holds — but a large class of design change is an **edge** move, not a
+property edit, and those lose their history unless the modeller deliberately records a Decision.
+
+Demonstrated end-to-end (docs/trials, reallocation demo): "Service A does X, Y, Z" → later
+"Reconcile (Z) moves to Service B." The right-way sequence (impact-check → record_change →
+delete the old `ALLOCATED_TO`, add the new one → a superseding Decision) worked, and the
+Decision chain (`dec:own-v2 OBSOLETES dec:own-v1`, v1 marked `superseded`) preserved the
+ownership history perfectly. **But** the snapshot of `cap:z` held only its properties
+(name/status/…), not the `ALLOCATED_TO cmp:a` edge it lost — so the *only* durable record that
+"A once owned Z" was the hand-authored Decision. A lazy reallocation (delete_edge + allocate,
+no Decision) would leave Z on B with **no trace** it was ever on A. This is exactly the
+long-lived-design case (storyflow, 8–9 months of shifting allocations) where it bites.
+
+**The fix**: capture the affected node's edges into the snapshot alongside its properties, so a
+`Modified`/`Removed` `record_change` preserves the link structure, not just the text. Design
+decisions to make:
+- **Scope** — snapshot *all* of a node's edges (complete but noisy/expensive for a hub like the
+  Project), or only the edges the change actually touched (cheap, but needs the change to name
+  them — pairs with BL-50's `affected` list and the `field`-scoped `CHANGED` edge). Lean toward
+  the changed-edges scope with a full-capture opt-in.
+- **Storage** — extend `Snapshot.state` (today a JSON string of props) with an `edges` section,
+  serialized sorted for byte-stability (same discipline as BL-58's property fix). Update
+  `parse_snapshot_state` and any reader.
+- **Honesty in the meantime** — until built, say so loudly on `snapshot_node`'s docs and in the
+  revise-design / retire-from-design skills: "a reallocation's history lives in the Decision you
+  record, not the snapshot — model it as a Decision." (Cheap, do first.)
+
+Not a silent-drop fix like BL-58 — the current behaviour is honest, just incomplete; this
+completes axis-Z coverage for the edge dimension of change.
+
 ## Deliberate deferrals
 
 Not gaps — decisions, recorded so they aren't rediscovered as bugs.
