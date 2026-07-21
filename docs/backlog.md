@@ -1189,6 +1189,18 @@ Size **M** for an advisory claim layer once the identity decision is made; the d
 identity (3), granularity vs blast radius (2), advisory-first (5) — are the real content, and
 they want a session with the user, not a patch.
 
+**2026-07-21 addendum (user)** — two sharpenings from a second pass on the same idea. **(a)** The
+claim unit may be a **cluster**, not a node: "Alex is working that cluster — Bobby is working that
+node." The regions are computable with machinery the graph already runs — a blast radius
+(`propagate_from`) or a community (the allocation clustering) — which promotes tension 2 from
+*validation* to *granularity*: claim the island, not the node list. **(b)** A claim licenses
+**design authority**, not just edit intent: the holder "goes off and makes design choices for
+their area", so Decisions recorded inside a claimed cluster belong to its holder — identity
+(tension 3) joined to BL-12 sketch 2's who-may-assert-what, applied to a region instead of a
+claim type. And a checkout that *explores an option* rather than progressing the baseline is
+[BL-70](#bigger-threads)'s fork wearing work clothes — the claim layer and the alternatives
+layer likely want the same scoping primitive, and should not be built twice.
+
 **BL-45 · System-of-systems: external dependencies between reflow2 projects** — *user,
 2026-07-20. Explicitly a thought exercise; the mechanics are the open question.*
 
@@ -1767,6 +1779,58 @@ does not make the *test* correct. **Fix:** compute `single_point_of_failure` as 
 `surprising_coupling` carry the community-bridge signal it already carries. Either way `cmp:service`
 stays flagged — correctly, and now answered on the record by `dec:service-spof-accepted` (the single
 MCP door is an intentional SPOF per `req:invocation`) — and `cmp:flow` stops firing.
+
+**BL-70 · Parallel alternatives — AoA branches held open until a decision point** — *user,
+source-selection practice (analysis of alternatives / DOTMLPF-P), 2026-07-21.* Concept; size
+**L**; the vocabulary decisions are the user's (and shared with [BL-68]'s question 1).
+
+The idea in the user's words: an undecided design choice could hold **forks** — option A and
+option B (and more) as live sub-designs — and, from military source selection, an analysis of
+alternatives keeps two or more parallel designs *viable until some decision is made* — "almost
+like a decision point."
+
+More is seeded than expected:
+
+- **`Decision.status = proposed` is a decision point in embryo** — the node can exist *before*
+  the choice is made, with `GOVERNED_BY` edges already saying which parts of the design hang on
+  it. Nothing today makes a `proposed` Decision *gate* anything; that is the missing teeth.
+- **`Decision.alternatives` is the losers' obituary** — prose, post-hoc, written on the winner.
+  The fork idea upgrades exactly this field: alternatives as live sub-graphs while the choice is
+  open, collapsing into that record when it closes — real history instead of reconstruction.
+- The edge vocabulary mostly exists: `CONTRADICTS` (opposing), `EVOLVES_INTO`, `OBSOLETES`,
+  `ANTICIPATES` can wire branches to each other; `retire-from-design` is the losing branch's
+  exit (superseded — genuine history retired on the record, not a mistake deleted).
+- **The comparison machinery an AoA needs is the machinery that already exists** —
+  `budget_report`, the dimension assessments, [BL-68]'s readiness scores — run *per branch*,
+  they make alternatives comparable on the same measures instead of on advocacy. BL-68's
+  vocabulary question 1 (increments/alternatives as first-class nodes) is this same question at
+  roadmap scale; one answer should serve both.
+
+What is genuinely missing is one primitive: **the graph is single-world.** Two Components both
+`SATISFIES`-ing one Requirement *on purpose* is indistinguishable from the incoherence the
+detectors hunt (`possible_duplicate`, allocation defects) — a second viable design held in the
+same graph would be punished for existing. The need is a **scope**: nodes and edges tagged to an
+alternative ("world"), DETECT running *within* a world, reports comparable *across* worlds, and
+the decision point collapsing the superposition — winner merges into the baseline, loser retired
+with its rationale. Cheapest first increment, no schema change: **one exported graph per
+alternative plus a cross-export comparison report** — export/import already round-trips a whole
+design deterministically, so branch-by-file works today and teaches what the real scoping
+primitive must preserve.
+
+**DOTMLPF-P is the breadth discipline for *generating* branches**: the alternative to a materiel
+Component may be non-materiel — doctrine, organization, training, a process change. reflow2 is
+unusually placed to hold that honestly: `req:design-anything` + `Flow` ([BL-37]) mean one branch
+can be a process satisfying the requirement while a sibling branch is a product — the same
+decision point gating a materiel and a non-materiel solution in one graph, which is exactly the
+comparison a source selection is supposed to make and rarely gets tool support for.
+
+Decisions that are the user's to make: branch as node-set tag vs sub-graph vs graph-per-branch;
+does DETECT run per-world only, or is a cross-world absence itself a gap ("this requirement is
+satisfied in only one alternative")?; and where the line falls between an alternative (design
+space, `CONTRADICTS`) and an epoch (time, `EVOLVES_INTO`) — the AoA that keeps both branches is
+describing space, not history, and the vocabulary should not conflate them. Connects to
+[BL-44]: a cluster checkout that explores an option rather than progressing the baseline is this
+item's fork — the two likely share the scoping primitive (see BL-44's 2026-07-21 addendum).
 
 ## Deliberate deferrals
 
