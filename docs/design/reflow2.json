@@ -3313,7 +3313,7 @@
         "is_exit_point": false,
         "name": "Track quality over time",
         "provenance": "authored",
-        "status": "realized",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -3378,7 +3378,7 @@
         "is_exit_point": false,
         "name": "Extract a design from freeform text",
         "provenance": "authored",
-        "status": "realized",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -4673,8 +4673,9 @@
         "kind": "functional",
         "name": "As-designed vs as-built divergence is detectable",
         "priority": "medium",
+        "provenance": "authored",
         "statement": "Real files on disk are registered as checksummed Artifacts realizing capabilities, so drift between the design and the build is visible rather than assumed.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -4711,8 +4712,9 @@
         "kind": "functional",
         "name": "The core is deterministic and LLM-free",
         "priority": "medium",
+        "provenance": "authored",
         "statement": "The runtime core must be free of LLM and provider dependencies and neutral to the interaction surface; LLM reasoning enters only behind a sync, object-safe seam.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -4723,8 +4725,9 @@
         "kind": "functional",
         "name": "The driving agents are coding agents, not humans",
         "priority": "medium",
+        "provenance": "authored",
         "statement": "The primary consumers are Claude Code and grok build (plus OpenCode/Copilot), which reach the system as MCP tools plus an installed skill kit. The human is reached only through the agent.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -4748,8 +4751,9 @@
         "kind": "functional",
         "name": "Gaps become questions, not guesses",
         "priority": "medium",
+        "provenance": "authored",
         "statement": "Where the design is underspecified, the system must ask the human in plain language and record the answer, rather than silently choosing a default.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -4773,8 +4777,9 @@
         "kind": "functional",
         "name": "Invoked as an MCP server over stdio",
         "priority": "medium",
+        "provenance": "authored",
         "statement": "The user-facing surface is the reflow2-mcp binary spoken to over stdio, installed into a consumer project by tools/reflow2_init.py, which merges rather than overwrites existing agent configuration.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -4811,8 +4816,9 @@
         "kind": "functional",
         "name": "The design persists in-repo alongside the code",
         "priority": "medium",
+        "provenance": "authored",
         "statement": "The graph lives at ./.reflow2/graph inside the consumer project, so the design travels with the repo; export/import is deterministic so a backup under git shows what actually changed.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -4909,6 +4915,7 @@
       "node_id": "ver:dimensions",
       "node_type": "Verification",
       "properties": {
+        "last_run_at": "2026-07-20",
         "level": "integration",
         "method": "test",
         "name": "dimensions.rs",
@@ -4959,6 +4966,7 @@
       "node_id": "ver:ingest",
       "node_type": "Verification",
       "properties": {
+        "last_run_at": "2026-07-20",
         "level": "integration",
         "method": "test",
         "name": "ingest.rs",
