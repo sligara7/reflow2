@@ -894,6 +894,23 @@ pub struct AddChangeEventReq {
     pub name: String,
     /// Change type key (e.g. `new_feature`, `scope_change`).
     pub change_type: String,
+    /// What the change touched: a CHANGED edge is drawn from the event to each
+    /// entry. Every entry must name an existing node — the whole call is
+    /// refused before anything is written if one does not.
+    #[serde(default)]
+    pub affected: Option<Vec<AffectedNodeReq>>,
+}
+
+/// One node an event changed, for `add_change_event`'s `affected` list.
+#[derive(Debug, Deserialize, JsonSchema)]
+pub struct AffectedNodeReq {
+    /// The changed node's type (e.g. `Requirement`, `Artifact`).
+    pub node_type: String,
+    /// The changed node's id.
+    pub node_id: String,
+    /// `added` / `modified` (default) / `removed`.
+    #[serde(default)]
+    pub action: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2050,7 +2067,8 @@ impl ReflowService {
         Parameters(req): Parameters<TypedIdReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.graph.lock().await;
-        ok_json(g.delete_node(&req.node_type, &req.id).map_err(dyno_err)?)
+        let deleted = g.delete_node(&req.node_type, &req.id).map_err(dyno_err)?;
+        ok_json(json!({ "deleted": deleted }))
     }
 
     #[tool(
@@ -2066,10 +2084,13 @@ impl ReflowService {
         Parameters(req): Parameters<DeleteEdgeReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.graph.lock().await;
-        ok_json(
-            g.delete_edge(&req.edge_type, &req.from_id, &req.to_id)
-                .map_err(dyno_err)?,
-        )
+        // `{deleted}` rather than the bare bool the core returns: a scalar in
+        // `structuredContent` is the BL-48 defect (ok_json would wrap it as an
+        // anonymous `{value}`, but the field deserves its name).
+        let deleted = g
+            .delete_edge(&req.edge_type, &req.from_id, &req.to_id)
+            .map_err(dyno_err)?;
+        ok_json(json!({ "deleted": deleted }))
     }
 
     #[tool(
@@ -2291,17 +2312,71 @@ impl ReflowService {
         ))
     }
 
-    #[tool(description = "Create a ChangeEvent (seed for propagate_change).")]
+    #[tool(
+        description = "Create a ChangeEvent (seed for propagate_change). Pass `affected` to say \
+                       in the same call what it changed — a CHANGED edge is drawn to each entry, \
+                       which is what makes the event propagatable."
+    )]
     pub async fn add_change_event(
         &self,
         Parameters(req): Parameters<AddChangeEventReq>,
     ) -> Result<CallToolResult, McpError> {
         let change_type: ChangeType = parse_enum(&req.change_type, "change type")?;
+        let affected = req.affected.unwrap_or_default();
         let mut g = self.graph.lock().await;
-        ok_json(NodeDto::from(
-            g.add_change_event(&req.id, &req.name, change_type)
-                .map_err(dyno_err)?,
-        ))
+        // Validate the whole list before writing anything: storage accepts
+        // dangling edges (this check is the only one there is), and a partial
+        // write — event created, third entry refused — would leave a record
+        // claiming less than the caller said. Refuse first, write whole.
+        for a in &affected {
+            match a.action.as_deref() {
+                None | Some("added") | Some("modified") | Some("removed") => {}
+                Some(other) => {
+                    return Err(McpError::invalid_params(
+                        format!(
+                            "unknown affected action {other:?} for {}: expected added / \
+                             modified / removed. Nothing was written.",
+                            a.node_id
+                        ),
+                        None,
+                    ));
+                }
+            }
+            if g.get_node(&a.node_type, &a.node_id)
+                .map_err(dyno_err)?
+                .is_none()
+            {
+                return Err(McpError::invalid_params(
+                    format!(
+                        "affected node not found: {} {:?}. Nothing was written — every \
+                         affected entry must already exist.",
+                        a.node_type, a.node_id
+                    ),
+                    None,
+                ));
+            }
+        }
+        let event = g
+            .add_change_event(&req.id, &req.name, change_type)
+            .map_err(dyno_err)?;
+        let mut changed = Vec::new();
+        for a in &affected {
+            let action = a.action.as_deref().unwrap_or("modified");
+            g.create_edge(
+                reflow2_core::nodes::edge::CHANGED,
+                reflow2_core::nodes::node::CHANGE_EVENT,
+                &req.id,
+                &a.node_type,
+                &a.node_id,
+                reflow2_core::nodes::Props::new().set("action", action),
+            )
+            .map_err(dyno_err)?;
+            changed.push(json!({ "node_id": a.node_id, "action": action }));
+        }
+        ok_json(json!({
+            "event": NodeDto::from(event),
+            "changed": changed,
+        }))
     }
 
     #[tool(description = "Record a change to a node in an epoch (snapshots the prior state).")]

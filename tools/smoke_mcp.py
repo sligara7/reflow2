@@ -252,6 +252,15 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("and says so in words", "wildcard" in loose.get("note", "") or "No edge type" in loose.get("note", ""),
          loose.get("note"))
 
+    # BL-50: CHANGED is designed to carry ChangeEvent -> anything; asking what
+    # connects a ChangeEvent to an Artifact must present it as the modelled
+    # fit, not a wildcard loophole.
+    chg = s.call("describe_schema", {"from": "ChangeEvent", "to": "Artifact"})
+    c.ok("a half-exact edge is counted, not lumped with wildcards (BL-50)",
+         chg.get("half_exact_matches", 0) >= 1
+         and chg["matches"][0]["edge_type"] == "CHANGED",
+         {"half": chg.get("half_exact_matches"), "first": chg["matches"][0]["edge_type"]})
+
     node = s.call("describe_schema", {"node_type": "Component"})
     c.ok("a node type lists the edges it can carry",
          any(m["edge_type"] == "PROVIDES" for m in node.get("outgoing", [])))
@@ -422,6 +431,38 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("a suspected duplicate never becomes an applicable merge",
          not any("cmp:board" in str(o) or "cmp:engine" in str(o) for o in merge_ops),
          merge_ops)
+
+    # BL-50: JSON has one number type, so every client writes `confidence: 1`.
+    # The exact call the self-adopt session had refused with "expected Float,
+    # got int" must now widen losslessly — and still face the range check.
+    dup_edge = s.call("create_edge", {
+        "edge_type": "DUPLICATES", "from_type": "Component", "from_id": "cmp:board",
+        "to_type": "Component", "to_id": "cmp:engine", "props": {"confidence": 1}})
+    c.ok("an integer literal is accepted for a float param (BL-50)",
+         dup_edge["properties"]["confidence"] == 1.0, dup_edge.get("properties"))
+    refused = s.call_expect_error("create_edge", {
+        "edge_type": "DUPLICATES", "from_type": "Component", "from_id": "cmp:engine",
+        "to_type": "Component", "to_id": "cmp:board", "props": {"confidence": 3}})
+    c.ok("and widening does not bypass the range check", refused is not None, refused)
+    s.call("delete_edge", {"edge_type": "DUPLICATES", "from_id": "cmp:board",
+                           "to_id": "cmp:engine"})
+
+    # BL-50: an event can declare what it changed in the same call, and the
+    # CHANGED edges make it propagatable as recorded.
+    ev = s.call("add_change_event", {
+        "id": "chg:smoke-affected", "name": "Board layout reworked",
+        "change_type": "refactor",
+        "affected": [{"node_type": "Component", "node_id": "cmp:board"}]})
+    c.ok("add_change_event draws its CHANGED edges (BL-50)",
+         [e["node_id"] for e in ev["changed"]] == ["cmp:board"]
+         and ev["changed"][0]["action"] == "modified", ev.get("changed"))
+    rad = s.call("propagate_change", {"change_event_id": "chg:smoke-affected"})
+    c.ok("and the event propagates from what it declared",
+         rad["seeds"] == ["cmp:board"], rad.get("seeds"))
+    ghost = s.call_expect_error("add_change_event", {
+        "id": "chg:ghost", "name": "Touches nothing real", "change_type": "refactor",
+        "affected": [{"node_type": "Component", "node_id": "cmp:ghost"}]})
+    c.ok("a missing affected node refuses the whole call", ghost is not None, ghost)
 
     gaps = s.call("detect_gaps")
     sources = [g["gap_source"] for g in gaps]

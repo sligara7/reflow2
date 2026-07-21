@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-50 (three S paper cuts) — @ajs — since 2026-07-20 — int-as-float coercion (core write path), add_change_event affected list + CHANGED ranking (service.rs/agent.rs), SessionStart hook recipe (getting-started)
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -76,6 +75,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-50 done (all three): int literals widen to schema floats at the core write seam (range check kept, foundation untouched); add_change_event takes `affected` and draws CHANGED atomically — refuse-first, write-whole; describe_schema counts half-exact matches so CHANGED reads as the modelled fit; delete_node/delete_edge return {deleted} (bare-bool envelope, caught by BL-48's choke-point wrap); SessionStart hook recipe documented in the kit's step 0a. Workspace 39 suites green, smoke ALL PASS incl. 9 new checks; drift on art:graph/art:vocabulary/art:service accepted two-sided (chg:bl50-tool-boundary), export 205n/386e, gaps 0. Same restart caveat: a session predating this build serves the old surface — @ajs — 2026-07-20 — (this commit)
 
 - BL-48 + BL-49 done: graph_report_markdown returns prose as text (ok_json wraps any scalar — the string twin of the array envelope bug), propagate defaults to a core-computed summary (full dump behind full=true), export_graph writes a deterministic file on request; smoke_mcp asserts the result envelope on every call + drives all three over real stdio; impact-check skill teaches summary-first; drift on art:propagate/art:service accepted two-sided (chg:bl48-bl49-tool-surface), export 201n/380e, gaps 0. Side effect: reflow2_init.py rerun for the mirror refresh did the full self-host conversion — REFLOW2.md + pointer lines committed, per-machine MCP configs (opencode.json, .vscode/mcp.json) gitignored. NOTE: a session started before this build serves the old shapes — restart before relying on summary/path live — @ajs — 2026-07-20 — (this commit)
 

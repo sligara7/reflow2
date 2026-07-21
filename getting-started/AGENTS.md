@@ -41,6 +41,30 @@ session, prose read out of an adopted codebase.
    only way they learn what a previous session concluded. Do it again whenever they ask "where
    are we?".
 
+   *Make it mechanical where the harness allows.* This step is a convention, and a convention
+   only holds while every session remembers it. If your harness supports session hooks, wire the
+   reminder in — for Claude Code, add to the project's `.claude/settings.json`:
+
+   ```json
+   {
+     "hooks": {
+       "SessionStart": [
+         {
+           "hooks": [
+             {
+               "type": "command",
+               "command": "echo 'reflow2: this project has a design graph. Orient first — open_questions, then the where-am-i skill — before touching code.'"
+             }
+           ]
+         }
+       ]
+     }
+   }
+   ```
+
+   The hook's output lands in the session's context at startup, so the ritual no longer depends
+   on the agent recalling this file. Harnesses without hooks keep the written convention.
+
 0. **Bootstrap once.** On a brand-new project (empty graph), start with the **genesis**
    skill: call the `genesis` tool to scaffold the Project + temporal anchor, seed the opening
    brief into Requirements + Capabilities (P0/P1, *not* Components), capture deployment/platform

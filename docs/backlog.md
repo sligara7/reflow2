@@ -1301,16 +1301,26 @@ returns a `{path, bytes, nodes, edges, stamp}` receipt instead of the payload. T
 skill teaches the summary-first contract. `max_nodes` was not added: the summary removes the
 size driver (hop chains), and a cap on the ring would be a silent truncation with extra steps.
 
-**BL-50 · Tool-boundary paper cuts from the self-adopt live session** — grouped, each **S**.
+**BL-50 · Tool-boundary paper cuts from the self-adopt live session — DONE 2026-07-20** —
+grouped, each **S**.
 
-(1) `DUPLICATES.confidence: 1` rejected with "expected Float, got int" — every LLM writes `1`;
-accept integer literals for float params. (2) `add_change_event` cannot declare what it
-changed — the CHANGED edges must be drawn one generic `create_edge` at a time, and
-`describe_schema from/to` ranks CHANGED in the wildcard bucket (its to-side is `*`), so the one
-edge type that models the pair is presented as if it merely accepts it. An `affected` list on
-`add_change_event`, or an exact-match hint for CHANGED, closes the gap. (3) The kit's
-"where-am-i at session start" ritual is convention with no mechanism; a documented SessionStart
-hook recipe in the consumer kit would make it real for harnesses that support hooks.
+(1) `DUPLICATES.confidence: 1` was rejected with "expected Float, got int" — every LLM writes
+`1`, JSON has one number type. **Integer literals now widen losslessly to floats at the core
+write seam** (`create_node`/`create_edge`, schema-aware, so it covers every surface), and only
+there: a non-exact integer still fails loud, the range check still applies after widening, and
+a property the schema does not declare float is never touched. The foundation stays pinned —
+the coercion is reflow2's, not a validator change. (2) **`add_change_event` takes an
+`affected` list** and draws its CHANGED edges in the same call — validated whole before
+anything is written (storage accepts dangling edges, so the tool's check is the only one), so
+a bad entry refuses the event rather than leaving a partial record; the result names each edge
+and its action. And **`describe_schema` now counts half-exact matches**: CHANGED names its
+from-side and is open on the to-side *by design*, and the note now calls such an edge the
+modelled fit instead of lumping it with both-sides wildcards. Bonus from the same envelope
+discipline: `delete_node`/`delete_edge` returned bare booleans (the BL-48 defect shape); they
+now return `{deleted}`. (3) The kit's **SessionStart hook recipe** is documented in
+getting-started/AGENTS.md step 0a — the where-am-i ritual lands in the session's context at
+startup on harnesses with hooks; the rest keep the written convention. Not auto-installed:
+writing into a consumer's `settings.json` is not a thing the installer gets to do.
 
 ## Deliberate deferrals
 

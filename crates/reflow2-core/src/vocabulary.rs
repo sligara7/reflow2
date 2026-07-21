@@ -157,6 +157,13 @@ pub struct EdgeQuery {
     /// How many of `matches` model this pair explicitly. Zero here with a
     /// non-empty `matches` is the case worth reading `note` for.
     pub exact_matches: usize,
+    /// How many of `matches` name one endpoint exactly and are open on the
+    /// other **by design** — e.g. `CHANGED`, whose source is always a
+    /// ChangeEvent while its target is anything a change can touch. For its
+    /// pair such an edge is the modelled fit, not a wildcard loophole; before
+    /// this count existed it was presented as merely tolerating the pair
+    /// (BL-50). Sorted after the exact fits, before both-sides wildcards.
+    pub half_exact_matches: usize,
     /// Plain-language reading of the result, so a caller that only skims sees
     /// the wildcard caveat rather than treating any hit as a fit.
     pub note: String,
@@ -326,13 +333,27 @@ impl DesignGraph {
         matches.sort_by(EdgeTypeMatch::order);
 
         let exact_matches = matches.iter().filter(|m| m.is_exact()).count();
-        let note = edge_query_note(from_type, to_type, matches.len(), exact_matches);
+        let half_exact_matches = matches
+            .iter()
+            .filter(|m| {
+                !m.is_exact()
+                    && (m.from_match == EndpointMatch::Exact || m.to_match == EndpointMatch::Exact)
+            })
+            .count();
+        let note = edge_query_note(
+            from_type,
+            to_type,
+            matches.len(),
+            exact_matches,
+            half_exact_matches,
+        );
 
         Ok(EdgeQuery {
             from_type: from_type.to_string(),
             to_type: to_type.to_string(),
             matches,
             exact_matches,
+            half_exact_matches,
             note,
         })
     }
@@ -352,22 +373,35 @@ fn wildcard_or_exact(endpoint: &EdgeEndpoint) -> EndpointMatch {
 
 /// The plain-language verdict. Separated out so the wording is testable and
 /// shared with the `create_edge` failure path.
-fn edge_query_note(from_type: &str, to_type: &str, total: usize, exact: usize) -> String {
-    match (total, exact) {
-        (0, _) => format!(
+fn edge_query_note(
+    from_type: &str,
+    to_type: &str,
+    total: usize,
+    exact: usize,
+    half: usize,
+) -> String {
+    match (total, exact, half) {
+        (0, _, _) => format!(
             "No edge type in this schema connects {from_type} to {to_type}. \
              Either the relationship belongs somewhere else in the design, or it \
              needs a new edge type in a schema domain — do not force it through an \
              edge that means something different."
         ),
-        (n, 0) => format!(
+        (n, 0, 0) => format!(
             "No edge type specifically models {from_type} -> {to_type}. The {n} below \
              accept the pair only because an endpoint is the `*` wildcard: they will \
              validate, but validating is not the same as meaning what you intend. \
              Read each `hint` before choosing, and prefer leaving the edge out to \
              asserting one that is wrong."
         ),
-        (_, k) => format!(
+        (n, 0, h) => format!(
+            "No edge type names both {from_type} and {to_type}, but {h} of the {n} \
+             below (listed first) name one side exactly and are open on the other \
+             by design — for its pair such an edge is the modelled fit, not a \
+             loophole; read its `hint`. The rest accept the pair only through a \
+             `*` wildcard on both sides."
+        ),
+        (_, k, _) => format!(
             "{k} edge type(s) explicitly model {from_type} -> {to_type}; these are \
              listed first. Any others accept the pair via a `*` wildcard endpoint."
         ),
@@ -435,6 +469,29 @@ mod tests {
                 .iter()
                 .any(|m| m.is_exact() && m.spec.edge_type == "INCLUDES"),
             "the exact fit is INCLUDES"
+        );
+    }
+
+    /// The self-adopt session's actual question (BL-50): what connects a
+    /// ChangeEvent to an Artifact? The answer is CHANGED — its from-side names
+    /// ChangeEvent exactly; its to-side is `*` because a change can touch
+    /// anything. That is the edge type *designed* for the pair, and it used to
+    /// be presented as if it merely tolerated it.
+    #[test]
+    fn change_event_to_artifact_reports_changed_as_the_modelled_fit() {
+        let g = graph();
+        let q = g.edge_types_between("ChangeEvent", "Artifact").unwrap();
+        assert_eq!(q.exact_matches, 0, "nothing names both sides");
+        assert!(q.half_exact_matches >= 1, "CHANGED names its from-side");
+        let first = q.matches.first().unwrap();
+        assert_eq!(
+            first.spec.edge_type, "CHANGED",
+            "the half-exact fit ranks above both-sides wildcards"
+        );
+        assert!(
+            q.note.contains("modelled fit"),
+            "the note must not call the designed edge a wildcard loophole: {}",
+            q.note
         );
     }
 

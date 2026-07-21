@@ -15,7 +15,30 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`add_change_event` can declare what it changed** (BL-50): an optional `affected` list
+  draws the CHANGED edges in the same call — validated whole before anything is written, so a
+  bad entry refuses the event instead of leaving a partial record. Previously the one edge
+  type that models "this event changed that node" had to be drawn one generic `create_edge`
+  at a time.
+- **A SessionStart hook recipe in the consumer kit** (BL-50): the "orient with where-am-i at
+  session start" ritual can now be wired into harnesses that support hooks, so it stops
+  depending on the agent recalling the instruction file.
+
 ### Changed
+
+- **Integer literals are accepted for float-typed properties** (BL-50): `confidence: 1` now
+  widens losslessly to `1.0` at the core write seam instead of being refused with "expected
+  Float, got int". JSON has one number type; every client writes the bare integer. Range
+  checks still apply after widening, and a non-exact integer still fails loud.
+- **`describe_schema` from/to counts half-exact matches** (BL-50): an edge type that names one
+  endpoint and is open on the other by design (CHANGED, SATISFIES) is now reported as the
+  modelled fit for its pair — `half_exact_matches` in the payload, honest wording in the note —
+  instead of being lumped with both-sides wildcards.
+- **`delete_node` / `delete_edge` return `{deleted}`** instead of a bare boolean — a scalar in
+  `structuredContent` is the same malformed envelope as BL-48, caught by the new choke-point
+  wrap the day it landed.
 
 - **`propagate_change` / `propagate_from` answer with a summary by default** (BL-49, from the
   self-adopt live session): counts by distance, the distance-1 ring with the edge that reached

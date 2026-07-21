@@ -346,6 +346,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:bl50-tool-boundary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl50-tool-boundary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl50-tool-boundary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:merge-integrity-bl47-bl46",
       "properties": {
         "accepted_baseline": true,
@@ -1541,6 +1568,33 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:2df9aeb2250d9b16",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:7037fcfa6ea72e8a",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:9319f05f147526a3",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -3060,7 +3114,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8e1f7ab526df9625",
+        "checksum": "sha256:2ca9a2279ca4edc5",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -3214,7 +3268,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2acf963b1b7ad7f6",
+        "checksum": "sha256:e817ecf285e9569c",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -3269,7 +3323,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:86bc99c202396a5f",
+        "checksum": "sha256:411ac59efbf58a84",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
         "status": "realized"
@@ -3619,6 +3673,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-48 + BL-49: result contract hardened at the tool boundary — graph_report_markdown returns prose as text (never a bare string in structuredContent; ok_json wraps any scalar), propagate answers with a bounded summary by default (full dump behind full=true), export_graph writes to a file on request"
+      }
+    },
+    {
+      "node_id": "chg:bl50-tool-boundary",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-50: three tool-boundary paper cuts closed — integer literals widen losslessly to schema floats at the core write seam (confidence: 1 accepted, range check kept), add_change_event takes an affected list and draws its CHANGED edges atomically (delete results named {deleted}), describe_schema counts half-exact edges so CHANGED reads as the modelled fit; kit documents a SessionStart hook making the where-am-i ritual mechanical"
       }
     },
     {
@@ -4225,6 +4287,42 @@
         "epoch_type": "baseline",
         "name": "Genesis",
         "sequence": 0
+      }
+    },
+    {
+      "node_id": "drift:2df9aeb2250d9b16",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-20",
+        "drift_type": "checksum_change",
+        "name": "art:vocabulary drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:vocabulary' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:7037fcfa6ea72e8a",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-20",
+        "drift_type": "checksum_change",
+        "name": "art:graph drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:graph' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:9319f05f147526a3",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-20",
+        "drift_type": "checksum_change",
+        "name": "art:service drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:service' has changed since it was registered against the design"
       }
     },
     {

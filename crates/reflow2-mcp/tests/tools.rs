@@ -1070,7 +1070,11 @@ async fn a_wrong_edge_can_be_retracted_without_deleting_its_endpoints() {
         from_id: "cap:flight".into(),
         to_id: "req:physics".into(),
     })));
-    assert_eq!(existed, serde_json::json!(true));
+    assert_eq!(
+        existed["deleted"],
+        serde_json::json!(true),
+        "a scalar result carries its name — bare bools in structuredContent are the BL-48 defect"
+    );
 
     // Both endpoints survive; only the assertion between them is gone —
     // and detect sees the thread it severed.
@@ -1095,7 +1099,7 @@ async fn a_wrong_edge_can_be_retracted_without_deleting_its_endpoints() {
         from_id: "cap:flight".into(),
         to_id: "req:physics".into(),
     })));
-    assert_eq!(second, serde_json::json!(false));
+    assert_eq!(second["deleted"], serde_json::json!(false));
 }
 
 #[tokio::test]
@@ -1321,4 +1325,87 @@ async fn export_graph_writes_a_deterministic_file_when_asked() {
     assert_eq!(on_disk, again, "two exports of an unchanged graph match");
 
     std::fs::remove_file(&path).ok();
+}
+
+// ---- BL-50 · add_change_event declares what it changed ----------------------
+
+#[tokio::test]
+async fn change_event_declares_what_it_changed_atomically() {
+    let s = seeded().await;
+
+    // A missing affected node refuses the whole call before anything is
+    // written — no event, no partial edge set.
+    let refused = s
+        .add_change_event(Parameters(AddChangeEventReq {
+            id: "chg:wind".into(),
+            name: "Add wind".into(),
+            change_type: "new_feature".into(),
+            affected: Some(vec![AffectedNodeReq {
+                node_type: "Capability".into(),
+                node_id: "cap:nope".into(),
+                action: None,
+            }]),
+        }))
+        .await;
+    assert!(refused.is_err(), "a missing affected node refuses the call");
+    let events = jl!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "ChangeEvent".into()
+    })));
+    assert!(
+        events.as_array().unwrap().is_empty(),
+        "nothing was written on refusal"
+    );
+
+    // A bogus action is refused the same way.
+    let bad_action = s
+        .add_change_event(Parameters(AddChangeEventReq {
+            id: "chg:wind".into(),
+            name: "Add wind".into(),
+            change_type: "new_feature".into(),
+            affected: Some(vec![AffectedNodeReq {
+                node_type: "Requirement".into(),
+                node_id: "req:physics".into(),
+                action: Some("tweaked".into()),
+            }]),
+        }))
+        .await;
+    assert!(bad_action.is_err(), "an unknown action refuses the call");
+
+    // The valid call draws the CHANGED edges in the same write.
+    let res = j!(s.add_change_event(Parameters(AddChangeEventReq {
+        id: "chg:wind".into(),
+        name: "Add wind".into(),
+        change_type: "new_feature".into(),
+        affected: Some(vec![
+            AffectedNodeReq {
+                node_type: "Requirement".into(),
+                node_id: "req:physics".into(),
+                action: Some("modified".into()),
+            },
+            AffectedNodeReq {
+                node_type: "Capability".into(),
+                node_id: "cap:flight".into(),
+                action: None,
+            },
+        ]),
+    })));
+    assert_eq!(res["event"]["node_id"], "chg:wind");
+    let changed = res["changed"].as_array().expect("changed list");
+    assert_eq!(changed.len(), 2);
+    assert_eq!(
+        changed[1]["action"], "modified",
+        "an unstated action defaults to modified, and says so"
+    );
+
+    // The point of the edges: the event is propagatable as recorded.
+    let brief = j!(s.propagate_change(Parameters(PropagateChangeReq {
+        change_event_id: "chg:wind".into(),
+        max_depth: None,
+        full: None
+    })));
+    let seeds = brief["seeds"].as_array().expect("seeds");
+    assert!(
+        seeds.iter().any(|v| v == "req:physics") && seeds.iter().any(|v| v == "cap:flight"),
+        "the affected nodes are the propagation seeds, got {seeds:?}"
+    );
 }

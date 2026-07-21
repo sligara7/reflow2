@@ -121,3 +121,42 @@ fn missing_required_property_fails_loud() {
     );
     assert!(err.is_err(), "missing required property must be rejected");
 }
+
+#[test]
+fn integer_literal_is_accepted_for_a_float_property() {
+    // BL-50: JSON has one number type, so every client writes `confidence: 1`
+    // — the store's strict Value validation refused the bare integer.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability("cap:a", "A", "does a", None).unwrap();
+    g.add_capability("cap:b", "B", "does b", None).unwrap();
+
+    let e = g
+        .create_edge(
+            edge::DUPLICATES,
+            node::CAPABILITY,
+            "cap:a",
+            node::CAPABILITY,
+            "cap:b",
+            reflow2_core::nodes::Props::new().set("confidence", 1i64),
+        )
+        .expect("an integer literal on a float property must be accepted");
+    assert_eq!(
+        e.properties.get("confidence"),
+        Some(&dynograph_core::Value::Float(1.0)),
+        "widened losslessly and stored as the schema's float"
+    );
+
+    // Widening must not bypass the schema's range check: confidence is [0, 1].
+    let out_of_range = g.create_edge(
+        edge::DUPLICATES,
+        node::CAPABILITY,
+        "cap:b",
+        node::CAPABILITY,
+        "cap:a",
+        reflow2_core::nodes::Props::new().set("confidence", 2i64),
+    );
+    assert!(
+        out_of_range.is_err(),
+        "a widened integer still faces the range check"
+    );
+}

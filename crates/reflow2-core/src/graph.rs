@@ -10,10 +10,34 @@
 //! bad node type, a missing required property, or an edge with the wrong
 //! endpoints fails loud here (rule 4 in AGENTS.md: no silent fallbacks).
 
-use dynograph_core::{DynoError, Schema, Value};
+use dynograph_core::{DynoError, PropertyDef, PropertyType, Schema, Value};
 use dynograph_storage::{StorageEngine, StoredEdge, StoredNode};
 
 use crate::nodes::{Props, edge, node};
+
+/// Widen integer literals to floats for properties the schema declares
+/// `float`, in place. JSON has one number type, so every client writes
+/// `confidence: 1` — and the store validates [`Value`] variants strictly, so
+/// the bare integer was refused ("expected Float, got int", BL-50). The
+/// coercion lives here, at the schema-aware seam every write passes through,
+/// and only when exact: an integer a `f64` cannot represent is left alone to
+/// fail loud, and a property the schema does not declare float is never
+/// touched.
+fn widen_ints_for_float_props(
+    defs: &std::collections::HashMap<String, PropertyDef>,
+    props: &mut std::collections::HashMap<String, Value>,
+) {
+    for (name, value) in props.iter_mut() {
+        if let Value::Int(i) = value
+            && defs
+                .get(name)
+                .is_some_and(|d| d.prop_type == PropertyType::Float)
+            && (*i as f64) as i64 == *i
+        {
+            *value = Value::Float(*i as f64);
+        }
+    }
+}
 
 /// Default logical graph id inside the storage instance. One design lives in
 /// one graph; the id is just a stable name to scope keys.
@@ -111,8 +135,12 @@ impl DesignGraph {
         id: &str,
         props: impl Into<std::collections::HashMap<String, Value>>,
     ) -> Result<StoredNode, DynoError> {
+        let mut props = props.into();
+        if let Some(def) = self.schema().node_types.get(node_type) {
+            widen_ints_for_float_props(&def.properties, &mut props);
+        }
         self.engine
-            .create_node(&self.graph_id, node_type, id, props.into())
+            .create_node(&self.graph_id, node_type, id, props)
     }
 
     /// Merge `props` onto `id` if it exists, or create it. The supplied
@@ -164,6 +192,10 @@ impl DesignGraph {
         to_id: &str,
         props: impl Into<std::collections::HashMap<String, Value>>,
     ) -> Result<StoredEdge, DynoError> {
+        let mut props = props.into();
+        if let Some(def) = self.schema().edge_types.get(edge_type) {
+            widen_ints_for_float_props(&def.properties, &mut props);
+        }
         self.engine.create_edge(
             &self.graph_id,
             edge_type,
@@ -171,7 +203,7 @@ impl DesignGraph {
             from_id,
             to_type,
             to_id,
-            props.into(),
+            props,
         )
     }
 
