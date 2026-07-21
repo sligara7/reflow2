@@ -408,7 +408,7 @@
   "stamp": {
     "edge_types": 54,
     "node_types": 27,
-    "reflow2_version": "0.5.0",
+    "reflow2_version": "0.6.0",
     "schema_version": 1
   }
 }

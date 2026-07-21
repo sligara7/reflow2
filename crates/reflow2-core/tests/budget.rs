@@ -225,3 +225,56 @@ fn a_missing_constraint_fails_loud() {
     let g = DesignGraph::open_in_memory().expect("open");
     assert!(g.budget_report("con:nope").is_err());
 }
+
+#[test]
+fn a_provable_overrun_beats_the_incomplete_caveat() {
+    // BL-58: unstated spenders can only ADD, so a stated total already over a
+    // maximum is provably Exceeded — reporting Incomplete would hide a definite
+    // violation behind "we don't know everything."
+    let mut g = mass_budget(Some(100.0));
+    g.constrains(
+        "con:mass",
+        "Component",
+        "cmp:bus",
+        Some(120.0),
+        Some("measured"),
+    )
+    .unwrap();
+    // cmp:payload's contribution is left UNSTATED.
+    g.constrains("con:mass", "Component", "cmp:payload", None, None)
+        .unwrap();
+
+    let report = g.budget_report("con:mass").unwrap();
+    assert_eq!(
+        report.verdict,
+        BudgetVerdict::Exceeded,
+        "120 > 100 is over budget no matter the unknowns, got {:?}",
+        report.verdict
+    );
+    assert!(
+        !report.unstated.is_empty(),
+        "the unstated spender is still reported, just not decisive"
+    );
+}
+
+#[test]
+fn a_non_finite_contribution_is_refused_at_the_write_seam() {
+    // BL-58: a NaN poisons the total and panics the worst-path max_by.
+    let mut g = mass_budget(Some(100.0));
+    assert!(
+        g.constrains("con:mass", "Component", "cmp:bus", Some(f64::NAN), None)
+            .is_err(),
+        "a NaN contribution must be refused"
+    );
+    assert!(
+        g.constrains(
+            "con:mass",
+            "Component",
+            "cmp:bus",
+            Some(f64::INFINITY),
+            None
+        )
+        .is_err(),
+        "an infinite contribution must be refused"
+    );
+}

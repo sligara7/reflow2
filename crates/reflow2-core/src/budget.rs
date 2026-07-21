@@ -71,6 +71,19 @@ impl DesignGraph {
         contribution: Option<f64>,
         basis: Option<&str>,
     ) -> Result<StoredEdge, DynoError> {
+        // Reject a non-finite contribution at the write seam (BL-58). A NaN
+        // poisons the total (every comparison against it is false) and panics
+        // the worst-path `max_by`; an infinity makes the verdict meaningless.
+        // Fail loud here rather than storing a number arithmetic cannot use.
+        if let Some(c) = contribution
+            && !c.is_finite()
+        {
+            return Err(DynoError::Validation {
+                node_type: node::CONSTRAINT.to_string(),
+                property: "contribution".to_string(),
+                message: format!("must be a finite number, got {c}"),
+            });
+        }
         self.create_edge(
             edge::CONSTRAINS,
             node::CONSTRAINT,
@@ -186,19 +199,31 @@ impl DesignGraph {
                 .or_insert(0) += 1;
         }
 
+        // A provable verdict beats the epistemic caveat (BL-58). Unstated
+        // spenders can only ADD to the total, so for a `maximum` a stated total
+        // already over the limit is definitely Exceeded no matter what the
+        // unknowns are; for a `minimum` a stated total already at/over the
+        // limit is definitely Within. Only when the stated side leaves the
+        // outcome genuinely open do the unstated contributions make it
+        // Incomplete.
         let verdict = match limit {
             None => BudgetVerdict::Ungated,
-            Some(_) if !unstated.is_empty() => BudgetVerdict::Incomplete,
-            Some(l) => {
-                let ok = if direction == "minimum" {
-                    total >= l
-                } else {
-                    total <= l
-                };
-                if ok {
+            Some(l) if direction == "minimum" => {
+                if total >= l {
                     BudgetVerdict::Within
+                } else if !unstated.is_empty() {
+                    BudgetVerdict::Incomplete
                 } else {
+                    BudgetVerdict::Exceeded // all stated and still short of the minimum
+                }
+            }
+            Some(l) => {
+                if total > l {
                     BudgetVerdict::Exceeded
+                } else if !unstated.is_empty() {
+                    BudgetVerdict::Incomplete
+                } else {
+                    BudgetVerdict::Within // all stated and within the maximum
                 }
             }
         };
@@ -345,7 +370,7 @@ impl DesignGraph {
         };
         let (total, path) = best
             .into_values()
-            .max_by(|(a, pa), (b, pb)| a.partial_cmp(b).unwrap().then(pb.cmp(pa)))
+            .max_by(|(a, pa), (b, pb)| a.total_cmp(b).then(pb.cmp(pa)))
             .unwrap_or((0.0, Vec::new()));
         Ok((path, total, note))
     }

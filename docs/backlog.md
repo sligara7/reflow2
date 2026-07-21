@@ -1448,7 +1448,19 @@ present — one named shape both ways. (f) Sibling tools disagree on missing rec
 (error vs `{withdrawn:false}` vs `{was_reviewed:false}`) — pick the boolean-report style.
 (g) `parse_enum` and the ~17 typed edge tools reject without naming what would have worked.
 
-**BL-58 · Core silent-failure batch** — *deep review.* Size **M–L** (each piece S).
+**BL-58 · Core silent-failure batch — DONE 2026-07-21** — *deep review.* Size **M–L** (each
+piece S). All twelve items fixed with tests: (a) ingest re-ingest merges via `upsert_node`
+instead of resetting; (b) snapshots serialize sorted (BTreeMap) for byte-stable exports;
+(c) `propagate_change` errors on a missing event instead of returning empty; (d) `apply_heal`
+is one atomic batch across all operations (merge_nodes made batch-free); (e) swallowed
+edge-creation errors in acknowledge_gap / record_asked_question / ingest provenance /
+ensure_epoch / fielded now surface; (f) budget rejects non-finite contributions at the write
+seam and reports a provable overrun instead of Incomplete (max_by uses total_cmp);
+(g) integer widening rejects the i64::MAX saturation edge (bound at 2^53); (h)
+`truncated_beyond_depth` documented honestly as the one-hop frontier lower bound; (i) drift
+skips the dangling DEPENDS_ON for undocumented additions; (j) missing-intermediate gaps get
+distinct ids per producing edge (relation folded into the hash); (k) a reused ingest
+fragment_id is refused up front; (l) node_type_index scans in sorted order. Old body:
 (a) ingest matched-evolved uses `create_node` replace — the BL-46 reset failure, still live;
 route through `upsert_node` merge. (b) `snapshot_node` serializes a HashMap — snapshot bytes
 are process-random, breaking byte-identical exports of identical history; BTreeMap it.

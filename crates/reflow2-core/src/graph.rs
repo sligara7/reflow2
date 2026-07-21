@@ -32,7 +32,12 @@ fn widen_ints_for_float_props(
             && defs
                 .get(name)
                 .is_some_and(|d| d.prop_type == PropertyType::Float)
-            && (*i as f64) as i64 == *i
+            // Only widen when `f64` represents the integer EXACTLY. The
+            // `(i as f64) as i64` round-trip is not a sufficient check: near
+            // i64::MAX the float rounds up to 2^63 and the float→int cast
+            // saturates back to i64::MAX, so a lossy value passed the test
+            // (BL-58). Bound by 2^53, the largest integer f64 holds losslessly.
+            && i.unsigned_abs() <= (1u64 << 53)
         {
             *value = Value::Float(*i as f64);
         }
@@ -250,7 +255,13 @@ impl DesignGraph {
         &self,
     ) -> Result<std::collections::HashMap<String, String>, DynoError> {
         let mut index = std::collections::HashMap::new();
-        let types: Vec<String> = self.schema().node_types.keys().cloned().collect();
+        // Sorted so that on an id collision across types (a convention
+        // violation, but writable) "first type scanned wins" is deterministic
+        // across processes rather than following HashMap iteration order
+        // (BL-58). The schema's `node_types` is a HashMap with per-process key
+        // order.
+        let mut types: Vec<String> = self.schema().node_types.keys().cloned().collect();
+        types.sort_unstable();
         for node_type in types {
             for node in self.scan_nodes(&node_type)? {
                 index

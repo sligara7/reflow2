@@ -346,6 +346,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl58-silent-failure-batch",
+      "properties": {},
+      "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:deep-review-tier1",
       "properties": {},
       "to_id": "epoch:v050-hardening"
@@ -436,6 +442,96 @@
         "action": "modified"
       },
       "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl58-silent-failure-batch",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl58-silent-failure-batch",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl58-silent-failure-batch",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl58-silent-failure-batch",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl58-silent-failure-batch",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl58-silent-failure-batch",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl58-silent-failure-batch",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl58-silent-failure-batch",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl58-silent-failure-batch",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl58-silent-failure-batch",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -1697,6 +1793,60 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "drift:35363b89192baf00",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:40419b14bd5562fd",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:458ddb78ed6f12c9",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:493ee879a5897da2",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:5376081f4bcbe993",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:5cbf1fd9f7054db7",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "drift:7037fcfa6ea72e8a",
       "properties": {
         "optional": false,
@@ -1748,6 +1898,42 @@
         "weight_basis": "estimated"
       },
       "to_id": "art:init"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:a84bbf1bb26c76ea",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:b66625a527eb60fb",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:e325adce47e0faa7",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:e73e7cea40c640df",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:fielded"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -3467,7 +3653,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c68b6e51f89b5caf",
+        "checksum": "sha256:96928f668e98b5ce",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
         "status": "realized"
@@ -3489,7 +3675,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a25ed6b6f633a3aa",
+        "checksum": "sha256:e22fc5ee8aa08964",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -3511,7 +3697,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:676d89b9e3be53bd",
+        "checksum": "sha256:61f887d80ed8a047",
         "location": "crates/reflow2-core/src/drift.rs",
         "name": "drift.rs",
         "status": "realized"
@@ -3544,7 +3730,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:58f501423e219105",
+        "checksum": "sha256:6c3bf4e758391586",
         "location": "crates/reflow2-core/src/fielded.rs",
         "name": "fielded.rs",
         "status": "realized"
@@ -3577,7 +3763,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2ca9a2279ca4edc5",
+        "checksum": "sha256:b2e290d8bb8a6f18",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -3588,7 +3774,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b69c5f6682770736",
+        "checksum": "sha256:b48ea911ce1a3fe0",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -3599,7 +3785,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2f697a383b3c457d",
+        "checksum": "sha256:30fc1a09862792a9",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
         "status": "realized"
@@ -3610,7 +3796,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6b75bc576b6c891f",
+        "checksum": "sha256:71dceb15b42d2a47",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
         "status": "realized"
@@ -3676,7 +3862,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f97040ce6de4e809",
+        "checksum": "sha256:ed84b3221438e34d",
         "location": "crates/reflow2-core/src/propagate.rs",
         "name": "propagate.rs",
         "status": "realized"
@@ -3764,7 +3950,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f9e9aed059f42db7",
+        "checksum": "sha256:a297a0b311b1ef16",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
         "status": "realized"
@@ -4152,6 +4338,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "BL-57: the tool boundary tells the truth — dyno_err maps caller mistakes to invalid_params not internal_error (one choke point, ~60 tools); every request struct denies unknown fields (a typo'd param is rejected, not swallowed — schemars publishes additionalProperties:false); export_graph refuses to overwrite without opt-in and reports the resolved path; the serve path gets the single-writer lock explanation; get_node returns one named {node} shape both ways; withdraw_gap_acknowledgement aligns on {withdrawn}"
+      }
+    },
+    {
+      "node_id": "chg:bl58-silent-failure-batch",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "BL-58: core silent-failure batch — ingest re-ingest merges instead of resetting (upsert), snapshots serialize sorted for byte-stable exports, propagate_change errors on a missing event instead of returning empty, apply_heal is one atomic batch across all operations, swallowed edge-creation errors now surface, budget rejects non-finite contributions and reports a provable overrun instead of Incomplete, integer widening rejects the i64::MAX saturation edge, truncated_beyond_depth documented as the frontier lower-bound, drift skips the dangling edge for undocumented additions, missing-intermediate gaps get distinct ids per edge type, a reused ingest fragment_id is refused, node_type_index scans in sorted order"
       }
     },
     {
@@ -4807,6 +5001,78 @@
       }
     },
     {
+      "node_id": "drift:35363b89192baf00",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:propagate drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:propagate' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:40419b14bd5562fd",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:drift drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:drift' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:458ddb78ed6f12c9",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:hierarchy drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:hierarchy' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:493ee879a5897da2",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:detect drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:detect' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:5376081f4bcbe993",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:graph drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:graph' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:5cbf1fd9f7054db7",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:budget drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:budget' has changed since it was registered against the design"
+      }
+    },
+    {
       "node_id": "drift:7037fcfa6ea72e8a",
       "node_type": "DriftEvent",
       "properties": {
@@ -4876,6 +5142,54 @@
         "resolved": true,
         "severity": "medium",
         "summary": "'art:init' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:a84bbf1bb26c76ea",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:heal drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:heal' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:b66625a527eb60fb",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:temporal drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:temporal' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:e325adce47e0faa7",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:ingest drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:ingest' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:e73e7cea40c640df",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:fielded drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:fielded' has changed since it was registered against the design"
       }
     },
     {

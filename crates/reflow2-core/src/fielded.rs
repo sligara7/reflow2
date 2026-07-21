@@ -325,17 +325,19 @@ impl DesignGraph {
             }
         }
 
-        let mut propagation_seeds: Vec<String> = findings
-            .iter()
-            .flat_map(|f| [f.environment_id.clone(), f.release_id.clone()])
-            .filter(|id| {
-                self.get_node(node::ENVIRONMENT, id)
-                    .ok()
-                    .flatten()
-                    .is_some()
-                    || self.get_node(node::RELEASE, id).ok().flatten().is_some()
-            })
-            .collect();
+        // A loop, not a `.filter()` with `.ok().flatten()`: the old form
+        // swallowed a storage error as "id not found" and silently dropped the
+        // propagation seed (BL-58). `?` surfaces a real read failure instead.
+        let mut propagation_seeds: Vec<String> = Vec::new();
+        for f in &findings {
+            for id in [&f.environment_id, &f.release_id] {
+                let is_seed = self.get_node(node::ENVIRONMENT, id)?.is_some()
+                    || self.get_node(node::RELEASE, id)?.is_some();
+                if is_seed {
+                    propagation_seeds.push(id.clone());
+                }
+            }
+        }
         propagation_seeds.sort();
         propagation_seeds.dedup();
 

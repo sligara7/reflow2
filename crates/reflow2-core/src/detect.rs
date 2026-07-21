@@ -495,8 +495,12 @@ impl DesignGraph {
             let Some(node_type) = self.node_type_index()?.get(target).cloned() else {
                 continue; // the gap outlived the node — nothing to attach to
             };
-            // A repeat acknowledgement re-creates the same edge; that is fine.
-            let _ = self.governed_by(&node_type, target, node::DECISION, &decision_id);
+            // A repeat acknowledgement re-creates the same edge harmlessly
+            // (create_edge upserts on (graph, type, from, to)), so there is no
+            // benign error to swallow here — a failure is a real storage/schema
+            // fault and must surface, not leave the Decision unlinked from what
+            // it governs (BL-58).
+            self.governed_by(&node_type, target, node::DECISION, &decision_id)?;
         }
         Ok(decision_id)
     }
@@ -569,14 +573,17 @@ impl DesignGraph {
             let Some(node_type) = self.node_type_index()?.get(target).cloned() else {
                 continue; // the gap outlived the node — nothing to attach to
             };
-            let _ = self.create_edge(
+            // Upsert, so a re-asked question re-draws the same edge harmlessly;
+            // a real failure must surface rather than leave the Question
+            // unlinked from what it asks about (BL-58).
+            self.create_edge(
                 edge::ASKS_ABOUT,
                 node::QUESTION,
                 &question_id,
                 &node_type,
                 target,
                 crate::nodes::Props::new(),
-            );
+            )?;
         }
         Ok(question_id)
     }
@@ -1843,8 +1850,17 @@ impl DesignGraph {
                 HierarchyIssueKind::LevelMismatch => "Decomposition level mismatch",
                 HierarchyIssueKind::OrphanLevel => "Floating decomposition level",
             };
+            // Fold the producing edge into the id so a CONTAINS and a
+            // DEPENDS_ON missing-intermediate over the same pair get DISTINCT
+            // gap ids (BL-58) — else one acknowledgement suppresses both. The
+            // discriminant is a hash input only; `affected_ids` stays the real
+            // component ids.
+            let mut id_input = issue.components.clone();
+            if let Some(rel) = issue.relation {
+                id_input.push(format!("via:{rel}"));
+            }
             gaps.push(GapCandidate {
-                id: gap_id(source, &issue.components),
+                id: gap_id(source, &id_input),
                 gap_source: source,
                 scope: GapScope::Component,
                 severity,

@@ -142,3 +142,37 @@ fn snapshot_of_missing_node_fails_loud() {
         "snapshotting a nonexistent node must fail, not silently no-op"
     );
 }
+
+#[test]
+fn snapshot_state_keys_are_sorted_for_byte_stable_exports() {
+    // BL-58: `state` was serialized from a HashMap, so its key order was
+    // process-random — two exports of identical history then differed. The
+    // keys must come out sorted (deterministic across processes).
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:x", "X requirement", "must hold")
+        .unwrap();
+    let epoch = g
+        .add_epoch("epoch:1", "e1", EpochType::Baseline, 0)
+        .unwrap();
+
+    let snap = g
+        .snapshot_node(&epoch.node_id, node::REQUIREMENT, "req:x")
+        .unwrap();
+    let state = snap.properties["state"].as_str().unwrap();
+
+    // Extract the top-level key appearance order and assert it is sorted.
+    let keys: Vec<&str> = state
+        .match_indices("\":")
+        .filter_map(|(i, _)| state[..i].rfind('"').map(|s| &state[s + 1..i]))
+        .collect();
+    assert!(
+        keys.len() >= 3,
+        "the requirement has several properties: {state}"
+    );
+    let mut sorted = keys.clone();
+    sorted.sort_unstable();
+    assert_eq!(
+        keys, sorted,
+        "snapshot state keys must be sorted, got {keys:?}"
+    );
+}

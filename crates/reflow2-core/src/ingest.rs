@@ -389,6 +389,28 @@ impl DesignGraph {
         options: &IngestOptions,
         backend: &dyn LlmBackend,
     ) -> Result<IngestReport, DynoError> {
+        // Each ingest run is a distinct extraction event and owns a distinct
+        // Fragment (and, by default, its own `epoch:{fragment_id}`). Reusing a
+        // fragment_id — easy to do accidentally via `IngestOptions::default()`,
+        // whose id is the fixed `frag:ingest` — would overwrite the prior run's
+        // Fragment and, worse, reopen its epoch and overwrite its snapshots,
+        // violating axis Z's never-overwrite-the-past (BL-58). Refuse it up
+        // front, before any write.
+        if self
+            .get_node(node::FRAGMENT, &options.fragment_id)?
+            .is_some()
+        {
+            return Err(DynoError::Validation {
+                node_type: node::FRAGMENT.to_string(),
+                property: "id".to_string(),
+                message: format!(
+                    "ingest fragment '{}' already exists — each ingest run needs a unique \
+                     fragment_id (IngestOptions::default() reuses 'frag:ingest'; set your own)",
+                    options.fragment_id
+                ),
+            });
+        }
+
         let mut errors = Vec::new();
 
         // ---- EXTRACT · Phase 1 (always run, read input only) ----
@@ -735,28 +757,40 @@ impl DesignGraph {
             return;
         }
         st.epoch_ready = true;
-        if matches!(self.get_node(node::DESIGN_EPOCH, &st.epoch_id), Ok(None))
-            && let Err(e) = self.add_epoch(&st.epoch_id, "ingest epoch", EpochType::Revision, 0)
-        {
-            st.warnings
-                .push(format!("open epoch '{}': {e}", st.epoch_id));
+        // A *read error* is not "the epoch exists" (BL-58): the old
+        // `matches!(_, Ok(None))` skipped both creation and any warning on
+        // `Err`, so the change events that pin to this epoch would land on
+        // nothing, silently.
+        match self.get_node(node::DESIGN_EPOCH, &st.epoch_id) {
+            Ok(Some(_)) => {}
+            Ok(None) => {
+                if let Err(e) = self.add_epoch(&st.epoch_id, "ingest epoch", EpochType::Revision, 0)
+                {
+                    st.warnings
+                        .push(format!("open epoch '{}': {e}", st.epoch_id));
+                }
+            }
+            Err(e) => st
+                .warnings
+                .push(format!("check epoch '{}': {e}", st.epoch_id)),
         }
     }
 
     /// `Fragment OCCURS_DURING epoch` — provenance-in-time.
     fn link_fragment_epoch(&mut self, st: &mut Integration) {
-        if self
-            .create_edge(
-                edge::OCCURS_DURING,
-                node::FRAGMENT,
-                st.fragment_id,
-                node::DESIGN_EPOCH,
-                &st.epoch_id,
-                Props::new(),
-            )
-            .is_ok()
-        {
-            st.edges_created += 1;
+        match self.create_edge(
+            edge::OCCURS_DURING,
+            node::FRAGMENT,
+            st.fragment_id,
+            node::DESIGN_EPOCH,
+            &st.epoch_id,
+            Props::new(),
+        ) {
+            Ok(_) => st.edges_created += 1,
+            // The module header promises nothing is silently swallowed (BL-58).
+            Err(e) => st
+                .warnings
+                .push(format!("link fragment to epoch '{}': {e}", st.epoch_id)),
         }
     }
 
@@ -858,7 +892,13 @@ impl DesignGraph {
         };
         match self.record_change(rec) {
             Ok(_) => {
-                if let Err(e) = self.create_node(node_type, id, new_map) {
+                // Merge, don't replace (BL-58, the BL-46 failure on the ingest
+                // path): the extraction produced only the fields it found in
+                // the text, so `create_node` would re-materialize schema
+                // defaults over everything it omitted — silently resetting a
+                // status or provenance the re-ingest never mentioned. The
+                // prior state is already snapshotted by `record_change` above.
+                if let Err(e) = self.upsert_node(node_type, id, new_map) {
                     st.warnings
                         .push(format!("apply evolved {node_type} '{id}': {e}"));
                 }
@@ -903,18 +943,20 @@ impl DesignGraph {
 
     /// `Fragment YIELDED node {action}` — provenance link.
     fn yield_edge(&mut self, st: &mut Integration, node_type: &str, id: &str, action: &str) {
-        if self
-            .create_edge(
-                edge::YIELDED,
-                node::FRAGMENT,
-                st.fragment_id,
-                node_type,
-                id,
-                Props::new().set("action", action),
-            )
-            .is_ok()
-        {
-            st.edges_created += 1;
+        match self.create_edge(
+            edge::YIELDED,
+            node::FRAGMENT,
+            st.fragment_id,
+            node_type,
+            id,
+            Props::new().set("action", action),
+        ) {
+            Ok(_) => st.edges_created += 1,
+            // A failed provenance edge means a node with no trail back to the
+            // work that made it — surfaced, never silent (BL-58).
+            Err(e) => st
+                .warnings
+                .push(format!("provenance edge for {node_type} '{id}': {e}")),
         }
     }
 

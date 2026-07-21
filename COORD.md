@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-58 core silent-failure batch (for v0.6.1) + versioning policy — @ajs — since 2026-07-21 — crates/reflow2-core (ingest/temporal/propagate/heal/detect/budget/graph/drift), CHANGELOG policy
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -76,6 +75,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-58 DONE (all 12 items, for 0.6.1) + versioning policy written into CHANGELOG. Fixes: ingest upsert (BL-46 on ingest path), snapshot BTreeMap determinism, propagate_change existence check, apply_heal one atomic batch (merge_nodes made batch-free — it was the only caller), swallowed edge errors surfaced (detect/ingest/fielded), budget non-finite rejection + provable-overrun + total_cmp, i64::MAX widen guard, truncated_beyond_depth honest doc, drift dangling-edge skip, per-edge gap ids for missing-intermediate, ingest fragment_id reuse refused, node_type_index sorted. 10 registered artifacts drifted → accepted two-sided (chg:bl58-silent-failure-batch); export 229n/466e, gaps 0. Gates: 39 workspace suites, clippy clean, smoke + phase_trial + model_the_loop + coherent_erosion + build_design_graph all green. Versioning policy: patch=fixes/silent-failure-loud, minor=surface/schema shape change; this batch is all patch → next cut is 0.6.1. Remaining review: BL-59 (perf), BL-56b (harness leaks) — @ajs — 2026-07-21 — (this commit)
 
 - BL-57 done (all 7): dyno_err variant-aware (caller mistakes → invalid_params, ~60 tools, one choke point, Schema stays internal since it's open-time); deny_unknown_fields on all 65 request structs + smoke additionalProperties:false guard — IMMEDIATELY caught a real latent bug (smoke passed `at` to reconcile_artifacts, silently ignored; field is detected_at); export_graph overwrite guard + resolved-path + invalid_params for unwritable; serve path gets explain_open_failure; get_node one named {node} shape both ways (rippled 17 consumers, 0 skills — strengthened previously-always-true smoke checks); withdraw_gap_ack `was_reviewed`→`withdrawn`; answer_question keeps erroring (doctrine: no silent drop) + documented. 4 new tests (taxonomy code-assert, overwrite guard, +the BL-62 ones adjusted). Gates all green; drift accepted (chg:bl57-tool-boundary-honesty); export 218n/445e. Remaining review: BL-56b, BL-58, BL-59 — @ajs — 2026-07-21 — (this commit)
 

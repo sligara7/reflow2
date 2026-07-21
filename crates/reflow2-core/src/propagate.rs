@@ -23,8 +23,8 @@ use std::collections::{BTreeMap, HashMap, HashSet, VecDeque};
 use dynograph_core::DynoError;
 
 use crate::graph::DesignGraph;
-use crate::nodes::edge;
 use crate::nodes::structural_rule;
+use crate::nodes::{edge, node};
 // Re-exported from the shared vocabulary base (see the note on the enum there):
 // `reflow2_core::propagate::ImpactDirection` stays a valid public path.
 pub use crate::nodes::ImpactDirection;
@@ -83,8 +83,11 @@ pub struct BlastRadius {
     pub impacted: Vec<ImpactedNode>,
     /// The depth bound the traversal used.
     pub max_depth: usize,
-    /// Count of further nodes reachable *beyond* `max_depth` that were not
-    /// expanded — reported, not hidden (discipline 1: never silently truncate).
+    /// How many distinct nodes sit on the frontier **one hop past**
+    /// `max_depth` — the ring the walk stopped at, not the full remainder of
+    /// the graph beyond it (BL-58: this is a lower bound, an honest "there is
+    /// more out here" signal, not a total). Non-zero ⇒ raise `max_depth` to
+    /// see further. Reported, not hidden (discipline 1: never silently truncate).
     pub truncated_beyond_depth: usize,
 }
 
@@ -193,8 +196,8 @@ pub struct BlastRadiusSummary {
     pub risk_crossings: Vec<RiskCrossing>,
     /// The depth bound the traversal used.
     pub max_depth: usize,
-    /// Count of further nodes reachable beyond `max_depth` — reported, not
-    /// hidden.
+    /// Nodes on the frontier one hop past `max_depth` (a lower bound, not the
+    /// full remainder — see [`BlastRadius::truncated_beyond_depth`]).
     pub truncated_beyond_depth: usize,
 }
 
@@ -380,6 +383,20 @@ impl DesignGraph {
         change_event_id: &str,
         opts: PropagateOptions,
     ) -> Result<BlastRadius, DynoError> {
+        // A nonexistent (or typo'd) ChangeEvent has no outgoing CHANGED edges,
+        // so it used to yield an empty blast radius — indistinguishable from "a
+        // real event that impacts nothing." That is a silent drop (BL-58): fail
+        // loud so the caller knows the id was wrong, not that the change was
+        // harmless.
+        if self
+            .get_node(node::CHANGE_EVENT, change_event_id)?
+            .is_none()
+        {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::CHANGE_EVENT.to_string(),
+                node_id: change_event_id.to_string(),
+            });
+        }
         let seeds: Vec<String> = self
             .outgoing(change_event_id, Some(edge::CHANGED))?
             .into_iter()

@@ -354,3 +354,18 @@ fn a_changed_artifact_reaches_the_release_that_ships_it() {
         "the release is a downstream packaging of its contents"
     );
 }
+
+#[test]
+fn propagate_change_on_a_missing_event_errors_not_empty() {
+    // BL-58: a typo'd ChangeEvent id had no CHANGED edges, so it returned an
+    // empty blast radius indistinguishable from "a real change that impacts
+    // nothing." Fail loud instead.
+    let g = thread();
+    let err = g
+        .propagate_change("chg:does-not-exist", PropagateOptions::default())
+        .unwrap_err();
+    assert!(
+        matches!(err, reflow2_core::DynoError::NodeNotFound { .. }),
+        "a missing ChangeEvent must be a NodeNotFound error, got {err:?}"
+    );
+}

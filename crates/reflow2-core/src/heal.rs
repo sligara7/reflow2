@@ -937,45 +937,25 @@ impl DesignGraph {
             }
         }
 
+        // All operations land together or not at all (BL-58). Previously each
+        // merge/create was its own write, so a failure in operation N committed
+        // 1..N-1 while returning a bare Err that implied nothing happened — and
+        // a merge has no snapshot and no undo. `merge_nodes` captures its edges
+        // up front (BL-29), and the pre-write guard above forbids two merges
+        // sharing a node, so no operation reads another's buffered write:
+        // batching is safe.
         let index = self.node_type_index()?;
-        let mut applied = 0;
-        let mut discarded: Vec<SkippedOperation> = Vec::new();
-        for operation in &proposal.operations {
-            match &operation.op {
-                HealOp::Merge {
-                    keep_type,
-                    keep_id,
-                    remove_type,
-                    remove_id,
-                } => {
-                    discarded.extend(self.merge_nodes(
-                        keep_type,
-                        keep_id,
-                        remove_type,
-                        remove_id,
-                        &index,
-                    )?);
-                    applied += 1;
-                }
-                HealOp::CreateEdge {
-                    edge_type,
-                    from_type,
-                    from_id,
-                    to_type,
-                    to_id,
-                } => {
-                    self.create_edge(
-                        edge_type,
-                        from_type,
-                        from_id,
-                        to_type,
-                        to_id,
-                        crate::nodes::Props::new(),
-                    )?;
-                    applied += 1;
-                }
+        self.begin_batch();
+        let (applied, discarded) = match self.apply_heal_operations(&proposal.operations, &index) {
+            Ok(result) => {
+                self.commit_batch()?;
+                result
             }
-        }
+            Err(e) => {
+                self.discard_batch();
+                return Err(e);
+            }
+        };
 
         // Post-repair verification: only the issues the OPERATIONS targeted.
         let op_issue_ids: std::collections::HashSet<&str> = proposal
@@ -1010,8 +990,57 @@ impl DesignGraph {
         })
     }
 
+    /// Run every operation, assuming the caller holds an open batch (BL-58).
+    /// Any error propagates so the caller discards the batch — all-or-nothing.
+    fn apply_heal_operations(
+        &mut self,
+        operations: &[HealOperation],
+        index: &HashMap<String, String>,
+    ) -> Result<(usize, Vec<SkippedOperation>), DynoError> {
+        let mut applied = 0;
+        let mut discarded: Vec<SkippedOperation> = Vec::new();
+        for operation in operations {
+            match &operation.op {
+                HealOp::Merge {
+                    keep_type,
+                    keep_id,
+                    remove_type,
+                    remove_id,
+                } => {
+                    discarded.extend(self.merge_nodes(
+                        keep_type,
+                        keep_id,
+                        remove_type,
+                        remove_id,
+                        index,
+                    )?);
+                    applied += 1;
+                }
+                HealOp::CreateEdge {
+                    edge_type,
+                    from_type,
+                    from_id,
+                    to_type,
+                    to_id,
+                } => {
+                    self.create_edge(
+                        edge_type,
+                        from_type,
+                        from_id,
+                        to_type,
+                        to_id,
+                        crate::nodes::Props::new(),
+                    )?;
+                    applied += 1;
+                }
+            }
+        }
+        Ok((applied, discarded))
+    }
+
     /// Merge `remove` into `keep`: re-point `remove`'s edges onto `keep`, then
-    /// delete `remove`. Atomic (one batch). Edges between the pair themselves
+    /// delete `remove`. Batch-free — the caller holds one batch across all
+    /// operations. Edges between the pair themselves
     /// are dropped so no self-loop is produced — the pair's own `DUPLICATES`
     /// edge silently (resolving it is the merge's purpose), anything else with
     /// a `discarded` entry. A `DUPLICATES` edge to a *third* node is re-pointed
@@ -1051,8 +1080,13 @@ impl DesignGraph {
             &existing_in,
         )?;
 
-        self.begin_batch();
-        match self.merge_repoint(
+        // No batch here: `apply_heal` — the only caller — wraps the whole
+        // operation list in ONE batch, so a failure in any operation rolls the
+        // entire apply back (BL-58). A batch opened here would nest, and the
+        // engine's `begin_batch` auto-commits the outer batch on nesting, which
+        // would defeat that atomicity. All reads above are captured before any
+        // write, so `merge_repoint` is pure mutation.
+        self.merge_repoint(
             keep_type,
             keep_id,
             remove_type,
@@ -1063,16 +1097,8 @@ impl DesignGraph {
             &existing_in,
             index,
             &mut discarded,
-        ) {
-            Ok(()) => {
-                self.commit_batch()?;
-                Ok(discarded)
-            }
-            Err(e) => {
-                self.discard_batch();
-                Err(e)
-            }
-        }
+        )?;
+        Ok(discarded)
     }
 
     /// What this merge will not be able to carry across, computed before it runs.

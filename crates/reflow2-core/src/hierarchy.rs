@@ -111,6 +111,12 @@ pub struct HierarchyIssue {
     pub kind: HierarchyIssueKind,
     /// The component(s) involved (1 for orphan_level, 2 for the edge defects).
     pub components: Vec<String>,
+    /// Which edge produced an edge-based defect (`"contains"` / `"depends_on"`),
+    /// or `None` for a node-based one. A `CONTAINS` and a `DEPENDS_ON`
+    /// missing-intermediate between the SAME pair are the same kind over the
+    /// same components, so without this they hashed to one gap id and a single
+    /// acknowledgement suppressed both (BL-58). It discriminates the gap id.
+    pub relation: Option<&'static str>,
     /// Human-readable description with the levels involved.
     pub message: String,
 }
@@ -149,6 +155,7 @@ impl DesignGraph {
                     issues.push(HierarchyIssue {
                         kind: HierarchyIssueKind::MissingIntermediateLevel,
                         components: vec![e.from_id.clone(), e.to_id.clone()],
+                        relation: Some("contains"),
                         message: format!(
                             "'{}' ({}) directly contains '{}' ({}) — {} intermediate level(s) skipped",
                             e.from_id, lvl.as_str(), e.to_id, child.as_str(), diff - 1
@@ -158,6 +165,7 @@ impl DesignGraph {
                     issues.push(HierarchyIssue {
                         kind: HierarchyIssueKind::LevelMismatch,
                         components: vec![e.from_id.clone(), e.to_id.clone()],
+                        relation: Some("contains"),
                         message: format!(
                             "'{}' ({}) contains '{}' ({}) but a parent must be above its child",
                             e.from_id,
@@ -177,6 +185,7 @@ impl DesignGraph {
                     issues.push(HierarchyIssue {
                         kind: HierarchyIssueKind::MissingIntermediateLevel,
                         components: vec![e.from_id.clone(), e.to_id.clone()],
+                        relation: Some("depends_on"),
                         message: format!(
                             "'{}' ({}) depends directly on '{}' ({}) across ≥2 levels — a missing intermediate",
                             e.from_id, lvl.as_str(), e.to_id, other.as_str()
@@ -218,6 +227,7 @@ impl DesignGraph {
                 issues.push(HierarchyIssue {
                     kind: HierarchyIssueKind::OrphanLevel,
                     components: vec![id.clone()],
+                    relation: None,
                     message: format!(
                         "'{}' ({}) is not contained by anything above it and contains \
                          nothing below it",

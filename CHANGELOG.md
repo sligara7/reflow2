@@ -31,6 +31,29 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed (BL-58 · core silent-failure batch, for 0.6.1)
+
+- **A re-ingest no longer resets properties it did not mention** — matched-evolved integration
+  merges (`upsert_node`) instead of replacing, so a status or provenance set separately
+  survives (the BL-46 failure, on the ingest path).
+- **`propagate_change` on a missing/typo'd ChangeEvent errors** instead of returning an empty
+  blast radius indistinguishable from "impacts nothing."
+- **`apply_heal` applies all operations in one atomic batch** — a mid-proposal failure rolls
+  the whole apply back instead of committing earlier merges (which have no undo) while
+  reporting nothing happened.
+- **Snapshots serialize with sorted keys**, so two exports of identical history are
+  byte-identical (they were process-random before).
+- **Swallowed edge-creation errors now surface** — a failed `GOVERNED_BY` / `ASKS_ABOUT` /
+  provenance / drift-seed edge is reported, not silently dropped.
+- **Budgets refuse a non-finite contribution** at the write seam (a NaN used to panic the
+  worst-path scan) and report a **provable** over/under-run instead of hiding it behind
+  `Incomplete` when unstated contributors cannot change the outcome.
+- **Large integers are not lossily widened to floats** (the `i64::MAX` rounding edge now fails
+  loud); `truncated_beyond_depth` is documented honestly as a one-hop-frontier lower bound; a
+  drift on an undocumented file no longer writes a dangling edge; a `CONTAINS` and a
+  `DEPENDS_ON` missing-intermediate over the same pair get distinct gap ids; a reused ingest
+  `fragment_id` is refused; node-type scans are deterministically ordered.
+
 ## [0.6.0] — 2026-07-21
 
 The first release cut from the public repo, and the one to actually reach a downstream user:

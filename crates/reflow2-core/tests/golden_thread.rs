@@ -160,3 +160,45 @@ fn integer_literal_is_accepted_for_a_float_property() {
         "a widened integer still faces the range check"
     );
 }
+
+#[test]
+fn a_large_integer_is_not_lossily_widened_to_a_float() {
+    // BL-58: near i64::MAX, `(i as f64) as i64` saturates back to i64::MAX, so
+    // the old round-trip "exactness" check passed a value f64 cannot hold. A
+    // small integer widens; i64::MAX must NOT be silently coerced — it stays an
+    // Int and the store's strict validation then rejects it (fail loud).
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability("cap:a", "A", "does a", None).unwrap();
+    g.add_capability("cap:b", "B", "does b", None).unwrap();
+
+    // A small integer on a no-range float property widens losslessly.
+    let ok = g
+        .create_edge(
+            edge::DEPENDS_ON,
+            node::CAPABILITY,
+            "cap:a",
+            node::CAPABILITY,
+            "cap:b",
+            reflow2_core::nodes::Props::new().set("data_volume", 1000i64),
+        )
+        .expect("a small integer widens to a float");
+    assert_eq!(
+        ok.properties.get("data_volume"),
+        Some(&dynograph_core::Value::Float(1000.0))
+    );
+
+    // i64::MAX cannot be represented exactly as f64 — it must not be widened,
+    // so the strict store rejects the bare integer rather than storing a lie.
+    let lossy = g.create_edge(
+        edge::DEPENDS_ON,
+        node::CAPABILITY,
+        "cap:b",
+        node::CAPABILITY,
+        "cap:a",
+        reflow2_core::nodes::Props::new().set("data_volume", i64::MAX),
+    );
+    assert!(
+        lossy.is_err(),
+        "i64::MAX must fail loud, not widen to an inexact float"
+    );
+}

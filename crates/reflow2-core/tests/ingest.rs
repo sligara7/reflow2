@@ -261,6 +261,12 @@ fn reingest_with_changed_content_evolves_and_snapshots() {
     )
     .unwrap();
 
+    // Set a status the re-ingest's extraction will NOT produce. Before BL-58,
+    // matched-evolved applied the edit with create_node (replace), which
+    // re-materialized schema defaults over everything the text omitted —
+    // silently resetting this back to `proposed`. It must survive the merge.
+    g.set_requirement_status("req:lat", "accepted").unwrap();
+
     // v2: same req:lat id, tightened statement → matched-evolved.
     let report = g
         .ingest(
@@ -283,6 +289,12 @@ fn reingest_with_changed_content_evolves_and_snapshots() {
     // The live node holds the new statement...
     let live = g.get_node(node::REQUIREMENT, "req:lat").unwrap().unwrap();
     assert_eq!(live.properties["statement"].as_str(), Some("under 100ms"));
+    // ...and the status set between ingests survives the merge (BL-58).
+    assert_eq!(
+        live.properties["status"].as_str(),
+        Some("accepted"),
+        "a re-ingest must merge, not reset properties the text did not mention"
+    );
 
     // ...and the past is remembered in a snapshot pinned to the epoch.
     let snap = g

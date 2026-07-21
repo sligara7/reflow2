@@ -332,14 +332,26 @@ impl DesignGraph {
         // The event is *about* this artifact. DEPENDS_ON is lateral in PROPAGATE,
         // so seeding from the event reaches the artifact, then upstream via
         // REALIZES into the design.
-        self.create_edge(
-            edge::DEPENDS_ON,
-            node::DRIFT_EVENT,
-            event_id,
-            node::ARTIFACT,
-            &finding.artifact_id,
-            Props::new(),
-        )?;
+        //
+        // But an `undocumented_addition` is a file on disk that is NOT a
+        // registered Artifact node — so this edge would point at a node that
+        // does not exist, a dangling edge the event could never propagate from
+        // and whose phantom id then leaked into `unresolved_drift`'s affected
+        // set (BL-58). Draw it only when the artifact is really in the graph.
+        if finding.kind != DriftKind::UndocumentedAddition
+            && self
+                .get_node(node::ARTIFACT, &finding.artifact_id)?
+                .is_some()
+        {
+            self.create_edge(
+                edge::DEPENDS_ON,
+                node::DRIFT_EVENT,
+                event_id,
+                node::ARTIFACT,
+                &finding.artifact_id,
+                Props::new(),
+            )?;
+        }
         Ok(())
     }
 }

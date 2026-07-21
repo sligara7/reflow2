@@ -231,7 +231,15 @@ impl DesignGraph {
                     node_id: node_id.to_string(),
                 })?;
 
-        let state = serde_json::to_string(&current.properties)
+        // Sort the properties before serializing: `StoredNode.properties` is a
+        // `HashMap`, whose iteration order is seeded per process, so an unsorted
+        // `to_string` writes byte-different `state` for the same node on every
+        // run — which then makes two exports of identical history differ,
+        // defeating the byte-stable-export promise (BL-58). A `BTreeMap` fixes
+        // the key order.
+        let sorted: std::collections::BTreeMap<&String, &Value> =
+            current.properties.iter().collect();
+        let state = serde_json::to_string(&sorted)
             .map_err(|e| DynoError::Serialization(format!("snapshot state for {node_id}: {e}")))?;
 
         let snap_id = snapshot_id(epoch_id, node_id);
