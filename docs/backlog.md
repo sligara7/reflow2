@@ -1735,6 +1735,39 @@ Why it matters: no roadmapping tool today *derives and defends* the delivery tim
 real readiness of the technology — they assert it. reflow2's thread + propagate makes derivation
 possible, which is a capability, not a viewpoint.
 
+**BL-69 · `single_point_of_failure` reports community bridges, not graph cut vertices** — *self-host
+review, 2026-07-21, while dispositioning the two SPOF warnings on reflow2's own graph.* Size **S–M**.
+
+`detect_defects` flags `cmp:flow` and `cmp:service` as single points of failure ("every path
+between subsystems routes through X"). An independent articulation-point (Tarjan) analysis of the
+Component+Interface dependency graph (`DEPENDS_ON` / `CONSUMES` / `PROVIDES`, undirected) tells a
+different story: the true cut vertices are `cmp:service`, `cmp:export`, `cmp:graph` (plus the three
+interfaces). So the detector is **wrong on both sides**:
+
+- **Over-reports.** `cmp:flow` is *not* a cut vertex — it depends only on `cmp:graph` and
+  `cmp:nodes`, and ~20 sibling modules (`allocate`, `budget`, `confirm`, `dimensions`, `hierarchy`,
+  …) share that exact shape without being flagged. Removing `cmp:flow` disconnects nothing. It is
+  flagged only because it bridges two communities of the modularity partition (which sits at a
+  suspiciously perfect 1.00, so communities are very fine-grained). A community bridge is not an
+  availability SPOF.
+- **Under-reports.** `cmp:export` and `cmp:graph` *are* genuine cut vertices (remove `cmp:export`
+  and `cmp:init` loses `ifc:graph-export`; remove `cmp:graph` and `schema`/`search`/`vocabulary`
+  isolate) and the detector does **not** flag them.
+
+The "between subsystems" phrasing means community partition, not the `CONTAINS` subsystems and not
+connectivity — all of `flow`/`graph`/`nodes` live inside `cmp:core`, so `cmp:flow` cannot bridge
+the real subsystems at all. And `surprising_connections` *already* reports these community bridges
+(`cmp:flow → cmp:graph`, sole bridge) under an accurate name — so `single_point_of_failure` is
+re-emitting that signal under a scarier label while missing the connectivity question its own name
+promises. This is BL-5 / `dec:operational-spof` a further turn: that pass cleared 22 false
+positives by restricting *candidates* to operational nodes and kept "4 true survivors," but the
+survivors were never checked against articulation-point semantics — restricting the candidate set
+does not make the *test* correct. **Fix:** compute `single_point_of_failure` as a real cut vertex
+(removal disconnects the operable component/interface graph), or drop it and let the existing
+`surprising_coupling` carry the community-bridge signal it already carries. Either way `cmp:service`
+stays flagged — correctly, and now answered on the record by `dec:service-spof-accepted` (the single
+MCP door is an intentional SPOF per `req:invocation`) — and `cmp:flow` stops firing.
+
 ## Deliberate deferrals
 
 Not gaps — decisions, recorded so they aren't rediscovered as bugs.
