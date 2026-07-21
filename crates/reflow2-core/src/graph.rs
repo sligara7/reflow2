@@ -115,6 +115,34 @@ impl DesignGraph {
             .create_node(&self.graph_id, node_type, id, props.into())
     }
 
+    /// Merge `props` onto `id` if it exists, or create it. The supplied
+    /// properties overwrite; every stored property the caller does not name
+    /// survives.
+    ///
+    /// This is the update half of generic CRUD — the contract the
+    /// revise-design skill states. [`create_node`](Self::create_node) alone is
+    /// create-or-*replace*, and replacing re-materializes schema defaults over
+    /// everything omitted, which is how a partial "edit one property" call
+    /// once silently reset a verified capability to `planned` (BL-46, the
+    /// 2026-07-20 self-adopt session). The typed setters remain the right
+    /// call when one exists: they refuse a missing node instead of creating it.
+    pub fn upsert_node(
+        &mut self,
+        node_type: &str,
+        id: &str,
+        props: impl Into<std::collections::HashMap<String, Value>>,
+    ) -> Result<StoredNode, DynoError> {
+        let supplied = props.into();
+        match self.get_node(node_type, id)? {
+            Some(existing) => {
+                let mut merged = existing.properties;
+                merged.extend(supplied);
+                self.create_node(node_type, id, merged)
+            }
+            None => self.create_node(node_type, id, supplied),
+        }
+    }
+
     /// Fetch a node by type and id. `Ok(None)` when it does not exist.
     pub fn get_node(&self, node_type: &str, id: &str) -> Result<Option<StoredNode>, DynoError> {
         self.engine.get_node(&self.graph_id, node_type, id)

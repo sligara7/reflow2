@@ -309,17 +309,26 @@ fn merge_op_for(issue: &HealIssue, index: &HashMap<String, String>) -> Result<He
 /// machine; `inferred` is the machine's guess from the implementation; `healed`
 /// is machine-generated fill. The machine's guess must never delete the
 /// human's words.
-fn provenance_rank(provenance: &str) -> u8 {
+///
+/// `None` is a node **without** the property. Schema defaults materialize on
+/// create, so only a node written before the property existed lacks it — a
+/// pre-provenance vintage. It is probably a human's words, so it outranks
+/// every machine provenance; but an explicit `authored` outranks *it*, because
+/// ranking the two equal sent the choice to the id tiebreak and the alphabet
+/// nearly deleted an authored, verified node in favour of its vintage stub
+/// (BL-47, the 2026-07-20 self-adopt session).
+fn provenance_rank(provenance: Option<&str>) -> u8 {
     match provenance {
-        "authored" => 0,
-        "planned" => 1,
-        "imported" => 2,
-        "reconciled" => 3,
-        "inferred" => 4,
-        "healed" => 5,
+        Some("authored") => 0,
+        None => 1,
+        Some("planned") => 2,
+        Some("imported") => 3,
+        Some("reconciled") => 4,
+        Some("inferred") => 5,
+        Some("healed") => 6,
         // The schema validates the enum, so this arm is unreachable for stored
         // values — but an unknown word must never outrank a known one.
-        _ => u8::MAX,
+        Some(_) => u8::MAX,
     }
 }
 
@@ -334,9 +343,12 @@ impl DesignGraph {
     /// won regardless — so on an adopted graph an `inferred` stub could delete
     /// an `authored` node's words. The fallback keeps the choice fully
     /// deterministic regardless of which way the `DUPLICATES` edge points; a
-    /// node without the property (or whose type does not carry it) counts as
-    /// `authored`, the schema default, so pre-provenance graphs behave exactly
-    /// as before.
+    /// node without the property (a pre-provenance vintage, or a type that
+    /// does not carry it) ranks just below an explicit `authored` and above
+    /// everything else — so a vintage pair still ties and falls to the id,
+    /// leaving pre-provenance graphs exactly as before, while an explicitly
+    /// authored node beats its vintage twin instead of racing it on the
+    /// alphabet (BL-47).
     fn merge_survivor(
         &self,
         index: &HashMap<String, String>,
@@ -347,17 +359,15 @@ impl DesignGraph {
             let Some(node_type) = index.get(id) else {
                 // Unresolvable endpoint: rank is moot — merge_op_for refuses
                 // the pair before an operation is built.
-                return Ok(provenance_rank("authored"));
+                return Ok(provenance_rank(None));
             };
-            Ok(self
-                .get_node(node_type, id)?
-                .and_then(|n| {
-                    n.properties
-                        .get("provenance")
-                        .and_then(dynograph_core::Value::as_str)
-                        .map(provenance_rank)
-                })
-                .unwrap_or(provenance_rank("authored")))
+            let stored = self.get_node(node_type, id)?;
+            Ok(provenance_rank(
+                stored
+                    .as_ref()
+                    .and_then(|n| n.properties.get("provenance"))
+                    .and_then(dynograph_core::Value::as_str),
+            ))
         };
         let (rank_a, rank_b) = (rank_of(a)?, rank_of(b)?);
         let a_survives = match rank_a.cmp(&rank_b) {
@@ -1005,12 +1015,30 @@ impl DesignGraph {
         remove_id: &str,
         index: &HashMap<String, String>,
     ) -> Result<Vec<SkippedOperation>, DynoError> {
-        // Capture the edges to re-point before mutating anything.
+        // Capture the edges to re-point — and the survivor's own, which win
+        // any collision — before mutating anything.
         let outgoing = self.outgoing(remove_id, None)?;
         let incoming = self.incoming(remove_id, None)?;
+        let existing_out: BTreeSet<(String, String)> = self
+            .outgoing(keep_id, None)?
+            .into_iter()
+            .map(|e| (e.edge_type, e.to_id))
+            .collect();
+        let existing_in: BTreeSet<(String, String)> = self
+            .incoming(keep_id, None)?
+            .into_iter()
+            .map(|e| (e.edge_type, e.from_id))
+            .collect();
 
-        let mut discarded =
-            self.merge_losses(keep_id, remove_type, remove_id, &outgoing, &incoming)?;
+        let mut discarded = self.merge_losses(
+            keep_id,
+            remove_type,
+            remove_id,
+            &outgoing,
+            &incoming,
+            &existing_out,
+            &existing_in,
+        )?;
 
         self.begin_batch();
         match self.merge_repoint(
@@ -1020,6 +1048,8 @@ impl DesignGraph {
             remove_id,
             &outgoing,
             &incoming,
+            &existing_out,
+            &existing_in,
             index,
             &mut discarded,
         ) {
@@ -1039,9 +1069,14 @@ impl DesignGraph {
     /// Two kinds, both previously silent. The removed node's **properties** are
     /// never carried — only its edges are — so its name, description and status
     /// go with it. And where both nodes already had the same edge type to the
-    /// same neighbour, `create_edge` is an upsert keyed on
-    /// `(graph, type, from, to)`, so the removed node's edge properties land on
-    /// top of the survivor's rather than beside them.
+    /// same neighbour, the survivor's edge is kept and the removed node's edge
+    /// properties are dropped — `merge_repoint` skips the collision, because
+    /// `create_edge` is an upsert keyed on `(graph, type, from, to)` and
+    /// re-pointing would land the removed node's properties on top of the
+    /// survivor's own (report-then-clobber was BL-47's second finding; a merge
+    /// keeps the survivor's words on edges for the same reason it does on the
+    /// node).
+    #[allow(clippy::too_many_arguments)]
     fn merge_losses(
         &self,
         keep_id: &str,
@@ -1049,6 +1084,8 @@ impl DesignGraph {
         remove_id: &str,
         outgoing: &[StoredEdge],
         incoming: &[StoredEdge],
+        existing_out: &BTreeSet<(String, String)>,
+        existing_in: &BTreeSet<(String, String)>,
     ) -> Result<Vec<SkippedOperation>, DynoError> {
         let mut discarded = Vec::new();
 
@@ -1070,17 +1107,6 @@ impl DesignGraph {
             }
         }
 
-        let existing_out: BTreeSet<(String, String)> = self
-            .outgoing(keep_id, None)?
-            .into_iter()
-            .map(|e| (e.edge_type, e.to_id))
-            .collect();
-        let existing_in: BTreeSet<(String, String)> = self
-            .incoming(keep_id, None)?
-            .into_iter()
-            .map(|e| (e.edge_type, e.from_id))
-            .collect();
-
         for e in outgoing {
             // Pair-joining edges are never re-pointed (see merge_repoint), so
             // they cannot collide; everything else — DUPLICATES to a third
@@ -1093,7 +1119,7 @@ impl DesignGraph {
                 discarded.push(SkippedOperation {
                     reference: format!("{remove_id} -{}-> {}", e.edge_type, e.to_id),
                     reason: format!(
-                        "'{keep_id}' already has this edge; the merged edge's properties overwrite its own"
+                        "'{keep_id}' already has this edge, and a merge keeps the survivor's own: the merged edge's properties are dropped"
                     ),
                 });
             }
@@ -1107,7 +1133,7 @@ impl DesignGraph {
                 discarded.push(SkippedOperation {
                     reference: format!("{} -{}-> {remove_id}", e.from_id, e.edge_type),
                     reason: format!(
-                        "'{keep_id}' already has this edge; the merged edge's properties overwrite its own"
+                        "'{keep_id}' already has this edge, and a merge keeps the survivor's own: the merged edge's properties are dropped"
                     ),
                 });
             }
@@ -1124,6 +1150,8 @@ impl DesignGraph {
         remove_id: &str,
         outgoing: &[StoredEdge],
         incoming: &[StoredEdge],
+        existing_out: &BTreeSet<(String, String)>,
+        existing_in: &BTreeSet<(String, String)>,
         index: &HashMap<String, String>,
         discarded: &mut Vec<SkippedOperation>,
     ) -> Result<(), DynoError> {
@@ -1142,6 +1170,14 @@ impl DesignGraph {
                         ),
                     });
                 }
+                continue;
+            }
+            if existing_out.contains(&(e.edge_type.clone(), other.clone())) {
+                // The survivor already has this edge, and create_edge is an
+                // upsert keyed on (graph, type, from, to): re-pointing would
+                // land the removed node's properties on top of the survivor's
+                // own. The survivor's version is kept; merge_losses reported
+                // the drop if there was anything to lose.
                 continue;
             }
             if let Some(to_type) = index.get(other) {
@@ -1178,6 +1214,10 @@ impl DesignGraph {
                 }
                 continue;
             }
+            if existing_in.contains(&(e.edge_type.clone(), other.clone())) {
+                // Same collision, incoming side: the survivor's edge wins.
+                continue;
+            }
             if let Some(from_type) = index.get(other) {
                 self.create_edge(
                     &e.edge_type,
@@ -1212,5 +1252,49 @@ fn orphan(id: &str, type_label: &str, what: &str, fix: &'static str) -> HealIssu
         message: format!("{type_label} '{id}' {what}"),
         suggested_fix_type: fix,
         affected_ids: affected,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::provenance_rank;
+
+    /// BL-47. A node without the property cannot be built through today's
+    /// public API — schema defaults materialize on create — so the vintage
+    /// slot is pinned here, at the function seam; the live reproduction is
+    /// the 2026-07-20 self-adopt trial record.
+    #[test]
+    fn unset_provenance_sits_between_authored_and_everything_else() {
+        assert!(
+            provenance_rank(Some("authored")) < provenance_rank(None),
+            "an explicit `authored` must beat a vintage node, not tie into the id lottery"
+        );
+        for machine_or_weaker in ["planned", "imported", "reconciled", "inferred", "healed"] {
+            assert!(
+                provenance_rank(None) < provenance_rank(Some(machine_or_weaker)),
+                "a vintage node is probably a human's words; `{machine_or_weaker}` must not delete them"
+            );
+        }
+    }
+
+    #[test]
+    fn the_explicit_order_is_unchanged_and_unknown_words_rank_last() {
+        let explicit = [
+            "authored",
+            "planned",
+            "imported",
+            "reconciled",
+            "inferred",
+            "healed",
+        ];
+        for pair in explicit.windows(2) {
+            assert!(
+                provenance_rank(Some(pair[0])) < provenance_rank(Some(pair[1])),
+                "`{}` must outrank `{}`",
+                pair[0],
+                pair[1]
+            );
+        }
+        assert!(provenance_rank(Some("healed")) < provenance_rank(Some("word-not-in-the-enum")));
     }
 }

@@ -1236,31 +1236,38 @@ repo could publish its own MCP tool surface as the first ICD. Related: BL-8 (mul
 BL-12 (multi-writer), BL-16 (domains), BL-44 (claims). Decision conversation with the user
 before any code; this entry is the prep.
 
-**BL-46 · `create_node` on an existing node replaces the whole property object** — *self-adopt
-live session, [trials/2026-07-20-self-adopt-live.md](trials/2026-07-20-self-adopt-live.md).* Size **S**.
+**BL-46 · `create_node` on an existing node replaces the whole property object — DONE** —
+*self-adopt live session, [trials/2026-07-20-self-adopt-live.md](trials/2026-07-20-self-adopt-live.md);
+fixed 2026-07-20, same day.*
 
 Folding merged wording into `cap:kit`'s description via `create_node` silently reset
 `status: verified → planned`; on `req:intent-preserved` it also reset `priority: high → medium`
-and `status: accepted → proposed`. The props object supplied replaces the stored one, with
-schema defaults filling every omitted property — so the only safe "edit one property" call is
-one that re-supplies all of them, which nothing tells the caller. Either merge supplied props
-over stored ones, or refuse a partial props object on an existing node loudly. The typed
-setters (`set_capability_status` et al.) were the recovery path; the generic writer should not
-be a trap the typed tools exist to undo.
+and `status: accepted → proposed`. The props object supplied replaced the stored one, with
+schema defaults filling every omitted property — so the only safe "edit one property" call was
+one that re-supplied all of them, which nothing told the caller. **Fixed by the merge option:**
+`DesignGraph::upsert_node` (supplied props over stored, validation unchanged), and the
+`create_node` MCP tool now routes through it and says so in its description — the contract the
+revise-design skill stated all along. The typed setters stay the right call where they exist:
+they refuse a missing node instead of creating it. Tests: `tests/upsert.rs` (core),
+`create_node_on_an_existing_id_merges_instead_of_resetting` (surface).
 
-**BL-47 · Unset provenance must not tie with `authored` in merge survivor selection** —
-*self-adopt live session.* Size **S**.
+**BL-47 · Unset provenance must not tie with `authored` in merge survivor selection — DONE** —
+*self-adopt live session; fixed 2026-07-20, same day.*
 
-The genesis stubs carried no `provenance`, which reads as the default `authored`; HEAL's
+The genesis stubs carried no `provenance`, which read as the default `authored`; HEAL's
 survivor rule saw a tie against the real authored nodes and fell through to the id tiebreak,
 proposing to keep stub `cap:install` and **delete the authored, verified `cap:kit`** (same for
 `cap:artifacts` over `cap:reconcile-built`). Caught only because the proposal was reviewed
-before apply. An explicitly-set value and an absent-value default should not rank equal:
-rank unset below `authored`, or require explicit provenance on both endpoints of a DUPLICATES
-merge. Refinement is recorded on `dec:merge-survivor-provenance` in the design graph. Related:
-the merge also lets a re-pointed edge's properties overwrite the survivor's same edge (the
-ChangeEvent's `action: removed` clobbered `modified`) — it is reported in `discarded`, but
-report-then-clobber is the wrong half of two-sided accept.
+before apply. **Fixed:** `provenance_rank` now takes an `Option` and slots `None` (a
+pre-provenance vintage — defaults materialize on create, so nothing newer lacks the property)
+strictly between explicit `authored` and everything else. A vintage pair still ties and falls
+to the id, so pre-provenance graphs are unchanged; an explicit `authored` now beats its
+vintage twin outright, and the machine provenances still never delete probable human words.
+The related clobber is fixed too: **a colliding edge is no longer re-pointed** — the
+survivor's edge and its properties are kept, the drop reported in `discarded` (previously the
+removed node's `action: removed` overwrote the survivor's `modified` after being "reported").
+Semantics pinned on `dec:merge-survivor-provenance`; the unset slot is unit-pinned at the
+`provenance_rank` seam because today's API cannot build a vintage node.
 
 **BL-48 · `graph_report_markdown` returns malformed `structuredContent`** — *self-adopt live
 session.* Size **S**.

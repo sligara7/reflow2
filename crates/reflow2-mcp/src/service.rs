@@ -1828,14 +1828,16 @@ impl ReflowService {
 
     // ---- Generic CRUD (deterministic) ----
 
-    #[tool(description = "Create a node of any schema type with a property object.")]
+    #[tool(
+        description = "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults."
+    )]
     pub async fn create_node(
         &self,
         Parameters(req): Parameters<CreateNodeReq>,
     ) -> Result<CallToolResult, McpError> {
         let props = parse_props(req.props)?;
         let mut g = self.graph.lock().await;
-        match g.create_node(&req.node_type, &req.id, props) {
+        match g.upsert_node(&req.node_type, &req.id, props) {
             Ok(n) => ok_json(NodeDto::from(n)),
             Err(e) => Err(node_error(&g, &req.node_type, e)),
         }

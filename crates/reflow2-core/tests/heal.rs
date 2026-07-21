@@ -434,10 +434,12 @@ fn a_merge_that_loses_nothing_reports_nothing() {
 }
 
 #[test]
-fn merge_reports_an_edge_whose_properties_are_overwritten() {
+fn merge_keeps_the_survivors_edge_and_reports_the_dropped_properties() {
     // Both capabilities are allocated to cmp:c, and the doomed one's edge
-    // carries a property. create_edge is an upsert on (type, from, to), so the
-    // survivor's version of that edge is overwritten rather than kept beside it.
+    // carries a property the survivor's lacks. The survivor's edge wins — the
+    // colliding edge is not re-pointed, so the doomed one's properties do not
+    // land on top of it — and the drop is reported (BL-47's second finding:
+    // report-then-clobber was the wrong half of two-sided accept).
     let mut g = dup_graph();
     g.create_edge(
         edge::ALLOCATED_TO,
@@ -456,9 +458,16 @@ fn merge_reports_an_edge_whose_properties_are_overwritten() {
         report
             .discarded
             .iter()
-            .any(|d| d.reason.contains("overwrite")),
-        "an upsert collision must be reported, got: {:?}",
+            .any(|d| d.reason.contains("dropped")),
+        "the collision must be reported as a drop, got: {:?}",
         report.discarded
+    );
+    let alloc = g.outgoing("cap:a", Some(edge::ALLOCATED_TO)).unwrap();
+    assert_eq!(alloc.len(), 1);
+    assert!(
+        !alloc[0].properties.contains_key("rationale"),
+        "the survivor's edge must keep its own properties, not the doomed one's: {:?}",
+        alloc[0].properties
     );
 }
 
@@ -771,6 +780,44 @@ fn equal_provenance_falls_back_to_the_smaller_id() {
         } => {
             assert_eq!(keep_id, "cap:a");
             assert_eq!(remove_id, "cap:b");
+        }
+        other => panic!("expected a Merge, got {other:?}"),
+    }
+}
+
+#[test]
+fn a_planned_stub_never_outlives_the_authored_twin_on_the_alphabet() {
+    // The 2026-07-20 self-adopt shape (BL-47): the stub sorts first, so under
+    // an id tiebreak it would delete the authored node's words. Its explicit
+    // `planned` must lose to the survivor's `authored` outright. (The unset-
+    // provenance half of BL-47 — a vintage node with no property at all — is
+    // pinned at the provenance_rank seam in src/heal.rs, because schema
+    // defaults materialize on create and today's API cannot build one.)
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_capability("cap:a-stub", "Planned twin", "the genesis scaffold", None)
+        .unwrap();
+    g.add_capability("cap:kit", "Authored", "what the user stated", None)
+        .unwrap();
+    g.set_provenance(node::CAPABILITY, "cap:a-stub", "planned")
+        .unwrap();
+    g.create_edge(
+        edge::DUPLICATES,
+        node::CAPABILITY,
+        "cap:a-stub",
+        node::CAPABILITY,
+        "cap:kit",
+        Props::new(),
+    )
+    .unwrap();
+
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    match &proposal.operations[0].op {
+        HealOp::Merge {
+            keep_id, remove_id, ..
+        } => {
+            assert_eq!(keep_id, "cap:kit", "authored survives");
+            assert_eq!(remove_id, "cap:a-stub", "the planned stub is merged away");
         }
         other => panic!("expected a Merge, got {other:?}"),
     }

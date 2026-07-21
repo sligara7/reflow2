@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-47 + BL-46 — @ajs — since 2026-07-20 — heal merge survivor/edge-props (heal.rs), create_node merge semantics (graph.rs/service area), tests
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -76,6 +75,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-47 + BL-46 done: merge survivor ranks unset provenance below explicit authored (the near-deletion of cap:kit can't recur), colliding edges keep the survivor's properties, create_node on an existing id merges per the revise-design contract (`upsert_node`); workspace green, smoke_mcp green, drift accepted two-sided (chg:merge-integrity-bl47-bl46). NOTE: this session's running server predates the rebuild — restart before relying on the new semantics live — @ajs — 2026-07-20 — (this commit)
 
 - **Stub-survivor reconciliation done — first live self-adopt session, 0 gaps**: where-am-i →
   detect-and-ask with the user (all 4 decisions theirs: 3 merges, cap:store wired, req:platform

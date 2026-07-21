@@ -1173,3 +1173,38 @@ async fn documents_links_a_doc_over_the_surface_and_refuses_a_ghost() {
         "the refusal must name the missing node, got: {err}"
     );
 }
+
+/// BL-46: the create_node tool's documented contract (the revise-design
+/// skill's "an existing id merges") — a partial props object edits the named
+/// properties and must not reset the rest to schema defaults, which is what
+/// silently downgraded a verified capability to `planned` in the 2026-07-20
+/// self-adopt session.
+#[tokio::test]
+async fn create_node_on_an_existing_id_merges_instead_of_resetting() {
+    let s = seeded().await;
+    j!(s.set_capability_status(Parameters(CapabilityStatusReq {
+        capability_id: "cap:flight".into(),
+        status: "verified".into(),
+    })));
+
+    let mut props = serde_json::Map::new();
+    props.insert(
+        "description".into(),
+        serde_json::Value::String("Simulate ball trajectory, with drag.".into()),
+    );
+    let n = j!(s.create_node(Parameters(CreateNodeReq {
+        node_type: "Capability".into(),
+        id: "cap:flight".into(),
+        props: Some(props),
+    })));
+
+    assert_eq!(
+        n["properties"]["description"],
+        "Simulate ball trajectory, with drag."
+    );
+    assert_eq!(
+        n["properties"]["status"], "verified",
+        "a property the caller did not name must survive the edit"
+    );
+    assert_eq!(n["properties"]["name"], "Ball flight");
+}

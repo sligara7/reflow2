@@ -15,7 +15,25 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
-*(nothing yet)*
+### Changed
+
+- **`create_node` on an existing id now merges instead of replacing** (BL-46, from the
+  self-adopt live session). The props you pass overwrite; every stored property you omit
+  survives. Previously the supplied object replaced everything and schema defaults
+  re-materialized over the rest — a partial "edit one property" call silently reset a
+  verified capability's status to `planned`. The tool description now states the contract
+  the revise-design skill always promised. Creation and validation are unchanged: a new id
+  still creates, unknown types and missing required properties still fail loud.
+- **The merge survivor rule no longer lets a vintage node tie with an explicit `authored`
+  one** (BL-47, same session). A node without a `provenance` property — possible only for
+  nodes written before the property existed — now ranks just below explicit `authored` and
+  above everything else. Before, it counted as `authored`, the tie fell to the id
+  tiebreak, and the alphabet nearly deleted an authored, verified capability in favour of
+  its genesis stub. Pre-provenance graphs (all nodes vintage) behave exactly as before.
+- **A merge now keeps the survivor's edge when the removed node has the same edge** (BL-47's
+  second finding). Previously the removed node's edge properties landed on top of the
+  survivor's via the create_edge upsert — reported, but still clobbered; report-then-clobber
+  was the wrong half of two-sided accept. The drop is still reported in `discarded`.
 
 ## [0.5.0] — 2026-07-20
 

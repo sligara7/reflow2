@@ -328,6 +328,60 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:merge-integrity-bl47-bl46",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:merge-integrity-bl47-bl46",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:merge-integrity-bl47-bl46",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:merge-integrity-bl47-bl46",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:merge-integrity-bl47-bl46",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:merge-integrity-bl47-bl46",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:stub-survivor-reconciliation",
       "properties": {
         "accepted_baseline": false,
@@ -2970,7 +3024,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:328b25be480771fb",
+        "checksum": "sha256:8e1f7ab526df9625",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -2981,7 +3035,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7fd0af4d731e0f22",
+        "checksum": "sha256:b7df07e69374cc45",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -3124,7 +3178,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:06a920acb1904585",
+        "checksum": "sha256:8f06cf8891344b43",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -3521,6 +3575,14 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "chg:merge-integrity-bl47-bl46",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "BL-47 + BL-46: merge survivor ranks unset provenance below explicit authored; a colliding edge keeps the survivor's properties; create_node on an existing id merges instead of replacing (the revise-design contract, now real)"
       }
     },
     {
