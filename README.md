@@ -1,17 +1,17 @@
-# Reflow Redesign — "Design Anything, Build Anything"
+# reflow2 — "Design Anything, Build Anything"
 
 > ### 👉 Just want to use it? Read **[getting-started/SETUP.md](getting-started/SETUP.md)**.
 > The **[getting-started/](getting-started/)** folder is the complete, non-developer setup:
-> build the server, connect grok build / claude code, verify it works. Everything below is
+> install the server, connect grok build / claude code, verify it works. Everything below is
 > about reflow2's own internals.
 
-A clean-room rebuild of Reflow's core idea
-([github.com/sligara7/reflow2](https://github.com/sligara7/reflow2)), starting fresh so
-nothing in the source projects is disturbed — all of them the author's own work:
-[reflow](https://github.com/sligara7/reflow),
-[storyflow](https://github.com/sligara7/storyflow),
-[chain_reflow](https://github.com/sligara7/chain_reflow), and
-[dynograph-foundation](https://github.com/sligara7/dynograph-foundation).
+**reflow2 is a persistent design brain for building things with an AI agent.** It keeps a
+project's entire design — requirements, capabilities, components, code, tests, releases — in
+one schema-validated graph that outlives any chat session, and keeps that design *coherent*:
+when anything changes, reflow2 finds what the change touches, asks you plain-language
+questions about what's undecided, and refuses to let the design quietly drift from what was
+actually built. You drive it from a coding agent (Claude Code, grok build, OpenCode, Copilot)
+over MCP; the graph carries the systems-engineering discipline so you don't have to.
 
 **New to the internals? Read [docs/overview.md](docs/overview.md) first** — it maps all the
 documents and how they fit together.
@@ -32,16 +32,18 @@ COHERENCE` — where PROPAGATE walks the golden thread to find a change's blast 
 ## What this is
 
 A graph-backed workflow engine that partners with an LLM agent to **design and
-build anything** — not just software. It keeps Reflow's phase spine
-(**WHAT → WHERE → BUILD → VERIFY → OPERATE**) but swaps two foundations:
+build anything** — not just software: hardware, a document, a process, a full program.
+A design moves along a phase spine (**WHAT → WHERE → BUILD → VERIFY → OPERATE**), and two
+foundations carry it:
 
-1. **Store**: `dynograph-foundation` (schema-driven Rust graph engine:
-   RocksDB + HNSW vectors + BM25 text + fuzzy/vector entity resolution)
-   replaces Neo4j.
-2. **Design capture**: instead of hand-calling CRUD tools, freeform design
-   input is **extracted** into the graph via the storyflow / `dynograph-extract`
-   pattern — schema-driven, phase-aware, multi-pass, with graph-informed
-   dedup.
+1. **The store** is [dynograph-foundation](https://github.com/sligara7/dynograph-foundation),
+   a schema-driven Rust graph engine (RocksDB + HNSW vectors + BM25 text + fuzzy/vector
+   entity resolution). The vocabulary is enforced on every write — an invented node or edge
+   type is refused, loudly.
+2. **Design capture is extraction, not data entry**: freeform input — a brief, a
+   conversation, prose read out of an existing codebase — is extracted into typed graph
+   nodes in schema-driven, phase-aware, multi-pass fashion, with graph-informed dedup and
+   provenance on every claim.
 
 ## "How do you know the LLM didn't just hallucinate something?"
 
@@ -109,7 +111,7 @@ OBSOLETES, DUPLICATES, CONSTRAINS, ANTICIPATES, MASKS.
 ## Layout
 
 ```
-redesign/
+reflow2/
   README.md
   schema/            # composable dynograph schema domains (one concern each)
     core.yaml        #   P0 — intent, constraints, rules
@@ -133,8 +135,8 @@ redesign/
     gap-surfacing.md     # find graph weaknesses, ask the user questions (DIAGNOSE→PROMPT)
     heal-process.md      # self-repair of the design graph (HEAL)
     operating-environment.md # the environment's ruleset the design must comply with
-    reflow-v3-nuggets.md # ideas carried over from the original Reflow project
-    chain-reflow-nuggets.md # ideas from Chain Reflow (matryoshka, causality, linking)
+    reflow-v3-nuggets.md # ideas carried over from an earlier prototype (see Heritage)
+    chain-reflow-nuggets.md # more of the same (matryoshka, causality, creative linking)
 ```
 
 ## Three structural axes
@@ -148,10 +150,10 @@ Beyond phases and processes, every design is sliced along three independent axes
 
 ## Phases and processes
 
-Reflow's **phases** (P0–P5) are the *linear lifecycle spine* — where a project is.
-Storyflow contributes six *universal graph processes* — the *cyclic engine* that runs
-on the graph regardless of phase. They map onto the coherence loop; see
-[docs/overview.md](docs/overview.md) for the full reconciliation.
+The **phases** (P0–P5) are the *linear lifecycle spine* — where a project is. Six
+*universal graph processes* are the *cyclic engine* that runs on the graph regardless of
+phase. They map onto the coherence loop; see [docs/overview.md](docs/overview.md) for the
+full reconciliation.
 
 - **GENESIS** — bootstrap the graph from a brief ([docs/genesis.md](docs/genesis.md))
 - **INGEST** — extraction ([docs/extraction-plan.md](docs/extraction-plan.md))
@@ -169,6 +171,15 @@ artifact linking) is complete and cold-start-verified. See
 [docs/surface-plan.md](docs/surface-plan.md) for what's built vs. the tracked future
 improvements (SP-3b ingest extraction, SP-6b as-built drift). To *use* it, see
 [getting-started/](getting-started/).
+
+## Heritage
+
+reflow2 is a clean-room rebuild of ideas the author developed across several earlier
+prototypes (reflow, storyflow, chain_reflow — private repos, referenced in the docs where an
+idea came from one of them). The graph engine it runs on,
+[dynograph-foundation](https://github.com/sligara7/dynograph-foundation), is the author's
+public library. Nothing here derives from third-party conceptual work; the only third-party
+pieces are ordinary dependencies.
 
 ## License
 
