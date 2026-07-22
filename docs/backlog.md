@@ -1135,6 +1135,21 @@ questions — auto-resolving a design conflict by quorum would be sycophancy-by-
 party in the judgment seat ([partnership.md](partnership.md)). Borrow from the *evidence* side
 (what was seen, who may claim, what is final); never from the *verdict* side.
 
+**BL-12 · 2026-07-21 addendum (user)** — the reopening condition `dec:repo-file-embedded` wrote
+down has now been *asked for in so many words*: "could multiple sessions (same machine or
+remote) all use a common MCP — a common/centrally hosted MCP server?" That is the second writer
+materializing as a request rather than a hypothesis, which is what the embedded decision said
+would reopen the fork. Shape of the answer when picked up: **(a)** stdio MCP is 1:1 by
+construction, so a shared server means the streamable-HTTP/SSE transport in front of the same
+core — the surface-neutral seam exists for exactly this; **(b)** the cheap first rung is still
+the recorded one — RocksDB read-only secondaries if the need is "let me look while you work",
+a full service only for true concurrent *writers*; **(c)** a central host puts the design on a
+machine the user doesn't control — the decision's strongest objection — so self-hosted-first;
+**(d)** the moment two writers are real, BL-44's claims, BL-41's mechanical trust half, and
+sketch idea 1 (claims reference the graph state they saw) stop being future work and become the
+write-path prerequisites. Sequencing note: BL-71's design-vs-design diff is also the merge
+primitive a shared graph needs the day two writers disagree.
+
 **BL-44 · Node-level claims — parallel work on one design** — *user, 2026-07-20. Concept-only by
 their own framing; the details are the work.*
 
