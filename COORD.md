@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- AT-proto capture (BL-72 raised, BL-12/BL-41 notes) + export hash-chain build — @ajs — since 2026-07-21 — docs/backlog.md, export.rs, compare.rs, service.rs, main.rs, reflow2_check.py, smoke_mcp.py
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
@@ -77,6 +76,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- AT-proto capture + export hash-chain done (user-directed): backlog gains the AT Protocol design-notes block under BL-12 (identity-decoupled hosting, labels-as-overlay, per-writer-repos+merge shape) and BL-72 (namespaced schema packs); the hash-chain built same day (dec:export-hash-chain). GraphExport += content_hash (sha256 over canonical content JSON, stamp excluded — same design fingerprints the same across builds) + prev_content_hash (file lineage at the export-tool write seam; chain advances only on content change so unchanged exports stay byte-identical). compare_designs += ancestry (succeeds/siblings/unknown) + tamper callout in provenance_note; import reports integrity mismatch loudly; reflow2_check FAILS on a doctored committed export (negative-tested: doctored exit 1, clean exit 0). Cross-language canonical hash pinned Rust↔stdlib-Python in smoke. 5 new export tests + 4 compare tests + chain tool test + 3 smoke checks; all 40 workspace suites green. Drift on art:export/compare/service/main/check accepted two-sided (chg:atproto-hash-chain). Export 268n/670e, hashed, chain rooted; gaps 0. Per-claim anchoring (accepts carrying the state hash they saw) stays open under BL-12 — @ajs — 2026-07-21 — (this commit)
 
 - v0.8.0 cut (user-directed): compare_designs + --diff on the surface, no schema change, no upgrade doc. Release layer modelled: rel:v080 deployed active (first manifest carrying compare.rs — the unreleased_component gap closed itself), rel:v070 retired rolled_back. Self-model 261n/654e, gaps 0, live==committed verified by --diff (identical; provenance note correctly names the two writers: 0.8.0 script vs 0.7.0-era session server), reflow2_check OK 0 notes. Release run watched to completion under draft-then-publish — @ajs — 2026-07-21 — (this commit)
 

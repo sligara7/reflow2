@@ -161,6 +161,9 @@ async fn main() -> anyhow::Result<()> {
             "reflow2: imported {} node(s) and {} edge(s) into {}",
             report.nodes_written, report.edges_written, cli.graph_path
         );
+        if let Some(note) = &report.integrity_note {
+            eprintln!("reflow2: WARNING — {note}");
+        }
         if !report.skipped_edges.is_empty() {
             eprintln!(
                 "reflow2: {} edge(s) had endpoints not in the document and not already in the \

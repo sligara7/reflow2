@@ -19,6 +19,10 @@ serde = { version = "1", features = ["derive"] }
 # `Snapshot.state`); `Value` is serde-serializable (untagged), so this renders
 # clean JSON rather than an opaque debug blob.
 serde_json = "1"
+# The export's content hash (tamper evidence + lineage chain,
+# dec:export-hash-chain). FNV-1a serves the deterministic *ids*; a fingerprint
+# meant to detect edits needs a real cryptographic hash.
+sha2 = "0.10"
 
 [features]
 default = []

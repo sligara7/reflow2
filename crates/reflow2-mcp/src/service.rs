@@ -891,8 +891,11 @@ pub struct PropagateChangeReq {
 #[serde(deny_unknown_fields)]
 pub struct ExportGraphToReq {
     /// Write the export to this file (deterministic sorted-key JSON, diffable
-    /// under git) and return only {path, bytes, nodes, edges, stamp}. Omit to
-    /// get the whole document as the result payload.
+    /// under git) and return only {path, bytes, nodes, edges, content_hash,
+    /// prev_content_hash, stamp}. Replacing an existing export links the new
+    /// document to the old one's content hash (lineage; chain advances only
+    /// when content changed). Omit to get the whole document as the result
+    /// payload.
     #[serde(default)]
     pub path: Option<String>,
     /// Allow `path` to replace an existing file. Off by default: an export
@@ -2080,7 +2083,7 @@ impl ReflowService {
         Parameters(req): Parameters<ExportGraphToReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
-        let export = g.export_graph().map_err(dyno_err)?;
+        let mut export = g.export_graph().map_err(dyno_err)?;
         let Some(path) = req.path else {
             return ok_json(export);
         };
@@ -2098,6 +2101,25 @@ impl ReflowService {
                 None,
             ));
         }
+        // The file-write seam is where lineage lives (dec:export-hash-chain):
+        // replacing an export file links the new document to the old one's
+        // content hash — advancing only when content actually changed, so an
+        // unchanged design still writes byte-identical files. A file that is
+        // not a reflow2 export records no chain, and says so in the receipt.
+        let mut chain_note = None;
+        if target.exists() {
+            match std::fs::read_to_string(target)
+                .ok()
+                .and_then(|raw| serde_json::from_str::<reflow2_core::GraphExport>(&raw).ok())
+            {
+                Some(predecessor) => export.chain_after(&predecessor),
+                None => {
+                    chain_note = Some(
+                        "the file being replaced was not a reflow2 export — no lineage recorded",
+                    );
+                }
+            }
+        }
         // Through `serde_json::Value` so keys serialize sorted (its object is a
         // BTreeMap) — the same convention as the committed design export, so a
         // file this writes diffs cleanly against one written before it.
@@ -2113,13 +2135,19 @@ impl ReflowService {
         let resolved = std::fs::canonicalize(target)
             .map(|p| p.display().to_string())
             .unwrap_or(path);
-        ok_json(json!({
+        let mut receipt = json!({
             "path": resolved,
             "bytes": text.len(),
             "nodes": export.nodes.len(),
             "edges": export.edges.len(),
+            "content_hash": export.content_hash,
+            "prev_content_hash": export.prev_content_hash,
             "stamp": serde_json::to_value(&export.stamp).map_err(ser_err)?,
-        }))
+        });
+        if let Some(note) = chain_note {
+            receipt["chain_note"] = json!(note);
+        }
+        ok_json(receipt)
     }
 
     #[tool(

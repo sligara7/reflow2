@@ -248,6 +248,34 @@ DECISIONS = [
      "of the rung a+b upsert-layering, the sibling of the reconcile family — which compares "
      "design against reality, hence the separate word: divergence, not drift.",
      ["cap:compare-designs"]),
+    ("dec:export-hash-chain",
+     "The export proves itself: content hash + file-lineage chain, from AT proto's "
+     "self-authenticating repos",
+     "Every export carries a content_hash — sha256 over the canonical sorted JSON of the design "
+     "content only (graph_id, nodes, edges), excluding the stamp and chain fields, so the same "
+     "design hashes identically whichever build wrote it. A prev_content_hash records file "
+     "lineage: when an export overwrites an existing export file, the chain advances to the old "
+     "file's content hash — but only when content actually changed, so two exports of an "
+     "unchanged design stay byte-identical. The full hash is carried (not truncated like display "
+     "checksums) because this is tamper evidence. compare_designs reports ancestry from the "
+     "chain (other succeeds base / base succeeds other / siblings of a common parent / unknown); "
+     "import reports an integrity mismatch loudly; the CI gate fails on a committed export that "
+     "does not match its own hash. Documents predating the hash stay importable and comparable — "
+     "absence is reported, never an error.",
+     "User directed 2026-07-21 after the AT Protocol comparison: atproto repos are "
+     "self-authenticating (signed commits over a content-addressed root), and reflow2's export "
+     "was already deterministic — the hash was well-defined and simply never computed. "
+     "Content-only hashing (stamp excluded) was proven necessary the same day: the committed "
+     "export and the live export had identical content but different writers (0.8.0 script vs "
+     "0.7.0-era session server), and they must fingerprint the same. The chain lives at the "
+     "file-write seam because the committed export file IS the durable record whose lineage "
+     "matters; the graph itself must not be mutated by a read-only export. Ancestry is what "
+     "turns compare_designs from 'what diverged' into 'was the divergence made in ignorance of "
+     "the base or in defiance of it' — BL-12 sketch idea 1's question, computable for the "
+     "one-step case. Signing (identity) is deliberately deferred until a second writer is real; "
+     "a hash chain without keys is already tamper-evident against accident and hand-editing, "
+     "which is today's actual threat model.",
+     ["cap:portability", "cap:compare-designs"]),
 ]
 
 # ---- P2 · Structure. Coarse: crate -> module. -----------------------------

@@ -1164,6 +1164,60 @@ commercial/government) — the multi-writer service, if built, is the natural th
 sells. Not scheduled; recorded so the increments above are walked in an order that keeps this
 reachable.
 
+**BL-12 · AT Protocol design notes (2026-07-21)** — *from the user's question "anything we can
+take from atproto.com/docs?" Same discipline as the crypto-consensus notes above: what survived
+contact, and where the analogy breaks. AT proto answers "many parties, one shared data layer,
+without a referee" — BL-12's question with different nouns — but its repos are deliberately
+single-writer-per-identity, so it solves attribution, portability and trust-layering AROUND
+single-writer stores, never collaborative mutation of one document. Borrow accordingly.*
+
+1. **Self-authenticating records** (signed commits over a content-addressed root). Every AT
+   repo write hashes up to a signed root, so anyone verifies state without trusting the host.
+   reflow2's export is already deterministic, so a content hash is already well-defined — it
+   was just never computed or carried. **Built same day** (export content hash + prev-hash
+   lineage chain + `compare_designs` ancestry — see CHANGELOG); the *per-claim* half — every
+   accept/edit carrying the hash of the state it saw, sketch idea 1 above made mechanical —
+   stays open here as the two-writer prerequisite.
+2. **Identity decoupled from hosting** (DID + keys are yours; the host is a replaceable
+   service that cannot forge signed content). Dissolves `dec:repo-file-embedded`'s strongest
+   objection to a hosted graph: the host holds bytes it cannot falsify. The shape for the
+   shared-MCP future: writers sign, the server stores and relays, anyone audits — "we host
+   it" stops meaning "we have custody of the truth". Pairs with the licensing direction (the
+   paid org tier sells hosting, not custody).
+3. **Labels: assertion as overlay, not mutation** (speech/reach separation; labelers publish
+   their own subscribable records ABOUT content, never touching it; consumers pick whom to
+   trust). Maps onto report-dont-judge and BL-41's who-may-assert-what — and adds a move we
+   lack: a reviewer's "this requirement is risky" as a signed annotation from their identity
+   living BESIDE the graph, not a property write inside it. Most of what a second
+   collaborator wants early is annotation, not mutation — an overlay layer gives N parties a
+   voice on one design with zero write contention, deferring the hard merge to genuine
+   structural edits. Candidate first rung for multi-writer, cheaper than any locking scheme.
+4. **Per-writer repos + computed merge as a BL-12 shape.** Since AT proto never lets two
+   writers share a repo, its architecture suggests the alternative to one shared mutable
+   graph: each collaborator appends to their own record and the baseline is a computed merge
+   — the git model — with `compare_designs` + the survivor/provenance rules as the merge
+   machinery and BL-44's claims as "which subtree I am authoring". Named here so the
+   shared-graph and per-writer-repo shapes get weighed deliberately when BL-12 opens.
+
+*Where it breaks:* DID:PLC infrastructure, blobs, firehose scale are for millions of anonymous
+parties; the threat model here stays error-and-drift among named collaborators. Lexicon's
+publish-forever immutability is for a network that controls neither end; reflow2 controls both
+and has export/import migration — the additive-only discipline (already policy) is the right
+dose. Take the evidence machinery (hashes, signatures, namespaces); skip the infrastructure.
+
+**BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
+the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
+vocabulary wants in.* Lexicon namespaces schemas reverse-DNS (`app.bsky.feed.post`) so
+organizations extend the vocabulary without collisions, under a published-constraints-never-
+change discipline (breaking = new name). reflow2's ten YAML domains already merge through
+`Schema::from_multiple_yamls`, so the composition mechanism exists; what's missing is the
+naming discipline and a pack convention — a UAF/TRL pack, a DoDAF viewpoint pack, an org's
+own types under `org.<name>.*` beside the core 27, shippable and installable without touching
+core. This is the reflow-v3 "framework packs" heritage idea with a proven governance model
+attached. Prerequisite thinking: how the kit installs a pack, how `describe_schema` reports
+provenance of a type, and what the CI gate does with types it doesn't know. Connects to
+[BL-68] (readiness vocabularies are the first obvious pack) and the org-scale thread above.
+
 **BL-44 · Node-level claims — parallel work on one design** — *user, 2026-07-20. Concept-only by
 their own framing; the details are the work.*
 

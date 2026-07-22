@@ -139,6 +139,26 @@ pub struct DiffSummary {
     pub edges_unchanged: usize,
 }
 
+/// How the two records relate through the export lineage chain
+/// (`dec:export-hash-chain`) — the answer to "was this divergence made *from*
+/// the base, or did the two fork earlier?". Computed from `prev_content_hash`
+/// links, so it sees one generation; `unknown` honestly covers everything the
+/// chain cannot show (older documents, longer histories, unrelated designs).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum DiffAncestry {
+    /// `other` names `base`'s content as its predecessor — a direct
+    /// successor, so its changes were made in full view of the base.
+    OtherSucceedsBase,
+    /// `base` names `other`'s content as its predecessor.
+    BaseSucceedsOther,
+    /// Both name the same predecessor — two divergent successors of one
+    /// parent, the two-writer fork in its simplest form.
+    SiblingsOfCommonParent,
+    /// The chain does not relate them (or one side predates hashing).
+    Unknown,
+}
+
 /// Two as-designed records, compared. See the module docs for what this is
 /// and is not.
 #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -147,6 +167,8 @@ pub struct DesignDiff {
     pub base: String,
     /// The side `added` nodes are found on.
     pub other: String,
+    /// How the records relate through the lineage chain.
+    pub ancestry: DiffAncestry,
     pub summary: DiffSummary,
     /// Present when the two records were written by different reflow2 builds
     /// or carry different graph ids — context for reading the divergence, not
@@ -347,6 +369,34 @@ pub fn compare_designs(
             base.graph_id, other.graph_id
         ));
     }
+    // A side whose embedded hash disagrees with its own content has been
+    // edited outside reflow2 — the reader must know before trusting a single
+    // finding about it.
+    for (label, doc) in [("base", base), ("other", other)] {
+        if doc.verify_content_hash() == Some(false) {
+            notes.push(format!(
+                "{label} does not match its own content_hash — edited outside reflow2 \
+                 or corrupted"
+            ));
+        }
+    }
+
+    // Ancestry through the lineage chain: hashes are content-derived, so
+    // this works even when one side predates hashing (its identity is
+    // recomputed), while `prev` links only exist where a writer recorded
+    // them.
+    let base_hash = base.effective_content_hash();
+    let other_hash = other.effective_content_hash();
+    let ancestry = if other.prev_content_hash.as_deref() == Some(base_hash.as_str()) {
+        DiffAncestry::OtherSucceedsBase
+    } else if base.prev_content_hash.as_deref() == Some(other_hash.as_str()) {
+        DiffAncestry::BaseSucceedsOther
+    } else if base.prev_content_hash.is_some() && base.prev_content_hash == other.prev_content_hash
+    {
+        DiffAncestry::SiblingsOfCommonParent
+    } else {
+        DiffAncestry::Unknown
+    };
 
     let summary = DiffSummary {
         identical: design.is_empty()
@@ -370,6 +420,7 @@ pub fn compare_designs(
     DesignDiff {
         base: base_label.to_string(),
         other: other_label.to_string(),
+        ancestry,
         summary,
         provenance_note: (!notes.is_empty()).then(|| notes.join("; ")),
         design,

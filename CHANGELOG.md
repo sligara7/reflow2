@@ -31,6 +31,27 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **The export proves itself: content hash + lineage chain** (`dec:export-hash-chain`, from
+  the AT Protocol comparison; minor: the export document and several results gain fields).
+  Every export now carries `content_hash` — sha256 over the canonical sorted JSON of the
+  design content only, excluding the stamp, so the same design fingerprints identically
+  whichever build wrote it — and `prev_content_hash`, recorded when an export replaces an
+  existing export file with changed content (unchanged content keeps the old chain, so
+  unchanged designs still write byte-identical files). `compare_designs` gains `ancestry`
+  (other_succeeds_base / base_succeeds_other / siblings_of_common_parent / unknown) — the
+  one-generation answer to "was this divergence made from the base, or did the two fork?" —
+  and calls out a side whose hash doesn't match its own content. `import_graph` reports the
+  same mismatch loudly (import proceeds; seeing it is not optional), and `reflow2_check.py`
+  fails the build on a committed export that doesn't match its own hash — the committed
+  record is now tamper-evident in CI, verified cross-language (the stdlib-Python
+  recomputation is pinned against the Rust one in the smoke test). Pre-hashing documents
+  stay importable and comparable everywhere; absence is reported, never an error.
+- Backlog: the AT Protocol design notes land under BL-12 (identity-decoupled hosting,
+  labels-as-overlay, per-writer-repos-plus-merge as a candidate shape), and BL-72 raises
+  namespaced schema packs (Lexicon-style domain vocabularies that compose without forking).
+
 ## [0.8.0] — 2026-07-21
 
 A minor release: the tool surface gains `compare_designs` (and the binary the `--diff` flag) —

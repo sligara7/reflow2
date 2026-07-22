@@ -1,4 +1,5 @@
 {
+  "content_hash": "sha256:57d8768c7ba1666d78cdae0de8f374f8f8a94e4ae1f8e20450be063a1f3c37b5",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -477,6 +478,87 @@
         "action": "modified"
       },
       "to_id": "art:search"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:atproto-hash-chain",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:atproto-hash-chain",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:atproto-hash-chain",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:atproto-hash-chain",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:atproto-hash-chain",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:atproto-hash-chain",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:atproto-hash-chain",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:atproto-hash-chain",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:atproto-hash-chain",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "CHANGED",
@@ -2044,6 +2126,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "drift:1ed00db9d4f9e604",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "drift:2df9aeb2250d9b16",
       "properties": {
         "optional": false,
@@ -2125,6 +2216,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "drift:76a930f5177ed8a9",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "drift:772e13e57cf4cf5b",
       "properties": {
         "optional": false,
@@ -2144,6 +2244,15 @@
     {
       "edge_type": "DEPENDS_ON",
       "from_id": "drift:88555080c4773d64",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:8a46e52a42e69a63",
       "properties": {
         "optional": false,
         "weight_basis": "estimated"
@@ -2197,6 +2306,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "drift:b8574fc9888de79d",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "drift:e325adce47e0faa7",
       "properties": {
         "optional": false,
@@ -2239,6 +2357,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "art:heal"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:f7d4129e648da57e",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:check"
     },
     {
       "edge_type": "DEPLOYED_TO",
@@ -2308,6 +2435,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-designs",
+      "properties": {},
+      "to_id": "dec:export-hash-chain"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:detect",
       "properties": {},
       "to_id": "dec:anchored-first"
@@ -2347,6 +2480,12 @@
       "from_id": "cap:heal",
       "properties": {},
       "to_id": "dec:operational-spof"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:portability",
+      "properties": {},
+      "to_id": "dec:export-hash-chain"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5174,7 +5313,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:269835daee23015f",
+        "checksum": "sha256:eff12f1f951fa68b",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
         "status": "realized"
@@ -5185,7 +5324,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e0fe0dddb965b779",
+        "checksum": "sha256:1379f486b2b70b22",
         "location": "crates/reflow2-core/src/compare.rs",
         "name": "compare.rs",
         "status": "realized"
@@ -5251,7 +5390,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1957641d39c28842",
+        "checksum": "sha256:870fc04ad3b347a8",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
         "status": "realized"
@@ -5361,7 +5500,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4d619bc69acb1dd5",
+        "checksum": "sha256:ef7ba16d1727d0ee",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -5449,7 +5588,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8cf6bd3694ffafe2",
+        "checksum": "sha256:321ad4f8bf6d5f9f",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -5949,6 +6088,14 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:atproto-hash-chain",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Export content hash + lineage chain + compare ancestry (AT-proto capture)"
       }
     },
     {
@@ -6590,6 +6737,16 @@
       }
     },
     {
+      "node_id": "dec:export-hash-chain",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Every export carries a content_hash \u2014 sha256 over the canonical sorted JSON of the design content only (graph_id, nodes, edges), excluding the stamp and chain fields, so the same design hashes identically whichever build wrote it. A prev_content_hash records file lineage: when an export overwrites an existing export file, the chain advances to the old file's content hash \u2014 but only when content actually changed, so two exports of an unchanged design stay byte-identical. The full hash is carried (not truncated like display checksums) because this is tamper evidence. compare_designs reports ancestry from the chain (other succeeds base / base succeeds other / siblings of a common parent / unknown); import reports an integrity mismatch loudly; the CI gate fails on a committed export that does not match its own hash. Documents predating the hash stay importable and comparable \u2014 absence is reported, never an error.",
+        "name": "The export proves itself: content hash + file-lineage chain, from AT proto's self-authenticating repos",
+        "rationale": "User directed 2026-07-21 after the AT Protocol comparison: atproto repos are self-authenticating (signed commits over a content-addressed root), and reflow2's export was already deterministic \u2014 the hash was well-defined and simply never computed. Content-only hashing (stamp excluded) was proven necessary the same day: the committed export and the live export had identical content but different writers (0.8.0 script vs 0.7.0-era session server), and they must fingerprint the same. The chain lives at the file-write seam because the committed export file IS the durable record whose lineage matters; the graph itself must not be mutated by a read-only export. Ancestry is what turns compare_designs from 'what diverged' into 'was the divergence made in ignorance of the base or in defiance of it' \u2014 BL-12 sketch idea 1's question, computable for the one-step case. Signing (identity) is deliberately deferred until a second writer is real; a hash chain without keys is already tamper-evident against accident and hand-editing, which is today's actual threat model.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:graph-spof-accepted",
       "node_type": "Decision",
       "properties": {
@@ -6729,6 +6886,18 @@
       }
     },
     {
+      "node_id": "drift:1ed00db9d4f9e604",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:export drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:export' has changed since it was registered against the design"
+      }
+    },
+    {
       "node_id": "drift:2df9aeb2250d9b16",
       "node_type": "DriftEvent",
       "properties": {
@@ -6837,6 +7006,18 @@
       }
     },
     {
+      "node_id": "drift:76a930f5177ed8a9",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:main drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:main' has changed since it was registered against the design"
+      }
+    },
+    {
       "node_id": "drift:772e13e57cf4cf5b",
       "node_type": "DriftEvent",
       "properties": {
@@ -6862,6 +7043,18 @@
     },
     {
       "node_id": "drift:88555080c4773d64",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:service drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:service' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:8a46e52a42e69a63",
       "node_type": "DriftEvent",
       "properties": {
         "detected_at": "2026-07-21",
@@ -6933,6 +7126,18 @@
       }
     },
     {
+      "node_id": "drift:b8574fc9888de79d",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:compare drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:compare' has changed since it was registered against the design"
+      }
+    },
+    {
       "node_id": "drift:e325adce47e0faa7",
       "node_type": "DriftEvent",
       "properties": {
@@ -6990,6 +7195,18 @@
         "resolved": true,
         "severity": "medium",
         "summary": "'art:heal' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:f7d4129e648da57e",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:check drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:check' has changed since it was registered against the design"
       }
     },
     {

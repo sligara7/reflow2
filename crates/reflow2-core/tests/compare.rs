@@ -240,3 +240,82 @@ fn different_graph_ids_are_noted_not_judged() {
     let note = diff.provenance_note.expect("graph id difference noted");
     assert!(note.contains("another-design"));
 }
+
+// ---- Ancestry through the lineage chain (dec:export-hash-chain) -------------
+
+#[test]
+fn ancestry_reads_the_lineage_chain_in_both_directions() {
+    let mut g = graph();
+    seed(&mut g);
+    let base = export(&g);
+    g.add_capability("cap:two", "Second capability", "Does a second thing.", None)
+        .expect("capability");
+    let mut other = export(&g);
+    other.chain_after(&base);
+
+    let diff = compare_designs(&base, &other, "base", "other");
+    assert_eq!(diff.ancestry, reflow2_core::DiffAncestry::OtherSucceedsBase);
+
+    let reversed = compare_designs(&other, &base, "base", "other");
+    assert_eq!(
+        reversed.ancestry,
+        reflow2_core::DiffAncestry::BaseSucceedsOther
+    );
+}
+
+#[test]
+fn two_successors_of_one_parent_read_as_siblings() {
+    let mut g = graph();
+    seed(&mut g);
+    let parent = export(&g);
+
+    g.add_capability("cap:two", "Second capability", "Does a second thing.", None)
+        .expect("capability");
+    let mut left = export(&g);
+    left.chain_after(&parent);
+
+    let mut g2 = graph();
+    seed(&mut g2);
+    g2.add_capability("cap:three", "Third capability", "Does a third thing.", None)
+        .expect("capability");
+    let mut right = g2.export_graph().expect("export");
+    right.chain_after(&parent);
+
+    let diff = compare_designs(&left, &right, "left", "right");
+    assert_eq!(
+        diff.ancestry,
+        reflow2_core::DiffAncestry::SiblingsOfCommonParent,
+        "the two-writer fork in its simplest form is named"
+    );
+}
+
+#[test]
+fn unrelated_records_are_unknown_not_guessed() {
+    let mut g = graph();
+    seed(&mut g);
+    let base = export(&g);
+    let other = export(&g);
+
+    let diff = compare_designs(&base, &other, "base", "other");
+    assert_eq!(diff.ancestry, reflow2_core::DiffAncestry::Unknown);
+}
+
+#[test]
+fn a_tampered_side_is_named_in_the_provenance_note() {
+    let mut g = graph();
+    seed(&mut g);
+    let base = export(&g);
+    let mut other = export(&g);
+    other.nodes[0]
+        .properties
+        .insert("name".into(), reflow2_core::Value::from("edited by hand"));
+
+    let diff = compare_designs(&base, &other, "base", "other");
+    let note = diff
+        .provenance_note
+        .expect("tampering is context the reader needs");
+    assert!(
+        note.contains("other does not match its own content_hash"),
+        "{note}"
+    );
+}

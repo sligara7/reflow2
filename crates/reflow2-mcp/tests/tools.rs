@@ -1427,6 +1427,72 @@ async fn compare_designs_reports_divergence_from_a_base_export() {
     std::fs::remove_file(&other_path).ok();
 }
 
+// ---- dec:export-hash-chain · lineage at the file-write seam -----------------
+
+#[tokio::test]
+async fn export_files_chain_by_content_hash() {
+    let s = seeded().await;
+    let path = std::env::temp_dir().join(format!("reflow2-chain-{}.json", std::process::id()));
+    let path_str = path.to_str().expect("utf8 path").to_string();
+    std::fs::remove_file(&path).ok();
+
+    // First write: hashed, no predecessor.
+    let first = j!(s.export_graph(Parameters(ExportGraphToReq {
+        path: Some(path_str.clone()),
+        overwrite: None,
+    })));
+    let first_hash = first["content_hash"]
+        .as_str()
+        .expect("hash in receipt")
+        .to_string();
+    assert!(
+        first["prev_content_hash"].is_null(),
+        "a new file has no lineage"
+    );
+
+    // Unchanged design, rewritten: byte-identical file, chain unmoved.
+    let on_disk = std::fs::read_to_string(&path).expect("written");
+    j!(s.export_graph(Parameters(ExportGraphToReq {
+        path: Some(path_str.clone()),
+        overwrite: Some(true),
+    })));
+    assert_eq!(
+        on_disk,
+        std::fs::read_to_string(&path).expect("rewritten"),
+        "an unchanged design still writes byte-identical files"
+    );
+
+    // Changed design: the new file names its predecessor.
+    j!(s.add_capability(Parameters(CapabilityReq {
+        id: "cap:chain".into(),
+        name: "Chained".into(),
+        description: "Content moved.".into(),
+        status: None
+    })));
+    let second = j!(s.export_graph(Parameters(ExportGraphToReq {
+        path: Some(path_str.clone()),
+        overwrite: Some(true),
+    })));
+    assert_eq!(
+        second["prev_content_hash"].as_str(),
+        Some(first_hash.as_str()),
+        "the chain advances to the replaced file's content hash"
+    );
+
+    // And compare_designs reads the lineage as ancestry.
+    let old_copy =
+        std::env::temp_dir().join(format!("reflow2-chain-old-{}.json", std::process::id()));
+    std::fs::write(&old_copy, &on_disk).expect("copy of the first export");
+    let diff = j!(s.compare_designs(Parameters(CompareDesignsReq {
+        base_path: old_copy.to_str().unwrap().into(),
+        other_path: Some(path_str.clone()),
+    })));
+    assert_eq!(diff["ancestry"], "other_succeeds_base");
+
+    std::fs::remove_file(&path).ok();
+    std::fs::remove_file(&old_copy).ok();
+}
+
 // ---- BL-50 · add_change_event declares what it changed ----------------------
 
 #[tokio::test]

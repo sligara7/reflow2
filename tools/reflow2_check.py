@@ -177,6 +177,33 @@ def main() -> int:
     failures: list[str] = []
     notes: list[str] = []
 
+    # Integrity first (dec:export-hash-chain): the export carries a hash of its
+    # own content, so a committed record that was hand-edited or corrupted is
+    # detectable before anything downstream trusts it. The canonical form must
+    # byte-match the Rust side's: compact separators, sorted keys, raw unicode
+    # (tools/smoke_mcp.py pins the two implementations against each other).
+    try:
+        with open(opts.export, encoding="utf-8") as fh:
+            doc = json.load(fh)
+    except (OSError, ValueError) as e:
+        die(2, f"could not read '{opts.export}' as JSON: {e}")
+    embedded = doc.get("content_hash")
+    if embedded:
+        canonical = json.dumps(
+            {"edges": doc.get("edges", []), "graph_id": doc.get("graph_id"),
+             "nodes": doc.get("nodes", [])},
+            sort_keys=True, ensure_ascii=False, separators=(",", ":"),
+        )
+        actual = "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+        if actual != embedded:
+            failures.append(
+                f"INTEGRITY  '{opts.export}' does not match its own content_hash — the "
+                f"committed design record was edited outside reflow2 or corrupted. "
+                f"Re-export from the graph, or review what changed it."
+            )
+    else:
+        notes.append("integrity: export predates content hashing (no content_hash)")
+
     with tempfile.TemporaryDirectory(prefix="reflow2-check-") as tmp:
         graph = os.path.join(tmp, "graph")
         imported = subprocess.run(

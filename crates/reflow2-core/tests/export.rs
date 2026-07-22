@@ -188,3 +188,136 @@ fn importing_an_old_document_backfills_new_defaults() {
         "and nothing it did carry may be lost in the process"
     );
 }
+
+// ---- Content hash + lineage chain (dec:export-hash-chain) -------------------
+
+/// The export fingerprints its own content; the same design fingerprints the
+/// same, and any content change moves it.
+#[test]
+fn the_export_carries_a_verifiable_content_hash() {
+    let g = a_design();
+    let doc = g.export_graph().unwrap();
+
+    let hash = doc.content_hash.clone().expect("content_hash is set");
+    assert!(
+        hash.starts_with("sha256:") && hash.len() == 7 + 64,
+        "{hash}"
+    );
+    assert_eq!(doc.verify_content_hash(), Some(true));
+    assert_eq!(
+        g.export_graph().unwrap().content_hash.unwrap(),
+        hash,
+        "an unchanged design hashes identically"
+    );
+
+    let mut g2 = DesignGraph::open_in_memory().unwrap();
+    g2.import_graph(&doc).unwrap();
+    g2.add_capability("cap:log", "Log readings", "writes them down", None)
+        .unwrap();
+    assert_ne!(
+        g2.export_graph().unwrap().content_hash.unwrap(),
+        hash,
+        "a changed design hashes differently"
+    );
+}
+
+/// The hash covers the design content only — the same design written by a
+/// different build (different stamp) or claiming different ancestry must
+/// fingerprint identically, because content identity is what the chain and
+/// the diff reason about.
+#[test]
+fn the_content_hash_excludes_stamp_and_chain() {
+    let g = a_design();
+    let doc = g.export_graph().unwrap();
+    let mut relabelled = doc.clone();
+    relabelled.stamp.reflow2_version = "9.9.9".into();
+    relabelled.prev_content_hash = Some("sha256:0000".into());
+
+    assert_eq!(
+        doc.compute_content_hash(),
+        relabelled.compute_content_hash()
+    );
+}
+
+/// Tampering is three-valued: a matching hash verifies, a mismatch is
+/// reported, and a document that predates hashing is neither — absence of a
+/// hash is not evidence of tampering.
+#[test]
+fn tampering_and_prehash_documents_are_distinguished() {
+    let g = a_design();
+    let mut doc = g.export_graph().unwrap();
+
+    doc.nodes[0]
+        .properties
+        .insert("name".into(), reflow2_core::Value::from("edited by hand"));
+    assert_eq!(doc.verify_content_hash(), Some(false));
+
+    let report = DesignGraph::open_in_memory()
+        .unwrap()
+        .import_graph(&doc)
+        .unwrap();
+    let note = report
+        .integrity_note
+        .expect("a tampered document is said loudly");
+    assert!(note.contains("content_hash"), "{note}");
+
+    doc.content_hash = None; // pre-hashing document
+    assert_eq!(doc.verify_content_hash(), None);
+    let report = DesignGraph::open_in_memory()
+        .unwrap()
+        .import_graph(&doc)
+        .unwrap();
+    assert!(
+        report.integrity_note.is_none(),
+        "an unhashed document imports without accusation"
+    );
+}
+
+/// The chain advances only when content changes — an unchanged design keeps
+/// its predecessor's chain, which is what keeps unchanged exports
+/// byte-identical.
+#[test]
+fn the_chain_advances_on_change_and_holds_still_otherwise() {
+    let g = a_design();
+    let mut first = g.export_graph().unwrap();
+    first.prev_content_hash = Some("sha256:ancestor".into());
+
+    // Unchanged content: the successor inherits the predecessor's own chain.
+    let mut same = g.export_graph().unwrap();
+    same.chain_after(&first);
+    assert_eq!(same.prev_content_hash.as_deref(), Some("sha256:ancestor"));
+
+    // Changed content: the chain advances to the predecessor's hash.
+    let mut g2 = DesignGraph::open_in_memory().unwrap();
+    g2.import_graph(&first).unwrap();
+    g2.add_capability("cap:log", "Log readings", "writes them down", None)
+        .unwrap();
+    let mut changed = g2.export_graph().unwrap();
+    changed.chain_after(&first);
+    assert_eq!(
+        changed.prev_content_hash,
+        Some(first.compute_content_hash()),
+        "a changed successor names its predecessor"
+    );
+}
+
+/// A pre-hashing predecessor still has an identity — the chain can grow from
+/// a file written before this feature existed.
+#[test]
+fn the_chain_grows_from_an_unhashed_predecessor() {
+    let g = a_design();
+    let mut old = g.export_graph().unwrap();
+    old.content_hash = None;
+
+    let mut g2 = DesignGraph::open_in_memory().unwrap();
+    g2.import_graph(&old).unwrap();
+    g2.add_capability("cap:log", "Log readings", "writes them down", None)
+        .unwrap();
+    let mut new = g2.export_graph().unwrap();
+    new.chain_after(&old);
+    assert_eq!(
+        new.prev_content_hash,
+        Some(old.compute_content_hash()),
+        "the predecessor's identity is recomputed, not refused"
+    );
+}

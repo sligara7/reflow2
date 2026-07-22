@@ -64,8 +64,8 @@ pub use allocate::{
 pub use artifact::{ArtifactLink, DriftDisposition, LinkArtifactOptions};
 pub use budget::{BudgetContributor, BudgetReport, BudgetVerdict};
 pub use compare::{
-    ChangedEdge, ChangedNode, DesignDiff, DiffBand, DiffSummary, EdgeRef, LIVE_GRAPH_LABEL,
-    NodeRef, PropertyDivergence, compare_designs,
+    ChangedEdge, ChangedNode, DesignDiff, DiffAncestry, DiffBand, DiffSummary, EdgeRef,
+    LIVE_GRAPH_LABEL, NodeRef, PropertyDivergence, compare_designs,
 };
 pub use confirm::{ClaimConfirmation, ConfirmationLedger, ConfirmationState};
 pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, GapSource};

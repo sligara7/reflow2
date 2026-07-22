@@ -22,6 +22,7 @@ Exits 0 when every check passes, 1 otherwise. Standard library only.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import shutil
@@ -976,6 +977,20 @@ def run(binary: str, graph_path: str) -> int:
          receipt.get("nodes") == len(doc["nodes"]) and on_disk["nodes"] == doc["nodes"],
          receipt)
 
+    # dec:export-hash-chain: the export proves itself, and the proof crosses
+    # languages — the canonical hash Rust computes must be reproducible by
+    # stdlib Python, because that is exactly what lets reflow2_check.py verify
+    # the committed record in CI without the binary's help.
+    embedded = on_disk.get("content_hash")
+    recomputed = "sha256:" + hashlib.sha256(json.dumps(
+        {"edges": on_disk["edges"], "graph_id": on_disk["graph_id"],
+         "nodes": on_disk["nodes"]},
+        sort_keys=True, ensure_ascii=False, separators=(",", ":"),
+    ).encode("utf-8")).hexdigest()
+    c.ok("the export's content hash recomputes identically in stdlib Python",
+         embedded is not None and embedded == recomputed,
+         {"embedded": embedded, "recomputed": recomputed})
+
     # BL-71 rung c: the design-vs-design diff — the reconcile family's sibling,
     # comparing two as-designed records instead of design against reality.
     same = s.call("compare_designs", {"base_path": export_file})
@@ -1004,6 +1019,14 @@ def run(binary: str, graph_path: str) -> int:
          d["design"]["changed"])
     c.ok("the report is directional relative to the named base",
          d["base"] == export_file and d["summary"]["design_removed"] >= 1, d["summary"])
+
+    # The divergent copy above was made by editing the JSON directly — which
+    # makes it a *tampered* export (its embedded content_hash no longer matches
+    # its content), and the diff must say so before anyone trusts a finding
+    # about it (dec:export-hash-chain).
+    c.ok("a hand-edited export is called out by its own content hash",
+         "does not match its own content_hash" in (d.get("provenance_note") or ""),
+         d.get("provenance_note"))
 
     # Two-file --diff never opens the graph, so it must run even while this
     # server holds the single-writer lock.
