@@ -1281,6 +1281,42 @@ release / temporal) vs multiplexing vs both — a vocabulary decision for the us
 which clients actually struggle. Multiplexing collides with skill_lint's tool-name contract
 and every skill's tool references; cost that honestly when weighing.
 
+**BL-78 · External-dependency freshness & obsolescence as a first-class coherence check** —
+*user, 2026-07-22.* Size **M–L**; a vocabulary decision, not mechanical. The user's framing: "you
+build something and find out all your external dependencies are outdated — and maybe worse, now
+obsolete." They want reflow2 to notice, and explicitly **not just for software packages** — this
+is the "design anything" generalisation. A design depends on things that live *outside* it and
+move on their own: a Rust crate or npm package, but equally a referenced standard (a MIL-STD
+revised, a spec withdrawn), a COTS hardware part going end-of-life, a discontinued supplier, a
+cited document superseded. "Your design rests on something the world has moved past" is a
+universal design failure mode, and it is exactly reflow2's territory.
+
+The shape already exists — this points the reconcile family *outward*. `reconcile_artifacts`
+compares observed files on disk against the design's checksums and raises drift → gap; a
+`reconcile_dependencies` would compare an **observed upstream latest/status** against the design's
+**pinned/current** version and raise the same drift, with two distinct severities: *stale* (a
+newer version exists) and the sharper *obsolete/EOL/yanked/withdrawn* (the pinned thing is gone
+or unsupported — a real gap, not a nudge). The observation stays external (an agent, a CI job, a
+`git ls-remote`/registry query supplies "latest" — the core never reaches the network, per
+req:deterministic-core); reflow2 records, compares, and surfaces.
+
+**The vocabulary question for the user** (why this is M–L, not S): does an external dependency
+extend the existing **Resource** node (add_resource already models "a database, a queue" the
+built thing needs — add `current_version` / `pinned_version` / `lifecycle_status`), or is it a
+new node type (an `ExternalDependency`, so a crate and a queue aren't conflated)? And what does
+"latest/obsolete" mean uniformly across a crate, a standard, and a part — a version string, a
+lifecycle enum, or both? Decide deliberately, not additively (the BL-73/BL-75 lesson).
+
+**Load-bearing constraint, already on the record:** notify, do **not** auto-bump. AGENTS.md is
+explicit that bumping the dynograph-foundation pin as housekeeping is forbidden — every bump
+forces a ~10-min RocksDB C++ rebuild on every consumer, and a bump is a data-migration question
+(BL-19). So the feature's output is a *gap the human dispositions*, never an automatic edit —
+which is precisely how the rest of the loop already works. Near-term, before the in-graph
+feature: a scheduled GitHub Action doing `cargo outdated` (crates.io deps) + `git ls-remote
+--tags` against dynograph-foundation, opening an issue on divergence, would cover reflow2's own
+deps today (checked 2026-07-22: dynograph pinned v0.10.0 == latest tag; rmcp pinned "2" →
+2.2.0). That script is the S down-payment; the in-graph generalisation is this item.
+
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
 vocabulary wants in.* Lexicon namespaces schemas reverse-DNS (`app.bsky.feed.post`) so
