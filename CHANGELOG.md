@@ -34,7 +34,7 @@ This file is the third view: *what changed, and when*.
 ### Added
 
 - **`loop_status` — the coherence loop's outstanding debt, cheaply** (BL-74 rungs c+b, from
-  the first extensive external trial; minor: new tool + new `loop_hint` field on write
+  the first extensive field trial; minor: new tool + new `loop_hint` field on write
   results). The field lesson: under operational load, adding nodes *feels* like using reflow2
   while the capture→detect→ask→decide loop silently stops. One call now returns the debt as a
   to-do list — anchored gaps never put to the user, questions waiting or
@@ -46,6 +46,15 @@ This file is the third view: *what changed, and when*.
   step in the result the agent already reads. The capture-intent and detect-and-ask skills
   teach the call; rung a (a kit hook recipe firing `loop_status` on client events) stays open
   on BL-74.
+- **The loop-nudge hook — the trigger itself** (BL-74 rung a, closing BL-74). The kit ships
+  `tools/loop_nudge.py` (stdlib, beside `reflow2_check.py`): one script wired to three harness
+  events — SessionStart prints the orient-first reminder, PostToolUse counts reflow2 graph
+  writes per session (a `loop_status`/`detect_gaps`/`detect_defects` call resets), and Stop
+  blocks **once** when a session tries to finish with unchecked writes, saying exactly what to
+  run. Never blocks twice, never reads the graph (the session's server holds the single-writer
+  lock — the hook counts events; the graph answers what is owed), never breaks a session (any
+  failure warns and exits 0). Claude Code settings snippet in the kit AGENTS.md step 0a;
+  `REFLOW2_LOOP_NUDGE_THRESHOLD` tunes it. Its own hermetic suite runs in CI.
 - `build_design_graph.py` writes the committed export **through the export tool's file seam**,
   so the self-model export now carries the lineage chain instead of silently dropping it —
   found because the first hashed rebuild came out chain-rootless.

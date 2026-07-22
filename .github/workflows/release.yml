@@ -102,6 +102,7 @@ jobs:
           mkdir -p kit-stage/reflow2-kit/tools
           cp tools/reflow2_init.py kit-stage/reflow2-kit/tools/
           cp tools/reflow2_check.py kit-stage/reflow2-kit/tools/
+          cp tools/loop_nudge.py kit-stage/reflow2-kit/tools/
           cp -r getting-started kit-stage/reflow2-kit/
           printf '{"reflow2_version": "%s", "commit": "%s", "committed_at": "%s", "source": "release-tarball"}\n' \
             "$VERSION" "$COMMIT" "$COMMITTED_AT" > kit-stage/reflow2-kit/KIT_VERSION.json

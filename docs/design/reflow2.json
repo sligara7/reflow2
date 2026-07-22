@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a0d20c22a324d3b0b359bae6041c4f91f15f06d1904e9c8e0eed6d360db93f75",
+  "content_hash": "sha256:f4e7c27d768059c5802140ee688300a2815c69dec0687b34b9e9851ea185a265",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -891,6 +891,24 @@
         "action": "modified"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl74a-loop-nudge",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl74a-loop-nudge",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:kit"
     },
     {
       "edge_type": "CHANGED",
@@ -4511,6 +4529,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:loop-nudge",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:main",
       "properties": {
         "completeness": "complete"
@@ -4974,6 +5000,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:loop-nudge",
+      "properties": {},
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:loop-status",
       "properties": {},
       "to_id": "cap:loop-status"
@@ -5235,6 +5267,14 @@
         "action": "created"
       },
       "to_id": "art:llm"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:loop-nudge",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:loop-nudge"
     },
     {
       "edge_type": "YIELDED",
@@ -5590,6 +5630,17 @@
         "checksum": "sha256:6869d93e97fc9393",
         "location": "crates/reflow2-core/src/llm.rs",
         "name": "llm.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:loop-nudge",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:be1051b582c9e898",
+        "location": "tools/loop_nudge.py",
+        "name": "loop_nudge.py",
         "status": "realized"
       }
     },
@@ -6287,6 +6338,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-74 rungs c+b: loop_status debt rollup + loop hints in write-tool results"
+      }
+    },
+    {
+      "node_id": "chg:bl74a-loop-nudge",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-74 rung a: the loop-nudge hook — the trigger fired by the harness's own events"
       }
     },
     {
@@ -7581,6 +7640,16 @@
       }
     },
     {
+      "node_id": "frag:art:loop-nudge",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered loop_nudge.py"
+      }
+    },
+    {
       "node_id": "frag:art:main",
       "node_type": "Fragment",
       "properties": {
@@ -8250,6 +8319,17 @@
       }
     },
     {
+      "node_id": "ver:loop-nudge",
+      "node_type": "Verification",
+      "properties": {
+        "last_run_at": "2026-07-22",
+        "level": "integration",
+        "method": "test",
+        "name": "test_loop_nudge.py",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:loop-status",
       "node_type": "Verification",
       "properties": {
@@ -8412,7 +8492,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:57d8768c7ba1666d78cdae0de8f374f8f8a94e4ae1f8e20450be063a1f3c37b5",
+  "prev_content_hash": "sha256:a0d20c22a324d3b0b359bae6041c4f91f15f06d1904e9c8e0eed6d360db93f75",
   "stamp": {
     "edge_types": 54,
     "node_types": 27,

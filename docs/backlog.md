@@ -1232,7 +1232,7 @@ provenance of a type, and what the CI gate does with types it doesn't know. Conn
 [BL-68] (readiness vocabularies are the first obvious pack) and the org-scale thread above.
 
 **BL-73 · Verification at component granularity must be expressible, honestly** — *first
-extensive external trial (StoryFlow fleet, 2026-07-21,
+extensive field trial (the user's own StoryFlow fleet, another machine, 2026-07-21,
 docs/trials-private/2026-07-21-storyflow-fleet-improvement-log.md). Size **S–M**; one
 vocabulary decision, then mechanics.* A brownfield adopt of a system with real coverage
 (per-service unit suites + a 137-file integration suite) read as **"0/20 capabilities
@@ -1247,21 +1247,25 @@ untested. Field-suggested shapes, decision the user's: (a) a `Verification` on a
 component granularity" is neither "verified" nor "unverified" and deserves its own word.
 
 **BL-74 · The loop fires on triggers, not virtue — adoption-critical** — *the most important
-finding of the first extensive external trial (same log), self-reported by the driving agent
-and caught by its user.* Size **M**. **Rungs c+b DONE 2026-07-21**
+finding of the first extensive field trial (same log — the user's own fleet), self-reported by
+the driving agent and caught by its user.* Size **M**. **Rungs c+b DONE 2026-07-21**
 (`dec:loop-status-state-not-history`): `loop_status` is live — one cheap call returning the
 loop's outstanding debt as an ordered to-do list, computed from **state, never run history**
 (the core takes no clock and looking-is-not-writing is doctrine, so "no detect_gaps since
 Tuesday" is not an honest computation — "3 anchored gaps never put to the user" is, and it's
 the actionable one); phase nudges excluded (guidance, not debt). The five capture/structural
 write tools carry a static `loop_hint` in their own results. Skills updated (capture-intent
-step 6, detect-and-ask pulse-check). **Rung a stays open — the actual trigger**: a kit hook
-recipe (Claude Code Stop/SessionStart hook) that fires the check on the client's own events.
-Design constraint discovered en route: a hook can't reach the live graph (the session's own
-server holds the single-writer lock), so the hook either nudges the agent to call
-`loop_status` in-session, or runs a stdlib script over the *committed* export
-(reflow2_check-style) and reports its debt — both honest, the second stale by one export.
-Their cold-start warm-up note belongs to the same recipe. Told to "use the reflow2 skills extensively," the agent
+step 6, detect-and-ask pulse-check). **Rung a DONE 2026-07-22 — CLOSING BL-74**: the kit
+ships `tools/loop_nudge.py`, one stdlib script wired to three harness events (SessionStart
+orientation, PostToolUse write-counting with loop-check reset, Stop blocking **once** with
+what to run). It honours the lock constraint by never reading the graph — the hook counts
+events, `loop_status` answers what is owed in-session — and honours the never-hostage rule
+via `stop_hook_active`. Snippet in the kit AGENTS.md step 0a (which also absorbs the
+cold-start orientation note), hermetic suite (`test_loop_nudge.py`, 9 cases) in CI, ships in
+the kit tarball. The ladder is complete: hints where results land (b), the cheap computation
+(c), the trigger that fires it (a). What remains is *evidence*: the fleet trial that raised
+this should run with the hook armed and report whether the loop actually stays alive under
+load — that verdict belongs in the trial log, not here. Told to "use the reflow2 skills extensively," the agent
 under multi-hour operational load kept the graph's *bookkeeping* current via raw tools
 (`add_capability`, `link_artifact`, …) but **dropped the loop skills** (`detect-and-ask`,
 `check-health`, `impact-check`) — capture continued, the capture→detect→ask→decide loop

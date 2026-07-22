@@ -49,6 +49,8 @@ jobs:
           python3 tools/validate_schema.py
       - name: Installer suite (hermetic)
         run: python3 tools/test_init.py
+      - name: Loop-nudge hook suite (hermetic)
+        run: python3 tools/test_loop_nudge.py
       - name: Skill lint (skills' contract with the surface)
         run: python3 tools/skill_lint.py
 

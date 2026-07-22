@@ -42,8 +42,22 @@ session, prose read out of an adopted codebase.
    are we?".
 
    *Make it mechanical where the harness allows.* This step is a convention, and a convention
-   only holds while every session remembers it. If your harness supports session hooks, wire the
-   reminder in — for Claude Code, add to the project's `.claude/settings.json`:
+   only holds while every session remembers it — and the same goes for the loop itself: real
+   use showed that under operational load an agent keeps *adding nodes* (which feels like using
+   reflow2) while the capture→detect→ask→decide loop silently stops. A discipline that depends
+   on being remembered loses to urgency every time; **fire it on a trigger, not on virtue.**
+
+   The kit ships that trigger: `tools/loop_nudge.py` (stdlib, beside `reflow2_check.py` in the
+   kit). One script, three events — at session start it prints the orientation reminder; after
+   each tool call it counts reflow2 graph writes (a `loop_status` / `detect_gaps` /
+   `detect_defects` call resets the count); and when a session tries to finish with writes
+   nobody checked, it blocks the stop **once** with what to do (`loop_status`, then
+   detect-and-ask / check-health if debt is named). It never blocks twice, and it never reads
+   the graph — your session's server holds the single-writer lock; the hook counts events and
+   the graph answers what is owed.
+
+   For Claude Code, wire all three into the project's `.claude/settings.json` (adjust the kit
+   path if yours differs):
 
    ```json
    {
@@ -53,7 +67,28 @@ session, prose read out of an adopted codebase.
            "hooks": [
              {
                "type": "command",
-               "command": "echo 'reflow2: this project has a design graph. Orient first — open_questions, then the where-am-i skill — before touching code.'"
+               "command": "python3 ~/.local/share/reflow2/kit/tools/loop_nudge.py"
+             }
+           ]
+         }
+       ],
+       "PostToolUse": [
+         {
+           "matcher": "mcp__reflow2__.*",
+           "hooks": [
+             {
+               "type": "command",
+               "command": "python3 ~/.local/share/reflow2/kit/tools/loop_nudge.py"
+             }
+           ]
+         }
+       ],
+       "Stop": [
+         {
+           "hooks": [
+             {
+               "type": "command",
+               "command": "python3 ~/.local/share/reflow2/kit/tools/loop_nudge.py"
              }
            ]
          }
@@ -62,8 +97,9 @@ session, prose read out of an adopted codebase.
    }
    ```
 
-   The hook's output lands in the session's context at startup, so the ritual no longer depends
-   on the agent recalling this file. Harnesses without hooks keep the written convention.
+   `REFLOW2_LOOP_NUDGE_THRESHOLD` (default 1) sets how many unchecked writes arm the stop
+   nudge. Harnesses without hooks keep the written convention — and `loop_status` stays worth
+   calling by hand between tasks either way.
 
 0. **Bootstrap once.** On a brand-new project (empty graph), start with the **genesis**
    skill: call the `genesis` tool to scaffold the Project + temporal anchor, seed the opening
