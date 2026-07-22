@@ -56,6 +56,7 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
+- BL-76 — @ajs — since 2026-07-22 — crates/reflow2-mcp/src/service.rs (readOnlyHint on every tool + smoke gate), then toolsnaps golden schemas + CI diff
 
 
 
