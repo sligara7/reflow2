@@ -31,6 +31,19 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.9.0] — 2026-07-22
+
+A minor release, and the one the field trial should pick up: the design record now **proves
+itself**, and the coherence loop now **fires on a trigger instead of on memory**. The tool
+surface gains `loop_status`; the export document gains `content_hash` + `prev_content_hash`
+(both optional and backward-compatible — old exports still import, absence is reported not
+errored); the kit gains `loop_nudge.py`. No graph-schema change, so no upgrade doc: existing
+graphs open unchanged and consumers update blindly, gaining the tool, the tamper-evident
+export, and the loop hook. Headline threads since 0.8.0: the AT-Protocol-inspired export
+hash-chain (the committed design is now tamper-evident in CI, verified cross-language), and
+the close-out of the adoption-critical BL-74 — `loop_status`, the write-tool `loop_hint`s, and
+the event-fired loop-nudge hook, from the first extensive field trial.
+
 ### Added
 
 - **`loop_status` — the coherence loop's outstanding debt, cheaply** (BL-74 rungs c+b, from
