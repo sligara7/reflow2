@@ -31,6 +31,12 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.8.0] — 2026-07-21
+
+A minor release: the tool surface gains `compare_designs` (and the binary the `--diff` flag) —
+a new tool, so minor per the versioning policy. No schema change, so no upgrade doc: existing
+graphs open unchanged and nothing needs migrating; consumers update blindly and gain the tool.
+
 ### Added
 
 - **`compare_designs` — the design-vs-design diff** (BL-71 rung c; minor: new tool on the
