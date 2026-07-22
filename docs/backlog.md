@@ -1093,6 +1093,39 @@ back toward code. AGENTS.md then points at it. Size **S**.
 | **BL-13** | **Advanced testing tiers** | Comprehension (partly answered by the blind trial), scale (all fixtures are 3–10 nodes), messy input, longitudinal. | M |
 | **BL-14** | **`tools/` sweep follow-ups** | The remaining adopt-list items in [reflow-audit.md](reflow-audit.md): typed gap resolution strategies, abstraction-gap → strategy, document round-trip, MCP resources/prompts. | M |
 
+**BL-8 · addendum — WHEN context enters the graph, not just WHAT** — *user, 2026-07-22: "if I
+exit the session before the LLM writes its summary, do I lose the opportunity?"* The sharp version
+of the session-continuity question, and it exposes that the vulnerability is the **timing**, not
+the content. The wrong design — the LLM distills a summary at session end — is the exact BL-74
+failure mode ("a discipline that depends on being remembered loses to operational urgency"): exit
+is the moment context is most exhausted and most likely to be abandoned, so a summary written on
+the way out is the one the busy session never writes. The right design decouples two things BL-8's
+existing doctrine already separates and this pins to a **three-part safety net**, each part
+already doctrine or already built:
+
+1. **During — continuous capture.** Design decisions are written *when made* via the normal loop
+   tools (`add_decision`, `answer_question`, `add_change_event`), never deferred to a summary. By
+   exit there is nothing pending to lose because there was never a pending summary. The
+   just-shipped BL-79 skill guidance ("attribute nodes when captured, not at exit") is this rule
+   applied to authorship; it generalizes.
+2. **On exit — a trigger, not a virtue.** A **Stop hook** distills anything not yet captured —
+   the exact mechanism BL-74's `loop_nudge.py` already installs (SessionStart / PostToolUse /
+   Stop). Triggers beat exhortation.
+3. **If the Stop hook is missed (hard kill / crash) — retroactive recovery.** The coding agent
+   persists the full transcript under a session **UUID** independent of the LLM's cooperation
+   (Claude Code: `~/.claude/projects/.../<uuid>.jsonl`; the commit trailer `Claude-Session:` and
+   the transcript-URL-on-Decision precedent already link it). So the next session's SessionStart
+   hook can detect an **un-distilled prior transcript and offer to ingest it** (the INGEST /
+   SP-3b pipeline, BL-7). Worst case is *deferral*, never *loss* — the no-silent-drops invariant
+   applied to context.
+
+This third rung — next-session recovery of an orphaned transcript — is the piece **not yet
+written down anywhere**, and it is what makes the honest answer to the user's question "no, exit
+timing cannot lose it." Consistent with `views-are-projections`: the goal is to extract the
+*decisions* from the transcript, never to embalm the conversation. Prerequisites: the Stop-hook
+recipe (BL-74, shipped) and the INGEST-over-MCP handshake (BL-7, still L). Size **S** for the
+recovery-offer hook once BL-7 lands; the doctrine is the value and it is now recorded.
+
 **BL-12 · design notes — what crypto consensus mechanisms lend the multi-writer future** —
 *thought exercise, 2026-07-19, from the author's question: could XRP / Hedera hashgraph /
 Proof-of-Stake trust machinery extrapolate to reflow2?* These mechanisms all answer one question —
@@ -1352,6 +1385,59 @@ alternative-authorship for BL-70. **(5)** signing the export `content_hash` with
 key = BL-41's mechanical half + `dec:export-hash-chain`'s deferred signing, "when a second writer
 is real." Deliberately no "unauthored node" detector yet — it would N-alarm on every existing
 node (the BL-23/42 lesson).
+
+**BL-80 · Git's merge model is the missing half of reflow2's git-like history** — *from the
+user's question "we do a few git-like operations — anything in /home/ajs7/project/git we could
+apply?" (2026-07-22, explored against git's object/merge model and
+`Documentation/technical/{trivial-merge,rerere,sparse-checkout,partial-clone}.adoc`).* The
+finding that reframes the whole multi-writer thread: **reflow2 already built the content-addressed
+*history* half of git** — hash-chained exports (`dec:export-hash-chain`) = commits, DesignEpochs +
+Snapshots = immutable history, `compare_designs` ancestry = merge-base *reporting*. What git has
+that reflow2 doesn't is the **merge + branch** half, which is exactly BL-12 / BL-70 / BL-44 / BL-41.
+Git is the canonical prior art, and reflow2's typed-node model makes several ideas *cleaner* than
+in git. Applicable imports, most-valuable-first:
+
+1. **Three-way typed-node merge — specifies BL-12's merge problem.** ⭐ highest value. Git merges
+   per path against the common ancestor: only one side changed → take it; both changed
+   differently → conflict (the `trivial-merge.adoc` case table literally). Run the SAME algorithm
+   per **node** and per **property** against the common-ancestor export — and `compare_designs`
+   already computes that typed diff, so it is the input. A both-sides conflict becomes a
+   structured **Question/gap** ("node X.prop Y: base=A, ours=B, theirs=C — which?"), which *is*
+   `dec:report-dont-judge` / human-decides. Superior to git: no `<<<<<<<` line markers, typed
+   values not lines, and the ask-the-human machinery exists. Turns BL-12's merge from open to
+   specified.
+2. **merge-base / retain the common ancestor** — prerequisite for #1. The chain is linear
+   (`prev_content_hash`) and must become a **DAG** to represent branches; the ancestor export
+   must be retrievable (content, not just its hash — which `compare_designs` already reports).
+3. **Branches = named mutable pointers over immutable epochs → BL-70.** A git branch is just a
+   named ref to an immutable commit. Epochs + `PRECEDES` are already the commit chain; add the
+   **ref layer** (a name → an epoch/hash, permission for >1 head) and AoA alternatives largely
+   fall out. BL-44's cluster-claims and BL-70's alternatives "want the same scoping primitive" —
+   git says that primitive is a ref + a merge-base.
+4. **author vs committer + signed commits → ratifies BL-79 + mechanizes BL-41.** Git records
+   author (who wrote it) *and* committer (who applied it) distinctly, and signs commits over the
+   object hash. The author/committer split **is** the deferred `ACTS_FOR` rung (person authored,
+   agent committed); signing the export `content_hash` with a Contributor key is BL-41's
+   mechanical half + `dec:export-hash-chain`'s deferred signing, "when a second writer is real."
+   No design invention — copy the proven split.
+5. **rerere — reuse recorded conflict resolutions** (later rung). Record how a human resolved a
+   node/property conflict, keyed by a normalized conflict id, and auto-replay it when the same
+   divergence recurs. reflow2 already mints deterministic gap ids (FNV over source+sorted-affected)
+   — the same normalization instinct.
+6. **Merkle-per-node hashes** (defer) — the export hash is a single flat hash, not a tree of
+   per-node hashes; per-node hashes would make diff/merge O(changed) and enable partial sync, but
+   it is an optimization at ~300-node scale, not a correctness need.
+7. **sparse-checkout / worktrees as the *model* for BL-44** — a contributor scoped to a computable
+   subgraph (`propagate_from` / community). Borrow the cone/worktree concept, not git's
+   filesystem mechanism — reflow2's claim layer is advisory (`dec:report-dont-judge`).
+
+**Explicitly do NOT import** (reflow2 is a design graph, not a filesystem): line-based diff/merge
+*representation* (the 3-way *algorithm* transfers, the line orientation is strictly worse than
+typed diffs — the key "graph ≠ files" caveat); packfiles / delta compression; the smart
+fetch/push transport (whole-file export/import is the right-sized `git bundle` analogue); the
+index/staging area (continuous-capture doctrine deliberately rejects a staging gate). Sizes: #1+#2
+together are the **L** core of BL-12; #3 is **M** and mostly BL-70; #4 near-term **S** (adopt the
+split) then later signing; #5–#7 later rungs.
 
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
