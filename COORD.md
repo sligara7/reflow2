@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-75 (requirement certainty as a state) — @ajs — since 2026-07-22 — vocabulary session first; then likely report.rs + skills, possibly schema
 
 
 
@@ -80,6 +79,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-75 done, closing the fleet-trial trio (dec:certainty-derived): requirement certainty DERIVED from status × provenance, never a stored third axis. accepted/met → user-confirmed; proposed+inferred → recovered; proposed+authored → asserted; deferred/dropped → settled out. Doctrine: every move off proposed records the USER's word (BL-12 sketch-2's example made real, cultural for now, mechanical stays BL-41) — stated in set_requirement_status's description ("promoting it yourself forges their signature"), capture-intent, adopt; where-am-i reads the new "Requirement certainty" snapshot line instead of caveating in prose (3 mirrors × 3 skills). requirement_certainty + breakdown in report.rs, GraphReport += requirement_certainty, snapshot renders it. skill_lint += accepted/met/proposed. 2 new report tests (matrix incl. confirmed-recovered + no-requirements silence); 41 suites green, smoke green. No schema change — second read-side-blind item this week. Drift accepted two-sided art:report/service/adopt-skill (chg:bl75-certainty-derived). Export 290n/752e, gaps 0, chain advanced, live==committed — @ajs — 2026-07-22 — (this commit)
 
 - BL-73 done (dec:component-verified-computed): component-granularity verification as a computed third state. capability_verification (verify.rs) → verified / component_verified / unchecked; coverage line gains the clause ("N more at component granularity"); the N per-cap unverified alarms fold into ONE component_granularity_verification gap per carrying component at 0.35 (riding caps listed, acknowledgeable once); status_contradiction accepts component proof; loop_status counts it proven; failing suite carries nothing. Write side needed zero changes (VERIFIES→* all along). Adopt skill teaches suite-on-the-Component (3 mirrors). 7-case suite (component_verified.rs) replays the fleet trial's shape; 41 workspace suites green; smoke green. Self-derived DEPENDS_ON caught the new detect→verify + report→verify calls — the design tracked the code change by itself. Drift accepted two-sided on art:verify/detect/report/adopt-skill (chg:bl73-component-verified). Export 285n/742e, gaps 0, chain advanced, live==committed — @ajs — 2026-07-22 — (this commit)
 

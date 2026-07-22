@@ -328,6 +328,30 @@ DECISIONS = [
      "question, not a tuned number. The write side needed nothing: VERIFIES accepts any "
      "target and even carries an unused coverage enum — the whole defect was the read side.",
      ["cap:detect", "cap:report"]),
+    ("dec:certainty-derived",
+     "A Requirement's certainty is derived from status × provenance; every move off proposed "
+     "is the user's word",
+     "Requirement certainty is a computed reading, never a stored third axis: status "
+     "accepted/met → user-confirmed; status deferred/dropped → settled out (also the user's "
+     "word); status proposed → asserted (provenance authored/planned/imported) or recovered "
+     "(provenance inferred/reconciled/healed). The load-bearing doctrine: an agent captures "
+     "requirements at proposed and ONLY the user's answer moves the status — accepted, met, "
+     "deferred and dropped are all user-only verbs. Reports render the certainty breakdown "
+     "directly so no session reconstructs it in prose.",
+     "User decided all three axes 2026-07-22 (BL-75 vocabulary session, from their fleet "
+     "trial: where-am-i had to caveat user-confirmed vs recovered in prose every session). "
+     "Derived over stored for the BL-73 reason — a third stored property can contradict the "
+     "two axes that already span the space, and the backlog's own warning was 'decide "
+     "deliberately, not additively'. Every-move-off-proposed rather than accepted-only "
+     "because an agent dropping a requirement on its own judgment is exactly the silent "
+     "decision the loop exists to prevent — and this is BL-12 sketch idea 2's example made "
+     "real ('a requirement moves to accepted only on the human's say-so'), enforced "
+     "culturally in the skills and the tool description today; the mechanical half stays "
+     "with BL-41. 'Recovered' over the trial's 'adopted' because it matches the graph's own "
+     "vocabulary (cap:adopt: 'Recover a design from an existing system') and names the fact, "
+     "not the workflow. No schema change: the whole defect was the read side — the second "
+     "time this week (BL-73) the vocabulary was already sufficient and unread.",
+     ["cap:report"]),
 ]
 
 # ---- P2 · Structure. Coarse: crate -> module. -----------------------------

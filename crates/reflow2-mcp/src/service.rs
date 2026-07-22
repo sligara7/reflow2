@@ -1400,9 +1400,12 @@ impl ReflowService {
 
     #[tool(
         description = "Set a Requirement's lifecycle status: `proposed` (the default) / \
-                       `accepted` / `deferred` / `dropped` / `met`. Use it to mark a requirement \
-                       provisional rather than writing that into the statement text. A `dropped` \
-                       or `met` requirement stops raising unsatisfied_requirement."
+                       `accepted` / `deferred` / `dropped` / `met`. Every move off `proposed` \
+                       records the USER's word, never your own judgment: capture at `proposed` \
+                       and move the status only when the user has actually confirmed, deferred \
+                       or dropped it — certainty is derived from this status, so promoting it \
+                       yourself forges their signature (dec:certainty-derived). A `dropped` or \
+                       `met` requirement stops raising unsatisfied_requirement."
     )]
     pub async fn set_requirement_status(
         &self,

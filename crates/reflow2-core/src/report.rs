@@ -43,12 +43,73 @@ const SNAPSHOT_TYPES: &[&str] = &[
     node::RESOURCE,
 ];
 
+/// The `status` × `provenance` → certainty mapping, on a node already in
+/// hand. Absent properties take their schema defaults (`proposed`,
+/// `authored`), so a bare requirement reads as asserted, never as confirmed.
+fn certainty_of(req: &dynograph_storage::StoredNode) -> RequirementCertainty {
+    let status = req
+        .properties
+        .get("status")
+        .and_then(dynograph_core::Value::as_str)
+        .unwrap_or("proposed");
+    match status {
+        "accepted" | "met" => RequirementCertainty::UserConfirmed,
+        "deferred" | "dropped" => RequirementCertainty::SettledOut,
+        _ => {
+            let provenance = req
+                .properties
+                .get("provenance")
+                .and_then(dynograph_core::Value::as_str)
+                .unwrap_or("authored");
+            match provenance {
+                "inferred" | "reconciled" | "healed" => RequirementCertainty::Recovered,
+                _ => RequirementCertainty::Asserted,
+            }
+        }
+    }
+}
+
 /// Whether a node type is design content, as opposed to the supporting layer
 /// (provenance, questions, history). The same split the graph report's
 /// snapshot draws — `compare` reuses it so "design vs supporting" means one
 /// thing everywhere.
 pub(crate) fn is_design_type(node_type: &str) -> bool {
     SNAPSHOT_TYPES.contains(&node_type)
+}
+
+/// How firmly a Requirement stands — derived from `status` × `provenance`,
+/// never stored (BL-75, `dec:certainty-derived`). The two axes already span
+/// the space; a third stored property could contradict them both. The
+/// load-bearing doctrine that makes this derivable: an agent captures
+/// requirements at `proposed`, and ONLY the user's answer moves the status —
+/// `accepted`, `met`, `deferred` and `dropped` are all user-only verbs.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum RequirementCertainty {
+    /// The user said yes to this — status `accepted` or `met`.
+    UserConfirmed,
+    /// Someone stated it and the user has not yet confirmed the wording —
+    /// status `proposed`, provenance `authored`/`planned`/`imported`.
+    Asserted,
+    /// Read back out of an existing system and not yet put to the user —
+    /// status `proposed`, provenance `inferred`/`reconciled`/`healed`. A
+    /// recovered requirement is satisfied by construction and can never
+    /// contradict anything, which is exactly why its certainty must be
+    /// visible.
+    Recovered,
+    /// The user decided it *out* — status `deferred` or `dropped`. Also
+    /// their word; not uncertainty.
+    SettledOut,
+}
+
+/// The certainty breakdown the snapshot renders — so no session reconstructs
+/// "which of these did the user actually confirm?" in prose.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct CertaintyBreakdown {
+    pub user_confirmed: usize,
+    pub asserted: usize,
+    pub recovered: usize,
+    pub settled_out: usize,
 }
 
 /// How much of the design carries its own verification.
@@ -153,6 +214,10 @@ pub struct GraphReport {
     pub surprising: Vec<SurprisingConnection>,
     /// Surprising couplings beyond the shown top.
     pub surprising_truncated: usize,
+    /// Which requirements the user actually confirmed, which are asserted,
+    /// which were recovered from an artifact (BL-75). `None` when there are
+    /// no requirements.
+    pub requirement_certainty: Option<CertaintyBreakdown>,
     /// How much of the design carries its own verification (a signal, not a gap).
     pub verification: VerificationCoverage,
     /// How much of the design has something built for it, and how much the
@@ -208,6 +273,41 @@ pub struct LoopStatus {
 }
 
 impl DesignGraph {
+    /// Derive a requirement's [`RequirementCertainty`] from its stored
+    /// `status` and `provenance`. Pure derivation — see the enum for the
+    /// mapping and the doctrine it rests on.
+    pub fn requirement_certainty(
+        &self,
+        requirement_id: &str,
+    ) -> Result<RequirementCertainty, DynoError> {
+        let Some(req) = self.get_node(node::REQUIREMENT, requirement_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::REQUIREMENT.to_string(),
+                node_id: requirement_id.to_string(),
+            });
+        };
+        Ok(certainty_of(&req))
+    }
+
+    /// Count the certainty breakdown across every Requirement.
+    pub fn requirement_certainty_breakdown(&self) -> Result<CertaintyBreakdown, DynoError> {
+        let mut b = CertaintyBreakdown {
+            user_confirmed: 0,
+            asserted: 0,
+            recovered: 0,
+            settled_out: 0,
+        };
+        for req in self.scan_nodes(node::REQUIREMENT)? {
+            match certainty_of(&req) {
+                RequirementCertainty::UserConfirmed => b.user_confirmed += 1,
+                RequirementCertainty::Asserted => b.asserted += 1,
+                RequirementCertainty::Recovered => b.recovered += 1,
+                RequirementCertainty::SettledOut => b.settled_out += 1,
+            }
+        }
+        Ok(b)
+    }
+
     /// Compute the loop's outstanding debt. See [`LoopStatus`].
     pub fn loop_status(&self) -> Result<LoopStatus, DynoError> {
         let questions = self.open_questions()?;
@@ -416,6 +516,11 @@ impl DesignGraph {
         let total_nodes = design_nodes + other_nodes;
 
         let verification = self.verification_coverage()?;
+        let requirement_certainty = if self.count_nodes(node::REQUIREMENT)? > 0 {
+            Some(self.requirement_certainty_breakdown()?)
+        } else {
+            None
+        };
         let realization = self.realization_coverage()?;
         let ledger = self.confirmation_ledger()?;
         let confirmation = if ledger.claims.is_empty() {
@@ -472,6 +577,7 @@ impl DesignGraph {
             allocation,
             surprising,
             surprising_truncated,
+            requirement_certainty,
             verification,
             confirmation,
             declining,
@@ -521,6 +627,29 @@ impl GraphReport {
                     other,
                     self.total_nodes
                 );
+            }
+            // Which requirements the user actually confirmed (BL-75) — said
+            // here so no session reconstructs certainty in prose. Zero
+            // categories are omitted; a wholly-confirmed set reads as one
+            // clean clause.
+            if let Some(c) = &self.requirement_certainty {
+                let mut parts = Vec::new();
+                for (n, label) in [
+                    (c.user_confirmed, "user-confirmed"),
+                    (c.asserted, "asserted, awaiting the user"),
+                    (
+                        c.recovered,
+                        "recovered from the artifact, awaiting the user",
+                    ),
+                    (c.settled_out, "settled out (deferred/dropped)"),
+                ] {
+                    if n > 0 {
+                        parts.push(format!("{n} {label}"));
+                    }
+                }
+                if !parts.is_empty() {
+                    let _ = writeln!(m, "Requirement certainty: {}.\n", parts.join(" · "));
+                }
             }
             let _ = writeln!(
                 m,

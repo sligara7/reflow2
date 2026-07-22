@@ -302,3 +302,83 @@ fn recorded_drift_is_owed_a_disposition_until_accepted() {
     assert_eq!(accepted.undispositioned_drift, 0);
     assert_eq!(accepted.unexamined_claims, 0);
 }
+
+// ---- Requirement certainty: derived, never stored (BL-75) -------------------
+
+#[test]
+fn certainty_is_derived_from_status_and_provenance() {
+    use reflow2_core::RequirementCertainty;
+
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+
+    // Captured by an agent, awaiting the user: asserted.
+    g.add_requirement("req:asserted", "A", "Someone stated it.")
+        .unwrap();
+    // Recovered from an artifact during adopt, awaiting the user.
+    g.add_requirement("req:recovered", "R", "Read out of the code.")
+        .unwrap();
+    g.set_provenance(node::REQUIREMENT, "req:recovered", "inferred")
+        .unwrap();
+    // The user said yes — including to a recovered one: provenance keeps
+    // saying how it ENTERED, status records their word.
+    g.add_requirement("req:confirmed", "C", "The user confirmed it.")
+        .unwrap();
+    g.set_requirement_status("req:confirmed", "accepted")
+        .unwrap();
+    g.add_requirement(
+        "req:confirmed-recovered",
+        "CR",
+        "Recovered, then confirmed.",
+    )
+    .unwrap();
+    g.set_provenance(node::REQUIREMENT, "req:confirmed-recovered", "inferred")
+        .unwrap();
+    g.set_requirement_status("req:confirmed-recovered", "accepted")
+        .unwrap();
+    // The user decided it out — their word too, not uncertainty.
+    g.add_requirement("req:out", "O", "Not in v1.").unwrap();
+    g.set_requirement_status("req:out", "dropped").unwrap();
+
+    for (req, expected) in [
+        ("req:asserted", RequirementCertainty::Asserted),
+        ("req:recovered", RequirementCertainty::Recovered),
+        ("req:confirmed", RequirementCertainty::UserConfirmed),
+        (
+            "req:confirmed-recovered",
+            RequirementCertainty::UserConfirmed,
+        ),
+        ("req:out", RequirementCertainty::SettledOut),
+    ] {
+        assert_eq!(
+            g.requirement_certainty(req).unwrap(),
+            expected,
+            "{req} should read as {expected:?}"
+        );
+    }
+
+    let b = g.requirement_certainty_breakdown().unwrap();
+    assert_eq!(
+        (b.user_confirmed, b.asserted, b.recovered, b.settled_out),
+        (2, 1, 1, 1)
+    );
+
+    // And the report says it, so no session reconstructs it in prose.
+    let md = g.graph_report().unwrap().to_markdown();
+    assert!(
+        md.contains(
+            "Requirement certainty: 2 user-confirmed · 1 asserted, awaiting the user · \
+             1 recovered from the artifact, awaiting the user · 1 settled out (deferred/dropped)."
+        ),
+        "{md}"
+    );
+}
+
+#[test]
+fn a_design_with_no_requirements_makes_no_certainty_claim() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    let r = g.graph_report().unwrap();
+    assert!(r.requirement_certainty.is_none());
+    assert!(!r.to_markdown().contains("Requirement certainty"));
+}

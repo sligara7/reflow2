@@ -57,7 +57,11 @@ something they could read in under a minute:
 - **Never paste raw ids at the user.** `cmp:reading-store` means nothing to them; "the reading
   store" does. Ids belong in your tool calls, not your prose.
 - **Don't imply more certainty than the graph holds.** A Requirement recorded from an assumption
-  you made is not the same as one the user confirmed — say which is which.
+  you made is not the same as one the user confirmed — and the report now says which is which:
+  the snapshot's **"Requirement certainty"** line (user-confirmed · asserted · recovered) is
+  derived from status × provenance, because every move off `proposed` records the *user's* word.
+  Read it back to them instead of reconstructing it; the asserted and recovered counts are
+  standing questions.
 - **Don't hide the open questions to make the summary tidy.** The gaps are the value.
 - **If nothing has changed since last time, say so plainly.** A short honest answer beats a
   padded one.

@@ -1297,15 +1297,21 @@ remembered will lose to operational urgency every time.* Also fold in: session c
 warm-up (their MCP tools were deferred at first use) belongs to the same hook recipe, not to
 the server.
 
-**BL-75 · A Requirement's certainty is a state, not a caveat** — *same trial log.* Size
-**S** (schema change → minor + upgrade doc). `where-am-i` tells agents to distinguish a
-user-confirmed Requirement from one recovered/assumed during adopt — but the graph carries
-only `provenance`, so every session reconstructs certainty in prose. Field suggestion: a
-first-class confirmation state on Requirement (e.g. `asserted` / `adopted` /
-`user-confirmed`) that reports render directly. Vocabulary is the user's call; watch the
-overlap with `status` (proposed/accepted already implies some of this — maybe the answer is
-a documented meaning for `accepted`-with-`provenance:inferred` rather than a third axis).
-Decide deliberately, not additively.
+**BL-75 · A Requirement's certainty is a state, not a caveat — DONE 2026-07-22** — *same
+trial log; the last of the trio it raised.* User decided all three axes
+(`dec:certainty-derived`), and the backlog's own hunch was right: **derived, not a third
+axis** — status × provenance already spans the space once the doctrine is settled. The
+mapping: `accepted`/`met` → user-confirmed; `proposed`+`inferred` → recovered, awaiting the
+user; `proposed`+`authored` → asserted, awaiting the user; `deferred`/`dropped` → settled
+out (their word too). The doctrine with teeth: **every move off `proposed` records the
+USER's word** — an agent captures at proposed and only the user's answer moves it (BL-12
+sketch idea 2's example made real, culturally for now; the mechanical half stays with
+BL-41). `graph_report`'s snapshot renders the breakdown ("Requirement certainty: 15
+user-confirmed · 2 asserted…"); where-am-i reads the line instead of caveating;
+capture-intent and adopt state the rule at the point of capture; the
+`set_requirement_status` description says it to every session ("promoting it yourself
+forges their signature"). No schema change — the second item this week (BL-73) where the
+vocabulary was sufficient and the read side was blind.
 
 **BL-44 · Node-level claims — parallel work on one design** — *user, 2026-07-20. Concept-only by
 their own framing; the details are the work.*

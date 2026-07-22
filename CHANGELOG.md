@@ -33,6 +33,20 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Requirement certainty, derived and rendered** (BL-75, closing the field-trial trio;
+  minor: `graph_report` gains a field and a snapshot line — no schema change). A
+  requirement's certainty is computed from the two axes that already span the space, never
+  stored as a third: `accepted`/`met` → **user-confirmed**, `proposed` + `inferred` →
+  **recovered from the artifact, awaiting the user**, `proposed` + `authored` → **asserted,
+  awaiting the user**, `deferred`/`dropped` → settled out. The snapshot now carries a
+  "Requirement certainty" line so no session reconstructs it in prose — the caveat where-am-i
+  had to hand-write every time. The load-bearing doctrine is now stated everywhere it
+  matters (`dec:certainty-derived`, the `set_requirement_status` tool description, the
+  capture-intent and adopt skills): an agent captures at `proposed`, and **every move off
+  `proposed` records the user's word** — promoting a status yourself forges their signature.
+  Second item this week where the vocabulary was already sufficient and only the read side
+  was blind.
+
 - **Component-granularity verification — the third state** (BL-73, from the field trial;
   minor: `verification_coverage` gains a field, `detect_gaps` a gap kind). A capability's
   verification is now three-valued: `verified` (a passing check of its own),

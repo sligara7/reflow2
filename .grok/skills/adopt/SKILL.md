@@ -63,6 +63,11 @@ recorded.
   package linked into its callers. A shared library is imported by everything, so it looks
   exactly like a hub — and "add redundancy" is meaningless for it. Marking it `library` is how
   the graph knows.
+- **Recovered requirements stay `proposed` until the user confirms them.** A requirement read
+  out of an artifact is satisfied by construction — with `provenance: inferred` and status
+  `proposed` it reads as *recovered, awaiting the user* in every report, which is the truth.
+  Only the user's answer moves it to `accepted`; promoting it yourself would make an
+  assumption indistinguishable from their word.
 - **Statuses honest, provenance marked**: what ships is `realized` (or `verified` only where a
   passing check will actually back it), and everything read out of the artifact carries
   `provenance: inferred`. A graph that calls a production system `planned` asserts it is
