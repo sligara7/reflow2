@@ -1882,6 +1882,37 @@ describing space, not history, and the vocabulary should not conflate them. Conn
 [BL-44]: a cluster checkout that explores an option rather than progressing the baseline is this
 item's fork — the two likely share the scoping primitive (see BL-44's 2026-07-21 addendum).
 
+**BL-71 · Two models of one design: the curated rebuild clobbers the accumulated live graph** —
+*found 2026-07-21 while modelling the v0.6/v0.7 Release nodes.* Size **M**; needs a
+reconciliation decision before code.
+
+`tools/build_design_graph.py` (full run) rebuilds the curated self-model from source — 184
+nodes — and writes it to `docs/design/reflow2.json`, the same path the live sessions export the
+**accumulated** graph to (247 nodes at the time: everything the curated model has *plus* the
+session-written layer — freshness-claim ChangeEvents, the SPOF-acceptance Decisions, Questions,
+the BL-63/66/69 change events, `art:check`). The full rebuild therefore silently **discards the
+live layer from the committed record**; it happened live and was caught only because the node
+count dropped, then restored from git. The two writers disagree about what the file *is*: the
+rebuild treats it as a projection of source, the sessions treat it as the durable record of the
+graph (SETUP.md's own doctrine: "the export is the durable record").
+
+Sharper statement: the curated model and the live graph have **diverged as designs** — 18 vs 10
+Requirements, 10 vs 9 Decisions — and nothing detects or reconciles that. This is drift between
+two as-designed records, a case none of the three reconcile tools covers (they all compare
+design against *reality* — disk, deployment, test runs — never design against design).
+
+Decisions needed: **(a)** is the committed export the rebuild's output or the live graph's
+export — one of them needs a different file, or the rebuild needs to *import-then-layer* rather
+than replace (its own import is upsert, so rebuild-into-the-live-graph may already be the
+answer: run the curated pass INTO the accumulated graph, then export the union); **(b)** should
+`import_graph`/the export flow warn when an import would *shrink* the graph it replaces (a
+node-count drop is exactly the silent-loss signature that caught this); **(c)** does
+`reconcile_artifacts`' sibling — a design-vs-design diff — deserve to exist (it is also what
+BL-70's cross-branch comparison needs, and the export is deterministic precisely so two of them
+diff cleanly). Until then: **do not run the full `build_design_graph.py` after live-session
+graph writes without re-exporting the live graph afterwards** — the tool's release model
+(v0.4.0–v0.7.0, added 2026-07-21) reaches the live graph only via that reconciliation.
+
 ## Deliberate deferrals
 
 Not gaps — decisions, recorded so they aren't rediscovered as bugs.
