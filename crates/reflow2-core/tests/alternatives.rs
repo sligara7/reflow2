@@ -3,7 +3,7 @@
 //! Alternatives are separate exports; this lays them side by side on the same
 //! measures and reports each one's divergence from the baseline.
 
-use reflow2_core::{DesignGraph, GraphExport, Value, analyze_alternatives};
+use reflow2_core::{DesignGraph, GapSource, GraphExport, Value, analyze_alternatives};
 
 fn g() -> DesignGraph {
     DesignGraph::open_in_memory().expect("graph")
@@ -210,4 +210,43 @@ fn collapsing_to_a_non_alternative_is_refused() {
         .collapse_decision("dec:choice", "alt:ghost", None)
         .unwrap_err();
     assert!(format!("{err}").contains("not an alternative"));
+}
+
+#[test]
+fn a_proposed_decision_with_two_alternatives_raises_an_open_fork_gap() {
+    let mut g = decision_point();
+    g.register_alternative("dec:choice", "alt:a", "Option A", "a.json")
+        .expect("a");
+
+    // One road is not a choice — no fork yet.
+    let gaps = g.detect_gaps().expect("detect");
+    assert!(
+        !gaps
+            .iter()
+            .any(|g| g.gap_source == GapSource::UndecidedDecisionPoint),
+        "a single alternative is not an open fork"
+    );
+
+    g.register_alternative("dec:choice", "alt:b", "Option B", "b.json")
+        .expect("b");
+
+    // Two roads, undecided — the teeth fire.
+    let gaps = g.detect_gaps().expect("detect");
+    let gap = gaps
+        .iter()
+        .find(|g| g.gap_source == GapSource::UndecidedDecisionPoint)
+        .expect("an undecided decision point is surfaced");
+    assert!(gap.affected_ids.contains(&"dec:choice".to_string()));
+    assert!(gap.affected_ids.contains(&"alt:a".to_string()));
+
+    // Collapsing settles it — the fork closes, the gap is gone.
+    g.collapse_decision("dec:choice", "alt:a", Some("simpler"))
+        .expect("collapse");
+    let gaps = g.detect_gaps().expect("detect");
+    assert!(
+        !gaps
+            .iter()
+            .any(|g| g.gap_source == GapSource::UndecidedDecisionPoint),
+        "a settled decision is no longer an open fork"
+    );
 }

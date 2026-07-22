@@ -198,6 +198,13 @@ pub enum GapSource {
     LevelMismatch,
     /// A subsystem-or-higher component with no parent above and no child below.
     OrphanLevel,
+    // Decision points (axis of design space — BL-70)
+    /// A *proposed* Decision holding ≥2 registered alternatives — an open fork
+    /// the design has not chosen between. The "missing teeth" BL-70 named:
+    /// nothing else makes a proposed Decision gate anything, so a held-open
+    /// analysis of alternatives would sit undecided forever without a nudge.
+    /// Compare them (`analyze_alternatives`), then `collapse_decision`.
+    UndecidedDecisionPoint,
 }
 
 impl GapSource {
@@ -233,6 +240,7 @@ impl GapSource {
             GapSource::MissingIntermediateLevel => "missing_intermediate_level",
             GapSource::LevelMismatch => "level_mismatch",
             GapSource::OrphanLevel => "orphan_level",
+            GapSource::UndecidedDecisionPoint => "undecided_decision_point",
         }
     }
 }
@@ -841,6 +849,7 @@ impl DesignGraph {
         // an answer — see `GapSource::UnexpectedCoupling`.
         self.detect_declining_dimensions(&mut gaps)?;
         self.detect_hierarchy_gaps(&mut gaps)?;
+        self.detect_undecided_decision_points(&mut gaps)?;
 
         gaps.sort_by(|a, b| {
             // `false` sorts before `true`, so "has anchors" comes first.
@@ -1928,6 +1937,53 @@ impl DesignGraph {
                 affected_ids: issue.components,
                 suggested_depth: 2,
                 evidence: issue.message,
+            });
+        }
+        Ok(())
+    }
+
+    /// A proposed Decision holding ≥2 registered alternatives — an open fork
+    /// (BL-70's "missing teeth": a proposed Decision that otherwise gates
+    /// nothing). One question per decision point, anchored on the Decision and
+    /// its alternatives, so acknowledging it survives only while that exact fork
+    /// stands. A fork of one road is not a choice, so ≥2 is the threshold.
+    fn detect_undecided_decision_points(
+        &self,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        for dec in self.scan_nodes(node::DECISION)? {
+            if dec
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                != Some("proposed")
+            {
+                continue;
+            }
+            let alts = self.alternatives_for(&dec.node_id)?;
+            if alts.len() < 2 {
+                continue;
+            }
+            let name = node_name(&dec);
+            let mut affected = vec![dec.node_id.clone()];
+            affected.extend(alts.iter().map(|a| a.id.clone()));
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::UndecidedDecisionPoint, &affected),
+                gap_source: GapSource::UndecidedDecisionPoint,
+                scope: GapScope::Capability,
+                severity: 0.6,
+                title: format!("Decision “{name}” has {} alternatives, undecided", alts.len()),
+                description: format!(
+                    "“{name}” is a proposed decision point with {} alternatives held open — which do you choose? Compare them with analyze_alternatives, then collapse_decision to settle it.",
+                    alts.len()
+                ),
+                affected_ids: affected,
+                suggested_depth: 3,
+                evidence: format!(
+                    "Decision '{}' is proposed with {} alternative(s) GOVERNED_BY it.",
+                    dec.node_id,
+                    alts.len()
+                ),
             });
         }
         Ok(())

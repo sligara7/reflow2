@@ -2336,10 +2336,14 @@ chooses a winner: Decision → accepted, losers `OBSOLETES`-superseded (retired 
 deleted), outcome + rationale written into the Decision's own `alternatives` field (the ADR obituary
 the fork upgrades from prose to structure). Winner's content merged separately via `apply_merge`.
 Ops `set_decision_status` / `register_alternative` / `alternatives_for` / `collapse_decision`; 8
-tests. **Still open on BL-70:** the `undecided_decision_point` DETECT gap (surface an open fork as a
-question — the last of the "missing teeth"), DETECT question #2 (is a cross-branch absence itself a
+tests. **The teeth are complete:** the `undecided_decision_point` DETECT gap BUILT 2026-07-22 — a
+proposed Decision holding ≥2 alternatives is surfaced by `detect_gaps` as an open fork ("which do
+you choose?"), anchored on the Decision + its alternatives so it clears the moment the decision
+collapses (a fork of one road is not a choice, so ≥2 is the threshold). **Still open on BL-70:**
+DETECT question #2 (is a cross-branch absence — "satisfied in only one alternative" — itself a
 gap?), per-branch readiness (BL-68), and world-scope (decision #1's other option) if simultaneous
-in-one-graph AoA ever proves needed.
+in-one-graph AoA ever proves needed. The core of BL-70 — compare, hold, collapse, and now surface —
+is done.
 
 The idea in the user's words: an undecided design choice could hold **forks** — option A and
 option B (and more) as live sub-designs — and, from military source selection, an analysis of
