@@ -566,11 +566,18 @@ def build(s: Server, fresh: bool = True) -> None:
          "Patch: the BL-58 core silent-failure batch (12 doctrine/correctness "
          "fixes). Superseded in place by v0.7.0.",
          ["art:adopt-skill"]),
-        ("rel:v070", "v0.7.0", "0.7.0", "deployed",
+        ("rel:v070", "v0.7.0", "0.7.0", "retired",
          "Minor: Snapshot.edges (BL-63, snapshots capture design edges), "
          "single_point_of_failure measured on the as-built operational network "
          "(BL-69), and the consumer CI coherence gate reflow2_check.py + "
-         "ci-gate skill (BL-66) — the kit tarball's first second tool.",
+         "ci-gate skill (BL-66) — the kit tarball's first second tool. "
+         "Superseded in place by v0.8.0.",
+         ["art:adopt-skill", "art:check"]),
+        ("rel:v080", "v0.8.0", "0.8.0", "deployed",
+         "Minor: compare_designs, the design-vs-design diff (BL-71 rung c) — "
+         "the reconcile family's sibling for two as-designed records, as a "
+         "core op + MCP tool + --diff CLI. No schema change. First release "
+         "whose manifest carries compare.rs.",
          ["art:adopt-skill", "art:check"]),
     ]
     EXTRA_RELEASE_ARTIFACTS = {
@@ -610,10 +617,10 @@ def build(s: Server, fresh: bool = True) -> None:
     # reconcile_deployment correction path uses exactly this).
     s.call("deploy_to", {"release_id": "rel:v040", "environment_id": "env:dev",
                          "status": "rolled_back"})
-    for retired in ("rel:v050", "rel:v060", "rel:v061"):
+    for retired in ("rel:v050", "rel:v060", "rel:v061", "rel:v070"):
         s.call("deploy_to", {"release_id": retired, "environment_id": "env:dev",
                              "status": "rolled_back"})
-    s.call("deploy_to", {"release_id": "rel:v070", "environment_id": "env:dev",
+    s.call("deploy_to", {"release_id": "rel:v080", "environment_id": "env:dev",
                          "status": "active"})
 
 
