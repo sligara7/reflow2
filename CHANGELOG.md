@@ -33,6 +33,18 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Three-way merge of two divergent designs — the `merge_designs` tool + `--merge` CLI** (BL-80,
+  the report rung; **minor** — a new tool on the surface). Compare's write-side sibling: given a
+  common ancestor (base) and two divergent records (ours, theirs), it runs git's trivial-merge
+  case table per node and per property over typed values — one-sided changes are taken, agreed
+  changes are taken, both-sides changes become **conflicts surfaced as questions** with
+  deterministic ids, and a node one side deleted while the other changed it is **retained and
+  asked** (deletion must be re-justified; `dec:merge-conflict-semantics`). Edges get the identical
+  rule. It is a **proposal — it writes nothing** (`dec:merge-three-way`, `dec:report-dont-judge`);
+  the base comes from git (`git merge-base` + the committed export at that commit), so reflow2
+  builds no commit DAG of its own. Applying the resolved merge is the next rung, recorded as
+  Deferred. Pure and deterministic (`crates/reflow2-core/src/merge.rs`, `tests/merge.rs` — 14
+  cases). Specifies the core of BL-12's multi-writer problem.
 - **Design-authorship identity — the `Contributor` keystone, authorship seed** (BL-79, user-chosen
   direction; **schema change → minor, and a graph written now cannot be opened by a
   pre-`Contributor` binary** — refused loudly by the count-based provenance check, per BL-19). The

@@ -47,6 +47,18 @@ struct Cli {
     /// whenever the comparison ran, whatever it found.
     #[arg(long, value_name = "BASE [OTHER]", num_args = 1..=2)]
     diff: Vec<String>,
+
+    /// Propose a three-way merge and exit, printing the proposal as JSON. Takes
+    /// three paths — the common ancestor (base), ours, and theirs — and never
+    /// opens the graph, so it runs even while a server holds the lock.
+    ///
+    /// Matching the `merge_designs` tool: one-sided changes are taken, both-
+    /// sides changes conflict and are surfaced as questions, and a node one
+    /// side deleted and the other changed is retained and asked. This is a
+    /// proposal — it writes nothing; applying it is a separate step. The exit
+    /// code is 0 whenever the merge ran, whatever it found.
+    #[arg(long, value_name = "BASE OURS THEIRS", num_args = 3)]
+    merge: Vec<String>,
 }
 
 /// Turn the RocksDB lock error into the sentence the operator needs.
@@ -87,6 +99,9 @@ async fn main() -> anyhow::Result<()> {
     if !cli.diff.is_empty() && (cli.export || cli.import.is_some()) {
         anyhow::bail!("--diff is its own mode; pass it without --export/--import");
     }
+    if !cli.merge.is_empty() && (cli.export || cli.import.is_some() || !cli.diff.is_empty()) {
+        anyhow::bail!("--merge is its own mode; pass it without --export/--import/--diff");
+    }
 
     // Diff-and-exit. Two files never touch the graph; one file compares
     // against the live graph, which needs the (single-writer) store.
@@ -113,6 +128,25 @@ async fn main() -> anyhow::Result<()> {
             }
         };
         println!("{}", serde_json::to_string_pretty(&diff)?);
+        return Ok(());
+    }
+
+    // Merge-and-exit. Three files, never the graph — so it runs while a server
+    // holds the lock. It proposes; it writes nothing.
+    if !cli.merge.is_empty() {
+        let read_doc = |path: &str| -> anyhow::Result<reflow2_core::GraphExport> {
+            let raw = std::fs::read_to_string(path)
+                .with_context(|| format!("failed to read the design from {path}"))?;
+            serde_json::from_str(&raw)
+                .with_context(|| format!("{path} is not a reflow2 export document"))
+        };
+        let (base_path, ours_path, theirs_path) = (&cli.merge[0], &cli.merge[1], &cli.merge[2]);
+        let base = read_doc(base_path)?;
+        let ours = read_doc(ours_path)?;
+        let theirs = read_doc(theirs_path)?;
+        let proposal =
+            reflow2_core::merge_designs(&base, &ours, &theirs, base_path, ours_path, theirs_path);
+        println!("{}", serde_json::to_string_pretty(&proposal)?);
         return Ok(());
     }
 

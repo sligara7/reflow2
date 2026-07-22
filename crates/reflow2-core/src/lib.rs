@@ -44,6 +44,7 @@ pub mod heal;
 pub mod hierarchy;
 pub mod ingest;
 pub mod llm;
+pub mod merge;
 pub mod nodes;
 pub mod operate;
 pub mod propagate;
@@ -86,6 +87,10 @@ pub use hierarchy::{HierarchyIssue, HierarchyIssueKind, Level};
 pub use ingest::{DroppedEdge, IngestOptions, IngestReport, IngestStatus, PassError};
 pub use llm::{
     LlmBackend, LlmError, LlmParams, LlmRequest, LlmResponse, MockLlmBackend, complete_json,
+};
+pub use merge::{
+    AutoResolution, ConflictKind, MergeAction, MergeConflict, MergeProposal, MergeSummary,
+    MergeUnit, Source, merge_designs,
 };
 pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOptions};
 pub use provenance::{GraphStamp, Provenance};

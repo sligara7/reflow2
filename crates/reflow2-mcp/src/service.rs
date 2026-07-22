@@ -1119,6 +1119,19 @@ pub struct CompareDesignsReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct MergeDesignsReq {
+    /// Path to the common-ancestor export — the state `ours` and `theirs`
+    /// diverged from. Typically `git merge-base` + the committed export at
+    /// that commit; reflow2 builds no commit DAG of its own here.
+    pub base_path: String,
+    /// Path to the export being merged *into* (the current design).
+    pub ours_path: String,
+    /// Path to the export being merged *in* (the other branch's design).
+    pub theirs_path: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AnswerQuestionReq {
     /// The gap the question was asked about (`gap_id` from `open_questions`).
     pub gap_id: String,
@@ -2432,6 +2445,37 @@ impl ReflowService {
                 )
             }
         }
+    }
+
+    #[tool(
+        description = "Propose a three-way merge of two divergent designs against their common \
+                       ancestor — compare's write-side sibling (BL-80). Runs git's trivial-merge \
+                       case table per node and per property over typed values: only one side \
+                       changed → take it; both changed the same way → take it; both changed \
+                       differently → a conflict, surfaced as a Question for the human, never \
+                       guessed. A node one side deleted and the other changed is retained and \
+                       asked (deletion must be re-justified); edges get the identical rule. Pass \
+                       base_path (the ancestor — e.g. git merge-base + the committed export at \
+                       that commit), ours_path (merge into) and theirs_path (merge in). This is a \
+                       PROPOSAL: it writes nothing. Applying the resolved merge is a separate, \
+                       explicit step.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn merge_designs(
+        &self,
+        Parameters(req): Parameters<MergeDesignsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let base = read_export_document(&req.base_path)?;
+        let ours = read_export_document(&req.ours_path)?;
+        let theirs = read_export_document(&req.theirs_path)?;
+        ok_json(reflow2_core::merge_designs(
+            &base,
+            &ours,
+            &theirs,
+            &req.base_path,
+            &req.ours_path,
+            &req.theirs_path,
+        ))
     }
 
     #[tool(

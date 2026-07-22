@@ -1,0 +1,31 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Propose a three-way merge of two divergent designs against their common ancestor — compare's write-side sibling (BL-80). Runs git's trivial-merge case table per node and per property over typed values: only one side changed → take it; both changed the same way → take it; both changed differently → a conflict, surfaced as a Question for the human, never guessed. A node one side deleted and the other changed is retained and asked (deletion must be re-justified); edges get the identical rule. Pass base_path (the ancestor — e.g. git merge-base + the committed export at that commit), ours_path (merge into) and theirs_path (merge in). This is a PROPOSAL: it writes nothing. Applying the resolved merge is a separate, explicit step.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "base_path": {
+        "description": "Path to the common-ancestor export — the state `ours` and `theirs`\ndiverged from. Typically `git merge-base` + the committed export at\nthat commit; reflow2 builds no commit DAG of its own here.",
+        "type": "string"
+      },
+      "ours_path": {
+        "description": "Path to the export being merged *into* (the current design).",
+        "type": "string"
+      },
+      "theirs_path": {
+        "description": "Path to the export being merged *in* (the other branch's design).",
+        "type": "string"
+      }
+    },
+    "required": [
+      "base_path",
+      "ours_path",
+      "theirs_path"
+    ],
+    "type": "object"
+  },
+  "name": "merge_designs"
+}
