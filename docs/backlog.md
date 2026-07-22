@@ -1218,6 +1218,56 @@ publish-forever immutability is for a network that controls neither end; reflow2
 and has export/import migration — the additive-only discipline (already policy) is the right
 dose. Take the evidence machinery (hashes, signatures, namespaces); skip the infrastructure.
 
+**BL-12 · github-mcp-server notes (2026-07-22)** — *from the user's question "anything we can
+learn from how they set up their MCP?" (clone read at ~/project/github-mcp-server). GitHub's
+official server is a live case study in this item's open questions; what survived contact:*
+
+1. **The hosted shape is validated.** Their remote server (githubcopilot.com) is the same
+   open-source repo consumed as a library, bound into their infrastructure, serving
+   *stateless streamable HTTP* with a fresh server per request. reflow2's core is already
+   surface-neutral by decision, so the hosted mode is a streamable-HTTP front over the same
+   service layer — with the one structural difference that reflow2's daemon would hold the
+   single-writer lock once, centrally: exactly this item's "one server owns the lock,
+   session shims are thin clients" option, now with an existence proof.
+2. **Read-only is two layers, and they shipped the surface layer.** Per-tool
+   `ReadOnlyHint` annotations + filtered registration under `--read-only`, with a CI check
+   that *fails the build if any tool omits the hint* (no silent default). For reflow2 the
+   full rung is annotation-filtered tools (BL-76) PLUS a RocksDB secondary open — the
+   annotation alone would not release the lock.
+3. **Sketch idea 2 ships in production**: tools declare required token scopes and the
+   server hides what your token cannot do — trust topology per claim type, real. And their
+   `--lockdown-mode` (hide content authored by users without push access, as prompt-injection
+   mitigation) is [BL-41]'s mechanical half proven in the wild: authority-keyed
+   who-may-assert-what. Both are the shapes to reach for when the second writer arrives.
+4. **Identity**: local = token/OAuth (official binaries bake in a client id for zero-config
+   login); remote = the client brings a bearer token and the server never authenticates —
+   attribution is simply "the server acts as that token's user". Composes with the AT-proto
+   notes above: signer-side identity, custody-free hosting.
+
+*Where it breaks:* they are stateless over someone else's API — the durable local graph, the
+merge problem, and everything temporal stays reflow2's own. Their removal of runtime
+dynamic-toolset discovery (selection is static per session) is a data point for BL-77.
+
+**BL-76 · Tool-surface hardening from the github-mcp-server comparison: ReadOnlyHint + toolsnaps**
+— *2026-07-22.* Size **S + S**; both mechanical, no vocabulary decision needed. **(a)** Every
+reflow2 tool declares the MCP `readOnlyHint` annotation (true for the read/analysis family,
+false for writes) — clients use it for approval prompts today, and it is the surface half of
+the BL-12 read-only rung. With it, the explicitness gate: smoke asserts every served tool
+carries the annotation, so a new tool cannot ship unclassified (their AST-check idea, done
+reflow2-style over the real stdio surface). **(b)** Toolsnaps: one committed golden JSON
+schema per tool, CI-diffed — the BL-28/BL-32/BL-48 bug family ("the surface changed and
+nothing noticed") made into a mechanical tripwire; regenerate deliberately, never silently.
+
+**BL-77 · Surface scale: toolsets / verb-multiplexing — parked until it pinches** —
+*2026-07-22.* Size **M**; deliberately not now. github-mcp-server holds ~100 tools down with
+verb-multiplexed tools (`issue_read` + a `method` enum), ~26 flag-selectable toolsets, and an
+allow/exclude list — and notably *removed* runtime dynamic-toolset discovery (static per
+session won). reflow2 is at ~80 tools; the fleet's cold-start/deferred-tools friction is the
+early symptom. When it pinches harder, the choice is grouping (core-loop / analysis /
+release / temporal) vs multiplexing vs both — a vocabulary decision for the user, informed by
+which clients actually struggle. Multiplexing collides with skill_lint's tool-name contract
+and every skill's tool references; cost that honestly when weighing.
+
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
 vocabulary wants in.* Lexicon namespaces schemas reverse-DNS (`app.bsky.feed.post`) so
@@ -1535,6 +1585,10 @@ now that the repo is public and BL-15's machinery exists:
 - **(cadence, no code) Frequent minor cuts.** release.yml makes a cut cheap; the practice is
   cutting often and keeping CHANGELOG sections small. Nothing to build — but the one-word
   update is what makes a frequent cadence tolerable to consumers, so it gates the practice.
+- **(2026-07-22 addendum, from the github-mcp-server read)** Two cheap reach-wideners when
+  this thread is picked up: an MCP-registry manifest (`server.json`) so clients discover
+  reflow2 the way they discover github-mcp-server, and possibly a Docker image (their
+  recommended end-user path). Both distribution polish, neither urgent.
 
 **BL-52 · CI enforces the gates; skills get contract lint — DONE 2026-07-20** — *user asked
 "do we have legitimate CI tests for the skills?"; the answer was that there was no CI at all.*
