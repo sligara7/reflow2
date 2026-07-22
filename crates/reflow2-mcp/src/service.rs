@@ -1132,6 +1132,22 @@ pub struct MergeDesignsReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ApplyMergeReq {
+    /// Path to the common-ancestor export (the base of the merge).
+    pub base_path: String,
+    /// Path to the export being merged *in*. `ours` is the live graph at
+    /// `--graph-path`, so this applies theirs into the current design.
+    pub theirs_path: String,
+    /// Per-conflict decisions: conflict id (`merge:…` from `merge_designs`) →
+    /// `base` / `ours` / `theirs`. Every conflict must have one; a merge with an
+    /// unresolved conflict is refused, and nothing is written. Omit for a clean
+    /// merge with no conflicts.
+    #[serde(default)]
+    pub resolutions: std::collections::HashMap<String, String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AnswerQuestionReq {
     /// The gap the question was asked about (`gap_id` from `open_questions`).
     pub gap_id: String,
@@ -2476,6 +2492,45 @@ impl ReflowService {
             &req.ours_path,
             &req.theirs_path,
         ))
+    }
+
+    #[tool(
+        description = "Apply a resolved three-way merge into the live design — the write side of \
+                       merge_designs (BL-80). `ours` is the live graph at --graph-path; this \
+                       merges `theirs` into it against the common ancestor `base`, making the live \
+                       design equal the merged result, atomically. Pass `resolutions` — one \
+                       decision per conflict (its `merge:…` id → base/ours/theirs, from a prior \
+                       merge_designs run). It REFUSES and writes nothing if any conflict is \
+                       undecided, or a decision names no conflict. This is the explicit commit the \
+                       proposal is designed around: run merge_designs first, decide the conflicts, \
+                       then apply.",
+        annotations(read_only_hint = false, destructive_hint = false)
+    )]
+    pub async fn apply_merge(
+        &self,
+        Parameters(req): Parameters<ApplyMergeReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let base = read_export_document(&req.base_path)?;
+        let theirs = read_export_document(&req.theirs_path)?;
+        let mut resolutions = std::collections::BTreeMap::new();
+        for (id, choice) in &req.resolutions {
+            let parsed = reflow2_core::Resolution::parse(choice).ok_or_else(|| {
+                dyno_err(reflow2_core::DynoError::Validation {
+                    node_type: "merge".into(),
+                    property: "resolutions".into(),
+                    message: format!(
+                        "conflict '{id}' has resolution '{choice}', which is not one of \
+                         base/ours/theirs"
+                    ),
+                })
+            })?;
+            resolutions.insert(id.clone(), parsed);
+        }
+        let mut g = self.graph.lock().await;
+        ok_json(
+            g.apply_merge(&base, &theirs, &resolutions)
+                .map_err(dyno_err)?,
+        )
     }
 
     #[tool(

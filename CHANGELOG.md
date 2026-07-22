@@ -33,18 +33,21 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
-- **Three-way merge of two divergent designs — the `merge_designs` tool + `--merge` CLI** (BL-80,
-  the report rung; **minor** — a new tool on the surface). Compare's write-side sibling: given a
-  common ancestor (base) and two divergent records (ours, theirs), it runs git's trivial-merge
-  case table per node and per property over typed values — one-sided changes are taken, agreed
-  changes are taken, both-sides changes become **conflicts surfaced as questions** with
-  deterministic ids, and a node one side deleted while the other changed it is **retained and
+- **Three-way merge of two divergent designs — `merge_designs` + `apply_merge` tools, `--merge`
+  CLI** (BL-80, propose + apply; **minor** — new tools on the surface). Compare's write-side
+  sibling: given a common ancestor (base) and two divergent records (ours, theirs), it runs git's
+  trivial-merge case table per node and per property over typed values — one-sided changes are
+  taken, agreed changes are taken, both-sides changes become **conflicts surfaced as questions**
+  with deterministic ids, and a node one side deleted while the other changed it is **retained and
   asked** (deletion must be re-justified; `dec:merge-conflict-semantics`). Edges get the identical
-  rule. It is a **proposal — it writes nothing** (`dec:merge-three-way`, `dec:report-dont-judge`);
-  the base comes from git (`git merge-base` + the committed export at that commit), so reflow2
-  builds no commit DAG of its own. Applying the resolved merge is the next rung, recorded as
-  Deferred. Pure and deterministic (`crates/reflow2-core/src/merge.rs`, `tests/merge.rs` — 14
-  cases). Specifies the core of BL-12's multi-writer problem.
+  rule. `merge_designs` **proposes — it writes nothing** (`dec:merge-three-way`,
+  `dec:report-dont-judge`); the base comes from git (`git merge-base` + the committed export at
+  that commit), so reflow2 builds no commit DAG of its own. **`apply_merge` is the explicit commit**:
+  it takes the human's per-conflict decisions (`base`/`ours`/`theirs`) and makes the live design
+  equal the merged result, atomically — **refusing, and writing nothing, until every conflict is
+  decided** (and on any resolution that names no conflict). Pure/deterministic core
+  (`crates/reflow2-core/src/merge.rs` — `merge_designs`, `resolve_merge`, `apply_merge`;
+  `tests/merge.rs` — 21 cases). Specifies **and closes** the core of BL-12's multi-writer merge.
 - **Design-authorship identity — the `Contributor` keystone, authorship seed** (BL-79, user-chosen
   direction; **schema change → minor, and a graph written now cannot be opened by a
   pre-`Contributor` binary** — refused loudly by the count-based provenance check, per BL-19). The

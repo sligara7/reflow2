@@ -1,0 +1,35 @@
+{
+  "annotations": {
+    "destructiveHint": false,
+    "readOnlyHint": false
+  },
+  "description": "Apply a resolved three-way merge into the live design — the write side of merge_designs (BL-80). `ours` is the live graph at --graph-path; this merges `theirs` into it against the common ancestor `base`, making the live design equal the merged result, atomically. Pass `resolutions` — one decision per conflict (its `merge:…` id → base/ours/theirs, from a prior merge_designs run). It REFUSES and writes nothing if any conflict is undecided, or a decision names no conflict. This is the explicit commit the proposal is designed around: run merge_designs first, decide the conflicts, then apply.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "base_path": {
+        "description": "Path to the common-ancestor export (the base of the merge).",
+        "type": "string"
+      },
+      "resolutions": {
+        "additionalProperties": {
+          "type": "string"
+        },
+        "default": {},
+        "description": "Per-conflict decisions: conflict id (`merge:…` from `merge_designs`) →\n`base` / `ours` / `theirs`. Every conflict must have one; a merge with an\nunresolved conflict is refused, and nothing is written. Omit for a clean\nmerge with no conflicts.",
+        "type": "object"
+      },
+      "theirs_path": {
+        "description": "Path to the export being merged *in*. `ours` is the live graph at\n`--graph-path`, so this applies theirs into the current design.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "base_path",
+      "theirs_path"
+    ],
+    "type": "object"
+  },
+  "name": "apply_merge"
+}

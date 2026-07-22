@@ -29,12 +29,14 @@
 //! byte-identical proposal, including the conflict ids.
 
 use std::collections::{BTreeMap, BTreeSet};
+use std::fmt;
 
-use dynograph_core::Value;
+use dynograph_core::{DynoError, Value};
 use serde::Serialize;
 
 use crate::detect::fnv1a;
-use crate::export::GraphExport;
+use crate::export::{ExportedEdge, ExportedNode, GraphExport, Props};
+use crate::graph::DesignGraph;
 
 /// Which input a resolved value came from — the audit trail on every automatic
 /// decision, so a reader can see *why* the merge took what it took.
@@ -727,5 +729,672 @@ pub fn merge_designs(
         auto,
         conflicts,
         provenance_note: (!notes.is_empty()).then(|| notes.join("; ")),
+    }
+}
+
+// ---------------------------------------------------------------------------
+// The apply rung: resolve the conflicts and commit the merged design.
+//
+// `merge_designs` proposes; this half carries it out. The human dispositions
+// each conflict (`base` / `ours` / `theirs`), then an explicit apply commits —
+// never before, and never a value the human did not choose (`dec:merge-three-way`).
+// ---------------------------------------------------------------------------
+
+/// A human's decision for one conflict — which side's value the merge takes.
+/// For a delete/modify conflict, the deleting side means "accept the deletion"
+/// and the changed side means "keep the changed node".
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum Resolution {
+    /// Take the common ancestor's value (revert the change / restore a deleted
+    /// node; for an add/add, drop the node).
+    Base,
+    Ours,
+    Theirs,
+}
+
+impl Resolution {
+    /// Parse the wire form. Loud on anything else — an unrecognised choice is a
+    /// mistake to surface, not a silent default.
+    pub fn parse(s: &str) -> Option<Resolution> {
+        match s {
+            "base" => Some(Resolution::Base),
+            "ours" => Some(Resolution::Ours),
+            "theirs" => Some(Resolution::Theirs),
+            _ => None,
+        }
+    }
+}
+
+/// Why a resolved merge could not be produced. Both variants are refusals, not
+/// guesses — the merge never invents a value the human did not choose.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum MergeError {
+    /// Conflicts with no resolution supplied, by id. The merge refuses to pick.
+    Unresolved(Vec<String>),
+    /// Resolutions naming ids that are not conflicts in this merge — a typo or a
+    /// stale resolution set, surfaced rather than ignored.
+    UnknownResolutions(Vec<String>),
+}
+
+impl fmt::Display for MergeError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            MergeError::Unresolved(ids) => write!(
+                f,
+                "the merge has {} unresolved conflict(s) — decide each (base/ours/theirs) before \
+                 applying: {}",
+                ids.len(),
+                ids.join(", ")
+            ),
+            MergeError::UnknownResolutions(ids) => write!(
+                f,
+                "{} resolution(s) name ids that are not conflicts in this merge (a typo, or a \
+                 stale resolution set): {}",
+                ids.len(),
+                ids.join(", ")
+            ),
+        }
+    }
+}
+
+impl std::error::Error for MergeError {}
+
+fn exported_node(id: &str, node_type: &str, properties: Props) -> ExportedNode {
+    ExportedNode {
+        node_type: node_type.to_string(),
+        node_id: id.to_string(),
+        properties,
+    }
+}
+
+/// Resolve one node's merged property bag, consulting the human's decisions for
+/// conflicts. Records unresolved conflict ids and every conflict id it touched.
+#[allow(clippy::too_many_arguments)]
+fn resolve_props(
+    target: &str,
+    base_hash: &str,
+    base_props: &Props,
+    ours_props: &Props,
+    theirs_props: &Props,
+    resolutions: &BTreeMap<String, Resolution>,
+    unresolved: &mut Vec<String>,
+    touched: &mut BTreeSet<String>,
+) -> Props {
+    let keys: BTreeSet<&String> = base_props
+        .keys()
+        .chain(ours_props.keys())
+        .chain(theirs_props.keys())
+        .collect();
+    let mut out = Props::new();
+    for k in keys {
+        let bv = base_props.get(k).cloned();
+        let ov = ours_props.get(k).cloned();
+        let tv = theirs_props.get(k).cloned();
+        let chosen = match three_way(&bv, &ov, &tv) {
+            ThreeWay::Agreed(v) | ThreeWay::OneSided(v, _) => v,
+            ThreeWay::Conflict => {
+                let cid = conflict_id(base_hash, target, Some(k));
+                touched.insert(cid.clone());
+                match resolutions.get(&cid) {
+                    None => {
+                        unresolved.push(cid);
+                        continue;
+                    }
+                    Some(Resolution::Base) => bv,
+                    Some(Resolution::Ours) => ov,
+                    Some(Resolution::Theirs) => tv,
+                }
+            }
+        };
+        if let Some(val) = chosen {
+            out.insert(k.clone(), val);
+        }
+    }
+    out
+}
+
+#[allow(clippy::too_many_arguments)]
+fn resolve_one_node(
+    id: &str,
+    base: Option<NodeSide<'_>>,
+    ours: Option<NodeSide<'_>>,
+    theirs: Option<NodeSide<'_>>,
+    base_hash: &str,
+    resolutions: &BTreeMap<String, Resolution>,
+    unresolved: &mut Vec<String>,
+    touched: &mut BTreeSet<String>,
+) -> Option<ExportedNode> {
+    let empty = Props::new();
+    match (base, ours, theirs) {
+        (None, Some((ty, p)), None) | (None, None, Some((ty, p))) => {
+            Some(exported_node(id, ty, p.clone()))
+        }
+        (None, Some((oty, op)), Some((tty, tp))) => {
+            if oty != tty {
+                resolve_node_type(
+                    id,
+                    base_hash,
+                    None,
+                    oty,
+                    op,
+                    tty,
+                    tp,
+                    resolutions,
+                    unresolved,
+                    touched,
+                )
+            } else {
+                let props = resolve_props(
+                    id,
+                    base_hash,
+                    &empty,
+                    op,
+                    tp,
+                    resolutions,
+                    unresolved,
+                    touched,
+                );
+                Some(exported_node(id, oty, props))
+            }
+        }
+        (Some(_), None, None) => None,
+        (Some((bty, bp)), Some((oty, op)), None) => resolve_delete_modify(
+            id,
+            (bty, bp),
+            (oty, op),
+            Source::Ours,
+            base_hash,
+            resolutions,
+            unresolved,
+            touched,
+        ),
+        (Some((bty, bp)), None, Some((tty, tp))) => resolve_delete_modify(
+            id,
+            (bty, bp),
+            (tty, tp),
+            Source::Theirs,
+            base_hash,
+            resolutions,
+            unresolved,
+            touched,
+        ),
+        (Some((bty, bp)), Some((oty, op)), Some((tty, tp))) => {
+            match three_way(&bty.to_string(), &oty.to_string(), &tty.to_string()) {
+                ThreeWay::Agreed(ty) | ThreeWay::OneSided(ty, _) => {
+                    let props =
+                        resolve_props(id, base_hash, bp, op, tp, resolutions, unresolved, touched);
+                    Some(exported_node(id, &ty, props))
+                }
+                ThreeWay::Conflict => resolve_node_type(
+                    id,
+                    base_hash,
+                    Some((bty, bp)),
+                    oty,
+                    op,
+                    tty,
+                    tp,
+                    resolutions,
+                    unresolved,
+                    touched,
+                ),
+            }
+        }
+        (None, None, None) => unreachable!("a node id in the union exists on some side"),
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn resolve_node_type(
+    id: &str,
+    base_hash: &str,
+    base: Option<NodeSide<'_>>,
+    ours_ty: &str,
+    ours_props: &Props,
+    theirs_ty: &str,
+    theirs_props: &Props,
+    resolutions: &BTreeMap<String, Resolution>,
+    unresolved: &mut Vec<String>,
+    touched: &mut BTreeSet<String>,
+) -> Option<ExportedNode> {
+    let cid = conflict_id(base_hash, id, Some("node_type"));
+    touched.insert(cid.clone());
+    match resolutions.get(&cid) {
+        None => {
+            unresolved.push(cid);
+            None
+        }
+        Some(Resolution::Base) => base.map(|(bty, bp)| exported_node(id, bty, bp.clone())),
+        Some(Resolution::Ours) => Some(exported_node(id, ours_ty, ours_props.clone())),
+        Some(Resolution::Theirs) => Some(exported_node(id, theirs_ty, theirs_props.clone())),
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn resolve_delete_modify(
+    id: &str,
+    base: NodeSide<'_>,
+    kept: NodeSide<'_>,
+    kept_source: Source,
+    base_hash: &str,
+    resolutions: &BTreeMap<String, Resolution>,
+    unresolved: &mut Vec<String>,
+    touched: &mut BTreeSet<String>,
+) -> Option<ExportedNode> {
+    if kept == base {
+        // Unchanged on the surviving side — the deletion stands.
+        return None;
+    }
+    let cid = conflict_id(base_hash, id, None);
+    touched.insert(cid.clone());
+    match resolutions.get(&cid) {
+        None => {
+            unresolved.push(cid);
+            None
+        }
+        Some(Resolution::Base) => Some(exported_node(id, base.0, base.1.clone())),
+        // The kept side's value is the changed node; the other side deleted it.
+        Some(choice) if *choice == source_to_resolution(kept_source) => {
+            Some(exported_node(id, kept.0, kept.1.clone()))
+        }
+        // The opposite side: accept the deletion.
+        Some(_) => None,
+    }
+}
+
+fn source_to_resolution(s: Source) -> Resolution {
+    match s {
+        Source::Ours => Resolution::Ours,
+        Source::Theirs => Resolution::Theirs,
+        Source::Agreed => Resolution::Ours, // unreachable in delete/modify
+    }
+}
+
+fn exported_edge(key: &EdgeKey<'_>, properties: Props) -> ExportedEdge {
+    let (ty, from, to) = key;
+    ExportedEdge {
+        edge_type: ty.to_string(),
+        from_id: from.to_string(),
+        to_id: to.to_string(),
+        properties,
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn resolve_one_edge(
+    key: &EdgeKey<'_>,
+    base: Option<&Props>,
+    ours: Option<&Props>,
+    theirs: Option<&Props>,
+    base_hash: &str,
+    resolutions: &BTreeMap<String, Resolution>,
+    unresolved: &mut Vec<String>,
+    touched: &mut BTreeSet<String>,
+) -> Option<ExportedEdge> {
+    let target = edge_target(key);
+    let empty = Props::new();
+    match (base, ours, theirs) {
+        (None, Some(p), None) | (None, None, Some(p)) => Some(exported_edge(key, p.clone())),
+        (None, Some(o), Some(t)) => {
+            let props = resolve_props(
+                &target,
+                base_hash,
+                &empty,
+                o,
+                t,
+                resolutions,
+                unresolved,
+                touched,
+            );
+            Some(exported_edge(key, props))
+        }
+        (Some(_), None, None) => None,
+        (Some(b), Some(o), None) => resolve_edge_remove(
+            key,
+            &target,
+            b,
+            o,
+            Source::Ours,
+            base_hash,
+            resolutions,
+            unresolved,
+            touched,
+        ),
+        (Some(b), None, Some(t)) => resolve_edge_remove(
+            key,
+            &target,
+            b,
+            t,
+            Source::Theirs,
+            base_hash,
+            resolutions,
+            unresolved,
+            touched,
+        ),
+        (Some(b), Some(o), Some(t)) => {
+            let props = resolve_props(
+                &target,
+                base_hash,
+                b,
+                o,
+                t,
+                resolutions,
+                unresolved,
+                touched,
+            );
+            Some(exported_edge(key, props))
+        }
+        (None, None, None) => unreachable!("an edge key in the union exists on some side"),
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn resolve_edge_remove(
+    key: &EdgeKey<'_>,
+    target: &str,
+    base: &Props,
+    kept: &Props,
+    kept_source: Source,
+    base_hash: &str,
+    resolutions: &BTreeMap<String, Resolution>,
+    unresolved: &mut Vec<String>,
+    touched: &mut BTreeSet<String>,
+) -> Option<ExportedEdge> {
+    if kept == base {
+        return None;
+    }
+    let cid = conflict_id(base_hash, target, None);
+    touched.insert(cid.clone());
+    match resolutions.get(&cid) {
+        None => {
+            unresolved.push(cid);
+            None
+        }
+        Some(Resolution::Base) => Some(exported_edge(key, base.clone())),
+        Some(choice) if *choice == source_to_resolution(kept_source) => {
+            Some(exported_edge(key, kept.clone()))
+        }
+        Some(_) => None,
+    }
+}
+
+/// Resolve a proposed merge into a single merged design, using the human's
+/// per-conflict decisions. Pure and deterministic. Refuses — never guesses —
+/// when a conflict has no decision, or a decision names a non-conflict.
+///
+/// The merged document's lineage points at `ours` (`prev_content_hash`) and it
+/// carries `ours`'s stamp: it is *ours, with theirs merged in*.
+pub fn resolve_merge(
+    base: &GraphExport,
+    ours: &GraphExport,
+    theirs: &GraphExport,
+    resolutions: &BTreeMap<String, Resolution>,
+) -> Result<GraphExport, MergeError> {
+    let base_hash = base.effective_content_hash();
+    let bn = index_nodes(base);
+    let on = index_nodes(ours);
+    let tn = index_nodes(theirs);
+
+    let mut unresolved = Vec::new();
+    let mut touched = BTreeSet::new();
+    let mut nodes = Vec::new();
+
+    let node_ids: BTreeSet<&str> = bn
+        .keys()
+        .chain(on.keys())
+        .chain(tn.keys())
+        .copied()
+        .collect();
+    for id in node_ids {
+        if let Some(n) = resolve_one_node(
+            id,
+            bn.get(id).copied(),
+            on.get(id).copied(),
+            tn.get(id).copied(),
+            &base_hash,
+            resolutions,
+            &mut unresolved,
+            &mut touched,
+        ) {
+            nodes.push(n);
+        }
+    }
+
+    let be = index_edges(base);
+    let oe = index_edges(ours);
+    let te = index_edges(theirs);
+    let mut edges = Vec::new();
+    let edge_keys: BTreeSet<EdgeKey<'_>> = be
+        .keys()
+        .chain(oe.keys())
+        .chain(te.keys())
+        .copied()
+        .collect();
+    for key in edge_keys {
+        if let Some(e) = resolve_one_edge(
+            &key,
+            be.get(&key).copied(),
+            oe.get(&key).copied(),
+            te.get(&key).copied(),
+            &base_hash,
+            resolutions,
+            &mut unresolved,
+            &mut touched,
+        ) {
+            edges.push(e);
+        }
+    }
+
+    if !unresolved.is_empty() {
+        unresolved.sort();
+        unresolved.dedup();
+        return Err(MergeError::Unresolved(unresolved));
+    }
+    let unknown: Vec<String> = resolutions
+        .keys()
+        .filter(|k| !touched.contains(*k))
+        .cloned()
+        .collect();
+    if !unknown.is_empty() {
+        return Err(MergeError::UnknownResolutions(unknown));
+    }
+
+    // Sorted the way exports are, so the merged document is canonical.
+    nodes.sort_by(|a, b| {
+        a.node_type
+            .cmp(&b.node_type)
+            .then(a.node_id.cmp(&b.node_id))
+    });
+    edges.sort_by(|a, b| {
+        a.edge_type
+            .cmp(&b.edge_type)
+            .then(a.from_id.cmp(&b.from_id))
+            .then(a.to_id.cmp(&b.to_id))
+    });
+
+    let mut merged = GraphExport {
+        stamp: ours.stamp.clone(),
+        content_hash: None,
+        prev_content_hash: None,
+        graph_id: ours.graph_id.clone(),
+        nodes,
+        edges,
+    };
+    merged.content_hash = Some(merged.compute_content_hash());
+    merged.prev_content_hash = Some(ours.effective_content_hash());
+    Ok(merged)
+}
+
+/// What an applied merge did to the live graph — every count, and every edge it
+/// could not carry, named rather than dropped in silence.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct MergeApplyReport {
+    pub nodes_added: usize,
+    pub nodes_changed: usize,
+    pub nodes_removed: usize,
+    pub edges_added: usize,
+    pub edges_changed: usize,
+    pub edges_removed: usize,
+    /// How many conflict decisions were applied.
+    pub conflicts_resolved: usize,
+    /// Merged edges whose endpoints were not in the merged design, so they were
+    /// not written — a dangling edge is reported, never silently kept or dropped.
+    pub skipped_edges: Vec<String>,
+}
+
+fn merge_err(e: MergeError) -> DynoError {
+    DynoError::Validation {
+        node_type: "merge".into(),
+        property: "resolutions".into(),
+        message: e.to_string(),
+    }
+}
+
+impl DesignGraph {
+    /// Apply a resolved three-way merge into this graph — the write side of
+    /// `merge_designs`. This graph is *ours*: given the common ancestor and
+    /// *theirs*, it makes the live design equal the merged result, atomically.
+    ///
+    /// Refuses before writing anything when a conflict has no decision
+    /// (`dec:merge-three-way`): the batch is only committed once the whole
+    /// merged design is known.
+    pub fn apply_merge(
+        &mut self,
+        base: &GraphExport,
+        theirs: &GraphExport,
+        resolutions: &BTreeMap<String, Resolution>,
+    ) -> Result<MergeApplyReport, DynoError> {
+        let ours = self.export_graph()?;
+        let merged = resolve_merge(base, &ours, theirs, resolutions).map_err(merge_err)?;
+
+        // What ours holds now, to diff against the merged target.
+        let ours_nodes: BTreeMap<&str, (&str, &Props)> = ours
+            .nodes
+            .iter()
+            .map(|n| (n.node_id.as_str(), (n.node_type.as_str(), &n.properties)))
+            .collect();
+        let ours_edges: BTreeMap<EdgeKey<'_>, &Props> = ours
+            .edges
+            .iter()
+            .map(|e| {
+                (
+                    (e.edge_type.as_str(), e.from_id.as_str(), e.to_id.as_str()),
+                    &e.properties,
+                )
+            })
+            .collect();
+        let merged_node_ids: BTreeSet<&str> =
+            merged.nodes.iter().map(|n| n.node_id.as_str()).collect();
+        let merged_types: BTreeMap<&str, &str> = merged
+            .nodes
+            .iter()
+            .map(|n| (n.node_id.as_str(), n.node_type.as_str()))
+            .collect();
+        let merged_edge_keys: BTreeSet<EdgeKey<'_>> = merged
+            .edges
+            .iter()
+            .map(|e| (e.edge_type.as_str(), e.from_id.as_str(), e.to_id.as_str()))
+            .collect();
+
+        self.begin_batch();
+        let result = (|| -> Result<MergeApplyReport, DynoError> {
+            let mut report = MergeApplyReport {
+                nodes_added: 0,
+                nodes_changed: 0,
+                nodes_removed: 0,
+                edges_added: 0,
+                edges_changed: 0,
+                edges_removed: 0,
+                conflicts_resolved: resolutions.len(),
+                skipped_edges: Vec::new(),
+            };
+
+            // Upsert only what actually differs.
+            for n in &merged.nodes {
+                let props: std::collections::HashMap<String, Value> =
+                    n.properties.clone().into_iter().collect();
+                match ours_nodes.get(n.node_id.as_str()) {
+                    None => {
+                        self.create_node(&n.node_type, &n.node_id, props)?;
+                        report.nodes_added += 1;
+                    }
+                    Some((oty, op)) => {
+                        if *oty != n.node_type || **op != n.properties {
+                            self.create_node(&n.node_type, &n.node_id, props)?;
+                            report.nodes_changed += 1;
+                        }
+                    }
+                }
+            }
+            for e in &merged.edges {
+                let (from_ty, to_ty) = (
+                    merged_types.get(e.from_id.as_str()).copied(),
+                    merged_types.get(e.to_id.as_str()).copied(),
+                );
+                let (Some(from_ty), Some(to_ty)) = (from_ty, to_ty) else {
+                    report.skipped_edges.push(format!(
+                        "{} {} -> {} (an endpoint is not in the merged design)",
+                        e.edge_type, e.from_id, e.to_id
+                    ));
+                    continue;
+                };
+                let key: EdgeKey<'_> = (e.edge_type.as_str(), e.from_id.as_str(), e.to_id.as_str());
+                let props: std::collections::HashMap<String, Value> =
+                    e.properties.clone().into_iter().collect();
+                match ours_edges.get(&key) {
+                    None => {
+                        self.create_edge(
+                            &e.edge_type,
+                            from_ty,
+                            &e.from_id,
+                            to_ty,
+                            &e.to_id,
+                            props,
+                        )?;
+                        report.edges_added += 1;
+                    }
+                    Some(op) => {
+                        if **op != e.properties {
+                            self.create_edge(
+                                &e.edge_type,
+                                from_ty,
+                                &e.from_id,
+                                to_ty,
+                                &e.to_id,
+                                props,
+                            )?;
+                            report.edges_changed += 1;
+                        }
+                    }
+                }
+            }
+
+            // Remove what the merge dropped. Edges first; deleting a node then
+            // cascades any of its edges that survived this loop.
+            for (ty, from, to) in ours_edges.keys() {
+                if !merged_edge_keys.contains(&(*ty, *from, *to)) {
+                    self.delete_edge(ty, from, to)?;
+                    report.edges_removed += 1;
+                }
+            }
+            for (id, (ty, _)) in &ours_nodes {
+                if !merged_node_ids.contains(id) {
+                    self.delete_node(ty, id)?;
+                    report.nodes_removed += 1;
+                }
+            }
+            Ok(report)
+        })();
+
+        match result {
+            Ok(report) => {
+                self.commit_batch()?;
+                Ok(report)
+            }
+            Err(e) => {
+                self.discard_batch();
+                Err(e)
+            }
+        }
     }
 }

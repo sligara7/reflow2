@@ -89,8 +89,8 @@ pub use llm::{
     LlmBackend, LlmError, LlmParams, LlmRequest, LlmResponse, MockLlmBackend, complete_json,
 };
 pub use merge::{
-    AutoResolution, ConflictKind, MergeAction, MergeConflict, MergeProposal, MergeSummary,
-    MergeUnit, Source, merge_designs,
+    AutoResolution, ConflictKind, MergeAction, MergeApplyReport, MergeConflict, MergeError,
+    MergeProposal, MergeSummary, MergeUnit, Resolution, Source, merge_designs, resolve_merge,
 };
 pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOptions};
 pub use provenance::{GraphStamp, Provenance};

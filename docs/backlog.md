@@ -1390,15 +1390,19 @@ node (the BL-23/42 lesson).
 user's question "we do a few git-like operations — anything in /home/ajs7/project/git we could
 apply?" (2026-07-22, explored against git's object/merge model and
 `Documentation/technical/{trivial-merge,rerere,sparse-checkout,partial-clone}.adoc`).*
-**#1+#2 report rung BUILT 2026-07-22** — `crates/reflow2-core/src/merge.rs` computes the
-three-way case table (`merge_designs`, pure/deterministic, 14 tests); exposed as the
-`merge_designs` MCP tool + `--merge` CLI (base/ours/theirs, read-only). Decisions on the record:
-`dec:merge-three-way` (explicit inputs over git's DAG; reports a proposal, never auto-applies) and
+**#1+#2 BUILT 2026-07-22 (propose + apply)** — `crates/reflow2-core/src/merge.rs`: `merge_designs`
+computes the three-way case table (pure/deterministic proposal, writes nothing), `resolve_merge`
+materialises the merged design from the human's per-conflict decisions, and `apply_merge` commits
+it into the live graph atomically — **refusing until every conflict is decided** (and on a
+resolution that names no conflict). 21 tests. Exposed as the `merge_designs` (read-only) and
+`apply_merge` (write) MCP tools + the `--merge` CLI. Decisions on the record: `dec:merge-three-way`
+(explicit inputs over git's DAG; reports a proposal, never auto-applies) and
 `dec:merge-conflict-semantics` (delete/modify → retain-and-ask; edges symmetric; conflicts are
-Questions with deterministic ids, rerere-ready). Realizes `cap:merge-designs`. **Remaining on #1:
-the APPLY rung** — resolve the conflict Questions and commit the merged design (write side; recorded
-Deferred in requirements-coverage). #2's ancestor-retrieval is git's for now (merge-base); the
-reflow2-native DAG/ref layer stays with BL-70. The
+Questions with deterministic ids, rerere-ready). Realizes + verifies `cap:merge-designs`. This
+**closes the core of BL-12's merge**. #2's ancestor-retrieval is git's for now (merge-base); the
+reflow2-native DAG/ref layer (so reflow2 finds its own merge-base) stays with BL-70. Still open on
+BL-80: rerere (#5, replay a recorded resolution by the conflict's deterministic id), and a
+document-producing `--merge-apply` CLI for the pure git-file workflow (small). The
 finding that reframes the whole multi-writer thread: **reflow2 already built the content-addressed
 *history* half of git** — hash-chained exports (`dec:export-hash-chain`) = commits, DesignEpochs +
 Snapshots = immutable history, `compare_designs` ancestry = merge-base *reporting*. What git has

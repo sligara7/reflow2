@@ -5,8 +5,10 @@
 //! delete/modify retained-and-asked, edges symmetric with nodes, conflicts
 //! carrying deterministic ids.
 
-use reflow2_core::merge::{ConflictKind, MergeAction, MergeUnit, Source};
-use reflow2_core::{DesignGraph, GraphExport, MergeProposal, Value, merge_designs};
+use std::collections::BTreeMap;
+
+use reflow2_core::merge::{ConflictKind, MergeAction, MergeError, MergeUnit, Resolution, Source};
+use reflow2_core::{DesignGraph, GraphExport, MergeProposal, Value, merge_designs, resolve_merge};
 
 fn g() -> DesignGraph {
     DesignGraph::open_in_memory().expect("open in-memory graph")
@@ -360,4 +362,213 @@ fn the_same_three_documents_always_merge_identically() {
     let second = merge(&base, &ours, &theirs);
     assert_eq!(first, second);
     assert_eq!(first.conflicts[0].id, second.conflicts[0].id);
+}
+
+// --- The apply rung: resolve conflicts and commit the merged design ---------
+
+fn node_prop(doc: &GraphExport, id: &str, key: &str) -> Option<String> {
+    doc.nodes
+        .iter()
+        .find(|n| n.node_id == id)
+        .and_then(|n| n.properties.get(key))
+        .and_then(|v| v.as_str().map(str::to_string))
+}
+
+fn has_node(doc: &GraphExport, id: &str) -> bool {
+    doc.nodes.iter().any(|n| n.node_id == id)
+}
+
+fn live_status(g: &DesignGraph, id: &str) -> Option<String> {
+    g.get_node("Requirement", id)
+        .expect("get_node")
+        .and_then(|n| {
+            n.properties
+                .get("status")
+                .and_then(|v| v.as_str().map(str::to_string))
+        })
+}
+
+#[test]
+fn resolve_a_clean_merge_takes_each_side_and_adds() {
+    let base = ex(&seeded());
+    let mut o = seeded();
+    o.set_requirement_status("req:one", "accepted").expect("o");
+    let ours = ex(&o);
+    let mut t = seeded();
+    t.add_capability("cap:two", "Second capability", "Does a second thing.", None)
+        .expect("t add");
+    let theirs = ex(&t);
+
+    let merged = resolve_merge(&base, &ours, &theirs, &BTreeMap::new()).expect("clean merge");
+    assert_eq!(
+        node_prop(&merged, "req:one", "status").as_deref(),
+        Some("accepted")
+    );
+    assert!(has_node(&merged, "cap:two"), "theirs' addition is carried");
+    // The merged document descends from ours.
+    assert_eq!(
+        merged.prev_content_hash,
+        Some(ours.effective_content_hash())
+    );
+}
+
+#[test]
+fn resolve_a_property_conflict_each_way() {
+    let base = ex(&seeded());
+    let mut o = seeded();
+    o.set_requirement_status("req:one", "accepted").expect("o");
+    let ours = ex(&o);
+    let mut t = seeded();
+    t.set_requirement_status("req:one", "deferred").expect("t");
+    let theirs = ex(&t);
+
+    let cid = merge(&base, &ours, &theirs).conflicts[0].id.clone();
+
+    for (choice, expected) in [
+        (Resolution::Ours, "accepted"),
+        (Resolution::Theirs, "deferred"),
+        (Resolution::Base, "proposed"),
+    ] {
+        let mut res = BTreeMap::new();
+        res.insert(cid.clone(), choice);
+        let merged = resolve_merge(&base, &ours, &theirs, &res).expect("resolved");
+        assert_eq!(
+            node_prop(&merged, "req:one", "status").as_deref(),
+            Some(expected),
+            "resolution {choice:?} takes the {expected} value"
+        );
+    }
+}
+
+#[test]
+fn resolve_delete_modify_keeps_or_deletes_on_the_decision() {
+    // ours changes cap:one; theirs deletes it → retained is ours.
+    let base = ex(&seeded());
+    let mut o = seeded();
+    o.add_capability("cap:one", "First capability", "CHANGED.", None)
+        .expect("o modify");
+    let ours = ex(&o);
+    let mut t = seeded();
+    t.delete_node("Capability", "cap:one").expect("t del");
+    let theirs = ex(&t);
+
+    let cid = merge(&base, &ours, &theirs)
+        .conflicts
+        .iter()
+        .find(|c| c.kind == ConflictKind::DeleteModify)
+        .expect("delete/modify")
+        .id
+        .clone();
+
+    // Keep ours' changed node.
+    let mut keep = BTreeMap::new();
+    keep.insert(cid.clone(), Resolution::Ours);
+    let merged = resolve_merge(&base, &ours, &theirs, &keep).expect("keep");
+    assert!(has_node(&merged, "cap:one"));
+    assert_eq!(
+        node_prop(&merged, "cap:one", "description").as_deref(),
+        Some("CHANGED.")
+    );
+
+    // Accept the deletion.
+    let mut drop = BTreeMap::new();
+    drop.insert(cid, Resolution::Theirs);
+    let merged = resolve_merge(&base, &ours, &theirs, &drop).expect("drop");
+    assert!(!has_node(&merged, "cap:one"), "the deletion was accepted");
+}
+
+#[test]
+fn resolve_refuses_an_unresolved_conflict() {
+    let base = ex(&seeded());
+    let mut o = seeded();
+    o.set_requirement_status("req:one", "accepted").expect("o");
+    let mut t = seeded();
+    t.set_requirement_status("req:one", "deferred").expect("t");
+
+    let err = resolve_merge(&base, &ex(&o), &ex(&t), &BTreeMap::new()).unwrap_err();
+    match err {
+        MergeError::Unresolved(ids) => assert!(ids.iter().any(|i| i.starts_with("merge:"))),
+        other => panic!("expected Unresolved, got {other:?}"),
+    }
+}
+
+#[test]
+fn resolve_refuses_a_resolution_that_names_no_conflict() {
+    // A clean merge plus a bogus resolution — the stale/typo decision is surfaced.
+    let base = ex(&seeded());
+    let mut o = seeded();
+    o.set_requirement_status("req:one", "accepted").expect("o");
+    let ours = ex(&o);
+    let theirs = base.clone();
+
+    let mut res = BTreeMap::new();
+    res.insert("merge:deadbeefdeadbeef".to_string(), Resolution::Ours);
+    let err = resolve_merge(&base, &ours, &theirs, &res).unwrap_err();
+    match err {
+        MergeError::UnknownResolutions(ids) => {
+            assert_eq!(ids, vec!["merge:deadbeefdeadbeef".to_string()])
+        }
+        other => panic!("expected UnknownResolutions, got {other:?}"),
+    }
+}
+
+#[test]
+fn apply_merge_commits_the_merge_into_the_live_graph() {
+    // ours is the live graph: base + a status change. theirs adds a node and
+    // deletes another. A clean merge applied end to end.
+    let base = ex(&seeded());
+    let mut g = seeded(); // this is ours, live
+    g.set_requirement_status("req:one", "accepted")
+        .expect("ours");
+
+    let mut t = seeded();
+    t.add_capability("cap:two", "Second capability", "Does a second thing.", None)
+        .expect("t add");
+    t.delete_node("Capability", "cap:one").expect("t del");
+    let theirs = ex(&t);
+
+    let report = g
+        .apply_merge(&base, &theirs, &BTreeMap::new())
+        .expect("clean apply");
+
+    // ours' change survived, theirs' addition landed, theirs' deletion took.
+    assert_eq!(live_status(&g, "req:one").as_deref(), Some("accepted"));
+    assert!(g.get_node("Capability", "cap:two").expect("get").is_some());
+    assert!(g.get_node("Capability", "cap:one").expect("get").is_none());
+    assert!(report.nodes_added >= 1, "cap:two added");
+    assert!(report.nodes_removed >= 1, "cap:one removed");
+    assert!(
+        report.edges_removed >= 1,
+        "the satisfies edge went with cap:one"
+    );
+}
+
+#[test]
+fn apply_merge_refuses_until_conflicts_are_decided() {
+    let base = ex(&seeded());
+    let mut g = seeded(); // ours
+    g.set_requirement_status("req:one", "accepted")
+        .expect("ours");
+    let mut t = seeded();
+    t.set_requirement_status("req:one", "deferred").expect("t");
+    let theirs = ex(&t);
+
+    // No decision → refused, and nothing was written.
+    let err = g.apply_merge(&base, &theirs, &BTreeMap::new()).unwrap_err();
+    assert!(format!("{err}").contains("unresolved"));
+    assert_eq!(
+        live_status(&g, "req:one").as_deref(),
+        Some("accepted"),
+        "ours untouched"
+    );
+
+    // Decide theirs → the live graph takes it.
+    let cid = {
+        let ours = ex(&g);
+        merge(&base, &ours, &theirs).conflicts[0].id.clone()
+    };
+    let mut res = BTreeMap::new();
+    res.insert(cid, Resolution::Theirs);
+    g.apply_merge(&base, &theirs, &res).expect("resolved apply");
+    assert_eq!(live_status(&g, "req:one").as_deref(), Some("deferred"));
 }

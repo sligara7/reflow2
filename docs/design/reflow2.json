@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:94611016c78152a7c4672e965df5e68c96fceaf2ff7b7b61b2db539c512ee27c",
+  "content_hash": "sha256:f0a7e9be64f02603e5735a808660952878ac6462c418cdfbb5d1f8c0b2d5a386",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -512,6 +512,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ver:merge",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "CHANGED",
@@ -5218,7 +5227,7 @@
       "edge_type": "REALIZES",
       "from_id": "art:merge",
       "properties": {
-        "completeness": "partial"
+        "completeness": "complete"
       },
       "to_id": "cap:merge-designs"
     },
@@ -5712,6 +5721,12 @@
       "from_id": "ver:mcp-surface",
       "properties": {},
       "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:merge",
+      "properties": {},
+      "to_id": "cap:merge-designs"
     },
     {
       "edge_type": "VERIFIES",
@@ -6717,12 +6732,12 @@
       "node_id": "cap:merge-designs",
       "node_type": "Capability",
       "properties": {
-        "description": "Given a common-ancestor export and two divergent records, compute a typed three-way merge per node and per property (git's trivial-merge case table over typed values, not lines): where only one side changed, take it; where both changed differently, surface a structured conflict as a Question rather than guessing. The write-side sibling of cap:compare-designs, which computes the typed diff this consumes. BL-80 #1+#2 = the core of BL-12's merge problem. Report rung BUILT (merge.rs / merge_designs, art:merge): the proposal that writes nothing. Remaining: the APPLY rung (resolve conflicts, commit the merged design).",
+        "description": "Given a common-ancestor export and two divergent records, compute a typed three-way merge per node and per property (git's trivial-merge case table over typed values, not lines): where only one side changed, take it; where both changed differently, surface a structured conflict as a Question rather than guessing. Deletion is retain-and-ask. The write-side sibling of cap:compare-designs. BL-80 #1+#2, the core of BL-12's merge. BUILT + VERIFIED (art:merge, ver:merge, 21 tests): merge_designs proposes (writes nothing); resolve_merge materialises the merged design from the human's per-conflict decisions; apply_merge commits it into the live graph atomically, refusing until every conflict is decided. merge_designs (read-only) + apply_merge (write) MCP tools + --merge CLI. Base is git's merge-base; the reflow2-native DAG is BL-70; rerere is BL-80 #5.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Three-way merge two divergent designs",
         "provenance": "authored",
-        "status": "in_progress",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -9287,6 +9302,16 @@
       }
     },
     {
+      "node_id": "ver:merge",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "merge suite (tests/merge.rs) — 21 cases",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:model-process",
       "node_type": "Verification",
       "properties": {
@@ -9429,7 +9454,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d6e6e210fa7e9bd5239ccc07c71ab50cc9c668dfb71d1a768b41f2f0006bdb08",
+  "prev_content_hash": "sha256:94611016c78152a7c4672e965df5e68c96fceaf2ff7b7b61b2db539c512ee27c",
   "stamp": {
     "edge_types": 55,
     "node_types": 28,
