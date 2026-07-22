@@ -1163,6 +1163,14 @@ pub struct RecallResolutionsReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct AnalyzeAlternativesReq {
+    /// Paths to the alternative design exports (branch-by-file). The first is
+    /// the baseline the others' divergence is reported against. Two or more.
+    pub paths: Vec<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AnswerQuestionReq {
     /// The gap the question was asked about (`gap_id` from `open_questions`).
     pub gap_id: String,
@@ -2568,6 +2576,29 @@ impl ReflowService {
             g.recall_resolutions(&req.resolution_keys)
                 .map_err(dyno_err)?,
         )
+    }
+
+    #[tool(
+        description = "Compare parallel design alternatives on the same measures — an analysis of \
+                       alternatives (BL-70). Pass the paths to two or more alternative export \
+                       documents (branch-by-file); the first is the baseline. Returns each branch's \
+                       measures side by side — design nodes, open gaps, structural defects, \
+                       allocation modularity, capabilities verified — plus every non-baseline \
+                       branch's structural divergence from the baseline (added/removed/changed). \
+                       Makes alternatives comparable on measures, not advocacy; it opens its own \
+                       throwaway graphs, so it never touches and is never blocked by the live one. \
+                       Collapse the winner with merge_designs/apply_merge and retire the losers.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn analyze_alternatives(
+        &self,
+        Parameters(req): Parameters<AnalyzeAlternativesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut alternatives = Vec::with_capacity(req.paths.len());
+        for p in &req.paths {
+            alternatives.push((p.clone(), read_export_document(p)?));
+        }
+        ok_json(reflow2_core::analyze_alternatives(&alternatives).map_err(dyno_err)?)
     }
 
     #[tool(

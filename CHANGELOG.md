@@ -33,6 +33,18 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Analysis of alternatives — compare parallel design branches on the same measures — the
+  `analyze_alternatives` tool** (BL-70 v1, branch-by-file; **minor**). Given the paths to two or
+  more alternative design exports (the first is the baseline), it loads each into its own throwaway
+  graph, runs the same rollup, and lays the decision-relevant measures **side by side** — design
+  nodes, open gaps, structural defects, allocation modularity, capabilities verified — plus every
+  non-baseline branch's structural divergence from the baseline (`compare_designs`). Alternatives
+  become comparable **on measures, not advocacy** (`dec:parallel-alternatives`). Alternatives are
+  design *space* (sibling roads that CONTRADICT, held under a proposed Decision), distinct from
+  epochs (*time*); collapsing the winner reuses `merge_designs`/`apply_merge`, retiring the losers
+  reuses retire-from-design — so almost no new machinery, and no detector learns about "worlds"
+  (`crates/reflow2-core/src/alternatives.rs`, `tests/alternatives.rs` — 4 cases). Rung 2 wires the
+  decision point (a proposed Decision governing alternative pointers that CONTRADICT).
 - **Three-way merge of two divergent designs — `merge_designs` + `apply_merge` tools, `--merge`
   CLI** (BL-80, propose + apply; **minor** — new tools on the surface). Compare's write-side
   sibling: given a common ancestor (base) and two divergent records (ours, theirs), it runs git's

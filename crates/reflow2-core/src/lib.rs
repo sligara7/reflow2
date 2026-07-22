@@ -28,6 +28,7 @@
 
 pub mod agent;
 pub mod allocate;
+pub mod alternatives;
 pub mod artifact;
 pub mod budget;
 pub mod compare;
@@ -62,6 +63,7 @@ pub use agent::{AgentAnswer, AgentBackend, AgentPrompt, PromptCollector, prompt_
 pub use allocate::{
     AllocationReport, ComponentScore, MisplacedCapability, ProposedAllocation, ProposedComponent,
 };
+pub use alternatives::{AoaReport, BranchMeasures, analyze_alternatives};
 pub use artifact::{ArtifactLink, DriftDisposition, LinkArtifactOptions};
 pub use budget::{BudgetContributor, BudgetReport, BudgetVerdict};
 pub use compare::{
