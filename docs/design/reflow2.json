@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:792849ba9d4dfc97c3eec797764039da53478f625634a15137c3305cb55e9663",
+  "content_hash": "sha256:ae28d388035b88686430af65c4a9d3af38ff9487e101758d2f71e8b6d6b67198",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -152,6 +152,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:merge-designs",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:compare"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -396,6 +404,69 @@
       "from_id": "rel:v050",
       "properties": {},
       "to_id": "epoch:v050-cut"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cap:merge-designs",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:design-authorship-identity",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:design-authorship-identity",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:merge-conflict-semantics",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:merge-conflict-semantics",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:merge-three-way",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:merge-three-way",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "CHANGED",
@@ -2807,6 +2878,18 @@
       "from_id": "cap:loop-status",
       "properties": {},
       "to_id": "dec:loop-status-state-not-history"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-designs",
+      "properties": {},
+      "to_id": "dec:merge-conflict-semantics"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-designs",
+      "properties": {},
+      "to_id": "dec:merge-three-way"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5339,6 +5422,18 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:merge-designs",
+      "properties": {},
+      "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:merge-designs",
+      "properties": {},
+      "to_id": "req:intent-preserved"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:model-process",
       "properties": {},
       "to_id": "req:design-anything"
@@ -6531,6 +6626,19 @@
       }
     },
     {
+      "node_id": "cap:merge-designs",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Given a common-ancestor export and two divergent records, compute a typed three-way merge per node and per property (git's trivial-merge case table over typed values, not lines): where only one side changed, take it; where both changed differently, surface a structured conflict as a Question rather than guessing. The write-side sibling of cap:compare-designs, which already computes the typed diff this consumes. BL-80 #1 (with #2, the retained common ancestor) = the core of BL-12's merge problem. DRAFT — shape awaiting the user's decisions; status planned.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Three-way merge two divergent designs",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:model-process",
       "node_type": "Capability",
       "properties": {
@@ -7428,6 +7536,26 @@
       }
     },
     {
+      "node_id": "who:ajs",
+      "node_type": "Contributor",
+      "properties": {
+        "description": "Author and owner of reflow2; Space Force systems engineer, UAF/DoDAF-fluent. Decides the design — the human in the three-party loop (dec:three-party-checks).",
+        "handle": "@ajs",
+        "kind": "person",
+        "name": "Anthony Sligar"
+      }
+    },
+    {
+      "node_id": "who:claude-code",
+      "node_type": "Contributor",
+      "properties": {
+        "description": "Anthropic's CLI coding agent; the driving agent that captures intent into the graph and drafts decisions for the human to decide. The LLM that speaks, in the three-party loop (dec:three-party-checks).",
+        "handle": "claude-code",
+        "kind": "automated_agent",
+        "name": "Claude Code"
+      }
+    },
+    {
       "node_id": "dec:anchored-first",
       "node_type": "Decision",
       "properties": {
@@ -7528,12 +7656,32 @@
       }
     },
     {
+      "node_id": "dec:merge-conflict-semantics",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "The three-way merge (cap:merge-designs, dec:merge-three-way) resolves per node, per property, and per edge against the base by this case table. NODES/PROPERTIES: only one side changed a property -> take it; both changed it differently -> conflict. add/add (same id, no base) -> treated as modify/modify against an empty base: matching properties merge, each differing property is a conflict. delete/delete -> node gone, no conflict. delete/modify (one side removes the node, the other changes it) -> RETAIN-AND-ASK: the proposal keeps the modified node and raises a conflict asking the human to confirm the deletion or keep it, leaning toward keeping — deletion is the destructive side and must be re-justified, never the silent default (req:intent-preserved, retire-vs-delete). Symmetric in both directions. EDGES: first-class design content and get the identical three-way rule — one-sided add or remove -> take it; the same edge changed differently on both sides, or one side removes while the other changes it -> conflict; never silently drop an edge one side deliberately cut (req:no-silent-fallback). CONFLICT REPRESENTATION: a both-sides conflict is a Question node with source 'merge_conflict', a deterministic id (FNV over base + node/edge id + property, the existing gap-id normalization), carrying the base/ours/theirs values; it reuses the existing answer_question / open_questions machinery and writes nothing until dispositioned, and its normalized id is the key a later rerere rung (BL-80 #5) replays a recorded resolution against. No new node type — the schema stays 28.",
+        "name": "The merge conflict case table: retain-and-ask on delete, edges symmetric with nodes, conflicts are Questions",
+        "rationale": "User decided all three axes 2026-07-22, each the doctrine-aligned option, closing the sub-decisions dec:merge-three-way explicitly deferred. Retain-and-ask over a neutral conflict because losing a node is not symmetric with keeping it: req:intent-preserved and the retire-vs-delete distinction make a delete the move that must be justified, so the proposal keeps the node and asks rather than treating erasure as an equal default. Edges symmetric with nodes because they carry the golden thread — a lighter union-and-keep-wins rule would override a deliberate one-sided edge removal without asking, which is exactly the silent drop req:no-silent-fallback forbids; compare_designs already bands edge divergence, so the input is there. Reuse Question over a dedicated MergeConflict type for the recurring schema-minimalism reason (the vocabulary was already sufficient — same lesson as dec:certainty-derived and dec:component-verified-computed): the answer/open-questions machinery, the deterministic FNV gap-id normalization, and the human-decides routing all already exist, and reusing them makes the conflict rerere-ready for free (BL-80 #5) while keeping the schema at 28 node types. With this, the merge is fully specified — nothing left but the build and its verification.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:merge-survivor-provenance",
       "node_type": "Decision",
       "properties": {
         "decision": "When HEAL merges DUPLICATES-asserted nodes, the survivor is picked by provenance rank (authored > planned > imported > reconciled > inferred > healed); node id breaks ties. Pre-provenance graphs are unchanged.",
         "name": "Merge survivor is chosen by provenance, id breaks ties",
         "rationale": "User decided option 2 for BL-29 (2026-07-20): provenance is the closest thing the graph has to 'who asserted this and how deliberately'. Refinement from the 2026-07-20 self-adopt live session: a node with UNSET provenance defaults to authored, which made two genesis stubs tie against authored+verified survivors and nearly win on alphabetical id — set provenance explicitly on both sides before proposing a merge, and consider ranking unset below authored in a future revision.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:merge-three-way",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "The design merge is a three-way typed merge exposed as a core op (MCP tool + CLI flag), the write-side sibling of compare_designs. (1) Inputs are three explicit export documents — a common ancestor (base), ours, theirs; git supplies the base (git merge-base + the committed reflow2.json at that commit), so reflow2 does not build its own commit DAG for this rung. The multi-parent/ref layer that would let reflow2 find its own merge-base is deferred to BL-70/#3. (2) The algorithm is git's trivial-merge case table run per node and per property against the base over typed values, not lines: only one side changed a property -> take it; both sides changed it differently -> a structured conflict. (3) It produces a merge proposal — auto-resolved one-sided changes plus a list of both-sides conflicts rendered as Questions ('node X.prop Y: base=A, ours=B, theirs=C — which?') — and writes NOTHING to the graph. The human dispositions the conflict Questions, then an explicit apply commits the merge. Compare reports and never writes; merge does the same until the human has looked.",
+        "name": "The three-way merge takes explicit inputs over git's DAG, and reports a proposal it never auto-applies",
+        "rationale": "User decided both axes 2026-07-22, both the recommended option. Explicit-inputs-over-git because the exports are already git-committed (dec:repo-file-embedded) and git already tracks the merge-base — building a second DAG inside reflow2 would reimplement what git provides and contradicts 'export/import is the right-sized git bundle analogue' (BL-80's explicit do-NOT-import list). It keeps rung #1 shippable now and defers the ref/branch layer to where it belongs (BL-70). compare_designs already computes the typed per-property diff this consumes, so the input side is built. Report-a-proposal-never-auto-apply because a both-sides conflict IS a Question and the graph must not silently pick a side (dec:report-dont-judge, req:human-decides, req:no-silent-fallback); mirroring compare's read-only contract keeps the sibling honest, and the explicit apply is the disposition gate (dec:two-sided-accept's spirit — no silent write) without a staging area (BL-80 explicitly rejects the index). Typed per-node/per-property conflicts are strictly better than git's line markers — the key 'graph is not files' caveat. This specifies BL-12's merge problem: rung #1 (this algorithm over three documents) + #2 (the retained ancestor, here git's) = the L core of BL-12. Deferred to their own decisions: delete/modify and add/add conflict semantics (retire-vs-delete makes a delete meaningful, so delete/modify must go to the human, never auto-resolve), edge-merge banding, and the exact shape of the conflict Question.",
         "status": "accepted"
       }
     },
@@ -9170,10 +9318,10 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:502da418f46c4d1b3fe795d235d936c7ac2bceedcd4eb2dd1292576b96df5b03",
+  "prev_content_hash": "sha256:87c0f133bfccff0bc1e42181693298c6c643fee3d4401345e9c1a688a21256b4",
   "stamp": {
-    "edge_types": 54,
-    "node_types": 27,
+    "edge_types": 55,
+    "node_types": 28,
     "reflow2_version": "0.9.0",
     "schema_version": 1
   }
