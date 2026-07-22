@@ -1150,6 +1150,19 @@ sketch idea 1 (claims reference the graph state they saw) stop being future work
 write-path prerequisites. Sequencing note: BL-71's design-vs-design diff is also the merge
 primitive a shared graph needs the day two writers disagree.
 
+**BL-12 · 2026-07-21 field confirmation (StoryFlow fleet trial)** — the lock is now a
+*measured* cost, not a hypothesis: in a Boss + workers fleet all under one repo, the Boss's
+stdio server holds `.reflow2/graph/LOCK` for its whole lifetime and **workers cannot even
+READ the live graph** — "the Boss drives it, everyone else is blind" is forced by the lock,
+not chosen (docs/trials-private/2026-07-21-storyflow-fleet-improvement-log.md). The recorded
+first rung — **RocksDB read-only secondaries** (`--read-only` open) — now has its concrete
+consumer: workers running `where-am-i` / `detect_gaps` / `scan_nodes` against a graph the
+single writer holds live. That rung is now the cheapest high-value BL-12 increment and could
+be pulled ahead of any service work. (Their "at minimum, a clear lock-conflict error"
+suggestion is already built — `explain_open_failure`, BL-57 — but the trial saw a bare
+open failure, so verify the message actually *surfaces* through an MCP-spawned server's
+stderr in the client, not only on a hand-run CLI.)
+
 **Same day, the user named the destination**: set this up "for a whole organization to access
 simultaneously … a great resource for a whole organization to do all their planning and design
 with." That is the north star that makes the pieces one product rather than features: a shared
@@ -1217,6 +1230,53 @@ core. This is the reflow-v3 "framework packs" heritage idea with a proven govern
 attached. Prerequisite thinking: how the kit installs a pack, how `describe_schema` reports
 provenance of a type, and what the CI gate does with types it doesn't know. Connects to
 [BL-68] (readiness vocabularies are the first obvious pack) and the org-scale thread above.
+
+**BL-73 · Verification at component granularity must be expressible, honestly** — *first
+extensive external trial (StoryFlow fleet, 2026-07-21,
+docs/trials-private/2026-07-21-storyflow-fleet-improvement-log.md). Size **S–M**; one
+vocabulary decision, then mechanics.* A brownfield adopt of a system with real coverage
+(per-service unit suites + a 137-file integration suite) read as **"0/20 capabilities
+verified"**, and recording the honest state cost **21 near-identical acknowledge/decision
+writes**. Two defects in one: the *write side* has no way to say "verified at component
+granularity" in one move, and the *report* renders that state as indistinguishable from
+untested. Field-suggested shapes, decision the user's: (a) a `Verification` on a Component
+**cascades** (as a weaker, labelled claim) to the capabilities that component realizes;
+(b) a bulk attest operation; (c) `detect_gaps` folds the N per-capability gaps into one
+"verified only at component granularity" note when the owning component carries a passing
+`Verification`. Whatever is chosen, the coverage line must say the true thing: "verified at
+component granularity" is neither "verified" nor "unverified" and deserves its own word.
+
+**BL-74 · The loop fires on triggers, not virtue — adoption-critical** — *the most important
+finding of the first extensive external trial (same log), self-reported by the driving agent
+and caught by its user.* Size **M**. Told to "use the reflow2 skills extensively," the agent
+under multi-hour operational load kept the graph's *bookkeeping* current via raw tools
+(`add_capability`, `link_artifact`, …) but **dropped the loop skills** (`detect-and-ask`,
+`check-health`, `impact-check`) — capture continued, the capture→detect→ask→decide loop
+silently stopped. Root causes, verbatim from the field: the tools give the result without the
+discipline; nothing *fires* the skills (their compaction hook works because it fires on an
+event — "under load, a mood loses to whatever has a trigger"); skill round-trips cost context
+mid-flow; and the lock concentrates all of it on the busiest session. Fixes, best first, and
+they compose as one ladder: **(c→b→a)** — build a cheap **`loop_status`** core op + tool
+("3 captures and 2 structural edits since the last health check; 1 realized capability with no
+Verification; 1 open question unanswered" — the un-run loop steps, computed from what the
+graph already records); thread **next-step nudges into the write tools' own results**
+(`add_capability` → "run detect_gaps when you finish capturing"; zero extra round-trip to see
+it); then ship the **kit hook recipe** that fires `loop_status` on the client's own trigger
+(SessionStart/Stop-hook), which is (a) — triggers beat exhortation, and the enabler is (c).
+The trial's meta-lesson is the item's bar: *a design-discipline tool that depends on being
+remembered will lose to operational urgency every time.* Also fold in: session cold-start
+warm-up (their MCP tools were deferred at first use) belongs to the same hook recipe, not to
+the server.
+
+**BL-75 · A Requirement's certainty is a state, not a caveat** — *same trial log.* Size
+**S** (schema change → minor + upgrade doc). `where-am-i` tells agents to distinguish a
+user-confirmed Requirement from one recovered/assumed during adopt — but the graph carries
+only `provenance`, so every session reconstructs certainty in prose. Field suggestion: a
+first-class confirmation state on Requirement (e.g. `asserted` / `adopted` /
+`user-confirmed`) that reports render directly. Vocabulary is the user's call; watch the
+overlap with `status` (proposed/accepted already implies some of this — maybe the answer is
+a documented meaning for `accepted`-with-`provenance:inferred` rather than a third axis).
+Decide deliberately, not additively.
 
 **BL-44 · Node-level claims — parallel work on one design** — *user, 2026-07-20. Concept-only by
 their own framing; the details are the work.*
