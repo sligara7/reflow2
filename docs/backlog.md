@@ -1389,7 +1389,16 @@ node (the BL-23/42 lesson).
 **BL-80 · Git's merge model is the missing half of reflow2's git-like history** — *from the
 user's question "we do a few git-like operations — anything in /home/ajs7/project/git we could
 apply?" (2026-07-22, explored against git's object/merge model and
-`Documentation/technical/{trivial-merge,rerere,sparse-checkout,partial-clone}.adoc`).* The
+`Documentation/technical/{trivial-merge,rerere,sparse-checkout,partial-clone}.adoc`).*
+**#1+#2 report rung BUILT 2026-07-22** — `crates/reflow2-core/src/merge.rs` computes the
+three-way case table (`merge_designs`, pure/deterministic, 14 tests); exposed as the
+`merge_designs` MCP tool + `--merge` CLI (base/ours/theirs, read-only). Decisions on the record:
+`dec:merge-three-way` (explicit inputs over git's DAG; reports a proposal, never auto-applies) and
+`dec:merge-conflict-semantics` (delete/modify → retain-and-ask; edges symmetric; conflicts are
+Questions with deterministic ids, rerere-ready). Realizes `cap:merge-designs`. **Remaining on #1:
+the APPLY rung** — resolve the conflict Questions and commit the merged design (write side; recorded
+Deferred in requirements-coverage). #2's ancestor-retrieval is git's for now (merge-base); the
+reflow2-native DAG/ref layer stays with BL-70. The
 finding that reframes the whole multi-writer thread: **reflow2 already built the content-addressed
 *history* half of git** — hash-chained exports (`dec:export-hash-chain`) = commits, DesignEpochs +
 Snapshots = immutable history, `compare_designs` ancestry = merge-base *reporting*. What git has
