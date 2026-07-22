@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-74 rungs c+b (loop_status core op + tool, loop hints in write-tool results) — @ajs — since 2026-07-21 — report.rs, service.rs, skills (capture-intent, detect-and-ask), smoke; rung a (kit hook) stays open after
 
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
@@ -78,6 +77,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-74 rungs c+b done (dec:loop-status-state-not-history): loop_status tool — the loop's outstanding debt as one cheap call, computed from STATE never run history (no clock, looking-is-not-writing; phase nudges excluded as guidance-not-debt); unsurfaced anchored gaps / waiting + unwritten questions / defects / unproven realized caps / undispositioned drift / unexamined claims, each with a next-step line. Five write tools (add_requirement/capability/component/interface, link_artifact) carry a static loop_hint in their results — the pointer rides what the agent already reads. Skills: capture-intent step 6 + detect-and-ask pulse-check (3 mirrors); skill_lint += next. 3 core tests + tool test + 2 smoke checks; 40 workspace suites green. BONUS FIX: build_design_graph now exports through the tool's file seam — the first hashed rebuild came out chain-rootless because the script hand-wrote the payload; chain repaired to this morning's hash and verified held on re-run. Self-model 274n/682e, gaps 0, live==committed identical, reflow2_check OK. Rung a (kit hook firing loop_status on client events) stays open with its design constraint recorded (a hook can't reach the locked live graph) — @ajs — 2026-07-21 — (this commit)
 
 - First extensive external feedback triaged (StoryFlow fleet improvement log, from @bro's deployment): saved verbatim to docs/trials-private/2026-07-21-storyflow-fleet-improvement-log.md (private — names the fleet). Raised BL-73 (component-granularity verification: 20 false unverified gaps, 21 acknowledges to close honestly; report understates a tested system), BL-74 (ADOPTION-CRITICAL: loop skills dropped under operational load — triggers beat exhortation; ladder is loop_status core op → nudges in tool results → kit hook recipe), BL-75 (requirement confirmation state). BL-12 updated: the lock cost is now measured (workers can't even read while the Boss holds it) — read-only secondaries promoted to cheapest high-value increment; their "clear lock error" ask is already built (BL-57) but verify it surfaces through MCP-spawned stderr. Positives kept as-is: scan Decision as the highest-value read, reviewed_gaps auditability, the one genuine unmotivated-capability catch — @ajs — 2026-07-21 — (this commit)
 

@@ -158,6 +158,14 @@ CAPABILITIES = [
      "relative to a named base, banded into design content vs bookkeeping, property-level on "
      "changes.",
      "verified", ["req:intent-preserved"]),
+    # BL-74 rungs c+b (2026-07-21, from the StoryFlow fleet trial): under
+    # operational load the loop skills got dropped while raw-tool bookkeeping
+    # continued — this is the cheap in-flow call that says what the loop is
+    # owed, so the discipline has a trigger target instead of a mood.
+    ("cap:loop-status", "Say what the loop is owed",
+     "One cheap call returning the coherence loop's outstanding debt as an ordered to-do list, "
+     "computed from graph state alone.",
+     "verified", ["req:coherence"]),
 ]
 
 # ---- Decisions. The distillate of the sessions that shaped the design. ----
@@ -276,6 +284,26 @@ DECISIONS = [
      "a hash chain without keys is already tamper-evident against accident and hand-editing, "
      "which is today's actual threat model.",
      ["cap:portability", "cap:compare-designs"]),
+    ("dec:loop-status-state-not-history",
+     "Loop debt is computed from graph state, never from run history",
+     "loop_status reports what the coherence loop is owed — anchored gaps never surfaced, "
+     "questions waiting or answered-but-unwritten, structural defects, capabilities claiming "
+     "realized/verified with no passing check, drift awaiting disposition, claims never "
+     "examined — computed entirely from current graph state. reflow2 does not track when tools "
+     "were run: phase nudges are excluded (guidance, not debt), and the write tools carry "
+     "static loop_hint pointers at the next loop step in their own results.",
+     "From the StoryFlow fleet trial (BL-74): under operational load the agent kept bookkeeping "
+     "via raw tools while the loop skills silently stopped — 'a design-discipline tool that "
+     "depends on being remembered will lose to operational urgency every time; fire on a "
+     "trigger, not on virtue.' Run-history ('no detect_gaps since Tuesday') is not honestly "
+     "computable here: the core takes no clock, and looking-is-not-writing is doctrine — "
+     "recording reads so observation could be tracked would make looking mutate the record. "
+     "Outstanding debt is the state-based equivalent and the actionable truth regardless of "
+     "who ran what when. The hint rides the tool result the agent already reads (zero extra "
+     "round-trip to see it), and loop_status is the cheap computation a client hook can fire "
+     "on its own events — rung a of the BL-74 ladder builds on exactly this call. Decided "
+     "2026-07-21.",
+     ["cap:loop-status"]),
 ]
 
 # ---- P2 · Structure. Coarse: crate -> module. -----------------------------
@@ -298,7 +326,7 @@ MODULES = [
     ("cmp:hierarchy", "hierarchy", "cmp:core", ["cap:hierarchy"]),
     ("cmp:dimensions", "dimensions", "cmp:core", ["cap:dimensions"]),
     ("cmp:ingest", "ingest", "cmp:core", ["cap:ingest"]),
-    ("cmp:report", "report", "cmp:core", ["cap:report"]),
+    ("cmp:report", "report", "cmp:core", ["cap:report", "cap:loop-status"]),
     ("cmp:graph", "graph", "cmp:core", ["cap:portability"]),
     ("cmp:verify", "verify", "cmp:core", ["cap:reconcile-verified"]),
     ("cmp:operate", "operate", "cmp:core", []),
@@ -390,6 +418,7 @@ VERIFICATIONS = {  # capability -> test file
     "cap:kit": "tools/test_init.py",
     "cap:search": "crates/reflow2-core/tests/search.rs",
     "cap:compare-designs": "crates/reflow2-core/tests/compare.rs",
+    "cap:loop-status": "crates/reflow2-core/tests/report.rs",
 }
 # The one capability that ships without an automated check — the honest
 # remainder the gap list SHOULD carry: cap:adopt is a skill, exercised on a
@@ -751,9 +780,15 @@ def main() -> int:
                       file=sys.stderr)
                 return 1
             EXPORT.parent.mkdir(parents=True, exist_ok=True)
-            EXPORT.write_text(json.dumps(doc, indent=2, sort_keys=True) + "\n")
-            print(f"exported {len(doc['nodes'])} nodes / {len(doc['edges'])} edges "
-                  f"-> {EXPORT.relative_to(REPO)}")
+            # Write through the export tool's file seam, not by hand: that is
+            # where the lineage chain lives (dec:export-hash-chain) — the tool
+            # links the new document to the replaced file's content hash, and
+            # advances the chain only when content actually changed. The
+            # payload call above stays as the shrink-guard's evidence.
+            receipt = s.call("export_graph", {"path": str(EXPORT), "overwrite": True})
+            chain = receipt.get("prev_content_hash") or "chain root"
+            print(f"exported {receipt['nodes']} nodes / {receipt['edges']} edges "
+                  f"-> {EXPORT.relative_to(REPO)} (prev: {chain})")
         analyse(s)
     finally:
         s.close()

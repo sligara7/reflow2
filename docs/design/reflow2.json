@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:57d8768c7ba1666d78cdae0de8f374f8f8a94e4ae1f8e20450be063a1f3c37b5",
+  "content_hash": "sha256:a0d20c22a324d3b0b359bae6041c4f91f15f06d1904e9c8e0eed6d360db93f75",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -120,6 +120,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:loop-status",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -829,6 +837,60 @@
         "action": "modified"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl74-loop-status",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl74-loop-status",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl74-loop-status",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl74-loop-status",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl74-loop-status",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl74-loop-status",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "CHANGED",
@@ -2126,6 +2188,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "drift:1ce1cf92d38064b1",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "drift:1ed00db9d4f9e604",
       "properties": {
         "optional": false,
@@ -2213,6 +2284,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "art:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:752edf7eefe9dbe0",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:report"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -2480,6 +2560,12 @@
       "from_id": "cap:heal",
       "properties": {},
       "to_id": "dec:operational-spof"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:loop-status",
+      "properties": {},
+      "to_id": "dec:loop-status-state-not-history"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4660,7 +4746,7 @@
       "from_id": "cap:kit",
       "properties": {
         "coverage": "partial",
-        "evidence": "install.sh is checksum-verified and pulls published binaries (no rebuild), and reflow2_init.py updates a project in place \u2014 but the installer is not yet reachable from a stable public one-liner URL, there is no single self-update command, and the release cadence is not yet frequent-and-minor. The delta is the backlog's frictionless-update item."
+        "evidence": "install.sh is checksum-verified and pulls published binaries (no rebuild), and reflow2_init.py updates a project in place — but the installer is not yet reachable from a stable public one-liner URL, there is no single self-update command, and the release cadence is not yet frequent-and-minor. The delta is the backlog's frictionless-update item."
       },
       "to_id": "req:frictionless-update"
     },
@@ -4675,6 +4761,12 @@
       "from_id": "cap:kit",
       "properties": {},
       "to_id": "req:platform"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:loop-status",
+      "properties": {},
+      "to_id": "req:coherence"
     },
     {
       "edge_type": "SATISFIES",
@@ -4879,6 +4971,12 @@
       "from_id": "ver:kit",
       "properties": {},
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:loop-status",
+      "properties": {},
+      "to_id": "cap:loop-status"
     },
     {
       "edge_type": "VERIFIES",
@@ -5555,7 +5653,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:01397f14c1c72bc7",
+        "checksum": "sha256:26dc9c4433de0731",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
         "status": "realized"
@@ -5588,7 +5686,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:321ad4f8bf6d5f9f",
+        "checksum": "sha256:7b4c8bada025ba92",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -5692,7 +5790,7 @@
       "node_id": "cap:change",
       "node_type": "Capability",
       "properties": {
-        "description": "Snapshot prior state at an epoch, then edit \u2014 axis Z.",
+        "description": "Snapshot prior state at an epoch, then edit — axis Z.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Record a change",
@@ -5783,7 +5881,7 @@
       "node_id": "cap:hierarchy",
       "node_type": "Capability",
       "properties": {
-        "description": "Find missing intermediates and level mismatches \u2014 axis Y.",
+        "description": "Find missing intermediates and level mismatches — axis Y.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Check decomposition levels",
@@ -5813,6 +5911,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Install into a consumer project",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:loop-status",
+      "node_type": "Capability",
+      "properties": {
+        "description": "One cheap call returning the coherence loop's outstanding debt as an ordered to-do list, computed from graph state alone.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say what the loop is owed",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -5965,7 +6076,7 @@
       "node_id": "cap:store",
       "node_type": "Capability",
       "properties": {
-        "description": "A typed vocabulary of node and edge types, validated on write, over a pluggable graph storage backend \u2014 the foundation everything else hangs off.",
+        "description": "A typed vocabulary of node and edge types, validated on write, over a pluggable graph storage backend — the foundation everything else hangs off.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Schema-validated graph store",
@@ -6103,7 +6214,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
-        "name": "BL-26 (recorded late): the DOCUMENTS write side \u2014 artifact.rs gained the documents() constructor so a descriptive file can say what it explains. The design moved with the code in commit 2d86ccb (2026-07-20); this event records the design side that session omitted, found by the 2026-07-21 reconcile sweep."
+        "name": "BL-26 (recorded late): the DOCUMENTS write side — artifact.rs gained the documents() constructor so a descriptive file can say what it explains. The design moved with the code in commit 2d86ccb (2026-07-20); this event records the design side that session omitted, found by the 2026-07-21 reconcile sweep."
       }
     },
     {
@@ -6111,7 +6222,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
-        "name": "BL-48 + BL-49: result contract hardened at the tool boundary \u2014 graph_report_markdown returns prose as text (never a bare string in structuredContent; ok_json wraps any scalar), propagate answers with a bounded summary by default (full dump behind full=true), export_graph writes to a file on request"
+        "name": "BL-48 + BL-49: result contract hardened at the tool boundary — graph_report_markdown returns prose as text (never a bare string in structuredContent; ok_json wraps any scalar), propagate answers with a bounded summary by default (full dump behind full=true), export_graph writes to a file on request"
       }
     },
     {
@@ -6119,7 +6230,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
-        "name": "BL-50: three tool-boundary paper cuts closed \u2014 integer literals widen losslessly to schema floats at the core write seam (confidence: 1 accepted, range check kept), add_change_event takes an affected list and draws its CHANGED edges atomically (delete results named {deleted}), describe_schema counts half-exact edges so CHANGED reads as the modelled fit; kit documents a SessionStart hook making the where-am-i ritual mechanical"
+        "name": "BL-50: three tool-boundary paper cuts closed — integer literals widen losslessly to schema floats at the core write seam (confidence: 1 accepted, range check kept), add_change_event takes an affected list and draws its CHANGED edges atomically (delete results named {deleted}), describe_schema counts half-exact edges so CHANGED reads as the modelled fit; kit documents a SessionStart hook making the where-am-i ritual mechanical"
       }
     },
     {
@@ -6127,7 +6238,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "refactor",
-        "name": "BL-57: the tool boundary tells the truth \u2014 dyno_err maps caller mistakes to invalid_params not internal_error (one choke point, ~60 tools); every request struct denies unknown fields (a typo'd param is rejected, not swallowed \u2014 schemars publishes additionalProperties:false); export_graph refuses to overwrite without opt-in and reports the resolved path; the serve path gets the single-writer lock explanation; get_node returns one named {node} shape both ways; withdraw_gap_acknowledgement aligns on {withdrawn}"
+        "name": "BL-57: the tool boundary tells the truth — dyno_err maps caller mistakes to invalid_params not internal_error (one choke point, ~60 tools); every request struct denies unknown fields (a typo'd param is rejected, not swallowed — schemars publishes additionalProperties:false); export_graph refuses to overwrite without opt-in and reports the resolved path; the serve path gets the single-writer lock explanation; get_node returns one named {node} shape both ways; withdraw_gap_acknowledgement aligns on {withdrawn}"
       }
     },
     {
@@ -6135,7 +6246,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "test_failure_fix",
-        "name": "BL-58: core silent-failure batch \u2014 ingest re-ingest merges instead of resetting (upsert), snapshots serialize sorted for byte-stable exports, propagate_change errors on a missing event instead of returning empty, apply_heal is one atomic batch across all operations, swallowed edge-creation errors now surface, budget rejects non-finite contributions and reports a provable overrun instead of Incomplete, integer widening rejects the i64::MAX saturation edge, truncated_beyond_depth documented as the frontier lower-bound, drift skips the dangling edge for undocumented additions, missing-intermediate gaps get distinct ids per edge type, a reused ingest fragment_id is refused, node_type_index scans in sorted order"
+        "name": "BL-58: core silent-failure batch — ingest re-ingest merges instead of resetting (upsert), snapshots serialize sorted for byte-stable exports, propagate_change errors on a missing event instead of returning empty, apply_heal is one atomic batch across all operations, swallowed edge-creation errors now surface, budget rejects non-finite contributions and reports a provable overrun instead of Incomplete, integer widening rejects the i64::MAX saturation edge, truncated_beyond_depth documented as the frontier lower-bound, drift skips the dangling edge for undocumented additions, missing-intermediate gaps get distinct ids per edge type, a reused ingest fragment_id is refused, node_type_index scans in sorted order"
       }
     },
     {
@@ -6143,7 +6254,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
-        "name": "BL-63: snapshots capture design edges \u2014 an edge move keeps its history. Snapshot.edges (optional, sorted, bookkeeping excluded) added beside state; parse_snapshot_edges/SnapshotEdge in core; CRUD skills updated to record-first-then-delete."
+        "name": "BL-63: snapshots capture design edges — an edge move keeps its history. Snapshot.edges (optional, sorted, bookkeeping excluded) added beside state; parse_snapshot_edges/SnapshotEdge in core; CRUD skills updated to record-first-then-delete."
       }
     },
     {
@@ -6151,7 +6262,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
-        "name": "BL-66: the consumer CI coherence gate \u2014 reflow2_check.py reads the committed export, rehashes registered artifacts, runs detect_gaps, and exits non-zero on unaccepted drift or an open anchored gap at/above threshold; ci-gate skill + CI snippet ship in the kit; the tarball carries the script."
+        "name": "BL-66: the consumer CI coherence gate — reflow2_check.py reads the committed export, rehashes registered artifacts, runs detect_gaps, and exits non-zero on unaccepted drift or an open anchored gap at/above threshold; ci-gate skill + CI snippet ship in the kit; the tarball carries the script."
       }
     },
     {
@@ -6171,11 +6282,19 @@
       }
     },
     {
+      "node_id": "chg:bl74-loop-status",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-74 rungs c+b: loop_status debt rollup + loop hints in write-tool results"
+      }
+    },
+    {
       "node_id": "chg:deep-review-tier1",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "test_failure_fix",
-        "name": "Deep-review tier-1 fixes (BL-53..56): HEAL refuses self-loop DUPLICATES merges (a sanctioned self-merge deleted the node with no undo); the installer proves file ownership by hash manifest \u2014 user edits are kept and reported, obsolete kit files pruned only when untouched, malformed configs left alone without crashing; install.sh fails loud instead of silently or falsely succeeding; release publishes only after every asset is verified attached; the smoke harness refuses to wipe an existing graph directory without --wipe"
+        "name": "Deep-review tier-1 fixes (BL-53..56): HEAL refuses self-loop DUPLICATES merges (a sanctioned self-merge deleted the node with no undo); the installer proves file ownership by hash manifest — user edits are kept and reported, obsolete kit files pruned only when untouched, malformed configs left alone without crashing; install.sh fails loud instead of silently or falsely succeeding; release publishes only after every asset is verified attached; the smoke harness refuses to wipe an existing graph directory without --wipe"
       }
     },
     {
@@ -6191,7 +6310,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "scope_change",
-        "name": "Reconcile genesis-stub survivor nodes with the committed model (user-approved 2026-07-20): merge cap:install\u2192cap:kit, cap:artifacts\u2192cap:reconcile-built, req:past-preserved\u2192req:intent-preserved; wire cap:store; satisfy req:platform via cap:kit; verify cap:adopt from the storyflow trial"
+        "name": "Reconcile genesis-stub survivor nodes with the committed model (user-approved 2026-07-20): merge cap:install→cap:kit, cap:artifacts→cap:reconcile-built, req:past-preserved→req:intent-preserved; wire cap:store; satisfy req:platform via cap:kit; verify cap:adopt from the storyflow trial"
       }
     },
     {
@@ -6720,9 +6839,9 @@
       "node_id": "dec:design-diff-vocabulary",
       "node_type": "Decision",
       "properties": {
-        "decision": "A design-vs-design diff (compare_designs) exists as a core op exposed as both an MCP tool and a CLI flag. It compares two export documents, or the live graph against one document. Findings are directional \u2014 added / removed / changed relative to an explicitly named base \u2014 with property-level detail on changed nodes, grouped into two bands: design content vs the supporting/bookkeeping layer (ChangeEvents, DriftEvents, Fragments, Questions). It reports divergence between two as-designed records and never judges which side is right; the word 'drift' stays reserved for design-vs-reality.",
+        "decision": "A design-vs-design diff (compare_designs) exists as a core op exposed as both an MCP tool and a CLI flag. It compares two export documents, or the live graph against one document. Findings are directional — added / removed / changed relative to an explicitly named base — with property-level detail on changed nodes, grouped into two bands: design content vs the supporting/bookkeeping layer (ChangeEvents, DriftEvents, Fragments, Questions). It reports divergence between two as-designed records and never judges which side is right; the word 'drift' stays reserved for design-vs-reality.",
         "name": "Design-vs-design comparison is directional, banded, and lives in the core",
-        "rationale": "User decided all four axes 2026-07-21 (BL-71 rung c vocabulary session). Directional because all three consumers have a real base \u2014 the committed record (the BL-71 clobber tripwire), the main branch (BL-70 branch-by-file comparison), the state a claim was made against (BL-12 merge) \u2014 while AoA can still read the report neutrally or run it both ways. Banded because the real 2026-07-21 divergence was 3 Decisions and 8 Requirements buried under ~20 bookkeeping nodes; a flat list hides exactly what matters. Core op (not a kit script) because deterministic design computation belongs in the tested core; CLI flag so CI and no-server contexts reach it, like --import/--export. It is the read side of the rung a+b upsert-layering, the sibling of the reconcile family \u2014 which compares design against reality, hence the separate word: divergence, not drift.",
+        "rationale": "User decided all four axes 2026-07-21 (BL-71 rung c vocabulary session). Directional because all three consumers have a real base — the committed record (the BL-71 clobber tripwire), the main branch (BL-70 branch-by-file comparison), the state a claim was made against (BL-12 merge) — while AoA can still read the report neutrally or run it both ways. Banded because the real 2026-07-21 divergence was 3 Decisions and 8 Requirements buried under ~20 bookkeeping nodes; a flat list hides exactly what matters. Core op (not a kit script) because deterministic design computation belongs in the tested core; CLI flag so CI and no-server contexts reach it, like --import/--export. It is the read side of the rung a+b upsert-layering, the sibling of the reconcile family — which compares design against reality, hence the separate word: divergence, not drift.",
         "status": "accepted"
       }
     },
@@ -6732,7 +6851,7 @@
       "properties": {
         "decision": "cmp:export and ifc:graph-export are the only route from a design to the kit converter (cmp:init) and to any other machine or reflow2 version, and they stay that way. Both single_point_of_failure warnings are accepted as intentional, not resolved by adding a second export path.",
         "name": "The export document is an accepted single door, so its chain is an accepted SPOF",
-        "rationale": "dec:repo-file-embedded made the deterministic export the durable, diffable record, and req:survives-upgrade makes export-with-the-old-build / import-with-the-new THE migration mechanism \u2014 a single door is the feature, because a second export path would be a second source of truth for what the design is, and byte-identical determinism (req:persistence: a backup under git shows what actually changed) is only a meaningful promise about one format. The detector is right that severing this chain cuts cmp:init off from the design; that fragility is the price of one canonical portability format, knowingly paid. Accepted 2026-07-21 while dispositioning BL-69's corrected findings; sibling of dec:service-spof-accepted and dec:graph-spof-accepted.",
+        "rationale": "dec:repo-file-embedded made the deterministic export the durable, diffable record, and req:survives-upgrade makes export-with-the-old-build / import-with-the-new THE migration mechanism — a single door is the feature, because a second export path would be a second source of truth for what the design is, and byte-identical determinism (req:persistence: a backup under git shows what actually changed) is only a meaningful promise about one format. The detector is right that severing this chain cuts cmp:init off from the design; that fragility is the price of one canonical portability format, knowingly paid. Accepted 2026-07-21 while dispositioning BL-69's corrected findings; sibling of dec:service-spof-accepted and dec:graph-spof-accepted.",
         "status": "accepted"
       }
     },
@@ -6740,9 +6859,9 @@
       "node_id": "dec:export-hash-chain",
       "node_type": "Decision",
       "properties": {
-        "decision": "Every export carries a content_hash \u2014 sha256 over the canonical sorted JSON of the design content only (graph_id, nodes, edges), excluding the stamp and chain fields, so the same design hashes identically whichever build wrote it. A prev_content_hash records file lineage: when an export overwrites an existing export file, the chain advances to the old file's content hash \u2014 but only when content actually changed, so two exports of an unchanged design stay byte-identical. The full hash is carried (not truncated like display checksums) because this is tamper evidence. compare_designs reports ancestry from the chain (other succeeds base / base succeeds other / siblings of a common parent / unknown); import reports an integrity mismatch loudly; the CI gate fails on a committed export that does not match its own hash. Documents predating the hash stay importable and comparable \u2014 absence is reported, never an error.",
+        "decision": "Every export carries a content_hash — sha256 over the canonical sorted JSON of the design content only (graph_id, nodes, edges), excluding the stamp and chain fields, so the same design hashes identically whichever build wrote it. A prev_content_hash records file lineage: when an export overwrites an existing export file, the chain advances to the old file's content hash — but only when content actually changed, so two exports of an unchanged design stay byte-identical. The full hash is carried (not truncated like display checksums) because this is tamper evidence. compare_designs reports ancestry from the chain (other succeeds base / base succeeds other / siblings of a common parent / unknown); import reports an integrity mismatch loudly; the CI gate fails on a committed export that does not match its own hash. Documents predating the hash stay importable and comparable — absence is reported, never an error.",
         "name": "The export proves itself: content hash + file-lineage chain, from AT proto's self-authenticating repos",
-        "rationale": "User directed 2026-07-21 after the AT Protocol comparison: atproto repos are self-authenticating (signed commits over a content-addressed root), and reflow2's export was already deterministic \u2014 the hash was well-defined and simply never computed. Content-only hashing (stamp excluded) was proven necessary the same day: the committed export and the live export had identical content but different writers (0.8.0 script vs 0.7.0-era session server), and they must fingerprint the same. The chain lives at the file-write seam because the committed export file IS the durable record whose lineage matters; the graph itself must not be mutated by a read-only export. Ancestry is what turns compare_designs from 'what diverged' into 'was the divergence made in ignorance of the base or in defiance of it' \u2014 BL-12 sketch idea 1's question, computable for the one-step case. Signing (identity) is deliberately deferred until a second writer is real; a hash chain without keys is already tamper-evident against accident and hand-editing, which is today's actual threat model.",
+        "rationale": "User directed 2026-07-21 after the AT Protocol comparison: atproto repos are self-authenticating (signed commits over a content-addressed root), and reflow2's export was already deterministic — the hash was well-defined and simply never computed. Content-only hashing (stamp excluded) was proven necessary the same day: the committed export and the live export had identical content but different writers (0.8.0 script vs 0.7.0-era session server), and they must fingerprint the same. The chain lives at the file-write seam because the committed export file IS the durable record whose lineage matters; the graph itself must not be mutated by a read-only export. Ancestry is what turns compare_designs from 'what diverged' into 'was the divergence made in ignorance of the base or in defiance of it' — BL-12 sketch idea 1's question, computable for the one-step case. Signing (identity) is deliberately deferred until a second writer is real; a hash chain without keys is already tamper-evident against accident and hand-editing, which is today's actual threat model.",
         "status": "accepted"
       }
     },
@@ -6752,7 +6871,17 @@
       "properties": {
         "decision": "cmp:graph is the single store handle everything else hangs off, and it stays that way. The single_point_of_failure warning on it is accepted as intentional, not resolved by adding redundancy.",
         "name": "The graph handle is an accepted single point of failure",
-        "rationale": "The architecture is explicit (AGENTS.md): DesignGraph is 'the single handle everything else hangs off' \u2014 one schema-validated CRUD surface so every coherence-loop module speaks to one store one way. Removing it strands schema, search and vocabulary (each with its file) plus the export chain, which is the BL-69 detector telling the truth about the spine. Redundancy is incoherent here twice over: these are modules compiled into one binary (they cannot fail independently of cmp:graph at run time \u2014 the same reasoning as the F6 library filter, which cannot see cmp:graph only because it provides no Interface node), and a second graph handle would mean two write paths to one store, exactly the incoherence the single handle exists to prevent. Accepted 2026-07-21 while dispositioning BL-69's corrected findings; sibling of dec:service-spof-accepted.",
+        "rationale": "The architecture is explicit (AGENTS.md): DesignGraph is 'the single handle everything else hangs off' — one schema-validated CRUD surface so every coherence-loop module speaks to one store one way. Removing it strands schema, search and vocabulary (each with its file) plus the export chain, which is the BL-69 detector telling the truth about the spine. Redundancy is incoherent here twice over: these are modules compiled into one binary (they cannot fail independently of cmp:graph at run time — the same reasoning as the F6 library filter, which cannot see cmp:graph only because it provides no Interface node), and a second graph handle would mean two write paths to one store, exactly the incoherence the single handle exists to prevent. Accepted 2026-07-21 while dispositioning BL-69's corrected findings; sibling of dec:service-spof-accepted.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:loop-status-state-not-history",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "loop_status reports what the coherence loop is owed — anchored gaps never surfaced, questions waiting or answered-but-unwritten, structural defects, capabilities claiming realized/verified with no passing check, drift awaiting disposition, claims never examined — computed entirely from current graph state. reflow2 does not track when tools were run: phase nudges are excluded (guidance, not debt), and the write tools carry static loop_hint pointers at the next loop step in their own results.",
+        "name": "Loop debt is computed from graph state, never from run history",
+        "rationale": "From the StoryFlow fleet trial (BL-74): under operational load the agent kept bookkeeping via raw tools while the loop skills silently stopped — 'a design-discipline tool that depends on being remembered will lose to operational urgency every time; fire on a trigger, not on virtue.' Run-history ('no detect_gaps since Tuesday') is not honestly computable here: the core takes no clock, and looking-is-not-writing is doctrine — recording reads so observation could be tracked would make looking mutate the record. Outstanding debt is the state-based equivalent and the actionable truth regardless of who ran what when. The hint rides the tool result the agent already reads (zero extra round-trip to see it), and loop_status is the cheap computation a client hook can fire on its own events — rung a of the BL-74 ladder builds on exactly this call. Decided 2026-07-21.",
         "status": "accepted"
       }
     },
@@ -6762,7 +6891,7 @@
       "properties": {
         "decision": "When HEAL merges DUPLICATES-asserted nodes, the survivor is picked by provenance rank (authored > planned > imported > reconciled > inferred > healed); node id breaks ties. Pre-provenance graphs are unchanged.",
         "name": "Merge survivor is chosen by provenance, id breaks ties",
-        "rationale": "User decided option 2 for BL-29 (2026-07-20): provenance is the closest thing the graph has to 'who asserted this and how deliberately'. Refinement from the 2026-07-20 self-adopt live session: a node with UNSET provenance defaults to authored, which made two genesis stubs tie against authored+verified survivors and nearly win on alphabetical id \u2014 set provenance explicitly on both sides before proposing a merge, and consider ranking unset below authored in a future revision.",
+        "rationale": "User decided option 2 for BL-29 (2026-07-20): provenance is the closest thing the graph has to 'who asserted this and how deliberately'. Refinement from the 2026-07-20 self-adopt live session: a node with UNSET provenance defaults to authored, which made two genesis stubs tie against authored+verified survivors and nearly win on alphabetical id — set provenance explicitly on both sides before proposing a merge, and consider ranking unset below authored in a future revision.",
         "status": "accepted"
       }
     },
@@ -6782,7 +6911,7 @@
       "properties": {
         "decision": "verification_coverage counts passing checks; a failing check is its own 0.8 gap.",
         "name": "Verified means a check that passes, not one that exists",
-        "rationale": "A failing test used to satisfy the gap that asked for a test, and passing vs failing were byte-identical to every diagnostic \u2014 counting test nodes while ignoring test results. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: phase-coverage trial, BL-30.",
+        "rationale": "A failing test used to satisfy the gap that asked for a test, and passing vs failing were byte-identical to every diagnostic — counting test nodes while ignoring test results. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: phase-coverage trial, BL-30.",
         "status": "accepted"
       }
     },
@@ -6791,7 +6920,7 @@
       "node_type": "Decision",
       "properties": {
         "decision": "RocksDB directory beside the repo, exports as the durable, diffable record.",
-        "name": "The graph lives as a repo file, embedded \u2014 not a service",
+        "name": "The graph lives as a repo file, embedded — not a service",
         "rationale": "The service's strongest argument (concurrency) is hypothetical while there is one writer; it would put the user's design on a machine they do not control and is permanent operational cost. Reopening conditions are written down. Decided 2026-07-18 (surface-plan.md); BL-12/BL-15 carry the consequences.",
         "status": "accepted"
       }
@@ -6802,7 +6931,7 @@
       "properties": {
         "decision": "Per capability: drifting / confirmed / unexamined, with the disposition counts visible.",
         "name": "The confirmation ledger reports claim history, never judges a claim",
-        "rationale": "Five design_holds claims with zero design edits is the erosion signature and the ledger makes it legible \u2014 but judging a specific claim false is semantic, and a deterministic detector would fire on every stable design with cosmetic churn (the unexpected_coupling lesson). Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); BL-35.",
+        "rationale": "Five design_holds claims with zero design edits is the erosion signature and the ledger makes it legible — but judging a specific claim false is semantic, and a deterministic detector would fire on every stable design with cosmetic churn (the unexpected_coupling lesson). Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); BL-35.",
         "status": "accepted"
       }
     },
@@ -6812,7 +6941,7 @@
       "properties": {
         "decision": "cmp:service is the sole bridge between the reflow2-mcp subsystem and both the core and the kit, and it stays that way. The single_point_of_failure warning on it is accepted as intentional, not resolved by adding redundancy.",
         "name": "The single MCP service is an accepted single point of failure",
-        "rationale": "req:invocation mandates one reflow2-mcp binary spoken to over stdio as the entire user-facing surface; a redundant second service would contradict that 'one door' design and buys nothing while there is a single local writer (dec:repo-file-embedded). Articulation-point analysis of the component/interface dependency graph (2026-07-21 self-host review) confirms cmp:service is a genuine cut vertex \u2014 removing it disconnects the MCP surface \u2014 so the finding is true, and the right disposition is to accept it rather than fix it. Contrast cmp:flow, flagged by the same detector but NOT a cut vertex (BL-69). Redundancy is the wrong fix; this SPOF is the architecture working as intended.",
+        "rationale": "req:invocation mandates one reflow2-mcp binary spoken to over stdio as the entire user-facing surface; a redundant second service would contradict that 'one door' design and buys nothing while there is a single local writer (dec:repo-file-embedded). Articulation-point analysis of the component/interface dependency graph (2026-07-21 self-host review) confirms cmp:service is a genuine cut vertex — removing it disconnects the MCP surface — so the finding is true, and the right disposition is to accept it rather than fix it. Contrast cmp:flow, flagged by the same detector but NOT a cut vertex (BL-69). Redundancy is the wrong fix; this SPOF is the architecture working as intended.",
         "status": "accepted"
       }
     },
@@ -6832,7 +6961,7 @@
       "properties": {
         "decision": "set_artifact_checksum requires a disposition: design_holds (a dated claim) or design_updated (naming the design-side ChangeEvent, linked to the artifact).",
         "name": "Silent drift-accept does not exist",
-        "rationale": "'Accept the file, leave the design alone, say nothing' is how a design erodes into fiction over N legitimate fix cycles while reporting zero gaps \u2014 the failure that sank the original reflow. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: erosion trials, BL-33.",
+        "rationale": "'Accept the file, leave the design alone, say nothing' is how a design erodes into fiction over N legitimate fix cycles while reporting zero gaps — the failure that sank the original reflow. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: erosion trials, BL-33.",
         "status": "accepted"
       }
     },
@@ -6842,7 +6971,7 @@
       "properties": {
         "decision": "Renderers may only emit what the graph states; everything else is confessed as a finding.",
         "name": "A view is a projection of the graph; renderer fill-ins are defects",
-        "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 \u2014 almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
+        "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 — almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
         "status": "accepted"
       }
     },
@@ -6883,6 +7012,18 @@
         "resolved": true,
         "severity": "medium",
         "summary": "'art:report' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:1ce1cf92d38064b1",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:service drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:service' has changed since it was registered against the design"
       }
     },
     {
@@ -7003,6 +7144,18 @@
         "resolved": true,
         "severity": "medium",
         "summary": "'art:graph' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:752edf7eefe9dbe0",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:report drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:report' has changed since it was registered against the design"
       }
     },
     {
@@ -7609,10 +7762,10 @@
       "node_id": "question:276837cbe7db075f",
       "node_type": "Question",
       "properties": {
-        "answer": "Covered \u2014 link it. The v0.5.0 published binaries (3 platforms via release.yml) plus install.sh are exactly this promise; draw SATISFIES from cap:kit and fold the no-rebuild intent into its description.",
-        "context_setter": "Nothing satisfies requirement \u201cRuns on Linux and macOS developer machines\u201d",
+        "answer": "Covered — link it. The v0.5.0 published binaries (3 platforms via release.yml) plus install.sh are exactly this promise; draw SATISFIES from cap:kit and fold the no-rebuild intent into its description.",
+        "context_setter": "Nothing satisfies requirement “Runs on Linux and macOS developer machines”",
         "gap_id": "gap:276837cbe7db075f",
-        "question": "You promised reflow2 works on both Linux and Mac laptops without users sitting through a long rebuild for every update \u2014 but nothing in the design currently claims to deliver that promise. Is it actually covered by the published binaries and install work you just finished, still on the to-do list, or no longer a promise you're making?",
+        "question": "You promised reflow2 works on both Linux and Mac laptops without users sitting through a long rebuild for every update — but nothing in the design currently claims to deliver that promise. Is it actually covered by the published binaries and install work you just finished, still on the to-do list, or no longer a promise you're making?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -7622,9 +7775,9 @@
       "node_type": "Question",
       "properties": {
         "answer": "Keep it and wire it up: promote to authored, allocate to the schema/graph/storage components, add a Verification backed by the real test suite. It is the foundation, not a stub artifact.",
-        "context_setter": "Nothing verifies \u201cSchema-validated graph store\u201d",
+        "context_setter": "Nothing verifies “Schema-validated graph store”",
         "gap_id": "gap:634fc0554d9ccfc6",
-        "question": "How will you prove the design store only ever keeps valid, well-formed records \u2014 or is this the same store your design already describes and tests elsewhere under a different name?",
+        "question": "How will you prove the design store only ever keeps valid, well-formed records — or is this the same store your design already describes and tests elsewhere under a different name?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -7633,10 +7786,10 @@
       "node_id": "question:7bdb8b6cce42d588",
       "node_type": "Question",
       "properties": {
-        "answer": "Same thing as the authored 'Reconcile against what was built' \u2014 merge them (user: \"go with your recommendation on all the duplicates\"). Keep the stub's write-side wording (checksummed registration) in the survivor.",
-        "context_setter": "Nothing verifies \u201cArtifact reconciliation\u201d",
+        "answer": "Same thing as the authored 'Reconcile against what was built' — merge them (user: \"go with your recommendation on all the duplicates\"). Keep the stub's write-side wording (checksummed registration) in the survivor.",
+        "context_setter": "Nothing verifies “Artifact reconciliation”",
         "gap_id": "gap:7bdb8b6cce42d588",
-        "question": "How will you check that comparing the recorded files against what's really on disk actually works \u2014 or is this the same ability your design already covers and tests under the name 'reconcile against what was built'?",
+        "question": "How will you check that comparing the recorded files against what's really on disk actually works — or is this the same ability your design already covers and tests under the name 'reconcile against what was built'?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -7646,9 +7799,9 @@
       "node_type": "Question",
       "properties": {
         "answer": "Record the storyflow brownfield adopt trial (2643 files, 5 true findings) as the proof, with its real outcome; this session's self-adopt run is a second data point.",
-        "context_setter": "Nothing verifies \u201cRecover a design from an existing system\u201d",
+        "context_setter": "Nothing verifies “Recover a design from an existing system”",
         "gap_id": "gap:c54e80b55a3273a9",
-        "question": "You've now tried recovering a design from an existing codebase on several real projects \u2014 what would count as proof that this works well enough to rely on, and should one of those trial runs be recorded as that proof?",
+        "question": "You've now tried recovering a design from an existing codebase on several real projects — what would count as proof that this works well enough to rely on, and should one of those trial runs be recorded as that proof?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -7657,10 +7810,10 @@
       "node_id": "question:c7c58ee8f8328d68",
       "node_type": "Question",
       "properties": {
-        "answer": "Same thing as the authored 'Install into a consumer project' \u2014 merge them (user: \"go with your recommendation on all the duplicates\"). Keep the four-harness / merge-not-overwrite detail in the survivor.",
-        "context_setter": "Nothing verifies \u201cConsumer install kit\u201d",
+        "answer": "Same thing as the authored 'Install into a consumer project' — merge them (user: \"go with your recommendation on all the duplicates\"). Keep the four-harness / merge-not-overwrite detail in the survivor.",
+        "context_setter": "Nothing verifies “Consumer install kit”",
         "gap_id": "gap:c7c58ee8f8328d68",
-        "question": "How will you confirm the one-command setup really installs everything into a user's project without breaking their existing configuration \u2014 or is this the same ability your design already covers and tests under the name 'install into a consumer project'?",
+        "question": "How will you confirm the one-command setup really installs everything into a user's project without breaking their existing configuration — or is this the same ability your design already covers and tests under the name 'install into a consumer project'?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -7669,7 +7822,7 @@
       "node_id": "rel:v040",
       "node_type": "Release",
       "properties": {
-        "description": "Superseded by v0.5.0 on the developer machine (deployment declaration withdrawn as rolled_back, 2026-07-20 \u2014 the binary was upgraded in place, not reverted).",
+        "description": "Superseded by v0.5.0 on the developer machine (deployment declaration withdrawn as rolled_back, 2026-07-20 — the binary was upgraded in place, not reverted).",
         "name": "v0.4.0",
         "status": "retired",
         "unit_type": "binary",
@@ -7713,7 +7866,7 @@
       "node_id": "rel:v070",
       "node_type": "Release",
       "properties": {
-        "description": "Minor: Snapshot.edges (BL-63, snapshots capture design edges), single_point_of_failure measured on the as-built operational network (BL-69), and the consumer CI coherence gate reflow2_check.py + ci-gate skill (BL-66) \u2014 the kit tarball's first second tool. Superseded in place by v0.8.0.",
+        "description": "Minor: Snapshot.edges (BL-63, snapshots capture design edges), single_point_of_failure measured on the as-built operational network (BL-69), and the consumer CI coherence gate reflow2_check.py + ci-gate skill (BL-66) — the kit tarball's first second tool. Superseded in place by v0.8.0.",
         "name": "v0.7.0",
         "status": "retired",
         "unit_type": "binary",
@@ -7724,7 +7877,7 @@
       "node_id": "rel:v080",
       "node_type": "Release",
       "properties": {
-        "description": "Minor: compare_designs, the design-vs-design diff (BL-71 rung c) \u2014 the reconcile family's sibling for two as-designed records, as a core op + MCP tool + --diff CLI. No schema change. First release whose manifest carries compare.rs.",
+        "description": "Minor: compare_designs, the design-vs-design diff (BL-71 rung c) — the reconcile family's sibling for two as-designed records, as a core op + MCP tool + --diff CLI. No schema change. First release whose manifest carries compare.rs.",
         "name": "v0.8.0",
         "status": "deployed",
         "unit_type": "binary",
@@ -7792,7 +7945,7 @@
         "name": "Design anything, not only software",
         "priority": "high",
         "provenance": "authored",
-        "statement": "Software, hardware, a document, a process \u2014 the vocabulary stays neutral.",
+        "statement": "Software, hardware, a document, a process — the vocabulary stays neutral.",
         "status": "accepted"
       }
     },
@@ -8097,6 +8250,16 @@
       }
     },
     {
+      "node_id": "ver:loop-status",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "report.rs",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:mcp-surface",
       "node_type": "Verification",
       "properties": {
@@ -8203,7 +8366,7 @@
         "last_run_at": "2026-07-20",
         "level": "integration",
         "method": "analysis",
-        "name": "skill_lint.py \u2014 the skills' contract with the served surface (tool refs resolve, mirrors byte-identical, frontmatter, standing rule), enforced in CI on every push",
+        "name": "skill_lint.py — the skills' contract with the served surface (tool refs resolve, mirrors byte-identical, frontmatter, standing rule), enforced in CI on every push",
         "status": "passing"
       }
     },
@@ -8249,6 +8412,7 @@
       }
     }
   ],
+  "prev_content_hash": "sha256:57d8768c7ba1666d78cdae0de8f374f8f8a94e4ae1f8e20450be063a1f3c37b5",
   "stamp": {
     "edge_types": 54,
     "node_types": 27,

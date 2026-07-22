@@ -164,7 +164,166 @@ pub struct GraphReport {
     pub declining_truncated: usize,
 }
 
+/// The coherence loop's outstanding debt — what CHANGE→DETECT→SURFACE→RESOLVE
+/// steps are *owed*, computed from graph state alone (BL-74).
+///
+/// Deliberately state, never run-history (`dec:loop-status-state-not-history`):
+/// the core takes no clock and looking is not writing, so "you haven't run
+/// detect_gaps since Tuesday" is not an honest computation — but "3 open gaps
+/// were never put to the user" is, and it is also the thing that actually
+/// matters. The field lesson this answers: under operational load, bookkeeping
+/// via the raw tools continued while the loop silently stopped, because
+/// nothing cheap said what was owed. This is that cheap thing — one call, a
+/// to-do list, no skill loaded.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct LoopStatus {
+    /// Open *anchored* gaps DETECT finds right now that no Question was ever
+    /// asked about — intent was captured and never surfaced to the user.
+    /// Phase nudges don't count: they say what comes next, not what is owed.
+    pub unsurfaced_gaps: usize,
+    /// Questions put to the user, still waiting on them.
+    pub unanswered_questions: usize,
+    /// Questions the user answered whose gap is still open — the answer never
+    /// reached the design (write it in, or acknowledge the gap).
+    pub unwritten_answers: usize,
+    /// Structural defects HEAL reports right now.
+    pub structural_defects: usize,
+    /// Capabilities claiming `realized`/`verified` with no passing check.
+    pub unproven_capabilities: usize,
+    /// Recorded divergences (`DriftEvent`) awaiting a disposition.
+    pub undispositioned_drift: usize,
+    /// Built capabilities nobody has ever checked against reality
+    /// (the confirmation ledger's `unexamined`).
+    pub unexamined_claims: usize,
+    /// The debt as ordered to-do lines, most blocking first. Empty when the
+    /// loop is clean — and emptiness is asserted, not implied.
+    pub next: Vec<String>,
+    /// Every counter zero.
+    pub clean: bool,
+}
+
 impl DesignGraph {
+    /// Compute the loop's outstanding debt. See [`LoopStatus`].
+    pub fn loop_status(&self) -> Result<LoopStatus, DynoError> {
+        let questions = self.open_questions()?;
+        let surfaced: std::collections::BTreeSet<&str> =
+            questions.iter().map(|q| q.gap_id.as_str()).collect();
+        // Acknowledged gaps are already absent from detect_gaps, so what
+        // remains unsurfaced is: open right now, anchored to real nodes, and
+        // never asked about. Anchored only — a phase nudge says what comes
+        // next, not what is owed (dec:anchored-first), and counting nudges as
+        // debt would make `clean` unreachable on a healthy design.
+        let unsurfaced_gaps = self
+            .detect_gaps()?
+            .iter()
+            .filter(|g| !g.affected_ids.is_empty() && !surfaced.contains(g.id.as_str()))
+            .count();
+        let unanswered_questions = questions.iter().filter(|q| q.status == "asked").count();
+        let unwritten_answers = questions.iter().filter(|q| q.status == "answered").count();
+
+        let structural_defects = self.detect_defects()?.len();
+
+        let mut unproven_capabilities = 0usize;
+        for cap in self.scan_nodes(node::CAPABILITY)? {
+            let claims_built = cap
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                .map(|s| s == "realized" || s == "verified")
+                .unwrap_or(false);
+            if !claims_built {
+                continue;
+            }
+            let mut passing = false;
+            for e in self.incoming(&cap.node_id, Some(crate::nodes::edge::VERIFIES))? {
+                passing = self
+                    .get_node(node::VERIFICATION, &e.from_id)?
+                    .and_then(|v| {
+                        v.properties
+                            .get("status")
+                            .and_then(dynograph_core::Value::as_str)
+                            .map(|s| s == "passing")
+                    })
+                    .unwrap_or(false);
+                if passing {
+                    break;
+                }
+            }
+            if !passing {
+                unproven_capabilities += 1;
+            }
+        }
+
+        let undispositioned_drift = self
+            .scan_nodes(node::DRIFT_EVENT)?
+            .into_iter()
+            .filter(|d| {
+                !d.properties
+                    .get("resolved")
+                    .and_then(dynograph_core::Value::as_bool)
+                    .unwrap_or(false)
+            })
+            .count();
+
+        let unexamined_claims = self.confirmation_ledger()?.unexamined;
+
+        let mut next = Vec::new();
+        if unanswered_questions > 0 {
+            next.push(format!(
+                "{unanswered_questions} question(s) are waiting on the user — follow up, \
+                 don't re-ask (open_questions)"
+            ));
+        }
+        if unwritten_answers > 0 {
+            next.push(format!(
+                "{unwritten_answers} answered question(s) never reached the design — write \
+                 the answer in, or acknowledge the gap"
+            ));
+        }
+        if unsurfaced_gaps > 0 {
+            next.push(format!(
+                "{unsurfaced_gaps} open gap(s) have never been put to the user — run \
+                 detect-and-ask"
+            ));
+        }
+        if structural_defects > 0 {
+            next.push(format!(
+                "{structural_defects} structural defect(s) outstanding — run check-health \
+                 (detect_defects)"
+            ));
+        }
+        if unproven_capabilities > 0 {
+            next.push(format!(
+                "{unproven_capabilities} capability(ies) claim realized/verified with no \
+                 passing check — add or run their Verification"
+            ));
+        }
+        if undispositioned_drift > 0 {
+            next.push(format!(
+                "{undispositioned_drift} recorded divergence(s) await a disposition \
+                 (set_artifact_checksum)"
+            ));
+        }
+        if unexamined_claims > 0 {
+            next.push(format!(
+                "{unexamined_claims} built capability(ies) never checked against reality \
+                 (reconcile_artifacts)"
+            ));
+        }
+
+        Ok(LoopStatus {
+            unsurfaced_gaps,
+            unanswered_questions,
+            unwritten_answers,
+            structural_defects,
+            unproven_capabilities,
+            undispositioned_drift,
+            unexamined_claims,
+            clean: next.is_empty(),
+            next,
+        })
+    }
+
     /// Count how much of the design carries its own verification.
     ///
     /// Deliberately a count and not a detector. Capabilities without a check

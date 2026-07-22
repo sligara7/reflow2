@@ -287,6 +287,20 @@ fn parse_struct_param<T: serde::de::DeserializeOwned>(
         .map_err(|e| McpError::invalid_params(format!("invalid {what}: {e}"), None))
 }
 
+/// Append the loop's next step to a write-tool result (BL-74): the field
+/// lesson was that adding nodes *feels* like using reflow2 while the
+/// capture→detect→ask→decide loop silently stops — so the pointer to the next
+/// loop step rides the result the agent already reads, at zero extra
+/// round-trip. Static and deterministic on purpose: this is the signpost, not
+/// the computation — `loop_status` is the one-call computation.
+fn with_loop_hint<T: serde::Serialize>(value: T, hint: &str) -> Result<CallToolResult, McpError> {
+    let mut v = serde_json::to_value(value).map_err(ser_err)?;
+    if let Some(obj) = v.as_object_mut() {
+        obj.insert("loop_hint".into(), JsonValue::String(hint.to_string()));
+    }
+    ok_json(v)
+}
+
 /// Read an export document from a caller-supplied path. A path that cannot be
 /// read or parsed is the caller's mistake — `invalid_params`, with the path
 /// named so the error is actionable.
@@ -1173,6 +1187,20 @@ impl ReflowService {
         ok_json(g.detect_gaps().map_err(dyno_err)?)
     }
 
+    #[tool(description = "The coherence loop's outstanding debt, cheaply: what \
+                       capture→detect→ask→decide steps are owed right now, computed from graph \
+                       state alone (never from run history — looking is not writing). One call \
+                       returns a short to-do list: anchored gaps never put to the user, \
+                       questions still waiting or answered-but-unwritten, structural defects, \
+                       capabilities claiming realized/verified with no passing check, recorded \
+                       drift awaiting a disposition, and built capabilities nobody has checked \
+                       against reality. Fire it between operational tasks instead of trying to \
+                       remember the loop; `clean: true` means nothing is owed.")]
+    pub async fn loop_status(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        ok_json(g.loop_status().map_err(dyno_err)?)
+    }
+
     #[tool(
         description = "Blast radius of a recorded ChangeEvent along the golden thread. Returns \
                        a summary (counts by distance, the distance-1 ring, risk crossings); \
@@ -1340,10 +1368,14 @@ impl ReflowService {
         Parameters(req): Parameters<RequirementReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.graph.lock().await;
-        ok_json(NodeDto::from(
-            g.add_requirement(&req.id, &req.name, &req.statement)
-                .map_err(dyno_err)?,
-        ))
+        with_loop_hint(
+            NodeDto::from(
+                g.add_requirement(&req.id, &req.name, &req.statement)
+                    .map_err(dyno_err)?,
+            ),
+            "loop: when this capture batch lands, run detect_gaps (detect-and-ask) — \
+             loop_status says what's owed",
+        )
     }
 
     #[tool(
@@ -1356,10 +1388,14 @@ impl ReflowService {
         Parameters(req): Parameters<CapabilityReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.graph.lock().await;
-        ok_json(NodeDto::from(
-            g.add_capability(&req.id, &req.name, &req.description, req.status.as_deref())
-                .map_err(dyno_err)?,
-        ))
+        with_loop_hint(
+            NodeDto::from(
+                g.add_capability(&req.id, &req.name, &req.description, req.status.as_deref())
+                    .map_err(dyno_err)?,
+            ),
+            "loop: wire satisfies to the requirement this serves, then run detect_gaps when \
+             the capture batch lands (detect-and-ask)",
+        )
     }
 
     #[tool(
@@ -1428,10 +1464,13 @@ impl ReflowService {
         Parameters(req): Parameters<ComponentReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.graph.lock().await;
-        ok_json(NodeDto::from(
-            g.add_component(&req.id, &req.name, &req.description, req.level.as_deref())
-                .map_err(dyno_err)?,
-        ))
+        with_loop_hint(
+            NodeDto::from(
+                g.add_component(&req.id, &req.name, &req.description, req.level.as_deref())
+                    .map_err(dyno_err)?,
+            ),
+            "loop: structural change — run detect_defects (check-health) when the batch lands",
+        )
     }
 
     #[tool(
@@ -1486,9 +1525,11 @@ impl ReflowService {
         Parameters(req): Parameters<IdName>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.graph.lock().await;
-        ok_json(NodeDto::from(
-            g.add_interface(&req.id, &req.name).map_err(dyno_err)?,
-        ))
+        with_loop_hint(
+            NodeDto::from(g.add_interface(&req.id, &req.name).map_err(dyno_err)?),
+            "loop: structural change — wire provides/consumes, then run detect_defects \
+             (check-health) when the batch lands",
+        )
     }
 
     #[tool(
@@ -2512,7 +2553,11 @@ impl ReflowService {
             checksum: req.checksum,
         };
         let mut g = self.graph.lock().await;
-        ok_json(g.link_artifact(opts).map_err(dyno_err)?)
+        with_loop_hint(
+            g.link_artifact(opts).map_err(dyno_err)?,
+            "loop: as-built moved — reconcile_artifacts confirms the design still describes \
+             what's on disk; loop_status says what else is owed",
+        )
     }
 
     // ---- Temporal / CHANGE (deterministic, mutating) ----

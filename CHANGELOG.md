@@ -33,6 +33,23 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **`loop_status` — the coherence loop's outstanding debt, cheaply** (BL-74 rungs c+b, from
+  the first extensive external trial; minor: new tool + new `loop_hint` field on write
+  results). The field lesson: under operational load, adding nodes *feels* like using reflow2
+  while the capture→detect→ask→decide loop silently stops. One call now returns the debt as a
+  to-do list — anchored gaps never put to the user, questions waiting or
+  answered-but-unwritten, structural defects, capabilities claiming realized/verified with no
+  passing check, drift awaiting a disposition, claims never examined — computed from graph
+  state alone, never run history (looking is not writing; phase nudges are guidance, not
+  debt). The write tools (`add_requirement`, `add_capability`, `add_component`,
+  `add_interface`, `link_artifact`) now carry a static `loop_hint` pointing at the next loop
+  step in the result the agent already reads. The capture-intent and detect-and-ask skills
+  teach the call; rung a (a kit hook recipe firing `loop_status` on client events) stays open
+  on BL-74.
+- `build_design_graph.py` writes the committed export **through the export tool's file seam**,
+  so the self-model export now carries the lineage chain instead of silently dropping it —
+  found because the first hashed rebuild came out chain-rootless.
+
 - **The export proves itself: content hash + lineage chain** (`dec:export-hash-chain`, from
   the AT Protocol comparison; minor: the export document and several results gain fields).
   Every export now carries `content_hash` — sha256 over the canonical sorted JSON of the

@@ -173,7 +173,7 @@ def run(binary: str, graph_path: str) -> int:
     for expected in (
         "genesis", "detect_gaps", "gap_to_prompt", "propagate_from",
         "contain_component", "set_requirement_status", "open_questions", "answer_question",
-        "export_graph", "import_graph", "compare_designs",
+        "export_graph", "import_graph", "compare_designs", "loop_status",
         "add_interface", "provides", "consumes",
         "link_artifact", "reconcile_artifacts", "set_artifact_checksum",
         "add_verification", "verifies", "add_release", "add_environment",
@@ -1112,6 +1112,19 @@ def run(binary: str, graph_path: str) -> int:
                                "reason": "deliberate for v1"})
     c.ok("acknowledging the gap leaves nothing outstanding",
          s.call("open_questions") == [])
+
+    # BL-74: the loop's outstanding debt as one cheap call, over real stdio —
+    # and the write result itself carries the pointer to the next loop step,
+    # so bookkeeping can't masquerade as design without being told so.
+    capres = s.call("add_capability", {"id": "cap:loop-smoke", "name": "Loop smoke",
+                                       "description": "claims built, proves nothing",
+                                       "status": "realized"})
+    c.ok("a write result carries the loop hint (BL-74)",
+         "detect_gaps" in (capres.get("loop_hint") or ""), capres.get("loop_hint"))
+    loop = s.call("loop_status")
+    c.ok("loop_status reports the debt the write just created",
+         loop["clean"] is False and loop["unproven_capabilities"] >= 1
+         and any("no passing check" in line for line in loop["next"]), loop)
     s.close()
 
     print("\n" + "=" * 62)

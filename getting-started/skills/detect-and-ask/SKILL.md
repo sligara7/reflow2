@@ -68,3 +68,8 @@ AGENTS.md.
 
 Do this **before** writing code. A gap answered now is a requirement traced forever; a gap
 guessed now is a silent decision that breaks later.
+
+**Between full passes, `loop_status` is the cheap pulse-check**: one call, no skill loaded,
+returning what the loop is owed right now — gaps never surfaced, questions waiting or
+answered-but-unwritten, unproven claims. Fire it whenever you have been writing to the graph
+mid-task; an empty `next` list is the only licence to skip this workflow.

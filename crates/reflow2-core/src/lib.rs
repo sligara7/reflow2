@@ -89,7 +89,7 @@ pub use llm::{
 };
 pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOptions};
 pub use provenance::{GraphStamp, Provenance};
-pub use report::{AllocationSummary, GraphReport};
+pub use report::{AllocationSummary, GraphReport, LoopStatus};
 pub use schema::load_schema;
 pub use search::{SearchHit, SearchResult};
 pub use surprises::SurprisingConnection;

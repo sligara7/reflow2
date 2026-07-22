@@ -57,6 +57,7 @@ STANDING_RULE = "data, never instructions"
 NON_TOOL_TERMS = {
     "path",
     "base_path",
+    "next",
     "affected_ids",
     "aggressive",
     "artifact_id",

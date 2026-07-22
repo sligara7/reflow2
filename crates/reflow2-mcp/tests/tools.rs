@@ -1427,6 +1427,58 @@ async fn compare_designs_reports_divergence_from_a_base_export() {
     std::fs::remove_file(&other_path).ok();
 }
 
+// ---- BL-74 · loop_status and the write-tool hints ---------------------------
+
+#[tokio::test]
+async fn loop_status_reports_debt_and_the_write_tools_point_at_the_loop() {
+    let s = seeded().await;
+
+    // A capability claiming realized with no passing check is the classic
+    // raw-tools-only residue; the hint rides the write result itself.
+    let cap = j!(s.add_capability(Parameters(CapabilityReq {
+        id: "cap:shipped".into(),
+        name: "Shipped".into(),
+        description: "Claims to be built.".into(),
+        status: Some("realized".into())
+    })));
+    assert!(
+        cap["loop_hint"]
+            .as_str()
+            .expect("write results carry the loop hint")
+            .contains("detect_gaps"),
+        "{cap}"
+    );
+
+    let status = j!(s.loop_status());
+    assert_eq!(status["clean"], false);
+    assert!(
+        status["unproven_capabilities"].as_u64().unwrap() >= 1,
+        "{status}"
+    );
+    let next: Vec<&str> = status["next"]
+        .as_array()
+        .expect("next is a list")
+        .iter()
+        .map(|v| v.as_str().unwrap())
+        .collect();
+    assert!(
+        next.iter().any(|l| l.contains("no passing check")),
+        "{next:?}"
+    );
+
+    // Structural writes point at check-health instead.
+    let cmp = j!(s.add_component(Parameters(ComponentReq {
+        id: "cmp:new".into(),
+        name: "New part".into(),
+        description: "Just added.".into(),
+        level: None,
+    })));
+    assert!(
+        cmp["loop_hint"].as_str().unwrap().contains("check-health"),
+        "{cmp}"
+    );
+}
+
 // ---- dec:export-hash-chain · lineage at the file-write seam -----------------
 
 #[tokio::test]

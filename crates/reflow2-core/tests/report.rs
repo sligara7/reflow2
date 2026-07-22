@@ -143,3 +143,162 @@ fn the_total_counts_every_node_including_the_provenance_layer() {
     assert!(md.contains("Fragment 1"), "{md}");
     assert!(md.contains("3 nodes in total"), "{md}");
 }
+
+// ---- Loop status: the debt list, computed from state (BL-74) ----------------
+
+#[test]
+fn a_design_with_nothing_owed_reads_clean() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+
+    let status = g.loop_status().unwrap();
+
+    // A bare project draws phase nudges, and nudges are guidance, not debt.
+    assert!(status.clean, "{:?}", status.next);
+    assert!(status.next.is_empty());
+    assert_eq!(status.unsurfaced_gaps, 0);
+}
+
+#[test]
+fn captured_intent_owes_a_surface_pass_until_the_question_is_asked() {
+    use reflow2_core::AskedQuestion;
+
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    // Stated intent plus a capability claiming realized, satisfying nothing,
+    // verified by nothing: exactly the state a raw-tools-only capture session
+    // leaves behind.
+    g.add_requirement("req:r", "R", "Must do x.").unwrap();
+    g.add_capability("cap:x", "X", "does x", Some("realized"))
+        .unwrap();
+
+    let before = g.loop_status().unwrap();
+    assert!(!before.clean);
+    assert!(
+        before.unsurfaced_gaps > 0,
+        "anchored gaps exist and nobody asked"
+    );
+    assert_eq!(before.unproven_capabilities, 1);
+    assert!(
+        before.next.iter().any(|l| l.contains("detect-and-ask")),
+        "{:?}",
+        before.next
+    );
+    assert!(
+        before.next.iter().any(|l| l.contains("no passing check")),
+        "{:?}",
+        before.next
+    );
+
+    // Surfacing every anchored gap moves the debt from "unsurfaced" to
+    // "waiting on the user" — the loop advanced one step.
+    let gaps: Vec<_> = g
+        .detect_gaps()
+        .unwrap()
+        .into_iter()
+        .filter(|gap| !gap.affected_ids.is_empty())
+        .collect();
+    for gap in &gaps {
+        g.record_asked_question(
+            &gap.id,
+            &gap.affected_ids,
+            "What should happen here?",
+            AskedQuestion::default(),
+        )
+        .unwrap();
+    }
+    let asked = g.loop_status().unwrap();
+    assert_eq!(asked.unsurfaced_gaps, 0);
+    assert_eq!(asked.unanswered_questions, gaps.len());
+    assert!(
+        asked.next.iter().any(|l| l.contains("waiting on the user")),
+        "{:?}",
+        asked.next
+    );
+
+    // An answer that never reaches the design is its own named debt.
+    g.answer_question(&gaps[0].id, "It should do x.").unwrap();
+    let answered = g.loop_status().unwrap();
+    assert_eq!(answered.unwritten_answers, 1);
+    assert_eq!(answered.unanswered_questions, gaps.len() - 1);
+    assert!(
+        answered
+            .next
+            .iter()
+            .any(|l| l.contains("never reached the design")),
+        "{:?}",
+        answered.next
+    );
+
+    // Proving the capability clears the unproven count.
+    g.add_verification("ver:x", "x tests", Some("test"), None)
+        .unwrap();
+    g.verifies("ver:x", node::CAPABILITY, "cap:x").unwrap();
+    g.set_verification_status("ver:x", "passing", None).unwrap();
+    assert_eq!(g.loop_status().unwrap().unproven_capabilities, 0);
+}
+
+#[test]
+fn recorded_drift_is_owed_a_disposition_until_accepted() {
+    use reflow2_core::drift::{ObservedArtifact, ReconcileOptions};
+    use reflow2_core::{DriftDisposition, LinkArtifactOptions};
+
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_capability("cap:x", "X", "does x", Some("realized"))
+        .unwrap();
+    g.link_artifact(LinkArtifactOptions {
+        artifact_id: "art:x".into(),
+        name: "x.rs".into(),
+        location: Some("src/x.rs".into()),
+        artifact_type: Some("code".into()),
+        target_type: node::CAPABILITY.into(),
+        target_id: "cap:x".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: Some("sha256:old".into()),
+    })
+    .unwrap();
+
+    // Built, never reconciled: the ledger calls it unexamined and so do we.
+    assert_eq!(g.loop_status().unwrap().unexamined_claims, 1);
+
+    let report = g
+        .reconcile_artifacts(
+            &[ObservedArtifact {
+                artifact_id: "art:x".into(),
+                present: true,
+                checksum: Some("sha256:new".into()),
+            }],
+            &ReconcileOptions {
+                record_events: true,
+                exhaustive: false,
+                detected_at: Some("2026-07-21".into()),
+            },
+        )
+        .unwrap();
+    assert_eq!(report.findings.len(), 1);
+
+    let drifted = g.loop_status().unwrap();
+    assert_eq!(drifted.undispositioned_drift, 1);
+    assert!(
+        drifted.next.iter().any(|l| l.contains("disposition")),
+        "{:?}",
+        drifted.next
+    );
+
+    g.set_artifact_checksum(
+        "art:x",
+        "sha256:new",
+        DriftDisposition::DesignHolds {
+            change_type: reflow2_core::ChangeType::TestFailureFix,
+        },
+        None,
+        Some("2026-07-21"),
+    )
+    .unwrap();
+    let accepted = g.loop_status().unwrap();
+    assert_eq!(accepted.undispositioned_drift, 0);
+    assert_eq!(accepted.unexamined_claims, 0);
+}
