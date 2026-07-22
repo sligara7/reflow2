@@ -1317,6 +1317,42 @@ feature: a scheduled GitHub Action doing `cargo outdated` (crates.io deps) + `gi
 deps today (checked 2026-07-22: dynograph pinned v0.10.0 == latest tag; rmcp pinned "2" →
 2.2.0). That script is the S down-payment; the in-graph generalisation is this item.
 
+**BL-79 · The identity keystone: who authors the design — RUNG 1 (authorship seed) DONE
+2026-07-22** — *user-chosen as the next most important, from the recurring "the schema has no
+notion of who" thread the backlog kept naming.* The missing keystone under four threads: BL-44
+(claim a node/cluster for parallel work), BL-70 (an AoA alternative needs an author), BL-41 (the
+*mechanical* half of requirement-certainty — "the user's word" is enforced only culturally
+today), and BL-12 sketch 2 (who may assert what, when the second writer arrives). The backlog's
+own warning made it one item, not four: *"one identity mechanism should serve all three; building
+it for claims alone would be the recurring lesson in reverse."*
+
+**User decisions (2026-07-22):** a **new `Contributor` node type**, kept separate from the
+existing `Actor` — `Actor` is *who the designed system serves* (boundary-facing domain content),
+`Contributor` is *who authors and decides the design itself* (person / automated_agent /
+organization); conflating them blurs two lifecycles a UAF model keeps apart. First rung =
+**authorship seed**: `AUTHORED_BY` (design node → Contributor), the structured *who* behind
+provenance's *how*, replacing the free-text `Requirement.source`. First-class node (not a
+property) because a claim expires and authorship belongs on axis-Z — a bare property is invisible
+to history.
+
+**Rung 1 DONE:** schema += `Contributor` + `AUTHORED_BY` (core.yaml; 28 node / 55 edge types);
+`AUTHORED_BY` deliberately NOT in `structural_rule`, so authorship is metadata and never enlarges
+a blast radius (smoke asserts it). `nodes.rs` name constants; `add_contributor` + `authored_by`
+core constructors and MCP tools (readOnlyHint=false, 82 tools, 2 new toolsnaps); capture-intent
+skill records the driver once per session and attributes nodes *when captured, not at exit*.
+Schema counts updated in schema.rs/vocabulary.rs/smoke; all gates green. **BL-19 note:** additive,
+so a new-binary graph is refused loudly by a pre-Contributor binary (count-based provenance
+check) — no `schema_version` bump needed.
+
+**Remaining rungs (need the user on vocabulary each):** **(2)** `CLAIMS` — a Contributor claims a
+node or a computable cluster (`propagate_from`/community), advisory-first per `dec:report-dont-judge`
+(this is BL-44). **(3)** `ACTS_FOR` — agent-acts-for-person: git's **author vs committer** split
+(Anthony authored, Claude Code committed) — the git exploration ratified this exact shape. **(4)**
+alternative-authorship for BL-70. **(5)** signing the export `content_hash` with a Contributor's
+key = BL-41's mechanical half + `dec:export-hash-chain`'s deferred signing, "when a second writer
+is real." Deliberately no "unauthored node" detector yet — it would N-alarm on every existing
+node (the BL-23/42 lesson).
+
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
 vocabulary wants in.* Lexicon namespaces schemas reverse-DNS (`app.bsky.feed.post`) so

@@ -1,0 +1,48 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record a Contributor — who authors and decides the DESIGN itself: a person, an automated coding agent, or an organization. Distinct from an Actor (add via create_node), which is who the designed system SERVES. Create one per session for whoever is driving, then attribute their design nodes with authored_by — the structured 'who' behind provenance's 'how'.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "description": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "handle": {
+        "default": null,
+        "description": "Short stable handle used to coordinate — e.g. the COORD board handle\n(`@ajs`) or an agent's name — so the same contributor is recognisable\nacross sessions without matching on the display name.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "id": {
+        "description": "Stable id (e.g. `who:ajs`, `who:claude-code`).",
+        "type": "string"
+      },
+      "kind": {
+        "default": null,
+        "description": "`person` (default) / `automated_agent` / `organization`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "name": "add_contributor"
+}

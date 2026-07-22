@@ -14,6 +14,9 @@ pub mod node {
     pub const DESIGN_RULE: &str = "DesignRule";
     /// A question already put to the user about a gap (and whether answered).
     pub const QUESTION: &str = "Question";
+    /// Who authors/decides the design itself — a person or automated agent.
+    /// Distinct from [`ACTOR`], who the designed system serves.
+    pub const CONTRIBUTOR: &str = "Contributor";
     // P1 · Function (functional.yaml)
     pub const CAPABILITY: &str = "Capability";
     pub const FLOW: &str = "Flow";
@@ -50,6 +53,10 @@ pub mod edge {
     pub const CONTAINS: &str = "CONTAINS";
     /// `* → *` — traceability: a Capability SATISFIES a Requirement.
     pub const SATISFIES: &str = "SATISFIES";
+    /// `* → Contributor` — the structured "who" behind a node's authorship.
+    /// Deliberately NOT a traceability edge (absent from `structural_rule`), so
+    /// authorship never propagates a blast radius.
+    pub const AUTHORED_BY: &str = "AUTHORED_BY";
     /// `Constraint/DesignRule → *` — a limit binds a target; for a budget
     /// Constraint the edge carries the target's `contribution` (BL-11).
     pub const CONSTRAINS: &str = "CONSTRAINS";

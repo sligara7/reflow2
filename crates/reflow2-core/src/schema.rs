@@ -58,8 +58,8 @@ mod tests {
         // as-released view). Every bump moves GraphStamp, so a graph written
         // by this schema is refused by older binaries — deliberate, loud, and
         // worth a CHANGELOG entry each time (BL-19).
-        assert_eq!(schema.node_types.len(), 27, "expected 27 node types");
-        assert_eq!(schema.edge_types.len(), 54, "expected 54 edge types");
+        assert_eq!(schema.node_types.len(), 28, "expected 28 node types");
+        assert_eq!(schema.edge_types.len(), 55, "expected 55 edge types");
     }
 
     #[test]

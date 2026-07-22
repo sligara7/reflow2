@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:502da418f46c4d1b3fe795d235d936c7ac2bceedcd4eb2dd1292576b96df5b03",
+  "content_hash": "sha256:792849ba9d4dfc97c3eec797764039da53478f625634a15137c3305cb55e9663",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -7468,6 +7468,16 @@
       }
     },
     {
+      "node_id": "dec:design-authorship-identity",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "The design's authorship identity is a new first-class Contributor node type (kind: person / automated_agent / organization), kept separate from the existing Actor. Actor is who the designed system SERVES (boundary-facing domain content); Contributor is who authors and decides the design ITSELF. The first rung is the authorship seed: an AUTHORED_BY edge (any design node → Contributor, role author/reviewer/approver) — the structured \"who\" behind provenance's \"how\", replacing the free-text Requirement.source. AUTHORED_BY is deliberately NOT a traceability edge (absent from nodes.rs structural_rule), so authorship is metadata and never enlarges a blast radius. Later rungs, each needing the user on vocabulary: CLAIMS (BL-44 node/cluster claims, advisory-first), ACTS_FOR (agent-acts-for-person, git's author/committer split), alternative-authorship (BL-70), and signing the export content_hash with a Contributor key (BL-41 mechanical half). No \"unauthored node\" detector yet — it would N-alarm on every existing node.",
+        "name": "Design-authorship is a Contributor, distinct from an Actor; the seed is AUTHORED_BY",
+        "rationale": "User chose the identity keystone as the next most important work (2026-07-22), and decided both axes: a new type over overloading Actor, and authorship-first over jumping to claims. First-class node over a bare property because a claim expires and authorship belongs on axis-Z — a property is invisible to history. One identity mechanism because the backlog's own warning is that building it for claims alone would be \"the recurring lesson in reverse\": the same who-is-this is needed by BL-44 (claims), BL-70 (alternative authorship), BL-41 (the mechanical half of requirement-certainty, cultural today), and BL-12 sketch 2 (who may assert what). Contributor separate from Actor because they have different lifecycles — a UAF model keeps who-serves and who-makes apart. The git exploration (2026-07-22) independently ratified the shape: git's author-vs-committer split is exactly the deferred ACTS_FOR rung, and signing the record hash is BL-41's mechanical half. Additive schema change (28 node / 55 edge types); a new-binary graph is refused loudly by a pre-Contributor binary via the count-based provenance check (BL-19), so no schema_version bump.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:design-diff-vocabulary",
       "node_type": "Decision",
       "properties": {
@@ -9160,7 +9170,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:3f275a6c765e5ff7f796e639830f57d532dd0d63609bc0a2054712be7a34cda4",
+  "prev_content_hash": "sha256:502da418f46c4d1b3fe795d235d936c7ac2bceedcd4eb2dd1292576b96df5b03",
   "stamp": {
     "edge_types": 54,
     "node_types": 27,

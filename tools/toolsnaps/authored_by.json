@@ -1,0 +1,46 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Attribute a design node to a Contributor (AUTHORED_BY) — whose word this Decision/Requirement/… is. `role` is author (default), reviewer, or approver. This is the structured author behind a node; it is deliberately not a traceability edge, so it never enlarges a blast radius. Record it when a decision is MADE, not at session end — captured-when-decided is what keeps the authorship honest.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "acted_at": {
+        "default": null,
+        "description": "ISO-8601 timestamp of the authorship act, if recorded.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "contributor_id": {
+        "description": "The `Contributor` whose word this node is.",
+        "type": "string"
+      },
+      "from_id": {
+        "type": "string"
+      },
+      "from_type": {
+        "description": "Type of the design node being attributed (e.g. `Decision`, `Requirement`).",
+        "type": "string"
+      },
+      "role": {
+        "default": null,
+        "description": "`author` (default) / `reviewer` / `approver`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "from_type",
+      "from_id",
+      "contributor_id"
+    ],
+    "type": "object"
+  },
+  "name": "authored_by"
+}

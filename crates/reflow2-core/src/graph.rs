@@ -332,6 +332,29 @@ impl DesignGraph {
         )
     }
 
+    /// Record a [`Contributor`](node::CONTRIBUTOR) — who authors and decides the
+    /// design (a person, an automated agent, or an organization). Distinct from
+    /// an Actor, who the designed system serves. The seed of the identity thread:
+    /// design nodes then point at it with [`authored_by`](Self::authored_by).
+    pub fn add_contributor(
+        &mut self,
+        id: &str,
+        name: &str,
+        kind: Option<&str>,
+        handle: Option<&str>,
+        description: Option<&str>,
+    ) -> Result<StoredNode, DynoError> {
+        self.create_node(
+            node::CONTRIBUTOR,
+            id,
+            Props::new()
+                .set("name", name)
+                .set_opt("kind", kind)
+                .set_opt("handle", handle)
+                .set_opt("description", description),
+        )
+    }
+
     /// P1 · Function — something the design can do. `name` and `description`
     /// are required.
     ///
@@ -632,6 +655,30 @@ impl DesignGraph {
             to_type,
             to_id,
             Props::new(),
+        )
+    }
+
+    /// Record that a design node was authored (or reviewed/approved) by a
+    /// [`Contributor`](node::CONTRIBUTOR) — the structured "who" behind
+    /// provenance's "how". [`AUTHORED_BY`](edge::AUTHORED_BY) is deliberately not
+    /// a traceability edge, so this never enlarges a blast radius.
+    pub fn authored_by(
+        &mut self,
+        from_type: &str,
+        from_id: &str,
+        contributor_id: &str,
+        role: Option<&str>,
+        acted_at: Option<&str>,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::AUTHORED_BY,
+            from_type,
+            from_id,
+            node::CONTRIBUTOR,
+            contributor_id,
+            Props::new()
+                .set_opt("role", role)
+                .set_opt("acted_at", acted_at),
         )
     }
 

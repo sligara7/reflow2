@@ -840,6 +840,40 @@ pub struct GovernedByReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ContributorReq {
+    /// Stable id (e.g. `who:ajs`, `who:claude-code`).
+    pub id: String,
+    pub name: String,
+    /// `person` (default) / `automated_agent` / `organization`.
+    #[serde(default)]
+    pub kind: Option<String>,
+    /// Short stable handle used to coordinate — e.g. the COORD board handle
+    /// (`@ajs`) or an agent's name — so the same contributor is recognisable
+    /// across sessions without matching on the display name.
+    #[serde(default)]
+    pub handle: Option<String>,
+    #[serde(default)]
+    pub description: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct AuthoredByReq {
+    /// Type of the design node being attributed (e.g. `Decision`, `Requirement`).
+    pub from_type: String,
+    pub from_id: String,
+    /// The `Contributor` whose word this node is.
+    pub contributor_id: String,
+    /// `author` (default) / `reviewer` / `approver`.
+    #[serde(default)]
+    pub role: Option<String>,
+    /// ISO-8601 timestamp of the authorship act, if recorded.
+    #[serde(default)]
+    pub acted_at: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AcknowledgeGapReq {
     /// The gap's `id`, exactly as `detect_gaps` reported it.
     pub gap_id: String,
@@ -2164,6 +2198,60 @@ impl ReflowService {
         ok_json(EdgeDto::from(
             g.governed_by(&req.from_type, &req.from_id, &req.to_type, &req.to_id)
                 .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record a Contributor — who authors and decides the DESIGN \
+                       itself: a person, an automated coding agent, or an \
+                       organization. Distinct from an Actor (add via create_node), \
+                       which is who the designed system SERVES. Create one per \
+                       session for whoever is driving, then attribute their design \
+                       nodes with authored_by — the structured 'who' behind \
+                       provenance's 'how'.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn add_contributor(
+        &self,
+        Parameters(req): Parameters<ContributorReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.add_contributor(
+                &req.id,
+                &req.name,
+                req.kind.as_deref(),
+                req.handle.as_deref(),
+                req.description.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Attribute a design node to a Contributor (AUTHORED_BY) — \
+                       whose word this Decision/Requirement/… is. `role` is \
+                       author (default), reviewer, or approver. This is the \
+                       structured author behind a node; it is deliberately not a \
+                       traceability edge, so it never enlarges a blast radius. \
+                       Record it when a decision is MADE, not at session end — \
+                       captured-when-decided is what keeps the authorship honest.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn authored_by(
+        &self,
+        Parameters(req): Parameters<AuthoredByReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(EdgeDto::from(
+            g.authored_by(
+                &req.from_type,
+                &req.from_id,
+                &req.contributor_id,
+                req.role.as_deref(),
+                req.acted_at.as_deref(),
+            )
+            .map_err(dyno_err)?,
         ))
     }
 

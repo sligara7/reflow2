@@ -33,6 +33,22 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Design-authorship identity — the `Contributor` keystone, authorship seed** (BL-79, user-chosen
+  direction; **schema change → minor, and a graph written now cannot be opened by a
+  pre-`Contributor` binary** — refused loudly by the count-based provenance check, per BL-19). The
+  schema gains a `Contributor` node type (kind: person / automated_agent / organization) and an
+  `AUTHORED_BY` edge, giving the design a structured *who* — who authors and decides the design
+  itself — kept deliberately distinct from the existing `Actor` (who the designed system *serves*):
+  two different lifecycles, not one overloaded type. `AUTHORED_BY` is **not** a traceability edge
+  (absent from the impact table on purpose), so authorship never enlarges a blast radius; the smoke
+  test asserts exactly that. Two typed tools land it — `add_contributor` and `authored_by` — and
+  the capture-intent skill now records who is driving once per session and attributes captured
+  nodes *when they are captured*, not at session end. This is the seed of the identity thread the
+  backlog kept pointing at: the same node will carry claims (BL-44), alternative-authorship (BL-70),
+  and the mechanical half of requirement-certainty (BL-41). Schema now: 28 node types, 55 edge
+  types. Deferred, recorded: the `ACTS_FOR` rung (agent-acts-for-person, the git author/committer
+  split), and any "unauthored node" detector (left out to avoid an N-alarm on existing graphs).
+
 - **Tool-surface hardening: read-only classification + toolsnaps** (BL-76, from the
   github-mcp-server comparison; minor: every served tool gains an `annotations.readOnlyHint`
   field — no schema change, no call shape change). Every one of the ~80 MCP tools now declares

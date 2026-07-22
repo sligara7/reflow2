@@ -286,9 +286,9 @@ def run(binary: str, graph_path: str) -> int:
     # cargo tests: every other layer is a client we wrote.
     print("\n== schema discovery (BL-1) ==")
     vocab = s.call("describe_schema", {})
-    c.ok("every node type is discoverable", len(vocab.get("node_types", [])) == 27,
+    c.ok("every node type is discoverable", len(vocab.get("node_types", [])) == 28,
          len(vocab.get("node_types", [])))
-    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 54,
+    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 55,
          len(vocab.get("edge_types", [])))
 
     exact = s.call("describe_schema", {"from": "Capability", "to": "Component"})
@@ -370,6 +370,39 @@ def run(binary: str, graph_path: str) -> int:
         "objective": "Prove the loop runs", "domain": "software",
     })
     c.ok("bootstraps a project", g.get("project_id") == "proj:smoke", g)
+
+    # Identity keystone: who authors the DESIGN, distinct from the Actor who the
+    # designed system serves. The seed rung — a Contributor node + AUTHORED_BY —
+    # is the structured "who" behind provenance's "how", and the load-bearing
+    # property is that authorship is METADATA: it must never enlarge a blast
+    # radius, which is why AUTHORED_BY is absent from the impact table.
+    print("\n== 0b. design authorship (Contributor + AUTHORED_BY) ==")
+    vocab = s.call("describe_schema", {})
+    c.ok("Contributor is a discoverable node type",
+         any(n.get("node_type") == "Contributor" for n in vocab.get("node_types", [])),
+         [n.get("node_type") for n in vocab.get("node_types", [])][:5])
+    who = s.call("add_contributor", {"id": "who:ajs", "name": "Anthony",
+                                     "kind": "person", "handle": "@ajs"})
+    c.ok("a person contributor records who, with a handle",
+         who["properties"].get("kind") == "person"
+         and who["properties"].get("handle") == "@ajs", who["properties"])
+    s.call("add_contributor", {"id": "who:agent", "name": "Claude Code",
+                               "kind": "automated_agent"})
+    s.call("add_decision", {"id": "dec:smoke-auth", "name": "Use a custom loop",
+                            "decision": "Drive the loop by composing tools.",
+                            "rationale": "Fine-grained tools compose."})
+    edge = s.call("authored_by", {"from_type": "Decision", "from_id": "dec:smoke-auth",
+                                  "contributor_id": "who:ajs", "role": "author",
+                                  "acted_at": "2026-07-22T00:00:00Z"})
+    c.ok("a decision is attributed to its author with a role",
+         edge["properties"].get("role") == "author", edge.get("properties"))
+    # The load-bearing invariant: authorship is not traceability. A change to the
+    # attributed decision must NOT reach the contributor — a Contributor is not a
+    # design hub, and authorship must never widen a blast radius.
+    reach = s.call("propagate_from", {"seed_ids": ["dec:smoke-auth"], "full": True})
+    c.ok("AUTHORED_BY does not propagate — authorship never widens a blast radius",
+         not any(n["node_id"] == "who:ajs" for n in reach["impacted"]),
+         [n["node_id"] for n in reach["impacted"]])
 
     print("\n== 1. capture intent, including a contract ==")
     s.call("add_requirement", {"id": "req:physics", "name": "Realistic physics",
