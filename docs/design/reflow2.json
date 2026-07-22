@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:8febd579f8c79b400daccaa3469fcf8fc91526e04a57143f7fe048c89060ba4b",
+  "content_hash": "sha256:400a11780263a614d51dd10b6840685a241fe995b2a166a564cbdf01e1ef06fa",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -6786,7 +6786,7 @@
       "node_id": "cap:decision-point",
       "node_type": "Capability",
       "properties": {
-        "description": "A proposed Decision is a decision point: register alternatives under it as lightweight Artifact pointers (branch-by-file, each naming its export), GOVERNED_BY the Decision and CONTRADICTS their siblings — the fork held open. Refuses registering under a settled decision. Collapse chooses a winner: the Decision moves to accepted, losers are superseded (OBSOLETES, retired on the record not deleted), and the outcome + rationale are written into the Decision's own alternatives field (the ADR obituary the fork upgrades). The content-merge of the winner reuses apply_merge. BL-70 rung 2; ops set_decision_status, register_alternative, alternatives_for, collapse_decision.",
+        "description": "A proposed Decision is a decision point: register alternatives under it as lightweight Artifact pointers (branch-by-file, each naming its export), GOVERNED_BY the Decision and CONTRADICTS their siblings — the fork held open. Refuses registering under a settled decision. Collapse chooses a winner: the Decision moves to accepted, losers are superseded (OBSOLETES, retired on the record not deleted), and the outcome + rationale are written into the Decision's own alternatives field. The teeth: the undecided_decision_point DETECT gap surfaces a proposed Decision with >=2 alternatives as an open fork ('which do you choose?'), anchored so it clears on collapse. The winner's content-merge reuses apply_merge. BL-70 rung 2; ops set_decision_status, register_alternative, alternatives_for, collapse_decision.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Hold and collapse a decision point (forkable alternatives)",
@@ -9707,7 +9707,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:49e60717b105980201b15b5abb6eeb4818bb51ab307a0f4d05b6e9e7f3e7160a",
+  "prev_content_hash": "sha256:8febd579f8c79b400daccaa3469fcf8fc91526e04a57143f7fe048c89060ba4b",
   "stamp": {
     "edge_types": 55,
     "node_types": 28,

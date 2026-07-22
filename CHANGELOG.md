@@ -33,6 +33,13 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **`undecided_decision_point` DETECT gap — an open fork surfaces as a question** (BL-70, the last
+  of the "missing teeth"; **minor** — a new gap type). A *proposed* Decision holding ≥2 registered
+  alternatives is now surfaced by `detect_gaps` as an open decision the design hasn't made — "which
+  do you choose? compare them, then collapse." Anchored on the Decision and its alternatives, so an
+  acknowledgement survives only while that exact fork stands; it clears the moment the decision is
+  collapsed. This gives a proposed Decision teeth: without it, a held-open analysis of alternatives
+  would sit undecided forever with nothing to nudge it (`detect.rs`, `tests/alternatives.rs`).
 - **Analysis of alternatives — compare parallel design branches on the same measures — the
   `analyze_alternatives` tool** (BL-70 v1, branch-by-file; **minor**). Given the paths to two or
   more alternative design exports (the first is the baseline), it loads each into its own throwaway
