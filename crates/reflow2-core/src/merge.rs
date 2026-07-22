@@ -134,6 +134,13 @@ pub struct MergeConflict {
     /// node/edge. The merge retains that side pending the human's call.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub retained: Option<Source>,
+    /// The rerere key: a content fingerprint over the disputed values and the
+    /// property, *independent of which node* — so the identical conflict
+    /// anywhere gets the same key and one recorded resolution replays across all
+    /// of them (`dec:merge-rerere`, git's model). `None` for conflicts without a
+    /// clean value triple (node type, delete/modify), which v1 does not record.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub resolution_key: Option<String>,
 }
 
 /// The counts first, so a caller can read "clean" or "6 conflicts" without
@@ -229,6 +236,26 @@ fn conflict_id(base_hash: &str, target: &str, property: Option<&str>) -> String 
     )
 }
 
+/// The rerere content fingerprint (`dec:merge-rerere`): over the property and
+/// the three disputed values, deliberately *not* the node id or the ancestor
+/// hash — so the same conflict shape anywhere, against any base, keys the same.
+fn content_key(
+    property: &str,
+    base: &Option<Value>,
+    ours: &Option<Value>,
+    theirs: &Option<Value>,
+) -> String {
+    format!(
+        "rr:{:016x}",
+        fnv1a(&format!(
+            "{property}|{}|{}|{}",
+            render(base),
+            render(ours),
+            render(theirs)
+        ))
+    )
+}
+
 /// Merge one node's property bag against the base (an empty base means an
 /// add/add). Appends autos and conflicts; returns nothing — the caller counts.
 #[allow(clippy::too_many_arguments)]
@@ -276,6 +303,7 @@ fn merge_props(
                 });
             }
             ThreeWay::Conflict => {
+                let resolution_key = Some(content_key(k, &bv, &ov, &tv));
                 conflicts.push(MergeConflict {
                     id: conflict_id(base_hash, target, Some(k)),
                     kind: conflict_prop_kind,
@@ -292,6 +320,7 @@ fn merge_props(
                     ours: ov,
                     theirs: tv,
                     retained: None,
+                    resolution_key,
                 });
             }
         }
@@ -453,6 +482,7 @@ fn delete_vs_side(
             ours: None,
             theirs: None,
             retained: Some(kept_source),
+            resolution_key: None,
         });
     }
 }
@@ -481,6 +511,7 @@ fn node_type_conflict(
         ours: Some(Value::String(ours_ty.to_string())),
         theirs: Some(Value::String(theirs_ty.to_string())),
         retained: None,
+        resolution_key: None,
     }
 }
 
@@ -604,6 +635,7 @@ fn edge_remove_vs_side(
             ours: None,
             theirs: None,
             retained: Some(kept_source),
+            resolution_key: None,
         });
     }
 }
@@ -1237,6 +1269,11 @@ pub struct MergeApplyReport {
     pub edges_removed: usize,
     /// How many conflict decisions were applied.
     pub conflicts_resolved: usize,
+    /// How many of those decisions came from recorded resolutions (rerere),
+    /// rather than being passed explicitly (`dec:merge-rerere`).
+    pub resolutions_recalled: usize,
+    /// How many resolutions were recorded for future reuse.
+    pub resolutions_recorded: usize,
     /// Merged edges whose endpoints were not in the merged design, so they were
     /// not written — a dangling edge is reported, never silently kept or dropped.
     pub skipped_edges: Vec<String>,
@@ -1251,21 +1288,106 @@ fn merge_err(e: MergeError) -> DynoError {
 }
 
 impl DesignGraph {
+    /// Record how a conflict was resolved, keyed by its content fingerprint
+    /// (`dec:merge-rerere`) — stored as an answered `Question` whose id *is* the
+    /// rerere key, so it travels with the design in the export and reuses the
+    /// answer machinery. The same conflict shape anywhere recalls this decision.
+    pub fn record_merge_resolution(
+        &mut self,
+        resolution_key: &str,
+        choice: Resolution,
+    ) -> Result<(), DynoError> {
+        let answer = match choice {
+            Resolution::Base => "base",
+            Resolution::Ours => "ours",
+            Resolution::Theirs => "theirs",
+        };
+        let props = crate::nodes::Props::new()
+            .set("question", "recorded merge-conflict resolution (rerere)")
+            .set("gap_id", resolution_key)
+            .set("status", "answered")
+            .set("answer", answer);
+        self.create_node(crate::nodes::node::QUESTION, resolution_key, props)?;
+        Ok(())
+    }
+
+    /// Recall a recorded resolution by its content fingerprint, if one exists.
+    /// Advisory: the caller decides whether to reuse it (`dec:merge-rerere`).
+    pub fn recall_merge_resolution(
+        &self,
+        resolution_key: &str,
+    ) -> Result<Option<Resolution>, DynoError> {
+        let Some(n) = self.get_node(crate::nodes::node::QUESTION, resolution_key)? else {
+            return Ok(None);
+        };
+        Ok(n.properties
+            .get("answer")
+            .and_then(Value::as_str)
+            .and_then(Resolution::parse))
+    }
+
+    /// Bulk recall — for each rerere key, any recorded resolution. This is the
+    /// advisory surfacing the merge *report* cannot do itself: it is pure over
+    /// files, while the resolution memory lives in the graph.
+    pub fn recall_resolutions(
+        &self,
+        resolution_keys: &[String],
+    ) -> Result<BTreeMap<String, Resolution>, DynoError> {
+        let mut out = BTreeMap::new();
+        for k in resolution_keys {
+            if let Some(r) = self.recall_merge_resolution(k)? {
+                out.insert(k.clone(), r);
+            }
+        }
+        Ok(out)
+    }
+
     /// Apply a resolved three-way merge into this graph — the write side of
     /// `merge_designs`. This graph is *ours*: given the common ancestor and
     /// *theirs*, it makes the live design equal the merged result, atomically.
     ///
     /// Refuses before writing anything when a conflict has no decision
     /// (`dec:merge-three-way`): the batch is only committed once the whole
-    /// merged design is known.
+    /// merged design is known. With `use_recorded`, conflicts left undecided are
+    /// filled from recorded resolutions (rerere) where one exists — the human
+    /// opts in by passing the flag (`dec:merge-rerere`). Every applied
+    /// resolution is recorded for future reuse.
     pub fn apply_merge(
         &mut self,
         base: &GraphExport,
         theirs: &GraphExport,
         resolutions: &BTreeMap<String, Resolution>,
+        use_recorded: bool,
     ) -> Result<MergeApplyReport, DynoError> {
         let ours = self.export_graph()?;
-        let merged = resolve_merge(base, &ours, theirs, resolutions).map_err(merge_err)?;
+
+        // The proposal gives each conflict's id and its rerere key — what recall
+        // and recording key on.
+        let proposal = merge_designs(base, &ours, theirs, "base", "ours", "theirs");
+        let mut effective = resolutions.clone();
+        let mut recalled = 0usize;
+        if use_recorded {
+            for c in &proposal.conflicts {
+                let Some(key) = &c.resolution_key else { continue };
+                if effective.contains_key(&c.id) {
+                    continue;
+                }
+                if let Some(r) = self.recall_merge_resolution(key)? {
+                    effective.insert(c.id.clone(), r);
+                    recalled += 1;
+                }
+            }
+        }
+        let merged = resolve_merge(base, &ours, theirs, &effective).map_err(merge_err)?;
+
+        // Every applied resolution that carries a rerere key, to record for reuse.
+        let to_record: Vec<(String, Resolution)> = proposal
+            .conflicts
+            .iter()
+            .filter_map(|c| Some((c.resolution_key.clone()?, *effective.get(&c.id)?)))
+            .collect();
+        let conflicts_resolved = effective.len();
+        let resolutions_recorded = to_record.len();
 
         // What ours holds now, to diff against the merged target.
         let ours_nodes: BTreeMap<&str, (&str, &Props)> = ours
@@ -1305,7 +1427,9 @@ impl DesignGraph {
                 edges_added: 0,
                 edges_changed: 0,
                 edges_removed: 0,
-                conflicts_resolved: resolutions.len(),
+                conflicts_resolved,
+                resolutions_recalled: recalled,
+                resolutions_recorded,
                 skipped_edges: Vec::new(),
             };
 
@@ -1382,6 +1506,12 @@ impl DesignGraph {
                     self.delete_node(ty, id)?;
                     report.nodes_removed += 1;
                 }
+            }
+
+            // Record each applied resolution for reuse (rerere), in the same
+            // atomic batch as the merge it came from.
+            for (key, choice) in &to_record {
+                self.record_merge_resolution(key, *choice)?;
             }
             Ok(report)
         })();

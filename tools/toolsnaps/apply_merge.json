@@ -23,6 +23,11 @@
       "theirs_path": {
         "description": "Path to the export being merged *in*. `ours` is the live graph at\n`--graph-path`, so this applies theirs into the current design.",
         "type": "string"
+      },
+      "use_recorded": {
+        "default": false,
+        "description": "Fill any conflict left undecided from a recorded resolution (rerere),\nwhere one exists — you opt in to reusing past decisions by setting this.\nA conflict with neither an explicit decision nor a recorded one still\nrefuses. Default false.",
+        "type": "boolean"
       }
     },
     "required": [
