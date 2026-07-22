@@ -31,6 +31,15 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.7.0] — 2026-07-21
+
+A minor release: the schema gains one optional property (`Snapshot.edges`), which is what makes
+this 0.7.0 rather than 0.6.2 — see [docs/upgrading-to-v0.7.0.md](docs/upgrading-to-v0.7.0.md)
+(short version: existing graphs open unchanged, old snapshots stay readable, no action needed).
+The theme is the coherence loop closing its own gaps: history that survives edge moves, a SPOF
+detector that measures the right graph, and the whole loop made continuous for consumers via a
+CI gate.
+
 ### Added
 
 - **A consumer CI coherence gate** (BL-66). `tools/reflow2_check.py` — stdlib-only, ships in
