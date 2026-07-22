@@ -2328,10 +2328,18 @@ EVOLVES_INTO). `analyze_alternatives(paths)` (MCP tool + `alternatives.rs`, 4 te
 alternative exports and lays their measures side by side (graph_report snapshot — nodes, gaps,
 defects, modularity, verification) plus each branch's `compare_designs` divergence from the
 baseline. Collapse = `merge_designs`/`apply_merge` winner into baseline + retire losers (built).
-**Rung 2** wires the decision point (a proposed Decision GOVERNS lightweight alternative pointers
-that CONTRADICT; collapse accepts the Decision, merges the winner, retires the losers) — plus DETECT
-question #2 (is a cross-branch absence itself a gap?) and per-branch readiness (BL-68). World-scope
-(decision #1's other option) stays deferred unless simultaneous in-one-graph AoA proves needed.
+**Rung 2 BUILT 2026-07-22** (`cap:decision-point`): a *proposed* Decision is a decision point with
+teeth. `register_alternative` hangs a lightweight Artifact pointer (its export, branch-by-file)
+under it, `GOVERNED_BY` the Decision and `CONTRADICTS` its siblings — refused unless the Decision is
+proposed. `alternatives_for` lists them (feed to `analyze_alternatives`). `collapse_decision`
+chooses a winner: Decision → accepted, losers `OBSOLETES`-superseded (retired on the record, not
+deleted), outcome + rationale written into the Decision's own `alternatives` field (the ADR obituary
+the fork upgrades from prose to structure). Winner's content merged separately via `apply_merge`.
+Ops `set_decision_status` / `register_alternative` / `alternatives_for` / `collapse_decision`; 8
+tests. **Still open on BL-70:** the `undecided_decision_point` DETECT gap (surface an open fork as a
+question — the last of the "missing teeth"), DETECT question #2 (is a cross-branch absence itself a
+gap?), per-branch readiness (BL-68), and world-scope (decision #1's other option) if simultaneous
+in-one-graph AoA ever proves needed.
 
 The idea in the user's words: an undecided design choice could hold **forks** — option A and
 option B (and more) as live sub-designs — and, from military source selection, an analysis of

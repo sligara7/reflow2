@@ -1,0 +1,20 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "List the alternatives registered under a decision point (BL-70) — the Artifact pointers GOVERNED_BY the Decision, with their export locations. Feed the locations to analyze_alternatives to compare them.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "decision_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "decision_id"
+    ],
+    "type": "object"
+  },
+  "name": "alternatives_for"
+}

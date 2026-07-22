@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "destructiveHint": false,
+    "readOnlyHint": false
+  },
+  "description": "Set a Decision's lifecycle status — proposed / accepted / superseded / rejected (BL-70). Setting it to `proposed` opens it as a decision point: an undecided fork you can register alternatives under. Every other property is preserved.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "decision_id": {
+        "type": "string"
+      },
+      "status": {
+        "description": "`proposed` (opens a decision point) / `accepted` / `superseded` /\n`rejected`.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "decision_id",
+      "status"
+    ],
+    "type": "object"
+  },
+  "name": "set_decision_status"
+}

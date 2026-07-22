@@ -3,7 +3,7 @@
 //! Alternatives are separate exports; this lays them side by side on the same
 //! measures and reports each one's divergence from the baseline.
 
-use reflow2_core::{DesignGraph, GraphExport, analyze_alternatives};
+use reflow2_core::{DesignGraph, GraphExport, Value, analyze_alternatives};
 
 fn g() -> DesignGraph {
     DesignGraph::open_in_memory().expect("graph")
@@ -106,4 +106,108 @@ fn the_same_alternatives_analyse_identically() {
         analyze_alternatives(&alts).expect("a"),
         analyze_alternatives(&alts).expect("b"),
     );
+}
+
+// --- rung 2: the decision point — register alternatives, collapse the fork ---
+
+fn as_str(n: &reflow2_core::DesignGraph, ty: &str, id: &str, key: &str) -> Option<String> {
+    n.get_node(ty, id).expect("get_node").and_then(|node| {
+        node.properties
+            .get(key)
+            .and_then(Value::as_str)
+            .map(str::to_string)
+    })
+}
+
+/// A proposed decision point with nothing registered yet.
+fn decision_point() -> DesignGraph {
+    let mut g = g();
+    g.add_project("proj:x", "X").expect("project");
+    g.add_decision("dec:choice", "Which approach", "Undecided.", None)
+        .expect("decision");
+    g.set_decision_status("dec:choice", "proposed")
+        .expect("propose");
+    g
+}
+
+#[test]
+fn alternatives_register_under_a_proposed_decision_and_contradict() {
+    let mut g = decision_point();
+    g.register_alternative("dec:choice", "alt:a", "Option A", "alt-a.json")
+        .expect("a");
+    g.register_alternative("dec:choice", "alt:b", "Option B", "alt-b.json")
+        .expect("b");
+
+    let alts = g.alternatives_for("dec:choice").expect("list");
+    assert_eq!(alts.len(), 2);
+    assert_eq!(alts[0].id, "alt:a");
+    assert_eq!(alts[0].location.as_deref(), Some("alt-a.json"));
+
+    // The second sibling CONTRADICTS the first.
+    let contradicts = g.outgoing("alt:b", Some("CONTRADICTS")).expect("edges");
+    assert!(contradicts.iter().any(|e| e.to_id == "alt:a"));
+}
+
+#[test]
+fn registering_under_a_settled_decision_is_refused() {
+    let mut g = g();
+    g.add_project("proj:x", "X").expect("project");
+    // add_decision creates it accepted (settled), not a proposed decision point.
+    g.add_decision("dec:done", "Already chosen", "Settled.", None)
+        .expect("decision");
+
+    let err = g
+        .register_alternative("dec:done", "alt:x", "X", "x.json")
+        .unwrap_err();
+    assert!(
+        format!("{err}").contains("proposed"),
+        "you fork an open choice, not a settled one"
+    );
+}
+
+#[test]
+fn collapsing_accepts_the_decision_supersedes_losers_and_records_the_obituary() {
+    let mut g = decision_point();
+    g.register_alternative("dec:choice", "alt:a", "Option A", "alt-a.json")
+        .expect("a");
+    g.register_alternative("dec:choice", "alt:b", "Option B", "alt-b.json")
+        .expect("b");
+
+    let report = g
+        .collapse_decision("dec:choice", "alt:a", Some("A is simpler"))
+        .expect("collapse");
+    assert_eq!(report.winner, "alt:a");
+    assert_eq!(report.retired, vec!["alt:b".to_string()]);
+
+    // The decision is settled.
+    assert_eq!(
+        as_str(&g, "Decision", "dec:choice", "status").as_deref(),
+        Some("accepted")
+    );
+
+    // The outcome is written into the ADR's own alternatives field.
+    let obituary =
+        as_str(&g, "Decision", "dec:choice", "alternatives").expect("alternatives prose");
+    assert!(obituary.contains("chosen"), "the winner is recorded");
+    assert!(obituary.contains("retired"), "the loser is recorded");
+    assert!(obituary.contains("A is simpler"), "the rationale is kept");
+
+    // The winner supersedes the loser on the record (retired, not deleted).
+    let obsoletes = g.outgoing("alt:a", Some("OBSOLETES")).expect("edges");
+    assert!(obsoletes.iter().any(|e| e.to_id == "alt:b"));
+    assert!(
+        g.get_node("Artifact", "alt:b").expect("get").is_some(),
+        "the loser is kept, not deleted"
+    );
+}
+
+#[test]
+fn collapsing_to_a_non_alternative_is_refused() {
+    let mut g = decision_point();
+    g.register_alternative("dec:choice", "alt:a", "Option A", "alt-a.json")
+        .expect("a");
+    let err = g
+        .collapse_decision("dec:choice", "alt:ghost", None)
+        .unwrap_err();
+    assert!(format!("{err}").contains("not an alternative"));
 }

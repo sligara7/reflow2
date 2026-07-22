@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:49e60717b105980201b15b5abb6eeb4818bb51ab307a0f4d05b6e9e7f3e7160a",
+  "content_hash": "sha256:8febd579f8c79b400daccaa3469fcf8fc91526e04a57143f7fe048c89060ba4b",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -44,6 +44,14 @@
     {
       "edge_type": "ALLOCATED_TO",
       "from_id": "cap:compare-designs",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:decision-point",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -442,6 +450,15 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "cap:compare-alternatives",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cap:decision-point",
       "properties": {
         "acted_at": "2026-07-22",
         "role": "author"
@@ -2966,6 +2983,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:decision-point",
+      "properties": {},
+      "to_id": "dec:parallel-alternatives"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:detect",
       "properties": {},
       "to_id": "dec:anchored-first"
@@ -5158,6 +5181,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:alternatives",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:decision-point"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:artifact",
       "properties": {
         "completeness": "complete"
@@ -5492,6 +5523,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:decision-point",
+      "properties": {},
+      "to_id": "req:intent-preserved"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:detect",
       "properties": {},
       "to_id": "req:coherence"
@@ -5762,6 +5799,12 @@
       "from_id": "ver:alternatives",
       "properties": {},
       "to_id": "cap:compare-alternatives"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:alternatives",
+      "properties": {},
+      "to_id": "cap:decision-point"
     },
     {
       "edge_type": "VERIFIES",
@@ -6734,6 +6777,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Compare two as-designed records",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:decision-point",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A proposed Decision is a decision point: register alternatives under it as lightweight Artifact pointers (branch-by-file, each naming its export), GOVERNED_BY the Decision and CONTRADICTS their siblings — the fork held open. Refuses registering under a settled decision. Collapse chooses a winner: the Decision moves to accepted, losers are superseded (OBSOLETES, retired on the record not deleted), and the outcome + rationale are written into the Decision's own alternatives field (the ADR obituary the fork upgrades). The content-merge of the winner reuses apply_merge. BL-70 rung 2; ops set_decision_status, register_alternative, alternatives_for, collapse_decision.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Hold and collapse a decision point (forkable alternatives)",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -9353,7 +9409,7 @@
       "properties": {
         "level": "integration",
         "method": "test",
-        "name": "AoA suite (tests/alternatives.rs) — 4 cases",
+        "name": "AoA + decision-point suite (tests/alternatives.rs) — 8 cases",
         "status": "passing"
       }
     },
@@ -9651,7 +9707,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:182e028ef3c2c9d6be93e1573173e198c4b5f9b726ab38661977c5fc05bd0677",
+  "prev_content_hash": "sha256:49e60717b105980201b15b5abb6eeb4818bb51ab307a0f4d05b6e9e7f3e7160a",
   "stamp": {
     "edge_types": 55,
     "node_types": 28,

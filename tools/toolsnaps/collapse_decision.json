@@ -1,0 +1,34 @@
+{
+  "annotations": {
+    "destructiveHint": false,
+    "readOnlyHint": false
+  },
+  "description": "Collapse a decision point (BL-70): choose the winning alternative. The Decision moves to `accepted`, the losing alternatives are superseded (OBSOLETES — retired on the record, not deleted), and the outcome is written into the Decision's own `alternatives` field with the rationale. This records the choice; merge the winner's design content into the baseline separately with apply_merge.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "decision_id": {
+        "type": "string"
+      },
+      "note": {
+        "default": null,
+        "description": "Why — recorded in the Decision's alternatives field with the outcome.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "winner_id": {
+        "description": "The winning alternative's id.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "decision_id",
+      "winner_id"
+    ],
+    "type": "object"
+  },
+  "name": "collapse_decision"
+}
