@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- BL-75 (requirement certainty as a state) — @ajs — since 2026-07-22 — vocabulary session first; then likely report.rs + skills, possibly schema
+
 
 
 
