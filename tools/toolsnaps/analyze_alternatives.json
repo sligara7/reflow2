@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Compare parallel design alternatives on the same measures — an analysis of alternatives (BL-70). Pass the paths to two or more alternative export documents (branch-by-file); the first is the baseline. Returns each branch's measures side by side — design nodes, open gaps, structural defects, allocation modularity, capabilities verified — plus every non-baseline branch's structural divergence from the baseline (added/removed/changed). Makes alternatives comparable on measures, not advocacy; it opens its own throwaway graphs, so it never touches and is never blocked by the live one. Collapse the winner with merge_designs/apply_merge and retire the losers.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "paths": {
+        "description": "Paths to the alternative design exports (branch-by-file). The first is\nthe baseline the others' divergence is reported against. Two or more.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "paths"
+    ],
+    "type": "object"
+  },
+  "name": "analyze_alternatives"
+}

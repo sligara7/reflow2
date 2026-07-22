@@ -1368,7 +1368,9 @@ impl DesignGraph {
         let mut recalled = 0usize;
         if use_recorded {
             for c in &proposal.conflicts {
-                let Some(key) = &c.resolution_key else { continue };
+                let Some(key) = &c.resolution_key else {
+                    continue;
+                };
                 if effective.contains_key(&c.id) {
                     continue;
                 }

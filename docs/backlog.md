@@ -2320,6 +2320,18 @@ instruments (phase 13/13, erosion 7/8, coherent 9/9, model_the_loop, smoke) at t
 **BL-70 · Parallel alternatives — AoA branches held open until a decision point** — *user,
 source-selection practice (analysis of alternatives / DOTMLPF-P), 2026-07-21.* Concept; size
 **L**; the vocabulary decisions are the user's (and shared with [BL-68]'s question 1).
+**v1 BUILT 2026-07-22** (`cap:compare-alternatives`, `dec:parallel-alternatives`, user decided both
+axes): alternatives are **branch-by-file** (separate exports, reusing BL-80's compare/merge/retire
+whole — NOT world-tags inside one graph, so no detector goes world-aware), and they are design
+**space** (siblings CONTRADICT, held under a proposed Decision), distinct from **time** (epochs /
+EVOLVES_INTO). `analyze_alternatives(paths)` (MCP tool + `alternatives.rs`, 4 tests) loads N
+alternative exports and lays their measures side by side (graph_report snapshot — nodes, gaps,
+defects, modularity, verification) plus each branch's `compare_designs` divergence from the
+baseline. Collapse = `merge_designs`/`apply_merge` winner into baseline + retire losers (built).
+**Rung 2** wires the decision point (a proposed Decision GOVERNS lightweight alternative pointers
+that CONTRADICT; collapse accepts the Decision, merges the winner, retires the losers) — plus DETECT
+question #2 (is a cross-branch absence itself a gap?) and per-branch readiness (BL-68). World-scope
+(decision #1's other option) stays deferred unless simultaneous in-one-graph AoA proves needed.
 
 The idea in the user's words: an undecided design choice could hold **forks** — option A and
 option B (and more) as live sub-designs — and, from military source selection, an analysis of

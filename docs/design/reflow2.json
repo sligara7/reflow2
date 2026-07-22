@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:182e028ef3c2c9d6be93e1573173e198c4b5f9b726ab38661977c5fc05bd0677",
+  "content_hash": "sha256:49e60717b105980201b15b5abb6eeb4818bb51ab307a0f4d05b6e9e7f3e7160a",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -32,6 +32,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:compare-alternatives",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:compare"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -415,7 +423,25 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "art:alternatives",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "art:merge",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cap:compare-alternatives",
       "properties": {
         "acted_at": "2026-07-22",
         "role": "author"
@@ -533,6 +559,24 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:merge-three-way",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:parallel-alternatives",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:parallel-alternatives",
       "properties": {
         "acted_at": "2026-07-22",
         "role": "author"
@@ -2904,6 +2948,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-alternatives",
+      "properties": {},
+      "to_id": "dec:parallel-alternatives"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:compare-designs",
       "properties": {},
       "to_id": "dec:design-diff-vocabulary"
@@ -5100,6 +5150,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:alternatives",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:compare-alternatives"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:artifact",
       "properties": {
         "completeness": "complete"
@@ -5422,6 +5480,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:compare-alternatives",
+      "properties": {},
+      "to_id": "req:human-decides"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:compare-designs",
       "properties": {},
       "to_id": "req:intent-preserved"
@@ -5692,6 +5756,12 @@
       "from_id": "ver:allocate",
       "properties": {},
       "to_id": "cap:allocate"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:alternatives",
+      "properties": {},
+      "to_id": "cap:compare-alternatives"
     },
     {
       "edge_type": "VERIFIES",
@@ -6198,6 +6268,16 @@
       }
     },
     {
+      "node_id": "art:alternatives",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "location": "crates/reflow2-core/src/alternatives.rs",
+        "name": "alternatives.rs — AoA report",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:artifact",
       "node_type": "Artifact",
       "properties": {
@@ -6628,6 +6708,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Record a change",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:compare-alternatives",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Load N alternative design exports (branch-by-file) and report each branch on the same measures — graph_report snapshot (nodes, open gaps, allocation health, verification coverage) side by side — plus each branch's structural divergence from a named baseline (compare_designs). Alternatives comparable on measures, not advocacy. BL-70 v1; the collapse (merge winner + retire losers) reuses BL-80. Rung 2 wires the decision point.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Compare parallel alternatives on the same measures (AoA)",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -7889,6 +7982,16 @@
         "decision": "single_point_of_failure candidates are Components, Interfaces, Resources, Environments.",
         "name": "Only things that operate can be single points of failure",
         "rationale": "The suggested fix is add_redundancy, and redundancy is only coherent for running parts; a golden thread converges on intent by design, so intent hubs are the thread working. 22 of 22 false positives cleared, 4 true survivors. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); BL-5.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:parallel-alternatives",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Parallel alternatives (an analysis of alternatives held open until a decision) are represented BRANCH-BY-FILE: each alternative is a separate exported design (a git branch's reflow2.json, or an export file), not a world-tag inside one live graph. This reuses everything BL-80 built — cross-branch comparison is compare_designs, collapsing the winner is merge_designs/apply_merge, retiring the loser is retire-from-design — so reflow2 owns almost no new branch machinery, consistent with the merge's 'git is the DAG' decision. Semantically, alternatives are design SPACE, not time: sibling alternatives coexist 'now' and CONTRADICT each other, held under a proposed Decision (the decision point) until it collapses — distinct from an epoch (EVOLVES_INTO, before->after). Forking is not advancing time; storage may still be a ref/epoch, but the semantic layer keeps 'the road not taken' apart from 'an earlier version' (BL-70's warning). v1 is the N-way AoA report (analyze_alternatives): measures per branch (graph_report snapshot — nodes, open gaps, allocation health, verification coverage) side by side, plus each branch's structural divergence from a named baseline (compare_designs). Rung 2 wires the decision point: a proposed Decision GOVERNS lightweight alternative pointers that CONTRADICT their siblings; collapsing accepts the Decision, merges the winner into the baseline, and retires the losers with their rationale.",
+        "name": "AoA alternatives are branch-by-file and live in design-space (CONTRADICTS), not time (epochs)",
+        "rationale": "User decided both axes 2026-07-22, each the recommended option. Branch-by-file over world-scope because BL-80 already built the comparison (compare_designs), the collapse (merge/apply_merge) and the retire machinery, so branch-by-file is the cheapest increment BL-70 itself named ('one exported graph per alternative plus a cross-export comparison report ... branch-by-file works today') and it is consistent with dec:merge-three-way's 'explicit inputs, git is the DAG'; world-scoping would bake world-awareness into every detector (possible_duplicate, allocation, SPOF, …) — a large invasive change for a simultaneous-in-one-graph benefit not yet needed, and BL-70 says branch-by-file 'teaches what the real scoping primitive must preserve' first. Space-over-time because an AoA holds both roads at once (design space, CONTRADICTS); reusing the epoch/PRECEDES time chain for branches (git's literal branch=commit-in-a-DAG, BL-80 #3) would make the road-not-taken indistinguishable from an earlier version — exactly the conflation BL-70 warns against. This is the fork/navigation substrate BL-81 (roads-not-taken) needs and shares the scoping primitive with BL-44 (cluster claims). Deferred: the decision-point pointer nodes + collapse wiring (rung 2), world-scoping if simultaneous in-graph AoA proves needed, and per-branch readiness scoring (BL-68).",
         "status": "accepted"
       }
     },
@@ -9245,6 +9348,16 @@
       }
     },
     {
+      "node_id": "ver:alternatives",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "AoA suite (tests/alternatives.rs) — 4 cases",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:budget",
       "node_type": "Verification",
       "properties": {
@@ -9538,7 +9651,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f0a7e9be64f02603e5735a808660952878ac6462c418cdfbb5d1f8c0b2d5a386",
+  "prev_content_hash": "sha256:182e028ef3c2c9d6be93e1573173e198c4b5f9b726ab38661977c5fc05bd0677",
   "stamp": {
     "edge_types": 55,
     "node_types": 28,
