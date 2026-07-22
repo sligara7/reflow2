@@ -528,7 +528,7 @@ fn apply_merge_commits_the_merge_into_the_live_graph() {
     let theirs = ex(&t);
 
     let report = g
-        .apply_merge(&base, &theirs, &BTreeMap::new())
+        .apply_merge(&base, &theirs, &BTreeMap::new(), false)
         .expect("clean apply");
 
     // ours' change survived, theirs' addition landed, theirs' deletion took.
@@ -554,7 +554,9 @@ fn apply_merge_refuses_until_conflicts_are_decided() {
     let theirs = ex(&t);
 
     // No decision → refused, and nothing was written.
-    let err = g.apply_merge(&base, &theirs, &BTreeMap::new()).unwrap_err();
+    let err = g
+        .apply_merge(&base, &theirs, &BTreeMap::new(), false)
+        .unwrap_err();
     assert!(format!("{err}").contains("unresolved"));
     assert_eq!(
         live_status(&g, "req:one").as_deref(),
@@ -569,6 +571,140 @@ fn apply_merge_refuses_until_conflicts_are_decided() {
     };
     let mut res = BTreeMap::new();
     res.insert(cid, Resolution::Theirs);
-    g.apply_merge(&base, &theirs, &res).expect("resolved apply");
+    g.apply_merge(&base, &theirs, &res, false)
+        .expect("resolved apply");
     assert_eq!(live_status(&g, "req:one").as_deref(), Some("deferred"));
+}
+
+// --- rerere: record a resolution, replay it when the conflict recurs --------
+
+fn two_req_base() -> DesignGraph {
+    let mut g = g();
+    g.add_project("proj:demo", "Demo").expect("project");
+    for id in ["req:one", "req:two"] {
+        g.add_requirement(id, "A requirement", "Does a thing.")
+            .expect("req");
+        g.set_requirement_status(id, "proposed").expect("status");
+    }
+    g
+}
+
+#[test]
+fn property_conflicts_carry_a_rerere_key_structural_ones_do_not() {
+    let base = ex(&seeded());
+    let mut o = seeded();
+    o.set_requirement_status("req:one", "accepted").expect("o");
+    let mut t = seeded();
+    t.set_requirement_status("req:one", "deferred").expect("t");
+    let c = merge(&base, &ex(&o), &ex(&t)).conflicts.remove(0);
+    let key = c
+        .resolution_key
+        .expect("a property conflict carries a rerere key");
+    assert!(key.starts_with("rr:"), "content-keyed, not location-keyed");
+
+    // A node-type conflict has no clean value triple → no key in v1.
+    let mut o2 = seeded();
+    o2.add_capability("dup:x", "A capability", "as cap", None)
+        .expect("o2");
+    let mut t2 = seeded();
+    t2.add_component("dup:x", "A component", "as cmp", None)
+        .expect("t2");
+    let ntc = merge(&base, &ex(&o2), &ex(&t2))
+        .conflicts
+        .into_iter()
+        .find(|c| c.target == "dup:x")
+        .expect("node-type conflict");
+    assert!(ntc.resolution_key.is_none());
+}
+
+#[test]
+fn the_same_conflict_shape_shares_one_rerere_key_across_nodes() {
+    let base = ex(&two_req_base());
+    let mut o = two_req_base();
+    let mut t = two_req_base();
+    for id in ["req:one", "req:two"] {
+        o.set_requirement_status(id, "accepted").expect("o");
+        t.set_requirement_status(id, "deferred").expect("t");
+    }
+    let conflicts = merge(&base, &ex(&o), &ex(&t)).conflicts;
+    let k1 = conflicts
+        .iter()
+        .find(|c| c.target == "req:one")
+        .and_then(|c| c.resolution_key.clone())
+        .expect("req:one key");
+    let k2 = conflicts
+        .iter()
+        .find(|c| c.target == "req:two")
+        .and_then(|c| c.resolution_key.clone())
+        .expect("req:two key");
+    assert_eq!(
+        k1, k2,
+        "identical conflict shape on two nodes shares one rerere key"
+    );
+}
+
+#[test]
+fn a_recorded_resolution_replays_on_apply_with_use_recorded() {
+    let base = ex(&seeded());
+    let mut g = seeded(); // ours, live
+    g.set_requirement_status("req:one", "accepted")
+        .expect("ours");
+    let mut t = seeded();
+    t.set_requirement_status("req:one", "deferred").expect("t");
+    let theirs = ex(&t);
+
+    // The conflict's content key, and a decision recorded against it: theirs.
+    let key = {
+        let ours = ex(&g);
+        merge(&base, &ours, &theirs).conflicts[0]
+            .resolution_key
+            .clone()
+            .expect("property conflict has a rerere key")
+    };
+    g.record_merge_resolution(&key, Resolution::Theirs)
+        .expect("record");
+    assert_eq!(
+        g.recall_merge_resolution(&key).expect("recall"),
+        Some(Resolution::Theirs)
+    );
+
+    // With use_recorded, apply needs no explicit decision — it recalls, and the
+    // live design takes the recorded side.
+    let report = g
+        .apply_merge(&base, &theirs, &BTreeMap::new(), true)
+        .expect("recalled apply");
+    assert_eq!(report.resolutions_recalled, 1);
+    assert_eq!(live_status(&g, "req:one").as_deref(), Some("deferred"));
+}
+
+#[test]
+fn apply_records_the_resolution_it_used() {
+    let base = ex(&seeded());
+    let mut g = seeded();
+    g.set_requirement_status("req:one", "accepted")
+        .expect("ours");
+    let mut t = seeded();
+    t.set_requirement_status("req:one", "deferred").expect("t");
+    let theirs = ex(&t);
+
+    let key = {
+        let ours = ex(&g);
+        merge(&base, &ours, &theirs).conflicts[0]
+            .resolution_key
+            .clone()
+            .expect("key")
+    };
+    let mut res = BTreeMap::new();
+    let cid = {
+        let ours = ex(&g);
+        merge(&base, &ours, &theirs).conflicts[0].id.clone()
+    };
+    res.insert(cid, Resolution::Ours);
+    let report = g.apply_merge(&base, &theirs, &res, false).expect("apply");
+    assert_eq!(report.resolutions_recorded, 1);
+    // The decision is now remembered for next time.
+    assert_eq!(
+        g.recall_merge_resolution(&key).expect("recall"),
+        Some(Resolution::Ours)
+    );
 }

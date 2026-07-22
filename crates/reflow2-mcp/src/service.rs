@@ -1144,6 +1144,21 @@ pub struct ApplyMergeReq {
     /// merge with no conflicts.
     #[serde(default)]
     pub resolutions: std::collections::HashMap<String, String>,
+    /// Fill any conflict left undecided from a recorded resolution (rerere),
+    /// where one exists — you opt in to reusing past decisions by setting this.
+    /// A conflict with neither an explicit decision nor a recorded one still
+    /// refuses. Default false.
+    #[serde(default)]
+    pub use_recorded: bool,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct RecallResolutionsReq {
+    /// The conflicts' `resolution_key`s (`rr:…`, from a prior `merge_designs`
+    /// run). Returns, for each that has one, the recorded decision
+    /// (`base`/`ours`/`theirs`) — the advisory rerere suggestion.
+    pub resolution_keys: Vec<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2528,7 +2543,29 @@ impl ReflowService {
         }
         let mut g = self.graph.lock().await;
         ok_json(
-            g.apply_merge(&base, &theirs, &resolutions)
+            g.apply_merge(&base, &theirs, &resolutions, req.use_recorded)
+                .map_err(dyno_err)?,
+        )
+    }
+
+    #[tool(
+        description = "Recall recorded conflict resolutions (rerere) by their content keys — the \
+                       advisory half of merge (BL-80 #5). Pass the `resolution_key`s (`rr:…`) that \
+                       merge_designs put on its conflicts; returns, for each one previously \
+                       resolved, the recorded decision (base/ours/theirs). Because the key is the \
+                       conflict's *content* (values, not location), one recorded decision is \
+                       recalled for every node with the identical conflict — resolve the shape \
+                       once, then apply_merge with use_recorded, or feed these suggestions back as \
+                       explicit resolutions. A suggestion, never an auto-decision.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn recall_resolutions(
+        &self,
+        Parameters(req): Parameters<RecallResolutionsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        ok_json(
+            g.recall_resolutions(&req.resolution_keys)
                 .map_err(dyno_err)?,
         )
     }

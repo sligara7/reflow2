@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Recall recorded conflict resolutions (rerere) by their content keys — the advisory half of merge (BL-80 #5). Pass the `resolution_key`s (`rr:…`) that merge_designs put on its conflicts; returns, for each one previously resolved, the recorded decision (base/ours/theirs). Because the key is the conflict's *content* (values, not location), one recorded decision is recalled for every node with the identical conflict — resolve the shape once, then apply_merge with use_recorded, or feed these suggestions back as explicit resolutions. A suggestion, never an auto-decision.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "resolution_keys": {
+        "description": "The conflicts' `resolution_key`s (`rr:…`, from a prior `merge_designs`\nrun). Returns, for each that has one, the recorded decision\n(`base`/`ours`/`theirs`) — the advisory rerere suggestion.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "resolution_keys"
+    ],
+    "type": "object"
+  },
+  "name": "recall_resolutions"
+}

@@ -47,7 +47,18 @@ This file is the third view: *what changed, and when*.
   equal the merged result, atomically — **refusing, and writing nothing, until every conflict is
   decided** (and on any resolution that names no conflict). Pure/deterministic core
   (`crates/reflow2-core/src/merge.rs` — `merge_designs`, `resolve_merge`, `apply_merge`;
-  `tests/merge.rs` — 21 cases). Specifies **and closes** the core of BL-12's multi-writer merge.
+  `tests/merge.rs` — 25 cases). Specifies **and closes** the core of BL-12's multi-writer merge.
+- **Merge rerere — reuse a recorded conflict resolution — `recall_resolutions` tool +
+  `apply_merge use_recorded`** (BL-80 #5; **minor**). Each merge conflict now carries a
+  `resolution_key`: a content fingerprint over the disputed values and property, deliberately
+  **node-independent**, so the identical conflict anywhere keys the same (git's model). `apply_merge`
+  records every applied property/edge-property resolution — as an answered `Question` whose id *is*
+  the key, so it travels in the export and reuses the answer machinery (no schema change). A later
+  `recall_resolutions` returns the recorded decision for matching keys, and `apply_merge use_recorded`
+  fills undecided conflicts from them — **advisory**: the human still opts in and confirms
+  (`dec:merge-rerere`, `dec:report-dont-judge`), never an auto-decision. Resolve the shape once,
+  apply it across all N near-identical conflicts — the `BL-73` field pain, answered. v1 covers
+  property/edge-property conflicts (node-type/delete-modify keys deferred).
 - **Design-authorship identity — the `Contributor` keystone, authorship seed** (BL-79, user-chosen
   direction; **schema change → minor, and a graph written now cannot be opened by a
   pre-`Contributor` binary** — refused loudly by the count-based provenance check, per BL-19). The

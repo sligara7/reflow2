@@ -1400,9 +1400,16 @@ resolution that names no conflict). 21 tests. Exposed as the `merge_designs` (re
 `dec:merge-conflict-semantics` (delete/modify → retain-and-ask; edges symmetric; conflicts are
 Questions with deterministic ids, rerere-ready). Realizes + verifies `cap:merge-designs`. This
 **closes the core of BL-12's merge**. #2's ancestor-retrieval is git's for now (merge-base); the
-reflow2-native DAG/ref layer (so reflow2 finds its own merge-base) stays with BL-70. Still open on
-BL-80: rerere (#5, replay a recorded resolution by the conflict's deterministic id), and a
-document-producing `--merge-apply` CLI for the pure git-file workflow (small). The
+reflow2-native DAG/ref layer (so reflow2 finds its own merge-base) stays with BL-70.
+**#5 rerere BUILT 2026-07-22** (`cap:merge-rerere`, `dec:merge-rerere`): each conflict carries a
+`resolution_key` — a **content** fingerprint (values + property, node-independent, git's model, NOT
+the ancestor-hash conflict id); `apply_merge` records every applied property/edge-property
+resolution as an answered Question whose id is the key (travels in the export, no schema change);
+`recall_resolutions` returns recorded decisions and `apply_merge use_recorded` reuses them —
+**advisory**, the human opts in (`dec:report-dont-judge`). Resolve the shape once, apply across all
+N near-identical conflicts (the BL-73 pain). 25 tests. Still open on BL-80: node-type/delete-modify
+rerere keys (no clean value triple), memory aging/pruning, and a document-producing `--merge-apply`
+CLI for the pure git-file workflow (small). The
 finding that reframes the whole multi-writer thread: **reflow2 already built the content-addressed
 *history* half of git** — hash-chained exports (`dec:export-hash-chain`) = commits, DesignEpochs +
 Snapshots = immutable history, `compare_designs` ancestry = merge-base *reporting*. What git has
