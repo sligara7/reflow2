@@ -1,0 +1,20 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "The as-released view (BL-34): what a Release actually shipped — artifacts with their frozen cut-time checksums, components, the capabilities that build covers, the built capabilities it leaves out, and where it is deployed. This is the query 'does what we released match what we designed?' — compare capabilities_covered against the design's capability list, and built_capabilities_not_covered is the diff.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "release_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "release_id"
+    ],
+    "type": "object"
+  },
+  "name": "release_report"
+}

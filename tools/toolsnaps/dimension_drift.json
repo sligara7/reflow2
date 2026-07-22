@@ -1,0 +1,25 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Quality-dimension drift for one target node.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "dimension": {
+        "description": "Quality dimension key (e.g. `reliability`, `security`).",
+        "type": "string"
+      },
+      "target_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "target_id",
+      "dimension"
+    ],
+    "type": "object"
+  },
+  "name": "dimension_drift"
+}

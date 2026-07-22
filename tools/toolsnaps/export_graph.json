@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "The whole design as one portable document — every node and edge, sorted so two exports of an unchanged graph are byte-identical. Use it to back the design up, move it between machines, or migrate it across a reflow2 upgrade (export with the old build, import with the new). It carries a stamp saying which reflow2 wrote it. Pass `path` to write the document to a file instead of returning it — on a large design the payload overflows what a session can read, and a backup wants to be a file anyway.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "overwrite": {
+        "default": null,
+        "description": "Allow `path` to replace an existing file. Off by default: an export\nwrites freely to a new path but refuses to clobber an existing one\nunless you say so, so a stray or injected path cannot silently destroy\na file (BL-57).",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "path": {
+        "default": null,
+        "description": "Write the export to this file (deterministic sorted-key JSON, diffable\nunder git) and return only {path, bytes, nodes, edges, content_hash,\nprev_content_hash, stamp}. Replacing an existing export links the new\ndocument to the old one's content hash (lineage; chain advances only\nwhen content changed). Omit to get the whole document as the result\npayload.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "name": "export_graph"
+}

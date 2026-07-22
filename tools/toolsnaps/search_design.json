@@ -1,0 +1,39 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Find design nodes by what they say, when you don't know their ids — 'what does the design say about persistence?', 'is there already a requirement about latency?'. BM25 keyword search over every node's name/statement/description, ranked, optionally scoped to one node type. Search BEFORE creating a node that might already exist, and to map the user's words to the node they mean. Result reports its own bounds: hits.len() == limit means there may be more, and a non-empty `stale` list means the index has drifted from the store.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "limit": {
+        "default": null,
+        "description": "Maximum hits to return, best first (default 10). The result echoes it —\nhits.len() == limit means there may be more.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "node_type": {
+        "default": null,
+        "description": "Restrict hits to one node type (e.g. \"Requirement\"); omit for all.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "query": {
+        "description": "Keywords to search for — tokenized BM25 over every node's name,\nstatement and description (not substring or regex). Use the words the\ndesign would use: \"persistence\", \"dedup window\", \"latency budget\".",
+        "type": "string"
+      }
+    },
+    "required": [
+      "query"
+    ],
+    "type": "object"
+  },
+  "name": "search_design"
+}

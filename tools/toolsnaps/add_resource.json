@@ -1,0 +1,32 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record a Resource the built thing needs — a database, a queue, a secret, a GPU, power, bandwidth.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "provider": {
+        "default": null,
+        "description": "Who supplies it (cloud provider, vendor, utility).",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "name": "add_resource"
+}

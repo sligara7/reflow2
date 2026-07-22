@@ -1,0 +1,28 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Pin any node to a DesignEpoch (AT_EPOCH) — e.g. a Release to its release_cut epoch, so the release and the design state it was cut from are joined on axis Z. Generic: AT_EPOCH is declared from any type.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "epoch_id": {
+        "type": "string"
+      },
+      "node_id": {
+        "type": "string"
+      },
+      "node_type": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "node_type",
+      "node_id",
+      "epoch_id"
+    ],
+    "type": "object"
+  },
+  "name": "pin_at_epoch"
+}

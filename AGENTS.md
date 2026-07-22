@@ -155,6 +155,7 @@ cargo clippy -p reflow2-core --no-default-features --all-targets
 cargo fmt --check
 python3 tools/validate_schema.py                         # after any schema/*.yaml edit
 python3 tools/smoke_mcp.py                               # after any tool-surface change
+python3 tools/toolsnap.py                                # tool schemas vs committed goldens; --update to bless
 python3 tools/skill_lint.py                              # after any skill or tool-surface edit
 ```
 

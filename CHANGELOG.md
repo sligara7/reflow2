@@ -33,6 +33,26 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Tool-surface hardening: read-only classification + toolsnaps** (BL-76, from the
+  github-mcp-server comparison; minor: every served tool gains an `annotations.readOnlyHint`
+  field — no schema change, no call shape change). Every one of the ~80 MCP tools now declares
+  the standard MCP `readOnlyHint` annotation, so a client can tell a query from a mutation
+  (approval prompts, dry-run affordances) without guessing from the name. The classification is
+  derived from the graph borrow itself — a read-only tool takes the shared lock, a writer takes
+  `let mut g` — so it cannot silently disagree with what the tool does; the non-obvious writers
+  (`gap_to_prompt`, which records the question it phrased, and the `reconcile_*` family, which
+  records DriftEvents) are correctly not read-only. Two mechanical tripwires keep it honest:
+  `smoke_mcp.py` fails if any served tool omits the hint (a new tool cannot ship unclassified —
+  the explicitness gate), and **toolsnaps** (`tools/toolsnap.py`) freeze each tool's served
+  schema as a committed golden JSON, CI-diffed, so a surface change — a lost param type, a
+  reshaped result, a stale binary (the BL-28/BL-32/BL-48 bug family) — becomes a reviewed diff
+  named tool by tool rather than a silent drift.
+
+- **`req:frictionless-update` confirmed** — the "install is one command, update is one word"
+  requirement moved `proposed → accepted` on the user's word (2026-07-22); all 18 requirements
+  are now user-confirmed. Records the intent behind BL-51's one-liner install / one-word update
+  direction as a settled requirement, not an assertion awaiting review.
+
 - **Requirement certainty, derived and rendered** (BL-75, closing the field-trial trio;
   minor: `graph_report` gains a field and a snapshot line — no schema change). A
   requirement's certainty is computed from the two axes that already span the space, never

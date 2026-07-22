@@ -1,0 +1,68 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create a ChangeEvent (seed for propagate_change). Pass `affected` to say in the same call what it changed — a CHANGED edge is drawn to each entry, which is what makes the event propagatable.",
+  "inputSchema": {
+    "$defs": {
+      "AffectedNodeReq": {
+        "additionalProperties": false,
+        "description": "One node an event changed, for `add_change_event`'s `affected` list.",
+        "properties": {
+          "action": {
+            "default": null,
+            "description": "`added` / `modified` (default) / `removed`.",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "node_id": {
+            "description": "The changed node's id.",
+            "type": "string"
+          },
+          "node_type": {
+            "description": "The changed node's type (e.g. `Requirement`, `Artifact`).",
+            "type": "string"
+          }
+        },
+        "required": [
+          "node_type",
+          "node_id"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "affected": {
+        "description": "What the change touched: a CHANGED edge is drawn from the event to each\nentry. Every entry must name an existing node — the whole call is\nrefused before anything is written if one does not.",
+        "items": {
+          "$ref": "#/$defs/AffectedNodeReq"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      },
+      "change_type": {
+        "description": "Change type key (e.g. `new_feature`, `scope_change`).",
+        "type": "string"
+      },
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "change_type"
+    ],
+    "type": "object"
+  },
+  "name": "add_change_event"
+}

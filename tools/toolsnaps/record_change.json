@@ -1,0 +1,46 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record a change to a node in an epoch (snapshots the prior state).",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "action": {
+        "description": "`added` | `modified` | `removed`.",
+        "type": "string"
+      },
+      "change_event_id": {
+        "type": "string"
+      },
+      "change_type": {
+        "description": "Change type key (e.g. `new_feature`).",
+        "type": "string"
+      },
+      "epoch_id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "target_id": {
+        "type": "string"
+      },
+      "target_type": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "epoch_id",
+      "change_event_id",
+      "name",
+      "target_type",
+      "target_id",
+      "change_type",
+      "action"
+    ],
+    "type": "object"
+  },
+  "name": "record_change"
+}

@@ -1,0 +1,25 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Set a Requirement's lifecycle status: `proposed` (the default) / `accepted` / `deferred` / `dropped` / `met`. Every move off `proposed` records the USER's word, never your own judgment: capture at `proposed` and move the status only when the user has actually confirmed, deferred or dropped it — certainty is derived from this status, so promoting it yourself forges their signature (dec:certainty-derived). A `dropped` or `met` requirement stops raising unsatisfied_requirement.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "requirement_id": {
+        "type": "string"
+      },
+      "status": {
+        "description": "`proposed` (default) / `accepted` / `deferred` / `dropped` / `met`.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "requirement_id",
+      "status"
+    ],
+    "type": "object"
+  },
+  "name": "set_requirement_status"
+}

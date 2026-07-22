@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record that a Component PROVIDES an Interface — it is the side that implements the contract. `from_id` is the Component, `to_id` the Interface.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "from_id": {
+        "type": "string"
+      },
+      "to_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "from_id",
+      "to_id"
+    ],
+    "type": "object"
+  },
+  "name": "provides"
+}

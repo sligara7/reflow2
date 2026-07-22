@@ -242,6 +242,44 @@ def run(binary: str, graph_path: str) -> int:
         open_schemas,
     )
 
+    # BL-76. Every served tool must declare a readOnlyHint annotation, so a new
+    # tool cannot ship unclassified — the surface half of the read-only rung
+    # (BL-12), and the explicitness gate their AST-check idea suggested, done
+    # here over the real stdio surface. The hint is derived from the graph
+    # borrow: a read-only tool takes the shared lock (`let g`), a writer takes
+    # `let mut g`. Clients use it for approval prompts, so an absent hint is a
+    # real hole, not cosmetic. Absent because `skip_serializing_if` drops a None
+    # annotation entirely — so this catches both "no annotations" and
+    # "annotations without readOnlyHint".
+    unclassified = [
+        t["name"] for t in tools
+        if not isinstance((t.get("annotations") or {}).get("readOnlyHint"), bool)
+    ]
+    c.ok(
+        "every served tool declares readOnlyHint (BL-76 · explicitness gate)",
+        not unclassified,
+        unclassified,
+    )
+
+    # Present is not enough — the hint must be RIGHT, or an inverted/copy-pasted
+    # annotation would pass the gate above while lying to the client. Spot-check
+    # both poles, including the non-obvious writers: gap_to_prompt records the
+    # question it phrased, and the reconcile_* family records DriftEvents, so
+    # none of them is read-only despite reading like a query.
+    hint = {t["name"]: (t.get("annotations") or {}).get("readOnlyHint") for t in tools}
+    read_only = ("detect_gaps", "scan_nodes", "get_node", "graph_report",
+                 "export_graph", "compare_designs", "describe_schema",
+                 "propose_heal", "propagate_from", "loop_status")
+    writes = ("add_requirement", "create_node", "delete_node", "apply_heal",
+              "set_requirement_status", "import_graph", "answer_question",
+              "gap_to_prompt", "reconcile_artifacts", "reconcile_verification")
+    c.ok("read-only tools are marked read-only",
+         all(hint.get(n) is True for n in read_only),
+         {n: hint.get(n) for n in read_only if hint.get(n) is not True})
+    c.ok("tools that can mutate the graph are not marked read-only",
+         all(hint.get(n) is False for n in writes),
+         {n: hint.get(n) for n in writes if hint.get(n) is not False})
+
     # The vocabulary must be discoverable before anything is written, because a
     # blind trial that could not see it brute-forced fourteen edge types and then
     # used the one that happened to validate. Checked here rather than only in

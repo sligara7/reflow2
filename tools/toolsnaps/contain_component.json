@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Nest one Component inside another (parent CONTAINS child) — the assembly spine. The parent should sit exactly one level above the child: nesting two components at the same level is reported as a level_mismatch, and skipping a level as a missing_intermediate_level. Set `level` on both via add_component first, or every containment looks like a mismatch.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "from_id": {
+        "type": "string"
+      },
+      "to_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "from_id",
+      "to_id"
+    ],
+    "type": "object"
+  },
+  "name": "contain_component"
+}

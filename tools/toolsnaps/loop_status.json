@@ -1,0 +1,11 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "The coherence loop's outstanding debt, cheaply: what capture→detect→ask→decide steps are owed right now, computed from graph state alone (never from run history — looking is not writing). One call returns a short to-do list: anchored gaps never put to the user, questions still waiting or answered-but-unwritten, structural defects, capabilities claiming realized/verified with no passing check, recorded drift awaiting a disposition, and built capabilities nobody has checked against reality. Fire it between operational tasks instead of trying to remember the loop; `clean: true` means nothing is owed.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "name": "loop_status"
+}

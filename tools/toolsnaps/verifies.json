@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Link a Verification to what it checks (VERIFIES).",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "target_id": {
+        "type": "string"
+      },
+      "target_type": {
+        "description": "Node type being verified (e.g. `Capability`, `Artifact`, `Component`).",
+        "type": "string"
+      },
+      "verification_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "verification_id",
+      "target_type",
+      "target_id"
+    ],
+    "type": "object"
+  },
+  "name": "verifies"
+}

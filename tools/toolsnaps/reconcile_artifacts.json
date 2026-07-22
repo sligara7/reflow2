@@ -1,0 +1,43 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Check the design against what was actually built. You supply what you observed — for each registered artifact, whether it still exists and its current content hash — and reflow2 reports the divergences: files that vanished, files whose content changed since they were registered, and files present but unknown to the design. reflow2 performs no file I/O; compute the hashes yourself (any algorithm, used consistently). The result's `propagation_seeds` are the design nodes the changes land on — feed them to `propagate_from` to see what a code change means upstream.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "detected_at": {
+        "default": null,
+        "description": "Timestamp for recorded events (reflow2 takes no clock).",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "exhaustive": {
+        "default": false,
+        "description": "Assert the observation list is a complete sweep, so registered artifacts\nmissing from it are reported as unobserved (default false).",
+        "type": "boolean"
+      },
+      "observed": {
+        "description": "What you observed, one entry per artifact you checked:\n`{ \"artifact_id\", \"present\": bool, \"checksum\": \"<hash>\"? }`.",
+        "items": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "record_events": {
+        "default": false,
+        "description": "Record a `DriftEvent` per divergence (default false — looking is not writing).",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "observed"
+    ],
+    "type": "object"
+  },
+  "name": "reconcile_artifacts"
+}

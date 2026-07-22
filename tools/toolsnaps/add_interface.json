@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create an Interface node — a contract between parts (an API, event, data feed, CLI, library boundary, or physical/human connection point). Model one whenever two Components talk to each other, then pair it with `provides` and `consumes`: that pairing is what makes a change on one side of a boundary surface the other side.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "description": "Stable node id (e.g. `req:offline`).",
+        "type": "string"
+      },
+      "name": {
+        "description": "Human-readable name.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "name": "add_interface"
+}

@@ -1,0 +1,22 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Propose a capability→component allocation via Leiden clustering.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "resolution": {
+        "description": "Leiden resolution (higher = more, smaller clusters).",
+        "format": "double",
+        "type": "number"
+      }
+    },
+    "required": [
+      "resolution"
+    ],
+    "type": "object"
+  },
+  "name": "propose_allocation"
+}

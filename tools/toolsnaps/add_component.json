@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create a Component node. Pass `level` when the part is an assembly rather than a leaf (`subsystem`, `system`, `system_of_systems`, `enterprise`; default `component`), then use contain_component to nest it — that pair is what gives hierarchy_issues something to check.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "description": {
+        "description": "What this part is for.",
+        "type": "string"
+      },
+      "id": {
+        "type": "string"
+      },
+      "level": {
+        "default": null,
+        "description": "Axis-Y decomposition rank: `component` (default), `subsystem`,\n`system`, `system_of_systems`, `enterprise`. Set it whenever the part\nis really an assembly — `hierarchy_issues` compares the levels either\nside of a containment, so leaving everything at the default means there\nis no hierarchy to check.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "description"
+    ],
+    "type": "object"
+  },
+  "name": "add_component"
+}

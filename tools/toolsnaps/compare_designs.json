@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Compare two as-designed records — the design-vs-design sibling of the reconcile family, which only ever compares design against reality. Findings are directional relative to the named base: `added` / `removed` / `changed` (property-level), banded into design content vs the supporting layer (change events, questions, provenance). Pass base_path alone to compare the live graph against a committed export ('has this session diverged from the record?'); pass other_path too to compare two export files (branches, machines, alternatives). Reports divergence, never judges which side is right.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "base_path": {
+        "description": "Path to the base export document — what every finding is relative to\n(`added` = in the other side, not here). Typically the committed\nexport, or the main branch's copy of it.",
+        "type": "string"
+      },
+      "other_path": {
+        "default": null,
+        "description": "Path to the other export document. Omit to compare the live graph as\nthe other side — \"has this session diverged from the record?\".",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "base_path"
+    ],
+    "type": "object"
+  },
+  "name": "compare_designs"
+}

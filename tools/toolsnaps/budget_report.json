@@ -1,0 +1,20 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Roll a budget Constraint up (BL-11): total of stated contributions vs the limit, the worst dependency path among contributors (the path-cumulative rollup — end-to-end latency, mass down a chain), basis coverage (estimated vs measured), and an honest verdict — `incomplete` when any contribution is unstated, because a partial sum passed off as a total is how budgets lie. Contributors with no stated number are listed, never zeroed.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "constraint_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "constraint_id"
+    ],
+    "type": "object"
+  },
+  "name": "budget_report"
+}

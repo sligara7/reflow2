@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Link an Artifact to the node it DOCUMENTS (describes without implementing): a design doc, ADR, README, runbook, instruction file or diagram. Record a file this way when something would be WRONG if it drifted out of step with the design — not every file. Fails loud if either endpoint is missing. Distinct from REALIZES (implementation) and SPECIFIES (machine-readable contract).",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "artifact_id": {
+        "type": "string"
+      },
+      "doc_kind": {
+        "default": null,
+        "description": "What kind of document: `design_doc` / `adr` / `readme` / `runbook` /\n`agent_instructions` / `dataflow` / `sequence_diagram` / `arch_diagram`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "target_id": {
+        "type": "string"
+      },
+      "target_type": {
+        "description": "Node type the artifact describes (e.g. `Component`, `Interface`, `Project`).",
+        "type": "string"
+      }
+    },
+    "required": [
+      "artifact_id",
+      "target_type",
+      "target_id"
+    ],
+    "type": "object"
+  },
+  "name": "documents"
+}

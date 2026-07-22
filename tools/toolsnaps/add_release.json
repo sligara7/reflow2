@@ -1,0 +1,39 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record a Release — a packaged, operable version: a container image, a published package, a manufactured build. Part of answering the `no_deploy_operate` gap.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "unit_type": {
+        "default": null,
+        "description": "`container` (default) / `package` / `binary` / `bundle` / `physical_build` / `publication`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "version": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "name": "add_release"
+}

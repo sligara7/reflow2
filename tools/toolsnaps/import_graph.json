@@ -1,0 +1,22 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Load an exported design into this graph. Upsert, not replace: ids already present are overwritten and anything not in the document is left alone, so clear the graph first if you want a clean restore. Atomic — a document that fails validation leaves the graph untouched rather than half-loaded. Reports any edge whose endpoints were missing rather than dropping it.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "document": {
+        "additionalProperties": true,
+        "description": "A document previously returned by `export_graph`.",
+        "type": "object"
+      }
+    },
+    "required": [
+      "document"
+    ],
+    "type": "object"
+  },
+  "name": "import_graph"
+}

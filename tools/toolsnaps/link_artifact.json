@@ -1,0 +1,76 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Register a real file against the design WITH provenance, atomically: Artifact + a provenance Fragment (YIELDED) + a REALIZES edge to the Capability/Component it implements. Fails loud if the target is missing. Use after building a file so as-designed vs as-built stays honest.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "artifact_id": {
+        "type": "string"
+      },
+      "artifact_type": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "checksum": {
+        "default": null,
+        "description": "Content hash of the file as registered — the baseline `reconcile_artifacts`\ncompares against later. Supply it whenever you can; without it a content\nchange is reported as `no_baseline` instead of being caught.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "completeness": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "fragment_id": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "location": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "name": {
+        "type": "string"
+      },
+      "provenance": {
+        "default": null,
+        "description": "Provenance stamped on the Fragment (default `authored`).",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "target_id": {
+        "type": "string"
+      },
+      "target_type": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "artifact_id",
+      "name",
+      "target_type",
+      "target_id"
+    ],
+    "type": "object"
+  },
+  "name": "link_artifact"
+}

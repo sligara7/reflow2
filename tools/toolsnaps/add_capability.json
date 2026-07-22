@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create a Capability node. `status` defaults to `planned`; set it when recording something that already exists, so adopting a running system does not describe it as entirely unbuilt.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "description": {
+        "description": "What this capability does.",
+        "type": "string"
+      },
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "status": {
+        "default": null,
+        "description": "`planned` (default) / `in_progress` / `realized` / `verified`. Leave it\nunset when designing forwards — a new capability really is planned.\nSet it when recording a capability that already exists, so the graph\ndoes not assert that a shipped system is entirely unbuilt.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "description"
+    ],
+    "type": "object"
+  },
+  "name": "add_capability"
+}

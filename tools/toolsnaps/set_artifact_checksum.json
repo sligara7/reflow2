@@ -1,0 +1,62 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Accept an artifact's current content as the new drift baseline — a two-sided decision. `disposition` is required: `design_holds` (the change carries no design meaning; recorded as a dated claim) or `design_updated` (behaviour moved and the design moved with it; pass `design_change_event_id` from the record_change that updated it, so code and design are one change). Silent accept does not exist: it is how a design erodes into fiction over N fix cycles while reporting zero gaps. Until you accept, the same checksum_change is reported on every reconcile.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "artifact_id": {
+        "type": "string"
+      },
+      "at": {
+        "default": null,
+        "description": "Timestamp for the claim (reflow2 takes no clock). A dated claim is what\nthe confirmation ledger can report as \"last checked at …\".",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "change_type": {
+        "default": null,
+        "description": "For `design_holds`: why the code moved (`test_failure_fix` (default) /\n`refactor` / `performance_optimization` / …).",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "checksum": {
+        "description": "The accepted content hash — the new drift baseline.",
+        "type": "string"
+      },
+      "design_change_event_id": {
+        "default": null,
+        "description": "For `design_updated`: the ChangeEvent recorded when the design was\nupdated. Must exist — a dangling reference is refused.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "disposition": {
+        "description": "The answer to the second question — required, because \"accept the file,\nleave the design alone, say nothing\" is the option that erodes a design\n(BL-33). `design_holds`: the change carries no design meaning (a\nrefactor, a fix restoring intended behaviour) — recorded as a dated\nclaim. `design_updated`: behaviour moved and the design moved with it —\npass `design_change_event_id` from the `record_change` that updated it.",
+        "type": "string"
+      },
+      "note": {
+        "default": null,
+        "description": "Optional note stored on the recorded claim (`design_holds` only).",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "artifact_id",
+      "checksum",
+      "disposition"
+    ],
+    "type": "object"
+  },
+  "name": "set_artifact_checksum"
+}

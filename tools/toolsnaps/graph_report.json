@@ -1,0 +1,11 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "The 'what should I look at?' rollup report (SYNTHESIZE). Its `served_by` block names the reflow2 actually answering — version and binary build time — because an MCP server started before a rebuild keeps serving the old surface with nothing to say so (BL-32): the session that finds a mismatch between served_by and the repo should be restarted before trusting anything else it reads.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "name": "graph_report"
+}

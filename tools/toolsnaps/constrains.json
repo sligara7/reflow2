@@ -1,0 +1,46 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record that a Constraint CONSTRAINS a target, with the target's `contribution` to the budget (in the Constraint's quantity unit) and the `basis` for the number (estimated/evidence/measured). An edge without a contribution is reported by budget_report as unstated — never treated as zero.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "basis": {
+        "default": null,
+        "description": "`estimated` (default) / `evidence` / `measured`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "constraint_id": {
+        "type": "string"
+      },
+      "contribution": {
+        "default": null,
+        "description": "This target's spend, in the Constraint's quantity unit. Omitted =\nparticipates but unstated; budget_report reports it, never zeroes it.",
+        "format": "double",
+        "type": [
+          "number",
+          "null"
+        ]
+      },
+      "target_id": {
+        "type": "string"
+      },
+      "target_type": {
+        "description": "The spender's node type — anything can spend (Component mass,\nInterface latency, Resource cost).",
+        "type": "string"
+      }
+    },
+    "required": [
+      "constraint_id",
+      "target_type",
+      "target_id"
+    ],
+    "type": "object"
+  },
+  "name": "constrains"
+}

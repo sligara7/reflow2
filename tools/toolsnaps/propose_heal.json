@@ -1,0 +1,32 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Propose a HEAL plan (never mutates; review then apply_heal).",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "max_operations": {
+        "default": null,
+        "description": "Cap on structural operations; extras surface in `skipped_operations`.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "strategy": {
+        "default": null,
+        "description": "`conservative` | `balanced` | `aggressive` (default `balanced`).",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "name": "propose_heal"
+}

@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Link a Project to a child node it CONTAINS.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "child_id": {
+        "type": "string"
+      },
+      "child_type": {
+        "description": "Child node type (e.g. `Requirement`, `Capability`, `Component`).",
+        "type": "string"
+      },
+      "project_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "project_id",
+      "child_type",
+      "child_id"
+    ],
+    "type": "object"
+  },
+  "name": "contains"
+}

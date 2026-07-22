@@ -1,0 +1,11 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Decomposition/hierarchy issues (matryoshka level checks).",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "name": "hierarchy_issues"
+}

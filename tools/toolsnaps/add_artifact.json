@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create an Artifact node — a real deliverable (file/spec/doc) that lives outside the graph, pointed to by `location`.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "artifact_type": {
+        "default": null,
+        "description": "`code` (default) / `spec` / `document` / `diagram` / `model` / …",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "id": {
+        "type": "string"
+      },
+      "location": {
+        "default": null,
+        "description": "Path / URI / content-hash of the real deliverable (lives outside the graph).",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "name": "add_artifact"
+}

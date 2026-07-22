@@ -1248,15 +1248,28 @@ official server is a live case study in this item's open questions; what survive
 merge problem, and everything temporal stays reflow2's own. Their removal of runtime
 dynamic-toolset discovery (selection is static per session) is a data point for BL-77.
 
-**BL-76 · Tool-surface hardening from the github-mcp-server comparison: ReadOnlyHint + toolsnaps**
-— *2026-07-22.* Size **S + S**; both mechanical, no vocabulary decision needed. **(a)** Every
-reflow2 tool declares the MCP `readOnlyHint` annotation (true for the read/analysis family,
-false for writes) — clients use it for approval prompts today, and it is the surface half of
-the BL-12 read-only rung. With it, the explicitness gate: smoke asserts every served tool
-carries the annotation, so a new tool cannot ship unclassified (their AST-check idea, done
-reflow2-style over the real stdio surface). **(b)** Toolsnaps: one committed golden JSON
-schema per tool, CI-diffed — the BL-28/BL-32/BL-48 bug family ("the surface changed and
-nothing noticed") made into a mechanical tripwire; regenerate deliberately, never silently.
+**BL-76 · Tool-surface hardening from the github-mcp-server comparison: ReadOnlyHint + toolsnaps
+— DONE 2026-07-22** — *2026-07-22.* Size **S + S**; both mechanical, no vocabulary decision
+needed. **(a)** Every reflow2 tool declares the MCP `readOnlyHint` annotation (true for the
+read/analysis family, false for writes) — clients use it for approval prompts today, and it is
+the surface half of the BL-12 read-only rung. With it, the explicitness gate: smoke asserts
+every served tool carries the annotation, so a new tool cannot ship unclassified (their
+AST-check idea, done reflow2-style over the real stdio surface). **(b)** Toolsnaps: one
+committed golden JSON schema per tool, CI-diffed — the BL-28/BL-32/BL-48 bug family ("the
+surface changed and nothing noticed") made into a mechanical tripwire; regenerate deliberately,
+never silently.
+
+**Done:** all 80 tools annotated (`annotations(read_only_hint = …)` on each `#[tool]`), the
+classification derived from the graph borrow itself (`let g` = read, `let mut g` = write) rather
+than the name — so `gap_to_prompt` and the `reconcile_*` family, which read like queries but
+record, are correctly `false`; 26 read-only, 54 write. `smoke_mcp.py` gained the explicitness
+gate plus a both-poles correctness spot-check (present is not enough — an inverted hint would
+pass a presence-only gate). `tools/toolsnap.py` freezes each tool's served schema as a committed
+golden under `tools/toolsnaps/` (80 files), CI-diffs them, and regenerates on `--update`; wired
+into the `full` CI job and the AGENTS.md done-gates. Surface half of BL-12 delivered; the
+read-only *transaction mode* (a session that physically cannot write) stays with BL-12. **Next
+per the S+S sequencing note above:** the RocksDB secondary-open rung of BL-12 is the natural
+follow-on now that the surface declares intent.
 
 **BL-77 · Surface scale: toolsets / verb-multiplexing — parked until it pinches** —
 *2026-07-22.* Size **M**; deliberately not now. github-mcp-server holds ~100 tools down with

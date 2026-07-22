@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record an Environment — where a Release runs: a cloud region, a lab bench, a physical site. More than a deploy target; it is the context whose rules the design must satisfy.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "env_type": {
+        "default": null,
+        "description": "`production` (default) / `development` / `staging` / `field` / `lab` / `physical_site`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "id": {
+        "type": "string"
+      },
+      "location": {
+        "default": null,
+        "description": "Cloud region, host, physical site, or jurisdiction.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "name": "add_environment"
+}

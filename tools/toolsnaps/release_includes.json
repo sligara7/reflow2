@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record that a Release ships an Artifact or Component (INCLUDES) — the as-released view. Pass as_checksum to freeze the artifact's content hash as shipped: the artifact node's own checksum is the live drift baseline and moves with every accept, so without the frozen copy a past release's manifest would quietly rewrite itself. A Release with no INCLUDES edges is a version number, not a manifest.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "as_checksum": {
+        "default": null,
+        "description": "The artifact's content hash AS SHIPPED in this release — frozen at cut\ntime, so later baseline moves do not rewrite what a past release\ncontained.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "release_id": {
+        "type": "string"
+      },
+      "target_id": {
+        "type": "string"
+      },
+      "target_type": {
+        "description": "`Artifact` or `Component`.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "release_id",
+      "target_type",
+      "target_id"
+    ],
+    "type": "object"
+  },
+  "name": "release_includes"
+}

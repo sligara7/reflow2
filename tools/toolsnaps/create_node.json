@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "node_type": {
+        "type": "string"
+      },
+      "props": {
+        "additionalProperties": true,
+        "default": null,
+        "description": "Property object; validated against the schema.",
+        "type": [
+          "object",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "node_type",
+      "id"
+    ],
+    "type": "object"
+  },
+  "name": "create_node"
+}

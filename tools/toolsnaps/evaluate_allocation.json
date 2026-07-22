@@ -1,0 +1,11 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Evaluate how capabilities are allocated across components.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "name": "evaluate_allocation"
+}

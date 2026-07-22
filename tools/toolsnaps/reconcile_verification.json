@@ -1,0 +1,61 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Compare what a real test run REPORTED against what each Verification records — the P4 reconcile, last of the three feedback loops (BL-30): reconcile_artifacts asks about the code, this about the outcomes, reconcile_deployment about what runs. Supply one entry per check the run executed ('passed'/'failed'/'skipped'). A recorded 'passing' that the run failed is the dangerous direction and sorts first — the design believed proven what is actually broken. With record_events each divergence is a persistent DriftEvent (and unresolved_drift gap), auto-resolved when a later run agrees; the design-side answer is set_verification_status with what the run actually said.",
+  "inputSchema": {
+    "$defs": {
+      "ObservedVerificationReq": {
+        "additionalProperties": false,
+        "properties": {
+          "outcome": {
+            "description": "What the run reported: `passed` / `failed` / `skipped`. Anything else\nis rejected by name; the rest of the batch still processes.",
+            "type": "string"
+          },
+          "verification_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "verification_id",
+          "outcome"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "detected_at": {
+        "default": null,
+        "description": "Timestamp for recorded events (the server takes no clock).",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "exhaustive": {
+        "default": false,
+        "description": "The run covered every check: recorded passing/failing claims it did\nnot include are reported as unobserved.",
+        "type": "boolean"
+      },
+      "observed": {
+        "description": "One entry per check the run actually executed. Checks not listed are\nnot evidence of anything.",
+        "items": {
+          "$ref": "#/$defs/ObservedVerificationReq"
+        },
+        "type": "array"
+      },
+      "record_events": {
+        "default": false,
+        "description": "Write a DriftEvent per divergence (off = look before you write).",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "observed"
+    ],
+    "type": "object"
+  },
+  "name": "reconcile_verification"
+}

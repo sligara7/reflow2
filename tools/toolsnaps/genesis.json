@@ -1,0 +1,55 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Bootstrap the design graph: create the Project + a genesis Epoch anchor and return a next-steps checklist. Guarded and idempotent — a no-op that reports already_initialized if a Project exists (unless rescan). Call this first, then seed the brief into Requirements/Capabilities via the add_* tools and run detect_gaps.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "domain": {
+        "default": null,
+        "description": "Optional domain hint (software / hardware / document / …).",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "mode": {
+        "default": null,
+        "description": "Project mode: `flexible` (default) or `rigid`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "name": {
+        "description": "Project name.",
+        "type": "string"
+      },
+      "objective": {
+        "default": null,
+        "description": "Optional one-line \"what success looks like\".",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "project_id": {
+        "description": "Stable Project id (e.g. `proj:softball`).",
+        "type": "string"
+      },
+      "rescan": {
+        "default": false,
+        "description": "Bootstrap over an existing Project instead of a guarded no-op.",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "project_id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "name": "genesis"
+}

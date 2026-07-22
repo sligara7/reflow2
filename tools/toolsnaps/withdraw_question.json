@@ -1,0 +1,20 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Withdraw a question asked in error or overtaken by events. Kept in the                        graph, not deleted.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "gap_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "gap_id"
+    ],
+    "type": "object"
+  },
+  "name": "withdraw_question"
+}

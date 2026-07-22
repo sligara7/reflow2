@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record that a Capability is a step of a Flow (PART_OF_FLOW), with its position (`step_order`). A step without one is listed after the ordered steps, and `flow_report` says so rather than inventing an order.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "capability_id": {
+        "type": "string"
+      },
+      "flow_id": {
+        "type": "string"
+      },
+      "step_order": {
+        "default": null,
+        "description": "Position of this capability within the flow. Steps without one are\nlisted after the ordered ones, and the flow report says so.",
+        "format": "int64",
+        "type": [
+          "integer",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "capability_id",
+      "flow_id"
+    ],
+    "type": "object"
+  },
+  "name": "part_of_flow"
+}

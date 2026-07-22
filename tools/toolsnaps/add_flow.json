@@ -1,0 +1,55 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create a Flow — an ordered process linking Capabilities end to end (a user journey, an assembly sequence, an operating loop). Attach each step with `part_of_flow` (+ step_order); join steps with TRIGGERS edges via `create_edge`, giving each a `role` property saying what the transition means ('feeds', 'forces resync') — in a process the backward edges are the point, and without a role they are indistinguishable from forward ones. Read it back with `flow_report`.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "description": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "entry_point": {
+        "default": null,
+        "description": "Capability name or id where the flow begins.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "exit_point": {
+        "default": null,
+        "description": "Capability name or id where the flow ends.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "flow_type": {
+        "default": null,
+        "description": "`process` (default) / `data_flow` / `control_flow` / `decision_flow` /\n`capture` / `retrieval` / `generation`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "name": "add_flow"
+}

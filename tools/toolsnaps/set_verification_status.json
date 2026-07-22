@@ -1,0 +1,32 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Set a Verification's outcome (planned/passing/failing/skipped/blocked), preserving what the check is. A failing check is a live signal: `propagate_from` it to see which capability and requirement it affects.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "last_run_at": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "status": {
+        "description": "`planned` / `passing` / `failing` / `skipped` / `blocked`.",
+        "type": "string"
+      },
+      "verification_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "verification_id",
+      "status"
+    ],
+    "type": "object"
+  },
+  "name": "set_verification_status"
+}

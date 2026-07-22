@@ -46,6 +46,15 @@ input schema from the request struct. So a new tool is:
    mechanism — an agent picks tools by matching its problem, not by reading signatures.
 3. Optional args go through `#[serde(default)]`. A half-specified argument set should fail loud
    rather than silently defaulting to "return everything".
+4. **Classify it: `annotations(read_only_hint = …)` on the `#[tool]` attribute.** `true` if the
+   method takes the shared lock (`let g = self.graph.lock()`), `false` if it takes `let mut g`
+   or can otherwise mutate the graph — the borrow *is* the classification, so read it off the
+   body rather than the name (`gap_to_prompt` and the `reconcile_*` family read like queries but
+   record, so they are `false`). `smoke_mcp.py` fails if any served tool omits the hint, so a
+   tool cannot ship unclassified (BL-76).
+5. **Regenerate the toolsnap.** `cargo build -p reflow2-mcp && python3 ../../tools/toolsnap.py
+   --update`, then commit the new `tools/toolsnaps/<name>.json`. CI diffs the served surface
+   against these goldens; a surface change is a reviewed diff, never a silent one (BL-76).
 
 ## Conventions that are easy to break
 

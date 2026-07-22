@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Link a node to the Decision or DesignRule that shapes it (GOVERNED_BY).",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "from_id": {
+        "type": "string"
+      },
+      "from_type": {
+        "type": "string"
+      },
+      "to_id": {
+        "type": "string"
+      },
+      "to_type": {
+        "description": "Usually `Decision` or `DesignRule`.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "from_type",
+      "from_id",
+      "to_type",
+      "to_id"
+    ],
+    "type": "object"
+  },
+  "name": "governed_by"
+}

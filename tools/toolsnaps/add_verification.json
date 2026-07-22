@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record a Verification — a check that something meets its intent: a test, a review, a simulation, a physical inspection, a measurement. Answers the `build_without_verification` and `unverified_capability` gaps. Pair it with `verifies` to say what it checks.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "level": {
+        "default": null,
+        "description": "`unit` (default) / `integration` / `system` / `acceptance`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "method": {
+        "default": null,
+        "description": "`test` (default) / `review` / `simulation` / `inspection` / `measurement` / `analysis`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "name": "add_verification"
+}

@@ -1,0 +1,58 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Phrase a gap as a plain question via the ambient agent. Call with empty `answers` to get {status:needs_llm, prompts}; fill them and call again with `answers` to get {status:ok, prompt}.",
+  "inputSchema": {
+    "$defs": {
+      "AgentAnswerReq": {
+        "additionalProperties": false,
+        "description": "One filled answer from the ambient agent (mirrors core `AgentAnswer` with a\nJsonSchema for the tool boundary).",
+        "properties": {
+          "id": {
+            "description": "The `AgentPrompt.id` this answers.",
+            "type": "string"
+          },
+          "text": {
+            "description": "The answer text (JSON string when the prompt expected JSON).",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "answers": {
+        "description": "Answers to a prior `needs_llm` round. Empty on the first (prepare) call.",
+        "items": {
+          "$ref": "#/$defs/AgentAnswerReq"
+        },
+        "type": "array"
+      },
+      "asked_at": {
+        "default": null,
+        "description": "Timestamp to record against the question, if you have one.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "gap": {
+        "additionalProperties": true,
+        "description": "A `GapCandidate` previously returned by `detect_gaps`.",
+        "type": "object"
+      }
+    },
+    "required": [
+      "gap"
+    ],
+    "type": "object"
+  },
+  "name": "gap_to_prompt"
+}

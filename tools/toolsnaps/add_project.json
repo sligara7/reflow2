@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create a Project node.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "description": "Stable node id (e.g. `req:offline`).",
+        "type": "string"
+      },
+      "name": {
+        "description": "Human-readable name.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "name": "add_project"
+}

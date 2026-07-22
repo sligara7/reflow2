@@ -1,0 +1,64 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Compare what is observed RUNNING against what DEPLOYED_TO declares — the as-fielded reconcile, sibling of reconcile_artifacts one phase later (BL-9). Supply one entry per environment you actually looked at, listing the releases running there (empty list = nothing runs, a positive statement). Reports deployment_missing (declared active, not running), deployment_undeclared (running, never declared) and deployment_contradicted (running while declared planned/rolled_back), plus ids the design has never heard of. Only Releases run and only Environments host — components and libraries never produce drift here. With record_events each divergence becomes a persistent DriftEvent (and an unresolved_drift gap) that a later reconcile resolves automatically when the divergence is gone; the design-side fix is deploy_to with the true status.",
+  "inputSchema": {
+    "$defs": {
+      "ObservedEnvironmentReq": {
+        "additionalProperties": false,
+        "properties": {
+          "environment_id": {
+            "type": "string"
+          },
+          "running": {
+            "default": [],
+            "description": "Release ids actually running there. An empty list is a positive\nstatement — nothing runs here — not missing evidence.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "environment_id"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "detected_at": {
+        "default": null,
+        "description": "Timestamp for recorded events (the server takes no clock).",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "exhaustive": {
+        "default": false,
+        "description": "The observation covers every environment: declared-active deployments\nin unlisted environments are reported as unobserved.",
+        "type": "boolean"
+      },
+      "observed": {
+        "description": "One entry per environment you actually looked at. Environments not\nlisted are not evidence of anything.",
+        "items": {
+          "$ref": "#/$defs/ObservedEnvironmentReq"
+        },
+        "type": "array"
+      },
+      "record_events": {
+        "default": false,
+        "description": "Write a DriftEvent per divergence (off = look before you write).",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "observed"
+    ],
+    "type": "object"
+  },
+  "name": "reconcile_deployment"
+}

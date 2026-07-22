@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record a Decision and why it was made (an ADR). Use this whenever the user chooses between real alternatives — the rationale is what stops the choice being silently reversed later. Link it with `governed_by`.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "decision": {
+        "description": "What was decided.",
+        "type": "string"
+      },
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "rationale": {
+        "default": null,
+        "description": "Why — the part worth recording.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "decision"
+    ],
+    "type": "object"
+  },
+  "name": "add_decision"
+}

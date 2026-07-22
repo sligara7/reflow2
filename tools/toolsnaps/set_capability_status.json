@@ -1,0 +1,25 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Set a Capability's lifecycle status: `planned` (the default) / `in_progress` / `realized` / `verified`. Use it as a capability moves through its life; to record one that already ships, pass `status` to add_capability instead and save a write.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "capability_id": {
+        "type": "string"
+      },
+      "status": {
+        "description": "`planned` (default) / `in_progress` / `realized` / `verified`.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "capability_id",
+      "status"
+    ],
+    "type": "object"
+  },
+  "name": "set_capability_status"
+}

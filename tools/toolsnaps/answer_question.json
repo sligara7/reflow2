@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record what the user said in reply to a question, closing it. Write the design nodes their answer implies separately — this is the record that it was settled, not a substitute for the design. Precondition: the gap must already have a recorded question (from gap_to_prompt's serve pass); answering one that was never asked is refused, not silently accepted — distinct from the withdraw_* tools, which no-op on an absent record.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "answer": {
+        "description": "What the user said, in their own words.",
+        "type": "string"
+      },
+      "gap_id": {
+        "description": "The gap the question was asked about (`gap_id` from `open_questions`).",
+        "type": "string"
+      }
+    },
+    "required": [
+      "gap_id",
+      "answer"
+    ],
+    "type": "object"
+  },
+  "name": "answer_question"
+}

@@ -1161,7 +1161,8 @@ impl ReflowService {
                        and return a next-steps checklist. Guarded and idempotent — a no-op that \
                        reports already_initialized if a Project exists (unless rescan). Call this \
                        first, then seed the brief into Requirements/Capabilities via the add_* \
-                       tools and run detect_gaps."
+                       tools and run detect_gaps.",
+        annotations(read_only_hint = false)
     )]
     pub async fn genesis(
         &self,
@@ -1181,13 +1182,17 @@ impl ReflowService {
 
     // ---- DETECT / analyze (deterministic, read-only) ----
 
-    #[tool(description = "Find gaps in the design to ask the human about (DETECT).")]
+    #[tool(
+        description = "Find gaps in the design to ask the human about (DETECT).",
+        annotations(read_only_hint = true)
+    )]
     pub async fn detect_gaps(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         ok_json(g.detect_gaps().map_err(dyno_err)?)
     }
 
-    #[tool(description = "The coherence loop's outstanding debt, cheaply: what \
+    #[tool(
+        description = "The coherence loop's outstanding debt, cheaply: what \
                        capture→detect→ask→decide steps are owed right now, computed from graph \
                        state alone (never from run history — looking is not writing). One call \
                        returns a short to-do list: anchored gaps never put to the user, \
@@ -1195,7 +1200,9 @@ impl ReflowService {
                        capabilities claiming realized/verified with no passing check, recorded \
                        drift awaiting a disposition, and built capabilities nobody has checked \
                        against reality. Fire it between operational tasks instead of trying to \
-                       remember the loop; `clean: true` means nothing is owed.")]
+                       remember the loop; `clean: true` means nothing is owed.",
+        annotations(read_only_hint = true)
+    )]
     pub async fn loop_status(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         ok_json(g.loop_status().map_err(dyno_err)?)
@@ -1204,7 +1211,8 @@ impl ReflowService {
     #[tool(
         description = "Blast radius of a recorded ChangeEvent along the golden thread. Returns \
                        a summary (counts by distance, the distance-1 ring, risk crossings); \
-                       pass full=true for every impacted node with its hop chain."
+                       pass full=true for every impacted node with its hop chain.",
+        annotations(read_only_hint = true)
     )]
     pub async fn propagate_change(
         &self,
@@ -1227,7 +1235,8 @@ impl ReflowService {
     #[tool(
         description = "Speculative blast radius from seed node ids (what would this touch?). \
                        Returns a summary (counts by distance, the distance-1 ring, risk \
-                       crossings); pass full=true for every impacted node with its hop chain."
+                       crossings); pass full=true for every impacted node with its hop chain.",
+        annotations(read_only_hint = true)
     )]
     pub async fn propagate_from(
         &self,
@@ -1253,7 +1262,8 @@ impl ReflowService {
                        split into design_holds vs design_updated, design edits on the record, \
                        and a state per capability: drifting (an observed divergence is \
                        unanswered), confirmed (examined, with the claim history visible), or \
-                       unexamined (nobody has ever looked — NOT the same as confirmed)."
+                       unexamined (nobody has ever looked — NOT the same as confirmed).",
+        annotations(read_only_hint = true)
     )]
     pub async fn confirmation_ledger(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
@@ -1266,7 +1276,8 @@ impl ReflowService {
                        time — because an MCP server started before a rebuild keeps serving the \
                        old surface with nothing to say so (BL-32): the session that finds a \
                        mismatch between served_by and the repo should be restarted before \
-                       trusting anything else it reads."
+                       trusting anything else it reads.",
+        annotations(read_only_hint = true)
     )]
     pub async fn graph_report(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
@@ -1276,20 +1287,29 @@ impl ReflowService {
         ok_json(report)
     }
 
-    #[tool(description = "The graph report rendered as Markdown.")]
+    #[tool(
+        description = "The graph report rendered as Markdown.",
+        annotations(read_only_hint = true)
+    )]
     pub async fn graph_report_markdown(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         let report = g.graph_report().map_err(dyno_err)?;
         Ok(ok_markdown(report.to_markdown()))
     }
 
-    #[tool(description = "Detect structural defects the machine can repair (HEAL).")]
+    #[tool(
+        description = "Detect structural defects the machine can repair (HEAL).",
+        annotations(read_only_hint = true)
+    )]
     pub async fn detect_defects(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         ok_json(g.detect_defects().map_err(dyno_err)?)
     }
 
-    #[tool(description = "Propose a HEAL plan (never mutates; review then apply_heal).")]
+    #[tool(
+        description = "Propose a HEAL plan (never mutates; review then apply_heal).",
+        annotations(read_only_hint = true)
+    )]
     pub async fn propose_heal(
         &self,
         Parameters(req): Parameters<ProposeHealReq>,
@@ -1306,13 +1326,19 @@ impl ReflowService {
         ok_json(g.propose_heal(opts).map_err(dyno_err)?)
     }
 
-    #[tool(description = "Evaluate how capabilities are allocated across components.")]
+    #[tool(
+        description = "Evaluate how capabilities are allocated across components.",
+        annotations(read_only_hint = true)
+    )]
     pub async fn evaluate_allocation(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         ok_json(g.evaluate_allocation().map_err(dyno_err)?)
     }
 
-    #[tool(description = "Propose a capability→component allocation via Leiden clustering.")]
+    #[tool(
+        description = "Propose a capability→component allocation via Leiden clustering.",
+        annotations(read_only_hint = true)
+    )]
     pub async fn propose_allocation(
         &self,
         Parameters(req): Parameters<ProposeAllocationReq>,
@@ -1321,25 +1347,37 @@ impl ReflowService {
         ok_json(g.propose_allocation(req.resolution).map_err(dyno_err)?)
     }
 
-    #[tool(description = "Decomposition/hierarchy issues (matryoshka level checks).")]
+    #[tool(
+        description = "Decomposition/hierarchy issues (matryoshka level checks).",
+        annotations(read_only_hint = true)
+    )]
     pub async fn hierarchy_issues(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         ok_json(g.hierarchy_issues().map_err(dyno_err)?)
     }
 
-    #[tool(description = "Surprising cross-community couplings (mined from the graph).")]
+    #[tool(
+        description = "Surprising cross-community couplings (mined from the graph).",
+        annotations(read_only_hint = true)
+    )]
     pub async fn surprising_connections(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         ok_json(g.surprising_connections().map_err(dyno_err)?)
     }
 
-    #[tool(description = "All declining quality dimensions across the design, worst first.")]
+    #[tool(
+        description = "All declining quality dimensions across the design, worst first.",
+        annotations(read_only_hint = true)
+    )]
     pub async fn dimension_drifts(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         ok_json(g.dimension_drifts().map_err(dyno_err)?)
     }
 
-    #[tool(description = "Quality-dimension drift for one target node.")]
+    #[tool(
+        description = "Quality-dimension drift for one target node.",
+        annotations(read_only_hint = true)
+    )]
     pub async fn dimension_drift(
         &self,
         Parameters(req): Parameters<DimensionDriftReq>,
@@ -1351,7 +1389,10 @@ impl ReflowService {
 
     // ---- Golden-thread constructors (deterministic, mutating) ----
 
-    #[tool(description = "Create a Project node.")]
+    #[tool(
+        description = "Create a Project node.",
+        annotations(read_only_hint = false)
+    )]
     pub async fn add_project(
         &self,
         Parameters(req): Parameters<IdName>,
@@ -1362,7 +1403,10 @@ impl ReflowService {
         ))
     }
 
-    #[tool(description = "Create a Requirement node.")]
+    #[tool(
+        description = "Create a Requirement node.",
+        annotations(read_only_hint = false)
+    )]
     pub async fn add_requirement(
         &self,
         Parameters(req): Parameters<RequirementReq>,
@@ -1381,7 +1425,8 @@ impl ReflowService {
     #[tool(
         description = "Create a Capability node. `status` defaults to `planned`; set it when \
                        recording something that already exists, so adopting a running system \
-                       does not describe it as entirely unbuilt."
+                       does not describe it as entirely unbuilt.",
+        annotations(read_only_hint = false)
     )]
     pub async fn add_capability(
         &self,
@@ -1405,7 +1450,8 @@ impl ReflowService {
                        and move the status only when the user has actually confirmed, deferred \
                        or dropped it — certainty is derived from this status, so promoting it \
                        yourself forges their signature (dec:certainty-derived). A `dropped` or \
-                       `met` requirement stops raising unsatisfied_requirement."
+                       `met` requirement stops raising unsatisfied_requirement.",
+        annotations(read_only_hint = false)
     )]
     pub async fn set_requirement_status(
         &self,
@@ -1422,7 +1468,8 @@ impl ReflowService {
         description = "Set a Capability's lifecycle status: `planned` (the default) / \
                        `in_progress` / `realized` / `verified`. Use it as a capability moves \
                        through its life; to record one that already ships, pass `status` to \
-                       add_capability instead and save a write."
+                       add_capability instead and save a write.",
+        annotations(read_only_hint = false)
     )]
     pub async fn set_capability_status(
         &self,
@@ -1443,7 +1490,8 @@ impl ReflowService {
                        a requirement backed out of the code that implements it is satisfied by \
                        construction and cannot contradict anything, and a reader has no other way \
                        to tell. For bulk adoption prefer import_graph, which carries this at \
-                       create time."
+                       create time.",
+        annotations(read_only_hint = false)
     )]
     pub async fn set_provenance(
         &self,
@@ -1460,7 +1508,8 @@ impl ReflowService {
         description = "Create a Component node. Pass `level` when the part is an assembly \
                        rather than a leaf (`subsystem`, `system`, `system_of_systems`, \
                        `enterprise`; default `component`), then use contain_component to nest \
-                       it — that pair is what gives hierarchy_issues something to check."
+                       it — that pair is what gives hierarchy_issues something to check.",
+        annotations(read_only_hint = false)
     )]
     pub async fn add_component(
         &self,
@@ -1481,7 +1530,8 @@ impl ReflowService {
                        spine. The parent should sit exactly one level above the child: nesting \
                        two components at the same level is reported as a level_mismatch, and \
                        skipping a level as a missing_intermediate_level. Set `level` on both via \
-                       add_component first, or every containment looks like a mismatch."
+                       add_component first, or every containment looks like a mismatch.",
+        annotations(read_only_hint = false)
     )]
     pub async fn contain_component(
         &self,
@@ -1494,7 +1544,10 @@ impl ReflowService {
         ))
     }
 
-    #[tool(description = "Link a Capability to a Requirement it SATISFIES.")]
+    #[tool(
+        description = "Link a Capability to a Requirement it SATISFIES.",
+        annotations(read_only_hint = false)
+    )]
     pub async fn satisfies(
         &self,
         Parameters(req): Parameters<EdgePairReq>,
@@ -1505,7 +1558,10 @@ impl ReflowService {
         ))
     }
 
-    #[tool(description = "Allocate a Capability to a Component (ALLOCATED_TO).")]
+    #[tool(
+        description = "Allocate a Capability to a Component (ALLOCATED_TO).",
+        annotations(read_only_hint = false)
+    )]
     pub async fn allocate(
         &self,
         Parameters(req): Parameters<EdgePairReq>,
@@ -1521,7 +1577,8 @@ impl ReflowService {
                        data feed, CLI, library boundary, or physical/human connection point). \
                        Model one whenever two Components talk to each other, then pair it with \
                        `provides` and `consumes`: that pairing is what makes a change on one \
-                       side of a boundary surface the other side."
+                       side of a boundary surface the other side.",
+        annotations(read_only_hint = false)
     )]
     pub async fn add_interface(
         &self,
@@ -1542,7 +1599,8 @@ impl ReflowService {
                        `create_edge`, giving each a `role` property saying what the transition \
                        means ('feeds', 'forces resync') — in a process the backward edges are \
                        the point, and without a role they are indistinguishable from forward \
-                       ones. Read it back with `flow_report`."
+                       ones. Read it back with `flow_report`.",
+        annotations(read_only_hint = false)
     )]
     pub async fn add_flow(
         &self,
@@ -1565,7 +1623,8 @@ impl ReflowService {
     #[tool(
         description = "Record that a Capability is a step of a Flow (PART_OF_FLOW), with its \
                        position (`step_order`). A step without one is listed after the ordered \
-                       steps, and `flow_report` says so rather than inventing an order."
+                       steps, and `flow_report` says so rather than inventing an order.",
+        annotations(read_only_hint = false)
     )]
     pub async fn part_of_flow(
         &self,
@@ -1585,7 +1644,8 @@ impl ReflowService {
                        not appear in detect_defects (whose circular_dependency stays scoped to \
                        DEPENDS_ON and contracts, where a cycle really is a defect). Anything \
                        the model left unstated (an unmatched entry/exit point, steps without \
-                       step_order, transitions without a role) is confessed by name."
+                       step_order, transitions without a role) is confessed by name.",
+        annotations(read_only_hint = true)
     )]
     pub async fn flow_report(
         &self,
@@ -1597,7 +1657,8 @@ impl ReflowService {
 
     #[tool(
         description = "Record that a Component PROVIDES an Interface — it is the side that \
-                       implements the contract. `from_id` is the Component, `to_id` the Interface."
+                       implements the contract. `from_id` is the Component, `to_id` the Interface.",
+        annotations(read_only_hint = false)
     )]
     pub async fn provides(
         &self,
@@ -1614,7 +1675,8 @@ impl ReflowService {
                        depends on the contract. `from_id` is the Component, `to_id` the \
                        Interface. Once both sides are recorded, `propagate_change` on either \
                        Component reaches the other, and `detect_gaps` reports a contract that \
-                       is consumed but never provided."
+                       is consumed but never provided.",
+        annotations(read_only_hint = false)
     )]
     pub async fn consumes(
         &self,
@@ -1626,7 +1688,10 @@ impl ReflowService {
         ))
     }
 
-    #[tool(description = "Link a Project to a child node it CONTAINS.")]
+    #[tool(
+        description = "Link a Project to a child node it CONTAINS.",
+        annotations(read_only_hint = false)
+    )]
     pub async fn contains(
         &self,
         Parameters(req): Parameters<ContainsReq>,
@@ -1645,7 +1710,8 @@ impl ReflowService {
                        \"still needs attention\"; a list that can never reach zero gets skimmed. \
                        The reason is stored as a real Decision node in the graph, so it outlives \
                        this session. If the gap's affected nodes later change, the review \
-                       expires and the gap returns for a fresh judgement."
+                       expires and the gap returns for a fresh judgement.",
+        annotations(read_only_hint = false)
     )]
     pub async fn acknowledge_gap(
         &self,
@@ -1660,7 +1726,8 @@ impl ReflowService {
 
     #[tool(
         description = "Gaps that were reviewed and accepted, each with the reason given. Worth \
-                       re-reading when the design shifts."
+                       re-reading when the design shifts.",
+        annotations(read_only_hint = true)
     )]
     pub async fn reviewed_gaps(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
@@ -1669,7 +1736,8 @@ impl ReflowService {
 
     #[tool(
         description = "Withdraw a gap's acceptance: the Decision is marked superseded (kept, not \
-                       deleted) and the gap returns to the open list."
+                       deleted) and the gap returns to the open list.",
+        annotations(read_only_hint = false)
     )]
     pub async fn withdraw_gap_acknowledgement(
         &self,
@@ -1690,7 +1758,8 @@ impl ReflowService {
         description = "Record a Verification — a check that something meets its intent: a test, a \
                        review, a simulation, a physical inspection, a measurement. Answers the \
                        `build_without_verification` and `unverified_capability` gaps. Pair it with \
-                       `verifies` to say what it checks."
+                       `verifies` to say what it checks.",
+        annotations(read_only_hint = false)
     )]
     pub async fn add_verification(
         &self,
@@ -1711,7 +1780,8 @@ impl ReflowService {
     #[tool(
         description = "Set a Verification's outcome (planned/passing/failing/skipped/blocked), \
                        preserving what the check is. A failing check is a live signal: \
-                       `propagate_from` it to see which capability and requirement it affects."
+                       `propagate_from` it to see which capability and requirement it affects.",
+        annotations(read_only_hint = false)
     )]
     pub async fn set_verification_status(
         &self,
@@ -1728,7 +1798,10 @@ impl ReflowService {
         ))
     }
 
-    #[tool(description = "Link a Verification to what it checks (VERIFIES).")]
+    #[tool(
+        description = "Link a Verification to what it checks (VERIFIES).",
+        annotations(read_only_hint = false)
+    )]
     pub async fn verifies(
         &self,
         Parameters(req): Parameters<VerifiesReq>,
@@ -1743,7 +1816,8 @@ impl ReflowService {
     #[tool(
         description = "Record a Release — a packaged, operable version: a container image, a \
                        published package, a manufactured build. Part of answering the \
-                       `no_deploy_operate` gap."
+                       `no_deploy_operate` gap.",
+        annotations(read_only_hint = false)
     )]
     pub async fn add_release(
         &self,
@@ -1764,7 +1838,8 @@ impl ReflowService {
     #[tool(
         description = "Record an Environment — where a Release runs: a cloud region, a lab bench, \
                        a physical site. More than a deploy target; it is the context whose rules \
-                       the design must satisfy."
+                       the design must satisfy.",
+        annotations(read_only_hint = false)
     )]
     pub async fn add_environment(
         &self,
@@ -1784,7 +1859,8 @@ impl ReflowService {
 
     #[tool(
         description = "Record a Resource the built thing needs — a database, a queue, a secret, a \
-                       GPU, power, bandwidth."
+                       GPU, power, bandwidth.",
+        annotations(read_only_hint = false)
     )]
     pub async fn add_resource(
         &self,
@@ -1797,7 +1873,10 @@ impl ReflowService {
         ))
     }
 
-    #[tool(description = "Deploy a Release to an Environment (planned/active/rolled_back).")]
+    #[tool(
+        description = "Deploy a Release to an Environment (planned/active/rolled_back).",
+        annotations(read_only_hint = false)
+    )]
     pub async fn deploy_to(
         &self,
         Parameters(req): Parameters<DeployToReq>,
@@ -1815,7 +1894,8 @@ impl ReflowService {
                        as shipped: the artifact node's own checksum is the live drift baseline \
                        and moves with every accept, so without the frozen copy a past release's \
                        manifest would quietly rewrite itself. A Release with no INCLUDES edges \
-                       is a version number, not a manifest."
+                       is a version number, not a manifest.",
+        annotations(read_only_hint = false)
     )]
     pub async fn release_includes(
         &self,
@@ -1839,7 +1919,8 @@ impl ReflowService {
                        build covers, the built capabilities it leaves out, and where it is \
                        deployed. This is the query 'does what we released match what we \
                        designed?' — compare capabilities_covered against the design's \
-                       capability list, and built_capabilities_not_covered is the diff."
+                       capability list, and built_capabilities_not_covered is the diff.",
+        annotations(read_only_hint = true)
     )]
     pub async fn release_report(
         &self,
@@ -1859,7 +1940,8 @@ impl ReflowService {
                        believed proven what is actually broken. With record_events each \
                        divergence is a persistent DriftEvent (and unresolved_drift gap), \
                        auto-resolved when a later run agrees; the design-side answer is \
-                       set_verification_status with what the run actually said."
+                       set_verification_status with what the run actually said.",
+        annotations(read_only_hint = false)
     )]
     pub async fn reconcile_verification(
         &self,
@@ -1898,7 +1980,8 @@ impl ReflowService {
                        With record_events each divergence becomes a persistent DriftEvent (and \
                        an unresolved_drift gap) that a later reconcile resolves automatically \
                        when the divergence is gone; the design-side fix is deploy_to with the \
-                       true status."
+                       true status.",
+        annotations(read_only_hint = false)
     )]
     pub async fn reconcile_deployment(
         &self,
@@ -1929,7 +2012,8 @@ impl ReflowService {
                        which is a goal to achieve. For a numeric budget (BL-11) set `quantity` \
                        (unit-bearing name like mass_kg / latency_ms / cost_usd), `limit`, and \
                        `direction` (maximum = stay at or under, the default). Then attach the \
-                       spenders with `constrains` and read the rollup with `budget_report`."
+                       spenders with `constrains` and read the rollup with `budget_report`.",
+        annotations(read_only_hint = false)
     )]
     pub async fn add_constraint(
         &self,
@@ -1955,7 +2039,8 @@ impl ReflowService {
                        `contribution` to the budget (in the Constraint's quantity unit) and the \
                        `basis` for the number (estimated/evidence/measured). An edge without a \
                        contribution is reported by budget_report as unstated — never treated as \
-                       zero."
+                       zero.",
+        annotations(read_only_hint = false)
     )]
     pub async fn constrains(
         &self,
@@ -1981,7 +2066,8 @@ impl ReflowService {
                        coverage (estimated vs measured), and an honest verdict — `incomplete` \
                        when any contribution is unstated, because a partial sum passed off as a \
                        total is how budgets lie. Contributors with no stated number are listed, \
-                       never zeroed."
+                       never zeroed.",
+        annotations(read_only_hint = true)
     )]
     pub async fn budget_report(
         &self,
@@ -1995,7 +2081,8 @@ impl ReflowService {
         description = "Order one DesignEpoch after another (earlier PRECEDES later) — the chain \
                        axis Z exists to record. Epochs also carry a `sequence` integer, but the \
                        explicit edge is what makes the history walkable as a graph rather than \
-                       sortable as a list."
+                       sortable as a list.",
+        annotations(read_only_hint = false)
     )]
     pub async fn precedes(
         &self,
@@ -2012,7 +2099,8 @@ impl ReflowService {
     #[tool(
         description = "Pin any node to a DesignEpoch (AT_EPOCH) — e.g. a Release to its \
                        release_cut epoch, so the release and the design state it was cut from \
-                       are joined on axis Z. Generic: AT_EPOCH is declared from any type."
+                       are joined on axis Z. Generic: AT_EPOCH is declared from any type.",
+        annotations(read_only_hint = false)
     )]
     pub async fn pin_at_epoch(
         &self,
@@ -2028,7 +2116,8 @@ impl ReflowService {
 
     #[tool(
         description = "Record that a Component or Release needs a Resource, with how critical it \
-                       is (optional/recommended/required)."
+                       is (optional/recommended/required).",
+        annotations(read_only_hint = false)
     )]
     pub async fn require_resource(
         &self,
@@ -2049,7 +2138,8 @@ impl ReflowService {
     #[tool(
         description = "Record a Decision and why it was made (an ADR). Use this whenever the user \
                        chooses between real alternatives — the rationale is what stops the choice \
-                       being silently reversed later. Link it with `governed_by`."
+                       being silently reversed later. Link it with `governed_by`.",
+        annotations(read_only_hint = false)
     )]
     pub async fn add_decision(
         &self,
@@ -2062,7 +2152,10 @@ impl ReflowService {
         ))
     }
 
-    #[tool(description = "Link a node to the Decision or DesignRule that shapes it (GOVERNED_BY).")]
+    #[tool(
+        description = "Link a node to the Decision or DesignRule that shapes it (GOVERNED_BY).",
+        annotations(read_only_hint = false)
+    )]
     pub async fn governed_by(
         &self,
         Parameters(req): Parameters<GovernedByReq>,
@@ -2077,7 +2170,8 @@ impl ReflowService {
     // ---- Generic CRUD (deterministic) ----
 
     #[tool(
-        description = "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults."
+        description = "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults.",
+        annotations(read_only_hint = false)
     )]
     pub async fn create_node(
         &self,
@@ -2091,7 +2185,10 @@ impl ReflowService {
         }
     }
 
-    #[tool(description = "Create an edge of any schema type between typed endpoints.")]
+    #[tool(
+        description = "Create an edge of any schema type between typed endpoints.",
+        annotations(read_only_hint = false)
+    )]
     pub async fn create_edge(
         &self,
         Parameters(req): Parameters<CreateEdgeReq>,
@@ -2120,7 +2217,8 @@ impl ReflowService {
                        (export with the old build, import with the new). It carries a stamp saying \
                        which reflow2 wrote it. Pass `path` to write the document to a file instead \
                        of returning it — on a large design the payload overflows what a session \
-                       can read, and a backup wants to be a file anyway."
+                       can read, and a backup wants to be a file anyway.",
+        annotations(read_only_hint = true)
     )]
     pub async fn export_graph(
         &self,
@@ -2199,7 +2297,8 @@ impl ReflowService {
                        present are overwritten and anything not in the document is left alone, so \
                        clear the graph first if you want a clean restore. Atomic — a document that \
                        fails validation leaves the graph untouched rather than half-loaded. \
-                       Reports any edge whose endpoints were missing rather than dropping it."
+                       Reports any edge whose endpoints were missing rather than dropping it.",
+        annotations(read_only_hint = false)
     )]
     pub async fn import_graph(
         &self,
@@ -2219,7 +2318,8 @@ impl ReflowService {
                        alone to compare the live graph against a committed export ('has this \
                        session diverged from the record?'); pass other_path too to compare two \
                        export files (branches, machines, alternatives). Reports divergence, \
-                       never judges which side is right."
+                       never judges which side is right.",
+        annotations(read_only_hint = true)
     )]
     pub async fn compare_designs(
         &self,
@@ -2253,7 +2353,8 @@ impl ReflowService {
                        No arguments returns everything; `node_type` focuses one type and the \
                        edges it can carry; `from` + `to` together answer 'what may connect an X \
                        to a Y?', ranking edge types that model the pair above ones that merely \
-                       accept it through a `*` wildcard."
+                       accept it through a `*` wildcard.",
+        annotations(read_only_hint = true)
     )]
     pub async fn describe_schema(
         &self,
@@ -2274,7 +2375,10 @@ impl ReflowService {
         }
     }
 
-    #[tool(description = "Fetch a node by type and id (null if absent).")]
+    #[tool(
+        description = "Fetch a node by type and id (null if absent).",
+        annotations(read_only_hint = true)
+    )]
     pub async fn get_node(
         &self,
         Parameters(req): Parameters<TypedIdReq>,
@@ -2288,7 +2392,10 @@ impl ReflowService {
         ok_json(json!({ "node": node.map(NodeDto::from) }))
     }
 
-    #[tool(description = "List all nodes of a type.")]
+    #[tool(
+        description = "List all nodes of a type.",
+        annotations(read_only_hint = true)
+    )]
     pub async fn scan_nodes(
         &self,
         Parameters(req): Parameters<ScanReq>,
@@ -2306,7 +2413,8 @@ impl ReflowService {
                        Search BEFORE creating a node that might already exist, and to map the \
                        user's words to the node they mean. Result reports its own bounds: \
                        hits.len() == limit means there may be more, and a non-empty `stale` \
-                       list means the index has drifted from the store."
+                       list means the index has drifted from the store.",
+        annotations(read_only_hint = true)
     )]
     pub async fn search_design(
         &self,
@@ -2323,7 +2431,10 @@ impl ReflowService {
         ok_json(result)
     }
 
-    #[tool(description = "Delete a node by type and id (true if it existed).")]
+    #[tool(
+        description = "Delete a node by type and id (true if it existed).",
+        annotations(read_only_hint = false)
+    )]
     pub async fn delete_node(
         &self,
         Parameters(req): Parameters<TypedIdReq>,
@@ -2339,7 +2450,8 @@ impl ReflowService {
                        an allocation that never happened. A link that WAS true and stopped being \
                        true is design history, not an error: record it (record_change) rather \
                        than erasing it. Until this tool existed the only way to remove a wrong \
-                       edge over MCP was to delete one of its endpoints."
+                       edge over MCP was to delete one of its endpoints.",
+        annotations(read_only_hint = false)
     )]
     pub async fn delete_edge(
         &self,
@@ -2362,7 +2474,8 @@ impl ReflowService {
                        before a single write, so hand-editing the proposal or reusing a stale one \
                        fails rather than merging the wrong nodes. Merging deletes a node and \
                        cannot be undone. Read `discarded` in the result: it lists what the merge \
-                       could not carry onto the survivor."
+                       could not carry onto the survivor.",
+        annotations(read_only_hint = false)
     )]
     pub async fn apply_heal(
         &self,
@@ -2381,7 +2494,8 @@ impl ReflowService {
                        files present but unknown to the design. reflow2 performs no file I/O; \
                        compute the hashes yourself (any algorithm, used consistently). The \
                        result's `propagation_seeds` are the design nodes the changes land on — \
-                       feed them to `propagate_from` to see what a code change means upstream."
+                       feed them to `propagate_from` to see what a code change means upstream.",
+        annotations(read_only_hint = false)
     )]
     pub async fn reconcile_artifacts(
         &self,
@@ -2410,7 +2524,8 @@ impl ReflowService {
                        `design_change_event_id` from the record_change that updated it, so code \
                        and design are one change). Silent accept does not exist: it is how a \
                        design erodes into fiction over N fix cycles while reporting zero gaps. \
-                       Until you accept, the same checksum_change is reported on every reconcile."
+                       Until you accept, the same checksum_change is reported on every reconcile.",
+        annotations(read_only_hint = false)
     )]
     pub async fn set_artifact_checksum(
         &self,
@@ -2474,7 +2589,8 @@ impl ReflowService {
 
     #[tool(
         description = "Create an Artifact node — a real deliverable (file/spec/doc) that \
-                          lives outside the graph, pointed to by `location`."
+                          lives outside the graph, pointed to by `location`.",
+        annotations(read_only_hint = false)
     )]
     pub async fn add_artifact(
         &self,
@@ -2492,7 +2608,10 @@ impl ReflowService {
         ))
     }
 
-    #[tool(description = "Link an Artifact to the Capability/Component it REALIZES (implements).")]
+    #[tool(
+        description = "Link an Artifact to the Capability/Component it REALIZES (implements).",
+        annotations(read_only_hint = false)
+    )]
     pub async fn realizes(
         &self,
         Parameters(req): Parameters<RealizesReq>,
@@ -2515,7 +2634,8 @@ impl ReflowService {
                        or diagram. Record a file this way when something would be WRONG if it \
                        drifted out of step with the design — not every file. Fails loud if \
                        either endpoint is missing. Distinct from REALIZES (implementation) \
-                       and SPECIFIES (machine-readable contract)."
+                       and SPECIFIES (machine-readable contract).",
+        annotations(read_only_hint = false)
     )]
     pub async fn documents(
         &self,
@@ -2537,7 +2657,8 @@ impl ReflowService {
         description = "Register a real file against the design WITH provenance, atomically: \
                        Artifact + a provenance Fragment (YIELDED) + a REALIZES edge to the \
                        Capability/Component it implements. Fails loud if the target is missing. \
-                       Use after building a file so as-designed vs as-built stays honest."
+                       Use after building a file so as-designed vs as-built stays honest.",
+        annotations(read_only_hint = false)
     )]
     pub async fn link_artifact(
         &self,
@@ -2565,7 +2686,10 @@ impl ReflowService {
 
     // ---- Temporal / CHANGE (deterministic, mutating) ----
 
-    #[tool(description = "Create an Epoch (a point on the time axis).")]
+    #[tool(
+        description = "Create an Epoch (a point on the time axis).",
+        annotations(read_only_hint = false)
+    )]
     pub async fn add_epoch(
         &self,
         Parameters(req): Parameters<AddEpochReq>,
@@ -2581,7 +2705,8 @@ impl ReflowService {
     #[tool(
         description = "Create a ChangeEvent (seed for propagate_change). Pass `affected` to say \
                        in the same call what it changed — a CHANGED edge is drawn to each entry, \
-                       which is what makes the event propagatable."
+                       which is what makes the event propagatable.",
+        annotations(read_only_hint = false)
     )]
     pub async fn add_change_event(
         &self,
@@ -2645,7 +2770,10 @@ impl ReflowService {
         }))
     }
 
-    #[tool(description = "Record a change to a node in an epoch (snapshots the prior state).")]
+    #[tool(
+        description = "Record a change to a node in an epoch (snapshots the prior state).",
+        annotations(read_only_hint = false)
+    )]
     pub async fn record_change(
         &self,
         Parameters(req): Parameters<RecordChangeReq>,
@@ -2674,7 +2802,8 @@ impl ReflowService {
     #[tool(
         description = "Phrase a gap as a plain question via the ambient agent. \
                        Call with empty `answers` to get {status:needs_llm, prompts}; \
-                       fill them and call again with `answers` to get {status:ok, prompt}."
+                       fill them and call again with `answers` to get {status:ok, prompt}.",
+        annotations(read_only_hint = false)
     )]
     pub async fn gap_to_prompt(
         &self,
@@ -2725,7 +2854,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Questions already put to the user that still bear on something open, with the wording they saw. `status: asked` means they have not replied \u{2014} follow it up, do not ask again. `status: answered` means they replied but the gap is still open, so their answer needs writing into the design or the gap needs acknowledging; their reply comes back with it. Read this at the start of a session, before detect_gaps."
+        description = "Questions already put to the user that still bear on something open, with the wording they saw. `status: asked` means they have not replied \u{2014} follow it up, do not ask again. `status: answered` means they replied but the gap is still open, so their answer needs writing into the design or the gap needs acknowledging; their reply comes back with it. Read this at the start of a session, before detect_gaps.",
+        annotations(read_only_hint = true)
     )]
     pub async fn open_questions(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
@@ -2738,7 +2868,8 @@ impl ReflowService {
                        it was settled, not a substitute for the design. Precondition: the gap \
                        must already have a recorded question (from gap_to_prompt's serve pass); \
                        answering one that was never asked is refused, not silently accepted — \
-                       distinct from the withdraw_* tools, which no-op on an absent record."
+                       distinct from the withdraw_* tools, which no-op on an absent record.",
+        annotations(read_only_hint = false)
     )]
     pub async fn answer_question(
         &self,
@@ -2758,7 +2889,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Withdraw a question asked in error or overtaken by events. Kept in the                        graph, not deleted."
+        description = "Withdraw a question asked in error or overtaken by events. Kept in the                        graph, not deleted.",
+        annotations(read_only_hint = false)
     )]
     pub async fn withdraw_question(
         &self,

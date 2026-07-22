@@ -1,0 +1,61 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create a Constraint — a limit the design must respect, vs a Requirement which is a goal to achieve. For a numeric budget (BL-11) set `quantity` (unit-bearing name like mass_kg / latency_ms / cost_usd), `limit`, and `direction` (maximum = stay at or under, the default). Then attach the spenders with `constrains` and read the rollup with `budget_report`.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "category": {
+        "default": null,
+        "description": "`technical` (default) / `business` / `operational` / `physical` /\n`regulatory` / `budget` / `schedule`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "direction": {
+        "default": null,
+        "description": "`maximum` (default: total must stay at or under) / `minimum`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "id": {
+        "type": "string"
+      },
+      "limit": {
+        "default": null,
+        "description": "The budget number, in the quantity's unit.",
+        "format": "double",
+        "type": [
+          "number",
+          "null"
+        ]
+      },
+      "name": {
+        "type": "string"
+      },
+      "quantity": {
+        "default": null,
+        "description": "For a numeric budget: unit-bearing name, e.g. `mass_kg`, `latency_ms`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "statement": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "statement"
+    ],
+    "type": "object"
+  },
+  "name": "add_constraint"
+}

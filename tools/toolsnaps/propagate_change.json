@@ -1,0 +1,39 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Blast radius of a recorded ChangeEvent along the golden thread. Returns a summary (counts by distance, the distance-1 ring, risk crossings); pass full=true for every impacted node with its hop chain.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "change_event_id": {
+        "description": "The ChangeEvent to propagate from.",
+        "type": "string"
+      },
+      "full": {
+        "default": null,
+        "description": "`true` returns every impacted node with its full hop chain. The default\nis a summary — counts by distance, the distance-1 ring, risk crossings —\nbecause the full dump on a large design overflows what a session can\nread, and every band is still counted in the summary.",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "max_depth": {
+        "default": null,
+        "description": "Max traversal depth (default 5).",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "change_event_id"
+    ],
+    "type": "object"
+  },
+  "name": "propagate_change"
+}

@@ -1,0 +1,44 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create an edge of any schema type between typed endpoints.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "edge_type": {
+        "type": "string"
+      },
+      "from_id": {
+        "type": "string"
+      },
+      "from_type": {
+        "type": "string"
+      },
+      "props": {
+        "additionalProperties": true,
+        "default": null,
+        "type": [
+          "object",
+          "null"
+        ]
+      },
+      "to_id": {
+        "type": "string"
+      },
+      "to_type": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "edge_type",
+      "from_type",
+      "from_id",
+      "to_type",
+      "to_id"
+    ],
+    "type": "object"
+  },
+  "name": "create_edge"
+}

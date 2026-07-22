@@ -1,0 +1,38 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Discover the design vocabulary before writing to it: which node types exist, which properties they require, and which edge types may join two given types. Call this instead of guessing at create_node / create_edge. No arguments returns everything; `node_type` focuses one type and the edges it can carry; `from` + `to` together answer 'what may connect an X to a Y?', ranking edge types that model the pair above ones that merely accept it through a `*` wildcard.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "from": {
+        "default": null,
+        "description": "With `to`: which edge types may join this source type to that target.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "node_type": {
+        "default": null,
+        "description": "Focus one node type: its properties plus the edges it can carry.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "to": {
+        "default": null,
+        "description": "With `from`: the target node type.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "name": "describe_schema"
+}

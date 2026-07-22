@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record that a Component or Release needs a Resource, with how critical it is (optional/recommended/required).",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "criticality": {
+        "default": null,
+        "description": "`optional` / `recommended` / `required`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "from_id": {
+        "type": "string"
+      },
+      "from_type": {
+        "description": "Source node type (e.g. `Component`, `Release`).",
+        "type": "string"
+      },
+      "resource_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "from_type",
+      "from_id",
+      "resource_id"
+    ],
+    "type": "object"
+  },
+  "name": "require_resource"
+}

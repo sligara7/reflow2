@@ -56,7 +56,6 @@ Add yourself if you're new here.
 
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
-- BL-76 — @ajs — since 2026-07-22 — crates/reflow2-mcp/src/service.rs (readOnlyHint on every tool + smoke gate), then toolsnaps golden schemas + CI diff
 
 
 
@@ -80,6 +79,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-76 done (both rungs): all 80 MCP tools declare `annotations(read_only_hint = …)` on the `#[tool]` attr — classification derived from the graph borrow itself (`let g` = read → true, `let mut g` = write → false), so gap_to_prompt + the reconcile_* family are correctly false (they record); 26 read / 54 write. smoke_mcp gained the explicitness gate (every served tool must carry readOnlyHint — a new tool can't ship unclassified) plus a both-poles correctness spot-check. New tools/toolsnap.py freezes each tool's served schema as a committed golden (tools/toolsnaps/, 80 files), CI-diffs them, `--update` to bless; wired into the full CI job + AGENTS.md done-gates + mcp-crate "Adding a tool". Surface half of BL-12; the read-only transaction mode stays BL-12. Also: req:frictionless-update confirmed proposed→accepted (all 18 reqs now user-confirmed) — export re-run, live==committed, chain advanced, gaps 0. smoke/fmt/clippy/skill_lint green — @ajs — 2026-07-22 — (this commit)
 
 - github-mcp-server comparison captured (user-directed read of the clone at ~/project/github-mcp-server): BL-12 gains the github notes block (hosted shape validated — one library, stateless streamable-HTTP front, their remote IS the OSS repo; read-only = per-tool ReadOnlyHint + filter, with the two-layer caveat that reflow2 also needs the RocksDB-secondary open; scope-filtered tools = sketch-2 in production; lockdown mode = BL-41-M's authority-keyed precedent). BL-76 raised (S+S, next up: ReadOnlyHint on all ~80 tools + explicitness gate in smoke, and toolsnaps — golden per-tool schema snapshots, the BL-28/32/48 bug family made a tripwire). BL-77 raised, parked (toolsets/verb-multiplexing when the 80-tool surface pinches; their removal of dynamic discovery is a data point). BL-51 addendum (server.json registry manifest, Docker). Analysis by scout agent over the clone; nothing built — @ajs — 2026-07-22 — (this commit)
 

@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Link a Capability to a Requirement it SATISFIES.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "from_id": {
+        "type": "string"
+      },
+      "to_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "from_id",
+      "to_id"
+    ],
+    "type": "object"
+  },
+  "name": "satisfies"
+}

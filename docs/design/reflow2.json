@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3f275a6c765e5ff7f796e639830f57d532dd0d63609bc0a2054712be7a34cda4",
+  "content_hash": "sha256:502da418f46c4d1b3fe795d235d936c7ac2bceedcd4eb2dd1292576b96df5b03",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -8722,7 +8722,7 @@
         "priority": "low",
         "provenance": "authored",
         "statement": "A consumer installs reflow2 with a single command from a stable public URL (curl | bash or the platform equivalent) and updates with a single short command; releases are frequent and very minor, so updating is routine and cheap rather than an event. Modeled on the Claude Code installer/update experience the user named as the target (2026-07-20).",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -9160,7 +9160,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:150661476898f523ae5a294a0b94339784616559bae2074b17cee0954d4e01d6",
+  "prev_content_hash": "sha256:3f275a6c765e5ff7f796e639830f57d532dd0d63609bc0a2054712be7a34cda4",
   "stamp": {
     "edge_types": 54,
     "node_types": 27,

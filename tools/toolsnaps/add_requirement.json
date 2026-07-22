@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create a Requirement node.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "statement": {
+        "description": "The requirement statement.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "statement"
+    ],
+    "type": "object"
+  },
+  "name": "add_requirement"
+}

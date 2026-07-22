@@ -1,0 +1,32 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Deploy a Release to an Environment (planned/active/rolled_back).",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "environment_id": {
+        "type": "string"
+      },
+      "release_id": {
+        "type": "string"
+      },
+      "status": {
+        "default": null,
+        "description": "`planned` / `active` / `rolled_back`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "release_id",
+      "environment_id"
+    ],
+    "type": "object"
+  },
+  "name": "deploy_to"
+}
