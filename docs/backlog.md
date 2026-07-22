@@ -1439,6 +1439,70 @@ index/staging area (continuous-capture doctrine deliberately rejects a staging g
 together are the **L** core of BL-12; #3 is **M** and mostly BL-70; #4 near-term **S** (adopt the
 split) then later signing; #5–#7 later rungs.
 
+**BL-81 · reflow2 as a navigable decision-MDP — the roads not taken, held forkable** — *user's
+idea on a walk home, 2026-07-22, developed live across three framings: choose-your-own-adventure,
+analysis of alternatives, and a reinforcement-learning gridworld. Size **L**. Advances [BL-70] and
+unifies it with [BL-80] and [BL-44]; captured as graph nodes with scope decided.* The one-line
+frame in the user's words: **the graph is the world-model, defects and field trials are the
+reward, branches are the replay, and the human does the credit assignment.**
+
+Extends [BL-70]'s "AoA branches held open until a decision point" from a held-open *superposition*
+into a *navigable decision tree over time* — any past Decision can be re-opened at its epoch and a
+different branch taken from that point, the "return to the choice page" of a choose-your-own-
+adventure book. Captured 2026-07-22: `req:roads-not-taken` (accepted — extends `req:intent-preserved`
+from "the past is never overwritten" to "the roads not taken are never lost either"),
+`dec:alternatives-unranked-forkable` (accepted), `cap:fork-alternatives` (planned, deliberately
+**unallocated** — its owning component is BL-70's branch/history-navigation module, still to design).
+
+**Scope decided — answers BL-70's open ranked-vs-not question: unranked.** Alternatives are
+forkable siblings, not a scored trade-study runner-up; the human judges in hindsight
+(`dec:report-dont-judge`, `dec:three-party-checks`). A stored ranking would be the system asserting
+a preference it cannot honestly hold, and design episodes are too few, too expensive and too
+subjective for a stationary reward. This tempers BL-70's "run the comparison machinery per branch":
+the machinery (`budget_report`, the dimension assessments, [BL-68]'s readiness scores) still
+*informs* the human per branch, but it never *ranks for* them.
+
+The RL frame, and where it is load-bearing versus where it would mislead:
+- **Model-based planning, not model-free crashing** — the graph is a world-model:
+  `propagate_change` / `detect_gaps` / `compare_designs` evaluate a fork's consequences *before*
+  anything is built, so you simulate the hole instead of falling in it. This is the whole reason a
+  design brain earns its keep.
+- **Two reward channels** — the structural detectors are *in-model* holes (SPOF, cycles, gaps),
+  computable a priori; **field trials are *out-of-model* holes only a real episode reveals** —
+  [BL-74]'s loop-on-virtue collapse was invisible to every detector until the StoryFlow fleet fell
+  in. Both feed the replay buffer.
+- **The cliff: no auto-optimize.** reflow2 supplies the replay buffer and the world-model; the
+  **human is the reward function** and does the credit assignment / policy update. Replay-and-score
+  to auto-pick a design would manufacture exactly the silent default the whole system forbids
+  (`dec:three-party-checks`).
+
+**Architecture stance (`dec:alternatives-unranked-forkable`): store the fork, compute the
+consequence.** Keep the unchosen option + its rationale cheaply at the decision's epoch — this
+upgrades BL-70's "`Decision.alternatives` = the losers' obituary" from post-hoc prose into a live,
+forkable sibling — and *compute* the alternative's consequence design on demand by forking that
+epoch and replaying; never eagerly maintain N full parallel designs, which combinatorially explode
+and **rot** as the main line moves on (a non-stationary MDP). Which fork to expand follows the
+reward: **expand where the surprise is** — a fresh defect, a failed trial, or a rationale that
+already flags doubt points back to a decision (high "TD error") — not the whole tree. That is
+MCTS-style selective deepening, and it is the selection rule BL-70's cheapest increment (one export
+per alternative) lacked. Precedent that the mechanism already works by hand:
+`dec:merge-survivor-provenance` carries a "reconsider" note tracing a near-bad merge back to its own
+fork, and the 2026-07-22 hindsight pass over all 19 Decisions found it by exactly this trace.
+
+How it unifies the threads: **[BL-70]** supplies the branch/ref scope (the fork layer); **[BL-80]**'s
+three-way merge (`dec:merge-three-way` / `dec:merge-conflict-semantics`) is *how a forked road comes
+home* — taking the other path and bringing its consequences into the baseline is a three-way merge
+against the fork's epoch; **[BL-71]** rung c (`compare_designs`) shows the difference between the
+taken and untaken path; **[BL-44]**'s cluster claims are the same scoping primitive at
+work-parallelism scale (BL-70 already noted the two share it).
+
+Decisions still the user's: the schema attachment for an alternative on a Decision — node-set tag
+vs sub-graph vs graph-per-branch, shared with BL-70's first open question and BL-44; and the
+genuinely new one this frame surfaces — **the "when has an episode taught us enough to revise?"
+trigger**: what counts as enough reward signal (how many defects, which severity, a failed trial)
+to *re-open* a fork rather than let it lie. That threshold is the credit-assignment rule, and it is
+the open conceptual thread this item leaves on the table.
+
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
 vocabulary wants in.* Lexicon namespaces schemas reverse-DNS (`app.bsky.feed.post`) so
