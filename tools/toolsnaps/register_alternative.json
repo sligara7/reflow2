@@ -1,0 +1,36 @@
+{
+  "annotations": {
+    "destructiveHint": false,
+    "readOnlyHint": false
+  },
+  "description": "Register an alternative under a proposed decision point (BL-70): a lightweight Artifact pointer that names where the alternative's design export lives (branch-by-file), GOVERNED_BY the Decision and CONTRADICTS its siblings. Refuses unless the Decision is `proposed` — you fork an open choice, not a settled one. Compare the registered alternatives with analyze_alternatives, then collapse_decision to choose.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "artifact_id": {
+        "description": "Id for the alternative pointer (an Artifact), e.g. `alt:laser`.",
+        "type": "string"
+      },
+      "decision_id": {
+        "description": "The proposed Decision this alternative is a fork of.",
+        "type": "string"
+      },
+      "location": {
+        "description": "Where the alternative's design export lives (branch-by-file).",
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "decision_id",
+      "artifact_id",
+      "name",
+      "location"
+    ],
+    "type": "object"
+  },
+  "name": "register_alternative"
+}

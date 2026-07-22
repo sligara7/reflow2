@@ -1171,6 +1171,44 @@ pub struct AnalyzeAlternativesReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct SetDecisionStatusReq {
+    pub decision_id: String,
+    /// `proposed` (opens a decision point) / `accepted` / `superseded` /
+    /// `rejected`.
+    pub status: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct RegisterAlternativeReq {
+    /// The proposed Decision this alternative is a fork of.
+    pub decision_id: String,
+    /// Id for the alternative pointer (an Artifact), e.g. `alt:laser`.
+    pub artifact_id: String,
+    pub name: String,
+    /// Where the alternative's design export lives (branch-by-file).
+    pub location: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct AlternativesForReq {
+    pub decision_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct CollapseDecisionReq {
+    pub decision_id: String,
+    /// The winning alternative's id.
+    pub winner_id: String,
+    /// Why — recorded in the Decision's alternatives field with the outcome.
+    #[serde(default)]
+    pub note: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AnswerQuestionReq {
     /// The gap the question was asked about (`gap_id` from `open_questions`).
     pub gap_id: String,
@@ -2599,6 +2637,78 @@ impl ReflowService {
             alternatives.push((p.clone(), read_export_document(p)?));
         }
         ok_json(reflow2_core::analyze_alternatives(&alternatives).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Set a Decision's lifecycle status — proposed / accepted / superseded / \
+                       rejected (BL-70). Setting it to `proposed` opens it as a decision point: an \
+                       undecided fork you can register alternatives under. Every other property is \
+                       preserved.",
+        annotations(read_only_hint = false, destructive_hint = false)
+    )]
+    pub async fn set_decision_status(
+        &self,
+        Parameters(req): Parameters<SetDecisionStatusReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.set_decision_status(&req.decision_id, &req.status)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Register an alternative under a proposed decision point (BL-70): a \
+                       lightweight Artifact pointer that names where the alternative's design \
+                       export lives (branch-by-file), GOVERNED_BY the Decision and CONTRADICTS its \
+                       siblings. Refuses unless the Decision is `proposed` — you fork an open \
+                       choice, not a settled one. Compare the registered alternatives with \
+                       analyze_alternatives, then collapse_decision to choose.",
+        annotations(read_only_hint = false, destructive_hint = false)
+    )]
+    pub async fn register_alternative(
+        &self,
+        Parameters(req): Parameters<RegisterAlternativeReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(
+            g.register_alternative(&req.decision_id, &req.artifact_id, &req.name, &req.location)
+                .map_err(dyno_err)?,
+        )
+    }
+
+    #[tool(
+        description = "List the alternatives registered under a decision point (BL-70) — the \
+                       Artifact pointers GOVERNED_BY the Decision, with their export locations. \
+                       Feed the locations to analyze_alternatives to compare them.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn alternatives_for(
+        &self,
+        Parameters(req): Parameters<AlternativesForReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        ok_json(g.alternatives_for(&req.decision_id).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Collapse a decision point (BL-70): choose the winning alternative. The \
+                       Decision moves to `accepted`, the losing alternatives are superseded \
+                       (OBSOLETES — retired on the record, not deleted), and the outcome is \
+                       written into the Decision's own `alternatives` field with the rationale. \
+                       This records the choice; merge the winner's design content into the \
+                       baseline separately with apply_merge.",
+        annotations(read_only_hint = false, destructive_hint = false)
+    )]
+    pub async fn collapse_decision(
+        &self,
+        Parameters(req): Parameters<CollapseDecisionReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(
+            g.collapse_decision(&req.decision_id, &req.winner_id, req.note.as_deref())
+                .map_err(dyno_err)?,
+        )
     }
 
     #[tool(

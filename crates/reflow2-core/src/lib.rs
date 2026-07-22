@@ -63,7 +63,9 @@ pub use agent::{AgentAnswer, AgentBackend, AgentPrompt, PromptCollector, prompt_
 pub use allocate::{
     AllocationReport, ComponentScore, MisplacedCapability, ProposedAllocation, ProposedComponent,
 };
-pub use alternatives::{AoaReport, BranchMeasures, analyze_alternatives};
+pub use alternatives::{
+    AlternativeRef, AoaReport, BranchMeasures, CollapseReport, analyze_alternatives,
+};
 pub use artifact::{ArtifactLink, DriftDisposition, LinkArtifactOptions};
 pub use budget::{BudgetContributor, BudgetReport, BudgetVerdict};
 pub use compare::{

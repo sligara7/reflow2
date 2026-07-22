@@ -121,6 +121,9 @@ pub mod edge {
     // Inference "why" edges (inference.yaml) referenced by HEAL/PROPAGATE.
     /// `* → *` — two nodes are contradictory (a tension to resolve).
     pub const CONTRADICTS: &str = "CONTRADICTS";
+    /// `* → *` — source supersedes target (target retired on the record — a
+    /// decision-point's losing alternative, superseded by the winner: BL-70).
+    pub const OBSOLETES: &str = "OBSOLETES";
     /// `* → *` — two nodes cover the same ground (candidates to merge).
     pub const DUPLICATES: &str = "DUPLICATES";
     /// `* → *` — a planned/anticipated need (may lack follow-through).

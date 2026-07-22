@@ -43,8 +43,19 @@ This file is the third view: *what changed, and when*.
   design *space* (sibling roads that CONTRADICT, held under a proposed Decision), distinct from
   epochs (*time*); collapsing the winner reuses `merge_designs`/`apply_merge`, retiring the losers
   reuses retire-from-design — so almost no new machinery, and no detector learns about "worlds"
-  (`crates/reflow2-core/src/alternatives.rs`, `tests/alternatives.rs` — 4 cases). Rung 2 wires the
-  decision point (a proposed Decision governing alternative pointers that CONTRADICT).
+  (`crates/reflow2-core/src/alternatives.rs`, `tests/alternatives.rs`).
+- **The decision point — hold and collapse forkable alternatives — `set_decision_status`,
+  `register_alternative`, `alternatives_for`, `collapse_decision` tools** (BL-70 rung 2; **minor**).
+  A *proposed* Decision is now a decision point with teeth: `register_alternative` hangs a
+  lightweight Artifact pointer (naming its export, branch-by-file) under it, `GOVERNED_BY` the
+  Decision and `CONTRADICTS` its siblings — refusing unless the Decision is proposed (you fork an
+  open choice, not a settled one). `alternatives_for` lists them (feed the locations to
+  `analyze_alternatives`). `collapse_decision` chooses a winner: the Decision moves to `accepted`,
+  the losers are superseded (`OBSOLETES` — retired on the record, **not deleted**), and the outcome
+  and rationale are written into the Decision's own `alternatives` field — the ADR "losers'
+  obituary" the fork upgrades from prose into live, forkable structure. The winner's design content
+  is merged separately with `apply_merge`. Alternatives are design *space* (CONTRADICTS), distinct
+  from epochs (*time*) — `dec:parallel-alternatives`. `tests/alternatives.rs` — 8 cases total.
 - **Three-way merge of two divergent designs — `merge_designs` + `apply_merge` tools, `--merge`
   CLI** (BL-80, propose + apply; **minor** — new tools on the surface). Compare's write-side
   sibling: given a common ancestor (base) and two divergent records (ours, theirs), it runs git's
