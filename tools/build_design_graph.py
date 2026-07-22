@@ -505,14 +505,32 @@ def build(s: Server) -> None:
          "Superseded by v0.5.0 on the developer machine (deployment declaration "
          "withdrawn as rolled_back, 2026-07-20 — the binary was upgraded in "
          "place, not reverted).", []),
-        ("rel:v050", "v0.5.0", "0.5.0", "deployed",
+        ("rel:v050", "v0.5.0", "0.5.0", "retired",
          "First release cut from the public repo; first live run of release.yml "
          "(3-platform binaries + kit tarball, checksum-verified install.sh). "
-         "Surface change from v0.4.0: documents tool; graph model unchanged.",
+         "Surface change from v0.4.0: documents tool; graph model unchanged. "
+         "Never published: its release run sat stuck in the macos-x86_64 queue "
+         "for 11h; superseded by v0.6.0 cut from current main (2026-07-21).",
          ["art:adopt-skill"]),
+        ("rel:v060", "v0.6.0", "0.6.0", "retired",
+         "The first release to actually reach a user (v0.5.0's run never "
+         "published). Carried the deep-review tier-1 fixes and BL-57 tool-"
+         "boundary honesty. Superseded in place by v0.6.1.",
+         ["art:adopt-skill"]),
+        ("rel:v061", "v0.6.1", "0.6.1", "retired",
+         "Patch: the BL-58 core silent-failure batch (12 doctrine/correctness "
+         "fixes). Superseded in place by v0.7.0.",
+         ["art:adopt-skill"]),
+        ("rel:v070", "v0.7.0", "0.7.0", "deployed",
+         "Minor: Snapshot.edges (BL-63, snapshots capture design edges), "
+         "single_point_of_failure measured on the as-built operational network "
+         "(BL-69), and the consumer CI coherence gate reflow2_check.py + "
+         "ci-gate skill (BL-66) — the kit tarball's first second tool.",
+         ["art:adopt-skill", "art:check"]),
     ]
     EXTRA_RELEASE_ARTIFACTS = {
         "art:adopt-skill": "getting-started/skills/adopt/SKILL.md",
+        "art:check": "tools/reflow2_check.py",
     }
     s.call("add_environment", {"id": "env:dev", "name": "Developer machine",
                                "env_type": "development"})
@@ -544,7 +562,10 @@ def build(s: Server) -> None:
     # reconcile_deployment correction path uses exactly this).
     s.call("deploy_to", {"release_id": "rel:v040", "environment_id": "env:dev",
                          "status": "rolled_back"})
-    s.call("deploy_to", {"release_id": "rel:v050", "environment_id": "env:dev",
+    for retired in ("rel:v050", "rel:v060", "rel:v061"):
+        s.call("deploy_to", {"release_id": retired, "environment_id": "env:dev",
+                             "status": "rolled_back"})
+    s.call("deploy_to", {"release_id": "rel:v070", "environment_id": "env:dev",
                          "status": "active"})
 
 
