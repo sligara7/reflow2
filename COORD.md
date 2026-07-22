@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-66 consumer CI coherence gate — @ajs — since 2026-07-21 — getting-started/ (check script + skill + CI snippet), maybe tools/
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -76,6 +75,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-66 done: consumer CI coherence gate. tools/reflow2_check.py (stdlib, self-contained, in the kit tarball via release.yml) reads the COMMITTED export — CI can't open gitignored .reflow2/, and the export is what the team reviewed — rehashes registered artifacts (sha256 truncated to each registration's own length), reconciles, runs detect_gaps. Exit 1 on unaccepted checksum_change/missing or open anchored gap ≥ 0.8 (--gap-threshold); acknowledge_gap = the sanctioned green, no drift-skip flag exists. Exit 2 loud on can't-run. Three-way verified on reflow2 itself (pass / doctored-file fail / missing-export refuse). ci-gate skill (CI snippet + red-to-green playbook naming the two launderings) + SETUP.md pointer; skill_lint NON_TOOL_TERMS += "path". Graph: art:check REALIZES cap:reconcile-built, accepted two-sided (chg:bl66-ci-gate). Export 247n/486e — @ajs — 2026-07-21 — (this commit)
 
 - BL-63 done: snapshots capture design edges (new optional Snapshot.edges beside state; sorted; bookkeeping neighbours excluded so a snapshot never accumulates its own history) — a lazy reallocation now leaves "A once owned Z" recoverable from the snapshot alone, no hand-authored Decision needed. parse_snapshot_edges/SnapshotEdge in core; pre-BL-63 snapshots read as empty capture, not error. Deviation from the entry's lean, reasoned in backlog: full-capture-with-exclusions, not changed-edges scope. revise-design's "leave a formerly-true edge" workaround replaced with record-first-then-delete; both CRUD skills updated (3 mirrors, kit refreshed to 0.6.1). Schema +1 optional prop → next cut is 0.7.0. Gates: workspace green, clippy/fmt/schema/skill-lint/test_init clean, all instruments at baselines incl. coherent 9/9 (its snapshot reader unaffected — state shape unchanged). Drift accepted two-sided (chg:bl63-snapshot-edges). NOTE: a session started before this build snapshots without edges — restart before relying on it live — @ajs — 2026-07-21 — (this commit)
 

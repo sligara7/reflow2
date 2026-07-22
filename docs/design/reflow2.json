@@ -643,6 +643,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:bl66-ci-gate",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:bl69-spof-cut-vertices",
       "properties": {
         "accepted_baseline": true,
@@ -2826,6 +2835,12 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:check",
+      "properties": {},
+      "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:confirm",
       "properties": {
         "completeness": "complete"
@@ -3810,6 +3825,17 @@
       }
     },
     {
+      "node_id": "art:check",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:269835daee23015f",
+        "location": "tools/reflow2_check.py",
+        "name": "reflow2_check.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:confirm",
       "node_type": "Artifact",
       "properties": {
@@ -4602,6 +4628,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-63: snapshots capture design edges — an edge move keeps its history. Snapshot.edges (optional, sorted, bookkeeping excluded) added beside state; parse_snapshot_edges/SnapshotEdge in core; CRUD skills updated to record-first-then-delete."
+      }
+    },
+    {
+      "node_id": "chg:bl66-ci-gate",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-66: the consumer CI coherence gate — reflow2_check.py reads the committed export, rehashes registered artifacts, runs detect_gaps, and exits non-zero on unaccepted drift or an open anchored gap at/above threshold; ci-gate skill + CI snippet ship in the kit; the tarball carries the script."
       }
     },
     {

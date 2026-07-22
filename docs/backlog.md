@@ -1650,8 +1650,25 @@ Both BL-64 and BL-65 deliberately reuse propagate + detect-and-ask rather than i
 subsystems; the genuinely new part in each is *vocabulary* (a lifecycle state; a Risk node),
 which is a design decision for the user — hence "concept, needs the user."
 
-**BL-66 · Design coherence as a consumer CI gate (shift-left the golden thread)** — *user,
-commercial-practice analysis (DevOps/shift-left), 2026-07-21.* Actionable; size **S–M**.
+**BL-66 · Design coherence as a consumer CI gate (shift-left the golden thread) — DONE
+2026-07-21** — *user, commercial-practice analysis (DevOps/shift-left), 2026-07-21.* Size ~~S–M~~.
+
+**Built**: `tools/reflow2_check.py` — stdlib-only, self-contained (embeds the reflow2_cli stdio
+client so it ships alone in the kit tarball; release.yml carries it). Imports the **committed
+export** into a temp graph (decision made by evidence, not preference: `.reflow2/` is
+gitignored so CI *cannot* open it, and the committed export is the design the team actually
+reviewed), rehashes every registered Artifact from the working tree — truncating sha256 to each
+registered checksum's own length, so any registration dialect works — reconciles, runs
+`detect_gaps`. **Fails (exit 1)** on unaccepted `checksum_change`/`missing` (an accepted drift
+updates the export, so red = the two-sided accept was skipped) and on open **anchored** gaps at
+severity ≥ 0.8 (`--gap-threshold`); `acknowledge_gap` is the sanctioned way to go green without
+fixing, so the gate inherits DETECT's own review mechanism instead of inventing a mute flag.
+Phase nudges and `no_baseline` print as notes, never gate; exit 2 (cannot run) is loud, never a
+silent pass. Verified three-way on reflow2 itself: clean tree passes, a doctored `budget.rs`
+fails with the named artifact, a missing export refuses with instructions. Shipped as the
+**ci-gate** skill (setup, GitHub Actions snippet, and the honest ways to turn red green —
+including the two launderings it names and forbids) plus a SETUP.md pointer. There is
+deliberately no flag to skip the drift check.
 
 DevOps' deepest principle is that verification runs on **every commit**, not at a milestone
 gate. reflow2 gave *itself* CI (BL-52), but a **consumer** project has no documented, one-step

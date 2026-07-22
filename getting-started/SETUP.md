@@ -214,6 +214,11 @@ the day, stopping is a perfectly good answer. Everything decided so far is alrea
   design via git, commit an **export**: `reflow2-mcp --graph-path .reflow2/graph --export >
   design.json` produces a deterministic, diffable JSON your teammate loads with `--import`.
   The export is the durable record; the RocksDB dir is a local cache of it.
+- **Gate CI on the committed export.** `tools/reflow2_check.py` (in the kit) rehashes every
+  registered artifact against the working tree and runs the gap detectors, exiting non-zero on
+  unaccepted drift or a serious open gap — so the design is checked on every commit, not once a
+  session. The **ci-gate** skill has the copy-paste CI step and the honest ways to turn a red
+  build green.
 - **One agent at a time.** The graph is a RocksDB store and only one `reflow2-mcp` process can
   hold it. If a second agent starts against the same `--graph-path`, it exits immediately with
   `While lock file: .../LOCK: Resource temporarily unavailable`. That is the lock doing its job,

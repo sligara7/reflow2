@@ -33,6 +33,15 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A consumer CI coherence gate** (BL-66). `tools/reflow2_check.py` — stdlib-only, ships in
+  the kit tarball — reads the *committed* design export (never the live `.reflow2/` store),
+  rehashes every registered artifact from the working tree, reconciles, and runs the gap
+  detectors. Exit 1 on unaccepted drift (an accepted drift updates the export, so red means the
+  two-sided accept was skipped) or an open anchored gap at/above `--gap-threshold` (default
+  0.8) — `acknowledge_gap` is the honest way to go green without fixing. Exit 2 when it cannot
+  run; never a silent pass, and deliberately no flag to skip the drift check. New **ci-gate**
+  skill carries the copy-paste CI step and the red-to-green playbook.
+
 - **Snapshots capture edges, so an edge move keeps its history** (BL-63). `snapshot_node` (and
   therefore `record_change`) now stores the node's design edges — direction, edge type, the
   other endpoint and the edge's properties, sorted for byte-stable exports — in a new optional
