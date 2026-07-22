@@ -1930,17 +1930,24 @@ Requirements, 10 vs 9 Decisions — and nothing detects or reconciles that. This
 two as-designed records, a case none of the three reconcile tools covers (they all compare
 design against *reality* — disk, deployment, test runs — never design against design).
 
-Decisions needed: **(a)** is the committed export the rebuild's output or the live graph's
-export — one of them needs a different file, or the rebuild needs to *import-then-layer* rather
-than replace (its own import is upsert, so rebuild-into-the-live-graph may already be the
-answer: run the curated pass INTO the accumulated graph, then export the union); **(b)** should
-`import_graph`/the export flow warn when an import would *shrink* the graph it replaces (a
-node-count drop is exactly the silent-loss signature that caught this); **(c)** does
-`reconcile_artifacts`' sibling — a design-vs-design diff — deserve to exist (it is also what
-BL-70's cross-branch comparison needs, and the export is deterministic precisely so two of them
-diff cleanly). Until then: **do not run the full `build_design_graph.py` after live-session
-graph writes without re-exporting the live graph afterwards** — the tool's release model
-(v0.4.0–v0.7.0, added 2026-07-21) reaches the live graph only via that reconciliation.
+**Rungs (a) and (b) DONE 2026-07-21.** The rebuild now **imports the committed export first
+and layers the curated pass onto it** (import is upsert; curated wins on shared ids, so a
+deliberate curated update — a release status — takes, while the session-written layer
+survives). Genesis is skipped when a prior export was imported — it refuses to clobber an
+existing graph, correctly. And the tool **refuses to write a shrinking export** (fewer nodes
+than the committed file), naming BL-71 — a regression tripwire that layering should make
+unreachable, which is exactly when a tripwire earns its keep. Verified: the union export is 250
+nodes (18 Requirements, 13 Decisions, all ChangeEvents/Questions/Fragments/DriftEvents, plus
+the 5 Release nodes with v0.7.0 active), a second full run is idempotent at 250, gaps 0,
+reconcile-vs-filesystem clean, and `reflow2_check.py` passes against it. The interim
+do-not-run rule is retired. Note: the live `.reflow2` graph learns the release nodes on its
+next `--import` of the committed export (the session server holds the lock and predates 0.7.0).
+
+**Still open — rung (c), the real remaining content**: does `reconcile_artifacts`' sibling — a
+**design-vs-design diff** — deserve to exist? It is also what BL-70's cross-branch comparison
+and BL-12's two-writer merge need, and the export is deterministic precisely so two of them
+diff cleanly. One vocabulary session with the user; the upsert-layering above is the write
+side of whatever that diff reads.
 
 ## Deliberate deferrals
 

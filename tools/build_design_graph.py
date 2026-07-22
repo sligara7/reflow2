@@ -413,10 +413,15 @@ def derive_depends_on() -> tuple[list[tuple[str, str]], list[str]]:
     return sorted(pairs), sorted(set(skipped))
 
 
-def build(s: Server) -> None:
-    s.call("genesis", {"project_id": "proj:reflow2", "name": "Reflow 2.0",
-                       "objective": "Keep a design coherent from concept through operations",
-                       "domain": "software"})
+def build(s: Server, fresh: bool = True) -> None:
+    # Genesis refuses to clobber an existing graph — deliberately. When the
+    # committed export was imported first (BL-71: the rebuild layers onto the
+    # accumulated record instead of replacing it), the Project already exists
+    # and the curated pass starts from create_node upserts instead.
+    if fresh:
+        s.call("genesis", {"project_id": "proj:reflow2", "name": "Reflow 2.0",
+                           "objective": "Keep a design coherent from concept through operations",
+                           "domain": "software"})
     for rid, (name, stmt, prio) in REQUIREMENTS.items():
         s.call("create_node", {"node_type": "Requirement", "id": rid,
                                "props": {"name": name, "statement": stmt,
@@ -650,8 +655,23 @@ def main() -> int:
         if args.analyse_only:
             s.call("import_graph", {"document": json.loads(EXPORT.read_text())})
         else:
-            build(s)
+            # BL-71: the committed export is the ACCUMULATED design record —
+            # the curated pass layers onto it (import first, then upsert), so
+            # the session-written layer (decisions, freshness claims, change
+            # events) survives a rebuild. Replacing the file with the curated
+            # model alone silently discarded that layer once (2026-07-21).
+            prior = json.loads(EXPORT.read_text()) if EXPORT.exists() else None
+            if prior is not None:
+                s.call("import_graph", {"document": prior})
+            build(s, fresh=prior is None)
             doc = s.call("export_graph")
+            if prior is not None and len(doc["nodes"]) < len(prior["nodes"]):
+                print(f"REFUSING to write {EXPORT.relative_to(REPO)}: the rebuilt "
+                      f"graph has {len(doc['nodes'])} nodes, the committed export "
+                      f"{len(prior['nodes'])} — a shrinking export is the "
+                      f"silent-loss signature (BL-71). Nothing was written.",
+                      file=sys.stderr)
+                return 1
             EXPORT.parent.mkdir(parents=True, exist_ok=True)
             EXPORT.write_text(json.dumps(doc, indent=2, sort_keys=True) + "\n")
             print(f"exported {len(doc['nodes'])} nodes / {len(doc['edges'])} edges "

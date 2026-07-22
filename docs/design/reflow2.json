@@ -2109,6 +2109,30 @@
       "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v050",
       "properties": {
+        "status": "rolled_back"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v060",
+      "properties": {
+        "status": "rolled_back"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v061",
+      "properties": {
+        "status": "rolled_back"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v070",
+      "properties": {
         "status": "active"
       },
       "to_id": "env:dev"
@@ -2770,6 +2794,848 @@
       "to_id": "cmp:skills"
     },
     {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:ef54ecabcaf64bc5"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:1c729eee5b67e7dc"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:4d3f6e1093dc2564"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:c68b6e51f89b5caf"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:5e77e752c0c60d06"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:a25ed6b6f633a3aa"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:fbe714849869c1d8"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:676d89b9e3be53bd"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:74c0459e03ad38ce"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:1957641d39c28842"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:58f501423e219105"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:e2e94e52eb601d53"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:2ca9a2279ca4edc5"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:b69c5f6682770736"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:2f697a383b3c457d"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:6b75bc576b6c891f"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:1a020de7ccdcc36c"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:f19fd2fdf9e7885a"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:ed67a002f4a0c5da"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:feca736d9d86d965"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:f97040ce6de4e809"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:d8275cc570cb9bb2"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:383cd220f7f1b639"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:d2f251dfcb8193df"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:c421c3496192d22d"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:f691ee260346fbeb"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:8fb4dc8eb7c490fb"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:f9e9aed059f42db7"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:824287d5a22bd960"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {
+        "as_checksum": "sha256:411ac59efbf58a84"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v060",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:ef54ecabcaf64bc5"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:1c729eee5b67e7dc"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:4d3f6e1093dc2564"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:96928f668e98b5ce"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:5e77e752c0c60d06"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:e22fc5ee8aa08964"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:fbe714849869c1d8"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:61f887d80ed8a047"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:74c0459e03ad38ce"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:1957641d39c28842"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:6c3bf4e758391586"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:e2e94e52eb601d53"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:b2e290d8bb8a6f18"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:b48ea911ce1a3fe0"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:30fc1a09862792a9"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:71dceb15b42d2a47"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:1a020de7ccdcc36c"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:f19fd2fdf9e7885a"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:ed67a002f4a0c5da"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:feca736d9d86d965"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:ed84b3221438e34d"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:d8275cc570cb9bb2"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:383cd220f7f1b639"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:d2f251dfcb8193df"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:c421c3496192d22d"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:f691ee260346fbeb"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:8fb4dc8eb7c490fb"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:a297a0b311b1ef16"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:824287d5a22bd960"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {
+        "as_checksum": "sha256:411ac59efbf58a84"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v061",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:ef54ecabcaf64bc5"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:1c729eee5b67e7dc"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:4d3f6e1093dc2564"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:96928f668e98b5ce"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:269835daee23015f"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:5e77e752c0c60d06"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:e22fc5ee8aa08964"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:fbe714849869c1d8"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:61f887d80ed8a047"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:74c0459e03ad38ce"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:1957641d39c28842"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:6c3bf4e758391586"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:e2e94e52eb601d53"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:b2e290d8bb8a6f18"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:2f75755ae2cd98d4"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:30fc1a09862792a9"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:71dceb15b42d2a47"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:1a020de7ccdcc36c"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:f19fd2fdf9e7885a"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:ed67a002f4a0c5da"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:feca736d9d86d965"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:ed84b3221438e34d"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:d8275cc570cb9bb2"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:383cd220f7f1b639"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:d2f251dfcb8193df"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:c421c3496192d22d"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:f691ee260346fbeb"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:cf17239c87df16a3"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:3a6dd54d084e1e41"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:824287d5a22bd960"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {
+        "as_checksum": "sha256:411ac59efbf58a84"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v070",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
       "edge_type": "PROVIDES",
       "from_id": "cmp:core",
       "properties": {
@@ -3190,7 +4056,7 @@
       "from_id": "cap:kit",
       "properties": {
         "coverage": "partial",
-        "evidence": "install.sh is checksum-verified and pulls published binaries (no rebuild), and reflow2_init.py updates a project in place — but the installer is not yet reachable from a stable public one-liner URL, there is no single self-update command, and the release cadence is not yet frequent-and-minor. The delta is the backlog's frictionless-update item."
+        "evidence": "install.sh is checksum-verified and pulls published binaries (no rebuild), and reflow2_init.py updates a project in place \u2014 but the installer is not yet reachable from a stable public one-liner URL, there is no single self-update command, and the release cadence is not yet frequent-and-minor. The delta is the backlog's frictionless-update item."
       },
       "to_id": "req:frictionless-update"
     },
@@ -4163,7 +5029,7 @@
         "is_exit_point": false,
         "name": "Recover a design from an existing system",
         "provenance": "authored",
-        "status": "verified",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -4197,7 +5063,7 @@
       "node_id": "cap:change",
       "node_type": "Capability",
       "properties": {
-        "description": "Snapshot prior state at an epoch, then edit — axis Z.",
+        "description": "Snapshot prior state at an epoch, then edit \u2014 axis Z.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Record a change",
@@ -4275,7 +5141,7 @@
       "node_id": "cap:hierarchy",
       "node_type": "Capability",
       "properties": {
-        "description": "Find missing intermediates and level mismatches — axis Y.",
+        "description": "Find missing intermediates and level mismatches \u2014 axis Y.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Check decomposition levels",
@@ -4301,7 +5167,7 @@
       "node_id": "cap:kit",
       "node_type": "Capability",
       "properties": {
-        "description": "One command sets up or refreshes the design environment: installs the MCP server registration and the skill kit across four agent harnesses (Claude Code, grok build, OpenCode, Copilot), merging existing configuration rather than overwriting it. Ships as published binaries with a checksum-verified install.sh, so Linux and macOS consumers do not pay a RocksDB rebuild for a routine update.",
+        "description": "One command sets up or refreshes the design environment.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Install into a consumer project",
@@ -4379,7 +5245,7 @@
       "node_id": "cap:reconcile-built",
       "node_type": "Capability",
       "properties": {
-        "description": "Real files are registered as checksummed Artifacts realizing capabilities, then compared against what is observed on disk — divergence between as-designed and as-built is reported, never assumed.",
+        "description": "Compare registered artifacts against observed files and report divergence.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Reconcile against what was built",
@@ -4457,7 +5323,7 @@
       "node_id": "cap:store",
       "node_type": "Capability",
       "properties": {
-        "description": "A typed vocabulary of node and edge types, validated on write, over a pluggable graph storage backend — the foundation everything else hangs off.",
+        "description": "A typed vocabulary of node and edge types, validated on write, over a pluggable graph storage backend \u2014 the foundation everything else hangs off.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Schema-validated graph store",
@@ -4587,7 +5453,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
-        "name": "BL-26 (recorded late): the DOCUMENTS write side — artifact.rs gained the documents() constructor so a descriptive file can say what it explains. The design moved with the code in commit 2d86ccb (2026-07-20); this event records the design side that session omitted, found by the 2026-07-21 reconcile sweep."
+        "name": "BL-26 (recorded late): the DOCUMENTS write side \u2014 artifact.rs gained the documents() constructor so a descriptive file can say what it explains. The design moved with the code in commit 2d86ccb (2026-07-20); this event records the design side that session omitted, found by the 2026-07-21 reconcile sweep."
       }
     },
     {
@@ -4595,7 +5461,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
-        "name": "BL-48 + BL-49: result contract hardened at the tool boundary — graph_report_markdown returns prose as text (never a bare string in structuredContent; ok_json wraps any scalar), propagate answers with a bounded summary by default (full dump behind full=true), export_graph writes to a file on request"
+        "name": "BL-48 + BL-49: result contract hardened at the tool boundary \u2014 graph_report_markdown returns prose as text (never a bare string in structuredContent; ok_json wraps any scalar), propagate answers with a bounded summary by default (full dump behind full=true), export_graph writes to a file on request"
       }
     },
     {
@@ -4603,7 +5469,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
-        "name": "BL-50: three tool-boundary paper cuts closed — integer literals widen losslessly to schema floats at the core write seam (confidence: 1 accepted, range check kept), add_change_event takes an affected list and draws its CHANGED edges atomically (delete results named {deleted}), describe_schema counts half-exact edges so CHANGED reads as the modelled fit; kit documents a SessionStart hook making the where-am-i ritual mechanical"
+        "name": "BL-50: three tool-boundary paper cuts closed \u2014 integer literals widen losslessly to schema floats at the core write seam (confidence: 1 accepted, range check kept), add_change_event takes an affected list and draws its CHANGED edges atomically (delete results named {deleted}), describe_schema counts half-exact edges so CHANGED reads as the modelled fit; kit documents a SessionStart hook making the where-am-i ritual mechanical"
       }
     },
     {
@@ -4611,7 +5477,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "refactor",
-        "name": "BL-57: the tool boundary tells the truth — dyno_err maps caller mistakes to invalid_params not internal_error (one choke point, ~60 tools); every request struct denies unknown fields (a typo'd param is rejected, not swallowed — schemars publishes additionalProperties:false); export_graph refuses to overwrite without opt-in and reports the resolved path; the serve path gets the single-writer lock explanation; get_node returns one named {node} shape both ways; withdraw_gap_acknowledgement aligns on {withdrawn}"
+        "name": "BL-57: the tool boundary tells the truth \u2014 dyno_err maps caller mistakes to invalid_params not internal_error (one choke point, ~60 tools); every request struct denies unknown fields (a typo'd param is rejected, not swallowed \u2014 schemars publishes additionalProperties:false); export_graph refuses to overwrite without opt-in and reports the resolved path; the serve path gets the single-writer lock explanation; get_node returns one named {node} shape both ways; withdraw_gap_acknowledgement aligns on {withdrawn}"
       }
     },
     {
@@ -4619,7 +5485,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "test_failure_fix",
-        "name": "BL-58: core silent-failure batch — ingest re-ingest merges instead of resetting (upsert), snapshots serialize sorted for byte-stable exports, propagate_change errors on a missing event instead of returning empty, apply_heal is one atomic batch across all operations, swallowed edge-creation errors now surface, budget rejects non-finite contributions and reports a provable overrun instead of Incomplete, integer widening rejects the i64::MAX saturation edge, truncated_beyond_depth documented as the frontier lower-bound, drift skips the dangling edge for undocumented additions, missing-intermediate gaps get distinct ids per edge type, a reused ingest fragment_id is refused, node_type_index scans in sorted order"
+        "name": "BL-58: core silent-failure batch \u2014 ingest re-ingest merges instead of resetting (upsert), snapshots serialize sorted for byte-stable exports, propagate_change errors on a missing event instead of returning empty, apply_heal is one atomic batch across all operations, swallowed edge-creation errors now surface, budget rejects non-finite contributions and reports a provable overrun instead of Incomplete, integer widening rejects the i64::MAX saturation edge, truncated_beyond_depth documented as the frontier lower-bound, drift skips the dangling edge for undocumented additions, missing-intermediate gaps get distinct ids per edge type, a reused ingest fragment_id is refused, node_type_index scans in sorted order"
       }
     },
     {
@@ -4627,7 +5493,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
-        "name": "BL-63: snapshots capture design edges — an edge move keeps its history. Snapshot.edges (optional, sorted, bookkeeping excluded) added beside state; parse_snapshot_edges/SnapshotEdge in core; CRUD skills updated to record-first-then-delete."
+        "name": "BL-63: snapshots capture design edges \u2014 an edge move keeps its history. Snapshot.edges (optional, sorted, bookkeeping excluded) added beside state; parse_snapshot_edges/SnapshotEdge in core; CRUD skills updated to record-first-then-delete."
       }
     },
     {
@@ -4635,7 +5501,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
-        "name": "BL-66: the consumer CI coherence gate — reflow2_check.py reads the committed export, rehashes registered artifacts, runs detect_gaps, and exits non-zero on unaccepted drift or an open anchored gap at/above threshold; ci-gate skill + CI snippet ship in the kit; the tarball carries the script."
+        "name": "BL-66: the consumer CI coherence gate \u2014 reflow2_check.py reads the committed export, rehashes registered artifacts, runs detect_gaps, and exits non-zero on unaccepted drift or an open anchored gap at/above threshold; ci-gate skill + CI snippet ship in the kit; the tarball carries the script."
       }
     },
     {
@@ -4651,7 +5517,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "test_failure_fix",
-        "name": "Deep-review tier-1 fixes (BL-53..56): HEAL refuses self-loop DUPLICATES merges (a sanctioned self-merge deleted the node with no undo); the installer proves file ownership by hash manifest — user edits are kept and reported, obsolete kit files pruned only when untouched, malformed configs left alone without crashing; install.sh fails loud instead of silently or falsely succeeding; release publishes only after every asset is verified attached; the smoke harness refuses to wipe an existing graph directory without --wipe"
+        "name": "Deep-review tier-1 fixes (BL-53..56): HEAL refuses self-loop DUPLICATES merges (a sanctioned self-merge deleted the node with no undo); the installer proves file ownership by hash manifest \u2014 user edits are kept and reported, obsolete kit files pruned only when untouched, malformed configs left alone without crashing; install.sh fails loud instead of silently or falsely succeeding; release publishes only after every asset is verified attached; the smoke harness refuses to wipe an existing graph directory without --wipe"
       }
     },
     {
@@ -4667,7 +5533,7 @@
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "scope_change",
-        "name": "Reconcile genesis-stub survivor nodes with the committed model (user-approved 2026-07-20): merge cap:install→cap:kit, cap:artifacts→cap:reconcile-built, req:past-preserved→req:intent-preserved; wire cap:store; satisfy req:platform via cap:kit; verify cap:adopt from the storyflow trial"
+        "name": "Reconcile genesis-stub survivor nodes with the committed model (user-approved 2026-07-20): merge cap:install\u2192cap:kit, cap:artifacts\u2192cap:reconcile-built, req:past-preserved\u2192req:intent-preserved; wire cap:store; satisfy req:platform via cap:kit; verify cap:adopt from the storyflow trial"
       }
     },
     {
@@ -5185,7 +6051,7 @@
       "properties": {
         "decision": "cmp:export and ifc:graph-export are the only route from a design to the kit converter (cmp:init) and to any other machine or reflow2 version, and they stay that way. Both single_point_of_failure warnings are accepted as intentional, not resolved by adding a second export path.",
         "name": "The export document is an accepted single door, so its chain is an accepted SPOF",
-        "rationale": "dec:repo-file-embedded made the deterministic export the durable, diffable record, and req:survives-upgrade makes export-with-the-old-build / import-with-the-new THE migration mechanism — a single door is the feature, because a second export path would be a second source of truth for what the design is, and byte-identical determinism (req:persistence: a backup under git shows what actually changed) is only a meaningful promise about one format. The detector is right that severing this chain cuts cmp:init off from the design; that fragility is the price of one canonical portability format, knowingly paid. Accepted 2026-07-21 while dispositioning BL-69's corrected findings; sibling of dec:service-spof-accepted and dec:graph-spof-accepted.",
+        "rationale": "dec:repo-file-embedded made the deterministic export the durable, diffable record, and req:survives-upgrade makes export-with-the-old-build / import-with-the-new THE migration mechanism \u2014 a single door is the feature, because a second export path would be a second source of truth for what the design is, and byte-identical determinism (req:persistence: a backup under git shows what actually changed) is only a meaningful promise about one format. The detector is right that severing this chain cuts cmp:init off from the design; that fragility is the price of one canonical portability format, knowingly paid. Accepted 2026-07-21 while dispositioning BL-69's corrected findings; sibling of dec:service-spof-accepted and dec:graph-spof-accepted.",
         "status": "accepted"
       }
     },
@@ -5195,7 +6061,7 @@
       "properties": {
         "decision": "cmp:graph is the single store handle everything else hangs off, and it stays that way. The single_point_of_failure warning on it is accepted as intentional, not resolved by adding redundancy.",
         "name": "The graph handle is an accepted single point of failure",
-        "rationale": "The architecture is explicit (AGENTS.md): DesignGraph is 'the single handle everything else hangs off' — one schema-validated CRUD surface so every coherence-loop module speaks to one store one way. Removing it strands schema, search and vocabulary (each with its file) plus the export chain, which is the BL-69 detector telling the truth about the spine. Redundancy is incoherent here twice over: these are modules compiled into one binary (they cannot fail independently of cmp:graph at run time — the same reasoning as the F6 library filter, which cannot see cmp:graph only because it provides no Interface node), and a second graph handle would mean two write paths to one store, exactly the incoherence the single handle exists to prevent. Accepted 2026-07-21 while dispositioning BL-69's corrected findings; sibling of dec:service-spof-accepted.",
+        "rationale": "The architecture is explicit (AGENTS.md): DesignGraph is 'the single handle everything else hangs off' \u2014 one schema-validated CRUD surface so every coherence-loop module speaks to one store one way. Removing it strands schema, search and vocabulary (each with its file) plus the export chain, which is the BL-69 detector telling the truth about the spine. Redundancy is incoherent here twice over: these are modules compiled into one binary (they cannot fail independently of cmp:graph at run time \u2014 the same reasoning as the F6 library filter, which cannot see cmp:graph only because it provides no Interface node), and a second graph handle would mean two write paths to one store, exactly the incoherence the single handle exists to prevent. Accepted 2026-07-21 while dispositioning BL-69's corrected findings; sibling of dec:service-spof-accepted.",
         "status": "accepted"
       }
     },
@@ -5205,7 +6071,7 @@
       "properties": {
         "decision": "When HEAL merges DUPLICATES-asserted nodes, the survivor is picked by provenance rank (authored > planned > imported > reconciled > inferred > healed); node id breaks ties. Pre-provenance graphs are unchanged.",
         "name": "Merge survivor is chosen by provenance, id breaks ties",
-        "rationale": "User decided option 2 for BL-29 (2026-07-20): provenance is the closest thing the graph has to 'who asserted this and how deliberately'. Refinement from the 2026-07-20 self-adopt live session: a node with UNSET provenance defaults to authored, which made two genesis stubs tie against authored+verified survivors and nearly win on alphabetical id — set provenance explicitly on both sides before proposing a merge, and consider ranking unset below authored in a future revision.",
+        "rationale": "User decided option 2 for BL-29 (2026-07-20): provenance is the closest thing the graph has to 'who asserted this and how deliberately'. Refinement from the 2026-07-20 self-adopt live session: a node with UNSET provenance defaults to authored, which made two genesis stubs tie against authored+verified survivors and nearly win on alphabetical id \u2014 set provenance explicitly on both sides before proposing a merge, and consider ranking unset below authored in a future revision.",
         "status": "accepted"
       }
     },
@@ -5225,7 +6091,7 @@
       "properties": {
         "decision": "verification_coverage counts passing checks; a failing check is its own 0.8 gap.",
         "name": "Verified means a check that passes, not one that exists",
-        "rationale": "A failing test used to satisfy the gap that asked for a test, and passing vs failing were byte-identical to every diagnostic — counting test nodes while ignoring test results. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: phase-coverage trial, BL-30.",
+        "rationale": "A failing test used to satisfy the gap that asked for a test, and passing vs failing were byte-identical to every diagnostic \u2014 counting test nodes while ignoring test results. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: phase-coverage trial, BL-30.",
         "status": "accepted"
       }
     },
@@ -5234,7 +6100,7 @@
       "node_type": "Decision",
       "properties": {
         "decision": "RocksDB directory beside the repo, exports as the durable, diffable record.",
-        "name": "The graph lives as a repo file, embedded — not a service",
+        "name": "The graph lives as a repo file, embedded \u2014 not a service",
         "rationale": "The service's strongest argument (concurrency) is hypothetical while there is one writer; it would put the user's design on a machine they do not control and is permanent operational cost. Reopening conditions are written down. Decided 2026-07-18 (surface-plan.md); BL-12/BL-15 carry the consequences.",
         "status": "accepted"
       }
@@ -5245,7 +6111,7 @@
       "properties": {
         "decision": "Per capability: drifting / confirmed / unexamined, with the disposition counts visible.",
         "name": "The confirmation ledger reports claim history, never judges a claim",
-        "rationale": "Five design_holds claims with zero design edits is the erosion signature and the ledger makes it legible — but judging a specific claim false is semantic, and a deterministic detector would fire on every stable design with cosmetic churn (the unexpected_coupling lesson). Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); BL-35.",
+        "rationale": "Five design_holds claims with zero design edits is the erosion signature and the ledger makes it legible \u2014 but judging a specific claim false is semantic, and a deterministic detector would fire on every stable design with cosmetic churn (the unexpected_coupling lesson). Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); BL-35.",
         "status": "accepted"
       }
     },
@@ -5255,7 +6121,7 @@
       "properties": {
         "decision": "cmp:service is the sole bridge between the reflow2-mcp subsystem and both the core and the kit, and it stays that way. The single_point_of_failure warning on it is accepted as intentional, not resolved by adding redundancy.",
         "name": "The single MCP service is an accepted single point of failure",
-        "rationale": "req:invocation mandates one reflow2-mcp binary spoken to over stdio as the entire user-facing surface; a redundant second service would contradict that 'one door' design and buys nothing while there is a single local writer (dec:repo-file-embedded). Articulation-point analysis of the component/interface dependency graph (2026-07-21 self-host review) confirms cmp:service is a genuine cut vertex — removing it disconnects the MCP surface — so the finding is true, and the right disposition is to accept it rather than fix it. Contrast cmp:flow, flagged by the same detector but NOT a cut vertex (BL-69). Redundancy is the wrong fix; this SPOF is the architecture working as intended.",
+        "rationale": "req:invocation mandates one reflow2-mcp binary spoken to over stdio as the entire user-facing surface; a redundant second service would contradict that 'one door' design and buys nothing while there is a single local writer (dec:repo-file-embedded). Articulation-point analysis of the component/interface dependency graph (2026-07-21 self-host review) confirms cmp:service is a genuine cut vertex \u2014 removing it disconnects the MCP surface \u2014 so the finding is true, and the right disposition is to accept it rather than fix it. Contrast cmp:flow, flagged by the same detector but NOT a cut vertex (BL-69). Redundancy is the wrong fix; this SPOF is the architecture working as intended.",
         "status": "accepted"
       }
     },
@@ -5275,7 +6141,7 @@
       "properties": {
         "decision": "set_artifact_checksum requires a disposition: design_holds (a dated claim) or design_updated (naming the design-side ChangeEvent, linked to the artifact).",
         "name": "Silent drift-accept does not exist",
-        "rationale": "'Accept the file, leave the design alone, say nothing' is how a design erodes into fiction over N legitimate fix cycles while reporting zero gaps — the failure that sank the original reflow. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: erosion trials, BL-33.",
+        "rationale": "'Accept the file, leave the design alone, say nothing' is how a design erodes into fiction over N legitimate fix cycles while reporting zero gaps \u2014 the failure that sank the original reflow. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: erosion trials, BL-33.",
         "status": "accepted"
       }
     },
@@ -5285,7 +6151,7 @@
       "properties": {
         "decision": "Renderers may only emit what the graph states; everything else is confessed as a finding.",
         "name": "A view is a projection of the graph; renderer fill-ins are defects",
-        "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 — almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
+        "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 \u2014 almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
         "status": "accepted"
       }
     },
@@ -5946,10 +6812,10 @@
       "node_id": "question:276837cbe7db075f",
       "node_type": "Question",
       "properties": {
-        "answer": "Covered — link it. The v0.5.0 published binaries (3 platforms via release.yml) plus install.sh are exactly this promise; draw SATISFIES from cap:kit and fold the no-rebuild intent into its description.",
-        "context_setter": "Nothing satisfies requirement “Runs on Linux and macOS developer machines”",
+        "answer": "Covered \u2014 link it. The v0.5.0 published binaries (3 platforms via release.yml) plus install.sh are exactly this promise; draw SATISFIES from cap:kit and fold the no-rebuild intent into its description.",
+        "context_setter": "Nothing satisfies requirement \u201cRuns on Linux and macOS developer machines\u201d",
         "gap_id": "gap:276837cbe7db075f",
-        "question": "You promised reflow2 works on both Linux and Mac laptops without users sitting through a long rebuild for every update — but nothing in the design currently claims to deliver that promise. Is it actually covered by the published binaries and install work you just finished, still on the to-do list, or no longer a promise you're making?",
+        "question": "You promised reflow2 works on both Linux and Mac laptops without users sitting through a long rebuild for every update \u2014 but nothing in the design currently claims to deliver that promise. Is it actually covered by the published binaries and install work you just finished, still on the to-do list, or no longer a promise you're making?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -5959,9 +6825,9 @@
       "node_type": "Question",
       "properties": {
         "answer": "Keep it and wire it up: promote to authored, allocate to the schema/graph/storage components, add a Verification backed by the real test suite. It is the foundation, not a stub artifact.",
-        "context_setter": "Nothing verifies “Schema-validated graph store”",
+        "context_setter": "Nothing verifies \u201cSchema-validated graph store\u201d",
         "gap_id": "gap:634fc0554d9ccfc6",
-        "question": "How will you prove the design store only ever keeps valid, well-formed records — or is this the same store your design already describes and tests elsewhere under a different name?",
+        "question": "How will you prove the design store only ever keeps valid, well-formed records \u2014 or is this the same store your design already describes and tests elsewhere under a different name?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -5970,10 +6836,10 @@
       "node_id": "question:7bdb8b6cce42d588",
       "node_type": "Question",
       "properties": {
-        "answer": "Same thing as the authored 'Reconcile against what was built' — merge them (user: \"go with your recommendation on all the duplicates\"). Keep the stub's write-side wording (checksummed registration) in the survivor.",
-        "context_setter": "Nothing verifies “Artifact reconciliation”",
+        "answer": "Same thing as the authored 'Reconcile against what was built' \u2014 merge them (user: \"go with your recommendation on all the duplicates\"). Keep the stub's write-side wording (checksummed registration) in the survivor.",
+        "context_setter": "Nothing verifies \u201cArtifact reconciliation\u201d",
         "gap_id": "gap:7bdb8b6cce42d588",
-        "question": "How will you check that comparing the recorded files against what's really on disk actually works — or is this the same ability your design already covers and tests under the name 'reconcile against what was built'?",
+        "question": "How will you check that comparing the recorded files against what's really on disk actually works \u2014 or is this the same ability your design already covers and tests under the name 'reconcile against what was built'?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -5983,9 +6849,9 @@
       "node_type": "Question",
       "properties": {
         "answer": "Record the storyflow brownfield adopt trial (2643 files, 5 true findings) as the proof, with its real outcome; this session's self-adopt run is a second data point.",
-        "context_setter": "Nothing verifies “Recover a design from an existing system”",
+        "context_setter": "Nothing verifies \u201cRecover a design from an existing system\u201d",
         "gap_id": "gap:c54e80b55a3273a9",
-        "question": "You've now tried recovering a design from an existing codebase on several real projects — what would count as proof that this works well enough to rely on, and should one of those trial runs be recorded as that proof?",
+        "question": "You've now tried recovering a design from an existing codebase on several real projects \u2014 what would count as proof that this works well enough to rely on, and should one of those trial runs be recorded as that proof?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -5994,10 +6860,10 @@
       "node_id": "question:c7c58ee8f8328d68",
       "node_type": "Question",
       "properties": {
-        "answer": "Same thing as the authored 'Install into a consumer project' — merge them (user: \"go with your recommendation on all the duplicates\"). Keep the four-harness / merge-not-overwrite detail in the survivor.",
-        "context_setter": "Nothing verifies “Consumer install kit”",
+        "answer": "Same thing as the authored 'Install into a consumer project' \u2014 merge them (user: \"go with your recommendation on all the duplicates\"). Keep the four-harness / merge-not-overwrite detail in the survivor.",
+        "context_setter": "Nothing verifies \u201cConsumer install kit\u201d",
         "gap_id": "gap:c7c58ee8f8328d68",
-        "question": "How will you confirm the one-command setup really installs everything into a user's project without breaking their existing configuration — or is this the same ability your design already covers and tests under the name 'install into a consumer project'?",
+        "question": "How will you confirm the one-command setup really installs everything into a user's project without breaking their existing configuration \u2014 or is this the same ability your design already covers and tests under the name 'install into a consumer project'?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -6006,7 +6872,7 @@
       "node_id": "rel:v040",
       "node_type": "Release",
       "properties": {
-        "description": "Superseded by v0.5.0 on the developer machine (deployment declaration withdrawn as rolled_back, 2026-07-20 — the binary was upgraded in place, not reverted).",
+        "description": "Superseded by v0.5.0 on the developer machine (deployment declaration withdrawn as rolled_back, 2026-07-20 \u2014 the binary was upgraded in place, not reverted).",
         "name": "v0.4.0",
         "status": "retired",
         "unit_type": "binary",
@@ -6017,12 +6883,44 @@
       "node_id": "rel:v050",
       "node_type": "Release",
       "properties": {
-        "created_at": "2026-07-20",
-        "description": "First release cut from the public repo; first live run of release.yml (3-platform binaries + kit tarball, checksum-verified install.sh). Surface change from v0.4.0: documents tool; graph model unchanged.",
+        "description": "First release cut from the public repo; first live run of release.yml (3-platform binaries + kit tarball, checksum-verified install.sh). Surface change from v0.4.0: documents tool; graph model unchanged. Never published: its release run sat stuck in the macos-x86_64 queue for 11h; superseded by v0.6.0 cut from current main (2026-07-21).",
         "name": "v0.5.0",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.5.0"
+      }
+    },
+    {
+      "node_id": "rel:v060",
+      "node_type": "Release",
+      "properties": {
+        "description": "The first release to actually reach a user (v0.5.0's run never published). Carried the deep-review tier-1 fixes and BL-57 tool-boundary honesty. Superseded in place by v0.6.1.",
+        "name": "v0.6.0",
+        "status": "retired",
+        "unit_type": "binary",
+        "version": "0.6.0"
+      }
+    },
+    {
+      "node_id": "rel:v061",
+      "node_type": "Release",
+      "properties": {
+        "description": "Patch: the BL-58 core silent-failure batch (12 doctrine/correctness fixes). Superseded in place by v0.7.0.",
+        "name": "v0.6.1",
+        "status": "retired",
+        "unit_type": "binary",
+        "version": "0.6.1"
+      }
+    },
+    {
+      "node_id": "rel:v070",
+      "node_type": "Release",
+      "properties": {
+        "description": "Minor: Snapshot.edges (BL-63, snapshots capture design edges), single_point_of_failure measured on the as-built operational network (BL-69), and the consumer CI coherence gate reflow2_check.py + ci-gate skill (BL-66) \u2014 the kit tarball's first second tool.",
+        "name": "v0.7.0",
+        "status": "deployed",
+        "unit_type": "binary",
+        "version": "0.7.0"
       }
     },
     {
@@ -6086,7 +6984,7 @@
         "name": "Design anything, not only software",
         "priority": "high",
         "provenance": "authored",
-        "statement": "Software, hardware, a document, a process — the vocabulary stays neutral.",
+        "statement": "Software, hardware, a document, a process \u2014 the vocabulary stays neutral.",
         "status": "accepted"
       }
     },
@@ -6164,7 +7062,7 @@
         "name": "The past is never overwritten",
         "priority": "high",
         "provenance": "authored",
-        "statement": "Updating the design to match the build must not erase what was intended: changes are recorded as events against epochs with node snapshots, so prior design state remains recoverable.",
+        "statement": "Updating the design to match the build must not erase what was intended.",
         "status": "accepted"
       }
     },
@@ -6314,7 +7212,6 @@
       "node_id": "ver:dimensions",
       "node_type": "Verification",
       "properties": {
-        "last_run_at": "2026-07-20",
         "level": "integration",
         "method": "test",
         "name": "dimensions.rs",
@@ -6365,7 +7262,6 @@
       "node_id": "ver:ingest",
       "node_type": "Verification",
       "properties": {
-        "last_run_at": "2026-07-20",
         "level": "integration",
         "method": "test",
         "name": "ingest.rs",
@@ -6489,7 +7385,7 @@
         "last_run_at": "2026-07-20",
         "level": "integration",
         "method": "analysis",
-        "name": "skill_lint.py — the skills' contract with the served surface (tool refs resolve, mirrors byte-identical, frontmatter, standing rule), enforced in CI on every push",
+        "name": "skill_lint.py \u2014 the skills' contract with the served surface (tool refs resolve, mirrors byte-identical, frontmatter, standing rule), enforced in CI on every push",
         "status": "passing"
       }
     },
@@ -6538,7 +7434,7 @@
   "stamp": {
     "edge_types": 54,
     "node_types": 27,
-    "reflow2_version": "0.6.0",
+    "reflow2_version": "0.7.0",
     "schema_version": 1
   }
 }

@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-71 rungs 1+2 (rebuild layers onto the accumulated export; shrink fails loud) — @ajs — since 2026-07-21 — tools/build_design_graph.py
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -76,6 +75,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-71 rungs a+b done: build_design_graph now imports the committed export FIRST and layers the curated pass onto it (upsert; curated wins on shared ids so deliberate updates take, session layer survives; genesis skipped when a prior export exists), and refuses to write a shrinking export (the silent-loss signature, named as BL-71 in the refusal). Union export 250n/595e — full session layer + 5 Release nodes (v0.7.0 active, v0.4.0–v0.6.1 retired); second run idempotent at 250; gaps 0; reconcile clean; reflow2_check passes. Interim do-not-run rule retired. Rung c (design-vs-design diff) stays open, wants the user. Live .reflow2 picks the releases up on next --import — @ajs — 2026-07-21 — (this commit)
 
 - BL-66 done: consumer CI coherence gate. tools/reflow2_check.py (stdlib, self-contained, in the kit tarball via release.yml) reads the COMMITTED export — CI can't open gitignored .reflow2/, and the export is what the team reviewed — rehashes registered artifacts (sha256 truncated to each registration's own length), reconciles, runs detect_gaps. Exit 1 on unaccepted checksum_change/missing or open anchored gap ≥ 0.8 (--gap-threshold); acknowledge_gap = the sanctioned green, no drift-skip flag exists. Exit 2 loud on can't-run. Three-way verified on reflow2 itself (pass / doctored-file fail / missing-export refuse). ci-gate skill (CI snippet + red-to-green playbook naming the two launderings) + SETUP.md pointer; skill_lint NON_TOOL_TERMS += "path". Graph: art:check REALIZES cap:reconcile-built, accepted two-sided (chg:bl66-ci-gate). Export 247n/486e — @ajs — 2026-07-21 — (this commit)
 
