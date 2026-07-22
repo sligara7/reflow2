@@ -43,6 +43,14 @@ const SNAPSHOT_TYPES: &[&str] = &[
     node::RESOURCE,
 ];
 
+/// Whether a node type is design content, as opposed to the supporting layer
+/// (provenance, questions, history). The same split the graph report's
+/// snapshot draws — `compare` reuses it so "design vs supporting" means one
+/// thing everywhere.
+pub(crate) fn is_design_type(node_type: &str) -> bool {
+    SNAPSHOT_TYPES.contains(&node_type)
+}
+
 /// How much of the design carries its own verification.
 ///
 /// A *signal*, not a gap. An unverified Capability is asked about — nothing

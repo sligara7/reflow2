@@ -172,7 +172,7 @@ def run(binary: str, graph_path: str) -> int:
     for expected in (
         "genesis", "detect_gaps", "gap_to_prompt", "propagate_from",
         "contain_component", "set_requirement_status", "open_questions", "answer_question",
-        "export_graph", "import_graph",
+        "export_graph", "import_graph", "compare_designs",
         "add_interface", "provides", "consumes",
         "link_artifact", "reconcile_artifacts", "set_artifact_checksum",
         "add_verification", "verifies", "add_release", "add_environment",
@@ -975,6 +975,44 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("export writes to a file on request, and reports what it wrote (BL-49)",
          receipt.get("nodes") == len(doc["nodes"]) and on_disk["nodes"] == doc["nodes"],
          receipt)
+
+    # BL-71 rung c: the design-vs-design diff — the reconcile family's sibling,
+    # comparing two as-designed records instead of design against reality.
+    same = s.call("compare_designs", {"base_path": export_file})
+    c.ok("the live graph is identical to the export it just wrote (BL-71c)",
+         same["summary"]["identical"] and same["other"] == "live graph", same["summary"])
+
+    # A divergent copy: one design node gone, one property changed — the diff
+    # must name both, banded, relative to the named base.
+    div = json.loads(json.dumps(doc))
+    dropped = next(n for n in div["nodes"] if n["node_type"] == "Capability")
+    div["nodes"] = [n for n in div["nodes"] if n["node_id"] != dropped["node_id"]]
+    mutated = next(n for n in div["nodes"] if n["node_type"] == "Requirement")
+    mutated["properties"]["statement"] = "The wording moved out from under the record."
+    div_file = graph_path + "-divergent.json"
+    with open(div_file, "w") as fh:
+        json.dump(div, fh)
+    d = s.call("compare_designs", {"base_path": export_file, "other_path": div_file})
+    c.ok("a removed design node is reported by name, in the design band",
+         any(n["node_id"] == dropped["node_id"] for n in d["design"]["removed"]),
+         d["summary"])
+    c.ok("a changed property is reported with both sides",
+         any(n["node_id"] == mutated["node_id"]
+             and any(p["property"] == "statement" and p["base"] and p["other"]
+                     for p in n["properties"])
+             for n in d["design"]["changed"]),
+         d["design"]["changed"])
+    c.ok("the report is directional relative to the named base",
+         d["base"] == export_file and d["summary"]["design_removed"] >= 1, d["summary"])
+
+    # Two-file --diff never opens the graph, so it must run even while this
+    # server holds the single-writer lock.
+    cli_diff = subprocess.run([binary, "--diff", export_file, div_file],
+                              capture_output=True, text=True)
+    c.ok("the CLI diffs two files while the server holds the lock",
+         cli_diff.returncode == 0
+         and json.loads(cli_diff.stdout)["summary"] == d["summary"],
+         cli_diff.stderr.strip()[-160:])
 
     restore_path = graph_path + "-restored"
     r = Server(binary, restore_path)

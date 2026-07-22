@@ -1912,8 +1912,8 @@ describing space, not history, and the vocabulary should not conflate them. Conn
 item's fork — the two likely share the scoping primitive (see BL-44's 2026-07-21 addendum).
 
 **BL-71 · Two models of one design: the curated rebuild clobbers the accumulated live graph** —
-*found 2026-07-21 while modelling the v0.6/v0.7 Release nodes.* Size **M**; needs a
-reconciliation decision before code.
+*found 2026-07-21 while modelling the v0.6/v0.7 Release nodes.* Size **M**. **CLOSED
+2026-07-21: all three rungs done** (a+b layering/tripwire, c the design-vs-design diff below).
 
 `tools/build_design_graph.py` (full run) rebuilds the curated self-model from source — 184
 nodes — and writes it to `docs/design/reflow2.json`, the same path the live sessions export the
@@ -1943,11 +1943,22 @@ reconcile-vs-filesystem clean, and `reflow2_check.py` passes against it. The int
 do-not-run rule is retired. Note: the live `.reflow2` graph learns the release nodes on its
 next `--import` of the committed export (the session server holds the lock and predates 0.7.0).
 
-**Still open — rung (c), the real remaining content**: does `reconcile_artifacts`' sibling — a
-**design-vs-design diff** — deserve to exist? It is also what BL-70's cross-branch comparison
-and BL-12's two-writer merge need, and the export is deterministic precisely so two of them
-diff cleanly. One vocabulary session with the user; the upsert-layering above is the write
-side of whatever that diff reads.
+**Rung (c) DONE 2026-07-21** — the vocabulary session happened and the user decided all four
+axes (`dec:design-diff-vocabulary`): the diff exists as a **core op** (`compare.rs`,
+`compare_designs` / `compare_with_base`), exposed as the `compare_designs` MCP tool and
+`reflow2-mcp --diff BASE [OTHER]`; it compares **two export documents or the live graph
+against one**; findings are **directional** — added / removed / changed relative to a named
+base, property-level with absent-vs-present distinguished — because every real consumer has a
+base (committed record / main branch / the state a claim saw), while AoA can read it neutrally
+or run it both ways; and the report is **banded** into design content vs the supporting layer,
+because the divergence that motivated this item was 3 Decisions and 8 Requirements buried
+under ~20 bookkeeping nodes. Vocabulary line drawn on the record: this reports **divergence**
+between two as-designed records; "drift" stays reserved for design-vs-reality. Verified by 8
+core tests + a tool test + 5 smoke checks (including the CLI diffing two files *while the
+server holds the lock* — the two-file form never opens the graph); first live act was
+confirming its own landing (committed export vs live graph: identical, 260/616). The where-am-i
+skill now opens with it. Remaining consumers when picked up: BL-70's per-branch comparison
+report and BL-12's was-it-ignorance-or-defiance merge question both read this diff.
 
 ## Deliberate deferrals
 

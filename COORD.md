@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-71 rung c (design-vs-design diff) — @ajs — since 2026-07-21 — vocabulary session first, then likely core op + MCP tool; watch overlap with BL-70/BL-12
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -76,6 +75,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-71 rung c done, CLOSING BL-71: the design-vs-design diff. User decided all four axes in the vocabulary session (dec:design-diff-vocabulary): core op (compare.rs) + compare_designs MCP tool + `--diff BASE [OTHER]` CLI; operands two export docs OR live-vs-doc; directional added/removed/changed vs a named base, property-level, absent≠present; banded design content vs supporting layer. "Divergence" not "drift" — drift stays design-vs-reality. 8 core tests + tool test + 5 smoke checks (incl. CLI diffing two files WHILE the server holds the lock — two-file mode never opens the graph); skill_lint += base_path; where-am-i skill opens with it (3 mirrors). build_design_graph: modules absent at a tag are now loudly NOT in that release's manifest (truth, not refusal). Self-model 260n/616e, live==committed verified BY the new tool (identical 260/616); drift on art:report/service/main accepted two-sided (chg:bl71c-compare-designs); reflow2_check OK with the one honest note: cmp:compare ships in nothing until the next cut (0.8.0 — new tool = minor). Session opener housekeeping: live graph caught up to the committed export by delta import (the 0.7.0-release layer), obsolete memory cleared. BL-70 branch comparison and BL-12 merge now have their read primitive — @ajs — 2026-07-21 — (this commit)
 
 - BL-71 rungs a+b done: build_design_graph now imports the committed export FIRST and layers the curated pass onto it (upsert; curated wins on shared ids so deliberate updates take, session layer survives; genesis skipped when a prior export exists), and refuses to write a shrinking export (the silent-loss signature, named as BL-71 in the refusal). Union export 250n/595e — full session layer + 5 Release nodes (v0.7.0 active, v0.4.0–v0.6.1 retired); second run idempotent at 250; gaps 0; reconcile clean; reflow2_check passes. Interim do-not-run rule retired. Rung c (design-vs-design diff) stays open, wants the user. Live .reflow2 picks the releases up on next --import — @ajs — 2026-07-21 — (this commit)
 

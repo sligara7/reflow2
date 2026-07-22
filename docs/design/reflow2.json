@@ -34,6 +34,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:compare-designs",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:detect",
       "properties": {
         "weight_basis": "estimated"
@@ -670,6 +678,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:bl71c-compare-designs",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl71c-compare-designs",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl71c-compare-designs",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl71c-compare-designs",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:compare-designs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl71c-compare-designs",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl71c-compare-designs",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl71c-compare-designs",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl71c-compare-designs",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:deep-review-tier1",
       "properties": {
         "accepted_baseline": true,
@@ -868,6 +948,12 @@
       "from_id": "cmp:core",
       "properties": {},
       "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:core",
+      "properties": {},
+      "to_id": "cmp:compare"
     },
     {
       "edge_type": "CONTAINS",
@@ -1316,6 +1402,36 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:compare",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:compare",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:compare",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:report"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -1919,6 +2035,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "drift:0553d5de06de3b16",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "drift:2df9aeb2250d9b16",
       "properties": {
         "optional": false,
@@ -1952,6 +2077,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:48a933172ce9a884",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:main"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -1997,6 +2131,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "art:main"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:8063ac100a25a7c7",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -2148,6 +2291,12 @@
       "from_id": "cap:change",
       "properties": {},
       "to_id": "dec:two-sided-accept"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-designs",
+      "properties": {},
+      "to_id": "dec:design-diff-vocabulary"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3707,6 +3856,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:compare",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:confirm",
       "properties": {
         "completeness": "complete"
@@ -3975,6 +4132,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:compare-designs",
+      "properties": {},
+      "to_id": "req:intent-preserved"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:detect",
       "properties": {},
       "to_id": "req:coherence"
@@ -4224,6 +4387,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:compare-designs",
+      "properties": {},
+      "to_id": "cap:compare-designs"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:detect",
       "properties": {},
       "to_id": "cap:detect"
@@ -4399,6 +4568,14 @@
         "action": "created"
       },
       "to_id": "art:budget"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:compare",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:compare"
     },
     {
       "edge_type": "YIELDED",
@@ -4702,6 +4879,17 @@
       }
     },
     {
+      "node_id": "art:compare",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:e0fe0dddb965b779",
+        "location": "crates/reflow2-core/src/compare.rs",
+        "name": "compare.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:confirm",
       "node_type": "Artifact",
       "properties": {
@@ -4871,7 +5059,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f19fd2fdf9e7885a",
+        "checksum": "sha256:4d619bc69acb1dd5",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -4926,7 +5114,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:383cd220f7f1b639",
+        "checksum": "sha256:01397f14c1c72bc7",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
         "status": "realized"
@@ -4959,7 +5147,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f691ee260346fbeb",
+        "checksum": "sha256:8cf6bd3694ffafe2",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -5067,6 +5255,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Record a change",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:compare-designs",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Diff two export documents (or the live graph against one) into added / removed / changed relative to a named base, banded into design content vs bookkeeping, property-level on changes.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Compare two as-designed records",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -5513,6 +5714,14 @@
       }
     },
     {
+      "node_id": "chg:bl71c-compare-designs",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-71 rung c: design-vs-design diff (compare_designs core op + MCP tool + CLI)"
+      }
+    },
+    {
       "node_id": "chg:deep-review-tier1",
       "node_type": "ChangeEvent",
       "properties": {
@@ -5592,6 +5801,19 @@
         "name": "budget",
         "provenance": "authored",
         "purpose": "The budget module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:compare",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "compare",
+        "provenance": "authored",
+        "purpose": "The compare module.",
         "status": "planned",
         "tier": "operational"
       }
@@ -6046,6 +6268,16 @@
       }
     },
     {
+      "node_id": "dec:design-diff-vocabulary",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "A design-vs-design diff (compare_designs) exists as a core op exposed as both an MCP tool and a CLI flag. It compares two export documents, or the live graph against one document. Findings are directional \u2014 added / removed / changed relative to an explicitly named base \u2014 with property-level detail on changed nodes, grouped into two bands: design content vs the supporting/bookkeeping layer (ChangeEvents, DriftEvents, Fragments, Questions). It reports divergence between two as-designed records and never judges which side is right; the word 'drift' stays reserved for design-vs-reality.",
+        "name": "Design-vs-design comparison is directional, banded, and lives in the core",
+        "rationale": "User decided all four axes 2026-07-21 (BL-71 rung c vocabulary session). Directional because all three consumers have a real base \u2014 the committed record (the BL-71 clobber tripwire), the main branch (BL-70 branch-by-file comparison), the state a claim was made against (BL-12 merge) \u2014 while AoA can still read the report neutrally or run it both ways. Banded because the real 2026-07-21 divergence was 3 Decisions and 8 Requirements buried under ~20 bookkeeping nodes; a flat list hides exactly what matters. Core op (not a kit script) because deterministic design computation belongs in the tested core; CLI flag so CI and no-server contexts reach it, like --import/--export. It is the read side of the rung a+b upsert-layering, the sibling of the reconcile family \u2014 which compares design against reality, hence the separate word: divergence, not drift.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:export-door-spof-accepted",
       "node_type": "Decision",
       "properties": {
@@ -6183,6 +6415,18 @@
       }
     },
     {
+      "node_id": "drift:0553d5de06de3b16",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:report drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:report' has changed since it was registered against the design"
+      }
+    },
+    {
       "node_id": "drift:2df9aeb2250d9b16",
       "node_type": "DriftEvent",
       "properties": {
@@ -6228,6 +6472,18 @@
         "resolved": true,
         "severity": "medium",
         "summary": "'art:hierarchy' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:48a933172ce9a884",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:main drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:main' has changed since it was registered against the design"
       }
     },
     {
@@ -6288,6 +6544,18 @@
         "resolved": true,
         "severity": "medium",
         "summary": "'art:main' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:8063ac100a25a7c7",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-21",
+        "drift_type": "checksum_change",
+        "name": "art:service drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:service' has changed since it was registered against the design"
       }
     },
     {
@@ -6478,6 +6746,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered budget.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:compare",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered compare.rs"
       }
     },
     {
@@ -7195,6 +7473,16 @@
         "level": "integration",
         "method": "test",
         "name": "temporal.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:compare-designs",
+      "node_type": "Verification",
+      "properties": {
+        "level": "integration",
+        "method": "test",
+        "name": "compare.rs",
         "status": "passing"
       }
     },

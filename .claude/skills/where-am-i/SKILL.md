@@ -17,6 +17,10 @@ you. The standing rule is in AGENTS.md.
 
 ## Gather
 
+- If the project commits a design export (a `reflow2.json` under version control),
+  `compare_designs` with that file as `base_path` first — it says exactly how the live graph
+  and the committed record have diverged, node by node, instead of leaving you to guess from
+  counts. Identical is one line; a divergence is something to tell the user about.
 - `graph_report_markdown` — snapshot, top gaps, allocation health.
 - `scan_nodes` for `Decision` — what has actually been settled, and why. **This is the part they
   most want and the report does not include it.**

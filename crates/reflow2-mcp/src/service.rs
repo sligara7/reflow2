@@ -287,6 +287,20 @@ fn parse_struct_param<T: serde::de::DeserializeOwned>(
         .map_err(|e| McpError::invalid_params(format!("invalid {what}: {e}"), None))
 }
 
+/// Read an export document from a caller-supplied path. A path that cannot be
+/// read or parsed is the caller's mistake — `invalid_params`, with the path
+/// named so the error is actionable.
+fn read_export_document(path: &str) -> Result<reflow2_core::GraphExport, McpError> {
+    let raw = std::fs::read_to_string(path)
+        .map_err(|e| McpError::invalid_params(format!("cannot read {path}: {e}"), None))?;
+    serde_json::from_str(&raw).map_err(|e| {
+        McpError::invalid_params(
+            format!("{path} is not a reflow2 export document: {e}"),
+            None,
+        )
+    })
+}
+
 // ---- request shapes ---------------------------------------------------------
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1037,6 +1051,19 @@ pub struct AgentAnswerReq {
 pub struct ImportGraphReq {
     /// A document previously returned by `export_graph`.
     pub document: JsonObject,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct CompareDesignsReq {
+    /// Path to the base export document — what every finding is relative to
+    /// (`added` = in the other side, not here). Typically the committed
+    /// export, or the main branch's copy of it.
+    pub base_path: String,
+    /// Path to the other export document. Omit to compare the live graph as
+    /// the other side — "has this session diverged from the record?".
+    #[serde(default)]
+    pub other_path: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2109,6 +2136,42 @@ impl ReflowService {
         let doc: reflow2_core::GraphExport = parse_struct_param(req.document, "reflow2 export")?;
         let mut g = self.graph.lock().await;
         ok_json(g.import_graph(&doc).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Compare two as-designed records — the design-vs-design sibling of the \
+                       reconcile family, which only ever compares design against reality. \
+                       Findings are directional relative to the named base: `added` / `removed` \
+                       / `changed` (property-level), banded into design content vs the \
+                       supporting layer (change events, questions, provenance). Pass base_path \
+                       alone to compare the live graph against a committed export ('has this \
+                       session diverged from the record?'); pass other_path too to compare two \
+                       export files (branches, machines, alternatives). Reports divergence, \
+                       never judges which side is right."
+    )]
+    pub async fn compare_designs(
+        &self,
+        Parameters(req): Parameters<CompareDesignsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let base = read_export_document(&req.base_path)?;
+        match &req.other_path {
+            Some(other_path) => {
+                let other = read_export_document(other_path)?;
+                ok_json(reflow2_core::compare_designs(
+                    &base,
+                    &other,
+                    &req.base_path,
+                    other_path,
+                ))
+            }
+            None => {
+                let g = self.graph.lock().await;
+                ok_json(
+                    g.compare_with_base(&base, &req.base_path)
+                        .map_err(dyno_err)?,
+                )
+            }
+        }
     }
 
     #[tool(

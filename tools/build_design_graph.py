@@ -149,6 +149,15 @@ CAPABILITIES = [
     ("cap:freshness", "Say when a claim was last confirmed",
      "Distinguish a design that matches reality from one nobody has checked.",
      "verified", ["req:released-eq-designed", "req:coherence"]),
+    # BL-71 rung c (2026-07-21): the reconcile family's design-vs-design
+    # sibling — the three reconcile tools compare design against reality;
+    # nothing compared two as-designed records until the curated rebuild
+    # clobbered the accumulated live layer and only a node count noticed.
+    ("cap:compare-designs", "Compare two as-designed records",
+     "Diff two export documents (or the live graph against one) into added / removed / changed "
+     "relative to a named base, banded into design content vs bookkeeping, property-level on "
+     "changes.",
+     "verified", ["req:intent-preserved"]),
 ]
 
 # ---- Decisions. The distillate of the sessions that shaped the design. ----
@@ -219,6 +228,26 @@ DECISIONS = [
      "operational cost. Reopening conditions are written down. Decided 2026-07-18 "
      "(surface-plan.md); BL-12/BL-15 carry the consequences.",
      ["cap:portability"]),
+    ("dec:design-diff-vocabulary",
+     "Design-vs-design comparison is directional, banded, and lives in the core",
+     "A design-vs-design diff (compare_designs) exists as a core op exposed as both an MCP tool "
+     "and a CLI flag. It compares two export documents, or the live graph against one document. "
+     "Findings are directional — added / removed / changed relative to an explicitly named base "
+     "— with property-level detail on changed nodes, grouped into two bands: design content vs "
+     "the supporting/bookkeeping layer (ChangeEvents, DriftEvents, Fragments, Questions). It "
+     "reports divergence between two as-designed records and never judges which side is right; "
+     "the word 'drift' stays reserved for design-vs-reality.",
+     "User decided all four axes 2026-07-21 (BL-71 rung c vocabulary session). Directional "
+     "because all three consumers have a real base — the committed record (the BL-71 clobber "
+     "tripwire), the main branch (BL-70 branch-by-file comparison), the state a claim was made "
+     "against (BL-12 merge) — while AoA can still read the report neutrally or run it both "
+     "ways. Banded because the real 2026-07-21 divergence was 3 Decisions and 8 Requirements "
+     "buried under ~20 bookkeeping nodes; a flat list hides exactly what matters. Core op (not "
+     "a kit script) because deterministic design computation belongs in the tested core; CLI "
+     "flag so CI and no-server contexts reach it, like --import/--export. It is the read side "
+     "of the rung a+b upsert-layering, the sibling of the reconcile family — which compares "
+     "design against reality, hence the separate word: divergence, not drift.",
+     ["cap:compare-designs"]),
 ]
 
 # ---- P2 · Structure. Coarse: crate -> module. -----------------------------
@@ -259,6 +288,7 @@ MODULES = [
     ("cmp:surprises", "surprises", "cmp:core", ["cap:report"]),
     ("cmp:schema", "schema", "cmp:core", ["cap:vocabulary"]),
     ("cmp:search", "search", "cmp:core", ["cap:search"]),
+    ("cmp:compare", "compare", "cmp:core", ["cap:compare-designs"]),
     ("cmp:nodes", "nodes", "cmp:core", []),
     ("cmp:service", "service", "cmp:mcp", ["cap:mcp-surface"]),
     ("cmp:main", "main", "cmp:mcp", ["cap:mcp-surface"]),
@@ -297,6 +327,7 @@ ARTIFACTS = {  # component -> source path
     "cmp:surprises": "crates/reflow2-core/src/surprises.rs",
     "cmp:schema": "crates/reflow2-core/src/schema.rs",
     "cmp:search": "crates/reflow2-core/src/search.rs",
+    "cmp:compare": "crates/reflow2-core/src/compare.rs",
     "cmp:nodes": "crates/reflow2-core/src/nodes.rs",
     "cmp:service": "crates/reflow2-mcp/src/service.rs",
     "cmp:main": "crates/reflow2-mcp/src/main.rs",
@@ -330,6 +361,7 @@ VERIFICATIONS = {  # capability -> test file
     "cap:freshness": "crates/reflow2-core/tests/confirm.rs",
     "cap:kit": "tools/test_init.py",
     "cap:search": "crates/reflow2-core/tests/search.rs",
+    "cap:compare-designs": "crates/reflow2-core/tests/compare.rs",
 }
 # The one capability that ships without an automated check — the honest
 # remainder the gap list SHOULD carry: cap:adopt is a skill, exercised on a
@@ -505,6 +537,14 @@ def build(s: Server, fresh: bool = True) -> None:
                 f"{path} does not exist at tag {tag} — refusing to invent a checksum")
         return "sha256:" + hashlib.sha256(r.stdout).hexdigest()[:16]
 
+    # A module added after a tag was cut is not in that tag's release — its
+    # absence from the manifest is the truth, not a gap. Said out loud per
+    # release rather than skipped silently; sha_at's refusal still guards the
+    # case that matters (a file *claimed* for a release that never carried it).
+    def exists_at(tag: str, path: str) -> bool:
+        return subprocess.run(["git", "cat-file", "-e", f"{tag}:{path}"],
+                              capture_output=True, cwd=REPO).returncode == 0
+
     RELEASES = [
         ("rel:v040", "v0.4.0", "0.4.0", "retired",
          "Superseded by v0.5.0 on the developer machine (deployment declaration "
@@ -547,6 +587,9 @@ def build(s: Server, fresh: bool = True) -> None:
                                          "description": description}})
         # The as-released view (BL-34): the manifest, frozen at the tag.
         for cmp_id, path in ARTIFACTS.items():
+            if not exists_at(tag, path):
+                print(f"  note: {path} absent at {tag} — not in that release's manifest")
+                continue
             s.call("release_includes", {
                 "release_id": rid, "target_type": "Artifact",
                 "target_id": f"art:{cmp_id.split(':')[1]}",

@@ -1355,6 +1355,78 @@ async fn export_graph_writes_a_deterministic_file_when_asked() {
     std::fs::remove_file(&path).ok();
 }
 
+// ---- BL-71 rung c · design-vs-design comparison -----------------------------
+
+#[tokio::test]
+async fn compare_designs_reports_divergence_from_a_base_export() {
+    let s = seeded().await;
+    let base_path =
+        std::env::temp_dir().join(format!("reflow2-compare-base-{}.json", std::process::id()));
+    let base_str = base_path.to_str().expect("utf8 path").to_string();
+    std::fs::remove_file(&base_path).ok();
+
+    j!(s.export_graph(Parameters(ExportGraphToReq {
+        path: Some(base_str.clone()),
+        overwrite: None,
+    })));
+
+    // Identical: the live graph has not moved since the export.
+    let same = j!(s.compare_designs(Parameters(CompareDesignsReq {
+        base_path: base_str.clone(),
+        other_path: None,
+    })));
+    assert_eq!(same["summary"]["identical"], true);
+    assert_eq!(same["base"], base_str.as_str());
+    assert_eq!(same["other"], "live graph");
+
+    // Diverge the live graph: a new design node relative to the base.
+    j!(s.add_capability(Parameters(CapabilityReq {
+        id: "cap:catch".into(),
+        name: "Catching".into(),
+        description: "Field the ball.".into(),
+        status: None
+    })));
+
+    let diff = j!(s.compare_designs(Parameters(CompareDesignsReq {
+        base_path: base_str.clone(),
+        other_path: None,
+    })));
+    assert_eq!(diff["summary"]["identical"], false);
+    assert_eq!(diff["summary"]["design_added"], 1);
+    assert_eq!(diff["design"]["added"][0]["node_id"], "cap:catch");
+
+    // Two-file mode: export the diverged state and compare file against file.
+    let other_path =
+        std::env::temp_dir().join(format!("reflow2-compare-other-{}.json", std::process::id()));
+    let other_str = other_path.to_str().expect("utf8 path").to_string();
+    std::fs::remove_file(&other_path).ok();
+    j!(s.export_graph(Parameters(ExportGraphToReq {
+        path: Some(other_str.clone()),
+        overwrite: None,
+    })));
+
+    let files = j!(s.compare_designs(Parameters(CompareDesignsReq {
+        base_path: base_str.clone(),
+        other_path: Some(other_str.clone()),
+    })));
+    assert_eq!(files["summary"]["design_added"], 1);
+    assert_eq!(files["other"], other_str.as_str());
+
+    // A path that does not exist is the caller's mistake, said loudly.
+    assert!(
+        s.compare_designs(Parameters(CompareDesignsReq {
+            base_path: "/nonexistent/reflow2-compare.json".into(),
+            other_path: None,
+        }))
+        .await
+        .is_err(),
+        "an unreadable base path must be refused, not read as empty"
+    );
+
+    std::fs::remove_file(&base_path).ok();
+    std::fs::remove_file(&other_path).ok();
+}
+
 // ---- BL-50 · add_change_event declares what it changed ----------------------
 
 #[tokio::test]

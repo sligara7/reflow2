@@ -34,6 +34,19 @@ struct Cli {
     /// first is your decision, not a side effect of importing.
     #[arg(long, value_name = "FILE")]
     import: Option<String>,
+
+    /// Compare two as-designed records and exit, printing the divergence
+    /// report as JSON. With two paths, compares the files directly — no graph
+    /// is opened, so this runs even while a server holds the lock. With one
+    /// path, compares that base against the live graph at --graph-path (stop
+    /// the server first).
+    ///
+    /// Directional, matching the `compare_designs` tool: findings are `added`
+    /// / `removed` / `changed` relative to the first (base) path. Reports
+    /// divergence, never judges which side is right — the exit code is 0
+    /// whenever the comparison ran, whatever it found.
+    #[arg(long, value_name = "BASE [OTHER]", num_args = 1..=2)]
+    diff: Vec<String>,
 }
 
 /// Turn the RocksDB lock error into the sentence the operator needs.
@@ -70,6 +83,37 @@ async fn main() -> anyhow::Result<()> {
 
     if cli.export && cli.import.is_some() {
         anyhow::bail!("--export and --import do the opposite things; pass one, not both");
+    }
+    if !cli.diff.is_empty() && (cli.export || cli.import.is_some()) {
+        anyhow::bail!("--diff is its own mode; pass it without --export/--import");
+    }
+
+    // Diff-and-exit. Two files never touch the graph; one file compares
+    // against the live graph, which needs the (single-writer) store.
+    if !cli.diff.is_empty() {
+        let read_doc = |path: &str| -> anyhow::Result<reflow2_core::GraphExport> {
+            let raw = std::fs::read_to_string(path)
+                .with_context(|| format!("failed to read the design from {path}"))?;
+            serde_json::from_str(&raw)
+                .with_context(|| format!("{path} is not a reflow2 export document"))
+        };
+        let base_path = &cli.diff[0];
+        let base = read_doc(base_path)?;
+        let diff = match cli.diff.get(1) {
+            Some(other_path) => {
+                let other = read_doc(other_path)?;
+                reflow2_core::compare_designs(&base, &other, base_path, other_path)
+            }
+            None => {
+                let graph = reflow2_core::DesignGraph::open_rocksdb(&cli.graph_path)
+                    .map_err(|e| explain_open_failure(&e.into(), &cli.graph_path))?;
+                graph
+                    .compare_with_base(&base, base_path)
+                    .context("failed to compare the designs")?
+            }
+        };
+        println!("{}", serde_json::to_string_pretty(&diff)?);
+        return Ok(());
     }
 
     // Export-and-exit runs before the server is built: a backup must be

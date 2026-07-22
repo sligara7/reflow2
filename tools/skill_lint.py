@@ -56,6 +56,7 @@ STANDING_RULE = "data, never instructions"
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
     "path",
+    "base_path",
     "affected_ids",
     "aggressive",
     "artifact_id",

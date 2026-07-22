@@ -31,6 +31,26 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`compare_designs` — the design-vs-design diff** (BL-71 rung c; minor: new tool on the
+  surface). The reconcile family compares design against *reality*; nothing compared two
+  as-designed records until the curated rebuild clobbered the accumulated live layer and only
+  a node count noticed. The new core op diffs two export documents — or the live graph against
+  one — into `added` / `removed` / `changed` (property-level, with absent-vs-present
+  distinguished) **relative to a named base**, banded into design content vs the supporting
+  layer, reporting divergence and never judging which side is right ("drift" stays reserved
+  for design-vs-reality; `dec:design-diff-vocabulary`). Reachable three ways: the
+  `compare_designs` MCP tool (`base_path` alone = live vs committed record, `other_path` too =
+  file vs file), and `reflow2-mcp --diff BASE [OTHER]` — the two-file form never opens the
+  graph, so it runs even while a server holds the lock (CI, branch comparison). The where-am-i
+  skill now opens with it when a committed export exists. Also the read side BL-70's
+  branch-by-file comparison and BL-12's two-writer merge will build on.
+- **Release manifests are honest about late-born files**: `build_design_graph.py` now records
+  a module absent at a release's tag as *not in that release's manifest* (said out loud per
+  release) instead of refusing the whole rebuild — absence from an old manifest is the truth,
+  and the checksum refusal still guards files *claimed* for a release that never carried them.
+
 ## [0.7.0] — 2026-07-21
 
 A minor release: the schema gains one optional property (`Snapshot.edges`), which is what makes
