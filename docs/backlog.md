@@ -1231,10 +1231,22 @@ attached. Prerequisite thinking: how the kit installs a pack, how `describe_sche
 provenance of a type, and what the CI gate does with types it doesn't know. Connects to
 [BL-68] (readiness vocabularies are the first obvious pack) and the org-scale thread above.
 
-**BL-73 · Verification at component granularity must be expressible, honestly** — *first
-extensive field trial (the user's own StoryFlow fleet, another machine, 2026-07-21,
-docs/trials-private/2026-07-21-storyflow-fleet-improvement-log.md). Size **S–M**; one
-vocabulary decision, then mechanics.* A brownfield adopt of a system with real coverage
+**BL-73 · Verification at component granularity must be expressible, honestly — DONE
+2026-07-22** — *first extensive field trial (the user's own StoryFlow fleet, another machine,
+2026-07-21, docs/trials-private/2026-07-21-storyflow-fleet-improvement-log.md). Size
+**S–M**.* User decided all three axes (`dec:component-verified-computed`): a **computed third
+state** — `component_verified`, derived at read time from a passing `Verification` on an
+allocated component, never written as manufactured capability-level edges; the coverage line
+reports it as its own clause; and detect folds the N per-capability alarms into **one
+`component_granularity_verification` gap per carrying component** at 0.35, listing the riding
+capabilities, acknowledgeable once. `status_contradiction` accepts component-granularity
+proof; `loop_status` counts it as proven; a failing suite carries nothing. The write side
+needed nothing (`VERIFIES` → `*` all along, with an unused `coverage` enum — recurring-lesson
+shaped: the read side was blind, not the vocabulary missing). The adopt skill now teaches
+registering each real suite on its Component. 7-case suite replays the trial's exact shape;
+the 20-gaps-21-acknowledges pile is now a handful of one-time questions. The remaining depth
+(per-capability `VERIFIES` where behaviour deserves its own proof) is exactly what the
+residual gap asks for, per component, once.* A brownfield adopt of a system with real coverage
 (per-service unit suites + a 137-file integration suite) read as **"0/20 capabilities
 verified"**, and recording the honest state cost **21 near-identical acknowledge/decision
 writes**. Two defects in one: the *write side* has no way to say "verified at component

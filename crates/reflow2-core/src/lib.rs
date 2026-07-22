@@ -98,7 +98,8 @@ pub use temporal::{
     parse_snapshot_state,
 };
 pub use verify::{
-    ObservedVerification, VerificationDriftReport, VerificationFinding, VerifyReconcileOptions,
+    CapabilityVerification, ObservedVerification, VerificationDriftReport, VerificationFinding,
+    VerifyReconcileOptions,
 };
 pub use vocabulary::{
     EdgeQuery, EdgeTypeMatch, EdgeTypeSpec, EndpointMatch, NodeTypeDetail, NodeTypeSpec,

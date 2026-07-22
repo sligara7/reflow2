@@ -304,6 +304,30 @@ DECISIONS = [
      "on its own events — rung a of the BL-74 ladder builds on exactly this call. Decided "
      "2026-07-21.",
      ["cap:loop-status"]),
+    ("dec:component-verified-computed",
+     "Component-granularity verification is a computed third state, one question per component",
+     "A capability's verification state is three-valued: verified (a passing check of its "
+     "own), component_verified (no check of its own, but a component it is allocated to "
+     "carries a passing one — computed at read time, never written), and unchecked. The "
+     "coverage line reports the third state as its own clause; detect_gaps replaces the N "
+     "per-capability unverified alarms with ONE component_granularity_verification gap per "
+     "carrying component at 0.35 — listing the riding capabilities, acknowledgeable once; "
+     "status_contradiction accepts component-granularity proof for a verified status claim; "
+     "loop_status counts component_verified as proven. A failing component suite carries "
+     "nothing: passing-is-verified holds at every granularity.",
+     "User decided all three axes 2026-07-22 (BL-73 vocabulary session, from their own "
+     "fleet's field trial): a brownfield adopt with real per-service suites plus a 137-file "
+     "integration suite read as '0/20 capabilities verified' and cost 21 near-identical "
+     "acknowledge writes. Computed state over a bulk-attest write because the graph should "
+     "record exactly what was checked — the component — and derive what that means one hop "
+     "away; manufactured capability-level VERIFIES edges would be indistinguishable from "
+     "direct checks forever after. The word component_verified because it says where the "
+     "check lives. One gap per component because the residual question ('is component "
+     "granularity enough for these?') is genuinely per-component and deserves to be asked "
+     "once, not N times — the BL-42 lesson again: a loud detector needs a different "
+     "question, not a tuned number. The write side needed nothing: VERIFIES accepts any "
+     "target and even carries an unused coverage enum — the whole defect was the read side.",
+     ["cap:detect", "cap:report"]),
 ]
 
 # ---- P2 · Structure. Coarse: crate -> module. -----------------------------

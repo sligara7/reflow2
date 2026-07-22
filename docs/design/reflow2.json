@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:92385a20d8df8d20defdfabd6187b0bc639cc167e0f9d09f273454f9bd57cb23",
+  "content_hash": "sha256:150661476898f523ae5a294a0b94339784616559bae2074b17cee0954d4e01d6",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -840,6 +840,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:bl73-component-verified",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl73-component-verified",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl73-component-verified",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl73-component-verified",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl73-component-verified",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl73-component-verified",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl73-component-verified",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl73-component-verified",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:bl74-loop-status",
       "properties": {
         "accepted_baseline": true,
@@ -1667,6 +1739,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:detect",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "cmp:dimensions",
       "properties": {
         "dependency_type": "function_call",
@@ -2077,6 +2159,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:report",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "cmp:search",
       "properties": {
         "dependency_type": "function_call",
@@ -2278,6 +2370,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "drift:4b5e1b33583bf812",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "drift:5376081f4bcbe993",
       "properties": {
         "optional": false,
@@ -2338,6 +2439,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "art:service"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:8699634e7694ebc6",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:adopt-skill"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -2410,6 +2520,24 @@
         "weight_basis": "estimated"
       },
       "to_id": "art:compare"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:ba279469aaf17948",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:de5950128fc0c8d9",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:report"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -2561,6 +2689,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:detect",
       "properties": {},
+      "to_id": "dec:component-verified-computed"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:detect",
+      "properties": {},
       "to_id": "dec:passing-is-verified"
     },
     {
@@ -2610,6 +2744,12 @@
       "from_id": "cap:reconcile-built",
       "properties": {},
       "to_id": "dec:two-sided-accept"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:report",
+      "properties": {},
+      "to_id": "dec:component-verified-computed"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5706,7 +5846,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:ef54ecabcaf64bc5",
+        "checksum": "sha256:50cea8636c16fc56",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
         "status": "realized"
@@ -5794,7 +5934,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e22fc5ee8aa08964",
+        "checksum": "sha256:82238243c59325a8",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -6014,7 +6154,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:26dc9c4433de0731",
+        "checksum": "sha256:4540d153ff0d894a",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
         "status": "realized"
@@ -6091,7 +6231,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:824287d5a22bd960",
+        "checksum": "sha256:b5e0616634253222",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
         "status": "realized"
@@ -6640,6 +6780,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-71 rung c: design-vs-design diff (compare_designs core op + MCP tool + CLI)"
+      }
+    },
+    {
+      "node_id": "chg:bl73-component-verified",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-73: component-granularity verification — the computed third state"
       }
     },
     {
@@ -7205,6 +7353,16 @@
       }
     },
     {
+      "node_id": "dec:component-verified-computed",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "A capability's verification state is three-valued: verified (a passing check of its own), component_verified (no check of its own, but a component it is allocated to carries a passing one — computed at read time, never written), and unchecked. The coverage line reports the third state as its own clause; detect_gaps replaces the N per-capability unverified alarms with ONE component_granularity_verification gap per carrying component at 0.35 — listing the riding capabilities, acknowledgeable once; status_contradiction accepts component-granularity proof for a verified status claim; loop_status counts component_verified as proven. A failing component suite carries nothing: passing-is-verified holds at every granularity.",
+        "name": "Component-granularity verification is a computed third state, one question per component",
+        "rationale": "User decided all three axes 2026-07-22 (BL-73 vocabulary session, from their own fleet's field trial): a brownfield adopt with real per-service suites plus a 137-file integration suite read as '0/20 capabilities verified' and cost 21 near-identical acknowledge writes. Computed state over a bulk-attest write because the graph should record exactly what was checked — the component — and derive what that means one hop away; manufactured capability-level VERIFIES edges would be indistinguishable from direct checks forever after. The word component_verified because it says where the check lives. One gap per component because the residual question ('is component granularity enough for these?') is genuinely per-component and deserves to be asked once, not N times — the BL-42 lesson again: a loud detector needs a different question, not a tuned number. The write side needed nothing: VERIFIES accepts any target and even carries an unused coverage enum — the whole defect was the read side.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:design-diff-vocabulary",
       "node_type": "Decision",
       "properties": {
@@ -7480,6 +7638,18 @@
       }
     },
     {
+      "node_id": "drift:4b5e1b33583bf812",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-22",
+        "drift_type": "checksum_change",
+        "name": "art:detect drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:detect' has changed since it was registered against the design"
+      }
+    },
+    {
       "node_id": "drift:5376081f4bcbe993",
       "node_type": "DriftEvent",
       "properties": {
@@ -7561,6 +7731,18 @@
         "resolved": true,
         "severity": "medium",
         "summary": "'art:service' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:8699634e7694ebc6",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-22",
+        "drift_type": "checksum_change",
+        "name": "art:adopt-skill drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:adopt-skill' has changed since it was registered against the design"
       }
     },
     {
@@ -7657,6 +7839,30 @@
         "resolved": true,
         "severity": "medium",
         "summary": "'art:compare' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:ba279469aaf17948",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-22",
+        "drift_type": "checksum_change",
+        "name": "art:verify drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:verify' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:de5950128fc0c8d9",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-07-22",
+        "drift_type": "checksum_change",
+        "name": "art:report drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:report' has changed since it was registered against the design"
       }
     },
     {
@@ -8813,7 +9019,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f4e7c27d768059c5802140ee688300a2815c69dec0687b34b9e9851ea185a265",
+  "prev_content_hash": "sha256:92385a20d8df8d20defdfabd6187b0bc639cc167e0f9d09f273454f9bd57cb23",
   "stamp": {
     "edge_types": 54,
     "node_types": 27,

@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-73 (component-granularity verification) — @ajs — since 2026-07-22 — vocabulary session first; then likely report.rs, detect.rs, adopt skill
 
 
 
@@ -79,6 +78,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-73 done (dec:component-verified-computed): component-granularity verification as a computed third state. capability_verification (verify.rs) → verified / component_verified / unchecked; coverage line gains the clause ("N more at component granularity"); the N per-cap unverified alarms fold into ONE component_granularity_verification gap per carrying component at 0.35 (riding caps listed, acknowledgeable once); status_contradiction accepts component proof; loop_status counts it proven; failing suite carries nothing. Write side needed zero changes (VERIFIES→* all along). Adopt skill teaches suite-on-the-Component (3 mirrors). 7-case suite (component_verified.rs) replays the fleet trial's shape; 41 workspace suites green; smoke green. Self-derived DEPENDS_ON caught the new detect→verify + report→verify calls — the design tracked the code change by itself. Drift accepted two-sided on art:verify/detect/report/adopt-skill (chg:bl73-component-verified). Export 285n/742e, gaps 0, chain advanced, live==committed — @ajs — 2026-07-22 — (this commit)
 
 - BL-74 rung a done, CLOSING BL-74: tools/loop_nudge.py — the trigger, wired to the harness's events. One stdlib script, three hooks: SessionStart orientation, PostToolUse counts reflow2 graph writes per session (loop_status/detect_gaps/detect_defects resets), Stop blocks ONCE with what to run when writes finish unchecked (stop_hook_active honoured — never a hostage). Never reads the graph (lock constraint): the hook counts events, loop_status answers what's owed. 9-case hermetic suite in CI; ships in the kit tarball; snippet in kit AGENTS.md step 0a; REFLOW2.md self-host mirror refreshed (kit stamp 0.6.1→0.8.0). Graph: art:loop-nudge REALIZES cap:loop-status, ver:loop-nudge passing (chg:bl74a-loop-nudge). Export 278n/687e, gaps 0, chain advanced, live==committed. The BL-74 ladder is complete (c: loop_status, b: hints, a: trigger); the remaining question is field evidence — arm the hook in the fleet and let the trial log answer whether the loop stays alive under load — @ajs — 2026-07-22 — (this commit)
 

@@ -64,6 +64,11 @@ pub struct VerificationCoverage {
     pub capabilities: usize,
     /// Capabilities with at least one incoming `VERIFIES`.
     pub capabilities_verified: usize,
+    /// Capabilities with no passing check of their own whose allocated
+    /// component carries one — verified at component granularity (BL-73).
+    /// Neither `verified` nor unchecked: the state that made a tested
+    /// brownfield system read as "0/20 verified" when it was invisible.
+    pub capabilities_component_verified: usize,
     pub artifacts: usize,
     /// Artifacts with a `VERIFIES` edge of their own, as opposed to being
     /// covered by the capability they realize.
@@ -223,6 +228,9 @@ impl DesignGraph {
 
         let structural_defects = self.detect_defects()?.len();
 
+        // A component-granularity check clears this debt (BL-73): the claim
+        // HAS a passing check, one hop away — the coverage line says at which
+        // granularity, and the per-component gap asks whether that is enough.
         let mut unproven_capabilities = 0usize;
         for cap in self.scan_nodes(node::CAPABILITY)? {
             let claims_built = cap
@@ -231,25 +239,10 @@ impl DesignGraph {
                 .and_then(dynograph_core::Value::as_str)
                 .map(|s| s == "realized" || s == "verified")
                 .unwrap_or(false);
-            if !claims_built {
-                continue;
-            }
-            let mut passing = false;
-            for e in self.incoming(&cap.node_id, Some(crate::nodes::edge::VERIFIES))? {
-                passing = self
-                    .get_node(node::VERIFICATION, &e.from_id)?
-                    .and_then(|v| {
-                        v.properties
-                            .get("status")
-                            .and_then(dynograph_core::Value::as_str)
-                            .map(|s| s == "passing")
-                    })
-                    .unwrap_or(false);
-                if passing {
-                    break;
-                }
-            }
-            if !passing {
+            if claims_built
+                && self.capability_verification(&cap.node_id)?
+                    == crate::verify::CapabilityVerification::Unchecked
+            {
                 unproven_capabilities += 1;
             }
         }
@@ -334,40 +327,29 @@ impl DesignGraph {
         let mut v = VerificationCoverage {
             capabilities: 0,
             capabilities_verified: 0,
+            capabilities_component_verified: 0,
             artifacts: 0,
             artifacts_verified: 0,
         };
-        for (node_type, total, verified) in [
-            (
-                node::CAPABILITY,
-                &mut v.capabilities,
-                &mut v.capabilities_verified,
-            ),
-            (node::ARTIFACT, &mut v.artifacts, &mut v.artifacts_verified),
-        ] {
-            for n in self.scan_nodes(node_type)? {
-                *total += 1;
-                // "Verified" means a check that PASSES, not a check that exists.
-                // Counting mere existence let a failing test raise coverage —
-                // the design counting test nodes while ignoring test results,
-                // which is the reflow1 failure in miniature (BL-30). `planned`,
-                // `failing`, `skipped` and `blocked` all mean "not currently
-                // confirmed".
-                for e in self.incoming(&n.node_id, Some(crate::nodes::edge::VERIFIES))? {
-                    let passing = self
-                        .get_node(node::VERIFICATION, &e.from_id)?
-                        .and_then(|v| {
-                            v.properties
-                                .get("status")
-                                .and_then(dynograph_core::Value::as_str)
-                                .map(|s| s == "passing")
-                        })
-                        .unwrap_or(false);
-                    if passing {
-                        *verified += 1;
-                        break;
-                    }
+        // "Verified" means a check that PASSES, not a check that exists.
+        // Counting mere existence let a failing test raise coverage — the
+        // design counting test nodes while ignoring test results, which is
+        // the reflow1 failure in miniature (BL-30). `planned`, `failing`,
+        // `skipped` and `blocked` all mean "not currently confirmed".
+        for n in self.scan_nodes(node::CAPABILITY)? {
+            v.capabilities += 1;
+            match self.capability_verification(&n.node_id)? {
+                crate::verify::CapabilityVerification::Verified => v.capabilities_verified += 1,
+                crate::verify::CapabilityVerification::ComponentVerified => {
+                    v.capabilities_component_verified += 1;
                 }
+                crate::verify::CapabilityVerification::Unchecked => {}
+            }
+        }
+        for n in self.scan_nodes(node::ARTIFACT)? {
+            v.artifacts += 1;
+            if self.has_passing_verification(&n.node_id)? {
+                v.artifacts_verified += 1;
             }
         }
         Ok(v)
@@ -588,14 +570,29 @@ impl GraphReport {
             );
         }
 
-        // Verification coverage — reported, never demanded.
+        // Verification coverage — reported, never demanded. Component
+        // granularity is its own clause (BL-73): folding it into "verified"
+        // would overstate, folding it into silence read a tested system as
+        // 0/20.
         if !self.verification.is_empty() {
             let v = &self.verification;
             let _ = writeln!(m, "## Verification coverage\n");
+            let component_clause = if v.capabilities_component_verified > 0 {
+                format!(
+                    " ({} more at component granularity)",
+                    v.capabilities_component_verified
+                )
+            } else {
+                String::new()
+            };
             let _ = writeln!(
                 m,
-                "{}/{} capability(ies) verified; {}/{} artifact(s) carry a check of their own.\n",
-                v.capabilities_verified, v.capabilities, v.artifacts_verified, v.artifacts
+                "{}/{} capability(ies) verified{}; {}/{} artifact(s) carry a check of their own.\n",
+                v.capabilities_verified,
+                v.capabilities,
+                component_clause,
+                v.artifacts_verified,
+                v.artifacts
             );
         }
 

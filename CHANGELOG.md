@@ -31,6 +31,23 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **Component-granularity verification — the third state** (BL-73, from the field trial;
+  minor: `verification_coverage` gains a field, `detect_gaps` a gap kind). A capability's
+  verification is now three-valued: `verified` (a passing check of its own),
+  `component_verified` (its allocated component carries a passing check — computed at read
+  time, never written), and unchecked. The coverage line reports it ("12/20 verified, 8 more
+  at component granularity"), and the N per-capability `unverified_capability` alarms on a
+  component-tested system collapse into ONE `component_granularity_verification` gap per
+  carrying component at 0.35 — "is component granularity enough for these?", acknowledgeable
+  once. `status_contradiction` accepts component-granularity proof; `loop_status` counts it
+  as proven; a failing component suite carries nothing (passing-is-verified holds at every
+  granularity). The write side needed nothing — `VERIFIES` always accepted a Component
+  target; the adopt skill now teaches registering each real suite where it lives. The trial
+  that raised this read a tested system as "0/20 verified" and paid 21 acknowledges to
+  record the truth; that shape is now a handful of one-time questions.
+
 ## [0.9.0] — 2026-07-22
 
 A minor release, and the one the field trial should pick up: the design record now **proves

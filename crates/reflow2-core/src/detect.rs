@@ -142,6 +142,14 @@ pub enum GapSource {
     /// resulting id — so changing it would silently expire every capability
     /// acknowledgement a user has made.
     UnverifiedCapability,
+    /// Capabilities with no check of their own, riding a passing check on the
+    /// component they are allocated to (BL-73). One gap per carrying
+    /// component, at 0.35 — the question is "is component granularity enough
+    /// for these?", asked once, instead of N per-capability alarms on a
+    /// system whose suite genuinely passes. Neither `verified` nor
+    /// unchecked: the third state, computed, never written
+    /// (`dec:component-verified-computed`).
+    ComponentGranularityVerification,
     /// **Retired as a gap.** Per-file verification coverage is counted by
     /// [`DesignGraph::verification_coverage`] and reported by `graph_report`.
     ///
@@ -216,6 +224,7 @@ impl GapSource {
             // the serialized name, and gap ids hash this string.
             GapSource::StatusContradiction => "status_contradiction",
             GapSource::UnverifiedCapability => "unverified_capability",
+            GapSource::ComponentGranularityVerification => "component_granularity_verification",
             GapSource::UnverifiedArtifact => "unverified_artifact",
             GapSource::UnprovidedInterface => "unprovided_interface",
             GapSource::UnconsumedInterface => "unconsumed_interface",
@@ -1671,19 +1680,15 @@ impl DesignGraph {
             {
                 continue;
             }
-            let mut proven = false;
-            for e in self.incoming(&cap.node_id, Some(edge::VERIFIES))? {
-                if let Some(v) = self.get_node(node::VERIFICATION, &e.from_id)?
-                    && v.properties
-                        .get("status")
-                        .and_then(dynograph_core::Value::as_str)
-                        == Some("passing")
-                {
-                    proven = true;
-                    break;
-                }
-            }
-            if proven {
+            // A component-granularity check counts as proof for the status
+            // claim too (BL-73): the modeller who marked a capability
+            // `verified` because its component's suite passes is not
+            // overstating — the 0.35 component_granularity_verification gap
+            // asks the depth question, and asking it twice at 0.70 recreates
+            // the 21-acknowledge pile this item exists to remove.
+            if self.capability_verification(&cap.node_id)?
+                != crate::verify::CapabilityVerification::Unchecked
+            {
                 continue;
             }
             let name = node_name(&cap);
@@ -1765,30 +1770,84 @@ impl DesignGraph {
         // The coverage is still counted, by `verification_coverage`, and
         // reported by `graph_report`. It informs rather than demands, the same
         // resolution `unexpected_coupling` reached (BL-6b).
+        // Component granularity (BL-73, from the first extensive field
+        // trial): a brownfield adopt with a real per-service suite read as
+        // "0/20 capabilities verified" and cost 21 near-identical
+        // acknowledges, because the per-capability gap could not see a
+        // passing check one hop away. A capability riding its component's
+        // suite is not unchecked — it gets ONE per-component question at 0.35
+        // ("is component granularity enough for these?") instead of N
+        // per-capability alarms at 0.55 (`dec:component-verified-computed`).
+        let mut riding: BTreeMap<String, Vec<String>> = BTreeMap::new();
         for n in self.scan_nodes(node::CAPABILITY)? {
-            if self.incoming(&n.node_id, Some(edge::VERIFIES))?.is_empty() {
-                let name = node_name(&n);
-                gaps.push(GapCandidate {
-                    id: gap_id(
-                        GapSource::UnverifiedCapability,
-                        std::slice::from_ref(&n.node_id),
-                    ),
-                    gap_source: GapSource::UnverifiedCapability,
-                    scope: GapScope::Capability,
-                    severity: 0.55,
-                    title: format!("Nothing verifies \u{201c}{name}\u{201d}"),
-                    description: format!(
-                        "\u{201c}{name}\u{201d} has no verification proving it works — how will \
-                         you confirm it?"
-                    ),
-                    affected_ids: vec![n.node_id.clone()],
-                    suggested_depth: 2,
-                    evidence: format!(
-                        "Capability '{}' has 0 incoming VERIFIES; project has {} verification(s).",
-                        n.node_id, pop.verifications
-                    ),
-                });
+            if !self.incoming(&n.node_id, Some(edge::VERIFIES))?.is_empty() {
+                continue;
             }
+            let mut carrier = None;
+            for e in self.outgoing(&n.node_id, Some(edge::ALLOCATED_TO))? {
+                if self.has_passing_verification(&e.to_id)? {
+                    carrier = Some(e.to_id);
+                    break;
+                }
+            }
+            if let Some(component) = carrier {
+                riding.entry(component).or_default().push(n.node_id.clone());
+                continue;
+            }
+            let name = node_name(&n);
+            gaps.push(GapCandidate {
+                id: gap_id(
+                    GapSource::UnverifiedCapability,
+                    std::slice::from_ref(&n.node_id),
+                ),
+                gap_source: GapSource::UnverifiedCapability,
+                scope: GapScope::Capability,
+                severity: 0.55,
+                title: format!("Nothing verifies \u{201c}{name}\u{201d}"),
+                description: format!(
+                    "\u{201c}{name}\u{201d} has no verification proving it works — how will \
+                     you confirm it?"
+                ),
+                affected_ids: vec![n.node_id.clone()],
+                suggested_depth: 2,
+                evidence: format!(
+                    "Capability '{}' has 0 incoming VERIFIES; project has {} verification(s).",
+                    n.node_id, pop.verifications
+                ),
+            });
+        }
+        for (component, mut caps) in riding {
+            caps.sort();
+            let count = caps.len();
+            let cmp_name = self
+                .get_node(node::COMPONENT, &component)?
+                .map(|c| node_name(&c))
+                .unwrap_or_else(|| component.clone());
+            let listed = caps.join(", ");
+            let mut affected = vec![component.clone()];
+            affected.extend(caps);
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::ComponentGranularityVerification, &affected),
+                gap_source: GapSource::ComponentGranularityVerification,
+                scope: GapScope::Component,
+                severity: 0.35,
+                title: format!(
+                    "{count} capability(ies) verified only at component granularity via \
+                     \u{201c}{cmp_name}\u{201d}"
+                ),
+                description: format!(
+                    "\u{201c}{cmp_name}\u{201d}'s passing check is the only verification these \
+                     capabilities have: {listed}. That is a real check, one hop away — deepen \
+                     with per-capability verifications where the behaviour deserves its own \
+                     proof, or accept component granularity here once."
+                ),
+                affected_ids: affected,
+                suggested_depth: 2,
+                evidence: format!(
+                    "Component '{component}' has a passing VERIFIES; {count} capability(ies) \
+                     allocated to it have 0 VERIFIES edges of their own."
+                ),
+            });
         }
         Ok(())
     }

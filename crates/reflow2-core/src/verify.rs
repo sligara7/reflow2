@@ -19,7 +19,66 @@ use dynograph_storage::{StoredEdge, StoredNode};
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};
 
+/// How a capability's claim to work is checked — three-valued on purpose
+/// (BL-73, from the first extensive field trial). A brownfield adopt with a
+/// real per-service test suite read as "0/20 capabilities verified": the
+/// suites were registered against *components*, and nothing on the read side
+/// knew what that meant for the capabilities allocated to them. "Verified at
+/// component granularity" is neither "verified" nor "unverified" — collapsing
+/// it into either understates a tested system or overstates a wholesale claim
+/// (`dec:component-verified-computed`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum CapabilityVerification {
+    /// A passing `Verification` checks this capability itself.
+    Verified,
+    /// No passing check of its own, but a component it is allocated to
+    /// carries one — the capability rides its component's suite. Derived,
+    /// never written: the graph records exactly what was checked (the
+    /// component), and this state is what that fact means one hop away.
+    ComponentVerified,
+    /// No passing check anywhere in sight.
+    Unchecked,
+}
+
 impl DesignGraph {
+    /// Whether a node has at least one incoming `VERIFIES` from a passing
+    /// `Verification`. "Verified means a check that passes, not one that
+    /// exists" (`dec:passing-is-verified`).
+    pub(crate) fn has_passing_verification(&self, node_id: &str) -> Result<bool, DynoError> {
+        for e in self.incoming(node_id, Some(edge::VERIFIES))? {
+            let passing = self
+                .get_node(node::VERIFICATION, &e.from_id)?
+                .and_then(|v| {
+                    v.properties
+                        .get("status")
+                        .and_then(dynograph_core::Value::as_str)
+                        .map(|s| s == "passing")
+                })
+                .unwrap_or(false);
+            if passing {
+                return Ok(true);
+            }
+        }
+        Ok(false)
+    }
+
+    /// Compute a capability's [`CapabilityVerification`] state. See the enum
+    /// for why this is three-valued.
+    pub fn capability_verification(
+        &self,
+        capability_id: &str,
+    ) -> Result<CapabilityVerification, DynoError> {
+        if self.has_passing_verification(capability_id)? {
+            return Ok(CapabilityVerification::Verified);
+        }
+        for e in self.outgoing(capability_id, Some(edge::ALLOCATED_TO))? {
+            if self.has_passing_verification(&e.to_id)? {
+                return Ok(CapabilityVerification::ComponentVerified);
+            }
+        }
+        Ok(CapabilityVerification::Unchecked)
+    }
     /// P4 · Verification — a check that something meets its intent. `name` is
     /// required; `method` (default `test`), `level` (default `unit`),
     /// `location` and `status` (default `planned`) are optional.
