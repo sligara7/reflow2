@@ -1150,6 +1150,20 @@ sketch idea 1 (claims reference the graph state they saw) stop being future work
 write-path prerequisites. Sequencing note: BL-71's design-vs-design diff is also the merge
 primitive a shared graph needs the day two writers disagree.
 
+**Same day, the user named the destination**: set this up "for a whole organization to access
+simultaneously … a great resource for a whole organization to do all their planning and design
+with." That is the north star that makes the pieces one product rather than features: a shared
+graph (this item) partitioned by claims at cluster granularity (BL-44 — Alex takes this
+cluster, Bobby that node), alternatives held open as parallel branches until a decision point
+(BL-70 — an AoA the whole org can see), readiness-derived roadmaps (BL-68) computed *from* the
+same graph the engineers are editing, cross-project dependencies between one org's many designs
+(BL-45), and the trust layer (BL-41 + sketch 2's who-may-assert-what) doing at org scale what
+COORD.md does socially for two people. Commercial note: an org-wide deployment is exactly the
+paid tier of the licensing direction the user is considering (free personal/school, paid
+commercial/government) — the multi-writer service, if built, is the natural thing the licence
+sells. Not scheduled; recorded so the increments above are walked in an order that keeps this
+reachable.
+
 **BL-44 · Node-level claims — parallel work on one design** — *user, 2026-07-20. Concept-only by
 their own framing; the details are the work.*
 
