@@ -645,17 +645,16 @@ fn edge_remove_vs_side(
 fn provenance_notes(base: &GraphExport, ours: &GraphExport, theirs: &GraphExport) -> Vec<String> {
     let mut notes = Vec::new();
     let versions = [
-        ("base", &base.stamp.reflow2_version),
-        ("ours", &ours.stamp.reflow2_version),
-        ("theirs", &theirs.stamp.reflow2_version),
+        ("base", base.reflow2_version()),
+        ("ours", ours.reflow2_version()),
+        ("theirs", theirs.reflow2_version()),
     ];
-    if versions
-        .iter()
-        .any(|(_, v)| **v != *base.stamp.reflow2_version)
-    {
+    if versions.iter().any(|(_, v)| *v != base.reflow2_version()) {
         notes.push(format!(
             "written by different reflow2 builds: base {}, ours {}, theirs {}",
-            base.stamp.reflow2_version, ours.stamp.reflow2_version, theirs.stamp.reflow2_version
+            base.reflow2_version(),
+            ours.reflow2_version(),
+            theirs.reflow2_version()
         ));
     }
     if ours.graph_id != base.graph_id || theirs.graph_id != base.graph_id {

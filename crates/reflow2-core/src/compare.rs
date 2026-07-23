@@ -357,10 +357,11 @@ pub fn compare_designs(
     // before judging any finding — a "changed" node under a schema bump may
     // be the migration, not an edit.
     let mut notes = Vec::new();
-    if base.stamp.reflow2_version != other.stamp.reflow2_version {
+    if base.reflow2_version() != other.reflow2_version() {
         notes.push(format!(
             "written by different reflow2 builds: base {} vs other {}",
-            base.stamp.reflow2_version, other.stamp.reflow2_version
+            base.reflow2_version(),
+            other.reflow2_version()
         ));
     }
     if base.graph_id != other.graph_id {

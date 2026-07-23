@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e25694e6cab2c0dfb1b91eb04b78404bfee1df017fb0a4ec04577f101c2b581e",
+  "content_hash": "sha256:2daa422223e70ad6096235e8d0663a32fd84cc90ea097fe897c453a7701bc90e",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1363,6 +1363,42 @@
         "action": "modified"
       },
       "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl87",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl87",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl87",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl87",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:export"
     },
     {
       "edge_type": "CHANGED",
@@ -6823,7 +6859,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1379f486b2b70b22",
+        "checksum": "sha256:e26b3cba78fe4a67",
         "location": "crates/reflow2-core/src/compare.rs",
         "name": "compare.rs",
         "status": "realized"
@@ -6889,7 +6925,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:870fc04ad3b347a8",
+        "checksum": "sha256:8a8263be743e434f",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
         "status": "realized"
@@ -7824,6 +7860,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "BL-84 detector selectivity: community skips decomposition scaffolds; SPOF skips library/data foundations"
+      }
+    },
+    {
+      "node_id": "chg:bl87",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "BL-87: import tolerates an unstamped document (stamp optional + reported), like content_hash"
       }
     },
     {
@@ -10414,7 +10458,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d2b59c21d6d8f5b464a1f579e6fc99f5eeb6f36eb69d13db1641e6c1378a80b1",
+  "prev_content_hash": "sha256:e25694e6cab2c0dfb1b91eb04b78404bfee1df017fb0a4ec04577f101c2b581e",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,

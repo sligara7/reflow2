@@ -88,8 +88,13 @@ impl From<StoredEdge> for ExportedEdge {
 pub struct GraphExport {
     /// Which reflow2 wrote it. Carried so an import can tell whether the file
     /// came from a vocabulary it does not know — the same question
-    /// [`crate::provenance`] asks of a graph directory.
-    pub stamp: GraphStamp,
+    /// [`crate::provenance`] asks of a graph directory. Optional on the way in,
+    /// the sibling rule to `content_hash`: a hand-authored or third-party
+    /// document legitimately has no stamp, and its absence is a first-class,
+    /// reported state (see [`ImportReport::provenance_note`]), never a reason to
+    /// refuse the document (BL-87). Every export reflow2 writes carries one.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub stamp: Option<GraphStamp>,
     /// Fingerprint of the design content — see [`GraphExport::content_hash`].
     /// Deliberately excludes the stamp and the chain fields, so the same
     /// design hashes identically whichever build wrote it and whatever it
@@ -112,6 +117,22 @@ pub struct GraphExport {
 }
 
 impl GraphExport {
+    /// Whether the document arrived with no stamp — a hand-authored or
+    /// third-party document rather than one reflow2 exported (BL-87).
+    pub fn is_unstamped(&self) -> bool {
+        self.stamp.is_none()
+    }
+
+    /// The reflow2 version that wrote this document, or `"unstamped"` when it
+    /// carries no stamp — so callers reporting provenance (compare, merge) read
+    /// one value and never unwrap an absent stamp.
+    pub fn reflow2_version(&self) -> &str {
+        self.stamp
+            .as_ref()
+            .map(|s| s.reflow2_version.as_str())
+            .unwrap_or("unstamped")
+    }
+
     /// The canonical content fingerprint: sha256 over the compact,
     /// sorted-key JSON of `{"edges", "graph_id", "nodes"}` — the design
     /// content only. Full hash, not truncated like display checksums: this is
@@ -197,6 +218,15 @@ pub struct ImportReport {
     /// evidence of tampering.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub integrity_note: Option<String>,
+    /// Set when the document arrived with no `stamp` — a hand-authored or
+    /// third-party document rather than one reflow2 exported. The import
+    /// proceeds (the stamp is provenance metadata, not a gate — the sibling
+    /// rule to an absent `content_hash`), but never silently: an unstamped
+    /// document cannot be checked for an upgrade-direction mismatch, so the
+    /// human should know what they loaded (BL-87). `None` for a stamped
+    /// document.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub provenance_note: Option<String>,
 }
 
 impl DesignGraph {
@@ -228,7 +258,7 @@ impl DesignGraph {
         });
 
         let mut export = GraphExport {
-            stamp: GraphStamp::current(self.schema()),
+            stamp: Some(GraphStamp::current(self.schema())),
             content_hash: None,
             prev_content_hash: None,
             graph_id: self.graph_id().to_string(),
@@ -301,6 +331,12 @@ impl DesignGraph {
                     ),
                     _ => None,
                 },
+                provenance_note: doc.is_unstamped().then(|| {
+                    "the document had no stamp — imported as unstamped (a hand-authored or \
+                     third-party document, not one reflow2 exported); provenance and the \
+                     upgrade-direction check cannot be run on it"
+                        .to_string()
+                }),
             })
         })();
 

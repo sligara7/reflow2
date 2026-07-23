@@ -107,8 +107,48 @@ fn two_exports_of_an_unchanged_graph_are_byte_identical() {
 #[test]
 fn the_export_records_which_reflow2_wrote_it() {
     let doc = a_design().export_graph().unwrap();
-    assert!(doc.stamp.node_types >= 27, "{:?}", doc.stamp);
-    assert!(!doc.stamp.reflow2_version.is_empty());
+    let stamp = doc
+        .stamp
+        .as_ref()
+        .expect("an export reflow2 writes is stamped");
+    assert!(stamp.node_types >= 27, "{stamp:?}");
+    assert!(!stamp.reflow2_version.is_empty());
+}
+
+/// BL-87: the stamp is the sibling of `content_hash` — a hand-authored or
+/// third-party document with no stamp imports, treated as unstamped and
+/// reported, never refused. `import_graph` never gates on the stamp, so
+/// requiring it at deserialization was pure friction (the BL-83b adopt dogfood
+/// hit `missing field stamp` with no hint about the envelope).
+#[test]
+fn a_stampless_document_imports_and_is_reported_unstamped() {
+    // Round-trip through JSON with the stamp stripped, exactly as a client that
+    // hand-authored the envelope would send it.
+    let doc = a_design().export_graph().unwrap();
+    let mut value = serde_json::to_value(&doc).unwrap();
+    value.as_object_mut().unwrap().remove("stamp");
+    let stampless: GraphExport = serde_json::from_value(value).unwrap();
+    assert!(stampless.is_unstamped());
+    assert_eq!(stampless.reflow2_version(), "unstamped");
+
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let report = g.import_graph(&stampless).unwrap();
+    assert_eq!(
+        report.nodes_written,
+        doc.nodes.len(),
+        "the design still loads"
+    );
+    let note = report
+        .provenance_note
+        .expect("an unstamped import must be reported, not silent");
+    assert!(note.contains("no stamp"), "{note}");
+
+    // A stamped document imports with no provenance note.
+    let mut g2 = DesignGraph::open_in_memory().unwrap();
+    assert!(
+        g2.import_graph(&doc).unwrap().provenance_note.is_none(),
+        "a stamped document is not flagged"
+    );
 }
 
 /// An edge whose endpoints are missing is named, never dropped quietly.
@@ -230,7 +270,7 @@ fn the_content_hash_excludes_stamp_and_chain() {
     let g = a_design();
     let doc = g.export_graph().unwrap();
     let mut relabelled = doc.clone();
-    relabelled.stamp.reflow2_version = "9.9.9".into();
+    relabelled.stamp.as_mut().unwrap().reflow2_version = "9.9.9".into();
     relabelled.prev_content_hash = Some("sha256:0000".into());
 
     assert_eq!(

@@ -33,6 +33,20 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **`import_graph` accepts an unstamped document instead of refusing it** (BL-87; **minor** —
+  `GraphExport.stamp` becomes optional and `ImportReport` gains a `provenance_note` field). A
+  hand-authored or third-party document with no `stamp` used to fail deserialization with a bare
+  `missing field \`stamp\`` and no hint about the envelope (the BL-83b adopt dogfood hit this and
+  recovered only by exporting an empty graph first). But `import_graph` never *gated* on the stamp —
+  it was pure friction. The stamp is now the sibling of `content_hash`: absence is a first-class,
+  **reported** state, never a refusal. A stampless import proceeds and the `ImportReport` carries a
+  `provenance_note` saying the document was unstamped and the upgrade-direction check couldn't be run
+  — loud, not silent (`req:no-silent-fallback`). Every export reflow2 writes still carries a stamp,
+  and `compare_designs` / `merge_designs` read `reflow2_version()` (`"unstamped"` when absent) so
+  their provenance notes never hide a missing stamp. The `import_graph` input schema is unchanged
+  (the document is still a free object); this is the leniency-plus-report half of the fix, chosen
+  over publishing the envelope shape and keeping the stamp mandatory.
+
 - **The critical `detect↔verify` circular dependency is broken by relocating the id hash to its
   true home** (`dec:fnv1a-foundational`; **patch** — an internal refactor, no surface/schema
   change). The self-model's one *critical* structural defect was a genuine but spurious cycle:

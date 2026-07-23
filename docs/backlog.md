@@ -1772,8 +1772,16 @@ pointer in the consumer AGENTS.md "if reflow2 gets in your way" section (both de
 change is released — it is still `[Unreleased]`). Connects to BL-19 (the stamp), BL-51 (frictionless
 update), and `req:survives-upgrade`.
 
-**BL-87 · `import_graph` requires `document.stamp` but the published schema doesn't say so** —
-*BL-83b adopt dogfood, 2026-07-23 (E.2). Size **S**, BL-57/BL-28 family.* The first `import_graph`
+**BL-87 · `import_graph` requires `document.stamp` but the published schema doesn't say so — DONE
+2026-07-23** — *BL-83b adopt dogfood, 2026-07-23 (E.2). Size **S**, BL-57/BL-28 family. Fixed via
+option (b), on Anthony's call: the stamp is now the sibling of `content_hash` — `GraphExport.stamp`
+is `Option<GraphStamp>`, a stampless (hand-authored / third-party) document imports and the
+`ImportReport` carries a `provenance_note` (loud, not silent; the upgrade-direction check can't run
+on it). `import_graph` never gated on the stamp, so requiring it was pure deserialization friction.
+`compare_designs`/`merge_designs` read a new `reflow2_version()` accessor (`"unstamped"` when absent).
+The tool input schema is unchanged (still a free object), so no toolsnap churn; chosen over (a)
+publish-the-shape-and-keep-it-required because refusing a stampless document contradicts the
+content_hash precedent (`absence reported, never an error`). `chg:bl87`; 43 core+mcp suites green.* The first `import_graph`
 call in the trial failed with a bare `missing field \`stamp\`` and no hint about the shape; the
 adopter recovered the envelope by exporting the empty graph first. Verified: `GraphExport.stamp` is a
 required field (no serde default), but the tool's published input schema declares `document` as a
