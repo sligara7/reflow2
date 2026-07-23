@@ -1806,8 +1806,14 @@ type, so the adopter fell back to reading `schema/*.yaml` for "what's required" 
 edge per leaf. All three are ergonomics, not correctness.
 
 **BL-90 · loop_nudge has a total-bypass blind spot: a session that never touches the graph is never
-nudged** — *user, 2026-07-23, the one survivor from a review of external "force the agent to use
-tools" advice. Size **S**, BL-74 family.* `tools/loop_nudge.py` arms only on reflow2 **write**
+nudged — DONE 2026-07-23** — *user, 2026-07-23, the one survivor from a review of external "force
+the agent to use tools" advice. Size **S**, BL-74 family. Built exactly to the fix shape below: a
+second `PostToolUse` matcher (`Edit|Write|MultiEdit|NotebookEdit`) counts file edits, and the Stop
+hook blocks **once** when a session edited ≥`REFLOW2_LOOP_NUDGE_EDIT_THRESHOLD` (default 3) files
+and made zero reflow2 calls — any single reflow2 call, even a read, disarms it. Never reads the
+graph; the two backstops are mutually exclusive (a graph write means reflow2 was touched). Closes
+`req:nudge-covers-bypass` via `cap:loop-status` (the nudge `art:loop-nudge` already realizes it);
+`ver:loop-nudge` covers it with 6 new cases. `chg:bl90` on the record; live == committed.* `tools/loop_nudge.py` arms only on reflow2 **write**
 activity: the PostToolUse hook matches `mcp__reflow2__.*`, counts graph writes, and the Stop hook
 blocks once when writes finish unchecked. A session that edits code while making **zero** reflow2
 calls generates zero counted writes, so the Stop hook passes silently — the agent that ignores the

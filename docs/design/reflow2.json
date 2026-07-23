@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5ecb384a36520c2cd8ae89e8295a882dec8c8eaa6e7a6cf3d1a375a211dff56a",
+  "content_hash": "sha256:79fd7bcda0d83f2470f6ede0989d3514dcd623dbc24ea1162a300795669cb2da",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1300,6 +1300,24 @@
         "action": "modified"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl90",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl90",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:loop-status"
     },
     {
       "edge_type": "CHANGED",
@@ -5966,6 +5984,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:loop-status",
+      "properties": {},
+      "to_id": "req:nudge-covers-bypass"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:mcp-surface",
       "properties": {},
       "to_id": "req:agent-native"
@@ -6860,7 +6884,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:be1051b582c9e898",
+        "checksum": "sha256:96619724a77479e7",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
         "status": "realized"
@@ -7677,6 +7701,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-75: requirement certainty derived and rendered (user-confirmed / asserted / recovered)"
+      }
+    },
+    {
+      "node_id": "chg:bl90",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-90: loop-nudge covers the total-bypass session (edited code, zero reflow2 calls)"
       }
     },
     {
@@ -10218,7 +10250,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:99ee7d32e142bfea7cd27ec2303c739f4bf3b77addee3858d3701fb3fc91a53c",
+  "prev_content_hash": "sha256:5ecb384a36520c2cd8ae89e8295a882dec8c8eaa6e7a6cf3d1a375a211dff56a",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,

@@ -54,6 +54,19 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The loop nudge now covers the total-bypass session** (BL-90; **patch** — turns a silent gap in
+  the trigger into a loud one, no tool-surface or schema change; closes `req:nudge-covers-bypass`).
+  `tools/loop_nudge.py` armed only on reflow2 *writes*, so a session that edited code while making
+  **zero** reflow2 calls — the agent that ignores the design brain entirely — reached Stop
+  silently. A second `PostToolUse` matcher (`Edit|Write|MultiEdit|NotebookEdit` in
+  `.claude/settings.json`) now counts file edits, and the Stop hook blocks **once** when a session
+  edited files and never touched reflow2 at all: "N file(s) edited and the design graph was never
+  consulted — start with `loop_status`; impact-check before further edits, link-artifacts after."
+  Blunt by design (the hook can't read the graph to know which files are design-relevant), so it is
+  bounded by a count threshold — `REFLOW2_LOOP_NUDGE_EDIT_THRESHOLD` (default 3) — and the
+  once-only rule; any single reflow2 call, even a read, disarms it. Stays a *nudge that names what
+  is owed*, never a wall. This is the bypass one step upstream of the one BL-74 was built from.
+
 - **`undecided_decision_point` DETECT gap — an open fork surfaces as a question** (BL-70, the last
   of the "missing teeth"; **minor** — a new gap type). A *proposed* Decision holding ≥2 registered
   alternatives is now surfaced by `detect_gaps` as an open decision the design hasn't made — "which

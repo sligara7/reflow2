@@ -37,6 +37,11 @@ def post_tool(tool: str, session: str = "s1") -> dict:
             "tool_name": tool}
 
 
+def edit_tool(tool: str = "Edit", session: str = "s1") -> dict:
+    return {"hook_event_name": "PostToolUse", "session_id": session,
+            "tool_name": tool}
+
+
 def stop(session: str = "s1", active: bool = False) -> dict:
     return {"hook_event_name": "Stop", "session_id": session,
             "stop_hook_active": active}
@@ -53,6 +58,10 @@ class LoopNudge(unittest.TestCase):
     def writes(self, session: str = "s1") -> int:
         f = self.project / ".reflow2" / "loop-nudge" / f"{session}.json"
         return json.loads(f.read_text())["writes"] if f.exists() else 0
+
+    def edits(self, session: str = "s1") -> int:
+        f = self.project / ".reflow2" / "loop-nudge" / f"{session}.json"
+        return json.loads(f.read_text()).get("edits", 0) if f.exists() else 0
 
     def test_session_start_prints_the_orientation(self):
         r = run_hook(self.project, {"hook_event_name": "SessionStart",
@@ -121,6 +130,60 @@ class LoopNudge(unittest.TestCase):
         run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
         out = json.loads(run_hook(self.project, stop(), env=env).stdout)
         self.assertEqual(out["decision"], "block")
+
+    # --- BL-90: the total-bypass backstop (edited code, zero reflow2 calls) ---
+
+    def test_file_edits_are_counted_per_session(self):
+        for tool in ("Edit", "Write", "MultiEdit", "NotebookEdit"):
+            r = run_hook(self.project, edit_tool(tool))
+            self.assertEqual(r.returncode, 0)
+            self.assertEqual(r.stdout, "", "counting an edit is silent")
+        self.assertEqual(self.edits(), 4)
+
+    def test_stop_nudges_the_session_that_edited_but_never_touched_reflow2(self):
+        for _ in range(3):  # default edit threshold is 3
+            run_hook(self.project, edit_tool("Edit"))
+        r = run_hook(self.project, stop())
+        self.assertEqual(r.returncode, 0)
+        out = json.loads(r.stdout)
+        self.assertEqual(out["decision"], "block")
+        self.assertIn("never consulted", out["reason"])
+        self.assertIn("loop_status", out["reason"])
+        self.assertIn("3 file", out["reason"])
+
+        # Fires once — a second stop always proceeds.
+        r2 = run_hook(self.project, stop(active=True))
+        self.assertEqual(r2.stdout, "")
+
+    def test_edits_below_threshold_do_not_nudge(self):
+        for _ in range(2):  # under the default threshold of 3
+            run_hook(self.project, edit_tool("Write"))
+        self.assertEqual(run_hook(self.project, stop()).stdout, "")
+
+    def test_touching_reflow2_at_all_disarms_the_bypass_nudge(self):
+        # A single read means the agent DID consult the graph — no bypass.
+        run_hook(self.project, post_tool("mcp__reflow2__scan_nodes"))
+        for _ in range(5):
+            run_hook(self.project, edit_tool("Edit"))
+        self.assertEqual(run_hook(self.project, stop()).stdout, "",
+                         "engaged the design brain, so no bypass nudge")
+
+    def test_edit_threshold_is_configurable(self):
+        env = {"REFLOW2_LOOP_NUDGE_EDIT_THRESHOLD": "5"}
+        for _ in range(4):
+            run_hook(self.project, edit_tool("Edit"))
+        self.assertEqual(run_hook(self.project, stop(), env=env).stdout, "")
+        run_hook(self.project, edit_tool("Edit"))
+        out = json.loads(run_hook(self.project, stop(), env=env).stdout)
+        self.assertEqual(out["decision"], "block")
+
+    def test_graph_write_nudge_takes_precedence_over_edits(self):
+        # Wrote the graph AND edited: the write case is what needs the loop.
+        run_hook(self.project, edit_tool("Edit"))
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+        out = json.loads(run_hook(self.project, stop()).stdout)
+        self.assertEqual(out["decision"], "block")
+        self.assertIn("graph write", out["reason"])
 
     def test_garbage_never_breaks_the_session(self):
         for payload in ("not json at all", "[]", json.dumps({"no": "event"}),
