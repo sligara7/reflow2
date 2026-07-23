@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:99ee7d32e142bfea7cd27ec2303c739f4bf3b77addee3858d3701fb3fc91a53c",
+  "content_hash": "sha256:5ecb384a36520c2cd8ae89e8295a882dec8c8eaa6e7a6cf3d1a375a211dff56a",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -3021,6 +3021,24 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:adopt",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:allocate",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:budget",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:change",
       "properties": {},
       "to_id": "dec:three-party-checks"
@@ -3033,9 +3051,21 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:compare-alternatives",
       "properties": {},
       "to_id": "dec:parallel-alternatives"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-alternatives",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3051,9 +3081,21 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-designs",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:decision-point",
       "properties": {},
       "to_id": "dec:parallel-alternatives"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:decision-point",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3087,15 +3129,57 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:detect",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:dimensions",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:fork-alternatives",
       "properties": {},
       "to_id": "dec:alternatives-unranked-forkable"
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:fork-alternatives",
+      "properties": {},
+      "to_id": "decision:ack:72f2c38d8acdeac2"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:fork-alternatives",
+      "properties": {},
+      "to_id": "decision:ack:a714fec7e55225b4"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:fork-alternatives",
+      "properties": {},
+      "to_id": "decision:ack:e99afa635a6340fb"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:freshness",
       "properties": {},
       "to_id": "dec:report-dont-judge"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:freshness",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:genesis",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3111,9 +3195,45 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:heal",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:hierarchy",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:ingest",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kit",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:loop-status",
       "properties": {},
       "to_id": "dec:loop-status-state-not-history"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:loop-status",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mcp-surface",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3129,9 +3249,27 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-designs",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:merge-rerere",
       "properties": {},
       "to_id": "dec:merge-rerere"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-rerere",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:model-process",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3147,9 +3285,45 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:portability",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:propagate",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:questions",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-built",
       "properties": {},
       "to_id": "dec:two-sided-accept"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-built",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-deployed",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-verified",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3171,9 +3345,45 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:report",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:search",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:stamp",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:store",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:surface",
       "properties": {},
       "to_id": "dec:three-party-checks"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:surface",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:vocabulary",
+      "properties": {},
+      "to_id": "decision:ack:695a599323c7edfe"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8338,6 +8548,46 @@
       }
     },
     {
+      "node_id": "decision:ack:695a599323c7edfe",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:695a599323c7edfe.",
+        "name": "Reviewed: gap:695a599323c7edfe",
+        "rationale": "User (who:ajs, 2026-07-23): validation happens through the trials program — docs/trials/ (self-host, adopt dogfood, erosion, phase-coverage, fleet feedback) is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not the tracking mechanism for this project.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:72f2c38d8acdeac2",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:72f2c38d8acdeac2.",
+        "name": "Reviewed: gap:72f2c38d8acdeac2",
+        "rationale": "User (who:ajs, 2026-07-23): tracked under BL-70/BL-80 — art:alternatives/art:merge exist on disk (reported no_baseline by reconcile) and get modelled + linked when BL-80 lands.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:a714fec7e55225b4",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:a714fec7e55225b4.",
+        "name": "Reviewed: gap:a714fec7e55225b4",
+        "rationale": "User (who:ajs, 2026-07-23): tracked under BL-70/BL-80 — cap:fork-alternatives' verification, allocation and realization are the alternatives/merge work; BL-80 (three-way merge) is claimed and in progress on the board, BL-70 holds the rest. Acceptable open until that lands.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:e99afa635a6340fb",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:e99afa635a6340fb.",
+        "name": "Reviewed: gap:e99afa635a6340fb",
+        "rationale": "User (who:ajs, 2026-07-23): tracked under BL-70/BL-80 — same disposition as the verification gap; the capability's owning component arrives with the alternatives/merge work (alternatives.rs/merge.rs are on disk but not yet modelled, noted in the BL-83a session record).",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "epoch:genesis",
       "node_type": "DesignEpoch",
       "properties": {
@@ -9968,7 +10218,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:cf037c35b95b6dad49b3d7ecd55a1a2f6e134ea4d54ca3973a315813d7a11124",
+  "prev_content_hash": "sha256:99ee7d32e142bfea7cd27ec2303c739f4bf3b77addee3858d3701fb3fc91a53c",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,
