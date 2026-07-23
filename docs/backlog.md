@@ -1595,6 +1595,28 @@ granularity, mechanically checkable (purpose ≈ name → nothing captured), and
    session** (clean context + it needs the rebuilt binary; the running server predates the 28/53
    schema change).
 
+   **Method — as-designed vs as-built, reconciled by compare (recommended, from the 2026-07-22
+   "should we just re-adopt?" exchange).** The tempting shortcut — wipe the graph and re-run
+   **adopt** on reflow2 to "rebuild it from scratch" — is the wrong primary move, and *why* is the
+   whole finding: **adopt is reverse-engineering; it recovers from the artifact, and the artifact
+   (the code) is organized by module, so adopt re-derives a module decomposition — it reproduces
+   this finding more politely, it does not fix it.** The functional carving (nodes/edges as systems)
+   comes from the product's *purpose*, a genesis input, not from the code; and it *cuts across*
+   module boundaries (the "vocabulary system" is `schema.rs` + `nodes.rs` + part of `graph.rs` + the
+   YAML — no single module), a cut adopt structurally cannot see. Worse, wiping would strand the
+   irreplaceable layer adopt **cannot** recover: the ~24 Decisions + rationale, Contributors,
+   authorship, requirement certainty, gap acknowledgements — the *why*, the "what nobody can know
+   from the artifact alone." So:
+   - **(a) genesis (as-designed):** derive the functional systems from the brief, WITH the user.
+   - **(b) adopt on a COPY (as-built, additive):** run adopt against the code for a clean as-built
+     model — which doubles as the ultimate **dogfood test of `adopt` itself** (does it recover real
+     intent or emit "The X module." vacuity? does it honestly flag its unknowns?), a skill so far
+     only run on small trial repos.
+   - **(c) `compare_designs` (a) against (b):** the divergence between the functional and the module
+     decomposition **is this finding made mechanical and measurable** — reflow2's own
+     as-designed-vs-as-built doctrine (the whole reconcile/compare family) turned on its own design.
+   Never wipe the live graph; adopt runs on a copy, genesis extends the real one.
+
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
 vocabulary wants in.* Lexicon namespaces schemas reverse-DNS (`app.bsky.feed.post`) so
