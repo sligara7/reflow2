@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:cf037c35b95b6dad49b3d7ecd55a1a2f6e134ea4d54ca3973a315813d7a11124",
+  "content_hash": "sha256:99ee7d32e142bfea7cd27ec2303c739f4bf3b77addee3858d3701fb3fc91a53c",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -9543,7 +9543,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A session that edits code while making zero reflow2 calls must receive the same one-time Stop nudge as one that writes the graph unchecked: the nudge arms on the harness's file-edit events (Edit/Write), not only on reflow2 write events. Today loop_nudge.py counts only mcp__reflow2__ writes, so the total-bypass session — the agent that ignores the design brain entirely — passes the Stop hook silently. Constraints carried over: the hook never reads the graph (single-writer lock), blocks once and never twice, and names what is owed (loop_status; impact-check before further edits, link-artifacts after) rather than demanding a ritual call; an edit-count threshold bounds false positives on typo/docs sessions. (BL-90, BL-74 family.)",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -9968,7 +9968,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:31e8f61cd708326656458c0f67c5fdc10f937f1c69883fc0378a7a8839224195",
+  "prev_content_hash": "sha256:cf037c35b95b6dad49b3d7ecd55a1a2f6e134ea4d54ca3973a315813d7a11124",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,
