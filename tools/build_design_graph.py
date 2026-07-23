@@ -354,12 +354,50 @@ DECISIONS = [
      ["cap:report"]),
 ]
 
-# ---- P2 · Structure. Coarse: crate -> module. -----------------------------
-SUBSYSTEMS = [
-    ("cmp:core", "reflow2-core", "The deterministic, LLM-free coherence engine.", "subsystem"),
-    ("cmp:mcp", "reflow2-mcp", "The agent-facing MCP surface over one graph.", "subsystem"),
-    ("cmp:kit", "consumer kit", "What gets installed into a project being designed.", "subsystem"),
+# ---- P2 · Structure. FUNCTIONAL decomposition (BL-83a, 2026-07-23). --------
+#
+# The systems of "a thing that captures any design in a graph" — derived from
+# the brief WITH the user by running genesis's own question on reflow2 itself,
+# NOT recovered from the file tree. This replaces the as-BUILT crate grouping
+# (RETIRED_CRATES below) that walking crates/*/src produced — the "parts bins
+# labelled by aisle" BL-83 indicts, where all 38 Components were the Rust
+# module list and the domain primitives a design-graph product fundamentally IS
+# (node and edge types) appeared nowhere. The 38 modules re-parent UNDER these
+# systems as the implementation layer; the crate view is recovered fresh by
+# adopt-on-a-copy (BL-83b) and measured against this one by compare_designs
+# (BL-83c). Purpose text is functional, never "The X module." — the recorded
+# intent the module layer lacks.
+SYSTEMS = [
+    ("sys:vocabulary", "Vocabulary",
+     "The neutral type system — the node and edge types that ARE a design. "
+     "What any design is made of, before any of it is stored or checked."),
+    ("sys:store", "Design Store",
+     "Durable, deterministic memory: the schema-validated graph that persists "
+     "in the project, exports and imports byte-identically, is searchable, and "
+     "stamps which reflow2 wrote it."),
+    ("sys:coherence-loop", "Coherence Loop",
+     "The engine: on any change, find the ripples and surface them — detect "
+     "gaps, propagate impact, heal structure, reconcile against what was built, "
+     "proven and deployed, and report where the design stands."),
+    ("sys:human-channel", "Human Channel",
+     "Turn an underspecified design into a plain-language question for the "
+     "human, and remember what was asked."),
+    ("sys:time-history", "Time & History",
+     "The change axis: epochs, decisions, the roads not taken — hold and "
+     "compare alternatives, diff and merge divergent designs, so the past "
+     "survives being updated."),
+    ("sys:intake", "Intake",
+     "The front door: bring intent into the graph, greenfield (genesis from a "
+     "brief) or brownfield (adopt/ingest from an existing system)."),
+    ("sys:agent-surface", "Agent Surface",
+     "The boundary the agent lives behind: the reflow2-mcp binary spoken to "
+     "over stdio, and the consumer kit that installs it."),
 ]
+# The as-built crate components, RETIRED from the as-designed view by BL-83a.
+# Kept here as the record of what is retired and to drive its deletion from the
+# imported graph; no longer emitted as design structure. They were real crates
+# (retired-on-record, not a mistake deleted) — recovered by BL-83b's adopt.
+RETIRED_CRATES = ["cmp:core", "cmp:mcp", "cmp:kit"]
 MODULES = [
     ("cmp:temporal", "temporal", "cmp:core", ["cap:change"]),
     ("cmp:propagate", "propagate", "cmp:core", ["cap:propagate"]),
@@ -400,6 +438,31 @@ MODULES = [
     ("cmp:init", "reflow2_init", "cmp:kit", ["cap:kit"]),
     ("cmp:skills", "skills", "cmp:kit", ["cap:kit"]),
 ]
+
+# Which functional system each module realizes (BL-83a). Every module maps to
+# exactly one; build() asserts totality so a module added later cannot slip
+# through unparented. The third field of each MODULES tuple above is now the
+# *old* crate parent, kept only to delete the stale containment on re-parent.
+SYSTEM_OF = {
+    "cmp:schema": "sys:vocabulary", "cmp:nodes": "sys:vocabulary",
+    "cmp:vocabulary": "sys:vocabulary", "cmp:flow": "sys:vocabulary",
+    "cmp:graph": "sys:store", "cmp:export": "sys:store",
+    "cmp:search": "sys:store", "cmp:provenance": "sys:store",
+    "cmp:detect": "sys:coherence-loop", "cmp:propagate": "sys:coherence-loop",
+    "cmp:heal": "sys:coherence-loop", "cmp:structure": "sys:coherence-loop",
+    "cmp:hierarchy": "sys:coherence-loop", "cmp:surprises": "sys:coherence-loop",
+    "cmp:dimensions": "sys:coherence-loop", "cmp:report": "sys:coherence-loop",
+    "cmp:drift": "sys:coherence-loop", "cmp:artifact": "sys:coherence-loop",
+    "cmp:verify": "sys:coherence-loop", "cmp:fielded": "sys:coherence-loop",
+    "cmp:operate": "sys:coherence-loop", "cmp:allocate": "sys:coherence-loop",
+    "cmp:budget": "sys:coherence-loop", "cmp:confirm": "sys:coherence-loop",
+    "cmp:agent": "sys:human-channel", "cmp:llm": "sys:human-channel",
+    "cmp:temporal": "sys:time-history", "cmp:compare": "sys:time-history",
+    "cmp:genesis": "sys:intake", "cmp:ingest": "sys:intake",
+    "cmp:dto": "sys:agent-surface", "cmp:main": "sys:agent-surface",
+    "cmp:service": "sys:agent-surface", "cmp:init": "sys:agent-surface",
+    "cmp:skills": "sys:agent-surface",
+}
 
 # ---- P3/P4 · one Artifact per module, one Verification per test file ------
 ARTIFACTS = {  # component -> source path
@@ -473,7 +536,9 @@ VERIFICATIONS = {  # capability -> test file
 # real system once (storyflow, 2026-07-20) but checked by no machine.
 # Contracts between subsystems.
 INTERFACES = [
-    ("ifc:core-api", "DesignGraph API", "cmp:core", ["cmp:service"]),
+    # Provider was cmp:core (retired by BL-83a); the DesignGraph API is the
+    # graph module's surface, so it now provides it.
+    ("ifc:core-api", "DesignGraph API", "cmp:graph", ["cmp:service"]),
     ("ifc:mcp-tools", "MCP tool surface", "cmp:service", ["cmp:skills"]),
     ("ifc:graph-export", "Design export document", "cmp:export", ["cmp:init"]),
 ]
@@ -569,15 +634,46 @@ def build(s: Server, fresh: bool = True) -> None:
         s.call("add_capability", {"id": cid, "name": name, "description": desc, "status": status})
         for r in sats:
             s.call("satisfies", {"from_id": cid, "to_id": r})
-    for cid, name, desc, level in SUBSYSTEMS:
-        s.call("add_component", {"id": cid, "name": name, "description": desc, "level": level})
+    # BL-83a · the functional decomposition. Emit the 7 systems, re-parent every
+    # module under its system, then retire the as-built crate components the
+    # committed export still carries. The live graph is EXTENDED, never wiped.
+    for sid, name, desc in SYSTEMS:
+        # level=subsystem: reflow2-the-product is the system (proj:reflow2 is
+        # its containment root); these seven are its functional subsystems —
+        # the tier the retired crates occupied, so system->subsystem->component
+        # stays one level at a time (no missing_intermediate_level).
+        s.call("add_component", {"id": sid, "name": name, "description": desc,
+                                 "level": "subsystem"})
         s.call("contains", {"project_id": "proj:reflow2",
-                            "child_type": "Component", "child_id": cid})
-    for cid, name, parent, caps in MODULES:
+                            "child_type": "Component", "child_id": sid})
+    unparented = [cid for cid, *_ in MODULES if cid not in SYSTEM_OF]
+    if unparented:
+        raise SystemExit(f"BL-83a: modules with no functional system: {unparented}")
+    for cid, name, old_crate, caps in MODULES:
         s.call("add_component", {"id": cid, "name": name, "description": f"The {name} module."})
-        s.call("contain_component", {"from_id": parent, "to_id": cid})
+        # re-parent: drop the crate->module containment the import carried, nest
+        # the module under its functional system instead.
+        s.call("delete_edge", {"edge_type": "CONTAINS", "from_id": old_crate, "to_id": cid})
+        s.call("contain_component", {"from_id": SYSTEM_OF[cid], "to_id": cid})
         for c in caps:
             s.call("allocate", {"from_id": c, "to_id": cid})
+    # Retire the crate components. delete_node does not cascade (storage accepts
+    # dangling edges), so clear every incident edge first:
+    #  - cmp:core provided the DesignGraph API (reassigned to cmp:graph above);
+    #  - one accumulated history edge, chg:bl74a-loop-nudge CHANGED cmp:kit, is
+    #    lifted to the system that now subsumes the kit so axis-Z history stays
+    #    connected rather than dangling (props preserved);
+    #  - then the Project->crate containment, then the crate node itself.
+    s.call("delete_edge", {"edge_type": "PROVIDES", "from_id": "cmp:core", "to_id": "ifc:core-api"})
+    s.call("delete_edge", {"edge_type": "CHANGED",
+                           "from_id": "chg:bl74a-loop-nudge", "to_id": "cmp:kit"})
+    s.call("create_edge", {"edge_type": "CHANGED",
+                           "from_type": "ChangeEvent", "from_id": "chg:bl74a-loop-nudge",
+                           "to_type": "Component", "to_id": "sys:agent-surface",
+                           "props": {"accepted_baseline": False, "action": "modified"}})
+    for crate in RETIRED_CRATES:
+        s.call("delete_edge", {"edge_type": "CONTAINS", "from_id": "proj:reflow2", "to_id": crate})
+        s.call("delete_node", {"node_type": "Component", "id": crate})
     # Structure from imports and calls, never from prose (adopt discipline).
     by_stem = {name: cid for cid, name, _parent, _caps in MODULES}
     pairs, skipped = derive_depends_on()
@@ -630,6 +726,58 @@ def build(s: Server, fresh: bool = True) -> None:
         for target in governs:
             s.call("governed_by", {"from_type": "Capability", "from_id": target,
                                    "to_type": "Decision", "to_id": did})
+    # BL-83a · the decision that carved the functional systems, governed_by the
+    # systems themselves — this decomposition exists by this choice. Separate
+    # from the DECISIONS table because it governs Components, not Capabilities.
+    s.call("add_decision", {
+        "id": "dec:bl83a-functional-decomposition",
+        "name": "reflow2's systems are functional, not its file tree",
+        "decision": (
+            "reflow2's own decomposition is the seven functional systems a "
+            "design-graph tool IS — vocabulary, store, coherence-loop, "
+            "human-channel, time-history, intake, agent-surface — with the 38 "
+            "Rust modules re-parented under them as implementation. The as-built "
+            "crate grouping (reflow2-core / -mcp / kit) is retired from the "
+            "as-designed view."),
+        "rationale": (
+            "The self-model had been recovered backwards from the file tree, so "
+            "its 38 Components were the Rust module list and the domain "
+            "primitives a design-graph product fundamentally is — node and edge "
+            "types — appeared nowhere (BL-83). A functional carving comes from "
+            "the product's purpose (a genesis input), not the code, and cuts "
+            "across crate boundaries, so adopt on the code can only re-derive "
+            "the module view. Derived with the user, 2026-07-23. The retired "
+            "crate view is recovered by adopt-on-a-copy (BL-83b) and the "
+            "divergence measured by compare_designs (BL-83c)."),
+    })
+    for sid, *_ in SYSTEMS:
+        s.call("governed_by", {"from_type": "Component", "from_id": sid,
+                               "to_type": "Decision",
+                               "to_id": "dec:bl83a-functional-decomposition"})
+    # BL-83a consequence: retiring cmp:core moved the DesignGraph API's provider
+    # to cmp:graph, making ifc:core-api the sole operational bridge between the
+    # Design Store and the Agent Surface — a true SPOF, accepted like the graph
+    # handle and the MCP service (dec:graph-spof-accepted, dec:service-spof-
+    # accepted). The separate 8-node "subsystem island" a disconnected_community
+    # defect reports is a detector false positive — subsystems are pure
+    # decomposition nodes with no operational edges by design, and the
+    # operational-network community check should skip them (BL-84, BL-69 family).
+    s.call("add_decision", {
+        "id": "dec:core-api-spof-accepted",
+        "name": "The DesignGraph API is an accepted single point of failure",
+        "decision": (
+            "ifc:core-api — the DesignGraph API cmp:graph provides and the MCP "
+            "service consumes — is the sole operational path between the Design "
+            "Store and the Agent Surface subsystems. Accepted as a SPOF, like "
+            "dec:graph-spof-accepted and dec:service-spof-accepted."),
+        "rationale": (
+            "One store, one surface over it (req:agent-native, single-writer "
+            "storage): the bridge between them is inherently single. Surfaced "
+            "when BL-83a retired cmp:core and moved the API's provider to "
+            "cmp:graph; the topology is honest, not a defect to engineer away."),
+    })
+    s.call("governed_by", {"from_type": "Interface", "from_id": "ifc:core-api",
+                           "to_type": "Decision", "to_id": "dec:core-api-spof-accepted"})
     # Releases are frozen at their git tags — never hashed from the working
     # tree. Two earlier versions of this block hashed the CURRENT files under a
     # tag's name, asserting content into a release that never carried it;

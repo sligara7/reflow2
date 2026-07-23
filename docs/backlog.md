@@ -1607,7 +1607,22 @@ granularity, mechanically checkable (purpose ≈ name → nothing captured), and
    irreplaceable layer adopt **cannot** recover: the ~24 Decisions + rationale, Contributors,
    authorship, requirement certainty, gap acknowledgements — the *why*, the "what nobody can know
    from the artifact alone." So:
-   - **(a) genesis (as-designed):** derive the functional systems from the brief, WITH the user.
+   - **(a) genesis (as-designed): DONE 2026-07-23** (`dec:bl83a-functional-decomposition`). Ran
+     genesis's own question on reflow2 WITH the user: the seven functional subsystems a
+     design-graph tool IS — **Vocabulary** (node/edge types — the domain primitive that appeared
+     nowhere), **Design Store**, **Coherence Loop**, **Human Channel**, **Time & History**,
+     **Intake**, **Agent Surface** — with the 35 Rust modules re-parented under them and the three
+     as-built crate components (`cmp:core/mcp/kit`) retired on record. `level: subsystem` (reflow2
+     is the system, `proj:reflow2` its root), so the hierarchy stays one level at a time. Recorded
+     durably in `tools/build_design_graph.py` (SYSTEMS + SYSTEM_OF + retirement), not hand-edited;
+     self-model 309→315 nodes. Measured: **gaps unchanged (4→4, all pre-existing** — the
+     `cap:fork-alternatives` hole and the orthogonality `unvalidated_capability`); **defects +2**,
+     both from 3a: the `ifc:core-api` SPOF (accepted, `dec:core-api-spof-accepted` — the DesignGraph
+     API is the sole Store↔Surface bridge, like the graph handle and MCP service) and an 8-node
+     "subsystem island" `disconnected_community` — a **detector false positive** raised as **BL-84**
+     (the recursion working: the graph tool linted by its own detectors caught a BL-69-family blind
+     spot). The purpose text of each subsystem is functional, not `"The X module."` — the recorded
+     intent the module layer lacked. Remaining: **(b)** adopt on a copy, **(c)** compare.
    - **(b) adopt on a COPY (as-built, additive):** run adopt against the code for a clean as-built
      model — which doubles as the ultimate **dogfood test of `adopt` itself** (does it recover real
      intent or emit "The X module." vacuity? does it honestly flag its unknowns?), a skill so far
@@ -1616,6 +1631,23 @@ granularity, mechanically checkable (purpose ≈ name → nothing captured), and
      decomposition **is this finding made mechanical and measurable** — reflow2's own
      as-designed-vs-as-built doctrine (the whole reconcile/compare family) turned on its own design.
    Never wipe the live graph; adopt runs on a copy, genesis extends the real one.
+
+**BL-84 · The community/SPOF analysis flags pure-decomposition nodes as an island** — *surfaced by
+BL-83a on reflow2's own self-model, 2026-07-23. Size **S**, BL-69 family.* When the functional
+subsystems were seeded (`level: subsystem`, connected downward only by `CONTAINS`), `detect_defects`
+reported the seven of them plus their governing Decision as an 8-node `disconnected_community`. The
+cause is the same one [BL-69](#closed) fixed for `single_point_of_failure`: the structural detectors
+run on the **as-built operational network** and correctly exclude `CONTAINS` intent edges — but a
+subsystem is a *pure decomposition node with no operational edges by design*, so excluding its only
+edges leaves it a false island. BL-69 taught the SPOF candidate enumeration to skip non-operational
+nodes; the **community/modularity detector never got the same lesson**, because until BL-83a the
+self-model carried no pure-grouping components (the retired crates each had an operational edge —
+`cmp:core` *provided* the DesignGraph API). Fix: exclude nodes whose only edges are `CONTAINS`
+(decomposition) from the operational-network community analysis, the same way `single_point_of_failure`
+already scopes its candidates. Pin both directions: a subsystem grouping does not island; a genuinely
+disconnected *operational* cluster still fires. The finding is worth keeping as evidence — it is the
+clean recursion BL-83 predicted, the graph tool's own detectors catching a blind spot in the graph
+tool.
 
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second

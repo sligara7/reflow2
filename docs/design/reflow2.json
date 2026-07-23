@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a19a0093bea154b30198ff5a64fe4bc0968e22f0dc81f6ac1633364cef6ce999",
+  "content_hash": "sha256:cc4478992011314d37cc25265720dd8e497933c87358ad2f257fd0ab61f45f38",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1219,7 +1219,7 @@
         "accepted_baseline": false,
         "action": "modified"
       },
-      "to_id": "cmp:kit"
+      "to_id": "sys:agent-surface"
     },
     {
       "edge_type": "CHANGED",
@@ -1454,216 +1454,6 @@
     },
     {
       "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:agent"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:allocate"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:artifact"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:budget"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:compare"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:confirm"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:detect"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:dimensions"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:drift"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:export"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:fielded"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:flow"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:genesis"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:graph"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:heal"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:hierarchy"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:ingest"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:llm"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:nodes"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:operate"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:propagate"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:provenance"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:report"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:schema"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:search"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:structure"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:surprises"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:temporal"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:verify"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:core",
-      "properties": {},
-      "to_id": "cmp:vocabulary"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:kit",
-      "properties": {},
-      "to_id": "cmp:init"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:kit",
-      "properties": {},
-      "to_id": "cmp:skills"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:mcp",
-      "properties": {},
-      "to_id": "cmp:dto"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:mcp",
-      "properties": {},
-      "to_id": "cmp:main"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "cmp:mcp",
-      "properties": {},
-      "to_id": "cmp:service"
-    },
-    {
-      "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:change"
@@ -1703,24 +1493,6 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:store"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "proj:reflow2",
-      "properties": {},
-      "to_id": "cmp:core"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "proj:reflow2",
-      "properties": {},
-      "to_id": "cmp:kit"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "proj:reflow2",
-      "properties": {},
-      "to_id": "cmp:mcp"
     },
     {
       "edge_type": "CONTAINS",
@@ -1829,6 +1601,258 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:survives-upgrade"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "sys:agent-surface"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "sys:human-channel"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "sys:intake"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "sys:store"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "sys:time-history"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "sys:vocabulary"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:human-channel",
+      "properties": {},
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:human-channel",
+      "properties": {},
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:intake",
+      "properties": {},
+      "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:intake",
+      "properties": {},
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:store",
+      "properties": {},
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:store",
+      "properties": {},
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:store",
+      "properties": {},
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:store",
+      "properties": {},
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:time-history",
+      "properties": {},
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:time-history",
+      "properties": {},
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:vocabulary",
+      "properties": {},
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:vocabulary",
+      "properties": {},
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:vocabulary",
+      "properties": {},
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:vocabulary",
+      "properties": {},
+      "to_id": "cmp:vocabulary"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -3151,9 +3175,57 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "ifc:core-api",
+      "properties": {},
+      "to_id": "dec:core-api-spof-accepted"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "ifc:graph-export",
       "properties": {},
       "to_id": "dec:export-door-spof-accepted"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:human-channel",
+      "properties": {},
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:intake",
+      "properties": {},
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:store",
+      "properties": {},
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:time-history",
+      "properties": {},
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:vocabulary",
+      "properties": {},
+      "to_id": "dec:bl83a-functional-decomposition"
     },
     {
       "edge_type": "INCLUDES",
@@ -5143,19 +5215,19 @@
     },
     {
       "edge_type": "PROVIDES",
-      "from_id": "cmp:core",
-      "properties": {
-        "weight_basis": "estimated"
-      },
-      "to_id": "ifc:core-api"
-    },
-    {
-      "edge_type": "PROVIDES",
       "from_id": "cmp:export",
       "properties": {
         "weight_basis": "estimated"
       },
       "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "PROVIDES",
+      "from_id": "cmp:graph",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:core-api"
     },
     {
       "edge_type": "PROVIDES",
@@ -6398,7 +6470,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:82238243c59325a8",
+        "checksum": "sha256:c1c5855047f59ca2",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -6486,7 +6558,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b2e290d8bb8a6f18",
+        "checksum": "sha256:c3ddf29598f76fe3",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -6563,7 +6635,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ef7ba16d1727d0ee",
+        "checksum": "sha256:66a3be8cafc15b2e",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -6584,7 +6656,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ed67a002f4a0c5da",
+        "checksum": "sha256:40c8f12a2a6b1b07",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
         "status": "realized"
@@ -6639,7 +6711,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d2f251dfcb8193df",
+        "checksum": "sha256:777782d8d138b057",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
         "status": "realized"
@@ -6661,7 +6733,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a790d4ada6203658",
+        "checksum": "sha256:4bbd0c3f1ef4cbac",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -6705,7 +6777,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b5e0616634253222",
+        "checksum": "sha256:065407babd9c1a9e",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
         "status": "realized"
@@ -6716,7 +6788,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:411ac59efbf58a84",
+        "checksum": "sha256:7d10fd5f9b590c00",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
         "status": "realized"
@@ -7464,19 +7536,6 @@
       }
     },
     {
-      "node_id": "cmp:core",
-      "node_type": "Component",
-      "properties": {
-        "kind": "module",
-        "level": "subsystem",
-        "name": "reflow2-core",
-        "provenance": "authored",
-        "purpose": "The deterministic, LLM-free coherence engine.",
-        "status": "planned",
-        "tier": "operational"
-      }
-    },
-    {
       "node_id": "cmp:detect",
       "node_type": "Component",
       "properties": {
@@ -7646,19 +7705,6 @@
       }
     },
     {
-      "node_id": "cmp:kit",
-      "node_type": "Component",
-      "properties": {
-        "kind": "module",
-        "level": "subsystem",
-        "name": "consumer kit",
-        "provenance": "authored",
-        "purpose": "What gets installed into a project being designed.",
-        "status": "planned",
-        "tier": "operational"
-      }
-    },
-    {
       "node_id": "cmp:llm",
       "node_type": "Component",
       "properties": {
@@ -7680,19 +7726,6 @@
         "name": "main",
         "provenance": "authored",
         "purpose": "The main module.",
-        "status": "planned",
-        "tier": "operational"
-      }
-    },
-    {
-      "node_id": "cmp:mcp",
-      "node_type": "Component",
-      "properties": {
-        "kind": "module",
-        "level": "subsystem",
-        "name": "reflow2-mcp",
-        "provenance": "authored",
-        "purpose": "The agent-facing MCP surface over one graph.",
         "status": "planned",
         "tier": "operational"
       }
@@ -7880,6 +7913,97 @@
       }
     },
     {
+      "node_id": "sys:agent-surface",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "subsystem",
+        "name": "Agent Surface",
+        "provenance": "authored",
+        "purpose": "The boundary the agent lives behind: the reflow2-mcp binary spoken to over stdio, and the consumer kit that installs it.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "sys:coherence-loop",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "subsystem",
+        "name": "Coherence Loop",
+        "provenance": "authored",
+        "purpose": "The engine: on any change, find the ripples and surface them — detect gaps, propagate impact, heal structure, reconcile against what was built, proven and deployed, and report where the design stands.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "sys:human-channel",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "subsystem",
+        "name": "Human Channel",
+        "provenance": "authored",
+        "purpose": "Turn an underspecified design into a plain-language question for the human, and remember what was asked.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "sys:intake",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "subsystem",
+        "name": "Intake",
+        "provenance": "authored",
+        "purpose": "The front door: bring intent into the graph, greenfield (genesis from a brief) or brownfield (adopt/ingest from an existing system).",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "sys:store",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "subsystem",
+        "name": "Design Store",
+        "provenance": "authored",
+        "purpose": "Durable, deterministic memory: the schema-validated graph that persists in the project, exports and imports byte-identically, is searchable, and stamps which reflow2 wrote it.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "sys:time-history",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "subsystem",
+        "name": "Time & History",
+        "provenance": "authored",
+        "purpose": "The change axis: epochs, decisions, the roads not taken — hold and compare alternatives, diff and merge divergent designs, so the past survives being updated.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "sys:vocabulary",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "subsystem",
+        "name": "Vocabulary",
+        "provenance": "authored",
+        "purpose": "The neutral type system — the node and edge types that ARE a design. What any design is made of, before any of it is stored or checked.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "who:ajs",
       "node_type": "Contributor",
       "properties": {
@@ -7930,6 +8054,16 @@
       }
     },
     {
+      "node_id": "dec:bl83a-functional-decomposition",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "reflow2's own decomposition is the seven functional systems a design-graph tool IS — vocabulary, store, coherence-loop, human-channel, time-history, intake, agent-surface — with the 38 Rust modules re-parented under them as implementation. The as-built crate grouping (reflow2-core / -mcp / kit) is retired from the as-designed view.",
+        "name": "reflow2's systems are functional, not its file tree",
+        "rationale": "The self-model had been recovered backwards from the file tree, so its 38 Components were the Rust module list and the domain primitives a design-graph product fundamentally is — node and edge types — appeared nowhere (BL-83). A functional carving comes from the product's purpose (a genesis input), not the code, and cuts across crate boundaries, so adopt on the code can only re-derive the module view. Derived with the user, 2026-07-23. The retired crate view is recovered by adopt-on-a-copy (BL-83b) and the divergence measured by compare_designs (BL-83c).",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:certainty-derived",
       "node_type": "Decision",
       "properties": {
@@ -7946,6 +8080,16 @@
         "decision": "A capability's verification state is three-valued: verified (a passing check of its own), component_verified (no check of its own, but a component it is allocated to carries a passing one — computed at read time, never written), and unchecked. The coverage line reports the third state as its own clause; detect_gaps replaces the N per-capability unverified alarms with ONE component_granularity_verification gap per carrying component at 0.35 — listing the riding capabilities, acknowledgeable once; status_contradiction accepts component-granularity proof for a verified status claim; loop_status counts component_verified as proven. A failing component suite carries nothing: passing-is-verified holds at every granularity.",
         "name": "Component-granularity verification is a computed third state, one question per component",
         "rationale": "User decided all three axes 2026-07-22 (BL-73 vocabulary session, from their own fleet's field trial): a brownfield adopt with real per-service suites plus a 137-file integration suite read as '0/20 capabilities verified' and cost 21 near-identical acknowledge writes. Computed state over a bulk-attest write because the graph should record exactly what was checked — the component — and derive what that means one hop away; manufactured capability-level VERIFIES edges would be indistinguishable from direct checks forever after. The word component_verified because it says where the check lives. One gap per component because the residual question ('is component granularity enough for these?') is genuinely per-component and deserves to be asked once, not N times — the BL-42 lesson again: a loud detector needs a different question, not a tuned number. The write side needed nothing: VERIFIES accepts any target and even carries an unused coverage enum — the whole defect was the read side.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:core-api-spof-accepted",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ifc:core-api — the DesignGraph API cmp:graph provides and the MCP service consumes — is the sole operational path between the Design Store and the Agent Surface subsystems. Accepted as a SPOF, like dec:graph-spof-accepted and dec:service-spof-accepted.",
+        "name": "The DesignGraph API is an accepted single point of failure",
+        "rationale": "One store, one surface over it (req:agent-native, single-writer storage): the bridge between them is inherently single. Surfaced when BL-83a retired cmp:core and moved the API's provider to cmp:graph; the topology is honest, not a defect to engineer away.",
         "status": "accepted"
       }
     },
@@ -9414,6 +9558,7 @@
       "node_id": "ver:adopt-storyflow",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "last_run_at": "2026-07-20",
         "level": "acceptance",
         "method": "test",
@@ -9425,6 +9570,7 @@
       "node_id": "ver:allocate",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "allocate.rs",
@@ -9435,6 +9581,7 @@
       "node_id": "ver:alternatives",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "AoA + decision-point suite (tests/alternatives.rs) — 8 cases",
@@ -9445,6 +9592,7 @@
       "node_id": "ver:budget",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "budget.rs",
@@ -9455,6 +9603,7 @@
       "node_id": "ver:change",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "temporal.rs",
@@ -9465,6 +9614,7 @@
       "node_id": "ver:compare-designs",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "compare.rs",
@@ -9475,6 +9625,7 @@
       "node_id": "ver:detect",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "detect.rs",
@@ -9485,6 +9636,7 @@
       "node_id": "ver:dimensions",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "dimensions.rs",
@@ -9495,6 +9647,7 @@
       "node_id": "ver:freshness",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "confirm.rs",
@@ -9505,6 +9658,7 @@
       "node_id": "ver:genesis",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "genesis.rs",
@@ -9515,6 +9669,7 @@
       "node_id": "ver:heal",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "heal.rs",
@@ -9525,6 +9680,7 @@
       "node_id": "ver:hierarchy",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "hierarchy.rs",
@@ -9535,6 +9691,7 @@
       "node_id": "ver:ingest",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "ingest.rs",
@@ -9545,6 +9702,7 @@
       "node_id": "ver:kit",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "test_init.py",
@@ -9555,6 +9713,7 @@
       "node_id": "ver:loop-nudge",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "last_run_at": "2026-07-22",
         "level": "integration",
         "method": "test",
@@ -9566,6 +9725,7 @@
       "node_id": "ver:loop-status",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "report.rs",
@@ -9576,6 +9736,7 @@
       "node_id": "ver:mcp-surface",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "tools.rs",
@@ -9586,6 +9747,7 @@
       "node_id": "ver:merge",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "merge suite (tests/merge.rs) — 25 cases",
@@ -9596,6 +9758,7 @@
       "node_id": "ver:model-process",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "flow.rs",
@@ -9606,6 +9769,7 @@
       "node_id": "ver:portability",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "export.rs",
@@ -9616,6 +9780,7 @@
       "node_id": "ver:propagate",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "propagate.rs",
@@ -9626,6 +9791,7 @@
       "node_id": "ver:questions",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "gap_review.rs",
@@ -9636,6 +9802,7 @@
       "node_id": "ver:reconcile-built",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "drift.rs",
@@ -9646,6 +9813,7 @@
       "node_id": "ver:reconcile-deployed",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "fielded.rs",
@@ -9656,6 +9824,7 @@
       "node_id": "ver:reconcile-verified",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "verify_drift.rs",
@@ -9666,6 +9835,7 @@
       "node_id": "ver:report",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "report.rs",
@@ -9676,6 +9846,7 @@
       "node_id": "ver:search",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "search.rs",
@@ -9686,6 +9857,7 @@
       "node_id": "ver:skill-lint",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "last_run_at": "2026-07-20",
         "level": "integration",
         "method": "analysis",
@@ -9697,6 +9869,7 @@
       "node_id": "ver:stamp",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "provenance.rs",
@@ -9707,6 +9880,7 @@
       "node_id": "ver:store",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "last_run_at": "2026-07-20",
         "level": "unit",
         "method": "test",
@@ -9718,6 +9892,7 @@
       "node_id": "ver:surface",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "llm.rs",
@@ -9728,6 +9903,7 @@
       "node_id": "ver:vocabulary",
       "node_type": "Verification",
       "properties": {
+        "kind": "verification",
         "level": "integration",
         "method": "test",
         "name": "write_side.rs",
@@ -9735,9 +9911,9 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:400a11780263a614d51dd10b6840685a241fe995b2a166a564cbdf01e1ef06fa",
+  "prev_content_hash": "sha256:e18d4e2f676add7be506435f1c8fd45306c4de5d18cc8f9ecb59f45dc5bb0725",
   "stamp": {
-    "edge_types": 55,
+    "edge_types": 53,
     "node_types": 28,
     "reflow2_version": "0.9.0",
     "schema_version": 1
