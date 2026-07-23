@@ -14,6 +14,7 @@ schema:
         name: { type: string, required: true, indexed: true, fulltext: true }
         description: { type: string, fulltext: true }
         method: { type: enum, values: [test, review, simulation, inspection, measurement, analysis], default: test, indexed: true }
+        kind: { type: enum, values: [verification, validation], default: verification, indexed: true, description: "Verification = built right (meets the spec); validation = right thing (meets the operational intent/need). A distinct axis from method/level. Was the VALIDATES edge (retired, dec:edge-orthogonality); read by the unvalidated_capability gap." }
         level: { type: enum, values: [unit, integration, system, acceptance], default: unit, indexed: true }
         location: { type: string, description: "Path to the test/inspection artifact." }
         status: { type: enum, values: [planned, passing, failing, skipped, blocked], default: planned, indexed: true }
@@ -21,9 +22,10 @@ schema:
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
       extraction_hint: >
-        A check that a Capability or Artifact meets its intent — a test, a
-        review, a simulation, a physical inspection or measurement. It VERIFIES
-        its target; folds in both individual cases and suites (use `level`).
+        A check that a Capability or Artifact is sound — a test, a review, a
+        simulation, a physical inspection or measurement. It VERIFIES its target;
+        `kind` says whether it checks the spec (verification) or the intent
+        (validation); folds in both individual cases and suites (use `level`).
 
     QualityGate:
       properties:

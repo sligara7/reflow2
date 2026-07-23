@@ -131,6 +131,41 @@ impl DesignGraph {
         self.create_node(node::VERIFICATION, verification_id, props)
     }
 
+    /// Set a Verification's `kind` — `verification` (built right, against the
+    /// spec) or `validation` (the right thing, against the intent). A separate
+    /// setter, like `set_verification_status`: a check is created, then marked.
+    /// The axis the `unvalidated_capability` gap reads (`dec:edge-orthogonality`).
+    pub fn set_verification_kind(
+        &mut self,
+        verification_id: &str,
+        kind: &str,
+    ) -> Result<StoredNode, DynoError> {
+        const KINDS: [&str; 2] = ["verification", "validation"];
+        if !KINDS.contains(&kind) {
+            return Err(DynoError::Validation {
+                node_type: node::VERIFICATION.to_string(),
+                property: "kind".to_string(),
+                message: format!(
+                    "'{kind}' is not a Verification kind (one of {})",
+                    KINDS.join(", ")
+                ),
+            });
+        }
+        let Some(existing) = self.get_node(node::VERIFICATION, verification_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::VERIFICATION.to_string(),
+                node_id: verification_id.to_string(),
+            });
+        };
+        let mut props = Props::new().set("kind", kind);
+        for (k, v) in &existing.properties {
+            if k != "kind" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::VERIFICATION, verification_id, props)
+    }
+
     /// `Verification VERIFIES target` — the check and the thing it checks.
     /// `target_type` is required because the schema allows any target.
     ///

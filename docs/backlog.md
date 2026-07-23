@@ -1523,6 +1523,30 @@ trigger**: what counts as enough reward signal (how many defects, which severity
 to *re-open* a fork rather than let it lie. That threshold is the credit-assignment rule, and it is
 the open conceptual thread this item leaves on the table.
 
+**BL-82 · Vocabulary hygiene — orthogonality and usage** — *user, 2026-07-22, from the storyflow
+lesson that edge types an agent chooses between must be orthogonal (near-synonyms → inconsistent
+extraction).* **Orthogonality pass DONE 2026-07-22** (`dec:edge-orthogonality`): the standing rule
+is now "a distinction earns its keep only if a computation reads the two sides differently."
+Retired `VALIDATES` (orphan + confusable with `VERIFIES`; moved to `Verification.kind` + the
+`unvalidated_capability` gap) and `ENABLES` (folded into `CAUSES`); kept `TRIGGERS` (its `role`
+drives Flow). 55 → 53 edges.
+
+**Usage sweep, OPEN** — a companion audit (same "does anything read/write it?" test) found the
+schema carries **dormant subsystems**: scaffolded vocabulary with *no code path either way*, distinct
+from the delete-worthy `VALIDATES` case because they are **not redundant — just unbuilt**. Found:
+(a) the **bitemporal layer** — `TemporalFact` node + `HAS_TEMPORAL_FACT`/`ABOUT_ENTITY`/`VALID_FROM`/
+`VALID_TO` (no constructor, no reader); (b) **environment compliance** — `EnvironmentRule` node +
+`IMPOSES`/`COMPLIES_WITH`/`VIOLATES_RULE` (none written or read); (c) **actor interaction** —
+`Actor` + `INTERACTS_WITH`/`OPERATES_IN` (rendered in reports, never constructed via a typed path);
+(d) lone dormant nodes **`QualityGate`** and **`Anchor`** (zero references anywhere);
+(e) `CONTAINS_EPOCH` (epoch nesting, unbuilt). The **inference "why" edges** (`CAUSES`, `EVOLVES_INTO`,
+`MITIGATES`, `MASKS`, `ANTICIPATES`, `SUPPLEMENTS`, `ANNOTATES`, `SPECIFIES`, `PRODUCES`, …) are a
+*third* category — reachable only via generic `create_edge`, nothing computes on them: intentional
+agent-populated vocabulary + PROPAGATE traversal fodder, **not** dead. Disposition per dormant item
+is the user's: a real planned capability (keep the scaffold, mark it deferred in the coverage
+matrix) or abandoned (retire the vocabulary). Test to carry forward: **unused AND redundant →
+delete (VALIDATES); unused AND not-redundant → deferred, not dead.**
+
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
 vocabulary wants in.* Lexicon namespaces schemas reverse-DNS (`app.bsky.feed.post`) so

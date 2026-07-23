@@ -596,7 +596,7 @@ async fn describe_schema_returns_the_whole_vocabulary() {
     );
     assert_eq!(
         v["edge_types"].as_array().unwrap().len(),
-        55,
+        53,
         "every edge type is discoverable"
     );
 }

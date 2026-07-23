@@ -26,17 +26,11 @@ schema:
         evidence: { type: string }
         basis: { type: enum, values: [observed, correlational, causal, spurious], default: correlational, description: "Correlation-vs-causation rigor (chain_reflow): how strongly the link is grounded. Do not assert `causal` without a mechanism." }
         validation_status: { type: enum, values: [unvalidated, hypothesis, validated, refuted], default: unvalidated, description: "Whether the causal claim has been tested (observational / intervention / mechanism / temporal)." }
-      extraction_hint: Source directly brings about target (event/decision → outcome).
-
-    ENABLES:
-      from: "*"
-      to: "*"
-      inference_category: causal
-      pass_1_extractable: true
-      properties:
-        confidence: { type: float, range: [0.0, 1.0] }
-        evidence: { type: string }
-      extraction_hint: Source makes target possible without directly causing it.
+      # Folds in enabling (ENABLES retired 2026-07-22, dec:edge-orthogonality):
+      # use CAUSES whether the source is sufficient (directly brings about) or
+      # necessary (makes possible). The two were the same causal axis and no
+      # computation read them apart; `basis`/`evidence` carry the degree.
+      extraction_hint: Source brings about or makes target possible — a cause or an enabling condition (event/decision → outcome).
 
     BLOCKS:
       from: "*"
@@ -75,15 +69,10 @@ schema:
         alignment: { type: enum, values: [opposing, supporting], default: opposing, description: "opposing = conflict; supporting = corroboration. Both stored here." }
       extraction_hint: Two decisions/requirements/claims that conflict (or, with alignment=supporting, reinforce).
 
-    VALIDATES:
-      from: "*"
-      to: "*"
-      inference_category: evidence
-      pass_1_extractable: true
-      properties:
-        confidence: { type: float, range: [0.0, 1.0] }
-        evidence: { type: string }
-      extraction_hint: Source confirms target meets intent (a Verification validating a Capability).
+    # VALIDATES retired 2026-07-22 (dec:edge-orthogonality): orthogonal-in-name-
+    # only with VERIFIES (both Verification→Capability) and orphan — no code read
+    # it. The verify-vs-validate distinction moved to Verification.kind, read by
+    # the unvalidated_capability gap.
 
     VIOLATES:
       from: "*"

@@ -1083,3 +1083,49 @@ fn a_component_claiming_to_be_built_is_not_asked_what_builds_it() {
         .collect();
     assert_eq!(unrealized, ["cap:shipped"]);
 }
+
+#[test]
+fn a_verified_capability_with_no_validation_is_flagged_then_cleared() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "Need A").unwrap();
+    g.add_capability("cap:a", "Cap A", "Does A", None).unwrap();
+    g.satisfies("cap:a", "req:a").unwrap();
+
+    // A passing verification-kind check: built to spec.
+    g.add_verification("ver:spec", "spec test", Some("test"), Some("unit"))
+        .unwrap();
+    g.verifies("ver:spec", "Capability", "cap:a").unwrap();
+    g.set_verification_status("ver:spec", "passing", None)
+        .unwrap();
+
+    // Verified against spec, nothing validates the intent → flagged.
+    assert!(
+        sources(&g.detect_gaps().unwrap()).contains(&GapSource::UnvalidatedCapability),
+        "built right, but is it the right thing?"
+    );
+
+    // Add a passing validation-kind check → the gap clears.
+    g.add_verification(
+        "ver:val",
+        "field validation",
+        Some("review"),
+        Some("acceptance"),
+    )
+    .unwrap();
+    g.verifies("ver:val", "Capability", "cap:a").unwrap();
+    g.set_verification_status("ver:val", "passing", None)
+        .unwrap();
+    g.set_verification_kind("ver:val", "validation").unwrap();
+
+    assert!(
+        !sources(&g.detect_gaps().unwrap()).contains(&GapSource::UnvalidatedCapability),
+        "now validated"
+    );
+}
+
+#[test]
+fn a_bad_verification_kind_is_refused() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_verification("ver:x", "x", None, None).unwrap();
+    assert!(g.set_verification_kind("ver:x", "vindication").is_err());
+}
