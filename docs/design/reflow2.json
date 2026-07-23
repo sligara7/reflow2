@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:400a11780263a614d51dd10b6840685a241fe995b2a166a564cbdf01e1ef06fa",
+  "content_hash": "sha256:a19a0093bea154b30198ff5a64fe4bc0968e22f0dc81f6ac1633364cef6ce999",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -522,6 +522,24 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:design-authorship-identity",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:edge-orthogonality",
+      "properties": {
+        "acted_at": "2026-07-22",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:edge-orthogonality",
       "properties": {
         "acted_at": "2026-07-22",
         "role": "author"
@@ -7952,6 +7970,16 @@
       }
     },
     {
+      "node_id": "dec:edge-orthogonality",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Standing rule for the edge vocabulary: two edge types must be orthogonal, because an LLM asked to choose between near-synonyms picks inconsistently (storyflow's lesson). The test for keeping any distinction is not 'is it true?' but 'does a computation — a detector, a report, a propagation rule — read the two sides differently?' If nothing reads it, the distinction is descriptive decoration that costs extraction consistency for no gain (the 'read side was blind' lesson turned on the vocabulary itself). Applied 2026-07-22: (1) RETIRE the VALIDATES edge — it was orthogonal-in-name-only with VERIFIES (both land Verification->Capability, the canonical V&V confusion) AND orphan (no core code ever referenced it). The verify-vs-validate distinction is real and worth keeping, so it moves to a Verification.kind property (verification | validation) — a property of the check, not a rival relationship, which removes the edge-choice ambiguity entirely — and it earns its keep via a new unvalidated_capability DETECT gap that reads it (a capability verified against spec but with no validation check confirming it meets intent). (2) FOLD ENABLES into CAUSES — same causal axis, differ only by degree (brings-about vs makes-possible), both wildcard-typed, and neither read by any computation; CAUSES's hint now covers the enabling case. (3) KEEP TRIGGERS — it is not a causal-degree variant: it carries a role property and drives the Flow/process-feedback model (flow_report, BL-37), so a computation reads it. Net: 55 -> 53 edge types; the 'does a computation read it?' test is the standing rule for any future edge.",
+        "name": "A vocabulary distinction earns its keep only if a computation reads it; retire VALIDATES + ENABLES edges",
+        "rationale": "User raised it from the storyflow lesson that edge types an agent chooses between must be completely orthogonal, and reasoned each case by cost/benefit: keeping a distinction buys nothing over collapsing unless a computation reads it, and sharpening extraction hints only lowers the error rate on a distinction that still has no reader — it cannot make a same-axis distinction orthogonal. VALIDATES was the clearest case: confusable AND orphan (the engine runs entirely on VERIFIES). Moving it to Verification.kind is strictly better than a rival edge because verify-vs-validate is an attribute of one check, not two relationships — as an edge it forces the confusable choice every time; as a kind there is always exactly one edge (VERIFIES). But a kind with no reader is the same orphan relocated, so it is kept only because the unvalidated_capability gap reads it — the mission-assurance question 'built to spec, but is it the right thing?', which the user's domain cares about. ENABLES vs CAUSES had no reader (0 core files each), so sharpening hints bought only cleaner extraction of a distinction nothing uses; collapsing removes the error class. TRIGGERS was rescued from the trio because it genuinely has a reader (its process role). The gap follows the BL-73 anti-flood lesson: one project-level rollup ('N verified capabilities have no validation check'), acknowledgeable once, not N per-capability alarms.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:export-door-spof-accepted",
       "node_type": "Decision",
       "properties": {
@@ -9707,7 +9735,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:8febd579f8c79b400daccaa3469fcf8fc91526e04a57143f7fe048c89060ba4b",
+  "prev_content_hash": "sha256:400a11780263a614d51dd10b6840685a241fe995b2a166a564cbdf01e1ef06fa",
   "stamp": {
     "edge_types": 55,
     "node_types": 28,

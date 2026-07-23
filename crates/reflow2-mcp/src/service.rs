@@ -582,6 +582,15 @@ pub struct VerificationStatusReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct VerificationKindReq {
+    pub verification_id: String,
+    /// `verification` (built right — meets the spec) or `validation` (the right
+    /// thing — meets the operational intent).
+    pub kind: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct VerifiesReq {
     pub verification_id: String,
     /// Node type being verified (e.g. `Capability`, `Artifact`, `Component`).
@@ -1919,6 +1928,25 @@ impl ReflowService {
                 req.last_run_at.as_deref(),
             )
             .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Set a Verification's kind: `verification` (built right — checks the spec) \
+                       or `validation` (the right thing — checks the operational intent). A \
+                       distinct axis from method/level. A capability with a passing verification \
+                       but no passing validation raises the `unvalidated_capability` gap — this is \
+                       how you answer it (or acknowledge). Replaces the retired VALIDATES edge.",
+        annotations(read_only_hint = false, destructive_hint = false)
+    )]
+    pub async fn set_verification_kind(
+        &self,
+        Parameters(req): Parameters<VerificationKindReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.graph.lock().await;
+        ok_json(NodeDto::from(
+            g.set_verification_kind(&req.verification_id, &req.kind)
+                .map_err(dyno_err)?,
         ))
     }
 

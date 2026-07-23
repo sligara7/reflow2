@@ -105,6 +105,7 @@ as "should these connect?" questions rather than auto-repaired.
 |---|---|
 | `dimension_blind_spot` | a central node has too few `DimensionAssessment`s (reuse `find_blind_spots`) |
 | `unmitigated_risk` | a `RISKS` edge with no `MITIGATES` response |
+| `unvalidated_capability` ✅ | a capability with a passing verification-kind check but no passing validation-kind check — built right, but the right thing? Reads `Verification.kind` (`dec:edge-orthogonality`). One project rollup, not N alarms |
 | `unresolved_contradiction` | two nodes `CONTRADICTS` with no resolving `Decision` |
 | `violated_constraint` | a `VIOLATES` edge on a Constraint/DesignRule with no remediation |
 | `unvalidated_causal_claim` | a high-impact causal edge with `basis=correlational` + `validation_status=unvalidated` (chain_reflow: don't trust correlation as causation) |

@@ -205,6 +205,14 @@ pub enum GapSource {
     /// analysis of alternatives would sit undecided forever without a nudge.
     /// Compare them (`analyze_alternatives`), then `collapse_decision`.
     UndecidedDecisionPoint,
+    // Verification vs validation (BL — edge-orthogonality)
+    /// Capabilities with a passing verification-kind check but no passing
+    /// validation-kind check — built to spec, but nothing confirms they meet the
+    /// operational intent ("built right" without "the right thing"). The reader
+    /// that earns `Verification.kind` its keep after the `VALIDATES` edge was
+    /// retired (`dec:edge-orthogonality`). One project-level rollup, not N
+    /// per-capability alarms (the BL-73 lesson).
+    UnvalidatedCapability,
 }
 
 impl GapSource {
@@ -241,6 +249,7 @@ impl GapSource {
             GapSource::LevelMismatch => "level_mismatch",
             GapSource::OrphanLevel => "orphan_level",
             GapSource::UndecidedDecisionPoint => "undecided_decision_point",
+            GapSource::UnvalidatedCapability => "unvalidated_capability",
         }
     }
 }
@@ -850,6 +859,7 @@ impl DesignGraph {
         self.detect_declining_dimensions(&mut gaps)?;
         self.detect_hierarchy_gaps(&mut gaps)?;
         self.detect_undecided_decision_points(&mut gaps)?;
+        self.detect_unvalidated_capabilities(&mut gaps)?;
 
         gaps.sort_by(|a, b| {
             // `false` sorts before `true`, so "has anchors" comes first.
@@ -1986,6 +1996,75 @@ impl DesignGraph {
                 ),
             });
         }
+        Ok(())
+    }
+
+    /// Capabilities proven against their spec (a passing verification-kind
+    /// check) but with no validation-kind check confirming they meet the intent
+    /// — "built right" without "the right thing". Reads `Verification.kind`, the
+    /// reader that earns it its keep (`dec:edge-orthogonality`). One rollup, not
+    /// N per-capability alarms: the design tracks verification but not validation
+    /// (the BL-73 anti-flood lesson).
+    fn detect_unvalidated_capabilities(
+        &self,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        let mut unvalidated: Vec<(String, String)> = Vec::new();
+        for cap in self.scan_nodes(node::CAPABILITY)? {
+            let mut has_verification = false;
+            let mut has_validation = false;
+            for e in self.incoming(&cap.node_id, Some(edge::VERIFIES))? {
+                let Some(ver) = self.get_node(node::VERIFICATION, &e.from_id)? else {
+                    continue;
+                };
+                if ver
+                    .properties
+                    .get("status")
+                    .and_then(dynograph_core::Value::as_str)
+                    != Some("passing")
+                {
+                    continue;
+                }
+                match ver
+                    .properties
+                    .get("kind")
+                    .and_then(dynograph_core::Value::as_str)
+                {
+                    Some("validation") => has_validation = true,
+                    _ => has_verification = true, // default kind is verification
+                }
+            }
+            if has_verification && !has_validation {
+                unvalidated.push((cap.node_id.clone(), node_name(&cap)));
+            }
+        }
+        if unvalidated.is_empty() {
+            return Ok(());
+        }
+        let affected: Vec<String> = unvalidated.iter().map(|(id, _)| id.clone()).collect();
+        let names: Vec<String> = unvalidated.iter().map(|(_, n)| n.clone()).collect();
+        let n = unvalidated.len();
+        gaps.push(GapCandidate {
+            id: gap_id(GapSource::UnvalidatedCapability, &affected),
+            gap_source: GapSource::UnvalidatedCapability,
+            scope: GapScope::Project,
+            severity: 0.35,
+            title: format!(
+                "{n} verified capabilit{} not validated",
+                if n == 1 { "y" } else { "ies" }
+            ),
+            description: format!(
+                "{n} capabilit{} proven against spec, but no validation check confirms {} meet the operational intent — built right, but the right thing? Add a Verification of kind=validation, or acknowledge that validation is tracked elsewhere.",
+                if n == 1 { "y is" } else { "ies are" },
+                if n == 1 { "it" } else { "they" }
+            ),
+            affected_ids: affected,
+            suggested_depth: 2,
+            evidence: format!(
+                "Capabilities with a passing verification-kind VERIFIES and no passing validation-kind VERIFIES: {}.",
+                names.join(", ")
+            ),
+        });
         Ok(())
     }
 }

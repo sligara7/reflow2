@@ -31,6 +31,27 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **Edge-vocabulary orthogonality: retired `VALIDATES` and `ENABLES`; added `Verification.kind` and
+  the `unvalidated_capability` gap** (`dec:edge-orthogonality`; **schema change → minor**, 55 → 53
+  edge types — a graph using the retired edges won't open on the new binary, but none did, and none
+  exist in any committed graph; BL-19). The standing rule now on the record: an edge distinction
+  earns its keep only if a *computation* reads the two sides differently — otherwise it costs
+  extraction consistency (an LLM picks between near-synonyms inconsistently) for no gain.
+  - **`VALIDATES` retired** — it was orthogonal-in-name-only with `VERIFIES` (both `Verification →
+    Capability`, the canonical V&V confusion) *and* orphan (no code read it). The verify-vs-validate
+    distinction is real, so it moves to a **`Verification.kind`** property (`verification` = built
+    right / meets spec; `validation` = right thing / meets intent) — a property of the check, not a
+    rival relationship, which removes the edge-choice ambiguity. Set it with the new
+    **`set_verification_kind`** tool. It earns its keep via a new **`unvalidated_capability`** DETECT
+    gap: capabilities with a passing verification-kind check but no validation-kind check ("built
+    right, but the right thing?"), reported as one project-level rollup, not N alarms (BL-73).
+  - **`ENABLES` folded into `CAUSES`** — same causal axis, differ only by degree, neither read by any
+    computation; `CAUSES`'s hint now covers the enabling case.
+  - **`TRIGGERS` kept** — it is *not* a causal-degree variant: it carries a `role` property and drives
+    the Flow/process-feedback model, so a computation reads it.
+
 ### Added
 
 - **`undecided_decision_point` DETECT gap — an open fork surfaces as a question** (BL-70, the last
