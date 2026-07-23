@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b8c640e782fb3b46c564fec2581535563de60df89b5aa3ec5057ff1ab80547b9",
+  "content_hash": "sha256:cf037c35b95b6dad49b3d7ecd55a1a2f6e134ea4d54ca3973a315813d7a11124",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -620,6 +620,14 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:nudge-covers-bypass",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:roads-not-taken",
       "properties": {
         "acted_at": "2026-07-22",
@@ -719,12 +727,30 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-a2a035876eefa13a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-eccdea423f3e687e",
       "properties": {
         "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:search"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-f74ab63586b98dee",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
     },
     {
       "edge_type": "CHANGED",
@@ -7305,12 +7331,30 @@
       }
     },
     {
+      "node_id": "chg:accept-a2a035876eefa13a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-07-23",
+        "name": "Live-store catch-up: same as art:graph — committed export already carried this checksum (a28d0a4); live store was behind because that session's server was down. Refusal-message fix (dc9bf96, BL-86) restores intended behaviour — no design meaning."
+      }
+    },
+    {
       "node_id": "chg:accept-eccdea423f3e687e",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-f74ab63586b98dee",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-07-23",
+        "name": "Live-store catch-up: the 2026-07-23 session (f4109cb stamp-ordering, dc9bf96 refusal message) reconciled these checksums in the committed export via the build script while the live server was down; this accepts the same on-disk content in the live graph. Fixes restore intended behaviour — no design meaning."
       }
     },
     {
@@ -9490,6 +9534,19 @@
       }
     },
     {
+      "node_id": "req:nudge-covers-bypass",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "The loop nudge covers the session that never touches the graph",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A session that edits code while making zero reflow2 calls must receive the same one-time Stop nudge as one that writes the graph unchecked: the nudge arms on the harness's file-edit events (Edit/Write), not only on reflow2 write events. Today loop_nudge.py counts only mcp__reflow2__ writes, so the total-bypass session — the agent that ignores the design brain entirely — passes the Stop hook silently. Constraints carried over: the hook never reads the graph (single-writer lock), blocks once and never twice, and names what is owed (loop_status; impact-check before further edits, link-artifacts after) rather than demanding a ritual call; an edit-count threshold bounds false positives on typo/docs sessions. (BL-90, BL-74 family.)",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:persistence",
       "node_type": "Requirement",
       "properties": {
@@ -9911,7 +9968,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:cc4478992011314d37cc25265720dd8e497933c87358ad2f257fd0ab61f45f38",
+  "prev_content_hash": "sha256:31e8f61cd708326656458c0f67c5fdc10f937f1c69883fc0378a7a8839224195",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,

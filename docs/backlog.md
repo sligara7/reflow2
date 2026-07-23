@@ -1805,6 +1805,35 @@ type, so the adopter fell back to reading `schema/*.yaml` for "what's required" 
 `INCLUDES` a subsystem could optionally imply its `CONTAINS`-children ship, instead of one explicit
 edge per leaf. All three are ergonomics, not correctness.
 
+**BL-90 · loop_nudge has a total-bypass blind spot: a session that never touches the graph is never
+nudged** — *user, 2026-07-23, the one survivor from a review of external "force the agent to use
+tools" advice. Size **S**, BL-74 family.* `tools/loop_nudge.py` arms only on reflow2 **write**
+activity: the PostToolUse hook matches `mcp__reflow2__.*`, counts graph writes, and the Stop hook
+blocks once when writes finish unchecked. A session that edits code while making **zero** reflow2
+calls generates zero counted writes, so the Stop hook passes silently — the agent that ignores the
+design brain entirely is exactly the one the nudge never sees. This is the bypass *upstream* of the
+one BL-74 was built from (fleet agents kept *adding nodes* while the check→ask loop stopped); same
+operational-load conditions, one step earlier. Fix shape: a second PostToolUse matcher on the
+harness's file-write tools (`Edit|Write|MultiEdit|NotebookEdit`) counts code edits in a session with
+no reflow2 engagement at all, and the Stop hook names that debt once ("N files edited, the graph was
+never consulted — start with `loop_status`; impact-check before further edits, link-artifacts
+after"). Same contract as the existing nudge: blocks once, never twice, never reads the graph (the
+single-writer lock constraint stands — which also means the hook *cannot* know which files are
+design-relevant). Two cautions on the record, both from the review that raised this: **(1) false
+positives** — a typo fix or a docs pass shouldn't arm it; since the hook can't consult the graph for
+scope, start blunt: a count threshold (`REFLOW2_LOOP_NUDGE_EDIT_THRESHOLD`, default ~3) and the
+once-only rule bound the annoyance. **(2) ritual compliance** — a hard gate trains an agent to fire
+a token `loop_status` to silence it, so this stays a *nudge that names what is owed*, never a wall;
+the honest backstop for a session that bypasses anyway is the reconcile layer (BL-66's CI gate
+catches drift on **registered** artifacts at commit time — but a file *never registered* is
+invisible to it, which is precisely why the session hook is the right layer for this). Rejected from
+the same review, for the record: blanket MUST-language (loses to urgency; REFLOW2.md's own
+trigger-not-virtue doctrine), `tool_choice` forcing (a host-side API knob no MCP server can reach —
+hooks are the reachable enforcement layer), aggressive wording across ~90 tool descriptions (cancels
+out at that scale and distorts deferred-tool retrieval), and transcript few-shots in the server
+instructions (the skills are already the load-on-demand few-shot layer). Connects to BL-74 (the
+ladder this extends) and BL-88 (the gate that backstops it).
+
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
 vocabulary wants in.* Lexicon namespaces schemas reverse-DNS (`app.bsky.feed.post`) so
