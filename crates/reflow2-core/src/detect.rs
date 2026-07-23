@@ -45,7 +45,7 @@ use crate::dimensions::DriftDirection;
 use crate::graph::DesignGraph;
 use crate::hierarchy::HierarchyIssueKind;
 use crate::llm::{LlmBackend, LlmRequest};
-use crate::nodes::{edge, node};
+use crate::nodes::{edge, fnv1a, node};
 
 /// What a gap is about (docs/gap-surfacing.md taxonomy). Adding a detector is
 /// one variant + one branch, per storyflow's convention.
@@ -420,18 +420,6 @@ impl GapCandidate {
             },
         }
     }
-}
-
-/// FNV-1a 64-bit — a small, stable, dependency-free hash so gap ids are
-/// reproducible across runs and platforms (`std`'s `DefaultHasher` is not
-/// guaranteed stable). Discipline 6.
-pub(crate) fn fnv1a(input: &str) -> u64 {
-    let mut hash: u64 = 0xcbf2_9ce4_8422_2325;
-    for byte in input.bytes() {
-        hash ^= byte as u64;
-        hash = hash.wrapping_mul(0x0000_0100_0000_01b3);
-    }
-    hash
 }
 
 /// Deterministic gap id from source + affected ids (order-independent).

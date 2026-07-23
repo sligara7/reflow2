@@ -451,7 +451,7 @@ impl DesignGraph {
 fn verification_event_id(verification_id: &str, declared: &str, observed: &str) -> String {
     format!(
         "drift:{:016x}",
-        crate::detect::fnv1a(&format!(
+        crate::nodes::fnv1a(&format!(
             "status_mismatch|{verification_id}|{declared}|{observed}"
         ))
     )

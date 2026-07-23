@@ -173,7 +173,7 @@ impl DesignGraph {
             DriftDisposition::DesignHolds { change_type } => {
                 let event_id = format!(
                     "chg:accept-{:016x}",
-                    crate::detect::fnv1a(&format!("{artifact_id}|{checksum}"))
+                    crate::nodes::fnv1a(&format!("{artifact_id}|{checksum}"))
                 );
                 if self.get_node(node::CHANGE_EVENT, &event_id)?.is_none() {
                     self.add_change_event(

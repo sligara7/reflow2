@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:eb631d5995c80cc2ddf1c08e44abcf9c1f26476044de874bd4ed5d6d95761491",
+  "content_hash": "sha256:e25694e6cab2c0dfb1b91eb04b78404bfee1df017fb0a4ec04577f101c2b581e",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -545,6 +545,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:fnv1a-foundational",
+      "properties": {
+        "acted_at": "2026-07-23",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -1321,6 +1330,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:bl84",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl84",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl84",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl84",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:bl90",
       "properties": {
         "accepted_baseline": true,
@@ -1336,6 +1381,96 @@
         "action": "modified"
       },
       "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cycle-break",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cycle-break",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cycle-break",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cycle-break",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cycle-break",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cycle-break",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cycle-break",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cycle-break",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cycle-break",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cycle-break",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:verify"
     },
     {
       "edge_type": "CHANGED",
@@ -1924,7 +2059,7 @@
         "optional": false,
         "weight_basis": "evidence"
       },
-      "to_id": "cmp:detect"
+      "to_id": "cmp:llm"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -1934,7 +2069,7 @@
         "optional": false,
         "weight_basis": "evidence"
       },
-      "to_id": "cmp:llm"
+      "to_id": "cmp:nodes"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -1955,16 +2090,6 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:nodes"
-    },
-    {
-      "edge_type": "DEPENDS_ON",
-      "from_id": "cmp:artifact",
-      "properties": {
-        "dependency_type": "function_call",
-        "optional": false,
-        "weight_basis": "evidence"
-      },
-      "to_id": "cmp:detect"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -2154,16 +2279,6 @@
         "optional": false,
         "weight_basis": "evidence"
       },
-      "to_id": "cmp:detect"
-    },
-    {
-      "edge_type": "DEPENDS_ON",
-      "from_id": "cmp:drift",
-      "properties": {
-        "dependency_type": "function_call",
-        "optional": false,
-        "weight_basis": "evidence"
-      },
       "to_id": "cmp:graph"
     },
     {
@@ -2195,16 +2310,6 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:provenance"
-    },
-    {
-      "edge_type": "DEPENDS_ON",
-      "from_id": "cmp:fielded",
-      "properties": {
-        "dependency_type": "function_call",
-        "optional": false,
-        "weight_basis": "evidence"
-      },
-      "to_id": "cmp:detect"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -2305,16 +2410,6 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:schema"
-    },
-    {
-      "edge_type": "DEPENDS_ON",
-      "from_id": "cmp:heal",
-      "properties": {
-        "dependency_type": "function_call",
-        "optional": false,
-        "weight_basis": "evidence"
-      },
-      "to_id": "cmp:detect"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -2625,16 +2720,6 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:nodes"
-    },
-    {
-      "edge_type": "DEPENDS_ON",
-      "from_id": "cmp:verify",
-      "properties": {
-        "dependency_type": "function_call",
-        "optional": false,
-        "weight_basis": "evidence"
-      },
-      "to_id": "cmp:detect"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -3438,6 +3523,12 @@
       "from_id": "cmp:heal",
       "properties": {},
       "to_id": "dec:merge-survivor-provenance"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:nodes",
+      "properties": {},
+      "to_id": "dec:fnv1a-foundational"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -6667,7 +6758,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1c729eee5b67e7dc",
+        "checksum": "sha256:24c417ac64030158",
         "location": "crates/reflow2-core/src/agent.rs",
         "name": "agent.rs",
         "status": "realized"
@@ -6699,7 +6790,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4d3f6e1093dc2564",
+        "checksum": "sha256:5b1afbb0e369af59",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
         "status": "realized"
@@ -6754,7 +6845,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c1c5855047f59ca2",
+        "checksum": "sha256:3d8c464dc7106e76",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -6776,7 +6867,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:61f887d80ed8a047",
+        "checksum": "sha256:c1ba0429d42dce85",
         "location": "crates/reflow2-core/src/drift.rs",
         "name": "drift.rs",
         "status": "realized"
@@ -6809,7 +6900,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6c3bf4e758391586",
+        "checksum": "sha256:cfdf82f1a6497595",
         "location": "crates/reflow2-core/src/fielded.rs",
         "name": "fielded.rs",
         "status": "realized"
@@ -6853,7 +6944,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2f75755ae2cd98d4",
+        "checksum": "sha256:01606f8905e95775",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -6940,7 +7031,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:40c8f12a2a6b1b07",
+        "checksum": "sha256:8a52cd289b537c0d",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
         "status": "realized"
@@ -7028,7 +7119,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cf17239c87df16a3",
+        "checksum": "sha256:e646e8dd7928adac",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
         "status": "realized"
@@ -7061,7 +7152,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:065407babd9c1a9e",
+        "checksum": "sha256:d667d9a6a64a849e",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
         "status": "realized"
@@ -7728,11 +7819,27 @@
       }
     },
     {
+      "node_id": "chg:bl84",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "BL-84 detector selectivity: community skips decomposition scaffolds; SPOF skips library/data foundations"
+      }
+    },
+    {
       "node_id": "chg:bl90",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
         "name": "BL-90: loop-nudge covers the total-bypass session (edited code, zero reflow2 calls)"
+      }
+    },
+    {
+      "node_id": "chg:cycle-break",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Break the detect↔verify cycle: relocate fnv1a from detect to nodes"
       }
     },
     {
@@ -8450,6 +8557,16 @@
         "decision": "Every export carries a content_hash — sha256 over the canonical sorted JSON of the design content only (graph_id, nodes, edges), excluding the stamp and chain fields, so the same design hashes identically whichever build wrote it. A prev_content_hash records file lineage: when an export overwrites an existing export file, the chain advances to the old file's content hash — but only when content actually changed, so two exports of an unchanged design stay byte-identical. The full hash is carried (not truncated like display checksums) because this is tamper evidence. compare_designs reports ancestry from the chain (other succeeds base / base succeeds other / siblings of a common parent / unknown); import reports an integrity mismatch loudly; the CI gate fails on a committed export that does not match its own hash. Documents predating the hash stay importable and comparable — absence is reported, never an error.",
         "name": "The export proves itself: content hash + file-lineage chain, from AT proto's self-authenticating repos",
         "rationale": "User directed 2026-07-21 after the AT Protocol comparison: atproto repos are self-authenticating (signed commits over a content-addressed root), and reflow2's export was already deterministic — the hash was well-defined and simply never computed. Content-only hashing (stamp excluded) was proven necessary the same day: the committed export and the live export had identical content but different writers (0.8.0 script vs 0.7.0-era session server), and they must fingerprint the same. The chain lives at the file-write seam because the committed export file IS the durable record whose lineage matters; the graph itself must not be mutated by a read-only export. Ancestry is what turns compare_designs from 'what diverged' into 'was the divergence made in ignorance of the base or in defiance of it' — BL-12 sketch idea 1's question, computable for the one-step case. Signing (identity) is deliberately deferred until a second writer is real; a hash chain without keys is already tamper-evident against accident and hand-editing, which is today's actual threat model.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:fnv1a-foundational",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "The FNV-1a id hash (fnv1a) moves from cmp:detect (detect.rs) to cmp:nodes (nodes.rs), the vocabulary/identity leaf everything already sits above. This breaks the critical detect↔verify circular dependency: detect→verify is a genuine domain dependency (gap detection reads a capability's verification state, crate::verify::CapabilityVerification), but verify→detect existed ONLY because verify borrowed crate::detect::fnv1a to mint a deterministic id — not a domain dependency at all. Relocating the primitive removes that false edge (cycle broken, one-way detect→verify remains) and, as the same true consequence, removes five more fnv1a-only false couplings on cmp:detect (agent, artifact, drift, fielded, heal → detect all had no other detect reference); cmp:report keeps its real detect dependency (crate::detect::GapCandidate). Net self-model reconciliation: −6 DEPENDS_ON→cmp:detect, +1 cmp:agent→cmp:nodes (agent's new, real dependency on the primitive's home).",
+        "name": "The deterministic-id hash is a foundational primitive in nodes, not a detection concern — break the detect↔verify cycle by relocating it",
+        "rationale": "User directed fixing the critical cycle (2026-07-23). BREAK over ACCEPT because the cycle was not a genuine mutual dependency to live with — it was an artifact of a homeless utility: fnv1a began in detect.rs (where gap-id hashing first needed it) and eight modules reached through crate::detect::fnv1a, so the graph asserted a dependency on the detect DOMAIN that the code did not really have. Accepting it would embalm that lie; the honest move is to put the primitive where it belongs. RELOCATE-to-nodes over introduce-an-interface or invert-a-dependency because minting a derived node's id (gaps, heal issues, merge conflicts, prompts, drift/artifact keys) is an identity concern, and nodes is the vocabulary/identity module that is already a dependency leaf (depends on nothing), so the primitive gains no new coupling and creates no new cycle — the minimal, truthful home. The build script derives DEPENDS_ON from source (never prose), so a future rebuild reproduces exactly this shape; the committed self-model was reconciled by hand this session because it carries live-only nodes (req:nudge-covers-bypass, req:read-surfaces-debt) that block a full rebuild. Sibling in spirit to dec:bl83a-functional-decomposition (structure follows function/reality, not the file tree's accidents). The remaining structural defects are all accepted SPOFs and genuinely-disconnected intent clusters; this was the one critical one.",
         "status": "accepted"
       }
     },
@@ -10297,7 +10414,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:79fd7bcda0d83f2470f6ede0989d3514dcd623dbc24ea1162a300795669cb2da",
+  "prev_content_hash": "sha256:d2b59c21d6d8f5b464a1f579e6fc99f5eeb6f36eb69d13db1641e6c1378a80b1",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,

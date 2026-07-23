@@ -34,8 +34,8 @@ use std::collections::{BTreeSet, HashMap};
 use dynograph_core::DynoError;
 use dynograph_storage::StoredEdge;
 
-use crate::detect::fnv1a;
 use crate::graph::DesignGraph;
+use crate::nodes::fnv1a;
 use crate::nodes::{edge, node};
 
 /// The kind of structural defect (docs/heal-process.md defect catalog).

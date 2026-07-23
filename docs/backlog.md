@@ -1815,6 +1815,24 @@ type, so the adopter fell back to reading `schema/*.yaml` for "what's required" 
 `INCLUDES` a subsystem could optionally imply its `CONTAINS`-children ship, instead of one explicit
 edge per leaf. All three are ergonomics, not correctness.
 
+**BL-92 · The critical detect↔verify circular dependency — DONE 2026-07-23** — *the one critical
+structural defect on reflow2's own self-model, dispositioned on Anthony's direction to fix it
+(`dec:fnv1a-foundational`). Size **S**, BL-83a-surfaced.* The cycle was genuine but spurious:
+`detect→verify` is a real domain dependency (gap detection reads `crate::verify::CapabilityVerification`),
+but `verify→detect` existed ONLY because `verify` borrowed `crate::detect::fnv1a` to mint a
+deterministic id — the FNV-1a hash homed in `detect.rs` since gap-id hashing first needed it, and
+reached by eight modules. **Broke it by relocating `fnv1a` to `nodes.rs`** (the vocabulary/identity
+leaf everything already sits above; minting a derived node's id is an identity concern, and the leaf
+gains no coupling so no new cycle). This removed the cycle plus five more fnv1a-only false couplings
+on `cmp:detect` (agent, artifact, drift, fielded, heal); `report` keeps its real `GapCandidate`
+dependency, `detect→verify` stays. Self-model reconciled (−6 `DEPENDS_ON→cmp:detect`, +1
+`cmp:agent→cmp:nodes`) to match the corrected source; the build script derives deps from source so a
+rebuild reproduces it. Verified on the real self-model via `--analyse-only`: `detect_defects` now
+**zero critical** (7 warnings — 5 accepted SPOFs + fork-alternatives + parked BL-91). Also
+reconciled the artifact drift BL-84's `structure.rs`/`heal.rs` edits had left (`chg:bl84`). BREAK
+over ACCEPT because the cycle was a homeless-utility artifact, not a real mutual dependency — see the
+decision's rationale.
+
 **BL-91 · A read reminds the agent of loop debt at the moment of attention (read-side loop_hint)**
 — *user idea, 2026-07-23, raised while reviewing the BL-90 nudge. Size **S–M**, BL-74 family.
 Captured: `req:read-surfaces-debt` (proposed) governed_by `dec:read-hint-shape` (proposed, OPEN),

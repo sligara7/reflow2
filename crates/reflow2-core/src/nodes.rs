@@ -289,3 +289,25 @@ pub(crate) fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
 pub(crate) fn is_traceability_edge(edge_type: &str) -> bool {
     structural_rule(edge_type).is_some()
 }
+
+/// FNV-1a 64-bit — a small, stable, dependency-free hash so the deterministic
+/// ids of *derived* nodes (gaps, heal issues, merge conflicts, agent prompts,
+/// drift and artifact-claim keys) are reproducible across runs and platforms
+/// (`std`'s `DefaultHasher` is not guaranteed stable). Discipline 6.
+///
+/// It lives here, in the vocabulary/identity layer, because minting a derived
+/// node's id is an identity concern shared across the coherence loop — not a
+/// detection one. It began in `detect.rs` (where gap-id hashing first needed
+/// it) and every other module borrowed it through `crate::detect::fnv1a`, which
+/// manufactured a false dependency on the detect domain from eight modules and
+/// a genuine detect↔verify *cycle* (verify's only tie to detect was this
+/// helper). `nodes` is a leaf everything already sits above, so the primitive's
+/// true, edge-free home is here (the cycle-break decision on the record).
+pub(crate) fn fnv1a(input: &str) -> u64 {
+    let mut hash: u64 = 0xcbf2_9ce4_8422_2325;
+    for byte in input.bytes() {
+        hash ^= byte as u64;
+        hash = hash.wrapping_mul(0x0000_0100_0000_01b3);
+    }
+    hash
+}

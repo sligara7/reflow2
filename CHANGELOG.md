@@ -33,6 +33,22 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **The critical `detect↔verify` circular dependency is broken by relocating the id hash to its
+  true home** (`dec:fnv1a-foundational`; **patch** — an internal refactor, no surface/schema
+  change). The self-model's one *critical* structural defect was a genuine but spurious cycle:
+  `detect → verify` is real (gap detection reads a capability's verification state), but
+  `verify → detect` existed **only** because `verify` borrowed `fnv1a` — the FNV-1a deterministic-id
+  hash that happened to live in `detect.rs` since gap-id hashing first needed it. Eight modules
+  reached through `crate::detect::fnv1a`, so the graph asserted a dependency on the *detect domain*
+  the code didn't really have. `fnv1a` moves to `nodes.rs` (the vocabulary/identity layer, a
+  dependency leaf minting a derived node's id is an identity concern), which breaks the cycle and
+  removes six fnv1a-only false couplings on `cmp:detect` (agent, artifact, drift, fielded, heal,
+  verify); `report` keeps its real `GapCandidate` dependency. The build script derives `DEPENDS_ON`
+  from source, so a rebuild reproduces exactly this shape. Verified on the real self-model:
+  `detect_defects` now reports **zero critical** defects (7 warnings — 5 accepted SPOFs, 2
+  genuinely-disconnected intent clusters). Also reconciles the artifact drift that the BL-84
+  detector fix (below) had left on `structure.rs`/`heal.rs`.
+
 - **Structural detectors no longer cry wolf on pure-decomposition scaffolds or library/data
   foundations** (BL-84; **patch** — turns two false positives quiet, no surface/schema change;
   BL-5/BL-69 family). Two selectivity lessons the community and SPOF detectors were missing:

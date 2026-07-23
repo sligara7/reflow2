@@ -380,7 +380,7 @@ fn drift_event_id(artifact_id: &str, kind: DriftKind, observed_checksum: Option<
     };
     format!(
         "drift:{:016x}",
-        crate::detect::fnv1a(&format!(
+        crate::nodes::fnv1a(&format!(
             "{}|{}|{}",
             kind.as_str(),
             artifact_id,

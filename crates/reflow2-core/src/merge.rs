@@ -34,9 +34,9 @@ use std::fmt;
 use dynograph_core::{DynoError, Value};
 use serde::Serialize;
 
-use crate::detect::fnv1a;
 use crate::export::{ExportedEdge, ExportedNode, GraphExport, Props};
 use crate::graph::DesignGraph;
+use crate::nodes::fnv1a;
 
 /// Which input a resolved value came from — the audit trail on every automatic
 /// decision, so a reader can see *why* the merge took what it took.

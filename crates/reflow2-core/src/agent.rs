@@ -34,8 +34,8 @@ use std::collections::{HashMap, HashSet};
 
 use serde::{Deserialize, Serialize};
 
-use crate::detect::fnv1a;
 use crate::llm::{LlmBackend, LlmError, LlmRequest, LlmResponse};
+use crate::nodes::fnv1a;
 
 /// Stable id for a request's *semantic* content (system framing + prompt + the
 /// JSON hint), as lowercase hex of an FNV-1a hash — the same deterministic-id
