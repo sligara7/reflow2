@@ -1694,6 +1694,37 @@ documents), BL-74 (`loop_status` = the proto-view). BL-83(b)/(c) is a miniature 
 principle (reflow2's own as-built state in the graph, not a side doc), so this item is well-timed to
 follow it.
 
+**BL-86 · The provenance stamp is count-based, so a schema *removal* breaks the upgrade direction**
+— *user, 2026-07-23 (real graphs: storyflow, @bro's projects, written by pre-orthogonality
+binaries); the message half is DONE.* Size **S–M**. `req:survives-upgrade` promises "an existing
+graph opens, or is refused loudly with what to do." The BL-19 stamp records **counts** (`node_types`,
+`edge_types`), and the refusal fires when the graph's counts exceed the running binary's ("knows more
+of the schema"). That is exactly right for the **additive** case (an old binary meeting a newer
+graph). But the edge-orthogonality change **removed** two edge types (55 → 53) without bumping
+`reflow2_version` (`0.9.0` both sides) or `schema_version` (`1` both sides) — so a graph written
+*before* the removal has a **higher** count and is refused *by a current binary*, and the count alone
+**cannot distinguish** "this graph uses 2 types I removed → migrate the graph" from "this graph uses
+2 types I don't have yet → update my binary." The old message assumed the latter and told the user to
+`cargo build` — useless for the removal case, and doubly wrong for a `curl | sh` consumer with no
+checkout (`req:frictionless-update`). **DONE this session — the message half:** the refusal now names
+*both* recovery paths (update the binary; or migrate the graph — import a committed export into a
+fresh graph, or export-with-the-old-binary → import-here, retired types dropped and named), and drops
+the wrong single assumption. Verified: `--import` of an older-stamped export document is *not*
+refused (it was the migration path used for the self-model this session), so the recipe works today.
+
+**Still open (the real fix):** the count can't self-diagnose, so the message has to hedge. The
+principled resolution is a **set-based stamp** — record *which* types the schema (or the graph
+actually uses) carries, not just how many. Then the binary can say precisely "this graph uses edge
+type `VALIDATES`, which this reflow2 retired — safe to migrate" vs "this graph uses `X`, which this
+reflow2 has never heard of — you are behind," and the refusal becomes unambiguous without hedging.
+Cheaper interim options to weigh first: (a) a `--migrate` / re-stamp path that drops retired types and
+re-stamps in one step (today it is a manual export→import); (b) bump `schema_version` on any *removal*
+so the direction is at least detectable from the version, not only the count; (c) the per-release
+`upgrading-to-vX.md` for the edge-orthogonality cut carries the migration recipe, with a one-line
+pointer in the consumer AGENTS.md "if reflow2 gets in your way" section (both deferred to when the
+change is released — it is still `[Unreleased]`). Connects to BL-19 (the stamp), BL-51 (frictionless
+update), and `req:survives-upgrade`.
+
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
 vocabulary wants in.* Lexicon namespaces schemas reverse-DNS (`app.bsky.feed.post`) so

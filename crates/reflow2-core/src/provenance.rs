@@ -153,10 +153,17 @@ pub fn check_and_stamp(graph_path: &str, schema: &Schema) -> Result<Provenance, 
         Some(was) if was == now => Provenance::Match { stamp: was },
         Some(was) if was.knows_more_than(&now) => {
             return Err(DynoError::Storage(format!(
-                "this graph was written by reflow2 {} ({} node types, {} edge types), which \
-                 knows more of the schema than the reflow2 you are running ({}: {}, {}). \
-                 Opening it would silently show you less of your design than it holds.\n\
-                 Rebuild from a current checkout:  cargo build -p reflow2-mcp --release",
+                "this graph was written by reflow2 {}, which knew more of the schema \
+                 ({} node types, {} edge types) than the reflow2 you are running ({}: {}, {}); \
+                 opening it could silently show you less of your design than it holds, so it is \
+                 refused. This happens for one of two reasons, and the count alone cannot tell \
+                 them apart:\n\
+                 \u{20}\u{2022} Your reflow2 is BEHIND the one that wrote this graph — update reflow2 \
+                 (or rebuild it from a current checkout) and reopen.\n\
+                 \u{20}\u{2022} The graph PREDATES a schema change that retired some types, and your \
+                 reflow2 is current — migrate the graph: import a committed export into a fresh \
+                 graph, or export it with the reflow2 that wrote it and import it here. Any retired \
+                 type is dropped and named on import, so re-express it if the design used it.",
                 was.reflow2_version,
                 was.node_types,
                 was.edge_types,

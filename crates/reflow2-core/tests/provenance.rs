@@ -111,8 +111,9 @@ fn a_graph_from_the_future_is_refused_loudly() {
         "say why it is refused, not just that it is: {msg}"
     );
     assert!(
-        msg.contains("cargo build"),
-        "say what to do about it: {msg}"
+        msg.contains("update reflow2") && msg.contains("import"),
+        "say what to do about it — both recovery paths (update the binary, or migrate the \
+         graph by import): {msg}"
     );
 
     // Refused means untouched: the stamp is the only record of what wrote it.

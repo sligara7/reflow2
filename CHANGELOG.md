@@ -185,6 +185,15 @@ This file is the third view: *what changed, and when*.
   machine that had run it under an older binary). The store is now opened *first* (still content-
   agnostic, so the real "knows more" refusal for an actual on-disk graph is unchanged), and the
   test pins that a failed open writes no stamp. Surfaced by the BL-83b adopt dogfood.
+- **The "knows more of the schema" refusal now names both recovery paths** (**patch** — a
+  misleading message made correct; BL-86). The stamp is count-based, so a graph refused for a
+  higher count could mean *either* a stale binary *or* a graph that predates a schema **removal**
+  (like this release's 55 → 53 edge-orthogonality) — the count can't tell them apart. The old
+  message assumed only the first and said `cargo build`, useless for the removal case and for a
+  `curl | sh` consumer with no checkout. It now presents both: update reflow2, **or** migrate the
+  graph (import a committed export into a fresh graph, or export-with-the-writer → import-here;
+  retired types are dropped and named on import). The set-based-stamp fix that would remove the
+  ambiguity entirely is BL-86.
 
 ## [0.9.0] — 2026-07-22
 
