@@ -1547,6 +1547,54 @@ is the user's: a real planned capability (keep the scaffold, mark it deferred in
 matrix) or abandoned (retire the vocabulary). Test to carry forward: **unused AND redundant →
 delete (VALIDATES); unused AND not-redundant → deferred, not dead.**
 
+**BL-83 · The self-model decomposes by file, not by function** — *user, 2026-07-22, the sharpest
+self-application finding of the session: "if I designed a car, reflow2 should identify engine /
+frame / drivetrain / cabin as the systems; for a graph tool, the systems are nodes and edges — did
+it identify that?"* Size **L** (the re-derivation is a real design exercise). **The answer was no,
+and the *way* it is no is the diagnosis.**
+
+reflow2's own 38 Components are the **Rust module list** (`graph`, `schema`, `detect`, `export`,
+`service`, `dto`, `main`, …) — every one `kind: module`, every purpose literally *"The X module."*.
+The domain primitives a design-graph product fundamentally IS — **node types and edge types** — appear
+**nowhere** in the graph (searched: zero hits for the vocabulary as a subject). In the car analogy:
+the self-model is the *factory's parts bins labeled by aisle*, not *engine / frame / drivetrain*.
+
+**Root cause:** the self-model was **recovered backwards from source** (`build_design_graph.py` walks
+the file tree) plus session accretion — so it is the **as-built** decomposition (the file layout),
+never the **as-designed** functional one. A genesis exercise from the brief *"a system that captures
+any design in a graph"* would surface *vocabulary / store / coherence-loop / golden-thread / question
+channel* as the systems, with the Rust modules re-parented **under** them as implementation. That
+exercise was never run on reflow2 itself. This is **the `VALIDATES`/BL-82 gap one level up**: the
+vocabulary rot was invisible to the detectors *because the vocabulary is not in the graph*, and it is
+not in the graph *because the decomposition axis is implementation, not function*. Two symptoms, one
+cause.
+
+**What DID work (fair credit):** given a decomposition, reflow2 finds what is load-bearing —
+articulation-point SPOF analysis correctly named `cmp:graph`, the export chain, and `cmp:service` as
+genuine cut vertices (accepted as `dec:*-spof-accepted`); modularity/coupling/surprises all computed
+and true. *Originating* the right carving is deliberately not the graph's job (`dec:three-party-checks`
+— the human designs, the graph remembers and counts).
+
+**But one detectable thing was missed, and it is fair to hold:** every component purpose restating
+its name (*"The X module."*) is **zero recorded intent** — `design_without_intent` at component
+granularity, mechanically checkable (purpose ≈ name → nothing captured), and nothing fired.
+
+**Three moves, increasing depth:**
+1. **`vacuous_purpose` DETECT gap** (**S**) — a purpose/statement that merely restates the node's
+   name is recorded structure with no recorded intent. Would flag all 38 of our own modules today.
+2. **Schema-as-design** (**M**, = BL-82's fix, now motivated) — model the node/edge types as
+   first-class design content (elements something SATISFIES and code REALIZES), so the next
+   `VALIDATES` (unmotivated + duplicate) and the next dormant type (orphan/disconnected) are
+   *detected gaps*, run by the detectors reflow2 already has, not a hand `grep`. The recursion is
+   clean: the graph tool modeling its own type-graph, linted by its own graph detectors.
+3. **Re-derive reflow2's functional decomposition** (**L**, a session *with the user*) — run genesis's
+   question fresh on reflow2 itself: *what are the systems of a thing that captures any design in a
+   graph?* Almost certainly vocabulary / store / loop / thread / question-channel, with the 38 Rust
+   modules re-parented as the implementation layer. The engine/frame/drivetrain view the self-model
+   never had — and exactly the kind of exercise reflow2 exists to run. Best done in a **fresh
+   session** (clean context + it needs the rebuilt binary; the running server predates the 28/53
+   schema change).
+
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
 vocabulary wants in.* Lexicon namespaces schemas reverse-DNS (`app.bsky.feed.post`) so
