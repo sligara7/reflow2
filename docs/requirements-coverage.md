@@ -291,6 +291,30 @@ detection is itself deferred, and `QualityGate` has no detector at all. Adding c
 types nothing consumes would build the mirror image of the problem this section exists to record —
 a write side with no read side. Each should land with its detector, not before.
 
+## Dormant schema scaffolding — vocabulary with no code path yet (BL-82)
+
+A 2026-07-22 usage sweep (the "does a computation read or write it?" test that retired the
+`VALIDATES` edge) found subsystems scaffolded in `schema/*.yaml` with **no constructor and no
+reader**. These are recorded here so the schema does not silently overstate what is built. They are
+**deferred, not dead**: unlike `VALIDATES` (which was retired because it was unused *and* redundant),
+each of these is unused *and not redundant* — real planned capability, kept as scaffold until its
+read+write sides land together. The standing test: *unused AND redundant → retire; unused AND
+not-redundant → defer, and say so here.*
+
+| Subsystem | Schema types | Status |
+|---|---|---|
+| Bitemporal facts | `TemporalFact` + `HAS_TEMPORAL_FACT` / `ABOUT_ENTITY` / `VALID_FROM` / `VALID_TO` | ⬜ Deferred — time-bounded facts (valid-from/valid-to over epochs). Scaffold only; no constructor, no reader. |
+| Environment compliance | `EnvironmentRule` + `IMPOSES` / `COMPLIES_WITH` / `VIOLATES_RULE` | ⬜ Deferred — the P5 operating-ruleset layer (GS-9 / WS-4). Nothing writes or reads it yet. |
+| Actor interaction | `Actor` + `INTERACTS_WITH` / `OPERATES_IN` | ⬜ Deferred — `Actor` is rendered in reports but never constructed via a typed path; the interaction edges are unused. |
+| Quality gates | `QualityGate` (WS-5) | ⬜ Deferred — no constructor, no detector. |
+| Epoch nesting | `CONTAINS_EPOCH` | ⬜ Deferred — a hotfix epoch within a release epoch; unused. |
+| Reserved anchor | `Anchor` | ⬜ Deferred — zero references anywhere. |
+
+**Not on this list, and not deferred:** the inference "why" edges (`CAUSES`, `EVOLVES_INTO`,
+`MITIGATES`, `MASKS`, `ANTICIPATES`, `SUPPLEMENTS`, `ANNOTATES`, `SPECIFIES`, `PRODUCES`, …). They
+have no *specific* reader by design — they are agent-populated via `create_edge` and traversed
+generically by PROPAGATE. "Nothing computes on them" is the intended contract, not a gap.
+
 ## Cross-cutting project rules — [AGENTS.md](../AGENTS.md)
 
 | Rule | Status | Evidence / note |
