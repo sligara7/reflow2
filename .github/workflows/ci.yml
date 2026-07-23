@@ -53,6 +53,13 @@ jobs:
         run: python3 tools/test_loop_nudge.py
       - name: Skill lint (skills' contract with the surface)
         run: python3 tools/skill_lint.py
+      - name: Design coherence gate (reflow2 on itself — self-model matches the build)
+        # reflow2's own consumer CI gate (BL-66), run on reflow2's own committed
+        # self-model: re-hashes registered artifacts, reconciles, detect_gaps.
+        # Fails the build on unaccepted drift (a code change that didn't reconcile
+        # the design) or a serious open gap — so forgetting the loop in-session is
+        # caught here rather than merged silently. Dogfooding the ci-gate skill.
+        run: python3 tools/reflow2_check.py --export docs/design/reflow2.json
 
   full:
     name: workspace + real-binary instruments

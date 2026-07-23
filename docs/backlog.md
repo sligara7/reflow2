@@ -1786,7 +1786,12 @@ and reflow2's own gate is the one thing with no regression test. Ironic against 
 visible state" ethos, and doubly so because `render_views` is now a *confirmed intended feature*
 (the author settled it in the dogfood, so it has a requirement but still no test). Add a hermetic
 suite for each (a doctored-export-fails / clean-passes / missing-export-refuses trio for the gate,
-mirroring its BL-66 manual check) and wire both into `ci.yml`.
+mirroring its BL-66 manual check) and wire both into `ci.yml`. **PARTIAL 2026-07-23:** `reflow2_check`
+is now wired into `ci.yml`'s `core` job as the design-coherence gate — run against reflow2's own
+committed self-model on every push, so it is at least *exercised* in CI (and it immediately earned its
+keep: it caught this session's `art:graph`/`art:provenance` drift). Still open: a hermetic *unit*
+suite for the gate's own logic (the CI run only exercises the happy path on the real self-model), and
+`render_views.py` remains wholly untested. This is reflow2 finally dogfooding its own `ci-gate` skill.
 
 **BL-89 · Adopt-doctrine tweaks from the BL-83b dogfood** — *2026-07-23 (B.1, B.3, E.1). Size **S**
 each, batched.* Minor refinements the largest-ever adopt run surfaced, none blocking: **(B.1)** the
