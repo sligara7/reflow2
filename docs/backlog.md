@@ -1553,6 +1553,15 @@ frame / drivetrain / cabin as the systems; for a graph tool, the systems are nod
 it identify that?"* Size **L** (the re-derivation is a real design exercise). **The answer was no,
 and the *way* it is no is the diagnosis.**
 
+> **DONE 2026-07-23 — all three moves.** (a) genesis re-derived reflow2's seven functional subsystems
+> WITH the user (`dec:bl83a-functional-decomposition`); (b) `adopt` recovered a clean as-built module
+> model on a copy (dogfood: no vacuity, caught its own over-claim); (c) `compare_designs` measured the
+> divergence — `117 added / 186 removed / 18 changed`, 1 shared Component of ~42, capability count
+> converged 33 = 33. Thesis confirmed and quantified: from the artifact adopt re-derives *modules*;
+> the *functions* are a design layer the code doesn't carry, and they relocate to Flow/Interface when
+> recovered. Full write-up: `docs/trials/2026-07-23-bl83b-adopt-dogfood.md`. Details in the three move
+> bullets below; spawned BL-84/86/87/88/89.
+
 reflow2's own 38 Components are the **Rust module list** (`graph`, `schema`, `detect`, `export`,
 `service`, `dto`, `main`, …) — every one `kind: module`, every purpose literally *"The X module."*.
 The domain primitives a design-graph product fundamentally IS — **node types and edge types** — appear
@@ -1623,13 +1632,33 @@ granularity, mechanically checkable (purpose ≈ name → nothing captured), and
      (the recursion working: the graph tool linted by its own detectors caught a BL-69-family blind
      spot). The purpose text of each subsystem is functional, not `"The X module."` — the recorded
      intent the module layer lacked. Remaining: **(b)** adopt on a copy, **(c)** compare.
-   - **(b) adopt on a COPY (as-built, additive):** run adopt against the code for a clean as-built
-     model — which doubles as the ultimate **dogfood test of `adopt` itself** (does it recover real
-     intent or emit "The X module." vacuity? does it honestly flag its unknowns?), a skill so far
-     only run on small trial repos.
-   - **(c) `compare_designs` (a) against (b):** the divergence between the functional and the module
-     decomposition **is this finding made mechanical and measurable** — reflow2's own
-     as-designed-vs-as-built doctrine (the whole reconcile/compare family) turned on its own design.
+   - **(b) adopt on a COPY (as-built, additive): DONE 2026-07-23.** Ran `adopt` against a stripped
+     copy (`/home/ajs7/project/reflow2-bl83b/` — code + schema + kit, with reflow2's own design
+     record and self-study tooling removed so the design had to be *recovered*, not read). Recovered
+     143 nodes / 238 edges; **adopt worked** — no `"The X module."` vacuity (descriptions from
+     signatures/imports/contracts), 17 unmotivated capabilities surfaced as real questions (author
+     confirmed 7 as intended features, +7 authored requirements; 15 requirements recovered from
+     README/comments promoted to accepted with provenance kept `inferred`), and
+     `status_contradiction` **caught the adopter over-claiming `verified`** — the anti-erosion value
+     prop demonstrated on a live recovery. Ended at the correct adopt state: 7 gaps deliberately
+     open. Full evidence: `docs/trials/2026-07-23-bl83b-adopt-dogfood.md`. Also surfaced (and this
+     session fixed) two real bugs — the stamp-ordering bug (`f4109cb`) and the misleading refusal
+     message (`dc9bf96`, BL-86) — plus BL-87 (import_graph stamp), BL-88 (untested CI gate), BL-89
+     (adopt-doctrine tweaks). Caution recorded: adopt found a real failing test but *confabulated* a
+     nonexistent "committed fixture" as its cause — findings need verification gating.
+   - **(c) `compare_designs` (a) against (b): DONE 2026-07-23 — the finding, measured.**
+     `--diff docs/design/reflow2.json reflow2-asbuilt.json` → `design_added 117, design_removed 186,
+     design_changed 18`; the two models barely overlap. **Structure diverges almost completely** (1
+     shared Component of ~42): as-built recovered a *module/cluster* decomposition from the artifact
+     and did **not** re-derive the 7 functional `sys:*` subsystems — BL-83's thesis confirmed and
+     measured. **The functional concepts relocated rather than vanished** — the coherence loop came
+     back as a `Flow` (`flow:coherence-loop`), vocabulary as an Interface — onto different node types,
+     not structural subsystems. **The capability count converged (33 = 33, 9 ids shared)**: *what the
+     system does* is intrinsic to the artifact; *how it is decomposed* is a modeling choice two honest
+     passes make differently. And the **"why" layer is absent in (b)** (0 of a's 28 ChangeEvents / 37
+     DriftEvents / 5 Questions / 2 Contributors / 3 Epochs) — the irreplaceable layer adopt cannot
+     recover, now visible as `supporting_removed: 111`. Reproduced independently in the real-repo
+     session. **BL-83 is DONE.**
    Never wipe the live graph; adopt runs on a copy, genesis extends the real one.
 
 **BL-84 · The community/SPOF analysis flags pure-decomposition nodes as an island** — *surfaced by
@@ -1648,6 +1677,14 @@ already scopes its candidates. Pin both directions: a subsystem grouping does no
 disconnected *operational* cluster still fires. The finding is worth keeping as evidence — it is the
 clean recursion BL-83 predicted, the graph tool's own detectors catching a blind spot in the graph
 tool.
+
+*Sibling, same family, from the BL-83b adopt dogfood (2026-07-23, C.2):* `single_point_of_failure`
+still fires on `library`/`data`-medium hubs (`ifc:schema-vocab`, `ifc:graph-persist`, `cmp:core-store`
+in the recovered graph) where "add redundancy" is meaningless — a foundation everything links against
+isn't a failure point in the SPOF sense. BL-6/F6 already taught SPOF to skip *components* coupled only
+by a library contract; the gap is that a `medium: library|data` **Interface** hub still fires. Fold
+into this item's fix: the structural detectors should down-rank or skip nodes whose only contracts are
+`library`/`data` medium, the same way this item skips `CONTAINS`-only nodes.
 
 **BL-85 · The backlog is reflow2's own requirements stream, not a monolithic file** — *user,
 2026-07-23, following BL-83a.* Size **L** (a vocabulary + view design and a practice change;
@@ -1724,6 +1761,44 @@ so the direction is at least detectable from the version, not only the count; (c
 pointer in the consumer AGENTS.md "if reflow2 gets in your way" section (both deferred to when the
 change is released — it is still `[Unreleased]`). Connects to BL-19 (the stamp), BL-51 (frictionless
 update), and `req:survives-upgrade`.
+
+**BL-87 · `import_graph` requires `document.stamp` but the published schema doesn't say so** —
+*BL-83b adopt dogfood, 2026-07-23 (E.2). Size **S**, BL-57/BL-28 family.* The first `import_graph`
+call in the trial failed with a bare `missing field \`stamp\`` and no hint about the shape; the
+adopter recovered the envelope by exporting the empty graph first. Verified: `GraphExport.stamp` is a
+required field (no serde default), but the tool's published input schema declares `document` as a
+bare `{"type": "object", "additionalProperties": true}` with no inner structure — so a client cannot
+know `stamp` is required, exactly the under-typed-parameter shape BL-28 fixed for the `JsonValue`
+params. Fix, either: (a) publish the `GraphExport` shape in the tool schema (name `stamp` / `nodes` /
+`edges`, the BL-28 approach), or (b) default the stamp on import — accept a stampless document as
+`Unstamped` rather than erroring, which is friendlier for a hand-authored or third-party document.
+(a) keeps the "no silent acceptance" line; (b) trades it for ergonomics — a design call. The
+toolsnap freezes the current under-specified schema, so fixing it updates a golden.
+
+**BL-88 · reflow2's own CI gate and view renderer have no automated test** — *BL-83b adopt dogfood,
+2026-07-23 (C.1, confirmed against the real repo). Size **S–M**.* `unverified_capability` fired on
+`cap:ci-gate` and `cap:render-views` during the recovery, and it is true: `tools/reflow2_check.py`
+(275 LOC — *the consumer CI coherence gate*, BL-66) and `tools/render_views.py` (928 LOC) have **no
+test suite** in the tree (only `test_init.py` and `test_loop_nudge.py` exist) and **neither is
+invoked in `ci.yml`**. `reflow2_check.py` was three-way verified by hand when BL-66 landed, but
+nothing pins it since — a change could silently break the gate that is supposed to fail the build,
+and reflow2's own gate is the one thing with no regression test. Ironic against the "unexamined is a
+visible state" ethos, and doubly so because `render_views` is now a *confirmed intended feature*
+(the author settled it in the dogfood, so it has a requirement but still no test). Add a hermetic
+suite for each (a doctored-export-fails / clean-passes / missing-export-refuses trio for the gate,
+mirroring its BL-66 manual check) and wire both into `ci.yml`.
+
+**BL-89 · Adopt-doctrine tweaks from the BL-83b dogfood** — *2026-07-23 (B.1, B.3, E.1). Size **S**
+each, batched.* Minor refinements the largest-ever adopt run surfaced, none blocking: **(B.1)** the
+scale-granularity heuristic ("~78 nodes for 110k LOC") keys off **LOC**, but reflow2 is ~34k LOC with
+93 tools / 28 node types — *feature* density far above *line* density, so an honest coarse model
+still lands near ~100 nodes. Granularity guidance should key off **distinct contracts / capabilities**,
+which is what actually drives node count. **(B.3)** `describe_schema` returns a very large payload per
+type, so the adopter fell back to reading `schema/*.yaml` for "what's required" — add a
+`describe_schema {required_only: true}` compact mode. **(E.1)** wiring the operate layer spawned 11
+`unreleased_component` gaps until every leaf was `INCLUDES`-wired into the Release; a Release that
+`INCLUDES` a subsystem could optionally imply its `CONTAINS`-children ship, instead of one explicit
+edge per leaf. All three are ergonomics, not correctness.
 
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
