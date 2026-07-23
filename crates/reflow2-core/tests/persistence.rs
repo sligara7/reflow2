@@ -20,13 +20,29 @@ use reflow2_core::DesignGraph;
 #[cfg(not(feature = "rocksdb"))]
 #[test]
 fn open_rocksdb_without_feature_fails_loud() {
-    let Err(err) = DesignGraph::open_rocksdb("/tmp/reflow2-should-not-be-created") else {
+    use reflow2_core::provenance::stamp_path;
+
+    // A unique path per run, so the test is hermetic. A fixed path accumulates a
+    // provenance stamp across runs, and a stale stamp written by a *different*
+    // schema version used to pre-empt this very error with a "knows more of the
+    // schema" refusal — the exact bug fixed in graph.rs (open before stamp).
+    let path = std::env::temp_dir().join(format!("reflow2-nofeature-{}", std::process::id()));
+    let path = path.to_str().expect("temp path is valid utf-8");
+    let _ = std::fs::remove_file(stamp_path(path)); // clear any stale sibling stamp
+
+    let Err(err) = DesignGraph::open_rocksdb(path) else {
         panic!("on-disk open must fail loud when the rocksdb feature is off");
     };
     let msg = err.to_string().to_lowercase();
     assert!(
         msg.contains("rocksdb"),
         "error should name the missing feature, got: {msg}"
+    );
+    // The regression this pins: a failed open must not leave a provenance stamp
+    // behind. A stray stamp poisons the next open across a schema change.
+    assert!(
+        !stamp_path(path).exists(),
+        "a feature-off open must not write a version stamp"
     );
 }
 

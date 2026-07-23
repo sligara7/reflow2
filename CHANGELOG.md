@@ -175,6 +175,17 @@ This file is the third view: *what changed, and when*.
   that raised this read a tested system as "0/20 verified" and paid 21 acknowledges to
   record the truth; that shape is now a handful of one-time questions.
 
+### Fixed
+
+- **A feature-off on-disk open no longer writes a provenance stamp before failing** (**patch** —
+  a silent side-effect made loud/correct). `open_rocksdb` stamped `<path>.meta.json` *before* the
+  `rocksdb`-feature gate, so a build without the feature left a stray stamp behind — and across a
+  schema change a stale higher-count stamp then pre-empted the "fail loud, name the feature" error
+  with a "knows more of the schema" refusal (it also made the feature-off test non-hermetic on a
+  machine that had run it under an older binary). The store is now opened *first* (still content-
+  agnostic, so the real "knows more" refusal for an actual on-disk graph is unchanged), and the
+  test pins that a failed open writes no stamp. Surfaced by the BL-83b adopt dogfood.
+
 ## [0.9.0] — 2026-07-22
 
 A minor release, and the one the field trial should pick up: the design record now **proves

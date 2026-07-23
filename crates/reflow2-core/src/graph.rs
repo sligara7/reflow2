@@ -92,10 +92,20 @@ impl DesignGraph {
         path: &str,
     ) -> Result<(Self, crate::provenance::Provenance), DynoError> {
         let schema = crate::schema::load_schema()?;
+        // Open the store FIRST. A build without the `rocksdb` feature fails loud
+        // here (naming the feature — AGENTS.md rule 4), and it must do so BEFORE
+        // the provenance stamp touches disk: check_and_stamp writes
+        // `<path>.meta.json` for any non-refused path, so stamping before a failed
+        // open leaves a stray stamp that poisons the next open across a schema
+        // change (a stale higher-count stamp then reads as "knows more of the
+        // schema than you"). Opening is content-agnostic — no design data is
+        // interpreted — so the "knows more" refusal check_and_stamp raises next is
+        // unchanged for a real on-disk graph.
+        let engine = StorageEngine::new_rocksdb(schema.clone(), path)?;
         let provenance = crate::provenance::check_and_stamp(path, &schema)?;
         Ok((
             Self {
-                engine: StorageEngine::new_rocksdb(schema, path)?,
+                engine,
                 graph_id: DEFAULT_GRAPH_ID.to_string(),
             },
             provenance,
