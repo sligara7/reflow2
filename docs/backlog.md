@@ -1805,6 +1805,25 @@ type, so the adopter fell back to reading `schema/*.yaml` for "what's required" 
 `INCLUDES` a subsystem could optionally imply its `CONTAINS`-children ship, instead of one explicit
 edge per leaf. All three are ergonomics, not correctness.
 
+**BL-91 · A read reminds the agent of loop debt at the moment of attention (read-side loop_hint)**
+— *user idea, 2026-07-23, raised while reviewing the BL-90 nudge. Size **S–M**, BL-74 family.
+Captured: `req:read-surfaces-debt` (proposed) governed_by `dec:read-hint-shape` (proposed, OPEN),
+both authored_by who:ajs; gap `e20d0909` [0.60] is the honest unbuilt state.* The write tools carry
+a static `loop_hint` at the next loop step (`dec:loop-status-state-not-history`); reads carry
+nothing. The idea: a read that returns while the loop is owed something surfaces it — the mid-session
+trigger between SessionStart (fires once) and the Stop nudge (fires at the end), landing at the
+agent's most frequent action. **Decision to make, two axes** (`dec:read-hint-shape`): (1) *shape* —
+(A) do nothing, the three existing triggers suffice; (B) a static reminder on every read; (C) a
+state-derived conditional hint that fires only when `loop_status` would report real debt. (2)
+*scope/throttle* — which reads, and how often the debt is recomputed. Leaning **C**: (B) is the exact
+anti-pattern the user rejected in BL-90 ("aggressive wording across ~90 tools cancels out at scale" —
+boilerplate trains skimming), and reads differ from writes in the way that makes static wrong here —
+a write always advances the loop so its static hint is always relevant, a read creates no debt so a
+constant reminder is noise most of the time. C respects `dec:loop-status-state-not-history` (debt is
+computed, never remembered) and `dec:anchored-first` (a real problem outranks a generic nudge); its
+cost is coupling reads to a debt traversal, which axis 2's throttle bounds. **Wants the user's word
+on both axes before build.** Sibling of the write-side `loop_hint`; extends BL-74, complements BL-90.
+
 **BL-90 · loop_nudge has a total-bypass blind spot: a session that never touches the graph is never
 nudged — DONE 2026-07-23** — *user, 2026-07-23, the one survivor from a review of external "force
 the agent to use tools" advice. Size **S**, BL-74 family. Built exactly to the fix shape below: a
