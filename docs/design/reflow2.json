@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:cc4478992011314d37cc25265720dd8e497933c87358ad2f257fd0ab61f45f38",
+  "content_hash": "sha256:b8c640e782fb3b46c564fec2581535563de60df89b5aa3ec5057ff1ab80547b9",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -6558,7 +6558,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c3ddf29598f76fe3",
+        "checksum": "sha256:2fb1eb7c04dc16b3",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -6689,7 +6689,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d8275cc570cb9bb2",
+        "checksum": "sha256:75b484b15df65186",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
         "status": "realized"
@@ -9911,7 +9911,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e18d4e2f676add7be506435f1c8fd45306c4de5d18cc8f9ecb59f45dc5bb0725",
+  "prev_content_hash": "sha256:cc4478992011314d37cc25265720dd8e497933c87358ad2f257fd0ab61f45f38",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,
