@@ -1661,8 +1661,18 @@ granularity, mechanically checkable (purpose ≈ name → nothing captured), and
      session. **BL-83 is DONE.**
    Never wipe the live graph; adopt runs on a copy, genesis extends the real one.
 
-**BL-84 · The community/SPOF analysis flags pure-decomposition nodes as an island** — *surfaced by
-BL-83a on reflow2's own self-model, 2026-07-23. Size **S**, BL-69 family.* When the functional
+**BL-84 · The community/SPOF analysis flags pure-decomposition nodes as an island — DONE
+2026-07-23** — *surfaced by BL-83a on reflow2's own self-model, 2026-07-23. Size **S**, BL-69
+family. Fixed both halves. Community: `disconnected_community` now skips an island reachable from
+the main body through `CONTAINS` (the cluster-level twin of `dead_end`'s assembly exemption); the
+8-node subsystem island cleared on the real self-model (detect_defects 9→8), while the genuinely
+disconnected clusters — fork-alternatives and the parked BL-91 intent — correctly still fire. SPOF
+sibling: `couples_only_as_a_library` now also spares `data` medium, and a new `interface_is_foundation`
+twin spares an Interface node whose own medium is `library`/`data`. `is_foundation_medium` is the
+shared predicate; silence still earned by an explicit medium, REST stays a candidate. 3 new tests in
+`crates/reflow2-core/tests/structural.rs` pin both directions; the two live SPOF interfaces are REST
+so the accepted architectural SPOFs are untouched. The finding is kept as evidence — the graph
+tool's own detectors catching a blind spot in the graph tool.* When the functional
 subsystems were seeded (`level: subsystem`, connected downward only by `CONTAINS`), `detect_defects`
 reported the seven of them plus their governing Decision as an 8-node `disconnected_community`. The
 cause is the same one [BL-69](#closed) fixed for `single_point_of_failure`: the structural detectors

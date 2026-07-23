@@ -33,6 +33,25 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **Structural detectors no longer cry wolf on pure-decomposition scaffolds or library/data
+  foundations** (BL-84; **patch** — turns two false positives quiet, no surface/schema change;
+  BL-5/BL-69 family). Two selectivity lessons the community and SPOF detectors were missing:
+  - **`disconnected_community` skips a decomposition scaffold.** The design network excludes
+    `CONTAINS` on purpose (decomposition is not traceability), so a functional-subsystem grouping —
+    several subsystems tied to each other through the Decision that governs them, reaching their
+    modules only downward through containment — islanded by construction. It was the false positive
+    BL-83a's own self-model surfaced (an 8-node "subsystem island"). An island now reachable from
+    the main body through `CONTAINS` is recognized as a grouping, not an orphan — the cluster-level
+    twin of `dead_end`'s existing "an assembly speaks through its children" exemption. A genuinely
+    disconnected cluster (no containment crossing its boundary to the body) still fires.
+  - **`single_point_of_failure` treats a `data` foundation like a `library`, and skips an Interface
+    that is itself one.** `couples_only_as_a_library` already spared a component coupled only by a
+    `library` contract (F6); it now also spares `data` (a store everything reads), and a new twin
+    spares an `Interface` node whose own `medium` is `library`/`data` — the shared-foundation
+    contract two subsystems meet at, which is no more a runtime failure point than the library
+    component is. Silence is still earned by an explicit `library`/`data`; every run-time medium
+    (REST and friends) stays a candidate. Surfaced by the BL-83b adopt dogfood.
+
 - **Edge-vocabulary orthogonality: retired `VALIDATES` and `ENABLES`; added `Verification.kind` and
   the `unvalidated_capability` gap** (`dec:edge-orthogonality`; **schema change → minor**, 55 → 53
   edge types — a graph using the retired edges won't open on the new binary, but none did, and none

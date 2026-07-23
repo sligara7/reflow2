@@ -581,3 +581,129 @@ fn a_release_and_its_environment_are_not_an_island() {
         "a release shipping a design artifact is part of the design network"
     );
 }
+
+// ---- BL-84 · decomposition scaffolds and foundation hubs are not defects ----
+
+#[test]
+fn a_subsystem_grouping_is_not_a_disconnected_community() {
+    // reflow2's own self-model (BL-83a): functional subsystems connect down to
+    // their modules only by CONTAINS (excluded from the design network) and to
+    // each other through the Decision that governs them — so the whole grouping
+    // islands by construction, the cluster-level twin of dead_end's pure
+    // container. A grouping whose modules live in the main body is not an
+    // orphan, and `generate_bridge` would be nonsense.
+    let mut g = linear_thread(); // req:a—cap:a—cmp:a is the main body
+    for sys in ["sys:one", "sys:two"] {
+        g.add_component(sys, sys, "a subsystem", Some("subsystem"))
+            .unwrap();
+    }
+    // sys:one holds the body's component; both subsystems are governed by one
+    // Decision, which is what ties them into a ≥2 cluster in the design network.
+    g.contain_component("sys:one", "cmp:a").unwrap();
+    g.create_node(
+        node::DECISION,
+        "dec:decomp",
+        Props::new()
+            .set("name", "Functional decomposition")
+            .set("decision", "carve by function"),
+    )
+    .unwrap();
+    for sys in ["sys:one", "sys:two"] {
+        g.create_edge(
+            edge::GOVERNED_BY,
+            node::COMPONENT,
+            sys,
+            node::DECISION,
+            "dec:decomp",
+            Props::new(),
+        )
+        .unwrap();
+    }
+    assert!(
+        !has(&g, HealCategory::DisconnectedCommunity),
+        "a subsystem grouping attached through the hierarchy is not an orphan"
+    );
+}
+
+#[test]
+fn an_island_with_only_internal_containment_still_fires() {
+    // The exemption keys on containment crossing the island boundary *to the
+    // body* — not on containment existing. cap:x—cmp:x is a detached cluster;
+    // cmp:x holding an equally-detached module does not attach it to the design,
+    // so it stays a genuine disconnected community (BL-84 pins the other way).
+    let mut g = linear_thread();
+    g.add_capability("cap:x", "X", "island cap", None).unwrap();
+    g.add_component("cmp:x", "X part", "island assembly", Some("subsystem"))
+        .unwrap();
+    g.allocate("cap:x", "cmp:x").unwrap(); // internal traceability ⇒ a ≥2 island
+    g.add_component("cmp:x2", "X module", "island module", None)
+        .unwrap();
+    g.contain_component("cmp:x", "cmp:x2").unwrap(); // containment, but to an orphan
+    assert!(
+        has(&g, HealCategory::DisconnectedCommunity),
+        "containment that never reaches the body does not grant the exemption"
+    );
+}
+
+/// Two 2-node subsystems bridged by a single shared Interface of a given medium
+/// — the Interface is the articulation point (BL-84's C.2 shape, from the
+/// BL-83b adopt dogfood where `library`/`data` interface hubs still fired).
+fn bridged_by_interface(medium: &str) -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_component("cmp:a", "A", "part a", None).unwrap();
+    g.add_component("cmp:b", "B", "part b", None).unwrap();
+    g.create_node(node::ARTIFACT, "art:a", Props::new().set("name", "a.rs"))
+        .unwrap();
+    g.create_node(node::ARTIFACT, "art:b", Props::new().set("name", "b.rs"))
+        .unwrap();
+    g.create_node(
+        node::INTERFACE,
+        "ifc:hub",
+        Props::new()
+            .set("name", "Shared foundation")
+            .set("medium", medium),
+    )
+    .unwrap();
+    g.provides("cmp:a", "ifc:hub").unwrap();
+    g.consumes("cmp:b", "ifc:hub").unwrap();
+    for (art, cmp) in [("art:a", "cmp:a"), ("art:b", "cmp:b")] {
+        g.create_edge(
+            edge::DEPENDS_ON,
+            node::ARTIFACT,
+            art,
+            node::COMPONENT,
+            cmp,
+            Props::new(),
+        )
+        .unwrap();
+    }
+    g
+}
+
+#[test]
+fn a_foundation_interface_is_not_a_runtime_single_point_of_failure() {
+    let flagged = |g: &DesignGraph| -> Vec<String> {
+        g.detect_defects()
+            .unwrap()
+            .into_iter()
+            .filter(|d| d.category == HealCategory::SinglePointOfFailure)
+            .flat_map(|d| d.affected_ids)
+            .collect()
+    };
+    // A run-time contract (the default medium): removing it severs two real
+    // subsystems — a genuine single point of failure.
+    assert!(
+        flagged(&bridged_by_interface("REST")).contains(&"ifc:hub".to_string()),
+        "a run-time contract bridging two subsystems is fragile"
+    );
+    // The same topology stated as a library or data foundation: linked into /
+    // read by both sides, so `add_redundancy` is incoherent and it must not fire.
+    for medium in ["library", "data"] {
+        let f = flagged(&bridged_by_interface(medium));
+        assert!(
+            !f.contains(&"ifc:hub".to_string()),
+            "a {medium} foundation cannot be a runtime SPOF: {f:?}"
+        );
+    }
+}

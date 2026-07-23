@@ -67,6 +67,18 @@ fn is_operational_member(node_type: &str) -> bool {
     OPERATIONAL_TYPES.contains(&node_type) || node_type == node::ARTIFACT
 }
 
+/// A contract medium a consumer *links against* rather than *calls across* at
+/// run time — a shared `library`, or a `data` store everything reads. Such a
+/// foundation is imported/read by everything, which makes it a perfect
+/// articulation point, and you cannot run a second copy of it to survive its
+/// failure: `add_redundancy` is incoherent, so it is never a runtime single
+/// point of failure. `library` is F6 (the storyflow trial); `data` is the twin
+/// folded in by BL-84 (the BL-83b adopt dogfood, where `data`-medium hubs still
+/// fired). All other media (REST and friends) are carried at run time.
+pub(crate) fn is_foundation_medium(medium: &str) -> bool {
+    medium == "library" || medium == "data"
+}
+
 /// A `dynograph-graph` view of the design network plus the id/type of each dense
 /// node index (the algorithms return index-keyed results to map back).
 pub(crate) struct DesignNetwork {
@@ -432,7 +444,7 @@ impl DesignGraph {
                     i.properties
                         .get("medium")
                         .and_then(dynograph_core::Value::as_str)
-                        .map(|m| m == "library")
+                        .map(is_foundation_medium)
                 })
                 .unwrap_or(false);
             if !by_library {
@@ -440,6 +452,26 @@ impl DesignGraph {
             }
         }
         Ok(true)
+    }
+
+    /// Whether an `Interface` node is *itself* a `library`/`data` foundation.
+    /// The Interface-node twin of [`Self::couples_only_as_a_library`], which
+    /// keys on a *component's* provided contracts: when two subsystems meet at a
+    /// single shared foundation contract, the `Interface` is the articulation
+    /// point rather than the provider, and it is no more a runtime failure point
+    /// than the library component is (BL-84). A missing or non-foundation medium
+    /// is a run-time contract, so it stays a candidate — silence is earned by an
+    /// explicit `library`/`data`, never the default.
+    pub(crate) fn interface_is_foundation(&self, node_id: &str) -> Result<bool, DynoError> {
+        Ok(self
+            .get_node(node::INTERFACE, node_id)?
+            .and_then(|i| {
+                i.properties
+                    .get("medium")
+                    .and_then(dynograph_core::Value::as_str)
+                    .map(is_foundation_medium)
+            })
+            .unwrap_or(false))
     }
 
     pub(crate) fn is_single_point_of_failure(&self, node_id: &str) -> Result<bool, DynoError> {

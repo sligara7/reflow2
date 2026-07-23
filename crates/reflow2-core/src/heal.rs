@@ -531,7 +531,24 @@ impl DesignGraph {
                     .cmp(&a.len())
                     .then(net.id_of(a[0]).cmp(net.id_of(b[0])))
             });
+            let main_ids: BTreeSet<&str> = clusters[0].iter().map(|&i| net.id_of(i)).collect();
             for island in &clusters[1..] {
+                // A cluster reachable from the main design through CONTAINS is a
+                // decomposition scaffold, not an orphan. The design network
+                // excludes CONTAINS on purpose (decomposition is not
+                // traceability), so a subsystem grouping whose modules live in
+                // the main body islands by construction — several subsystems tie
+                // to each other through the Decision that governs them and reach
+                // the body only downward through containment. dead_end already
+                // exempts such an assembly ("an assembly speaks through its
+                // children"); the community detector needs the same lesson
+                // (BL-84, surfaced by BL-83a on reflow2's own self-model). A
+                // genuinely disconnected cluster has no containment crossing its
+                // boundary to the body and still fires.
+                let island_ids: BTreeSet<&str> = island.iter().map(|&i| net.id_of(i)).collect();
+                if self.island_attached_by_containment(&island_ids, &main_ids)? {
+                    continue;
+                }
                 let mut affected: Vec<String> =
                     island.iter().map(|&i| net.id_of(i).to_string()).collect();
                 affected.sort();
@@ -578,10 +595,20 @@ impl DesignGraph {
         // part, not the file.
         let op_net = self.operational_network(None)?;
         for ap in op_net.articulation_points() {
-            if !crate::structure::OPERATIONAL_TYPES.contains(&op_net.type_of(ap)) {
+            let ty = op_net.type_of(ap);
+            if !crate::structure::OPERATIONAL_TYPES.contains(&ty) {
                 continue;
             }
             let id = op_net.id_of(ap).to_string();
+            // An Interface that is itself a library/data foundation — linked
+            // into or read by everything, so a perfect articulation point you
+            // cannot make redundant — is the Interface twin of the library
+            // component handled just below (BL-84). When two subsystems meet at
+            // one shared foundation contract, the Interface is the cut vertex
+            // rather than its provider.
+            if ty == node::INTERFACE && self.interface_is_foundation(&id)? {
+                continue;
+            }
             // …and among components, only the ones that can fail *at run time*.
             // A shared library is imported by everything, which makes it a
             // perfect articulation point and a nonsense candidate: you cannot
@@ -662,6 +689,33 @@ impl DesignGraph {
             }
         }
         Ok(())
+    }
+
+    /// Whether any node in `island` reaches the main design `body` through a
+    /// CONTAINS (decomposition) edge — the one traceability edge the design
+    /// network excludes. Such an island is a subsystem grouping attached to the
+    /// design through the hierarchy, not a true orphan (BL-84); the check keys
+    /// on containment crossing the island boundary *to the body*, so an island
+    /// with only internal or dangling containment is still genuinely
+    /// disconnected and stays flagged.
+    fn island_attached_by_containment(
+        &self,
+        island: &BTreeSet<&str>,
+        body: &BTreeSet<&str>,
+    ) -> Result<bool, DynoError> {
+        for &id in island {
+            for e in self.outgoing(id, Some(edge::CONTAINS))? {
+                if body.contains(e.to_id.as_str()) {
+                    return Ok(true);
+                }
+            }
+            for e in self.incoming(id, Some(edge::CONTAINS))? {
+                if body.contains(e.from_id.as_str()) {
+                    return Ok(true);
+                }
+            }
+        }
+        Ok(false)
     }
 
     /// Produce a heal proposal for the current defects under `options`. Computes
