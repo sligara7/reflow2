@@ -1649,6 +1649,51 @@ disconnected *operational* cluster still fires. The finding is worth keeping as 
 clean recursion BL-83 predicted, the graph tool's own detectors catching a blind spot in the graph
 tool.
 
+**BL-85 · The backlog is reflow2's own requirements stream, not a monolithic file** — *user,
+2026-07-23, following BL-83a.* Size **L** (a vocabulary + view design and a practice change;
+keystone-adjacent). The smell: `docs/backlog.md` is growing long, and a *design-coherence* tool
+keeping its own todos in a side markdown file is the same shape BL-83 named one level up — state
+that should live *in the graph* living *outside* it. The user's framing is the spine: **treat each
+new BL as a new user requirement to reflow2.** It has already happened once — BL-27 ("adopting a
+system that already exists") became `req:adopt-existing`, `accepted`, in the self-model now. The
+Requirement lifecycle already **is** the backlog lifecycle: `status` (proposed → accepted →
+deferred / dropped → met) = raised → agreed → parked / won't-do → done; `priority` = urgency;
+`provenance` = who raised it (user vs a trial inferred it); BL-75 **certainty** = is-it-real; and
+**"done" is COMPUTED from the golden thread** (a requirement is `met` when something satisfies it and
+the capability is realized / verified), so % progress falls out *derived*, never asserted — the
+anti-erosion property (BL-35) for free. `detect_gaps`'s `unsatisfied_requirement` is already backlog
+triage; `loop_status` (BL-74) is already a proto-backlog view.
+
+The refinement that keeps it honest — **not every BL is a requirement**, and collapsing them all
+loses signal: a *defect* item (BL-42, "a detector punishes correct modelling") is a **gap / failing
+verification against an existing requirement** (`req:no-silent-fallback`), not a new one; an
+*open-choice* item (BL-29, the survivor rule) is a `Decision` / `Question`. So the move is not a new
+`Task` node type — it is **running the backlog through reflow2's own `capture-intent`**, classifying
+each raised item into the vocabulary the tool already has (mostly Requirement, some gaps, some
+Decisions). The deepest dogfood there is: "improve reflow2" going through reflow2's own
+capture → detect → decide loop.
+
+What is genuinely NEW (the residue after the mapping): **effort / size (S/M/L)** — a
+build-management attribute, not a design property, arguably out of scope and folding into readiness
+(BL-68); **sequencing** beyond priority; **risk-to-completion**, which is exactly BL-68's thesis
+(*"the roadmap is a risk-burndown schedule"*, TRL/MRL); and the **rich narrative** (some BL items
+are three paragraphs of reasoning) which stays as `documents`-linked Artifacts (BL-26), lossless,
+rather than crushed into a property. So: tracking-state in the graph, essays as linked docs, the
+whole rendered by a `backlog_report` / roadmap **projection** (SYNTHESIZE, BL-40 — a view, never a
+second source of truth).
+
+The load-bearing caution, on the record: the self-model has **19** requirements today, all
+`accepted`, load-bearing. Pouring ~84 backlog items in as requirements 5×'s that layer with
+mostly-`proposed`, churny, superseded work — and the *core intent* ("the things reflow2 must be")
+can drown in the *work-stream*. The mitigation is reflow2's own doctrine: items enter `proposed`,
+and only the user's word promotes to `accepted` (BL-75), so accepted + high-certainty stays
+separable from the raw stream, and met / dropped are axis-Z history, not cruft. **It works iff the
+certainty discipline holds; it fails the day everything is rubber-stamped `accepted` on entry.**
+Connects to BL-68 (risk-burndown roadmap), BL-65 (risk), BL-40 (the projection), BL-26 (narrative as
+documents), BL-74 (`loop_status` = the proto-view). BL-83(b)/(c) is a miniature of the same
+principle (reflow2's own as-built state in the graph, not a side doc), so this item is well-timed to
+follow it.
+
 **BL-72 · Namespaced schema packs — a domain vocabulary composes, it doesn't fork** — *from
 the AT-proto comparison (Lexicon NSIDs), 2026-07-21. Size **M**; concept until a real second
 vocabulary wants in.* Lexicon namespaces schemas reverse-DNS (`app.bsky.feed.post`) so
