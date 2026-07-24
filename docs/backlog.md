@@ -1740,6 +1740,42 @@ Connects to BL-68 (risk-burndown roadmap), BL-65 (risk), BL-40 (the projection),
 documents), BL-74 (`loop_status` = the proto-view). BL-83(b)/(c) is a miniature of the same
 principle (reflow2's own as-built state in the graph, not a side doc), so this item is well-timed to
 follow it.
+> **2026-07-24 addendum — communities, not human-labelled families (this item's payoff, and how to
+> de-risk it).** Once each BL is a node, the *families* a person intuits ("the loop-signal-quality
+> thread: BL-74/90/91/93") should fall out of the graph's **own structure** via community detection —
+> the same Leiden reflow2 already runs in `propose_allocation` and the modularity /
+> `disconnected_community` detectors, pointed at the requirement graph instead of asserted by an
+> agent reading prose. That moves "family" from LLM extrapolation (which `partnership.md` distrusts)
+> to a computed **projection** (BL-40): derived, never asserted — when *I* say "family" it is
+> pattern-matched prose; when Leiden says it, it is the topology. The honest caveat is the design
+> content: **communities come from edges, not nodes.** A requirement clusters only through the
+> capabilities/components it shares, so emergent communities skew toward *subsystem* ("everything
+> routed through `cmp:service`") over *theme* ("loop signal quality"), and a `proposed` requirement
+> with no satisfier yet is a **singleton** until it is built. Where the graph's communities *diverge*
+> from a human's intuited family is itself the finding — it says whether the theme is real structure
+> or narrative. **De-risk before the L migration**: capture one cluster as requirements and run
+> community detection — grouped ⇒ greenlight; scattered ⇒ the requirement graph needs thematic edges
+> (or a different projection) first.
+>
+> **Result (2026-07-24) — the clean hypothesis is refuted, and the refutation is the point.**
+> reflow2's own Leiden (`propose_allocation`) returns **34 singletons, modularity 0**: capabilities
+> carry *no sibling edges* (they link up to Requirements and down to Components, never cap-to-cap),
+> so the capability layer has no community structure to find. Louvain over the golden-thread
+> projection (176 nodes / 217 edges; a networkx proxy for Leiden) **scatters the 5-requirement loop
+> family across 4 communities** — `loop-fires-on-triggers` + `nudge-covers-bypass` group *only*
+> because they share the exact same capability (`cap:loop-status`); `read-surfaces-debt` (a different
+> capability) splits off, `agent-native` splits off, and the unbuilt `disposition-accepted-defects`
+> is a singleton (no satisfier — confirming a `proposed` requirement doesn't cluster until built).
+> Adding `GOVERNED_BY` collapses to 14 communities but merges into subsystem/platform grab-bags, not
+> the theme. **Conclusion:** community detection over the golden thread yields *delivery* families
+> ("these requirements ship through the same capability / part" — genuinely useful; it *is* the
+> operational roadmap) but **not** the cross-cutting *theme* a human names ("loop signal quality").
+> The theme is narrative, not current structure; encoding it would need an explicit theme edge (back
+> to human labelling, which defeats the point) or a different signal (citation edges between BLs;
+> text similarity — but that is the LLM again). So BL-85's roadmap projection should promise the
+> **delivery** view and treat thematic families as a separate, harder question — the experiment saved
+> the L migration from over-promising. The graph checked the agent's "family" story against its own
+> wiring and disagreed: exactly the property this whole tool exists for.
 
 **BL-86 · The provenance stamp is count-based, so a schema *removal* breaks the upgrade direction**
 — *user, 2026-07-23 (real graphs: storyflow, @bro's projects, written by pre-orthogonality
@@ -1851,6 +1887,48 @@ type, so the adopter fell back to reading `schema/*.yaml` for "what's required" 
 `unreleased_component` gaps until every leaf was `INCLUDES`-wired into the Release; a Release that
 `INCLUDES` a subsystem could optionally imply its `CONTAINS`-children ship, instead of one explicit
 edge per leaf. All three are ergonomics, not correctness.
+
+**BL-93 · Accepted structural defects can't be dispositioned, so `loop_status` never reads clean**
+— *found 2026-07-24 running reflow2's own gaps/health analysis on itself (dogfood); observed on the
+live self-model — `detect_defects` reports 6 warnings, all accepted, and `loop_status` counts every
+one as outstanding.* Size **S–M**; a vocabulary + loop-computation decision, BL-74/90/91 family.
+
+The asymmetry: reflow2 has `acknowledge_gap` — move a gap the user has judged fine out of
+`detect_gaps` into `reviewed_gaps`, recorded as a Decision, re-opening if the affected nodes change.
+There is **no equivalent for a `detect_defects` defect.** A structural defect the user has explicitly
+accepted still fires as a warning on every run: reflow2's own 5 SPOFs carry `dec:*-spof-accepted`
+governing decisions, and the `cap:fork-alternatives` disconnected community is a known BL-70 draft
+marker — yet `loop_status.structural_defects` counts all 6 forever, so `loop_status.clean` is
+**unreachable on any design that has a single legitimately-accepted SPOF.** reflow2's own loop
+reports "6 structural defect(s) outstanding" on every check, permanently.
+
+Why it matters (the BL-74 spine): a signal that never goes quiet gets tuned out — the exact skimming
+failure BL-90/91 were built to prevent, one layer over. `loop_status` today conflates *"undecided
+defect → act on it"* with *"decided-and-accepted defect → standing fact,"* and a permanently non-zero
+count trains the reader to ignore the number, so a genuinely **new** defect no longer stands out. The
+irony is on the record: the tool's own coherence loop can never report itself clean, for a reason it
+gives the user no way to resolve.
+
+Options to weigh:
+- **(a) `acknowledge_defect`** — the defect sibling of `acknowledge_gap`: record why a defect is
+  accepted (a Decision), drop it from the `loop_status` debt count into a reviewed-defects view, and
+  re-open it if the affected nodes change. The clean vocabulary match — the reviewed-gap ledger
+  already models exactly "kept, not suppressed, re-opens on change" (BL-84's `island_attached_by_containment`
+  and the retired `ack:695` show the lifecycle works).
+- **(b) `loop_status` nets out** defects whose affected nodes carry a `*-spof-accepted` (or
+  equivalent) governing decision — no new tool, but couples the loop count to a decision-naming
+  convention and only handles the SPOF case, not a generic accepted community/cycle.
+- **(c) Split the count** — `detect_defects` stays fully verbose (every defect visible, honest), but
+  `loop_status.structural_defects` reports `undecided` vs `accepted`, and `clean` keys on undecided
+  only. The smallest change if the goal is to keep every defect loud while fixing only the loop's
+  clean/debt signal.
+
+Lean **(a)** or **(c)**. The requirement underneath, either way: *the coherence loop must let the
+user distinguish a defect they have decided to live with from one they have not, so `loop_status` can
+reach clean and a new defect actually stands out.* Connects to BL-74 (the loop fires on triggers, not
+virtue), BL-90/91 (skimming / signal quality), and BL-84/BL-69 (the SPOF & community detector tuning
+that leaves these accepted-but-real warnings). Per BL-85, this is a **new requirement to reflow2**,
+not a defect against an existing one — capture it through the tool's own capture-intent when raised.
 
 **BL-92 · The critical detect↔verify circular dependency — DONE 2026-07-23** — *the one critical
 structural defect on reflow2's own self-model, dispositioned on Anthony's direction to fix it
