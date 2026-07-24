@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- BL-70 fork layer (design) — @ajs — since 2026-07-24 — design graph (epoch chain, fork
+  decisions, cmp:merge/cmp:alternatives), docs/backlog.md, docs/design/reflow2.json
 
 
 
