@@ -54,7 +54,6 @@ Add yourself if you're new here.
 
 
 
-- BL-80 merge-apply document CLI (git-file workflow) — @ajs — since 2026-07-24 — crates/reflow2-mcp/src/main.rs (--merge-apply + --resolutions), cap:merge-designs desc; report/apply/rerere rungs already landed
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -80,6 +79,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-80 #3 DONE — file-pure `--merge-apply` CLI, the apply half of the git-file merge workflow. `--merge` proposes (conflicts + ids); `--merge-apply base ours theirs --resolutions FILE` runs `resolve_merge` and prints the merged export document, opening no graph and refusing (non-zero, no output) until every conflict is decided. Reuses the tested core; `main.rs` adapter only. 4 CLI tests + end-to-end propose→decide→apply→`--diff`-identical. art:main design_updated (`chg:bl80-merge-apply-cli`), cap:merge-designs surface refreshed. workspace tests + clippy + fmt + gate green; live==committed 346n/1017e. Still open on BL-80: node-type/delete-modify rerere keys + rerere memory aging — @ajs — 2026-07-24 (ed37bc9) — crates/reflow2-mcp/src/main.rs, docs/design/reflow2.json, CHANGELOG.md, docs/backlog.md
 
 - BL-86 DONE — set-based schema stamp (the real fix). `GraphStamp` records `node_type_names`/`edge_type_names` (serde-default, so legacy count-only stamps still parse); a `RETIRED_{NODE,EDGE}_TYPES` registry lets the upgrade refusal name the offending types and split retired (→ migrate the graph) from unknown (→ update reflow2) instead of the count-only hedge; legacy count stamps get a sharpened message. Fixes the case v0.10.0 made reachable (a pre-`VALIDATES`/`ENABLES` graph refused with "update your binary"). `provenance.rs` only; `art:provenance` reconciled design_updated (`chg:bl86`). 7 new tests; full core suite + clippy + fmt green, gate green, live==committed 344n/973e — @ajs — 2026-07-24 — crates/reflow2-core/src/provenance.rs + tests/provenance.rs, docs/design/reflow2.json, CHANGELOG.md, docs/backlog.md
 
