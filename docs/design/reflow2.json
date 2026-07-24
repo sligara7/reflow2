@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2daa422223e70ad6096235e8d0663a32fd84cc90ea097fe897c453a7701bc90e",
+  "content_hash": "sha256:b721c03c22f77dfc5e67680059e23379361f18c0774a41bd64447b145494979b",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1399,6 +1399,78 @@
         "action": "modified"
       },
       "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl89",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl89",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl89",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl89",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl89",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl89",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl89",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl89",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:vocabulary"
     },
     {
       "edge_type": "CHANGED",
@@ -6783,7 +6855,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c47f4a0112f85d5b",
+        "checksum": "sha256:6df0a7aa74cf5803",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
         "status": "realized"
@@ -6881,7 +6953,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3d8c464dc7106e76",
+        "checksum": "sha256:223fdc794d10db78",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -7144,7 +7216,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4bbd0c3f1ef4cbac",
+        "checksum": "sha256:e0c5a090c7e042ad",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -7199,7 +7271,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7d10fd5f9b590c00",
+        "checksum": "sha256:34c2aa6c4bcc64d9",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
         "status": "realized"
@@ -7868,6 +7940,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "BL-87: import tolerates an unstamped document (stamp optional + reported), like content_hash"
+      }
+    },
+    {
+      "node_id": "chg:bl89",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "BL-89: adopt-doctrine tweaks — granularity guidance (B.1), describe_schema required_only (B.3), unreleased_component through CONTAINS (E.1)"
       }
     },
     {
@@ -10458,7 +10538,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e25694e6cab2c0dfb1b91eb04b78404bfee1df017fb0a4ec04577f101c2b581e",
+  "prev_content_hash": "sha256:2daa422223e70ad6096235e8d0663a32fd84cc90ea097fe897c453a7701bc90e",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,

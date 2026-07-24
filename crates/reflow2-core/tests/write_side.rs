@@ -784,6 +784,64 @@ fn a_built_component_in_no_release_is_a_gap_once_contents_are_modelled() {
     );
 }
 
+/// BL-89 E.1: a release that ships an assembly ships its parts — the same "an
+/// assembly speaks through its children" lesson dead_end and the community
+/// detector carry. Including a subsystem covers its contained modules without an
+/// explicit `INCLUDES` per leaf, so the operate layer isn't a per-leaf gap flood.
+#[test]
+fn a_release_that_includes_a_subsystem_ships_its_contained_parts() {
+    let mut g = built_thread(); // cmp:engine is built (art:score -> cap:score -> cmp:engine)
+    g.add_component(
+        "cmp:sub",
+        "Scoring subsystem",
+        "holds the engine",
+        Some("subsystem"),
+    )
+    .unwrap();
+    g.contain_component("cmp:sub", "cmp:engine").unwrap();
+    g.add_release("rel:v1", "v1.0", None, None).unwrap();
+    // The release ships the subsystem, not the leaf or its artifact directly.
+    g.release_includes("rel:v1", node::COMPONENT, "cmp:sub", None)
+        .unwrap();
+
+    assert!(
+        !g.detect_gaps()
+            .unwrap()
+            .iter()
+            .any(|x| x.gap_source == GapSource::UnreleasedComponent),
+        "a leaf shipping inside an included subsystem is not unreleased"
+    );
+
+    // A built component outside the shipped subsystem still fires — the
+    // expansion follows containment, it does not ship everything.
+    g.add_component("cmp:loose", "Loose part", "outside the subsystem", None)
+        .unwrap();
+    g.link_artifact(LinkArtifactOptions {
+        artifact_id: "art:loose".into(),
+        name: "loose.bin".into(),
+        location: Some("loose.bin".into()),
+        artifact_type: Some("binary".into()),
+        target_type: node::COMPONENT.into(),
+        target_id: "cmp:loose".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: Some("sha256:bbb".into()),
+    })
+    .unwrap();
+    let gaps = g.detect_gaps().unwrap();
+    let hit: Vec<&str> = gaps
+        .iter()
+        .filter(|x| x.gap_source == GapSource::UnreleasedComponent)
+        .flat_map(|x| x.affected_ids.iter().map(String::as_str))
+        .collect();
+    assert_eq!(
+        hit,
+        ["cmp:loose"],
+        "a built part outside the shipped assembly still fires"
+    );
+}
+
 #[test]
 fn a_release_cannot_include_a_requirement() {
     let mut g = built_thread();

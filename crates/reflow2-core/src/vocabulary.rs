@@ -304,6 +304,19 @@ impl DesignGraph {
         })
     }
 
+    /// The compact view of a node type: its hint and only the properties a
+    /// `create_node` MUST supply — no optional properties, no edge lists. The
+    /// adopt-scale answer to "what does this type require?" without the full
+    /// [`Self::describe_node_type`] payload, which returns every edge type that
+    /// can touch the node and pushed the adopter to read `schema/*.yaml`
+    /// instead (BL-89 B.3).
+    pub fn describe_node_type_required(&self, node_type: &str) -> Result<NodeTypeSpec, DynoError> {
+        let def = self.require_node_type(node_type)?;
+        let mut spec = node_spec(node_type, def);
+        spec.properties.retain(|p| p.required);
+        Ok(spec)
+    }
+
     /// Which edge types may join `from_type` to `to_type`, exact fits first.
     ///
     /// Both types must exist; an unknown name is an error rather than an empty

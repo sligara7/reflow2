@@ -588,6 +588,7 @@ async fn describe_schema_returns_the_whole_vocabulary() {
         node_type: None,
         from: None,
         to: None,
+        required_only: false,
     })));
     assert_eq!(
         v["node_types"].as_array().unwrap().len(),
@@ -608,6 +609,7 @@ async fn describe_schema_answers_the_directed_question() {
         node_type: None,
         from: Some("Capability".into()),
         to: Some("Component".into()),
+        required_only: false,
     })));
     assert!(
         q["exact_matches"].as_u64().unwrap() >= 1,
@@ -628,6 +630,7 @@ async fn release_pairs_report_their_true_standing() {
         node_type: None,
         from: Some("Release".into()),
         to: Some("Component".into()),
+        required_only: false,
     })));
     assert_eq!(
         q["exact_matches"].as_u64().unwrap(),
@@ -638,6 +641,7 @@ async fn release_pairs_report_their_true_standing() {
         node_type: None,
         from: Some("Release".into()),
         to: Some("Requirement".into()),
+        required_only: false,
     })));
     assert_eq!(
         loose["exact_matches"].as_u64().unwrap(),
@@ -658,6 +662,7 @@ async fn describe_schema_focuses_one_node_type() {
         node_type: Some("Component".into()),
         from: None,
         to: None,
+        required_only: false,
     })));
     let outgoing = d["outgoing"].as_array().unwrap();
     assert!(
@@ -674,6 +679,46 @@ async fn describe_schema_focuses_one_node_type() {
     );
 }
 
+/// BL-89 B.3: `required_only` returns the compact "what must I supply?" answer —
+/// only required properties, and no edge lists — so an adopter reading many
+/// types at scale is not forced back to `schema/*.yaml`.
+#[tokio::test]
+async fn describe_schema_required_only_is_compact() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    let full = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+        node_type: Some("Requirement".into()),
+        from: None,
+        to: None,
+        required_only: false,
+    })));
+    let compact = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+        node_type: Some("Requirement".into()),
+        from: None,
+        to: None,
+        required_only: true,
+    })));
+
+    // The full view carries the edge lists; the compact one drops them.
+    assert!(full.get("outgoing").is_some(), "full view lists edges");
+    assert!(
+        compact.get("outgoing").is_none() && compact.get("incoming").is_none(),
+        "compact view omits the edge lists, got {compact}"
+    );
+
+    // Every property returned is required, and there is at least one.
+    let props = compact["properties"].as_array().unwrap();
+    assert!(!props.is_empty(), "a Requirement has required properties");
+    assert!(
+        props.iter().all(|p| p["required"] == true),
+        "compact returns only required properties, got {compact}"
+    );
+    // …and it is genuinely a subset: the full view has optional ones too.
+    assert!(
+        full["properties"].as_array().unwrap().len() > props.len(),
+        "the full view carries optional properties the compact one drops"
+    );
+}
+
 #[tokio::test]
 async fn describe_schema_rejects_a_half_given_pair() {
     let s = ReflowService::in_memory().expect("in-memory service");
@@ -683,6 +728,7 @@ async fn describe_schema_rejects_a_half_given_pair() {
             node_type: None,
             from: Some("Release".into()),
             to: None,
+            required_only: false,
         }))
         .await
         .is_err(),
@@ -694,6 +740,7 @@ async fn describe_schema_rejects_a_half_given_pair() {
             node_type: Some("Relese".into()),
             from: None,
             to: None,
+            required_only: false,
         }))
         .await
         .is_err(),

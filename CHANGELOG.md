@@ -33,6 +33,21 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **Three adopt-scale ergonomic tweaks from the BL-83b dogfood** (BL-89; **minor** — one new
+  optional tool param, no schema change):
+  - **`describe_schema` gains `required_only`** — with `node_type`, returns just the properties a
+    `create_node` must supply and omits the (large) edge lists, so an adopter reading many types at
+    scale isn't pushed back to `schema/*.yaml` for "what's required."
+  - **`unreleased_component` follows containment** — a Release that `INCLUDES` an assembly now covers
+    its `CONTAINS`-children, so shipping a subsystem no longer needs an explicit `INCLUDES` per leaf
+    (the operate layer stopped being an 11-gap flood in the dogfood). Same "an assembly speaks
+    through its children" rule `dead_end` and the community detector already carry; a built component
+    *outside* any shipped assembly still fires.
+  - **Adopt-skill granularity guidance now keys off contracts/capabilities, not LOC** — node count
+    tracks how many distinct things a system does and exposes, not its size (reflow2 is ~34k LOC yet
+    ~100 nodes; a 110k-LOC system was ~78), so the skill says to size the model by counting contracts
+    and capabilities rather than an LOC ratio.
+
 - **`import_graph` accepts an unstamped document instead of refusing it** (BL-87; **minor** —
   `GraphExport.stamp` becomes optional and `ImportReport` gains a `provenance_note` field). A
   hand-authored or third-party document with no `stamp` used to fail deserialization with a bare

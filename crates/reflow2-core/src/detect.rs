@@ -1624,6 +1624,19 @@ impl DesignGraph {
             // graph situation, not one gap per component.
             return Ok(());
         }
+        // A release that includes an assembly ships its parts: expand the
+        // shipped set down every CONTAINS edge, so including a subsystem covers
+        // its modules without an explicit INCLUDES per leaf (BL-89 E.1 — the
+        // same "an assembly speaks through its children" lesson dead_end and the
+        // community detector already carry).
+        let mut frontier: Vec<String> = shipped.iter().cloned().collect();
+        while let Some(id) = frontier.pop() {
+            for e in self.outgoing(&id, Some(edge::CONTAINS))? {
+                if shipped.insert(e.to_id.clone()) {
+                    frontier.push(e.to_id);
+                }
+            }
+        }
         for cmp in self.scan_nodes(node::COMPONENT)? {
             if shipped.contains(&cmp.node_id) {
                 continue;

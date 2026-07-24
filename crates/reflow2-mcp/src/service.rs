@@ -492,6 +492,11 @@ pub struct DescribeSchemaReq {
     /// With `from`: the target node type.
     #[serde(default)]
     pub to: Option<String>,
+    /// With `node_type`: return only the properties a `create_node` MUST
+    /// supply, and omit the edge lists — the compact "what does this type
+    /// require?" answer. Ignored without `node_type`.
+    #[serde(default)]
+    pub required_only: bool,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2756,6 +2761,9 @@ impl ReflowService {
         let g = self.graph.lock().await;
         match (&req.node_type, &req.from, &req.to) {
             (None, None, None) => ok_json(g.describe_vocabulary()),
+            (Some(t), None, None) if req.required_only => {
+                ok_json(g.describe_node_type_required(t).map_err(params_err)?)
+            }
             (Some(t), None, None) => ok_json(g.describe_node_type(t).map_err(params_err)?),
             (None, Some(f), Some(t)) => ok_json(g.edge_types_between(f, t).map_err(params_err)?),
             // A half-given pair is a mistake, not a request for everything.

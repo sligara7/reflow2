@@ -23,6 +23,11 @@
           "null"
         ]
       },
+      "required_only": {
+        "default": false,
+        "description": "With `node_type`: return only the properties a `create_node` MUST\nsupply, and omit the edge lists — the compact \"what does this type\nrequire?\" answer. Ignored without `node_type`.",
+        "type": "boolean"
+      },
       "to": {
         "default": null,
         "description": "With `from`: the target node type.",

@@ -1811,8 +1811,15 @@ keep: it caught this session's `art:graph`/`art:provenance` drift). Still open: 
 suite for the gate's own logic (the CI run only exercises the happy path on the real self-model), and
 `render_views.py` remains wholly untested. This is reflow2 finally dogfooding its own `ci-gate` skill.
 
-**BL-89 · Adopt-doctrine tweaks from the BL-83b dogfood** — *2026-07-23 (B.1, B.3, E.1). Size **S**
-each, batched.* Minor refinements the largest-ever adopt run surfaced, none blocking: **(B.1)** the
+**BL-89 · Adopt-doctrine tweaks from the BL-83b dogfood — DONE 2026-07-23** — *2026-07-23 (B.1,
+B.3, E.1). Size **S** each, batched. All three landed: (B.1) the adopt skill's granularity guidance
+now keys off distinct contracts/capabilities not LOC (all three skill copies — kit, .claude, .grok —
+synced); (B.3) `describe_schema {required_only: true}` returns only required properties and drops the
+edge lists (new `describe_node_type_required` in core; toolsnap regenerated, +1 param); (E.1) the
+`unreleased_component` detector expands the shipped set down `CONTAINS`, so a Release including a
+subsystem covers its modules (the "assembly speaks through its children" rule again). 2 new tests
+(unreleased-through-subsystem, required_only-is-compact); `chg:bl89`, 4 artifacts reconciled; 43
+core+mcp suites + clippy + fmt + toolsnap + skill_lint green.* Minor refinements the largest-ever adopt run surfaced, none blocking: **(B.1)** the
 scale-granularity heuristic ("~78 nodes for 110k LOC") keys off **LOC**, but reflow2 is ~34k LOC with
 93 tools / 28 node types — *feature* density far above *line* density, so an honest coarse model
 still lands near ~100 nodes. Granularity guidance should key off **distinct contracts / capabilities**,
