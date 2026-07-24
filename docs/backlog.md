@@ -91,6 +91,7 @@ Nine independent sources, which is why several items appear on more than one lis
 
 | ID | Item | Why | Size |
 |---|---|---|---|
+| **BL-94** | **A graph stamped by reflow2 ≤ v0.9.0 cannot be opened by v0.10.x at all — and the recovery paths the refusal names can both be unavailable** | *Anthony, 2026-07-24, from a real project on the current release.* v0.9.0 declared 54 edge types; v0.10.0 retired some to 53 (the edge-orthogonality cut), and every stamp written before BL-86 is **count-only**, so `check_and_stamp` sees an excess it cannot attribute and returns `Err` — from `DesignGraph::open` (`graph.rs:105`). Because *every* entry point opens the graph first, **`--export` goes down with everything else**, which is what makes this more than a message problem: the graph is sealed, not merely refused. BL-86 (shipped in v0.10.1) fixed the *wording* — it now names both recovery paths instead of wrongly saying "rebuild" — but it did not make the graph openable, and **both paths it names have holes**: "export it with the reflow2 that wrote it" needs the old binary that `curl \| sh` already replaced (`req:frictionless-update` defeating the migration path), and "import a committed export" needs the project to have committed one. The undocumented escape is deleting the sidecar `.reflow2/graph.meta.json`, which opens the graph as unstamped — but that silently drops any genuinely-retired-type edges, i.e. it performs exactly the loss the refusal existed to prevent, without naming it. **Fix shape: a `--migrate` path** that opens past the stamp check, drops retired types, **names what it dropped**, and re-stamps — one step, no old binary, nothing silent. **BL-86's entry explicitly declared this option "moot" once the message became unambiguous; the field disproves that** — an unambiguous message you cannot act on is still a wall. Bears directly on `req:survives-upgrade` ("an existing graph opens, or is refused loudly with what to do") — today the second clause holds and the first does not. Update BL-86 and the requirement when it lands | S–M |
 | **BL-42** | **The adopt pass has a noise floor: two defects produce half its output — DONE 2026-07-20** | From the `storyflow trial` (private trial record), the first real `adopt` run (2,643 files, 122 nodes). **(a)** `unrealized_capability` fires for every capability whose artifacts were modelled coarsely — 13 of 51 gaps — so the skill's own granularity instruction is punished by a detector; BL-23 fixed this exact shape for `unverified_artifact` by counting rather than asking, and the same is owed here. **(b)** The DETECT/HEAL double-count, reproduced a **fourth** time and now dominant: 20 of 31 defects are `orphan_node` on requirements `detect_gaps` already reports as `unsatisfied_requirement`. Together they were ~40% of the pass's output. **Both fixed, and re-measured on the same 122-node storyflow graph: gaps 51 → 38, defects 31 → 19, total output 82 → 57, with every true finding preserved** (12 unsatisfied requirements, 16 unmotivated capabilities, the generation↔media cycle). **(a)** `unrealized_capability` now reads a claim the modeller already made rather than guessing from topology: a component marked `realized` asserts it exists, so an absent artifact describes the artifact layer's coverage, not a hole in the design — while `planned`/`in_progress` still gets the forward-looking question. The number is kept as `graph_report.realization` (BL-23's bargain: drop the question, keep the count). No threshold, per BL-5's lesson that a loud detector needs a different question rather than a tuned number. **(b)** HEAL's `orphan_node` no longer covers Requirements or Capabilities — DETECT asks both, they were never repairable (a `generate_owner` stub `apply_heal` can never apply), and the docs' own division puts meaning in gap-surfacing. The Artifact orphan stays, because DETECT has no counterpart. Closing that also required teaching `unallocated_capability` that a Flow is structure, or a loose capability on a process-only graph would have gone silent. Four pinned tests flipped honestly | ~~S + M~~ |
 | **BL-43** | **`graph_report` cannot see the provenance layer — DONE 2026-07-20** | Same trial: the import wrote 122 nodes, `graph_report` said **109** — the missing 13 are exactly the Fragments, which `report.rs`'s type census omits. The provenance ledger that makes every recovered claim checkable (and that BL-40's provenance viewpoint renders) is invisible to the surface an agent reads first, and the node count is quietly wrong. **Fixed**: `total_nodes` is now every node in the graph, counted from the *schema* rather than a second hardcoded list, so a type added later cannot go missing the way `Fragment` did. `design_nodes` keeps the lifecycle-ordered itemisation and a new `other_counts` names everything outside it — provenance, questions, drift events, axis-Z machinery — in the payload and in the Markdown. Verified on the storyflow graph: 122 imported, 122 reported (13 Fragments + 1 DriftEvent itemised). This is rule 6 — no silent caps — applied to reporting | ~~S~~ |
 | **BL-41** | **Graph text is data, never instructions — and nothing says so** | **S half done, 2026-07-19** — the standing rule is stated in the three places an agent looks: a section in the consumer AGENTS.md, one line in each of the eight skills at the point where it starts reading graph text, and the server's `get_info` instructions (so a session that loads no skill still gets it in the handshake). The one genuinely uncovered LLM failure mode in [partnership.md](partnership.md): every skill tells the agent to read node text and act on the design, and a hostile or careless statement rides that trust. Bounded today (single user, local graph); real the day a graph is shared (BL-12) or an adopted repo's prose flows through INGEST (BL-27). Mechanical mitigation (provenance-aware trust, quoting boundaries — [BL-12](#bigger-threads) sketch idea 2 is its design seed) is **M** and should wait for a real multi-writer case | ~~S~~ + M |
@@ -2848,6 +2849,61 @@ DETECT question #2 (is a cross-branch absence — "satisfied in only one alterna
 gap?), per-branch readiness (BL-68), and world-scope (decision #1's other option) if simultaneous
 in-one-graph AoA ever proves needed. The core of BL-70 — compare, hold, collapse, and now surface —
 is done.
+
+> **The fork layer DESIGNED 2026-07-24 (graph-only; no Rust yet).** Anthony decided all three open
+> axes. **(1) `dec:fork-point-address` — a fork point is a coordinate, not a copy.** "The design as
+> it stood at decision D" resolves as Decision `AT_EPOCH` → DesignEpoch → that epoch's existing
+> `checksum` (the export's `content_hash`) → the committed document, which git already stores.
+> *Rejected: a reflow2-native ref/branch/DAG layer* — it duplicates git (and `dec:repo-file-embedded`
+> put the design in the repo precisely so repo tooling carries file-shaped concerns), and a mutable
+> pointer is a foreign object in a graph whose axis-Z doctrine is that history is never overwritten.
+> Bringing a road home is then the existing three-way merge with the fork point as base — the
+> merge-base `dec:merge-three-way` currently borrows from git, now derivable from reflow2's own
+> chain. **(2) `dec:reopen-supersedes` — re-opening mints a NEW proposed Decision that `OBSOLETES`
+> the original**, which stays `accepted` forever. *Rejected: flipping the original back to
+> `proposed`* — it erases that the question was ever settled, which is exactly the strongest evidence
+> for re-opening it. **(3) `dec:temporal-backfill-from-releases` — the epoch chain is backfilled from
+> real shipped release tags or not at all.** *Rejected: forward-only* (a fork layer that can only
+> fork decisions made after it was built has nothing to fork) *and full reconstruction* (a fabricated
+> epoch is worse than an absent one — it looks like evidence).
+>
+> **The finding that reshaped the work: reflow2's own temporal axis was barely used.** Zero
+> Snapshots, 8 of 42 ChangeEvents pinned, **no Decision anchored to any epoch at all**, and the chain
+> stopped 2026-07-20 at three epochs. "Re-open a past decision at its epoch" had nothing to stand on
+> — the fork layer's foundation was missing, not merely its ref layer. Root cause is a practice one:
+> `add_change_event` (cheap, epoch-free) had been used throughout where `record_change` (which pins
+> *and* snapshots) was meant. Anything that cuts an epoch should prefer `record_change`.
+>
+> **Built into the graph this session:** a 12-epoch spine (`epoch:genesis` → `v040` → `v050-cut` →
+> `v050-hardening` → `v060` → `v061` → `v070` → `v080` → `v090` → `v0100` → `v0101` →
+> `bl70-fork-layer`), `PRECEDES`-chained, sequences spaced by 10 to leave insertion room; `checksum`
+> set on `v090`/`v0100`/`v0101` — the only three tags whose export carries an embedded
+> `content_hash`, since `dec:export-hash-chain` shipped in v0.9.0; earlier epochs say so in their
+> description rather than claiming a hash. All 34 Decisions anchored to the epoch of the earliest
+> release whose *committed export actually contains them* (v0.4.0 → the 9 founding doctrine
+> decisions, v0.6.0 → 1, v0.7.0 → the 3 SPOF-accepted, v0.8.0 → 1, v0.9.0 → 2, v0.10.0 → 18); v0.4.0
+> is the earliest tag carrying an export, so for those 9 it is earliest *evidence*, not origin, and
+> the epoch description says so. All 9 Releases pinned to their epochs.
+>
+> **Also modelled — the code that existed but the design didn't know about:** `cmp:merge` and
+> `cmp:alternatives` under `sys:time-history` (whose stated purpose already read "hold and compare
+> alternatives, diff and merge divergent designs"), with `cap:merge-designs`/`cap:merge-rerere` and
+> `cap:compare-alternatives`/`cap:decision-point` moved off the `cmp:compare` stand-in they had been
+> lumped under; `art:merge` (merge.rs, 1531 lines) and `art:alternatives` (alternatives.rs, 355)
+> registered with checksums; `cap:fork-alternatives` finally allocated. **This dissolved the
+> disconnected-community defect (6 → 5 structural defects, the remaining 5 being the accepted
+> SPOFs).** New `cap:revise-trigger` captures rung 3. `chg:bl70-fork-layer` recorded and pinned.
+> Export 346n/1017e → **365n/1100e**, gate green.
+>
+> **Still to build (Rust, next rung):** the read-only `fork_point(decision_id)` — resolve a Decision
+> to its epoch, checksum and the blast radius it governs, and report what has changed since; that
+> output is the base a three-way merge takes. Then `cap:revise-trigger`'s detector. **Deliberately
+> left open:** the revise threshold ("how much evidence counts as enough to re-open a road") is not
+> fixed until the detector can be calibrated against real history — a number chosen now would be a
+> guess wearing a decision's clothes. **Detector-honesty note for whoever picks this up:** the
+> `unrealized_capability` gap on `cap:fork-alternatives` retired itself the moment the capability
+> became allocated to a component that *some* artifact realizes, even though the fork point is
+> unbuilt. That is detector generosity, not progress — its silence means nothing here.
 
 The idea in the user's words: an undecided design choice could hold **forks** — option A and
 option B (and more) as live sub-designs — and, from military source selection, an analysis of

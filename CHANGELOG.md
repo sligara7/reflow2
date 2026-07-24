@@ -41,6 +41,25 @@ This file is the third view: *what changed, and when*.
   decided. The document-in/document-out sibling of the `apply_merge` tool (which commits into the
   live graph), completing git's merge workflow over export files.
 
+### Design (no code change)
+
+- The **fork layer designed** (BL-70) and recorded in the design graph: three decisions —
+  `dec:fork-point-address` (a fork point is the coordinate Decision → epoch → export
+  `content_hash`, resolved against git, rather than a native ref/branch layer),
+  `dec:reopen-supersedes` (re-opening a settled choice mints a new Decision that obsoletes the
+  original, which is never un-accepted), and `dec:temporal-backfill-from-releases` (the epoch chain
+  is backfilled only from real shipped release tags).
+- The **epoch chain backfilled and anchored**: 12 epochs from genesis to the current work, chained
+  with `PRECEDES`, carrying the export `content_hash` for the three releases whose exports embed one;
+  all 34 Decisions and all 9 Releases pinned to the epoch the git evidence puts them in. Found while
+  doing it: the temporal axis was nearly unused — no Decision was anchored to any epoch, and there
+  were no Snapshots at all, because `add_change_event` had been used throughout where `record_change`
+  was meant.
+- `merge.rs` and `alternatives.rs` **modelled at last** as `cmp:merge` / `cmp:alternatives` under
+  Time & History, with their capabilities moved off the `cmp:compare` stand-in and both files
+  registered as checksummed artifacts. This dissolved the long-standing disconnected-community
+  defect; the remaining five are the accepted single points of failure.
+
 ## [0.10.1] — 2026-07-24
 
 ### Changed

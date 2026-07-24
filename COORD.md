@@ -50,8 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-70 fork layer (design) — @ajs — since 2026-07-24 — design graph (epoch chain, fork
-  decisions, cmp:merge/cmp:alternatives), docs/backlog.md, docs/design/reflow2.json
 
 
 
@@ -81,6 +79,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-70 fork layer DESIGNED (graph + docs only, no Rust) — three decisions on the record: fork point = the coordinate Decision → epoch → export `content_hash` resolved against git (no native ref/DAG layer); re-opening a settled choice mints a superseding Decision rather than un-accepting the original; the epoch chain is backfilled from real release tags only. Epoch spine built (12 epochs, `PRECEDES`-chained, checksums where the export carries one), all 34 Decisions + 9 Releases anchored to the epoch the git evidence puts them in. `merge.rs`/`alternatives.rs` finally modelled (`cmp:merge`/`cmp:alternatives` under Time & History, capabilities moved off the `cmp:compare` stand-in, both registered as checksummed artifacts) — this dissolved the disconnected-community defect, 6 → 5 (the 5 accepted SPOFs). Found: the temporal axis was nearly unused (0 Snapshots, no Decision anchored, chain 4 days stale) because `add_change_event` was used where `record_change` was meant. Still to build: read-only `fork_point(decision_id)`, then `cap:revise-trigger`'s detector. Gate green, live==committed 365n/1100e — @ajs — 2026-07-24 — docs/design/reflow2.json, docs/backlog.md, CHANGELOG.md
 
 - BL-80 #3 DONE — file-pure `--merge-apply` CLI, the apply half of the git-file merge workflow. `--merge` proposes (conflicts + ids); `--merge-apply base ours theirs --resolutions FILE` runs `resolve_merge` and prints the merged export document, opening no graph and refusing (non-zero, no output) until every conflict is decided. Reuses the tested core; `main.rs` adapter only. 4 CLI tests + end-to-end propose→decide→apply→`--diff`-identical. art:main design_updated (`chg:bl80-merge-apply-cli`), cap:merge-designs surface refreshed. workspace tests + clippy + fmt + gate green; live==committed 346n/1017e. Still open on BL-80: node-type/delete-modify rerere keys + rerere memory aging — @ajs — 2026-07-24 (ed37bc9) — crates/reflow2-mcp/src/main.rs, docs/design/reflow2.json, CHANGELOG.md, docs/backlog.md
 

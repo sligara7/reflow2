@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:655bd52bd7a94161e1e12363ee877a681b838f21bb1fa4ae81c080748fb78a5e",
+  "content_hash": "sha256:c14ad901ab3b9d87deac482397db15a3074401710a29e275a22b5e58f667d154",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -39,7 +39,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:compare"
+      "to_id": "cmp:alternatives"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -55,7 +55,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:compare"
+      "to_id": "cmp:alternatives"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -72,6 +72,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:fork-alternatives",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:alternatives"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -175,7 +183,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:compare"
+      "to_id": "cmp:merge"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -183,7 +191,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:compare"
+      "to_id": "cmp:merge"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -280,6 +288,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:revise-trigger",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:alternatives"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -409,6 +425,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl70-fork-layer",
+      "properties": {},
+      "to_id": "epoch:bl70-fork-layer"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:deep-review-tier1",
       "properties": {},
       "to_id": "epoch:v050-hardening"
@@ -433,9 +455,279 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "dec:alternatives-unranked-forkable",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:anchored-first",
+      "properties": {},
+      "to_id": "epoch:v040"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:ask-not-repair",
+      "properties": {},
+      "to_id": "epoch:v040"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:bl83a-functional-decomposition",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:certainty-derived",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:component-verified-computed",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:core-api-spof-accepted",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:design-authorship-identity",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:design-diff-vocabulary",
+      "properties": {},
+      "to_id": "epoch:v080"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:edge-orthogonality",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:export-door-spof-accepted",
+      "properties": {},
+      "to_id": "epoch:v070"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:export-hash-chain",
+      "properties": {},
+      "to_id": "epoch:v090"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:fnv1a-foundational",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:fork-point-address",
+      "properties": {},
+      "to_id": "epoch:bl70-fork-layer"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:graph-spof-accepted",
+      "properties": {},
+      "to_id": "epoch:v070"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:loop-status-state-not-history",
+      "properties": {},
+      "to_id": "epoch:v090"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:merge-conflict-semantics",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:merge-rerere",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:merge-survivor-provenance",
+      "properties": {},
+      "to_id": "epoch:v060"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:merge-three-way",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:operational-spof",
+      "properties": {},
+      "to_id": "epoch:v040"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:parallel-alternatives",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:passing-is-verified",
+      "properties": {},
+      "to_id": "epoch:v040"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:read-hint-shape",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:reopen-supersedes",
+      "properties": {},
+      "to_id": "epoch:bl70-fork-layer"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:repo-file-embedded",
+      "properties": {},
+      "to_id": "epoch:v040"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:report-dont-judge",
+      "properties": {},
+      "to_id": "epoch:v040"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:service-spof-accepted",
+      "properties": {},
+      "to_id": "epoch:v070"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:temporal-backfill-from-releases",
+      "properties": {},
+      "to_id": "epoch:bl70-fork-layer"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:three-party-checks",
+      "properties": {},
+      "to_id": "epoch:v040"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:two-sided-accept",
+      "properties": {},
+      "to_id": "epoch:v040"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:views-are-projections",
+      "properties": {},
+      "to_id": "epoch:v040"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "decision:ack:233d08765e4cfc7b",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "decision:ack:695a599323c7edfe",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "decision:ack:72f2c38d8acdeac2",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "decision:ack:a714fec7e55225b4",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "decision:ack:e99afa635a6340fb",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0100",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0101",
+      "properties": {},
+      "to_id": "epoch:v0101"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v040",
+      "properties": {},
+      "to_id": "epoch:v040"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "rel:v050",
       "properties": {},
       "to_id": "epoch:v050-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v060",
+      "properties": {},
+      "to_id": "epoch:v060"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v061",
+      "properties": {},
+      "to_id": "epoch:v061"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v070",
+      "properties": {},
+      "to_id": "epoch:v070"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v080",
+      "properties": {},
+      "to_id": "epoch:v080"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v090",
+      "properties": {},
+      "to_id": "epoch:v090"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -1092,6 +1384,96 @@
         "action": "modified"
       },
       "to_id": "art:structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl70-fork-layer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl70-fork-layer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl70-fork-layer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:fork-alternatives"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl70-fork-layer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:revise-trigger"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl70-fork-layer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl70-fork-layer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl70-fork-layer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cmp:merge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl70-fork-layer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:fork-point-address"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl70-fork-layer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:reopen-supersedes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl70-fork-layer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:temporal-backfill-from-releases"
     },
     {
       "edge_type": "CHANGED",
@@ -2261,7 +2643,19 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:time-history",
       "properties": {},
+      "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:time-history",
+      "properties": {},
       "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:time-history",
+      "properties": {},
+      "to_id": "cmp:merge"
     },
     {
       "edge_type": "CONTAINS",
@@ -3582,6 +3976,18 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:fork-alternatives",
       "properties": {},
+      "to_id": "dec:fork-point-address"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:fork-alternatives",
+      "properties": {},
+      "to_id": "dec:reopen-supersedes"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:fork-alternatives",
+      "properties": {},
       "to_id": "decision:ack:72f2c38d8acdeac2"
     },
     {
@@ -3898,6 +4304,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:revise-trigger",
+      "properties": {},
+      "to_id": "dec:reopen-supersedes"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:revise-trigger",
+      "properties": {},
+      "to_id": "decision:ack:41e84391c187d118"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:search",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
@@ -3964,6 +4382,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:alternatives",
+      "properties": {},
+      "to_id": "dec:fork-point-address"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:export",
       "properties": {},
       "to_id": "dec:export-door-spof-accepted"
@@ -3982,6 +4406,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:merge",
+      "properties": {},
+      "to_id": "dec:merge-three-way"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:nodes",
       "properties": {},
       "to_id": "dec:fnv1a-foundational"
@@ -3991,6 +4421,12 @@
       "from_id": "cmp:service",
       "properties": {},
       "to_id": "dec:service-spof-accepted"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:temporal",
+      "properties": {},
+      "to_id": "dec:temporal-backfill-from-releases"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -6691,6 +7127,72 @@
       "to_id": "cmp:skills"
     },
     {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:genesis",
+      "properties": {},
+      "to_id": "epoch:v040"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0100",
+      "properties": {},
+      "to_id": "epoch:v0101"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0101",
+      "properties": {},
+      "to_id": "epoch:bl70-fork-layer"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v040",
+      "properties": {},
+      "to_id": "epoch:v050-cut"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v050-cut",
+      "properties": {},
+      "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v050-hardening",
+      "properties": {},
+      "to_id": "epoch:v060"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v060",
+      "properties": {},
+      "to_id": "epoch:v061"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v061",
+      "properties": {},
+      "to_id": "epoch:v070"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v070",
+      "properties": {},
+      "to_id": "epoch:v080"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v080",
+      "properties": {},
+      "to_id": "epoch:v090"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v090",
+      "properties": {},
+      "to_id": "epoch:v0100"
+    },
+    {
       "edge_type": "PROVIDES",
       "from_id": "cmp:export",
       "properties": {
@@ -6753,6 +7255,14 @@
         "completeness": "complete"
       },
       "to_id": "cap:decision-point"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:alternatives",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cmp:alternatives"
     },
     {
       "edge_type": "REALIZES",
@@ -6935,6 +7445,14 @@
         "completeness": "complete"
       },
       "to_id": "cap:merge-rerere"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:merge",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:merge"
     },
     {
       "edge_type": "REALIZES",
@@ -7325,6 +7843,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:revise-trigger",
+      "properties": {},
+      "to_id": "req:roads-not-taken"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:search",
       "properties": {},
       "to_id": "req:agent-native"
@@ -7598,6 +8122,22 @@
       "from_id": "ver:vocabulary",
       "properties": {},
       "to_id": "cap:vocabulary"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art-alternatives",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art-merge",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:merge"
     },
     {
       "edge_type": "YIELDED",
@@ -7938,7 +8478,7 @@
         "artifact_type": "code",
         "checksum": "sha256:c87a79726aeb111b",
         "location": "crates/reflow2-core/src/alternatives.rs",
-        "name": "alternatives.rs — AoA report",
+        "name": "alternatives.rs",
         "status": "realized"
       }
     },
@@ -8180,7 +8720,7 @@
         "artifact_type": "code",
         "checksum": "sha256:075bab31f3c131b6",
         "location": "crates/reflow2-core/src/merge.rs",
-        "name": "merge.rs — three-way merge",
+        "name": "merge.rs",
         "status": "realized"
       }
     },
@@ -8459,7 +8999,7 @@
       "node_id": "cap:fork-alternatives",
       "node_type": "Capability",
       "properties": {
-        "description": "Keep every Decision's unchosen options as forkable siblings; re-open a past decision at its epoch and take a different branch, with the alternative's consequence design computed by replay (propagate/compare) rather than pre-stored. Selection of which fork to expand follows the reward signal — defects and field trials — not the whole tree; the human does the credit assignment. The navigation layer of reflow2-as-decision-MDP, unifying BL-70 (branches), BL-80 (merge, how a road comes home) and BL-44 (claims). DRAFT — the schema attachment for an alternative, the branch/ref layer, and the revise trigger are still to design.",
+        "description": "Keep every Decision's unchosen options as forkable siblings; re-open a past decision at its epoch and take a different branch, with the alternative's consequence design computed by replay (propagate/compare) rather than pre-stored. Selection of which fork to expand follows the reward signal — defects and field trials — not the whole tree; the human does the credit assignment. The navigation layer of reflow2-as-decision-MDP, unifying BL-70 (branches), BL-80 (merge, how a road comes home) and BL-44 (claims). DESIGNED 2026-07-24: the fork point is a coordinate, decision → AT_EPOCH → epoch.checksum → the committed export (dec:fork-point-address), so no ref/DAG layer is needed; re-opening mints a superseding Decision rather than un-accepting the original (dec:reopen-supersedes); the epoch chain the whole thing addresses is backfilled from real release tags (dec:temporal-backfill-from-releases). STILL TO BUILD: the read-only fork_point operation that resolves a Decision to its epoch, checksum and governed blast radius, and reports what has changed since — the base a three-way merge then takes to bring a road home.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Hold and re-fork a decision's unchosen alternatives",
@@ -8712,6 +9252,19 @@
         "name": "Say where the design stands",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:revise-trigger",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The credit-assignment half of the fork layer (BL-81's open question, rung 3). When new evidence lands — a fresh structural defect, a failing verification, an accepted drift, a field-trial finding — trace its blast radius back through GOVERNED_BY to the Decisions that shaped the affected nodes, and surface those decisions as \"this road may be worth re-opening\". Reports the trace and the evidence; never re-opens anything, never ranks the alternatives, never scores a fork (dec:report-dont-judge, dec:alternatives-unranked-forkable). The human decides whether the surprise is large enough to mint a reconsidering Decision (dec:reopen-supersedes). Precedent that the trace works by hand: dec:merge-survivor-provenance carries a \"reconsider\" note found by exactly this path. PLANNED — the threshold (\"how much evidence counts as enough\") is the open axis and is deliberately not fixed until the detector has run against real history.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Surface when a settled road may be worth re-opening",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -8987,6 +9540,14 @@
       }
     },
     {
+      "node_id": "chg:bl70-fork-layer",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-70 fork layer designed: epoch spine backfilled from release tags, decisions anchored, merge/alternatives modelled"
+      }
+    },
+    {
       "node_id": "chg:bl71c-compare-designs",
       "node_type": "ChangeEvent",
       "properties": {
@@ -9153,6 +9714,19 @@
         "provenance": "authored",
         "purpose": "The allocate module.",
         "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:alternatives",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "alternatives",
+        "provenance": "authored",
+        "purpose": "The fork module: analysis of alternatives across branch exports, the decision point (a proposed Decision holding forkable siblings), its collapse into a winner plus retired losers, and — planned — the fork point that resolves a past Decision to the design it was made against.",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -9400,6 +9974,19 @@
         "provenance": "authored",
         "purpose": "The main module.",
         "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:merge",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "merge",
+        "provenance": "authored",
+        "purpose": "The three-way merge module: the typed-node case table against a common ancestor, conflict minting as Questions, resolution into a merged design, atomic apply, and rerere resolution memory. Compare's sibling — compare says how two records differ, merge says what to do about it.",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -9827,6 +10414,16 @@
       }
     },
     {
+      "node_id": "dec:fork-point-address",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "\"The design as it stood at decision D\" resolves by a three-step address: the Decision is pinned AT_EPOCH to a DesignEpoch, that epoch's existing `checksum` property carries the content_hash of the export cut there, and the document itself lives where it already lives — a git-committed reflow2.json. reflow2 supplies the coordinate; git supplies the bytes. No new node type, no mutable pointers, no reflow2-native DAG. Re-taking a road home is then the three-way merge already built (dec:merge-three-way), with the fork point as the base — which is precisely the merge-base reflow2 currently borrows from git, now derivable from its own epoch chain.",
+        "name": "A fork point is a coordinate (decision → epoch → export hash), not a stored copy or a native ref layer",
+        "rationale": "User decided 2026-07-24, choosing the coordinate over a native ref/branch layer. THE REJECTED ALTERNATIVE: branch names as graph nodes — mutable pointers to epochs, a real DAG, so reflow2 finds its own merge-base without git. Rejected on two grounds. (1) It duplicates machinery git already provides, and dec:repo-file-embedded already put the design in the repo as a file precisely so the repo's tooling carries the file-shaped concerns; dec:merge-three-way already chose explicit inputs over git's DAG for the same reason. (2) A mutable pointer is a foreign object in this graph: the whole doctrine of axis Z is that history is never overwritten (req:intent-preserved, req:roads-not-taken), and a ref that moves is by construction a thing whose past value is lost unless separately recorded — reintroducing the erosion the epoch chain exists to prevent. The coordinate has the further virtue of costing nothing: DesignEpoch.checksum already existed in the schema, described as \"a hash over the anchored spec set at this epoch\", which is exactly this use. Honest limit: only exports from v0.9.0 on carry an embedded content_hash (dec:export-hash-chain shipped then), so epochs before it are addressed by git tag alone and claim no checksum rather than inventing one.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:graph-spof-accepted",
       "node_type": "Decision",
       "properties": {
@@ -9927,6 +10524,16 @@
       }
     },
     {
+      "node_id": "dec:reopen-supersedes",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "When a past decision is re-opened to take a different road, the original Decision stays `accepted` untouched, and a NEW `proposed` Decision is created that OBSOLETES it and holds the alternatives (including the road originally taken, now a sibling rather than the incumbent). The decision-point machinery already built (register_alternative / alternatives_for / collapse_decision, and the undecided_decision_point gap) applies unchanged to the new node, because it is a genuinely open choice. The record therefore shows both that the question was settled and that it was later re-asked, with the reasoning of each visible in its own node.",
+        "name": "Re-opening a settled choice mints a new Decision that obsoletes the old one; the accepted Decision is never un-accepted",
+        "rationale": "User decided 2026-07-24. THE REJECTED ALTERNATIVE: flip the original Decision's status back to `proposed` and hang the new alternatives on it — simpler, and reuses the existing node. Rejected because it overwrites the fact that the choice was ever settled: a reader of the graph afterwards sees an open question and cannot tell it was once answered, or when, or on what grounds. That is the ADR failure mode this whole system was built against (dec:two-sided-accept, \"silent drift-accept does not exist\"), and it would make the strongest evidence for re-opening — that we chose X, lived with it, and the trials found the hole — the very thing the re-opening erases. Snapshots would in principle preserve it, but only if one was taken, which makes the integrity of the record contingent on remembering a second step. Superseding is unconditional. It also composes with the existing vocabulary rather than straining it: OBSOLETES already means \"retired on the record, not deleted\" (the retire-from-design exit), and the new node's own `alternatives` obituary is written by collapse_decision when the re-opened choice closes, so the second decision documents the first without rewriting it.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:repo-file-embedded",
       "node_type": "Decision",
       "properties": {
@@ -9953,6 +10560,16 @@
         "decision": "cmp:service is the sole bridge between the reflow2-mcp subsystem and both the core and the kit, and it stays that way. The single_point_of_failure warning on it is accepted as intentional, not resolved by adding redundancy.",
         "name": "The single MCP service is an accepted single point of failure",
         "rationale": "req:invocation mandates one reflow2-mcp binary spoken to over stdio as the entire user-facing surface; a redundant second service would contradict that 'one door' design and buys nothing while there is a single local writer (dec:repo-file-embedded). Articulation-point analysis of the component/interface dependency graph (2026-07-21 self-host review) confirms cmp:service is a genuine cut vertex — removing it disconnects the MCP surface — so the finding is true, and the right disposition is to accept it rather than fix it. Contrast cmp:flow, flagged by the same detector but NOT a cut vertex (BL-69). Redundancy is the wrong fix; this SPOF is the architecture working as intended.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:temporal-backfill-from-releases",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Every epoch on the retrospective chain corresponds to a real shipped release with a real git tag and date (v0.4.0 through v0.10.1), plus the pre-existing genesis and post-v0.5.0-hardening epochs. Each Decision is anchored to the epoch of the earliest release whose committed export actually contains it — evidence from the repo, not reconstruction from memory. Each Release is pinned to its own epoch. Epochs before v0.9.0 carry no checksum, because their exports predate the hash chain; they say so in their description rather than claiming one. Going forward, an epoch is cut as work happens so nothing needs backfilling again.",
+        "name": "The epoch chain is backfilled from shipped releases only — real tags, or nothing",
+        "rationale": "User decided 2026-07-24 among three options. THE REJECTED ALTERNATIVES: (a) forward-only — anchor from today and leave the past alone. Rejected because all 34 existing decisions are the ones actually worth re-opening; a fork layer that can only fork decisions made after it was built is a fork layer with nothing to fork. (b) full reconstruction — invent an epoch per work session across the whole history and synthesize the missing snapshots. Rejected because most of those boundaries are guesses, and a fabricated epoch is worse than an absent one: it looks like evidence. Release tags are the natural resolution because they are the only points in this project's history that are independently attested (a tag, a date, a published binary, a committed export), and because \"the design as of the release that shipped it\" is the question a fork actually asks. The cost is deliberately accepted: the 9 founding decisions anchor to v0.4.0, the earliest tag carrying an export, which is their earliest EVIDENCE rather than their origin — recorded as such in that epoch's description instead of being silently presented as the date they were made. FOUND WHILE DOING THIS: reflow2's own temporal axis was nearly unused — zero Snapshots, 8 of 42 ChangeEvents pinned, no Decision anchored at all, the chain stopped four days back — because add_change_event (cheap, epoch-free) had been used throughout where record_change (pins and snapshots) was meant. The fork layer's foundation was missing, not merely its ref layer.",
         "status": "accepted"
       }
     },
@@ -9997,6 +10614,16 @@
       }
     },
     {
+      "node_id": "decision:ack:41e84391c187d118",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:41e84391c187d118.",
+        "name": "Reviewed: gap:41e84391c187d118",
+        "rationale": "Same disposition as its sibling cap:fork-alternatives (the user's standing 2026-07-23 call, extended 2026-07-24 to the rung-3 capability captured in this session): cap:revise-trigger is `planned` and deliberately unbuilt — its threshold question (\"how much evidence counts as enough to re-open a road\") is explicitly left open until the detector can be run against real history, because fixing a number before there is anything to calibrate it on would be a guess wearing a decision's clothes. A Verification node now would verify nothing. It arrives with the build.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:695a599323c7edfe",
       "node_type": "Decision",
       "properties": {
@@ -10022,7 +10649,7 @@
       "properties": {
         "decision": "Accepted the gap gap:a714fec7e55225b4.",
         "name": "Reviewed: gap:a714fec7e55225b4",
-        "rationale": "User (who:ajs, 2026-07-23): tracked under BL-70/BL-80 — cap:fork-alternatives' verification, allocation and realization are the alternatives/merge work; BL-80 (three-way merge) is claimed and in progress on the board, BL-70 holds the rest. Acceptable open until that lands.",
+        "rationale": "Extends the user's standing 2026-07-23 disposition on this same gap, with its wording brought up to date (2026-07-24): BL-80 has now landed in full, and BL-70's fork layer has been DESIGNED — the fork point is a coordinate (dec:fork-point-address), re-opening supersedes (dec:reopen-supersedes), and the epoch chain it addresses is backfilled and anchored. What remains unbuilt is the read-only fork_point operation itself, so a verification would have nothing to run against. Verification arrives with that build, not before; the capability's status stays `planned` and its description names exactly what is still to build, so nothing here claims more than is true. NOTE for whoever picks this up: the sibling unrealized_capability gap (gap:72f2c38d8acdeac2) has now RETIRED itself, because cap:fork-alternatives became allocated to cmp:alternatives and alternatives.rs realizes that component — the detector treats component-level realization as covering the capability. That is a detector generosity, not evidence the fork point is built. Do not read its silence as progress.",
         "status": "accepted"
       }
     },
@@ -10037,6 +10664,16 @@
       }
     },
     {
+      "node_id": "epoch:bl70-fork-layer",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "The epoch the fork layer was designed in (BL-70). Cut so that today's decisions have an anchor from the moment they are made, rather than being backfilled later — the practice dec:fork-point-address depends on.",
+        "epoch_type": "revision",
+        "name": "BL-70 fork layer designed (2026-07-24)",
+        "sequence": 100
+      }
+    },
+    {
       "node_id": "epoch:genesis",
       "node_type": "DesignEpoch",
       "properties": {
@@ -10046,12 +10683,44 @@
       }
     },
     {
+      "node_id": "epoch:v0100",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "checksum": "sha256:0600430cfc61eb9afd4eee842eb418aefa5b548c150051f61fc83d3543225cd8",
+        "description": "Cut at git tag v0.10.0. The alternatives/merge/rerere release — 18 of the graph's decisions first appear in this export.",
+        "epoch_type": "release_cut",
+        "name": "v0.10.0 release cut (2026-07-24)",
+        "sequence": 80
+      }
+    },
+    {
+      "node_id": "epoch:v0101",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "checksum": "sha256:86162dde66ee75cd455c42d67a7c2d9992b410debfe6558247a3587835601939",
+        "description": "Cut at git tag v0.10.1, the current deployed release.",
+        "epoch_type": "release_cut",
+        "name": "v0.10.1 release cut (2026-07-24)",
+        "sequence": 90
+      }
+    },
+    {
+      "node_id": "epoch:v040",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Cut at git tag v0.4.0. The earliest tag carrying docs/design/reflow2.json, so it is the first epoch with a retrievable design document — decisions that predate it appear here as their earliest evidence, not their origin. The export predates the hash chain (dec:export-hash-chain, v0.9.0), so no checksum is claimed.",
+        "epoch_type": "release_cut",
+        "name": "v0.4.0 release cut (2026-07-20)",
+        "sequence": 10
+      }
+    },
+    {
       "node_id": "epoch:v050-cut",
       "node_type": "DesignEpoch",
       "properties": {
         "epoch_type": "release_cut",
         "name": "v0.5.0 release cut (2026-07-20)",
-        "sequence": 1
+        "sequence": 20
       }
     },
     {
@@ -10060,7 +10729,54 @@
       "properties": {
         "epoch_type": "revision",
         "name": "Post-v0.5.0 hardening: self-adopt reconciliation, BL-46..50, the as-released model (2026-07-20)",
-        "sequence": 2
+        "sequence": 25
+      }
+    },
+    {
+      "node_id": "epoch:v060",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.6.0 release cut (2026-07-21)",
+        "sequence": 30
+      }
+    },
+    {
+      "node_id": "epoch:v061",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.6.1 release cut (2026-07-21)",
+        "sequence": 40
+      }
+    },
+    {
+      "node_id": "epoch:v070",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.7.0 release cut (2026-07-21)",
+        "sequence": 50
+      }
+    },
+    {
+      "node_id": "epoch:v080",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.8.0 release cut (2026-07-21)",
+        "sequence": 60
+      }
+    },
+    {
+      "node_id": "epoch:v090",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "checksum": "sha256:f4e7c27d768059c5802140ee688300a2815c69dec0687b34b9e9851ea185a265",
+        "description": "Cut at git tag v0.9.0. First epoch whose export carries an embedded content_hash (dec:export-hash-chain shipped in this release), so this is the first fork point addressable by checksum rather than by tag alone.",
+        "epoch_type": "release_cut",
+        "name": "v0.9.0 release cut (2026-07-22)",
+        "sequence": 70
       }
     },
     {
@@ -10513,6 +11229,26 @@
       "properties": {
         "env_type": "development",
         "name": "Developer machine"
+      }
+    },
+    {
+      "node_id": "frag:art-alternatives",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered alternatives.rs"
+      }
+    },
+    {
+      "node_id": "frag:art-merge",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered merge.rs"
       }
     },
     {
@@ -11745,11 +12481,96 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c00d940e253e717d5d4a6baabf26d330ab38c149bb562d4614e3815f26c08a07",
+  "prev_content_hash": "sha256:655bd52bd7a94161e1e12363ee877a681b838f21bb1fa4ae81c080748fb78a5e",
   "stamp": {
+    "edge_type_names": [
+      "ABOUT_ENTITY",
+      "ALLOCATED_TO",
+      "ANNOTATES",
+      "ANTICIPATES",
+      "ASKS_ABOUT",
+      "ASSESSED_ON",
+      "AT_EPOCH",
+      "AUTHORED_BY",
+      "BLOCKS",
+      "CAUSES",
+      "CHANGED",
+      "COMPLIES_WITH",
+      "CONSTRAINS",
+      "CONSUMES",
+      "CONTAINS",
+      "CONTAINS_EPOCH",
+      "CONTRADICTS",
+      "DEPENDS_ON",
+      "DEPLOYED_TO",
+      "DOCUMENTS",
+      "DUPLICATES",
+      "EVOLVES_INTO",
+      "GOVERNED_BY",
+      "HAS_OBSERVATION",
+      "HAS_SNAPSHOT",
+      "HAS_TEMPORAL_FACT",
+      "IMPOSES",
+      "INCLUDES",
+      "INTERACTS_WITH",
+      "MASKS",
+      "MITIGATES",
+      "OBSERVED_IN",
+      "OBSOLETES",
+      "OCCURS_DURING",
+      "OPERATES_IN",
+      "PART_OF_FLOW",
+      "PRECEDES",
+      "PRODUCES",
+      "PROVIDES",
+      "REALIZES",
+      "REQUIRES_RESOURCE",
+      "RISKS",
+      "SATISFIES",
+      "SPECIFIES",
+      "SUPERSEDES",
+      "SUPPLEMENTS",
+      "TRIGGERS",
+      "VALID_FROM",
+      "VALID_TO",
+      "VERIFIES",
+      "VIOLATES",
+      "VIOLATES_RULE",
+      "YIELDED"
+    ],
     "edge_types": 53,
+    "node_type_names": [
+      "Actor",
+      "Anchor",
+      "Artifact",
+      "Capability",
+      "ChangeEvent",
+      "Component",
+      "Constraint",
+      "Contributor",
+      "Decision",
+      "DesignEpoch",
+      "DesignRule",
+      "DimensionAssessment",
+      "DimensionObservation",
+      "DriftEvent",
+      "Environment",
+      "EnvironmentRule",
+      "Flow",
+      "Fragment",
+      "Interface",
+      "Project",
+      "QualityGate",
+      "Question",
+      "Release",
+      "Requirement",
+      "Resource",
+      "Snapshot",
+      "TemporalFact",
+      "Verification"
+    ],
     "node_types": 28,
-    "reflow2_version": "0.9.0",
+    "reflow2_version": "0.10.1",
     "schema_version": 1
   }
 }
