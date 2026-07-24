@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6ac0c2e46a122c3050256de80c2daa6b0cc3f662b1b97bbbb3b71c89d919140e",
+  "content_hash": "sha256:e99587cee7c81fdbb6765361d7f6b82d98c69951f66fcface57a836c39b3bc62",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -8862,10 +8862,10 @@
       "node_id": "dec:read-hint-shape",
       "node_type": "Decision",
       "properties": {
-        "decision": "OPEN — the decision-to-make behind req:read-surfaces-debt, captured proposed on the user's idea (2026-07-23), not yet chosen. Two axes. AXIS 1 — shape: (A) no read hint — rely on the writes' loop_hint + SessionStart + the Stop nudge (BL-90) as sufficient; (B) a static reminder appended to every read return (\"…for gaps analysis use the reflow2 skill\"); (C) a state-derived conditional hint — a read carries a pointer only when loop_status would report real debt, nothing when the loop is clean. AXIS 2 — scope: which reads carry it (all reads, or only orientation-shaped ones like graph_report/scan_nodes/search_design), and the throttle (every call vs at-most-once-per-N vs only-when-the-debt-count-changed), since a hint computed on every read couples reads to a debt traversal.",
-        "name": "Should reads carry a loop-debt hint — and static or state-derived? (open)",
+        "decision": "RESOLVED 2026-07-24 on Anthony's word: OPTION C. A read carries a loop-debt pointer ONLY when loop_status would report real outstanding debt, and stays silent when the loop is clean — never the static-every-read of (B), which BL-90 already rejected as boilerplate the agent learns to skim. AXIS 2 resolved: the hint rides the orientation-shaped reads (graph_report, scan_nodes, search_design, get_node — what an agent runs to get its bearings), and fires only when the owed-set CHANGES since it was last surfaced (fire-on-change) — so it appears once when debt arises and stays quiet until the picture moves, which also bounds the per-read cost of computing what is owed. The read-side sibling of the write tools' loop_hint (dec:loop-status-state-not-history). Satisfies req:read-surfaces-debt; unbuilt until it lands in the MCP read tools' result path. Options weighed: (A) do nothing — SessionStart + Stop suffice; (B) static reminder on every read; (C, CHOSEN) state-derived conditional hint.",
+        "name": "Reads surface loop debt only when it's real — option C (state-derived, orientation reads, fire-on-change)",
         "rationale": "Leaning C on axis 1, for reasons already on the record. (B) is the failure mode the user explicitly rejected in BL-90 (\"aggressive wording across ~90 tool descriptions — cancels out at that scale\"): boilerplate on every return trains the agent to skim past it, and reads differ from writes in a way that makes static wrong here — a write always advances the loop (it creates debt, so a static \"next step\" is always relevant, which is why the write-side loop_hint is static and accepted), whereas a read creates no debt, so a constant reminder is irrelevant most of the time and becomes noise. (C) respects dec:loop-status-state-not-history (debt is computed from current state, never remembered) and dec:anchored-first (a real, named problem outranks a generic nudge). (A) is the honest null option: the three existing triggers may already be enough, and the marginal value of C is specifically the mid-session read that SessionStart and Stop don't see. Axis 2 exists because loop_status is cheap but not free; the throttle is where C's cost is paid. Sibling of the write-side loop_hint; BL-74 family. Awaits the user's word on both axes before anything is built to satisfy req:read-surfaces-debt.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -10223,7 +10223,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "The agent should be reminded of outstanding coherence-loop debt while it is looking at the graph mid-session — not only at SessionStart (fires once) and Stop (fires at the very end). Reads (scan_nodes, get_node, search_design, graph_report, …) are the agent's first and most frequent action, so a read that returns while the loop is owed something is a well-timed place to surface it, closing the gap between the two existing triggers. This is the read-side sibling of the write tools' loop_hint and a member of the BL-74 \"fire on a trigger, not on virtue\" family: the reminder must ride a call the agent already makes, so remembering reflow2 does not depend on the agent's discipline under operational load.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -10644,7 +10644,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b721c03c22f77dfc5e67680059e23379361f18c0774a41bd64447b145494979b",
+  "prev_content_hash": "sha256:6ac0c2e46a122c3050256de80c2daa6b0cc3f662b1b97bbbb3b71c89d919140e",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,

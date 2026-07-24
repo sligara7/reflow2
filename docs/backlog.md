@@ -1858,10 +1858,16 @@ reconciled the artifact drift BL-84's `structure.rs`/`heal.rs` edits had left (`
 over ACCEPT because the cycle was a homeless-utility artifact, not a real mutual dependency — see the
 decision's rationale.
 
-**BL-91 · A read reminds the agent of loop debt at the moment of attention (read-side loop_hint)**
-— *user idea, 2026-07-23, raised while reviewing the BL-90 nudge. Size **S–M**, BL-74 family.
-Captured: `req:read-surfaces-debt` (proposed) governed_by `dec:read-hint-shape` (proposed, OPEN),
-both authored_by who:ajs; gap `e20d0909` [0.60] is the honest unbuilt state.* The write tools carry
+**BL-91 · A read reminds the agent of loop debt at the moment of attention (read-side loop_hint) —
+DECIDED 2026-07-24, ready to build** — *user idea, 2026-07-23, raised while reviewing the BL-90
+nudge. Size **S–M**, BL-74 family. `req:read-surfaces-debt` ACCEPTED and `dec:read-hint-shape`
+collapsed to **option C** on Anthony's word (2026-07-24): a read carries a loop-debt pointer ONLY
+when `loop_status` would report real debt (never static-every-read — the BL-90 boilerplate
+anti-pattern); it rides the **orientation reads** (graph_report / scan_nodes / search_design /
+get_node) and fires **only when the owed-set changes** (fire-on-change), which also bounds the
+per-read cost. Read-side sibling of the write tools' `loop_hint`. Build target: the MCP read tools'
+result path (with_loop_hint-style, computed from loop_status, throttled on change). gap `e20d0909`
+[0.60] stays the honest unbuilt state until it lands.* The write tools carry
 a static `loop_hint` at the next loop step (`dec:loop-status-state-not-history`); reads carry
 nothing. The idea: a read that returns while the loop is owed something surfaces it — the mid-session
 trigger between SessionStart (fires once) and the Stop nudge (fires at the end), landing at the
