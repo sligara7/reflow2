@@ -1407,9 +1407,16 @@ the ancestor-hash conflict id); `apply_merge` records every applied property/edg
 resolution as an answered Question whose id is the key (travels in the export, no schema change);
 `recall_resolutions` returns recorded decisions and `apply_merge use_recorded` reuses them —
 **advisory**, the human opts in (`dec:report-dont-judge`). Resolve the shape once, apply across all
-N near-identical conflicts (the BL-73 pain). 25 tests. Still open on BL-80: node-type/delete-modify
-rerere keys (no clean value triple), memory aging/pruning, and a document-producing `--merge-apply`
-CLI for the pure git-file workflow (small). The
+N near-identical conflicts (the BL-73 pain). 25 tests.
+**#3 file-pure apply BUILT 2026-07-24** (`crates/reflow2-mcp/src/main.rs`): the `--merge-apply` CLI
+completes the git-file workflow — `--merge base ours theirs` prints the conflicts and their ids, a
+JSON decisions file maps each id to base/ours/theirs, and `--merge-apply base ours theirs
+--resolutions FILE` runs `resolve_merge` and prints the merged export document. It opens no graph
+(runs while a server holds the lock) and, unlike `--merge`, *refuses* — non-zero exit, no document —
+until every conflict is decided; records no rerere memory (that lives in the graph). 4 CLI tests;
+`art:main` accepted `design_updated` via `chg:bl80-merge-apply-cli`, `cap:merge-designs` surface
+refreshed. Still open on BL-80: node-type/delete-modify rerere keys (no clean value triple) and
+rerere memory aging/pruning. The
 finding that reframes the whole multi-writer thread: **reflow2 already built the content-addressed
 *history* half of git** — hash-chained exports (`dec:export-hash-chain`) = commits, DesignEpochs +
 Snapshots = immutable history, `compare_designs` ancestry = merge-base *reporting*. What git has

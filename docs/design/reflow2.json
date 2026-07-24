@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c00d940e253e717d5d4a6baabf26d330ab38c149bb562d4614e3815f26c08a07",
+  "content_hash": "sha256:655bd52bd7a94161e1e12363ee877a681b838f21bb1fa4ae81c080748fb78a5e",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1362,6 +1362,24 @@
         "action": "modified"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl80-merge-apply-cli",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl80-merge-apply-cli",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:merge-designs"
     },
     {
       "edge_type": "CHANGED",
@@ -8149,7 +8167,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:66a3be8cafc15b2e",
+        "checksum": "sha256:642790f15f14f243",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -8558,7 +8576,7 @@
       "node_id": "cap:merge-designs",
       "node_type": "Capability",
       "properties": {
-        "description": "Given a common-ancestor export and two divergent records, compute a typed three-way merge per node and per property (git's trivial-merge case table over typed values, not lines): where only one side changed, take it; where both changed differently, surface a structured conflict as a Question rather than guessing. Deletion is retain-and-ask. The write-side sibling of cap:compare-designs. BL-80 #1+#2, the core of BL-12's merge. BUILT + VERIFIED (art:merge, ver:merge, 21 tests): merge_designs proposes (writes nothing); resolve_merge materialises the merged design from the human's per-conflict decisions; apply_merge commits it into the live graph atomically, refusing until every conflict is decided. merge_designs (read-only) + apply_merge (write) MCP tools + --merge CLI. Base is git's merge-base; the reflow2-native DAG is BL-70; rerere is BL-80 #5.",
+        "description": "Given a common-ancestor export and two divergent records, compute a typed three-way merge per node and per property (git's trivial-merge case table over typed values, not lines): where only one side changed, take it; where both changed differently, surface a structured conflict as a Question rather than guessing. Deletion is retain-and-ask. The write-side sibling of cap:compare-designs. BL-80 #1+#2, the core of BL-12's merge. BUILT + VERIFIED (art:merge, ver:merge, 46 tests): merge_designs proposes (writes nothing); resolve_merge materialises the merged design from the human's per-conflict decisions; apply_merge commits it into the live graph atomically, refusing until every conflict is decided. Surfaces: merge_designs (read-only) + apply_merge (write) MCP tools; and the file-pure git-file pair of CLI modes --merge (propose, printing conflicts and their ids) and --merge-apply (apply a decisions file with resolve_merge, printing the merged export document, never touching the graph and refusing until every conflict is decided). Base is git's merge-base; the reflow2-native DAG is BL-70; rerere is BL-80 #5.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Three-way merge two divergent designs",
@@ -9006,6 +9024,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-75: requirement certainty derived and rendered (user-confirmed / asserted / recovered)"
+      }
+    },
+    {
+      "node_id": "chg:bl80-merge-apply-cli",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-80: file-pure --merge-apply document CLI"
       }
     },
     {
@@ -11719,7 +11745,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:86162dde66ee75cd455c42d67a7c2d9992b410debfe6558247a3587835601939",
+  "prev_content_hash": "sha256:c00d940e253e717d5d4a6baabf26d330ab38c149bb562d4614e3815f26c08a07",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,

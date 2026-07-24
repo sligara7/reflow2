@@ -31,6 +31,16 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- `--merge-apply` CLI mode (BL-80): the file-pure half of three-way merge. `--merge base ours
+  theirs` prints the conflicts and their ids; a JSON decisions file maps each id to
+  `base`/`ours`/`theirs`; then `--merge-apply base ours theirs --resolutions FILE` runs
+  `resolve_merge` and prints the merged export document to stdout — opening no graph (so it runs
+  while a server holds the lock) and refusing (non-zero exit, no output) until every conflict is
+  decided. The document-in/document-out sibling of the `apply_merge` tool (which commits into the
+  live graph), completing git's merge workflow over export files.
+
 ## [0.10.1] — 2026-07-24
 
 ### Changed
