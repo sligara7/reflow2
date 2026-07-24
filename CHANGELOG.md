@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.10.0] — 2026-07-24
+
 ### Changed
 
 - **Reads now surface coherence-loop debt at the moment of attention** (BL-91; **minor** — the
