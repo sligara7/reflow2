@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.10.1] — 2026-07-24
+
 ### Changed
 
 - **The schema stamp records *which* types it carried, not just how many** (BL-86, the real fix —
