@@ -53,6 +53,8 @@ fn an_older_graph_opens_and_reports_the_difference() {
         schema_version: 1,
         node_types: 26,
         edge_types: 52,
+        node_type_names: None,
+        edge_type_names: None,
     };
     std::fs::write(
         stamp_path(g.to_str().unwrap()),
@@ -95,6 +97,8 @@ fn a_graph_from_the_future_is_refused_loudly() {
         schema_version: 1,
         node_types: 99,
         edge_types: 99,
+        node_type_names: None,
+        edge_type_names: None,
     };
     std::fs::write(
         stamp_path(g.to_str().unwrap()),
@@ -140,6 +144,46 @@ fn an_unreadable_stamp_is_reported_never_overwritten() {
         std::fs::read_to_string(stamp_path(g.to_str().unwrap())).unwrap(),
         "{ not json",
         "it may be the only record of what wrote the graph"
+    );
+    std::fs::remove_dir_all(&d).ok();
+}
+
+/// BL-86, the real @bro/StoryFlow scenario end to end: a set-based stamp that
+/// names a RETIRED edge type (`VALIDATES`) is refused with the *migrate* path
+/// precisely — not the count-only hedge, and not "update your binary." Uses the
+/// real schema, so it also exercises `GraphStamp::current` populating the sets.
+#[test]
+fn a_graph_naming_a_retired_type_is_told_to_migrate() {
+    let d = tmpdir("retired");
+    let g = d.join("graph");
+    let schema = load_schema().unwrap();
+
+    // Today's schema, plus the retired VALIDATES edge the old graph still used.
+    let now = GraphStamp::current(&schema);
+    let mut edges = now.edge_type_names.clone().unwrap();
+    edges.push("VALIDATES".into());
+    edges.sort();
+    let was = GraphStamp {
+        reflow2_version: "0.9.0".into(),
+        schema_version: 1,
+        node_types: now.node_types,
+        edge_types: edges.len(),
+        node_type_names: now.node_type_names.clone(),
+        edge_type_names: Some(edges),
+    };
+    std::fs::write(
+        stamp_path(g.to_str().unwrap()),
+        serde_json::to_string(&was).unwrap(),
+    )
+    .unwrap();
+
+    let err = check_and_stamp(g.to_str().unwrap(), &schema)
+        .expect_err("a graph using a retired type must be refused");
+    let msg = err.to_string();
+    assert!(msg.contains("VALIDATES"), "name the retired type: {msg}");
+    assert!(
+        msg.to_lowercase().contains("migrate") && !msg.contains("BEHIND"),
+        "point at migration, not a binary update: {msg}"
     );
     std::fs::remove_dir_all(&d).ok();
 }

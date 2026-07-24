@@ -31,6 +31,20 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **The schema stamp records *which* types it carried, not just how many** (BL-86, the real fix —
+  **patch**; the `.meta.json` stamp gains two additive, backward-compatible fields). The upgrade
+  check refused a graph whose type *count* exceeded the binary's — but a count can't tell "uses a
+  type I **retired** → migrate the graph" from "uses a type I've **never heard of** → you're
+  behind." So retiring `VALIDATES`/`ENABLES` (55 → 53 edge types) made a pre-removal graph get
+  refused with advice to *update the binary it was already on*. Now `GraphStamp` records the sorted
+  type-name sets, and the refusal names the exact offending types and gives the right path for each
+  (retired → migrate the graph; unknown → update reflow2), via a small retired-types registry.
+  Legacy count-only stamps still parse (`serde(default)`) and get a sharpened message — an excess
+  the retired types fully explain now leads with migration instead of hedging. Closes the open half
+  of BL-86 (the message half shipped earlier).
+
 ### Fixed
 
 - **The design-coherence CI gate now actually runs** (**patch** — a silent CI failure made loud).

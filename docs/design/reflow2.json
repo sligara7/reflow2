@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:945ebfcb4760425b94d3e6a23e3a32b1f243e1c1bdc49dfec51818cd387676c9",
+  "content_hash": "sha256:86162dde66ee75cd455c42d67a7c2d9992b410debfe6558247a3587835601939",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1398,6 +1398,24 @@
         "action": "modified"
       },
       "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl86",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl86",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:stamp"
     },
     {
       "edge_type": "CHANGED",
@@ -7852,7 +7870,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:75b484b15df65186",
+        "checksum": "sha256:437623ff7dd7ac86",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
         "status": "realized"
@@ -8662,6 +8680,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "BL-84 detector selectivity: community skips decomposition scaffolds; SPOF skips library/data foundations"
+      }
+    },
+    {
+      "node_id": "chg:bl86",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-86: set-based schema stamp — record which types, disambiguate the upgrade refusal"
       }
     },
     {
@@ -11348,7 +11374,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0600430cfc61eb9afd4eee842eb418aefa5b548c150051f61fc83d3543225cd8",
+  "prev_content_hash": "sha256:945ebfcb4760425b94d3e6a23e3a32b1f243e1c1bdc49dfec51818cd387676c9",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,

@@ -1743,7 +1743,7 @@ follow it.
 
 **BL-86 · The provenance stamp is count-based, so a schema *removal* breaks the upgrade direction**
 — *user, 2026-07-23 (real graphs: storyflow, @bro's projects, written by pre-orthogonality
-binaries); the message half is DONE.* Size **S–M**. `req:survives-upgrade` promises "an existing
+binaries); DONE 2026-07-24 — message half + the set-based real fix.* Size **S–M**. `req:survives-upgrade` promises "an existing
 graph opens, or is refused loudly with what to do." The BL-19 stamp records **counts** (`node_types`,
 `edge_types`), and the refusal fires when the graph's counts exceed the running binary's ("knows more
 of the schema"). That is exactly right for the **additive** case (an old binary meeting a newer
@@ -1771,6 +1771,18 @@ so the direction is at least detectable from the version, not only the count; (c
 pointer in the consumer AGENTS.md "if reflow2 gets in your way" section (both deferred to when the
 change is released — it is still `[Unreleased]`). Connects to BL-19 (the stamp), BL-51 (frictionless
 update), and `req:survives-upgrade`.
+> **Built 2026-07-24 (the set-based stamp).** `GraphStamp` gains `node_type_names` / `edge_type_names`
+> (sorted, `serde(default)` so legacy count-only stamps still parse), populated from
+> `schema.{node,edge}_types.keys()`. A `RETIRED_NODE_TYPES` / `RETIRED_EDGE_TYPES` registry
+> (`&["VALIDATES","ENABLES"]`) lets the new `unreadable_by` partition the types a graph names but the
+> binary lacks into *retired* (→ migrate) and *unknown* (→ update reflow2), naming each. Legacy
+> count-only stamps fall back to the count check but get a sharpened message: an excess the retired
+> types fully explain leads with migration. `provenance.rs` only (`art:provenance`, `chg:bl86`,
+> reconciled design_updated); 6 new unit tests + 1 real-schema integration test (a graph naming
+> `VALIDATES` is told to migrate, not to update). Full core suite + clippy + fmt green.
+> **Interim options (a)/(b)/(c) from above are now moot** — the set-based stamp is unambiguous, so no
+> `schema_version`-bump-on-removal or `--migrate` shortcut is needed; the per-release upgrade doc
+> still helps a human but the binary no longer hedges.
 
 **BL-87 · `import_graph` requires `document.stamp` but the published schema doesn't say so — DONE
 2026-07-23** — *BL-83b adopt dogfood, 2026-07-23 (E.2). Size **S**, BL-57/BL-28 family. Fixed via

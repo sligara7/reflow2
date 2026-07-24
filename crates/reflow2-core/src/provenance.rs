@@ -22,10 +22,24 @@
 //! seeing less than is there. That is refused loudly. Everything else opens,
 //! and the difference is reported rather than hidden.
 
+use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
 
 use dynograph_core::{DynoError, Schema};
 use serde::{Deserialize, Serialize};
+
+/// Node types this reflow2 once had and has since retired. A graph that carries
+/// one in its stamp is not from the future — it predates the removal — so the
+/// honest recovery is to migrate the graph, not to update the binary. Empty so
+/// far; grows the day a node type is retired (as VALIDATES/ENABLES were on the
+/// edge side). This is what lets a set-based stamp say "retired → migrate"
+/// rather than the count-only hedge (BL-86).
+const RETIRED_NODE_TYPES: &[&str] = &[];
+
+/// Edge types this reflow2 retired. `VALIDATES` and `ENABLES` were removed by
+/// the edge-orthogonality change (55 → 53) without a version bump — the exact
+/// case that made the count-only stamp ambiguous.
+const RETIRED_EDGE_TYPES: &[&str] = &["VALIDATES", "ENABLES"];
 
 /// The reflow2 that wrote a graph, as recorded beside it.
 ///
@@ -43,23 +57,178 @@ pub struct GraphStamp {
     pub node_types: usize,
     /// How many edge types that schema had.
     pub edge_types: usize,
+    /// *Which* node types the schema carried, sorted. `None` on a legacy
+    /// count-only stamp written before BL-86; present from now on. The set is
+    /// what lets a removal be diagnosed precisely: a graph naming a type this
+    /// binary lacks either used one this binary retired (migrate) or one it has
+    /// never heard of (you are behind) — the count alone cannot tell them apart.
+    #[serde(default)]
+    pub node_type_names: Option<Vec<String>>,
+    /// *Which* edge types the schema carried, sorted. See `node_type_names`.
+    #[serde(default)]
+    pub edge_type_names: Option<Vec<String>>,
 }
 
 impl GraphStamp {
     /// The stamp this binary would write.
     pub fn current(schema: &Schema) -> Self {
+        let mut node_names: Vec<String> = schema.node_types.keys().cloned().collect();
+        node_names.sort();
+        let mut edge_names: Vec<String> = schema.edge_types.keys().cloned().collect();
+        edge_names.sort();
         Self {
             reflow2_version: env!("CARGO_PKG_VERSION").to_string(),
             schema_version: schema.version,
             node_types: schema.node_types.len(),
             edge_types: schema.edge_types.len(),
+            node_type_names: Some(node_names),
+            edge_type_names: Some(edge_names),
         }
     }
 
-    /// True when the recorded schema knew more than `other` does — the case
-    /// that cannot be read safely.
+    /// True when the recorded schema knew more *by count* than `other` does.
+    /// The legacy signal, kept for the fallback when a stamp carries no type-name
+    /// sets — the set-based [`unreadable_by`](Self::unreadable_by) is preferred
+    /// whenever both stamps carry them.
     fn knows_more_than(&self, other: &Self) -> bool {
         self.node_types > other.node_types || self.edge_types > other.edge_types
+    }
+
+    /// Whether a graph written under `self` cannot be safely read by the binary
+    /// whose stamp is `now`, and if so, the message explaining exactly why and
+    /// how to recover. `None` means readable (open it).
+    ///
+    /// `now` is always [`GraphStamp::current`], so it carries the binary's live
+    /// type-name sets. When `self` carries them too (any graph written since
+    /// BL-86), the answer is exact: partition the types the graph names but this
+    /// binary lacks into *retired* (migrate the graph) and *unknown* (update the
+    /// binary), and name them. When `self` is a legacy count-only stamp, fall
+    /// back to the count comparison — but still sharpen the message with the
+    /// retired registry, since a count excess that the retired types fully
+    /// explain is almost certainly a graph that predates the removal.
+    fn unreadable_by(&self, now: &Self) -> Option<String> {
+        match (
+            &self.node_type_names,
+            &self.edge_type_names,
+            &now.node_type_names,
+            &now.edge_type_names,
+        ) {
+            (Some(gnodes), Some(gedges), Some(nnodes), Some(nedges)) => {
+                let now_nodes: BTreeSet<&str> = nnodes.iter().map(String::as_str).collect();
+                let now_edges: BTreeSet<&str> = nedges.iter().map(String::as_str).collect();
+                let mut retired = Vec::new();
+                let mut unknown = Vec::new();
+                for t in gnodes.iter().filter(|t| !now_nodes.contains(t.as_str())) {
+                    if RETIRED_NODE_TYPES.contains(&t.as_str()) {
+                        retired.push(t.clone());
+                    } else {
+                        unknown.push(t.clone());
+                    }
+                }
+                for t in gedges.iter().filter(|t| !now_edges.contains(t.as_str())) {
+                    if RETIRED_EDGE_TYPES.contains(&t.as_str()) {
+                        retired.push(t.clone());
+                    } else {
+                        unknown.push(t.clone());
+                    }
+                }
+                if retired.is_empty() && unknown.is_empty() {
+                    None // this binary knows every type the graph names — additive, readable
+                } else {
+                    Some(refusal_named(&retired, &unknown, self, now))
+                }
+            }
+            // A legacy count-only stamp on at least one side (in practice `self`,
+            // since `now` is always current): the names are unavailable.
+            _ => {
+                if !self.knows_more_than(now) {
+                    return None;
+                }
+                let node_excess = self.node_types.saturating_sub(now.node_types);
+                let edge_excess = self.edge_types.saturating_sub(now.edge_types);
+                let retired_explains = node_excess <= RETIRED_NODE_TYPES.len()
+                    && edge_excess <= RETIRED_EDGE_TYPES.len();
+                Some(refusal_by_count(retired_explains, self, now))
+            }
+        }
+    }
+}
+
+/// The recovery recipe for a graph that predates a type retirement.
+fn migrate_recipe() -> &'static str {
+    "migrate the graph: import a committed export into a fresh graph, or export it \
+     with the reflow2 that wrote it and import it here. Any retired type is dropped \
+     and named on import, so re-express it if the design used it"
+}
+
+/// Refusal message when the graph's stamp names its types (BL-86): say exactly
+/// which types this binary lacks and the correct path for each.
+fn refusal_named(
+    retired: &[String],
+    unknown: &[String],
+    was: &GraphStamp,
+    now: &GraphStamp,
+) -> String {
+    let mut lines = vec![format!(
+        "this graph (written by reflow2 {}) names types this reflow2 ({}) cannot read, so \
+         opening it could silently show you less of your design than it holds — refused.",
+        was.reflow2_version, now.reflow2_version
+    )];
+    if !unknown.is_empty() {
+        lines.push(format!(
+            "\u{20}\u{2022} Your reflow2 is BEHIND: it has never heard of {} — update reflow2 (or \
+             rebuild from a current checkout) and reopen.",
+            unknown.join(", ")
+        ));
+    }
+    if !retired.is_empty() {
+        lines.push(format!(
+            "\u{20}\u{2022} This graph predates a schema change: it uses {}, which this reflow2 \
+             RETIRED, and your reflow2 is current — {}.",
+            retired.join(", "),
+            migrate_recipe()
+        ));
+    }
+    lines.join("\n")
+}
+
+/// Refusal message for a legacy count-only stamp: the names are gone, so reason
+/// from counts, but lead with migration when the retired registry fully explains
+/// the excess (the common case: a graph from before VALIDATES/ENABLES were cut).
+fn refusal_by_count(retired_explains: bool, was: &GraphStamp, now: &GraphStamp) -> String {
+    let head = format!(
+        "this graph was written by reflow2 {} and declares more schema types \
+         ({} node / {} edge) than the reflow2 you are running ({}: {} / {}); opening it could \
+         silently show you less of your design than it holds, so it is refused.",
+        was.reflow2_version,
+        was.node_types,
+        was.edge_types,
+        now.reflow2_version,
+        now.node_types,
+        now.edge_types
+    );
+    let behind = "\u{20}\u{2022} Your reflow2 is BEHIND the one that wrote this graph — update \
+         reflow2 (or rebuild from a current checkout) and reopen.";
+    let predates = format!(
+        "\u{20}\u{2022} The graph PREDATES a schema change that retired some types, and your \
+         reflow2 is current — {}.",
+        migrate_recipe()
+    );
+    if retired_explains {
+        // The excess is fully accounted for by the types this reflow2 retired —
+        // most likely a pre-removal graph. Lead with migration; keep behind as
+        // the alternative, since a count-only stamp cannot make it certain.
+        format!(
+            "{head}\nThis excess is exactly consistent with a graph written before this reflow2 \
+             retired {}, so most likely:\n{}\nIf instead this graph came from a NEWER reflow2:\n{}",
+            RETIRED_EDGE_TYPES.join(", "),
+            predates,
+            behind
+        )
+    } else {
+        format!(
+            "{head} This happens for one of two reasons, and the count alone cannot tell them apart:\n{behind}\n{predates}"
+        )
     }
 }
 
@@ -151,30 +320,12 @@ pub fn check_and_stamp(graph_path: &str, schema: &Schema) -> Result<Provenance, 
             stamped_now: now.clone(),
         },
         Some(was) if was == now => Provenance::Match { stamp: was },
-        Some(was) if was.knows_more_than(&now) => {
-            return Err(DynoError::Storage(format!(
-                "this graph was written by reflow2 {}, which knew more of the schema \
-                 ({} node types, {} edge types) than the reflow2 you are running ({}: {}, {}); \
-                 opening it could silently show you less of your design than it holds, so it is \
-                 refused. This happens for one of two reasons, and the count alone cannot tell \
-                 them apart:\n\
-                 \u{20}\u{2022} Your reflow2 is BEHIND the one that wrote this graph — update reflow2 \
-                 (or rebuild it from a current checkout) and reopen.\n\
-                 \u{20}\u{2022} The graph PREDATES a schema change that retired some types, and your \
-                 reflow2 is current — migrate the graph: import a committed export into a fresh \
-                 graph, or export it with the reflow2 that wrote it and import it here. Any retired \
-                 type is dropped and named on import, so re-express it if the design used it.",
-                was.reflow2_version,
-                was.node_types,
-                was.edge_types,
-                now.reflow2_version,
-                now.node_types,
-                now.edge_types
-            )));
-        }
-        Some(was) => Provenance::OlderGraph {
-            was,
-            now: now.clone(),
+        Some(was) => match was.unreadable_by(&now) {
+            Some(message) => return Err(DynoError::Storage(message)),
+            None => Provenance::OlderGraph {
+                was,
+                now: now.clone(),
+            },
         },
     };
 
@@ -201,12 +352,29 @@ pub fn check_and_stamp(graph_path: &str, schema: &Schema) -> Result<Provenance, 
 mod tests {
     use super::*;
 
-    fn stamp(v: &str, n: usize, e: usize) -> GraphStamp {
+    /// A legacy count-only stamp — no type-name sets (pre-BL-86).
+    fn legacy(v: &str, n: usize, e: usize) -> GraphStamp {
         GraphStamp {
             reflow2_version: v.into(),
             schema_version: 1,
             node_types: n,
             edge_types: e,
+            node_type_names: None,
+            edge_type_names: None,
+        }
+    }
+
+    /// A set-based stamp that names its types (BL-86 and after).
+    fn named(v: &str, nodes: &[&str], edges: &[&str]) -> GraphStamp {
+        let nn: Vec<String> = nodes.iter().map(|s| s.to_string()).collect();
+        let ne: Vec<String> = edges.iter().map(|s| s.to_string()).collect();
+        GraphStamp {
+            reflow2_version: v.into(),
+            schema_version: 1,
+            node_types: nn.len(),
+            edge_types: ne.len(),
+            node_type_names: Some(nn),
+            edge_type_names: Some(ne),
         }
     }
 
@@ -219,18 +387,99 @@ mod tests {
     }
 
     #[test]
-    fn a_graph_that_knows_more_is_the_only_refusal() {
-        let old = stamp("0.1.0", 26, 52);
-        let new = stamp("0.2.0", 27, 53);
-        assert!(
-            new.knows_more_than(&old),
-            "a graph from the future cannot be read in full"
-        );
+    fn a_graph_that_knows_more_by_count_is_the_only_refusal() {
+        let old = legacy("0.1.0", 26, 52);
+        let new = legacy("0.2.0", 27, 53);
+        assert!(new.knows_more_than(&old));
         assert!(
             !old.knows_more_than(&new),
-            "an older graph is additive and entirely readable — refusing would lock \
-             someone out of their own design over a change that cannot hurt them"
+            "an older graph is additive and entirely readable"
         );
         assert!(!new.knows_more_than(&new));
+    }
+
+    #[test]
+    fn set_based_subset_opens() {
+        // The graph names a strict subset of the binary's types — additive.
+        let graph = named("0.9.0", &["Requirement", "Capability"], &["SATISFIES"]);
+        let now = named(
+            "0.10.0",
+            &["Requirement", "Capability", "Release"],
+            &["SATISFIES", "INCLUDES"],
+        );
+        assert!(graph.unreadable_by(&now).is_none());
+    }
+
+    #[test]
+    fn set_based_retired_type_says_migrate_not_behind() {
+        // The graph uses VALIDATES, which this reflow2 retired: it is not from
+        // the future — migrate the graph.
+        let graph = named("0.9.0", &["Capability"], &["SATISFIES", "VALIDATES"]);
+        let now = named("0.10.0", &["Capability"], &["SATISFIES"]);
+        let msg = graph.unreadable_by(&now).expect("must refuse");
+        assert!(msg.contains("VALIDATES"), "names the retired type: {msg}");
+        assert!(msg.contains("RETIRED") && msg.to_lowercase().contains("migrate"));
+        assert!(
+            !msg.contains("BEHIND"),
+            "a purely-retired case must not tell the user to update: {msg}"
+        );
+    }
+
+    #[test]
+    fn set_based_unknown_type_says_behind() {
+        // The graph uses a type this reflow2 has never heard of: the binary is
+        // behind — update it.
+        let graph = named("0.11.0", &["Capability"], &["SATISFIES", "FUTURE_EDGE"]);
+        let now = named("0.10.0", &["Capability"], &["SATISFIES"]);
+        let msg = graph.unreadable_by(&now).expect("must refuse");
+        assert!(
+            msg.contains("FUTURE_EDGE") && msg.contains("BEHIND"),
+            "{msg}"
+        );
+    }
+
+    #[test]
+    fn set_based_mixed_names_both_paths() {
+        let graph = named("0.11.0", &["Capability"], &["VALIDATES", "FUTURE_EDGE"]);
+        let now = named("0.10.0", &["Capability"], &["SATISFIES"]);
+        let msg = graph.unreadable_by(&now).expect("must refuse");
+        assert!(
+            msg.contains("VALIDATES") && msg.contains("FUTURE_EDGE"),
+            "{msg}"
+        );
+        assert!(msg.contains("BEHIND") && msg.to_lowercase().contains("migrate"));
+    }
+
+    #[test]
+    fn legacy_count_excess_matching_retired_leads_with_migrate() {
+        // The count-only case that motivated BL-86: 2 extra edge types, exactly
+        // the number this reflow2 retired.
+        let graph = legacy("0.9.0", 3, 5);
+        let now = named("0.10.0", &["A", "B", "C"], &["X", "Y", "Z"]); // 3 / 3
+        let msg = graph.unreadable_by(&now).expect("must refuse");
+        assert!(
+            msg.contains("VALIDATES") && msg.to_lowercase().contains("most likely"),
+            "excess explained by the retired types → lead with migration: {msg}"
+        );
+    }
+
+    #[test]
+    fn legacy_count_excess_beyond_retired_stays_hedged() {
+        let graph = legacy("0.9.0", 3, 8); // 5 extra edge types — more than retired
+        let now = named("0.10.0", &["A", "B", "C"], &["X", "Y", "Z"]);
+        let msg = graph.unreadable_by(&now).expect("must refuse");
+        assert!(
+            msg.contains("cannot tell them apart"),
+            "an unexplained excess keeps the honest hedge: {msg}"
+        );
+    }
+
+    #[test]
+    fn a_legacy_stamp_still_deserializes_without_the_name_fields() {
+        let old =
+            r#"{"reflow2_version":"0.9.0","schema_version":1,"node_types":28,"edge_types":55}"#;
+        let s: GraphStamp = serde_json::from_str(old).expect("legacy stamp parses");
+        assert_eq!(s.node_type_names, None);
+        assert_eq!(s.edge_types, 55);
     }
 }
