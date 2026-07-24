@@ -54,7 +54,7 @@ Add yourself if you're new here.
 
 
 
-- BL-80 three-way merge (report rung) — @ajs — since 2026-07-22 — crates/reflow2-core/src/merge.rs (new) + tests, reflow2-mcp merge_designs tool + --merge CLI; extends compare
+- BL-80 merge-apply document CLI (git-file workflow) — @ajs — since 2026-07-24 — crates/reflow2-mcp/src/main.rs (--merge-apply + --resolutions), cap:merge-designs desc; report/apply/rerere rungs already landed
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
