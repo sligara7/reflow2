@@ -31,6 +31,14 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **The design-coherence CI gate now actually runs** (**patch** — a silent CI failure made loud).
+  `reflow2_check.py` spawns the `reflow2-mcp` binary, but the gate step had been placed in the
+  no-RocksDB `core` job, which never builds it — so every push hit `FileNotFoundError` on that step
+  (job red) and the gate never ran in CI, while everyone read "gate green" from the *local* run.
+  Moved to the `full` job, right after the binary is built. Found while cutting v0.10.0.
+
 ## [0.10.0] — 2026-07-24
 
 ### Changed
