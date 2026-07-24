@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:98ce4e3cf7ea0ecc6cbea02ee4520974318597500f14a56408bdb3ef333e2799",
+  "content_hash": "sha256:0600430cfc61eb9afd4eee842eb418aefa5b548c150051f61fc83d3543225cd8",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -681,6 +681,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-041e39df97343a36",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-17017303d729e5ee",
       "properties": {
         "accepted_baseline": true,
@@ -732,6 +741,15 @@
         "action": "modified"
       },
       "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-57815d3b012cb271",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:merge"
     },
     {
       "edge_type": "CHANGED",
@@ -7214,6 +7232,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
+        "checksum": "sha256:c87a79726aeb111b",
         "location": "crates/reflow2-core/src/alternatives.rs",
         "name": "alternatives.rs — AoA report",
         "status": "realized"
@@ -7455,6 +7474,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
+        "checksum": "sha256:075bab31f3c131b6",
         "location": "crates/reflow2-core/src/merge.rs",
         "name": "merge.rs — three-way merge",
         "status": "realized"
@@ -8057,6 +8077,15 @@
       }
     },
     {
+      "node_id": "chg:accept-041e39df97343a36",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-07-24",
+        "name": "Initial baseline of the alternatives/AoA module (alternatives.rs; realizes cap:compare-alternatives + cap:decision-point). Previously no_baseline — recording the as-built fingerprint so future edits are caught; no design change."
+      }
+    },
+    {
       "node_id": "chg:accept-17017303d729e5ee",
       "node_type": "ChangeEvent",
       "properties": {
@@ -8108,6 +8137,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-57815d3b012cb271",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-07-24",
+        "name": "Initial baseline of the BL-80 three-way-merge module (merge.rs, authored 2026-07-22; realizes cap:merge-designs + cap:merge-rerere, verified by ver:merge). Previously no_baseline — recording the as-built fingerprint so future edits are caught; no design change."
       }
     },
     {
@@ -10965,7 +11003,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f84ddc83feb0f3fb9991602696d04e5131a1caf3c8498cd88308bd25f9ba4cac",
+  "prev_content_hash": "sha256:98ce4e3cf7ea0ecc6cbea02ee4520974318597500f14a56408bdb3ef333e2799",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,
