@@ -138,6 +138,17 @@ python3 tools/reflow2_init.py /path/to/project --check   # what would change
 Tests live beside the code as `crates/reflow2-core/tests/*.rs` (one file per module/concern) plus
 unit tests in `src/schema.rs` and doctests in `src/lib.rs`/`src/nodes.rs`.
 
+**The MCP server this repo runs on its own design graph is launched via
+[`tools/reflow2-mcp-launch.sh`](tools/reflow2-mcp-launch.sh)** (wired in `.mcp.json`), not the raw
+`target/debug/reflow2-mcp`. The wrapper content-hashes the sources and rebuilds `reflow2-mcp` iff
+they changed before exec'ing it, so every new session and every `/mcp` reconnect serves a fresh
+binary automatically. It hashes content, not mtimes, on purpose: `cargo build` keys on mtimes, and
+`git pull --rebase`/checkout can leave sources *older* than the last-built binary — which silently
+served stale code for whole sessions until this was added. Consequence to know: editing reflow2
+source **mid-session** does not hot-swap the running server — rebuild lands on disk, but you must
+`/mcp` reconnect reflow2 (or restart the session) for the live tools to pick it up. All wrapper
+output goes to stderr; stdout is the JSON-RPC channel and must stay clean.
+
 ## Working on this repo
 
 **Order of operations.** `git pull --rebase`, then claim your item on [COORD.md](COORD.md) and
