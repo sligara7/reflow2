@@ -36,8 +36,12 @@ def _unwrap(value):
 
     MCP requires `structuredContent` to be an object, so a tool returning a list
     sends `{"count": n, "items": [...]}`. Callers want the list.
+
+    Match on the presence of count+items, not an exact key set: an orientation
+    read can add a sibling `loop_hint` (BL-91), and additive metadata must not
+    defeat the unwrap.
     """
-    if isinstance(value, dict) and set(value) == {"count", "items"}:
+    if isinstance(value, dict) and {"count", "items"} <= value.keys():
         return value["items"]
     return value
 

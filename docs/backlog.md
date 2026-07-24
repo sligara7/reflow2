@@ -1859,7 +1859,7 @@ over ACCEPT because the cycle was a homeless-utility artifact, not a real mutual
 decision's rationale.
 
 **BL-91 · A read reminds the agent of loop debt at the moment of attention (read-side loop_hint) —
-DECIDED 2026-07-24, ready to build** — *user idea, 2026-07-23, raised while reviewing the BL-90
+DONE 2026-07-24** — *user idea, 2026-07-23, raised while reviewing the BL-90
 nudge. Size **S–M**, BL-74 family. `req:read-surfaces-debt` ACCEPTED and `dec:read-hint-shape`
 collapsed to **option C** on Anthony's word (2026-07-24): a read carries a loop-debt pointer ONLY
 when `loop_status` would report real debt (never static-every-read — the BL-90 boilerplate
@@ -1880,8 +1880,20 @@ boilerplate trains skimming), and reads differ from writes in the way that makes
 a write always advances the loop so its static hint is always relevant, a read creates no debt so a
 constant reminder is noise most of the time. C respects `dec:loop-status-state-not-history` (debt is
 computed, never remembered) and `dec:anchored-first` (a real problem outranks a generic nudge); its
-cost is coupling reads to a debt traversal, which axis 2's throttle bounds. **Wants the user's word
-on both axes before build.** Sibling of the write-side `loop_hint`; extends BL-74, complements BL-90.
+cost is coupling reads to a debt traversal, which axis 2's throttle bounds. Sibling of the write-side
+`loop_hint`; extends BL-74, complements BL-90.
+> **Built 2026-07-24 (option C, exactly as decided).** `graph_report`, `graph_report_markdown`,
+> `scan_nodes`, `search_design`, `get_node` attach `loop_hint` only on real debt, fire-on-change.
+> Axis 2's throttle is a service **write-generation counter** (`write_lock` bumps it; the 61 write
+> handlers route through it): the owed-set can move only on a write, so within one generation the
+> first orientation read computes `loop_status` once and later reads add nothing — the debt traversal
+> the decision worried about is paid at most once per write, not per read. `cap:read-loop-hint`
+> (SATISFIES `req:read-surfaces-debt`, ALLOCATED_TO `cmp:service`, REALIZED `art:service`, VERIFIED
+> `ver:read-loop-hint` — new `tools.rs` cases); gap `e20d0909` closed, read-hint disconnected
+> community dissolved. Surfaced + fixed a real bug of its own: `reflow2_check.py`/`reflow2_cli.py`/
+> `smoke_mcp.py` unwrapped the `{count, items}` list envelope by exact key set, so the new
+> `loop_hint` broke the unwrap (crashed the gate) — now presence-matched. `chg:bl91`; art:service
+> (design_updated) + art:check (design_holds) reconciled; all gates green, live == committed 340n/927e.
 
 **BL-90 · loop_nudge has a total-bypass blind spot: a session that never touches the graph is never
 nudged — DONE 2026-07-23** — *user, 2026-07-23, the one survivor from a review of external "force

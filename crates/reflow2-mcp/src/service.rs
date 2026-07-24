@@ -12,6 +12,7 @@
 
 use std::collections::HashMap;
 use std::sync::Arc;
+use std::sync::atomic::{AtomicU64, Ordering};
 
 use rmcp::{
     ErrorData as McpError, ServerHandler,
@@ -31,8 +32,8 @@ use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
     AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DesignGraph, Dimension, DriftDisposition,
     DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy,
-    LinkArtifactOptions, ObservedArtifact, PromptCollector, PropagateOptions, ReconcileOptions,
-    Value,
+    LinkArtifactOptions, LoopStatus, ObservedArtifact, PromptCollector, PropagateOptions,
+    ReconcileOptions, Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -72,6 +73,27 @@ type JsonObject = JsonMap<String, JsonValue>;
 pub struct ReflowService {
     graph: Arc<Mutex<DesignGraph>>,
     tool_router: ToolRouter<Self>,
+    /// Advanced whenever a mutating handler takes the graph (via `write_lock`).
+    /// The coherence loop's owed-set can change only on a write, so this is the
+    /// cheap signal that lets an orientation read skip recomputing `loop_status`
+    /// when nothing has moved since it last did — the cost bound the read-side
+    /// loop_hint rests on (BL-91, dec:read-hint-shape option C).
+    write_gen: Arc<AtomicU64>,
+    /// Fire-on-change memory for the read-side loop_hint: the write generation
+    /// at which `loop_status` was last computed for a read, and the hint then
+    /// surfaced. Together they stop the hint both recomputing every read and
+    /// repeating itself while the picture has not moved.
+    read_hint: Arc<std::sync::Mutex<ReadHintCache>>,
+}
+
+/// See [`ReflowService::read_hint`]. `computed_gen: None` means nothing has been
+/// computed yet this process, so the first orientation read surfaces any
+/// standing debt once; `surfaced` is the last hint actually attached
+/// (`None` = the loop was clean, or nothing shown).
+#[derive(Default)]
+struct ReadHintCache {
+    computed_gen: Option<u64>,
+    surfaced: Option<String>,
 }
 
 // ---- error / result helpers -------------------------------------------------
@@ -216,18 +238,23 @@ fn node_error(g: &DesignGraph, node_type: &str, e: DynoError) -> McpError {
 /// both get the data. Returning a raw `CallToolResult` registers no output
 /// schema (the wire format is the payload directly).
 fn ok_json<T: serde::Serialize>(value: T) -> Result<CallToolResult, McpError> {
-    let v = serde_json::to_value(value).map_err(ser_err)?;
-    // MCP defines `structuredContent` as an **object**. A tool returning a bare
-    // JSON array is malformed, and a spec-compliant client rejects the call
-    // outright ("expected record, received array") — which silently took out
-    // detect_gaps, scan_nodes and detect_defects, i.e. most of the read surface
-    // and the tool the whole loop orbits.
-    //
-    // Wrapping happens here, at the one choke point every tool returns through,
-    // rather than at each call site: a list tool added later cannot reintroduce
-    // the bug by forgetting. `count` is included because an agent almost always
-    // wants it and would otherwise measure the array itself.
-    let v = if v.is_array() {
+    json_result(envelope(serde_json::to_value(value).map_err(ser_err)?))
+}
+
+/// Force a payload into the object shape `structuredContent` requires.
+///
+/// MCP defines `structuredContent` as an **object**. A tool returning a bare
+/// JSON array is malformed, and a spec-compliant client rejects the call
+/// outright ("expected record, received array") — which silently took out
+/// detect_gaps, scan_nodes and detect_defects, i.e. most of the read surface
+/// and the tool the whole loop orbits.
+///
+/// Wrapping happens here, at the one choke point every tool returns through,
+/// rather than at each call site: a list tool added later cannot reintroduce
+/// the bug by forgetting. `count` is included because an agent almost always
+/// wants it and would otherwise measure the array itself.
+fn envelope(v: JsonValue) -> JsonValue {
+    if v.is_array() {
         let count = v.as_array().map(Vec::len).unwrap_or(0);
         json!({ "count": count, "items": v })
     } else if !v.is_object() {
@@ -239,7 +266,41 @@ fn ok_json<T: serde::Serialize>(value: T) -> Result<CallToolResult, McpError> {
         json!({ "value": v })
     } else {
         v
+    }
+}
+
+/// A compact one-line rendering of what the loop is owed, for the read-side
+/// loop_hint (BL-91). Names only the non-zero categories and points at
+/// `loop_status` for the ordered to-do list, rather than duplicating its full
+/// `next` prose on every orientation read. The caller only builds this when
+/// `!clean`, so at least one category is non-zero.
+fn read_debt_summary(s: &LoopStatus) -> String {
+    let mut parts = Vec::new();
+    let mut add = |n: usize, label: &str| {
+        if n > 0 {
+            parts.push(format!("{n} {label}"));
+        }
     };
+    add(s.unsurfaced_gaps, "gap(s) never asked");
+    add(s.unanswered_questions, "question(s) awaiting the user");
+    add(s.unwritten_answers, "answer(s) not written back");
+    add(s.structural_defects, "structural defect(s)");
+    add(
+        s.unproven_capabilities,
+        "capability(ies) claiming built with no check",
+    );
+    add(s.undispositioned_drift, "drift(s) awaiting disposition");
+    add(s.unexamined_claims, "built capability(ies) never checked");
+    format!(
+        "loop owes: {} — run loop_status for the ordered to-do list",
+        parts.join(", ")
+    )
+}
+
+/// Build the tool result from an already-enveloped object: structured JSON plus
+/// a text rendering, so clients reading either `structuredContent` or `content`
+/// both get the data.
+fn json_result(v: JsonValue) -> Result<CallToolResult, McpError> {
     let text = serde_json::to_string(&v).map_err(ser_err)?;
     let mut result = CallToolResult::structured(v);
     result.content = vec![ContentBlock::text(text)];
@@ -1268,28 +1329,86 @@ impl ReflowService {
         // saw, and a silently-partial search reads as "the design says
         // nothing about that". One bounded rebuild at open closes that hole.
         graph.reindex_search()?;
-        Ok((
-            Self {
-                graph: Arc::new(Mutex::new(graph)),
-                tool_router: Self::tool_router(),
-            },
-            provenance.note(),
-        ))
+        Ok((Self::wrap(graph), provenance.note()))
     }
 
     pub fn new(path: &str) -> Result<Self, DynoError> {
-        Ok(Self {
-            graph: Arc::new(Mutex::new(DesignGraph::open_rocksdb(path)?)),
-            tool_router: Self::tool_router(),
-        })
+        Ok(Self::wrap(DesignGraph::open_rocksdb(path)?))
     }
 
     /// Open an in-memory design graph (tests / dry runs; not persisted).
     pub fn in_memory() -> Result<Self, DynoError> {
-        Ok(Self {
-            graph: Arc::new(Mutex::new(DesignGraph::open_in_memory()?)),
+        Ok(Self::wrap(DesignGraph::open_in_memory()?))
+    }
+
+    /// The one place the service is assembled from an opened graph, so every
+    /// entry point starts the write generation and read-hint memory the same
+    /// way and a new constructor cannot forget one.
+    fn wrap(graph: DesignGraph) -> Self {
+        Self {
+            graph: Arc::new(Mutex::new(graph)),
             tool_router: Self::tool_router(),
-        })
+            write_gen: Arc::new(AtomicU64::new(0)),
+            read_hint: Arc::new(std::sync::Mutex::new(ReadHintCache::default())),
+        }
+    }
+
+    /// Take the graph for a mutating handler, advancing the write generation so
+    /// the read-side loop_hint knows the owed-set may have moved (BL-91). Every
+    /// write site uses this in place of `self.graph.lock()`; over-counting a
+    /// non-mutating pass only costs one extra `loop_status`, never correctness.
+    async fn write_lock(&self) -> tokio::sync::MutexGuard<'_, DesignGraph> {
+        self.write_gen.fetch_add(1, Ordering::Relaxed);
+        self.graph.lock().await
+    }
+
+    /// The read-side sibling of the write tools' `with_loop_hint` (BL-91,
+    /// dec:read-hint-shape option C). Return an orientation read's result with a
+    /// `loop_hint` attached ONLY when the coherence loop is owed something and
+    /// the owed-set has changed since it was last surfaced. The caller passes
+    /// the graph it already holds so no second lock is taken.
+    fn ok_read<T: serde::Serialize>(
+        &self,
+        g: &DesignGraph,
+        value: T,
+    ) -> Result<CallToolResult, McpError> {
+        let mut v = envelope(serde_json::to_value(value).map_err(ser_err)?);
+        if let (Some(hint), Some(obj)) = (self.read_loop_hint(g)?, v.as_object_mut()) {
+            obj.insert("loop_hint".into(), JsonValue::String(hint));
+        }
+        json_result(v)
+    }
+
+    /// Compute the read-side loop-debt pointer for the read now returning, or
+    /// `None` to stay silent. Two gates, both from dec:read-hint-shape:
+    ///
+    /// - **Cost** — the owed-set changes only on a write, so if the write
+    ///   generation has not advanced since we last computed, we recompute
+    ///   nothing and say nothing. Reads are the agent's most frequent call, and
+    ///   `loop_status` is cheap but not free; this keeps it off the hot path.
+    /// - **Fire-on-change** — after a write we recompute once, but surface the
+    ///   hint only when it differs from the one last shown, so a persisting
+    ///   debt appears once and then stays quiet until the picture actually
+    ///   moves. Debt is always read from current state, never remembered
+    ///   (dec:loop-status-state-not-history); only the *presentation* is
+    ///   throttled.
+    fn read_loop_hint(&self, g: &DesignGraph) -> Result<Option<String>, McpError> {
+        let generation = self.write_gen.load(Ordering::Relaxed);
+        // The graph is held for this whole handler, so read-hint access is
+        // already serialized; a std mutex is enough and never awaits.
+        let mut cache = self.read_hint.lock().expect("read-hint mutex poisoned");
+        if cache.computed_gen == Some(generation) {
+            return Ok(None);
+        }
+        let status = g.loop_status().map_err(dyno_err)?;
+        cache.computed_gen = Some(generation);
+        let hint = (!status.clean).then(|| read_debt_summary(&status));
+        if hint == cache.surfaced {
+            Ok(None)
+        } else {
+            cache.surfaced = hint.clone();
+            Ok(hint)
+        }
     }
 
     // ---- GENESIS (bootstrap the graph from a brief) ----
@@ -1314,7 +1433,7 @@ impl ReflowService {
             mode: req.mode,
             rescan: req.rescan,
         };
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(g.genesis(opts).map_err(dyno_err)?)
     }
 
@@ -1422,7 +1541,7 @@ impl ReflowService {
         let mut report = serde_json::to_value(g.graph_report().map_err(dyno_err)?)
             .map_err(|e| McpError::internal_error(e.to_string(), None))?;
         report["served_by"] = served_by();
-        ok_json(report)
+        self.ok_read(&g, report)
     }
 
     #[tool(
@@ -1432,7 +1551,14 @@ impl ReflowService {
     pub async fn graph_report_markdown(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         let report = g.graph_report().map_err(dyno_err)?;
-        Ok(ok_markdown(report.to_markdown()))
+        let mut md = report.to_markdown();
+        // The rendering sibling of graph_report, and an orientation read in its
+        // own right — carry the same read-side loop_hint (BL-91), as a trailing
+        // blockquote since a Markdown document has no field to hang it on.
+        if let Some(hint) = self.read_loop_hint(&g)? {
+            md.push_str(&format!("\n\n> **loop_hint** — {hint}\n"));
+        }
+        Ok(ok_markdown(md))
     }
 
     #[tool(
@@ -1535,7 +1661,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<IdName>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.add_project(&req.id, &req.name).map_err(dyno_err)?,
         ))
@@ -1549,7 +1675,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RequirementReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         with_loop_hint(
             NodeDto::from(
                 g.add_requirement(&req.id, &req.name, &req.statement)
@@ -1570,7 +1696,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<CapabilityReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         with_loop_hint(
             NodeDto::from(
                 g.add_capability(&req.id, &req.name, &req.description, req.status.as_deref())
@@ -1595,7 +1721,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RequirementStatusReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.set_requirement_status(&req.requirement_id, &req.status)
                 .map_err(dyno_err)?,
@@ -1613,7 +1739,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<CapabilityStatusReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.set_capability_status(&req.capability_id, &req.status)
                 .map_err(dyno_err)?,
@@ -1635,7 +1761,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ProvenanceReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.set_provenance(&req.node_type, &req.node_id, &req.provenance)
                 .map_err(dyno_err)?,
@@ -1653,7 +1779,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ComponentReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         with_loop_hint(
             NodeDto::from(
                 g.add_component(&req.id, &req.name, &req.description, req.level.as_deref())
@@ -1675,7 +1801,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EdgePairReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.contain_component(&req.from_id, &req.to_id)
                 .map_err(dyno_err)?,
@@ -1690,7 +1816,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EdgePairReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.satisfies(&req.from_id, &req.to_id).map_err(dyno_err)?,
         ))
@@ -1704,7 +1830,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EdgePairReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.allocate(&req.from_id, &req.to_id).map_err(dyno_err)?,
         ))
@@ -1722,7 +1848,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<IdName>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         with_loop_hint(
             NodeDto::from(g.add_interface(&req.id, &req.name).map_err(dyno_err)?),
             "loop: structural change — wire provides/consumes, then run detect_defects \
@@ -1744,7 +1870,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AddFlowReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.add_flow(
                 &req.id,
@@ -1768,7 +1894,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<PartOfFlowReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.part_of_flow(&req.capability_id, &req.flow_id, req.step_order)
                 .map_err(dyno_err)?,
@@ -1802,7 +1928,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EdgePairReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.provides(&req.from_id, &req.to_id).map_err(dyno_err)?,
         ))
@@ -1820,7 +1946,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EdgePairReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.consumes(&req.from_id, &req.to_id).map_err(dyno_err)?,
         ))
@@ -1834,7 +1960,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ContainsReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.contains(&req.project_id, &req.child_type, &req.child_id)
                 .map_err(dyno_err)?,
@@ -1855,7 +1981,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AcknowledgeGapReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         let decision_id = g
             .acknowledge_gap(&req.gap_id, &req.affected_ids, &req.reason)
             .map_err(dyno_err)?;
@@ -1881,7 +2007,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<GapIdReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         let existed = g
             .withdraw_gap_acknowledgement(&req.gap_id)
             .map_err(dyno_err)?;
@@ -1903,7 +2029,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<VerificationReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.add_verification(
                 &req.id,
@@ -1925,7 +2051,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<VerificationStatusReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.set_verification_status(
                 &req.verification_id,
@@ -1948,7 +2074,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<VerificationKindReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.set_verification_kind(&req.verification_id, &req.kind)
                 .map_err(dyno_err)?,
@@ -1963,7 +2089,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<VerifiesReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.verifies(&req.verification_id, &req.target_type, &req.target_id)
                 .map_err(dyno_err)?,
@@ -1980,7 +2106,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ReleaseReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.add_release(
                 &req.id,
@@ -2002,7 +2128,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EnvironmentReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.add_environment(
                 &req.id,
@@ -2023,7 +2149,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ResourceReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.add_resource(&req.id, &req.name, req.provider.as_deref())
                 .map_err(dyno_err)?,
@@ -2038,7 +2164,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<DeployToReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.deploy_to(&req.release_id, &req.environment_id, req.status.as_deref())
                 .map_err(dyno_err)?,
@@ -2058,7 +2184,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ReleaseIncludesReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.release_includes(
                 &req.release_id,
@@ -2117,7 +2243,7 @@ impl ReflowService {
             exhaustive: req.exhaustive,
             detected_at: req.detected_at,
         };
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(
             g.reconcile_verification(&observed, &options)
                 .map_err(dyno_err)?,
@@ -2157,7 +2283,7 @@ impl ReflowService {
             exhaustive: req.exhaustive,
             detected_at: req.detected_at,
         };
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(
             g.reconcile_deployment(&observed, &options)
                 .map_err(dyno_err)?,
@@ -2176,7 +2302,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AddConstraintReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.add_constraint(
                 &req.id,
@@ -2203,7 +2329,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ConstrainsReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.constrains(
                 &req.constraint_id,
@@ -2245,7 +2371,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<PrecedesReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         g.precedes(&req.earlier_epoch, &req.later_epoch)
             .map_err(dyno_err)?;
         ok_json(serde_json::json!({
@@ -2263,7 +2389,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<PinAtEpochReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         g.pin_at_epoch(&req.node_type, &req.node_id, &req.epoch_id)
             .map_err(dyno_err)?;
         ok_json(serde_json::json!({
@@ -2280,7 +2406,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RequireResourceReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.require_resource(
                 &req.from_type,
@@ -2302,7 +2428,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<DecisionReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.add_decision(&req.id, &req.name, &req.decision, req.rationale.as_deref())
                 .map_err(dyno_err)?,
@@ -2317,7 +2443,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<GovernedByReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.governed_by(&req.from_type, &req.from_id, &req.to_type, &req.to_id)
                 .map_err(dyno_err)?,
@@ -2338,7 +2464,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ContributorReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.add_contributor(
                 &req.id,
@@ -2365,7 +2491,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AuthoredByReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.authored_by(
                 &req.from_type,
@@ -2389,7 +2515,7 @@ impl ReflowService {
         Parameters(req): Parameters<CreateNodeReq>,
     ) -> Result<CallToolResult, McpError> {
         let props = parse_props(req.props)?;
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         match g.upsert_node(&req.node_type, &req.id, props) {
             Ok(n) => ok_json(NodeDto::from(n)),
             Err(e) => Err(node_error(&g, &req.node_type, e)),
@@ -2405,7 +2531,7 @@ impl ReflowService {
         Parameters(req): Parameters<CreateEdgeReq>,
     ) -> Result<CallToolResult, McpError> {
         let props = parse_props(req.props)?;
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         let edge = g.create_edge(
             &req.edge_type,
             &req.from_type,
@@ -2516,7 +2642,7 @@ impl ReflowService {
         Parameters(req): Parameters<ImportGraphReq>,
     ) -> Result<CallToolResult, McpError> {
         let doc: reflow2_core::GraphExport = parse_struct_param(req.document, "reflow2 export")?;
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(g.import_graph(&doc).map_err(dyno_err)?)
     }
 
@@ -2620,7 +2746,7 @@ impl ReflowService {
             })?;
             resolutions.insert(id.clone(), parsed);
         }
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(
             g.apply_merge(&base, &theirs, &resolutions, req.use_recorded)
                 .map_err(dyno_err)?,
@@ -2683,7 +2809,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<SetDecisionStatusReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.set_decision_status(&req.decision_id, &req.status)
                 .map_err(dyno_err)?,
@@ -2703,7 +2829,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RegisterAlternativeReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(
             g.register_alternative(&req.decision_id, &req.artifact_id, &req.name, &req.location)
                 .map_err(dyno_err)?,
@@ -2737,7 +2863,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<CollapseDecisionReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(
             g.collapse_decision(&req.decision_id, &req.winner_id, req.note.as_deref())
                 .map_err(dyno_err)?,
@@ -2790,7 +2916,7 @@ impl ReflowService {
         // `{node: null}` when absent. Before, present returned a bare object
         // and absent returned `{value: null}` (the scalar wrap) — two shapes,
         // so an agent branching on the result read the absent case wrong.
-        ok_json(json!({ "node": node.map(NodeDto::from) }))
+        self.ok_read(&g, json!({ "node": node.map(NodeDto::from) }))
     }
 
     #[tool(
@@ -2803,7 +2929,7 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         let nodes = g.scan_nodes(&req.node_type).map_err(dyno_err)?;
-        ok_json(nodes.into_iter().map(NodeDto::from).collect::<Vec<_>>())
+        self.ok_read(&g, nodes.into_iter().map(NodeDto::from).collect::<Vec<_>>())
     }
 
     #[tool(
@@ -2829,7 +2955,7 @@ impl ReflowService {
                 req.limit.unwrap_or(10),
             )
             .map_err(dyno_err)?;
-        ok_json(result)
+        self.ok_read(&g, result)
     }
 
     #[tool(
@@ -2840,7 +2966,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<TypedIdReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         let deleted = g.delete_node(&req.node_type, &req.id).map_err(dyno_err)?;
         ok_json(json!({ "deleted": deleted }))
     }
@@ -2858,7 +2984,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<DeleteEdgeReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         // `{deleted}` rather than the bare bool the core returns: a scalar in
         // `structuredContent` is the BL-48 defect (ok_json would wrap it as an
         // anonymous `{value}`, but the field deserves its name).
@@ -2883,7 +3009,7 @@ impl ReflowService {
         Parameters(req): Parameters<ApplyHealReq>,
     ) -> Result<CallToolResult, McpError> {
         let proposal: HealProposal = parse_struct_param(req.proposal, "HealProposal")?;
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(g.apply_heal(&proposal).map_err(dyno_err)?)
     }
 
@@ -2913,7 +3039,7 @@ impl ReflowService {
             exhaustive: req.exhaustive,
             detected_at: req.detected_at,
         };
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(g.reconcile_artifacts(&observed, &opts).map_err(dyno_err)?)
     }
 
@@ -2970,7 +3096,7 @@ impl ReflowService {
                 ));
             }
         };
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         let (artifact, change_event_id) = g
             .set_artifact_checksum(
                 &req.artifact_id,
@@ -2997,7 +3123,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AddArtifactReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.add_artifact(
                 &req.id,
@@ -3017,7 +3143,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RealizesReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.realizes(
                 &req.artifact_id,
@@ -3042,7 +3168,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<DocumentsReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.documents(
                 &req.artifact_id,
@@ -3077,7 +3203,7 @@ impl ReflowService {
             fragment_id: req.fragment_id,
             checksum: req.checksum,
         };
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         with_loop_hint(
             g.link_artifact(opts).map_err(dyno_err)?,
             "loop: as-built moved — reconcile_artifacts confirms the design still describes \
@@ -3096,7 +3222,7 @@ impl ReflowService {
         Parameters(req): Parameters<AddEpochReq>,
     ) -> Result<CallToolResult, McpError> {
         let epoch_type: EpochType = parse_enum(&req.epoch_type, "epoch type")?;
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.add_epoch(&req.id, &req.name, epoch_type, req.sequence)
                 .map_err(dyno_err)?,
@@ -3115,7 +3241,7 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let change_type: ChangeType = parse_enum(&req.change_type, "change type")?;
         let affected = req.affected.unwrap_or_default();
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         // Validate the whole list before writing anything: storage accepts
         // dangling edges (this check is the only one there is), and a partial
         // write — event created, third entry refused — would leave a record
@@ -3190,7 +3316,7 @@ impl ReflowService {
             change_type,
             action,
         };
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         let (prior, current) = g.record_change(rec).map_err(dyno_err)?;
         ok_json(json!({
             "prior_snapshot": prior.map(NodeDto::from),
@@ -3236,7 +3362,7 @@ impl ReflowService {
         // and asked again. Persisting here rather than in a separate call means
         // the record cannot be forgotten by an agent that does not know to make
         // it.
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         let question_id = g
             .record_asked_question(
                 &gap.id,
@@ -3276,7 +3402,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AnswerQuestionReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         let found = g
             .answer_question(&req.gap_id, &req.answer)
             .map_err(dyno_err)?;
@@ -3297,7 +3423,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<WithdrawQuestionReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.graph.lock().await;
+        let mut g = self.write_lock().await;
         let found = g.withdraw_question(&req.gap_id).map_err(dyno_err)?;
         ok_json(json!({ "withdrawn": found, "gap_id": req.gap_id }))
     }

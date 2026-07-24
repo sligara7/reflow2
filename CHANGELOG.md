@@ -33,6 +33,29 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **Reads now surface coherence-loop debt at the moment of attention** (BL-91; **minor** — the
+  orientation reads' result shape gains an optional `loop_hint` field, plus a new capability and
+  graph nodes). The write tools have carried a static `loop_hint` since BL-74; reads carried
+  nothing, so the only mid-session reminder was the agent's own discipline. Now `graph_report`,
+  `graph_report_markdown`, `scan_nodes`, `search_design` and `get_node` attach a `loop_hint`
+  **only when `loop_status` reports real debt** (never static-every-read — the boilerplate
+  anti-pattern BL-90 rejected) and **only when the owed-set has changed since it was last surfaced**
+  (fire-on-change). It is the mid-session trigger between SessionStart (fires once) and the Stop
+  nudge (fires at the end), landing on the agent's most frequent call. `dec:read-hint-shape` option C.
+  - **Cost is bounded structurally:** the owed-set changes only on a write, so a service
+    write-generation counter gates the recompute — within one generation the first orientation read
+    computes `loop_status` once and later reads add nothing. Debt is always read from current state,
+    never remembered (`dec:loop-status-state-not-history`); only the *presentation* is throttled.
+  - Modeled: `cap:read-loop-hint` SATISFIES `req:read-surfaces-debt`, ALLOCATED_TO `cmp:service`,
+    REALIZED by `art:service`, VERIFIED by `ver:read-loop-hint` (new `tools.rs` cases). Closes the
+    last open gap (`req:read-surfaces-debt` unsatisfied) and dissolves the read-hint
+    disconnected-community defect. `chg:bl91`.
+  - **This caught a latent bug in reflow2's own tooling:** `tools/reflow2_check.py`,
+    `reflow2_cli.py` and `smoke_mcp.py` unwrapped the `{count, items}` list envelope by *exact* key
+    set, so the additive `loop_hint` broke the unwrap and crashed the gate. Now they match by
+    presence — the documented envelope convention the `jl!` test macro already used. `art:check`
+    reconciled (design_holds).
+
 - **reflow2's own CI gate and view renderer now have hermetic regression suites — and writing them
   caught a real gate bug** (BL-88; **patch** — the fix turns a silent miss loud). `tools/reflow2_check.py`
   (the consumer coherence gate, BL-66) and `tools/render_views.py` (the viewpoint renderer) had no

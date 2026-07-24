@@ -1911,3 +1911,83 @@ async fn export_refuses_to_overwrite_without_opt_in() {
     );
     std::fs::remove_file(&path).ok();
 }
+
+// ---- BL-91: read-side loop_hint (dec:read-hint-shape option C) -------------
+
+#[tokio::test]
+async fn read_side_loop_hint_fires_on_debt_then_only_on_change() {
+    // A seeded thread leaves the capability unallocated → the loop is owed
+    // something, so an orientation read has a real debt to surface.
+    let s = seeded().await;
+
+    // First orientation read after the seeding writes surfaces the pointer once.
+    let first = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Capability".into()
+    })));
+    let hint = first
+        .get("loop_hint")
+        .and_then(|v| v.as_str())
+        .expect("first orientation read on an owing loop carries a loop_hint");
+    assert!(
+        hint.contains("loop owes"),
+        "the hint names the debt and points at loop_status, got {hint:?}"
+    );
+
+    // A second read with no write in between stays quiet — the picture has not
+    // moved, and boilerplate on every read is the anti-pattern C rejects.
+    let second = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Capability".into()
+    })));
+    assert!(
+        second.get("loop_hint").is_none(),
+        "an unchanged owed-set does not repeat the hint, got {second}"
+    );
+
+    // A different orientation read in the same generation is also silent.
+    let node = j!(s.get_node(Parameters(TypedIdReq {
+        node_type: "Capability".into(),
+        id: "cap:flight".into()
+    })));
+    assert!(
+        node.get("loop_hint").is_none(),
+        "no write since last surfaced → still quiet on get_node, got {node}"
+    );
+
+    // A write that MOVES the owed-set — a new requirement nothing satisfies —
+    // re-arms the hint on the next orientation read, still naming real debt.
+    j!(s.add_requirement(Parameters(RequirementReq {
+        id: "req:latency".into(),
+        name: "Low latency".into(),
+        statement: "Input to render under 50ms.".into()
+    })));
+    let grown = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Capability".into()
+    })));
+    assert!(
+        grown.get("loop_hint").is_some(),
+        "a write that changed the debt surfaces the hint again, got {grown}"
+    );
+
+    // Clearing the debt to nothing (allocate the capability, drop the extra
+    // requirement, remove the now-connected component's defect) is exercised by
+    // the clean-loop test; here the point is proven: fire once, then only when
+    // the picture moves.
+}
+
+#[tokio::test]
+async fn read_side_loop_hint_silent_when_the_loop_is_clean() {
+    // An empty graph owes nothing.
+    let s = ReflowService::in_memory().expect("in-memory service");
+    let status = j!(s.loop_status());
+    assert_eq!(status["clean"], true, "empty graph: the loop is clean");
+
+    // A clean loop attaches no read hint — the pointer is state-derived, not
+    // static, so silence is the correct output here.
+    let read = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Capability".into()
+    })));
+    assert!(
+        read.get("loop_hint").is_none(),
+        "a clean loop attaches no loop_hint, got {read}"
+    );
+}

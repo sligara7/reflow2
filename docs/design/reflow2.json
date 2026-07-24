@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e99587cee7c81fdbb6765361d7f6b82d98c69951f66fcface57a836c39b3bc62",
+  "content_hash": "sha256:98ce4e3cf7ea0ecc6cbea02ee4520974318597500f14a56408bdb3ef333e2799",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -224,6 +224,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:read-loop-hint",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -760,6 +768,15 @@
         "action": "modified"
       },
       "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-c34747b1ae344744",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
     },
     {
       "edge_type": "CHANGED",
@@ -1516,6 +1533,42 @@
         "action": "modified"
       },
       "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl91",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl91",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:read-loop-hint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl91",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl91",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:read-surfaces-debt"
     },
     {
       "edge_type": "CHANGED",
@@ -3279,13 +3332,31 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:adopt",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:adopt",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:allocate",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:allocate",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:budget",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3309,6 +3380,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:change",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -3316,6 +3393,12 @@
       "from_id": "cap:compare-alternatives",
       "properties": {},
       "to_id": "dec:parallel-alternatives"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-alternatives",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3339,6 +3422,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:compare-designs",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-designs",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -3346,6 +3435,12 @@
       "from_id": "cap:decision-point",
       "properties": {},
       "to_id": "dec:parallel-alternatives"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:decision-point",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3387,7 +3482,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:detect",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:detect",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:dimensions",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3429,7 +3536,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:freshness",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:freshness",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:genesis",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3453,7 +3572,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:heal",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:heal",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:hierarchy",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3465,7 +3596,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:ingest",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:ingest",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kit",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3483,7 +3626,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:loop-status",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:loop-status",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mcp-surface",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3507,6 +3662,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:merge-designs",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-designs",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -3519,7 +3680,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:merge-rerere",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-rerere",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:model-process",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3543,7 +3716,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:portability",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:portability",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:propagate",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3555,7 +3740,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:questions",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:questions",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:read-loop-hint",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3567,13 +3764,31 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-built",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-built",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-deployed",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-deployed",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-verified",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3603,7 +3818,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:report",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:report",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:search",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3615,7 +3842,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:stamp",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:stamp",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:store",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -3633,7 +3872,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:surface",
       "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:surface",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:vocabulary",
+      "properties": {},
+      "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -6033,6 +6284,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:read-loop-hint"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cmp:service"
     },
     {
@@ -6302,6 +6561,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:read-loop-hint",
+      "properties": {},
+      "to_id": "req:read-surfaces-debt"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:reconcile-built",
       "properties": {},
       "to_id": "req:as-built-honest"
@@ -6539,6 +6804,12 @@
       "from_id": "ver:questions",
       "properties": {},
       "to_id": "cap:questions"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:read-loop-hint",
+      "properties": {},
+      "to_id": "cap:read-loop-hint"
     },
     {
       "edge_type": "VERIFIES",
@@ -6975,7 +7246,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e9e36c28e7361067",
+        "checksum": "sha256:6002847b15115694",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
         "status": "realized"
@@ -7282,7 +7553,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e0c5a090c7e042ad",
+        "checksum": "sha256:f5adfb4ad655e5f8",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -7656,6 +7927,19 @@
       }
     },
     {
+      "node_id": "cap:read-loop-hint",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A conditional loop_hint rides the orientation-shaped reads (graph_report, graph_report_markdown, scan_nodes, search_design, get_node) and surfaces outstanding coherence-loop debt at the agent's most frequent action — the mid-session trigger between SessionStart (fires once) and Stop (fires at the end). Option C of dec:read-hint-shape: the pointer appears ONLY when loop_status would report real debt (never static-every-read), and only when the owed-set has CHANGED since it was last surfaced (fire-on-change). The owed-set can change only on a write, so the recompute is gated on a service write-generation counter, bounding per-read cost. The read-side sibling of the write tools' static loop_hint (dec:loop-status-state-not-history).",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Reads surface loop debt when it's real",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:reconcile-built",
       "node_type": "Capability",
       "properties": {
@@ -7863,6 +8147,14 @@
       }
     },
     {
+      "node_id": "chg:accept-c34747b1ae344744",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Tolerate the additive loop_hint key on {count,items} read envelopes (BL-91) — presence-match, not exact-set. A robustness fix to the gate's list unwrap; reflow2's product behaviour and design are unchanged by it."
+      }
+    },
+    {
       "node_id": "chg:accept-eccdea423f3e687e",
       "node_type": "ChangeEvent",
       "properties": {
@@ -8030,6 +8322,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-90: loop-nudge covers the total-bypass session (edited code, zero reflow2 calls)"
+      }
+    },
+    {
+      "node_id": "chg:bl91",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-91: read-side loop_hint (option C, state-derived, fire-on-change)"
       }
     },
     {
@@ -8925,6 +9225,16 @@
         "decision": "Renderers may only emit what the graph states; everything else is confessed as a finding.",
         "name": "A view is a projection of the graph; renderer fill-ins are defects",
         "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 — almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:233d08765e4cfc7b",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:233d08765e4cfc7b.",
+        "name": "Reviewed: gap:233d08765e4cfc7b",
+        "rationale": "User (who:ajs, standing policy from 2026-07-23, re-affirmed 2026-07-24 for the 33rd cap): validation happens through the trials program — docs/trials/ (self-host, adopt dogfood, erosion, phase-coverage, fleet feedback) is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. cap:read-loop-hint (BL-91) joins the same disposition unchanged — the read-side loop_hint is dogfooded in every reflow2 session, this one included. The gap re-fired only because its affected-set grew by one; the decision is unchanged.",
         "status": "accepted"
       }
     },
@@ -10521,6 +10831,17 @@
       }
     },
     {
+      "node_id": "ver:read-loop-hint",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "integration",
+        "method": "test",
+        "name": "tools.rs: read-side loop_hint fires on debt, only on change, silent when clean",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:reconcile-built",
       "node_type": "Verification",
       "properties": {
@@ -10644,7 +10965,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6ac0c2e46a122c3050256de80c2daa6b0cc3f662b1b97bbbb3b71c89d919140e",
+  "prev_content_hash": "sha256:f84ddc83feb0f3fb9991602696d04e5131a1caf3c8498cd88308bd25f9ba4cac",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,

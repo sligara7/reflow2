@@ -124,7 +124,10 @@ class Server:
             die(2, f"{tool}: {text}")
         if "structuredContent" in result:
             value = result["structuredContent"]
-            if isinstance(value, dict) and set(value) == {"count", "items"}:
+            # Presence, not exact set: an orientation read can add a sibling
+            # `loop_hint` (BL-91) to the {count, items} envelope, and that extra
+            # key must not defeat the list unwrap.
+            if isinstance(value, dict) and {"count", "items"} <= value.keys():
                 return value["items"]
             return value
         blocks = result.get("content") or []
