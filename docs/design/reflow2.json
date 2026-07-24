@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b721c03c22f77dfc5e67680059e23379361f18c0774a41bd64447b145494979b",
+  "content_hash": "sha256:6ac0c2e46a122c3050256de80c2daa6b0cc3f662b1b97bbbb3b71c89d919140e",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1399,6 +1399,33 @@
         "action": "modified"
       },
       "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl88",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl88",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl88",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:report"
     },
     {
       "edge_type": "CHANGED",
@@ -5970,6 +5997,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:render-views",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:report"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:report",
       "properties": {
         "completeness": "complete"
@@ -6417,6 +6452,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:gate-suite",
+      "properties": {},
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:genesis",
       "properties": {},
       "to_id": "cap:genesis"
@@ -6552,6 +6593,12 @@
       "from_id": "ver:surface",
       "properties": {},
       "to_id": "cap:surface"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:views-suite",
+      "properties": {},
+      "to_id": "art:render-views"
     },
     {
       "edge_type": "VERIFIES",
@@ -6777,6 +6824,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:render-views",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:report",
       "properties": {
         "action": "created"
@@ -6920,7 +6975,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:eff12f1f951fa68b",
+        "checksum": "sha256:e9e36c28e7361067",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
         "status": "realized"
@@ -7175,6 +7230,17 @@
         "checksum": "sha256:75b484b15df65186",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:render-views",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:99fc5da421a04f5e",
+        "location": "tools/render_views.py",
+        "name": "render_views.py",
         "status": "realized"
       }
     },
@@ -7940,6 +8006,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "BL-87: import tolerates an unstamped document (stamp optional + reported), like content_hash"
+      }
+    },
+    {
+      "node_id": "chg:bl88",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-88: hermetic tests for the CI gate + view renderer; gate now fails on a vanished artifact; render_views modeled"
       }
     },
     {
@@ -9644,6 +9718,16 @@
       }
     },
     {
+      "node_id": "frag:art:render-views",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered render_views.py"
+      }
+    },
+    {
       "node_id": "frag:art:report",
       "node_type": "Fragment",
       "properties": {
@@ -10282,6 +10366,17 @@
       }
     },
     {
+      "node_id": "ver:gate-suite",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "integration",
+        "method": "test",
+        "name": "test_reflow2_check.py",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:genesis",
       "node_type": "Verification",
       "properties": {
@@ -10527,6 +10622,17 @@
       }
     },
     {
+      "node_id": "ver:views-suite",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "test_render_views.py",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:vocabulary",
       "node_type": "Verification",
       "properties": {
@@ -10538,7 +10644,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2daa422223e70ad6096235e8d0663a32fd84cc90ea097fe897c453a7701bc90e",
+  "prev_content_hash": "sha256:b721c03c22f77dfc5e67680059e23379361f18c0774a41bd64447b145494979b",
   "stamp": {
     "edge_types": 53,
     "node_types": 28,

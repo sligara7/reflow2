@@ -238,7 +238,7 @@ def main() -> int:
             for finding in drift.get("findings", []):
                 kind = finding.get("kind")
                 what = f"{finding.get('artifact_id')}: {kind}"
-                if kind in ("checksum_change", "missing"):
+                if kind in ("checksum_change", "missing_artifact"):
                     failures.append(
                         f"DRIFT  {what} — the build no longer matches the committed design. "
                         f"Reconcile and accept two-sided (set_artifact_checksum), then re-export."

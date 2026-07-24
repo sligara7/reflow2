@@ -51,6 +51,8 @@ jobs:
         run: python3 tools/test_init.py
       - name: Loop-nudge hook suite (hermetic)
         run: python3 tools/test_loop_nudge.py
+      - name: View-renderer suite (hermetic, file-form — no binary)
+        run: python3 tools/test_render_views.py
       - name: Skill lint (skills' contract with the surface)
         run: python3 tools/skill_lint.py
       - name: Design coherence gate (reflow2 on itself — self-model matches the build)
@@ -79,6 +81,8 @@ jobs:
         run: cargo clippy -p reflow2-mcp --all-targets -- -D warnings
       - name: Build the served binary
         run: cargo build -p reflow2-mcp
+      - name: Coherence-gate suite (hermetic — the gate's own regression net, BL-88)
+        run: python3 tools/test_reflow2_check.py
       - name: Smoke test over real stdio
         run: python3 tools/smoke_mcp.py
       - name: Toolsnaps — served surface matches the committed goldens (BL-76)

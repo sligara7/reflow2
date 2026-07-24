@@ -33,6 +33,26 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **reflow2's own CI gate and view renderer now have hermetic regression suites — and writing them
+  caught a real gate bug** (BL-88; **patch** — the fix turns a silent miss loud). `tools/reflow2_check.py`
+  (the consumer coherence gate, BL-66) and `tools/render_views.py` (the viewpoint renderer) had no
+  tests and reflow2's own gate was the one thing with no net under it.
+  - **Bug the new suite caught:** the gate is documented to fail when a registered artifact "changed
+    **or vanished** with no two-sided accept," but it only matched the reconcile kind `"missing"` — and
+    reconcile emits `missing_artifact` (severity *high*). So a registered file that *vanished* was
+    silently downgraded to a note, never turning the build red. Fixed to match `missing_artifact`; the
+    gate now fails on a vanished artifact as it always claimed to.
+  - **`tools/test_reflow2_check.py`** (in CI's `full` job) drives the real binary to build tiny designs
+    and pins the gate's whole contract — its exit code — across the trio it was hand-verified against:
+    coherent-passes (0), missing-export-cannot-run (2), tampered-fails-integrity (1), plus both drift
+    shapes (changed file, vanished file → 1) and no_baseline-is-a-note (0).
+  - **`tools/test_render_views.py`** (in CI's `core` job, pure-Python file form — no binary) pins the
+    *projection* doctrine: the renderer emits only what the graph states and **confesses** what a
+    viewpoint needs but the graph lacks (an unsatisfied requirement is confessed, a satisfied one is
+    not; no Project is confessed; a decision's rationale is projected verbatim).
+  - `render_views.py` is now modeled (`art:render-views` realizing `cap:report`, governed by
+    `dec:views-are-projections`); both suites are registered as passing `Verification`s.
+
 - **Three adopt-scale ergonomic tweaks from the BL-83b dogfood** (BL-89; **minor** — one new
   optional tool param, no schema change):
   - **`describe_schema` gains `required_only`** — with `node_type`, returns just the properties a

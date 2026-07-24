@@ -1810,6 +1810,16 @@ committed self-model on every push, so it is at least *exercised* in CI (and it 
 keep: it caught this session's `art:graph`/`art:provenance` drift). Still open: a hermetic *unit*
 suite for the gate's own logic (the CI run only exercises the happy path on the real self-model), and
 `render_views.py` remains wholly untested. This is reflow2 finally dogfooding its own `ci-gate` skill.
+**DONE 2026-07-24:** both hermetic suites landed and wired. `tools/test_reflow2_check.py` (CI `full`
+job, drives the real binary) pins the gate's exit-code contract on the doctored-fails / clean-passes /
+missing-refuses trio + both drift shapes + no_baseline-is-a-note; `tools/test_render_views.py` (CI
+`core` job, pure-Python file form) pins the projection/confession doctrine. **The gate suite caught a
+real bug:** the gate only failed on reconcile kind `"missing"`, but reconcile emits `missing_artifact`
+(severity high) — so a *vanished* registered artifact was silently a note, not a red build, despite the
+gate's docstring promising "changed or vanished." Fixed. Also modeled `render_views.py` (`art:render-views`
+→ `cap:report`, governed by `dec:views-are-projections`) and registered both suites as passing
+`Verification`s (`ver:gate-suite`, `ver:views-suite`). `chg:bl88`; 13 new hermetic cases; gate + skill_lint
+green, live==committed.
 
 **BL-89 · Adopt-doctrine tweaks from the BL-83b dogfood — DONE 2026-07-23** — *2026-07-23 (B.1,
 B.3, E.1). Size **S** each, batched. All three landed: (B.1) the adopt skill's granularity guidance
