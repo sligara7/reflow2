@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b899cf3a3fce0c4c9d2637d4fd8225e8b3040725d48f06cd4ea0bd359a655f1e",
+  "content_hash": "sha256:1c13a8d49b295a925823f4e2e61e4b37ff75a601b0af606573c1fd60001c5963",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -32,6 +32,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:change-an-existing-feature",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -243,6 +251,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:missing-sibling",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:model-process",
       "properties": {
         "weight_basis": "estimated"
@@ -352,6 +368,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:requirement-lineage",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:vocabulary"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -590,6 +614,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:recover-from-tests",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:requirement-lineage-capture",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -1239,6 +1269,15 @@
       "from_id": "req:read-surfaces-debt",
       "properties": {
         "acted_at": "2026-07-23",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:requirement-lineage",
+      "properties": {
+        "acted_at": "2026-07-25",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -2754,6 +2793,42 @@
         "action": "added"
       },
       "to_id": "who:alex"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-lineage-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:change-an-existing-feature"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-lineage-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:missing-sibling"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-lineage-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:requirement-lineage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-lineage-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:requirement-lineage"
     },
     {
       "edge_type": "CHANGED",
@@ -4497,6 +4572,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:adopt",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:adopt",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -4515,6 +4596,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:allocate",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:allocate",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -4528,6 +4615,12 @@
       "from_id": "cap:allocate",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:budget",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4563,6 +4656,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:change",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -4579,9 +4678,27 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change-an-existing-feature",
+      "properties": {},
+      "to_id": "decision:ack:e9ba5784cf1cfa36"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change-an-existing-feature",
+      "properties": {},
+      "to_id": "decision:ack:f58dc09a846a8783"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:compare-alternatives",
       "properties": {},
       "to_id": "dec:parallel-alternatives"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-alternatives",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4612,6 +4729,12 @@
       "from_id": "cap:compare-designs",
       "properties": {},
       "to_id": "dec:export-hash-chain"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-designs",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4665,6 +4788,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:decision-point",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:decision-point",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -4684,6 +4813,12 @@
       "from_id": "cap:derived-completion",
       "properties": {},
       "to_id": "dec:certainty-derived"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:derived-completion",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4731,6 +4866,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:detect",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:detect",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -4744,6 +4885,12 @@
       "from_id": "cap:detect",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:dimensions",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4768,6 +4915,12 @@
       "from_id": "cap:drift-direction",
       "properties": {},
       "to_id": "dec:two-sided-accept"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:drift-direction",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4833,6 +4986,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:freshness",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:freshness",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -4846,6 +5005,12 @@
       "from_id": "cap:freshness",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:genesis",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4881,6 +5046,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:heal",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:heal",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -4899,6 +5070,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:hierarchy",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:hierarchy",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -4917,6 +5094,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:ingest",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:ingest",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -4930,6 +5113,12 @@
       "from_id": "cap:ingest",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kit",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4971,6 +5160,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:loop-status",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:loop-status",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -4984,6 +5179,12 @@
       "from_id": "cap:loop-status",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mcp-surface",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5019,6 +5220,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:merge-designs",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-designs",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -5043,6 +5250,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:merge-rerere",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-rerere",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -5056,6 +5269,24 @@
       "from_id": "cap:merge-rerere",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:missing-sibling",
+      "properties": {},
+      "to_id": "dec:three-party-checks"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:missing-sibling",
+      "properties": {},
+      "to_id": "decision:ack:4a6cb8914622b724"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:model-process",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5095,6 +5326,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:onboarding",
+      "properties": {},
+      "to_id": "decision:ack:f58dc09a846a8783"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:portability",
       "properties": {},
       "to_id": "dec:export-hash-chain"
@@ -5109,6 +5346,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:portability",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:portability",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -5127,6 +5370,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:propagate",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:propagate",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -5145,6 +5394,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:questions",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:questions",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -5158,6 +5413,12 @@
       "from_id": "cap:questions",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:read-loop-hint",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5181,6 +5442,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-built",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-built",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -5199,6 +5466,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-deployed",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-deployed",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -5212,6 +5485,12 @@
       "from_id": "cap:reconcile-deployed",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-verified",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5265,6 +5544,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:report",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:report",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -5281,6 +5566,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:requirement-lineage",
+      "properties": {},
+      "to_id": "decision:ack:75651a693cc63b9c"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:revise-trigger",
       "properties": {},
       "to_id": "dec:reopen-supersedes"
@@ -5290,6 +5581,12 @@
       "from_id": "cap:revise-trigger",
       "properties": {},
       "to_id": "decision:ack:41e84391c187d118"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:search",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5319,6 +5616,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:stamp",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:stamp",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -5332,6 +5635,12 @@
       "from_id": "cap:stamp",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:store",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5361,6 +5670,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:surface",
       "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:surface",
+      "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
     },
     {
@@ -5374,6 +5689,12 @@
       "from_id": "cap:surface",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:vocabulary",
+      "properties": {},
+      "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5446,6 +5767,12 @@
       "from_id": "cmp:skills",
       "properties": {},
       "to_id": "decision:ack:4ac1c3ccf483b4d6"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:skills",
+      "properties": {},
+      "to_id": "decision:ack:f58dc09a846a8783"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8699,6 +9026,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:change-an-existing-feature",
+      "properties": {},
+      "to_id": "req:onboard-newcomer"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:compare-alternatives",
       "properties": {},
       "to_id": "req:human-decides"
@@ -8894,6 +9227,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:missing-sibling",
+      "properties": {},
+      "to_id": "req:human-decides"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:model-process",
       "properties": {},
       "to_id": "req:design-anything"
@@ -8975,6 +9314,12 @@
       "from_id": "cap:report",
       "properties": {},
       "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:requirement-lineage",
+      "properties": {},
+      "to_id": "req:requirement-lineage"
     },
     {
       "edge_type": "SATISFIES",
@@ -10134,6 +10479,19 @@
       }
     },
     {
+      "node_id": "cap:change-an-existing-feature",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Anthony's B+K / B-K case, 2026-07-25: the project does A, B, C and D, and the ask is to make B do something more (or less). Distinct from cap:onboarding (BL-101), which answers where a NEW thing belongs — this answers where an EXISTING thing gets extended or narrowed, and the difference matters because the answer is shaped by what B already touches rather than by where a gap is. Mostly composition of machinery that exists and has never been aimed at this question: search_design maps the user's words onto B; propagate_from gives the blast radius of touching it; the Decision layer says what already governs B and must not be casually contradicted; cap:requirement-lineage would say whether B is a decomposed child (so the parent's other children are siblings that may need the same change) or carries derived requirements that the extension might invalidate. THE SIMPLIFICATION DIRECTION IS THE INTERESTING HALF and is not symmetric with extension: removing capability from B means asking what still depends on it, which is propagate run the other way, and then whether any requirement is left unsatisfied by the removal — a question retire-from-design already forces for a whole node but nobody asks for a partial reduction. Removing is where designs are damaged quietly, because the thing that breaks is usually not the thing being edited. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Show where to extend or simplify a feature that already exists",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:compare-alternatives",
       "node_type": "Capability",
       "properties": {
@@ -10420,6 +10778,19 @@
       }
     },
     {
+      "node_id": "cap:missing-sibling",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Anthony, 2026-07-25: \"you have requirements A and C, but you missed B.\" A genuinely different kind of gap from everything detect_gaps currently finds. Every existing gap source reasons about STRUCTURE — this requirement has no capability, this capability has no check — and each is deterministic because the hole is visible in the graph's shape. A missing sibling is invisible in the shape: the design is perfectly coherent without B, which is exactly why nobody notices. Finding it requires reading what A and C MEAN and recognising the pattern they belong to, which is semantic and therefore the LLM's half of dec:three-party-checks, not the deterministic core's. That places it correctly and also bounds it: the agent proposes candidates, the graph records them at `proposed`, and the human decides — a suggested requirement must never enter as anything but a question, or the tool starts inventing intent, which is the one thing dec:human-decides forbids most firmly. Strongest where the design already has structure to pattern-match against: a decomposition with three of four obvious children, a CRUD interface missing delete, a lifecycle with no teardown. Depends on cap:requirement-lineage for its best signal, because siblings under a decomposed parent are precisely where an omission is both most likely and most detectable. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Notice the requirement nobody wrote down",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:model-process",
       "node_type": "Capability",
       "properties": {
@@ -10559,6 +10930,19 @@
         "name": "Say where the design stands",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:requirement-lineage",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Anthony's acquisitions vocabulary, 2026-07-25, and it fills a real hole: reflow2 currently has ZERO requirement-to-requirement edges and no decomposition vocabulary in the schema, so a systems-engineering tool holds requirements as a flat list with no tree. Needs a parent link for DECOMPOSED (a 1:1 split adding no new information) and a decision link for DERIVED (new technical necessity created by a design choice nobody asked for), leaving ORIGINAL as the unparented stakeholder statement. THE REASON THIS EARNS ITS KEEP UNDER dec:edge-orthogonality — each class changes a computation, so this is not taxonomy for its own sake. (1) DELIVERY ROLLS UP. Satisfying every decomposed child satisfies the parent, so cap:derived-completion (BL-104) should credit a parent through its children rather than demanding the parent carry its own capability; today a properly decomposed parent reads as unsatisfied or is credited by a capability covering only part of it. (2) RE-FORKING GAINS TEETH. A derived requirement exists BECAUSE of a decision, so when the fork layer re-opens that decision (dec:reopen-supersedes), the requirements that existed only because of the road taken can be named — today re-opening a decision cannot tell which requirements it would orphan, which is exactly the consequence a person needs before choosing to reconsider. (3) CERTAINTY DIFFERS BY CLASS. An original requirement needs the user's confirmation because it is their word (dec:certainty-derived); a derived one needs engineering justification instead, and holding both to the same test either over-trusts derivation or under-trusts the stakeholder. Also worth carrying: an original requirement is the only kind whose loss loses intent — decomposed and derived ones are regenerable from what they came from, which is the argument for recording the link rather than trusting anyone to remember it. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Hold the requirement tree: original, decomposed, derived",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -11078,6 +11462,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Recovering intent from test evidence captured as an expansion of adopt; Alex recorded as a Contributor"
+      }
+    },
+    {
+      "node_id": "chg:requirement-lineage-capture",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Requirement lineage (original/decomposed/derived), targeted feature change, and missing-sibling detection captured"
       }
     },
     {
@@ -12127,6 +12519,16 @@
       }
     },
     {
+      "node_id": "decision:ack:22386cd2f1a1fa96",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:22386cd2f1a1fa96.",
+        "name": "Reviewed: gap:22386cd2f1a1fa96",
+        "rationale": "User (who:ajs, standing policy from 2026-07-23): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:drift-direction joined the set (34 → 35). Notably apt this time: whether directional drift reports the delta a PERSON would have named is not answerable by a unit test, and its intended validation is explicitly a field one — run it against storyflow, where the understatement was observed, and see whether it agrees.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:233d08765e4cfc7b",
       "node_type": "Decision",
       "properties": {
@@ -12153,6 +12555,16 @@
         "decision": "Accepted the gap gap:4589232c9150f8fe.",
         "name": "Reviewed: gap:4589232c9150f8fe",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities: cap:onboarding is a skill over existing operations (BL-101) and no artifact exists yet. It arrives with the build.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:4a6cb8914622b724",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:4a6cb8914622b724.",
+        "name": "Reviewed: gap:4a6cb8914622b724",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities, with a caveat that matters more here than usual: this capability is semantic, so a deterministic test can only pin its GUARDS, never its judgement. What must be asserted is that a suggested requirement enters at `proposed` and never higher, that it is attributed to inference rather than to the user, and that nothing downstream treats it as intent until a human confirms it. Whether the suggestions are any GOOD is a trials question, not a test one. The failure to guard against is a tool that quietly invents requirements and then reports them as the design — which would violate dec:human-decides more seriously than any gap it closed.",
         "status": "accepted"
       }
     },
@@ -12203,6 +12615,16 @@
         "decision": "Accepted the gap gap:72f2c38d8acdeac2.",
         "name": "Reviewed: gap:72f2c38d8acdeac2",
         "rationale": "User (who:ajs, 2026-07-23): tracked under BL-70/BL-80 — art:alternatives/art:merge exist on disk (reported no_baseline by reconcile) and get modelled + linked when BL-80 lands.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:75651a693cc63b9c",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:75651a693cc63b9c.",
+        "name": "Reviewed: gap:75651a693cc63b9c",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities. The check named now because the interesting assertions are the downstream ones, not the vocabulary itself: storing a parent link proves nothing. The tests must be that a parent with fully-satisfied decomposed children reads as DELIVERED without carrying its own capability (extending cap:derived-completion), and that re-opening a Decision can name the derived requirements that existed only because of it. If either is cut, the distinction stops earning its keep under dec:edge-orthogonality and should be reconsidered rather than kept as an uncomputed label.",
         "status": "accepted"
       }
     },
@@ -12283,6 +12705,26 @@
         "decision": "Accepted the gap gap:e99afa635a6340fb.",
         "name": "Reviewed: gap:e99afa635a6340fb",
         "rationale": "User (who:ajs, 2026-07-23): tracked under BL-70/BL-80 — same disposition as the verification gap; the capability's owning component arrives with the alternatives/merge work (alternatives.rs/merge.rs are on disk but not yet modelled, noted in the BL-83a session record).",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:e9ba5784cf1cfa36",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:e9ba5784cf1cfa36.",
+        "name": "Reviewed: gap:e9ba5784cf1cfa36",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities: this is a skill over existing operations (search, propagate, the Decision layer) and no artifact exists yet. It arrives with the build, alongside cap:onboarding, which it shares a component and most of its machinery with.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:f58dc09a846a8783",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:f58dc09a846a8783.",
+        "name": "Reviewed: gap:f58dc09a846a8783",
+        "rationale": "Accepted at component granularity for now, with the same caveat recorded when cap:onboarding first joined this: neither skill has been written, so the detector reads them as covered because they are allocated to a component that carries a passing check. That is detector generosity, not evidence. When either is built it should get its own verification rather than inheriting the skills suite's.",
         "status": "accepted"
       }
     },
@@ -13869,6 +14311,19 @@
       }
     },
     {
+      "node_id": "req:requirement-lineage",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "A requirement knows where it came from: stated, decomposed from a parent, or derived from a decision",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Requirements multiply in two different ways and reflow2 must tell them apart, because they behave differently. An ORIGINAL requirement is the stakeholder's own word. A DECOMPOSED requirement is a 1:1 split of a parent into smaller testable pieces, adding no new information — so satisfying every child satisfies the parent, and a parent's delivery is therefore derivable from its children rather than needing its own capability. A DERIVED requirement is new technical necessity that nobody asked for, created because of a design decision — so it traces to that DECISION, not to a parent goal, and if the decision is ever re-opened the derived requirement may cease to have any reason to exist. Three consequences follow. Delivery must roll up a decomposition tree instead of treating every requirement as an independent leaf. Re-opening a decision must be able to say which requirements existed only because of the road taken. And the distinction must survive the loss of the person who made it: an original requirement is the only kind whose loss loses intent, because decomposed and derived ones can be regenerated from what they came from, and that is precisely why the link back must be recorded rather than remembered.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:roads-not-taken",
       "node_type": "Requirement",
       "properties": {
@@ -14347,7 +14802,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:18dd04b87fc1a5cb57318707214edaad9466b352cdf35015d4dbff619dd904f6",
+  "prev_content_hash": "sha256:b899cf3a3fce0c4c9d2637d4fd8225e8b3040725d48f06cd4ea0bd359a655f1e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
