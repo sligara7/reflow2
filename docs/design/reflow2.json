@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c14ad901ab3b9d87deac482397db15a3074401710a29e275a22b5e58f667d154",
+  "content_hash": "sha256:51fe3c3069b6eb67b4c5eb6248ff6c31935bd71e9c8cdc594dc143c5ff21bb0c",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -48,6 +48,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:coverage",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:drift"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -428,6 +436,12 @@
       "from_id": "chg:bl70-fork-layer",
       "properties": {},
       "to_id": "epoch:bl70-fork-layer"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl95-coverage-capture",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2005,6 +2019,24 @@
         "action": "modified"
       },
       "to_id": "req:read-surfaces-debt"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl95-coverage-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:coverage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl95-coverage-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:coverage-visible"
     },
     {
       "edge_type": "CHANGED",
@@ -3893,6 +3925,18 @@
       "from_id": "cap:compare-designs",
       "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:coverage",
+      "properties": {},
+      "to_id": "dec:report-dont-judge"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:coverage",
+      "properties": {},
+      "to_id": "decision:ack:66c6e5b6a10c8ac3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7128,6 +7172,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:bl70-fork-layer",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:genesis",
       "properties": {},
       "to_id": "epoch:v040"
@@ -7621,6 +7671,12 @@
       "from_id": "cap:compare-designs",
       "properties": {},
       "to_id": "req:intent-preserved"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:coverage",
+      "properties": {},
+      "to_id": "req:coverage-visible"
     },
     {
       "edge_type": "SATISFIES",
@@ -8957,6 +9013,19 @@
       }
     },
     {
+      "node_id": "cap:coverage",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Compare the design against an agent-supplied sweep of the real system and report the regions no node claims, ranked by mass, so the largest silences surface first. The sibling of reconcile_artifacts (design vs reality) and its opposite in subject: reconcile asks \"has what I know about changed?\", coverage asks \"what is there that I have never been told about?\". reflow2 performs no file I/O — the agent sweeps and supplies the paths, exactly as reconcile does with checksums. Measures CLAIMED REGIONS, never a file-count ratio, because the modelling doctrine mandates one artifact per meaningful unit and one opaque component for a vendored mass; counting files would punish correct coarse modelling. Excluded regions are named as excluded, never silently dropped. Reports the sweep's date so stale coverage is never read as current, and can record its result so a state-derived gap can be raised from it without detect_gaps needing arguments. PLANNED — BL-95.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say what the design has never heard of",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:decision-point",
       "node_type": "Capability",
       "properties": {
@@ -9649,6 +9718,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-91: read-side loop_hint (option C, state-derived, fire-on-change)"
+      }
+    },
+    {
+      "node_id": "chg:bl95-coverage-capture",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-95 captured: the design must be able to say what it has never modelled"
       }
     },
     {
@@ -10624,6 +10701,16 @@
       }
     },
     {
+      "node_id": "decision:ack:66c6e5b6a10c8ac3",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:66c6e5b6a10c8ac3.",
+        "name": "Reviewed: gap:66c6e5b6a10c8ac3",
+        "rationale": "Same standing disposition as the other planned-but-unbuilt capabilities in this thread (the user's 2026-07-23 call, applied again 2026-07-24): cap:coverage is `planned` and captured today from Anthony's storyflow field report; nothing is built yet, so a Verification node would have nothing to run against. It arrives with the build (BL-95). Note that this gap is itself an instance of what BL-95 exists to fix: the detector can tell us a capability we DID model lacks a check, and cannot tell us anything about the parts of a system nobody has modelled at all.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:695a599323c7edfe",
       "node_type": "Decision",
       "properties": {
@@ -10671,6 +10758,15 @@
         "epoch_type": "revision",
         "name": "BL-70 fork layer designed (2026-07-24)",
         "sequence": 100
+      }
+    },
+    {
+      "node_id": "epoch:bl95-coverage",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "BL-95 coverage detector captured (2026-07-24)",
+        "sequence": 110
       }
     },
     {
@@ -11871,6 +11967,19 @@
       }
     },
     {
+      "node_id": "req:coverage-visible",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "The design must be able to say how much of the system it has never modelled",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 must be able to report the portion of a real system that no node in the design has ever claimed, so that the thinness of a recovered or evolving model is measurable rather than merely felt. An empty gap list must mean \"the design is coherent AND it covers the system\", not \"the design is coherent about the fraction it happens to know\". The report says what is unclaimed and how large it is; it never scores the design, never blocks, and never treats coarse-but-honest modelling as a deficiency — a single opaque Component legitimately claims everything beneath it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:design-anything",
       "node_type": "Requirement",
       "properties": {
@@ -12481,7 +12590,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:655bd52bd7a94161e1e12363ee877a681b838f21bb1fa4ae81c080748fb78a5e",
+  "prev_content_hash": "sha256:c14ad901ab3b9d87deac482397db15a3074401710a29e275a22b5e58f667d154",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

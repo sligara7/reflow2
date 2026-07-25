@@ -50,8 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-95 coverage detector (spec + graph capture, no code) — @ajs — since 2026-07-24 — docs/backlog.md, docs/design/reflow2.json
-
 
 
 
@@ -81,6 +79,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-95 SPEC'D + CAPTURED (no code) — the design cannot see what it was never told about: all 26 gap sources take an existing node as subject, none takes a file on disk, so a graph covering 30% of a codebase reports the same "0 open gaps" as one covering 100%. From Anthony's storyflow adopt pass. Shape: `coverage_report(observed_paths, exclusions)` in drift.rs, sibling of reconcile_artifacts, agent-supplied sweep (reflow2 does no file I/O), measuring CLAIMED REGIONS ranked by mass — never a file-count ratio, which would punish the coarse modelling adopt mandates. `req:coverage-visible` (left `proposed` — needs Anthony's read of the statement before it moves) + `cap:coverage` (planned, allocated to cmp:drift). `chg:bl95-coverage-capture` pinned to a fresh epoch. Gate green, live==committed 370n/1108e — @ajs — 2026-07-24 — docs/backlog.md, docs/design/reflow2.json
 
 - BL-70 fork layer DESIGNED (graph + docs only, no Rust) — three decisions on the record: fork point = the coordinate Decision → epoch → export `content_hash` resolved against git (no native ref/DAG layer); re-opening a settled choice mints a superseding Decision rather than un-accepting the original; the epoch chain is backfilled from real release tags only. Epoch spine built (12 epochs, `PRECEDES`-chained, checksums where the export carries one), all 34 Decisions + 9 Releases anchored to the epoch the git evidence puts them in. `merge.rs`/`alternatives.rs` finally modelled (`cmp:merge`/`cmp:alternatives` under Time & History, capabilities moved off the `cmp:compare` stand-in, both registered as checksummed artifacts) — this dissolved the disconnected-community defect, 6 → 5 (the 5 accepted SPOFs). Found: the temporal axis was nearly unused (0 Snapshots, no Decision anchored, chain 4 days stale) because `add_change_event` was used where `record_change` was meant. Still to build: read-only `fork_point(decision_id)`, then `cap:revise-trigger`'s detector. Gate green, live==committed 365n/1100e — @ajs — 2026-07-24 — docs/design/reflow2.json, docs/backlog.md, CHANGELOG.md
 
