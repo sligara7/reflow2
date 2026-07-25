@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:8dbfeb4c5f79642c6f49e5598aaa38a5aaa7469cacc1459aea4d3417fcb1ae6b",
+  "content_hash": "sha256:d3ffbfa589718204442cd71e49b262a9ecef2eac3d78f1321f72f2350c246c24",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -490,6 +490,12 @@
       "from_id": "chg:merge-integrity-bl47-bl46",
       "properties": {},
       "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:search-nl-defect",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2406,6 +2412,24 @@
         "action": "modified"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:search-nl-defect",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:search"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:search-nl-defect",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ver:search-natural-language"
     },
     {
       "edge_type": "CHANGED",
@@ -8442,6 +8466,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:search-natural-language",
+      "properties": {},
+      "to_id": "cap:search"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:skill-lint",
       "properties": {},
       "to_id": "cmp:skills"
@@ -10115,6 +10145,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "BL-47 + BL-46: merge survivor ranks unset provenance below explicit authored; a colliding edge keeps the survivor's properties; create_node on an existing id merges instead of replacing (the revise-design contract, now real)"
+      }
+    },
+    {
+      "node_id": "chg:search-nl-defect",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Natural-language search found broken: conjunctive query semantics behind a ranked-BM25 description"
       }
     },
     {
@@ -13032,6 +13070,19 @@
       }
     },
     {
+      "node_id": "ver:search-natural-language",
+      "node_type": "Verification",
+      "properties": {
+        "criteria": "FAILING, demonstrated 2026-07-24 against the live graph. Asking a natural-language question returns nothing for a requirement that plainly exists. Reproduced minimally: search_design(\"upgrade\", node_type=Requirement) returns req:survives-upgrade with score 8.29; search_design(\"upgrade zzzznotaword\") returns ZERO. One non-matching token annihilates a perfect match. Cause: dynograph-text TextIndex::search builds a BooleanQuery with Occur::Must per token — every token must occur (AND semantics), documented at crates/dynograph-text/src/lib.rs:257 in the foundation. reflow2's own tool description advertises the opposite: 'BM25 keyword search over every node's name/statement/description, ranked', which any reader takes as ranked OR retrieval where a missing term lowers the score rather than eliminating the hit. Real-world failures observed the same day, all returning zero against requirements that exist: 'multiple people working at the same time collaboration' (req:concurrent-planning exists, and the single token 'people' DOES find it), 'upgrade an existing graph to a new version without losing it' (req:survives-upgrade exists), 'ingest many markdown specification documents from a folder' (req:corpus-ingest exists). CONSEQUENCE BEYOND SEARCH: capture-intent instructs the agent to search before adding and treats no-hits as licence to create ('No hits is also information: record it and create freely'), so a false negative manufactures duplicate nodes — the defect actively degrades the graph it is meant to protect. This is also why prose files keep winning over the graph: the query surface cannot answer the question a person actually asks.",
+        "kind": "verification",
+        "last_run_at": "2026-07-24",
+        "level": "integration",
+        "method": "test",
+        "name": "A natural-language question finds the requirement it is asking about",
+        "status": "failing"
+      }
+    },
+    {
       "node_id": "ver:skill-lint",
       "node_type": "Verification",
       "properties": {
@@ -13100,7 +13151,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0dca7c1d7ce90f0838eaea33de53b62e455bf0e468af4823ee8ae78962f18518",
+  "prev_content_hash": "sha256:8dbfeb4c5f79642c6f49e5598aaa38a5aaa7469cacc1459aea4d3417fcb1ae6b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
