@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:25d03391d09e4d82dc085eacb91b9356c2eddbd3843c1f78ae438558dc024384",
+  "content_hash": "sha256:2ca996a22d6e9471f6150a501b63f3f7f64e0bd74011549c690057c6834e36df",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -700,6 +700,12 @@
       "from_id": "chg:stub-survivor-reconciliation",
       "properties": {},
       "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:two-answers-2026-07-25",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3180,6 +3186,24 @@
         "action": "modified"
       },
       "to_id": "req:platform"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-answers-2026-07-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-answers-2026-07-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:concurrent-planning"
     },
     {
       "edge_type": "CHANGED",
@@ -6205,6 +6229,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:docs",
+      "properties": {},
+      "to_id": "decision:ack:a752db1dd8a251b2"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:export",
       "properties": {},
       "to_id": "dec:export-door-spof-accepted"
@@ -6280,6 +6310,12 @@
       "from_id": "req:concurrent-planning",
       "properties": {},
       "to_id": "dec:multi-writer-architecture"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:concurrent-planning",
+      "properties": {},
+      "to_id": "decision:ack:65b894fcc73c3961"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -12080,6 +12116,14 @@
       }
     },
     {
+      "node_id": "chg:two-answers-2026-07-25",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Anthony answered both open questions: concurrent planning waits, documentation ships from the next release"
+      }
+    },
+    {
       "node_id": "chg:v050-as-released",
       "node_type": "ChangeEvent",
       "properties": {
@@ -13164,6 +13208,16 @@
       }
     },
     {
+      "node_id": "decision:ack:65b894fcc73c3961",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:65b894fcc73c3961.",
+        "name": "Reviewed: gap:65b894fcc73c3961",
+        "rationale": "User (who:ajs, 2026-07-25): concurrent planning WAITS on the multi-writer decision. Accepted intent, blocked rather than shelved — deliberately left `accepted` rather than moved to `deferred`, because deferred reads as \"parked, nobody act\", whereas this is real intent with exactly one thing standing in front of it. The blocker is dec:multi-writer-architecture, a proposed decision point holding repo-file vs hosted-service vs hybrid; it is recorded as req:concurrent-planning GOVERNED_BY that decision, so the link is queryable and not just written here. Nothing should be built toward this requirement until the decision collapses, because each answer implies different machinery — and per cap:what-next's ranking rule, the decision therefore outranks the requirement it blocks. This acknowledgement expires if the affected node changes, which is correct: when the decision is made, this should come back for a fresh look rather than stay quietly accepted.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:66c6e5b6a10c8ac3",
       "node_type": "Decision",
       "properties": {
@@ -13250,6 +13304,16 @@
         "decision": "Accepted the gap gap:a714fec7e55225b4.",
         "name": "Reviewed: gap:a714fec7e55225b4",
         "rationale": "Extends the user's standing 2026-07-23 disposition on this same gap, with its wording brought up to date (2026-07-24): BL-80 has now landed in full, and BL-70's fork layer has been DESIGNED — the fork point is a coordinate (dec:fork-point-address), re-opening supersedes (dec:reopen-supersedes), and the epoch chain it addresses is backfilled and anchored. What remains unbuilt is the read-only fork_point operation itself, so a verification would have nothing to run against. Verification arrives with that build, not before; the capability's status stays `planned` and its description names exactly what is still to build, so nothing here claims more than is true. NOTE for whoever picks this up: the sibling unrealized_capability gap (gap:72f2c38d8acdeac2) has now RETIRED itself, because cap:fork-alternatives became allocated to cmp:alternatives and alternatives.rs realizes that component — the detector treats component-level realization as covering the capability. That is a detector generosity, not evidence the fork point is built. Do not read its silence as progress.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:a752db1dd8a251b2",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:a752db1dd8a251b2.",
+        "name": "Reviewed: gap:a752db1dd8a251b2",
+        "rationale": "User (who:ajs, 2026-07-25): start from the next release; the nine shipped releases are left as they are. Retro-editing them to claim a contents-line nobody wrote at the time would reconstruct history rather than record it, which dec:intent-preserved exists to prevent — those releases genuinely did ship a README and a setup guide, but the design did not model documentation as a deliverable until today, and when the understanding arrived is itself a true fact worth keeping. The obligation is forward and concrete: the next release cut must list cmp:docs in its contents, and the release checklist in AGENTS.md now says so, because an intention recorded only in an acknowledgement is one nobody reads at the moment it matters.",
         "status": "accepted"
       }
     },
@@ -14396,12 +14460,13 @@
       "node_id": "question:65b894fcc73c3961",
       "node_type": "Question",
       "properties": {
+        "answer": "\"Concurrent planning waits on the multi-writer decision.\" — Anthony, 2026-07-25. The requirement stays ACCEPTED: it is confirmed intent, not a parked idea, and marking it deferred would lose that distinction. It is blocked, not shelved — the difference matters because a deferred requirement invites nobody to act, whereas a blocked one names the single thing that would unblock it. The block is already on the record as req:concurrent-planning GOVERNED_BY dec:multi-writer-architecture, which is a proposed decision point holding the repo-file / hosted-service / hybrid choice. Nothing should be built toward this requirement until that decision collapses, because every shape of the answer implies different machinery.",
         "asked_at": "2026-07-24",
         "context_setter": "Nothing satisfies requirement “Several people can plan against one design without colliding”",
         "gap_id": "gap:65b894fcc73c3961",
         "question": "You've said a team should be able to work on one design at the same time without stepping on each other. Right now nothing in reflow2 actually does that, and it can't be built until you settle whether the design stays a file in the repo or becomes something people connect to. Do you want to leave this waiting on that decision, or drop it for now?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -14420,12 +14485,13 @@
       "node_id": "question:a752db1dd8a251b2",
       "node_type": "Question",
       "properties": {
+        "answer": "\"Start from the next release.\" — Anthony, 2026-07-25, on whether the nine shipped releases should be corrected to record that they included documentation. The past release record is left exactly as it stands. Retro-editing nine Release nodes to claim a contents-line nobody wrote at the time would be reconstructing history rather than recording it, and dec:intent-preserved is specifically about not doing that — the releases genuinely did ship a README and a setup guide, but the design did not model documentation as a deliverable until 2026-07-25, and that is a true fact about when the understanding arrived. The obligation is forward: the next release cut must include cmp:docs in its contents.",
         "asked_at": "2026-07-24",
         "context_setter": "“docs” is built but ships in nothing",
         "gap_id": "gap:a752db1dd8a251b2",
         "question": "You've just said documentation is part of reflow2, like documentation shipped with a fighter jet. The graph now takes that literally and points out that none of your nine releases lists documentation as something it delivered — even though every one of them shipped a README and a setup guide. Should the past releases be corrected to say they included the documentation, or should this start from the next release onward?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -15427,7 +15493,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:62ef44dfd0605fc7e5d40ef38a87fb05ad865ed968a7b4528321fec190ff9226",
+  "prev_content_hash": "sha256:25d03391d09e4d82dc085eacb91b9356c2eddbd3843c1f78ae438558dc024384",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
