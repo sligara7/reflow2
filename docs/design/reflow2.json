@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b496c37ea68a2099dd5a9d13e5338e19cb3ceecc9de709bf0054397dc833104d",
+  "content_hash": "sha256:52cb6b6bf094e4abcc9b4054a7104963148b2598da743c1b43d95ad221fb25a5",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1543,6 +1543,14 @@
       "from_id": "dec:fnv1a-foundational",
       "properties": {
         "acted_at": "2026-07-23",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:github-mcp-tandem",
+      "properties": {
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -5757,6 +5765,24 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:github-mcp-tandem",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:mirror-surface"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:github-mcp-tandem",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:central-host"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -16942,6 +16968,16 @@
       }
     },
     {
+      "node_id": "dec:github-mcp-tandem",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-07-25: \"what if reflow2 was paired with github's mcp and two worked in tandem?\" THE ARCHITECTURAL POINT FIRST, because it decides how expensive any of this is: MCP composes AT THE AGENT, not in the code. An agent can hold both servers at once, so reflow2 would never call GitHub and would never learn what a pull request is — the integration would live entirely in a SKILL that knows both surfaces exist. Zero coupling, no dependency, nothing in the core. Skills are now served from the binary, so such a skill costs a consumer project nothing. SIX PAIRINGS, strongest first. (1) THE PUBLISHING CASE — dec:nested-graphs says a design is its own graph per ownership boundary and designs link by mirroring a published surface, and the open question underneath dec:central-host was always \"how does the other team REACH my surface without cloning my repo\". GitHub is already that distribution network: an agent with github-mcp fetches another repo's committed export, and mirror_surface imports its published boundary with the coordinate. That is federation with no server, no hosting and no account beyond the one they already have — it may answer the strongest argument for hosting. (2) NOTIFICATION reflow2 structurally lacks — reflow2 can only nudge an agent that is already running, which is exactly req:nudge-path-proven's weakness; an unacknowledged gap posted as a GitHub issue reaches a PERSON who is not at a terminal, and closing that issue with an answer writes back through answer_question. (3) THE GATE EXPLAINS ITSELF IN REVIEW — today the coherence gate fails a build; with github-mcp the same finding becomes a review comment naming the thread (\"this moves art:X, which realizes cap:Y, which satisfies req:Z — and req:Z has no verification\"), landing where humans actually decide. (4) TRACEABILITY IN THE PR BODY — the golden thread from requirement to artifact, written where a reviewer sees WHY and not only what. (5) CLAIMS AGAINST REAL DATA — claim_report overlaps computed against open PRs' changed files rather than announcements, and dec:advisory-concurrency's \"first-on-disk, both provable\" has an exact GitHub expression in which PR opened first. (6) RELEASE NOTES DERIVED from the graph — delivered requirements and the decisions in that epoch, cut and attached by github-mcp. THE OBJECTIONS, recorded beside the ideas. Context cost is real: reflow2 serves 106 tools and github-mcp is comparably large, so an agent holding both pays in tool-selection noise — both have an answer (find_tools, and GitHub's toolsets/dynamic discovery, noted in docs/github-mcp-nuggets.md) and neither answer is free. And the load-bearing one: reflow2's proposition is that it works with no service and no account. Any pairing must be ADDITIVE AND NEVER REQUIRED, or reflow2 excludes GitLab, self-hosted, air-gapped and classified environments — which is the population this tool was built for.",
+        "name": "OPEN — does reflow2 run in tandem with GitHub's MCP server, and where would the pairing pay?",
+        "rationale": "Raised as brainstorming while looking at how two people collaborate over plain git, so nothing here is scheduled and nothing is promoted. Kept as ONE decision rather than six because the pairings are a menu under a single question — whether reflow2 reaches for a second MCP surface at all — and answering that decides the shape of every item. Worth recording rather than leaving in conversation because two of the six touch decisions already on the record: (1) bears directly on dec:central-host, where the publishing case is named as the strongest argument for hosting a server, and GitHub-as-distribution would weaken that argument without any hosting at all; (2) bears on req:nudge-path-proven, which is accepted work about a notification path reflow2 cannot currently prove reaches anybody. The architectural observation is the part most likely to be forgotten and re-derived: MCP integration happens in the agent's context, not in either server's code, so the whole idea is skill-shaped and reversible — which is also why it can be tried cheaply on one pairing before deciding anything.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:graph-spof-accepted",
       "node_type": "Decision",
       "properties": {
@@ -20800,7 +20836,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:88d74496b28f4f84e0e5d4cfb0462788166558bdf782f2ff9bd4390c1f1844ee",
+  "prev_content_hash": "sha256:b496c37ea68a2099dd5a9d13e5338e19cb3ceecc9de709bf0054397dc833104d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
