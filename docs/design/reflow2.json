@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:260fb96c8ccccd2799b13e3d8eadae2f4c3740fafe0637486cefb9122ef218e0",
+  "content_hash": "sha256:ea12b3eef90f70eacf0f56e441f40d8d91ba3b08482fab0bf86c186db00c1aa9",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1419,6 +1419,15 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:multi-writer-architecture",
+      "properties": {
+        "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:nested-graphs",
       "properties": {
         "acted_at": "2026-07-25",
         "role": "author"
@@ -3919,6 +3928,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:tool-search"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "dec:nested-graphs"
     },
     {
       "edge_type": "CONTAINS",
@@ -14908,6 +14923,16 @@
       }
     },
     {
+      "node_id": "dec:nested-graphs",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNDECIDED, and RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-07-25, explicitly not convinced by the collaboration design and thinking out loud: \"could you have small/mini reflow2 graphs inside itself... coming from a system of systems engineering approach, reflow2 may lay out the graph and how all the systems need to interact and where there are gaps, but what if we now had a mini-reflow2 graph for each system? And a mini-mini-reflow2 of the components in the system... the idea is that reflow2 has the tools to analyze the graph at each level and ensure there are no gaps and that it works with the higher level systems or system-of-systems.\" WHAT IS ALREADY TRUE, because it changes what the idea is asking for. Levels exist and are already checked: Component.level is an enum of component / subsystem / system / system_of_systems / enterprise, CONTAINS between Components is the axis-Y spine, and hierarchy_issues already reports level_mismatch, missing_intermediate_level and orphan_level — the carburetor-to-body problem, imported from chain_reflow's matryoshka insight (docs/three-axes.md). And the multi-graph primitive exists unused: every node and edge carries graph_id, pinned to the constant \"reflow2\". So the question is not whether reflow2 can express nesting. It can. The question is whether a level should be a SUBTREE of one graph or a GRAPH OF ITS OWN. THREE OPTIONS. (a) ONE GRAPH, ZOOM BY LEVEL — today's shape. What is missing is not nesting but SCOPING: no read takes a subtree as its subject, so detect_gaps and graph_report always answer for the whole design. Adding a scope argument is a filter, not an architecture, and it delivers most of what was asked — the tools analysing each level. (b) A GRAPH PER SYSTEM, COMPOSED — Anthony's idea. It buys four things one graph cannot: an independent write lock per system, which is a different and stronger answer to the collaboration problem than region claims, because separate graphs are PHYSICALLY separate where a claim is only advisory; an independent lifecycle, so a subsystem can be released, adopted or handed to a vendor on its own; selective publishing, which is exactly req:design-reachable-without-the-repo; and per-level scale, since detectors run over hundreds of nodes instead of tens of thousands. (c) A GRAPH PER OWNERSHIP BOUNDARY, LEVELS INSIDE EACH — the hybrid, and the shape federated systems engineering actually uses: you split where AUTHORITY splits, not where the hierarchy happens to have a layer. THE FOUR HARD PARTS of (b), each one real: the golden thread cannot cross a store boundary, because the schema validates both endpoints of every edge — so a parent's Component pointing at a child's design needs a typed COORDINATE (graph id + node id + the export's content hash at the moment the reference was made), which is precisely the choice dec:fork-point-address already made for fork points over a native ref layer. Gap detection goes blind at the seam: a parent requirement whose satisfying capability lives in a child graph would fire unsatisfied forever unless the child's evidence rolls up — and that roll-up is cap:derived-completion's computation applied one level higher, which is encouraging rather than novel. Freshness becomes load-bearing: a parent's view of a child is a claim about a VERSION of that child, so it is a dated examined claim and never a live truth (the cap:freshness and confirmation-ledger shape). And the seam becomes the new collision point: two people changing the interface across the boundary still collide, now in the one place with no merge machinery. THE TENSION WORTH KNOWING ABOUT: docs/org-scale-vision.md records the opposite destination — \"one graph the whole company plans in\", with the CEO's objectives at the top and everything tracing upward. Federation and one-big-graph cannot both be the end state, and nothing in the design has ever chosen between them. THE DISCRIMINATOR, offered as a finding and not a decision: depth alone does not justify a separate graph. Nesting three levels of graphs costs a coordinate, a roll-up and a freshness check at every seam, and buys nothing that a scope filter would not have delivered — unless something at that level is separately OWNED, separately RELEASED, or separately SHARED. Where those hold, a graph of its own is right. Where they do not, it is ceremony.",
+        "name": "OPEN — one graph with levels, or a graph per system composed into a bigger one?",
+        "rationale": "Recorded because Anthony said plainly he is not convinced by the collaboration design, and an unconvinced author is a finding, not a disagreement to be argued down. The three options and the ranking above are analysis offered for him to judge — the brainstorm skill's rule is that a counter-argument is recorded BESIDE an idea rather than used to talk someone out of it, and this decision is the first real test of that rule. Held proposed with nothing built, and deliberately without a Requirement: if federation is the answer it changes the shape of several settled things at once (dec:repo-file-embedded's single file, dec:central-host's hosting question, the whole org-scale destination), and that is a decision to make deliberately rather than to discover halfway through an implementation. The cheap next step, if he wants motion without commitment: add a scope argument to the existing detectors — option (a) — because it is a filter over machinery that already exists, it tests whether per-level analysis is what he actually wants, and it is a strict subset of what option (b) would need anyway, so it forecloses nothing (rule:no-foreclosure).",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:operational-spof",
       "node_type": "Decision",
       "properties": {
@@ -17857,7 +17882,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:87b14c6a89ea69663bea8920c132df21311503d5bfe9837a6a5f4783d1f75460",
+  "prev_content_hash": "sha256:260fb96c8ccccd2799b13e3d8eadae2f4c3740fafe0637486cefb9122ef218e0",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
