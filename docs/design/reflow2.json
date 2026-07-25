@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0dca7c1d7ce90f0838eaea33de53b62e455bf0e468af4823ee8ae78962f18518",
+  "content_hash": "sha256:8dbfeb4c5f79642c6f49e5598aaa38a5aaa7469cacc1459aea4d3417fcb1ae6b",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -48,6 +48,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:corpus-ingest",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:ingest"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -216,6 +224,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:onboarding",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -454,6 +470,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:bl96-kpp-capture",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl97-103-idea-capture",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -876,6 +898,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:exploratory-staging",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:fnv1a-foundational",
       "properties": {
         "acted_at": "2026-07-23",
@@ -939,6 +970,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:multi-writer-architecture",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:parallel-alternatives",
       "properties": {
         "acted_at": "2026-07-22",
@@ -966,8 +1006,62 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:concurrent-planning",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:corpus-ingest",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:coverage-visible",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:explains-itself",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:inviolable-intent",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:nudge-covers-bypass",
       "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:onboard-newcomer",
+      "properties": {
+        "acted_at": "2026-07-24",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -2069,6 +2163,87 @@
         "action": "added"
       },
       "to_id": "req:inviolable-intent"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl97-103-idea-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:corpus-ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl97-103-idea-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:explains-itself"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl97-103-idea-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:onboarding"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl97-103-idea-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:exploratory-staging"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl97-103-idea-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:multi-writer-architecture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl97-103-idea-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl97-103-idea-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:corpus-ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl97-103-idea-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:explains-itself"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl97-103-idea-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:onboard-newcomer"
     },
     {
       "edge_type": "CHANGED",
@@ -3960,6 +4135,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:corpus-ingest",
+      "properties": {},
+      "to_id": "dec:ask-not-repair"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:corpus-ingest",
+      "properties": {},
+      "to_id": "decision:ack:dfe1b2a6caace1f4"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:coverage",
       "properties": {},
       "to_id": "dec:report-dont-judge"
@@ -4041,6 +4228,18 @@
       "from_id": "cap:dimensions",
       "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:explains-itself",
+      "properties": {},
+      "to_id": "decision:ack:7a65e7fed7172917"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:explains-itself",
+      "properties": {},
+      "to_id": "decision:ack:ac64f6e79aa8a17d"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4263,6 +4462,24 @@
       "from_id": "cap:model-process",
       "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:onboarding",
+      "properties": {},
+      "to_id": "dec:views-are-projections"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:onboarding",
+      "properties": {},
+      "to_id": "decision:ack:4589232c9150f8fe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:onboarding",
+      "properties": {},
+      "to_id": "decision:ack:4ac1c3ccf483b4d6"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4512,6 +4729,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:skills",
+      "properties": {},
+      "to_id": "decision:ack:4ac1c3ccf483b4d6"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:temporal",
       "properties": {},
       "to_id": "dec:temporal-backfill-from-releases"
@@ -4527,6 +4750,12 @@
       "from_id": "ifc:graph-export",
       "properties": {},
       "to_id": "dec:export-door-spof-accepted"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:concurrent-planning",
+      "properties": {},
+      "to_id": "dec:multi-writer-architecture"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7718,6 +7947,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:corpus-ingest",
+      "properties": {},
+      "to_id": "req:corpus-ingest"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:coverage",
       "properties": {},
       "to_id": "req:coverage-visible"
@@ -7751,6 +7986,12 @@
       "from_id": "cap:dimensions",
       "properties": {},
       "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:explains-itself",
+      "properties": {},
+      "to_id": "req:explains-itself"
     },
     {
       "edge_type": "SATISFIES",
@@ -7880,6 +8121,12 @@
       "from_id": "cap:model-process",
       "properties": {},
       "to_id": "req:design-anything"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:onboarding",
+      "properties": {},
+      "to_id": "req:onboard-newcomer"
     },
     {
       "edge_type": "SATISFIES",
@@ -9063,6 +9310,19 @@
       }
     },
     {
+      "node_id": "cap:corpus-ingest",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Take a directory of written specifications and produce one coherent design from the whole corpus, keeping each claim's provenance Fragment pointing back at its source document. Extends single-document extraction, which already works, with the two things a corpus needs and a file does not: a folder driver, and identity resolution ACROSS documents so the same thing named in many specs converges on one node. The primitive for that convergence already exists — every node type declares its own resolution strategy and threshold in the schema — so this is wiring an existing mechanism at batch scale rather than inventing one. Bound by dec:ask-not-repair: suspected duplicates are asked, never silently merged, which at corpus scale means the asking must be batched or the feature is unusable. PLANNED — BL-97.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Ingest a folder of specifications as one design",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:coverage",
       "node_type": "Capability",
       "properties": {
@@ -9111,6 +9371,19 @@
         "name": "Track quality over time",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:explains-itself",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The plain-language entry surface: what reflow2 physically is, how it runs on the reader's own machine, where the agent instructions go, and a few concrete uses — before any doctrine. Realized by documentation artifacts (README, the getting-started material, diagrams) rather than by code, which is why it is a capability with no module: what satisfies it is prose and pictures. PLANNED — BL-102. Deliberately left unallocated at capture: which part of the project owns its own explanation is a real question, not an obvious one, and inventing an owner would be a renderer fill-in of the kind dec:views-are-projections forbids.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Explain itself to someone who has not been convinced yet",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -9280,6 +9553,19 @@
         "name": "Model a process, not only a product",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:onboarding",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Answer \"we need to add this — where does it go?\" from the graph, for someone who did not build the system. Assembles machinery that already exists and has never been pointed at this question: map the newcomer's words onto the parts that exist, show what touching each candidate would reach, name the decisions already governing that area and who authored them, name the intent it must not break, and say honestly which parts of the real system the design does not cover. Distinct from saying where the design stands, which answers what the system is and what was decided but not where new work belongs. No core change — a skill over existing operations. PLANNED — BL-101.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Tell a newcomer where a new piece of work belongs",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -9797,6 +10083,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-96 captured: KPPs as first-class inviolable intent, with a computed violation"
+      }
+    },
+    {
+      "node_id": "chg:bl97-103-idea-capture",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The idea list captured as graph elements, not backlog prose (BL-97..BL-102)"
       }
     },
     {
@@ -10532,6 +10826,16 @@
       }
     },
     {
+      "node_id": "dec:exploratory-staging",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNDECIDED, and recorded because it contradicts something already on the record. The user asks for a \"rubber-ducking\" mode: work an idea through with the agent before committing concepts to the graph. The git prior-art study explicitly listed the index/staging area under things to NOT import, on the grounds that continuous-capture doctrine rejects a staging gate. The question is whether that rejection covers this. A reading that would reconcile them: the rejection targeted a gate sitting between EVERY edit and the graph, whereas this is an opt-in mode for one activity — early exploration, where most ideas are meant to be discarded and recording them all would pollute the design with roads nobody walked. Note what already works: a session that simply makes no write calls IS rubber-ducking, and the read operations are the ducking aids. So the real question is narrower than it appears — what happens at the END of such a session: does the outcome get committed in one deliberate act, and are the discarded branches dropped, or preserved as unchosen alternatives under a decision point (which the fork layer just built the vocabulary for)?",
+        "name": "OPEN — does reflow2 get an opt-in \"think first, commit later\" mode, having rejected a staging gate?",
+        "rationale": "Raised by the user and his brother, 2026-07-24. Held proposed rather than built because it sits against a recorded position, and the cost of drifting into it is exactly the cost the original rejection named: a staging area quietly becomes the place where design intent waits, and a design brain whose defining property is continuous capture acquires a buffer where things are forgotten instead of recorded. That is worth deciding out loud rather than discovering. The reason it may still be right is equally concrete: the doctrine that nothing is lost was written against losing REAL decisions, and an exploratory session's dead ends are not decisions — forcing them into the graph would make the record noisier, not more honest, which is the same trade dec:alternatives-unranked-forkable made when it chose to store the fork and compute the consequence rather than eagerly maintaining every branch.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:export-door-spof-accepted",
       "node_type": "Decision",
       "properties": {
@@ -10629,6 +10933,16 @@
         "name": "The three-way merge takes explicit inputs over git's DAG, and reports a proposal it never auto-applies",
         "rationale": "User decided both axes 2026-07-22, both the recommended option. Explicit-inputs-over-git because the exports are already git-committed (dec:repo-file-embedded) and git already tracks the merge-base — building a second DAG inside reflow2 would reimplement what git provides and contradicts 'export/import is the right-sized git bundle analogue' (BL-80's explicit do-NOT-import list). It keeps rung #1 shippable now and defers the ref/branch layer to where it belongs (BL-70). compare_designs already computes the typed per-property diff this consumes, so the input side is built. Report-a-proposal-never-auto-apply because a both-sides conflict IS a Question and the graph must not silently pick a side (dec:report-dont-judge, req:human-decides, req:no-silent-fallback); mirroring compare's read-only contract keeps the sibling honest, and the explicit apply is the disposition gate (dec:two-sided-accept's spirit — no silent write) without a staging area (BL-80 explicitly rejects the index). Typed per-node/per-property conflicts are strictly better than git's line markers — the key 'graph is not files' caveat. This specifies BL-12's merge problem: rung #1 (this algorithm over three documents) + #2 (the retained ancestor, here git's) = the L core of BL-12. Deferred to their own decisions: delete/modify and add/add conflict semantics (retire-vs-delete makes a delete meaningful, so delete/modify must go to the human, never auto-resolve), edge-merge banding, and the exact shape of the conflict Question.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:multi-writer-architecture",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNDECIDED. This is a decision point, not a decision: it is recorded proposed so the question is visible and forkable rather than living as prose in a backlog file. The question: when N people (the concrete case raised was fifteen developers) work one design, does reflow2 stay a graph-in-a-repo-file that merges on pull, become a centrally hosted service with a shared writable store, or take a hybrid — a hosted read/coordination surface over per-writer files? If accepted in any form other than the first, this would supersede dec:repo-file-embedded, which chose the repo file and is NOT to be flipped back to proposed (dec:reopen-supersedes). Half of what a team needs already exists and should be weighed before any architecture moves: the three-way merge computes a typed per-node, per-property case table against the common ancestor and mints each conflict as a Question with a deterministic id, with recorded resolutions replayable across near-identical conflicts. What does not exist is the coordination underneath it — a scoping primitive so two people do not collide in the first place, and identity at team scale.",
+        "name": "OPEN — does a design with many writers stay a repo file, become a hosted service, or something between?",
+        "rationale": "Raised by the user and his brother, 2026-07-24, from a concrete scenario rather than speculation. This is the first field-sourced trigger to re-open a settled decision, and it is worth recording WHY it counts as one: dec:repo-file-embedded's own rationale reads \"the service's strongest argument (concurrency) is hypothetical while there is one writer.\" Fifteen developers is that hypothesis arriving, so the decision is not being second-guessed — its stated precondition has changed. That is exactly the signal cap:revise-trigger is being built to surface automatically; here it arrived by conversation instead, which is itself evidence the trigger is worth building. Held proposed deliberately: the architecture question is upstream of every feature beneath it (req:concurrent-planning among them), and starting to build under an unmade decision is how a design acquires an architecture nobody chose. The counter-argument that belongs in the weighing, so it is not lost: reflow2's loop is built around asking a human and recording an attributable answer — deliberate, sequential, credited — and simultaneous editing may be the wrong shape for that product even where it is technically reachable. What the raised scenario actually asks for is non-colliding parallel work plus good merges, which may be reachable without a service at all.",
+        "status": "proposed"
       }
     },
     {
@@ -10782,6 +11096,26 @@
       }
     },
     {
+      "node_id": "decision:ack:4589232c9150f8fe",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:4589232c9150f8fe.",
+        "name": "Reviewed: gap:4589232c9150f8fe",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities: cap:onboarding is a skill over existing operations (BL-101) and no artifact exists yet. It arrives with the build.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:4ac1c3ccf483b4d6",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:4ac1c3ccf483b4d6.",
+        "name": "Reviewed: gap:4ac1c3ccf483b4d6",
+        "rationale": "Accepted at component granularity for now, but recorded with a caveat rather than a clean yes: cap:onboarding is allocated to cmp:skills, which carries a passing check, so the detector reads it as verified one hop away — while in fact the onboarding skill has not been written at all. This is the same detector generosity noted on cap:fork-alternatives (BL-70): allocation to a checked component makes an unbuilt capability read as covered. It is not evidence of anything. When BL-101 is built, give it its own verification rather than inheriting the component's.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:66c6e5b6a10c8ac3",
       "node_type": "Decision",
       "properties": {
@@ -10812,12 +11146,42 @@
       }
     },
     {
+      "node_id": "decision:ack:7a65e7fed7172917",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:7a65e7fed7172917.",
+        "name": "Reviewed: gap:7a65e7fed7172917",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities, with one thing worth saying plainly: this capability is realized by prose and diagrams, not code, so \"verification\" here means someone who did not build reflow2 reading the README and successfully running it. That is a trial, not a test suite — which is the same reason the 33-capability validation gap is dispositioned to the trials programme. It arrives with BL-102, and the honest check is a person, not a CI job.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:a714fec7e55225b4",
       "node_type": "Decision",
       "properties": {
         "decision": "Accepted the gap gap:a714fec7e55225b4.",
         "name": "Reviewed: gap:a714fec7e55225b4",
         "rationale": "Extends the user's standing 2026-07-23 disposition on this same gap, with its wording brought up to date (2026-07-24): BL-80 has now landed in full, and BL-70's fork layer has been DESIGNED — the fork point is a coordinate (dec:fork-point-address), re-opening supersedes (dec:reopen-supersedes), and the epoch chain it addresses is backfilled and anchored. What remains unbuilt is the read-only fork_point operation itself, so a verification would have nothing to run against. Verification arrives with that build, not before; the capability's status stays `planned` and its description names exactly what is still to build, so nothing here claims more than is true. NOTE for whoever picks this up: the sibling unrealized_capability gap (gap:72f2c38d8acdeac2) has now RETIRED itself, because cap:fork-alternatives became allocated to cmp:alternatives and alternatives.rs realizes that component — the detector treats component-level realization as covering the capability. That is a detector generosity, not evidence the fork point is built. Do not read its silence as progress.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:ac64f6e79aa8a17d",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:ac64f6e79aa8a17d.",
+        "name": "Reviewed: gap:ac64f6e79aa8a17d",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities: what realizes this is documentation — the README, the getting-started material, the diagrams — and none of it is written yet. It arrives with BL-102, at which point those documents should be registered as artifacts like any other deliverable, since a doc that drifts from the design is the same defect as code that does.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:dfe1b2a6caace1f4",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:dfe1b2a6caace1f4.",
+        "name": "Reviewed: gap:dfe1b2a6caace1f4",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24): cap:corpus-ingest was captured today from the idea list and nothing is built, so a Verification would have nothing to run against. It arrives with the build (BL-97).",
         "status": "accepted"
       }
     },
@@ -12048,6 +12412,32 @@
       }
     },
     {
+      "node_id": "req:concurrent-planning",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Several people can plan against one design without colliding",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A team, not a single author, must be able to work on one design at the same time: each person able to see what the others hold, to work in a scope that does not collide with theirs, and to have genuinely overlapping work surfaced as decidable conflicts rather than silent last-writer-wins. Whether this extends to simultaneous editing with live presence, or stops at non-colliding parallel work with good merges, is deliberately not asserted here — it depends on an architecture question that is still open, and the weaker form may be what teams actually need.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:corpus-ingest",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "A whole corpus of existing specifications can be brought into the design in one pass",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Where a system's intent already exists as a large body of written specifications, reflow2 must be able to take the whole corpus — a folder, not a file — and produce one coherent design from it, with every claim still pointing back at the document it came from. The load-bearing requirement is identity ACROSS documents: the same component named in forty specifications must converge on one node rather than forty near-duplicates, and where convergence is uncertain the user is asked rather than the nodes being silently merged. Ordering must not decide meaning — which file happened to be read first must not determine the canonical name of anything.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:coverage-visible",
       "node_type": "Requirement",
       "properties": {
@@ -12097,6 +12487,19 @@
         "provenance": "authored",
         "statement": "The primary consumers are Claude Code and grok build (plus OpenCode/Copilot), which reach the system as MCP tools plus an installed skill kit. The human is reached only through the agent.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:explains-itself",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "reflow2 explains what it is and how to run it before it explains what it believes",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Someone arriving at reflow2 cold must learn, in plain language and before any philosophy, what it physically is and how it runs on their machine: a binary they run locally, a design graph kept as a file in their own repository, and a coding agent that talks to it over MCP. They must then find where the agent instructions go and two or three concrete uses — starting a design from nothing, recovering one from a system that already exists, and asking what breaks if something changes. The doctrine that makes reflow2 worth using is not the entry point to it.",
+        "status": "proposed"
       }
     },
     {
@@ -12214,6 +12617,19 @@
         "provenance": "authored",
         "statement": "A session that edits code while making zero reflow2 calls must receive the same one-time Stop nudge as one that writes the graph unchecked: the nudge arms on the harness's file-edit events (Edit/Write), not only on reflow2 write events. Today loop_nudge.py counts only mcp__reflow2__ writes, so the total-bypass session — the agent that ignores the design brain entirely — passes the Stop hook silently. Constraints carried over: the hook never reads the graph (single-writer lock), blocks once and never twice, and names what is owed (loop_status; impact-check before further edits, link-artifacts after) rather than demanding a ritual call; an edit-count threshold bounds false positives on typo/docs sessions. (BL-90, BL-74 family.)",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:onboard-newcomer",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Someone who did not build the system can be told where a new piece of work belongs",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A person inheriting a mature design must be able to ask \"we need to add this — where does it go?\" and be answered from the graph: which existing part should own it, what the change would touch, which decisions already govern that area and must not be casually contradicted, what intent it must not break, and who authored the reasoning so they can be asked. Answering \"what is this system and what has been decided\" is necessary but not sufficient; the requirement is satisfied only when the second question — where and how do I add to it — is also answered, and when the answer says honestly which parts of the real system the design does not cover.",
+        "status": "proposed"
       }
     },
     {
@@ -12684,7 +13100,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:51fe3c3069b6eb67b4c5eb6248ff6c31935bd71e9c8cdc594dc143c5ff21bb0c",
+  "prev_content_hash": "sha256:0dca7c1d7ce90f0838eaea33de53b62e455bf0e468af4823ee8ae78962f18518",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
