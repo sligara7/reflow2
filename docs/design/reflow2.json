@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:afb8adfabf2b68cce0ca0ae097e8818277f4d50c86d2f50dc47ddd9413b50692",
+  "content_hash": "sha256:50afae7c09196c70d15c581d90103bc7fadfa45fd0679eef061a9fcbb80b25a7",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -96,6 +96,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:explains-itself",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:docs"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -529,6 +537,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:documentation-subsystem",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:merge-integrity-bl47-bl46",
       "properties": {},
       "to_id": "epoch:v050-hardening"
@@ -622,6 +636,12 @@
       "from_id": "dec:design-diff-vocabulary",
       "properties": {},
       "to_id": "epoch:v080"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "dec:documentation-has-no-operational-coupling",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -952,6 +972,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:documentation-has-no-operational-coupling",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -2466,6 +2495,60 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:documentation-subsystem",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:documentation-subsystem",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:documentation-subsystem",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:explains-itself"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:documentation-subsystem",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:documentation-subsystem",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:documentation-has-no-operational-coupling"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:documentation-subsystem",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "sys:documentation"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:merge-integrity-bl47-bl46",
       "properties": {
         "accepted_baseline": true,
@@ -2783,6 +2866,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:explains-itself"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:frictionless-update"
     },
     {
@@ -2856,6 +2945,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "sys:documentation"
     },
     {
       "edge_type": "CONTAINS",
@@ -3012,6 +3107,12 @@
       "from_id": "sys:coherence-loop",
       "properties": {},
       "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:documentation",
+      "properties": {},
+      "to_id": "cmp:docs"
     },
     {
       "edge_type": "CONTAINS",
@@ -4215,6 +4316,30 @@
       "to_id": "env:dev"
     },
     {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:readme",
+      "properties": {
+        "doc_kind": "readme"
+      },
+      "to_id": "proj:reflow2"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:setup",
+      "properties": {
+        "doc_kind": "runbook"
+      },
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:setup",
+      "properties": {
+        "doc_kind": "runbook"
+      },
+      "to_id": "cmp:service"
+    },
+    {
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:adopt",
       "properties": {},
@@ -4999,6 +5124,12 @@
       "from_id": "sys:coherence-loop",
       "properties": {},
       "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:documentation",
+      "properties": {},
+      "to_id": "dec:documentation-has-no-operational-coupling"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8036,6 +8167,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:readme",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:explains-itself"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:render-views",
       "properties": {
         "completeness": "complete"
@@ -8081,6 +8220,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:setup",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:explains-itself"
     },
     {
       "edge_type": "REALIZES",
@@ -8743,6 +8890,22 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art-readme",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art-setup",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:adopt-skill",
       "properties": {
         "action": "created"
@@ -9371,6 +9534,17 @@
       }
     },
     {
+      "node_id": "art:readme",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:68e99fdfbc39d0ec",
+        "location": "README.md",
+        "name": "README.md",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:render-views",
       "node_type": "Artifact",
       "properties": {
@@ -9422,6 +9596,17 @@
         "checksum": "sha256:f5adfb4ad655e5f8",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:setup",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:f56cbbe3e7ccb23b",
+        "location": "getting-started/SETUP.md",
+        "name": "getting-started/SETUP.md",
         "status": "realized"
       }
     },
@@ -10406,6 +10591,14 @@
       }
     },
     {
+      "node_id": "chg:documentation-subsystem",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Documentation modelled as part of the product, on Anthony's answer"
+      }
+    },
+    {
       "node_id": "chg:merge-integrity-bl47-bl46",
       "node_type": "ChangeEvent",
       "properties": {
@@ -10574,6 +10767,19 @@
         "name": "dimensions",
         "provenance": "authored",
         "purpose": "The dimensions module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:docs",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "docs",
+        "provenance": "authored",
+        "purpose": "The human-facing documents: the README that says what reflow2 is and how it runs, the getting-started material that installs and connects it, and the diagrams. Distinct from the skills, which instruct the agent, and from the questions the Human Channel asks — this is what a person reads before they are a user, and possibly before they are convinced.",
         "status": "planned",
         "tier": "operational"
       }
@@ -10969,6 +11175,19 @@
       }
     },
     {
+      "node_id": "sys:documentation",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "subsystem",
+        "name": "Documentation",
+        "provenance": "authored",
+        "purpose": "The explanation reflow2 ships with itself. Modelled as a subsystem of the product rather than as material about the product, on the user's call (2026-07-24): documentation is part of any deliverable, and a system handed over without it has not been fully delivered — his analogy was designing a fighter jet in reflow2 and shipping no documentation to the people who must operate it. The consequence taken seriously here is that documentation gets the same treatment as code: its files are registered Artifacts with checksums, so a README that drifts away from what the system does is a detectable defect rather than a thing someone eventually notices.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "sys:human-channel",
       "node_type": "Component",
       "properties": {
@@ -11150,6 +11369,16 @@
         "decision": "A design-vs-design diff (compare_designs) exists as a core op exposed as both an MCP tool and a CLI flag. It compares two export documents, or the live graph against one document. Findings are directional — added / removed / changed relative to an explicitly named base — with property-level detail on changed nodes, grouped into two bands: design content vs the supporting/bookkeeping layer (ChangeEvents, DriftEvents, Fragments, Questions). It reports divergence between two as-designed records and never judges which side is right; the word 'drift' stays reserved for design-vs-reality.",
         "name": "Design-vs-design comparison is directional, banded, and lives in the core",
         "rationale": "User decided all four axes 2026-07-21 (BL-71 rung c vocabulary session). Directional because all three consumers have a real base — the committed record (the BL-71 clobber tripwire), the main branch (BL-70 branch-by-file comparison), the state a claim was made against (BL-12 merge) — while AoA can still read the report neutrally or run it both ways. Banded because the real 2026-07-21 divergence was 3 Decisions and 8 Requirements buried under ~20 bookkeeping nodes; a flat list hides exactly what matters. Core op (not a kit script) because deterministic design computation belongs in the tested core; CLI flag so CI and no-server contexts reach it, like --import/--export. It is the read side of the rung a+b upsert-layering, the sibling of the reconcile family — which compares design against reality, hence the separate word: divergence, not drift.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:documentation-has-no-operational-coupling",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "The Documentation subsystem, its docs component, the capability of explaining reflow2 to a newcomer, and the README/SETUP artifacts read as a disconnected community to `detect_defects`, and that reading is ACCEPTED rather than bridged. The cluster is correctly modelled: the project contains the subsystem, the subsystem contains the component, the component owns the capability, and the artifacts both REALIZE the capability and DOCUMENT the project, the installer and the service. Those DOCUMENTS edges are true and are kept on their own merit — the tool's own guidance is to record a file that way when something would be wrong if it drifted out of step with the design, which is exactly the property the user asserted when he said documentation is part of the deliverable. They simply do not attach the cluster, because the structural network is built from DEPENDENCY relations only (a direct DEPENDS_ON, or a CONSUMES/PROVIDES contract collapsed through its Interface), and documenting a thing is not depending on it. No further edge can fix this without being a lie: documentation genuinely does not participate in the operational dependency graph.",
+        "name": "Documentation is part of the product but has no operational coupling, so its island is accepted — and the detector should learn this",
+        "rationale": "Decided 2026-07-24, immediately after the user answered that documentation belongs to reflow2 rather than sitting outside it (\"it'd be like if I designed a fighter jet using reflow2, but then didn't deliver any documentation on it to the user\"). Three bridges were attempted before accepting: project containment, which is how every other subsystem attaches; then DOCUMENTS edges to the project, the installer and the service. The detector still fired, and reading structure.rs explains why — `operational_network` admits only dependency pairs, deliberately, because mixing the golden thread's traceability edges into one directed graph manufactures cycles that are just the thread closing on itself. That selectivity is correct and should not be weakened to silence this. THE GENERAL PRINCIPLE, which is the reason this is worth recording rather than just accepting: dec:operational-spof already established that only things which OPERATE can be single points of failure, because the suggested fix — add redundancy — is meaningless for intent. The identical argument applies one category over. Only things that operate can be meaningfully disconnected FROM the operational network; a documentation subsystem has no operational coupling by its nature, so flagging it is a false positive of exactly the BL-84 family, and the fix belongs in the detector rather than in the design. Until that lands this decision holds the disposition, and the design is not distorted to satisfy a detector — the failure mode the project names as generate_bridge being a cosmetic repair. Deliberately NOT accepted: the idea that documentation should therefore live outside the design, which the user explicitly rejected and which this decision must not be read as reinstating.",
         "status": "accepted"
       }
     },
@@ -12161,6 +12390,26 @@
       }
     },
     {
+      "node_id": "frag:art-readme",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered README.md"
+      }
+    },
+    {
+      "node_id": "frag:art-setup",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered getting-started/SETUP.md"
+      }
+    },
+    {
       "node_id": "frag:art:adopt-skill",
       "node_type": "Fragment",
       "properties": {
@@ -12644,12 +12893,13 @@
       "node_id": "question:e68c76afcb57424c",
       "node_type": "Question",
       "properties": {
+        "answer": "\"I believe documentation is part of reflow2 (not external to). I think that is true to just about any project deliverable — that documentation is part of the project. It'd be like if I designed a fighter jet using reflow2, but then didn't deliver any documentation on it to the user. Likewise, documentation is part of reflow2 itself.\" — Anthony, 2026-07-24. So documentation is owned by the product, not treated as material about it: a new Documentation subsystem containing a docs component now owns cap:explains-itself, and README.md and getting-started/SETUP.md are registered as checksummed Artifacts realizing it. The consequence he is asserting, taken literally: a README that drifts from what the system does is a detectable defect on the same footing as drifted code, not something someone eventually notices.",
         "asked_at": "2026-07-24",
         "context_setter": "Capability “Explain itself to someone who has not been convinced yet” isn't assigned to any part",
         "gap_id": "gap:e68c76afcb57424c",
         "question": "You want reflow2 to explain plainly what it is and how to run it, before it explains what it believes. Nothing currently owns that job — the README, the getting-started guide and the diagrams are written by hand and belong to no part of the system. Should one part be responsible for explaining reflow2 to a newcomer, or is that simply documentation that lives outside the design?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -13531,7 +13781,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d1086593704eff97f0f2053bb7e5bd5e6eea3335ef7f547dbd86be5045025c54",
+  "prev_content_hash": "sha256:afb8adfabf2b68cce0ca0ae097e8818277f4d50c86d2f50dc47ddd9413b50692",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
