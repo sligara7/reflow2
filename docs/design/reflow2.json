@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:08579fe9ea8ce6fba9aa73a8a12ecb7513393f6b3e34c871848dda13ddb5f92c",
+  "content_hash": "sha256:dbc4b58af45432d6f7292a0bc0000ae18b8d68301a179949192fed37777591df",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -521,6 +521,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:33be77a4e91bc8ae",
+      "properties": {},
+      "to_id": "req:many-designs-one-service"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:634fc0554d9ccfc6",
       "properties": {},
       "to_id": "cap:store"
@@ -536,6 +542,12 @@
       "from_id": "question:7bdb8b6cce42d588",
       "properties": {},
       "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:90a90e90df05c31a",
+      "properties": {},
+      "to_id": "req:design-reachable-without-the-repo"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -1166,6 +1178,24 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:central-host",
+      "properties": {
+        "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:coord-board-in-graph",
+      "properties": {
+        "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -3010,6 +3040,51 @@
         "action": "added"
       },
       "to_id": "ver:drift-direction"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:hosted-collaboration-raised",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:central-host"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:hosted-collaboration-raised",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:coord-board-in-graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:hosted-collaboration-raised",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:hosted-collaboration-raised",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:design-reachable-without-the-repo"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:hosted-collaboration-raised",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:many-designs-one-service"
     },
     {
       "edge_type": "CHANGED",
@@ -7106,6 +7181,18 @@
       "from_id": "req:concurrent-planning",
       "properties": {},
       "to_id": "decision:ack:65b894fcc73c3961"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:design-reachable-without-the-repo",
+      "properties": {},
+      "to_id": "dec:central-host"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:many-designs-one-service",
+      "properties": {},
+      "to_id": "dec:central-host"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -12993,6 +13080,14 @@
       }
     },
     {
+      "node_id": "chg:hosted-collaboration-raised",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Two-coast collaboration and multiple projects raised: a hosted MCP, project segregation, and coordinating in the graph instead of COORD.md"
+      }
+    },
+    {
       "node_id": "chg:kpp-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -13810,6 +13905,16 @@
       }
     },
     {
+      "node_id": "dec:central-host",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNDECIDED. Raised by Anthony 2026-07-25 from his own situation: he is in Long Island, his brother is in Washington State, they want to work on one design at the same time and to see each other's projects. THREE ROADS, and the middle one is not the obvious winner. (a) GIT IS ALREADY THE CENTRAL SERVER — the design is a file in the repo, the repo already spans both coasts, and the claims layer that shipped 2026-07-25 already answers \"who has what in hand\" the moment either side pulls. Nothing to host, nothing to secure, nothing to pay for, and no new place for the design to live. What it cannot do is tell you about a claim before the other person pushes. (b) A HOSTED MCP over HTTPS — one server process holding the graph, both people's agents connecting to it, so a claim is visible the moment it is made and a design is reachable by someone who never cloned the repo. Costs: reflow2-mcp serves stdio only today (rmcp's streamable-HTTP transport exists, the binary does not use it), authentication does not exist at all, and it puts the design on a machine — which weakens but does not erase dec:repo-file-embedded's objection, since the machine would be Anthony's own droplet rather than a vendor's. (c) HYBRID — host a read/publish surface for reaching and browsing designs, keep writes local and merge through git, so the durable record never moves. THE CHEAPEST FIRST CUT, worth naming because it needs almost no core work: one server process PER PROJECT, each with its own graph path and its own token, and project selection becomes which URL the agent points at — no graph_id plumbing, no multi-tenancy, and a per-project blast radius if one goes wrong. A private tailnet instead of public TLS removes the authentication problem for exactly two people, which is the population this actually has.",
+        "name": "OPEN — does reflow2 gain a hosted surface (one MCP over HTTPS) alongside the repo file?",
+        "rationale": "Held proposed, not built, because it sits against a decision made HOURS earlier on 2026-07-25 (dec:multi-writer-architecture: repo file plus merge on pull, no hosted service) and it must not be drifted into. Per dec:reopen-supersedes, the move is a NEW decision point rather than flipping that one back to proposed. What is genuinely new, and the reason this is not a rerun of the same argument: that decision answered \"how do two writers avoid clobbering each other\", and its rationale turned on concurrency being hypothetical and on not putting the user's design on someone else's machine. Neither objection addresses what was raised now — two machines that never share a filesystem, several projects per person, and wanting to READ and contribute to a design without cloning its repo. It is also the second field-sourced trigger in two days on the same seam, which is what cap:revise-trigger exists to notice; that it arrived by conversation rather than by detector is a finding about the detector, not about the trigger. THE HONEST COUNTER-ARGUMENT, recorded so nobody has to rediscover it: reflow2's loop is ask-the-human-and-record-the-decision, which is deliberate, attributable and slow — a shared live server optimises for simultaneity, which this tool does not need and may be harmed by. The thing the two of them described wanting is mostly non-colliding parallel work plus visibility, and git plus the claims layer already delivers most of that. What it does NOT deliver is the publishing case, and that is the strongest argument on the hosted side.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:certainty-derived",
       "node_type": "Decision",
       "properties": {
@@ -13827,6 +13932,16 @@
         "name": "Component-granularity verification is a computed third state, one question per component",
         "rationale": "User decided all three axes 2026-07-22 (BL-73 vocabulary session, from their own fleet's field trial): a brownfield adopt with real per-service suites plus a 137-file integration suite read as '0/20 capabilities verified' and cost 21 near-identical acknowledge writes. Computed state over a bulk-attest write because the graph should record exactly what was checked — the component — and derive what that means one hop away; manufactured capability-level VERIFIES edges would be indistinguishable from direct checks forever after. The word component_verified because it says where the check lives. One gap per component because the residual question ('is component granularity enough for these?') is genuinely per-component and deserves to be asked once, not N times — the BL-42 lesson again: a loud detector needs a different question, not a tuned number. The write side needed nothing: VERIFIES accepts any target and even carries an unused coverage enum — the whole defect was the read side.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:coord-board-in-graph",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNDECIDED. Anthony, 2026-07-25: COORD.md was invented so he and his brother could coordinate; the claims layer shipped the same day; and reflow2 is developed by using reflow2 on itself, so the question is whether the markdown board should now be a graph read. WHAT WOULD ACTUALLY CHANGE, because it is less than it sounds: `claim_region` records a Contributor holding a seed node to a depth, `claim_report` computes the region and the overlaps, and both travel in the committed export exactly as COORD.md travels in git — so visibility is unchanged, and the gain is that the region is COMPUTED from the design (it follows the graph as the design moves) rather than being a hand-typed list of file paths that goes stale silently. WHAT WOULD BE LOST, and it is the part worth deciding rather than assuming: COORD.md is readable by a human with no reflow2 and no binary, it shows up as a diff in a pull request, and it holds the merge-conflict doctrine for the shared records — none of which a graph read does. The sane split, if this is taken: claims in the graph for WHO HAS WHAT, COORD.md retained for the conventions and the conflict doctrine, and the in-progress table deleted rather than maintained in two places, since two places for the same fact is the failure the backlog-in-the-graph move exists to end.",
+        "name": "OPEN — does reflow2's own claim board move from COORD.md into the graph?",
+        "rationale": "Raised as a dogfooding question, which is how most of this project's real findings have arrived — and it is a genuinely good test of the claims layer, because reflow2's own two-person collaboration is the only live multi-writer case that exists. Held proposed because a claim board is a coordination mechanism between two people, and switching it unilaterally would mean one of them silently changing where the other must look; that is Anthony's brother's call as much as his. The prerequisite is honest: nobody has used claim_region for real yet, so the first move is to run it on one real piece of work and see whether claim_report says something a person would have said.",
+        "status": "proposed"
       }
     },
     {
@@ -15577,6 +15692,18 @@
       }
     },
     {
+      "node_id": "question:33be77a4e91bc8ae",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-25",
+        "context_setter": "Nothing satisfies requirement “One reflow2 can hold several designs, and a session says which one it is working on”",
+        "gap_id": "gap:33be77a4e91bc8ae",
+        "question": "You have reflow2 and storyflow, and your brother has several projects of his own — today one reflow2 holds exactly one design, and it never asks which project you mean. Do you want one reflow2 to hold several designs, with each session naming the project it is working on before it can touch anything? And is that worth building now, or only once you have decided whether there is a shared server at all?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:634fc0554d9ccfc6",
       "node_type": "Question",
       "properties": {
@@ -15611,6 +15738,18 @@
         "question": "How will you check that comparing the recorded files against what's really on disk actually works — or is this the same ability your design already covers and tests under the name 'reconcile against what was built'?",
         "rephrase_degraded": false,
         "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:90a90e90df05c31a",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-25",
+        "context_setter": "Nothing satisfies requirement “Someone without the repo can reach a design, read it, and contribute to it”",
+        "gap_id": "gap:90a90e90df05c31a",
+        "question": "You said it would be cool to publish reflow2 and storyflow somewhere your brother could reach them and comment on your ideas without cloning your code. Is that a real requirement you want reflow2 to meet — someone you name can open your design, read it, and add intent to it — or is sharing the repo good enough for the two of you? If it is real, does contributing mean writing into your design directly, or proposing something you then accept?",
+        "rephrase_degraded": false,
+        "status": "asked"
       }
     },
     {
@@ -15884,6 +16023,20 @@
       }
     },
     {
+      "node_id": "req:design-reachable-without-the-repo",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Someone without the repo can reach a design, read it, and contribute to it",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony and his brother work on each other's ideas from opposite coasts, and today the only way to reach a design is to clone the repository that carries it. The intent is that a design can be made reachable to a named collaborator without handing them the code: they can read what it says, ask it questions, and contribute intent back — the collaboration is on the DESIGN, which is often the part a second person can help with before they know anything about the implementation. Two things this must not become. It must not make the design's home ambiguous: whatever hosts a shared copy, the repo file stays the durable record, or a hosting outage becomes a design outage (req:persistence, dec:repo-file-embedded). And it must not silently widen who can write: reaching a design is not the same as authoring in it, so a contribution must be attributable to a person (the Contributor layer, which exists) and the reach must be granted rather than assumed. Whether this is served by git remotes that already span both coasts, by a hosted service, or by both, is the open question recorded as dec:central-host — this requirement states the need, not the machinery.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:deterministic-core",
       "node_type": "Requirement",
       "properties": {
@@ -16014,6 +16167,20 @@
         "provenance": "authored",
         "statement": "The user-facing surface is the reflow2-mcp binary spoken to over stdio, installed into a consumer project by tools/reflow2_init.py, which merges rather than overwrites existing agent configuration.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:many-designs-one-service",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "One reflow2 can hold several designs, and a session says which one it is working on",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A person works on more than one project at a time, so reflow2 must be able to hold more than one design without their contents mixing, and a session must state which design it is operating on before it can read or write. Anthony, 2026-07-25: he has reflow2 itself and storyflow; his brother has several. Three properties follow. Selection is EXPLICIT — a session that has not named its design must be refused rather than defaulted to the last one used or the only one present, because a tool call landing in the wrong project is a silent corruption that no gap detector would ever notice. Segregation is enforced by the store, not by convention: every node and edge already carries a graph_id, which is exactly the primitive this needs, and today it is pinned to the constant \"reflow2\" — so the mechanism exists and is unused, the same shape as the temporal axis and the inviolable-intent vocabulary before them. And the identity of a design must be stable across machines, so the same project reached from two places is one design rather than two that happen to share a name. This is deliberately silent on where the designs live: one process per design and one holding many are both answers to it, and that is the hosting question, not this requirement.",
+        "status": "proposed"
       }
     },
     {
@@ -16674,7 +16841,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0d1990cd7cb83bde5869165394f57da88522b6887800942b74fcdec4f51997b4",
+  "prev_content_hash": "sha256:08579fe9ea8ce6fba9aa73a8a12ecb7513393f6b3e34c871848dda13ddb5f92c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
