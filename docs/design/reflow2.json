@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d9c105c08d145a14f641cd2a2f49bae55c0e223f07338d9e831f9a2100a9d284",
+  "content_hash": "sha256:af6091157f2fc6ad71941faa625cdf56012a6dc829bdc9cf78f4247f8734c16a",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -12722,6 +12722,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:degraded-surface"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:degraded",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cmp:degraded"
     },
     {
@@ -12906,6 +12914,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:snapshot-read"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:main",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cmp:main"
     },
     {
@@ -13064,6 +13080,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:service",
       "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:stale-seat-refusal"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:service"
@@ -13075,6 +13099,14 @@
         "completeness": "complete"
       },
       "to_id": "cap:explains-itself"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:skills",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:skills-served"
     },
     {
       "edge_type": "REALIZES",
@@ -13115,6 +13147,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:sync",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:stale-seat-refusal"
     },
     {
       "edge_type": "REALIZES",
@@ -15505,7 +15545,7 @@
         "is_exit_point": false,
         "name": "The server explains its own absence instead of vanishing",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -16064,7 +16104,7 @@
         "is_exit_point": false,
         "name": "Serve the skills AND the working instructions from the binary, so a project holds only a pointer",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -16077,7 +16117,7 @@
         "is_exit_point": false,
         "name": "Export a design another session is holding",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -16090,7 +16130,7 @@
         "is_exit_point": false,
         "name": "Refuse to write a design over work the shared record already holds",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -21829,7 +21869,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:57981b98e152617e4f14e4110024486d2aa698613cf99f27b8077622dc770803",
+  "prev_content_hash": "sha256:d9c105c08d145a14f641cd2a2f49bae55c0e223f07338d9e831f9a2100a9d284",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
