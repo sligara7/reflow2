@@ -1095,6 +1095,17 @@ pub struct ScanReq {
     pub brief: Option<bool>,
 }
 
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct MirrorSurfaceReq {
+    /// A published-surface document from another design (`export_surface`).
+    pub document: serde_json::Map<String, JsonValue>,
+    /// When the mirror was taken (reflow2 takes no clock). Recorded on the
+    /// mirrored project, because a mirror is a dated claim about a version.
+    #[serde(default)]
+    pub at: Option<String>,
+}
+
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ExportSurfaceReq {
@@ -3085,6 +3096,48 @@ impl ReflowService {
                 }))
             }
         }
+    }
+
+    #[tool(
+        description = "Mirror ANOTHER design's published surface into this graph as foreign nodes \
+                       carrying the coordinate that says whose they are — which design, at what \
+                       content hash, when. The composition step of dec:nested-graphs option (c): \
+                       designs are separate graphs at ownership boundaries and link by mirroring, \
+                       because an edge cannot cross a store. Afterwards your own components \
+                       provides/consumes the mirrored Interface with ORDINARY local edges, so the \
+                       golden thread, propagate and every detector work unchanged, and foreignness \
+                       is a property of the node rather than of the link. COLLISIONS ARE REFUSED, \
+                       never merged: an id that already exists here is left untouched and \
+                       reported, because upsert would otherwise overwrite your design with \
+                       somebody else's node, and two designs using one id for different things is \
+                       a naming conversation between owners.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn mirror_surface(
+        &self,
+        Parameters(req): Parameters<MirrorSurfaceReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let doc: reflow2_core::GraphExport =
+            serde_json::from_value(JsonValue::Object(req.document)).map_err(|e| {
+                McpError::invalid_params(format!("not a reflow2 surface document: {e}"), None)
+            })?;
+        let mut g = self.write_lock().await;
+        ok_json(
+            g.mirror_surface(&doc, req.at.as_deref())
+                .map_err(dyno_err)?,
+        )
+    }
+
+    #[tool(
+        description = "The designs this one is composed with, and the version each was pinned to: \
+                       project id, source graph, surface content hash, and when the mirror was \
+                       taken. A mirror is a dated claim about a VERSION of another design, never a \
+                       live truth, so this is the list to re-check when a partner publishes again.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn mirrors(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        self.ok_read(&g, g.mirrors().map_err(dyno_err)?)
     }
 
     #[tool(

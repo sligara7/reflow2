@@ -61,10 +61,30 @@ impl DesignGraph {
     /// tests and dev iteration. Fails only if the embedded schema fails to
     /// merge/validate (a build-time-embedded bug, surfaced at open).
     pub fn open_in_memory() -> Result<Self, DynoError> {
+        Self::open_in_memory_as(DEFAULT_GRAPH_ID)
+    }
+
+    /// Open an in-memory graph that knows its own name.
+    ///
+    /// Every node and edge carries a `graph_id`, and until federation it was
+    /// pinned to one constant — so every reflow2 design claimed to BE the same
+    /// design. That is harmless while designs never meet and load-bearing the
+    /// moment they do: `mirror_surface` has to tell "somebody else's design" from
+    /// "mine", and it can only do that if the two have different names
+    /// (`dec:nested-graphs` option (c); `rule:no-foreclosure` item 5, which said
+    /// the foreclosure is code that ASSUMES the constant rather than reads the
+    /// field).
+    ///
+    /// **In-memory only, deliberately.** The id namespaces every stored key, so
+    /// an on-disk graph reopened under a different name would find nothing —
+    /// which means a durable design's identity has to be remembered beside the
+    /// store, not passed on each open. That is real work and it is named as a gap
+    /// rather than half-done here.
+    pub fn open_in_memory_as(graph_id: &str) -> Result<Self, DynoError> {
         let schema = crate::schema::load_schema()?;
         Ok(Self {
             engine: StorageEngine::new_in_memory(schema),
-            graph_id: DEFAULT_GRAPH_ID.to_string(),
+            graph_id: graph_id.to_string(),
         })
     }
 

@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Mirror ANOTHER design's published surface into this graph as foreign nodes carrying the coordinate that says whose they are — which design, at what content hash, when. The composition step of dec:nested-graphs option (c): designs are separate graphs at ownership boundaries and link by mirroring, because an edge cannot cross a store. Afterwards your own components provides/consumes the mirrored Interface with ORDINARY local edges, so the golden thread, propagate and every detector work unchanged, and foreignness is a property of the node rather than of the link. COLLISIONS ARE REFUSED, never merged: an id that already exists here is left untouched and reported, because upsert would otherwise overwrite your design with somebody else's node, and two designs using one id for different things is a naming conversation between owners.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "at": {
+        "default": null,
+        "description": "When the mirror was taken (reflow2 takes no clock). Recorded on the\nmirrored project, because a mirror is a dated claim about a version.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "document": {
+        "additionalProperties": true,
+        "description": "A published-surface document from another design (`export_surface`).",
+        "type": "object"
+      }
+    },
+    "required": [
+      "document"
+    ],
+    "type": "object"
+  },
+  "name": "mirror_surface"
+}

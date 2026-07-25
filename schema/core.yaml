@@ -20,6 +20,18 @@ schema:
         mode: { type: enum, values: [flexible, rigid], default: flexible, description: "flexible = design evolves with the build; rigid = design is the source of truth." }
         status: { type: enum, values: [active, paused, archived], default: active, indexed: true }
         created_at: { type: string }
+        # ---- Federation (dec:nested-graphs option (c), 2026-07-25) ----------
+        # A design is its own graph when something is separately owned, released
+        # or shared. Designs then link by MIRRORING each other's published
+        # surface: the other side's nodes land here as local nodes, and this
+        # Project node is the mirror's identity — which design, which version,
+        # when. Edges cannot cross stores (the schema validates both endpoints),
+        # so foreignness is a property of the NODE, never of the link, and your
+        # own components PROVIDE/CONSUME a mirrored Interface with ordinary local
+        # edges. Absent on your own project; present only on a mirror.
+        mirror_of: { type: string, indexed: true, description: "The `graph_id` of the design this Project is a MIRROR of. Present only on a mirrored (foreign) project: this node is somebody else's design as we received it, not ours to edit. Its absence means the project is our own." }
+        mirror_content_hash: { type: string, description: "The `content_hash` of the published-surface document this mirror was made from — the coordinate, in dec:fork-point-address's sense: a version resolved against a document rather than a live reference. A newer surface with a different hash means this mirror is stale, which is what makes staleness computable instead of assumed." }
+        mirrored_at: { type: string, description: "When the mirror was taken. A mirror is a dated CLAIM about a version of another design, never a live truth (the cap:freshness discipline), so the date is part of the record rather than metadata." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
       extraction_hint: >

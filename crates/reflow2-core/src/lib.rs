@@ -79,7 +79,9 @@ pub use confirm::{ClaimConfirmation, ConfirmationLedger, ConfirmationState};
 pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, GapSource};
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};
-pub use export::{ExportedEdge, ExportedNode, GraphExport, ImportReport};
+pub use export::{
+    ExportedEdge, ExportedNode, GraphExport, ImportReport, MirrorRef, MirrorReport, SurfaceExport,
+};
 pub use fielded::{
     FieldedDriftKind, FieldedFinding, FieldedOptions, FieldedReport, ObservedEnvironment,
 };

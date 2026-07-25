@@ -1,0 +1,11 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "The designs this one is composed with, and the version each was pinned to: project id, source graph, surface content hash, and when the mirror was taken. A mirror is a dated claim about a VERSION of another design, never a live truth, so this is the list to re-check when a partner publishes again.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "name": "mirrors"
+}

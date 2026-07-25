@@ -493,3 +493,210 @@ impl DesignGraph {
         })
     }
 }
+
+/// What mirroring another design's published surface did — and, critically, what
+/// it refused to do.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct MirrorReport {
+    /// The `graph_id` of the design mirrored.
+    pub mirror_of: String,
+    /// The surface document's content hash: the coordinate this mirror is pinned
+    /// to, and what makes staleness computable later.
+    pub mirror_content_hash: Option<String>,
+    /// Nodes brought in as foreign mirrors.
+    pub mirrored_nodes: usize,
+    /// Edges brought in (only those wholly inside the mirrored set).
+    pub mirrored_edges: usize,
+    /// Ids in the surface that ALREADY EXIST here and were left untouched.
+    ///
+    /// The hazard this exists for: `import_graph` is an upsert, so mirroring a
+    /// foreign surface whose ids collide with local ones would silently overwrite
+    /// your own design with somebody else's nodes. A collision is reported and
+    /// skipped, never resolved by guessing — and a non-empty list means the two
+    /// designs are using the same id for different things, which is a naming
+    /// conversation between two owners, not a merge.
+    pub collisions: Vec<String>,
+    /// Said in words, because the counts alone do not tell you whether to worry.
+    pub note: String,
+}
+
+impl DesignGraph {
+    /// Mirror another design's published surface into this graph as **foreign**
+    /// nodes carrying the coordinate that says whose they are.
+    ///
+    /// The first rung of `dec:nested-graphs` option (c): designs are separate
+    /// graphs at ownership boundaries and link by mirroring, because an edge
+    /// cannot cross a store — the schema validates both endpoints. After
+    /// mirroring, your own components `provides`/`consumes` the mirrored
+    /// Interface with **ordinary local edges**, so the golden thread, propagate,
+    /// and every detector work unchanged. Foreignness is a property of the node,
+    /// never of the link.
+    ///
+    /// The mirrored Project node carries the coordinate — `mirror_of`,
+    /// `mirror_content_hash`, `mirrored_at` — which is what makes a later
+    /// surface with a different hash detectable as staleness rather than assumed
+    /// current (`req:design-composes`, obligation 3).
+    ///
+    /// **Collisions are refused, not merged.** An id present here already is left
+    /// exactly as it is and reported: mirroring must never overwrite your design
+    /// with someone else's node, and two designs using one id for different
+    /// things is a conversation between owners rather than something a tool may
+    /// silently resolve (`dec:ask-not-repair`).
+    pub fn mirror_surface(
+        &mut self,
+        doc: &GraphExport,
+        at: Option<&str>,
+    ) -> Result<MirrorReport, DynoError> {
+        let source = doc.graph_id.clone();
+        if source == self.graph_id() {
+            return Err(DynoError::Validation {
+                node_type: node::PROJECT.into(),
+                property: "mirror_of".into(),
+                message: format!(
+                    "this surface came from '{source}', which is this graph — mirroring a design \
+                     into itself would overwrite your own nodes with a filtered copy of them. \
+                     Import a surface from ANOTHER design, or use import_graph if you meant to \
+                     restore a backup."
+                ),
+            });
+        }
+
+        let existing = self.node_type_index()?;
+        let mut collisions = Vec::new();
+        let mut mirrored: BTreeSet<String> = BTreeSet::new();
+
+        self.begin_batch();
+        let result = (|| -> Result<(usize, usize), DynoError> {
+            let mut nodes_written = 0;
+            for n in &doc.nodes {
+                if existing.contains_key(&n.node_id) {
+                    collisions.push(n.node_id.clone());
+                    continue;
+                }
+                let mut props: std::collections::HashMap<String, Value> =
+                    n.properties.clone().into_iter().collect();
+                // Every mirrored node says how it got here. `imported` is the
+                // existing provenance value for exactly this (BL-45's "imported
+                // reference nodes aren't marked foreign" — now they are).
+                props.insert("provenance".into(), Value::from("imported"));
+                if n.node_type == node::PROJECT {
+                    props.insert("mirror_of".into(), Value::from(source.as_str()));
+                    if let Some(hash) = &doc.content_hash {
+                        props.insert("mirror_content_hash".into(), Value::from(hash.as_str()));
+                    }
+                    if let Some(at) = at {
+                        props.insert("mirrored_at".into(), Value::from(at));
+                    }
+                }
+                self.create_node(&n.node_type, &n.node_id, props)?;
+                mirrored.insert(n.node_id.clone());
+                nodes_written += 1;
+            }
+            let mut edges_written = 0;
+            for e in &doc.edges {
+                // Only edges wholly inside what we actually mirrored. An edge
+                // touching a collided id is dropped rather than rewired, because
+                // pointing their edge at OUR same-named node would fabricate a
+                // relationship neither design asserted.
+                if mirrored.contains(&e.from_id) && mirrored.contains(&e.to_id) {
+                    let props: std::collections::HashMap<String, Value> =
+                        e.properties.clone().into_iter().collect();
+                    let (from_type, to_type) = (
+                        doc.nodes
+                            .iter()
+                            .find(|n| n.node_id == e.from_id)
+                            .map(|n| n.node_type.as_str())
+                            .unwrap_or_default(),
+                        doc.nodes
+                            .iter()
+                            .find(|n| n.node_id == e.to_id)
+                            .map(|n| n.node_type.as_str())
+                            .unwrap_or_default(),
+                    );
+                    self.create_edge(
+                        &e.edge_type,
+                        from_type,
+                        &e.from_id,
+                        to_type,
+                        &e.to_id,
+                        props,
+                    )?;
+                    edges_written += 1;
+                }
+            }
+            Ok((nodes_written, edges_written))
+        })();
+        match result {
+            Ok((mirrored_nodes, mirrored_edges)) => {
+                self.commit_batch()?;
+                let note = if collisions.is_empty() {
+                    format!(
+                        "Mirrored {mirrored_nodes} node(s) and {mirrored_edges} edge(s) from \
+                         '{source}', pinned to that surface's content hash. They are marked \
+                         `imported` and are not yours to edit: link to them with your own \
+                         provides/consumes edges instead. A newer surface with a different hash \
+                         means this mirror is stale."
+                    )
+                } else {
+                    format!(
+                        "Mirrored {mirrored_nodes} node(s) and {mirrored_edges} edge(s) from \
+                         '{source}'. REFUSED {} id(s) that already exist here and were left \
+                         untouched: {}. Two designs using one id for different things is a naming \
+                         conversation between their owners — nothing was overwritten and nothing \
+                         was guessed.",
+                        collisions.len(),
+                        collisions.join(", ")
+                    )
+                };
+                Ok(MirrorReport {
+                    mirror_of: source,
+                    mirror_content_hash: doc.content_hash.clone(),
+                    mirrored_nodes,
+                    mirrored_edges,
+                    collisions,
+                    note,
+                })
+            }
+            Err(e) => {
+                self.discard_batch();
+                Err(e)
+            }
+        }
+    }
+
+    /// The designs this graph mirrors: `(project_id, mirror_of, content_hash,
+    /// mirrored_at)`, sorted — who we are composed with, and at what version.
+    pub fn mirrors(&self) -> Result<Vec<MirrorRef>, DynoError> {
+        let mut out = Vec::new();
+        for p in self.scan_nodes(node::PROJECT)? {
+            let Some(mirror_of) = p.properties.get("mirror_of").and_then(Value::as_str) else {
+                continue;
+            };
+            out.push(MirrorRef {
+                project_id: p.node_id.clone(),
+                mirror_of: mirror_of.to_string(),
+                mirror_content_hash: p
+                    .properties
+                    .get("mirror_content_hash")
+                    .and_then(Value::as_str)
+                    .map(str::to_string),
+                mirrored_at: p
+                    .properties
+                    .get("mirrored_at")
+                    .and_then(Value::as_str)
+                    .map(str::to_string),
+            });
+        }
+        out.sort_by(|a, b| a.project_id.cmp(&b.project_id));
+        Ok(out)
+    }
+}
+
+/// One design this graph is composed with, and the version it was pinned to.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct MirrorRef {
+    pub project_id: String,
+    pub mirror_of: String,
+    pub mirror_content_hash: Option<String>,
+    pub mirrored_at: Option<String>,
+}

@@ -33,6 +33,41 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Designs compose by mirroring, and the mirror carries a coordinate**
+  (`cap:mirror-surface`, `mirror_surface` / `mirrors`). `dec:nested-graphs` is
+  **decided**: option (c) — *a graph per ownership boundary, levels inside each*. A
+  design is its own graph when something is separately **owned**, **released** or
+  **shared**; the hierarchy does not decide, authority does.
+
+  An edge cannot cross a store (the schema validates both endpoints), so linking
+  designs is not an edge problem: the other side's published surface is mirrored in
+  as **local nodes marked `imported`**, and the mirrored Project carries
+  `mirror_of`, `mirror_content_hash` and `mirrored_at`. Your components then
+  provide/consume the mirrored Interface with **ordinary local edges** — so the
+  golden thread, propagate and every detector keep working, and foreignness is a
+  property of the *node*, never of the link. Crossing the seam even reports as a
+  published-boundary crossing, which is exactly what changing your side of someone
+  else's contract is.
+
+  **Collisions are refused, not merged.** `import_graph` is an upsert, so mirroring
+  a surface whose ids collide would silently overwrite your design with someone
+  else's nodes. A collision leaves your node untouched and is named; an edge
+  touching a collided id is dropped rather than rewired, because pointing their
+  `PROVIDES` at your same-named component would fabricate a relationship neither
+  design asserted. Mirroring a design into itself is refused outright.
+
+  Schema: `Project` gains the three mirror properties (additive, no new types).
+
+### Found while building
+
+- **Every reflow2 graph carried the same hardcoded `graph_id`**, so no design could
+  tell another from itself — `rule:no-foreclosure` item 5 arriving as a concrete
+  blocker rather than a hypothetical. `DesignGraph::open_in_memory_as` lets a
+  design name itself, which is enough for library and test use. The durable case is
+  filed as `req:design-identity` and deliberately **not** half-built: the id
+  namespaces every stored key, so a graph reopened under the wrong name would
+  present an empty design.
+
 - **`export_surface` — publish just the boundary** (`cap:publish-surface`). The
   contracts others are entitled to rely on, and nothing internal: every Interface
   designated `published`, the artifacts that specify or realize it (the real ICD),

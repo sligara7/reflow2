@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:08e8d1d0e51a716439595d0c8cacad4de66ce7ba7fdf76736f1fe583ffbd4d62",
+  "content_hash": "sha256:c06f93da2f57590790c98587a4122b885037bb89804ae8e2e9b349056f608cf8",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -304,6 +304,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:merge"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:mirror-surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -764,6 +772,12 @@
       "from_id": "chg:drift-direction-built",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:federation-decided",
+      "properties": {},
+      "to_id": "epoch:surface-export"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1236,6 +1250,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:surface-export:cap:portability",
+      "properties": {},
+      "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:surface-export:dec:nested-graphs",
       "properties": {},
       "to_id": "epoch:surface-export"
     },
@@ -3364,6 +3384,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:federation-decided",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:federation-decided",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:federation-decided",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:federation-decided",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:github-mcp-imports",
       "properties": {
         "accepted_baseline": true,
@@ -4171,6 +4227,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:mirror-surface"
     },
     {
       "edge_type": "CONTAINS",
@@ -7066,6 +7128,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mirror-surface",
+      "properties": {},
+      "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mirror-surface",
+      "properties": {},
+      "to_id": "decision:ack:6632226c74b49c3a"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:missing-sibling",
       "properties": {},
       "to_id": "dec:three-party-checks"
@@ -7273,6 +7347,12 @@
       "from_id": "cap:publish-surface",
       "properties": {},
       "to_id": "dec:export-hash-chain"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:publish-surface",
+      "properties": {},
+      "to_id": "decision:ack:6632226c74b49c3a"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8155,6 +8235,12 @@
       "from_id": "dec:nested-graphs",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:dec:nested-graphs"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:nested-graphs",
+      "properties": {},
+      "to_id": "snap:epoch:surface-export:dec:nested-graphs"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -12121,6 +12207,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:mirror-surface",
+      "properties": {},
+      "to_id": "req:design-composes"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:missing-sibling",
       "properties": {},
       "to_id": "req:human-decides"
@@ -12526,6 +12618,12 @@
       "from_id": "ver:merge-driver",
       "properties": {},
       "to_id": "cap:git-merge-driver"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:mirror-surface",
+      "properties": {},
+      "to_id": "cap:mirror-surface"
     },
     {
       "edge_type": "VERIFIES",
@@ -13252,7 +13350,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8c7fdcb3b35ed77d",
+        "checksum": "sha256:cfe81e36af4e3dfd",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
         "status": "realized"
@@ -13307,7 +13405,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:21ec45e48bd3bc7b",
+        "checksum": "sha256:0c23ae8f781b3c60",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -13560,7 +13658,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3b64418bf2aebe59",
+        "checksum": "sha256:d9a7cb2cf58db2dc",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -14091,6 +14189,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Reuse a recorded conflict resolution (rerere)",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:mirror-surface",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-07-25, the first rung of dec:nested-graphs option (c). An edge cannot cross a store because the schema validates both endpoints, so designs link by MIRRORING: `mirror_surface` brings another design's published surface in as local nodes marked `provenance: imported`, and the mirrored Project carries the coordinate — `mirror_of` (whose design), `mirror_content_hash` (which version of their surface), `mirrored_at` (when). Afterwards your own components provides/consumes the mirrored Interface with ORDINARY LOCAL EDGES, so the golden thread, propagate, and every detector work unchanged: foreignness became a property of the NODE rather than of the link, which is what makes the whole approach cheap. `mirrors()` lists who you are composed with and at what version. THE GUARD THAT MATTERS: import_graph is an upsert, so mirroring a surface whose ids collide with local ones would silently overwrite your design with someone else's nodes. A collision is REPORTED AND SKIPPED — your node survives untouched, and an edge touching a collided id is dropped rather than rewired, because pointing their PROVIDES at your same-named component would fabricate a relationship neither design asserted (dec:ask-not-repair). Two designs using one id for different things is a naming conversation between owners, not a merge. Mirroring a design into itself is refused outright, naming import_graph as what you meant. WHAT THE BUILD EXPOSED, and it is the honest limit: every reflow2 graph carried the same hardcoded graph_id, so no design could tell another from itself — rule:no-foreclosure item 5 arriving as a concrete blocker rather than a hypothetical. `open_in_memory_as` lets a design name itself, which is enough for library use and for the tests, but a DURABLE design's identity has to be remembered beside the store (the id namespaces every key, so reopening under a different name would find nothing). That is req:design-identity, filed rather than half-built. 7 tests, including the seam one: after mirroring, consuming their contract reports a published-boundary crossing — which is exactly what changing your side of somebody else's interface is.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Compose two designs by mirroring the other's published surface, coordinate and all",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -14909,6 +15020,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Directional drift built: reconcile now says understated / overstated / diverged and names the delta"
+      }
+    },
+    {
+      "node_id": "chg:federation-decided",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Anthony collapses the nested-graphs decision: a graph per ownership boundary, levels inside each"
       }
     },
     {
@@ -16053,10 +16172,10 @@
       "node_id": "dec:nested-graphs",
       "node_type": "Decision",
       "properties": {
-        "decision": "UNDECIDED, and RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-07-25, explicitly not convinced by the collaboration design and thinking out loud: \"could you have small/mini reflow2 graphs inside itself... coming from a system of systems engineering approach, reflow2 may lay out the graph and how all the systems need to interact and where there are gaps, but what if we now had a mini-reflow2 graph for each system? And a mini-mini-reflow2 of the components in the system... the idea is that reflow2 has the tools to analyze the graph at each level and ensure there are no gaps and that it works with the higher level systems or system-of-systems.\" WHAT IS ALREADY TRUE, because it changes what the idea is asking for. Levels exist and are already checked: Component.level is an enum of component / subsystem / system / system_of_systems / enterprise, CONTAINS between Components is the axis-Y spine, and hierarchy_issues already reports level_mismatch, missing_intermediate_level and orphan_level — the carburetor-to-body problem, imported from chain_reflow's matryoshka insight (docs/three-axes.md). And the multi-graph primitive exists unused: every node and edge carries graph_id, pinned to the constant \"reflow2\". So the question is not whether reflow2 can express nesting. It can. The question is whether a level should be a SUBTREE of one graph or a GRAPH OF ITS OWN. THREE OPTIONS. (a) ONE GRAPH, ZOOM BY LEVEL — today's shape. What is missing is not nesting but SCOPING: no read takes a subtree as its subject, so detect_gaps and graph_report always answer for the whole design. Adding a scope argument is a filter, not an architecture, and it delivers most of what was asked — the tools analysing each level. (b) A GRAPH PER SYSTEM, COMPOSED — Anthony's idea. It buys four things one graph cannot: an independent write lock per system, which is a different and stronger answer to the collaboration problem than region claims, because separate graphs are PHYSICALLY separate where a claim is only advisory; an independent lifecycle, so a subsystem can be released, adopted or handed to a vendor on its own; selective publishing, which is exactly req:design-reachable-without-the-repo; and per-level scale, since detectors run over hundreds of nodes instead of tens of thousands. (c) A GRAPH PER OWNERSHIP BOUNDARY, LEVELS INSIDE EACH — the hybrid, and the shape federated systems engineering actually uses: you split where AUTHORITY splits, not where the hierarchy happens to have a layer. THE FOUR HARD PARTS of (b), each one real: the golden thread cannot cross a store boundary, because the schema validates both endpoints of every edge — so a parent's Component pointing at a child's design needs a typed COORDINATE (graph id + node id + the export's content hash at the moment the reference was made), which is precisely the choice dec:fork-point-address already made for fork points over a native ref layer. Gap detection goes blind at the seam: a parent requirement whose satisfying capability lives in a child graph would fire unsatisfied forever unless the child's evidence rolls up — and that roll-up is cap:derived-completion's computation applied one level higher, which is encouraging rather than novel. Freshness becomes load-bearing: a parent's view of a child is a claim about a VERSION of that child, so it is a dated examined claim and never a live truth (the cap:freshness and confirmation-ledger shape). And the seam becomes the new collision point: two people changing the interface across the boundary still collide, now in the one place with no merge machinery. THE TENSION WORTH KNOWING ABOUT: docs/org-scale-vision.md records the opposite destination — \"one graph the whole company plans in\", with the CEO's objectives at the top and everything tracing upward. Federation and one-big-graph cannot both be the end state, and nothing in the design has ever chosen between them. THE DISCRIMINATOR, offered as a finding and not a decision: depth alone does not justify a separate graph. Nesting three levels of graphs costs a coordinate, a roll-up and a freshness check at every seam, and buys nothing that a scope filter would not have delivered — unless something at that level is separately OWNED, separately RELEASED, or separately SHARED. Where those hold, a graph of its own is right. Where they do not, it is ceremony.",
-        "name": "OPEN — one graph with levels, or a graph per system composed into a bigger one?",
-        "rationale": "Recorded 2026-07-25 because Anthony said plainly he was not convinced by the collaboration design, and an unconvinced author is a finding rather than a disagreement to be argued down. PROMOTED THE SAME DAY on his word (\"let's promote both\"): the brainstorm produced two accepted requirements and stays open on the mechanism, which is the split that keeps both halves honest. req:analyse-at-any-level is the part he needed day to day and is ALREADY DELIVERED by cap:scoped-analysis (option (a), built first because it forecloses nothing). req:design-composes is the federation intent — a system's design as a unit that composes through interfaces — GOVERNED_BY this decision, so nothing gets built toward it until the mechanism is chosen. THIS DECISION THEREFORE STAYS PROPOSED, and that is not hedging: promoting an idea to intent is not the same act as choosing between three architectures, and collapsing this one would assert a shape Anthony has never chosen. Its options and the four hard parts of federation are unchanged above. The discriminator recorded then still stands as the thing to test when it is decided: depth alone does not earn a separate graph — ownership, separate release, or separate sharing does. NOTE FOR WHOEVER COLLAPSES IT: docs/org-scale-vision.md still records the opposite destination (one graph the whole company plans in), and req:design-composes now sits in the graph as accepted intent pointing the other way. That tension is real, on the record, and undecided; it is the strongest reason this decision should be made deliberately rather than discovered.",
-        "status": "proposed"
+        "decision": "DECIDED 2026-07-25 by Anthony: option (c), A GRAPH PER OWNERSHIP BOUNDARY WITH LEVELS INSIDE EACH. A design is its own graph when something at that level is separately OWNED, separately RELEASED, or separately SHARED — and a subtree of one graph otherwise. The hierarchy does not decide; authority does. That is the shape federated systems engineering actually uses, and it makes the split rule non-arbitrary: you can always answer \"why is this its own design?\" with a name, a release train, or a recipient. WHAT FOLLOWS, and each is an obligation rather than a detail. (1) THE COORDINATE. Edges cannot cross stores because the schema validates both endpoints, so a link between designs is not an edge: the other side's published surface is MIRRORED into your graph as local nodes, and the mirror carries the coordinate — which design it came from, at what content hash, when. Your own components then PROVIDE and CONSUME the mirrored Interface with ordinary local edges, so the golden thread works unchanged and foreignness is a property of the NODE rather than of the link. Same reasoning as dec:fork-point-address: a coordinate resolved against a document, never a live ref layer. (2) ROLL-UP. A parent's view of a composed child must derive from the child's own evidence or a requirement satisfied inside the child fires unsatisfied in the parent forever — cap:derived-completion's computation one level up. (3) FRESHNESS. A mirror is a dated claim about a VERSION, so a newer surface with a different hash makes it stale and that must be detectable, never assumed current (the cap:freshness and confirmation-ledger shape). (4) THE SEAM. Two teams changing the boundary itself still collide, in the one place the merge machinery does not reach; the published-surface document is what they are actually negotiating over. THE ROADS NOT TAKEN, kept because req:roads-not-taken says they are part of the record. (a) ONE GRAPH, ZOOM BY LEVEL was not rejected — it was BUILT FIRST and remains correct for everything inside one ownership boundary; cap:scoped-analysis delivers it, and (c) is a superset rather than a replacement. What (a) alone could not do is give two owners separate write locks, separate release trains, or a way to share one part without sharing everything. (b) A GRAPH PER SYSTEM was rejected as a RULE, not as a possibility: a system that is separately owned still gets its own graph under (c), but depth alone stops being sufficient reason, because every seam costs a coordinate, a roll-up and a freshness check, and a three-level tower of graphs inside one team buys none of what those cost. THE TENSION THIS RESOLVES, and it should be resolved out loud: docs/org-scale-vision.md records the destination as \"one graph the whole company plans in\". Under (c) that is no longer the destination — an enterprise is many designs federated at ownership boundaries, and the CEO's objectives are one design that others mirror rather than one graph everyone writes into. That document now describes a road not taken and should say so.",
+        "name": "DECIDED — a graph per ownership boundary, levels inside each",
+        "rationale": "Raised 2026-07-25 as brainstorming, because Anthony said plainly he was not convinced by the collaboration design and an unconvinced author is a finding rather than a disagreement to be argued down. Promoted to intent the same day, and COLLAPSED the same day on his word (\"let's do (c) option\"). THE SEQUENCE IS THE ARGUMENT for why this was worth holding open for a few hours rather than deciding immediately: option (a)'s scope filter was built FIRST precisely because it forecloses nothing, so by the time the decision was made there was working evidence about what per-level analysis actually feels like — and (a) turned out to be a subset of (c) rather than a rival to it. Deciding on day one would have been a guess; deciding after building the cheap half was a choice with evidence behind it. WHY (c) OVER (b), stated as the discriminator that survived from the brainstorm: every seam between designs costs a coordinate, an evidence roll-up and a freshness check, so a level earns its own graph only when it is separately owned, released or shared. A three-level tower of graphs inside one team pays all of that and buys none of it. (b) is not forbidden by this — a separately-owned system still gets its own design — it is that DEPTH stops being sufficient reason. WHAT THIS COSTS, recorded so nobody is surprised: docs/org-scale-vision.md's \"one graph the whole company plans in\" is now a road not taken, and req:concurrent-planning's answer changes shape — ownership boundaries become the primary isolation mechanism, with the claims layer and the merge driver serving work INSIDE one boundary rather than across all of them. The first rung built on this decision is the coordinate (cap:mirror-surface): the other side's published surface mirrored as local nodes carrying which design, which hash, and when.",
+        "status": "accepted"
       }
     },
     {
@@ -16216,7 +16335,7 @@
         "decision": "Accepted the gap gap:2066530ed8b00fb8.",
         "name": "Reviewed: gap:2066530ed8b00fb8",
         "rationale": "User (who:ajs, 2026-07-25): accepted intent, BLOCKED on dec:nested-graphs — the same disposition req:concurrent-planning and the two hosting requirements carry, and left `accepted` rather than `deferred` for the same reason: deferred reads as \"parked, nobody act\", and this is real intent with exactly one thing in front of it. Nothing should be built toward it until the mechanism is chosen, because the three options need materially different machinery: option (a) needs nothing new, option (b) needs a cross-design coordinate, an evidence roll-up and a staleness model at every seam, and option (c) needs all of that plus a rule for where the boundaries fall. Guessing would build for the road not taken. Two things are NOT blocked and are deliberately left as open gaps rather than swept in here: req:key-interfaces and req:modularity-computed. Both serve this requirement when it is built, both are useful without it, and both are the honest next rung — so their gaps stay open, because a gap that names real work owed is doing its job.",
-        "status": "accepted"
+        "status": "superseded"
       }
     },
     {
@@ -16366,6 +16485,16 @@
         "decision": "Accepted the gap gap:65b894fcc73c3961.",
         "name": "Reviewed: gap:65b894fcc73c3961",
         "rationale": "User (who:ajs, 2026-07-25): concurrent planning WAITS on the multi-writer decision. Accepted intent, blocked rather than shelved — deliberately left `accepted` rather than moved to `deferred`, because deferred reads as \"parked, nobody act\", whereas this is real intent with exactly one thing standing in front of it. The blocker is dec:multi-writer-architecture, a proposed decision point holding repo-file vs hosted-service vs hybrid; it is recorded as req:concurrent-planning GOVERNED_BY that decision, so the link is queryable and not just written here. Nothing should be built toward this requirement until the decision collapses, because each answer implies different machinery — and per cap:what-next's ranking rule, the decision therefore outranks the requirement it blocks. This acknowledgement expires if the affected node changes, which is correct: when the decision is made, this should come back for a fresh look rather than stay quietly accepted.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:6632226c74b49c3a",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:6632226c74b49c3a.",
+        "name": "Reviewed: gap:6632226c74b49c3a",
+        "rationale": "User (who:ajs, standing policy from 2026-07-23, applied again 2026-07-25): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:mirror-surface joined the set (46 → 47). The trial is now unusually concrete and unusually available: reflow2 and storyflow are two separately-owned designs on one machine, which is exactly the split option (c) describes, so publishing one's surface and mirroring it into the other tests composition on real designs rather than a seven-node fixture. What no test can establish is whether the SEAM was drawn in the right place — a boundary that turns out to carry the wrong contract shows up as constant renegotiation, and only two owners using it discover that.",
         "status": "accepted"
       }
     },
@@ -18314,6 +18443,20 @@
       }
     },
     {
+      "node_id": "req:design-identity",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A durable design knows its own name, and remembers it across opens",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A design that composes with others must have a stable identity of its own, remembered beside the store rather than supplied on each open. Found while building cap:mirror-surface on 2026-07-25: every reflow2 graph carried the same hardcoded graph_id, so no design could tell another design from itself — mirroring had to refuse a surface whose source id equalled its own, and with one constant that check could never pass. `open_in_memory_as` fixed it for library and test use; the durable case is unsolved and is deliberately not half-built, because the id namespaces every stored key: an on-disk graph reopened under a different name would find nothing, and one reopened under the DEFAULT name after being created with another would silently present an empty design. So identity has to live where the provenance stamp already lives (the sidecar beside the store), be written once at creation, and be REFUSED rather than defaulted when a later open disagrees with it — the same shape as the schema stamp refusing a graph a binary cannot read in full. Two consequences follow. Identity must be stable across machines, or the same design mirrored from two places reads as two designs; and it must be distinct by default, since two projects both called the design's default name would mirror into each other and the collision guard would report every node as a clash. This is rule:no-foreclosure item 5 arriving as real work rather than as a hypothetical.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:design-reachable-without-the-repo",
       "node_type": "Requirement",
       "properties": {
@@ -18774,6 +18917,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:surface-export:dec:nested-graphs",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Capability\",\"other_id\":\"cap:scoped-analysis\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:design-composes\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-25\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"UNDECIDED, and RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-07-25, explicitly not convinced by the collaboration design and thinking out loud: \\\"could you have small/mini reflow2 graphs inside itself... coming from a system of systems engineering approach, reflow2 may lay out the graph and how all the systems need to interact and where there are gaps, but what if we now had a mini-reflow2 graph for each system? And a mini-mini-reflow2 of the components in the system... the idea is that reflow2 has the tools to analyze the graph at each level and ensure there are no gaps and that it works with the higher level systems or system-of-systems.\\\" WHAT IS ALREADY TRUE, because it changes what the idea is asking for. Levels exist and are already checked: Component.level is an enum of component / subsystem / system / system_of_systems / enterprise, CONTAINS between Components is the axis-Y spine, and hierarchy_issues already reports level_mismatch, missing_intermediate_level and orphan_level — the carburetor-to-body problem, imported from chain_reflow's matryoshka insight (docs/three-axes.md). And the multi-graph primitive exists unused: every node and edge carries graph_id, pinned to the constant \\\"reflow2\\\". So the question is not whether reflow2 can express nesting. It can. The question is whether a level should be a SUBTREE of one graph or a GRAPH OF ITS OWN. THREE OPTIONS. (a) ONE GRAPH, ZOOM BY LEVEL — today's shape. What is missing is not nesting but SCOPING: no read takes a subtree as its subject, so detect_gaps and graph_report always answer for the whole design. Adding a scope argument is a filter, not an architecture, and it delivers most of what was asked — the tools analysing each level. (b) A GRAPH PER SYSTEM, COMPOSED — Anthony's idea. It buys four things one graph cannot: an independent write lock per system, which is a different and stronger answer to the collaboration problem than region claims, because separate graphs are PHYSICALLY separate where a claim is only advisory; an independent lifecycle, so a subsystem can be released, adopted or handed to a vendor on its own; selective publishing, which is exactly req:design-reachable-without-the-repo; and per-level scale, since detectors run over hundreds of nodes instead of tens of thousands. (c) A GRAPH PER OWNERSHIP BOUNDARY, LEVELS INSIDE EACH — the hybrid, and the shape federated systems engineering actually uses: you split where AUTHORITY splits, not where the hierarchy happens to have a layer. THE FOUR HARD PARTS of (b), each one real: the golden thread cannot cross a store boundary, because the schema validates both endpoints of every edge — so a parent's Component pointing at a child's design needs a typed COORDINATE (graph id + node id + the export's content hash at the moment the reference was made), which is precisely the choice dec:fork-point-address already made for fork points over a native ref layer. Gap detection goes blind at the seam: a parent requirement whose satisfying capability lives in a child graph would fire unsatisfied forever unless the child's evidence rolls up — and that roll-up is cap:derived-completion's computation applied one level higher, which is encouraging rather than novel. Freshness becomes load-bearing: a parent's view of a child is a claim about a VERSION of that child, so it is a dated examined claim and never a live truth (the cap:freshness and confirmation-ledger shape). And the seam becomes the new collision point: two people changing the interface across the boundary still collide, now in the one place with no merge machinery. THE TENSION WORTH KNOWING ABOUT: docs/org-scale-vision.md records the opposite destination — \\\"one graph the whole company plans in\\\", with the CEO's objectives at the top and everything tracing upward. Federation and one-big-graph cannot both be the end state, and nothing in the design has ever chosen between them. THE DISCRIMINATOR, offered as a finding and not a decision: depth alone does not justify a separate graph. Nesting three levels of graphs costs a coordinate, a roll-up and a freshness check at every seam, and buys nothing that a scope filter would not have delivered — unless something at that level is separately OWNED, separately RELEASED, or separately SHARED. Where those hold, a graph of its own is right. Where they do not, it is ceremony.\",\"name\":\"OPEN — one graph with levels, or a graph per system composed into a bigger one?\",\"rationale\":\"Recorded 2026-07-25 because Anthony said plainly he was not convinced by the collaboration design, and an unconvinced author is a finding rather than a disagreement to be argued down. PROMOTED THE SAME DAY on his word (\\\"let's promote both\\\"): the brainstorm produced two accepted requirements and stays open on the mechanism, which is the split that keeps both halves honest. req:analyse-at-any-level is the part he needed day to day and is ALREADY DELIVERED by cap:scoped-analysis (option (a), built first because it forecloses nothing). req:design-composes is the federation intent — a system's design as a unit that composes through interfaces — GOVERNED_BY this decision, so nothing gets built toward it until the mechanism is chosen. THIS DECISION THEREFORE STAYS PROPOSED, and that is not hedging: promoting an idea to intent is not the same act as choosing between three architectures, and collapsing this one would assert a shape Anthony has never chosen. Its options and the four hard parts of federation are unchanged above. The discriminator recorded then still stands as the thing to test when it is decided: depth alone does not earn a separate graph — ownership, separate release, or separate sharing does. NOTE FOR WHOEVER COLLAPSES IT: docs/org-scale-vision.md still records the opposite destination (one graph the whole company plans in), and req:design-composes now sits in the graph as accepted intent pointing the other way. That tension is real, on the record, and undecided; it is the strongest reason this decision should be made deliberately rather than discovered.\",\"status\":\"proposed\"}",
+        "target_id": "dec:nested-graphs",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "ver:adopt-storyflow",
       "node_type": "Verification",
       "properties": {
@@ -19092,6 +19245,18 @@
       }
     },
     {
+      "node_id": "ver:mirror-surface",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "integration",
+        "method": "test",
+        "name": "Two designs compose: the mirror carries whose/which-version/when, foreign nodes are marked imported, internals never arrive, the seam is an ordinary local edge reported as a boundary crossing, an id collision is refused with our node untouched, a colliding edge is dropped rather than rewired, and self-mirroring is refused (tests/mirror_surface.rs, 7 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:model-process",
       "node_type": "Verification",
       "properties": {
@@ -19366,7 +19531,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:359851f2e75b475bf5decc078df26878effc1d6ae1472994cfa8599c9189b42f",
+  "prev_content_hash": "sha256:08e8d1d0e51a716439595d0c8cacad4de66ce7ba7fdf76736f1fe583ffbd4d62",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
