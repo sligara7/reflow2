@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:50afae7c09196c70d15c581d90103bc7fadfa45fd0679eef061a9fcbb80b25a7",
+  "content_hash": "sha256:75bd2fd5b09be0ef405c2f1c1f3274ade1059fa12340eef40ff586dca6b3c473",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -456,6 +456,12 @@
       "from_id": "question:7bdb8b6cce42d588",
       "properties": {},
       "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:a752db1dd8a251b2",
+      "properties": {},
+      "to_id": "cmp:docs"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -12866,6 +12872,18 @@
       }
     },
     {
+      "node_id": "question:a752db1dd8a251b2",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-24",
+        "context_setter": "“docs” is built but ships in nothing",
+        "gap_id": "gap:a752db1dd8a251b2",
+        "question": "You've just said documentation is part of reflow2, like documentation shipped with a fighter jet. The graph now takes that literally and points out that none of your nine releases lists documentation as something it delivered — even though every one of them shipped a README and a setup guide. Should the past releases be corrected to say they included the documentation, or should this start from the next release onward?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:c54e80b55a3273a9",
       "node_type": "Question",
       "properties": {
@@ -13781,7 +13799,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:afb8adfabf2b68cce0ca0ae097e8818277f4d50c86d2f50dc47ddd9413b50692",
+  "prev_content_hash": "sha256:50afae7c09196c70d15c581d90103bc7fadfa45fd0679eef061a9fcbb80b25a7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
