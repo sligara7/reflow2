@@ -31,6 +31,26 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **The MCP configs are gitignored, and the graph path in them is relative.**
+  Both are machine state — every config carries an absolute path to *this*
+  machine's binary — and reflow2's own repo has ignored them from the start,
+  while a consumer project did not. Committed, they reach a collaborator
+  pointing at a binary that does not exist there, and the installer then
+  correctly refuses to repoint an entry somebody may have customised, so they
+  get a loud line they have to notice and act on.
+
+  The relative graph path (`.reflow2/graph`) fixes the case people actually hit:
+  **several sessions on one machine**. An absolute path copied into a second git
+  worktree points both sessions at the same store, so the second loses the
+  single-writer lock and gets the degraded server; relative, each worktree opens
+  its own. The binary path stays absolute — there is no PATH to rely on.
+
+  A config git already tracks is **reported with the fix** (`git rm --cached
+  .mcp.json`), because ignoring a tracked file changes nothing until it is
+  untracked, and saying "ignored" without saying that would be a half-truth.
+
 ## [0.12.0] — 2026-07-25
 
 **Upgrading:** read [docs/upgrading-to-v0.12.0.md](docs/upgrading-to-v0.12.0.md) first. This is the

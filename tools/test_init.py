@@ -18,6 +18,7 @@ import importlib.util
 import json
 import pathlib
 import shutil
+import subprocess
 import tempfile
 import unittest
 
@@ -149,6 +150,76 @@ class InstallerTest(unittest.TestCase):
         )
         for tool in ("get_instructions", "list_skills", "get_skill"):
             self.assertIn(tool, installed, f"the pointer must name {tool}")
+
+    def test_the_graph_path_is_relative_so_two_worktrees_do_not_collide(self):
+        """The six-sessions-on-one-machine case, which is what this is for.
+
+        An absolute graph path copied into a second git worktree points BOTH
+        sessions at the same store: the second loses the single-writer lock and
+        gets the degraded server. Relative, each worktree opens its own. The
+        binary path stays absolute — there is no PATH to rely on.
+        """
+        p = self.project()
+        self.install(p)
+
+        mcp = json.loads((p / ".mcp.json").read_text())["mcpServers"]["reflow2"]
+        self.assertEqual(mcp["args"][0], "--graph-path")
+        self.assertFalse(
+            pathlib.Path(mcp["args"][1]).is_absolute(),
+            f"the graph path must be relative: {mcp['args'][1]}",
+        )
+        self.assertIn(".reflow2", mcp["args"][1])
+        self.assertTrue(
+            pathlib.Path(mcp["command"]).is_absolute(),
+            "but the binary path must stay absolute",
+        )
+        # Same for the other two harnesses, or the guarantee is one-harness deep.
+        oc = json.loads((p / "opencode.json").read_text())["mcp"]["reflow2"]
+        self.assertFalse(pathlib.Path(oc["command"][2]).is_absolute(), oc["command"])
+        vs = json.loads((p / ".vscode/mcp.json").read_text())["servers"]["reflow2"]
+        self.assertFalse(pathlib.Path(vs["args"][1]).is_absolute(), vs["args"])
+
+    def test_the_mcp_configs_are_gitignored_like_the_graph(self):
+        """They carry an absolute path to THIS machine's binary. Committed, they
+        reach a collaborator pointing at a binary that does not exist there."""
+        p = self.project()
+        self.install(p)
+
+        ignored = (p / ".gitignore").read_text()
+        for line in (".reflow2/", ".mcp.json", "opencode.json", ".vscode/mcp.json"):
+            self.assertIn(line, ignored, f"{line} must be ignored")
+
+    def test_an_existing_gitignore_is_appended_to_not_replaced(self):
+        p = self.project()
+        (p / ".gitignore").write_text("# mine\n/target\nnode_modules/\n")
+        self.install(p)
+
+        ignored = (p / ".gitignore").read_text()
+        self.assertIn("/target", ignored, "the project's own rules survive")
+        self.assertIn("node_modules/", ignored)
+        self.assertIn(".mcp.json", ignored)
+
+    def test_a_config_git_already_tracks_is_reported_not_silently_ignored(self):
+        """Ignoring a tracked file does nothing until it is untracked, so
+        saying "ignored" without saying that would be a half-truth — and the
+        user would keep shipping their absolute paths to their collaborator.
+        """
+        p = self.project()
+        subprocess.run(["git", "init", "-q"], cwd=p, check=True)
+        (p / ".mcp.json").write_text(json.dumps({"mcpServers": {}}))
+        subprocess.run(["git", "add", "-f", ".mcp.json"], cwd=p, check=True)
+
+        done = self.install(p)
+
+        self.assertTrue(
+            any("git rm --cached .mcp.json" in d for d in done),
+            f"the run must say what to do about it: {done}",
+        )
+        # And --check says it too, before anything moves.
+        self.assertTrue(
+            any("git rm --cached" in c for c in init.planned_changes(p)),
+            "--check must disclose it as well",
+        )
 
     # ---- never overwrite what the project owns -----------------------------
 

@@ -368,7 +368,20 @@ def write_mcp_config(project: Path, spec: dict, binary: Path, force: bool) -> st
     run still reported success.
     """
     path = project / spec["path"]
-    graph = project / ".reflow2" / "graph"
+    # RELATIVE, deliberately (2026-07-25). The binary path has to be absolute —
+    # there is no PATH to rely on — but the graph path does not, and an absolute
+    # one is a footgun for the case people actually hit: several sessions on one
+    # machine. Copy an absolute config into a second git worktree and both
+    # sessions open the SAME store, so the second one loses the single-writer
+    # lock and gets the degraded server; with `./.reflow2/graph` each worktree
+    # opens its own. reflow2's own config has used the relative form all along.
+    #
+    # The assumption it rests on, stated because it is the failure to look for:
+    # the harness launches the server with the project as its working directory.
+    # Every harness in MCP_CONFIGS does. If one did not, the session would open
+    # an empty graph elsewhere rather than fail — which is why the installer
+    # prints the resolved path it expects.
+    graph = Path(".") / ".reflow2" / "graph"
     entry = spec["entry"](binary, graph)
     label = spec["path"]
 
@@ -486,24 +499,72 @@ def existing_system(project: Path, cap: int = 25) -> str | None:
     return None
 
 
-def ensure_gitignore(project: Path) -> str | None:
-    """Keep the graph directory out of version control: it is machine-local
-    RocksDB state (binary files and a lock); the durable, reviewable record is
-    an export. Appends or creates, idempotent, reported. Returns None when
-    `.reflow2` is already covered."""
+# What must never be committed, and why. Both are MACHINE state: the graph is
+# RocksDB files and a lock, and every MCP config carries an absolute path to
+# *this* machine's binary. reflow2's own repo has ignored both from the start;
+# a consumer project did not, which is the inconsistency this closes.
+#
+# The MCP configs matter more than they look. Committed, they reach a
+# collaborator pointing at a binary that does not exist on their machine — and
+# the installer will correctly REFUSE to repoint an entry somebody may have
+# customised, so they get a loud line they have to notice and act on. Ignored,
+# each person's `reflow2_init.py` run just writes their own.
+IGNORE_LINES = [
+    ("# reflow2's local design graph (machine state; the durable record is an export)",
+     ".reflow2/"),
+    ("# reflow2's MCP configs — they carry an absolute path to YOUR binary",
+     ".mcp.json"),
+    ("", "opencode.json"),
+    ("", ".vscode/mcp.json"),
+]
+
+
+def gitignore_block() -> str:
+    out = []
+    for comment, line in IGNORE_LINES:
+        if comment:
+            out.append(comment)
+        out.append(line)
+    return "\n".join(out) + "\n"
+
+
+def already_tracked(project: Path, rel: str) -> bool:
+    """Is this path committed already? .gitignore does not untrack a tracked
+    file, so saying "ignored" without saying that would be a half-truth."""
+    try:
+        return subprocess.run(
+            ["git", "ls-files", "--error-unmatch", rel],
+            cwd=project, capture_output=True, timeout=10,
+        ).returncode == 0
+    except (OSError, subprocess.SubprocessError):
+        return False
+
+
+def ensure_gitignore(project: Path) -> list[str]:
+    """Keep machine state out of version control — the graph directory and the
+    MCP configs. Appends or creates, idempotent, reported. Also reports any of
+    them git is *already* tracking, because ignoring a tracked file does
+    nothing at all until it is untracked."""
+    notes = []
     gi = project / ".gitignore"
-    if gi.exists():
-        if any(".reflow2" in line for line in gi.read_text().splitlines()):
-            return None
-        gi.write_text(
-            gi.read_text().rstrip("\n")
-            + "\n\n# reflow2's local design graph (machine state; the durable record is an export)\n.reflow2/\n"
-        )
-        return ".gitignore  (added .reflow2/ — the graph is machine-local state)"
-    gi.write_text(
-        "# reflow2's local design graph (machine state; the durable record is an export)\n.reflow2/\n"
-    )
-    return ".gitignore  (created, ignoring .reflow2/ — the graph is machine-local state)"
+    existing = gi.read_text() if gi.exists() else ""
+    missing = [line for _, line in IGNORE_LINES if line not in existing]
+    if missing:
+        if existing:
+            gi.write_text(existing.rstrip("\n") + "\n\n" + gitignore_block())
+            notes.append(f".gitignore  (added {', '.join(missing)} — machine state)")
+        else:
+            gi.write_text(gitignore_block())
+            notes.append(".gitignore  (created — ignoring the graph and the MCP configs)")
+    for _, line in IGNORE_LINES:
+        if line.endswith("/"):
+            continue
+        if already_tracked(project, line):
+            notes.append(
+                f"{line}  IS COMMITTED and carries this machine's absolute paths — "
+                f"ignoring it changes nothing until you untrack it:  git rm --cached {line}"
+            )
+    return notes
 
 
 def planned_changes(project: Path) -> list[str]:
@@ -573,10 +634,14 @@ def planned_changes(project: Path) -> list[str]:
     if not (project / ".reflow2").exists():
         changes.append("create  .reflow2/")
     gi = project / ".gitignore"
-    if not gi.exists():
-        changes.append("create  .gitignore  (ignoring .reflow2/)")
-    elif not any(".reflow2" in line for line in gi.read_text().splitlines()):
-        changes.append("append  .reflow2/ to .gitignore")
+    existing = gi.read_text() if gi.exists() else ""
+    missing = [line for _, line in IGNORE_LINES if line not in existing]
+    if missing:
+        verb = "create" if not existing else "append"
+        changes.append(f"{verb}  .gitignore  ({', '.join(missing)} — machine state)")
+    for _, line in IGNORE_LINES:
+        if not line.endswith("/") and already_tracked(project, line):
+            changes.append(f"report  {line} is committed — you will need `git rm --cached {line}`")
     return changes
 
 
@@ -758,8 +823,7 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
             done.append(pointer)
 
     (project / ".reflow2").mkdir(exist_ok=True)
-    if note := ensure_gitignore(project):
-        done.append(note)
+    done.extend(ensure_gitignore(project))
     stamp = project / STAMP
     stamp_data = kit_version()
     stamp_data["installed_files"] = dict(sorted(new_manifest.items()))

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:57981b98e152617e4f14e4110024486d2aa698613cf99f27b8077622dc770803",
+  "content_hash": "sha256:d9c105c08d145a14f641cd2a2f49bae55c0e223f07338d9e831f9a2100a9d284",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -885,6 +885,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:machine-state-not-shared",
+      "properties": {},
+      "to_id": "epoch:v0120"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:merge-driver-built",
       "properties": {},
       "to_id": "epoch:kpp-capture"
@@ -1362,6 +1368,12 @@
       "from_id": "snap:epoch:surface-export:dec:nested-graphs",
       "properties": {},
       "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:v0120:cap:kit",
+      "properties": {},
+      "to_id": "epoch:v0120"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -3912,6 +3924,24 @@
         "action": "modified"
       },
       "to_id": "cap:kpp-proposal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:machine-state-not-shared",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:machine-state-not-shared",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:kit"
     },
     {
       "edge_type": "CHANGED",
@@ -8834,6 +8864,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:kit",
+      "properties": {},
+      "to_id": "snap:epoch:v0120:cap:kit"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:kpp-proposal",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:cap:kpp-proposal"
@@ -12658,6 +12694,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:collaborating",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:git-merge-driver"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:compare",
       "properties": {
         "completeness": "complete"
@@ -14149,6 +14193,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:collaborating",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:compare",
       "properties": {
         "action": "created"
@@ -14658,6 +14710,17 @@
       }
     },
     {
+      "node_id": "art:collaborating",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:dad9a5cd440cd681908a1fd89d1099b11e8be32f2a9fb6fefdfcff8830067e86",
+        "location": "docs/collaborating.md",
+        "name": "collaborating.md",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:compare",
       "node_type": "Artifact",
       "properties": {
@@ -14849,7 +14912,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b63d9dc04d96671bb4503e06bca1ad67743cb7a091d518bc2964e3e8b7cf5321",
+        "checksum": "sha256:340ee9f980c981ae9579532132090e272f3a93f7897cbb81337f4aa08682466d",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
         "status": "realized"
@@ -16707,6 +16770,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Build the KPP capture half: the ask-don't-promote skill, and a typed way to record what the user confirms"
+      }
+    },
+    {
+      "node_id": "chg:machine-state-not-shared",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "The MCP configs are machine state: gitignored, and the graph path in them relative so worktrees do not collide"
       }
     },
     {
@@ -19475,6 +19546,16 @@
       }
     },
     {
+      "node_id": "frag:art:collaborating",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered collaborating.md"
+      }
+    },
+    {
       "node_id": "frag:art:compare",
       "node_type": "Fragment",
       "properties": {
@@ -21090,6 +21171,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:v0120:cap:kit",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:skills-served\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:kit\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:kit-manifest-agrees\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:init\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:skills\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:22386cd2f1a1fa96\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:233d08765e4cfc7b\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:593e26aed260f0a3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:695a599323c7edfe\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:75d815c93cad4c86\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:9b2071dba7dfe759\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:d31369434b7b1347\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:agent-native\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:driving-agent\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:frictionless-update\",\"properties\":{\"coverage\":\"partial\",\"evidence\":\"install.sh is checksum-verified and pulls published binaries (no rebuild), and reflow2_init.py updates a project in place — but the installer is not yet reachable from a stable public one-liner URL, there is no single self-update command, and the release cadence is not yet frequent-and-minor. The delta is the backlog's frictionless-update item.\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:invocation\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:platform\",\"properties\":{}}]",
+        "state": "{\"description\":\"One command sets up or refreshes the design environment.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Install into a consumer project\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:kit",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "ver:adopt-storyflow",
       "node_type": "Verification",
       "properties": {
@@ -21738,7 +21829,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9d9219cb4d6a2e1039122c1d6aa87db17ab7d56098ed1c485f38498c52309e4a",
+  "prev_content_hash": "sha256:57981b98e152617e4f14e4110024486d2aa698613cf99f27b8077622dc770803",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

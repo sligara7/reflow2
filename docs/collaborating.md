@@ -153,6 +153,32 @@ Two rules make it work:
 Either write it in `COORD.md` or ask your agent to use reflow2's `claim_region`, which computes
 the affected region from the design rather than from a hand-typed list of files.
 
+## Several sessions on one machine
+
+The same rules, one directory each. reflow2's store is **single-writer**: one session holds it, and
+any other session pointed at the same graph gets a server that serves exactly one tool
+(`reflow2_unavailable`) telling it why. That is a real limit, not a bug — but it is easy to work
+around, and the installer now does the work for you.
+
+**Give each session its own working directory** — a git worktree per session is the natural shape:
+
+```bash
+git worktree add ../proj-seat2 -b feat/seat2
+```
+
+The MCP config records a **relative** graph path (`.reflow2/graph`), so a config copied into another
+worktree opens *that* worktree's store rather than the first one's. Each session gets its own graph,
+its own lock, and no contention. They reconcile the way any two people do: through the committed
+export, with the merge driver and the stale-export refusal protecting both.
+
+The configs themselves are **gitignored**, because they carry an absolute path to *your* binary —
+useless on anyone else's machine. Each person (and each worktree) runs the installer once and gets
+their own.
+
+If you upgraded from an older reflow2, the installer will tell you when a config is already
+committed: ignoring a tracked file changes nothing until you untrack it, so it prints the exact
+command (`git rm --cached .mcp.json`).
+
 ## When something does conflict
 
 Git tells you which files, and stops. Nothing is lost — an unresolved conflict sitting in your
