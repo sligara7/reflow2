@@ -33,6 +33,21 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **`graph_report` now says how much intent is actually DELIVERED**, derived from
+  the golden thread instead of read from `Requirement.status` (BL-104). A
+  requirement counts as delivered when something satisfies it, that capability is
+  realized, and it currently carries a passing check — at its own or component
+  granularity. Two properties make it a derivation rather than a slower
+  assertion, and both are pinned by tests: it goes **backwards** when a check
+  starts failing, with nobody editing anything; and requirements whose own
+  provenance is `inferred` are excluded and counted separately, because a
+  requirement read back out of the code implementing it is satisfied by
+  construction — without that guard a brownfield adopt would report itself fully
+  delivered on arrival. Dropped requirements leave the denominator: abandoning a
+  need is not failing to deliver it.
+
+### Added
+
 - `--merge-apply` CLI mode (BL-80): the file-pure half of three-way merge. `--merge base ours
   theirs` prints the conflicts and their ids; a JSON decisions file maps each id to
   `base`/`ours`/`theirs`; then `--merge-apply base ours theirs --resolutions FILE` runs

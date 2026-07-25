@@ -18,7 +18,7 @@ use crate::allocate::AllocationReport;
 use crate::detect::GapCandidate;
 use crate::dimensions::{DimensionDrift, DriftDirection};
 use crate::graph::DesignGraph;
-use crate::nodes::node;
+use crate::nodes::{edge, node};
 use crate::surprises::SurprisingConnection;
 
 /// How many items each highlight list caps at (the rest are counted, not shown).
@@ -46,6 +46,15 @@ const SNAPSHOT_TYPES: &[&str] = &[
 /// The `status` × `provenance` → certainty mapping, on a node already in
 /// hand. Absent properties take their schema defaults (`proposed`,
 /// `authored`), so a bare requirement reads as asserted, never as confirmed.
+/// One string property, or `fallback` when absent — the schema default, so an
+/// unset field is read the way the schema says it would be.
+fn prop_str<'a>(n: &'a dynograph_storage::StoredNode, key: &str, fallback: &'a str) -> &'a str {
+    n.properties
+        .get(key)
+        .and_then(dynograph_core::Value::as_str)
+        .unwrap_or(fallback)
+}
+
 fn certainty_of(req: &dynograph_storage::StoredNode) -> RequirementCertainty {
     let status = req
         .properties
@@ -164,6 +173,56 @@ pub struct RealizationCoverage {
     pub built_but_unmodelled: usize,
 }
 
+/// How much of the intent has actually been **delivered** — derived from the
+/// golden thread, never read from a field (BL-104).
+///
+/// `Requirement.status` carries a `met` value, and it is the wrong place to
+/// learn this from: a hand-set "done" is a claim that outlives the truth. It
+/// survives the capability regressing, the artifact drifting and the check
+/// starting to fail, degrading exactly as silently as an unreconciled checksum.
+/// So delivery is computed the way component-granularity verification already
+/// is — a state the report works out, not a property anyone maintains — which
+/// is what makes progress *fall out* of the thread rather than being asserted
+/// on top of it.
+///
+/// Two subtleties, both load-bearing:
+///
+/// - **A failing check un-delivers.** Delivery requires the satisfying
+///   capability to be realized *and* currently checked, so a requirement that
+///   was delivered and whose test later fails stops counting. A derivation that
+///   cannot go backwards is just a slower assertion.
+/// - **Inference is not evidence** (`inferred_only`). A requirement recovered
+///   *from the code implementing it* is satisfied by construction and can never
+///   contradict anything — the schema says so on `Requirement.provenance`. If
+///   those counted, a brownfield adopt would report itself fully delivered on
+///   arrival, having demonstrated nothing. They are counted apart instead, so
+///   the number is visible without inflating the headline.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct DeliveryCoverage {
+    /// Requirements in scope — every requirement not `dropped`, since a
+    /// withdrawn need is not unfinished work.
+    pub requirements: usize,
+    /// Requirements with at least one capability claiming to satisfy them.
+    /// Already what `unsatisfied_requirement` asks about; repeated here so
+    /// "12 delivered" can be read against "of 20 satisfied", not against silence.
+    pub satisfied: usize,
+    /// Satisfied by a capability that is realized AND carries a passing check,
+    /// at its own or component granularity. The honest answer to "how much of
+    /// this is actually done?".
+    pub delivered: usize,
+    /// Satisfied, but only by capabilities whose requirement was itself
+    /// recovered by inference — excluded from `delivered` on purpose. See the
+    /// type docs.
+    pub inferred_only: usize,
+}
+
+impl DeliveryCoverage {
+    /// True when there is no intent to report on.
+    fn is_empty(&self) -> bool {
+        self.requirements == 0
+    }
+}
+
 /// The confirmation rollup — counts only; the full ledger is
 /// [`DesignGraph::confirmation_ledger`].
 #[derive(Debug, Clone, serde::Serialize)]
@@ -223,6 +282,10 @@ pub struct GraphReport {
     /// How much of the design has something built for it, and how much the
     /// artifact layer does not reach (a signal, not a gap — BL-42).
     pub realization: RealizationCoverage,
+    /// How much of the intent is actually **delivered**, derived from the
+    /// golden thread rather than read from `Requirement.status` (BL-104).
+    /// `None` when there are no requirements.
+    pub delivery: Option<DeliveryCoverage>,
     /// Confirmation rollup (BL-35): of the capabilities with realizing
     /// artifacts, how many are drifting / confirmed / **unexamined** — the
     /// last being the state the original reflow died in: nobody looked, and
@@ -474,6 +537,74 @@ impl DesignGraph {
         Ok(c)
     }
 
+    /// Work out how much intent has actually been delivered, from the thread
+    /// itself. See [`DeliveryCoverage`] for why this is computed rather than
+    /// read from `Requirement.status`.
+    ///
+    /// A requirement is DELIVERED when some capability satisfies it and that
+    /// capability is both realized and currently checked. "Currently" is the
+    /// whole point: [`capability_verification`](Self::capability_verification)
+    /// only reports `Verified`/`ComponentVerified` for checks that PASS
+    /// (`dec:passing-is-verified`), so a requirement stops being delivered the
+    /// moment its check starts failing, with nobody editing anything.
+    ///
+    /// A requirement whose own provenance is `inferred` never counts, however
+    /// good its thread looks — it was read back out of the thing that
+    /// implements it, so its satisfaction is a tautology rather than evidence.
+    pub fn delivery_coverage(&self) -> Result<DeliveryCoverage, DynoError> {
+        let mut d = DeliveryCoverage {
+            requirements: 0,
+            satisfied: 0,
+            delivered: 0,
+            inferred_only: 0,
+        };
+        for req in self.scan_nodes(node::REQUIREMENT)? {
+            // A dropped requirement is a withdrawn need, not unfinished work.
+            // Counting it would make abandoning something look like failing to
+            // deliver it.
+            if prop_str(&req, "status", "proposed") == "dropped" {
+                continue;
+            }
+            d.requirements += 1;
+
+            let satisfiers: Vec<String> = self
+                .incoming(&req.node_id, Some(edge::SATISFIES))?
+                .into_iter()
+                .map(|e| e.from_id)
+                .collect();
+            if satisfiers.is_empty() {
+                continue;
+            }
+            d.satisfied += 1;
+
+            let mut thread_complete = false;
+            for cap in &satisfiers {
+                let checked = !matches!(
+                    self.capability_verification(cap)?,
+                    crate::verify::CapabilityVerification::Unchecked
+                );
+                if checked && self.capability_is_realized(cap)? {
+                    thread_complete = true;
+                    break;
+                }
+            }
+            if !thread_complete {
+                continue;
+            }
+
+            // The thread is complete — but if the requirement itself was
+            // recovered from the code that satisfies it, the thread proves
+            // nothing. Counted apart rather than silently dropped, so the
+            // number stays visible (rule 6: no silent caps).
+            if prop_str(&req, "provenance", "authored") == "inferred" {
+                d.inferred_only += 1;
+            } else {
+                d.delivered += 1;
+            }
+        }
+        Ok(d)
+    }
+
     /// Build the [`GraphReport`] — a one-shot aggregation of the deterministic
     /// analyses. See the module docs.
     pub fn graph_report(&self) -> Result<GraphReport, DynoError> {
@@ -522,6 +653,10 @@ impl DesignGraph {
             None
         };
         let realization = self.realization_coverage()?;
+        let delivery = {
+            let d = self.delivery_coverage()?;
+            if d.is_empty() { None } else { Some(d) }
+        };
         let ledger = self.confirmation_ledger()?;
         let confirmation = if ledger.claims.is_empty() {
             None
@@ -569,6 +704,7 @@ impl DesignGraph {
             other_counts,
             design_nodes,
             realization,
+            delivery,
             total_nodes,
             gap_count,
             defect_count,
@@ -650,6 +786,27 @@ impl GraphReport {
                 if !parts.is_empty() {
                     let _ = writeln!(m, "Requirement certainty: {}.\n", parts.join(" · "));
                 }
+            }
+            // Delivery, derived — never read from `status`. Phrased against its
+            // denominator so "3 delivered" cannot be mistaken for "3 left".
+            if let Some(d) = &self.delivery {
+                let _ = write!(
+                    m,
+                    "Delivered: **{}** of {} requirement(s) ({} satisfied) — computed from the \
+                     thread (something satisfies it, and that capability is built and currently \
+                     passing), not from a status field.",
+                    d.delivered, d.requirements, d.satisfied
+                );
+                if d.inferred_only > 0 {
+                    let _ = write!(
+                        m,
+                        " {} further requirement(s) have a complete thread but were recovered by \
+                         inference, so they are excluded: a requirement read back out of the code \
+                         satisfying it proves nothing.",
+                        d.inferred_only
+                    );
+                }
+                let _ = writeln!(m, "\n");
             }
             let _ = writeln!(
                 m,
