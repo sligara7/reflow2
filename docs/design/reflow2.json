@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:7f2bd39fc6da2b042d2075b542ddea99009d14668e3166bc8235430abf1ea55f",
+  "content_hash": "sha256:96877dc60b0fca79bbdff5ba7c93001c38fa159779077eec67956ee66cdc2eef",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -556,6 +556,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-eight-requirements",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-three-built-requirements",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -1613,6 +1619,33 @@
         "action": "modified"
       },
       "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-three-built-requirements",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:completion-computed"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-three-built-requirements",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:drift-has-direction"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-three-built-requirements",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:requirement-lineage"
     },
     {
       "edge_type": "CHANGED",
@@ -12166,6 +12199,14 @@
       }
     },
     {
+      "node_id": "chg:accept-three-built-requirements",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "requirement_creep",
+        "name": "Anthony accepted the three requirements that were already delivered"
+      }
+    },
+    {
       "node_id": "chg:atomic-requirement",
       "node_type": "ChangeEvent",
       "properties": {
@@ -15180,11 +15221,12 @@
       "properties": {
         "concern": "core",
         "kind": "functional",
+        "lineage": "original",
         "name": "Whether intent has been delivered is computed from the golden thread, never asserted",
         "priority": "medium",
         "provenance": "authored",
         "statement": "A requirement's completion must be derived from evidence already in the graph — something satisfies it, and that capability is realized and its check passes — not set by hand on the requirement itself. A hand-set \"done\" is a claim that outlives the truth: it survives the capability regressing, the artifact drifting, the verification starting to fail, and it degrades exactly as silently as an unreconciled checksum. Derived completion also makes the reverse question answerable without anyone maintaining it: what fraction of accepted intent is actually delivered, and which requirements are believed-done on evidence that no longer holds. The same rule applies to the rest of the lifecycle: a requirement that stopped being satisfied must be able to say so, rather than remaining green because nobody revisited it.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -15261,11 +15303,12 @@
       "properties": {
         "concern": "core",
         "kind": "functional",
+        "lineage": "original",
         "name": "Drift is reported with its direction and its meaning, not just its magnitude",
         "priority": "medium",
         "provenance": "authored",
         "statement": "When the design and the build diverge, reflow2 must say which way and about what — not merely that a file's contents moved. Three things follow. Direction: a system that has grown capability the design never recorded is a different condition from one whose design overstates it, and today both arrive as an identical checksum change, so understatement is invisible exactly where it is largest. Meaning: the report must say what the design now claims wrongly, because asking someone to decide whether the design still holds while telling them only that bytes changed puts the entire burden of finding the delta on the person least likely to have time for it — which is how the design goes stale despite a mechanism designed to stop it. And write-back: where the design was recovered from documents, bringing the design up to date must be able to reach those documents, or the source everyone actually reads stays wrong while the graph quietly becomes right.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -15485,11 +15528,12 @@
       "properties": {
         "concern": "core",
         "kind": "functional",
+        "lineage": "original",
         "name": "A requirement knows where it came from: stated, decomposed from a parent, or derived from a decision",
         "priority": "medium",
         "provenance": "authored",
         "statement": "Requirements multiply in two different ways and reflow2 must tell them apart, because they behave differently. An ORIGINAL requirement is the stakeholder's own word. A DECOMPOSED requirement is a 1:1 split of a parent into smaller testable pieces, adding no new information — so satisfying every child satisfies the parent, and a parent's delivery is therefore derivable from its children rather than needing its own capability. A DERIVED requirement is new technical necessity that nobody asked for, created because of a design decision — so it traces to that DECISION, not to a parent goal, and if the decision is ever re-opened the derived requirement may cease to have any reason to exist. Three consequences follow. Delivery must roll up a decomposition tree instead of treating every requirement as an independent leaf. Re-opening a decision must be able to say which requirements existed only because of the road taken. And the distinction must survive the loss of the person who made it: an original requirement is the only kind whose loss loses intent, because decomposed and derived ones can be regenerated from what they came from, and that is precisely why the link back must be recorded rather than remembered.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -15997,7 +16041,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:70146232226264f52de75d8a39e40f6dccd8d211c23468d6daf54c3719ddb39d",
+  "prev_content_hash": "sha256:7f2bd39fc6da2b042d2075b542ddea99009d14668e3166bc8235430abf1ea55f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
