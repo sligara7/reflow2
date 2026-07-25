@@ -55,6 +55,7 @@ Add yourself if you're new here.
 
 
 
+
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -80,6 +81,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-104 CAPTURED **graph-first** — derive `met` from the golden thread: delivery is computed from evidence (satisfied AND the satisfying capability realized/verified with a passing check), never a hand-set field. `req:completion-computed` (proposed) + `cap:derived-completion` (planned, cmp:report, governed by dec:certainty-derived + dec:passing-is-verified), `chg:bl104-derived-completion` pinned. Measured: 0 of 28 requirements carry `met` though several are plainly shipped; 3 of 5 status values never used; EVOLVES_INTO/OBSOLETES/TemporalFact/Snapshot all at zero. **The backlog row is a PARITY CHECK ONLY, not the record** — per Anthony, it exists to compare against the graph until backlog items are demonstrably first-class there; if they disagree, the graph is right. Gate: 1 finding (the deliberate failing search check), 2 notes; live==committed 399n/1168e — @ajs — 2026-07-24 — docs/design/reflow2.json, docs/backlog.md
 
 - Foundation pin bump to **v0.11.0** — the ranked-disjunction full-text search fix (dynograph-foundation #76/#77, released 2026-07-24). Search matched tokens as a conjunction, so one word the corpus never used collapsed a perfect match to zero hits — which made a natural-language question unusable and, because capture-intent treats no-hits as licence to create, manufactured duplicates. 5 pins in Cargo.toml + AGENTS.md prose; Cargo.lock resolves dynograph-text 0.11.0 at the tagged merge commit 1fbd81c. 213 workspace tests green (incl. all 6 reflow2 search tests, which assume ranked order and a revised node NOT being resurrected by dropped wording). ver:search-natural-language stays FAILING until an automated test proves it against the real graph — @ajs — 2026-07-24 — Cargo.toml, Cargo.lock, AGENTS.md
 

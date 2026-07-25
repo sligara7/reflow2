@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9a905d1e7a8f84d2b1fa58af13b8560cbc7a661a8496a41f4fdb696d0fe55119",
+  "content_hash": "sha256:565de8ea8ed1637b71644549d479e828ac1f65f05e3f7254d63681fe0a773075",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -72,6 +72,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:derived-completion",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -438,6 +446,12 @@
       "from_id": "question:c7c58ee8f8328d68",
       "properties": {},
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl104-derived-completion",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1026,6 +1040,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:completion-computed",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:concurrent-planning",
       "properties": {
         "acted_at": "2026-07-24",
@@ -1337,6 +1360,24 @@
         "action": "modified"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl104-derived-completion",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:derived-completion"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl104-derived-completion",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:completion-computed"
     },
     {
       "edge_type": "CHANGED",
@@ -4242,6 +4283,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:derived-completion",
+      "properties": {},
+      "to_id": "dec:certainty-derived"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:derived-completion",
+      "properties": {},
+      "to_id": "decision:ack:6ac59b7adcc72d03"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:detect",
       "properties": {},
       "to_id": "dec:anchored-first"
@@ -4821,6 +4874,12 @@
       "from_id": "ifc:graph-export",
       "properties": {},
       "to_id": "dec:export-door-spof-accepted"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:completion-computed",
+      "properties": {},
+      "to_id": "dec:passing-is-verified"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8042,6 +8101,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:derived-completion",
+      "properties": {},
+      "to_id": "req:completion-computed"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:detect",
       "properties": {},
       "to_id": "req:coherence"
@@ -9438,6 +9503,19 @@
       }
     },
     {
+      "node_id": "cap:derived-completion",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Derive a requirement's delivery state from the golden thread rather than reading a hand-set field: satisfied (has an incoming SATISFIES) is already computed and already surfaced by the unsatisfied_requirement gap; DELIVERED is the missing rung — satisfied AND the satisfying capability realized/verified with a passing check — and it should be reported the way component-granularity verification already is, as a computed third state rather than a stored one. BL-85 already states this intent (\"done is COMPUTED from the golden thread, so % progress falls out derived, never asserted — the anti-erosion property for free\"); nothing implements it. THE EVIDENCE THAT IT IS NEEDED, measured 2026-07-24: of 28 requirements, ZERO carry status `met`, though several are plainly shipped (invoked over MCP, persists in-repo, runs on Linux/macOS). Three of the five status values (deferred, dropped, met) have never been used; EVOLVES_INTO and OBSOLETES have zero instances anywhere in the graph; TemporalFact and Snapshot are at zero. So \"how much of reflow2 is actually done?\" cannot be answered from the graph even though every input needed to compute it is present. Scope beyond the headline number: distinguish SUPERSEDED (replaced by a different requirement, OBSOLETES) from DROPPED (abandoned) from EVOLVED (same requirement, new wording — an axis-Z revision, not a new node), since those three are routinely conflated; and surface MET-BUT-REGRESSED, a requirement that was delivered and no longer is, which is a TemporalFact with VALID_TO and is invisible today. Watch the trap the schema already names: a requirement with provenance `inferred` was read back out of the code implementing it, so it is satisfied by construction and can never contradict anything — derived completion must not count it as evidence of delivery, or a brownfield adopt reports itself complete on arrival. PLANNED — BL-104.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Compute what is delivered, and expose the requirement lifecycle that is currently unused",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:detect",
       "node_type": "Capability",
       "properties": {
@@ -9993,6 +10071,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Export content hash + lineage chain + compare ancestry (AT-proto capture)"
+      }
+    },
+    {
+      "node_id": "chg:bl104-derived-completion",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-104 captured: derive delivery from the golden thread; the requirement lifecycle is 3/5 unused"
       }
     },
     {
@@ -11250,6 +11336,16 @@
         "decision": "Accepted the gap gap:695a599323c7edfe.",
         "name": "Reviewed: gap:695a599323c7edfe",
         "rationale": "User (who:ajs, 2026-07-23): validation happens through the trials program — docs/trials/ (self-host, adopt dogfood, erosion, phase-coverage, fleet feedback) is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not the tracking mechanism for this project.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:6ac59b7adcc72d03",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:6ac59b7adcc72d03.",
+        "name": "Reviewed: gap:6ac59b7adcc72d03",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24). Naming the check now, because this one has an unusually good fixture available: reflow2's own graph. When built, the verification should assert that requirements demonstrably shipped — invoked over MCP, persists in-repo, runs on Linux and macOS — come back DELIVERED without anyone having hand-set a status, and that a requirement whose satisfying capability has a failing check does NOT. The second half is the real test: today ver:search-natural-language is failing, so cap:search must not read as delivered, and req:agent-native must reflect that. A derivation that cannot go backwards is just a slower assertion.",
         "status": "accepted"
       }
     },
@@ -12540,6 +12636,19 @@
       }
     },
     {
+      "node_id": "req:completion-computed",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Whether intent has been delivered is computed from the golden thread, never asserted",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A requirement's completion must be derived from evidence already in the graph — something satisfies it, and that capability is realized and its check passes — not set by hand on the requirement itself. A hand-set \"done\" is a claim that outlives the truth: it survives the capability regressing, the artifact drifting, the verification starting to fail, and it degrades exactly as silently as an unreconciled checksum. Derived completion also makes the reverse question answerable without anyone maintaining it: what fraction of accepted intent is actually delivered, and which requirements are believed-done on evidence that no longer holds. The same rule applies to the rest of the lifecycle: a requirement that stopped being satisfied must be able to say so, rather than remaining green because nobody revisited it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:concurrent-planning",
       "node_type": "Requirement",
       "properties": {
@@ -13254,7 +13363,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:92421c76ddcc8ab6d077243a3861e7185846228f5e44a960ad2a3517a1530e61",
+  "prev_content_hash": "sha256:9a905d1e7a8f84d2b1fa58af13b8560cbc7a661a8496a41f4fdb696d0fe55119",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
