@@ -31,6 +31,12 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.12.0] — 2026-07-25
+
+**Upgrading:** read [docs/upgrading-to-v0.12.0.md](docs/upgrading-to-v0.12.0.md) first. This is the
+first release that *removes* files from a consumer project, and the last one that needs to touch a
+consumer project at all.
+
 ### Changed
 
 - **The skills are served by the server, not copied into your project**
