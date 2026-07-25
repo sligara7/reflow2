@@ -1095,6 +1095,19 @@ pub struct ScanReq {
     pub brief: Option<bool>,
 }
 
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ExportSurfaceReq {
+    /// Write the surface document to this file and return a summary instead of
+    /// the whole document. Omit to get the document inline.
+    #[serde(default)]
+    pub path: Option<String>,
+    /// Allow `path` to replace an existing file. Off by default: a published
+    /// surface is what someone else builds against.
+    #[serde(default)]
+    pub overwrite: Option<bool>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AcknowledgeDefectReq {
@@ -3021,6 +3034,57 @@ impl ReflowService {
             receipt["chain_note"] = json!(note);
         }
         ok_json(receipt)
+    }
+
+    #[tool(
+        description = "Export ONLY the published surface — the contracts others are entitled to \
+                       rely on, and nothing internal. Every Interface designated `published`, the \
+                       artifacts that specify or realize it (the machine-readable ICD), the \
+                       components on each side, and the project. Requirements, capabilities, \
+                       decisions, verifications and history stay home, and the result COUNTS what \
+                       it withheld — a recipient cannot tell a small design from a filtered one, \
+                       so the note says which they are holding. Use it to hand a boundary to \
+                       another team or a vendor without handing over the design. Deliberately not \
+                       part of the export hash chain: this is a derived view, not a record of the \
+                       design, and it is not a backup. A design with no designated boundary gets \
+                       an EMPTY SURFACE warning rather than a quietly empty file.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn export_surface(
+        &self,
+        Parameters(req): Parameters<ExportSurfaceReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        let surface = g.export_surface().map_err(dyno_err)?;
+        match req.path.as_deref() {
+            None => ok_json(surface),
+            Some(path) => {
+                let rendered = serde_json::to_string_pretty(&surface.document).map_err(ser_err)?;
+                if !req.overwrite.unwrap_or(false) && std::path::Path::new(path).exists() {
+                    return Err(McpError::invalid_params(
+                        format!(
+                            "{path} already exists — pass overwrite: true to replace it. A \
+                             published surface is meant to be shared, so clobbering one silently \
+                             could replace what a consumer is building against."
+                        ),
+                        None,
+                    ));
+                }
+                std::fs::write(path, format!("{rendered}\n")).map_err(|e| {
+                    McpError::internal_error(format!("failed to write {path}: {e}"), None)
+                })?;
+                ok_json(json!({
+                    "path": path,
+                    "published": surface.published,
+                    "nodes": surface.document.nodes.len(),
+                    "edges": surface.document.edges.len(),
+                    "withheld_nodes": surface.withheld_nodes,
+                    "withheld_edges": surface.withheld_edges,
+                    "content_hash": surface.document.content_hash,
+                    "note": surface.note,
+                }))
+            }
+        }
     }
 
     #[tool(

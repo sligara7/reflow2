@@ -28,13 +28,14 @@
 //! in time. Neither substitutes for the other: the temporal axis cannot recover
 //! a corrupted store, and an export cannot explain a requirement's history.
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 use dynograph_core::{DynoError, Value};
 use dynograph_storage::{StoredEdge, StoredNode};
 use serde::{Deserialize, Serialize};
 
 use crate::graph::DesignGraph;
+use crate::nodes::{edge, node};
 use crate::provenance::GraphStamp;
 
 /// Sorted property bag — `BTreeMap` so the JSON is byte-stable.
@@ -351,5 +352,144 @@ impl DesignGraph {
                 Err(e)
             }
         }
+    }
+}
+
+/// What a published-surface export contains, and what it deliberately does not.
+///
+/// The report is the load-bearing half. A surface document is a *partial* design
+/// by construction, so shipping one without saying what was held back would be
+/// the silent drop rule 6 forbids — and worse than usual here, because the
+/// recipient cannot tell a small design from a heavily-filtered one.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct SurfaceExport {
+    /// The document: published Interfaces, what specifies them, and the parts on
+    /// each side. Importable like any export.
+    pub document: GraphExport,
+    /// The published boundaries this surface is *about*, sorted.
+    pub published: Vec<String>,
+    /// Design nodes kept back as internal.
+    pub withheld_nodes: usize,
+    /// Edges dropped because at least one endpoint was withheld.
+    pub withheld_edges: usize,
+    /// Said in words, because a count alone does not tell the recipient what
+    /// kind of document they are holding.
+    pub note: String,
+}
+
+impl DesignGraph {
+    /// Export **only the published surface** — the contracts others are entitled
+    /// to rely on, and nothing internal.
+    ///
+    /// The first piece of `req:design-composes` that every architecture answer
+    /// needs: whatever composes, it composes through a published boundary rather
+    /// than by reaching into another system's internals. Also the openness half
+    /// of `req:key-interfaces` ("a design that publishes a surface should be able
+    /// to export exactly that surface").
+    ///
+    /// **What goes in**: every Interface designated `published`, the artifacts
+    /// that `SPECIFIES` or `REALIZES` it (the machine-readable contract — an
+    /// OpenAPI or protobuf file is the real ICD; both edges are honoured because
+    /// `link_artifact` writes REALIZES while the schema's intent for a contract
+    /// artifact is SPECIFIES), the Components that provide or consume it, and the
+    /// Project for provenance. Nodes are exported **as stored** — nothing is
+    /// trimmed or rewritten, because a fabricated node would import as a lie.
+    /// What leaks internals is the graph *beneath* a component, and that is what
+    /// is excluded.
+    ///
+    /// **What stays home**: requirements, capabilities, decisions, verifications,
+    /// history, provenance, and every internal component and contract. All
+    /// counted, never silently dropped.
+    ///
+    /// **It does not join the file's hash chain.** `prev_content_hash` is left
+    /// unset: this is a derived view, not a record of the design, and letting it
+    /// advance the chain would make `compare_designs` treat a published surface
+    /// as an ancestor of the full design (`dec:export-hash-chain`).
+    pub fn export_surface(&self) -> Result<SurfaceExport, DynoError> {
+        let published = self.published_interfaces()?;
+        let mut keep: BTreeSet<String> = published.clone();
+
+        // The parts on each side of a published contract: PROVIDES/CONSUMES run
+        // from the Component to the Interface, so the sides are its incoming.
+        for ifc in &published {
+            for e in self.incoming(ifc, None)? {
+                if e.edge_type == edge::PROVIDES || e.edge_type == edge::CONSUMES {
+                    keep.insert(e.from_id.clone());
+                }
+            }
+            // The contract artifacts. SPECIFIES is the modelled intent — "an
+            // OpenAPI / protobuf / IDL file SPECIFIES an Interface (its
+            // authoritative contract)" — but `link_artifact` writes REALIZES, so
+            // in practice the ICD arrives on either edge. Both belong on a
+            // published surface: one is the contract as written, the other as
+            // built, and a recipient needs whichever exists.
+            for e in self.incoming(ifc, None)? {
+                if e.edge_type == edge::SPECIFIES || e.edge_type == edge::REALIZES {
+                    keep.insert(e.from_id.clone());
+                }
+            }
+        }
+        // The Project, so a recipient knows whose surface this is.
+        for p in self.scan_nodes(node::PROJECT)? {
+            keep.insert(p.node_id);
+        }
+
+        let full = self.export_graph()?;
+        let total_nodes = full.nodes.len();
+        let total_edges = full.edges.len();
+        let nodes: Vec<ExportedNode> = full
+            .nodes
+            .into_iter()
+            .filter(|n| keep.contains(&n.node_id))
+            .collect();
+        let edges: Vec<ExportedEdge> = full
+            .edges
+            .into_iter()
+            .filter(|e| keep.contains(&e.from_id) && keep.contains(&e.to_id))
+            .collect();
+
+        let withheld_nodes = total_nodes - nodes.len();
+        let withheld_edges = total_edges - edges.len();
+        let note = if published.is_empty() {
+            // The dangerous case: an empty surface looks exactly like a design
+            // with nothing to share, and someone could publish it believing they
+            // had shared something. Say so unmistakably rather than refusing —
+            // "prove I publish nothing" is a legitimate question.
+            format!(
+                "EMPTY SURFACE: no Interface is designated `published`, so this document exposes \
+                 nothing. {withheld_nodes} node(s) and {withheld_edges} edge(s) were withheld as \
+                 internal. If you meant to publish a boundary, designate it first \
+                 (set_interface_designation) — an empty surface is indistinguishable from a design \
+                 with nothing in it."
+            )
+        } else {
+            format!(
+                "Published surface: {} boundary(ies), {} node(s) exposed. WITHHELD as internal: \
+                 {withheld_nodes} node(s), {withheld_edges} edge(s) — requirements, capabilities, \
+                 decisions, verifications and history stay home. This is a partial design by \
+                 design; it is not a backup and cannot be imported as one.",
+                published.len(),
+                nodes.len()
+            )
+        };
+
+        let mut document = GraphExport {
+            stamp: Some(GraphStamp::current(self.schema())),
+            content_hash: None,
+            // Deliberately not chained — see the doc comment.
+            prev_content_hash: None,
+            graph_id: self.graph_id().to_string(),
+            nodes,
+            edges,
+        };
+        document.content_hash = Some(document.compute_content_hash());
+
+        Ok(SurfaceExport {
+            document,
+            published: published.into_iter().collect(),
+            withheld_nodes,
+            withheld_edges,
+            note,
+        })
     }
 }

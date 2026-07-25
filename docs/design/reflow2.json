@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:359851f2e75b475bf5decc078df26878effc1d6ae1472994cfa8599c9189b42f",
+  "content_hash": "sha256:08e8d1d0e51a716439595d0c8cacad4de66ce7ba7fdf76736f1fe583ffbd4d62",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -360,6 +360,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:publish-surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -879,6 +887,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:surface-export",
+      "properties": {},
+      "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:two-answers-2026-07-25",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -1218,6 +1232,12 @@
       "from_id": "snap:epoch:kpp-capture:req:reviewed-defects",
       "properties": {},
       "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:surface-export:cap:portability",
+      "properties": {},
+      "to_id": "epoch:surface-export"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -3992,6 +4012,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:surface-export",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:surface-export",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:surface-export",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:portability"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:two-answers-2026-07-25",
       "properties": {
         "accepted_baseline": false,
@@ -4136,6 +4183,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:propagate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:publish-surface"
     },
     {
       "edge_type": "CONTAINS",
@@ -6721,6 +6774,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:key-interfaces",
       "properties": {},
+      "to_id": "decision:ack:85a8e6f0446bbbfd"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:key-interfaces",
+      "properties": {},
       "to_id": "decision:ack:c9fd9c1708bed944"
     },
     {
@@ -7208,6 +7267,18 @@
       "from_id": "cap:propagate",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:publish-surface",
+      "properties": {},
+      "to_id": "dec:export-hash-chain"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:publish-surface",
+      "properties": {},
+      "to_id": "decision:ack:85a8e6f0446bbbfd"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8060,6 +8131,12 @@
       "from_id": "cap:kpp-proposal",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:cap:kpp-proposal"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:portability",
+      "properties": {},
+      "to_id": "snap:epoch:surface-export:cap:portability"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -12086,6 +12163,18 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:publish-surface",
+      "properties": {},
+      "to_id": "req:design-reachable-without-the-repo"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:publish-surface",
+      "properties": {},
+      "to_id": "req:key-interfaces"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:questions",
       "properties": {},
       "to_id": "req:no-se-knowledge"
@@ -12455,6 +12544,12 @@
       "from_id": "ver:propagate",
       "properties": {},
       "to_id": "cap:propagate"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:publish-surface",
+      "properties": {},
+      "to_id": "cap:publish-surface"
     },
     {
       "edge_type": "VERIFIES",
@@ -13157,7 +13252,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8a8263be743e434f",
+        "checksum": "sha256:8c7fdcb3b35ed77d",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
         "status": "realized"
@@ -13465,7 +13560,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d10660c4fce94f91",
+        "checksum": "sha256:3b64418bf2aebe59",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -14074,6 +14169,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Propagate impact",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:publish-surface",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-07-25 as `export_surface`. The first piece of req:design-composes, and deliberately the piece that EVERY answer to dec:nested-graphs needs: whatever composes, it composes through a published boundary rather than by reaching into another system's internals. Also the openness half of req:key-interfaces (\"a design that publishes a surface should be able to export exactly that surface\"). Contents: every Interface designated `published`, the artifacts that SPECIFIES or REALIZES it, the Components on each side, and the Project so a recipient knows whose surface they hold. Requirements, capabilities, decisions, verifications, history and every internal component stay home. Nodes are exported AS STORED — nothing trimmed or rewritten, because a fabricated node would import as a lie; what leaks internals is the graph BENEATH a component, and that is what is excluded. THE HONEST HALF, and the reason this is not just a filter: a recipient cannot tell a small design from a heavily filtered one, so the result counts and NAMES what it withheld, and says what the document is not (\"not a backup\"). A design with no designated boundary gets an EMPTY SURFACE warning rather than a quietly empty file — that case is dangerous precisely because it is indistinguishable from having nothing to share, and someone could publish it believing otherwise. It is NOT refused, because \"prove I publish nothing\" is a legitimate question. FOUND BY IMPACT-CHECK, before writing any code: propagate_change on cap:portability put dec:export-hash-chain in the direct ring, which is what stopped the surface from joining the file's hash chain. A derived view that advanced prev_content_hash would make compare_designs treat a published surface as an ancestor of the full design. FOUND BY A TEST: link_artifact writes REALIZES while the schema's intent for a contract artifact is SPECIFIES, so an ICD registered the ordinary way was missing from the surface. Both edges are honoured now — one is the contract as written, the other as built, and a recipient needs whichever exists. 7 tests, including the round trip: the other side imports it with zero skipped edges, gets the contract, and does not get our requirements.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Publish just the boundary — the contracts others may rely on, and nothing internal",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -14969,6 +15077,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Reconcile genesis-stub survivor nodes with the committed model (user-approved 2026-07-20): merge cap:install→cap:kit, cap:artifacts→cap:reconcile-built, req:past-preserved→req:intent-preserved; wire cap:store; satisfy req:platform via cap:kit; verify cap:adopt from the storyflow trial"
+      }
+    },
+    {
+      "node_id": "chg:surface-export",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Export just the published surface — the one piece of composition that every architecture option needs"
       }
     },
     {
@@ -16344,6 +16460,16 @@
       }
     },
     {
+      "node_id": "decision:ack:85a8e6f0446bbbfd",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:85a8e6f0446bbbfd.",
+        "name": "Reviewed: gap:85a8e6f0446bbbfd",
+        "rationale": "User (who:ajs, standing policy from 2026-07-23, applied again 2026-07-25): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:publish-surface joined the set (45 → 46). The trial here writes itself and is the sharpest one this project has had available: publish reflow2's own surface — ifc:mcp-tools and ifc:graph-export are now designated, so the document is real — hand it to Alex, and see whether he can build against it WITHOUT the repo. That is req:design-reachable-without-the-repo tested by the only person who can test it. What the seven tests cannot tell us is whether the boundary set is RIGHT: a design that designates too little publishes a useless surface, and one that designates too much has published its internals under another name. Only a consumer discovers which.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:90a90e90df05c31a",
       "node_type": "Decision",
       "properties": {
@@ -16658,6 +16784,15 @@
         "epoch_type": "revision",
         "name": "KPP capture half built (2026-07-25)",
         "sequence": 120
+      }
+    },
+    {
+      "node_id": "epoch:surface-export",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Published-surface export (2026-07-25, post-v0.11.0)",
+        "sequence": 140
       }
     },
     {
@@ -17753,6 +17888,7 @@
       "node_id": "ifc:graph-export",
       "node_type": "Interface",
       "properties": {
+        "designation": "published",
         "medium": "REST",
         "name": "Design export document",
         "provenance": "authored"
@@ -17762,6 +17898,7 @@
       "node_id": "ifc:mcp-tools",
       "node_type": "Interface",
       "properties": {
+        "designation": "published",
         "medium": "REST",
         "name": "MCP tool surface",
         "provenance": "authored"
@@ -18627,6 +18764,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:surface-export:cap:portability",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:portability\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:graph\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:export-hash-chain\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:repo-file-embedded\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:22386cd2f1a1fa96\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:233d08765e4cfc7b\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:593e26aed260f0a3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:695a599323c7edfe\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:75d815c93cad4c86\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:9b2071dba7dfe759\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:d31369434b7b1347\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:survives-upgrade\",\"properties\":{}}]",
+        "state": "{\"description\":\"Move a design across machines and versions.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Export and import a design\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:portability",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "ver:adopt-storyflow",
       "node_type": "Verification",
       "properties": {
@@ -18978,6 +19125,18 @@
       }
     },
     {
+      "node_id": "ver:publish-surface",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "integration",
+        "method": "test",
+        "name": "The surface carries the boundary, its ICD and both sides; nothing internal leaves; the note names what was withheld; an undesignated design gets an EMPTY SURFACE warning; no dangling edges; it does not join the hash chain; and the other side imports it cleanly (tests/surface_export.rs, 7 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:questions",
       "node_type": "Verification",
       "properties": {
@@ -19207,7 +19366,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a2c3477809c4076ba43d8a98c3178edf6b1d677e947ec36d8c8fbad37119c657",
+  "prev_content_hash": "sha256:359851f2e75b475bf5decc078df26878effc1d6ae1472994cfa8599c9189b42f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

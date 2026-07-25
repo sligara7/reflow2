@@ -31,6 +31,35 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`export_surface` — publish just the boundary** (`cap:publish-surface`). The
+  contracts others are entitled to rely on, and nothing internal: every Interface
+  designated `published`, the artifacts that specify or realize it (the real ICD),
+  the components on each side, and the project. Requirements, capabilities,
+  decisions, verifications and history stay home.
+
+  **It counts and names what it withheld.** A recipient cannot tell a small design
+  from a heavily filtered one, so the note says which they are holding — and says
+  what the document is *not* ("not a backup"). A design with no designated boundary
+  gets an `EMPTY SURFACE` warning rather than a quietly empty file, because that
+  case is indistinguishable from having nothing to share and someone could publish
+  it believing otherwise. Not refused, though: *"prove I publish nothing"* is a
+  legitimate question.
+
+  Deliberately **not part of the export hash chain** — a derived view must not read
+  as an ancestor of the full design. That constraint came from running impact-check
+  *before* writing any code: `dec:export-hash-chain` was in the direct ring.
+
+  This is the first piece of `req:design-composes`, chosen because every answer to
+  the open federation question needs it: whatever composes, it composes through a
+  published boundary rather than by reaching into another system's internals.
+
+- **reflow2's own boundaries are now declared**: `ifc:mcp-tools` and
+  `ifc:graph-export` are `published`; `ifc:core-api` stays internal, because it is
+  the seam between reflow2's own modules and no consumer touches it. Impact
+  analysis now reports crossings against them.
+
 ## [0.11.0] — 2026-07-25
 
 **A minor bump: two schema changes, and the day reflow2 was used hard enough on
