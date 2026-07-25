@@ -263,14 +263,17 @@ joined by *traceability* edges) for HEAL's topology detectors.
   shared traceability set (`nodes::is_traceability_edge`). `INCLUDES` (Release → Artifact/
   Component) *is* in that set as of the v0.5.0 as-released work — a changed artifact reaches
   the releases that ship it, and a Release+Environment pair is no longer a disconnected island.
-- **A release ships the documentation too — model it.** When cutting a release, `release_includes`
-  must list `cmp:docs` alongside the binary and kit, because documentation is part of the
-  deliverable (Anthony, 2026-07-24: "it'd be like if I designed a fighter jet using reflow2, but
-  then didn't deliver any documentation on it to the user"). The nine releases up to v0.10.1 do
-  **not** record it and are deliberately left that way — they genuinely shipped a README and a
-  setup guide, but the design did not model documentation as a deliverable until 2026-07-25, and
-  back-filling would reconstruct history rather than record it (`dec:intent-preserved`). Starts
-  from the next release, on the user's call.
+- **A release records everything it actually ships — including the documentation.** When cutting a
+  release, `release_includes` must list every component that goes out, not a hand-maintained
+  roll-call: anything built since the last cut raises `unreleased_component` until its release
+  records it, and that gap is the reminder working rather than noise. `cmp:docs` is called out
+  because documentation is part of the deliverable and it is the one people forget (Anthony,
+  2026-07-24: "it'd be like if I designed a fighter jet using reflow2, but then didn't deliver any
+  documentation on it to the user"). The nine releases up to v0.10.1 do **not** record documentation
+  and are deliberately left that way — they genuinely shipped a README and a setup guide, but the
+  design did not model documentation as a deliverable until 2026-07-25, and back-filling would
+  reconstruct history rather than record it (`dec:intent-preserved`). Starts from the next release,
+  on the user's call.
 - **Structural topology detectors are selective.** A design's golden thread is tree-shaped,
   where every internal node is a naive articulation point — so `single_point_of_failure`
   only fires when a node separates ≥2 real subsystems (see `structure.rs`).
