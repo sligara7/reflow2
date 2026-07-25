@@ -7,3 +7,4 @@
 pub mod degraded;
 pub mod dto;
 pub mod service;
+pub mod skills;

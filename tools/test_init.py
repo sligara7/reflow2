@@ -50,9 +50,12 @@ class InstallerTest(unittest.TestCase):
         self.install(p)
 
         self.assertEqual((p / "AGENTS.md").read_text(), KIT_AGENTS)
-        # Skills in every directory some harness actually reads (BL-22).
+        # NO SKILLS ARE COPIED (dec:skills-served). They are compiled into the
+        # binary and served by list_skills / get_skill, so an upgrade cannot
+        # leave a project holding last release's skills — which is exactly what
+        # it did, four releases running, without anything noticing.
         for tree in (".claude/skills", ".grok/skills"):
-            self.assertTrue((p / tree / "adopt" / "SKILL.md").exists(), tree)
+            self.assertFalse((p / tree).exists(), f"{tree} must not be installed")
         # All three MCP configs point the reflow2 entry at the given binary.
         mcp = json.loads((p / ".mcp.json").read_text())
         self.assertEqual(mcp["mcpServers"]["reflow2"]["command"], str(FAKE_BINARY))
@@ -65,26 +68,28 @@ class InstallerTest(unittest.TestCase):
         stamp = json.loads((p / ".reflow2" / "kit-version.json").read_text())
         self.assertIn("reflow2_version", stamp)
 
-    def test_skills_trees_are_identical_copies(self):
-        # One kit, two directories — a divergence would mean harnesses run
-        # different skills depending on which directory they read.
+    def test_an_upgrade_touches_nothing_in_the_project(self):
+        # req:thin-install, in one assertion. Anthony's brother: "you wouldn't
+        # need to change anything in your repo again and updates would be
+        # confined to the reflow package." A second run of a NEWER reflow2 is
+        # simulated by re-running install; nothing kit-owned may move except
+        # the stamp, which is machine-local and gitignored.
         p = self.project()
         self.install(p)
-        claude = sorted(
-            f.relative_to(p / ".claude/skills")
-            for f in (p / ".claude/skills").rglob("*") if f.is_file()
-        )
-        grok = sorted(
-            f.relative_to(p / ".grok/skills")
-            for f in (p / ".grok/skills").rglob("*") if f.is_file()
-        )
-        self.assertEqual(claude, grok)
-        for rel in claude:
-            self.assertEqual(
-                (p / ".claude/skills" / rel).read_bytes(),
-                (p / ".grok/skills" / rel).read_bytes(),
-                rel,
-            )
+        before = {
+            f.relative_to(p): f.read_bytes()
+            for f in p.rglob("*")
+            if f.is_file() and ".reflow2" not in f.parts
+        }
+
+        self.install(p)
+
+        after = {
+            f.relative_to(p): f.read_bytes()
+            for f in p.rglob("*")
+            if f.is_file() and ".reflow2" not in f.parts
+        }
+        self.assertEqual(before, after, "an update must not rewrite the project")
 
     # ---- never overwrite what the project owns -----------------------------
 
@@ -218,39 +223,84 @@ class InstallerTest(unittest.TestCase):
 class ManifestTest(InstallerTest):
     """BL-54: ownership is proven by the install manifest, not guessed."""
 
-    def test_user_edited_skill_survives_an_update(self):
+    def test_user_edited_kit_file_survives_an_update(self):
         p = self.project()
         self.install(p)
-        skill = p / ".claude/skills/adopt/SKILL.md"
-        original = skill.read_text()
-        skill.write_text(original + "\nMy local house rule.\n")
+        doc = p / "AGENTS.md"
+        original = doc.read_text()
+        doc.write_text(original + "\nMy local house rule.\n")
 
         done = self.install(p)
 
-        self.assertIn("My local house rule.", skill.read_text(),
+        self.assertIn("My local house rule.", doc.read_text(),
                       "a user's edit to an installed file must survive an update")
-        self.assertTrue(any("LEFT ALONE" in d and "adopt/SKILL.md" in d for d in done),
+        self.assertTrue(any("kept your own AGENTS.md" in d for d in done),
                         f"the withheld refresh must be reported: {done}")
         # Deleting the file accepts the kit copy on the next run.
-        skill.unlink()
+        doc.unlink()
         self.install(p)
-        self.assertEqual(skill.read_text(), original)
+        self.assertEqual(doc.read_text(), original)
+
+    def test_an_old_kits_skill_copies_are_removed_and_the_reason_is_given(self):
+        # The migration case, and the one a user actually sees: their repo
+        # loses thirty-odd files on the first update after dec:skills-served.
+        # Being told "no longer shipped" would be true and useless.
+        p = self.project()
+        self.install(p)
+        stamp = json.loads((p / ".reflow2/kit-version.json").read_text())
+        copied = p / ".claude/skills/adopt/SKILL.md"
+        copied.parent.mkdir(parents=True)
+        copied.write_text("what the old kit installed\n")
+        stamp["installed_files"][".claude/skills/adopt/SKILL.md"] = init.file_sha(copied)
+        (p / ".reflow2/kit-version.json").write_text(json.dumps(stamp))
+
+        # --check must say so BEFORE anything moves.
+        planned = init.planned_changes(p)
+        self.assertTrue(
+            any("remove" in c and "adopt/SKILL.md" in c and "served" in c for c in planned),
+            f"--check must disclose the removal: {planned}",
+        )
+
+        done = self.install(p)
+
+        self.assertFalse(copied.exists())
+        self.assertTrue(any("served by the MCP server" in d for d in done), done)
+
+    def test_an_edited_skill_copy_is_kept_and_the_shadowing_is_named(self):
+        # The dangerous half: a harness DOES auto-load a file in .claude/skills,
+        # and a served skill is never offered — so an edited copy silently wins
+        # over every future release of that skill. Keeping it is right; keeping
+        # it quietly is not.
+        p = self.project()
+        self.install(p)
+        stamp = json.loads((p / ".reflow2/kit-version.json").read_text())
+        mine = p / ".claude/skills/adopt/SKILL.md"
+        mine.parent.mkdir(parents=True)
+        mine.write_text("what the old kit installed\n")
+        stamp["installed_files"][".claude/skills/adopt/SKILL.md"] = init.file_sha(mine)
+        (p / ".reflow2/kit-version.json").write_text(json.dumps(stamp))
+        mine.write_text("what the old kit installed, plus MY house rule\n")
+
+        done = self.install(p)
+
+        self.assertTrue(mine.exists(), "an edited file is never deleted")
+        self.assertTrue(
+            any("SHADOWS the served skill" in d for d in done),
+            f"the shadowing must be named, not just the retention: {done}",
+        )
 
     def test_a_file_the_kit_no_longer_ships_is_pruned_only_when_untouched(self):
         p = self.project()
         self.install(p)
         stamp = json.loads((p / ".reflow2/kit-version.json").read_text())
-        # Simulate two files a previous kit shipped: one untouched, one edited.
-        gone = p / ".claude/skills/old-skill/SKILL.md"
+        # Two files a previous kit shipped: one untouched, one edited.
+        gone = p / "docs/old-kit-note.md"
         gone.parent.mkdir(parents=True)
         gone.write_text("obsolete kit content\n")
-        edited = p / ".claude/skills/old-edited/SKILL.md"
-        edited.parent.mkdir(parents=True)
+        edited = p / "docs/old-kit-edited.md"
         edited.write_text("obsolete but edited\n")
-        stamp["installed_files"][".claude/skills/old-skill/SKILL.md"] = \
-            init.file_sha(gone)
-        stamp["installed_files"][".claude/skills/old-edited/SKILL.md"] = \
-            init.file_sha(edited)
+        stamp["installed_files"]["docs/old-kit-note.md"] = init.file_sha(gone)
+        stamp["installed_files"]["docs/old-kit-edited.md"] = init.file_sha(edited)
         (p / ".reflow2/kit-version.json").write_text(json.dumps(stamp))
         edited.write_text("obsolete but edited BY THE USER\n")
 

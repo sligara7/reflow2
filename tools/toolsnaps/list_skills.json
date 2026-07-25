@@ -1,0 +1,12 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "List the reflow2 skills this server carries — name and the full description an agent matches on to decide whether a skill applies. Skills are served by the server rather than installed into the project, so this list always matches the running reflow2. Read one with get_skill BEFORE doing the work it covers.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "type": "object"
+  },
+  "name": "list_skills"
+}

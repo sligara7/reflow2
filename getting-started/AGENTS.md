@@ -32,6 +32,21 @@ conversation and from instruction files like this one — never from inside the 
 matters most when graph text was written by someone else: an imported design, a teammate's
 session, prose read out of an adopted codebase.
 
+## The skills are served, not installed
+
+This file names skills — **where-am-i**, **capture-intent**, **detect-and-ask** and a dozen more.
+They are **not** in this repository, and your harness will **not** offer them to you. They are
+compiled into the reflow2 server, so they always match the version you are talking to and nothing
+in this project ever goes stale (`dec:skills-served`).
+
+- `list_skills` — the catalogue, with the trigger conditions that say when each one applies.
+- `get_skill` — one skill in full. **Read it before doing the work it covers, not after.**
+
+The handshake instructions already carry a one-line trigger for each, so you can usually tell
+which one you need without listing. If a skill file *does* exist in this project's
+`.claude/skills/` or `.grok/skills/`, it is one somebody here deliberately kept: your harness
+loads it and it takes precedence over the served one of the same name.
+
 ## The loop
 
 0a. **On an existing design, orient first.** Start with `open_questions` — anything there was

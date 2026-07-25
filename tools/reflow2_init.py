@@ -16,10 +16,18 @@ its code should be laid out, is a decision the design loop makes with you. A
 scaffold that guessed would be committing a design decision before the design
 exists, which is the thing reflow2 is for.
 
-Re-run it any time to update: the kit is copied into your project, so it
-otherwise freezes at install time while reflow2 keeps moving. Re-running
-refreshes the instructions and skills, leaves your design graph and your own
-files alone, and tells you exactly what changed.
+**The skills are not installed** — they are served by the MCP server
+(`dec:skills-served`), so they always match the reflow2 you are running and
+upgrading reflow2 changes nothing in your project. What lands in your repo is
+the instructions file, a pointer line in whatever instruction files you already
+have, the MCP configs, and `.reflow2/`. The first run after this change also
+*removes* the skill copies an older kit left behind — untouched ones deleted,
+edited ones kept and reported, because your harness would go on loading them in
+preference to the served ones.
+
+Re-run it any time; it leaves your design graph and your own files alone and
+tells you exactly what changed. `--check` first if you want the list before
+anything moves.
 
 Standard library only.
 """
@@ -96,19 +104,28 @@ def foreign_owner(src: Path, dst: Path) -> str | None:
         return None
     return None if existing[0].strip() == head else "it is not a reflow2 kit file"
 
-# Skills go to every directory some harness actually searches. There is no
-# single location: `.claude/skills/` is read by Claude Code, OpenCode and
-# Copilot/VS Code (the latter two name it "Claude-compatible" outright), while
-# Grok CLI reads only `.grok/skills/`. Installing one of them means the other
-# harnesses see an AGENTS.md naming skills they cannot load — which is exactly
-# what happened: the kit shipped `.grok/` alone, so the Grok trial under
-# opencode found no reflow2 skills at all and had to read the files by hand.
+# NOTHING IS COPIED ANY MORE — the skills are served by the MCP server
+# (`dec:skills-served`, accepted 2026-07-25).
 #
-# Adding a harness here is one line. See docs/skills/README.md for the tables.
-TREES = [
-    (KIT / "skills", ".claude/skills"),
-    (KIT / "skills", ".grok/skills"),
-]
+# This list held `.claude/skills` and `.grok/skills`, because no two harnesses
+# search the same directory and a skill outside the one yours reads is a file
+# nobody loads. That was correct, and it was also the whole problem: fifteen
+# skills copied into two trees meant every reflow2 release rewrote thirty-odd
+# files in a project that had nothing to do with it — and an installed kit
+# silently froze while reflow2 moved on. reflow2's own manifest sat FOUR
+# releases stale (0.8.0/12 skills against 0.11.0/15) and nothing noticed.
+#
+# Anthony's brother named the fix: setup should be a paragraph plus a server
+# address, "and updates would be confined to the reflow package". So the skills
+# are compiled into the binary and served by `list_skills` / `get_skill`, with
+# the catalogue in the server instructions — which is the one channel a client
+# puts in the agent's context without being asked.
+#
+# THE LIST IS KEPT, EMPTY, ON PURPOSE. Emptying it is what makes the existing
+# prune path below remove the copies a previous install left — untouched ones
+# deleted, edited ones kept and reported. Deleting the mechanism would have
+# stranded every existing install with skills that shadow the served ones.
+TREES: list[tuple[Path, str]] = []
 
 
 # Frontmatter every harness agrees on. A skill whose `name` is malformed, or
@@ -505,6 +522,23 @@ def planned_changes(project: Path) -> list[str]:
                 changes.append(f"create  {label}")
             elif not filecmp.cmp(path, dst, shallow=False):
                 changes.append(f"update  {label}")
+    # Files a previous kit installed that this one no longer ships — the
+    # thirty-odd skill copies, on the first update after dec:skills-served.
+    # --check that stayed silent about thirty deletions would be exactly the
+    # silent change this project forbids, and it is the run people trust
+    # before they let it touch a repo they care about.
+    shipped = {rel for _, rel in FILES}
+    shipped |= {SIDECAR.get(rel, f"REFLOW2_{rel}") for _, rel in FILES}
+    for src, rel in TREES:
+        shipped |= {str(Path(rel) / p.relative_to(src))
+                    for p in src.rglob("*") if p.is_file()}
+    for rel, recorded in sorted(installed_manifest(project).items()):
+        if rel in shipped or not (project / rel).exists():
+            continue
+        if file_sha(project / rel) == recorded:
+            changes.append(f"remove  {rel}  ({why_gone(rel)})")
+        else:
+            changes.append(f"keep    {rel}  (your edits — not removed)")
     for spec in MCP_CONFIGS:
         path = project / spec["path"]
         if not path.exists():
@@ -573,6 +607,22 @@ def backup_graph(project: Path, binary: Path) -> str | None:
 
 def file_sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def is_skill_path(rel: str) -> bool:
+    """A path a previous kit installed as a harness-loaded skill."""
+    return rel.startswith((".claude/skills/", ".grok/skills/"))
+
+
+def why_gone(rel: str) -> str:
+    """Why a file the kit used to ship is being removed.
+
+    "No longer shipped" is true and useless for the thirty-odd skill files a
+    first update after `dec:skills-served` deletes: someone watching their repo
+    empty out is owed the reason, not the mechanism.
+    """
+    return ("now served by the MCP server — call list_skills / get_skill"
+            if is_skill_path(rel) else "no longer shipped by the kit")
 
 
 def installed_manifest(project: Path) -> dict:
@@ -670,11 +720,20 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
             continue
         if file_sha(stale) == recorded:
             stale.unlink()
-            done.append(f"{rel}  removed (no longer shipped by the kit)")
+            done.append(f"{rel}  removed ({why_gone(rel)})")
         else:
             new_manifest[rel] = recorded
-            done.append(f"{rel}  no longer shipped by the kit, but it has "
-                        f"your edits — left in place")
+            if is_skill_path(rel):
+                # Not merely untidy: your harness DOES auto-load a file in a
+                # skills directory, and a served skill is never offered — so an
+                # edited copy silently wins over every future release of that
+                # skill. Keeping it is right; keeping it quietly is not.
+                done.append(f"{rel}  kept (your edits) — your harness will keep "
+                            f"loading it, and it SHADOWS the served skill of the "
+                            f"same name; delete it to follow the served one")
+            else:
+                done.append(f"{rel}  no longer shipped by the kit, but it has "
+                            f"your edits — left in place")
 
     # MCP config, with the binary path already resolved — the step people
     # previously had to hand-edit, and the one most likely to be got wrong.

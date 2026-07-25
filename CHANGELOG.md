@@ -31,6 +31,34 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **The skills are served by the server, not copied into your project**
+  (`cap:skills-served`, `dec:skills-served`) — **minor**, and the one release that
+  *removes* files from a consumer repo. See
+  [docs/upgrading-to-v0.12.0.md](docs/upgrading-to-v0.12.0.md).
+
+  Alex's feedback: setup should be a paragraph in the instructions file plus an
+  MCP entry, after which *"you wouldn't need to change anything in your repo
+  again and updates would be confined to the reflow package."* He was describing
+  a defect the installer's own docstring already conceded — the kit *"is copied
+  into your project, so it otherwise freezes at install time while reflow2 keeps
+  moving"* — and which had already bitten in the least visible place: reflow2's
+  installed manifest read 0.8.0 with twelve skills while the project was at
+  0.11.0 with fifteen, four releases running, unnoticed.
+
+  Skills are now compiled into the binary (`build.rs` embeds
+  `getting-started/skills`), served by **`list_skills`** and **`get_skill`**, and
+  advertised by a catalogue in the handshake instructions — the one channel a
+  client puts in the agent's context unasked. `reflow2_init.py` copies nothing,
+  and on the first run after upgrading it removes the copies an older kit left:
+  untouched files deleted *with the reason*, edited files kept and reported as
+  **shadowing** the served skill, because a harness does auto-load those.
+
+  The trade, stated rather than buried: a harness-native skill is auto-matched
+  from its description without the agent asking, and a served skill is not. That
+  is the price of never being stale, and it was accepted deliberately.
+
 ### Fixed
 
 - **A session that cannot open the graph now says so instead of vanishing**

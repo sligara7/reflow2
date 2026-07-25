@@ -1,0 +1,21 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Read one reflow2 skill in full, by name (see list_skills). Returns the whole SKILL.md — follow it as written. Call this BEFORE the work the skill covers, not after: these describe how to do the step, not how to report it.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "name": {
+        "description": "The skill's name, as `list_skills` reports it.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "type": "object"
+  },
+  "name": "get_skill"
+}

@@ -82,6 +82,12 @@ Three records, three questions — kept separate on purpose:
 - [design/reflow2.json](design/reflow2.json) — reflow2's own functional design as a reflow2 graph
   (~215 nodes), the durable record behind `tools/build_design_graph.py`.
 
+### 3½ · Upgrade notes — *read before updating a consumer project*
+- [upgrading-to-v0.12.0.md](upgrading-to-v0.12.0.md) — the skills leave your repository: served over MCP
+  instead of copied in, and the first release that *removes* files from a project.
+- [upgrading-to-v0.11.0.md](upgrading-to-v0.11.0.md) — two schema changes (Decision.status default,
+  Interface.designation).
+
 ### 3¾ · Direction — *the prescriptive graph* (candidate, not yet built)
 - [graph-analysis.md](graph-analysis.md) — use graph-theory tools (`dynograph-graph`/`-vector`/`-cluster`/`-game`) to *make* design decisions, not just record them — e.g. allocate functions to services by cohesion/coupling instead of by domain. Starts with edge **weights**.
 

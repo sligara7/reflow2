@@ -38,9 +38,22 @@ compatibility shim.
 | OpenCode | `opencode.json` — **no `.mcp.json` compatibility** |
 | Copilot / VS Code | `.vscode/mcp.json` |
 
-## What the kit installs, and why (BL-22, done)
+## Superseded: the skills are served now (`dec:skills-served`, 2026-07-25)
 
-`reflow2_init.py` now writes skills to **every** directory some harness searches, and an MCP
+The section below records why the kit wrote skills into two directory trees, and it was right for
+what it solved. It is no longer what happens. **Skills are compiled into the reflow2 binary and
+served over MCP** — `list_skills`, `get_skill`, and a catalogue in the handshake instructions — so
+they always match the running server and an upgrade touches nothing in a consumer's repo
+(`req:thin-install`). The installer still writes the MCP configs and the instructions file, and it
+*removes* skill copies an older kit left behind.
+
+Keep the tables below: they are still exactly right about **which directory each harness reads**,
+which is what makes the local-override rule work — a skill a project deliberately keeps in
+`.claude/skills/` is auto-loaded by the harness and takes precedence over the served one.
+
+## What the kit used to install, and why (BL-22, done)
+
+`reflow2_init.py` wrote skills to **every** directory some harness searches, and an MCP
 config in **every** format:
 
 | Harness | Skills | MCP |

@@ -4,12 +4,23 @@ Fifteen skills and eight slash commands. A **skill** is a prose workflow an agen
 when your situation matches its description, so the loop happens without you naming tools; a
 **slash command** is you asking for one on purpose.
 
-Skills ship in the consumer kit ([getting-started/skills/](getting-started/skills/)) and
-`tools/reflow2_init.py` installs them into both `.claude/skills/` and `.grok/skills/`, because
-every harness looks somewhere different ([docs/skills/README.md](docs/skills/README.md)). All three
-copies are byte-identical and `tools/skill_lint.py` enforces that. The slash commands live in
-`.claude/commands/` and are **not** installed into a consumer project — today they are a
-convenience for working on reflow2 itself.
+**Skills are served, not installed** (`dec:skills-served`, 2026-07-25). The source is
+[getting-started/skills/](getting-started/skills/); `build.rs` compiles it into the reflow2 binary,
+which serves it through **`list_skills`** and **`get_skill`** with a one-line catalogue in the
+handshake instructions. So a consumer project holds no skill files, the served set always matches
+the running server, and upgrading reflow2 changes nothing in your repo
+([docs/upgrading-to-v0.12.0.md](docs/upgrading-to-v0.12.0.md)).
+
+The cost, since it is real: a skill file on disk is auto-matched by your harness from its
+description, and a served one is not — the agent reads the catalogue and asks. A project that wants
+harness-native discovery for a particular skill can keep its own copy in `.claude/skills/`, which
+takes precedence over the served one.
+
+This repository still keeps `.claude/skills/` and `.grok/skills/` copies for working on reflow2
+itself; `tools/skill_lint.py` holds all three byte-identical, and
+`crates/reflow2-mcp/tests/served_skills.rs` holds the served set identical to the source. The slash
+commands live in `.claude/commands/` and are **not** installed into a consumer project — today they
+are a convenience for working on reflow2 itself.
 
 ## The loop, in the order you hit it
 
