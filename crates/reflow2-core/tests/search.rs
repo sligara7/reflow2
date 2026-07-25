@@ -43,9 +43,140 @@ fn without_the_feature_search_fails_loud_not_empty() {
     assert!(g.reindex_search().is_err(), "reindex refuses identically");
 }
 
+/// A graph whose requirements are worded the way real ones are — full
+/// sentences — so a query can be a *question* rather than a keyword. The
+/// wording deliberately mirrors two requirements from reflow2's own design that
+/// a natural-language question failed to find (see
+/// `a_natural_language_question_finds_the_requirement_it_asks_about`), plus a
+/// distractor sharing common words so the tests prove ranking and not merely
+/// retrieval.
+#[cfg(feature = "fulltext")]
+fn worded_like_real_requirements() -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    g.add_project("proj:1", "reflow2").expect("project");
+    g.add_requirement(
+        "req:concurrent",
+        "Several people can plan against one design without colliding",
+        "A team, not a single author, must be able to work on one design at the same time, \
+         with overlapping work surfaced as decidable conflicts rather than last-writer-wins.",
+    )
+    .expect("req");
+    g.add_requirement(
+        "req:upgrade",
+        "A design survives a reflow2 upgrade",
+        "An existing graph opens, or is refused loudly with what to do about it.",
+    )
+    .expect("req");
+    g.add_requirement(
+        "req:distractor",
+        "The core is deterministic and free of model dependencies",
+        "One design, one core: the runtime stays neutral to the interaction surface.",
+    )
+    .expect("req");
+    g
+}
+
 #[cfg(feature = "fulltext")]
 mod featured {
-    use super::thread;
+    use super::{thread, worded_like_real_requirements};
+
+    /// The regression this whole suite exists for, and the check
+    /// `ver:search-natural-language` names.
+    ///
+    /// Search used to AND its tokens, so a question phrased in a person's own
+    /// words — inevitably containing a word the corpus never happened to use —
+    /// returned NOTHING for a requirement that plainly existed. Zero hits reads
+    /// as "no such thing exists", and because `capture-intent` tells the agent
+    /// to search before adding and treats no-hits as licence to create, the
+    /// false negative did not merely fail to answer: it manufactured duplicates.
+    /// Fixed upstream in dynograph-foundation v0.11.0 by matching tokens as a
+    /// ranked disjunction.
+    ///
+    /// Pins the CLASS, not the instance: any question whose words only
+    /// partially overlap the target must still find it, and must rank it above
+    /// a document sharing merely a common word.
+    #[test]
+    fn a_natural_language_question_finds_the_requirement_it_asks_about() {
+        let g = worded_like_real_requirements();
+
+        // Not one of these words except "people" and "time" appears in the
+        // target, and "design" appears in two other requirements.
+        let asked = g
+            .search_design(
+                "multiple people working at the same time collaboration",
+                Some("Requirement"),
+                10,
+            )
+            .expect("search");
+        assert_eq!(
+            asked.hits.first().map(|h| h.node_id.as_str()),
+            Some("req:concurrent"),
+            "a question about people working simultaneously must find the requirement \
+             about it: {asked:?}"
+        );
+
+        // A different question, different target, same property.
+        let upgrade = g
+            .search_design(
+                "upgrade an existing graph to a new version without losing it",
+                Some("Requirement"),
+                10,
+            )
+            .expect("search");
+        assert_eq!(
+            upgrade.hits.first().map(|h| h.node_id.as_str()),
+            Some("req:upgrade"),
+            "a question about upgrading without loss must find the upgrade requirement: \
+             {upgrade:?}"
+        );
+    }
+
+    /// The minimal pin, reduced to one variable. Under the old rule this pair
+    /// was the whole bug: the bare term matched, and adding a single word the
+    /// corpus never used took the result to zero.
+    #[test]
+    fn one_unmatched_word_does_not_erase_a_real_match() {
+        let g = worded_like_real_requirements();
+
+        let bare = g
+            .search_design("upgrade", Some("Requirement"), 10)
+            .expect("search");
+        assert_eq!(
+            bare.hits.first().map(|h| h.node_id.as_str()),
+            Some("req:upgrade"),
+            "the bare term must match"
+        );
+
+        let noised = g
+            .search_design("upgrade zzzznotaword", Some("Requirement"), 10)
+            .expect("search");
+        assert_eq!(
+            noised.hits.first().map(|h| h.node_id.as_str()),
+            Some("req:upgrade"),
+            "an unmatched extra word must lower the score, never erase the hit: {noised:?}"
+        );
+    }
+
+    /// The other half of the contract, and the reason this is not simply
+    /// "match anything": a disjunction must still refuse. A question sharing no
+    /// vocabulary with the design has to come back empty, or "no hits" stops
+    /// carrying information and the duplicate problem returns from the other
+    /// direction.
+    #[test]
+    fn a_question_the_design_does_not_answer_still_returns_nothing() {
+        let g = worded_like_real_requirements();
+        let result = g
+            .search_design(
+                "hydraulic actuator torque specification",
+                Some("Requirement"),
+                10,
+            )
+            .expect("search");
+        assert!(
+            result.hits.is_empty(),
+            "no shared vocabulary must still mean no hits: {result:?}"
+        );
+    }
 
     #[test]
     fn search_finds_nodes_by_their_own_words() {

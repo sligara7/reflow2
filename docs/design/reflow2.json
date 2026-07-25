@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:565de8ea8ed1637b71644549d479e828ac1f65f05e3f7254d63681fe0a773075",
+  "content_hash": "sha256:94721f1db1f91721bd65f284fc958bdc7377e424fc407cd97407a0510a3dac13",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -516,6 +516,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:search-nl-defect",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:search-nl-verified",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -2492,6 +2498,24 @@
       "properties": {
         "accepted_baseline": false,
         "action": "added"
+      },
+      "to_id": "ver:search-natural-language"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:search-nl-verified",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:search"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:search-nl-verified",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
       },
       "to_id": "ver:search-natural-language"
     },
@@ -10314,6 +10338,14 @@
       }
     },
     {
+      "node_id": "chg:search-nl-verified",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Natural-language search proven fixed by a regression-verified test; ver:search-natural-language passing"
+      }
+    },
+    {
       "node_id": "chg:session-memory-capture",
       "node_type": "ChangeEvent",
       "properties": {
@@ -13285,13 +13317,13 @@
       "node_id": "ver:search-natural-language",
       "node_type": "Verification",
       "properties": {
-        "criteria": "FAILING, demonstrated 2026-07-24 against the live graph. Asking a natural-language question returns nothing for a requirement that plainly exists. Reproduced minimally: search_design(\"upgrade\", node_type=Requirement) returns req:survives-upgrade with score 8.29; search_design(\"upgrade zzzznotaword\") returns ZERO. One non-matching token annihilates a perfect match. Cause: dynograph-text TextIndex::search builds a BooleanQuery with Occur::Must per token — every token must occur (AND semantics), documented at crates/dynograph-text/src/lib.rs:257 in the foundation. reflow2's own tool description advertises the opposite: 'BM25 keyword search over every node's name/statement/description, ranked', which any reader takes as ranked OR retrieval where a missing term lowers the score rather than eliminating the hit. Real-world failures observed the same day, all returning zero against requirements that exist: 'multiple people working at the same time collaboration' (req:concurrent-planning exists, and the single token 'people' DOES find it), 'upgrade an existing graph to a new version without losing it' (req:survives-upgrade exists), 'ingest many markdown specification documents from a folder' (req:corpus-ingest exists). CONSEQUENCE BEYOND SEARCH: capture-intent instructs the agent to search before adding and treats no-hits as licence to create ('No hits is also information: record it and create freely'), so a false negative manufactures duplicate nodes — the defect actively degrades the graph it is meant to protect. This is also why prose files keep winning over the graph: the query surface cannot answer the question a person actually asks.",
+        "criteria": "PASSING as of 2026-07-24, proven by an automated test, not by an upstream claim. Location: crates/reflow2-core/tests/search.rs, featured arm (`cargo test -p reflow2-core --features fulltext --test search`), three cases. (1) `a_natural_language_question_finds_the_requirement_it_asks_about` — two full questions phrased in a person's own words, each of which shares only some vocabulary with its target, must rank that target first against a distractor sharing common words; pins the CLASS, not the instance. (2) `one_unmatched_word_does_not_erase_a_real_match` — the minimal pin reduced to one variable: `upgrade` matches, and `upgrade zzzznotaword` must still match. (3) `a_question_the_design_does_not_answer_still_returns_nothing` — the other half of the contract, because a disjunction that matched everything would destroy the information content of 'no hits' and bring the duplicate problem back from the other direction. REGRESSION PROOF, the step that makes this more than a decoration: the pins were temporarily reverted to dynograph-foundation v0.10.0 and the suite re-run. Cases (1) and (2) FAILED against the pre-fix build with exactly the reported symptom (SearchResult { hits: [] }) and PASS against v0.11.0; case (3) passes against both, correctly, since AND semantics also refused an unrelated question. A test that passes on the broken build proves nothing, so this was verified rather than assumed. Root cause fixed upstream in dynograph-foundation v0.11.0 (PRs #76, #77): TextIndex::search now matches tokens as a ranked disjunction — at least one token required, BM25 ordering — instead of requiring every token.",
         "kind": "verification",
         "last_run_at": "2026-07-24",
         "level": "integration",
         "method": "test",
         "name": "A natural-language question finds the requirement it is asking about",
-        "status": "failing"
+        "status": "passing"
       }
     },
     {
@@ -13363,7 +13395,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9a905d1e7a8f84d2b1fa58af13b8560cbc7a661a8496a41f4fdb696d0fe55119",
+  "prev_content_hash": "sha256:565de8ea8ed1637b71644549d479e828ac1f65f05e3f7254d63681fe0a773075",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
