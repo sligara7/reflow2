@@ -1645,7 +1645,8 @@ async fn change_event_declares_what_it_changed_atomically() {
         .await;
     assert!(refused.is_err(), "a missing affected node refuses the call");
     let events = jl!(s.scan_nodes(Parameters(ScanReq {
-        node_type: "ChangeEvent".into()
+        node_type: "ChangeEvent".into(),
+        ..Default::default()
     })));
     assert!(
         events.as_array().unwrap().is_empty(),
@@ -1953,7 +1954,8 @@ async fn read_side_loop_hint_fires_on_debt_then_only_on_change() {
 
     // First orientation read after the seeding writes surfaces the pointer once.
     let first = j!(s.scan_nodes(Parameters(ScanReq {
-        node_type: "Capability".into()
+        node_type: "Capability".into(),
+        ..Default::default()
     })));
     let hint = first
         .get("loop_hint")
@@ -1967,7 +1969,8 @@ async fn read_side_loop_hint_fires_on_debt_then_only_on_change() {
     // A second read with no write in between stays quiet — the picture has not
     // moved, and boilerplate on every read is the anti-pattern C rejects.
     let second = j!(s.scan_nodes(Parameters(ScanReq {
-        node_type: "Capability".into()
+        node_type: "Capability".into(),
+        ..Default::default()
     })));
     assert!(
         second.get("loop_hint").is_none(),
@@ -1992,7 +1995,8 @@ async fn read_side_loop_hint_fires_on_debt_then_only_on_change() {
         statement: "Input to render under 50ms.".into()
     })));
     let grown = j!(s.scan_nodes(Parameters(ScanReq {
-        node_type: "Capability".into()
+        node_type: "Capability".into(),
+        ..Default::default()
     })));
     assert!(
         grown.get("loop_hint").is_some(),
@@ -2015,10 +2019,198 @@ async fn read_side_loop_hint_silent_when_the_loop_is_clean() {
     // A clean loop attaches no read hint — the pointer is state-derived, not
     // static, so silence is the correct output here.
     let read = j!(s.scan_nodes(Parameters(ScanReq {
-        node_type: "Capability".into()
+        node_type: "Capability".into(),
+        ..Default::default()
     })));
     assert!(
         read.get("loop_hint").is_none(),
         "a clean loop attaches no loop_hint, got {read}"
     );
+}
+
+// ── Bounded reads and the tool catalogue (github-mcp-server study, 2026-07-25) ──
+
+#[tokio::test]
+async fn a_read_too_large_to_return_says_what_it_left_out() {
+    // The failure this closes happened to a real session: scan_nodes over 72
+    // Decisions returned 96,000 characters and the client truncated it. The
+    // drop was real, silent, and outside reflow2 where nothing could name it.
+    // A cap is allowed; an unnamed one is not (rule 6).
+    let s = ReflowService::in_memory().expect("in-memory service");
+    let prose = "x".repeat(3_000);
+    for i in 0..30 {
+        j!(s.add_capability(Parameters(CapabilityReq {
+            id: format!("cap:{i}"),
+            name: format!("Capability {i}"),
+            description: prose.clone(),
+            status: None,
+        })));
+    }
+
+    let page = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Capability".into(),
+        ..Default::default()
+    })));
+
+    assert_eq!(
+        page["total"], 30,
+        "total is how many exist, not how many fit"
+    );
+    let returned = page["returned"].as_u64().expect("returned");
+    assert!(returned < 30, "the payload budget must bite: {page}");
+    assert!(returned > 0, "something must come back");
+    assert_eq!(page["capped_by"], "size", "the cap must name itself");
+    assert_eq!(page["omitted"], 30 - returned, "and count what it withheld");
+    assert_eq!(
+        page["next_offset"], returned,
+        "and say where to resume, or the rest is unreachable"
+    );
+    assert_eq!(
+        page["count"], returned,
+        "count keeps meaning items.len() — an old caller reading {{count, items}} is unaffected"
+    );
+
+    // Resuming from next_offset reaches the rest: paging is real, not advice.
+    let rest = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Capability".into(),
+        offset: Some(returned as usize),
+        ..Default::default()
+    })));
+    assert!(rest["returned"].as_u64().unwrap() > 0, "{rest}");
+    assert_eq!(rest["offset"], returned);
+}
+
+#[tokio::test]
+async fn a_single_node_larger_than_the_budget_is_still_returned() {
+    // Otherwise a big node becomes unreachable rather than merely expensive,
+    // and an unreachable node is a silent drop by another name.
+    let s = ReflowService::in_memory().expect("in-memory service");
+    j!(s.add_capability(Parameters(CapabilityReq {
+        id: "cap:huge".into(),
+        name: "Huge".into(),
+        description: "y".repeat(60_000),
+        status: None,
+    })));
+
+    let page = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Capability".into(),
+        ..Default::default()
+    })));
+    assert_eq!(page["returned"], 1, "{}", page["capped_by"]);
+    assert_eq!(page["omitted"], 0);
+}
+
+#[tokio::test]
+async fn brief_gives_the_shape_without_the_prose() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    j!(s.add_capability(Parameters(CapabilityReq {
+        id: "cap:one".into(),
+        name: "The one".into(),
+        description: "z".repeat(5_000),
+        status: None,
+    })));
+
+    let page = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Capability".into(),
+        brief: Some(true),
+        ..Default::default()
+    })));
+
+    assert_eq!(page["brief"], true);
+    let item = &page["items"][0];
+    assert_eq!(item["node_id"], "cap:one");
+    assert_eq!(item["name"], "The one");
+    assert_eq!(
+        item["status"], "planned",
+        "status is what orientation needs"
+    );
+    assert!(
+        item.get("properties").is_none(),
+        "brief must not carry the prose it exists to avoid: {item}"
+    );
+}
+
+#[tokio::test]
+async fn an_explicit_limit_is_reported_as_the_reason_it_stopped() {
+    // A caller-imposed bound and a payload bound are different facts, and an
+    // agent deciding whether to page needs to know which one it hit.
+    let s = ReflowService::in_memory().expect("in-memory service");
+    for i in 0..5 {
+        j!(s.add_capability(Parameters(CapabilityReq {
+            id: format!("cap:{i}"),
+            name: format!("Cap {i}"),
+            description: "small".into(),
+            status: None,
+        })));
+    }
+
+    let page = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Capability".into(),
+        limit: Some(2),
+        ..Default::default()
+    })));
+    assert_eq!(page["returned"], 2);
+    assert_eq!(page["capped_by"], "limit");
+    assert_eq!(page["omitted"], 3);
+
+    // Unbounded and small: nothing is capped, and the fields say so plainly.
+    let all = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Capability".into(),
+        ..Default::default()
+    })));
+    assert_eq!(all["returned"], 5);
+    assert_eq!(all["capped_by"], serde_json::Value::Null);
+    assert_eq!(all["next_offset"], serde_json::Value::Null);
+    assert_eq!(all["omitted"], 0);
+}
+
+#[tokio::test]
+async fn the_tool_catalogue_finds_a_tool_by_the_job_it_does() {
+    // req:agent-native promises every capability is reachable over one surface.
+    // With a surface this large that is only true if the agent can find the
+    // tool, so the catalogue is part of the promise, not a convenience.
+    let s = ReflowService::in_memory().expect("in-memory service");
+
+    let found = j!(s.find_tools(Parameters(FindToolsReq {
+        query: "register a file that realizes a capability".into(),
+        limit: None,
+    })));
+    let names: Vec<String> = found["items"]
+        .as_array()
+        .expect("items")
+        .iter()
+        .map(|i| i["tool"].as_str().unwrap_or_default().to_string())
+        .collect();
+    assert!(
+        names.iter().any(|n| n == "link_artifact"),
+        "expected link_artifact among {names:?}"
+    );
+    assert!(
+        found["searched"].as_u64().unwrap() > 50,
+        "it must search the real served surface, not a hand-kept list"
+    );
+    assert!(
+        found["items"][0]["summary"]
+            .as_str()
+            .expect("summary")
+            .len()
+            < 400,
+        "summaries are trimmed — a catalogue that costs as much as the surface is pointless"
+    );
+
+    // An exact tool name is not a guess: it must rank first.
+    let exact = j!(s.find_tools(Parameters(FindToolsReq {
+        query: "propagate_change".into(),
+        limit: Some(3),
+    })));
+    assert_eq!(exact["items"][0]["tool"], "propagate_change");
+
+    // A query matching nothing says so rather than returning the surface.
+    let empty = j!(s.find_tools(Parameters(FindToolsReq {
+        query: "zzzzqqqxx".into(),
+        limit: None,
+    })));
+    assert_eq!(empty["count"], 0);
+    assert_eq!(empty["matched"], 0);
+    assert!(empty["searched"].as_u64().unwrap() > 50, "it still looked");
 }

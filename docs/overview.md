@@ -89,6 +89,8 @@ Three records, three questions — kept separate on purpose:
 - [reflow-v3-nuggets.md](reflow-v3-nuggets.md) — ideas carried over from the original Reflow.
 - [reflow-audit.md](reflow-audit.md) — the deep pass behind it: all 25 workflows and all 51 tools, each with an adopt / obsoleted / do-not-port verdict, plus the cautions and rule-4 counter-examples found along the way.
 - [chain-reflow-nuggets.md](chain-reflow-nuggets.md) — ideas from Chain Reflow (matryoshka, causality, linking).
+- [github-mcp-nuggets.md](github-mcp-nuggets.md) — what a *hosted* MCP server at scale teaches: what to import,
+  what not to, and the non-foreclosure rule that came out of it.
 
 ## Heritage & references
 

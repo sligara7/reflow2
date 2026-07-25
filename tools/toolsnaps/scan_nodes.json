@@ -2,13 +2,41 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "List all nodes of a type.",
+  "description": "List nodes of a type. Answers with as many as fit in one reply and says what it left out — `total` is how many exist, `omitted` how many did not come back, `next_offset` where to resume, and `capped_by` why it stopped (`size` when the payload was full, `limit` when you asked for fewer). A cap is never silent, but it is also never a surprise: pass `brief: true` for id/name/status only when you want the shape of a large type, or `limit`/`offset` to page deliberately. On a mature design the full properties of one type can be tens of thousands of characters — read brief first, then fetch the few nodes you actually need with get_node.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "brief": {
+        "default": null,
+        "description": "Return only `node_id` / `node_type` / `name` / `status` per node instead\nof every property. Use it to see the shape of a large type before\ndeciding what to read in full.",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "limit": {
+        "default": null,
+        "description": "Maximum nodes to return. Omitted means \"as many as fit in one reply\" —\nsee `capped_by` in the result.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
       "node_type": {
         "type": "string"
+      },
+      "offset": {
+        "default": null,
+        "description": "Where to start, for paging with `next_offset` (default 0).",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
       }
     },
     "required": [

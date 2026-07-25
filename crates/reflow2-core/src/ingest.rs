@@ -809,7 +809,7 @@ impl DesignGraph {
         id: &str,
         props: Props,
     ) {
-        let new_map = props.build();
+        let new_map = sanitize_extracted(st, node_type, id, props.build());
         match self.get_node(node_type, id) {
             Err(e) => st.warnings.push(format!("resolve {node_type} '{id}': {e}")),
             // Direct id hit → resolve against that node.
@@ -1013,6 +1013,40 @@ impl DesignGraph {
 /// purpose: below this, resolution creates a new node rather than risk a wrong
 /// merge — the uncertain band is the deferred LLM/vector tiebreaker's job.
 const FUZZY_MATCH_THRESHOLD: u32 = 90;
+
+/// The ingress trust boundary for INGEST: every extracted node's text passes
+/// through here on its way into the graph.
+///
+/// This is the one choke point for extraction — the prose came out of a
+/// codebase or a document nobody in this session wrote, so it is foreign text
+/// by definition, and the smuggling channels it may carry are invisible to
+/// whoever reviews the result. Stripping is not the whole job: the removal is
+/// pushed onto `warnings` naming the node and the field, because a design whose
+/// statements were silently rewritten on the way in is a design nobody can
+/// audit (rule 6). See [`crate::sanitize`].
+fn sanitize_extracted(
+    st: &mut Integration<'_>,
+    node_type: &'static str,
+    id: &str,
+    map: HashMap<String, Value>,
+) -> HashMap<String, Value> {
+    map.into_iter()
+        .map(|(field, value)| match value {
+            Value::String(text) => {
+                let (clean, report) = crate::sanitize::sanitize_text(&text);
+                if !report.is_clean() {
+                    st.warnings.push(format!(
+                        "sanitized {node_type} '{id}' field '{field}': removed {}",
+                        report.describe()
+                    ));
+                    return (field, Value::String(clean.into_owned()));
+                }
+                (field, Value::String(text))
+            }
+            other => (field, other),
+        })
+        .collect()
+}
 
 /// Mutable accumulators for one integration pass — bundled so the integration
 /// methods keep small, stable signatures (per the modular-code principle).

@@ -33,7 +33,7 @@ use reflow2_core::{
     AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DesignGraph, Dimension, DriftDisposition,
     DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy,
     LinkArtifactOptions, LoopStatus, ObservedArtifact, PromptCollector, PropagateOptions,
-    ReconcileOptions, Value,
+    ReconcileOptions, StoredNode, Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -239,6 +239,71 @@ fn node_error(g: &DesignGraph, node_type: &str, e: DynoError) -> McpError {
 /// schema (the wire format is the payload directly).
 fn ok_json<T: serde::Serialize>(value: T) -> Result<CallToolResult, McpError> {
     json_result(envelope(serde_json::to_value(value).map_err(ser_err)?))
+}
+
+/// How much rendered node JSON one `scan_nodes` reply will carry before it stops
+/// and says so. Not a memory limit — a *context* limit: past roughly this size
+/// the client truncates the reply, so the drop happens where reflow2 cannot name
+/// it. Deliberately generous enough that ordinary types come back whole (the
+/// design gate's 45 artifacts are nowhere near it) and only the genuinely large
+/// ones page.
+const SCAN_PAYLOAD_BUDGET_BYTES: usize = 40_000;
+
+/// Default matches returned by `find_tools`. Small on purpose: the point is to
+/// name the two or three candidates worth looking at, not to re-serve the
+/// surface the search exists to avoid loading.
+const DEFAULT_TOOL_SEARCH_RESULTS: usize = 5;
+
+/// The `brief: true` shape — what a node IS, without its prose. `name` and
+/// `status` are the two properties every orientation read actually uses.
+fn brief_node(node: &StoredNode) -> JsonValue {
+    let field = |key: &str| node.properties.get(key).and_then(Value::as_str);
+    json!({
+        "node_id": node.node_id,
+        "node_type": node.node_type,
+        "name": field("name"),
+        "status": field("status"),
+    })
+}
+
+/// Score one tool against the query terms. Weights follow github-mcp-server's
+/// `pkg/tooldiscovery` (docs/github-mcp-nuggets.md): a name match beats
+/// a description match beats a parameter match, because a tool whose *name*
+/// contains your word is usually the one you meant.
+fn score_tool(name: &str, description: &str, params: &[String], terms: &[&str]) -> f64 {
+    let name_lc = name.to_lowercase();
+    let desc_lc = description.to_lowercase();
+    let mut score = 0.0;
+    for term in terms {
+        if name_lc == *term {
+            score += 8.0; // an exact name is not a guess
+        } else if name_lc.contains(term) {
+            score += 5.0;
+        } else if name_lc.split('_').any(|part| part.starts_with(term)) {
+            score += 1.5;
+        }
+        if desc_lc.contains(term) {
+            score += 2.0;
+        }
+        if params.iter().any(|p| p.to_lowercase().contains(term)) {
+            score += 1.0;
+        }
+    }
+    score
+}
+
+/// First sentence (or the first 200 characters) of a tool description. The whole
+/// point of a catalogue is that reading it costs less than reading the surface.
+fn trim_summary(description: &str) -> String {
+    let flat = description.split_whitespace().collect::<Vec<_>>().join(" ");
+    if let Some(end) = flat.find(". ").filter(|end| *end < 240) {
+        return flat[..=end].to_string();
+    }
+    if flat.chars().count() <= 200 {
+        return flat;
+    }
+    let cut: String = flat.chars().take(200).collect();
+    format!("{cut}…")
 }
 
 /// Force a payload into the object shape `structuredContent` requires.
@@ -1012,10 +1077,34 @@ pub struct TypedIdReq {
     pub id: String,
 }
 
-#[derive(Debug, Deserialize, JsonSchema)]
+#[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ScanReq {
     pub node_type: String,
+    /// Maximum nodes to return. Omitted means "as many as fit in one reply" —
+    /// see `capped_by` in the result.
+    #[serde(default)]
+    pub limit: Option<usize>,
+    /// Where to start, for paging with `next_offset` (default 0).
+    #[serde(default)]
+    pub offset: Option<usize>,
+    /// Return only `node_id` / `node_type` / `name` / `status` per node instead
+    /// of every property. Use it to see the shape of a large type before
+    /// deciding what to read in full.
+    #[serde(default)]
+    pub brief: Option<bool>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct FindToolsReq {
+    /// What you are trying to do, in your own words — "register a file against a
+    /// capability", "see what a change touches", "who has this region".
+    pub query: String,
+    /// Maximum matches to return, best first (default 5). The result says how
+    /// many matched and how many it left out.
+    #[serde(default)]
+    pub limit: Option<usize>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -3071,7 +3160,15 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "List all nodes of a type.",
+        description = "List nodes of a type. Answers with as many as fit in one reply and says \
+                       what it left out — `total` is how many exist, `omitted` how many did not \
+                       come back, `next_offset` where to resume, and `capped_by` why it stopped \
+                       (`size` when the payload was full, `limit` when you asked for fewer). A \
+                       cap is never silent, but it is also never a surprise: pass `brief: true` \
+                       for id/name/status only when you want the shape of a large type, or \
+                       `limit`/`offset` to page deliberately. On a mature design the full \
+                       properties of one type can be tens of thousands of characters — read \
+                       brief first, then fetch the few nodes you actually need with get_node.",
         annotations(read_only_hint = true)
     )]
     pub async fn scan_nodes(
@@ -3080,7 +3177,129 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
         let nodes = g.scan_nodes(&req.node_type).map_err(dyno_err)?;
-        self.ok_read(&g, nodes.into_iter().map(NodeDto::from).collect::<Vec<_>>())
+        let total = nodes.len();
+        let offset = req.offset.unwrap_or(0).min(total);
+        let brief = req.brief.unwrap_or(false);
+
+        // Render one node at a time, stopping at whichever bound bites first:
+        // the caller's `limit`, or the payload budget. The budget exists because
+        // an unbounded read of a mature type does not fail loudly — it arrives
+        // as tens of thousands of characters that the client truncates, which is
+        // the silent drop rule 6 forbids, happening outside reflow2 where
+        // nothing can name it. Naming it here is the whole point.
+        let mut items: Vec<JsonValue> = Vec::new();
+        let mut bytes = 0usize;
+        let mut capped_by: Option<&'static str> = None;
+        for node in nodes.iter().skip(offset) {
+            if req.limit.is_some_and(|limit| items.len() >= limit) {
+                capped_by = Some("limit");
+                break;
+            }
+            let rendered = if brief {
+                brief_node(node)
+            } else {
+                serde_json::to_value(NodeDto::from(node.clone())).map_err(ser_err)?
+            };
+            let size = rendered.to_string().len();
+            // Always return at least one node: a single node larger than the
+            // whole budget must still be readable, or a big node becomes
+            // unreachable rather than merely expensive.
+            if !items.is_empty() && bytes + size > SCAN_PAYLOAD_BUDGET_BYTES {
+                capped_by = Some("size");
+                break;
+            }
+            bytes += size;
+            items.push(rendered);
+        }
+
+        let returned = items.len();
+        let next = offset + returned;
+        self.ok_read(
+            &g,
+            json!({
+                // `count` keeps its established meaning — how many came back in
+                // this reply — so a caller that only reads {count, items} is
+                // unaffected. `total` is the new, larger truth.
+                "count": returned,
+                "items": items,
+                "total": total,
+                "offset": offset,
+                "returned": returned,
+                "omitted": total.saturating_sub(next),
+                "next_offset": (next < total).then_some(next),
+                "capped_by": capped_by,
+                "brief": brief,
+            }),
+        )
+    }
+
+    #[tool(
+        description = "Find the reflow2 tool for a job you can describe but cannot name — \
+                       'how do I record that a file implements a capability?', 'what shows me \
+                       the blast radius?'. Ranked over the served surface itself (name, \
+                       description and parameter names), so it can never drift from the tools \
+                       that actually exist. The whole surface is too large to hold in context at \
+                       once; this is its catalogue. Descriptions come back trimmed — call the \
+                       tool you picked, or read its full schema, once you know its name.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn find_tools(
+        &self,
+        Parameters(req): Parameters<FindToolsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let query = req.query.to_lowercase();
+        let terms: Vec<&str> = query
+            .split(|c: char| !c.is_alphanumeric() && c != '_')
+            .filter(|t| !t.is_empty())
+            .collect();
+        let all = self.tool_router.list_all();
+        let searched = all.len();
+
+        let mut scored: Vec<(f64, JsonValue)> = all
+            .iter()
+            .filter_map(|tool| {
+                let name = tool.name.as_ref();
+                let description = tool.description.as_deref().unwrap_or("");
+                let params = tool
+                    .input_schema
+                    .get("properties")
+                    .and_then(JsonValue::as_object)
+                    .map(|p| p.keys().cloned().collect::<Vec<_>>())
+                    .unwrap_or_default();
+                let score = score_tool(name, description, &params, &terms);
+                (score > 0.0).then(|| {
+                    (
+                        score,
+                        json!({
+                            "tool": name,
+                            "score": score,
+                            "summary": trim_summary(description),
+                            "parameters": params,
+                        }),
+                    )
+                })
+            })
+            .collect();
+
+        // Ties broken by name so the same query answers the same way twice —
+        // a ranking that reshuffles teaches an agent not to trust it.
+        scored.sort_by(|a, b| {
+            b.0.partial_cmp(&a.0)
+                .unwrap_or(std::cmp::Ordering::Equal)
+                .then_with(|| a.1["tool"].as_str().cmp(&b.1["tool"].as_str()))
+        });
+        let matched = scored.len();
+        let limit = req.limit.unwrap_or(DEFAULT_TOOL_SEARCH_RESULTS).max(1);
+        let items: Vec<JsonValue> = scored.into_iter().take(limit).map(|(_, v)| v).collect();
+
+        ok_json(json!({
+            "count": items.len(),
+            "items": items,
+            "matched": matched,
+            "omitted": matched.saturating_sub(items.len()),
+            "searched": searched,
+            "query": req.query,
+        }))
     }
 
     #[tool(

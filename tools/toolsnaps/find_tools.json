@@ -1,0 +1,31 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Find the reflow2 tool for a job you can describe but cannot name — 'how do I record that a file implements a capability?', 'what shows me the blast radius?'. Ranked over the served surface itself (name, description and parameter names), so it can never drift from the tools that actually exist. The whole surface is too large to hold in context at once; this is its catalogue. Descriptions come back trimmed — call the tool you picked, or read its full schema, once you know its name.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "limit": {
+        "default": null,
+        "description": "Maximum matches to return, best first (default 5). The result says how\nmany matched and how many it left out.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "query": {
+        "description": "What you are trying to do, in your own words — \"register a file against a\ncapability\", \"see what a change touches\", \"who has this region\".",
+        "type": "string"
+      }
+    },
+    "required": [
+      "query"
+    ],
+    "type": "object"
+  },
+  "name": "find_tools"
+}

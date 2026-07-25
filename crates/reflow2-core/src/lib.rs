@@ -52,6 +52,7 @@ pub mod operate;
 pub mod propagate;
 pub mod provenance;
 pub mod report;
+pub mod sanitize;
 pub mod schema;
 pub mod search;
 pub mod structure;
@@ -102,6 +103,7 @@ pub use provenance::{GraphStamp, Provenance};
 pub use report::{
     AllocationSummary, CertaintyBreakdown, GraphReport, LoopStatus, RequirementCertainty,
 };
+pub use sanitize::{SanitizeReport, sanitize_text};
 pub use schema::load_schema;
 pub use search::{SearchHit, SearchResult};
 pub use surprises::SurprisingConnection;

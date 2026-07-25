@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:dbc4b58af45432d6f7292a0bc0000ae18b8d68301a179949192fed37777591df",
+  "content_hash": "sha256:1e07b390fee58439f4b85f60ed03030997f5392d00f2c3296c8c4e0c8aa59496",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -24,6 +24,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:bounded-reads",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -419,6 +427,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:sanitize-ingress",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:search",
       "properties": {
         "weight_basis": "estimated"
@@ -488,6 +504,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:tool-search",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -653,6 +677,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:brainstorm-is-a-kind",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:cluster-claims-built",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -680,6 +710,12 @@
       "from_id": "chg:drift-direction-built",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:github-mcp-imports",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1072,6 +1108,18 @@
       "to_id": "epoch:kpp-capture"
     },
     {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:kpp-capture:cap:sanitize-ingress",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:kpp-capture:dec:exploratory-staging",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
+    },
+    {
       "edge_type": "AUTHORED_BY",
       "from_id": "art:alternatives",
       "properties": {
@@ -1182,6 +1230,15 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:central-host",
+      "properties": {
+        "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:concurrent-work-isolation",
       "properties": {
         "acted_at": "2026-07-25",
         "role": "author"
@@ -1474,6 +1531,24 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "rule:no-foreclosure",
+      "properties": {
+        "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "rule:no-foreclosure",
+      "properties": {
+        "acted_at": "2026-07-25",
+        "role": "reviewer"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -2791,6 +2866,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:brainstorm-is-a-kind",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:exploratory-staging"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:cluster-claims-built",
       "properties": {
         "accepted_baseline": true,
@@ -3040,6 +3124,33 @@
         "action": "added"
       },
       "to_id": "ver:drift-direction"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:github-mcp-imports",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:github-mcp-imports",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:github-mcp-imports",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:sanitize-ingress"
     },
     {
       "edge_type": "CHANGED",
@@ -3609,6 +3720,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:change"
     },
     {
@@ -3645,7 +3762,19 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:sanitize-ingress"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:store"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:tool-search"
     },
     {
       "edge_type": "CONTAINS",
@@ -3676,6 +3805,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:design-anything"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:design-reachable-without-the-repo"
     },
     {
       "edge_type": "CONTAINS",
@@ -3729,6 +3864,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:many-designs-one-service"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:no-se-knowledge"
     },
     {
@@ -3760,6 +3901,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:survives-upgrade"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:trust-boundary-at-ingress"
     },
     {
       "edge_type": "CONTAINS",
@@ -3970,6 +4117,12 @@
       "from_id": "sys:intake",
       "properties": {},
       "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:intake",
+      "properties": {},
+      "to_id": "cmp:sanitize"
     },
     {
       "edge_type": "CONTAINS",
@@ -4482,6 +4635,17 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:ingest",
+      "properties": {
+        "dependency_type": "function_call",
+        "note": "ingest.rs calls the sanitizer at its single integration choke point — every extracted node's text passes through the trust boundary on its way into the graph. A real code dependency, not a bridge drawn to satisfy a detector.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:sanitize"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -5261,6 +5425,12 @@
       "from_id": "cap:atomic-requirement",
       "properties": {},
       "to_id": "decision:ack:bab6219e3365123a"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:bounded-reads",
+      "properties": {},
+      "to_id": "decision:ack:260a7ea303ec87f1"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -6848,6 +7018,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:sanitize-ingress",
+      "properties": {},
+      "to_id": "decision:ack:260a7ea303ec87f1"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:sanitize-ingress",
+      "properties": {},
+      "to_id": "rule:no-foreclosure"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:search",
       "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
@@ -7028,6 +7210,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:tool-search",
+      "properties": {},
+      "to_id": "decision:ack:260a7ea303ec87f1"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:vocabulary",
       "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
@@ -7124,6 +7312,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:sanitize",
+      "properties": {},
+      "to_id": "decision:ack:dd3647889c878492"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:service",
       "properties": {},
       "to_id": "dec:service-spof-accepted"
@@ -7154,6 +7348,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:central-host",
+      "properties": {},
+      "to_id": "rule:no-foreclosure"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "ifc:core-api",
       "properties": {},
       "to_id": "dec:core-api-spof-accepted"
@@ -7169,6 +7369,12 @@
       "from_id": "req:completion-computed",
       "properties": {},
       "to_id": "dec:passing-is-verified"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:concurrent-planning",
+      "properties": {},
+      "to_id": "dec:concurrent-work-isolation"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7193,6 +7399,12 @@
       "from_id": "req:many-designs-one-service",
       "properties": {},
       "to_id": "dec:central-host"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:many-designs-one-service",
+      "properties": {},
+      "to_id": "rule:no-foreclosure"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7259,6 +7471,18 @@
       "from_id": "cap:kpp-proposal",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:cap:kpp-proposal"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:sanitize-ingress",
+      "properties": {},
+      "to_id": "snap:epoch:kpp-capture:cap:sanitize-ingress"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:exploratory-staging",
+      "properties": {},
+      "to_id": "snap:epoch:kpp-capture:dec:exploratory-staging"
     },
     {
       "edge_type": "INCLUDES",
@@ -10170,6 +10394,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:github-mcp-study",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:graph",
       "properties": {
         "completeness": "partial"
@@ -10338,6 +10570,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:sanitize",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:schema",
       "properties": {
         "completeness": "complete"
@@ -10441,6 +10681,12 @@
       "from_id": "cap:atomic-requirement",
       "properties": {},
       "to_id": "req:requirement-lineage"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:bounded-reads",
+      "properties": {},
+      "to_id": "req:no-silent-fallback"
     },
     {
       "edge_type": "SATISFIES",
@@ -10789,6 +11035,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:sanitize-ingress",
+      "properties": {},
+      "to_id": "req:trust-boundary-at-ingress"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:search",
       "properties": {},
       "to_id": "req:agent-native"
@@ -10843,6 +11095,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:tool-search",
+      "properties": {},
+      "to_id": "req:agent-native"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:vocabulary",
       "properties": {},
       "to_id": "req:agent-native"
@@ -10882,6 +11140,12 @@
       "from_id": "ver:alternatives",
       "properties": {},
       "to_id": "cap:decision-point"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:bounded-reads",
+      "properties": {},
+      "to_id": "cap:bounded-reads"
     },
     {
       "edge_type": "VERIFIES",
@@ -11077,6 +11341,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:sanitize-ingress",
+      "properties": {},
+      "to_id": "cap:sanitize-ingress"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:search",
       "properties": {},
       "to_id": "cap:search"
@@ -11110,6 +11380,12 @@
       "from_id": "ver:surface",
       "properties": {},
       "to_id": "cap:surface"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:tool-search",
+      "properties": {},
+      "to_id": "cap:tool-search"
     },
     {
       "edge_type": "VERIFIES",
@@ -11285,6 +11561,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:github-mcp-study",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:graph",
       "properties": {
         "action": "created"
@@ -11402,6 +11686,14 @@
         "action": "created"
       },
       "to_id": "art:report"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:sanitize",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:sanitize"
     },
     {
       "edge_type": "YIELDED",
@@ -11677,6 +11969,17 @@
       }
     },
     {
+      "node_id": "art:github-mcp-study",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:34701500af93dbcf",
+        "location": "docs/github-mcp-nuggets.md",
+        "name": "github-mcp-nuggets.md",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:graph",
       "node_type": "Artifact",
       "properties": {
@@ -11714,7 +12017,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:71dceb15b42d2a47",
+        "checksum": "sha256:e5e40cef15b45dfe",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
         "status": "realized"
@@ -11864,6 +12167,17 @@
       }
     },
     {
+      "node_id": "art:sanitize",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:dc88dfbc4e1aacbc",
+        "location": "crates/reflow2-core/src/sanitize.rs",
+        "name": "sanitize.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:schema",
       "node_type": "Artifact",
       "properties": {
@@ -11890,7 +12204,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:402f025371a49ade",
+        "checksum": "sha256:0caeb56596c82a1e",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -12009,6 +12323,19 @@
         "name": "Know when to stop decomposing — and when someone went too far",
         "provenance": "authored",
         "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:bounded-reads",
+      "node_type": "Capability",
+      "properties": {
+        "description": "From the same study: GitHub's server generates its instructions from the enabled toolsets and tells the agent in them to paginate in batches of 5-10 and pass minimal_output, and its result types carry field-selection enums whose comments name the heaviest fields. reflow2 has the same problem and lost to it twice in one session on 2026-07-25 — scan_nodes over 72 Decisions returned 96,000 characters and the harness had to spill it to a file before it could be read at all. The precedent for the shape is already in this design: BL-48/BL-49 gave propagate a bounded summary with the full dump behind full=true. This extends that to the readers that grew unbounded, with the rule that a cap is never silent: the page says how many nodes exist, how many came back, and how to get the rest.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A read that would not fit answers with a bounded page and says what it left out",
+        "provenance": "authored",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -12559,6 +12886,19 @@
       }
     },
     {
+      "node_id": "cap:sanitize-ingress",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The mechanical half of \"graph text is data, never instructions\" (BL-41's deferred M piece), imported from github-mcp-server's pkg/sanitize after the 2026-07-25 study. Strips the characters whose only purpose is to make text read differently to a human than to a machine: Unicode tag characters (the smuggling channel), bidirectional overrides, and zero-width or hidden formatting characters. Applied where foreign text ENTERS — INGEST extraction and graph import — because the trust question is where text came from, not which field it landed in. REFLOW2'S OWN ADDITION, and the reason this is not a copy: it REPORTS. GitHub sanitises silently, which is right for rendering an issue body; a design brain that quietly rewrote a requirement statement would be unauditable, and rule 6 forbids silent drops. So the count and the kinds stripped ride back with the result. ZWJ is deliberately NOT stripped — it is load-bearing inside emoji sequences, and a filter that mangles legitimate content teaches people to turn it off.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Neutralise hidden instructions in text arriving from outside, and say what was stripped",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:search",
       "node_type": "Capability",
       "properties": {
@@ -12618,6 +12958,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Ask the user a plain question",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:tool-search",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-07-25 as the `find_tools` tool. Imported from github-mcp-server's pkg/tooldiscovery, which fuzzy-searches its own tool list with weighted scoring and returns three results by default. reflow2 serves 97 tools, and req:agent-native's promise — every capability reachable from a coding agent over one surface — is only true in principle if the agent can find the tool: a surface too large to hold in context is reachable the way a library with no catalogue is readable. Scored over `tool_router.list_all()`, the served surface itself, so the catalogue cannot drift from the tools that exist — the failure mode skill_lint exists to catch in prose, avoided here by construction rather than by a second list. Weights follow the source: an exact name outranks a name substring, which outranks a description hit, which outranks a parameter-name hit. Ties break by name so the same query answers the same way twice, because a ranking that reshuffles teaches an agent not to trust it. Summaries come back trimmed to the first sentence — a catalogue that costs as much to read as the surface it indexes is pointless — and the result names `matched`, `omitted` and `searched`, so a query that found nothing says so instead of falling back to the whole list.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Find the right tool on a surface too large to hold in context",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -13032,6 +13385,14 @@
       }
     },
     {
+      "node_id": "chg:brainstorm-is-a-kind",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Anthony's refinement: the rubber-duck ask is not a staging gate, it is brainstorming ideas held in the graph AS ideas"
+      }
+    },
+    {
       "node_id": "chg:cluster-claims-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -13077,6 +13438,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Directional drift built: reconcile now says understated / overstated / diverged and names the delta"
+      }
+    },
+    {
+      "node_id": "chg:github-mcp-imports",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Import three lessons from the GitHub MCP study: the ingress trust boundary, bounded reads, and a catalogue for the tool surface"
       }
     },
     {
@@ -13614,6 +13983,19 @@
       }
     },
     {
+      "node_id": "cmp:sanitize",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "sanitize",
+        "provenance": "authored",
+        "purpose": "The ingress trust boundary: the one place that neutralises instruction-carrying characters in text arriving from outside the session, and reports what it stripped. Deliberately a separate module rather than a helper inside ingest, because the same boundary has to serve graph import and, later, any hosted surface — a filter that lives inside one caller is a filter the next caller forgets.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:schema",
       "node_type": "Component",
       "properties": {
@@ -13935,6 +14317,16 @@
       }
     },
     {
+      "node_id": "dec:concurrent-work-isolation",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNDECIDED, and recorded as BRAINSTORMING rather than as a proposal — Anthony's own framing, 2026-07-25, thinking out loud. His starting doubt is the right one and had not been written down: claiming a cluster of nodes says nothing about the REPOSITORY, and if the design and the code share one repo, two people working different clusters still collide in git even when they never touch the same node. FOUR IDEAS AS HE PUT THEM. (1) reflow2 REPLACES git — the graph defines who may touch what, and git becomes an internal implementation detail. (2) The graph is a set of TEMPORARY LOCAL repos, pushed upstream only once work is done and no conflicts exist. (3) Each session opens a TEMPORARY WORKTREE BRANCH holding an identical copy of the graph; the person works there, then reflow2's own merge reconciles the copy back and the temporary is deleted. (4) A WEBSOCKET pushing every change to every user, giving live simultaneous collaboration. WHAT IS ALREADY TRUE, and it matters for ranking them: the collision is in the export FILE, not in the graph, and reflow2 already answers file-level collision semantically — BL-80's three-way merge compares per node and per property against the common ancestor and mints each real conflict as a Question with a deterministic id, and `--merge`/`--merge-apply` run it without a server. So idea 3 is not new machinery; it is mostly a PROCEDURE over machinery that exists, and a git worktree already gives each person their own checkout with its own `.reflow2/graph` (the store lock is per-directory). The missing piece is small and specific: git supports per-path merge drivers — this repo already uses `merge=union` for COORD.md — so registering the design export with a driver that calls reflow2's own merge would make two people working different clusters merge automatically, and make a genuine overlap arrive as a Question instead of as conflict markers in a 500KB JSON file. Idea 2 is idea 3 with extra steps, since git branches are already local until pushed. Idea 1 would make reflow2 a version-control system, contradicts dec:repo-file-embedded and req:persistence, and would have to reinvent what it currently inherits for free. Idea 4 is the simultaneity road already held open by dec:central-host and BL-99, with the counter-argument recorded there: this tool's loop is deliberate and attributable rather than live.",
+        "name": "OPEN — how are two people's simultaneous edits kept apart: worktrees, temporary repos, or a live channel?",
+        "rationale": "Held as brainstorming on purpose. Anthony called it thinking out loud, and the first honest thing to do with four ideas is to write them down as four ideas rather than pick one and start building — which is precisely the practice dec:exploratory-staging is about. Two notes for whoever takes it up. The ranking above is a finding, not a decision: it says which ideas are cheap and which are large, and the cheap one is testable this week by two people on one design without a line of new Rust. And the doubt that started it should survive into whatever gets built — a claim on a cluster of nodes is not a claim on a repository, so any answer here has to say what happens to the CODE two people are writing beside the design, not only what happens to the graph.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:coord-board-in-graph",
       "node_type": "Decision",
       "properties": {
@@ -13998,9 +14390,9 @@
       "node_id": "dec:exploratory-staging",
       "node_type": "Decision",
       "properties": {
-        "decision": "UNDECIDED, and recorded because it contradicts something already on the record. The user asks for a \"rubber-ducking\" mode: work an idea through with the agent before committing concepts to the graph. The git prior-art study explicitly listed the index/staging area under things to NOT import, on the grounds that continuous-capture doctrine rejects a staging gate. The question is whether that rejection covers this. A reading that would reconcile them: the rejection targeted a gate sitting between EVERY edit and the graph, whereas this is an opt-in mode for one activity — early exploration, where most ideas are meant to be discarded and recording them all would pollute the design with roads nobody walked. Note what already works: a session that simply makes no write calls IS rubber-ducking, and the read operations are the ducking aids. So the real question is narrower than it appears — what happens at the END of such a session: does the outcome get committed in one deliberate act, and are the discarded branches dropped, or preserved as unchosen alternatives under a decision point (which the fork layer just built the vocabulary for)?",
-        "name": "OPEN — does reflow2 get an opt-in \"think first, commit later\" mode, having rejected a staging gate?",
-        "rationale": "Raised by the user and his brother, 2026-07-24. Held proposed rather than built because it sits against a recorded position, and the cost of drifting into it is exactly the cost the original rejection named: a staging area quietly becomes the place where design intent waits, and a design brain whose defining property is continuous capture acquires a buffer where things are forgotten instead of recorded. That is worth deciding out loud rather than discovering. The reason it may still be right is equally concrete: the doctrine that nothing is lost was written against losing REAL decisions, and an exploratory session's dead ends are not decisions — forcing them into the graph would make the record noisier, not more honest, which is the same trade dec:alternatives-unranked-forkable made when it chose to store the fork and compute the consequence rather than eagerly maintaining every branch.",
+        "decision": "UNDECIDED. REFRAMED 2026-07-25 by Anthony, and the reframe is the useful part: what he and his brother were asking for is not a staging GATE, it is a KIND. \"I think I now realize what my brother's idea was trying to say — it is like a brainstorming session where you can work through ideas without committing to anything yet. These would be more like 'ideas' not yet fleshed out and could be held in the graph as just that, 'brainstorming ideas'.\" That dissolves the contradiction this decision was opened over. The git study rejected the index because a gate between every edit and the graph is where intent goes to be forgotten; a brainstorm is the opposite move — the idea DOES enter the graph, immediately, labelled as what it is. Nothing waits outside, so nothing is lost, and the design still never claims a half-formed thought as intent. THE QUESTION THAT REMAINS IS THE VOCABULARY ONE, and dec:edge-orthogonality decides it: a distinction earns its keep only if a computation reads it. So what would read `brainstorm`? The candidates, none of them chosen: gap detection must NOT nag about an idea nobody committed to (an unsatisfied brainstorm is not a hole in the design, and today an unsatisfied Requirement fires forever); delivery and certainty counts must exclude it, or the denominator becomes meaningless; promotion must be an explicit human act — a brainstorm becoming a Requirement is the same signature-forging risk dec:certainty-derived guards, one step earlier; and a brainstorm nobody has touched in months is a candidate for retirement rather than an accusation. If none of those is built, the label is decoration and the honest answer is to keep using `proposed` Decisions the way this session already did for the worktree ideas (dec:concurrent-work-isolation). PRIOR FRAMING, KEPT because it is what was true yesterday: the ask read as an opt-in \"think first, commit later\" mode; what already works is that a session making no write calls IS rubber-ducking, and the read tools are the ducking aids; and the narrow question was what happens at the END of such a session — one deliberate commit, with discarded branches either dropped or preserved as unchosen alternatives under a decision point. That question survives the reframe and is now the second half of it: if ideas land as ideas, the end of a brainstorm is a promotion step, not a commit step.",
+        "name": "OPEN — do half-formed ideas get a place in the graph, distinct from things the design asserts?",
+        "rationale": "Raised by Anthony and his brother 2026-07-24, reframed by Anthony 2026-07-25 while brainstorming the concurrency ideas — which is itself the evidence for the feature: he produced four options he explicitly did not want to commit to, and the only place to put them was a `proposed` Decision, a node type meant for a choice someone is actually facing. That works, and it is why this is not urgent; it is also a slightly wrong fit, and knowing why is worth recording. Still held proposed because the vocabulary question above is unanswered, and because it may be a SKILL rather than a schema change: a brainstorm skill that records ideas as proposed Decisions and asks before promoting any of them would test the practice without spending a schema change and an upgrade doc on a noun. Anthony's own words put it in that bracket — 'maybe a future skill'.",
         "status": "proposed"
       }
     },
@@ -14186,6 +14578,16 @@
       }
     },
     {
+      "node_id": "dec:sanitize-spof-accepted",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ACCEPT the single_point_of_failure finding on cmp:ingest rather than add redundancy. The topology it reports is true: cmp:sanitize is reached only through cmp:ingest today, because INGEST is the only path by which foreign text currently enters the graph, so every route to the trust boundary runs through one component.",
+        "name": "The trust boundary having one caller makes ingest an articulation point — accepted, and the fix is the second caller",
+        "rationale": "Recorded because the finding appeared the moment the sanitizer landed (2026-07-25) and would otherwise be re-litigated every session, and because the suggested fix is the wrong shape here: `add_redundancy` is coherent for a running part that can fail over, and a second copy of a pure text filter would be duplication, not resilience. What WILL dissolve it is already named in the module docs and in cap:sanitize-ingress — the import path. `import_graph` deliberately does not rewrite the document it is handed (an export's content is its identity), so the next rung is detect-and-report on import, and when that lands the boundary has two callers and the articulation point is gone honestly. Deliberately NOT done: wiring cmp:export or cmp:graph to cmp:sanitize now to quiet the detector, because that would be an edge the code does not have — the same fabrication dec:ask-not-repair forbids of a heuristic. Joins the five accepted SPOFs under the BL-93 disposition: loop_status will not call the structural set clean, and that is expected.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:service-spof-accepted",
       "node_type": "Decision",
       "properties": {
@@ -14272,6 +14674,16 @@
         "decision": "Accepted the gap gap:233d08765e4cfc7b.",
         "name": "Reviewed: gap:233d08765e4cfc7b",
         "rationale": "User (who:ajs, standing policy from 2026-07-23, re-affirmed 2026-07-24 for the 33rd cap): validation happens through the trials program — docs/trials/ (self-host, adopt dogfood, erosion, phase-coverage, fleet feedback) is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. cap:read-loop-hint (BL-91) joins the same disposition unchanged — the read-side loop_hint is dogfooded in every reflow2 session, this one included. The gap re-fired only because its affected-set grew by one; the decision is unchanged.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:260a7ea303ec87f1",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:260a7ea303ec87f1.",
+        "name": "Reviewed: gap:260a7ea303ec87f1",
+        "rationale": "User (who:ajs, standing policy from 2026-07-23, applied again 2026-07-25): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because the three github-mcp-study imports joined the set (39 → 42). Apt for each of them in a different way. cap:sanitize-ingress: the tests prove a payload is stripped and honest text survives, but whether the CLASSES chosen are the ones attackers actually use is answered by the field, and the day a real adopted repo carries something the filter misses is the only real evidence. cap:bounded-reads: the tests prove a cap names itself; whether the budget is set at a useful number is answerable only by sessions that stop being truncated. cap:tool-search: the tests prove an exact name ranks first and a described job finds link_artifact, but whether the ranking helps an agent that does not already know the answer is a trial — and the honest instrument is a session where an agent finds a tool it had never used.",
         "status": "accepted"
       }
     },
@@ -14546,6 +14958,16 @@
       }
     },
     {
+      "node_id": "decision:ack:dd3647889c878492",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:dd3647889c878492.",
+        "name": "Reviewed: gap:dd3647889c878492",
+        "rationale": "Not a defect: cmp:sanitize was built after the last release cut on 2026-07-25, so \"ships in nothing\" is simply true and expected of anything newly built. It resolves at the next release, which must list it — the same disposition as cmp:claims earlier the same day, and the AGENTS.md release checklist already says the cut lists everything it actually ships rather than a hand-maintained roll-call. Distinct from the cmp:docs case, which needed a decision because it was a pre-existing deliverable the design had never modelled; this one needs only a release.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:dfe1b2a6caace1f4",
       "node_type": "Decision",
       "properties": {
@@ -14747,6 +15169,16 @@
         "epoch_type": "release_cut",
         "name": "v0.9.0 release cut (2026-07-22)",
         "sequence": 70
+      }
+    },
+    {
+      "node_id": "rule:no-foreclosure",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "methodology",
+        "enforced": false,
+        "name": "Build nothing today that forecloses growing into a hosted, multi-user, multi-project service",
+        "statement": "Anthony's reframe, 2026-07-25, of what to do with the GitHub-MCP study's larger lessons: rather than hold them as a roadmap of features to build, hold them as a rule about what NOT to do now — do not take a shortcut today that would make it impossible for reflow2 to become what GitHub's MCP server is. A roadmap ages badly and gets stale in a document nobody reads; a non-foreclosure rule is checkable at the moment of the decision that would break it, which is the only moment it matters. THE SPECIFIC FORECLOSURES, from reading github-mcp-server (each one a shortcut that is tempting precisely because there is one writer today): (1) IDENTITY IN A GLOBAL. Authority must arrive with the caller and be read from the request, never stashed in a process-wide variable or resolved once at startup — GitHub constructs a fresh server per request in stateless mode for exactly this reason, and their lockdown cache carries the warning that a viewer-scoped lookup shared across requests runs under the wrong user's credentials. (2) INVENTING AUTHORITY. reflow2 must never become the thing that decides who may read what; it delegates to an authority that already exists, on GitHub's stated principle that a server must not let anyone reach more than they could reach without it. Building an account system would foreclose that by making reflow2 the authority. (3) TREATING THE SINGLE-WRITER LOCK AS A CONTRACT. One RocksDB handle is an implementation fact; the day it is a promise in a tool description or a skill, concurrency becomes a breaking change rather than a build. (4) CONFIG THAT WIDENS. Per-request configuration must only ever NARROW what the deployment allowed — GitHub's headers can restrict within static bounds and can never re-include what was excluded, and any read-only surface that a header can talk out of read-only was never read-only. (5) ONE GRAPH ASSUMED EVERYWHERE. graph_id already exists on every node and edge and is pinned to a constant; code that assumes the constant rather than reading the field is the foreclosure, not the constant itself. (6) TRUSTING TEXT BY ITS LOCATION. Once a design can arrive from someone else, text is untrusted because of where it came from, not because of which field it sits in — so the trust boundary belongs at ingress, before anything reads it. WHAT THIS RULE IS NOT: it is not a licence to build the hosted service, and not a reason to add abstraction now. Every item above is a constraint on shortcuts, satisfiable by writing the simple version carefully — the point is that the simple version stays a strict subset of the eventual one, so nothing has to be undone. WHETHER IT IS GATE-BLOCKING IS ANTHONY'S CALL and is recorded as `enforced: false` until he says otherwise, because a rule the machine blocks a build on is a different promise from one it reminds you about."
       }
     },
     {
@@ -15402,6 +15834,16 @@
       }
     },
     {
+      "node_id": "frag:art:github-mcp-study",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered github-mcp-nuggets.md"
+      }
+    },
+    {
       "node_id": "frag:art:graph",
       "node_type": "Fragment",
       "properties": {
@@ -15549,6 +15991,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered report.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:sanitize",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered sanitize.rs"
       }
     },
     {
@@ -16343,6 +16795,20 @@
       }
     },
     {
+      "node_id": "req:trust-boundary-at-ingress",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Text that enters the graph from outside is neutralised at the boundary, and the neutralisation is reported",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2's standing rule — graph text is data, never instructions — is enforced today only by prose in the skills and the server handshake, which is a rule addressed to a well-behaved reader. The requirement is that the mechanical half exists: text arriving from outside the session's own author (prose read out of a codebase by INGEST, a design export imported from another machine or another person, and anything a hosted surface would accept) is neutralised of the characters that carry hidden instructions before any agent reads it — invisible and zero-width characters, bidirectional overrides that make text render as something other than what it says, Unicode tag characters that smuggle a payload past a human reviewer, and metadata hidden in code-fence info strings. Two properties reflow2 must add to the technique it borrows. The neutralisation must be REPORTED, not silent: a design whose statements were quietly rewritten on the way in is a design nobody can audit, and rule 6 forbids silent drops — so the count and the kind of what was stripped travel with the result. And it must not touch legitimate design content: an arrow, an emoji, a maths symbol or a non-Latin script is ordinary text in a design that may be about anything, so the filter is a named list of instruction-carrying characters rather than a whitelist of what looks familiar.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:what-next",
       "node_type": "Requirement",
       "properties": {
@@ -16364,6 +16830,26 @@
         "state": "{\"description\":\"The capture half of KPPs, and the half a person actually touches. Anthony, 2026-07-25: the user says \\\\\\\"the system should be able to perform X\\\\\\\"; the agent, acting as the systems-engineering SME the user is not required to be (req:no-se-knowledge), recognises the shape of inviolable intent and asks — that sounds like something that MUST be met, is it? — and the user confirms or declines. WHY THE AGENT MUST NOT DECIDE IT: criticality is a claim about consequence, not about wording. Whether missing a threshold FAILS THE EFFORT depends on mission, contract and money that the graph does not hold and the agent cannot see. An agent that promoted a requirement to KPP on its own would be asserting the user's stake in their own project, which is the same forgery dec:certainty-derived forbids for requirement status — and worse here, because a KPP outranks every ordinary gap and would drag the whole detector's ranking with it. So: the agent PROPOSES, the human DISPOSES, and nothing enters as a KPP without the user's word. WHAT THE AGENT CAN LEGITIMATELY NOTICE, and it is more than intuition. A statement carrying a unit-bearing threshold (500 miles, 3000 pounds, 500 milliseconds) is already shaped like a KPP and may simply be unmodelled — the quantity/limit/direction triple has somewhere to go. Language of necessity ('must', 'shall', 'no less than') against language of preference ('should', 'aims to') is a real signal in acquisition prose. And a requirement whose failure the user has elsewhere described as fatal is a candidate the graph itself can surface. THE QUESTION MUST CARRY THE CONSEQUENCE, not just the label: asking 'is this a KPP?' invites a shrug, whereas asking 'if the system missed this by ten percent, would the effort have failed?' is answerable by someone who has never heard the term — which is the test req:no-se-knowledge sets. On confirmation the agent sets category kpp, and should ask for the threshold and, where one exists, the objective; on decline it stays an ordinary Requirement and the offer is not repeated. PLANNED.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Notice when a stated need is really a KPP, and ask\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
         "target_id": "cap:kpp-proposal",
         "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:kpp-capture:cap:sanitize-ingress",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:sanitize\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"DesignRule\",\"other_id\":\"rule:no-foreclosure\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:trust-boundary-at-ingress\",\"properties\":{}}]",
+        "state": "{\"description\":\"The mechanical half of \\\"graph text is data, never instructions\\\" (BL-41's deferred M piece), imported from github-mcp-server's pkg/sanitize after the 2026-07-25 study. Strips the characters whose only purpose is to make text read differently to a human than to a machine: Unicode tag characters (the smuggling channel), bidirectional overrides, and zero-width or hidden formatting characters. Applied where foreign text ENTERS — INGEST extraction and graph import — because the trust question is where text came from, not which field it landed in. REFLOW2'S OWN ADDITION, and the reason this is not a copy: it REPORTS. GitHub sanitises silently, which is right for rendering an issue body; a design brain that quietly rewrote a requirement statement would be unauditable, and rule 6 forbids silent drops. So the count and the kinds stripped ride back with the result. ZWJ is deliberately NOT stripped — it is load-bearing inside emoji sequences, and a filter that mangles legitimate content teaches people to turn it off.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Neutralise hidden instructions in text arriving from outside, and say what was stripped\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:sanitize-ingress",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:kpp-capture:dec:exploratory-staging",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-24\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"UNDECIDED, and recorded because it contradicts something already on the record. The user asks for a \\\"rubber-ducking\\\" mode: work an idea through with the agent before committing concepts to the graph. The git prior-art study explicitly listed the index/staging area under things to NOT import, on the grounds that continuous-capture doctrine rejects a staging gate. The question is whether that rejection covers this. A reading that would reconcile them: the rejection targeted a gate sitting between EVERY edit and the graph, whereas this is an opt-in mode for one activity — early exploration, where most ideas are meant to be discarded and recording them all would pollute the design with roads nobody walked. Note what already works: a session that simply makes no write calls IS rubber-ducking, and the read operations are the ducking aids. So the real question is narrower than it appears — what happens at the END of such a session: does the outcome get committed in one deliberate act, and are the discarded branches dropped, or preserved as unchosen alternatives under a decision point (which the fork layer just built the vocabulary for)?\",\"name\":\"OPEN — does reflow2 get an opt-in \\\"think first, commit later\\\" mode, having rejected a staging gate?\",\"rationale\":\"Raised by the user and his brother, 2026-07-24. Held proposed rather than built because it sits against a recorded position, and the cost of drifting into it is exactly the cost the original rejection named: a staging area quietly becomes the place where design intent waits, and a design brain whose defining property is continuous capture acquires a buffer where things are forgotten instead of recorded. That is worth deciding out loud rather than discovering. The reason it may still be right is equally concrete: the doctrine that nothing is lost was written against losing REAL decisions, and an exploratory session's dead ends are not decisions — forcing them into the graph would make the record noisier, not more honest, which is the same trade dec:alternatives-unranked-forkable made when it chose to store the fork and compute the consequence rather than eagerly maintaining every branch.\",\"status\":\"proposed\"}",
+        "target_id": "dec:exploratory-staging",
+        "target_type": "Decision"
       }
     },
     {
@@ -16397,6 +16883,18 @@
         "level": "integration",
         "method": "test",
         "name": "AoA + decision-point suite (tests/alternatives.rs) — 8 cases",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:bounded-reads",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "integration",
+        "method": "test",
+        "name": "A capped read names its cap, its total and where to resume; an oversized single node still returns (tools.rs, 4 cases)",
         "status": "passing"
       }
     },
@@ -16749,6 +17247,18 @@
       }
     },
     {
+      "node_id": "ver:sanitize-ingress",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "integration",
+        "method": "test",
+        "name": "Hidden payloads stripped and reported, honest text untouched, ZWJ survives, and the ingest wiring proved end to end (tests/sanitize.rs, 7 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:search",
       "node_type": "Verification",
       "properties": {
@@ -16819,6 +17329,18 @@
       }
     },
     {
+      "node_id": "ver:tool-search",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "integration",
+        "method": "test",
+        "name": "find_tools answers a described job with the right tool, ranks an exact name first, and reports a miss as a miss (tools.rs)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:views-suite",
       "node_type": "Verification",
       "properties": {
@@ -16841,7 +17363,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:08579fe9ea8ce6fba9aa73a8a12ecb7513393f6b3e34c871848dda13ddb5f92c",
+  "prev_content_hash": "sha256:dbc4b58af45432d6f7292a0bc0000ae18b8d68301a179949192fed37777591df",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

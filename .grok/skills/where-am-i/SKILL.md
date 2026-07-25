@@ -28,6 +28,15 @@ you. The standing rule is in AGENTS.md.
 - `reviewed_gaps` — what was raised and consciously accepted.
 - `scan_nodes` for `Requirement` / `Component` / `Interface` — the shape of the design.
 
+**On a mature design, read the shape before the prose.** `scan_nodes` answers with as many nodes
+as fit in one reply and then tells you what it withheld — `total` against `returned`, plus
+`next_offset` and `capped_by`. On a design with dozens of Decisions, the full properties of one
+type can be tens of thousands of characters, so pass `brief: true` first to see what is there,
+then read the handful you will actually narrate in full. **Never report from a page as if it were
+the whole set**: if `omitted` is not zero, either page on with `next_offset` or say plainly that
+you summarised part of it. A confident summary of the first twenty of seventy decisions is exactly
+the false completeness this skill exists to avoid.
+
 ## Tell them
 
 Write it as prose for the person who described this project to you, not as a data dump. Aim for
