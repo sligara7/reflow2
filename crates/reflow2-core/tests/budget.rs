@@ -18,6 +18,7 @@ fn mass_budget(limit: Option<f64>) -> DesignGraph {
         Some("mass_kg"),
         limit,
         None,
+        None,
     )
     .expect("constraint");
     for (id, name) in [
@@ -112,6 +113,7 @@ fn a_minimum_budget_gates_the_other_side() {
         Some("budget"),
         Some("power_w"),
         Some(500.0),
+        None,
         Some("minimum"),
     )
     .expect("constraint");
@@ -141,6 +143,7 @@ fn the_worst_dependency_path_is_accumulated() {
         Some("budget"),
         Some("latency_ms"),
         Some(200.0),
+        None,
         None,
     )
     .expect("constraint");

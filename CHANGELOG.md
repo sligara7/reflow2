@@ -33,6 +33,31 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The capture half of KPPs — the agent notices, the user decides** (BL-96,
+  `cap:kpp-proposal`). A new **kpp-proposal** skill: when something you said
+  carries a threshold, a "shall", or a consequence you described as fatal, the
+  agent asks whether it is inviolable — and asks it as a question you can answer
+  without the vocabulary ("if it came in at 450 instead of 500, would that sink
+  the project?") rather than "is this a KPP?". It never promotes on its own,
+  because criticality is a claim about *consequence* — mission, contract, money —
+  which is not in the graph and not visible to an agent. A `/kpp` command drives
+  the same skill when you want to state one outright.
+
+  `add_constraint` now takes **`objective`** and its description names the `kpp`
+  category. That was not cosmetic: before this, `objective` had no writer on the
+  MCP surface at all and the category was undocumented, so the only way to record
+  a confirmed KPP over MCP was the generic `create_node` — which is exactly how
+  `tests/kpp.rs` had to build its fixtures. A capture skill without it would have
+  pointed the agent at a door that was not there. `objective` is never defaulted;
+  three new tests pin that, and that the objective is never mistaken for the
+  threshold (missing it is disappointing, missing the threshold is fatal — only
+  the second is a breach).
+
+  Also new: **[SKILLS.md](SKILLS.md)**, the catalogue of which skill and which
+  slash command to reach for, linked from the README and the consumer kit. It
+  says plainly what is *not* there yet, including that the slash commands are not
+  installed into a consumer project.
+
 - **Advisory claims — see who already has a region of the design in hand**
   (BL-44). `claim_region` / `release_claim` / `claim_report`, plus a `CLAIMS`
   edge (Contributor → any node) carrying depth, timestamp and a note.

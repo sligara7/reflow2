@@ -1,0 +1,76 @@
+# The skills — which one, when
+
+Thirteen skills and seven slash commands. A **skill** is a prose workflow an agent loads by itself
+when your situation matches its description, so the loop happens without you naming tools; a
+**slash command** is you asking for one on purpose.
+
+Skills ship in the consumer kit ([getting-started/skills/](getting-started/skills/)) and
+`tools/reflow2_init.py` installs them into both `.claude/skills/` and `.grok/skills/`, because
+every harness looks somewhere different ([docs/skills/README.md](docs/skills/README.md)). All three
+copies are byte-identical and `tools/skill_lint.py` enforces that. The slash commands live in
+`.claude/commands/` and are **not** installed into a consumer project — today they are a
+convenience for working on reflow2 itself.
+
+## The loop, in the order you hit it
+
+| Skill | When |
+|---|---|
+| **genesis** | Very start, or the graph is empty. Bootstraps from your opening brief. |
+| **capture-intent** | You share a new idea, feature or requirement. Turns your words into nodes and wires the golden thread. |
+| **kpp-proposal** | Something you said sounds like it *must* hold no matter what. Asks you whether it is inviolable — a key performance parameter — rather than deciding for you, and records either answer. |
+| **detect-and-ask** | Before building, and after capturing. Finds gaps and puts them to you as plain questions. |
+| **impact-check** | Before changing or removing anything. Shows the blast radius so you edit only what is affected. |
+| **link-artifacts** | Right after you create or change a real file. Registers it with a checksum so drift is detectable. |
+| **check-health** | After structural changes. Cycles, single points of failure, duplicates, islands — how the design is *shaped*. |
+
+## Changing what is already there
+
+| Skill | When |
+|---|---|
+| **revise-design** | You changed your mind about something in the design. Walks the change onto the record before making the edit. |
+| **retire-from-design** | Something should leave. Forces the question that matters — *was it ever true?* — because history gets retired and mistakes get deleted. |
+
+## Getting oriented
+
+| Skill | When |
+|---|---|
+| **where-am-i** | Where things stand, what has been decided and why. Run it at the start of any session on an existing design. |
+| **adopt** | Pointed at a system that already exists with little documentation. The sibling of genesis. |
+
+## Setup and feedback
+
+| Skill | When |
+|---|---|
+| **ci-gate** | Wire the design check into CI so unaccepted drift turns the build red. |
+| **report-friction** | reflow2 itself got in your way. Not for problems with the project you are designing. |
+
+## Slash commands
+
+| Command | What it does |
+|---|---|
+| `/where` | Runs **where-am-i** — the design read back to you in plain language. |
+| `/gaps` | Walks the open gaps and asks you about them. |
+| `/health` | Structural health: cycles, single points of failure, islands. |
+| `/decisions` | What has been decided, and the reasoning behind it. |
+| `/debt` | What the coherence loop is owed right now. |
+| `/req` | Captures a requirement in your own words. |
+| `/kpp` | Records something as inviolable intent, after checking you meant it that way. |
+
+## Two worth knowing better than the rest
+
+**impact-check** is the one that is easy to skip and expensive to skip. It is the whole difference
+between finding out what a change touches *before* you make it and after.
+
+**report-friction** is the most underused. Friction with reflow2 tends to surface because someone
+asked a good question in the moment, not because anything captured it — and a friction report is
+how the next session does not need you to notice again.
+
+## What is not here yet
+
+- **"What should I work on next?"** — modelled as `cap:what-next` and unbuilt. The design can
+  answer it; no skill asks it yet.
+- **"I inherited this — where does a new feature go?"** — `cap:onboarding`, also unbuilt, and
+  arguably reflow2's strongest demo when it lands.
+- **The slash commands are not in the kit.** A consumer project gets the skills and no commands.
+
+This list is what exists today, not what is designed. The graph is the record of the difference.

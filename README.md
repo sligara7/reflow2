@@ -85,7 +85,7 @@ same way everything else here is: coverage is claimed only where a named mechani
 
 ## The design vocabulary
 
-Domain-neutral node types, layered by the phase they feed (27 types across 10 schema
+Domain-neutral node types, layered by the phase they feed (28 types across 10 schema
 domains; see [docs/overview.md](docs/overview.md) and `tools/validate_schema.py`):
 
 | Phase / layer | Nodes |
@@ -98,7 +98,7 @@ domains; see [docs/overview.md](docs/overview.md) and `tools/validate_schema.py`
 | P5 · Operation | `Release`, `Environment`, `Resource` |
 | Operating environment | `EnvironmentRule` |
 | Axis Z · change over time | `DesignEpoch`, `TemporalFact`, `Snapshot`, `ChangeEvent` |
-| Cross-cutting | `DimensionAssessment`, `DimensionObservation`, `Question` |
+| Cross-cutting | `DimensionAssessment`, `DimensionObservation`, `Question`, `Contributor` |
 
 **Structural edges:** CONTAINS, PROVIDES, CONSUMES, ALLOCATED_TO, REALIZES,
 VERIFIES, DEPENDS_ON, SATISFIES, PART_OF_FLOW, DEPLOYED_TO, REQUIRES_RESOURCE,
@@ -115,13 +115,14 @@ reflow2/
   crates/
     reflow2-core/    # the deterministic, LLM-free coherence engine (30 modules)
     reflow2-mcp/     # the agent-native MCP stdio server (~78 tools) — the binary you run
-  schema/            # 10 composable dynograph schema domains (27 node / 54 edge types)
+  schema/            # 10 composable dynograph schema domains (28 node / 55 edge types)
     core / functional / structure / build / verify / operate
     environment / temporal / inference / dimensions
   getting-started/   # the consumer kit installed into a project being designed
     SETUP.md         #   install + connect a coding agent + verify
     AGENTS.md        #   how an agent drives reflow2 to design YOUR project
-    skills/          #   the 11 skills (genesis, adopt, capture-intent, where-am-i, …)
+    skills/          #   the 13 skills (genesis, adopt, capture-intent, where-am-i, …)
+                     #   — SKILLS.md is the catalogue: which skill, when
     install.sh       #   fetch the released binaries, checksum-verified
   tools/             # reflow2_init.py (installer), smoke_mcp.py + the trial harnesses,
                      #   build_design_graph.py (reflow2's own design), validate_schema.py
@@ -129,6 +130,7 @@ reflow2/
     overview.md · vision.md · three-axes.md · surface-plan.md · partnership.md
     requirements-coverage.md · backlog.md · impact-propagation.md · heal-process.md · …
   AGENTS.md          # the primary instruction file for working ON reflow2
+  SKILLS.md          # which skill (and slash command) to reach for, and when
   CHANGELOG.md · COORD.md
 ```
 

@@ -173,6 +173,25 @@ NON_TOOL_TERMS = {
     "verified",
     "via",
     "warning",
+    # BL-96 KPP capture (cap:kpp-proposal): the Constraint budget triple and the
+    # objective beside it, the CONSTRAINS rigor ladder, and the three computed
+    # KPP gap sources the skill tells the user to expect.
+    "kpp_unbound",
+    "kpp_breached",
+    "kpp_contradicted",
+    "quantity",
+    "limit",
+    "direction",
+    "maximum",
+    "minimum",
+    "contribution",
+    "basis",
+    "estimated",
+    "evidence",
+    "measured",
+    "range_mi",
+    "mass_lb",
+    "latency_ms",
 }
 
 

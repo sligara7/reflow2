@@ -34,6 +34,15 @@ impl DesignGraph {
     /// P0 · Intent — a limit the design must respect. For a numeric budget,
     /// set `quantity` (unit-bearing name, e.g. `mass_kg`), `limit` and
     /// `direction` (`maximum`, the default, or `minimum`).
+    ///
+    /// `category: "kpp"` marks inviolable intent, and then `limit` is the
+    /// THRESHOLD (the minimum acceptable) while `objective` is what success
+    /// looks like. `objective` is optional and never defaulted: many KPPs state
+    /// only a threshold, and a number the graph supplied on its own is exactly
+    /// what intent vocabulary must not do. It is meaningless on an ordinary
+    /// Constraint, which has no notion of "better than required" — this is the
+    /// typed write path for the KPP the user confirmed (`cap:kpp-proposal`),
+    /// which before it existed could only be recorded through `create_node`.
     #[allow(clippy::too_many_arguments)]
     pub fn add_constraint(
         &mut self,
@@ -43,6 +52,7 @@ impl DesignGraph {
         category: Option<&str>,
         quantity: Option<&str>,
         limit: Option<f64>,
+        objective: Option<f64>,
         direction: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
         self.create_node(
@@ -54,6 +64,7 @@ impl DesignGraph {
                 .set_opt("category", category)
                 .set_opt("quantity", quantity)
                 .set_opt("limit", limit)
+                .set_opt("objective", objective)
                 .set_opt("direction", direction),
         )
     }

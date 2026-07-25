@@ -857,15 +857,22 @@ pub struct AddConstraintReq {
     pub name: String,
     pub statement: String,
     /// `technical` (default) / `business` / `operational` / `physical` /
-    /// `regulatory` / `budget` / `schedule`.
+    /// `regulatory` / `budget` / `schedule` / `kpp`.
     #[serde(default)]
     pub category: Option<String>,
     /// For a numeric budget: unit-bearing name, e.g. `mass_kg`, `latency_ms`.
     #[serde(default)]
     pub quantity: Option<String>,
-    /// The budget number, in the quantity's unit.
+    /// The budget number, in the quantity's unit. On a `kpp` this is the
+    /// THRESHOLD — the value that, if missed, fails the effort.
     #[serde(default)]
     pub limit: Option<f64>,
+    /// `kpp` only: the OBJECTIVE value — what success looks like, where `limit`
+    /// carries the minimum acceptable. Optional and never defaulted; ask the
+    /// user for it, and if they did not state one, leave it unset rather than
+    /// inventing a number the design would then assert on their behalf.
+    #[serde(default)]
+    pub objective: Option<f64>,
     /// `maximum` (default: total must stay at or under) / `minimum`.
     #[serde(default)]
     pub direction: Option<String>,
@@ -2432,7 +2439,13 @@ impl ReflowService {
                        which is a goal to achieve. For a numeric budget (BL-11) set `quantity` \
                        (unit-bearing name like mass_kg / latency_ms / cost_usd), `limit`, and \
                        `direction` (maximum = stay at or under, the default). Then attach the \
-                       spenders with `constrains` and read the rollup with `budget_report`.",
+                       spenders with `constrains` and read the rollup with `budget_report`. \
+                       `category: kpp` marks a KEY PERFORMANCE PARAMETER — inviolable intent, a \
+                       threshold that if missed fails the whole effort — and its violations are \
+                       computed and ranked above ordinary gaps. On a kpp, `limit` is the \
+                       threshold and `objective` is what success looks like. Never set kpp on \
+                       your own reading of the wording: criticality is a claim about \
+                       consequence, so ask the user first (the kpp-proposal skill).",
         annotations(read_only_hint = false)
     )]
     pub async fn add_constraint(
@@ -2448,6 +2461,7 @@ impl ReflowService {
                 req.category.as_deref(),
                 req.quantity.as_deref(),
                 req.limit,
+                req.objective,
                 req.direction.as_deref(),
             )
             .map_err(dyno_err)?,

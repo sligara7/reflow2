@@ -12,9 +12,9 @@
 //! cycle by someone who never read it. So these tests are about violations
 //! being *found*, not about the noun being storable.
 
-use reflow2_core::DesignGraph;
 use reflow2_core::detect::GapSource;
 use reflow2_core::nodes::{Props, node};
+use reflow2_core::{DesignGraph, Value};
 
 /// A car that must do 500 miles on a tank, with two mass contributors.
 fn car() -> DesignGraph {
@@ -227,5 +227,98 @@ fn the_objective_is_optional_and_never_invented() {
     assert!(
         !k.properties.contains_key("objective"),
         "unset means unset — no default objective appears from nowhere"
+    );
+}
+
+// ── The capture half (cap:kpp-proposal) ────────────────────────────────────
+//
+// The violation half above builds its KPPs with `create_node`, because when it
+// was written that was the only way: `add_constraint` had no `objective` and
+// its own description never mentioned the category, so the typed helper could
+// not record what the user had just confirmed. A capture skill that told an
+// agent to record a KPP would have been pointing at a door that was not there.
+
+#[test]
+fn a_confirmed_kpp_can_be_recorded_through_the_typed_helper() {
+    // The acquisition pair, both halves, in one call: threshold in `limit`,
+    // objective beside it — and the detector must read the result as a KPP,
+    // not merely store the words.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:car", "Car").unwrap();
+    let k = g
+        .add_constraint(
+            "kpp:range",
+            "500 miles on a tank",
+            "The car must travel at least 500 miles on one tank.",
+            Some("kpp"),
+            Some("range_mi"),
+            Some(500.0),
+            Some(600.0),
+            Some("minimum"),
+        )
+        .unwrap();
+
+    assert_eq!(k.properties["category"], Value::from("kpp"));
+    assert_eq!(k.properties["limit"], Value::from(500.0));
+    assert_eq!(k.properties["objective"], Value::from(600.0));
+    assert!(
+        sources(&g).contains(&GapSource::KppUnbound),
+        "recorded through the helper it must be a real KPP, not a stored noun"
+    );
+}
+
+#[test]
+fn the_typed_helper_never_defaults_the_objective() {
+    // Same rule as the create_node path: many KPPs state only a threshold, and
+    // asking the user for an objective they never set would produce a number
+    // the design then asserts on their behalf.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:car", "Car").unwrap();
+    let k = g
+        .add_constraint(
+            "kpp:mass",
+            "Curb mass under 3000 lb",
+            "The car must weigh under 3000 pounds.",
+            Some("kpp"),
+            Some("mass_lb"),
+            Some(3000.0),
+            None,
+            Some("maximum"),
+        )
+        .unwrap();
+
+    assert!(k.properties.contains_key("limit"));
+    assert!(
+        !k.properties.contains_key("objective"),
+        "unset means unset, on the typed path too"
+    );
+}
+
+#[test]
+fn the_objective_is_never_mistaken_for_the_threshold() {
+    // The slip this pins: reading `objective` as the limit would turn every
+    // KPP that is merely short of excellent into a program failure. Missing
+    // the objective is disappointing; missing the threshold is fatal, and only
+    // the second one is a breach.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:car", "Car").unwrap();
+    g.add_component("cmp:body", "Body", "the shell", None)
+        .unwrap();
+    g.add_constraint(
+        "kpp:mass",
+        "Curb mass under 3000 lb",
+        "The car must weigh under 3000 pounds; 2500 would be excellent.",
+        Some("kpp"),
+        Some("mass_lb"),
+        Some(3000.0),
+        Some(2500.0),
+        Some("maximum"),
+    )
+    .unwrap();
+    constrain(&mut g, "kpp:mass", "cmp:body", 2700.0);
+
+    assert!(
+        !sources(&g).contains(&GapSource::KppBreached),
+        "2700 lb misses the 2500 objective but meets the 3000 threshold"
     );
 }

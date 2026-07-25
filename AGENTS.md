@@ -219,7 +219,7 @@ not the centre.
   (`default-features = false` so RocksDB is opt-in; the core runs on the in-memory backend),
   `dynograph-graph` (pure graph-theory algorithms). To iterate against an unreleased foundation
   locally, uncomment the `[patch]` block in the root `Cargo.toml` — do not commit it uncommented.
-- The **schema is the vocabulary** (27 node types, 54 edge types across 10 `schema/*.yaml`
+- The **schema is the vocabulary** (28 node types, 55 edge types across 10 `schema/*.yaml`
   domains): the node/edge names are load-bearing. `src/schema.rs` embeds all ten YAML files
   via `include_str!` and merges them with `Schema::from_multiple_yamls` — the same files
   `tools/validate_schema.py` checks, so there is one source of truth. Terminology in code
@@ -379,7 +379,7 @@ LLM provider backends (deferred — unneeded agent-native), SME, generative HEAL
 embedding seam, and the `ingest` MCP handshake (SP-3b).
 
 - `schema/*.yaml` — 10 composable [dynograph-foundation](https://github.com/sligara7/dynograph-foundation)
-  schema domains (27 node types, 54 edge types). This is the foundation everything builds on.
+  schema domains (28 node types, 55 edge types). This is the foundation everything builds on.
 - `docs/*.md` — the vision, design, and process specifications; `docs/overview.md` maps them.
 - `getting-started/` — the consumer kit installed into a project being designed (never a build
   file). `tools/reflow2_init.py` installs it; `install.sh` fetches the released binaries.

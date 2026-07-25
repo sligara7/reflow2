@@ -56,7 +56,6 @@ Add yourself if you're new here.
 
 
 
-- cap:kpp-proposal — the capture half of KPPs (agent proposes, human disposes) — @ajs — since 2026-07-25 — getting-started/skills/kpp-proposal/ + the two mirrors, .claude/commands/kpp.md, crates/reflow2-core/src/budget.rs + crates/reflow2-mcp/src/service.rs (add_constraint needs `objective`, which today no MCP caller can set), tools/skill_lint.py, SKILLS.md, README.md
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -82,6 +81,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- KPP CAPTURE HALF BUILT (cap:kpp-proposal / BL-96) — the **kpp-proposal** skill + `/kpp`: the agent notices the shape of inviolable intent (unit-bearing threshold, necessity language, a consequence the user called fatal) and asks the CONSEQUENCE question, never the label — and never promotes on its own, because criticality is a claim about mission/contract/money the graph does not hold. FOUND WHILE BUILDING: `add_constraint` had no `objective` parameter and never named the `kpp` category, so a confirmed KPP could only be recorded via generic `create_node` (which is how the violation half's own 9 fixtures are built) — a skill without that fix would have pointed at a door that was not there. 3 new tests incl. the one that matters: the objective is never read as the threshold. Also SKILLS.md rewritten as the skill/command catalogue (linked from README + kit) and stale counts refreshed (11→13 skills, 27/54→28/55 types). 47 suites green, clippy 0, fmt clean, 96 toolsnaps blessed (add_constraint), skill lint green, design gate OK — @ajs — 2026-07-25 — getting-started/skills/kpp-proposal/ + mirrors, .claude/commands/kpp.md, budget.rs, service.rs, tests/kpp.rs, tools/skill_lint.py, SKILLS.md, docs/design/reflow2.json
 
 - CLAIMS LAYER BUILT (cap:cluster-claims / BL-44) — the scoping primitive dec:multi-writer-architecture committed to, and the thing that finally satisfies req:concurrent-planning. `claim_region`/`release_claim`/`claim_report` + a CLAIMS edge (Contributor -> any node, depth/claimed_at/note), new `cmp:claims` under sys:coherence-loop, art:claims registered. **A claim is NOT a lock** — no server exists to hold one, so nothing refuses a write and a second writer still merges correctly; pinned by a test, not a comment. Region COMPUTED from seed+depth (follows the design, does not freeze). Overlaps REPORTED not prevented, ranked by size, same-person overlaps excluded, and the advisory limit ships in the payload. CLAIMS deliberately NOT a traceability edge (like AUTHORED_BY) so people never appear in blast radii — also pinned. 9 tests; 47 suites green, clippy 0, fmt clean, 96 toolsnaps match. Schema: edge types 54 -> 55 — @ajs — 2026-07-25 — crates/reflow2-core/src/claims.rs, tests/claims.rs, crates/reflow2-mcp/src/service.rs, docs/design/reflow2.json
 
