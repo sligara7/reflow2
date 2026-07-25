@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- BL-95 coverage detector (spec + graph capture, no code) — @ajs — since 2026-07-24 — docs/backlog.md, docs/design/reflow2.json
+
 
 
 
