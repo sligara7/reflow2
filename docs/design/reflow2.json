@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:52cb6b6bf094e4abcc9b4054a7104963148b2598da743c1b43d95ad221fb25a5",
+  "content_hash": "sha256:974d81d4ec5ed7ada95bd777c7eb38e9d931313301d92701deea80ab0bc3941f",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -539,6 +539,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:stale-seat-refusal",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:stamp",
       "properties": {
         "weight_basis": "estimated"
@@ -962,6 +970,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:skills-served",
+      "properties": {},
+      "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:stale-seat",
       "properties": {},
       "to_id": "epoch:surface-export"
     },
@@ -4261,6 +4275,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:stale-seat",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stale-seat",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stale-seat",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:stale-seat-refusal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:stub-survivor-reconciliation",
       "properties": {
         "accepted_baseline": false,
@@ -4540,6 +4581,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cmp:sync"
     },
     {
       "edge_type": "CONTAINS",
@@ -8170,6 +8217,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:stale-seat-refusal",
+      "properties": {},
+      "to_id": "dec:advisory-concurrency"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:stale-seat-refusal",
+      "properties": {},
+      "to_id": "decision:ack:48cde54264aac425"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:stamp",
       "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
@@ -8455,6 +8514,12 @@
       "from_id": "cmp:skills",
       "properties": {},
       "to_id": "decision:ack:f58dc09a846a8783"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:sync",
+      "properties": {},
+      "to_id": "decision:ack:fc0919cac4f2727a"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -12390,6 +12455,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:sync",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:temporal",
       "properties": {
         "completeness": "complete"
@@ -12411,6 +12484,14 @@
         "completeness": "complete"
       },
       "to_id": "ver:served-skills"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-stale-seat",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:stale-seat"
     },
     {
       "edge_type": "REALIZES",
@@ -12941,6 +13022,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:stale-seat-refusal",
+      "properties": {},
+      "to_id": "req:stale-seat-knows"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:stamp",
       "properties": {},
       "to_id": "req:survives-upgrade"
@@ -13304,6 +13391,12 @@
       "from_id": "ver:skill-lint",
       "properties": {},
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:stale-seat",
+      "properties": {},
+      "to_id": "cap:stale-seat-refusal"
     },
     {
       "edge_type": "VERIFIES",
@@ -13765,6 +13858,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:sync",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:sync"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:temporal",
       "properties": {
         "action": "created"
@@ -13786,6 +13887,14 @@
         "action": "created"
       },
       "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-stale-seat",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-stale-seat"
     },
     {
       "edge_type": "YIELDED",
@@ -14245,7 +14354,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:437623ff7dd7ac86",
+        "checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
         "status": "realized"
@@ -14333,7 +14442,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:12d992bf4851fdcf7de970b59eee08d165c918712389f3fa65dddb08b900e73f",
+        "checksum": "sha256:952e2425030628ee23a07a01ae0f16a0bb3a0490dd3511e3d5c4c3d3834dd1e3",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -14406,6 +14515,17 @@
       }
     },
     {
+      "node_id": "art:sync",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:e792e6bab2ad48527428df1c015f6ebe20fec9d79da22657f7ed088f8d605c56",
+        "location": "crates/reflow2-core/src/sync.rs",
+        "name": "sync.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:temporal",
       "node_type": "Artifact",
       "properties": {
@@ -14435,6 +14555,17 @@
         "checksum": "sha256:a0c4364364109ae5aedf5c15b2b9a12d30fe5016b5265f972d26b3bf92319aec",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-stale-seat",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d",
+        "location": "crates/reflow2-core/tests/stale_seat.rs",
+        "name": "stale_seat.rs + test_stale_seat.py",
         "status": "realized"
       }
     },
@@ -15250,6 +15381,19 @@
       }
     },
     {
+      "node_id": "cap:stale-seat-refusal",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Before replacing an export file, compare what is on disk against what is about to be written and answer one question: would this DROP nodes or edges the file holds? The file where this seat left it is the silent fast path (one hash comparison against a marker in <graph-path>.sync.json); a file that moved but loses nothing is allowed and reported; a write that would delete somebody else's work is refused, naming the ids and the three-step remedy, overridable only by an explicit accept_divergence. import_graph gained a path argument so the remedy it names is a thing the tool can actually do.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Refuse to write a design over work the shared record already holds",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:stamp",
       "node_type": "Capability",
       "properties": {
@@ -16048,6 +16192,14 @@
       }
     },
     {
+      "node_id": "chg:stale-seat",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A seat is refused when its export would delete the other seat's work"
+      }
+    },
+    {
       "node_id": "chg:stub-survivor-reconciliation",
       "node_type": "ChangeEvent",
       "properties": {
@@ -16590,6 +16742,19 @@
         "name": "surprises",
         "provenance": "authored",
         "purpose": "The surprises module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:sync",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "sync",
+        "provenance": "authored",
+        "purpose": "The judgement about writing over a shared design record: what would be lost, said in the language of what to do about it.",
         "status": "planned",
         "tier": "operational"
       }
@@ -17389,6 +17554,16 @@
       }
     },
     {
+      "node_id": "decision:ack:48cde54264aac425",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:48cde54264aac425.",
+        "name": "Reviewed: gap:48cde54264aac425",
+        "rationale": "Standing disposition: validation evidence lives in docs/trials/ and in field reports from real use, not as validation-kind Verifications, so the detector is correctly reporting what the graph cannot see. Re-acknowledged at 51 capabilities — the gap id is derived from the affected SET, so every new capability mints a new id and the previous acknowledgement cannot carry over. That churn is a finding about the acknowledgement mechanism, not about validation.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:4a6cb8914622b724",
       "node_type": "Decision",
       "properties": {
@@ -17835,6 +18010,16 @@
         "decision": "Accepted the gap gap:f78628387e7c41cc.",
         "name": "Reviewed: gap:f78628387e7c41cc",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24). The check this needs, named now because the obvious one would pass while missing the point: a fixture where a REGISTERED artifact grows a new capability must report understatement, and must be distinguishable from the same artifact having a typo fixed — today both are checksum_change, and a test that only asserts \"drift was detected\" would pass on both and prove nothing about direction. A second case should assert the report names WHAT the design now claims wrongly, not merely that bytes moved, since the whole failure mode is that a human is told the design is stale without being told what to fix and therefore does not fix it. This capability's real validation is a field one and belongs to the trials programme: run it against storyflow, where the understatement was observed, and see whether it names the same delta a person would.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:fc0919cac4f2727a",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:fc0919cac4f2727a.",
+        "name": "Reviewed: gap:fc0919cac4f2727a",
+        "rationale": "Built after v0.11.0 was cut, so it ships in the next release. dec:intent-preserved settled that an unreleased-component gap from post-cut work is answered by the next manifest rather than backfilled into a shipped one — a release record must say what that release actually contained. Same disposition as cmp:degraded and cmp:skills.",
         "status": "accepted"
       }
     },
@@ -19045,6 +19230,16 @@
       }
     },
     {
+      "node_id": "frag:art:sync",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered sync.rs"
+      }
+    },
+    {
       "node_id": "frag:art:temporal",
       "node_type": "Fragment",
       "properties": {
@@ -19072,6 +19267,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered served_skills.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-stale-seat",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered stale_seat.rs + test_stale_seat.py"
       }
     },
     {
@@ -20757,6 +20962,17 @@
       }
     },
     {
+      "node_id": "ver:stale-seat",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "The ordinary export stays silent, a superset write is allowed and reported, and a write that would drop the other seat's work is refused with the ids, the remedy and the cap named (tests/stale_seat.rs, 7 cases); proven with two real graphs against one shared file, including the empty-graph-wipes-the-design case and the import-then-export remedy actually clearing the refusal (tools/test_stale_seat.py, 5 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:stamp",
       "node_type": "Verification",
       "properties": {
@@ -20836,7 +21052,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b496c37ea68a2099dd5a9d13e5338e19cb3ceecc9de709bf0054397dc833104d",
+  "prev_content_hash": "sha256:52cb6b6bf094e4abcc9b4054a7104963148b2598da743c1b43d95ad221fb25a5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

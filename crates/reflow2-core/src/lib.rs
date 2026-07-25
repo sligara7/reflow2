@@ -58,6 +58,7 @@ pub mod scope;
 pub mod search;
 pub mod structure;
 pub mod surprises;
+pub mod sync;
 pub mod temporal;
 pub mod verify;
 pub mod vocabulary;

@@ -7,6 +7,14 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "accept_divergence": {
+        "default": null,
+        "description": "Write even when the export would DELETE design the existing file holds\n— someone else's work, pulled in after this graph last synced. Off by\ndefault and refused loudly, because a stale export is a *complete*\ndocument: it merges cleanly and the missing work simply vanishes\n(`req:stale-seat-knows`). Set this only to discard that work on purpose.",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
       "overwrite": {
         "default": null,
         "description": "Allow `path` to replace an existing file. Off by default: an export\nwrites freely to a new path but refuses to clobber an existing one\nunless you say so, so a stray or injected path cannot silently destroy\na file (BL-57).",

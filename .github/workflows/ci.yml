@@ -94,6 +94,11 @@ jobs:
         # branches editing different parts of one export must merge with no
         # human, and a both-sides conflict must leave the path unmerged.
         run: python3 tools/test_merge_driver.py
+      - name: Stale-seat suite (two real graphs, one shared export file)
+        # req:stale-seat-knows: a seat whose graph never caught up must not
+        # replace the shared design with a complete-but-older document. Two
+        # separate servers and a real file, because that is the shape of the bug.
+        run: python3 tools/test_stale_seat.py
       - name: Degraded-server + held-graph-snapshot suite (measured against a real lock)
         # The fleet outage of 2026-07-25: a peer that cannot take the single-writer
         # lock must still handshake and say why, instead of dying before any tool

@@ -85,7 +85,7 @@ Three records, three questions — kept separate on purpose:
 ### 3¼ · Working together — *for the people using it*
 - [collaborating.md](collaborating.md) — two people, two machines, one design, over plain git: the
   one-time merge-driver setup, the daily loop, what merges automatically and what needs a person,
-  and the stale-export gap to work around until `req:stale-seat-knows` is built. Written to be sent
+  and what the stale-export refusal is telling you. Written to be sent
   to a collaborator as-is.
 
 ### 3½ · Upgrade notes — *read before updating a consumer project*

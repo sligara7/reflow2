@@ -61,6 +61,29 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **An export that would delete the other seat's work is refused**
+  (`cap:stale-seat-refusal`, `req:stale-seat-knows`). The hazard git answers with
+  a non-fast-forward refusal, one level down — and worse here, for one reason:
+  **a stale export is not a conflicting export, it is a complete one.** A
+  session's graph is a long-lived copy of the committed design; export from a
+  graph that never caught up and the document you write is internally perfect
+  and simply older. The merge driver finds no conflict (there is none), and the
+  other person's requirements are gone with nothing in the diff that looks like
+  an error.
+
+  Before replacing an export, reflow2 now asks whether the write would **drop**
+  anything the file holds. The file where you left it is written silently — one
+  hash comparison against a marker in `<graph-path>.sync.json`. A file that moved
+  but loses nothing is written, with the movement reported. A write that would
+  remove nodes or edges is **refused**, naming the ids, the three-step remedy,
+  and `accept_divergence=true` for discarding that work on purpose. The check is
+  deliberately narrow: a check that fired on every ordinary export would be
+  passed by habit within a day and would then protect nobody.
+
+  `import_graph` gained a **`path`** argument in the same change, so the remedy
+  the refusal names is one the tool can actually perform — and importing a file
+  records the sync, which is what clears the refusal.
+
 - **A session that cannot open the graph now says so instead of vanishing**
   (`cap:degraded-surface`, `crates/reflow2-mcp/src/degraded.rs`). Reported from a
   six-session StoryFlow fleet on 2026-07-25: the store is single-writer, so the

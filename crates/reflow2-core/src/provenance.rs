@@ -285,6 +285,76 @@ pub fn stamp_path(graph_path: &str) -> PathBuf {
     }
 }
 
+/// Where this seat records the shared export it last synced with
+/// (`req:stale-seat-knows`): `<graph-path>.sync.json`, a sibling of the store
+/// like the stamp.
+///
+/// **A separate file from the stamp on purpose.** The stamp answers "which
+/// reflow2 wrote this graph" and is rewritten wholesale on every open by
+/// `check_and_stamp`; sync state answers "what did this seat last see of the
+/// shared record", changes on a different schedule, and must survive that
+/// rewrite. Folding it into the stamp would also have changed that file's
+/// shape, and every existing graph would then fail to open with "the version
+/// stamp is not readable" — a migration nobody asked for, to hold one string.
+///
+/// Machine-local, like the graph it sits beside: never committed, never shared.
+pub fn sync_path(graph_path: &str) -> PathBuf {
+    let p = Path::new(graph_path);
+    let name = p.file_name().map(|n| n.to_string_lossy().to_string());
+    match name {
+        Some(n) => p.with_file_name(format!("{n}.sync.json")),
+        None => PathBuf::from(format!("{graph_path}.sync.json")),
+    }
+}
+
+/// What this seat last saw of each shared export it uses, keyed by the path.
+///
+/// Keyed by path because one graph can legitimately publish to more than one
+/// file — a full export and a published surface, say — and remembering only
+/// the most recent would make the two files disarm each other's check.
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct SyncState {
+    /// Absolute path → the `content_hash` this seat last wrote there or read
+    /// from there.
+    #[serde(default)]
+    pub last_synced: std::collections::BTreeMap<String, String>,
+}
+
+/// Read this seat's sync record. A missing or unreadable file is "never
+/// synced", not an error: the check that consumes it treats not-knowing as a
+/// reason to look harder, so losing the file costs a warning, never safety.
+pub fn read_sync_state(graph_path: &str) -> SyncState {
+    std::fs::read_to_string(sync_path(graph_path))
+        .ok()
+        .and_then(|t| serde_json::from_str(&t).ok())
+        .unwrap_or_default()
+}
+
+/// Record that this seat is in step with `hash` at `target`.
+///
+/// Best-effort by design: failing to write the marker must never fail an export
+/// that already succeeded. The cost of losing it is one extra content check on
+/// the next write, which is the safe direction to fail in.
+pub fn record_sync(graph_path: &str, target: &str, hash: &str) {
+    let mut state = read_sync_state(graph_path);
+    let key = std::fs::canonicalize(target)
+        .map(|p| p.display().to_string())
+        .unwrap_or_else(|_| target.to_string());
+    state.last_synced.insert(key, hash.to_string());
+    if let Ok(json) = serde_json::to_string_pretty(&state) {
+        let _ = std::fs::write(sync_path(graph_path), json + "\n");
+    }
+}
+
+/// What this seat believes is at `target`, if it has ever synced with it.
+pub fn last_synced(graph_path: &str, target: &str) -> Option<String> {
+    let state = read_sync_state(graph_path);
+    let key = std::fs::canonicalize(target)
+        .map(|p| p.display().to_string())
+        .unwrap_or_else(|_| target.to_string());
+    state.last_synced.get(&key).cloned()
+}
+
 /// Read the stamp beside a graph, compare it to this binary, and refresh it.
 ///
 /// Fails loud — and refuses to open — only when the graph was written by a

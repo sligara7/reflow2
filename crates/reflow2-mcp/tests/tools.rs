@@ -1085,7 +1085,8 @@ async fn a_design_round_trips_through_export_and_import() {
     let s = seeded().await;
     let doc = j!(s.export_graph(Parameters(ExportGraphToReq {
         path: None,
-        overwrite: None
+        overwrite: None,
+        accept_divergence: None,
     })));
     assert!(doc["nodes"].as_array().unwrap().len() >= 4);
     assert!(
@@ -1096,7 +1097,8 @@ async fn a_design_round_trips_through_export_and_import() {
     // A fresh graph, loaded from the document, holds the same design.
     let fresh = ReflowService::in_memory().expect("in-memory service");
     let report = j!(fresh.import_graph(Parameters(ImportGraphReq {
-        document: obj(&doc),
+        document: Some(obj(&doc)),
+        path: None,
     })));
     assert_eq!(
         report["nodes_written"].as_u64().unwrap(),
@@ -1111,7 +1113,8 @@ async fn a_design_round_trips_through_export_and_import() {
     // backup directory diffable rather than a pile of fresh blobs.
     let again = j!(fresh.export_graph(Parameters(ExportGraphToReq {
         path: None,
-        overwrite: None
+        overwrite: None,
+        accept_divergence: None,
     })));
     assert_eq!(again["nodes"], doc["nodes"]);
     assert_eq!(again["edges"], doc["edges"]);
@@ -1135,7 +1138,8 @@ async fn importing_something_that_is_not_an_export_fails_loud() {
     let s = ReflowService::in_memory().expect("in-memory service");
     assert!(
         s.import_graph(Parameters(ImportGraphReq {
-            document: obj(&serde_json::json!({"nodes": "not a list"})),
+            document: Some(obj(&serde_json::json!({"nodes": "not a list"}))),
+            path: None,
         }))
         .await
         .is_err(),
@@ -1398,6 +1402,7 @@ async fn export_graph_writes_a_deterministic_file_when_asked() {
     let receipt = j!(s.export_graph(Parameters(ExportGraphToReq {
         path: Some(path_str.clone()),
         overwrite: None,
+        accept_divergence: None,
     })));
     // The receipt reports the resolved (canonicalized) path — same file.
     assert_eq!(
@@ -1411,7 +1416,8 @@ async fn export_graph_writes_a_deterministic_file_when_asked() {
     let doc: serde_json::Value = serde_json::from_str(&on_disk).expect("valid JSON");
     let payload = j!(s.export_graph(Parameters(ExportGraphToReq {
         path: None,
-        overwrite: None
+        overwrite: None,
+        accept_divergence: None,
     })));
     assert_eq!(
         doc["nodes"], payload["nodes"],
@@ -1428,6 +1434,7 @@ async fn export_graph_writes_a_deterministic_file_when_asked() {
         s.export_graph(Parameters(ExportGraphToReq {
             path: Some(path_str.clone()),
             overwrite: None,
+            accept_divergence: None,
         }))
         .await
         .is_err(),
@@ -1438,6 +1445,7 @@ async fn export_graph_writes_a_deterministic_file_when_asked() {
     j!(s.export_graph(Parameters(ExportGraphToReq {
         path: Some(path_str.clone()),
         overwrite: Some(true),
+        accept_divergence: None,
     })));
     let again = std::fs::read_to_string(&path).expect("file written twice");
     assert_eq!(on_disk, again, "two exports of an unchanged graph match");
@@ -1458,6 +1466,7 @@ async fn compare_designs_reports_divergence_from_a_base_export() {
     j!(s.export_graph(Parameters(ExportGraphToReq {
         path: Some(base_str.clone()),
         overwrite: None,
+        accept_divergence: None,
     })));
 
     // Identical: the live graph has not moved since the export.
@@ -1493,6 +1502,7 @@ async fn compare_designs_reports_divergence_from_a_base_export() {
     j!(s.export_graph(Parameters(ExportGraphToReq {
         path: Some(other_str.clone()),
         overwrite: None,
+        accept_divergence: None,
     })));
 
     let files = j!(s.compare_designs(Parameters(CompareDesignsReq {
@@ -1582,6 +1592,7 @@ async fn export_files_chain_by_content_hash() {
     let first = j!(s.export_graph(Parameters(ExportGraphToReq {
         path: Some(path_str.clone()),
         overwrite: None,
+        accept_divergence: None,
     })));
     let first_hash = first["content_hash"]
         .as_str()
@@ -1597,6 +1608,7 @@ async fn export_files_chain_by_content_hash() {
     j!(s.export_graph(Parameters(ExportGraphToReq {
         path: Some(path_str.clone()),
         overwrite: Some(true),
+        accept_divergence: None,
     })));
     assert_eq!(
         on_disk,
@@ -1614,6 +1626,7 @@ async fn export_files_chain_by_content_hash() {
     let second = j!(s.export_graph(Parameters(ExportGraphToReq {
         path: Some(path_str.clone()),
         overwrite: Some(true),
+        accept_divergence: None,
     })));
     assert_eq!(
         second["prev_content_hash"].as_str(),
@@ -1944,6 +1957,7 @@ async fn export_refuses_to_overwrite_without_opt_in() {
         .export_graph(Parameters(ExportGraphToReq {
             path: Some(p),
             overwrite: None,
+            accept_divergence: None,
         }))
         .await
         .expect_err("overwriting an existing file must be refused");

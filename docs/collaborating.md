@@ -165,24 +165,42 @@ working tree is a completely recoverable state.
 - **If you are not sure — stop and ask each other.** A bad merge on `main` is somebody's afternoon
   deleted; an unmerged file is not.
 
-## One gap to know about, honestly
+## The one that would have bitten you — and what reflow2 does about it
 
-Git protects you from publishing over work you have not seen. **reflow2 does not do this for the
-design yet.**
+Git protects you from publishing over work you have not seen: that is the non-fast-forward
+refusal. The same hazard exists one level down, in the design, and it is **worse** there, for one
+reason:
 
-Your live graph is a long-lived copy of the committed design. If your partner pushed design
-changes and you export from a graph that has not caught up, you produce a document that is
-complete but *old* — and because it is complete, the merge driver merges it cleanly, with no
-conflict, and their work quietly disappears.
+> **A stale export is not a conflicting export. It is a complete one.**
 
-Until this is built (it is accepted work — `req:stale-seat-knows`), the rule that avoids it
-entirely:
+Your live graph is a long-lived copy of the committed design. If your partner's work reached the
+file and you export from a graph that never caught up, you write a document that is internally
+perfect and simply older. The merge driver finds no conflict — there is none to find — and their
+requirements are gone, with nothing in the diff that looks like an error.
 
-> **`git pull --rebase` before you export, and export immediately before you commit.**
+**reflow2 now refuses that write** (`req:stale-seat-knows`). Before replacing an export it asks
+one question: *would this drop anything the file already holds?*
 
-If you pulled design changes into your working tree, get them into your graph before you write
-back over it — ask your agent to `compare_designs` against `docs/design/reflow2.json` and it will
-say, node by node, whether your graph and the committed record still agree.
+- The file is where you left it → written, silently. (The ordinary case, every time.)
+- The file moved but nothing in it would be lost → written, and the movement is reported.
+- The write would delete nodes or edges the file holds → **refused**, naming what would have gone
+  and what to do instead.
+
+So the only time it stops you is the only time you were about to lose something. When it does:
+
+```text
+REFUSED: writing this design over docs/design/reflow2.json would DELETE 2 node(s)
+and 1 edge(s) that the file holds and your graph does not …
+  1. git pull --rebase
+  2. import_graph from that path (or compare_designs against it first)
+  3. Export again; it will be a superset and go through.
+```
+
+Doing exactly that clears it. If you genuinely mean to discard their work, `accept_divergence=true`
+says so out loud.
+
+The habit that avoids the refusal altogether is still worth having: **pull before you export, and
+export immediately before you commit.**
 
 ## The rules that keep this working
 
@@ -204,6 +222,7 @@ Every failure mode here is a version of one thing: **divergence you allowed to g
 | Your agent shows no reflow2 tools, or one called `reflow2_unavailable` | Another session on your machine holds the graph, or the graph was written by a different reflow2 | Call that tool — it names the reason and the fix |
 | The design in the repo does not match what your agent says | Your graph and the committed export have diverged | `compare_designs` against `docs/design/reflow2.json` |
 | Your agent's skills seem out of date | They are served by the server now, so they cannot be | Update reflow2 itself; nothing in the project needs changing |
+| `REFUSED: … would DELETE n node(s)` on export | Their work reached the file and your graph never caught up — reflow2 stopping real data loss | `git pull --rebase`, `import_graph` from the file, export again |
 
 ---
 

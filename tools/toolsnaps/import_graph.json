@@ -9,13 +9,22 @@
     "properties": {
       "document": {
         "additionalProperties": true,
-        "description": "A document previously returned by `export_graph`.",
-        "type": "object"
+        "default": null,
+        "description": "A document previously returned by `export_graph`. Omit when passing\n`path`.",
+        "type": [
+          "object",
+          "null"
+        ]
+      },
+      "path": {
+        "default": null,
+        "description": "Read the document from this file instead — the committed design export,\nusually. Prefer this to inlining: it avoids carrying a large document\nthrough the conversation, and it records that this seat is now in step\nwith that file, which is what clears a `req:stale-seat-knows` refusal.",
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
-    "required": [
-      "document"
-    ],
     "type": "object"
   },
   "name": "import_graph"

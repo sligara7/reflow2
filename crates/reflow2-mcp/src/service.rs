@@ -73,6 +73,11 @@ type JsonObject = JsonMap<String, JsonValue>;
 pub struct ReflowService {
     graph: Arc<Mutex<DesignGraph>>,
     tool_router: ToolRouter<Self>,
+    /// Where this seat's graph lives on disk, so it can remember which shared
+    /// export it is in step with (`req:stale-seat-knows`). `None` for an
+    /// in-memory graph, which has no sidecar to remember in and no partner to
+    /// collide with.
+    graph_path: Option<String>,
     /// Advanced whenever a mutating handler takes the graph (via `write_lock`).
     /// The coherence loop's owed-set can change only on a write, so this is the
     /// cheap signal that lets an orientation read skip recomputing `loop_status`
@@ -1222,6 +1227,13 @@ pub struct ExportGraphToReq {
     /// a file (BL-57).
     #[serde(default)]
     pub overwrite: Option<bool>,
+    /// Write even when the export would DELETE design the existing file holds
+    /// — someone else's work, pulled in after this graph last synced. Off by
+    /// default and refused loudly, because a stale export is a *complete*
+    /// document: it merges cleanly and the missing work simply vanishes
+    /// (`req:stale-seat-knows`). Set this only to discard that work on purpose.
+    #[serde(default)]
+    pub accept_divergence: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1370,8 +1382,16 @@ pub struct AgentAnswerReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ImportGraphReq {
-    /// A document previously returned by `export_graph`.
-    pub document: JsonObject,
+    /// A document previously returned by `export_graph`. Omit when passing
+    /// `path`.
+    #[serde(default)]
+    pub document: Option<JsonObject>,
+    /// Read the document from this file instead — the committed design export,
+    /// usually. Prefer this to inlining: it avoids carrying a large document
+    /// through the conversation, and it records that this seat is now in step
+    /// with that file, which is what clears a `req:stale-seat-knows` refusal.
+    #[serde(default)]
+    pub path: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1524,11 +1544,17 @@ impl ReflowService {
         // saw, and a silently-partial search reads as "the design says
         // nothing about that". One bounded rebuild at open closes that hole.
         graph.reindex_search()?;
-        Ok((Self::wrap(graph), provenance.note()))
+        Ok((
+            Self::wrap_at(graph, Some(path.to_string())),
+            provenance.note(),
+        ))
     }
 
     pub fn new(path: &str) -> Result<Self, DynoError> {
-        Ok(Self::wrap(DesignGraph::open_rocksdb(path)?))
+        Ok(Self::wrap_at(
+            DesignGraph::open_rocksdb(path)?,
+            Some(path.to_string()),
+        ))
     }
 
     /// Open an in-memory design graph (tests / dry runs; not persisted).
@@ -1540,8 +1566,16 @@ impl ReflowService {
     /// entry point starts the write generation and read-hint memory the same
     /// way and a new constructor cannot forget one.
     fn wrap(graph: DesignGraph) -> Self {
+        Self::wrap_at(graph, None)
+    }
+
+    /// `wrap`, remembering where the graph lives — the sync marker for
+    /// `req:stale-seat-knows` is a sibling of the store, so the path is the one
+    /// thing the service needs to keep.
+    fn wrap_at(graph: DesignGraph, graph_path: Option<String>) -> Self {
         Self {
             graph: Arc::new(Mutex::new(graph)),
+            graph_path,
             // The skills are served, not installed (dec:skills-served), and
             // their tools live in their own module — combined here so
             // find_tools and tools/list see one surface.
@@ -3007,12 +3041,35 @@ impl ReflowService {
         // unchanged design still writes byte-identical files. A file that is
         // not a reflow2 export records no chain, and says so in the receipt.
         let mut chain_note = None;
+        let mut sync_note = None;
         if target.exists() {
             match std::fs::read_to_string(target)
                 .ok()
                 .and_then(|raw| serde_json::from_str::<reflow2_core::GraphExport>(&raw).ok())
             {
-                Some(predecessor) => export.chain_after(&predecessor),
+                Some(predecessor) => {
+                    // req:stale-seat-knows. Before the lineage link, the
+                    // question git answers with a non-fast-forward refusal:
+                    // would writing this drop design the file already holds?
+                    // Only the lossy case stops — see reflow2_core::sync.
+                    let last = self
+                        .graph_path
+                        .as_deref()
+                        .and_then(|g| reflow2_core::provenance::last_synced(g, &path));
+                    let verdict = reflow2_core::sync::assess_overwrite(
+                        Some(&predecessor),
+                        &export,
+                        last.as_deref(),
+                    );
+                    if verdict.is_loss() && !req.accept_divergence.unwrap_or(false) {
+                        return Err(McpError::invalid_params(
+                            verdict.message(&path).unwrap_or_default(),
+                            None,
+                        ));
+                    }
+                    sync_note = verdict.message(&path);
+                    export.chain_after(&predecessor);
+                }
                 None => {
                     chain_note = Some(
                         "the file being replaced was not a reflow2 export — no lineage recorded",
@@ -3030,6 +3087,12 @@ impl ReflowService {
             // mistake, not a server fault.
             McpError::invalid_params(format!("cannot write export to {path}: {e}"), None)
         })?;
+        // This seat is now in step with what it just wrote — so the next
+        // export takes the one-hash fast path instead of comparing documents,
+        // and a file that moves after this is detectable (req:stale-seat-knows).
+        if let (Some(graph_path), Some(hash)) = (self.graph_path.as_deref(), &export.content_hash) {
+            reflow2_core::provenance::record_sync(graph_path, &path, hash);
+        }
         // Report where it actually landed: a relative path resolves against the
         // server's cwd, which the calling agent cannot see.
         let resolved = std::fs::canonicalize(target)
@@ -3046,6 +3109,9 @@ impl ReflowService {
         });
         if let Some(note) = chain_note {
             receipt["chain_note"] = json!(note);
+        }
+        if let Some(note) = sync_note {
+            receipt["sync_note"] = json!(note);
         }
         ok_json(receipt)
     }
@@ -3155,9 +3221,35 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ImportGraphReq>,
     ) -> Result<CallToolResult, McpError> {
-        let doc: reflow2_core::GraphExport = parse_struct_param(req.document, "reflow2 export")?;
+        let doc: reflow2_core::GraphExport = match (req.document, &req.path) {
+            (Some(document), None) => parse_struct_param(document, "reflow2 export")?,
+            (None, Some(path)) => read_export_document(path)?,
+            (Some(_), Some(_)) => {
+                return Err(McpError::invalid_params(
+                    "pass document OR path, not both — with two sources there is no way to say                      which one was imported."
+                        .to_string(),
+                    None,
+                ));
+            }
+            (None, None) => {
+                return Err(McpError::invalid_params(
+                    "nothing to import: pass document (an export payload) or path (a file)."
+                        .to_string(),
+                    None,
+                ));
+            }
+        };
         let mut g = self.write_lock().await;
-        ok_json(g.import_graph(&doc).map_err(dyno_err)?)
+        let report = g.import_graph(&doc).map_err(dyno_err)?;
+        // Absorbing a file puts this seat in step with it, which is exactly
+        // what the stale-seat refusal tells people to do — so record it, or the
+        // remedy would not clear the condition it names (req:stale-seat-knows).
+        if let (Some(graph_path), Some(path), Some(hash)) =
+            (self.graph_path.as_deref(), &req.path, &doc.content_hash)
+        {
+            reflow2_core::provenance::record_sync(graph_path, path, hash);
+        }
+        ok_json(report)
     }
 
     #[tool(
