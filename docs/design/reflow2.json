@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d3ffbfa589718204442cd71e49b262a9ecef2eac3d78f1321f72f2350c246c24",
+  "content_hash": "sha256:92421c76ddcc8ab6d077243a3861e7185846228f5e44a960ad2a3517a1530e61",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -339,6 +339,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:session-memory",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:stamp",
       "properties": {
         "weight_basis": "estimated"
@@ -494,6 +502,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:search-nl-defect",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:session-memory-capture",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -1086,6 +1100,15 @@
       "from_id": "req:roads-not-taken",
       "properties": {
         "acted_at": "2026-07-22",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:session-memory-in-graph",
+      "properties": {
+        "acted_at": "2026-07-24",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -2430,6 +2453,24 @@
         "action": "added"
       },
       "to_id": "ver:search-natural-language"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:session-memory-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:session-memory"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:session-memory-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:session-memory-in-graph"
     },
     {
       "edge_type": "CHANGED",
@@ -4786,6 +4827,12 @@
       "from_id": "req:read-surfaces-debt",
       "properties": {},
       "to_id": "dec:read-hint-shape"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:session-memory-in-graph",
+      "properties": {},
+      "to_id": "dec:multi-writer-architecture"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8238,6 +8285,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:session-memory",
+      "properties": {},
+      "to_id": "req:session-memory-in-graph"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:stamp",
       "properties": {},
       "to_id": "req:survives-upgrade"
@@ -9730,6 +9783,19 @@
       }
     },
     {
+      "node_id": "cap:session-memory",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Session takeaways as first-class graph content: each key decision, finding or realization written when it happens, anchored to the epoch of the session that produced it, and queryable afterwards by the agent as its own prior context. The substrate landed 2026-07-24 with the fork layer — an epoch is exactly a session-addressable point, decisions are now anchored to epochs, and change events pin there too — so what remains is the trigger and the query skill, not new vocabulary. The trigger is the load-bearing part: the existing handoff enforcement watches the modification time of markdown files under the Claude Code memory directory, so the only mechanism that forces a session to leave takeaways behind actively points AWAY from the graph. Reflow2's own doctrine already states the principle in the authored_by contract — record it when a decision is made, not at session end — it simply is not enforced for session memory. THE TRANSCRIPT POINTER (user's refinement, 2026-07-24): each session does have a full local record, at ~/.claude/projects/<project-slug>/<session-uuid>.jsonl — one multi-megabyte JSONL per session, UUID-named. Model it as a Fragment, which is already exactly the provenance vocabulary: the transcript is a source, and the nodes distilled from the session are YIELDED from it. Two constraints follow and both matter. First, the SESSION UUID is the portable identity and the local path is only a machine-scoped resolution hint — storing an absolute path as the identity would create a pointer that resolves for one person on one machine and silently misses, or worse resolves to something else, for everyone on a shared graph (the user raised precisely this against a central MCP; it is the same defect class as a version claim that looks valid and is not). Second, and more important: a pointer to a 3 MB transcript is a RECEIPT, not memory. If the design leans on it, the markdown problem is simply recreated one level down — 'it is all in the transcript' is the same excuse as 'it is all in the backlog file'. The distillation belongs in the graph as real nodes; the Fragment corroborates it. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Record and query what a session learned",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:stamp",
       "node_type": "Capability",
       "properties": {
@@ -10153,6 +10219,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Natural-language search found broken: conjunctive query semantics behind a ranked-BM25 description"
+      }
+    },
+    {
+      "node_id": "chg:session-memory-capture",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Session memory belongs in the graph, captured as it happens — and the current enforcement points at markdown"
       }
     },
     {
@@ -12736,6 +12810,19 @@
       }
     },
     {
+      "node_id": "req:session-memory-in-graph",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "What a session learns is written to the graph as it is learned, not summarized into a file on the way out",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A working session produces decisions, findings and realizations, and those are design content: they belong in the graph, recorded at the moment they occur, so a later session can query them rather than read a narrative. Two properties follow. First, capture is incremental — a summary written at the end is the one a busy session never gets to, and an end-of-session digest is a retelling rather than a record. Second, the enforcement must point at the graph: whatever mechanism insists a session leave its takeaways behind must be satisfiable only by graph writes, never by touching a prose file, or the prose file becomes the memory and the graph becomes decoration. The agent must then be able to ask its own history — what was decided about X, when, by whom, and against what state of the design — using the same query surface a person uses.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:survives-upgrade",
       "node_type": "Requirement",
       "properties": {
@@ -13151,7 +13238,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:8dbfeb4c5f79642c6f49e5598aaa38a5aaa7469cacc1459aea4d3417fcb1ae6b",
+  "prev_content_hash": "sha256:d3ffbfa589718204442cd71e49b262a9ecef2eac3d78f1321f72f2350c246c24",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
