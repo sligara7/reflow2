@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:18dd04b87fc1a5cb57318707214edaad9466b352cdf35015d4dbff619dd904f6",
+  "content_hash": "sha256:b899cf3a3fce0c4c9d2637d4fd8225e8b3040725d48f06cd4ea0bd359a655f1e",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -572,6 +572,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:drift-direction",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:drift-direction-built",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -2649,6 +2655,33 @@
         "action": "added"
       },
       "to_id": "req:drift-has-direction"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:drift-direction-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:drift-direction-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:drift-direction"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:drift-direction-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ver:drift-direction"
     },
     {
       "edge_type": "CHANGED",
@@ -8344,6 +8377,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:drift",
       "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:drift-direction"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:drift",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:drift"
@@ -9069,6 +9110,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:drift-direction",
+      "properties": {},
+      "to_id": "cap:drift-direction"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:freshness",
       "properties": {},
       "to_id": "cap:freshness"
@@ -9698,7 +9745,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c1ba0429d42dce85",
+        "checksum": "sha256:930d0dd59af1bb7b",
         "location": "crates/reflow2-core/src/drift.rs",
         "name": "drift.rs",
         "status": "realized"
@@ -10194,12 +10241,12 @@
       "node_id": "cap:drift-direction",
       "node_type": "Capability",
       "properties": {
-        "description": "Anthony's founding problem, observed again in the field 2026-07-24: reflow2 running on storyflow reported that its docs \"consistently understate what's built\". That is the exact failure the predecessor died of — design well, implement, iterate several cycles, and the stated requirements quietly stop matching the built product. THE PART THAT ALREADY WORKS, and should not be rebuilt: reconcile_artifacts computes checksum_change and undocumented_addition, and set_artifact_checksum refuses to accept drift silently, forcing design_holds versus design_updated (dec:two-sided-accept, written against precisely this erosion). THE THREE MISSING PIECES. (1) DIRECTION. Drift is asymmetric in practice — implementation accretes capability the design never records, far more often than the design overstates. Today a registered file that has grown three capabilities and a registered file with a fixed typo both arrive as checksum_change, so understatement is invisible where it is largest. undocumented_addition already names the condition but only at whole-file granularity, which catches a new file and misses a grown one. (2) MEANING. Reconcile says a file moved; it never says what the design now claims wrongly. So design_updated asks a human to find the semantic delta themselves, which is the labour that does not happen under load — the mechanism is armed and the design still goes stale, because being told bytes changed is not being told what to fix. (3) WRITE-BACK. Where a design was adopted from documents, updating the graph leaves the markdown everyone actually reads still wrong; the graph becomes quietly right while the source of truth people consult stays stale, which is the same divergence one level up. Related but distinct from cap:coverage (BL-95), which asks what the design never modelled AT ALL; this asks what the design modelled once and has since outgrown. PLANNED.",
+        "description": "Say which way the design and the build have diverged, not merely that they have. Anthony's founding problem, observed in the field 2026-07-24 (reflow2 on storyflow: the docs \"consistently understate what's built\") and the failure the predecessor died of. BUILT 2026-07-25, pieces 1 and 2 of 3. HOW: ObservedArtifact gains an optional `realizes` — what the caller observed the file actually implementing. Core compares that against the recorded REALIZES edges, which keeps the no-file-IO contract intact (the agent observes, the core computes) and yields both halves at once. DIRECTION: more observed than recorded is Understated, less is Overstated, each-having-what-the-other-lacks is Diverged. MEANING: the finding carries `unrecorded` and `unbuilt` — the specific design nodes involved — and the message names them, which is the answer to \"what does the design now claim wrongly?\" that a checksum could never give. Without it, accepting drift means asking someone to go find the delta themselves, and that is the labour that does not happen under load. FOUR JUDGEMENTS WORTH KNOWING. (a) Direction is assessed INDEPENDENTLY of the checksum: a design can be wrong from the day it was written, and tying this to checksum_change would miss the long-lived untouched files where understatement accumulates. (b) Overstatement outranks understatement and plain change, because a design claiming something absent is what someone will plan against — understatement is a record that is behind, overstatement is a record that is wrong. (c) `realizes: None` means not assessed and is never read as agreement, so no existing caller silently starts asserting alignment it never checked. (d) Mapped onto the EXISTING schema drift_types (understated records as undocumented_addition, which is what it is one level down; overstated as spec_mismatch) rather than adding two enum values — a schema change costs a minor bump, an upgrade doc and real pain for anyone on an older stamp (BL-94), and buys nothing here. NOT BUILT: piece 3, write-back to the source documents a design was adopted from. The graph can now be brought up to date; the markdown people actually read still cannot.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Say which way the design and the build have diverged, and bring the design back up",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -11007,6 +11054,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Drift direction and write-back captured, from the storyflow field observation that docs understate what is built"
+      }
+    },
+    {
+      "node_id": "chg:drift-direction-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Directional drift built: reconcile now says understated / overstated / diverged and names the delta"
       }
     },
     {
@@ -13967,6 +14022,18 @@
       }
     },
     {
+      "node_id": "ver:drift-direction",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "integration",
+        "method": "test",
+        "name": "Drift reports which way it went, and names what the design has wrong",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:freshness",
       "node_type": "Verification",
       "properties": {
@@ -14280,7 +14347,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:decd7a319eab4fc47b813ba07bd17a0997c993be847035466464f204763b97a1",
+  "prev_content_hash": "sha256:18dd04b87fc1a5cb57318707214edaad9466b352cdf35015d4dbff619dd904f6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

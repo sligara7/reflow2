@@ -189,6 +189,7 @@ fn provenance_nodes_stay_out_of_the_topology() {
             artifact_id: "art:a".into(),
             present: true,
             checksum: Some("sha256:v2".into()),
+            realizes: None,
         }],
         &ReconcileOptions {
             record_events: true,

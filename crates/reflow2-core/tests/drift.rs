@@ -45,6 +45,7 @@ fn observed(id: &str, present: bool, checksum: Option<&str>) -> ObservedArtifact
         artifact_id: id.into(),
         present,
         checksum: checksum.map(str::to_string),
+        realizes: None,
     }
 }
 
@@ -395,6 +396,7 @@ fn successive_drifts_accumulate_instead_of_collapsing_into_one_event() {
                     artifact_id: "art:score".into(),
                     present: true,
                     checksum: Some((*sum).into()),
+                    realizes: None,
                 }],
                 &ReconcileOptions {
                     detected_at: Some(format!("2026-07-19T0{}:00:00Z", i + 1)),
@@ -442,6 +444,7 @@ fn re_observing_the_same_unresolved_drift_does_not_pile_up_events() {
         artifact_id: "art:score".into(),
         present: true,
         checksum: Some("sha256:changed".into()),
+        realizes: None,
     }];
     g.reconcile_artifacts(&obs, &opts).unwrap();
     g.reconcile_artifacts(&obs, &opts).unwrap();
@@ -595,6 +598,7 @@ fn unexamined_confirmed_and_drifting_are_three_different_states() {
             artifact_id: "art:score".into(),
             present: true,
             checksum: Some("sha256:bbb".into()),
+            realizes: None,
         }],
         &opts,
     )

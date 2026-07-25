@@ -270,6 +270,7 @@ fn recorded_drift_is_owed_a_disposition_until_accepted() {
                 artifact_id: "art:x".into(),
                 present: true,
                 checksum: Some("sha256:new".into()),
+                realizes: None,
             }],
             &ReconcileOptions {
                 record_events: true,

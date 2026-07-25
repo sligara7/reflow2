@@ -33,6 +33,29 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Drift now says which WAY the design and the build diverged**, not just that
+  they did. `reconcile_artifacts` accepts an optional `realizes` per observation
+  — what the caller observed a file actually implementing — and compares it
+  against the recorded `REALIZES` edges. More than recorded is **understated**,
+  less is **overstated**, each-having-what-the-other-lacks is **diverged**. The
+  finding carries `unrecorded` and `unbuilt`, naming the specific design nodes,
+  which is the answer to "what does my design now claim wrongly?" that a
+  checksum could never give.
+
+  Motivated by a field observation: reflow2 running on a large project reported
+  that its docs "consistently understate what's built". A file that grew a whole
+  subsystem and a file with a typo fixed were the same `checksum_change`, so
+  understatement was invisible exactly where it was largest.
+
+  Direction is judged **independently of the checksum** — a design can be wrong
+  from the day it was written, and long-lived untouched files are where
+  understatement accumulates. Overstatement ranks above understatement and above
+  plain change: understatement is a record that is behind, overstatement is a
+  record that is *wrong*, and someone will plan against it. Omitting `realizes`
+  means "not assessed" and is never read as agreement, so existing callers are
+  unaffected. No schema change — understated records as `undocumented_addition`
+  (which is what it is, one level down) and overstated as `spec_mismatch`.
+
 - **`graph_report` now says how much intent is actually DELIVERED**, derived from
   the golden thread instead of read from `Requirement.status` (BL-104). A
   requirement counts as delivered when something satisfies it, that capability is

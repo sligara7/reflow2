@@ -45,6 +45,7 @@ fn observed(id: &str, checksum: &str) -> ObservedArtifact {
         artifact_id: id.into(),
         present: true,
         checksum: Some(checksum.into()),
+        realizes: None,
     }
 }
 

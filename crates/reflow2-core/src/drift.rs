@@ -48,6 +48,53 @@ pub struct ObservedArtifact {
     /// silently passing.
     #[serde(default)]
     pub checksum: Option<String>,
+    /// What the caller observed this artifact **actually implementing** — the
+    /// design node ids it would draw `REALIZES` to if it were registering the
+    /// file today.
+    ///
+    /// This is what makes drift *directional*. A checksum says a file moved; it
+    /// cannot say which way, so a file that grew a whole subsystem and a file
+    /// with a typo fixed are the same signal. Comparing what was observed
+    /// against what the design records separates them: more than recorded is
+    /// **understatement**, less is **overstatement**.
+    ///
+    /// `None` means "not assessed" and is not evidence of anything — direction
+    /// is simply not judged, exactly as before. An empty vec is different and
+    /// means "assessed, implements nothing recognisable", which is a real claim.
+    #[serde(default)]
+    pub realizes: Option<Vec<String>>,
+}
+
+/// Which way the design and the build diverge — the asymmetry a checksum cannot
+/// see.
+///
+/// Field observation that motivated this (storyflow, 2026-07-24): the docs
+/// "consistently understate what's built". Drift is not symmetric noise —
+/// implementation accretes capability the design never records, far more often
+/// than a design overstates. Naming the direction is what turns "something
+/// changed" into something a person can act on without re-deriving it.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum DriftDirection {
+    /// The build does more than the design records — the storyflow signature.
+    Understated,
+    /// The design claims more than the build was observed to do.
+    Overstated,
+    /// Each side has something the other lacks: not a gap in one direction but
+    /// a disagreement, which usually means the design moved on a different axis
+    /// than the code did.
+    Diverged,
+}
+
+impl DriftDirection {
+    /// Stable snake_case key.
+    pub fn as_str(self) -> &'static str {
+        match self {
+            DriftDirection::Understated => "understated",
+            DriftDirection::Overstated => "overstated",
+            DriftDirection::Diverged => "diverged",
+        }
+    }
 }
 
 /// The kind of divergence found. Maps onto the schema's `DriftEvent.drift_type`.
@@ -61,6 +108,15 @@ pub enum DriftKind {
     /// Observed, but no such `Artifact` node exists — something was built that
     /// the design does not know about.
     UndocumentedAddition,
+    /// A **registered** artifact implements more than the design records — the
+    /// same condition as `UndocumentedAddition` one level down, and the one
+    /// that was invisible: a new file is noticed, a *grown* file is not.
+    /// Records as `undocumented_addition`, because that is what it is.
+    Understated,
+    /// A registered artifact implements less than the design claims. Records as
+    /// `spec_mismatch`: the spec and the thing disagree, and here the spec is
+    /// the optimistic one.
+    Overstated,
     /// Cannot be judged: no checksum recorded, or none observed. Surfaced rather
     /// than treated as unchanged.
     NoBaseline,
@@ -73,6 +129,8 @@ impl DriftKind {
             DriftKind::MissingArtifact => "missing_artifact",
             DriftKind::ChecksumChange => "checksum_change",
             DriftKind::UndocumentedAddition => "undocumented_addition",
+            DriftKind::Understated => "understated",
+            DriftKind::Overstated => "overstated",
             DriftKind::NoBaseline => "no_baseline",
         }
     }
@@ -85,6 +143,12 @@ impl DriftKind {
             DriftKind::MissingArtifact => Some("missing_artifact"),
             DriftKind::ChecksumChange => Some("checksum_change"),
             DriftKind::UndocumentedAddition => Some("undocumented_addition"),
+            // Deliberately mapped onto existing schema values rather than
+            // adding two: a schema change costs a minor bump, an upgrade doc,
+            // and real pain for anyone on an older stamp (BL-94). These fit the
+            // existing vocabulary honestly, so the cost buys nothing.
+            DriftKind::Understated => Some("undocumented_addition"),
+            DriftKind::Overstated => Some("spec_mismatch"),
             DriftKind::NoBaseline => None,
         }
     }
@@ -95,6 +159,12 @@ impl DriftKind {
             DriftKind::MissingArtifact => "high",
             DriftKind::ChecksumChange => "medium",
             DriftKind::UndocumentedAddition => "medium",
+            DriftKind::Understated => "medium",
+            // Higher than understatement on purpose. A design that claims
+            // something the build does not do will be *relied on* — someone
+            // plans against a capability that is not there. Understatement is a
+            // record that is behind; overstatement is a record that is wrong.
+            DriftKind::Overstated => "high",
             DriftKind::NoBaseline => "low",
         }
     }
@@ -120,6 +190,22 @@ pub struct DriftFinding {
     /// The recorded `DriftEvent` node id, when `record_events` was set and this
     /// kind has a schema counterpart.
     pub event_id: Option<String>,
+    /// Which way this diverges, when the observation carried an assessment of
+    /// what the artifact actually implements. `None` means direction was not
+    /// judged — the caller supplied no `realizes`.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub direction: Option<DriftDirection>,
+    /// Observed to be implemented, but not recorded in the design. **This is
+    /// the answer to "what does the design now claim wrongly?"** — the part a
+    /// checksum could never supply, and without which accepting drift means
+    /// asking someone to go and find the delta themselves.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub unrecorded: Vec<String>,
+    /// Recorded in the design, but not observed to be implemented. The other
+    /// direction, and the more dangerous one: someone may be planning against
+    /// it.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub unbuilt: Vec<String>,
 }
 
 /// The outcome of a reconcile pass.
@@ -184,6 +270,9 @@ impl DesignGraph {
                     realizes: Vec::new(),
                     observed_checksum: obs.checksum.clone(),
                     event_id: None,
+                    direction: None,
+                    unrecorded: Vec::new(),
+                    unbuilt: Vec::new(),
                 });
                 continue;
             };
@@ -201,6 +290,9 @@ impl DesignGraph {
                     realizes,
                     observed_checksum: None,
                     event_id: None,
+                    direction: None,
+                    unrecorded: Vec::new(),
+                    unbuilt: Vec::new(),
                 });
                 continue;
             }
@@ -218,9 +310,12 @@ impl DesignGraph {
                         "'{}' has changed since it was registered against the design",
                         obs.artifact_id
                     ),
-                    realizes,
+                    realizes: realizes.clone(),
                     observed_checksum: obs.checksum.clone(),
                     event_id: None,
+                    direction: None,
+                    unrecorded: Vec::new(),
+                    unbuilt: Vec::new(),
                 }),
                 // Either side missing → we cannot judge. Say so; never pass silently.
                 (recorded, current) => {
@@ -236,9 +331,76 @@ impl DesignGraph {
                             "'{}' cannot be checked for drift — {why}",
                             obs.artifact_id
                         ),
-                        realizes,
+                        realizes: realizes.clone(),
                         observed_checksum: None,
                         event_id: None,
+                        direction: None,
+                        unrecorded: Vec::new(),
+                        unbuilt: Vec::new(),
+                    });
+                }
+            }
+
+            // Direction, when the caller assessed what the file actually
+            // implements. Judged INDEPENDENTLY of the checksum on purpose: a
+            // design can be wrong from the day it was written, and an artifact
+            // whose bytes never moved can still be described by a design that
+            // understates it. Tying this to checksum_change would miss exactly
+            // the long-lived files where understatement accumulates.
+            if let Some(observed_targets) = &obs.realizes {
+                let recorded: std::collections::BTreeSet<&str> =
+                    realizes.iter().map(String::as_str).collect();
+                let seen: std::collections::BTreeSet<&str> =
+                    observed_targets.iter().map(String::as_str).collect();
+
+                let unrecorded: Vec<String> =
+                    seen.difference(&recorded).map(|s| s.to_string()).collect();
+                let unbuilt: Vec<String> =
+                    recorded.difference(&seen).map(|s| s.to_string()).collect();
+
+                let direction = match (unrecorded.is_empty(), unbuilt.is_empty()) {
+                    (true, true) => None,
+                    (false, true) => Some(DriftDirection::Understated),
+                    (true, false) => Some(DriftDirection::Overstated),
+                    (false, false) => Some(DriftDirection::Diverged),
+                };
+
+                if let Some(direction) = direction {
+                    // The message names WHAT the design has wrong. That is the
+                    // whole point: telling someone their design is stale without
+                    // telling them what to fix is why the fix does not happen.
+                    let mut parts = Vec::new();
+                    if !unrecorded.is_empty() {
+                        parts.push(format!(
+                            "implements {} that the design does not record",
+                            unrecorded.join(", ")
+                        ));
+                    }
+                    if !unbuilt.is_empty() {
+                        parts.push(format!(
+                            "does not implement {} that the design claims",
+                            unbuilt.join(", ")
+                        ));
+                    }
+                    let kind = match direction {
+                        DriftDirection::Understated => DriftKind::Understated,
+                        // A disagreement is reported as overstatement, the more
+                        // serious half: something is claimed that is not there,
+                        // and that is what someone will plan against.
+                        DriftDirection::Overstated | DriftDirection::Diverged => {
+                            DriftKind::Overstated
+                        }
+                    };
+                    findings.push(DriftFinding {
+                        artifact_id: obs.artifact_id.clone(),
+                        kind,
+                        message: format!("'{}' {}", obs.artifact_id, parts.join("; and ")),
+                        realizes,
+                        observed_checksum: obs.checksum.clone(),
+                        event_id: None,
+                        direction: Some(direction),
+                        unrecorded,
+                        unbuilt,
                     });
                 }
             }
@@ -390,10 +552,16 @@ fn drift_event_id(artifact_id: &str, kind: DriftKind, observed_checksum: Option<
 }
 
 fn severity_rank(kind: DriftKind) -> u8 {
+    // Overstatement sorts above a checksum change, and above understatement:
+    // a design claiming something the build does not do is the one someone will
+    // plan against. Understatement is a record that is behind; overstatement is
+    // a record that is wrong. The pre-existing kinds keep their relative order.
     match kind {
         DriftKind::MissingArtifact => 0,
-        DriftKind::ChecksumChange => 1,
-        DriftKind::UndocumentedAddition => 2,
-        DriftKind::NoBaseline => 3,
+        DriftKind::Overstated => 1,
+        DriftKind::ChecksumChange => 2,
+        DriftKind::Understated => 3,
+        DriftKind::UndocumentedAddition => 4,
+        DriftKind::NoBaseline => 5,
     }
 }
