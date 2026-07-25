@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d2b2bcf20891fe182ebc51cf741721dcf52602f521b4178d60483000e4fbb650",
+  "content_hash": "sha256:87bf38981617f66345256850295c8187ab841ea8f2f09c3b33bd1787ba991784",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -656,6 +656,12 @@
       "from_id": "question:90a90e90df05c31a",
       "properties": {},
       "to_id": "req:design-reachable-without-the-repo"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:91a36377633a95bd",
+      "properties": {},
+      "to_id": "req:thin-install"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -1810,6 +1816,14 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:thin-install",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -4641,6 +4655,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:thin-install"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:trust-boundary-at-ingress"
     },
     {
@@ -5696,6 +5716,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "cap:model-process"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:skills-served",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:kit"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -8434,6 +8463,12 @@
       "from_id": "req:stale-seat-knows",
       "properties": {},
       "to_id": "dec:advisory-concurrency"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:thin-install",
+      "properties": {},
+      "to_id": "dec:skills-served"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -16843,6 +16878,16 @@
       }
     },
     {
+      "node_id": "dec:skills-served",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "THE HARD CONSTRAINT FIRST, because it rules out the literal proposal: no harness discovers skills from an MCP server. Claude Code, OpenCode and Copilot read `.claude/skills/`, Grok CLI reads `.grok/skills/` (docs/skills/README.md), and a skill that is not in one of those directories is not a skill — it is a file nobody loads. So \"reference something in the MCP to discover all those skills\" cannot be honoured as harness-native skills today. What CAN be honoured is the substance: nothing in the project changes after setup, and updates ride the package. FOUR PIECES, separable, in increasing cost. (1) SERVER INSTRUCTIONS — already how reflow2 delivers its loop doctrine (the paragraph in every session's context comes from the server, versioned with the binary, zero repo files). The catalogue of skills, one line each, belongs here: that is exactly what a skill's frontmatter description does, and it is what makes progressive disclosure work. (2) A `reflow2_skill(name)` TOOL returning the body on demand, with `list_skills` alongside. Works in EVERY MCP client including Grok, needs no filesystem copy, and always matches the binary. (3) MCP PROMPTS — reflow2 declares only `enable_tools()`; adding `enable_prompts()` would serve the command-shaped skills as `/mcp__reflow2__<name>` slash commands with zero files in the repo. Claude-Code-shaped, so it complements (2) rather than replacing it. (4) LOCAL OVERRIDE — a skill present in the project's own `.claude/skills/` wins over the served one, so customisation survives and the served set is a default rather than a cage. WHAT THE PROJECT WOULD STILL HOLD after all four: the pointer paragraph, `.mcp.json` (and the other harnesses' formats), `.reflow2/` and its gitignore line. That is his brother's proposal exactly.",
+        "name": "OPEN — do the skills come from the server instead of being copied into the project?",
+        "rationale": "Feedback from Anthony's brother, 2026-07-25, and it names the same failure shape reflow2 keeps finding in itself: a COPY drifts, and the fix is to remove the copying rather than to refresh it better — the same reasoning that retired the fleet's mint-race guard in dec:identity-out-of-band, and the same one behind computed-not-remembered everywhere else in this project. The evidence is already on the record: the installer's docstring concedes that the kit freezes while reflow2 moves, and reflow2's OWN kit manifest went four releases stale with nothing noticing. THE HONEST COST, recorded beside the idea: a harness-native skill is auto-matched by the harness from its description without the agent being asked, and a served skill is not — the agent has to know to call for it. Moving skills to the server therefore trades the harness's own progressive disclosure for freshness, and the mitigation (the catalogue in the server instructions) is a hand-built version of what the harness does for free. That trade is the decision, and it is worth putting to both brothers rather than assuming: one of them is the consumer whose repo churns, the other is the one who would maintain two delivery paths.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:temporal-backfill-from-releases",
       "node_type": "Decision",
       "properties": {
@@ -18788,6 +18833,18 @@
       }
     },
     {
+      "node_id": "question:91a36377633a95bd",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-25",
+        "context_setter": "Nothing satisfies requirement “After setup, a project never has to change again for reflow2 to move”",
+        "gap_id": "gap:91a36377633a95bd",
+        "question": "Your brother expects that once reflow2 is set up in a project, upgrading it should never touch that project's files again — the paragraph of instructions and the server address stay put, and everything else lives in the reflow2 package. Today an upgrade re-copies fifteen skills into two folders plus the instructions file, so his repo fills with changes that have nothing to do with his work. Do you want that expectation to become the way it works?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:95ddc1083445d73d",
       "node_type": "Question",
       "properties": {
@@ -19593,6 +19650,20 @@
       }
     },
     {
+      "node_id": "req:thin-install",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "After setup, a project never has to change again for reflow2 to move",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Installing reflow2 into a project should put a paragraph in the agent instructions and a server address in the MCP config, and nothing else that ever needs refreshing. Upgrades belong to the reflow2 package: today `reflow2_init.py` copies fifteen skills into two directory trees plus AGENTS.md, so upgrading means re-running init and taking thirty-odd changed files into a repo that has nothing to do with reflow2's release. Anthony's brother, 2026-07-25: \"you wouldn't need to change anything in your repo again and updates would be confined to the reflow package.\" The installer's own docstring already concedes the defect — \"the kit is copied into your project, so it otherwise freezes at install time while reflow2 keeps moving\" — and reflow2's own kit manifest sat four releases stale without anything noticing (ver:kit-manifest-agrees).",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:trust-boundary-at-ingress",
       "node_type": "Requirement",
       "properties": {
@@ -20327,7 +20398,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:53345780d0f46287a6ba6d2326ea8a5d3cd1e55931d6c2f46d2ed47d0b52c389",
+  "prev_content_hash": "sha256:d2b2bcf20891fe182ebc51cf741721dcf52602f521b4178d60483000e4fbb650",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
