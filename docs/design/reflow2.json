@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6008f4c8deacb45a302686b6db1e60a6e35f539d50ea04ffd95f5d42556558c1",
+  "content_hash": "sha256:0d1990cd7cb83bde5869165394f57da88522b6887800942b74fcdec4f51997b4",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -684,6 +684,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:multi-writer-decided",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:protocol-version-current",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -3100,6 +3106,24 @@
         "action": "modified"
       },
       "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:protocol-version-current",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:protocol-version-current",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "CHANGED",
@@ -11655,7 +11679,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2054bdf893915b83",
+        "checksum": "sha256:bce7a6758b33710c",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -12855,6 +12879,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Multi-writer architecture decided: repo file + merge on pull, confirming rather than superseding dec:repo-file-embedded"
+      }
+    },
+    {
+      "node_id": "chg:protocol-version-current",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Advertise the SDK's current MCP protocol, and make the version checkable"
       }
     },
     {
@@ -16438,7 +16470,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:38e57e4f5a06945cc1e8bd417fd509f23e9b5c0a858f08279faa03d74594b5f9",
+  "prev_content_hash": "sha256:6008f4c8deacb45a302686b6db1e60a6e35f539d50ea04ffd95f5d42556558c1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

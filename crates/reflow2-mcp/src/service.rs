@@ -3568,6 +3568,18 @@ impl ReflowService {
 
 // ---- ServerHandler ----------------------------------------------------------
 
+impl ReflowService {
+    /// The MCP protocol version this server advertises.
+    ///
+    /// Exposed so a test can pin it. `get_info` builds a whole `ServerInfo`
+    /// behind a trait, which makes "what protocol do we actually claim?" awkward
+    /// to assert — and an unassertable claim is how the previous value sat four
+    /// releases stale without anyone noticing.
+    pub fn describe_protocol_version() -> ProtocolVersion {
+        ProtocolVersion::LATEST
+    }
+}
+
 #[tool_handler(router = self.tool_router)]
 impl ServerHandler for ReflowService {
     fn get_info(&self) -> ServerInfo {
@@ -3582,7 +3594,20 @@ impl ServerHandler for ReflowService {
                 info.version = env!("CARGO_PKG_VERSION").to_string();
                 info
             })
-            .with_protocol_version(ProtocolVersion::V_2024_11_05)
+            // Follow the SDK rather than pinning a literal. This sat at
+            // V_2024_11_05 — the original MCP spec version — for the project's
+            // whole life with no recorded reason, almost certainly copied from
+            // an example at genesis and never revisited, while rmcp's own
+            // LATEST moved on four releases. A hand-written protocol constant
+            // is a claim about ourselves that nothing checks, which is the
+            // drift class this project exists to catch, sitting in the one
+            // layer the design graph does not reach.
+            //
+            // `LATEST` means an rmcp bump moves it automatically — so the move
+            // is made LOUD by a test asserting which version LATEST currently
+            // resolves to. Following silently would trade one invisible
+            // staleness for another.
+            .with_protocol_version(Self::describe_protocol_version())
             .with_instructions(
                 "reflow2 is the persistent, coherent design brain. The loop: capture intent as \
                  Requirements/Capabilities/Components via the add_* / create_* tools; run \

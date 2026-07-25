@@ -581,6 +581,37 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
 // asked for exactly this tool. These assert the answer is both available and
 // honest: available without guessing, honest about wildcard-only matches.
 
+/// The protocol version we advertise, pinned so a change is never silent.
+///
+/// `get_info` uses `ProtocolVersion::LATEST` deliberately: a hand-written
+/// literal sat at `V_2024_11_05` for the project's whole life with no recorded
+/// reason while rmcp's own LATEST moved on four releases, which is a claim about
+/// ourselves that nothing checked. Following the SDK fixes the staleness — but
+/// following it *silently* would just trade one invisible drift for another, so
+/// this test records what LATEST currently resolves to.
+///
+/// When an rmcp bump fails this, that is the test doing its job: look at what
+/// changed in the protocol, decide whether reflow2 should still speak it, and
+/// update the expectation deliberately. Same discipline as the schema type
+/// counts in `schema.rs` — growth must be conscious.
+#[test]
+fn the_advertised_protocol_version_is_the_sdks_latest_and_is_pinned() {
+    use rmcp::model::ProtocolVersion;
+    assert_eq!(
+        ProtocolVersion::LATEST,
+        ProtocolVersion::V_2025_11_25,
+        "rmcp's LATEST protocol version moved — decide deliberately whether \
+         reflow2 should follow it, then update this expectation"
+    );
+    let declared = ReflowService::describe_protocol_version();
+    assert_eq!(
+        declared,
+        ProtocolVersion::LATEST,
+        "the server must advertise the SDK's current protocol, not a literal \
+         copied from an example years ago"
+    );
+}
+
 #[tokio::test]
 async fn describe_schema_returns_the_whole_vocabulary() {
     let s = ReflowService::in_memory().expect("in-memory service");

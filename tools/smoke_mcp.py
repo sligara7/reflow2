@@ -86,7 +86,11 @@ class Server:
         init = self.rpc(
             "initialize",
             {
-                "protocolVersion": "2024-11-05",
+                # The version this smoke client SPEAKS. Kept current
+                # deliberately: asking for a years-old protocol would let the
+                # server advertise anything at all and still look fine here,
+                # which is how the server's own stale version went unnoticed.
+                "protocolVersion": "2025-11-25",
                 "capabilities": {},
                 "clientInfo": {"name": "smoke_mcp", "version": "0"},
             },
@@ -292,7 +296,7 @@ def run(binary: str, graph_path: str) -> int:
     vocab = s.call("describe_schema", {})
     c.ok("every node type is discoverable", len(vocab.get("node_types", [])) == 28,
          len(vocab.get("node_types", [])))
-    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 53,
+    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 55,
          len(vocab.get("edge_types", [])))
 
     exact = s.call("describe_schema", {"from": "Capability", "to": "Component"})
@@ -843,6 +847,15 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("and it matches the handshake's server version",
          init_version == sb.get("reflow2_version"),
          f"initialize={init_version} report={sb.get('reflow2_version')}")
+
+    # The protocol the server actually negotiated, checked against what this
+    # client asked for. Two hardcoded strings that never met was the hole: the
+    # server sat on 2024-11-05 for the project's whole life and nothing here
+    # would have said so, because the client was frozen at the same literal.
+    init_proto = (s.handshake_result or {}).get("result", {}).get("protocolVersion")
+    c.ok("the server negotiates the protocol this client speaks",
+         init_proto == "2025-11-25",
+         f"negotiated={init_proto} client=2025-11-25")
 
     print("\n== 7b. the as-released view (BL-34) ==")
     s.call("release_includes", {"release_id": "rel:v1", "target_type": "Artifact",
