@@ -478,8 +478,8 @@ checksum = "d0881ea181b1df73ff77ffaaf9c7544ecc11e82fba9b5f27b262a3c73a332555"
 
 [[package]]
 name = "dynograph-core"
-version = "0.10.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.10.0#1a6d50e743c3c923311658f6cf77c191e29f879d"
+version = "0.11.0"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.11.0#1fbd81c6e7a35b1b0fa128c7dc8abaf4e49d1213"
 dependencies = [
  "serde",
  "serde_json",
@@ -490,13 +490,13 @@ dependencies = [
 
 [[package]]
 name = "dynograph-graph"
-version = "0.10.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.10.0#1a6d50e743c3c923311658f6cf77c191e29f879d"
+version = "0.11.0"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.11.0#1fbd81c6e7a35b1b0fa128c7dc8abaf4e49d1213"
 
 [[package]]
 name = "dynograph-resolution"
-version = "0.10.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.10.0#1a6d50e743c3c923311658f6cf77c191e29f879d"
+version = "0.11.0"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.11.0#1fbd81c6e7a35b1b0fa128c7dc8abaf4e49d1213"
 dependencies = [
  "dynograph-core",
  "dynograph-vector",
@@ -504,8 +504,8 @@ dependencies = [
 
 [[package]]
 name = "dynograph-storage"
-version = "0.10.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.10.0#1a6d50e743c3c923311658f6cf77c191e29f879d"
+version = "0.11.0"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.11.0#1fbd81c6e7a35b1b0fa128c7dc8abaf4e49d1213"
 dependencies = [
  "dynograph-core",
  "dynograph-text",
@@ -518,8 +518,8 @@ dependencies = [
 
 [[package]]
 name = "dynograph-text"
-version = "0.10.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.10.0#1a6d50e743c3c923311658f6cf77c191e29f879d"
+version = "0.11.0"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.11.0#1fbd81c6e7a35b1b0fa128c7dc8abaf4e49d1213"
 dependencies = [
  "tantivy",
  "thiserror",
@@ -527,8 +527,8 @@ dependencies = [
 
 [[package]]
 name = "dynograph-vector"
-version = "0.10.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.10.0#1a6d50e743c3c923311658f6cf77c191e29f879d"
+version = "0.11.0"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.11.0#1fbd81c6e7a35b1b0fa128c7dc8abaf4e49d1213"
 dependencies = [
  "rand",
 ]

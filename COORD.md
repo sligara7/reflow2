@@ -54,6 +54,7 @@ Add yourself if you're new here.
 
 
 
+
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -79,6 +80,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- Foundation pin bump to **v0.11.0** — the ranked-disjunction full-text search fix (dynograph-foundation #76/#77, released 2026-07-24). Search matched tokens as a conjunction, so one word the corpus never used collapsed a perfect match to zero hits — which made a natural-language question unusable and, because capture-intent treats no-hits as licence to create, manufactured duplicates. 5 pins in Cargo.toml + AGENTS.md prose; Cargo.lock resolves dynograph-text 0.11.0 at the tagged merge commit 1fbd81c. 213 workspace tests green (incl. all 6 reflow2 search tests, which assume ranked order and a revised node NOT being resurrected by dropped wording). ver:search-natural-language stays FAILING until an automated test proves it against the real graph — @ajs — 2026-07-24 — Cargo.toml, Cargo.lock, AGENTS.md
 
 - BL-96..BL-103 FILED from Anthony + his brother's idea list (`~/Documents/reflow2_idea.txt`, 2026-07-24) — KPPs as first-class inviolable intent (BL-96, Anthony's call that KPP is its own vocabulary; `req:inviolable-intent` + `cap:kpp` captured, requirement left `proposed`), folder/bulk spec ingest (BL-97), 15-developer conflict identification (BL-98), real-time collaboration (BL-99), rubber-duck mode (BL-100), inherited-project onboarding (BL-101), README/architecture/use-cases/diagrams (BL-102), LangChain/LangSmith prior-art study (BL-103). Two findings recorded in the entries: the inviolable-intent vocabulary already exists in the schema and is 100% unused (0 Constraints / 0 DesignRules / 0 QualityGates against 22 Requirements — same shape as the BL-70 temporal finding), and BL-98 is the first field-sourced trigger to re-open `dec:repo-file-embedded`, whose rationale said concurrency was "hypothetical while there is one writer". Gate green, live==committed 374n/1115e — @ajs — 2026-07-24 — docs/backlog.md, docs/design/reflow2.json
 

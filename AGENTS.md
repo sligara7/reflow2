@@ -215,7 +215,7 @@ not the centre.
 
 - The graph store is **[dynograph-foundation](https://github.com/sligara7/dynograph-foundation)**,
   consumed as library crates **by git tag** (see the workspace `Cargo.toml` for the pinned tag;
-  `v0.10.0` at time of writing): `dynograph-core` (schema + `Value`), `dynograph-storage`
+  `v0.11.0` at time of writing): `dynograph-core` (schema + `Value`), `dynograph-storage`
   (`default-features = false` so RocksDB is opt-in; the core runs on the in-memory backend),
   `dynograph-graph` (pure graph-theory algorithms). To iterate against an unreleased foundation
   locally, uncomment the `[patch]` block in the root `Cargo.toml` — do not commit it uncommented.

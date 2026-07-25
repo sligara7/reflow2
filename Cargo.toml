@@ -26,16 +26,16 @@ authors = ["Anthony Sligar <sligara7@gmail.com>"]
 repository = "https://github.com/sligara7/reflow2"
 
 [workspace.dependencies]
-dynograph-core = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.10.0" }
-dynograph-storage = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.10.0", default-features = false }
+dynograph-core = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.11.0" }
+dynograph-storage = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.11.0", default-features = false }
 # Pure, dependency-free graph-theory algorithms (components, cuts, centrality,
 # Leiden communities) — powers HEAL's structural detectors + the allocation analysis.
-dynograph-graph = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.10.0" }
+dynograph-graph = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.11.0" }
 # Fuzzy string matching (jaro_winkler / token_sort_ratio) for INGEST cross-id dedup.
-dynograph-resolution = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.10.0" }
+dynograph-resolution = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.11.0" }
 # Pure vector + statistics math (mean, linear_regression_slope, …) for the depth
 # axis: DimensionObservation rollup + per-epoch quality drift. Embeddings-optional.
-dynograph-vector = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.10.0" }
+dynograph-vector = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.11.0" }
 
 # For local cross-repo dev against an unreleased foundation, uncomment and point
 # each crate at ../dynograph-foundation/crates/*. Do not commit uncommented.
