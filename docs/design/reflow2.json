@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:cda46c4df67c55e105f0d01c88582ea2563b307d39c45a581d7ab4619d24f573",
+  "content_hash": "sha256:3da1285bbe79c86bab0008fe7d5a6c8c817cedcf09d7dde6d575dcff83c9f2ec",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -407,6 +407,14 @@
       "properties": {
         "weight_basis": "estimated"
       },
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:session-memory",
+      "properties": {
+        "weight_basis": "estimated"
+      },
       "to_id": "cmp:temporal"
     },
     {
@@ -627,6 +635,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:requirement-lineage-built",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:requirement-lineage-capture",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -646,6 +660,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:search-nl-verified",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:session-context-is-documentation",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -2810,6 +2830,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:requirement-lineage-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-lineage-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-lineage-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-lineage-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-lineage-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-lineage-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-lineage-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:derived-completion"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-lineage-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:requirement-lineage"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:requirement-lineage-capture",
       "properties": {
         "accepted_baseline": false,
@@ -2897,6 +2989,15 @@
         "action": "modified"
       },
       "to_id": "ver:search-natural-language"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:session-context-is-documentation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:session-memory"
     },
     {
       "edge_type": "CHANGED",
@@ -8804,6 +8905,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:graph",
       "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:requirement-lineage"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:graph",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:graph"
@@ -9393,6 +9502,12 @@
       "edge_type": "SATISFIES",
       "from_id": "cap:session-memory",
       "properties": {},
+      "to_id": "req:explains-itself"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:session-memory",
+      "properties": {},
       "to_id": "req:session-memory-in-graph"
     },
     {
@@ -9634,6 +9749,12 @@
       "from_id": "ver:report",
       "properties": {},
       "to_id": "cap:report"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:requirement-lineage",
+      "properties": {},
+      "to_id": "cap:requirement-lineage"
     },
     {
       "edge_type": "VERIFIES",
@@ -10206,7 +10327,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2fb1eb7c04dc16b3",
+        "checksum": "sha256:29174e732d53bfd9",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -10305,7 +10426,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8a52cd289b537c0d",
+        "checksum": "sha256:51811e7517b942f7",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
         "status": "realized"
@@ -10371,7 +10492,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3b9f1294140cbc00",
+        "checksum": "sha256:c57347034efdfa68",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
         "status": "realized"
@@ -10382,7 +10503,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:777782d8d138b057",
+        "checksum": "sha256:4cba8720231abce0",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
         "status": "realized"
@@ -10404,7 +10525,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f5adfb4ad655e5f8",
+        "checksum": "sha256:fcf776d944694dec",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -10470,7 +10591,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:34c2aa6c4bcc64d9",
+        "checksum": "sha256:818e2f8cc1c2be90",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
         "status": "realized"
@@ -10987,12 +11108,12 @@
       "node_id": "cap:requirement-lineage",
       "node_type": "Capability",
       "properties": {
-        "description": "Anthony's acquisitions vocabulary, 2026-07-25, and it fills a real hole: reflow2 currently has ZERO requirement-to-requirement edges and no decomposition vocabulary in the schema, so a systems-engineering tool holds requirements as a flat list with no tree. Needs a parent link for DECOMPOSED (a 1:1 split adding no new information) and a decision link for DERIVED (new technical necessity created by a design choice nobody asked for), leaving ORIGINAL as the unparented stakeholder statement. THE REASON THIS EARNS ITS KEEP UNDER dec:edge-orthogonality — each class changes a computation, so this is not taxonomy for its own sake. (1) DELIVERY ROLLS UP. Satisfying every decomposed child satisfies the parent, so cap:derived-completion (BL-104) should credit a parent through its children rather than demanding the parent carry its own capability; today a properly decomposed parent reads as unsatisfied or is credited by a capability covering only part of it. (2) RE-FORKING GAINS TEETH. A derived requirement exists BECAUSE of a decision, so when the fork layer re-opens that decision (dec:reopen-supersedes), the requirements that existed only because of the road taken can be named — today re-opening a decision cannot tell which requirements it would orphan, which is exactly the consequence a person needs before choosing to reconsider. (3) CERTAINTY DIFFERS BY CLASS. An original requirement needs the user's confirmation because it is their word (dec:certainty-derived); a derived one needs engineering justification instead, and holding both to the same test either over-trusts derivation or under-trusts the stakeholder. Also worth carrying: an original requirement is the only kind whose loss loses intent — decomposed and derived ones are regenerable from what they came from, which is the argument for recording the link rather than trusting anyone to remember it. PLANNED.",
+        "description": "Hold the requirement tree. BUILT 2026-07-25. A new DECOMPOSES edge (Requirement → Requirement, child→parent, a traceability edge so requirement families cluster on their own meaning) plus a `lineage` property (original / decomposed / derived). Before this reflow2 had ZERO requirement-to-requirement edges: a systems-engineering tool holding requirements as a flat list. THE COMPUTATION THAT EARNS IT, and the half that is built: DELIVERY NOW ROLLS UP. cap:derived-completion credits a decomposed parent through its children instead of demanding it carry a capability of its own — EVERY child, not any, because a parent half-delivered is not delivered and `any` would let one finished slice of a checkout system report the whole thing done. The roll-up inherits the property that made delivery a derivation rather than an assertion: it goes backwards, so a child's check starting to fail un-delivers the parent with nobody editing anything. `decomposes` refuses a cycle, because a tree containing itself has no leaves and could never roll up honestly; it also sets the child's lineage, so the edge and the label cannot disagree — letting them would make the classification a second thing to maintain, which is how the requirement lifecycle went unused in the first place. Exposed over MCP as `decomposes` and `set_requirement_lineage` (93 tools), because a capability with no door is the failure this project found in `ingest` earlier the same week. SCHEMA CHANGE: edge types 53 → 54, so a graph written by this build is refused by older binaries with 'update reflow2' — the additive direction, which is loud and correct, and the one BL-86's set-based stamp made unambiguous. STILL TO BUILD: the derived half's teeth — naming, when a Decision is re-opened, the requirements that existed only because of the road taken. The vocabulary and the link are in place (lineage `derived` + GOVERNED_BY the Decision); the query is not.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Hold the requirement tree: original, decomposed, derived",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -11039,7 +11160,7 @@
       "node_id": "cap:session-memory",
       "node_type": "Capability",
       "properties": {
-        "description": "Session takeaways as first-class graph content: each key decision, finding or realization written when it happens, anchored to the epoch of the session that produced it, and queryable afterwards by the agent as its own prior context. The substrate landed 2026-07-24 with the fork layer — an epoch is exactly a session-addressable point, decisions are now anchored to epochs, and change events pin there too — so what remains is the trigger and the query skill, not new vocabulary. The trigger is the load-bearing part: the existing handoff enforcement watches the modification time of markdown files under the Claude Code memory directory, so the only mechanism that forces a session to leave takeaways behind actively points AWAY from the graph. Reflow2's own doctrine already states the principle in the authored_by contract — record it when a decision is made, not at session end — it simply is not enforced for session memory. THE TRANSCRIPT POINTER (user's refinement, 2026-07-24): each session does have a full local record, at ~/.claude/projects/<project-slug>/<session-uuid>.jsonl — one multi-megabyte JSONL per session, UUID-named. Model it as a Fragment, which is already exactly the provenance vocabulary: the transcript is a source, and the nodes distilled from the session are YIELDED from it. Two constraints follow and both matter. First, the SESSION UUID is the portable identity and the local path is only a machine-scoped resolution hint — storing an absolute path as the identity would create a pointer that resolves for one person on one machine and silently misses, or worse resolves to something else, for everyone on a shared graph (the user raised precisely this against a central MCP; it is the same defect class as a version claim that looks valid and is not). Second, and more important: a pointer to a 3 MB transcript is a RECEIPT, not memory. If the design leans on it, the markdown problem is simply recreated one level down — 'it is all in the transcript' is the same excuse as 'it is all in the backlog file'. The distillation belongs in the graph as real nodes; the Fragment corroborates it. PLANNED.",
+        "description": "Session takeaways as first-class graph content: each key decision, finding or realization written when it happens, anchored to the epoch of the session that produced it, and queryable afterwards by the agent as its own prior context. THE FRAMING THE USER SETTLED 2026-07-25, which moves this out of 'agent convenience' entirely: a session's context IS documentation — the how-and-why record of a design's evolution — and documentation is part of the product (sys:documentation, his fighter-jet argument). So this is not memory for the agent's benefit; it is internally-derived design documentation, produced by the work rather than written about it afterwards. That reframing matters because it changes the standard: a convenience can be skipped under load, a deliverable cannot. Decision.rationale and ChangeEvent already capture fragments of the why; what lives only in the session is the connective tissue — what was tried, what was rejected and on what grounds, which findings turned up while doing something else. The substrate landed with the fork layer: an epoch is a session-addressable point, decisions anchor to epochs, change events pin there. The trigger is the load-bearing gap: the existing handoff enforcement watches the modification time of MARKDOWN files, so the only mechanism forcing a session to leave takeaways behind points AWAY from the graph. Reflow2's own doctrine already states the principle in the authored_by contract — record it when a decision is made, not at session end. THE TRANSCRIPT POINTER: each session has a full local record at ~/.claude/projects/<slug>/<uuid>.jsonl, modelled as a Fragment, with nodes distilled from the session YIELDED from it. Two constraints. The session UUID is the portable identity and the absolute path only a machine-scoped hint, because a path stored as identity resolves for one person on one machine and silently misses for everyone on a shared graph. And a pointer to a 3 MB transcript is a RECEIPT, not documentation: leaning on it recreates the markdown problem one level down, since 'it is all in the transcript' is the same excuse as 'it is all in the backlog file'. PLANNED.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Record and query what a session learned",
@@ -11528,6 +11649,14 @@
       }
     },
     {
+      "node_id": "chg:requirement-lineage-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Requirement lineage built: DECOMPOSES edge, lineage property, and delivery rolling up the tree"
+      }
+    },
+    {
       "node_id": "chg:requirement-lineage-capture",
       "node_type": "ChangeEvent",
       "properties": {
@@ -11557,6 +11686,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Natural-language search proven fixed by a regression-verified test; ver:search-natural-language passing"
+      }
+    },
+    {
+      "node_id": "chg:session-context-is-documentation",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Session context reframed as internally-derived documentation, not agent convenience"
       }
     },
     {
@@ -14791,6 +14928,18 @@
       }
     },
     {
+      "node_id": "ver:requirement-lineage",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "integration",
+        "method": "test",
+        "name": "Decomposition rolls delivery up, and only when every child is delivered",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:search",
       "node_type": "Verification",
       "properties": {
@@ -14883,7 +15032,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1c13a8d49b295a925823f4e2e61e4b37ff75a601b0af606573c1fd60001c5963",
+  "prev_content_hash": "sha256:cda46c4df67c55e105f0d01c88582ea2563b307d39c45a581d7ab4619d24f573",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

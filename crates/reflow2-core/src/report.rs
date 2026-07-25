@@ -537,6 +537,50 @@ impl DesignGraph {
         Ok(c)
     }
 
+    /// Whether one requirement is delivered — satisfied by a realized, checked
+    /// capability, or (for a decomposed parent) by every one of its children
+    /// being delivered.
+    ///
+    /// `depth` bounds the recursion. `decomposes` refuses to create a cycle, so
+    /// a well-formed tree terminates on its own; the bound exists for a graph
+    /// that arrived by `import_graph` from somewhere less careful, where
+    /// refusing to answer beats recursing forever.
+    fn requirement_is_delivered_within(
+        &self,
+        requirement_id: &str,
+        depth: usize,
+    ) -> Result<bool, DynoError> {
+        if depth == 0 {
+            return Ok(false);
+        }
+        for e in self.incoming(requirement_id, Some(edge::SATISFIES))? {
+            let cap = &e.from_id;
+            let checked = !matches!(
+                self.capability_verification(cap)?,
+                crate::verify::CapabilityVerification::Unchecked
+            );
+            if checked && self.capability_is_realized(cap)? {
+                return Ok(true);
+            }
+        }
+        let children = self.decomposed_children(requirement_id)?;
+        if children.is_empty() {
+            return Ok(false);
+        }
+        for child in &children {
+            if !self.requirement_is_delivered_within(child, depth - 1)? {
+                return Ok(false);
+            }
+        }
+        Ok(true)
+    }
+
+    /// Whether one requirement is delivered, rolling up a decomposition tree.
+    /// See [`DeliveryCoverage`].
+    pub fn requirement_is_delivered(&self, requirement_id: &str) -> Result<bool, DynoError> {
+        self.requirement_is_delivered_within(requirement_id, 64)
+    }
+
     /// Work out how much intent has actually been delivered, from the thread
     /// itself. See [`DeliveryCoverage`] for why this is computed rather than
     /// read from `Requirement.status`.
@@ -572,7 +616,17 @@ impl DesignGraph {
                 .into_iter()
                 .map(|e| e.from_id)
                 .collect();
-            if satisfiers.is_empty() {
+
+            // A decomposed parent is carried by its children, not by a
+            // capability of its own: splitting a requirement adds no new
+            // information, so satisfying every child IS satisfying the parent.
+            // Without this a properly decomposed design reads as a wall of
+            // unsatisfied parents, which punishes exactly the practice
+            // systems engineering asks for.
+            let children = self.decomposed_children(&req.node_id)?;
+            let carried_by_children = !children.is_empty();
+
+            if satisfiers.is_empty() && !carried_by_children {
                 continue;
             }
             d.satisfied += 1;
@@ -586,6 +640,18 @@ impl DesignGraph {
                 if checked && self.capability_is_realized(cap)? {
                     thread_complete = true;
                     break;
+                }
+            }
+            // EVERY child, not any: a parent half-delivered is not delivered,
+            // and "any" would let one finished slice of a checkout system
+            // report the whole thing done.
+            if !thread_complete && carried_by_children {
+                thread_complete = true;
+                for child in &children {
+                    if !self.requirement_is_delivered(child)? {
+                        thread_complete = false;
+                        break;
+                    }
                 }
             }
             if !thread_complete {

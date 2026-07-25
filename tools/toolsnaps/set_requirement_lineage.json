@@ -1,0 +1,25 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Set where a Requirement came from — `original` (the stakeholder's own word), `decomposed` (a 1:1 split of a parent, normally set for you by `decomposes`), or `derived` (technical necessity nobody asked for, created by a design decision — pair it with governed_by to that Decision). Distinct from `provenance`, which says how the node entered the graph rather than where the need came from. The classes behave differently: delivery rolls up a decomposition, and a derived requirement may lose its reason to exist if the decision behind it is re-opened.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "lineage": {
+        "description": "`original` (default) / `decomposed` / `derived`.",
+        "type": "string"
+      },
+      "requirement_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "requirement_id",
+      "lineage"
+    ],
+    "type": "object"
+  },
+  "name": "set_requirement_lineage"
+}

@@ -442,6 +442,14 @@ pub struct RequirementStatusReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct RequirementLineageReq {
+    pub requirement_id: String,
+    /// `original` (default) / `decomposed` / `derived`.
+    pub lineage: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct CapabilityStatusReq {
     pub capability_id: String,
     /// `planned` (default) / `in_progress` / `realized` / `verified`.
@@ -1819,6 +1827,52 @@ impl ReflowService {
         let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
             g.satisfies(&req.from_id, &req.to_id).map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Split a Requirement into a smaller one: `from_id` DECOMPOSES `to_id`. Use \
+                       when a child is a 1:1 piece of its parent adding NO new information (\"the \
+                       app must have a checkout system\" → enter-a-card, apply-a-discount, \
+                       receive-a-receipt). Delivery rolls UP this edge: the parent is delivered \
+                       when EVERY child is, so a decomposed parent needs no capability of its own. \
+                       Do NOT use for a requirement that adds new technical necessity nobody asked \
+                       for — that is *derived*, it belongs to the Decision that forced it \
+                       (set_requirement_lineage `derived` + governed_by), and re-opening that \
+                       decision may remove its reason to exist. Marks the child `decomposed`. \
+                       Refuses a cycle: a tree that contains itself has no leaves and could never \
+                       roll up.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn decomposes(
+        &self,
+        Parameters(req): Parameters<EdgePairReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(EdgeDto::from(
+            g.decomposes(&req.from_id, &req.to_id).map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Set where a Requirement came from — `original` (the stakeholder's own \
+                       word), `decomposed` (a 1:1 split of a parent, normally set for you by \
+                       `decomposes`), or `derived` (technical necessity nobody asked for, created \
+                       by a design decision — pair it with governed_by to that Decision). Distinct \
+                       from `provenance`, which says how the node entered the graph rather than \
+                       where the need came from. The classes behave differently: delivery rolls up \
+                       a decomposition, and a derived requirement may lose its reason to exist if \
+                       the decision behind it is re-opened.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn set_requirement_lineage(
+        &self,
+        Parameters(req): Parameters<RequirementLineageReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(NodeDto::from(
+            g.set_requirement_lineage(&req.requirement_id, &req.lineage)
+                .map_err(dyno_err)?,
         ))
     }
 

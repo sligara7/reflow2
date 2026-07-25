@@ -632,6 +632,106 @@ impl DesignGraph {
         )
     }
 
+    /// `child DECOMPOSES parent` — split one requirement into smaller testable
+    /// pieces that add no new information, and mark the child `decomposed`.
+    ///
+    /// Refuses a self-loop and refuses to introduce a cycle: a decomposition
+    /// that contains itself has no leaves, so delivery could never roll up
+    /// through it and "satisfy every child" would be unsatisfiable by
+    /// construction. Cheaper to refuse here than to detect later as a defect
+    /// nobody can act on.
+    ///
+    /// Sets `lineage` on the child rather than leaving it to the caller: the
+    /// edge and the label are the same fact, and letting them disagree would
+    /// make the classification a second thing to maintain — which is how the
+    /// requirement lifecycle went unused in the first place.
+    pub fn decomposes(&mut self, child_id: &str, parent_id: &str) -> Result<StoredEdge, DynoError> {
+        if child_id == parent_id {
+            return Err(DynoError::Validation {
+                node_type: node::REQUIREMENT.into(),
+                property: "DECOMPOSES".into(),
+                message: format!("'{child_id}' cannot decompose itself"),
+            });
+        }
+        // Walk the parent's own ancestry; if the child is up there, this edge
+        // would close a loop.
+        let mut seen = std::collections::BTreeSet::new();
+        let mut frontier = vec![parent_id.to_string()];
+        while let Some(id) = frontier.pop() {
+            if id == child_id {
+                return Err(DynoError::Validation {
+                    node_type: node::REQUIREMENT.into(),
+                    property: "DECOMPOSES".into(),
+                    message: format!(
+                        "'{child_id}' already sits above '{parent_id}', so this would make the \
+                         decomposition circular — a tree with no leaves can never roll up"
+                    ),
+                });
+            }
+            if !seen.insert(id.clone()) {
+                continue;
+            }
+            for e in self.outgoing(&id, Some(edge::DECOMPOSES))? {
+                frontier.push(e.to_id);
+            }
+        }
+
+        let edge = self.create_edge(
+            edge::DECOMPOSES,
+            node::REQUIREMENT,
+            child_id,
+            node::REQUIREMENT,
+            parent_id,
+            Props::new(),
+        )?;
+        self.set_requirement_lineage(child_id, "decomposed")?;
+        Ok(edge)
+    }
+
+    /// Set a Requirement's `lineage` — where it came from, as opposed to how it
+    /// entered the graph (`provenance`). Preserves every other property.
+    pub fn set_requirement_lineage(
+        &mut self,
+        requirement_id: &str,
+        lineage: &str,
+    ) -> Result<StoredNode, DynoError> {
+        const LINEAGES: [&str; 3] = ["original", "decomposed", "derived"];
+        if !LINEAGES.contains(&lineage) {
+            return Err(DynoError::Validation {
+                node_type: node::REQUIREMENT.into(),
+                property: "lineage".into(),
+                message: format!(
+                    "'{lineage}' is not a requirement lineage (one of {})",
+                    LINEAGES.join(", ")
+                ),
+            });
+        }
+        let Some(existing) = self.get_node(node::REQUIREMENT, requirement_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::REQUIREMENT.into(),
+                node_id: requirement_id.into(),
+            });
+        };
+        let mut props = Props::new().set("lineage", lineage);
+        for (k, v) in &existing.properties {
+            if k != "lineage" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::REQUIREMENT, requirement_id, props)
+    }
+
+    /// The requirements this one was split into — its direct children.
+    pub fn decomposed_children(&self, parent_id: &str) -> Result<Vec<String>, DynoError> {
+        let mut kids: Vec<String> = self
+            .incoming(parent_id, Some(edge::DECOMPOSES))?
+            .into_iter()
+            .map(|e| e.from_id)
+            .collect();
+        kids.sort();
+        Ok(kids)
+    }
+
     /// `Capability ALLOCATED_TO Component` — the WHAT→WHERE binding.
     pub fn allocate(
         &mut self,

@@ -51,6 +51,11 @@ pub mod edge {
     /// `Question → *` — the design nodes a question was raised about.
     pub const ASKS_ABOUT: &str = "ASKS_ABOUT";
     pub const CONTAINS: &str = "CONTAINS";
+    /// `Requirement → Requirement` — child DECOMPOSES parent: a 1:1 split that
+    /// adds no new information. Directed child→parent so a leaf finds its
+    /// ancestry without the parent enumerating children, and because delivery
+    /// rolls UP it: satisfying every child satisfies the parent.
+    pub const DECOMPOSES: &str = "DECOMPOSES";
     /// `* → *` — traceability: a Capability SATISFIES a Requirement.
     pub const SATISFIES: &str = "SATISFIES";
     /// `* → Contributor` — the structured "who" behind a node's authorship.
@@ -251,6 +256,13 @@ pub(crate) fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
         // (incoming) you reach the realizer that may now be wrong (downstream);
         // from the capability (outgoing) you reach the intent it serves (upstream).
         "SATISFIES" => (Some(Upstream), Some(Downstream)),
+        // Decomposition within intent: child DECOMPOSES parent. Same shape as
+        // SATISFIES, and for the same reason — from the parent (incoming) you
+        // reach the children that carry it out, from a child (outgoing) you
+        // reach the intent it serves. Unlike CONTAINS this IS a traceability
+        // edge: it joins intent to intent rather than making the Project a hub,
+        // so requirement families cluster on their own meaning.
+        "DECOMPOSES" => (Some(Upstream), Some(Downstream)),
         // A node CONSTRAINS another it shapes.
         "CONSTRAINS" => (Some(Downstream), Some(Upstream)),
         // WHAT→WHERE: Capability ALLOCATED_TO Component.

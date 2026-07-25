@@ -37,6 +37,7 @@ schema:
         source: { type: string, description: "Who/what stated it — a user, a regulation, a stakeholder." }
         rationale: { type: string }
         status: { type: enum, values: [proposed, accepted, deferred, dropped, met], default: proposed, indexed: true }
+        lineage: { type: enum, values: [original, decomposed, derived], default: original, indexed: true, description: "Where this requirement came from, which is distinct from `provenance` (how it entered the graph). `original` is the stakeholder's own word. `decomposed` is a 1:1 split of a parent adding no new information — it DECOMPOSES that parent, and satisfying every child satisfies it. `derived` is technical necessity nobody asked for, created by a design decision — it is GOVERNED_BY that Decision, and if the decision is re-opened the requirement may lose its reason to exist. The classes behave differently under delivery roll-up and under re-forking, which is why the distinction is stored rather than inferred." }
         provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this node entered the graph. Same vocabulary as Fragment.provenance. `inferred` is the load-bearing one: a requirement read back out of the code that implements it is satisfied by construction and can never contradict anything, so it must be distinguishable from one a stakeholder actually stated." }
       embedding_field: statement
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
@@ -128,6 +129,22 @@ schema:
         Ownership/containment: from the Project down to any node, and between
         Components to express the axis-Y decomposition spine (a system CONTAINS
         its subsystems CONTAINS its parts — see Component.level / matryoshka).
+      properties:
+        note: { type: string }
+
+    DECOMPOSES:
+      from: Requirement
+      to: Requirement
+      extraction_hint: >
+        Child DECOMPOSES parent: a 1:1 split of one requirement into smaller
+        testable pieces that adds no new information ("the app must have a
+        checkout system" becomes enter-a-card, apply-a-discount, receive-a-
+        receipt). Distinct from a DERIVED requirement, which adds new technical
+        necessity nobody asked for and hangs off the Decision that forced it,
+        not off a parent goal. The direction is child→parent so a leaf can find
+        its ancestry without the parent enumerating its children, and because
+        satisfying every child is what satisfies the parent — delivery rolls
+        UP this edge.
       properties:
         note: { type: string }
 
