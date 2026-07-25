@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:53345780d0f46287a6ba6d2326ea8a5d3cd1e55931d6c2f46d2ed47d0b52c389",
+  "content_hash": "sha256:d2b2bcf20891fe182ebc51cf741721dcf52602f521b4178d60483000e4fbb650",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -641,15 +641,45 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:7d8edafb0bd7aea3",
+      "properties": {},
+      "to_id": "req:design-identity"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:8ce3d04154396568",
+      "properties": {},
+      "to_id": "req:nudge-path-proven"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:90a90e90df05c31a",
       "properties": {},
       "to_id": "req:design-reachable-without-the-repo"
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:95ddc1083445d73d",
+      "properties": {},
+      "to_id": "req:claims-have-owners"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:a752db1dd8a251b2",
       "properties": {},
       "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:acaf4106e0b94ec0",
+      "properties": {},
+      "to_id": "req:stale-seat-knows"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:b53c7315f39f3640",
+      "properties": {},
+      "to_id": "req:read-while-held"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -6565,6 +6595,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:degraded-surface",
+      "properties": {},
+      "to_id": "decision:ack:39bc6f37b50dc9c3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:derived-completion",
       "properties": {},
       "to_id": "dec:certainty-derived"
@@ -7975,6 +8011,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:snapshot-read",
+      "properties": {},
+      "to_id": "decision:ack:39bc6f37b50dc9c3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:stamp",
       "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
@@ -8170,6 +8212,12 @@
       "from_id": "cmp:claims",
       "properties": {},
       "to_id": "decision:ack:e2f901aa220997b4"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:degraded",
+      "properties": {},
+      "to_id": "decision:ack:532359c4b9e132a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -16945,6 +16993,16 @@
       }
     },
     {
+      "node_id": "decision:ack:39bc6f37b50dc9c3",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:39bc6f37b50dc9c3.",
+        "name": "Reviewed: gap:39bc6f37b50dc9c3",
+        "rationale": "Standing disposition, re-recorded: reflow2's validation evidence is the trial record in docs/trials/ and the field reports from real use (the 2026-07-25 fleet outage being the sharpest example — validation by a user losing their design brain, not by a test). Those are not modelled as validation-kind Verifications, so the detector is right that the graph cannot see them. NOTE THE REAL FINDING BEHIND THE CHURN: this gap's id is derived from the affected set, so every new verified capability mints a NEW gap id and the acknowledgement does not carry over — it has been re-acknowledged at 48 and 49 capabilities. An acknowledgement that expires because the design grew is expiring for the wrong reason; whether a set-scoped gap should be identified by its RULE rather than its members is a real question about the ack mechanism.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:41e84391c187d118",
       "node_type": "Decision",
       "properties": {
@@ -16991,6 +17049,16 @@
         "decision": "Accepted the gap gap:4dc755507da9ffe5.",
         "name": "Reviewed: gap:4dc755507da9ffe5",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities, with the check named because the obvious one would certify the wrong property. Asserting \"a claim was recorded and can be read back\" proves storage, not usefulness. The test must pin the HONEST LIMIT the architecture forces: a claim is advisory and NOT a lock, so the suite has to show that a second writer who ignores an existing claim is not blocked, that their work still merges correctly through the three-way merge, and that the overlap is REPORTED rather than prevented. A claims layer whose tests only demonstrate successful claiming would read as a locking mechanism to anyone skimming it, which is precisely the false promise dec:report-dont-judge and this decision's recorded weakness warn against — without a server, one person's claim is invisible to another until a pull.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:532359c4b9e132a3",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:532359c4b9e132a3.",
+        "name": "Reviewed: gap:532359c4b9e132a3",
+        "rationale": "Correct and expected: cmp:degraded was built after v0.11.0 was cut, so it ships in the NEXT release. dec:intent-preserved settled that unreleased-component gaps from work done after a cut are answered by the next manifest rather than backfilled into a shipped one — a release record must say what that release contained. Will close by inclusion at the next cut, not by editing rel:v0110.",
         "status": "accepted"
       }
     },
@@ -18683,6 +18751,30 @@
       }
     },
     {
+      "node_id": "question:7d8edafb0bd7aea3",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-25",
+        "context_setter": "Nothing satisfies requirement “A durable design knows its own name, and remembers it across opens”",
+        "gap_id": "gap:7d8edafb0bd7aea3",
+        "question": "Should every design get a permanent name of its own the moment it is created — one it keeps forever, even if the folder is renamed or copied to another machine — with the friendly title just a label on top? Right now every design answers to the same built-in name, so two designs cannot tell each other apart, which is what makes linking one plan to another meaningless. The fleet's way of doing this is to use the identifier the system already handed out, so nobody has to coordinate to be unique.",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
+      "node_id": "question:8ce3d04154396568",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-25",
+        "context_setter": "Nothing satisfies requirement “The path the coherence loop relies on to interrupt an agent is proven to interrupt one”",
+        "gap_id": "gap:8ce3d04154396568",
+        "question": "reflow2 relies on a reminder that taps the assistant on the shoulder when design work has gone unchecked — but nothing has ever proved that tap actually lands in a real session, and there is no fallback if it does not. Is proving it worth the work, given that everything reflow2 does to keep itself honest depends on it arriving?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:90a90e90df05c31a",
       "node_type": "Question",
       "properties": {
@@ -18696,6 +18788,18 @@
       }
     },
     {
+      "node_id": "question:95ddc1083445d73d",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-25",
+        "context_setter": "Nothing satisfies requirement “A claim names its owner, and a claim with no live owner is reported stale”",
+        "gap_id": "gap:95ddc1083445d73d",
+        "question": "When somebody says “I have got this part”, should reflow2 record WHO said it and then tell you when that person is no longer around — so the list shows what is actually being worked on rather than what somebody claimed days ago and walked away from? Today a claim carries only a label, so an abandoned claim looks exactly like a live one.",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:a752db1dd8a251b2",
       "node_type": "Question",
       "properties": {
@@ -18706,6 +18810,30 @@
         "question": "You've just said documentation is part of reflow2, like documentation shipped with a fighter jet. The graph now takes that literally and points out that none of your nine releases lists documentation as something it delivered — even though every one of them shipped a README and a setup guide. Should the past releases be corrected to say they included the documentation, or should this start from the next release onward?",
         "rephrase_degraded": false,
         "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:acaf4106e0b94ec0",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-25",
+        "context_setter": "Nothing satisfies requirement “A seat learns the shared design moved before it writes over it”",
+        "gap_id": "gap:acaf4106e0b94ec0",
+        "question": "When two people work on the same design at once, should reflow2 stop you and say so before you save over a version that has already moved on — the way git refuses a push that is out of date? Today it saves quietly, and the other person's work disappears without anyone seeing a conflict. Do you want that warning built, and should it refuse the write or only warn?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
+      "node_id": "question:b53c7315f39f3640",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-25",
+        "context_setter": "Nothing satisfies requirement “Reading the design does not require owning it”",
+        "gap_id": "gap:b53c7315f39f3640",
+        "question": "Should a session that cannot get the write lock still be able to READ the design — orientation, reports, gap checks — instead of having no design brain at all? This is the fleet's real blocker: five of your six sessions get nothing today. The catch is that it cannot be fixed here; it needs a change to the storage library reflow2 depends on, which you own but which is pinned by version. Do you want that upstream change taken on?",
+        "rephrase_degraded": false,
+        "status": "asked"
       }
     },
     {
@@ -20199,7 +20327,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:108e86ffe615bcb9d8891c1670af964ee7d2af9c2f09cc91623a108b1fd59cec",
+  "prev_content_hash": "sha256:53345780d0f46287a6ba6d2326ea8a5d3cd1e55931d6c2f46d2ed47d0b52c389",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
