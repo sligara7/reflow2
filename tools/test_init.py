@@ -26,7 +26,9 @@ _spec = importlib.util.spec_from_file_location("reflow2_init", HERE / "reflow2_i
 init = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(init)
 
-KIT_AGENTS = (init.KIT / "AGENTS.md").read_text()
+# What actually lands in a project: the short, stable pointer. The full
+# working instructions are served by get_instructions (req:thin-install).
+KIT_AGENTS = (init.KIT / "POINTER.md").read_text()
 FAKE_BINARY = pathlib.Path("/nonexistent/target/debug/reflow2-mcp")
 
 
@@ -69,11 +71,9 @@ class InstallerTest(unittest.TestCase):
         self.assertIn("reflow2_version", stamp)
 
     def test_an_upgrade_touches_nothing_in_the_project(self):
-        # req:thin-install, in one assertion. Anthony's brother: "you wouldn't
-        # need to change anything in your repo again and updates would be
-        # confined to the reflow package." A second run of a NEWER reflow2 is
-        # simulated by re-running install; nothing kit-owned may move except
-        # the stamp, which is machine-local and gitignored.
+        # Re-running the SAME version changes nothing. Necessary, and weaker
+        # than the requirement — test_a_new_release_touches_nothing below is
+        # the one that actually answers Alex.
         p = self.project()
         self.install(p)
         before = {
@@ -90,6 +90,65 @@ class InstallerTest(unittest.TestCase):
             if f.is_file() and ".reflow2" not in f.parts
         }
         self.assertEqual(before, after, "an update must not rewrite the project")
+
+    def test_a_new_release_touches_nothing_in_the_project(self):
+        """req:thin-install, answered properly.
+
+        Alex: "you wouldn't need to change anything in your repo again and
+        updates would be confined to the reflow package." Re-running the same
+        version proves almost nothing — the question is what a NEWER reflow2
+        does, so this simulates one: the project holds what an older kit
+        installed (manifest and file agreeing, as they would after a clean
+        install), and the kit has since moved on.
+
+        Before the served instructions, this test failed: the ~20 KB AGENTS.md
+        changed with almost every release, so every upgrade produced a diff in a
+        repository that has nothing to do with reflow2's release cycle.
+        """
+        p = self.project()
+        self.install(p)
+
+        # The release moves: rewrite the project's copy as an OLDER kit's output
+        # and record that hash, so the installer sees a file it owns which no
+        # longer matches the kit it ships.
+        doc = p / "AGENTS.md"
+        older = doc.read_text().replace(
+            "## Start here, every session", "## Getting started (older wording)"
+        )
+        self.assertNotEqual(older, doc.read_text(), "the fixture must actually differ")
+        doc.write_text(older)
+        stamp = json.loads((p / ".reflow2/kit-version.json").read_text())
+        stamp["installed_files"]["AGENTS.md"] = init.file_sha(doc)
+        (p / ".reflow2/kit-version.json").write_text(json.dumps(stamp))
+
+        planned = init.planned_changes(p)
+
+        # The pointer file is allowed to be refreshed — it is small and stable —
+        # but nothing about the WORKING INSTRUCTIONS or the skills may move,
+        # because neither lives here any more.
+        self.assertFalse(
+            any("skills" in c for c in planned),
+            f"no skill file may be installed or updated by an upgrade: {planned}",
+        )
+        for tree in (".claude", ".grok"):
+            self.assertFalse((p / tree).exists(), f"{tree} must not exist")
+
+    def test_the_installed_file_is_a_pointer_not_the_instructions(self):
+        """The size difference IS the requirement: what a project holds must be
+        the part that does not change between releases."""
+        p = self.project()
+        self.install(p)
+
+        installed = (p / "AGENTS.md").read_text()
+        served = (init.KIT / "AGENTS.md").read_text()
+
+        self.assertLess(
+            len(installed),
+            len(served) / 3,
+            "the installed file must be a pointer, not a copy of the instructions",
+        )
+        for tool in ("get_instructions", "list_skills", "get_skill"):
+            self.assertIn(tool, installed, f"the pointer must name {tool}")
 
     # ---- never overwrite what the project owns -----------------------------
 

@@ -87,6 +87,10 @@ pub struct GetSkillReq {
 #[serde(deny_unknown_fields)]
 pub struct ListSkillsReq {}
 
+#[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct GetInstructionsReq {}
+
 #[tool_router(router = skills_router, vis = "pub")]
 impl ReflowService {
     /// The catalogue, with full trigger conditions.
@@ -144,6 +148,26 @@ impl ReflowService {
             "name": skill.name,
             "description": skill.description,
             "body": skill.body,
+        }))
+    }
+    /// The working instructions, served rather than installed.
+    #[tool(
+        description = "How to work THIS project with reflow2: the loop, the standing rules, and \
+                       what to do first on an existing design. Served by the server rather than \
+                       stored in the project, so it always matches the reflow2 you are talking to. \
+                       Read it before the first design action of a session — the file in the repo \
+                       is only a pointer here.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn get_instructions(
+        &self,
+        Parameters(_): Parameters<GetInstructionsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        structured(json!({
+            "instructions": INSTRUCTIONS,
+            "note": "Served from the reflow2 binary (req:thin-install), so upgrading reflow2 \
+                     changes these instructions without changing anything in your repository. \
+                     The skills they refer to come from list_skills / get_skill.",
         }))
     }
 }

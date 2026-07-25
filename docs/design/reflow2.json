@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:974d81d4ec5ed7ada95bd777c7eb38e9d931313301d92701deea80ab0bc3941f",
+  "content_hash": "sha256:9d9219cb4d6a2e1039122c1d6aa87db17ab7d56098ed1c485f38498c52309e4a",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -861,6 +861,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:instructions-served",
+      "properties": {},
+      "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:key-interfaces-built",
       "properties": {},
       "to_id": "epoch:kpp-capture"
@@ -1336,6 +1342,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:surface-export:cap:portability",
+      "properties": {},
+      "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:surface-export:cap:skills-served",
       "properties": {},
       "to_id": "epoch:surface-export"
     },
@@ -3714,6 +3726,69 @@
         "action": "added"
       },
       "to_id": "req:many-designs-one-service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:instructions-served",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:instructions-served",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:instructions-served",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:instructions-served",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:instructions-served",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:instructions-served",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:upgrading-v0120"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:instructions-served",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:skills-served"
     },
     {
       "edge_type": "CHANGED",
@@ -8763,6 +8838,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:skills-served",
+      "properties": {},
+      "to_id": "snap:epoch:surface-export:cap:skills-served"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:exploratory-staging",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:dec:exploratory-staging"
@@ -12215,6 +12296,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:kit-pointer",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:kpp-proposal-skill",
       "properties": {
         "completeness": "complete"
@@ -13674,6 +13763,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:kit-pointer",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:kit-pointer"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:kpp-proposal-skill",
       "properties": {
         "action": "created"
@@ -14222,9 +14319,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6b6414f7ecb70b5e269820224ce716fdaf7c4ebbc467f367138690b02223fded",
+        "checksum": "sha256:b63d9dc04d96671bb4503e06bca1ad67743cb7a091d518bc2964e3e8b7cf5321",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:kit-pointer",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:feebbdb1438ff2c52e51cb0fbb004476378ffa97d3c9aa72890b7aa92f4b81b5",
+        "location": "getting-started/POINTER.md",
+        "name": "POINTER.md",
         "status": "realized"
       }
     },
@@ -14442,7 +14550,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:952e2425030628ee23a07a01ae0f16a0bb3a0490dd3511e3d5c4c3d3834dd1e3",
+        "checksum": "sha256:b4d9cfc07a00a23eb177af08456bf4cfa7a4225e68cb5a70427d24f26a239129",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -14464,7 +14572,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c3afa8055f5b778f8903d55e9c98a1e3fad845ebd2bde8fb30e743717c486a45",
+        "checksum": "sha256:61b6103196e422602afb185449f1ac037fdd17c033b26bd001a53e6e0799dd4e",
         "location": "crates/reflow2-mcp/src/skills.rs",
         "name": "skills.rs",
         "status": "realized"
@@ -14475,7 +14583,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:52c8a520c59681d4f5b7c4e12d3956f50aec2e95538f21542adb383d52a86457",
+        "checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797",
         "location": "crates/reflow2-mcp/build.rs",
         "name": "build.rs",
         "status": "realized"
@@ -14552,7 +14660,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a0c4364364109ae5aedf5c15b2b9a12d30fe5016b5265f972d26b3bf92319aec",
+        "checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
         "status": "realized"
@@ -14585,7 +14693,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:7984432f38d678edf64c923d1300d9b4ad15cfe577a01104faf7ed20ea5f0a46",
+        "checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34",
         "location": "docs/upgrading-to-v0.12.0.md",
         "name": "upgrading-to-v0.12.0.md",
         "status": "realized"
@@ -15358,10 +15466,10 @@
       "node_id": "cap:skills-served",
       "node_type": "Capability",
       "properties": {
-        "description": "The skills are compiled in at build time (build.rs embeds getting-started/skills), served by list_skills and get_skill, and advertised by a catalogue in the server instructions — the one channel a client puts in the agent's context unasked. The installer stops copying them and removes the copies an older kit left: untouched ones deleted with the reason, edited ones kept and reported as SHADOWING the served skill, because a harness does auto-load those.",
+        "description": "Both the fifteen skills and the ~20 KB instruction document are compiled in at build time (build.rs embeds getting-started/), served by list_skills, get_skill and get_instructions, and advertised by a catalogue plus a call-get_instructions-first line in the server instructions — the one channel a client puts in the agent's context unasked. What an install leaves in a project is a 2.4 KB pointer file naming those three tools, the MCP configs, .reflow2/ and a gitignore line; nothing else, and nothing that a later release rewrites. The installer removes the skill copies an older kit left: untouched ones deleted with the reason, edited ones kept and reported as SHADOWING the served skill, because a harness does auto-load those.",
         "is_entry_point": false,
         "is_exit_point": false,
-        "name": "Serve the skills from the binary instead of copying them into the project",
+        "name": "Serve the skills AND the working instructions from the binary, so a project holds only a pointer",
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
@@ -16037,6 +16145,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Two-coast collaboration and multiple projects raised: a hosted MCP, project segregation, and coordinating in the graph instead of COORD.md"
+      }
+    },
+    {
+      "node_id": "chg:instructions-served",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The working instructions follow the skills into the server; a project keeps only a pointer"
       }
     },
     {
@@ -19000,6 +19116,16 @@
       }
     },
     {
+      "node_id": "frag:art:kit-pointer",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered POINTER.md"
+      }
+    },
+    {
       "node_id": "frag:art:kpp-proposal-skill",
       "node_type": "Fragment",
       "properties": {
@@ -20394,6 +20520,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:surface-export:cap:skills-served",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:upgrading-v0120\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:served-skills\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:skills\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:skills-served\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:2a9626b1798c1959\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:thin-install\",\"properties\":{}}]",
+        "state": "{\"description\":\"Both the fifteen skills and the ~20 KB instruction document are compiled in at build time (build.rs embeds getting-started/), served by list_skills, get_skill and get_instructions, and advertised by a catalogue plus a call-get_instructions-first line in the server instructions — the one channel a client puts in the agent's context unasked. What an install leaves in a project is a 2.4 KB pointer file naming those three tools, the MCP configs, .reflow2/ and a gitignore line; nothing else, and nothing that a later release rewrites. The installer removes the skill copies an older kit left: untouched ones deleted with the reason, edited ones kept and reported as SHADOWING the served skill, because a harness does auto-load those.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Serve the skills AND the working instructions from the binary, so a project holds only a pointer\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:skills-served",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:surface-export:dec:nested-graphs",
       "node_type": "Snapshot",
       "properties": {
@@ -21052,7 +21188,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:52cb6b6bf094e4abcc9b4054a7104963148b2598da743c1b43d95ad221fb25a5",
+  "prev_content_hash": "sha256:c64be4373511b5b67368de030953693624ab11d7651c1e00ad0eb535b7f7a389",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

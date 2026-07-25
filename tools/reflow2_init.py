@@ -5,9 +5,9 @@
     python3 tools/reflow2_init.py ~/projects/my-thing --check    # what would change
     python3 tools/reflow2_init.py ~/projects/my-thing            # re-run to update
 
-Installs the **design environment** and nothing else: the agent instructions, the
-skills, an MCP config with the binary path already filled in, and the directory
-the design graph lives in.
+Installs the **design environment** and nothing else: a short pointer file, an
+MCP config with the binary path already filled in, and the directory the design
+graph lives in.
 
 It deliberately creates no `src/` layout, no build file, no language choice, no
 project scaffolding of any kind — because *you don't know the project type yet,
@@ -16,14 +16,15 @@ its code should be laid out, is a decision the design loop makes with you. A
 scaffold that guessed would be committing a design decision before the design
 exists, which is the thing reflow2 is for.
 
-**The skills are not installed** — they are served by the MCP server
-(`dec:skills-served`), so they always match the reflow2 you are running and
-upgrading reflow2 changes nothing in your project. What lands in your repo is
-the instructions file, a pointer line in whatever instruction files you already
-have, the MCP configs, and `.reflow2/`. The first run after this change also
-*removes* the skill copies an older kit left behind — untouched ones deleted,
-edited ones kept and reported, because your harness would go on loading them in
-preference to the served ones.
+**Neither the skills nor the working instructions are installed** — both are
+served by the MCP server (`dec:skills-served`, `req:thin-install`), so they
+always match the reflow2 you are running and **upgrading reflow2 produces no
+diff in your project**. What lands in your repo is a short, stable pointer file,
+a pointer line in whatever instruction files you already have, the MCP configs,
+and `.reflow2/`. The first run after this change also *removes* the skill copies
+an older kit left behind — untouched ones deleted, edited ones kept and
+reported, because your harness would go on loading them in preference to the
+served ones.
 
 Re-run it any time; it leaves your design graph and your own files alone and
 tells you exactly what changed. `--check` first if you want the list before
@@ -51,8 +52,15 @@ STAMP = ".reflow2/kit-version.json"
 
 # Everything installed, as (source in the kit, destination in the project).
 # Text only — nothing here implies a project type.
+#
+# POINTER.md, not AGENTS.md, since 2026-07-25 (req:thin-install). The full
+# working instructions are ~20 KB and change with almost every release, so
+# installing them meant every reflow2 upgrade produced a diff in a repository
+# that has nothing to do with reflow2 — the same defect as the copied skills,
+# in the one file left. They are served by `get_instructions` now; what lands
+# here is a short pointer that is deliberately stable and says where to look.
 FILES = [
-    (KIT / "AGENTS.md", "AGENTS.md"),
+    (KIT / "POINTER.md", "AGENTS.md"),
 ]
 
 # Where kit content goes when the project already owns that filename. AGENTS.md

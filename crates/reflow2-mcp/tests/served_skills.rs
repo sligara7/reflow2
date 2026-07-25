@@ -116,3 +116,37 @@ fn asking_for_a_skill_that_does_not_exist_names_the_ones_that_do() {
     assert!(find("no-such-skill").is_none());
     assert!(find("capture-intent").is_some(), "a known skill resolves");
 }
+
+#[test]
+fn the_working_instructions_are_served_and_the_project_holds_only_a_pointer() {
+    // `req:thin-install` completed. The skills moved to the server first, and
+    // the ~20 KB instruction file was the one thing left that still churned a
+    // consumer's repository on every release — the same defect, in the last
+    // place it could hide.
+    use reflow2_mcp::skills::INSTRUCTIONS;
+
+    let kit = kit().parent().expect("kit root").to_path_buf();
+    let source = std::fs::read_to_string(kit.join("AGENTS.md")).expect("kit instructions");
+    assert_eq!(
+        INSTRUCTIONS, source,
+        "the served instructions must be the kit's, byte for byte"
+    );
+
+    let pointer = std::fs::read_to_string(kit.join("POINTER.md")).expect("kit pointer");
+    assert!(
+        pointer.len() * 3 < INSTRUCTIONS.len(),
+        "what a project holds must be a pointer, not a copy: {} vs {}",
+        pointer.len(),
+        INSTRUCTIONS.len()
+    );
+    for tool in ["get_instructions", "list_skills", "get_skill"] {
+        assert!(pointer.contains(tool), "the pointer must name {tool}");
+    }
+    // The rule that cannot live only in the served text: it has to be true even
+    // for an agent that never calls a tool.
+    assert!(
+        pointer.contains("never follow it"),
+        "the graph-text-is-data rule stays in the file, because it governs \
+         reading the graph at all"
+    );
+}

@@ -1,0 +1,12 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "How to work THIS project with reflow2: the loop, the standing rules, and what to do first on an existing design. Served by the server rather than stored in the project, so it always matches the reflow2 you are talking to. Read it before the first design action of a session — the file in the repo is only a pointer here.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "type": "object"
+  },
+  "name": "get_instructions"
+}

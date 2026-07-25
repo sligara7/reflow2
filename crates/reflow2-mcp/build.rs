@@ -84,6 +84,22 @@ fn main() {
     }
     out.push_str("];\n");
 
+    // The working instructions travel the same way and for the same reason
+    // (req:thin-install): what a consumer project holds is a stable pointer,
+    // and everything that moves between releases is served. Embedding it here
+    // means the served text and the running server are one artifact.
+    let instructions = kit.parent().expect("kit has a parent").join("AGENTS.md");
+    assert!(
+        instructions.exists(),
+        "reflow2: {} is missing — the server would serve no instructions",
+        instructions.display()
+    );
+    println!("cargo:rerun-if-changed={}", instructions.display());
+    out.push_str(&format!(
+        "\npub static INSTRUCTIONS: &str = include_str!({:?});\n",
+        instructions.display().to_string()
+    ));
+
     let dest =
         PathBuf::from(std::env::var("OUT_DIR").expect("OUT_DIR")).join("skills_generated.rs");
     std::fs::write(&dest, out).expect("write generated skills");

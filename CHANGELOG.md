@@ -47,10 +47,14 @@ This file is the third view: *what changed, and when*.
   installed manifest read 0.8.0 with twelve skills while the project was at
   0.11.0 with fifteen, four releases running, unnoticed.
 
-  Skills are now compiled into the binary (`build.rs` embeds
-  `getting-started/skills`), served by **`list_skills`** and **`get_skill`**, and
-  advertised by a catalogue in the handshake instructions — the one channel a
-  client puts in the agent's context unasked. `reflow2_init.py` copies nothing,
+  Skills **and the ~20 KB working-instructions document** are now compiled into
+  the binary (`build.rs` embeds `getting-started/`), served by **`list_skills`**,
+  **`get_skill`** and **`get_instructions`**, and
+  advertised by a catalogue — plus a call-`get_instructions`-first line — in the
+  handshake instructions, the one channel a client puts in the agent's context
+  unasked. What an install now leaves in a project is a **2.4 KB pointer file**
+  naming those three tools, the MCP configs and `.reflow2/`: nothing a later
+  release rewrites. `reflow2_init.py` copies no skills,
   and on the first run after upgrading it removes the copies an older kit left:
   untouched files deleted *with the reason*, edited files kept and reported as
   **shadowing** the served skill, because a harness does auto-load those.
