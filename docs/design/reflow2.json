@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:94721f1db1f91721bd65f284fc958bdc7377e424fc407cd97407a0510a3dac13",
+  "content_hash": "sha256:d1086593704eff97f0f2053bb7e5bd5e6eea3335ef7f547dbd86be5045025c54",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -431,6 +431,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:65b894fcc73c3961",
+      "properties": {},
+      "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:7bdb8b6cce42d588",
       "properties": {},
       "to_id": "cap:reconcile-built"
@@ -446,6 +452,12 @@
       "from_id": "question:c7c58ee8f8328d68",
       "properties": {},
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:e68c76afcb57424c",
+      "properties": {},
+      "to_id": "cap:explains-itself"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -12481,6 +12493,18 @@
       }
     },
     {
+      "node_id": "question:65b894fcc73c3961",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-24",
+        "context_setter": "Nothing satisfies requirement “Several people can plan against one design without colliding”",
+        "gap_id": "gap:65b894fcc73c3961",
+        "question": "You've said a team should be able to work on one design at the same time without stepping on each other. Right now nothing in reflow2 actually does that, and it can't be built until you settle whether the design stays a file in the repo or becomes something people connect to. Do you want to leave this waiting on that decision, or drop it for now?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:7bdb8b6cce42d588",
       "node_type": "Question",
       "properties": {
@@ -12514,6 +12538,18 @@
         "question": "How will you confirm the one-command setup really installs everything into a user's project without breaking their existing configuration — or is this the same ability your design already covers and tests under the name 'install into a consumer project'?",
         "rephrase_degraded": false,
         "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:e68c76afcb57424c",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-24",
+        "context_setter": "Capability “Explain itself to someone who has not been convinced yet” isn't assigned to any part",
+        "gap_id": "gap:e68c76afcb57424c",
+        "question": "You want reflow2 to explain plainly what it is and how to run it, before it explains what it believes. Nothing currently owns that job — the README, the getting-started guide and the diagrams are written by hand and belong to no part of the system. Should one part be responsible for explaining reflow2 to a newcomer, or is that simply documentation that lives outside the design?",
+        "rephrase_degraded": false,
+        "status": "asked"
       }
     },
     {
@@ -13395,7 +13431,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:565de8ea8ed1637b71644549d479e828ac1f65f05e3f7254d63681fe0a773075",
+  "prev_content_hash": "sha256:94721f1db1f91721bd65f284fc958bdc7377e424fc407cd97407a0510a3dac13",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
