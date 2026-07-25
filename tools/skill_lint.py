@@ -209,6 +209,13 @@ NON_TOOL_TERMS = {
     # prose-only decision point, and the kind the graph does not have yet.
     "undecided_decision_point",
     "brainstorm",
+    # Scoped detection (cap:scoped-analysis): a team asks about its own part, and
+    # the answer names what it left out.
+    "scope",
+    "depth",
+    "in_scope",
+    "out_of_scope",
+    "unanchored",
 }
 
 

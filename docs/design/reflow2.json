@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ea12b3eef90f70eacf0f56e441f40d8d91ba3b08482fab0bf86c186db00c1aa9",
+  "content_hash": "sha256:5eef9455860ab3f3e02859444d9dc75c4b0e791dcb88f9b27c1e40bfdff77503",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -459,6 +459,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:scoped-analysis",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:search",
       "properties": {
         "weight_basis": "estimated"
@@ -806,6 +814,12 @@
       "from_id": "chg:requirement-quality-capture",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:scoped-analysis-built",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1256,6 +1270,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:scoped-analysis",
+      "properties": {
+        "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:alternatives-unranked-forkable",
       "properties": {
         "acted_at": "2026-07-22",
@@ -1415,6 +1438,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:mosa-conformance",
+      "properties": {
+        "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -3649,6 +3681,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:scoped-analysis-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scoped-analysis-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:scoped-analysis"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:search-nl-defect",
       "properties": {
         "accepted_baseline": false,
@@ -3921,6 +3971,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:scoped-analysis"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:store"
     },
     {
@@ -3928,6 +3984,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:tool-search"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "dec:mosa-conformance"
     },
     {
       "edge_type": "CONTAINS",
@@ -4228,6 +4290,12 @@
       "from_id": "sys:coherence-loop",
       "properties": {},
       "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:scope"
     },
     {
       "edge_type": "CONTAINS",
@@ -4955,6 +5023,28 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:scope",
+      "properties": {
+        "dependency_type": "function_call",
+        "note": "Runs the unscoped detectors and then buckets their findings; it never reimplements a detector, so a new gap source is scoped for free.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cmp:scope",
+      "properties": {
+        "dependency_type": "function_call",
+        "note": "scope.rs calls propagate_from for the traceability half of a region — the bounded part. The containment half is walked here, because propagation deliberately excludes CONTAINS.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:propagate"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -7243,6 +7333,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:scoped-analysis",
+      "properties": {},
+      "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:scoped-analysis",
+      "properties": {},
+      "to_id": "decision:ack:328f9220b2bcfe4e"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:search",
       "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
@@ -7528,6 +7630,12 @@
       "from_id": "cmp:sanitize",
       "properties": {},
       "to_id": "decision:ack:dd3647889c878492"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:scope",
+      "properties": {},
+      "to_id": "decision:ack:2081c4b64282a08b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10847,6 +10955,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:scope",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:search",
       "properties": {
         "completeness": "complete"
@@ -11320,6 +11436,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:scoped-analysis",
+      "properties": {},
+      "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:search",
       "properties": {},
       "to_id": "req:agent-native"
@@ -11629,6 +11751,12 @@
       "from_id": "ver:sanitize-ingress",
       "properties": {},
       "to_id": "cap:sanitize-ingress"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:scoped-analysis",
+      "properties": {},
+      "to_id": "cap:scoped-analysis"
     },
     {
       "edge_type": "VERIFIES",
@@ -12011,6 +12139,14 @@
         "action": "created"
       },
       "to_id": "art:schema"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:scope",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:scope"
     },
     {
       "edge_type": "YIELDED",
@@ -12531,6 +12667,17 @@
       }
     },
     {
+      "node_id": "art:scope",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:47fa2c2aa8b402bb",
+        "location": "crates/reflow2-core/src/scope.rs",
+        "name": "scope.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:search",
       "node_type": "Artifact",
       "properties": {
@@ -12546,7 +12693,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0caeb56596c82a1e",
+        "checksum": "sha256:b22c6760f5eb4231",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -13280,6 +13427,19 @@
       }
     },
     {
+      "node_id": "cap:scoped-analysis",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-07-25 on Anthony's choice of option (a) from dec:nested-graphs. His case: an organisation builds a satellite capability with a space segment, a ground/user segment and a control segment; his team owns the satellite, and specifically inter-satellite laser communications. He needs to understand the system of systems, but day to day he needs his own part's gaps — not the program's. Every detector until now took the whole design as its subject, which is the unbounded-read failure (cap:bounded-reads) one level up: technically complete, practically unusable, and the human response is to stop looking. `detect_gaps` and `detect_defects` now take `scope` (a node id) and `depth`. FOUND WHILE BUILDING, and it cost a failing test worth keeping: A SCOPE IS NOT A BLAST RADIUS. The first implementation reused the propagation radius on the reasoning that claimed_region and propagate_change already agree what a region is; the test that scoped to a Project and expected the whole design failed, because CONTAINS is deliberately excluded from the traceability rules (propagating along it would make the Project a hub short-circuiting every sibling to two hops). That exclusion is right for IMPACT — a change to a segment does not implicate every screw inside it — and wrong for OWNERSHIP, where a segment lead owns what is inside their segment by definition. So a scope is containment closure (unbounded: ownership does not attenuate with distance) then traceability radius (bounded: the thread reaches into other people's work and must stop). A CONSEQUENCE RECORDED RATHER THAN SILENTLY FIXED: claim_region still uses the radius alone, so claiming a segment does not claim the subsystems inside it — possibly a defect in the claims layer, but changing what a claim covers changes what two people believe they hold, so it is Anthony's call. SECOND FINDING, also from a test: the first filter silently dropped gaps that anchor on nothing — the lifecycle-phase gaps, which are statements about the design as a whole. That was the exact silent-drop this feature exists to prevent, so findings now land in exactly one of four buckets that sum to the total: in_scope, out_of_scope, unanchored, and project_level counted within in_scope. A scoped answer can therefore never imply the rest of the program is clean, and filtering never becomes the tool deciding what a team is allowed to worry about — a project-level rollup still reaches a team when it touches their work, carrying its own scope so they can see whose finding it is. NOT DONE: graph_report is a rollup, not a detector, and scoping it means per-subtree delivery denominators and modularity — a different job, deliberately not smuggled in here.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A team asks the detectors about its own part, and is told what it did not see",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:search",
       "node_type": "Capability",
       "properties": {
@@ -13944,6 +14104,14 @@
       }
     },
     {
+      "node_id": "chg:scoped-analysis-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Scoped detection: detect_gaps and detect_defects answer for one part of the design, and name what they left out"
+      }
+    },
+    {
       "node_id": "chg:search-nl-defect",
       "node_type": "ChangeEvent",
       "properties": {
@@ -14419,6 +14587,19 @@
         "name": "schema",
         "provenance": "authored",
         "purpose": "The schema module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:scope",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "scope",
+        "provenance": "authored",
+        "purpose": "Scoped analysis: the region a part of the design covers (containment closure, then traceability radius) and the detectors narrowed to it, with the four buckets that keep a narrowed answer honest. Separate from cmp:detect because the question is different — detect decides what a finding IS, this decides whose it is.",
         "status": "planned",
         "tier": "operational"
       }
@@ -14912,6 +15093,16 @@
       }
     },
     {
+      "node_id": "dec:mosa-conformance",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNDECIDED, RECORDED AS BRAINSTORMING. Anthony, 2026-07-25, supplied the DoD MOSA Implementation Guidebook (OUSD(R&E) Systems Engineering and Architecture, February 2025, Distribution A) and was explicit about the frame: \"just taking principles, concepts and ideas from this. not looking to implement mosa exactly over this document.\" So this records what the guidebook's concepts illuminate about reflow2, not a plan to become a MOSA tool. THE DEFINITION IT GIVES: \"an acquisition and design approach consisting of a technical and business architecture that supports using system interfaces compliant with widely supported and consensus-based standards... A MOSA system structure allows for severable components to be incrementally added, removed, or replaced throughout the life cycle\" (10 U.S.C. 4401, mandated for all DoD acquisition programs to the maximum extent practicable). ITS FIVE-STEP FRAMEWORK is a process, not a document: Plan, Modularize, Identify Interfaces, Define Interfaces, Standardize Interfaces — and reflow2 can already model a process rather than only a product (cap:model-process, Flow nodes), so the framework is expressible as a Flow whose steps the graph can be checked against. THE FINDING THAT MATTERS, from Table D-1 \"MOSA Conformance Criteria and Verification Methods\": most of what MOSA asks a program to demonstrate, reflow2 already computes for other reasons. Their MODULARITY criterion — \"encapsulated, cohesive, loosely coupled, and organized into functional categories\" — is the Leiden modularity score, community detection and the god-component detector that graph_report already prints. Their MOSA OBJECTIVES criterion — \"demonstrate severable modular components\" — is propagate_change: if the blast radius of a change inside a module stops at that module's interfaces the module is severable, and if it leaks past them the module is not modular whatever the architecture diagram says. That is severability as a COMPUTED property rather than an assertion, which is the same move dec:certainty-derived made for requirement status and cap:derived-completion made for delivery. Their MOSA MODULES criterion — \"implement minimal functions, are functionally independent, encapsulated, and traceable to requirements\" — is the god-component detector plus the golden thread. Their LIFE CYCLE CHARACTERISTICS criterion — severable, replaceable, interoperable, allowing competition — is the severability computation plus the alternatives layer, where interchangeable suppliers behind one interface are exactly an analysis of alternatives. WHAT IS GENUINELY MISSING, and it is one vocabulary item and one check. (1) NOTHING MARKS AN INTERFACE AS KEY. MOSA's whole discipline turns on designating major/modular system interfaces and then holding them stable and open; reflow2 has Interface nodes, provides/consumes and SPECIFIES, but no way to say \"this one is the published boundary and that one is internal plumbing\". BL-45 found the identical hole from the opposite direction — external dependencies between reflow2 projects — and recorded it as \"nothing marks an Interface external-facing\". Two independent routes to one missing property is the strongest evidence this design has for a vocabulary addition. (2) NOTHING CHECKS STANDARDS COMPLIANCE, and the vocabulary for it is present and unused: DesignRule is defined as a chosen standard or convention with an `enforced` flag, and there are zero DesignRules in any graph — the same schema-present-practice-absent shape as the temporal axis and the KPP vocabulary before them. THE COUNTER-ARGUMENT, recorded beside the idea rather than used to bury it: MOSA is domain vocabulary for defence acquisition, and req:design-anything says the vocabulary stays neutral. A MOSA conformance report is therefore a VIEW — a projection over computations that already exist, in the acquisition community's words — and not a set of new node types. Building it as a view keeps the core neutral (dec:views-are-projections) and any renderer fill-in remains a defect. If it were ever built as schema, reflow2 would have taken on one domain's language as its own, which is the thing it has refused since the beginning.",
+        "name": "OPEN — should reflow2 report MOSA conformance, given it already computes most of the criteria?",
+        "rationale": "Held as brainstorming because Anthony framed it that way and because the honest scope is not obvious: the difference between \"reflow2 can answer most MOSA conformance questions already\" (true, and interesting) and \"reflow2 should ship a MOSA report\" (a product decision with a domain commitment inside it). The route worth taking first, if any: designate key interfaces, because that single property is wanted independently by BL-45's system-of-systems thread and by MOSA's central discipline, and because it makes a real computation possible — a change that crosses a key interface is a different risk from one that stays behind it, which is the severability check MOSA asks for and reflow2 could compute today. Worth noting what this does NOT need: none of it requires the federated graph-per-system architecture from dec:nested-graphs. Severability, modularity and key interfaces are all computable inside one graph, which is a point in favour of the scope filter that was just built over the larger architectural move.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:multi-writer-architecture",
       "node_type": "Decision",
       "properties": {
@@ -15083,6 +15274,16 @@
       }
     },
     {
+      "node_id": "decision:ack:2081c4b64282a08b",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:2081c4b64282a08b.",
+        "name": "Reviewed: gap:2081c4b64282a08b",
+        "rationale": "Not a defect: cmp:scope was built after the last release cut on 2026-07-25, so \"ships in nothing\" is true and expected of anything newly built. Third instance of this shape today (cmp:docs, cmp:claims, cmp:sanitize before it), all resolving the same way — the next cut lists everything it actually ships, which the AGENTS.md release checklist already requires. Worth noting the pattern rather than acknowledging it a fourth time silently: a component built between releases will always raise this, so the finding is really a reminder that a release is owed, and it will clear itself the moment one is cut.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:2162197689aecdb2",
       "node_type": "Decision",
       "properties": {
@@ -15119,6 +15320,16 @@
         "decision": "Accepted the gap gap:260a7ea303ec87f1.",
         "name": "Reviewed: gap:260a7ea303ec87f1",
         "rationale": "User (who:ajs, standing policy from 2026-07-23, applied again 2026-07-25): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because the three github-mcp-study imports joined the set (39 → 42). Apt for each of them in a different way. cap:sanitize-ingress: the tests prove a payload is stripped and honest text survives, but whether the CLASSES chosen are the ones attackers actually use is answered by the field, and the day a real adopted repo carries something the filter misses is the only real evidence. cap:bounded-reads: the tests prove a cap names itself; whether the budget is set at a useful number is answerable only by sessions that stop being truncated. cap:tool-search: the tests prove an exact name ranks first and a described job finds link_artifact, but whether the ranking helps an agent that does not already know the answer is a trial — and the honest instrument is a session where an agent finds a tool it had never used.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:328f9220b2bcfe4e",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:328f9220b2bcfe4e.",
+        "name": "Reviewed: gap:328f9220b2bcfe4e",
+        "rationale": "User (who:ajs, standing policy from 2026-07-23, applied again 2026-07-25): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:scoped-analysis joined the set (43 → 44). Sharply apt here, and the trial is already named by the requirement that produced the feature: the tests prove a team sees its own gap and not the other segment's on a seven-node fixture, but whether a REAL team on a program-sized graph finds the scoped answer useful — whether depth 3 is the right radius, whether the four buckets read as honest rather than as noise, and whether a segment lead scoping to their segment gets what they expected — is answerable only by someone doing it. Anthony's satellite case is the trial, and the honest first run is him scoping to a part of reflow2's own graph and telling us whether the answer was his.",
         "status": "accepted"
       }
     },
@@ -16519,6 +16730,16 @@
       }
     },
     {
+      "node_id": "frag:art:scope",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered scope.rs"
+      }
+    },
+    {
       "node_id": "frag:art:search",
       "node_type": "Fragment",
       "properties": {
@@ -17778,6 +17999,18 @@
       }
     },
     {
+      "node_id": "ver:scoped-analysis",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "integration",
+        "method": "test",
+        "name": "The satellite fixture: a team sees its own gap and not the other segment's, every finding lands in exactly one bucket, a wider scope never sees less, and a mistyped scope is refused (tests/scope.rs, 7 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:search",
       "node_type": "Verification",
       "properties": {
@@ -17882,7 +18115,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:260fb96c8ccccd2799b13e3d8eadae2f4c3740fafe0637486cefb9122ef218e0",
+  "prev_content_hash": "sha256:ea12b3eef90f70eacf0f56e441f40d8d91ba3b08482fab0bf86c186db00c1aa9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

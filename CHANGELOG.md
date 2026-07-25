@@ -33,6 +33,38 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Scoped detection — a team can ask about its own part of the design**
+  (`cap:scoped-analysis`). `detect_gaps` and `detect_defects` now take `scope` (a
+  node id) and `depth`. From Anthony's satellite case: a program with space,
+  ground and control segments, where his team owns inter-satellite laser comms and
+  needs *its* gaps day to day, not the program's. An unscoped detector on a
+  program-sized graph is the unbounded-read failure one level up — complete, and
+  so unusable that people stop looking.
+
+  **A scoped answer always says what it left out.** Every finding lands in exactly
+  one of four buckets that sum to the total: `in_scope`, `out_of_scope`,
+  `unanchored` (findings that belong to no part in particular — the lifecycle-phase
+  gaps), and `project_level` counted within in-scope. Project-wide rollups still
+  reach a team when they touch that team's work, carrying their own `scope` so the
+  reader can see whose finding it is; hiding them would be the tool deciding what a
+  team may worry about.
+
+  Two findings, both caught by tests rather than review. **A scope is not a blast
+  radius**: the first implementation reused the propagation radius, and the test
+  that scoped to a Project and expected the whole design failed, because `CONTAINS`
+  is deliberately excluded from the traceability rules. That exclusion is right for
+  impact (a change to a segment does not implicate every screw in it) and wrong for
+  ownership (a segment lead owns what is inside it), so a scope is now containment
+  closure — unbounded, since ownership does not attenuate with distance — followed
+  by the traceability radius. And the first filter **silently dropped the
+  unanchored gaps**, which is the exact silent drop the feature exists to prevent;
+  hence the fourth bucket.
+
+  Recorded, not fixed: `claim_region` still uses the radius alone, so claiming a
+  segment does not claim the subsystems inside it. That may be a defect in the
+  claims layer, but changing what a claim covers changes what two people believe
+  they hold.
+
 - **A `brainstorm` skill — think an idea through without committing it** (15 skills
   now, plus a `/brainstorm` command). Anthony's brother's original "rubber-ducking"
   ask, reframed by Anthony into what it actually is: not a staging gate but a *kind

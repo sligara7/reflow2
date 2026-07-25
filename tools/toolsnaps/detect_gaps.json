@@ -2,9 +2,30 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Find gaps in the design to ask the human about (DETECT).",
+  "description": "Find gaps in the design to ask the human about (DETECT). Pass `scope` (a node id) to answer for ONE PART of the design instead of all of it — the question a team that owns a subsystem asks day to day. The region is the propagation radius around that seed (`depth`, default 3), the same computation claim_region uses for \"the part I hold\", so \"my area\" means one thing everywhere. A scoped answer always reports what it left out: `total` across the whole design against `in_scope`, plus `out_of_scope` and `region_size`. Project-level rollups still appear when they touch your part, counted as `project_level` and carrying `scope: project` themselves — filtering is not the tool deciding what you may worry about.",
   "inputSchema": {
-    "properties": {},
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "depth": {
+        "default": null,
+        "description": "Hops from the seed (default 3 — enough to reach a Component's own\ncapabilities, the requirements they satisfy, and what realizes them).\nMeaningless without `scope`.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "scope": {
+        "default": null,
+        "description": "Narrow the answer to the part of the design around this node — a\nComponent a team owns, a Project, a Capability. Omit for the whole design,\nwhich is the historical behaviour and stays byte-identical.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
     "type": "object"
   },
   "name": "detect_gaps"

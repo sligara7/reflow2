@@ -54,6 +54,7 @@ pub mod provenance;
 pub mod report;
 pub mod sanitize;
 pub mod schema;
+pub mod scope;
 pub mod search;
 pub mod structure;
 pub mod surprises;
@@ -105,6 +106,7 @@ pub use report::{
 };
 pub use sanitize::{SanitizeReport, sanitize_text};
 pub use schema::load_schema;
+pub use scope::{DEFAULT_SCOPE_DEPTH, Scoped};
 pub use search::{SearchHit, SearchResult};
 pub use surprises::SurprisingConnection;
 pub use temporal::{

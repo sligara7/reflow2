@@ -30,10 +30,10 @@ use tokio::sync::Mutex;
 
 use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
-    AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DesignGraph, Dimension, DriftDisposition,
-    DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy,
-    LinkArtifactOptions, LoopStatus, ObservedArtifact, PromptCollector, PropagateOptions,
-    ReconcileOptions, StoredNode, Value,
+    AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_SCOPE_DEPTH, DesignGraph,
+    Dimension, DriftDisposition, DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions,
+    HealProposal, HealStrategy, LinkArtifactOptions, LoopStatus, ObservedArtifact, PromptCollector,
+    PropagateOptions, ReconcileOptions, StoredNode, Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -1095,6 +1095,21 @@ pub struct ScanReq {
     pub brief: Option<bool>,
 }
 
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ScopeReq {
+    /// Narrow the answer to the part of the design around this node — a
+    /// Component a team owns, a Project, a Capability. Omit for the whole design,
+    /// which is the historical behaviour and stays byte-identical.
+    #[serde(default)]
+    pub scope: Option<String>,
+    /// Hops from the seed (default 3 — enough to reach a Component's own
+    /// capabilities, the requirements they satisfy, and what realizes them).
+    /// Meaningless without `scope`.
+    #[serde(default)]
+    pub depth: Option<usize>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct FindToolsReq {
@@ -1569,12 +1584,30 @@ impl ReflowService {
     // ---- DETECT / analyze (deterministic, read-only) ----
 
     #[tool(
-        description = "Find gaps in the design to ask the human about (DETECT).",
+        description = "Find gaps in the design to ask the human about (DETECT). Pass `scope` (a \
+                       node id) to answer for ONE PART of the design instead of all of it — the \
+                       question a team that owns a subsystem asks day to day. The region is the \
+                       propagation radius around that seed (`depth`, default 3), the same \
+                       computation claim_region uses for \"the part I hold\", so \"my area\" means \
+                       one thing everywhere. A scoped answer always reports what it left out: \
+                       `total` across the whole design against `in_scope`, plus `out_of_scope` \
+                       and `region_size`. Project-level rollups still appear when they touch \
+                       your part, counted as `project_level` and carrying `scope: project` \
+                       themselves — filtering is not the tool deciding what you may worry about.",
         annotations(read_only_hint = true)
     )]
-    pub async fn detect_gaps(&self) -> Result<CallToolResult, McpError> {
+    pub async fn detect_gaps(
+        &self,
+        Parameters(req): Parameters<ScopeReq>,
+    ) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
-        ok_json(g.detect_gaps().map_err(dyno_err)?)
+        match req.scope.as_deref() {
+            None => ok_json(g.detect_gaps().map_err(dyno_err)?),
+            Some(seed) => ok_json(
+                g.detect_gaps_in_scope(seed, req.depth.unwrap_or(DEFAULT_SCOPE_DEPTH))
+                    .map_err(dyno_err)?,
+            ),
+        }
     }
 
     #[tool(
@@ -1691,12 +1724,25 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Detect structural defects the machine can repair (HEAL).",
+        description = "Detect structural defects the machine can repair (HEAL). Pass `scope` (a \
+                       node id, `depth` default 3) to ask it of one part of the design: not \
+                       \"what is my team owed\" but \"is my part of the architecture sound\" — a \
+                       cycle wholly inside one subsystem is that subsystem's to fix. Reports \
+                       `total` against `in_scope` so a quiet corner never implies a quiet design.",
         annotations(read_only_hint = true)
     )]
-    pub async fn detect_defects(&self) -> Result<CallToolResult, McpError> {
+    pub async fn detect_defects(
+        &self,
+        Parameters(req): Parameters<ScopeReq>,
+    ) -> Result<CallToolResult, McpError> {
         let g = self.graph.lock().await;
-        ok_json(g.detect_defects().map_err(dyno_err)?)
+        match req.scope.as_deref() {
+            None => ok_json(g.detect_defects().map_err(dyno_err)?),
+            Some(seed) => ok_json(
+                g.detect_defects_in_scope(seed, req.depth.unwrap_or(DEFAULT_SCOPE_DEPTH))
+                    .map_err(dyno_err)?,
+            ),
+        }
     }
 
     #[tool(

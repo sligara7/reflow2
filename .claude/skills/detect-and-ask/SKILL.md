@@ -16,6 +16,14 @@ AGENTS.md.
    side** (`unprovided_interface` — something depends on it but nothing supplies it),
    decomposition problems (`missing_intermediate_level`), surprising couplings, quality drift.
    If empty, the design is coherent for now — proceed to build.
+
+   **On a large design, ask for your part.** Pass `scope` (a node id — the Component your team
+   owns) and the answer narrows to that part of the design, with `depth` controlling how far the
+   region reaches. The reply always says what it left out: `total` across the whole design against
+   `in_scope`, plus `out_of_scope` and `unanchored` (findings that belong to no part in
+   particular). **Never present a scoped answer as the whole picture** — if `out_of_scope` is not
+   zero, say so, because a team told only about its own corner will conclude the program is
+   healthy.
 2. For each gap worth resolving now, run the **gap_to_prompt handshake**:
    a. Call `gap_to_prompt` with `gap` = the GapCandidate and `answers: []`. It returns
       `{ "status": "needs_llm", "prompts": [{ "id", "prompt", "expect_json" }] }`.
