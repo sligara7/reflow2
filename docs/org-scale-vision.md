@@ -3,6 +3,15 @@
 *A note on where the multi-user thread could go. Not scheduled work — the destination that
 orders it.*
 
+> **Superseded in one respect, 2026-07-25 — read [planning-at-scale.md](planning-at-scale.md)
+> alongside this.** Everything below about the golden thread running from top-level objectives down
+> to a team's work still holds, and is still the destination. The **"one graph"** framing does not:
+> `dec:nested-graphs` decided that a design is its own graph per **ownership boundary**, and designs
+> link by mirroring each other's published surface. An organisation-wide thread is therefore a
+> *chain of published surfaces*, one per echelon — which survives an echelon being offline, makes
+> authorization fall out of ownership, and shards naturally. Strictly better than one store, and it
+> matches how an organisation already divides authority.
+
 ## The idea
 
 Today reflow2 keeps one project coherent for one person (or two, taking turns): intent at the

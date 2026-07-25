@@ -91,6 +91,10 @@ Three records, three questions — kept separate on purpose:
 - [chain-reflow-nuggets.md](chain-reflow-nuggets.md) — ideas from Chain Reflow (matryoshka, causality, linking).
 - [github-mcp-nuggets.md](github-mcp-nuggets.md) — what a *hosted* MCP server at scale teaches: what to import,
   what not to, and the non-foreclosure rule that came out of it.
+- [planning-at-scale.md](planning-at-scale.md) — a thousand simultaneous planners on an echeloned plan (the
+  State Funeral case): why federation already answers the concurrency half, what genuinely breaks, the one
+  vocabulary gap (scheduled time), and the six things not to foreclose. Supersedes org-scale-vision's
+  "one graph" framing.
 - [fleet-lessons.md](fleet-lessons.md) — what a working 15-session fleet knows that reflow2 doesn't: identity
   assigned out of band, claims announced by being pushed, staleness computed — extracted from the StoryFlow
   fleet's own protocol files after it found reflow2's single-writer lock the hard way.

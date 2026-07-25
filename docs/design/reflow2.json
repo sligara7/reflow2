@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:108e86ffe615bcb9d8891c1670af964ee7d2af9c2f09cc91623a108b1fd59cec",
+  "content_hash": "sha256:53345780d0f46287a6ba6d2326ea8a5d3cd1e55931d6c2f46d2ed47d0b52c389",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1499,6 +1499,14 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:live-tier",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:merge-conflict-semantics",
       "properties": {
         "acted_at": "2026-07-22",
@@ -1598,9 +1606,25 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:plan-time-axis",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:read-hint-shape",
       "properties": {
         "acted_at": "2026-07-23",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:who-needs-to-know",
+      "properties": {
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -5615,6 +5639,42 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:live-tier",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:central-host"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:live-tier",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:plan-time-axis",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:model-process"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:who-needs-to-know",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:propagate"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -11935,6 +11995,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:planning-at-scale",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "dec:live-tier"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:propagate",
       "properties": {
         "completeness": "complete"
@@ -12736,6 +12804,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:edges-need-both-ends",
+      "properties": {},
+      "to_id": "cap:store"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:freshness",
       "properties": {},
       "to_id": "cap:freshness"
@@ -13284,6 +13358,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:planning-at-scale",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:propagate",
       "properties": {
         "action": "created"
@@ -13814,6 +13896,17 @@
         "checksum": "sha256:c5b7664a5df44b99",
         "location": "getting-started/skills/parallel-work/SKILL.md",
         "name": "parallel-work/SKILL.md",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:planning-at-scale",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14",
+        "location": "docs/planning-at-scale.md",
+        "name": "planning-at-scale.md",
         "status": "realized"
       }
     },
@@ -16511,6 +16604,16 @@
       }
     },
     {
+      "node_id": "dec:live-tier",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-07-25, from work he has done: State Funerals for US Presidents (he worked President Bush's) — hundreds to thousands of people planning simultaneously, an echeloned plan (NORTHCOM OPLAN → JTF-NCR → each service → each unit), and events arriving during the run that the plan must react to in minutes. His words: \"using a common github repo may no longer work\". THE DECOMPOSITION THAT MAKES IT TRACTABLE IS ALREADY DECIDED: dec:nested-graphs (c) says a design is its own graph per ownership boundary, so a thousand planners are not a thousand writers on one store — they are ~100-200 graphs of 5-20 writers each, linked by mirrored published surfaces. Echelons own their plans; that is both the software answer and how the organisation actually works. FOUR ROADS for the tier itself. (a) NOTHING NEW — federation plus git, accepting minutes of latency; cheapest, and it fails only the react-in-near-real-time half. (b) ONE PROCESS PER GRAPH over streamable HTTP (rmcp has the transport, reflow2 serves stdio only), writes going to the store and the export DERIVED as the archival record; at federation scale the process-per-project cut already named in dec:central-host is also the natural sharding — one process per ownership boundary is one staff. (c) ONE SHARED MULTI-WRITER STORE, which means replacing single-writer RocksDB and owning consensus; most work, least alignment with a design that already shards by authority. (d) EVENT-SOURCED LOG plus materialised views — attractive because a plan IS a change history, expensive because every detector currently reads a materialised graph. WHAT BREAKS TODAY, in order: single-writer per graph (the six-seat outage of 2026-07-25 was this at tiny scale), the whole-document write path (769 KB for 606 nodes; a funeral federation is 10^5-10^6 nodes changing continuously), git-round-trip latency, nothing that pushes, no identity or authorization, and req:stale-seat-knows going from one bad afternoon to a systemic property.",
+        "name": "OPEN — does reflow2 grow a live tier for hundreds of simultaneous planners, alongside the repo file?",
+        "rationale": "Held as brainstorming because it is explicitly distant-future (\"probably distant future\") and because it challenges the PREMISE of two decisions rather than their reasoning — which is the honest thing to record, not to act on. dec:multi-writer-architecture chose repo-file-plus-merge on a rationale resting on concurrency being hypothetical; dec:central-host's rationale says outright that this tool \"does not need\" simultaneity \"and may be harmed by it\". A thousand people replanning a state funeral under events is the named counter-case both were missing, and per dec:reopen-supersedes the move is a new decision point, never flipping those back. NOTE THE PART THAT NEEDS NO DECISION: the ownership boundary federation already draws is the natural AUTHORIZATION boundary — you write your echelon's graph and read your superior's published surface — so authz needs enforcement, not a new concept, and Interface.designation internal|published is already the read primitive. Also settled by inspection: ordering without a shared git history needs no global clock, because the same federation shape gives a total order WITHIN each boundary (the store, proved by the content-hash chain) and dated coordinates ACROSS boundaries (a mirror already carries whose design, which version, when) — exactly how echelons coordinate. Full reasoning in docs/planning-at-scale.md.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:loop-status-state-not-history",
       "node_type": "Decision",
       "properties": {
@@ -16622,6 +16725,16 @@
       }
     },
     {
+      "node_id": "dec:plan-time-axis",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. The one place the vocabulary genuinely strains against a plan. reflow2's temporal axis is DECISION time — DesignEpoch, Snapshot, valid_from/valid_to, ChangeEvent: \"when did we settle this, and what was in force then\". A plan needs EXECUTION time: H-hour and offsets from it, durations, windows, and a critical path computed from dependencies. Flow + PRECEDES + TRIGGERS gives ordering, not schedule. (a) ADD IT — scheduled instants/durations on Flow steps plus a computed critical path; the biggest vocabulary addition since the temporal axis, and it makes \"the timeline slipped\" a computation rather than a note. (b) LEAVE IT OUT and reference an external schedule (MS Project, a synch matrix) from the graph; keeps reflow2 out of a crowded, well-solved problem, at the cost that the blast radius of a slip cannot be computed — which is exactly the thing worth having. (c) MINIMAL — offsets from a named reference event and durations, no calendar, no resource levelling, no Gantt: enough to compute what a slip breaks, not enough to be a scheduling tool. THE VOCABULARY CONSTRAINT EITHER WAY: no military or acquisition words enter the schema (req:design-anything, and the way dec:mosa-conformance was settled) — H-hour is a named reference event, not a schema noun.",
+        "name": "OPEN — does reflow2 model scheduled time (H-hour, durations, critical path) as a first-class axis?",
+        "rationale": "Named as the honest gap while mapping a staff planning process onto the existing vocabulary, which otherwise carried it almost without strain: ALLOCATED_TO is troop-to-task, Interface plus PROVIDES/CONSUMES is a coordination point or transfer of authority, Decision plus register_alternative is COA development and comparison, Constraint is constraints and restraints with breach computed, Verification is a rehearsal or confirmation brief, and a FRAGO is a ChangeEvent with a computed blast radius. Recorded rather than acted on because (c) is a real design choice that turns on whether any computation would read it — the same test dec:exploratory-staging applies to brainstorm vocabulary — and because getting it wrong means either reimplementing MS Project badly or leaving the highest-value computation on the table. Detail in docs/planning-at-scale.md §1.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:read-hint-shape",
       "node_type": "Decision",
       "properties": {
@@ -16719,6 +16832,16 @@
         "name": "A view is a projection of the graph; renderer fill-ins are defects",
         "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 — almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:who-needs-to-know",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. When a plan moves during execution — \"the motorcade slips thirty minutes\" — somebody has to be told, and the question is who decides that. (a) SUBSCRIPTION, the way every coordination tool works: you join a channel, or somebody remembers to include you on the distribution. Cheap, familiar, and it fails one way every time — the person who most needed to know was not on the list, and nobody finds out until it matters. (b) DERIVED FROM THE BLAST RADIUS: propagate_from already returns who a change impacts, including which published boundaries it crosses, so the owners of the impacted regions ARE the distribution. Nobody maintains a list, nobody is spammed with changes that cannot touch them, and when the plan changes shape the distribution changes with it for free. (c) BOTH — derived by default, with an explicit watch for people who want a region they do not own. THE COUNTER-ARGUMENT TO (b), recorded beside it: a blast radius is only as good as the edges that exist, so an unrecorded dependency means a silent non-notification — which is the same failure as (a), reached by a different route, and arguably harder to notice because the mechanism looks principled. The mitigation is that a missing edge is already what detect_gaps hunts, so the honesty debt has an owner.",
+        "name": "OPEN — is notification computed from the blast radius, or subscribed to?",
+        "rationale": "This is the most distinctive idea in the 1000-planner exploration and the strongest reason reflow2 would belong in that problem rather than a chat tool with a plan attached: a FRAGO is a ChangeEvent whose blast radius is computed, and \"who does this break\" is a question reflow2 already answers. It is the same shape as every other answer in this project — computed, not remembered — and it inherits the honesty rules, so a notification would have to say what changed, what it impacts and what is now unresolved, never \"the plan was updated\". Kept separate from dec:live-tier because the mechanism choice is separable: (b) is worth building for a single team on the repo-file architecture, with no hosting at all, the moment anyone wants it.",
+        "status": "proposed"
       }
     },
     {
@@ -18278,6 +18401,16 @@
       }
     },
     {
+      "node_id": "frag:art:planning-at-scale",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered planning-at-scale.md"
+      }
+    },
+    {
       "node_id": "frag:art:propagate",
       "node_type": "Fragment",
       "properties": {
@@ -19588,6 +19721,17 @@
       }
     },
     {
+      "node_id": "ver:edges-need-both-ends",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "An edge to a node that does not exist is refused, not written (found 2026-07-25: authored_by accepted contributor id \"person:anthony\", which was never created — the edge was stored and get_node returned null for its target, so a phantom AUTHORED_BY sat in the graph until noticed by eye; unwritten)",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "ver:freshness",
       "node_type": "Verification",
       "properties": {
@@ -20055,7 +20199,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ff00433243e7b71e4fad848d6c79bbcbf67bd4f10fafbc43367bd5086be9e312",
+  "prev_content_hash": "sha256:108e86ffe615bcb9d8891c1670af964ee7d2af9c2f09cc91623a108b1fd59cec",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
