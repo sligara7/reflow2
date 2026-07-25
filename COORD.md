@@ -56,6 +56,7 @@ Add yourself if you're new here.
 
 
 
+- cap:kpp-proposal — the capture half of KPPs (agent proposes, human disposes) — @ajs — since 2026-07-25 — getting-started/skills/kpp-proposal/ + the two mirrors, .claude/commands/kpp.md, crates/reflow2-core/src/budget.rs + crates/reflow2-mcp/src/service.rs (add_constraint needs `objective`, which today no MCP caller can set), tools/skill_lint.py, SKILLS.md, README.md
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
