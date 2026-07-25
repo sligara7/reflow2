@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:75bd2fd5b09be0ef405c2f1c1f3274ade1059fa12340eef40ff586dca6b3c473",
+  "content_hash": "sha256:76282332d3e24f7461dfacdddb89937f8013e6fff10100c6af77ae4f9e785403",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -434,6 +434,14 @@
       "to_id": "cmp:vocabulary"
     },
     {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:what-next",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
+    },
+    {
       "edge_type": "ASKS_ABOUT",
       "from_id": "question:276837cbe7db075f",
       "properties": {},
@@ -588,6 +596,12 @@
       "from_id": "chg:v050-as-released",
       "properties": {},
       "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:what-next-capture",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1206,6 +1220,15 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "req:session-memory-in-graph",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:what-next",
       "properties": {
         "acted_at": "2026-07-24",
         "role": "author"
@@ -2759,6 +2782,24 @@
         "action": "added"
       },
       "to_id": "rel:v050"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:what-next-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:what-next"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:what-next-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:what-next"
     },
     {
       "edge_type": "CONSUMES",
@@ -5028,6 +5069,12 @@
       "from_id": "cap:vocabulary",
       "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:what-next",
+      "properties": {},
+      "to_id": "decision:ack:7957f52a429a38a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8651,6 +8698,12 @@
       "to_id": "req:no-silent-fallback"
     },
     {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:what-next",
+      "properties": {},
+      "to_id": "req:what-next"
+    },
+    {
       "edge_type": "VERIFIES",
       "from_id": "ver:adopt-storyflow",
       "properties": {},
@@ -10231,6 +10284,19 @@
       }
     },
     {
+      "node_id": "cap:what-next",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The answer to \"what is the most pressing item?\" once the backlog lives in the graph. It is NOT detect_gaps and NOT check-health, and the distinction is the design: detect_gaps asks what the design has not yet decided, check-health asks what shape is wrong, and this asks which of the agreed things to do now. Three different questions needing three different actions, often from three different people. Composed rather than invented — BL-85 already specifies the form (\"a backlog_report / roadmap projection, a view, never a second source of truth\"), BL-68 supplies readiness and risk-to-completion (\"the roadmap is a risk-burndown schedule\"), BL-40 is the projection layer, and the long narratives stay as documents-linked artifacts rather than being crushed into properties. THE RANKING RULE THAT MATTERS MOST: an unmade decision outranks the work waiting on it. A proposed Decision with things GOVERNED_BY it is a blocker, and pointing someone at blocked work is worse than saying nothing, because it looks like progress. Measured 2026-07-24, this is not hypothetical: dec:multi-writer-architecture blocks two nodes, so the honest answer to \"what is next\" right now is a decision only the human can make, not a build task. PREREQUISITE, and the reason this cannot usefully ship first: today ZERO accepted requirements lack a satisfying capability, so \"what is unbuilt\" is unanswerable from the graph — everything accepted is allocated to something. Distinguishing allocated from delivered needs cap:derived-completion (BL-104). Until that lands, this view can rank what is undecided and what is misshapen but is blind to what is merely unfinished. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say what to work on next, as a projection with its reasoning shown",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "chg:accept-041e39df97343a36",
       "node_type": "ChangeEvent",
       "properties": {
@@ -10658,6 +10724,14 @@
       "properties": {
         "change_type": "resync",
         "name": "v0.5.0 as-released model: rel:v050 recorded (33 artifacts frozen at tag v0.5.0 + the skills tree), deployed active on the developer machine; rel:v040 retired and its deployment declaration withdrawn (upgraded in place); INCLUDES joined the traceability table so a release is part of the design network rather than an island"
+      }
+    },
+    {
+      "node_id": "chg:what-next-capture",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "\"What should I work on next\" captured as a projection, distinct from detect and heal"
       }
     },
     {
@@ -11735,6 +11809,16 @@
         "decision": "Accepted the gap gap:72f2c38d8acdeac2.",
         "name": "Reviewed: gap:72f2c38d8acdeac2",
         "rationale": "User (who:ajs, 2026-07-23): tracked under BL-70/BL-80 — art:alternatives/art:merge exist on disk (reported no_baseline by reconcile) and get modelled + linked when BL-80 lands.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:7957f52a429a38a3",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:7957f52a429a38a3.",
+        "name": "Reviewed: gap:7957f52a429a38a3",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24). The check to write when this is built, because the obvious one is too weak: asserting that the view returns SOMETHING ranked proves nothing. The test must assert the ranking RULE — construct a graph with a proposed Decision that governs an otherwise-ready piece of work, and require the view to surface the decision above that work, not beside it or beneath it. A second case should assert the view stays honest about its own blind spots: until cap:derived-completion lands it cannot distinguish allocated from delivered, so it must say so rather than presenting a confident ordering built on an unanswerable question. A prioritisation view that hides what it cannot see is worse than no view, because it reads as authoritative.",
         "status": "accepted"
       }
     },
@@ -13397,6 +13481,19 @@
       }
     },
     {
+      "node_id": "req:what-next",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "The design can say what to work on next, and why that and not something else",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A person returning to the design must be able to ask \"what is the most pressing thing to work on?\" and get an answer computed from the design itself, with its reasoning visible — not a hand-maintained ordering in a file. The answer must rank an unmade decision ABOVE the work that waits on it, because being told to build something blocked on a choice only the human can make is worse than being told nothing. It must distinguish what is undecided from what is unbuilt from what is misshapen, since those need different actions from different people. And it must be a projection over the graph, never a stored list: a second place where priority lives is a second place for it to go stale, which is the failure the whole backlog-in-the-graph move exists to end.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "ver:adopt-storyflow",
       "node_type": "Verification",
       "properties": {
@@ -13799,7 +13896,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:50afae7c09196c70d15c581d90103bc7fadfa45fd0679eef061a9fcbb80b25a7",
+  "prev_content_hash": "sha256:75bd2fd5b09be0ef405c2f1c1f3274ade1059fa12340eef40ff586dca6b3c473",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
