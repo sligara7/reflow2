@@ -32,6 +32,11 @@ anyhow = "1"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
-# For iterating against the local rmcp checkout instead of crates.io, uncomment:
+# For iterating against the local rmcp checkout instead of crates.io, uncomment.
+# `rust-sdk` IS rmcp — the repo publishes the crate; they are not two things.
+# A [patch] section is only honoured in the WORKSPACE root Cargo.toml, so put it
+# there rather than here if this ever gets used in anger. Do not commit it
+# uncommented: the local checkout tracks rmcp v3 betas while this workspace pins
+# v2, and a silent major-version swap would change the whole tool surface.
 # [patch.crates-io]
-# rmcp = { path = "/home/ajs/projects/rust-sdk/crates/rmcp" }
+# rmcp = { path = "/home/ajs7/project/rust-sdk/crates/rmcp" }
