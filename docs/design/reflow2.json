@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:decd7a319eab4fc47b813ba07bd17a0997c993be847035466464f204763b97a1",
+  "content_hash": "sha256:18dd04b87fc1a5cb57318707214edaad9466b352cdf35015d4dbff619dd904f6",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -96,6 +96,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:drift-direction",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:drift"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -558,6 +566,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:documentation-subsystem",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:drift-direction",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -1164,6 +1178,15 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "req:coverage-visible",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:drift-has-direction",
       "properties": {
         "acted_at": "2026-07-24",
         "role": "author"
@@ -2608,6 +2631,24 @@
         "action": "added"
       },
       "to_id": "sys:documentation"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:drift-direction",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:drift-direction"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:drift-direction",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:drift-has-direction"
     },
     {
       "edge_type": "CHANGED",
@@ -4688,6 +4729,18 @@
       "from_id": "cap:dimensions",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:drift-direction",
+      "properties": {},
+      "to_id": "dec:two-sided-accept"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:drift-direction",
+      "properties": {},
+      "to_id": "decision:ack:f78628387e7c41cc"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8665,6 +8718,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:drift-direction",
+      "properties": {},
+      "to_id": "req:drift-has-direction"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:explains-itself",
       "properties": {},
       "to_id": "req:explains-itself"
@@ -10132,6 +10191,19 @@
       }
     },
     {
+      "node_id": "cap:drift-direction",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Anthony's founding problem, observed again in the field 2026-07-24: reflow2 running on storyflow reported that its docs \"consistently understate what's built\". That is the exact failure the predecessor died of — design well, implement, iterate several cycles, and the stated requirements quietly stop matching the built product. THE PART THAT ALREADY WORKS, and should not be rebuilt: reconcile_artifacts computes checksum_change and undocumented_addition, and set_artifact_checksum refuses to accept drift silently, forcing design_holds versus design_updated (dec:two-sided-accept, written against precisely this erosion). THE THREE MISSING PIECES. (1) DIRECTION. Drift is asymmetric in practice — implementation accretes capability the design never records, far more often than the design overstates. Today a registered file that has grown three capabilities and a registered file with a fixed typo both arrive as checksum_change, so understatement is invisible where it is largest. undocumented_addition already names the condition but only at whole-file granularity, which catches a new file and misses a grown one. (2) MEANING. Reconcile says a file moved; it never says what the design now claims wrongly. So design_updated asks a human to find the semantic delta themselves, which is the labour that does not happen under load — the mechanism is armed and the design still goes stale, because being told bytes changed is not being told what to fix. (3) WRITE-BACK. Where a design was adopted from documents, updating the graph leaves the markdown everyone actually reads still wrong; the graph becomes quietly right while the source of truth people consult stays stale, which is the same divergence one level up. Related but distinct from cap:coverage (BL-95), which asks what the design never modelled AT ALL; this asks what the design modelled once and has since outgrown. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say which way the design and the build have diverged, and bring the design back up",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:explains-itself",
       "node_type": "Capability",
       "properties": {
@@ -10927,6 +10999,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Documentation modelled as part of the product, on Anthony's answer"
+      }
+    },
+    {
+      "node_id": "chg:drift-direction",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Drift direction and write-back captured, from the storyflow field observation that docs understate what is built"
       }
     },
     {
@@ -12148,6 +12228,16 @@
         "decision": "Accepted the gap gap:e99afa635a6340fb.",
         "name": "Reviewed: gap:e99afa635a6340fb",
         "rationale": "User (who:ajs, 2026-07-23): tracked under BL-70/BL-80 — same disposition as the verification gap; the capability's owning component arrives with the alternatives/merge work (alternatives.rs/merge.rs are on disk but not yet modelled, noted in the BL-83a session record).",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:f78628387e7c41cc",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:f78628387e7c41cc.",
+        "name": "Reviewed: gap:f78628387e7c41cc",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24). The check this needs, named now because the obvious one would pass while missing the point: a fixture where a REGISTERED artifact grows a new capability must report understatement, and must be distinguishable from the same artifact having a typo fixed — today both are checksum_change, and a test that only asserts \"drift was detected\" would pass on both and prove nothing about direction. A second case should assert the report names WHAT the design now claims wrongly, not merely that bytes moved, since the whole failure mode is that a human is told the design is stale without being told what to fix and therefore does not fix it. This capability's real validation is a field one and belongs to the trials programme: run it against storyflow, where the understatement was observed, and see whether it names the same delta a person would.",
         "status": "accepted"
       }
     },
@@ -13503,6 +13593,19 @@
       }
     },
     {
+      "node_id": "req:drift-has-direction",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Drift is reported with its direction and its meaning, not just its magnitude",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When the design and the build diverge, reflow2 must say which way and about what — not merely that a file's contents moved. Three things follow. Direction: a system that has grown capability the design never recorded is a different condition from one whose design overstates it, and today both arrive as an identical checksum change, so understatement is invisible exactly where it is largest. Meaning: the report must say what the design now claims wrongly, because asking someone to decide whether the design still holds while telling them only that bytes changed puts the entire burden of finding the delta on the person least likely to have time for it — which is how the design goes stale despite a mechanism designed to stop it. And write-back: where the design was recovered from documents, bringing the design up to date must be able to reach those documents, or the source everyone actually reads stays wrong while the graph quietly becomes right.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:driving-agent",
       "node_type": "Requirement",
       "properties": {
@@ -14177,7 +14280,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:40e7a2dbefc9664b72bc9ef6c3a57b4bcdc047a6c9a3f6048157c64dabd9bc10",
+  "prev_content_hash": "sha256:decd7a319eab4fc47b813ba07bd17a0997c993be847035466464f204763b97a1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
