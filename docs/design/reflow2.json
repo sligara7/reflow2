@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:51fe3c3069b6eb67b4c5eb6248ff6c31935bd71e9c8cdc594dc143c5ff21bb0c",
+  "content_hash": "sha256:0dca7c1d7ce90f0838eaea33de53b62e455bf0e468af4823ee8ae78962f18518",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -152,6 +152,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:kpp",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -440,6 +448,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:bl95-coverage-capture",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl96-kpp-capture",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -2037,6 +2051,24 @@
         "action": "added"
       },
       "to_id": "req:coverage-visible"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl96-kpp-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:kpp"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl96-kpp-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:inviolable-intent"
     },
     {
       "edge_type": "CHANGED",
@@ -4135,6 +4167,18 @@
       "from_id": "cap:kit",
       "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kpp",
+      "properties": {},
+      "to_id": "dec:edge-orthogonality"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kpp",
+      "properties": {},
+      "to_id": "decision:ack:2162197689aecdb2"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7791,6 +7835,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:kpp",
+      "properties": {},
+      "to_id": "req:inviolable-intent"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:loop-status",
       "properties": {},
       "to_id": "req:coherence"
@@ -9156,6 +9206,19 @@
       }
     },
     {
+      "node_id": "cap:kpp",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Key performance parameters as first-class vocabulary — Anthony's call, 2026-07-24 (BL-96): a KPP is its own thing, not a Constraint flagged critical, because it answers a different question. A Requirement is a goal that may be traded; a Constraint is a limit imposed from outside; a KPP is a threshold whose loss fails the whole effort, and it therefore outranks every design decision made after it. Carries the threshold value and, where meaningful, the objective value (the DoD acquisition sense). The load-bearing half is the computation, not the noun: a detector that fires when a KPP is unsatisfied, unallocated, or contradicted by an accepted Decision, at a severity above ordinary gaps, plus a KPP crossing marked in propagate_change so impact-check surfaces it before an edit rather than after. Per dec:edge-orthogonality a vocabulary distinction earns its keep only if a computation reads it — so without the detector this concept would not deserve to exist. Much of the substrate is already in the schema and entirely unused (Constraint's quantity/limit/direction triple with budget rollup, DesignRule.enforced, QualityGate.criteria, the VIOLATES_RULE edge). PLANNED — BL-96; whether this lands as a new node type or a discriminated Constraint subtype is an open sub-axis for the user at build time, because a new node type is a schema change with real upgrade cost (BL-94).",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Hold inviolable intent (KPPs) and compute when the design breaks one",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:loop-status",
       "node_type": "Capability",
       "properties": {
@@ -9726,6 +9789,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-95 captured: the design must be able to say what it has never modelled"
+      }
+    },
+    {
+      "node_id": "chg:bl96-kpp-capture",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-96 captured: KPPs as first-class inviolable intent, with a computed violation"
       }
     },
     {
@@ -10677,6 +10748,16 @@
         "decision": "Renderers may only emit what the graph states; everything else is confessed as a finding.",
         "name": "A view is a projection of the graph; renderer fill-ins are defects",
         "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 — almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:2162197689aecdb2",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:2162197689aecdb2.",
+        "name": "Reviewed: gap:2162197689aecdb2",
+        "rationale": "Same standing disposition as the other planned-but-unbuilt capabilities captured today (the user's 2026-07-23 call, applied again 2026-07-24): cap:kpp is `planned`, captured from the brothers' idea list, and nothing is built — a Verification would have nothing to run against, and it arrives with the build (BL-96). Worth noting for whoever builds it: the verification here is not incidental. dec:edge-orthogonality holds that a vocabulary distinction earns its keep only if a computation reads it, so the detector that fires on a KPP violation IS the justification for KPP being its own concept rather than a Constraint with priority critical. If that detector is ever cut for scope, the concept should be reconsidered with it rather than left as an uncomputed noun.",
         "status": "accepted"
       }
     },
@@ -12071,6 +12152,19 @@
       }
     },
     {
+      "node_id": "req:inviolable-intent",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "name": "Intent that must hold no matter what is recorded as inviolable, and a violation is computed, not remembered",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A design must be able to record intent that no downstream decision may trade away — a key performance parameter, in the acquisition sense: a threshold that, if missed, fails the effort regardless of how well everything else went. Inviolable intent is distinct from a Requirement (a goal to achieve, tradeable against other goals) and from a Constraint (a limit imposed on the design). reflow2 must (a) let that intent be stated with its threshold and, where it applies, its objective value; (b) COMPUTE a violation rather than rely on anyone remembering — an accepted Decision, an allocation, or a change whose blast radius contradicts a KPP must be surfaced loudly and above ordinary gaps; and (c) show a KPP crossing in impact analysis BEFORE the edit is made, not after it has been committed. A KPP that nothing checks is a comment.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:invocation",
       "node_type": "Requirement",
       "properties": {
@@ -12590,7 +12684,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c14ad901ab3b9d87deac482397db15a3074401710a29e275a22b5e58f667d154",
+  "prev_content_hash": "sha256:51fe3c3069b6eb67b4c5eb6248ff6c31935bd71e9c8cdc594dc143c5ff21bb0c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

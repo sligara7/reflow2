@@ -50,8 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- BL-96..BL-103 file the brothers' idea list + capture KPP vocabulary — @ajs — since 2026-07-24 — docs/backlog.md, docs/design/reflow2.json
-
 
 
 
@@ -81,6 +79,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- BL-96..BL-103 FILED from Anthony + his brother's idea list (`~/Documents/reflow2_idea.txt`, 2026-07-24) — KPPs as first-class inviolable intent (BL-96, Anthony's call that KPP is its own vocabulary; `req:inviolable-intent` + `cap:kpp` captured, requirement left `proposed`), folder/bulk spec ingest (BL-97), 15-developer conflict identification (BL-98), real-time collaboration (BL-99), rubber-duck mode (BL-100), inherited-project onboarding (BL-101), README/architecture/use-cases/diagrams (BL-102), LangChain/LangSmith prior-art study (BL-103). Two findings recorded in the entries: the inviolable-intent vocabulary already exists in the schema and is 100% unused (0 Constraints / 0 DesignRules / 0 QualityGates against 22 Requirements — same shape as the BL-70 temporal finding), and BL-98 is the first field-sourced trigger to re-open `dec:repo-file-embedded`, whose rationale said concurrency was "hypothetical while there is one writer". Gate green, live==committed 374n/1115e — @ajs — 2026-07-24 — docs/backlog.md, docs/design/reflow2.json
 
 - BL-95 SPEC'D + CAPTURED (no code) — the design cannot see what it was never told about: all 26 gap sources take an existing node as subject, none takes a file on disk, so a graph covering 30% of a codebase reports the same "0 open gaps" as one covering 100%. From Anthony's storyflow adopt pass. Shape: `coverage_report(observed_paths, exclusions)` in drift.rs, sibling of reconcile_artifacts, agent-supplied sweep (reflow2 does no file I/O), measuring CLAIMED REGIONS ranked by mass — never a file-count ratio, which would punish the coarse modelling adopt mandates. `req:coverage-visible` (left `proposed` — needs Anthony's read of the statement before it moves) + `cap:coverage` (planned, allocated to cmp:drift). `chg:bl95-coverage-capture` pinned to a fresh epoch. Gate green, live==committed 370n/1108e — @ajs — 2026-07-24 — docs/backlog.md, docs/design/reflow2.json
 
