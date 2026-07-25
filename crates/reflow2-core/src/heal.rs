@@ -89,6 +89,35 @@ pub enum HealSeverity {
     Info,
 }
 
+/// A structural defect that was reviewed and accepted, with the reason given.
+///
+/// The mirror of [`ReviewedGap`](crate::detect::ReviewedGap), including the part
+/// that matters most: an accepted defect is moved, never deleted, so the
+/// judgement stays visible and re-readable when the architecture shifts.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct ReviewedDefect {
+    /// The defect itself, exactly as the detector reports it — absent when the
+    /// shape it was accepted about no longer arises (see `retired`).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub defect: Option<HealIssue>,
+    /// Why it was accepted.
+    pub reason: String,
+    /// The `Decision` node recording the review.
+    pub decision_id: String,
+    /// The defect id this review was made against. Always present.
+    pub defect_id: String,
+    /// Set when the review outlived the shape it was made about: kept, because a
+    /// real judgement should not vanish because the graph moved.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub retired: Option<String>,
+}
+
+/// The `Decision` id recording a defect's review. Namespaced under `heal:` so it
+/// can never collide with a gap acknowledgement, whose ids are bare hashes.
+fn defect_ack_decision_id(defect_id: &str) -> String {
+    format!("decision:ack:{defect_id}")
+}
+
 /// A detected structural defect.
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct HealIssue {
@@ -420,8 +449,173 @@ impl DesignGraph {
         Ok(edges)
     }
 
-    /// Detect the deterministic structural defects (the HEAL catalog subset).
+    /// Open structural defects — everything the detectors found that has **not**
+    /// been reviewed and accepted.
+    ///
+    /// The gap side has worked this way since the beginning and the defect side
+    /// did not, which was friction found by using reflow2 on itself
+    /// (`req:reviewed-defects`, 2026-07-25): six architectural defects, every one
+    /// carrying a Decision explaining why it stands, reported identically on every
+    /// run. `acknowledge_gap`'s own reasoning applies word for word — "a list that
+    /// can never reach zero gets skimmed" — and a genuine seventh defect would
+    /// have arrived into a list nobody read carefully.
+    ///
+    /// Accepted defects move to [`reviewed_defects`](Self::reviewed_defects):
+    /// not deleted, not hidden. And because a defect id hashes its category with
+    /// its affected set, a review **expires by construction** when the shape it
+    /// was made about changes — the new shape gets a new id, which nothing has
+    /// accepted yet.
     pub fn detect_defects(&self) -> Result<Vec<HealIssue>, DynoError> {
+        let mut open = Vec::new();
+        for issue in self.all_defects()? {
+            if self.defect_acknowledgement(&issue.id)?.is_none() {
+                open.push(issue);
+            }
+        }
+        Ok(open)
+    }
+
+    /// Accept a structural defect the user has judged fine, recording WHY.
+    ///
+    /// The mirror of [`acknowledge_gap`](Self::acknowledge_gap), and deliberately
+    /// the same shape: the reason becomes a real `Decision` node so it outlives
+    /// the session, and the affected nodes are linked to it so the review is
+    /// reachable from the design rather than only from a list.
+    ///
+    /// Use it when the defect is real and the answer is "yes, and that is
+    /// correct" — a single point of failure that is inherent to a single-writer
+    /// store, a hub that the architecture deliberately routes through. Not for
+    /// silencing something nobody has looked at: the reason is the point, and it
+    /// is what a later session reads instead of re-litigating.
+    pub fn acknowledge_defect(
+        &mut self,
+        defect_id: &str,
+        affected_ids: &[String],
+        reason: &str,
+    ) -> Result<String, DynoError> {
+        let decision_id = defect_ack_decision_id(defect_id);
+        self.create_node(
+            node::DECISION,
+            &decision_id,
+            crate::nodes::Props::new()
+                .set("name", format!("Reviewed: {defect_id}"))
+                .set(
+                    "decision",
+                    format!("Accepted the structural defect {defect_id}."),
+                )
+                .set("rationale", reason)
+                // Explicit, because a new Decision is `proposed` since
+                // req:decision-status-not-asserted — and this one IS settled: the
+                // user just settled it.
+                .set("status", "accepted"),
+        )?;
+        let index = self.node_type_index()?;
+        for target in affected_ids {
+            if let Some(node_type) = index.get(target) {
+                self.governed_by(&node_type.clone(), target, node::DECISION, &decision_id)?;
+            }
+        }
+        Ok(decision_id)
+    }
+
+    /// Withdraw a defect's acknowledgement, so it returns to the open list.
+    ///
+    /// Supersedes the Decision rather than deleting it — the judgement was real
+    /// and its record survives being changed (`req:intent-preserved`). Returns
+    /// `false` when there was no acknowledgement, which is a no-op and not an
+    /// error.
+    pub fn withdraw_defect_acknowledgement(&mut self, defect_id: &str) -> Result<bool, DynoError> {
+        let decision_id = defect_ack_decision_id(defect_id);
+        let Some(existing) = self.get_node(node::DECISION, &decision_id)? else {
+            return Ok(false);
+        };
+        let mut props = crate::nodes::Props::new().set("status", "superseded");
+        for (k, v) in &existing.properties {
+            if k != "status" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::DECISION, &decision_id, props)?;
+        Ok(true)
+    }
+
+    /// Structural defects that were reviewed and accepted, each with its reason.
+    ///
+    /// Worth re-reading when the architecture shifts. An acknowledgement keyed to
+    /// a defect's shape expires when that shape changes, so a review that still
+    /// appears here is one that still applies — and a review whose detector or
+    /// shape has gone is reported as `retired` rather than vanishing, because
+    /// silently shrinking this list would hide a judgement the user made.
+    pub fn reviewed_defects(&self) -> Result<Vec<ReviewedDefect>, DynoError> {
+        let mut reviewed = Vec::new();
+        let mut live = std::collections::HashSet::new();
+        for issue in self.all_defects()? {
+            if let Some((decision_id, reason)) = self.defect_acknowledgement(&issue.id)? {
+                live.insert(issue.id.clone());
+                reviewed.push(ReviewedDefect {
+                    defect_id: issue.id.clone(),
+                    defect: Some(issue),
+                    reason,
+                    decision_id,
+                    retired: None,
+                });
+            }
+        }
+        for d in self.scan_nodes(node::DECISION)? {
+            let Some(rest) = d.node_id.strip_prefix("decision:ack:") else {
+                continue;
+            };
+            // Only defect acknowledgements — the gap side owns the bare hashes.
+            if !rest.starts_with("heal:") {
+                continue;
+            }
+            if live.contains(rest) {
+                continue;
+            }
+            let Some((decision_id, reason)) = self.defect_acknowledgement(rest)? else {
+                continue;
+            };
+            reviewed.push(ReviewedDefect {
+                defect_id: rest.to_string(),
+                defect: None,
+                reason,
+                decision_id,
+                retired: Some(
+                    "The shape this was accepted about has changed, or no current detector \
+                     raises it. The decision is kept; nothing is being suppressed by it."
+                        .into(),
+                ),
+            });
+        }
+        reviewed.sort_by(|a, b| a.defect_id.cmp(&b.defect_id));
+        Ok(reviewed)
+    }
+
+    /// The accepted review for a defect, if any — `(decision_id, reason)`.
+    fn defect_acknowledgement(
+        &self,
+        defect_id: &str,
+    ) -> Result<Option<(String, String)>, DynoError> {
+        let decision_id = defect_ack_decision_id(defect_id);
+        let Some(node) = self.get_node(node::DECISION, &decision_id)? else {
+            return Ok(None);
+        };
+        if node.properties.get("status").and_then(|v| v.as_str()) != Some("accepted") {
+            return Ok(None);
+        }
+        let reason = node
+            .properties
+            .get("rationale")
+            .and_then(|v| v.as_str())
+            .unwrap_or("(no reason recorded)")
+            .to_string();
+        Ok(Some((decision_id, reason)))
+    }
+
+    /// Detect the deterministic structural defects (the HEAL catalog subset),
+    /// including ones already reviewed. [`detect_defects`](Self::detect_defects)
+    /// is the filtered view callers want.
+    fn all_defects(&self) -> Result<Vec<HealIssue>, DynoError> {
         let index = self.node_type_index()?;
         let mut issues = Vec::new();
 

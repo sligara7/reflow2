@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:524fe28daccef887a04f79765f08f6b6309ff60b1765fc6d79ebb87bd823afe6",
+  "content_hash": "sha256:359851f2e75b475bf5decc078df26878effc1d6ae1472994cfa8599c9189b42f",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -837,6 +837,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:reviewed-defects-built",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:scoped-analysis-built",
       "properties": {},
       "to_id": "epoch:kpp-capture"
@@ -1131,6 +1137,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0110",
+      "properties": {},
+      "to_id": "epoch:v0110"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "rel:v040",
       "properties": {},
       "to_id": "epoch:v040"
@@ -1198,6 +1210,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:kpp-capture:req:key-interfaces",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:kpp-capture:req:reviewed-defects",
       "properties": {},
       "to_id": "epoch:kpp-capture"
     },
@@ -3803,6 +3821,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:reviewed-defects-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reviewed-defects-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reviewed-defects-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reviewed-defects-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:reviewed-defects"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:scoped-analysis-built",
       "properties": {
         "accepted_baseline": true,
@@ -5652,6 +5706,14 @@
     {
       "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v0101",
+      "properties": {
+        "status": "rolled_back"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0110",
       "properties": {
         "status": "active"
       },
@@ -8024,6 +8086,12 @@
       "to_id": "snap:epoch:kpp-capture:req:key-interfaces"
     },
     {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:reviewed-defects",
+      "properties": {},
+      "to_id": "snap:epoch:kpp-capture:req:reviewed-defects"
+    },
+    {
       "edge_type": "INCLUDES",
       "from_id": "rel:v0100",
       "properties": {
@@ -8672,6 +8740,434 @@
     {
       "edge_type": "INCLUDES",
       "from_id": "rel:v0101",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:6df0a7aa74cf5803"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:24c417ac64030158"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:c87a79726aeb111b"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:5b1afbb0e369af59"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:fabb8097364ca9e2"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:9da41f6bdb9885f7"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:6002847b15115694"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:bd100813c2f74603"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:e26b3cba78fe4a67"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:5e77e752c0c60d06"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:32d0609430669c46"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:fbe714849869c1d8"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:930d0dd59af1bb7b"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:74c0459e03ad38ce"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:8a8263be743e434f"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:cfdf82f1a6497595"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:e2e94e52eb601d53"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:34701500af93dbcf"
+      },
+      "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:21ec45e48bd3bc7b"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:fa4fa10add42f5e8"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:30fc1a09862792a9"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:e5e40cef15b45dfe"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:1a020de7ccdcc36c"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:65a01535f32f023e"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:96619724a77479e7"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:7cd58c187b327a97"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:075bab31f3c131b6"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:cddbea4165e0e3b0"
+      },
+      "to_id": "art:merge-driver-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:882d577621d9c62b"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:feca736d9d86d965"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:c5b7664a5df44b99"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:26dde99a1df42e6f"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:437623ff7dd7ac86"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:bd4282a6b99d8308"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:99fc5da421a04f5e"
+      },
+      "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:c57347034efdfa68"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:dc88dfbc4e1aacbc"
+      },
+      "to_id": "art:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:950e86c78c9c7b58"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:47fa2c2aa8b402bb"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:c421c3496192d22d"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:d10660c4fce94f91"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:f56cbbe3e7ccb23b"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:7a4195171b27daae"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:e646e8dd7928adac"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:3a6dd54d084e1e41"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:ef7dbb708e027df2"
+      },
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:d667d9a6a64a849e"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {
+        "as_checksum": "sha256:3b84a01ec0bae49d"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
+      "properties": {},
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0110",
       "properties": {},
       "to_id": "cmp:skills"
     },
@@ -10675,6 +11171,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:kpp-capture",
+      "properties": {},
+      "to_id": "epoch:v0110"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v0100",
       "properties": {},
       "to_id": "epoch:v0101"
@@ -11431,6 +11933,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:heal",
+      "properties": {},
+      "to_id": "req:reviewed-defects"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:hierarchy",
       "properties": {},
       "to_id": "req:coherence"
@@ -11989,6 +12497,12 @@
       "from_id": "ver:requirement-lineage",
       "properties": {},
       "to_id": "cap:requirement-lineage"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:reviewed-defects",
+      "properties": {},
+      "to_id": "cap:heal"
     },
     {
       "edge_type": "VERIFIES",
@@ -12599,7 +13113,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c1df9d769a9262d0",
+        "checksum": "sha256:32d0609430669c46",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -12709,7 +13223,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:01606f8905e95775",
+        "checksum": "sha256:fa4fa10add42f5e8",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -12951,7 +13465,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8f29dd09976e9d2c",
+        "checksum": "sha256:d10660c4fce94f91",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -14399,6 +14913,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Requirement quality criteria captured, split by which party can judge each"
+      }
+    },
+    {
+      "node_id": "chg:reviewed-defects-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Accepted structural defects leave the open list — the gap side's bargain kept on the defect side"
       }
     },
     {
@@ -16042,6 +16564,66 @@
       }
     },
     {
+      "node_id": "decision:ack:heal:554698fdd93307a7",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the structural defect heal:554698fdd93307a7 (single point of failure: cmp:graph).",
+        "name": "Reviewed: heal:554698fdd93307a7",
+        "rationale": "Carries dec:graph-spof-accepted (2026-07-24) onto the new reviewed-defects mechanism: the architecture is explicit in AGENTS.md — DesignGraph is 'the single handle everything else hangs off', one schema-validated CRUD surface every module goes through by design. `add_redundancy` is incoherent for it: a second store handle would be two sources of truth, which IS the defect rather than the fix. Expires by construction if the shape changes.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:heal:61df710ed7d3ca8f",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the structural defect heal:61df710ed7d3ca8f (single point of failure: ifc:core-api).",
+        "name": "Reviewed: heal:61df710ed7d3ca8f",
+        "rationale": "Carries dec:core-api-spof-accepted (2026-07-24): one store and one surface over it (req:agent-native, single-writer storage) makes the bridge between them inherently single. Duplicating the contract would contradict req:invocation's one binary spoken to over stdio.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:heal:81571c7881a57813",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the structural defect heal:81571c7881a57813 (single point of failure: cmp:export).",
+        "name": "Reviewed: heal:81571c7881a57813",
+        "rationale": "Carries dec:export-door-spof-accepted (2026-07-24): dec:repo-file-embedded made the deterministic export the durable, diffable record, and req:survives-upgrade makes export-with-the-old-build the migration path. One door is the point — a second export format would be a second thing that must stay byte-identical to the first.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:heal:bda06fadbc343090",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the structural defect heal:bda06fadbc343090 (single point of failure: ifc:graph-export).",
+        "name": "Reviewed: heal:bda06fadbc343090",
+        "rationale": "The contract side of dec:export-door-spof-accepted (2026-07-24): the export document IS the interchange format, so a redundant one would mean two records that must agree — the erosion this design exists to prevent.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:heal:e533183803d878a4",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the structural defect heal:e533183803d878a4 (single point of failure: cmp:service).",
+        "name": "Reviewed: heal:e533183803d878a4",
+        "rationale": "Carries dec:service-spof-accepted (2026-07-24): req:invocation mandates one reflow2-mcp binary spoken to over stdio as the entire user-facing surface, so a redundant second service would contradict the requirement it would be protecting.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:heal:f737a5cdf35a906d",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the structural defect heal:f737a5cdf35a906d (single point of failure: cmp:ingest).",
+        "name": "Reviewed: heal:f737a5cdf35a906d",
+        "rationale": "Carries dec:sanitize-spof-accepted (2026-07-25): true and expected — cmp:sanitize is reached only through cmp:ingest, because INGEST is the only path foreign text currently enters by, so every route to the trust boundary runs through one component. `add_redundancy` is the wrong shape (a second copy of a pure text filter is duplication, not resilience). What dissolves it is the SECOND CALLER: detect-and-report on graph import. Deliberately NOT wiring cmp:export to cmp:sanitize to quiet the detector, because that edge does not exist in the code.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "epoch:bl70-fork-layer",
       "node_type": "DesignEpoch",
       "properties": {
@@ -16098,6 +16680,17 @@
         "epoch_type": "release_cut",
         "name": "v0.10.1 release cut (2026-07-24)",
         "sequence": 90
+      }
+    },
+    {
+      "node_id": "epoch:v0110",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "checksum": "sha256:a2c3477809c4076ba43d8a98c3178edf6b1d677e947ec36d8c8fbad37119c657",
+        "description": "Cut at git tag v0.11.0, the current deployed release. The checksum anchors the export taken at cut time, immediately before this anchor was written — the same practice as epoch:v0101, and the reason dec:fork-point-address treats a fork point as a coordinate resolved against git rather than a self-referential hash.",
+        "epoch_type": "release_cut",
+        "name": "v0.11.0 release cut (2026-07-25)",
+        "sequence": 130
       }
     },
     {
@@ -17327,9 +17920,20 @@
       "properties": {
         "description": "Patch. BL-86: the set-based schema stamp — record which types the graph carried (not just counts), so the upgrade refusal names the offending types and splits retired (migrate the graph) from unknown (update reflow2); fixes the pre-removal graph v0.10.0 refused with 'update your binary'. Also: the design-coherence CI gate now runs in the job that builds the binary (it silently never ran — FileNotFound in the no-RocksDB core job). No schema change. Supersedes v0.10.0 in place.",
         "name": "v0.10.1",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.10.1"
+      }
+    },
+    {
+      "node_id": "rel:v0110",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.11.0",
+        "notes": "Cut 2026-07-25. A minor bump: Decision.status now defaults to `proposed` (was `accepted`) and Interface.designation is new (internal | published) — both behaviour changes with docs/upgrading-to-v0.11.0.md written. Contents: 45 artifacts with frozen cut-time checksums plus cmp:skills and cmp:docs, which is the first release to record documentation as a deliverable (the nine before it shipped a README and a setup guide without modelling them, and dec:intent-preserved said start from the next cut rather than backfill). Ships the KPP capture half, the github-mcp study's three imports (ingress sanitisation, bounded reads, find_tools), the git merge driver, the parallel-work and brainstorm skills, scoped detection, published boundaries with computed severability, and reviewed defects.",
+        "status": "deployed",
+        "unit_type": "binary",
+        "version": "0.11.0"
       }
     },
     {
@@ -18013,6 +18617,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:kpp-capture:req:reviewed-defects",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:heal\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"The open structural-defect list means still-needs-attention\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"A structural defect that has been reviewed and consciously accepted must move out of the open list into a reviewed one — not deleted, not hidden — the way an acknowledged gap already does. Found as friction 2026-07-25: detect_defects reports the same six findings every run, all six carrying recorded Decisions explaining why they stand, so a genuine seventh would arrive into a list nobody reads carefully and the count is the only signal. reviewed_gaps already keeps this promise for gaps on the stated grounds that \\\"a list that can never reach zero gets skimmed\\\"; the defect side makes the same promise in its docs and does not keep it. Two properties carried over from the gap side: the acceptance records WHY, as a real node that outlives the session, and it expires when the affected nodes change, so an accepted defect comes back for a fresh look rather than staying quietly accepted forever.\",\"status\":\"accepted\"}",
+        "target_id": "req:reviewed-defects",
+        "target_type": "Requirement"
+      }
+    },
+    {
       "node_id": "ver:adopt-storyflow",
       "node_type": "Verification",
       "properties": {
@@ -18442,6 +19056,18 @@
       }
     },
     {
+      "node_id": "ver:reviewed-defects",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "integration",
+        "method": "test",
+        "name": "An accepted defect leaves the open list keeping its reason as a Decision, the acceptance EXPIRES when the shape changes (re-routed cycle), withdrawal supersedes rather than deletes, and a defect review is never mistaken for a gap review (tests/reviewed_defects.rs, 6 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:sanitize-ingress",
       "node_type": "Verification",
       "properties": {
@@ -18581,7 +19207,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2b7b98c89b2906e4228488f7ae46b591dec21b86662c88d088120316696ea38f",
+  "prev_content_hash": "sha256:a2c3477809c4076ba43d8a98c3178edf6b1d677e947ec36d8c8fbad37119c657",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

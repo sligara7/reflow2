@@ -788,6 +788,13 @@ impl DesignGraph {
             let Some(hash) = d.node_id.strip_prefix("decision:ack:") else {
                 continue;
             };
+            // Defect acknowledgements share the `decision:ack:` prefix but are
+            // namespaced under `heal:` (req:reviewed-defects). Without this guard
+            // an accepted DEFECT would surface here as a retired GAP — the two
+            // lists would each report the other's judgements.
+            if hash.starts_with("heal:") {
+                continue;
+            }
             let gap_id = format!("gap:{hash}");
             if live.contains(&gap_id) {
                 continue;

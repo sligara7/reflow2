@@ -1,0 +1,11 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Structural defects that were reviewed and accepted, each with the reason given. Worth re-reading when the architecture shifts: an acknowledgement is keyed to a defect's shape, so one still listed here still applies, and one whose shape has gone is reported as `retired` rather than vanishing.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "name": "reviewed_defects"
+}

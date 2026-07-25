@@ -1,0 +1,34 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Accept a structural defect the user has judged fine, recording WHY. It moves out of detect_defects into reviewed_defects — not deleted, not hidden — the mirror of acknowledge_gap, and for the same reason: a list that can never reach zero gets skimmed, so a genuine new defect must arrive into a list someone still reads. The reason becomes a real Decision node that outlives the session. Because a defect id hashes its category with its affected set, the review EXPIRES when that shape changes — the new shape has a new id nobody has accepted.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "affected_ids": {
+        "default": [],
+        "description": "The defect's `affected_ids`, so the review is reachable from the design.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "defect_id": {
+        "description": "The defect's `id`, exactly as `detect_defects` reported it.",
+        "type": "string"
+      },
+      "reason": {
+        "description": "Why this defect is acceptable. Recorded as the Decision's rationale.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "defect_id",
+      "reason"
+    ],
+    "type": "object"
+  },
+  "name": "acknowledge_defect"
+}

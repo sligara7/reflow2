@@ -30,6 +30,23 @@ def run() -> subprocess.CompletedProcess[str]:
     )
 
 
+def current_version() -> str:
+    """The workspace version, read the same way the checker reads it.
+
+    Derived rather than hardcoded, because a fixture pinned to a literal version
+    fails on every release — which is exactly what happened cutting v0.11.0, and
+    a test that breaks on release day is a test people learn to edit rather than
+    trust.
+    """
+    for line in (REPO / "Cargo.toml").read_text().splitlines():
+        if line.strip().startswith("version = "):
+            return line.split('"')[1]
+    raise AssertionError("no workspace version in Cargo.toml")
+
+
+CLAIM = f"**Shipping at v{current_version()}.**"
+
+
 def test_the_repo_as_it_stands_passes() -> None:
     r = run()
     assert r.returncode == 0, f"the committed docs must agree with the build:\n{r.stdout}"
@@ -40,13 +57,11 @@ def test_a_stale_claim_is_caught() -> None:
     agents = REPO / "AGENTS.md"
     original = agents.read_text()
     try:
-        agents.write_text(
-            original.replace("**Shipping at v0.10.1.**", "**Shipping at v0.5.0.**")
-        )
+        agents.write_text(original.replace(CLAIM, "**Shipping at v0.0.1.**"))
         r = run()
         assert r.returncode == 1, "a stale version claim must fail the build"
         assert "DRIFT" in r.stdout
-        assert "0.5.0" in r.stdout and "0.10.1" in r.stdout, (
+        assert "0.0.1" in r.stdout and current_version() in r.stdout, (
             "the report must name BOTH what the prose says and what the build "
             f"says, or nobody can act on it:\n{r.stdout}"
         )
@@ -60,9 +75,7 @@ def test_rewording_the_prose_fails_loudly_rather_than_disabling_the_check() -> N
     original = agents.read_text()
     try:
         agents.write_text(
-            original.replace(
-                "**Shipping at v0.10.1.**", "**Currently shipping v0.10.1.**"
-            )
+            original.replace(CLAIM, f"**Currently shipping v{current_version()}.**")
         )
         r = run()
         assert r.returncode == 1, (

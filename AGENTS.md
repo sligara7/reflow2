@@ -323,7 +323,7 @@ seam** (semantic dedup/retrieval), and the `ingest` handshake over MCP (SP-3b �
 agent extracts intent and writes via GENESIS + `add_*`/`create_*` today). See the coverage
 matrix for the exact deferral list. Everything else in the loop — the MCP surface, GENESIS,
 INGEST's core, the consumer kit, search, the reconcile family — is built and shipping as of
-v0.10.1.
+v0.11.0.
 
 ---
 
@@ -362,7 +362,7 @@ Three complementary lenses on the graph: **phases** (P0–P5 lifecycle), **three
 
 ## Current state (important)
 
-**Shipping at v0.10.1.** The deterministic core, the agent-native MCP surface, and the consumer
+**Shipping at v0.11.0.** The deterministic core, the agent-native MCP surface, and the consumer
 kit are all built, released as prebuilt binaries, and cold-start-verified. The interaction
 surface — once an open question — was **decided (agent-native MCP, 2026-07-18)** and built;
 `docs/requirements-coverage.md` is the living status matrix. Do not re-litigate the surface

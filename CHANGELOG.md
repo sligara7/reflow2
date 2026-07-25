@@ -31,6 +31,12 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.11.0] — 2026-07-25
+
+**A minor bump: two schema changes, and the day reflow2 was used hard enough on
+itself to find its own friction.** Two behaviour changes want reading before you
+upgrade — see [docs/upgrading-to-v0.11.0.md](docs/upgrading-to-v0.11.0.md).
+
 ### Changed
 
 - **A new Decision lands `proposed`, not `accepted`** — a behaviour change to a

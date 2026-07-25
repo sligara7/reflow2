@@ -1097,6 +1097,24 @@ pub struct ScanReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct AcknowledgeDefectReq {
+    /// The defect's `id`, exactly as `detect_defects` reported it.
+    pub defect_id: String,
+    /// The defect's `affected_ids`, so the review is reachable from the design.
+    #[serde(default)]
+    pub affected_ids: Vec<String>,
+    /// Why this defect is acceptable. Recorded as the Decision's rationale.
+    pub reason: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct DefectIdReq {
+    pub defect_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct InterfaceDesignationReq {
     pub interface_id: String,
     /// `internal` (the default state) or `published` — a boundary others are
@@ -1752,6 +1770,58 @@ impl ReflowService {
                     .map_err(dyno_err)?,
             ),
         }
+    }
+
+    #[tool(
+        description = "Accept a structural defect the user has judged fine, recording WHY. It \
+                       moves out of detect_defects into reviewed_defects — not deleted, not \
+                       hidden — the mirror of acknowledge_gap, and for the same reason: a list \
+                       that can never reach zero gets skimmed, so a genuine new defect must \
+                       arrive into a list someone still reads. The reason becomes a real Decision \
+                       node that outlives the session. Because a defect id hashes its category \
+                       with its affected set, the review EXPIRES when that shape changes — the \
+                       new shape has a new id nobody has accepted.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn acknowledge_defect(
+        &self,
+        Parameters(req): Parameters<AcknowledgeDefectReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        let decision_id = g
+            .acknowledge_defect(&req.defect_id, &req.affected_ids, &req.reason)
+            .map_err(dyno_err)?;
+        ok_json(json!({ "acknowledged": req.defect_id, "decision_id": decision_id }))
+    }
+
+    #[tool(
+        description = "Structural defects that were reviewed and accepted, each with the reason \
+                       given. Worth re-reading when the architecture shifts: an acknowledgement \
+                       is keyed to a defect's shape, so one still listed here still applies, and \
+                       one whose shape has gone is reported as `retired` rather than vanishing.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn reviewed_defects(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        self.ok_read(&g, g.reviewed_defects().map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Withdraw a defect's acknowledgement, returning it to the open list. The \
+                       Decision is superseded rather than deleted — the judgement was real and \
+                       its record survives being changed. No-ops (returns withdrawn: false) when \
+                       there was no acknowledgement.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn withdraw_defect_acknowledgement(
+        &self,
+        Parameters(req): Parameters<DefectIdReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        let withdrawn = g
+            .withdraw_defect_acknowledgement(&req.defect_id)
+            .map_err(dyno_err)?;
+        ok_json(json!({ "withdrawn": withdrawn, "defect_id": req.defect_id }))
     }
 
     #[tool(

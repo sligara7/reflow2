@@ -1,0 +1,20 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Withdraw a defect's acknowledgement, returning it to the open list. The Decision is superseded rather than deleted — the judgement was real and its record survives being changed. No-ops (returns withdrawn: false) when there was no acknowledgement.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "defect_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "defect_id"
+    ],
+    "type": "object"
+  },
+  "name": "withdraw_defect_acknowledgement"
+}
