@@ -31,7 +31,58 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **A new Decision lands `proposed`, not `accepted`** — a behaviour change to a
+  shipped tool, on Anthony's call, from friction found using reflow2 on itself.
+  Recording a choice is not the same act as settling it: with the old default,
+  every open question landed as *settled and reasoned*, which is the forgery
+  `dec:certainty-derived` forbids for requirement status, with more consequence —
+  an accepted Decision is what **where-am-i** reads back as "what you decided",
+  what the fork layer treats as binding, and what the KPP contradiction check
+  reads as a trade already made. Six corrections in one session, and the
+  brainstorm skill had to carry the workaround in prose. Two of reflow2's own
+  tests failed on the flip and both were right to — each had leaned on the default
+  instead of stating its intent. Existing graphs are unaffected (defaults apply at
+  write time). See [docs/upgrading-to-v0.11.0.md](docs/upgrading-to-v0.11.0.md).
+
 ### Added
+
+- **Published boundaries, and severability computed rather than asserted**
+  (`cap:key-interfaces`, `req:key-interfaces`, `req:modularity-computed`).
+  `Interface.designation` is new — `internal` (default) or `published` — plus
+  `set_interface_designation`. `published` marks a contract others are entitled to
+  rely on: what an ICD publishes, and what MOSA calls a modular system interface.
+  Default internal on purpose, because publishing is a commitment nobody should
+  have asserted for them.
+
+  **It is read, not just stored.** `propagate_from` now reports
+  `boundary_crossings` — the published Interfaces a change passes through, *named*
+  rather than counted, in both the full radius and the summary, with
+  `crosses_published_boundary` per impacted node. So "is this part severable" is
+  computed: a change either stays behind the design's published boundaries, or the
+  report says which contract carried it and therefore whom to talk to.
+
+  Two independent routes had asked for exactly this property — MOSA's designation
+  discipline, and BL-45's system-of-systems thread five days earlier ("nothing
+  marks an Interface external-facing").
+
+  A test caught a real bug: the first implementation counted a boundary *one hop
+  past the depth bound* as crossed, so an internal change reported crossing a
+  contract the walk never reached. Also pinned: seeding a change **on** a
+  published interface is not a crossing (you are changing the promise, not passing
+  through it), and withdrawing a designation removes the crossing, because the
+  computation follows the design rather than remembering it.
+
+- **Four friction findings filed as graph elements** rather than as backlog prose,
+  from the first real run of the **report-friction** skill:
+  `req:decision-status-not-asserted` (fixed above), `req:reviewed-defects` (the
+  open defect list should mean still-needs-attention, the way `reviewed_gaps`
+  already does), and two `planned` Verifications for checks that do not exist —
+  that a served tool rejects an argument it does not know, and that the installed
+  kit's manifest agrees with the kit it claims to be. That last one found
+  reflow2's own `.reflow2/kit-version.json` four releases stale with stale
+  per-file hashes, unnoticed.
 
 - **Four requirements promoted out of two brainstorms** (Anthony, 2026-07-25).
   The nested-graphs and MOSA ideas stop being musings and become intent, while the

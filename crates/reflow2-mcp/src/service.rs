@@ -1095,6 +1095,15 @@ pub struct ScanReq {
     pub brief: Option<bool>,
 }
 
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct InterfaceDesignationReq {
+    pub interface_id: String,
+    /// `internal` (the default state) or `published` — a boundary others are
+    /// entitled to rely on.
+    pub designation: String,
+}
+
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ScopeReq {
@@ -2604,6 +2613,28 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Designate an Interface as a PUBLISHED boundary others may rely on, or back \
+                       to INTERNAL plumbing its owner may change freely. An Interface is internal \
+                       until someone says otherwise, because publishing is a commitment. This is \
+                       the distinction a systems-engineering ICD publishes and that MOSA calls a \
+                       modular system interface — and it is READ, not just stored: propagate \
+                       reports which published boundaries a change crosses, so \"is this part \
+                       severable\" is computed instead of asserted. It is NOT a claim that the \
+                       boundary has held; whether it stayed stable is its drift history.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn set_interface_designation(
+        &self,
+        Parameters(req): Parameters<InterfaceDesignationReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(NodeDto::from(
+            g.set_interface_designation(&req.interface_id, &req.designation)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
         description = "Record that a Constraint CONSTRAINS a target, with the target's \
                        `contribution` to the budget (in the Constraint's quantity unit) and the \
                        `basis` for the number (estimated/evidence/measured). An edge without a \
@@ -2707,7 +2738,14 @@ impl ReflowService {
     #[tool(
         description = "Record a Decision and why it was made (an ADR). Use this whenever the user \
                        chooses between real alternatives — the rationale is what stops the choice \
-                       being silently reversed later. Link it with `governed_by`.",
+                       being silently reversed later. Link it with `governed_by`. It lands \
+                       `proposed`: recording a choice is not the same as settling it, so reaching \
+                       `accepted` is a separate act (`set_decision_status`, or `collapse_decision` \
+                       when a fork is chosen). That is deliberate — an accepted Decision is what \
+                       where-am-i reads back to the user as \"what you decided\", so asserting it \
+                       on their behalf would be the forgery dec:certainty-derived forbids for \
+                       requirement status. BEHAVIOUR CHANGED 2026-07-25: this used to default to \
+                       `accepted`.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_decision(

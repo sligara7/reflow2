@@ -34,6 +34,7 @@ schema:
         description: { type: string, fulltext: true }
         medium: { type: enum, values: [REST, gRPC, event, graphql, cli, library, data, mechanical, electrical, human], default: REST, indexed: true, description: "How the contract is carried." }
         spec: { type: string, description: "Endpoint path, signature, connector spec, or protocol detail." }
+        designation: { type: enum, values: [internal, published], default: internal, indexed: true, description: "Whether this contract is a PUBLISHED boundary others are entitled to rely on, or INTERNAL plumbing the owner may change freely. `published` is what MOSA calls a modular/major system interface (10 U.S.C. 4401) and what a systems-engineering ICD publishes; it is also the surface a composed design links through rather than reaching into another system's internals (req:key-interfaces, req:design-composes). Default `internal` on purpose: publishing is a commitment, and defaulting to it would assert one nobody made — the same reasoning that makes a new Decision `proposed`. Read by impact analysis, which reports which published boundaries a change crosses, so severability is computed rather than asserted (req:modularity-computed). NOT a claim that the boundary has held: whether it actually stayed stable is its drift history, which is evidence, not a property anyone sets." }
         provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this node entered the graph. Same vocabulary as Fragment.provenance." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
@@ -48,7 +49,15 @@ schema:
         decision: { type: string, required: true, fulltext: true, description: "What was decided." }
         rationale: { type: string, fulltext: true }
         alternatives: { type: string, description: "JSON array of options considered and why they lost." }
-        status: { type: enum, values: [proposed, accepted, superseded, rejected], default: accepted, indexed: true }
+        # BL: `proposed` is the default on purpose (2026-07-25, req:decision-status-not-asserted).
+        # It used to be `accepted`, so recording an open question asserted that it
+        # had been settled and reasoned — the same forgery dec:certainty-derived
+        # forbids for requirement status, with more consequence, because an accepted
+        # Decision is what where-am-i reads back as "what you decided", what the
+        # fork layer treats as binding, and what the KPP contradiction check reads
+        # as a trade already made. Reaching `accepted` is now a separate act
+        # (`set_decision_status`, or `collapse_decision` choosing a fork).
+        status: { type: enum, values: [proposed, accepted, superseded, rejected], default: proposed, indexed: true }
       embedding_field: decision
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
       extraction_hint: >

@@ -18,7 +18,7 @@
 //! It only computes and tags — turning tags into questions is SURFACE and
 //! repair is HEAL (discipline 5: feed the loop, don't fix).
 
-use std::collections::{BTreeMap, HashMap, HashSet, VecDeque};
+use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet, VecDeque};
 
 use dynograph_core::DynoError;
 
@@ -64,6 +64,13 @@ pub struct ImpactedNode {
     pub via: Vec<Hop>,
     /// Whether any hop on `via` crossed a risk edge.
     pub crosses_risk_edge: bool,
+    /// Whether the path to this node passed through a **published** Interface —
+    /// a boundary someone else is entitled to rely on. Reaching a node only by
+    /// crossing a published contract is a different fact from reaching it
+    /// internally: it means the change is not contained by that boundary, which
+    /// is severability, computed (`req:key-interfaces`,
+    /// `req:modularity-computed`).
+    pub crosses_published_boundary: bool,
     /// The node's betweenness centrality in the design network (normalized
     /// 0..1) — how much of the golden thread routes through it. A change landing
     /// on a high-centrality node has a wider secondary blast radius, so it ranks
@@ -89,6 +96,14 @@ pub struct BlastRadius {
     /// more out here" signal, not a total). Non-zero ⇒ raise `max_depth` to
     /// see further. Reported, not hidden (discipline 1: never silently truncate).
     pub truncated_beyond_depth: usize,
+    /// The **published** Interfaces this radius passed through, sorted.
+    ///
+    /// Named rather than counted, because "your change crosses a boundary" is
+    /// unactionable while "it crosses THIS contract" tells you whom to talk to.
+    /// Empty means the change stayed behind whatever boundaries the design has
+    /// designated — which is what MOSA asks a program to demonstrate and what a
+    /// diagram cannot prove.
+    pub boundary_crossings: Vec<String>,
 }
 
 impl BlastRadius {
@@ -146,6 +161,7 @@ impl BlastRadius {
                 .collect(),
             direct_ring,
             risk_crossings,
+            boundary_crossings: self.boundary_crossings.clone(),
             max_depth: self.max_depth,
             truncated_beyond_depth: self.truncated_beyond_depth,
         }
@@ -194,6 +210,10 @@ pub struct BlastRadiusSummary {
     pub direct_ring: Vec<RingNode>,
     /// Every node reached across a risk edge, at any distance.
     pub risk_crossings: Vec<RiskCrossing>,
+    /// The **published** Interfaces this change passes through, sorted and named
+    /// — empty means it stayed behind the boundaries the design has designated.
+    /// The severability answer, computed (`req:modularity-computed`).
+    pub boundary_crossings: Vec<String>,
     /// The depth bound the traversal used.
     pub max_depth: usize,
     /// Nodes on the frontier one hop past `max_depth` (a lower bound, not the
@@ -285,19 +305,26 @@ impl DesignGraph {
             .cloned()
             .collect();
 
+        // The published boundaries, resolved once: a change is contained if it
+        // never passes through one of these (req:key-interfaces).
+        let published = self.published_interfaces()?;
+        let mut boundary_crossings: BTreeSet<String> = BTreeSet::new();
+
         // BFS. `visited` maps id -> its best (shortest, first-found) impact.
         let mut visited: HashMap<String, ImpactedNode> = HashMap::new();
-        let mut queue: VecDeque<(String, usize, Vec<Hop>, bool)> = VecDeque::new();
+        let mut queue: VecDeque<(String, usize, Vec<Hop>, bool, bool)> = VecDeque::new();
         let mut beyond_depth: HashSet<String> = HashSet::new();
 
         for s in &seeds {
             // Only walk from seeds that exist; unknown seeds are already reported.
             if index.contains_key(s) {
-                queue.push_back((s.clone(), 0, Vec::new(), false));
+                // A seed that IS a published boundary does not count as crossing
+                // itself — you are standing on it, not passing through it.
+                queue.push_back((s.clone(), 0, Vec::new(), false, false));
             }
         }
 
-        while let Some((id, depth, via, crosses_risk)) = queue.pop_front() {
+        while let Some((id, depth, via, crosses_risk, crosses_boundary)) = queue.pop_front() {
             let neighbors = self.impact_neighbors(&id, &inference_edges)?;
             for nb in neighbors {
                 // Skip edges to nodes that don't exist, and back to seeds.
@@ -320,6 +347,18 @@ impl DesignGraph {
                     continue;
                 }
 
+                // Passing THROUGH a published Interface is the crossing, and it
+                // is only a crossing if the walk actually GOT there — a boundary
+                // one hop past the depth bound was not reached, it is part of
+                // `truncated_beyond_depth`. Counting it would overstate the blast
+                // radius, which a test caught: an internal change reported
+                // crossing a contract two hops away that the walk never touched.
+                let at_boundary = published.contains(&nb.id);
+                if at_boundary {
+                    boundary_crossings.insert(nb.id.clone());
+                }
+                let next_boundary = crosses_boundary || at_boundary;
+
                 let mut next_via = via.clone();
                 let direction = nb.hop.direction;
                 next_via.push(nb.hop);
@@ -333,10 +372,11 @@ impl DesignGraph {
                         direction,
                         via: next_via.clone(),
                         crosses_risk_edge: next_crosses,
+                        crosses_published_boundary: next_boundary,
                         centrality: 0.0, // filled in below
                     },
                 );
-                queue.push_back((nb.id, next_depth, next_via, next_crosses));
+                queue.push_back((nb.id, next_depth, next_via, next_crosses, next_boundary));
             }
         }
 
@@ -372,6 +412,7 @@ impl DesignGraph {
             impacted,
             max_depth: opts.max_depth,
             truncated_beyond_depth: beyond_depth.len(),
+            boundary_crossings: boundary_crossings.into_iter().collect(),
         })
     }
 

@@ -1,0 +1,25 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Designate an Interface as a PUBLISHED boundary others may rely on, or back to INTERNAL plumbing its owner may change freely. An Interface is internal until someone says otherwise, because publishing is a commitment. This is the distinction a systems-engineering ICD publishes and that MOSA calls a modular system interface — and it is READ, not just stored: propagate reports which published boundaries a change crosses, so \"is this part severable\" is computed instead of asserted. It is NOT a claim that the boundary has held; whether it stayed stable is its drift history.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "designation": {
+        "description": "`internal` (the default state) or `published` — a boundary others are\nentitled to rely on.",
+        "type": "string"
+      },
+      "interface_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "interface_id",
+      "designation"
+    ],
+    "type": "object"
+  },
+  "name": "set_interface_designation"
+}

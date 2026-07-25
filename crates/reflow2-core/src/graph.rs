@@ -556,6 +556,63 @@ impl DesignGraph {
         self.create_node(node::INTERFACE, id, Props::new().set("name", name))
     }
 
+    /// Designate a contract as a **published boundary** others may rely on, or
+    /// back to **internal** plumbing the owner may change freely.
+    ///
+    /// The distinction MOSA's whole discipline turns on (a modular system
+    /// interface, 10 U.S.C. 4401) and the one BL-45's system-of-systems thread
+    /// found missing from the other direction. It earns its keep by being READ:
+    /// `propagate_from` reports which published boundaries a change crosses, so
+    /// "is this part severable" is computed rather than asserted
+    /// (`req:key-interfaces`, `req:modularity-computed`).
+    ///
+    /// Publishing is a commitment, so it is always an explicit act — an
+    /// Interface is `internal` until someone says otherwise.
+    pub fn set_interface_designation(
+        &mut self,
+        interface_id: &str,
+        designation: &str,
+    ) -> Result<StoredNode, DynoError> {
+        if !matches!(designation, "internal" | "published") {
+            return Err(DynoError::Validation {
+                node_type: node::INTERFACE.into(),
+                property: "designation".into(),
+                message: format!(
+                    "'{designation}' is not an Interface designation (one of internal, published)"
+                ),
+            });
+        }
+        let Some(existing) = self.get_node(node::INTERFACE, interface_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::INTERFACE.into(),
+                node_id: interface_id.into(),
+            });
+        };
+        let mut props = Props::new().set("designation", designation);
+        for (k, v) in &existing.properties {
+            if k != "designation" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::INTERFACE, interface_id, props)
+    }
+
+    /// The published boundaries in this design, by id — the set impact analysis
+    /// checks a blast radius against.
+    pub fn published_interfaces(&self) -> Result<std::collections::BTreeSet<String>, DynoError> {
+        Ok(self
+            .scan_nodes(node::INTERFACE)?
+            .into_iter()
+            .filter(|n| {
+                n.properties
+                    .get("designation")
+                    .and_then(Value::as_str)
+                    .is_some_and(|d| d == "published")
+            })
+            .map(|n| n.node_id)
+            .collect())
+    }
+
     /// P2 · Structure — a recorded decision with its rationale (an ADR, in
     /// software terms). `name` and `decision` are required; `rationale` is
     /// optional but is the part worth having — HEAL raises a `contradiction`

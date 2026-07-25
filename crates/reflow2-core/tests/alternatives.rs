@@ -152,9 +152,14 @@ fn alternatives_register_under_a_proposed_decision_and_contradict() {
 fn registering_under_a_settled_decision_is_refused() {
     let mut g = g();
     g.add_project("proj:x", "X").expect("project");
-    // add_decision creates it accepted (settled), not a proposed decision point.
+    // Settle it deliberately. add_decision used to land `accepted` by default,
+    // which is what this test relied on; since 2026-07-25 a new Decision is
+    // `proposed` (req:decision-status-not-asserted), so a test about a SETTLED
+    // decision has to settle it — which is the honest shape anyway.
     g.add_decision("dec:done", "Already chosen", "Settled.", None)
         .expect("decision");
+    g.set_decision_status("dec:done", "accepted")
+        .expect("settle it");
 
     let err = g
         .register_alternative("dec:done", "alt:x", "X", "x.json")

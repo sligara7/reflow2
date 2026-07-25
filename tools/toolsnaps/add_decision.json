@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record a Decision and why it was made (an ADR). Use this whenever the user chooses between real alternatives — the rationale is what stops the choice being silently reversed later. Link it with `governed_by`.",
+  "description": "Record a Decision and why it was made (an ADR). Use this whenever the user chooses between real alternatives — the rationale is what stops the choice being silently reversed later. Link it with `governed_by`. It lands `proposed`: recording a choice is not the same as settling it, so reaching `accepted` is a separate act (`set_decision_status`, or `collapse_decision` when a fork is chosen). That is deliberate — an accepted Decision is what where-am-i reads back to the user as \"what you decided\", so asserting it on their behalf would be the forgery dec:certainty-derived forbids for requirement status. BEHAVIOUR CHANGED 2026-07-25: this used to default to `accepted`.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

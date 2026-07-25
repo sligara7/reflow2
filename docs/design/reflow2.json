@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2b7b98c89b2906e4228488f7ae46b591dec21b86662c88d088120316696ea38f",
+  "content_hash": "sha256:524fe28daccef887a04f79765f08f6b6309ff60b1765fc6d79ebb87bd823afe6",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -216,6 +216,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:key-interfaces",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:propagate"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -757,6 +765,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:key-interfaces-built",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:kpp-built",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -1178,6 +1192,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:kpp-capture:dec:nested-graphs",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:kpp-capture:req:key-interfaces",
       "properties": {},
       "to_id": "epoch:kpp-capture"
     },
@@ -3378,6 +3398,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:key-interfaces-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:key-interfaces-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:key-interfaces-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:key-interfaces-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:key-interfaces-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:key-interfaces"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:kpp-built",
       "properties": {
         "accepted_baseline": true,
@@ -3993,6 +4058,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:key-interfaces"
     },
     {
       "edge_type": "CONTAINS",
@@ -6586,6 +6657,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:key-interfaces",
+      "properties": {},
+      "to_id": "decision:ack:c9fd9c1708bed944"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:kit",
       "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
@@ -7939,6 +8016,12 @@
       "from_id": "dec:nested-graphs",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:dec:nested-graphs"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:key-interfaces",
+      "properties": {},
+      "to_id": "snap:epoch:kpp-capture:req:key-interfaces"
     },
     {
       "edge_type": "INCLUDES",
@@ -11138,6 +11221,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:upgrade-v0110",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:verify",
       "properties": {
         "completeness": "complete"
@@ -11246,6 +11337,12 @@
       "edge_type": "SATISFIES",
       "from_id": "cap:decision-point",
       "properties": {},
+      "to_id": "req:decision-status-not-asserted"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:decision-point",
+      "properties": {},
       "to_id": "req:intent-preserved"
     },
     {
@@ -11343,6 +11440,18 @@
       "from_id": "cap:ingest",
       "properties": {},
       "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:key-interfaces",
+      "properties": {},
+      "to_id": "req:key-interfaces"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:key-interfaces",
+      "properties": {},
+      "to_id": "req:modularity-computed"
     },
     {
       "edge_type": "SATISFIES",
@@ -11514,6 +11623,12 @@
       "from_id": "cap:recover-from-tests",
       "properties": {},
       "to_id": "req:adopt-existing"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:report",
+      "properties": {},
+      "to_id": "req:modularity-computed"
     },
     {
       "edge_type": "SATISFIES",
@@ -11751,7 +11866,19 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:key-interfaces",
+      "properties": {},
+      "to_id": "cap:key-interfaces"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:kit",
+      "properties": {},
+      "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:kit-manifest-agrees",
       "properties": {},
       "to_id": "cap:kit"
     },
@@ -11916,6 +12043,12 @@
       "from_id": "ver:tool-search",
       "properties": {},
       "to_id": "cap:tool-search"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:tools-reject-unknown-args",
+      "properties": {},
+      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "VERIFIES",
@@ -12315,6 +12448,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:upgrade-v0110",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:verify",
       "properties": {
         "action": "created"
@@ -12557,7 +12698,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:29174e732d53bfd9",
+        "checksum": "sha256:21ec45e48bd3bc7b",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -12711,7 +12852,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ed84b3221438e34d",
+        "checksum": "sha256:26dde99a1df42e6f",
         "location": "crates/reflow2-core/src/propagate.rs",
         "name": "propagate.rs",
         "status": "realized"
@@ -12810,7 +12951,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b22c6760f5eb4231",
+        "checksum": "sha256:8f29dd09976e9d2c",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -12868,6 +13009,17 @@
         "checksum": "sha256:3a6dd54d084e1e41",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:upgrade-v0110",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:ef7dbb708e027df2",
+        "location": "docs/upgrading-to-v0.11.0.md",
+        "name": "upgrading-to-v0.11.0.md",
         "status": "realized"
       }
     },
@@ -13226,6 +13378,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Extract a design from freeform text",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:key-interfaces",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-07-25. `Interface.designation` (internal | published, defaulting to internal because publishing is a commitment nobody should have asserted for them) plus `set_interface_designation`, plus the computation that earns the distinction: `propagate_from` now reports `boundary_crossings` — the published Interfaces a change passes through, NAMED rather than counted, in both the full radius and the summary, with `crosses_published_boundary` on each impacted node. That makes severability computed instead of asserted, which is what MOSA's Table D-1 asks a program to demonstrate and what an architecture diagram cannot prove: a change inside a part either crosses none of the design's published boundaries, or the report says which contract carried it and therefore whom to talk to. WHY THE DISTINCTION WAS WORTH ADDING: two independent routes arrived at the same missing property — MOSA's designation of modular system interfaces (from the guidebook Anthony supplied) and BL-45's system-of-systems thread, which recorded five days earlier that nothing marks an Interface external-facing. dec:edge-orthogonality's rule is satisfied because a computation reads it. FOUND BY A TEST, and it was a real bug: the first implementation counted a boundary ONE HOP PAST the depth bound as crossed, so an internal change reported crossing a contract the walk never reached. The crossing bookkeeping now sits after the depth guard, where a boundary beyond the bound belongs to truncated_beyond_depth instead. Also pinned: seeding a change ON a published interface is not a crossing (you are changing the promise, not passing through it — conflating them would make every ICD edit look like a containment failure), and withdrawing a designation removes the crossing, because the computation follows the design rather than remembering it. 8 tests. NOT DONE, and named rather than implied: no filtered export of \"just the published surface\" (req:design-composes needs it), and no per-module modularity view — the acquisition community's words for these criteria belong in a projection, never in the schema.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Designate a published boundary, and compute whether a change stays behind it",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -14138,6 +14303,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Two-coast collaboration and multiple projects raised: a hosted MCP, project segregation, and coordinating in the graph instead of COORD.md"
+      }
+    },
+    {
+      "node_id": "chg:key-interfaces-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Published boundaries designated, severability computed, and a new Decision now lands proposed"
       }
     },
     {
@@ -15739,6 +15912,16 @@
       }
     },
     {
+      "node_id": "decision:ack:c9fd9c1708bed944",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:c9fd9c1708bed944.",
+        "name": "Reviewed: gap:c9fd9c1708bed944",
+        "rationale": "User (who:ajs, standing policy from 2026-07-23, applied again 2026-07-25): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:key-interfaces joined the set (44 → 45). The trial it wants is unusually well defined, and it is Anthony's own domain: designate the real published boundaries on a program-sized design and see whether the crossings a change reports are the ones a systems engineer would have named in an ICD review. The tests prove the arithmetic — a crossing is named, an internal change crosses nothing, a boundary beyond the depth bound is not counted — but whether the DESIGNATIONS people actually make carve the system where its authority boundaries really fall is a judgement no fixture can hold, and getting it wrong is invisible: a design that publishes nothing reports perfect containment.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:ca4e30e6002dfd13",
       "node_type": "Decision",
       "properties": {
@@ -16935,6 +17118,16 @@
       }
     },
     {
+      "node_id": "frag:art:upgrade-v0110",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered upgrading-to-v0.11.0.md"
+      }
+    },
+    {
       "node_id": "frag:art:verify",
       "node_type": "Fragment",
       "properties": {
@@ -17339,6 +17532,20 @@
       }
     },
     {
+      "node_id": "req:decision-status-not-asserted",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Recording an open question must never assert that it was settled",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A Decision's status must not be set on the user's behalf. Recording a choice someone is still facing — an open question, a brainstormed option, a decision point held for later — must land as `proposed`, and reaching `accepted` must be a separate, deliberate act. Found as friction 2026-07-25: add_decision defaults to `accepted`, so six open questions recorded in one session each landed as settled and needed correcting immediately afterwards. This generalises dec:certainty-derived from requirements to decisions, and the reason is the same: an accepted Decision is what where-am-i reads back to the user as \"what you decided\", what the fork layer treats as binding, and what the KPP contradiction check reads as a trade already made. A musing recorded as a reasoned choice is therefore worse than a missing record — it is a false one, attributed to them. Evidence it was systemic rather than one slip: the correction had become a standing note carried across sessions, and the brainstorm skill had to instruct it in prose (\"this call is not optional\"), which is a defect with a bandage on it.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:design-anything",
       "node_type": "Requirement",
       "properties": {
@@ -17674,6 +17881,20 @@
       }
     },
     {
+      "node_id": "req:reviewed-defects",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The open structural-defect list means still-needs-attention",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A structural defect that has been reviewed and consciously accepted must move out of the open list into a reviewed one — not deleted, not hidden — the way an acknowledged gap already does. Found as friction 2026-07-25: detect_defects reports the same six findings every run, all six carrying recorded Decisions explaining why they stand, so a genuine seventh would arrive into a list nobody reads carefully and the count is the only signal. reviewed_gaps already keeps this promise for gaps on the stated grounds that \"a list that can never reach zero gets skimmed\"; the defect side makes the same promise in its docs and does not keep it. Two properties carried over from the gap side: the acceptance records WHY, as a real node that outlives the session, and it expires when the affected nodes change, so an accepted defect comes back for a fresh look rather than staying quietly accepted forever.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:roads-not-taken",
       "node_type": "Requirement",
       "properties": {
@@ -17779,6 +18000,16 @@
         "state": "{\"decision\":\"UNDECIDED, and RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-07-25, explicitly not convinced by the collaboration design and thinking out loud: \\\"could you have small/mini reflow2 graphs inside itself... coming from a system of systems engineering approach, reflow2 may lay out the graph and how all the systems need to interact and where there are gaps, but what if we now had a mini-reflow2 graph for each system? And a mini-mini-reflow2 of the components in the system... the idea is that reflow2 has the tools to analyze the graph at each level and ensure there are no gaps and that it works with the higher level systems or system-of-systems.\\\" WHAT IS ALREADY TRUE, because it changes what the idea is asking for. Levels exist and are already checked: Component.level is an enum of component / subsystem / system / system_of_systems / enterprise, CONTAINS between Components is the axis-Y spine, and hierarchy_issues already reports level_mismatch, missing_intermediate_level and orphan_level — the carburetor-to-body problem, imported from chain_reflow's matryoshka insight (docs/three-axes.md). And the multi-graph primitive exists unused: every node and edge carries graph_id, pinned to the constant \\\"reflow2\\\". So the question is not whether reflow2 can express nesting. It can. The question is whether a level should be a SUBTREE of one graph or a GRAPH OF ITS OWN. THREE OPTIONS. (a) ONE GRAPH, ZOOM BY LEVEL — today's shape. What is missing is not nesting but SCOPING: no read takes a subtree as its subject, so detect_gaps and graph_report always answer for the whole design. Adding a scope argument is a filter, not an architecture, and it delivers most of what was asked — the tools analysing each level. (b) A GRAPH PER SYSTEM, COMPOSED — Anthony's idea. It buys four things one graph cannot: an independent write lock per system, which is a different and stronger answer to the collaboration problem than region claims, because separate graphs are PHYSICALLY separate where a claim is only advisory; an independent lifecycle, so a subsystem can be released, adopted or handed to a vendor on its own; selective publishing, which is exactly req:design-reachable-without-the-repo; and per-level scale, since detectors run over hundreds of nodes instead of tens of thousands. (c) A GRAPH PER OWNERSHIP BOUNDARY, LEVELS INSIDE EACH — the hybrid, and the shape federated systems engineering actually uses: you split where AUTHORITY splits, not where the hierarchy happens to have a layer. THE FOUR HARD PARTS of (b), each one real: the golden thread cannot cross a store boundary, because the schema validates both endpoints of every edge — so a parent's Component pointing at a child's design needs a typed COORDINATE (graph id + node id + the export's content hash at the moment the reference was made), which is precisely the choice dec:fork-point-address already made for fork points over a native ref layer. Gap detection goes blind at the seam: a parent requirement whose satisfying capability lives in a child graph would fire unsatisfied forever unless the child's evidence rolls up — and that roll-up is cap:derived-completion's computation applied one level higher, which is encouraging rather than novel. Freshness becomes load-bearing: a parent's view of a child is a claim about a VERSION of that child, so it is a dated examined claim and never a live truth (the cap:freshness and confirmation-ledger shape). And the seam becomes the new collision point: two people changing the interface across the boundary still collide, now in the one place with no merge machinery. THE TENSION WORTH KNOWING ABOUT: docs/org-scale-vision.md records the opposite destination — \\\"one graph the whole company plans in\\\", with the CEO's objectives at the top and everything tracing upward. Federation and one-big-graph cannot both be the end state, and nothing in the design has ever chosen between them. THE DISCRIMINATOR, offered as a finding and not a decision: depth alone does not justify a separate graph. Nesting three levels of graphs costs a coordinate, a roll-up and a freshness check at every seam, and buys nothing that a scope filter would not have delivered — unless something at that level is separately OWNED, separately RELEASED, or separately SHARED. Where those hold, a graph of its own is right. Where they do not, it is ceremony.\",\"name\":\"OPEN — one graph with levels, or a graph per system composed into a bigger one?\",\"rationale\":\"Recorded because Anthony said plainly he is not convinced by the collaboration design, and an unconvinced author is a finding, not a disagreement to be argued down. The three options and the ranking above are analysis offered for him to judge — the brainstorm skill's rule is that a counter-argument is recorded BESIDE an idea rather than used to talk someone out of it, and this decision is the first real test of that rule. Held proposed with nothing built, and deliberately without a Requirement: if federation is the answer it changes the shape of several settled things at once (dec:repo-file-embedded's single file, dec:central-host's hosting question, the whole org-scale destination), and that is a decision to make deliberately rather than to discover halfway through an implementation. The cheap next step, if he wants motion without commitment: add a scope argument to the existing detectors — option (a) — because it is a filter over machinery that already exists, it tests whether per-level analysis is what he actually wants, and it is a strict subset of what option (b) would need anyway, so it forecloses nothing (rule:no-foreclosure).\",\"status\":\"proposed\"}",
         "target_id": "dec:nested-graphs",
         "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:kpp-capture:req:key-interfaces",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-25\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:mosa-conformance\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"The design says which interfaces are the published boundaries, and computations read that distinction\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"Some interfaces are the boundary a system is known by; most are internal plumbing. The design must be able to say which — and the distinction must earn its keep by being read, not merely stored (dec:edge-orthogonality). From the MOSA guidebook Anthony supplied (OUSD(R&E), February 2025), whose entire discipline turns on designating modular system interfaces and then holding them stable and open, and independently from BL-45's system-of-systems thread, which found the same hole from the other side: nothing marks an Interface external-facing, so \\\"visible to others\\\" versus \\\"mine to change\\\" is undeclarable. Two independent routes to one missing property. What must read it, or the designation is decoration: a change that crosses a published boundary is a different risk from one that stays behind it, and impact analysis should say which it is BEFORE the edit; a design that publishes a surface should be able to export exactly that surface and nothing internal; and a composed design (req:design-composes) links through published boundaries, never through another system's internals. What this must NOT become: an assertion that a boundary is stable. Whether a published interface has in fact held is a matter of evidence — its drift history — not a property anyone sets.\",\"status\":\"accepted\"}",
+        "target_id": "req:key-interfaces",
+        "target_type": "Requirement"
       }
     },
     {
@@ -17985,6 +18216,18 @@
       }
     },
     {
+      "node_id": "ver:key-interfaces",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "integration",
+        "method": "test",
+        "name": "Published boundaries: internal until designated, a crossing is named, an internal change crosses nothing, standing on a boundary is not crossing it, withdrawal removes it — and the depth-bound bug that reported an unreached boundary (tests/key_interfaces.rs, 8 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:kit",
       "node_type": "Verification",
       "properties": {
@@ -17993,6 +18236,17 @@
         "method": "test",
         "name": "test_init.py",
         "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:kit-manifest-agrees",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "system",
+        "method": "test",
+        "name": "The installed kit's manifest agrees with the kit source it claims to be — version, file set and per-file hashes (friction 2026-07-25: reflow2's own manifest is four releases stale and nothing noticed; unwritten)",
+        "status": "planned"
       }
     },
     {
@@ -18294,6 +18548,17 @@
       }
     },
     {
+      "node_id": "ver:tools-reject-unknown-args",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "system",
+        "method": "test",
+        "name": "A served tool refuses an argument it does not know — including a tool whose FIRST parameter is new, where the old surface has nothing to reject with (friction 2026-07-25, unwritten)",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "ver:views-suite",
       "node_type": "Verification",
       "properties": {
@@ -18316,7 +18581,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5eef9455860ab3f3e02859444d9dc75c4b0e791dcb88f9b27c1e40bfdff77503",
+  "prev_content_hash": "sha256:2b7b98c89b2906e4228488f7ae46b591dec21b86662c88d088120316696ea38f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

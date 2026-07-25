@@ -156,6 +156,11 @@ fn an_accepted_decision_over_what_a_kpp_binds_is_surfaced_for_review() {
         Some("Cheaper tooling."),
     )
     .unwrap();
+    // ACCEPTED deliberately — the whole point of this check is that a settled
+    // choice may have traded a KPP away, and since 2026-07-25 a new Decision
+    // lands `proposed` (req:decision-status-not-asserted), which correctly does
+    // NOT fire: an open choice has traded nothing yet.
+    g.set_decision_status("dec:steel", "accepted").unwrap();
     g.governed_by(node::COMPONENT, "cmp:body", node::DECISION, "dec:steel")
         .unwrap();
 
