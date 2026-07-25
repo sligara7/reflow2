@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2b734ba2376cff6fed7e73d28ac7f4eca91815fdf4adcdfd264481dd62ae0827",
+  "content_hash": "sha256:2551a347dd99f0a8a059ba423aa7373ba5800fbcc0ad400886413d35c123cb59",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5023,6 +5023,24 @@
       "from_id": "cap:cluster-claims",
       "properties": {},
       "to_id": "dec:multi-writer-architecture"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cluster-claims",
+      "properties": {},
+      "to_id": "decision:ack:4dc755507da9ffe5"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cluster-claims",
+      "properties": {},
+      "to_id": "decision:ack:5551e27a6da191b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cluster-claims",
+      "properties": {},
+      "to_id": "decision:ack:ca4e30e6002dfd13"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -13265,6 +13283,26 @@
       }
     },
     {
+      "node_id": "decision:ack:4dc755507da9ffe5",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:4dc755507da9ffe5.",
+        "name": "Reviewed: gap:4dc755507da9ffe5",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities, with the check named because the obvious one would certify the wrong property. Asserting \"a claim was recorded and can be read back\" proves storage, not usefulness. The test must pin the HONEST LIMIT the architecture forces: a claim is advisory and NOT a lock, so the suite has to show that a second writer who ignores an existing claim is not blocked, that their work still merges correctly through the three-way merge, and that the overlap is REPORTED rather than prevented. A claims layer whose tests only demonstrate successful claiming would read as a locking mechanism to anyone skimming it, which is precisely the false promise dec:report-dont-judge and this decision's recorded weakness warn against — without a server, one person's claim is invisible to another until a pull.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:5551e27a6da191b0",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:5551e27a6da191b0.",
+        "name": "Reviewed: gap:5551e27a6da191b0",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call). The owning component arrives with the build and is not invented ahead of it: claims are new core code and will need their own module, but which module — a new claims.rs, or folded into the provenance layer that already holds Contributor identity — is a real choice about where the seam falls, and guessing it now would put a component in the design that nothing has yet justified. Distinct from the cap:explains-itself case, where allocation was left open because the answer was genuinely ambiguous; here it is simply not yet earned.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:593e26aed260f0a3",
       "node_type": "Decision",
       "properties": {
@@ -13411,6 +13449,16 @@
         "decision": "Accepted the gap gap:be224976b1f4f6e1.",
         "name": "Reviewed: gap:be224976b1f4f6e1",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24): cap:session-memory was captured today and nothing is built, so a Verification would have nothing to run against. Worth naming the check it will need when it is built, because it is not the obvious one: the test is not \"does a node get written\" but \"does a LATER session, with no memory of this one, find what this session decided by asking a question in its own words\". That makes it an integration check spanning the trigger, the epoch anchor and the query surface — and it cannot pass while ver:search-natural-language is failing, since the query half is the same machinery. Sequence it after the foundation search fix lands.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:ca4e30e6002dfd13",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:ca4e30e6002dfd13.",
+        "name": "Reviewed: gap:ca4e30e6002dfd13",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities: nothing is built for claims yet. The decision that shapes it landed minutes ago (dec:multi-writer-architecture), so this is the newest work on the board rather than neglected work.",
         "status": "accepted"
       }
     },
@@ -15560,7 +15608,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2ca996a22d6e9471f6150a501b63f3f7f64e0bd74011549c690057c6834e36df",
+  "prev_content_hash": "sha256:2b734ba2376cff6fed7e73d28ac7f4eca91815fdf4adcdfd264481dd62ae0827",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
