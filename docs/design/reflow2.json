@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:96877dc60b0fca79bbdff5ba7c93001c38fa159779077eec67956ee66cdc2eef",
+  "content_hash": "sha256:38e57e4f5a06945cc1e8bd417fd509f23e9b5c0a858f08279faa03d74594b5f9",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -216,6 +216,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:kpp-proposal",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -658,6 +666,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:drift-direction-built",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:kpp-built",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -2969,6 +2983,42 @@
         "action": "added"
       },
       "to_id": "ver:drift-direction"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:kpp-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:kpp-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:kpp-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:kpp"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:kpp-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:kpp-proposal"
     },
     {
       "edge_type": "CHANGED",
@@ -5787,6 +5837,12 @@
       "from_id": "cap:kpp",
       "properties": {},
       "to_id": "decision:ack:2162197689aecdb2"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kpp-proposal",
+      "properties": {},
+      "to_id": "dec:three-party-checks"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9592,6 +9648,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:kpp"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:detect"
@@ -10115,6 +10179,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:kpp-proposal",
+      "properties": {},
+      "to_id": "req:inviolable-intent"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:loop-status",
       "properties": {},
       "to_id": "req:coherence"
@@ -10442,6 +10512,12 @@
       "from_id": "ver:kit",
       "properties": {},
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:kpp",
+      "properties": {},
+      "to_id": "cap:kpp"
     },
     {
       "edge_type": "VERIFIES",
@@ -11035,7 +11111,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:223fdc794d10db78",
+        "checksum": "sha256:c1df9d769a9262d0",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -11709,10 +11785,23 @@
       "node_id": "cap:kpp",
       "node_type": "Capability",
       "properties": {
-        "description": "Key performance parameters as first-class vocabulary — Anthony's call, 2026-07-24 (BL-96): a KPP is its own thing, not a Constraint flagged critical, because it answers a different question. A Requirement is a goal that may be traded; a Constraint is a limit imposed from outside; a KPP is a threshold whose loss fails the whole effort, and it therefore outranks every design decision made after it. Carries the threshold value and, where meaningful, the objective value (the DoD acquisition sense). The load-bearing half is the computation, not the noun: a detector that fires when a KPP is unsatisfied, unallocated, or contradicted by an accepted Decision, at a severity above ordinary gaps, plus a KPP crossing marked in propagate_change so impact-check surfaces it before an edit rather than after. Per dec:edge-orthogonality a vocabulary distinction earns its keep only if a computation reads it — so without the detector this concept would not deserve to exist. Much of the substrate is already in the schema and entirely unused (Constraint's quantity/limit/direction triple with budget rollup, DesignRule.enforced, QualityGate.criteria, the VIOLATES_RULE edge). PLANNED — BL-96; whether this lands as a new node type or a discriminated Constraint subtype is an open sub-axis for the user at build time, because a new node type is a schema change with real upgrade cost (BL-94).",
+        "description": "Hold inviolable intent (KPPs) and COMPUTE when the design breaks one. BUILT 2026-07-25. Anthony's call on shape: a discriminated Constraint (`category: kpp`) rather than a new node type, because the quantity/limit/direction triple and the budget rollup are exactly what a KPP needs and already existed unused — and because an enum value plus a property is upgrade-SAFE where a new node type would refuse older binaries, which mattered on a day that already shipped two edge-type changes. Added `objective` beside the existing `limit`, giving the acquisition pair: threshold is the minimum acceptable, objective is what success looks like. Objective is optional and never invented, because a number the graph asserts on its own is the one thing intent vocabulary must not do. THREE VIOLATIONS, ranked ABOVE ordinary gaps because a breached KPP is not thinness in the design, it is the design failing. UNBOUND (0.90) — a KPP constraining nothing can never be violated, so it sits permanently green while asserting something vital; the quietest failure and the reason 'a KPP that nothing checks is a comment'. Reported once, not three times: an unbound KPP cannot also be breached or contradicted, and counting one fault three ways would teach people the findings are noise. BREACHED (0.95) — the budget rollup crossed the threshold, reusing budget_report wholesale. The only arithmetic violation, and the reason a KPP is worth distinguishing from a requirement nobody adds up. An INCOMPLETE rollup is deliberately NOT a breach: asserting failure from absent data is the silent guess this project forbids. CONTRADICTED (0.85) — an ACCEPTED decision governs what the KPP binds, surfaced for review and explicitly not asserted as a violation, since whether it truly costs the KPP is semantic. Proposed decisions are excluded: an open choice has traded nothing away, and flagging it would punish thinking out loud. 9 tests. FOUND WHILE BUILDING: GOVERNED_BY runs FROM the governed node TO the Decision, so the first implementation walked it backwards and found nothing — caught by the test rather than by review. THE CAPTURE HALF IS cap:kpp-proposal AND IS NOT BUILT: this computes violations of KPPs that exist; it does not notice that a stated need SHOULD be one.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Hold inviolable intent (KPPs) and compute when the design breaks one",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:kpp-proposal",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The capture half of KPPs, and the half a person actually touches. Anthony, 2026-07-25: the user says \\\"the system should be able to perform X\\\"; the agent, acting as the systems-engineering SME the user is not required to be (req:no-se-knowledge), recognises the shape of inviolable intent and asks — that sounds like something that MUST be met, is it? — and the user confirms or declines. WHY THE AGENT MUST NOT DECIDE IT: criticality is a claim about consequence, not about wording. Whether missing a threshold FAILS THE EFFORT depends on mission, contract and money that the graph does not hold and the agent cannot see. An agent that promoted a requirement to KPP on its own would be asserting the user's stake in their own project, which is the same forgery dec:certainty-derived forbids for requirement status — and worse here, because a KPP outranks every ordinary gap and would drag the whole detector's ranking with it. So: the agent PROPOSES, the human DISPOSES, and nothing enters as a KPP without the user's word. WHAT THE AGENT CAN LEGITIMATELY NOTICE, and it is more than intuition. A statement carrying a unit-bearing threshold (500 miles, 3000 pounds, 500 milliseconds) is already shaped like a KPP and may simply be unmodelled — the quantity/limit/direction triple has somewhere to go. Language of necessity ('must', 'shall', 'no less than') against language of preference ('should', 'aims to') is a real signal in acquisition prose. And a requirement whose failure the user has elsewhere described as fatal is a candidate the graph itself can surface. THE QUESTION MUST CARRY THE CONSEQUENCE, not just the label: asking 'is this a KPP?' invites a shrug, whereas asking 'if the system missed this by ten percent, would the effort have failed?' is answerable by someone who has never heard the term — which is the test req:no-se-knowledge sets. On confirmation the agent sets category kpp, and should ask for the threshold and, where one exists, the objective; on decline it stays an ordinary Requirement and the offer is not repeated. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Notice when a stated need is really a KPP, and ask",
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
@@ -12484,6 +12573,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Directional drift built: reconcile now says understated / overstated / diverged and names the delta"
+      }
+    },
+    {
+      "node_id": "chg:kpp-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "KPPs built: category kpp with objective, and three computed violations; the proposal half captured"
       }
     },
     {
@@ -15793,6 +15890,18 @@
       }
     },
     {
+      "node_id": "ver:kpp",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "integration",
+        "method": "test",
+        "name": "A KPP breach is computed, an unbound KPP is caught, and an incomplete rollup is not a breach",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:loop-nudge",
       "node_type": "Verification",
       "properties": {
@@ -16041,7 +16150,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:7f2bd39fc6da2b042d2075b542ddea99009d14668e3166bc8235430abf1ea55f",
+  "prev_content_hash": "sha256:96877dc60b0fca79bbdff5ba7c93001c38fa159779077eec67956ee66cdc2eef",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

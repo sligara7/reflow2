@@ -50,7 +50,7 @@ schema:
       properties:
         name: { type: string, required: true, indexed: true, fulltext: true }
         statement: { type: string, required: true, fulltext: true }
-        category: { type: enum, values: [technical, business, operational, physical, regulatory, budget, schedule], default: technical, indexed: true }
+        category: { type: enum, values: [technical, business, operational, physical, regulatory, budget, schedule, kpp], default: technical, indexed: true, description: "`kpp` marks a KEY PERFORMANCE PARAMETER: inviolable intent, in the acquisition sense — a threshold that, if missed, fails the effort regardless of how well everything else went. Distinct from an ordinary Constraint (a limit imposed on the design, tradeable against other limits) and from a Requirement (a goal to achieve). Modelled as a Constraint subtype rather than its own node type on the user's call (2026-07-25) because the quantity/limit/direction triple and the budget rollup are exactly what a KPP needs and already exist. Its violations are computed, never remembered, and are ranked above ordinary gaps." }
         concern: { type: enum, values: [core, logistics, sustainment, safety, security, cost, schedule, manufacturability, usability, environmental, other], default: core, indexed: true, description: "Cross-cutting concern (ILS facet). Lets logistics/sustainment limits be filtered without a separate node type." }
         priority: { type: enum, values: [low, medium, high, critical], default: medium, indexed: true }
         rationale: { type: string }
@@ -61,6 +61,7 @@ schema:
         quantity: { type: string, indexed: true, description: "Unit-bearing name of the budgeted quantity — e.g. mass_kg, latency_ms, power_w, cost_usd." }
         limit: { type: float, description: "The budget number, in the quantity's unit." }
         direction: { type: enum, values: [maximum, minimum], default: maximum, description: "maximum = total must stay at or under the limit; minimum = at or over." }
+        objective: { type: float, description: "For a `kpp`: the OBJECTIVE value, the desired performance, where `limit` carries the THRESHOLD — the minimum acceptable. The acquisition pair: missing the threshold fails the effort, reaching the objective is what success looks like. Optional, because many KPPs state only a threshold, and inventing an objective nobody set would be a number the graph asserts on its own." }
       embedding_field: statement
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
       extraction_hint: >

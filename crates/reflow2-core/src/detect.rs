@@ -213,6 +213,21 @@ pub enum GapSource {
     /// retired (`dec:edge-orthogonality`). One project-level rollup, not N
     /// per-capability alarms (the BL-73 lesson).
     UnvalidatedCapability,
+    /// A **key performance parameter** — inviolable intent — that nothing is
+    /// bound to. A KPP constraining nothing is a comment: it can never be
+    /// violated because it touches nothing, so it will sit green forever while
+    /// asserting something important. Ranked above ordinary gaps.
+    KppUnbound,
+    /// A KPP whose budget rollup has gone past its threshold: the stated
+    /// contributions sum to the wrong side of the limit. The one KPP violation
+    /// that is arithmetic rather than judgement.
+    KppBreached,
+    /// An **accepted** Decision whose blast radius reaches what a KPP binds —
+    /// a downstream choice that may have traded away something untradeable.
+    /// Surfaced for review, never asserted as a violation: whether the decision
+    /// actually costs the KPP is semantic, and calling it broken automatically
+    /// would be the judgement `dec:report-dont-judge` forbids.
+    KppContradicted,
 }
 
 impl GapSource {
@@ -250,6 +265,9 @@ impl GapSource {
             GapSource::OrphanLevel => "orphan_level",
             GapSource::UndecidedDecisionPoint => "undecided_decision_point",
             GapSource::UnvalidatedCapability => "unvalidated_capability",
+            GapSource::KppUnbound => "kpp_unbound",
+            GapSource::KppBreached => "kpp_breached",
+            GapSource::KppContradicted => "kpp_contradicted",
         }
     }
 }
@@ -848,6 +866,7 @@ impl DesignGraph {
         self.detect_hierarchy_gaps(&mut gaps)?;
         self.detect_undecided_decision_points(&mut gaps)?;
         self.detect_unvalidated_capabilities(&mut gaps)?;
+        self.detect_kpp_violations(&mut gaps)?;
 
         gaps.sort_by(|a, b| {
             // `false` sorts before `true`, so "has anchors" comes first.
@@ -2066,6 +2085,160 @@ impl DesignGraph {
                 names.join(", ")
             ),
         });
+        Ok(())
+    }
+
+    /// KPP violations — inviolable intent, checked rather than remembered.
+    ///
+    /// A key performance parameter is a Constraint with `category: kpp`: a
+    /// threshold that, if missed, fails the effort regardless of how well
+    /// everything else went. The whole point is that it is COMPUTED. A KPP
+    /// nobody checks is a comment, and a comment is exactly what gets traded
+    /// away in the tenth iteration cycle by someone who never read it.
+    ///
+    /// Three findings, ranked above ordinary gaps because a breached KPP is not
+    /// a thinness in the design — it is the design failing:
+    ///
+    /// - **unbound** — it constrains nothing, so it can never be violated. The
+    ///   quietest failure: permanently green while asserting something vital.
+    /// - **breached** — the budget rollup has crossed the threshold. The only
+    ///   one that is arithmetic rather than judgement, and it reuses
+    ///   `budget_report` wholesale.
+    /// - **contradicted** — an *accepted* Decision reaches what the KPP binds.
+    ///   Surfaced for review and deliberately NOT asserted as a violation:
+    ///   whether that decision actually costs the KPP is semantic, and deciding
+    ///   it automatically is the judgement `dec:report-dont-judge` forbids.
+    fn detect_kpp_violations(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        for c in self.scan_nodes(node::CONSTRAINT)? {
+            if c.properties
+                .get("category")
+                .and_then(dynograph_core::Value::as_str)
+                != Some("kpp")
+            {
+                continue;
+            }
+            let name = node_name(&c);
+            let bound: Vec<String> = self
+                .outgoing(&c.node_id, Some(edge::CONSTRAINS))?
+                .into_iter()
+                .map(|e| e.to_id)
+                .collect();
+
+            if bound.is_empty() {
+                let affected = vec![c.node_id.clone()];
+                gaps.push(GapCandidate {
+                    id: gap_id(GapSource::KppUnbound, &affected),
+                    gap_source: GapSource::KppUnbound,
+                    scope: GapScope::Capability,
+                    severity: 0.9,
+                    title: format!("Key performance parameter “{name}” binds nothing"),
+                    description: format!(
+                        "“{name}” is a key performance parameter — if it is missed the effort \
+                         fails — but it constrains no part of the design, so nothing can ever \
+                         violate it. What must meet it?"
+                    ),
+                    evidence: format!(
+                        "Constraint '{}' has category=kpp and 0 outgoing CONSTRAINS.",
+                        c.node_id
+                    ),
+                    affected_ids: affected,
+                    suggested_depth: 2,
+                });
+                // An unbound KPP cannot be breached or contradicted either —
+                // both need something bound to reason about. Reporting all
+                // three would be one fault counted three times.
+                continue;
+            }
+
+            let report = self.budget_report(&c.node_id)?;
+            if report.verdict == crate::budget::BudgetVerdict::Exceeded {
+                let mut affected = vec![c.node_id.clone()];
+                affected.extend(bound.iter().cloned());
+                affected.sort();
+                let limit = report
+                    .limit
+                    .map(|l| l.to_string())
+                    .unwrap_or_else(|| "?".into());
+                gaps.push(GapCandidate {
+                    id: gap_id(GapSource::KppBreached, &affected),
+                    gap_source: GapSource::KppBreached,
+                    scope: GapScope::Project,
+                    severity: 0.95,
+                    title: format!("Key performance parameter “{name}” is breached"),
+                    description: format!(
+                        "“{name}” is a threshold the effort fails without, and the design has \
+                         crossed it: the stated contributions total {} against a {} of {}. This \
+                         is not a gap to weigh against others — either the design changes or the \
+                         parameter was wrong.",
+                        report.total, report.direction, limit
+                    ),
+                    evidence: format!(
+                        "budget_report('{}') = Exceeded: total {} vs limit {} ({}), over {} \
+                         contributor(s).",
+                        c.node_id,
+                        report.total,
+                        limit,
+                        report.direction,
+                        report.contributors.len()
+                    ),
+                    affected_ids: affected,
+                    suggested_depth: 2,
+                });
+            }
+
+            // Accepted decisions that reach what this KPP binds. `proposed`
+            // ones are excluded on purpose: an open choice has not traded
+            // anything away yet, and flagging it would punish thinking out loud.
+            let mut reaching: Vec<String> = Vec::new();
+            for target in &bound {
+                // GOVERNED_BY runs FROM the governed node TO the Decision, so
+                // the decisions shaping a target are its OUTGOING edges.
+                for e in self.outgoing(target, Some(edge::GOVERNED_BY))? {
+                    let dec_id = e.to_id;
+                    if reaching.contains(&dec_id) {
+                        continue;
+                    }
+                    if let Some(dec) = self.get_node(node::DECISION, &dec_id)?
+                        && dec
+                            .properties
+                            .get("status")
+                            .and_then(dynograph_core::Value::as_str)
+                            == Some("accepted")
+                    {
+                        reaching.push(dec_id);
+                    }
+                }
+            }
+            if !reaching.is_empty() {
+                reaching.sort();
+                let mut affected = vec![c.node_id.clone()];
+                affected.extend(reaching.iter().cloned());
+                gaps.push(GapCandidate {
+                    id: gap_id(GapSource::KppContradicted, &affected),
+                    gap_source: GapSource::KppContradicted,
+                    scope: GapScope::Capability,
+                    severity: 0.85,
+                    title: format!(
+                        "{} accepted decision(s) govern what “{name}” binds",
+                        reaching.len()
+                    ),
+                    description: format!(
+                        "“{name}” must hold no matter what else is decided, and {} accepted \
+                         decision(s) shape the very parts it binds. Confirm each still leaves it \
+                         intact — this is a prompt to check, not a claim that it is broken.",
+                        reaching.len()
+                    ),
+                    evidence: format!(
+                        "KPP '{}' CONSTRAINS {} node(s) governed by accepted decision(s): {}.",
+                        c.node_id,
+                        bound.len(),
+                        reaching.join(", ")
+                    ),
+                    affected_ids: affected,
+                    suggested_depth: 2,
+                });
+            }
+        }
         Ok(())
     }
 }
