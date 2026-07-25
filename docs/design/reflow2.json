@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2ca996a22d6e9471f6150a501b63f3f7f64e0bd74011549c690057c6834e36df",
+  "content_hash": "sha256:2b734ba2376cff6fed7e73d28ac7f4eca91815fdf4adcdfd264481dd62ae0827",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -649,6 +649,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:multi-writer-decided",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:recover-from-tests",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -1221,7 +1227,7 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:multi-writer-architecture",
       "properties": {
-        "acted_at": "2026-07-24",
+        "acted_at": "2026-07-25",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -2925,6 +2931,33 @@
         "action": "modified"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:multi-writer-decided",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:multi-writer-decided",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:multi-writer-architecture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:multi-writer-decided",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:concurrent-planning"
     },
     {
       "edge_type": "CHANGED",
@@ -4984,6 +5017,12 @@
       "from_id": "cap:change-an-existing-feature",
       "properties": {},
       "to_id": "decision:ack:f58dc09a846a8783"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cluster-claims",
+      "properties": {},
+      "to_id": "dec:multi-writer-architecture"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9559,6 +9598,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:cluster-claims",
+      "properties": {},
+      "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:compare-alternatives",
       "properties": {},
       "to_id": "req:human-decides"
@@ -11050,6 +11095,19 @@
       }
     },
     {
+      "node_id": "cap:cluster-claims",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The scoping primitive dec:multi-writer-architecture commits to (BL-44). A contributor claims a computable region of the design — a node and its neighbourhood, or a community — so parallel work is separated BEFORE it overlaps rather than reconciled after. Satisfies req:concurrent-planning, which was accepted 2026-07-25 and blocked until the architecture decision was made. THE SHAPE IS SET BY THE DECISION: designs stay files in each checkout and git moves them, so a claim is not a lock and cannot be — there is no shared server to hold one. It is advisory, travels in the export like everything else, and is honest about what it can and cannot promise (dec:report-dont-judge). Two people who ignore claims still get a correct three-way merge; claims exist so they rarely need one. The region should be COMPUTED rather than hand-drawn — propagate_from's blast radius or a Leiden community is already the right shape, and git's sparse-checkout cone is the acknowledged prior art (borrow the concept, not the filesystem mechanism). Carries the same identity layer the rest of the design uses: a claim is AUTHORED_BY a Contributor, so \\\"who holds what\\\" is answerable from the graph. THE HONEST LIMIT, inherited from the decision and worth stating in the tool itself: without a server, one person's claim is only visible to another after a pull. Claims reduce collisions, they do not prevent them, and a claim layer that implied otherwise would be worse than none. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Claim a region of the design so two people do not collide in it",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:compare-alternatives",
       "node_type": "Capability",
       "properties": {
@@ -12044,6 +12102,14 @@
       }
     },
     {
+      "node_id": "chg:multi-writer-decided",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Multi-writer architecture decided: repo file + merge on pull, confirming rather than superseding dec:repo-file-embedded"
+      }
+    },
+    {
       "node_id": "chg:recover-from-tests",
       "node_type": "ChangeEvent",
       "properties": {
@@ -12991,10 +13057,11 @@
       "node_id": "dec:multi-writer-architecture",
       "node_type": "Decision",
       "properties": {
-        "decision": "UNDECIDED. This is a decision point, not a decision: it is recorded proposed so the question is visible and forkable rather than living as prose in a backlog file. The question: when N people (the concrete case raised was fifteen developers) work one design, does reflow2 stay a graph-in-a-repo-file that merges on pull, become a centrally hosted service with a shared writable store, or take a hybrid — a hosted read/coordination surface over per-writer files? If accepted in any form other than the first, this would supersede dec:repo-file-embedded, which chose the repo file and is NOT to be flipped back to proposed (dec:reopen-supersedes). Half of what a team needs already exists and should be weighed before any architecture moves: the three-way merge computes a typed per-node, per-property case table against the common ancestor and mints each conflict as a Question with a deterministic id, with recorded resolutions replayable across near-identical conflicts. What does not exist is the coordination underneath it — a scoping primitive so two people do not collide in the first place, and identity at team scale.",
-        "name": "OPEN — does a design with many writers stay a repo file, become a hosted service, or something between?",
+        "alternatives": "[{\"option\":\"repo file, merge on pull\",\"outcome\":\"chosen\",\"note\":\"contradicts nothing; reuses the built merge machinery; needs BL-44 claims\"},{\"option\":\"hosted service\",\"outcome\":\"rejected\",\"note\":\"contradicts req:persistence and req:invocation (both accepted); supersedes dec:repo-file-embedded; design leaves the user's machine; permanent operational burden\"},{\"option\":\"hybrid: hosted coordination, local designs\",\"outcome\":\"rejected\",\"note\":\"keeps req:persistence but strains req:invocation with a second surface; the claims layer approximates the benefit without a server\"}]",
+        "decision": "DECIDED 2026-07-25: the design STAYS a graph-in-a-repo-file, and many writers are handled by merging on pull. No hosted service, no shared writable store. Each person's design lives at ./.reflow2/graph in their own checkout, git moves it, and genuinely overlapping work is resolved by the three-way merge that already exists — typed per-node and per-property against the common ancestor, with each conflict minted as a Question carrying a deterministic id, and recorded resolutions replayable across near-identical conflicts (rerere). THIS CONFIRMS dec:repo-file-embedded RATHER THAN SUPERSEDING IT. That is the outcome worth noting: this was the first field-sourced re-opening of a settled decision, triggered because dec:repo-file-embedded's own rationale said the concurrency argument was 'hypothetical while there is one writer' and fifteen developers made it concrete. The precondition genuinely changed, the decision was genuinely re-opened, and the original answer survived contact with the new evidence. A re-opening that ends where it started is not wasted — it converts an assumption into a tested position. WHAT WAS REJECTED AND WHY. A HOSTED SERVICE: rejected on cost against confirmed intent, not on taste. It contradicts req:persistence ('the graph lives at ./.reflow2/graph inside the consumer project, so the design travels with the repo') and req:invocation ('the reflow2-mcp binary spoken to over stdio, installed into a consumer project'), both accepted, so choosing it would have required retiring or revising confirmed intent rather than merely adding machinery. It also puts the design on a machine the user does not control, carries permanent operational burden, and breaks the session-transcript identity for everyone but the local user (a local path resolves for one person and silently misses for the rest). A HYBRID — hosted claims and presence over local designs: rejected as the weaker version of the same trade. It keeps req:persistence but strains req:invocation with a second surface to run, and buys live visibility that the claims layer can approximate without a server. WHAT THIS COMMITS TO BUILDING: the scoping primitive (BL-44 cluster claims) so two people do not collide in the first place, and merge-on-pull ergonomics. The honest weakness accepted with this choice: no live view of what others hold, so overlap surfaces at merge time rather than before it — which is exactly the trade git itself makes, and the one this project's users already understand.",
+        "name": "Many writers keep the repo file and merge on pull — no hosted service",
         "rationale": "Raised by the user and his brother, 2026-07-24, from a concrete scenario rather than speculation. This is the first field-sourced trigger to re-open a settled decision, and it is worth recording WHY it counts as one: dec:repo-file-embedded's own rationale reads \"the service's strongest argument (concurrency) is hypothetical while there is one writer.\" Fifteen developers is that hypothesis arriving, so the decision is not being second-guessed — its stated precondition has changed. That is exactly the signal cap:revise-trigger is being built to surface automatically; here it arrived by conversation instead, which is itself evidence the trigger is worth building. Held proposed deliberately: the architecture question is upstream of every feature beneath it (req:concurrent-planning among them), and starting to build under an unmade decision is how a design acquires an architecture nobody chose. The counter-argument that belongs in the weighing, so it is not lost: reflow2's loop is built around asking a human and recording an attributable answer — deliberate, sequential, credited — and simultaneous editing may be the wrong shape for that product even where it is technically reachable. What the raised scenario actually asks for is non-colliding parallel work plus good merges, which may be reachable without a service at all.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -15493,7 +15560,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:25d03391d09e4d82dc085eacb91b9356c2eddbd3843c1f78ae438558dc024384",
+  "prev_content_hash": "sha256:2ca996a22d6e9471f6150a501b63f3f7f64e0bd74011549c690057c6834e36df",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
