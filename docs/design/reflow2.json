@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:55b46bf929a85493ee4a3ad5d78e502a5a228007a143baceda70fde57f300723",
+  "content_hash": "sha256:87b14c6a89ea69663bea8920c132df21311503d5bfe9837a6a5f4783d1f75460",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1787,6 +1787,15 @@
         "action": "modified"
       },
       "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-fbd346a011b020b7",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:parallel-work-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -13355,6 +13364,15 @@
       }
     },
     {
+      "node_id": "chg:accept-fbd346a011b020b7",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-25",
+        "name": "Examined on the day it was written, so the ledger says \"checked\" rather than \"nobody has ever looked\": the file on disk is the file the design registered, the three mirrors are byte-identical (skill_lint), and every tool it names is served (skill_lint's reference check). What that does NOT establish, and the confirmation ledger should not be read as claiming, is that the PROCEDURE works — worktree, claim, export-before-commit, driver merge, release across two people and two checkouts. That needs a field trial, which is where the standing validation disposition puts it."
+      }
+    },
+    {
       "node_id": "chg:accept-three-built-requirements",
       "node_type": "ChangeEvent",
       "properties": {
@@ -17655,7 +17673,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:426c0abccce3df565d63bcbde12c83768243432b4317b8b73c672120526a71ba",
+  "prev_content_hash": "sha256:55b46bf929a85493ee4a3ad5d78e502a5a228007a143baceda70fde57f300723",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
