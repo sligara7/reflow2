@@ -1,6 +1,6 @@
 # The skills — which one, when
 
-Thirteen skills and seven slash commands. A **skill** is a prose workflow an agent loads by itself
+Fourteen skills and seven slash commands. A **skill** is a prose workflow an agent loads by itself
 when your situation matches its description, so the loop happens without you naming tools; a
 **slash command** is you asking for one on purpose.
 
@@ -22,6 +22,7 @@ convenience for working on reflow2 itself.
 | **impact-check** | Before changing or removing anything. Shows the blast radius so you edit only what is affected. |
 | **link-artifacts** | Right after you create or change a real file. Registers it with a checksum so drift is detectable. |
 | **check-health** | After structural changes. Cycles, single points of failure, duplicates, islands — how the design is *shaped*. |
+| **parallel-work** | Two people on one design. Claims the region, isolates the work in a worktree with its own graph, and merges the design semantically instead of by lines. |
 
 ## Changing what is already there
 
@@ -72,5 +73,7 @@ how the next session does not need you to notice again.
 - **"I inherited this — where does a new feature go?"** — `cap:onboarding`, also unbuilt, and
   arguably reflow2's strongest demo when it lands.
 - **The slash commands are not in the kit.** A consumer project gets the skills and no commands.
+- **Live collaboration.** **parallel-work** is parallel work with good merges, not simultaneous
+  editing: the graph store is single-writer, and a claim is advisory rather than a lock.
 
 This list is what exists today, not what is designed. The graph is the record of the difference.

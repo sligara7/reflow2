@@ -9,3 +9,17 @@
 # genuinely needs a human to look.
 COORD.md    merge=union
 CHANGELOG.md merge=union
+
+# The design export is one large JSON document, so two people who edited
+# DIFFERENT parts of the design still collide here — and git resolves it by
+# lines, which is the wrong unit for a graph. reflow2's own three-way merge
+# compares per node and per property against the common ancestor, so disjoint
+# work merges itself and only a real both-sides conflict stops for a human.
+#
+# Needs the driver defined once per clone (git deliberately does not let a
+# repository configure an executable):
+#   git config merge.reflow2.name 'reflow2 design export merge'
+#   git config merge.reflow2.driver 'reflow2-mcp --merge-driver %O %A %B'
+# Without that config git falls back to its normal text merge, which is safe —
+# it just means you resolve the JSON by hand.
+docs/design/reflow2.json merge=reflow2

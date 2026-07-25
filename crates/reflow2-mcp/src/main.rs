@@ -81,6 +81,36 @@ struct Cli {
     /// "theirs". Only meaningful with `--merge-apply`.
     #[arg(long, value_name = "FILE")]
     resolutions: Option<String>,
+
+    /// Be git's merge driver for a committed design export. Takes git's three
+    /// temporary files — %O (ancestor), %A (ours, and the file git reads the
+    /// result back from), %B (theirs) — in that order.
+    ///
+    /// Why this exists: two people editing DIFFERENT parts of one design still
+    /// collide in git, because the export is a single large JSON file and git
+    /// merges it by lines. The divergences are not really textual, and reflow2
+    /// already resolves them per node and per property against the common
+    /// ancestor. Wiring that in as a driver makes disjoint work merge itself.
+    ///
+    /// Git's contract, followed exactly: exit 0 means "merged, the result is in
+    /// %A"; non-zero means "conflicts remain, leave the path unmerged for the
+    /// human". So a clean merge is written to %A and succeeds, and a real
+    /// both-sides conflict exits non-zero WITHOUT touching %A, printing each
+    /// conflict id, its question, and the `--merge-apply` command that finishes
+    /// the job. Nothing is auto-decided: this driver only ever applies the
+    /// resolutions the machine can derive from one-sided changes.
+    ///
+    /// Install once per clone (the pair git needs — .gitattributes names the
+    /// driver, config defines it):
+    ///
+    ///   git config merge.reflow2.name 'reflow2 design export merge'
+    ///   git config merge.reflow2.driver 'reflow2-mcp --merge-driver %O %A %B'
+    #[arg(
+        long = "merge-driver",
+        value_name = "ANCESTOR OURS THEIRS",
+        num_args = 3
+    )]
+    merge_driver: Vec<String>,
 }
 
 /// Turn the RocksDB lock error into the sentence the operator needs.
@@ -152,6 +182,17 @@ async fn main() -> anyhow::Result<()> {
     {
         anyhow::bail!(
             "--merge-apply is its own mode; pass it without --export/--import/--diff/--merge"
+        );
+    }
+    if !cli.merge_driver.is_empty()
+        && (cli.export
+            || cli.import.is_some()
+            || !cli.diff.is_empty()
+            || !cli.merge.is_empty()
+            || !cli.merge_apply.is_empty())
+    {
+        anyhow::bail!(
+            "--merge-driver is its own mode; pass it without --export/--import/--diff/--merge/--merge-apply"
         );
     }
     if cli.resolutions.is_some() && cli.merge_apply.is_empty() {
@@ -238,6 +279,71 @@ async fn main() -> anyhow::Result<()> {
             .map_err(|e| anyhow::anyhow!("{e}"))
             .context("could not produce the merged design")?;
         println!("{}", serde_json::to_string_pretty(&merged)?);
+        return Ok(());
+    }
+
+    // Merge-driver-and-exit. Git's side of the same file-pure merge: it hands us
+    // three temporary files and reads the result back out of the middle one.
+    if !cli.merge_driver.is_empty() {
+        let read_doc = |path: &str| -> anyhow::Result<reflow2_core::GraphExport> {
+            let raw = std::fs::read_to_string(path)
+                .with_context(|| format!("failed to read the design from {path}"))?;
+            serde_json::from_str(&raw)
+                .with_context(|| format!("{path} is not a reflow2 export document"))
+        };
+        let (base_path, ours_path, theirs_path) = (
+            &cli.merge_driver[0],
+            &cli.merge_driver[1],
+            &cli.merge_driver[2],
+        );
+        let base = read_doc(base_path)?;
+        let ours = read_doc(ours_path)?;
+        let theirs = read_doc(theirs_path)?;
+        let proposal =
+            reflow2_core::merge_designs(&base, &ours, &theirs, base_path, ours_path, theirs_path);
+
+        // Real conflicts stop here. Git's convention is that a non-zero exit
+        // leaves the path unmerged, which is exactly right: the human decides,
+        // and the message has to be actionable at a git prompt where nobody is
+        // going to go hunting for the tool that produced it (rule 4).
+        if !proposal.conflicts.is_empty() {
+            eprintln!(
+                "reflow2: {} conflict(s) in the design export need a decision — \
+                 the rest merged cleanly and is NOT lost, it is recomputed when you apply.",
+                proposal.conflicts.len()
+            );
+            for c in &proposal.conflicts {
+                let property = c
+                    .property
+                    .as_deref()
+                    .map(|p| format!(" [{p}]"))
+                    .unwrap_or_default();
+                eprintln!("  {} — {}{}: {}", c.id, c.target, property, c.question);
+            }
+            eprintln!(
+                "\nDecide each id as base|ours|theirs in a JSON file, then:\n  \
+                 reflow2-mcp --merge-apply {base_path} {ours_path} {theirs_path} \
+                 --resolutions <FILE> > {ours_path}\n  git add <the export>"
+            );
+            std::process::exit(1);
+        }
+
+        // No conflicts: every divergence was one-sided, so the merge is
+        // derivable with no decisions at all. resolve_merge is the same code the
+        // apply path uses — the driver takes no shortcut of its own.
+        let merged = reflow2_core::resolve_merge(&base, &ours, &theirs, &Default::default())
+            .map_err(|e| anyhow::anyhow!("{e}"))
+            .context("could not produce the merged design")?;
+        let rendered = serde_json::to_string_pretty(&merged)?;
+        std::fs::write(ours_path, format!("{rendered}\n"))
+            .with_context(|| format!("failed to write the merged design to {ours_path}"))?;
+        eprintln!(
+            "reflow2: merged {} node(s) and {} edge(s) — {} divergence(s) resolved automatically, \
+             no conflicts.",
+            merged.nodes.len(),
+            merged.edges.len(),
+            proposal.auto.len()
+        );
         return Ok(());
     }
 

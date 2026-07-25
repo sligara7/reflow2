@@ -200,6 +200,11 @@ NON_TOOL_TERMS = {
     "omitted",
     "next_offset",
     "capped_by",
+    # The merge driver's per-conflict decisions (parallel-work skill): each
+    # conflict id maps to one of these three sides.
+    "base",
+    "ours",
+    "theirs",
 }
 
 

@@ -33,6 +33,32 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **reflow2 is now git's merge driver for the design export** — so two people
+  editing *different* parts of one design stop colliding. The export is a single
+  large JSON file and git merges it by lines, a unit that means nothing to a
+  graph; the semantic merge already existed (BL-80), and this is the adapter that
+  makes git call it.
+
+  `reflow2-mcp --merge-driver %O %A %B`, wired by `.gitattributes` and one
+  `git config` per clone (git will not let a repository configure an executable).
+  Git's contract exactly: a clean merge is written to `%A` and exits 0; a real
+  both-sides conflict exits non-zero **without touching `%A`**, printing each
+  conflict id, its question, and the `--merge-apply` command that finishes it.
+  Nothing is auto-decided — only what one-sided changes make derivable.
+
+  Tested **by git**, on real branches (`tools/test_merge_driver.py`, in CI's full
+  job): disjoint edits merge with no human, both-sides conflicts leave the path
+  unmerged and name themselves, additions from each side both survive, and a clone
+  without the config degrades to git's text merge instead of failing.
+
+  Plus a **parallel-work** skill (14 skills now): claim the region, work in a
+  worktree with its own graph — the store is single-writer *per directory*, so two
+  people can each run a server — export before every commit that touched the
+  design, let the driver merge, release the claim, reconcile. It is required to say
+  the uncomfortable parts out loud: a claim is advisory and invisible until a pull,
+  the *code* still merges the way it always did, and `--ours`/`--theirs` on a design
+  conflict silently discards a node someone wrote.
+
 - **Three imports from the GitHub MCP Server study**
   ([docs/github-mcp-nuggets.md](docs/github-mcp-nuggets.md)) — a hosted MCP
   server at very large scale, read for what a design brain should take and what

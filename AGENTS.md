@@ -158,6 +158,21 @@ conflicts on the shared records without discarding anyone's work; read that befo
 
 **Branches.** `feat/<short-name>` off `main`, one per claimed item where practical.
 
+**One-time setup per clone — the design-export merge driver.** `.gitattributes` points
+`docs/design/reflow2.json` at reflow2's own three-way merge, but git deliberately does not let a
+repository configure an executable, so each clone defines it once:
+
+```bash
+git config merge.reflow2.name 'reflow2 design export merge'
+git config merge.reflow2.driver 'target/debug/reflow2-mcp --merge-driver %O %A %B'
+```
+
+Then two people editing different parts of the design merge with no conflict, and a real
+both-sides conflict stops with its ids and the `--merge-apply` command that finishes it. Without
+the config git falls back to a text merge of a 600KB JSON file — safe, but you resolve it by hand.
+**Never resolve a design conflict with `--ours`/`--theirs`**: for code that drops a hunk, for a
+design it drops a node someone wrote and nothing will tell you it is gone.
+
 **A change is done when all of these are clean:**
 
 ```bash

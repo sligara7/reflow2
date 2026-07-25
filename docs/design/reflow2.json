@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1e07b390fee58439f4b85f60ed03030997f5392d00f2c3296c8c4e0c8aa59496",
+  "content_hash": "sha256:55b46bf929a85493ee4a3ad5d78e502a5a228007a143baceda70fde57f300723",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -171,6 +171,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:git-merge-driver",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:heal",
       "properties": {
         "weight_basis": "estimated"
@@ -300,6 +308,14 @@
     {
       "edge_type": "ALLOCATED_TO",
       "from_id": "cap:onboarding",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:parallel-work",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -726,6 +742,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:kpp-proposal-built",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:merge-driver-built",
       "properties": {},
       "to_id": "epoch:kpp-capture"
     },
@@ -3271,6 +3293,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:merge-driver-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:merge-driver-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:merge-driver-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:merge-driver-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:git-merge-driver"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:merge-integrity-bl47-bl46",
       "properties": {
         "accepted_baseline": true,
@@ -3738,6 +3796,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:git-merge-driver"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:heal"
     },
     {
@@ -3745,6 +3809,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:parallel-work"
     },
     {
       "edge_type": "CONTAINS",
@@ -5532,6 +5602,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:change-an-existing-feature",
       "properties": {},
+      "to_id": "decision:ack:bd5aefd848b8d3e4"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change-an-existing-feature",
+      "properties": {},
       "to_id": "decision:ack:e114420e3f72541b"
     },
     {
@@ -6088,6 +6164,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:git-merge-driver",
+      "properties": {},
+      "to_id": "decision:ack:046d5d7e84c91989"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:heal",
       "properties": {},
       "to_id": "dec:ask-not-repair"
@@ -6582,6 +6664,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:onboarding",
       "properties": {},
+      "to_id": "decision:ack:bd5aefd848b8d3e4"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:onboarding",
+      "properties": {},
       "to_id": "decision:ack:e114420e3f72541b"
     },
     {
@@ -6589,6 +6677,12 @@
       "from_id": "cap:onboarding",
       "properties": {},
       "to_id": "decision:ack:f58dc09a846a8783"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:parallel-work",
+      "properties": {},
+      "to_id": "decision:ack:bd5aefd848b8d3e4"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7332,6 +7426,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cmp:skills",
       "properties": {},
+      "to_id": "decision:ack:bd5aefd848b8d3e4"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:skills",
+      "properties": {},
       "to_id": "decision:ack:e114420e3f72541b"
     },
     {
@@ -7396,9 +7496,21 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:design-reachable-without-the-repo",
+      "properties": {},
+      "to_id": "decision:ack:90a90e90df05c31a"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:many-designs-one-service",
       "properties": {},
       "to_id": "dec:central-host"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:many-designs-one-service",
+      "properties": {},
+      "to_id": "decision:ack:33be77a4e91bc8ae"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10506,6 +10618,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:merge-driver-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:git-merge-driver"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:nodes",
       "properties": {
         "completeness": "complete"
@@ -10519,6 +10639,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:parallel-work-skill",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:parallel-work"
     },
     {
       "edge_type": "REALIZES",
@@ -10822,6 +10950,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:git-merge-driver",
+      "properties": {},
+      "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:heal",
       "properties": {},
       "to_id": "req:coherence"
@@ -10942,6 +11076,12 @@
       "from_id": "cap:onboarding",
       "properties": {},
       "to_id": "req:onboard-newcomer"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:parallel-work",
+      "properties": {},
+      "to_id": "req:concurrent-planning"
     },
     {
       "edge_type": "SATISFIES",
@@ -11278,6 +11418,12 @@
       "from_id": "ver:merge",
       "properties": {},
       "to_id": "cap:merge-rerere"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:merge-driver",
+      "properties": {},
+      "to_id": "cap:git-merge-driver"
     },
     {
       "edge_type": "VERIFIES",
@@ -11641,6 +11787,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:merge-driver-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:merge-driver-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:nodes",
       "properties": {
         "action": "created"
@@ -11654,6 +11808,14 @@
         "action": "created"
       },
       "to_id": "art:operate"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:parallel-work-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:parallel-work-skill"
     },
     {
       "edge_type": "YIELDED",
@@ -12072,7 +12234,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:642790f15f14f243",
+        "checksum": "sha256:7cd58c187b327a97",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -12086,6 +12248,17 @@
         "checksum": "sha256:075bab31f3c131b6",
         "location": "crates/reflow2-core/src/merge.rs",
         "name": "merge.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:merge-driver-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:cddbea4165e0e3b0",
+        "location": "tools/test_merge_driver.py",
+        "name": "test_merge_driver.py",
         "status": "realized"
       }
     },
@@ -12108,6 +12281,17 @@
         "checksum": "sha256:feca736d9d86d965",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:parallel-work-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:c5b7664a5df44b99",
+        "location": "getting-started/skills/parallel-work/SKILL.md",
+        "name": "parallel-work/SKILL.md",
         "status": "realized"
       }
     },
@@ -12138,7 +12322,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:98cdbed855638b17",
+        "checksum": "sha256:5ca4a40c94fa8661",
         "location": "README.md",
         "name": "README.md",
         "status": "realized"
@@ -12226,7 +12410,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:ba652824213d0e54",
+        "checksum": "sha256:a35efc9ffeba99d8",
         "location": "SKILLS.md",
         "name": "SKILLS.md",
         "status": "realized"
@@ -12561,6 +12745,19 @@
       }
     },
     {
+      "node_id": "cap:git-merge-driver",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-07-25 as `reflow2-mcp --merge-driver %O %A %B`, plus the `.gitattributes` entry and the parallel-work skill. THE PROBLEM IT ANSWERS, from Anthony's own doubt while brainstorming the isolation ideas: claiming a cluster of nodes says nothing about the REPOSITORY, so two people working entirely separate parts of one design still collide in git — the export is a single large JSON document and git merges it by lines, a unit that means nothing to a graph. The merge itself already existed (BL-80: per node, per property, against the common ancestor, conflicts minted as Questions with deterministic ids); what was missing was one adapter so git calls it. Git's contract followed exactly: exit 0 means merged with the result in %A, non-zero means conflicts remain and the path stays unmerged for a human. A clean merge is written and succeeds; a real both-sides conflict exits non-zero WITHOUT touching %A and prints each conflict id, its question and the `--merge-apply` command that finishes the job — because a driver that fails silently at a git prompt is how someone reaches for `--ours` and deletes a node the other person wrote. NOTHING IS AUTO-DECIDED: the driver applies only what one-sided changes make derivable, running the same resolve_merge the apply path uses so it can take no shortcut of its own. Tested by GIT, not by a home-grown client (tools/test_merge_driver.py, 4 cases on real branches): disjoint edits merge with no human, both-sides conflicts leave the path unmerged and name themselves, additions from both sides both survive, and an unconfigured clone degrades to git's text merge instead of failing — because .gitattributes travels with the repo and the driver definition cannot.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Be git's merge driver for the design, so disjoint work merges itself",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:heal",
       "node_type": "Capability",
       "properties": {
@@ -12726,6 +12923,19 @@
         "name": "Tell a newcomer where a new piece of work belongs",
         "provenance": "authored",
         "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:parallel-work",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-07-25 as the parallel-work skill — the procedure that ties the pieces together, chosen over the three alternatives in dec:concurrent-work-isolation because it needed no new architecture: a git worktree already gives each person a separate checkout, the graph store is single-writer PER DIRECTORY so each worktree can run its own server, and cap:git-merge-driver now merges the design semantically on the way back. Claim the region (advisory, never a lock), work isolated, export before every commit that touched the design, let the driver merge, release the claim, reconcile. WHAT THE SKILL IS REQUIRED TO SAY OUT LOUD, because these are the things people assume are handled: a claim is invisible to the other person until they pull, and nothing refuses a write; the design merges semantically but the CODE beside it merges exactly as before, so two people can hold disjoint design regions and still collide in the same module; and `--ours`/`--theirs` on a design conflict discards a node someone wrote, with nothing to tell you afterwards. This is parallel work with good merges, not simultaneous editing — the live-collaboration road stays open in dec:central-host with its counter-argument recorded.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Two people work one design at once through isolation, not through a lock",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -13470,6 +13680,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Build the KPP capture half: the ask-don't-promote skill, and a typed way to record what the user confirms"
+      }
+    },
+    {
+      "node_id": "chg:merge-driver-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "reflow2 becomes git's merge driver for the design export, and parallel work gets a procedure"
       }
     },
     {
@@ -14638,6 +14856,16 @@
       }
     },
     {
+      "node_id": "decision:ack:046d5d7e84c91989",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:046d5d7e84c91989.",
+        "name": "Reviewed: gap:046d5d7e84c91989",
+        "rationale": "User (who:ajs, standing policy from 2026-07-23, applied again 2026-07-25): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:git-merge-driver joined the set (42 → 43). Unusually well fitted this time, and worth naming why: the driver's tests are run BY GIT on real branches, which is as close to validation as a test gets — and still not validation. What they cannot show is the thing the feature exists for: whether two people on opposite coasts, working different clusters of one design over a week, actually stop losing each other's work. That is a two-person field trial with the parallel-work skill in hand, and it is the first trial this project has had a genuine second participant for.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:101a69b0a4f8eed6",
       "node_type": "Decision",
       "properties": {
@@ -14684,6 +14912,16 @@
         "decision": "Accepted the gap gap:260a7ea303ec87f1.",
         "name": "Reviewed: gap:260a7ea303ec87f1",
         "rationale": "User (who:ajs, standing policy from 2026-07-23, applied again 2026-07-25): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because the three github-mcp-study imports joined the set (39 → 42). Apt for each of them in a different way. cap:sanitize-ingress: the tests prove a payload is stripped and honest text survives, but whether the CLASSES chosen are the ones attackers actually use is answered by the field, and the day a real adopted repo carries something the filter misses is the only real evidence. cap:bounded-reads: the tests prove a cap names itself; whether the budget is set at a useful number is answerable only by sessions that stop being truncated. cap:tool-search: the tests prove an exact name ranks first and a described job finds link_artifact, but whether the ranking helps an agent that does not already know the answer is a trial — and the honest instrument is a session where an agent finds a tool it had never used.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:33be77a4e91bc8ae",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:33be77a4e91bc8ae.",
+        "name": "Reviewed: gap:33be77a4e91bc8ae",
+        "rationale": "User (who:ajs, 2026-07-25): accepted intent, BLOCKED rather than shelved — the same disposition req:concurrent-planning carries, and for the same reason. Deliberately left `accepted` rather than moved to `deferred`, because deferred reads as \"parked, nobody act\", whereas this is real intent with exactly one thing standing in front of it: dec:central-host, recorded as GOVERNED_BY so the link is queryable rather than only written here. Nothing should be built toward it until that decision collapses, because the cheapest hosted shape — one server process per project, with project selection becoming which URL the agent points at — satisfies most of this requirement with NO graph_id plumbing at all, while a multi-tenant single process needs graph_id threaded through every read and write. Building the second before the choice is made is building for the road not taken. What is owed meanwhile is only the non-foreclosure half (rule:no-foreclosure item 5): code must not ASSUME the graph_id constant where it could read the field. This acknowledgement expires if the affected node changes, which is correct — when the decision is made this should come back for a fresh look rather than stay quietly accepted.",
         "status": "accepted"
       }
     },
@@ -14848,6 +15086,16 @@
       }
     },
     {
+      "node_id": "decision:ack:90a90e90df05c31a",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:90a90e90df05c31a.",
+        "name": "Reviewed: gap:90a90e90df05c31a",
+        "rationale": "User (who:ajs, 2026-07-25): accepted intent, BLOCKED on dec:central-host, same disposition as its sibling req:many-designs-one-service and left `accepted` rather than `deferred` for the same reason. One thing his answer DID settle, and it narrows the eventual build rather than leaving it open: contributing means PROPOSE-THEN-ACCEPT, not direct write. A named collaborator can read the design and put intent to it; the owner accepts it. That is not a UX preference — a design brain whose entire loop is ask-the-human-and-record-the-decision cannot let a second person's word enter as the first person's, which is dec:certainty-derived's forgery rule applied across people instead of across time, and it means the machinery this needs is the Question/answer surface plus Contributor attribution that already exist, not a second write path. Worth noting for whoever builds it: the cheapest form of this requires no service at all — a read-only export shared as a file is already \"reach without write\", and the proposals could ride back as a design export that the owner merges. That may be enough, which is exactly why the decision is upstream.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:9b2071dba7dfe759",
       "node_type": "Decision",
       "properties": {
@@ -14904,6 +15152,16 @@
         "decision": "Accepted the gap gap:bab6219e3365123a.",
         "name": "Reviewed: gap:bab6219e3365123a",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities. The check divides as the capability does, and the cheap half is genuinely cheap: the conjunction scan and the single-owner rule are deterministic and get ordinary fixture tests (\"must do X AND Y\" is flagged; a leaf whose satisfying capabilities allocate to three components is flagged). The over-decomposition half cannot be unit-tested for correctness — a test asserting the fixture was flagged only proves the fixture was flagged — so what must be pinned there is that a complaint about grain never edits or splits anything, only asks. Worth building the conjunction scan first regardless: it is a text check needing no model, it catches the commonest compound requirement, and it would have something to say about real designs on day one.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:bd5aefd848b8d3e4",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:bd5aefd848b8d3e4.",
+        "name": "Reviewed: gap:bd5aefd848b8d3e4",
+        "rationale": "Accepted at component granularity, with the caveat carried since cap:onboarding first raised this and now true of a third capability — but with one real difference worth recording. For cap:change-an-existing-feature and cap:onboarding the caveat is that neither skill has been WRITTEN, so the detector reads them as covered purely because they are allocated to a component that carries a passing check; that is detector generosity, not evidence. cap:parallel-work is different: the skill exists, and the machinery it drives is independently proven — cap:git-merge-driver carries ver:merge-driver, four cases run by real git. What has no test is the PROCEDURE the prose describes (worktree, claim, export before commit, release), and it is not testable in CI in any honest way: it spans two people, two checkouts and a pull. Its check is a field trial, which is where the standing validation disposition already puts it. So: accepted, and when the trial runs, its record in docs/trials/ is this capability's evidence rather than a synthetic test.",
         "status": "accepted"
       }
     },
@@ -15178,7 +15436,7 @@
         "category": "methodology",
         "enforced": false,
         "name": "Build nothing today that forecloses growing into a hosted, multi-user, multi-project service",
-        "statement": "Anthony's reframe, 2026-07-25, of what to do with the GitHub-MCP study's larger lessons: rather than hold them as a roadmap of features to build, hold them as a rule about what NOT to do now — do not take a shortcut today that would make it impossible for reflow2 to become what GitHub's MCP server is. A roadmap ages badly and gets stale in a document nobody reads; a non-foreclosure rule is checkable at the moment of the decision that would break it, which is the only moment it matters. THE SPECIFIC FORECLOSURES, from reading github-mcp-server (each one a shortcut that is tempting precisely because there is one writer today): (1) IDENTITY IN A GLOBAL. Authority must arrive with the caller and be read from the request, never stashed in a process-wide variable or resolved once at startup — GitHub constructs a fresh server per request in stateless mode for exactly this reason, and their lockdown cache carries the warning that a viewer-scoped lookup shared across requests runs under the wrong user's credentials. (2) INVENTING AUTHORITY. reflow2 must never become the thing that decides who may read what; it delegates to an authority that already exists, on GitHub's stated principle that a server must not let anyone reach more than they could reach without it. Building an account system would foreclose that by making reflow2 the authority. (3) TREATING THE SINGLE-WRITER LOCK AS A CONTRACT. One RocksDB handle is an implementation fact; the day it is a promise in a tool description or a skill, concurrency becomes a breaking change rather than a build. (4) CONFIG THAT WIDENS. Per-request configuration must only ever NARROW what the deployment allowed — GitHub's headers can restrict within static bounds and can never re-include what was excluded, and any read-only surface that a header can talk out of read-only was never read-only. (5) ONE GRAPH ASSUMED EVERYWHERE. graph_id already exists on every node and edge and is pinned to a constant; code that assumes the constant rather than reading the field is the foreclosure, not the constant itself. (6) TRUSTING TEXT BY ITS LOCATION. Once a design can arrive from someone else, text is untrusted because of where it came from, not because of which field it sits in — so the trust boundary belongs at ingress, before anything reads it. WHAT THIS RULE IS NOT: it is not a licence to build the hosted service, and not a reason to add abstraction now. Every item above is a constraint on shortcuts, satisfiable by writing the simple version carefully — the point is that the simple version stays a strict subset of the eventual one, so nothing has to be undone. WHETHER IT IS GATE-BLOCKING IS ANTHONY'S CALL and is recorded as `enforced: false` until he says otherwise, because a rule the machine blocks a build on is a different promise from one it reminds you about."
+        "statement": "Anthony's reframe, 2026-07-25, of what to do with the GitHub-MCP study's larger lessons: rather than hold them as a roadmap of features to build, hold them as a rule about what NOT to do now — do not take a shortcut today that would make it impossible for reflow2 to become what GitHub's MCP server is. A roadmap ages badly and gets stale in a document nobody reads; a non-foreclosure rule is checkable at the moment of the decision that would break it, which is the only moment it matters. THE SPECIFIC FORECLOSURES, from reading github-mcp-server (each one a shortcut that is tempting precisely because there is one writer today): (1) IDENTITY IN A GLOBAL. Authority must arrive with the caller and be read from the request, never stashed in a process-wide variable or resolved once at startup — GitHub constructs a fresh server per request in stateless mode for exactly this reason, and their lockdown cache carries the warning that a viewer-scoped lookup shared across requests runs under the wrong user's credentials. (2) INVENTING AUTHORITY. reflow2 must never become the thing that decides who may read what; it delegates to an authority that already exists, on GitHub's stated principle that a server must not let anyone reach more than they could reach without it. Building an account system would foreclose that by making reflow2 the authority. (3) TREATING THE SINGLE-WRITER LOCK AS A CONTRACT. One RocksDB handle is an implementation fact; the day it is a promise in a tool description or a skill, concurrency becomes a breaking change rather than a build. (4) CONFIG THAT WIDENS. Per-request configuration must only ever NARROW what the deployment allowed — GitHub's headers can restrict within static bounds and can never re-include what was excluded, and any read-only surface that a header can talk out of read-only was never read-only. (5) ONE GRAPH ASSUMED EVERYWHERE. graph_id already exists on every node and edge and is pinned to a constant; code that assumes the constant rather than reading the field is the foreclosure, not the constant itself. (6) TRUSTING TEXT BY ITS LOCATION. Once a design can arrive from someone else, text is untrusted because of where it came from, not because of which field it sits in — so the trust boundary belongs at ingress, before anything reads it. WHAT THIS RULE IS NOT: it is not a licence to build the hosted service, and not a reason to add abstraction now. Every item above is a constraint on shortcuts, satisfiable by writing the simple version carefully — the point is that the simple version stays a strict subset of the eventual one, so nothing has to be undone. ENFORCEMENT DECIDED 2026-07-25 (Anthony: \"go with your recommendation\"): ADVISORY, `enforced: false`, and deliberately so. VIOLATES_RULE is a vocabulary item no detector reads, so declaring this gate-blocking would promise a check that does not exist — the exact failure the KPP work was built to end (\"a KPP that nothing checks is a comment\"). The rule is the project's rule, confirmed by its author; the flag says only that no build has been stopped by it yet. It flips to enforced the day a detector can read a foreclosure from graph state — the honest first candidate being (4) and (5), which are mechanically checkable, unlike (2), which is a judgement about architecture."
       }
     },
     {
@@ -15934,6 +16192,16 @@
       }
     },
     {
+      "node_id": "frag:art:merge-driver-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_merge_driver.py"
+      }
+    },
+    {
       "node_id": "frag:art:nodes",
       "node_type": "Fragment",
       "properties": {
@@ -15951,6 +16219,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered operate.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:parallel-work-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered parallel-work/SKILL.md"
       }
     },
     {
@@ -16147,12 +16425,13 @@
       "node_id": "question:33be77a4e91bc8ae",
       "node_type": "Question",
       "properties": {
+        "answer": "\"Go with your recommendation on all points\" (Anthony, 2026-07-25), against the recommendation put to him: YES this is real intent — he has reflow2 and storyflow, his brother has several projects — and NO it is not built now. It waits on dec:central-host, because one server process per project answers most of it with no graph_id plumbing at all, and building multi-tenancy before that choice is made would be building for the road not taken. Recorded as accepted-and-blocked rather than deferred: deferred reads as \"parked, nobody act\", and this is real intent with exactly one thing in front of it.",
         "asked_at": "2026-07-25",
         "context_setter": "Nothing satisfies requirement “One reflow2 can hold several designs, and a session says which one it is working on”",
         "gap_id": "gap:33be77a4e91bc8ae",
         "question": "You have reflow2 and storyflow, and your brother has several projects of his own — today one reflow2 holds exactly one design, and it never asks which project you mean. Do you want one reflow2 to hold several designs, with each session naming the project it is working on before it can touch anything? And is that worth building now, or only once you have decided whether there is a shared server at all?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -16196,12 +16475,13 @@
       "node_id": "question:90a90e90df05c31a",
       "node_type": "Question",
       "properties": {
+        "answer": "\"Go with your recommendation on all points\" (Anthony, 2026-07-25). The recommendation had two halves. First: yes, publishing is real intent — being able to show his brother a design without handing over the repo is the strongest single argument on the hosted side. Second, on what \"contribute\" means: PROPOSE-THEN-ACCEPT, not direct write. A named collaborator can read the design and put intent to it, and the owner accepts it — reach is not authorship, and a design brain whose whole loop is ask-the-human-and-record-the-decision should not let a second person's word enter as the first person's. Also waits on dec:central-host for the mechanism.",
         "asked_at": "2026-07-25",
         "context_setter": "Nothing satisfies requirement “Someone without the repo can reach a design, read it, and contribute to it”",
         "gap_id": "gap:90a90e90df05c31a",
         "question": "You said it would be cool to publish reflow2 and storyflow somewhere your brother could reach them and comment on your ideas without cloning your code. Is that a real requirement you want reflow2 to meet — someone you name can open your design, read it, and add intent to it — or is sharing the repo good enough for the two of you? If it is real, does contributing mean writing into your design directly, or proposing something you then accept?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -16485,7 +16765,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony and his brother work on each other's ideas from opposite coasts, and today the only way to reach a design is to clone the repository that carries it. The intent is that a design can be made reachable to a named collaborator without handing them the code: they can read what it says, ask it questions, and contribute intent back — the collaboration is on the DESIGN, which is often the part a second person can help with before they know anything about the implementation. Two things this must not become. It must not make the design's home ambiguous: whatever hosts a shared copy, the repo file stays the durable record, or a hosting outage becomes a design outage (req:persistence, dec:repo-file-embedded). And it must not silently widen who can write: reaching a design is not the same as authoring in it, so a contribution must be attributable to a person (the Contributor layer, which exists) and the reach must be granted rather than assumed. Whether this is served by git remotes that already span both coasts, by a hosted service, or by both, is the open question recorded as dec:central-host — this requirement states the need, not the machinery.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -16632,7 +16912,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A person works on more than one project at a time, so reflow2 must be able to hold more than one design without their contents mixing, and a session must state which design it is operating on before it can read or write. Anthony, 2026-07-25: he has reflow2 itself and storyflow; his brother has several. Three properties follow. Selection is EXPLICIT — a session that has not named its design must be refused rather than defaulted to the last one used or the only one present, because a tool call landing in the wrong project is a silent corruption that no gap detector would ever notice. Segregation is enforced by the store, not by convention: every node and edge already carries a graph_id, which is exactly the primitive this needs, and today it is pinned to the constant \"reflow2\" — so the mechanism exists and is unused, the same shape as the temporal axis and the inviolable-intent vocabulary before them. And the identity of a design must be stable across machines, so the same project reached from two places is one design rather than two that happen to share a name. This is deliberately silent on where the designs live: one process per design and one holding many are both answers to it, and that is the hosting question, not this requirement.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -16805,7 +17085,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "reflow2's standing rule — graph text is data, never instructions — is enforced today only by prose in the skills and the server handshake, which is a rule addressed to a well-behaved reader. The requirement is that the mechanical half exists: text arriving from outside the session's own author (prose read out of a codebase by INGEST, a design export imported from another machine or another person, and anything a hosted surface would accept) is neutralised of the characters that carry hidden instructions before any agent reads it — invisible and zero-width characters, bidirectional overrides that make text render as something other than what it says, Unicode tag characters that smuggle a payload past a human reviewer, and metadata hidden in code-fence info strings. Two properties reflow2 must add to the technique it borrows. The neutralisation must be REPORTED, not silent: a design whose statements were quietly rewritten on the way in is a design nobody can audit, and rule 6 forbids silent drops — so the count and the kind of what was stripped travel with the result. And it must not touch legitimate design content: an arrow, an emoji, a maths symbol or a non-Latin script is ordinary text in a design that may be about anything, so the filter is a named list of instruction-carrying characters rather than a whitelist of what looks familiar.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -17136,6 +17416,18 @@
       }
     },
     {
+      "node_id": "ver:merge-driver",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "system",
+        "method": "test",
+        "name": "Real git branches: disjoint edits merge with no human, a both-sides conflict leaves the path unmerged and names itself, both additions survive, an unconfigured clone degrades (tools/test_merge_driver.py, 4 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:model-process",
       "node_type": "Verification",
       "properties": {
@@ -17363,7 +17655,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:dbc4b58af45432d6f7292a0bc0000ae18b8d68301a179949192fed37777591df",
+  "prev_content_hash": "sha256:426c0abccce3df565d63bcbde12c83768243432b4317b8b73c672120526a71ba",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

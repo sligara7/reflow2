@@ -89,6 +89,11 @@ jobs:
         run: python3 tools/reflow2_check.py --export docs/design/reflow2.json
       - name: Coherence-gate suite (hermetic — the gate's own regression net, BL-88)
         run: python3 tools/test_reflow2_check.py
+      - name: Merge-driver suite (real git branches, not a home-grown client)
+        # Git is the client this contract is with, so git runs the test: two
+        # branches editing different parts of one export must merge with no
+        # human, and a both-sides conflict must leave the path unmerged.
+        run: python3 tools/test_merge_driver.py
       - name: Smoke test over real stdio
         run: python3 tools/smoke_mcp.py
       - name: Toolsnaps — served surface matches the committed goldens (BL-76)

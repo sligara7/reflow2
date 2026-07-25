@@ -121,7 +121,7 @@ reflow2/
   getting-started/   # the consumer kit installed into a project being designed
     SETUP.md         #   install + connect a coding agent + verify
     AGENTS.md        #   how an agent drives reflow2 to design YOUR project
-    skills/          #   the 13 skills (genesis, adopt, capture-intent, where-am-i, …)
+    skills/          #   the 14 skills (genesis, adopt, capture-intent, where-am-i, …)
                      #   — SKILLS.md is the catalogue: which skill, when
     install.sh       #   fetch the released binaries, checksum-verified
   tools/             # reflow2_init.py (installer), smoke_mcp.py + the trial harnesses,
