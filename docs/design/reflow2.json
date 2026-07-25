@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d1086593704eff97f0f2053bb7e5bd5e6eea3335ef7f547dbd86be5045025c54",
+  "content_hash": "sha256:afb8adfabf2b68cce0ca0ae097e8818277f4d50c86d2f50dc47ddd9413b50692",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -315,6 +315,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:recover-from-tests",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:report",
       "properties": {
         "weight_basis": "estimated"
@@ -524,6 +532,12 @@
       "from_id": "chg:merge-integrity-bl47-bl46",
       "properties": {},
       "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:recover-from-tests",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -893,6 +907,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cap:recover-from-tests",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -2494,6 +2517,24 @@
         "action": "modified"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:recover-from-tests",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:recover-from-tests"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:recover-from-tests",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "CHANGED",
@@ -4730,6 +4771,18 @@
       "from_id": "cap:reconcile-verified",
       "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:recover-from-tests",
+      "properties": {},
+      "to_id": "dec:passing-is-verified"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:recover-from-tests",
+      "properties": {},
+      "to_id": "decision:ack:101a69b0a4f8eed6"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8368,6 +8421,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:recover-from-tests",
+      "properties": {},
+      "to_id": "req:adopt-existing"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:report",
       "properties": {},
       "to_id": "req:no-se-knowledge"
@@ -9864,6 +9923,19 @@
       }
     },
     {
+      "node_id": "cap:recover-from-tests",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Read requirements, functions and features back out of tests and their results, for the case where that is most or all of what survives — no specification, thin documentation, sometimes not even readable source, but a suite that says what the system was expected to do and a result set saying whether it did. Alex's observation, 2026-07-24. An expansion of cap:adopt rather than a rival: adopt already names tests among its evidence sources and already registers each suite as a Verification on the component it covers. What is new is the degenerate case, where tests are the PRIMARY source, so adopt's ordinary method does not apply — 'structure from imports and calls, never from prose' assumes a repo to read, and there may not be one. THE LOAD-BEARING CONSTRAINT, and the reason this needs its own computation rather than a paragraph in the adopt skill: a requirement recovered from a PASSING test is verified by construction. The test that produced the requirement is the same test that would prove it, so the golden thread closes on itself and the recovered design reads as fully delivered the moment it is created, having demonstrated nothing. This is the schema's `inferred` provenance trap one turn sharper — with code you get satisfied-by-construction, with test results you get satisfied AND verified by construction, which would defeat cap:derived-completion (BL-104) outright. So: intent recovered from a test must be marked as such, and must NOT count that same test as its verification evidence. A test-derived requirement is a claim about what someone once intended, not proof that it holds today. Corollary worth keeping: a FAILING test is the more informative artifact of the two, because it states an intent the system does not currently meet — which is a genuine gap, and the one thing in this whole area that cannot be circular. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Recover intent from test evidence, without letting the tests prove themselves",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:report",
       "node_type": "Capability",
       "properties": {
@@ -10339,6 +10411,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "BL-47 + BL-46: merge survivor ranks unset provenance below explicit authored; a colliding edge keeps the survivor's properties; create_node on an existing id merges instead of replacing (the revise-design contract, now real)"
+      }
+    },
+    {
+      "node_id": "chg:recover-from-tests",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Recovering intent from test evidence captured as an expansion of adopt; Alex recorded as a Contributor"
       }
     },
     {
@@ -10964,6 +11044,16 @@
       }
     },
     {
+      "node_id": "who:alex",
+      "node_type": "Contributor",
+      "properties": {
+        "description": "Anthony's brother and reflow2's second user — uses it for real on his own projects via grok build, and is the source of the consumer-kit feedback. Design contributor: the 2026-07-24 idea list (bulk spec ingest, team-scale conflicts, rubber-ducking, inherited-project onboarding) came from a conversation between the two of them, and recovering intent from test results is his. Recorded as a Contributor so authorship attributes to the person whose word it is, rather than defaulting to whoever relayed it.",
+        "handle": "@bro",
+        "kind": "person",
+        "name": "Alex"
+      }
+    },
+    {
       "node_id": "who:claude-code",
       "node_type": "Contributor",
       "properties": {
@@ -11310,6 +11400,16 @@
         "decision": "Renderers may only emit what the graph states; everything else is confessed as a finding.",
         "name": "A view is a projection of the graph; renderer fill-ins are defects",
         "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 — almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:101a69b0a4f8eed6",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:101a69b0a4f8eed6.",
+        "name": "Reviewed: gap:101a69b0a4f8eed6",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24). Naming the check now because this one is unusually easy to fake, and the obvious test would be worthless: asserting that requirements recovered from a suite come back looking correct proves nothing, since they were derived from that suite. The real check is the NEGATIVE one — recover intent from a passing suite, then assert those requirements do NOT read as verified or delivered on the strength of the same tests that produced them, and that cap:derived-completion (BL-104) refuses to count them. A companion case should recover from a FAILING test and assert it lands as an open gap rather than a satisfied requirement, since that is the one signal in this area that cannot be circular. If this capability is ever built and its verification only demonstrates successful extraction, the verification is wrong even when it passes.",
         "status": "accepted"
       }
     },
@@ -13431,7 +13531,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:94721f1db1f91721bd65f284fc958bdc7377e424fc407cd97407a0510a3dac13",
+  "prev_content_hash": "sha256:d1086593704eff97f0f2053bb7e5bd5e6eea3335ef7f547dbd86be5045025c54",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
