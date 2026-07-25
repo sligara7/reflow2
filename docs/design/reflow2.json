@@ -15353,6 +15353,7 @@
       "CONTAINS",
       "CONTAINS_EPOCH",
       "CONTRADICTS",
+      "DECOMPOSES",
       "DEPENDS_ON",
       "DEPLOYED_TO",
       "DOCUMENTS",
@@ -15390,7 +15391,7 @@
       "VIOLATES_RULE",
       "YIELDED"
     ],
-    "edge_types": 53,
+    "edge_types": 54,
     "node_type_names": [
       "Actor",
       "Anchor",
