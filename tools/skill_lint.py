@@ -205,6 +205,10 @@ NON_TOOL_TERMS = {
     "base",
     "ours",
     "theirs",
+    # The brainstorm skill: the gap source that deliberately does NOT fire on a
+    # prose-only decision point, and the kind the graph does not have yet.
+    "undecided_decision_point",
+    "brainstorm",
 }
 
 

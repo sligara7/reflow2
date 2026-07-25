@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:87b14c6a89ea69663bea8920c132df21311503d5bfe9837a6a5f4783d1f75460",
+  "content_hash": "sha256:260fb96c8ccccd2799b13e3d8eadae2f4c3740fafe0637486cefb9122ef218e0",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -32,6 +32,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:brainstorm",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -699,6 +707,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:brainstorm-skill-built",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:cluster-claims-built",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -1167,6 +1181,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cap:brainstorm",
+      "properties": {
+        "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -1697,6 +1720,15 @@
         "action": "modified"
       },
       "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-e8649fb89e9ed28a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:brainstorm-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -2906,6 +2938,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:brainstorm-skill-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:brainstorm-skill-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:brainstorm-skill-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:exploratory-staging"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:cluster-claims-built",
       "properties": {
         "accepted_baseline": true,
@@ -3788,6 +3847,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:brainstorm"
     },
     {
       "edge_type": "CONTAINS",
@@ -5513,6 +5578,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:brainstorm",
+      "properties": {},
+      "to_id": "dec:exploratory-staging"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:brainstorm",
+      "properties": {},
+      "to_id": "decision:ack:7a268920fdfe0ba7"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:budget",
       "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
@@ -5606,6 +5683,12 @@
       "from_id": "cap:change",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change-an-existing-feature",
+      "properties": {},
+      "to_id": "decision:ack:7a268920fdfe0ba7"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -6673,6 +6756,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:onboarding",
       "properties": {},
+      "to_id": "decision:ack:7a268920fdfe0ba7"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:onboarding",
+      "properties": {},
       "to_id": "decision:ack:bd5aefd848b8d3e4"
     },
     {
@@ -6686,6 +6775,12 @@
       "from_id": "cap:onboarding",
       "properties": {},
       "to_id": "decision:ack:f58dc09a846a8783"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:parallel-work",
+      "properties": {},
+      "to_id": "decision:ack:7a268920fdfe0ba7"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7430,6 +7525,12 @@
       "from_id": "cmp:skills",
       "properties": {},
       "to_id": "decision:ack:4ac1c3ccf483b4d6"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:skills",
+      "properties": {},
+      "to_id": "decision:ack:7a268920fdfe0ba7"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10397,6 +10498,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:brainstorm-skill",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:brainstorm"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:budget",
       "properties": {
         "completeness": "complete"
@@ -10824,6 +10933,12 @@
       "from_id": "cap:bounded-reads",
       "properties": {},
       "to_id": "req:no-silent-fallback"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:brainstorm",
+      "properties": {},
+      "to_id": "req:roads-not-taken"
     },
     {
       "edge_type": "SATISFIES",
@@ -11628,6 +11743,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:brainstorm-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:budget",
       "properties": {
         "action": "created"
@@ -11997,6 +12120,17 @@
       }
     },
     {
+      "node_id": "art:brainstorm-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:fabb8097364ca9e2",
+        "location": "getting-started/skills/brainstorm/SKILL.md",
+        "name": "brainstorm/SKILL.md",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:budget",
       "node_type": "Artifact",
       "properties": {
@@ -12331,7 +12465,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:5ca4a40c94fa8661",
+        "checksum": "sha256:bd4282a6b99d8308",
         "location": "README.md",
         "name": "README.md",
         "status": "realized"
@@ -12419,7 +12553,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a35efc9ffeba99d8",
+        "checksum": "sha256:7a4195171b27daae",
         "location": "SKILLS.md",
         "name": "SKILLS.md",
         "status": "realized"
@@ -12529,6 +12663,19 @@
         "name": "A read that would not fit answers with a bounded page and says what it left out",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:brainstorm",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-07-25 as the brainstorm skill + the /brainstorm command. Anthony's brother's original ask (\"work through planning and idea realization before committing concepts to graph... an agent-assisted thinking process\"), reframed by Anthony into what it actually is: not a staging gate but a KIND of record. Ideas enter the graph immediately as `proposed` Decisions named as open questions, with the options in the decision text and the honest counter-argument beside each; nothing waits outside in a buffer where it could be forgotten, and nothing is claimed as intent. THE MECHANISM THAT MAKES IT WORK WAS ALREADY THERE, found while building: detect_gaps raises undecided_decision_point ONLY on a proposed Decision with two or more REGISTERED alternatives, so a Decision whose options live in prose is silent by construction — and the nudge to choose arrives exactly when register_alternative turns an option into a fork with a design behind it. The loop stays quiet while someone thinks, and speaks the moment the ideas stop being ideas. No label, no schema change, no upgrade doc. THE GUARDS, all prose because none is machine-checkable: never create Requirements or Capabilities from a brainstorm (promotion is a separate step needing the user's word); never argue an idea down in conversation — record the objection beside it, because an idea killed in dialogue loses its reasoning; never run detect-and-ask over brainstormed nodes, which would ask the user to firm up exactly what they left soft; and never promote the last idea standing, since one remaining idea nobody chose is still an idea nobody chose. set_decision_status to `proposed` is mandatory, because add_decision defaults to `accepted` and would assert a settlement that never happened. Ends as a PROMOTION step, not a commit step: chosen ideas go through capture-intent, the rest stay recorded as considered rather than deleted (req:roads-not-taken). The one honest weakness is readability — a person scanning the decision list cannot tell a musing from a choice without reading the prose, which is what the open vocabulary question in dec:exploratory-staging is now reduced to.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Work an idea through without committing to it, on the record",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -13338,6 +13485,15 @@
       }
     },
     {
+      "node_id": "chg:accept-e8649fb89e9ed28a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-25",
+        "name": "Examined the day it was written, so the ledger reads \"checked\" rather than \"nobody has ever looked\": the file on disk is the file the design registered, the three mirrors are byte-identical, and every tool the prose names is served (skill_lint). What is NOT established, and the ledger must not be read as claiming: that the practice works — that a person thinking out loud recognises their own ideas in what got recorded, and that the promotion step at the end actually gets taken rather than skipped. Both are trials, and the first honest one is a session where Anthony brainstorms and then disagrees with what was written down."
+      }
+    },
+    {
       "node_id": "chg:accept-eccdea423f3e687e",
       "node_type": "ChangeEvent",
       "properties": {
@@ -13618,6 +13774,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Anthony's refinement: the rubber-duck ask is not a staging gate, it is brainstorming ideas held in the graph AS ideas"
+      }
+    },
+    {
+      "node_id": "chg:brainstorm-skill-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The brainstorm skill: ideas recorded as ideas, and the finding that the existing vocabulary already tells a musing from a choice"
       }
     },
     {
@@ -14626,9 +14790,9 @@
       "node_id": "dec:exploratory-staging",
       "node_type": "Decision",
       "properties": {
-        "decision": "UNDECIDED. REFRAMED 2026-07-25 by Anthony, and the reframe is the useful part: what he and his brother were asking for is not a staging GATE, it is a KIND. \"I think I now realize what my brother's idea was trying to say — it is like a brainstorming session where you can work through ideas without committing to anything yet. These would be more like 'ideas' not yet fleshed out and could be held in the graph as just that, 'brainstorming ideas'.\" That dissolves the contradiction this decision was opened over. The git study rejected the index because a gate between every edit and the graph is where intent goes to be forgotten; a brainstorm is the opposite move — the idea DOES enter the graph, immediately, labelled as what it is. Nothing waits outside, so nothing is lost, and the design still never claims a half-formed thought as intent. THE QUESTION THAT REMAINS IS THE VOCABULARY ONE, and dec:edge-orthogonality decides it: a distinction earns its keep only if a computation reads it. So what would read `brainstorm`? The candidates, none of them chosen: gap detection must NOT nag about an idea nobody committed to (an unsatisfied brainstorm is not a hole in the design, and today an unsatisfied Requirement fires forever); delivery and certainty counts must exclude it, or the denominator becomes meaningless; promotion must be an explicit human act — a brainstorm becoming a Requirement is the same signature-forging risk dec:certainty-derived guards, one step earlier; and a brainstorm nobody has touched in months is a candidate for retirement rather than an accusation. If none of those is built, the label is decoration and the honest answer is to keep using `proposed` Decisions the way this session already did for the worktree ideas (dec:concurrent-work-isolation). PRIOR FRAMING, KEPT because it is what was true yesterday: the ask read as an opt-in \"think first, commit later\" mode; what already works is that a session making no write calls IS rubber-ducking, and the read tools are the ducking aids; and the narrow question was what happens at the END of such a session — one deliberate commit, with discarded branches either dropped or preserved as unchosen alternatives under a decision point. That question survives the reframe and is now the second half of it: if ideas land as ideas, the end of a brainstorm is a promotion step, not a commit step.",
+        "decision": "UNDECIDED as a vocabulary question, but MUCH SMALLER than it looked, and the skill that tests it is BUILT (2026-07-25, the brainstorm skill). REFRAMED by Anthony the same day, and the reframe was the useful part: what he and his brother were asking for is not a staging GATE, it is a KIND. \"I think I now realize what my brother's idea was trying to say — it is like a brainstorming session where you can work through ideas without committing to anything yet. These would be more like 'ideas' not yet fleshed out and could be held in the graph as just that, 'brainstorming ideas'.\" That dissolves the contradiction this decision was opened over: the git study rejected the index because a gate between every edit and the graph is where intent goes to be forgotten, whereas a brainstorm is the opposite move — the idea DOES enter the graph, immediately, labelled as what it is. Nothing waits outside, so nothing is lost, and the design still never claims a half-formed thought as intent. THE FINDING THAT SHRANK THE QUESTION, from reading the detector while building the skill: the existing vocabulary ALREADY tells a musing from a choice, and a computation already reads the difference. `detect_gaps` raises `undecided_decision_point` only on a proposed Decision holding TWO OR MORE REGISTERED ALTERNATIVES — a fork with a real design export behind each branch (detect.rs: `alts.len() < 2 { continue }`). A proposed Decision whose options live in its prose therefore raises NO gap at all. So brainstormed ideas are silent by construction, and the nudge to choose arrives exactly when the ideas stop being ideas: register_alternative turns an option into a fork, and being asked to decide a fork is correct. Nobody has to remember which is which, and no label was needed to get it. WHAT A `brainstorm` KIND WOULD STILL BUY, and it is now a short list rather than the four-item one recorded yesterday: (a) delivery and certainty counts already exclude Decisions, so nothing is owed there; (b) gap silence is already delivered, per the finding above; (c) what remains is RETIREMENT — an idea nobody has touched in months could be surfaced as a candidate for tidying rather than sitting in the decision list forever, which is a real computation and the only one left standing; and (d) READABILITY — a person scanning 70-odd Decisions cannot tell at a glance which were choices and which were musings, which the skill currently answers with a sentence of prose inside the node rather than with a queryable property. PRIOR FRAMING, KEPT because it was true when written: the ask read as an opt-in \"think first, commit later\" mode; a session making no write calls IS rubber-ducking and the read tools are the ducking aids; and the narrow question was what happens at the END — which the skill now answers as a PROMOTION step, not a commit step.",
         "name": "OPEN — do half-formed ideas get a place in the graph, distinct from things the design asserts?",
-        "rationale": "Raised by Anthony and his brother 2026-07-24, reframed by Anthony 2026-07-25 while brainstorming the concurrency ideas — which is itself the evidence for the feature: he produced four options he explicitly did not want to commit to, and the only place to put them was a `proposed` Decision, a node type meant for a choice someone is actually facing. That works, and it is why this is not urgent; it is also a slightly wrong fit, and knowing why is worth recording. Still held proposed because the vocabulary question above is unanswered, and because it may be a SKILL rather than a schema change: a brainstorm skill that records ideas as proposed Decisions and asks before promoting any of them would test the practice without spending a schema change and an upgrade doc on a noun. Anthony's own words put it in that bracket — 'maybe a future skill'.",
+        "rationale": "Raised by Anthony and his brother 2026-07-24, reframed by Anthony 2026-07-25, and the skill built the same day on his word (\"go ahead with the brainstorm skill\"). Built as a SKILL and not a schema change deliberately: it tests the practice at the cost of prose, and if the practice sticks the vocabulary question can be answered with evidence instead of taste — whereas a new node type or an enum value would have bought an upgrade doc and a foundation-migration checklist for a noun nobody had used yet. The evidence for the feature is this session itself: Anthony produced four isolation ideas he explicitly did not want to commit to, and the only home for them was a proposed Decision. That worked (dec:concurrent-work-isolation), which is why this is not urgent; it is also a slightly wrong fit, since a Decision node is meant for a choice someone is actually facing, and knowing exactly which part of the fit is wrong is what the finding above now pins down. Left PROPOSED because two of the four original arguments for a kind have dissolved and the remaining two (retirement candidates, at-a-glance readability) are real but small — and whether they are worth a schema change is Anthony's call, not a judgement to be made by the agent that just wrote the skill.",
         "status": "proposed"
       }
     },
@@ -15090,6 +15254,16 @@
         "decision": "Accepted the gap gap:7957f52a429a38a3.",
         "name": "Reviewed: gap:7957f52a429a38a3",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24). The check to write when this is built, because the obvious one is too weak: asserting that the view returns SOMETHING ranked proves nothing. The test must assert the ranking RULE — construct a graph with a proposed Decision that governs an otherwise-ready piece of work, and require the view to surface the decision above that work, not beside it or beneath it. A second case should assert the view stays honest about its own blind spots: until cap:derived-completion lands it cannot distinguish allocated from delivered, so it must say so rather than presenting a confident ordering built on an unanswerable question. A prioritisation view that hides what it cannot see is worse than no view, because it reads as authoritative.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:7a268920fdfe0ba7",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:7a268920fdfe0ba7.",
+        "name": "Reviewed: gap:7a268920fdfe0ba7",
+        "rationale": "Accepted at component granularity, re-fired because cap:brainstorm joined the set (3 → 4), and the four split into three distinct honesty cases worth keeping straight. cap:change-an-existing-feature and cap:onboarding: neither skill has been WRITTEN, so the detector reads them as covered purely because they are allocated to a component carrying a passing check — detector generosity, not evidence, and each gets its own verification when built. cap:parallel-work: the skill exists and the machinery under it is independently proven (ver:merge-driver, four cases run by real git); what has no test is the procedure across two people and two checkouts, which is a field trial. cap:brainstorm: the skill exists and there is nothing under it to test — it is prose over existing tools, and every guard it carries is unenforceable by construction (an agent that creates a Requirement mid-brainstorm has violated the skill, and no fixture can catch that, because the same tool call is correct one message later after the user says yes). Its check is a person: a session where someone thinks out loud, reads back what was recorded, and says whether those are their ideas. That is the trials programme, where the standing validation disposition already puts it — and until such a trial runs, this capability's status of `realized` rather than `verified` is the honest reading.",
         "status": "accepted"
       }
     },
@@ -15997,6 +16171,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered artifact.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:brainstorm-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered brainstorm/SKILL.md"
       }
     },
     {
@@ -17145,7 +17329,7 @@
       "node_type": "Snapshot",
       "properties": {
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-24\",\"role\":\"author\"}}]",
-        "state": "{\"decision\":\"UNDECIDED, and recorded because it contradicts something already on the record. The user asks for a \\\"rubber-ducking\\\" mode: work an idea through with the agent before committing concepts to the graph. The git prior-art study explicitly listed the index/staging area under things to NOT import, on the grounds that continuous-capture doctrine rejects a staging gate. The question is whether that rejection covers this. A reading that would reconcile them: the rejection targeted a gate sitting between EVERY edit and the graph, whereas this is an opt-in mode for one activity — early exploration, where most ideas are meant to be discarded and recording them all would pollute the design with roads nobody walked. Note what already works: a session that simply makes no write calls IS rubber-ducking, and the read operations are the ducking aids. So the real question is narrower than it appears — what happens at the END of such a session: does the outcome get committed in one deliberate act, and are the discarded branches dropped, or preserved as unchosen alternatives under a decision point (which the fork layer just built the vocabulary for)?\",\"name\":\"OPEN — does reflow2 get an opt-in \\\"think first, commit later\\\" mode, having rejected a staging gate?\",\"rationale\":\"Raised by the user and his brother, 2026-07-24. Held proposed rather than built because it sits against a recorded position, and the cost of drifting into it is exactly the cost the original rejection named: a staging area quietly becomes the place where design intent waits, and a design brain whose defining property is continuous capture acquires a buffer where things are forgotten instead of recorded. That is worth deciding out loud rather than discovering. The reason it may still be right is equally concrete: the doctrine that nothing is lost was written against losing REAL decisions, and an exploratory session's dead ends are not decisions — forcing them into the graph would make the record noisier, not more honest, which is the same trade dec:alternatives-unranked-forkable made when it chose to store the fork and compute the consequence rather than eagerly maintaining every branch.\",\"status\":\"proposed\"}",
+        "state": "{\"decision\":\"UNDECIDED. REFRAMED 2026-07-25 by Anthony, and the reframe is the useful part: what he and his brother were asking for is not a staging GATE, it is a KIND. \\\"I think I now realize what my brother's idea was trying to say — it is like a brainstorming session where you can work through ideas without committing to anything yet. These would be more like 'ideas' not yet fleshed out and could be held in the graph as just that, 'brainstorming ideas'.\\\" That dissolves the contradiction this decision was opened over. The git study rejected the index because a gate between every edit and the graph is where intent goes to be forgotten; a brainstorm is the opposite move — the idea DOES enter the graph, immediately, labelled as what it is. Nothing waits outside, so nothing is lost, and the design still never claims a half-formed thought as intent. THE QUESTION THAT REMAINS IS THE VOCABULARY ONE, and dec:edge-orthogonality decides it: a distinction earns its keep only if a computation reads it. So what would read `brainstorm`? The candidates, none of them chosen: gap detection must NOT nag about an idea nobody committed to (an unsatisfied brainstorm is not a hole in the design, and today an unsatisfied Requirement fires forever); delivery and certainty counts must exclude it, or the denominator becomes meaningless; promotion must be an explicit human act — a brainstorm becoming a Requirement is the same signature-forging risk dec:certainty-derived guards, one step earlier; and a brainstorm nobody has touched in months is a candidate for retirement rather than an accusation. If none of those is built, the label is decoration and the honest answer is to keep using `proposed` Decisions the way this session already did for the worktree ideas (dec:concurrent-work-isolation). PRIOR FRAMING, KEPT because it is what was true yesterday: the ask read as an opt-in \\\"think first, commit later\\\" mode; what already works is that a session making no write calls IS rubber-ducking, and the read tools are the ducking aids; and the narrow question was what happens at the END of such a session — one deliberate commit, with discarded branches either dropped or preserved as unchosen alternatives under a decision point. That question survives the reframe and is now the second half of it: if ideas land as ideas, the end of a brainstorm is a promotion step, not a commit step.\",\"name\":\"OPEN — do half-formed ideas get a place in the graph, distinct from things the design asserts?\",\"rationale\":\"Raised by Anthony and his brother 2026-07-24, reframed by Anthony 2026-07-25 while brainstorming the concurrency ideas — which is itself the evidence for the feature: he produced four options he explicitly did not want to commit to, and the only place to put them was a `proposed` Decision, a node type meant for a choice someone is actually facing. That works, and it is why this is not urgent; it is also a slightly wrong fit, and knowing why is worth recording. Still held proposed because the vocabulary question above is unanswered, and because it may be a SKILL rather than a schema change: a brainstorm skill that records ideas as proposed Decisions and asks before promoting any of them would test the practice without spending a schema change and an upgrade doc on a noun. Anthony's own words put it in that bracket — 'maybe a future skill'.\",\"status\":\"proposed\"}",
         "target_id": "dec:exploratory-staging",
         "target_type": "Decision"
       }
@@ -17673,7 +17857,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:55b46bf929a85493ee4a3ad5d78e502a5a228007a143baceda70fde57f300723",
+  "prev_content_hash": "sha256:87b14c6a89ea69663bea8920c132df21311503d5bfe9837a6a5f4783d1f75460",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

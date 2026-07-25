@@ -1,6 +1,6 @@
 # The skills — which one, when
 
-Fourteen skills and seven slash commands. A **skill** is a prose workflow an agent loads by itself
+Fifteen skills and eight slash commands. A **skill** is a prose workflow an agent loads by itself
 when your situation matches its description, so the loop happens without you naming tools; a
 **slash command** is you asking for one on purpose.
 
@@ -16,6 +16,7 @@ convenience for working on reflow2 itself.
 | Skill | When |
 |---|---|
 | **genesis** | Very start, or the graph is empty. Bootstraps from your opening brief. |
+| **brainstorm** | You are thinking out loud, not deciding. Records ideas *as* ideas — open questions, in your words, with the counter-arguments — and asks at the end which ones you want to keep as intent. |
 | **capture-intent** | You share a new idea, feature or requirement. Turns your words into nodes and wires the golden thread. |
 | **kpp-proposal** | Something you said sounds like it *must* hold no matter what. Asks you whether it is inviolable — a key performance parameter — rather than deciding for you, and records either answer. |
 | **detect-and-ask** | Before building, and after capturing. Finds gaps and puts them to you as plain questions. |
@@ -56,6 +57,7 @@ convenience for working on reflow2 itself.
 | `/debt` | What the coherence loop is owed right now. |
 | `/req` | Captures a requirement in your own words. |
 | `/kpp` | Records something as inviolable intent, after checking you meant it that way. |
+| `/brainstorm` | Thinks an idea through with you and records it as an idea, not a commitment. |
 
 ## Two worth knowing better than the rest
 
@@ -75,5 +77,8 @@ how the next session does not need you to notice again.
 - **The slash commands are not in the kit.** A consumer project gets the skills and no commands.
 - **Live collaboration.** **parallel-work** is parallel work with good merges, not simultaneous
   editing: the graph store is single-writer, and a claim is advisory rather than a lock.
+- **A `brainstorm` kind.** Ideas are recorded as open questions at `proposed`, which is silent and
+  works, but a person scanning the decision list cannot tell a musing from a choice without
+  reading it. Open in the design, not in this list.
 
 This list is what exists today, not what is designed. The graph is the record of the difference.

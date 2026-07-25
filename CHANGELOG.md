@@ -33,6 +33,30 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A `brainstorm` skill — think an idea through without committing it** (15 skills
+  now, plus a `/brainstorm` command). Anthony's brother's original "rubber-ducking"
+  ask, reframed by Anthony into what it actually is: not a staging gate but a *kind
+  of record*. Ideas enter the graph immediately as `proposed` Decisions named as
+  open questions, with the options in the user's own words and the honest
+  counter-argument beside each. Nothing waits in a buffer where it could be
+  forgotten, and nothing is claimed as intent.
+
+  **The mechanism turned out to already exist.** `detect_gaps` raises
+  `undecided_decision_point` only on a proposed Decision holding **two or more
+  registered alternatives** — a fork with a real design behind each branch. So a
+  Decision whose options live in prose raises no gap at all: the loop stays quiet
+  while you are thinking, and starts asking the moment `register_alternative` turns
+  an option into a fork. No label, no schema change, no upgrade doc — and it
+  shrinks the open vocabulary question in `dec:exploratory-staging` from four
+  arguments to two small ones.
+
+  The skill ends with a **promotion** step rather than a commit: chosen ideas go
+  through capture-intent, and the rest stay recorded as considered rather than
+  deleted. Its guards are prose because none of them is machine-checkable — don't
+  create requirements mid-brainstorm, don't argue an idea down (record the
+  objection beside it), don't run gap detection over brainstormed nodes, and never
+  promote an idea for being the last one standing.
+
 - **reflow2 is now git's merge driver for the design export** — so two people
   editing *different* parts of one design stop colliding. The export is a single
   large JSON file and git merges it by lines, a unit that means nothing to a
