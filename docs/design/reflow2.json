@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ed0ceb02a36233aaa4e20c0f56d4855ab8e8d656e7c0e2bfc561bf47b7ae415d",
+  "content_hash": "sha256:62ef44dfd0605fc7e5d40ef38a87fb05ad865ed968a7b4528321fec190ff9226",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -544,6 +544,12 @@
       "from_id": "question:e68c76afcb57424c",
       "properties": {},
       "to_id": "cap:explains-itself"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-eight-requirements",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1500,6 +1506,78 @@
         "action": "modified"
       },
       "to_id": "art:search"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-eight-requirements",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-eight-requirements",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:corpus-ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-eight-requirements",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:coverage-visible"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-eight-requirements",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:explains-itself"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-eight-requirements",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:inviolable-intent"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-eight-requirements",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:onboard-newcomer"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-eight-requirements",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:session-memory-in-graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-eight-requirements",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:what-next"
     },
     {
       "edge_type": "CHANGED",
@@ -11633,6 +11711,14 @@
       }
     },
     {
+      "node_id": "chg:accept-eight-requirements",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "requirement_creep",
+        "name": "Anthony accepted the eight proposed requirements captured this session"
+      }
+    },
+    {
       "node_id": "chg:accept-f74ab63586b98dee",
       "node_type": "ChangeEvent",
       "properties": {
@@ -14549,11 +14635,12 @@
       "properties": {
         "concern": "core",
         "kind": "functional",
+        "lineage": "original",
         "name": "Several people can plan against one design without colliding",
         "priority": "medium",
         "provenance": "authored",
         "statement": "A team, not a single author, must be able to work on one design at the same time: each person able to see what the others hold, to work in a scope that does not collide with theirs, and to have genuinely overlapping work surfaced as decidable conflicts rather than silent last-writer-wins. Whether this extends to simultaneous editing with live presence, or stops at non-colliding parallel work with good merges, is deliberately not asserted here — it depends on an architecture question that is still open, and the weaker form may be what teams actually need.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -14562,11 +14649,12 @@
       "properties": {
         "concern": "core",
         "kind": "functional",
+        "lineage": "original",
         "name": "A whole corpus of existing specifications can be brought into the design in one pass",
         "priority": "medium",
         "provenance": "authored",
         "statement": "Where a system's intent already exists as a large body of written specifications, reflow2 must be able to take the whole corpus — a folder, not a file — and produce one coherent design from it, with every claim still pointing back at the document it came from. The load-bearing requirement is identity ACROSS documents: the same component named in forty specifications must converge on one node rather than forty near-duplicates, and where convergence is uncertain the user is asked rather than the nodes being silently merged. Ordering must not decide meaning — which file happened to be read first must not determine the canonical name of anything.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -14575,11 +14663,12 @@
       "properties": {
         "concern": "core",
         "kind": "functional",
+        "lineage": "original",
         "name": "The design must be able to say how much of the system it has never modelled",
         "priority": "medium",
         "provenance": "authored",
         "statement": "reflow2 must be able to report the portion of a real system that no node in the design has ever claimed, so that the thinness of a recovered or evolving model is measurable rather than merely felt. An empty gap list must mean \"the design is coherent AND it covers the system\", not \"the design is coherent about the fraction it happens to know\". The report says what is unclaimed and how large it is; it never scores the design, never blocks, and never treats coarse-but-honest modelling as a deficiency — a single opaque Component legitimately claims everything beneath it.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -14640,11 +14729,12 @@
       "properties": {
         "concern": "core",
         "kind": "functional",
+        "lineage": "original",
         "name": "reflow2 explains what it is and how to run it before it explains what it believes",
         "priority": "medium",
         "provenance": "authored",
         "statement": "Someone arriving at reflow2 cold must learn, in plain language and before any philosophy, what it physically is and how it runs on their machine: a binary they run locally, a design graph kept as a file in their own repository, and a coding agent that talks to it over MCP. They must then find where the agent instructions go and two or three concrete uses — starting a design from nothing, recovering one from a system that already exists, and asking what breaks if something changes. The doctrine that makes reflow2 worth using is not the entry point to it.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -14705,11 +14795,12 @@
       "properties": {
         "concern": "core",
         "kind": "functional",
+        "lineage": "original",
         "name": "Intent that must hold no matter what is recorded as inviolable, and a violation is computed, not remembered",
         "priority": "medium",
         "provenance": "authored",
         "statement": "A design must be able to record intent that no downstream decision may trade away — a key performance parameter, in the acquisition sense: a threshold that, if missed, fails the effort regardless of how well everything else went. Inviolable intent is distinct from a Requirement (a goal to achieve, tradeable against other goals) and from a Constraint (a limit imposed on the design). reflow2 must (a) let that intent be stated with its threshold and, where it applies, its objective value; (b) COMPUTE a violation rather than rely on anyone remembering — an accepted Decision, an allocation, or a change whose blast radius contradicts a KPP must be surfaced loudly and above ordinary gaps; and (c) show a KPP crossing in impact analysis BEFORE the edit is made, not after it has been committed. A KPP that nothing checks is a comment.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -14770,11 +14861,12 @@
       "properties": {
         "concern": "core",
         "kind": "functional",
+        "lineage": "original",
         "name": "Someone who did not build the system can be told where a new piece of work belongs",
         "priority": "medium",
         "provenance": "authored",
         "statement": "A person inheriting a mature design must be able to ask \"we need to add this — where does it go?\" and be answered from the graph: which existing part should own it, what the change would touch, which decisions already govern that area and must not be casually contradicted, what intent it must not break, and who authored the reasoning so they can be asked. Answering \"what is this system and what has been decided\" is necessary but not sufficient; the requirement is satisfied only when the second question — where and how do I add to it — is also answered, and when the answer says honestly which parts of the real system the design does not cover.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -14861,11 +14953,12 @@
       "properties": {
         "concern": "core",
         "kind": "functional",
+        "lineage": "original",
         "name": "What a session learns is written to the graph as it is learned, not summarized into a file on the way out",
         "priority": "medium",
         "provenance": "authored",
         "statement": "A working session produces decisions, findings and realizations, and those are design content: they belong in the graph, recorded at the moment they occur, so a later session can query them rather than read a narrative. Two properties follow. First, capture is incremental — a summary written at the end is the one a busy session never gets to, and an end-of-session digest is a retelling rather than a record. Second, the enforcement must point at the graph: whatever mechanism insists a session leave its takeaways behind must be satisfiable only by graph writes, never by touching a prose file, or the prose file becomes the memory and the graph becomes decoration. The agent must then be able to ask its own history — what was decided about X, when, by whom, and against what state of the design — using the same query surface a person uses.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -14887,11 +14980,12 @@
       "properties": {
         "concern": "core",
         "kind": "functional",
+        "lineage": "original",
         "name": "The design can say what to work on next, and why that and not something else",
         "priority": "medium",
         "provenance": "authored",
         "statement": "A person returning to the design must be able to ask \"what is the most pressing thing to work on?\" and get an answer computed from the design itself, with its reasoning visible — not a hand-maintained ordering in a file. The answer must rank an unmade decision ABOVE the work that waits on it, because being told to build something blocked on a choice only the human can make is worse than being told nothing. It must distinguish what is undecided from what is unbuilt from what is misshapen, since those need different actions from different people. And it must be a projection over the graph, never a stored list: a second place where priority lives is a second place for it to go stale, which is the failure the whole backlog-in-the-graph move exists to end.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -15333,7 +15427,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:3da1285bbe79c86bab0008fe7d5a6c8c817cedcf09d7dde6d575dcff83c9f2ec",
+  "prev_content_hash": "sha256:ed0ceb02a36233aaa4e20c0f56d4855ab8e8d656e7c0e2bfc561bf47b7ae415d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
