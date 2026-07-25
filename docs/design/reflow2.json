@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1c13a8d49b295a925823f4e2e61e4b37ff75a601b0af606573c1fd60001c5963",
+  "content_hash": "sha256:cda46c4df67c55e105f0d01c88582ea2563b307d39c45a581d7ab4619d24f573",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -379,6 +379,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:requirement-quality",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:revise-trigger",
       "properties": {
         "weight_basis": "estimated"
@@ -620,6 +628,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:requirement-lineage-capture",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:requirement-quality-capture",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -2829,6 +2843,24 @@
         "action": "added"
       },
       "to_id": "req:requirement-lineage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-quality-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:missing-sibling"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:requirement-quality-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:requirement-quality"
     },
     {
       "edge_type": "CHANGED",
@@ -5569,6 +5601,18 @@
       "from_id": "cap:requirement-lineage",
       "properties": {},
       "to_id": "decision:ack:75651a693cc63b9c"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:requirement-quality",
+      "properties": {},
+      "to_id": "dec:three-party-checks"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:requirement-quality",
+      "properties": {},
+      "to_id": "decision:ack:d39c8c716229303c"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9323,6 +9367,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:requirement-quality",
+      "properties": {},
+      "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:revise-trigger",
       "properties": {},
       "to_id": "req:roads-not-taken"
@@ -10781,7 +10831,7 @@
       "node_id": "cap:missing-sibling",
       "node_type": "Capability",
       "properties": {
-        "description": "Anthony, 2026-07-25: \"you have requirements A and C, but you missed B.\" A genuinely different kind of gap from everything detect_gaps currently finds. Every existing gap source reasons about STRUCTURE — this requirement has no capability, this capability has no check — and each is deterministic because the hole is visible in the graph's shape. A missing sibling is invisible in the shape: the design is perfectly coherent without B, which is exactly why nobody notices. Finding it requires reading what A and C MEAN and recognising the pattern they belong to, which is semantic and therefore the LLM's half of dec:three-party-checks, not the deterministic core's. That places it correctly and also bounds it: the agent proposes candidates, the graph records them at `proposed`, and the human decides — a suggested requirement must never enter as anything but a question, or the tool starts inventing intent, which is the one thing dec:human-decides forbids most firmly. Strongest where the design already has structure to pattern-match against: a decomposition with three of four obvious children, a CRUD interface missing delete, a lifecycle with no teardown. Depends on cap:requirement-lineage for its best signal, because siblings under a decomposed parent are precisely where an omission is both most likely and most detectable. PLANNED.",
+        "description": "Anthony, 2026-07-25: \"you have requirements A and C, but you missed B.\" A genuinely different kind of gap from everything detect_gaps finds today. Every existing gap source reasons about STRUCTURE — this requirement has no capability, this capability has no check — and each is deterministic because the hole is visible in the graph's shape. A missing requirement is invisible in the shape: the design is perfectly coherent without it, which is exactly why nobody notices. TWO AXES, and the user's fighter-jet example shows they are different detections. BREADTH is the bigger one: a stakeholder states that the wings must provide X lift and sustain Y G, and the engine must make Z thrust — two SUBSYSTEM-level requirements, which implies a subsystem decomposition in which landing gear, avionics, fuel, flight controls, life support, structures, hydraulics and thermal have nothing whatsoever. That is not interpolating a missing item between two others; it is noticing that 2 of roughly 12 expected subsystems have been named at all, which requires knowing what kind of thing is being built. DEPTH is the second: the wing requirement is itself thin, since wings need more than lift and G-load. Both are semantic — pattern-matching against a domain archetype — so they belong to the LLM half of dec:three-party-checks, not the deterministic core. Bounded accordingly: the agent proposes, the graph records at `proposed`, the human decides, and nothing enters above proposed, or the tool starts inventing intent and dec:human-decides is broken in the way that matters most. cap:requirement-lineage sharpens it considerably — requirement families (which Leiden already clusters, once requirement-to-requirement edges exist) are precisely where an omission is both most likely and most detectable, because a family with two members in a design whose siblings have twenty is visible without knowing any domain at all. PLANNED.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Notice the requirement nobody wrote down",
@@ -10941,6 +10991,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Hold the requirement tree: original, decomposed, derived",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:requirement-quality",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The INCOSE-style criteria Anthony brought from acquisitions, 2026-07-25: a good requirement is unambiguous, verifiable, necessary, minimally constrained (implementation-free), traceable, feasible and consistent. THE USEFUL STRUCTURE IS THAT THEY DO NOT ALL BELONG TO THE SAME PARTY (dec:three-party-checks). THREE ARE STRUCTURAL and the core can judge them deterministically today or nearly so. TRACEABLE is already half-built — unsatisfied_requirement asks downward (nothing satisfies it), and cap:requirement-lineage supplies upward (a requirement claiming decomposition with no parent is a defect; an original with no parent is correct). VERIFIABLE splits: whether anything CHECKS it is structural and already computed; whether the statement contains a measurable threshold is semantic. CONSISTENT splits the same way: CONTRADICTS already exists as an edge, so a recorded contradiction is checkable — finding an unrecorded one is not. FOUR ARE SEMANTIC and belong to the agent, never the core. UNAMBIGUOUS (does it say \"fast\" where it means a number), NECESSARY (would removing it leave a real capability gap), MINIMALLY CONSTRAINED (does it dictate a solution instead of stating a need — the one engineers violate most, and the one that quietly forecloses design alternatives before the fork layer ever sees them), FEASIBLE (needs domain knowledge and cost/schedule context the graph does not hold). Bound exactly as cap:missing-sibling is: the agent may flag and propose, the human decides, and nothing enters above `proposed`. WHY IT IS WORTH BUILDING THE STRUCTURAL THREE FIRST: they are cheap, they never produce a false accusation about meaning, and they give the semantic four somewhere to attach. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Judge whether a requirement is well formed, and say which part a machine can judge",
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
@@ -11470,6 +11533,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Requirement lineage (original/decomposed/derived), targeted feature change, and missing-sibling detection captured"
+      }
+    },
+    {
+      "node_id": "chg:requirement-quality-capture",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Requirement quality criteria captured, split by which party can judge each"
       }
     },
     {
@@ -12685,6 +12756,16 @@
         "decision": "Accepted the gap gap:be224976b1f4f6e1.",
         "name": "Reviewed: gap:be224976b1f4f6e1",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24): cap:session-memory was captured today and nothing is built, so a Verification would have nothing to run against. Worth naming the check it will need when it is built, because it is not the obvious one: the test is not \"does a node get written\" but \"does a LATER session, with no memory of this one, find what this session decided by asking a question in its own words\". That makes it an integration check spanning the trigger, the epoch anchor and the query surface — and it cannot pass while ver:search-natural-language is failing, since the query half is the same machinery. Sequence it after the foundation search fix lands.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:d39c8c716229303c",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:d39c8c716229303c.",
+        "name": "Reviewed: gap:d39c8c716229303c",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities. The check divides the way the capability does, which is the point of it: the three STRUCTURAL criteria (traceable, has-a-check, recorded-contradiction) get ordinary deterministic tests with fixtures, and those are the ones worth building first. The four SEMANTIC criteria cannot be unit-tested for correctness — a test asserting \"this vague requirement was flagged\" only proves the fixture was flagged — so what must be pinned there is the GUARD: a quality complaint never edits a requirement, never changes its status, and is surfaced as a question rather than a verdict. Whether the semantic judgements are any good is a trials question, and the honest place to answer it is a real corpus with a human disagreeing.",
         "status": "accepted"
       }
     },
@@ -14802,7 +14883,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b899cf3a3fce0c4c9d2637d4fd8225e8b3040725d48f06cd4ea0bd359a655f1e",
+  "prev_content_hash": "sha256:1c13a8d49b295a925823f4e2e61e4b37ff75a601b0af606573c1fd60001c5963",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
