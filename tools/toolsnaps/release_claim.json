@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Let a claimed region go. Returns whether a claim was there to release — releasing what nobody holds says so rather than pretending it worked.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "contributor_id": {
+        "type": "string"
+      },
+      "seed_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "contributor_id",
+      "seed_id"
+    ],
+    "type": "object"
+  },
+  "name": "release_claim"
+}

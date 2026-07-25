@@ -33,6 +33,27 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Advisory claims — see who already has a region of the design in hand**
+  (BL-44). `claim_region` / `release_claim` / `claim_report`, plus a `CLAIMS`
+  edge (Contributor → any node) carrying depth, timestamp and a note.
+
+  **A claim is not a lock and cannot be.** The design lives as a file in each
+  checkout with no shared server (`dec:multi-writer-architecture`), so there is
+  nowhere for a lock to live. Nothing refuses a write, nothing consults a claim
+  before allowing one, and a second writer who ignores a claim gets a correct
+  three-way merge exactly as if it did not exist — pinned by a test, because a
+  claims layer that *reads* like locking is worse than none.
+
+  The region is **computed** from a seed and a depth, never stored as a node
+  list, so it follows the design as the design changes. Overlaps are **reported,
+  never prevented**: two people may claim the same ground, both claims stand, and
+  `claim_report` names the shared nodes ranked by size. Two claims by the same
+  person are not a collision. The advisory limit ships in the payload, not only
+  the docs — whoever reads it over the wire never sees the docs.
+
+  Schema: edge types 54 → 55, so a graph written by this build is refused by
+  older binaries with "update reflow2".
+
 - **Drift now says which WAY the design and the build diverged**, not just that
   they did. `reconcile_artifacts` accepts an optional `realizes` per observation
   — what the caller observed a file actually implementing — and compares it

@@ -132,6 +132,25 @@ schema:
       properties:
         note: { type: string }
 
+    CLAIMS:
+      from: Contributor
+      to: "*"
+      extraction_hint: >
+        A Contributor has taken a region of the design in hand, so others can see
+        what is already held before starting. ADVISORY, never a lock: the design
+        lives as a file in each person's checkout with no shared server to hold a
+        lock, so a claim cannot block anyone and must never be read as if it
+        could. The claim names a SEED and a depth; the region itself is computed
+        from them, so it follows the design as the design changes instead of
+        going stale. Deliberately NOT a traceability edge (absent from
+        structural_rule, like AUTHORED_BY) — who is working on something is
+        coordination, not design structure, and letting it propagate would put
+        people into blast radii.
+      properties:
+        depth: { type: int, default: 2, description: "How far from the seed the claimed region reaches, in hops." }
+        claimed_at: { type: string }
+        note: { type: string, description: "Why it is held / what is being done — the thing a colleague actually wants to know." }
+
     DECOMPOSES:
       from: Requirement
       to: Requirement

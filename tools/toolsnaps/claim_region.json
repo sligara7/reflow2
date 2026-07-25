@@ -1,0 +1,52 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Take a region of the design in hand so colleagues can see it is held: `contributor_id` claims everything within `depth` hops of `seed_id`. ADVISORY, NEVER A LOCK — it does not block anyone, nothing consults it before a write, and a second person who ignores it still gets a correct three-way merge. It is also only as fresh as the last pull, because the design lives as a file in each checkout with no shared server (dec:multi-writer-architecture). Claims reduce collisions; they do not prevent them. The region is COMPUTED from seed+depth rather than stored as a node list, so it follows the design as it changes. Overlapping an existing claim is allowed and reported by claim_report, never refused.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "at": {
+        "default": null,
+        "description": "Timestamp; the core takes no clock, so the caller supplies it.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "contributor_id": {
+        "description": "The `Contributor` taking the region in hand.",
+        "type": "string"
+      },
+      "depth": {
+        "default": null,
+        "description": "How far from the seed the region reaches, in hops (default 2).",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "note": {
+        "default": null,
+        "description": "Why it is held / what is being done — what a colleague actually wants.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "seed_id": {
+        "description": "The node the region is computed from.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "contributor_id",
+      "seed_id"
+    ],
+    "type": "object"
+  },
+  "name": "claim_region"
+}

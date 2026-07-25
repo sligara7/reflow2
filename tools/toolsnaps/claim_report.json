@@ -1,0 +1,11 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Who holds what, and where two people are working the same ground. Read this before starting on an area someone else may already be in. Overlaps are ranked by how much they share, and two claims by the SAME person are not reported as a collision. An overlap is a WARNING, not a refusal: the merge still resolves it correctly if two people do collide.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "name": "claim_report"
+}

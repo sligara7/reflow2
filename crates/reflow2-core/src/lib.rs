@@ -31,6 +31,7 @@ pub mod allocate;
 pub mod alternatives;
 pub mod artifact;
 pub mod budget;
+pub mod claims;
 pub mod compare;
 pub mod confirm;
 pub mod detect;

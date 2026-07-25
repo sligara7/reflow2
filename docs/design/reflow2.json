@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2551a347dd99f0a8a059ba423aa7373ba5800fbcc0ad400886413d35c123cb59",
+  "content_hash": "sha256:70146232226264f52de75d8a39e40f6dccd8d211c23468d6daf54c3719ddb39d",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -48,6 +48,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:cluster-claims",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:claims"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -614,6 +622,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:bl97-103-idea-capture",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:cluster-claims-built",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
     },
@@ -2673,6 +2687,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:cluster-claims-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cluster-claims-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cluster-claims-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cluster-claims-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:cluster-claims-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:cycle-break",
       "properties": {
         "accepted_baseline": true,
@@ -3558,6 +3617,12 @@
       "from_id": "sys:coherence-loop",
       "properties": {},
       "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:claims"
     },
     {
       "edge_type": "CONTAINS",
@@ -9240,6 +9305,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:claims",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:compare",
       "properties": {
         "completeness": "complete"
@@ -10033,6 +10106,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:cluster-claims",
+      "properties": {},
+      "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:compare-designs",
       "properties": {},
       "to_id": "cap:compare-designs"
@@ -10248,6 +10327,14 @@
         "action": "created"
       },
       "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art-claims",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:claims"
     },
     {
       "edge_type": "YIELDED",
@@ -10650,6 +10737,17 @@
       }
     },
     {
+      "node_id": "art:claims",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:bd100813c2f74603",
+        "location": "crates/reflow2-core/src/claims.rs",
+        "name": "claims.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:compare",
       "node_type": "Artifact",
       "properties": {
@@ -10863,7 +10961,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:51811e7517b942f7",
+        "checksum": "sha256:882d577621d9c62b",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
         "status": "realized"
@@ -10940,7 +11038,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4cba8720231abce0",
+        "checksum": "sha256:950e86c78c9c7b58",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
         "status": "realized"
@@ -10962,7 +11060,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fcf776d944694dec",
+        "checksum": "sha256:2054bdf893915b83",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -11028,7 +11126,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:818e2f8cc1c2be90",
+        "checksum": "sha256:3b84a01ec0bae49d",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
         "status": "realized"
@@ -11116,12 +11214,12 @@
       "node_id": "cap:cluster-claims",
       "node_type": "Capability",
       "properties": {
-        "description": "The scoping primitive dec:multi-writer-architecture commits to (BL-44). A contributor claims a computable region of the design — a node and its neighbourhood, or a community — so parallel work is separated BEFORE it overlaps rather than reconciled after. Satisfies req:concurrent-planning, which was accepted 2026-07-25 and blocked until the architecture decision was made. THE SHAPE IS SET BY THE DECISION: designs stay files in each checkout and git moves them, so a claim is not a lock and cannot be — there is no shared server to hold one. It is advisory, travels in the export like everything else, and is honest about what it can and cannot promise (dec:report-dont-judge). Two people who ignore claims still get a correct three-way merge; claims exist so they rarely need one. The region should be COMPUTED rather than hand-drawn — propagate_from's blast radius or a Leiden community is already the right shape, and git's sparse-checkout cone is the acknowledged prior art (borrow the concept, not the filesystem mechanism). Carries the same identity layer the rest of the design uses: a claim is AUTHORED_BY a Contributor, so \\\"who holds what\\\" is answerable from the graph. THE HONEST LIMIT, inherited from the decision and worth stating in the tool itself: without a server, one person's claim is only visible to another after a pull. Claims reduce collisions, they do not prevent them, and a claim layer that implied otherwise would be worse than none. PLANNED.",
+        "description": "Claim a region of the design so two people do not collide in it (BL-44). BUILT 2026-07-25 as claims.rs, exposed as claim_region / release_claim / claim_report (96 tools). A new CLAIMS edge, Contributor → any node, carrying depth / claimed_at / note. THE SHAPE IS SET BY dec:multi-writer-architecture, and every part of it follows from having no server. A CLAIM IS NOT A LOCK. Nothing in the module refuses a write and nothing anywhere consults a claim before allowing one; a second writer who ignores a claim gets a correct three-way merge exactly as if it did not exist. That is pinned by a test rather than promised in a comment, because a claims layer that READS like locking is worse than none — it invites reliance on a guarantee it cannot make. THE REGION IS COMPUTED, never stored: a claim holds a seed and a depth, and the membership is derived through the same traversal propagate_from uses, so it follows the design as the design changes instead of freezing a list that silently goes wrong the moment someone adds an edge (pinned: new work inside a claimed area is covered without re-claiming). OVERLAP IS REPORTED, NEVER PREVENTED. Two people may claim the same ground and both claims stand; claim_report names the shared nodes and ranks collisions by size, because a two-node brush and a forty-node collision should not read alike. Two claims by the SAME person are not a collision — reporting them would train people to ignore the list, which is how a signal dies. The advisory limit ships IN the payload, not only in the docs, since whoever reads it over the wire never sees the docs. CLAIMS is deliberately NOT a traceability edge, like AUTHORED_BY: who is working on something is coordination, not design structure, and propagating it would drag people into every blast radius (pinned by a test). 9 tests. Schema change: edge types 54 → 55.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Claim a region of the design so two people do not collide in it",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -12072,6 +12170,14 @@
       }
     },
     {
+      "node_id": "chg:cluster-claims-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Claims layer built: advisory regions, computed from seed and depth, overlaps reported not prevented"
+      }
+    },
+    {
       "node_id": "chg:cycle-break",
       "node_type": "ChangeEvent",
       "properties": {
@@ -12284,6 +12390,19 @@
         "name": "budget",
         "provenance": "authored",
         "purpose": "The budget module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:claims",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "claims",
+        "provenance": "authored",
+        "purpose": "The coordination module: who has which region of the design in hand, and where two people are working the same ground. Advisory only — it holds no locks and refuses no writes, because the design lives as a file in each checkout with no shared server to hold one (dec:multi-writer-architecture). Regions are computed from a seed and a depth via the same traversal propagate_from uses, so they follow the design rather than freezing a membership list.",
         "status": "planned",
         "tier": "operational"
       }
@@ -14110,6 +14229,16 @@
       }
     },
     {
+      "node_id": "frag:art-claims",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered claims.rs"
+      }
+    },
+    {
       "node_id": "frag:art-merge",
       "node_type": "Fragment",
       "properties": {
@@ -15226,6 +15355,18 @@
       }
     },
     {
+      "node_id": "ver:cluster-claims",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-25",
+        "level": "integration",
+        "method": "test",
+        "name": "A claim never blocks anyone, and overlaps are reported rather than prevented",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:compare-designs",
       "node_type": "Verification",
       "properties": {
@@ -15608,7 +15749,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2b734ba2376cff6fed7e73d28ac7f4eca91815fdf4adcdfd264481dd62ae0827",
+  "prev_content_hash": "sha256:2551a347dd99f0a8a059ba423aa7373ba5800fbcc0ad400886413d35c123cb59",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

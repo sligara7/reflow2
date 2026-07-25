@@ -56,6 +56,12 @@ pub mod edge {
     /// ancestry without the parent enumerating children, and because delivery
     /// rolls UP it: satisfying every child satisfies the parent.
     pub const DECOMPOSES: &str = "DECOMPOSES";
+    /// `Contributor → *` — someone has a region of the design in hand.
+    /// Advisory, never a lock, and deliberately NOT a traceability edge (absent
+    /// from `structural_rule`, like `AUTHORED_BY`): who is working on something
+    /// is coordination, not design structure, and propagating along it would
+    /// drag people into blast radii.
+    pub const CLAIMS: &str = "CLAIMS";
     /// `* → *` — traceability: a Capability SATISFIES a Requirement.
     pub const SATISFIES: &str = "SATISFIES";
     /// `* → Contributor` — the structured "who" behind a node's authorship.

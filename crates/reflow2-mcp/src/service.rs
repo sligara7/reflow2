@@ -442,6 +442,31 @@ pub struct RequirementStatusReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ClaimReq {
+    /// The `Contributor` taking the region in hand.
+    pub contributor_id: String,
+    /// The node the region is computed from.
+    pub seed_id: String,
+    /// How far from the seed the region reaches, in hops (default 2).
+    #[serde(default)]
+    pub depth: Option<usize>,
+    /// Why it is held / what is being done — what a colleague actually wants.
+    #[serde(default)]
+    pub note: Option<String>,
+    /// Timestamp; the core takes no clock, so the caller supplies it.
+    #[serde(default)]
+    pub at: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ReleaseClaimReq {
+    pub contributor_id: String,
+    pub seed_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct RequirementLineageReq {
     pub requirement_id: String,
     /// `original` (default) / `decomposed` / `derived`.
@@ -1828,6 +1853,64 @@ impl ReflowService {
         ok_json(EdgeDto::from(
             g.satisfies(&req.from_id, &req.to_id).map_err(dyno_err)?,
         ))
+    }
+
+    #[tool(
+        description = "Take a region of the design in hand so colleagues can see it is held: \
+                       `contributor_id` claims everything within `depth` hops of `seed_id`. \
+                       ADVISORY, NEVER A LOCK — it does not block anyone, nothing consults it \
+                       before a write, and a second person who ignores it still gets a correct \
+                       three-way merge. It is also only as fresh as the last pull, because the \
+                       design lives as a file in each checkout with no shared server \
+                       (dec:multi-writer-architecture). Claims reduce collisions; they do not \
+                       prevent them. The region is COMPUTED from seed+depth rather than stored as \
+                       a node list, so it follows the design as it changes. Overlapping an \
+                       existing claim is allowed and reported by claim_report, never refused.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn claim_region(
+        &self,
+        Parameters(req): Parameters<ClaimReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(
+            g.claim_region(
+                &req.contributor_id,
+                &req.seed_id,
+                req.depth.unwrap_or(2),
+                req.note.as_deref(),
+                req.at.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        )
+    }
+
+    #[tool(
+        description = "Let a claimed region go. Returns whether a claim was there to release — \
+                       releasing what nobody holds says so rather than pretending it worked.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn release_claim(
+        &self,
+        Parameters(req): Parameters<ReleaseClaimReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(serde_json::json!({
+            "released": g.release_claim(&req.contributor_id, &req.seed_id).map_err(dyno_err)?
+        }))
+    }
+
+    #[tool(
+        description = "Who holds what, and where two people are working the same ground. Read \
+                       this before starting on an area someone else may already be in. Overlaps \
+                       are ranked by how much they share, and two claims by the SAME person are \
+                       not reported as a collision. An overlap is a WARNING, not a refusal: the \
+                       merge still resolves it correctly if two people do collide.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn claim_report(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.lock().await;
+        ok_json(g.claim_report().map_err(dyno_err)?)
     }
 
     #[tool(
