@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- BL-96..BL-103 file the brothers' idea list + capture KPP vocabulary — @ajs — since 2026-07-24 — docs/backlog.md, docs/design/reflow2.json
+
 
 
 
