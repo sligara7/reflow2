@@ -31,6 +31,41 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **A session that cannot open the graph now says so instead of vanishing**
+  (`cap:degraded-surface`, `crates/reflow2-mcp/src/degraded.rs`). Reported from a
+  six-session StoryFlow fleet on 2026-07-25: the store is single-writer, so the
+  first session won the lock and the rest **died at startup, before any tool
+  existed**. What they saw was not an error but *nothing* — zero `reflow2__*`
+  tools — and, in one boss's words, *"nothing distinguished this from 'reflow2 was
+  never configured for this project'"*. reflow2's own good diagnosis went to stderr
+  and died with the process; one session went on to report the project as having no
+  design brain.
+
+  Any open failure now serves a handshake with the translated reason **in the
+  server instructions** (which the client puts in the agent's context) plus exactly
+  one tool, `reflow2_unavailable`, carrying the reason, the remedies and an explicit
+  *do not conclude reflow2 is missing*. Same fix covers the other cause of the same
+  silence: a graph refused for schema-version skew. Nine cases in
+  `tools/test_degraded_server.py`, measured from both sides of a **real** held lock.
+
+- **`--export-snapshot` reads a graph another session is holding.** The second
+  field blocker: a locked-out seat could not so much as export the design, and
+  export is where the whole per-seat merge workflow starts. Copies the store's flat
+  files to scratch (skipping `LOCK`), exports the copy, removes it **and its
+  provenance sidecar**. Loudly labelled best-effort — it is a live-database read,
+  not a backup — and a graph that is *not* locked gets an ordinary export and is
+  told so.
+
+- **A bare hex checksum no longer reads as total drift** (`canonical_checksum`).
+  Drift is a *string* comparison and the gate observes `sha256:<hex>`, so an
+  artifact registered from raw `sha256sum` output was identical on disk and 100%
+  drifted at the same time. Found by reflow2's own coherence gate reporting four
+  false reds in one session. A bare digest is now stored canonically as
+  `sha256:<hex>`; anything carrying another algorithm, or not hex at all, is stored
+  verbatim — this normalises a known dialect, it does not police the field.
+
 ### Added
 
 - **Designs compose by mirroring, and the mirror carries a coordinate**

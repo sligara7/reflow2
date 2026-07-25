@@ -94,6 +94,11 @@ jobs:
         # branches editing different parts of one export must merge with no
         # human, and a both-sides conflict must leave the path unmerged.
         run: python3 tools/test_merge_driver.py
+      - name: Degraded-server + held-graph-snapshot suite (measured against a real lock)
+        # The fleet outage of 2026-07-25: a peer that cannot take the single-writer
+        # lock must still handshake and say why, instead of dying before any tool
+        # exists. Both sides of a REAL held lock, so it cannot pass against a mock.
+        run: python3 tools/test_degraded_server.py
       - name: Smoke test over real stdio
         run: python3 tools/smoke_mcp.py
       - name: Toolsnaps — served surface matches the committed goldens (BL-76)

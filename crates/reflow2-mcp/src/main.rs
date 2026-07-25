@@ -7,6 +7,7 @@
 
 use anyhow::Context;
 use clap::Parser;
+use reflow2_mcp::degraded::DegradedService;
 use reflow2_mcp::service::ReflowService;
 use rmcp::{ServiceExt, transport::stdio};
 use tracing_subscriber::EnvFilter;
@@ -82,6 +83,31 @@ struct Cli {
     #[arg(long, value_name = "FILE")]
     resolutions: Option<String>,
 
+    /// Export a BEST-EFFORT snapshot of a graph another process is holding.
+    ///
+    /// The single-writer lock blocks reads as well as writes, so a peer session
+    /// cannot `--export` the design a colleague's server holds — and `--export`
+    /// is what the entire git-file merge workflow starts from. A StoryFlow fleet
+    /// hit this with three bosses on one graph (2026-07-25): the two that lost
+    /// the startup race could not so much as read the design, and one of them
+    /// worked around it by hand with `cp -r` plus `rm LOCK`.
+    ///
+    /// That workaround gets discovered anyway, and the uncaveated version is the
+    /// one that spreads — so reflow2 offers it with the caveat attached rather
+    /// than leaving it as folklore. What you get: a copy taken at one instant,
+    /// opened without disturbing the holder, exported, and thrown away.
+    ///
+    /// **It is best-effort and read-only, and it is NOT crash-consistent.** SSTs
+    /// are immutable once written so a copy normally replays cleanly, but a
+    /// MANIFEST or WAL captured mid-write can fail to open or silently lack the
+    /// newest unflushed writes. Treat the result as "the design as of about now",
+    /// never as a backup — the durable answer is RocksDB's secondary-instance
+    /// open (`req:read-while-held`), which lives one layer down and is not
+    /// exposed yet. If the graph is NOT locked this exports normally and says so,
+    /// because a snapshot nobody needed would be a worse answer than the truth.
+    #[arg(long = "export-snapshot")]
+    export_snapshot: bool,
+
     /// Be git's merge driver for a committed design export. Takes git's three
     /// temporary files — %O (ancestor), %A (ours, and the file git reads the
     /// result back from), %B (theirs) — in that order.
@@ -111,6 +137,83 @@ struct Cli {
         num_args = 3
     )]
     merge_driver: Vec<String>,
+}
+
+/// A throwaway copy of a graph directory, opened without disturbing its holder.
+///
+/// The lock is a filesystem lock on the directory's `LOCK` inode — it guards the
+/// handle, not the bytes — so a copy with `LOCK` removed opens cleanly. That is
+/// the whole trick, and its limit is stated where it is used: the copy is not
+/// crash-consistent.
+struct GraphSnapshot {
+    dir: std::path::PathBuf,
+}
+
+impl GraphSnapshot {
+    fn path(&self) -> &str {
+        self.dir.to_str().unwrap_or_default()
+    }
+
+    /// Remove the copy. Called even on failure: a stale second design left on
+    /// disk is something for a later session to mistake for the real one.
+    ///
+    /// Removes the provenance sidecar too. Opening a graph writes
+    /// `<graph-path>.meta.json` BESIDE the directory, so deleting only the
+    /// directory leaves a stamp behind — which is the exact sidecar trap a
+    /// StoryFlow session reported on 2026-07-24, where an archived graph's
+    /// leftover stamp made a brand-new graph refuse to open. It bit this code on
+    /// its first run.
+    fn cleanup(self) {
+        if let Err(e) = std::fs::remove_dir_all(&self.dir) {
+            eprintln!(
+                "reflow2: WARNING — could not remove the temporary snapshot at {}: {e}. Delete it \
+                 by hand: a stale copy of a design is worse than no copy.",
+                self.dir.display()
+            );
+        }
+        let sidecar = std::path::PathBuf::from(format!("{}.meta.json", self.dir.display()));
+        if sidecar.exists() {
+            let _ = std::fs::remove_file(&sidecar);
+        }
+    }
+}
+
+/// Copy a graph directory to a temporary location and drop its lock file.
+fn snapshot_dir(graph_path: &str) -> anyhow::Result<GraphSnapshot> {
+    let source = std::path::Path::new(graph_path);
+    if !source.is_dir() {
+        anyhow::bail!("{graph_path} is not a directory, so there is nothing to snapshot");
+    }
+    // Distinct per process so two peers snapshotting at once cannot collide.
+    let dir = std::env::temp_dir().join(format!("reflow2-snapshot-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(&dir)
+        .with_context(|| format!("could not create the snapshot directory {}", dir.display()))?;
+    for entry in std::fs::read_dir(source)
+        .with_context(|| format!("could not read the graph directory {graph_path}"))?
+    {
+        let entry = entry?;
+        let name = entry.file_name();
+        // The lock is exactly what must not come along.
+        if name == "LOCK" {
+            continue;
+        }
+        let target = dir.join(&name);
+        if entry.file_type()?.is_dir() {
+            // RocksDB keeps its own files flat, so the only nested directory is
+            // the full-text index — which a snapshot does not need, because
+            // export reads the store rather than the index. It is rebuilt empty
+            // in the copy, so do not use a snapshot for `search_design`.
+            continue;
+        }
+        std::fs::copy(entry.path(), &target).with_context(|| {
+            format!(
+                "could not copy {} into the snapshot",
+                entry.path().display()
+            )
+        })?;
+    }
+    Ok(GraphSnapshot { dir })
 }
 
 /// Turn the RocksDB lock error into the sentence the operator needs.
@@ -182,6 +285,11 @@ async fn main() -> anyhow::Result<()> {
     {
         anyhow::bail!(
             "--merge-apply is its own mode; pass it without --export/--import/--diff/--merge"
+        );
+    }
+    if cli.export_snapshot && (cli.export || cli.import.is_some() || !cli.diff.is_empty()) {
+        anyhow::bail!(
+            "--export-snapshot is its own mode; pass it without --export/--import/--diff"
         );
     }
     if !cli.merge_driver.is_empty()
@@ -347,6 +455,57 @@ async fn main() -> anyhow::Result<()> {
         return Ok(());
     }
 
+    // Export-a-snapshot-and-exit: the read a peer cannot otherwise get.
+    if cli.export_snapshot {
+        // Probe by actually taking the handle we would use — an earlier version
+        // opened the graph to test it and then opened it AGAIN to read it, which
+        // deadlocked against its own first handle ("lock hold by current
+        // process"). Found by this feature's own test.
+        match reflow2_core::DesignGraph::open_rocksdb(&cli.graph_path) {
+            // Not locked after all — the honest answer is a real export, not a
+            // copy of one.
+            Ok(graph) => {
+                eprintln!(
+                    "reflow2: the graph was not locked, so this is an ORDINARY export, not a \
+                     snapshot — nothing was copied and nothing is stale."
+                );
+                println!("{}", serde_json::to_string_pretty(&graph.export_graph()?)?);
+                return Ok(());
+            }
+            Err(_) => {
+                let snapshot = snapshot_dir(&cli.graph_path)?;
+                eprintln!(
+                    "reflow2: WARNING — BEST-EFFORT SNAPSHOT. The graph at {} is held by another \
+                     process, so it was COPIED and the copy opened read-only. SSTs are immutable \
+                     once written, so this normally replays cleanly — but a MANIFEST or WAL caught \
+                     mid-write can lack the newest unflushed writes. This is the design as of \
+                     about now. It is NOT a backup and NOT crash-consistent. The durable answer is \
+                     a secondary-instance open, which reflow2 cannot do yet.",
+                    cli.graph_path
+                );
+                let result = (|| -> anyhow::Result<()> {
+                    let graph = reflow2_core::DesignGraph::open_rocksdb(snapshot.path())
+                        .map_err(|e| anyhow::anyhow!("{e}"))
+                        .with_context(|| {
+                            format!(
+                                "the snapshot at {} could not be opened. That is the \
+                                 crash-consistency caveat arriving: the copy caught the store \
+                                 mid-write. Try again, or ask the holder to release the graph.",
+                                snapshot.path()
+                            )
+                        })?;
+                    println!("{}", serde_json::to_string_pretty(&graph.export_graph()?)?);
+                    Ok(())
+                })();
+                // The copy is temporary by contract: leaving it behind would put
+                // a second, stale design on disk for someone to mistake for the
+                // real one.
+                snapshot.cleanup();
+                return result;
+            }
+        }
+    }
+
     // Export-and-exit runs before the server is built: a backup must be
     // possible even when the caller has no intention of serving.
     if cli.export {
@@ -412,23 +571,57 @@ async fn main() -> anyhow::Result<()> {
     // a second editor session against the same graph — so it needs the same
     // plain explanation --export/--import already get, not a raw RocksDB error
     // (BL-57).
-    let (service, provenance) = ReflowService::new_reporting(&cli.graph_path)
-        .map_err(|e| explain_open_failure(&e.into(), &cli.graph_path))?;
+    //
+    // AND IT MUST NOT EXIT. Until 2026-07-25 a failure here ended the process
+    // before the MCP handshake, so the client reported only "Connection closed"
+    // and the session saw zero reflow2 tools — indistinguishable from reflow2
+    // never having been configured. A three-boss StoryFlow fleet measured that
+    // from both sides of the lock: the two bosses that lost the startup race ran
+    // design-blind, and one of them only investigated because the user had
+    // asserted the tools should be there. The diagnosis existed the whole time,
+    // on stderr, where no agent reads.
+    //
+    // So: serve a degraded surface that carries the reason in its handshake
+    // instructions and in one unmistakably-named tool. An MCP server that starts
+    // and explains itself beats one that dies before it can be asked.
+    match ReflowService::new_reporting(&cli.graph_path) {
+        Ok((service, provenance)) => {
+            // Say it on stderr as well as the log: an operator running this by
+            // hand sees stderr, and "which reflow2 wrote this graph" is exactly
+            // the question that used to have no answer at all.
+            if let Some(note) = provenance {
+                tracing::warn!("{note}");
+                eprintln!("reflow2: {note}");
+            }
 
-    // Say it on stderr as well as the log: an operator running this by hand
-    // sees stderr, and "which reflow2 wrote this graph" is exactly the question
-    // that used to have no answer at all.
-    if let Some(note) = provenance {
-        tracing::warn!("{note}");
-        eprintln!("reflow2: {note}");
+            tracing::info!("reflow2-mcp serving over stdio");
+            let running = service
+                .serve(stdio())
+                .await
+                .context("failed to start MCP stdio server")?;
+            running.waiting().await.context("MCP server error")?;
+        }
+        Err(e) => {
+            let explained = explain_open_failure(&e.into(), &cli.graph_path);
+            let reason = format!("{explained:#}");
+            // Still on stderr for whoever runs this by hand...
+            eprintln!("reflow2: {reason}");
+            eprintln!(
+                "reflow2: serving a DEGRADED surface so this session can find out why — one tool, \
+                 `reflow2_unavailable`, and the reason in the handshake instructions."
+            );
+            tracing::warn!("degraded mode: {reason}");
+            // ...and in-band, where the agent will actually see it.
+            let running = DegradedService::new(reason, cli.graph_path.clone())
+                .serve(stdio())
+                .await
+                .context("failed to start the degraded MCP server")?;
+            running
+                .waiting()
+                .await
+                .context("degraded MCP server error")?;
+        }
     }
-
-    tracing::info!("reflow2-mcp serving over stdio");
-    let running = service
-        .serve(stdio())
-        .await
-        .context("failed to start MCP stdio server")?;
-    running.waiting().await.context("MCP server error")?;
     Ok(())
 }
 

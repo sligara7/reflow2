@@ -28,6 +28,32 @@ use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};
 use crate::temporal::{ChangeAction, ChangeType};
 
+/// Canonicalise a recorded checksum to `sha256:<hex>`.
+///
+/// Drift is detected by comparing the registered checksum against one observed
+/// from disk, and that comparison is a **string** comparison — so `abc123…` and
+/// `sha256:abc123…` are the same digest and total drift at the same time. On
+/// 2026-07-25 four artifacts were registered from raw `sha256sum` output, and
+/// the coherence gate reported every one of them as "the build no longer matches
+/// the committed design" while the bytes matched exactly. A false red on a gate
+/// whose whole job is to be believed is worse than no gate.
+///
+/// A bare hex digest is unambiguous, so it is canonicalised rather than refused
+/// — and the stored value comes back in the returned artifact, so the caller
+/// sees what was written. Anything else (a different algorithm's prefix, a
+/// non-hex fingerprint) is stored verbatim: this normalises a known dialect, it
+/// does not police the field.
+fn canonical_checksum(checksum: &str) -> String {
+    let is_bare_hex = !checksum.is_empty()
+        && checksum.len() <= 64
+        && checksum.chars().all(|c| c.is_ascii_hexdigit());
+    if is_bare_hex {
+        format!("sha256:{checksum}")
+    } else {
+        checksum.to_string()
+    }
+}
+
 /// Which way an accepted drift went — the answer to the **second question**.
 ///
 /// The code moved; that much is observed. Accepting the new baseline is a
@@ -168,6 +194,9 @@ impl DesignGraph {
                 node_id: artifact_id.to_string(),
             });
         };
+        // Canonicalise before the accept id is hashed, so re-accepting the same
+        // state stays idempotent whichever dialect the caller typed.
+        let checksum = &canonical_checksum(checksum);
 
         let event_id = match disposition {
             DriftDisposition::DesignHolds { change_type } => {
@@ -241,7 +270,7 @@ impl DesignGraph {
             self.create_node(node::DRIFT_EVENT, &ev.node_id, props)?;
         }
 
-        let mut props = Props::new().set("checksum", checksum);
+        let mut props = Props::new().set("checksum", checksum.as_str());
         for (k, v) in &existing.properties {
             if k != "checksum" {
                 props = props.set(k, v.clone());
@@ -405,7 +434,7 @@ impl DesignGraph {
                 .set("name", opts.name.as_str())
                 .set_opt("artifact_type", opts.artifact_type.as_deref())
                 .set_opt("location", opts.location.as_deref())
-                .set_opt("checksum", opts.checksum.as_deref()),
+                .set_opt("checksum", opts.checksum.as_deref().map(canonical_checksum)),
         )?;
         // Fragment YIELDED the Artifact (the provenance anchor).
         self.create_edge(

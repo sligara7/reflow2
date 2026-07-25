@@ -438,6 +438,32 @@ reading order (Vision → Design → Process → Heritage). Then:
 6. **Don't touch the sibling source repos** (`../../storyflow`, etc.) — mine them for
    ideas, but all new work lands here.
 
+### What carries across sessions, and what does not
+
+Taken from the StoryFlow fleet's boss charter, which draws the line explicitly and puts the
+highest-consequence permission on the far side of it: *"prior-session GOs — merge authority,
+deploy windows — do not carry into your session. Get fresh ones."* Absent a written list, both
+errors are available: asking permission for the routine, and assuming it for the irreversible.
+The line is **reversible → standing; outward-facing → per-session.**
+
+**Standing** — do these without asking again:
+
+- Accept checksum drift on a registered artifact you just edited, with a `note` saying which it
+  was (standing policy, 2026-07-23). The accept is recorded either way, so it is reviewable.
+- Record intent in the graph, run the detectors, commit and push to `main` with the gate green.
+- Acknowledge a gap or a defect **only** with the user's reason on the record — the
+  acknowledgement is a Decision, and `dec:certainty-derived` says a status change carries the
+  *user's* word, not yours.
+
+**Per-session** — ask every time, however recently it was granted:
+
+- **Cutting a release.** Tagging and publishing is this project's deploy: it reaches other
+  people's machines and cannot be recalled.
+- **Filing an issue or anything else in a repository the user does not control** (the
+  `report-friction` skill already enforces this).
+- **Moving a Requirement off `proposed`, or a Decision to `accepted`.** That write *is* the
+  user's signature; making it on their behalf forges it.
+
 ## Engineering principles (adapted from storyflow's `PROTOCOL.md ⭐`)
 
 These are the author's hard-won code-quality principles, carried over and adapted to

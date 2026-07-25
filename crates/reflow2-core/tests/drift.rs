@@ -685,3 +685,104 @@ fn the_ledger_tells_a_design_updated_claim_from_a_design_holds_one() {
     assert_eq!(claim.design_holds_claims, 0);
     assert_eq!(claim.design_edits, 1, "the capability moved, on the record");
 }
+
+#[test]
+fn a_bare_hex_digest_is_stored_in_the_dialect_drift_compares_in() {
+    // Found in the field, 2026-07-25, by reflow2's own coherence gate. Drift is a
+    // STRING comparison, and the gate observes `sha256:<hex>` — so an artifact
+    // registered from raw `sha256sum` output reads as total drift while its bytes
+    // match exactly. Four artifacts, four false reds, on a gate whose entire value
+    // is that a red means something.
+    let mut g = built_thread();
+    let digest = "eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde";
+
+    g.link_artifact(LinkArtifactOptions {
+        artifact_id: "art:bare".into(),
+        name: "bare.rs".into(),
+        location: Some("src/bare.rs".into()),
+        artifact_type: Some("code".into()),
+        target_type: node::CAPABILITY.into(),
+        target_id: "cap:score".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: Some(digest.into()),
+    })
+    .expect("link");
+
+    let report = g
+        .reconcile_artifacts(
+            &[observed(
+                "art:bare",
+                true,
+                Some(&format!("sha256:{digest}")),
+            )],
+            &ReconcileOptions::default(),
+        )
+        .expect("reconcile");
+    assert!(
+        report.findings.is_empty(),
+        "the same file must not read as changed: {report:?}"
+    );
+
+    // And the accept path, which is where it actually bit: the disposition is
+    // recorded, and the very next reconcile still agrees.
+    let next = "0f5a250ca821774cc1be3d61f50cc2c7d848fd8869df9ed670f8a6d1611a0903";
+    g.set_artifact_checksum(
+        "art:bare",
+        next,
+        DriftDisposition::DesignHolds {
+            change_type: ChangeType::Refactor,
+        },
+        Some("cargo fmt only"),
+        None,
+    )
+    .expect("accept");
+
+    let after = g
+        .reconcile_artifacts(
+            &[observed("art:bare", true, Some(&format!("sha256:{next}")))],
+            &ReconcileOptions::default(),
+        )
+        .expect("reconcile");
+    assert!(
+        after.findings.is_empty(),
+        "an accepted baseline must actually clear the drift: {after:?}"
+    );
+}
+
+#[test]
+fn a_fingerprint_that_is_not_a_bare_digest_is_stored_verbatim() {
+    // This normalises one known dialect; it does not police the field. A value
+    // that already carries an algorithm, or is not hex at all, is the caller's
+    // business and is left exactly as given.
+    let mut g = built_thread();
+    for (id, given) in [
+        ("art:prefixed", "sha256:aaa"),
+        ("art:blake", "blake3:2f7c1d"),
+        ("art:not-hex", "v3-content-fingerprint"),
+    ] {
+        g.link_artifact(LinkArtifactOptions {
+            artifact_id: id.into(),
+            name: id.into(),
+            location: Some(format!("src/{id}.rs")),
+            artifact_type: Some("code".into()),
+            target_type: node::CAPABILITY.into(),
+            target_id: "cap:score".into(),
+            completeness: None,
+            provenance: None,
+            fragment_id: None,
+            checksum: Some(given.into()),
+        })
+        .expect("link");
+        let stored = g
+            .get_node(node::ARTIFACT, id)
+            .unwrap()
+            .unwrap()
+            .properties
+            .get("checksum")
+            .and_then(|v| v.as_str().map(str::to_string))
+            .unwrap();
+        assert_eq!(stored, given, "{id} must be stored as written");
+    }
+}

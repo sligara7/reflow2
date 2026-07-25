@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c06f93da2f57590790c98587a4122b885037bb89804ae8e2e9b349056f608cf8",
+  "content_hash": "sha256:108e86ffe615bcb9d8891c1670af964ee7d2af9c2f09cc91623a108b1fd59cec",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -112,6 +112,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:degraded-surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:degraded"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -515,6 +523,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:snapshot-read",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:stamp",
       "properties": {
         "weight_basis": "estimated"
@@ -754,6 +770,12 @@
       "from_id": "chg:deep-review-tier1",
       "properties": {},
       "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:degraded-surface",
+      "properties": {},
+      "to_id": "epoch:surface-export"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1836,6 +1858,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-489316048746f57d",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-5517aad06e685a27",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-57815d3b012cb271",
       "properties": {
         "accepted_baseline": true,
@@ -1872,6 +1912,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-815dd755caf58e7c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-83844819d2fdeba9",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-9ed800f22aff9099",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-a2a035876eefa13a",
       "properties": {
         "accepted_baseline": true,
@@ -1881,12 +1948,48 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-bd7907f2d9949364",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-bee1129a4a4fe87a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-c34747b1ae344744",
       "properties": {
         "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-cd270db9c9c20396",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-dfd8f1bc21828db6",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:degraded"
     },
     {
       "edge_type": "CHANGED",
@@ -3285,6 +3388,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:degraded-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:degraded-surface",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:degraded-surface"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:documentation-subsystem",
       "properties": {
         "accepted_baseline": false,
@@ -4286,6 +4407,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "dec:mosa-conformance"
     },
     {
@@ -4322,6 +4449,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:claims-have-owners"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:coherence"
     },
     {
@@ -4335,6 +4468,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:design-composes"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:design-identity"
     },
     {
       "edge_type": "CONTAINS",
@@ -6152,6 +6291,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:cluster-claims",
       "properties": {},
+      "to_id": "dec:advisory-concurrency"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cluster-claims",
+      "properties": {},
       "to_id": "dec:multi-writer-architecture"
     },
     {
@@ -7130,6 +7275,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:mirror-surface",
       "properties": {},
+      "to_id": "dec:identity-out-of-band"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mirror-surface",
+      "properties": {},
       "to_id": "dec:nested-graphs"
     },
     {
@@ -8070,6 +8221,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:claims-have-owners",
+      "properties": {},
+      "to_id": "dec:identity-out-of-band"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:completion-computed",
       "properties": {},
       "to_id": "dec:passing-is-verified"
@@ -8103,6 +8260,12 @@
       "from_id": "req:design-composes",
       "properties": {},
       "to_id": "decision:ack:2066530ed8b00fb8"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:design-identity",
+      "properties": {},
+      "to_id": "dec:identity-out-of-band"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8157,6 +8320,12 @@
       "from_id": "req:session-memory-in-graph",
       "properties": {},
       "to_id": "dec:multi-writer-architecture"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:stale-seat-knows",
+      "properties": {},
+      "to_id": "dec:advisory-concurrency"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -11526,6 +11695,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:degraded",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
         "completeness": "partial"
@@ -11587,6 +11764,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:fleet-lessons",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "dec:advisory-concurrency"
     },
     {
       "edge_type": "REALIZES",
@@ -11886,6 +12071,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-degraded-server",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:degraded-surface"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:upgrade-v0110",
       "properties": {
         "completeness": "complete"
@@ -12009,6 +12202,12 @@
       "from_id": "cap:decision-point",
       "properties": {},
       "to_id": "req:intent-preserved"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:degraded-surface",
+      "properties": {},
+      "to_id": "req:never-silently-absent"
     },
     {
       "edge_type": "SATISFIES",
@@ -12387,6 +12586,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:snapshot-read",
+      "properties": {},
+      "to_id": "req:never-silently-absent"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:stamp",
       "properties": {},
       "to_id": "req:survives-upgrade"
@@ -12492,6 +12697,18 @@
       "from_id": "ver:compare-designs",
       "properties": {},
       "to_id": "cap:compare-designs"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:degraded-surface",
+      "properties": {},
+      "to_id": "cap:degraded-surface"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:degraded-surface",
+      "properties": {},
+      "to_id": "cap:snapshot-read"
     },
     {
       "edge_type": "VERIFIES",
@@ -12875,6 +13092,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:degraded",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:detect",
       "properties": {
         "action": "created"
@@ -12920,6 +13145,14 @@
         "action": "created"
       },
       "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:fleet-lessons",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:fleet-lessons"
     },
     {
       "edge_type": "YIELDED",
@@ -13155,6 +13388,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-degraded-server",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:upgrade-v0110",
       "properties": {
         "action": "created"
@@ -13229,7 +13470,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5b1afbb0e369af59",
+        "checksum": "sha256:9cace9045ec19152",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
         "status": "realized"
@@ -13302,6 +13543,17 @@
       }
     },
     {
+      "node_id": "art:degraded",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde",
+        "location": "crates/reflow2-mcp/src/degraded.rs",
+        "name": "degraded.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:detect",
       "node_type": "Artifact",
       "properties": {
@@ -13364,6 +13616,17 @@
         "checksum": "sha256:cfdf82f1a6497595",
         "location": "crates/reflow2-core/src/fielded.rs",
         "name": "fielded.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:fleet-lessons",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2",
+        "location": "docs/fleet-lessons.md",
+        "name": "fleet-lessons.md",
         "status": "realized"
       }
     },
@@ -13493,7 +13756,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7cd58c187b327a97",
+        "checksum": "sha256:efde27a92468d6354f0591c658c91aae26422abe44577312aef52adfb59c912f",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -13720,6 +13983,17 @@
       }
     },
     {
+      "node_id": "art:test-degraded-server",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:a61a4afe2c63e9ee9f50eaac573bf3c710eb41d5e3beae49f7d561c52e2b9e41",
+        "location": "tools/test_degraded_server.py",
+        "name": "test_degraded_server.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:upgrade-v0110",
       "node_type": "Artifact",
       "properties": {
@@ -13931,6 +14205,19 @@
         "name": "Hold and collapse a decision point (forkable alternatives)",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:degraded-surface",
+      "node_type": "Capability",
+      "properties": {
+        "description": "On any open failure, serve a handshake plus exactly one tool (reflow2_unavailable) whose name is the diagnosis, with the translated reason in the server instructions, the remedies in the tool payload, and an explicit do-not-conclude-reflow2-is-missing.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "The server explains its own absence instead of vanishing",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -14481,6 +14768,19 @@
       }
     },
     {
+      "node_id": "cap:snapshot-read",
+      "node_type": "Capability",
+      "properties": {
+        "description": "--export-snapshot copies the store's flat files to a scratch directory (skipping LOCK), opens the copy, exports it, and removes both the copy and its provenance sidecar. Best-effort and loudly labelled as such: it is a live-database read, not a backup. A graph that is NOT locked gets an ordinary export and is told so.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Export a design another session is holding",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:stamp",
       "node_type": "Capability",
       "properties": {
@@ -14622,6 +14922,22 @@
       }
     },
     {
+      "node_id": "chg:accept-489316048746f57d",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Same bytes — re-registered in the sha256: dialect the gate compares in (the bare-hex false-drift bug, fixed in artifact.rs this session)."
+      }
+    },
+    {
+      "node_id": "chg:accept-5517aad06e685a27",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "cargo fmt only."
+      }
+    },
+    {
       "node_id": "chg:accept-57815d3b012cb271",
       "node_type": "ChangeEvent",
       "properties": {
@@ -14658,6 +14974,30 @@
       }
     },
     {
+      "node_id": "chg:accept-815dd755caf58e7c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Same bytes — re-registered in the sha256: dialect the gate compares in."
+      }
+    },
+    {
+      "node_id": "chg:accept-83844819d2fdeba9",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "canonical_checksum: a bare hex digest is stored as sha256:&lt;hex&gt;, the dialect drift compares in. Restores intended behaviour — the design already said drift is a checksum comparison; it was reading identical bytes as total drift. Found by reflow2's own gate, 2026-07-25; pinned by two cases in tests/drift.rs."
+      }
+    },
+    {
+      "node_id": "chg:accept-9ed800f22aff9099",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Same bytes — re-registered in the sha256: dialect the gate compares in."
+      }
+    },
+    {
       "node_id": "chg:accept-a2a035876eefa13a",
       "node_type": "ChangeEvent",
       "properties": {
@@ -14667,11 +15007,43 @@
       }
     },
     {
+      "node_id": "chg:accept-bd7907f2d9949364",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "cargo fmt only."
+      }
+    },
+    {
+      "node_id": "chg:accept-bee1129a4a4fe87a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Added the overview breadcrumb required by AGENTS.md rule 2."
+      }
+    },
+    {
       "node_id": "chg:accept-c34747b1ae344744",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "refactor",
         "name": "Tolerate the additive loop_hint key on {count,items} read envelopes (BL-91) — presence-match, not exact-set. A robustness fix to the gate's list unwrap; reflow2's product behaviour and design are unchanged by it."
+      }
+    },
+    {
+      "node_id": "chg:accept-cd270db9c9c20396",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Same bytes — re-registered in the sha256: dialect the gate compares in."
+      }
+    },
+    {
+      "node_id": "chg:accept-dfd8f1bc21828db6",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "cargo fmt only."
       }
     },
     {
@@ -14996,6 +15368,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Deep-review tier-1 fixes (BL-53..56): HEAL refuses self-loop DUPLICATES merges (a sanctioned self-merge deleted the node with no undo); the installer proves file ownership by hash manifest — user edits are kept and reported, obsolete kit files pruned only when untouched, malformed configs left alone without crashing; install.sh fails loud instead of silently or falsely succeeding; release publishes only after every asset is verified attached; the smoke harness refuses to wipe an existing graph directory without --wipe"
+      }
+    },
+    {
+      "node_id": "chg:degraded-surface",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Field fix from the six-session fleet: reflow2 never exits silently, and a graph somebody else holds can still be exported"
       }
     },
     {
@@ -15330,6 +15710,19 @@
         "name": "confirm",
         "provenance": "authored",
         "purpose": "The confirm module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:degraded",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "degraded",
+        "provenance": "authored",
+        "purpose": "The server that starts when the graph cannot be opened: one tool, reflow2_unavailable, and the reason in the handshake instructions.",
         "status": "planned",
         "tier": "operational"
       }
@@ -15898,6 +16291,16 @@
       }
     },
     {
+      "node_id": "dec:advisory-concurrency",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Take a claim when you need one and start — but publish it by pushing it, every time, not only when contested; a claim nobody can see is not a claim. When two claims cross, the winner is whichever landed first in git history, and both parties can verify that independently. Rejected: a coordination service or lock manager (contradicts dec:multi-writer-architecture, and single-writer exclusion is the observed failure), and asking before every claim (the fleet measured that timidity starves the pool).",
+        "name": "Seats coordinate by announcement and provable order, never by exclusion",
+        "rationale": "The StoryFlow fleet runs 15+ concurrent seats on exactly this rule — grab-and-go, announce always, crossings settled \"first-on-disk, both provable\". reflow2 has better material for the provable half than a markdown timestamp: a content-hash chain and git order. The alternative people reach for by reflex is a lock, and a lock is exactly what took five of six sessions offline on 2026-07-25.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:alternatives-unranked-forkable",
       "node_type": "Decision",
       "properties": {
@@ -16095,6 +16498,16 @@
         "name": "The graph handle is an accepted single point of failure",
         "rationale": "The architecture is explicit (AGENTS.md): DesignGraph is 'the single handle everything else hangs off' — one schema-validated CRUD surface so every coherence-loop module speaks to one store one way. Removing it strands schema, search and vocabulary (each with its file) plus the export chain, which is the BL-69 detector telling the truth about the spine. Redundancy is incoherent here twice over: these are modules compiled into one binary (they cannot fail independently of cmp:graph at run time — the same reasoning as the F6 library filter, which cannot see cmp:graph only because it provides no Interface node), and a second graph handle would mean two write paths to one store, exactly the incoherence the single handle exists to prevent. Accepted 2026-07-21 while dispositioning BL-69's corrected findings; sibling of dec:service-spof-accepted.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:identity-out-of-band",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "A design's identity is a UUID minted at genesis and stored in the graph; the friendly name is a label on top of it. A seat's identity is the harness session id it was already given. Rejected: deriving from the project name or path (two designs can share both, and the id must survive being copied), and a registry that hands out ids (that is the coordination this avoids, and there is no service to host it).",
+        "name": "Names are assigned with zero coordination, never derived from shared state",
+        "rationale": "Neither identifier is negotiated with anybody, so neither can race — unique by construction at one seat or fifteen. The fleet reached this by DELETING a whole mint-race guard: the race was an artifact of deriving the handle by reading a shared roster, so removing the derivation removed the race rather than patching it. reflow2 has the derived-identity bug twice today — every in-memory graph answered DEFAULT_GRAPH_ID until mirroring needed open_in_memory_as, and claims record a label rather than an owner.",
+        "status": "proposed"
       }
     },
     {
@@ -17625,6 +18038,16 @@
       }
     },
     {
+      "node_id": "frag:art:degraded",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered degraded.rs"
+      }
+    },
+    {
       "node_id": "frag:art:detect",
       "node_type": "Fragment",
       "properties": {
@@ -17682,6 +18105,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered fielded.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:fleet-lessons",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered fleet-lessons.md"
       }
     },
     {
@@ -17972,6 +18405,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered temporal.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-degraded-server",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_degraded_server.py"
       }
     },
     {
@@ -18333,6 +18776,20 @@
       }
     },
     {
+      "node_id": "req:claims-have-owners",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A claim names its owner, and a claim with no live owner is reported stale",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A claim records the session that made it (its harness session id — assigned out of band, so it cannot race), and claim_report distinguishes a claim held by a live seat from one left behind by a session that closed. Liveness is computed from the owner, not asserted by the claim: a claim nobody is working is a ghost that makes the overlap report lie.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:coherence",
       "node_type": "Requirement",
       "properties": {
@@ -18646,6 +19103,20 @@
       }
     },
     {
+      "node_id": "req:never-silently-absent",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A session that has no design graph is told so, in band",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When reflow2 cannot open the graph — another session holds the single-writer lock, or the graph was stamped by a different reflow2 — the MCP server must still complete the handshake and carry the reason where the agent will read it. Exiting at startup makes the outage indistinguishable from \"reflow2 was never configured for this project\", and an agent that concludes that skips the design-first process for a reason nobody recorded. Field-reported by the StoryFlow fleet, 2026-07-25.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:no-se-knowledge",
       "node_type": "Requirement",
       "properties": {
@@ -18682,6 +19153,20 @@
         "provenance": "authored",
         "statement": "A session that edits code while making zero reflow2 calls must receive the same one-time Stop nudge as one that writes the graph unchecked: the nudge arms on the harness's file-edit events (Edit/Write), not only on reflow2 write events. Today loop_nudge.py counts only mcp__reflow2__ writes, so the total-bypass session — the agent that ignores the design brain entirely — passes the Stop hook silently. Constraints carried over: the hook never reads the graph (single-writer lock), blocks once and never twice, and names what is owed (loop_status; impact-check before further edits, link-artifacts after) rather than demanding a ritual call; an edit-count threshold bounds false positives on typo/docs sessions. (BL-90, BL-74 family.)",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:nudge-path-proven",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The path the coherence loop relies on to interrupt an agent is proven to interrupt one",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "The Stop-hook nudge and the read-side loop_hint are the only mechanisms that make the loop self-correcting, and nothing proves they reach a live agent: the existing suite tests the nudge script given its inputs, not that the hook is installed and fires. Prove the path end to end in a real session, and give it a backstop for when it is absent — a mechanism relied on to interrupt you is worthless until observed doing so.",
+        "status": "proposed"
       }
     },
     {
@@ -18735,6 +19220,20 @@
         "provenance": "authored",
         "statement": "The agent should be reminded of outstanding coherence-loop debt while it is looking at the graph mid-session — not only at SessionStart (fires once) and Stop (fires at the very end). Reads (scan_nodes, get_node, search_design, graph_report, …) are the agent's first and most frequent action, so a read that returns while the loop is owed something is a well-timed place to surface it, closing the gap between the two existing triggers. This is the read-side sibling of the write tools' loop_hint and a member of the BL-74 \"fire on a trigger, not on virtue\" family: the reminder must ride a call the agent already makes, so remembering reflow2 does not depend on the agent's discipline under operational load.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:read-while-held",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Reading the design does not require owning it",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A session that cannot take the write lock should still be able to READ the design — orientation, detectors, reports — rather than having no design brain at all. RocksDB supports this (open_for_read_only, open_as_secondary) but dynograph-storage does not expose it, so this needs an upstream change to a tag-pinned dependency. Six concurrent sessions on one machine is the actual working pattern, and today five of them get nothing.",
+        "status": "proposed"
       }
     },
     {
@@ -18803,6 +19302,20 @@
         "provenance": "authored",
         "statement": "A working session produces decisions, findings and realizations, and those are design content: they belong in the graph, recorded at the moment they occur, so a later session can query them rather than read a narrative. Two properties follow. First, capture is incremental — a summary written at the end is the one a busy session never gets to, and an end-of-session digest is a retelling rather than a record. Second, the enforcement must point at the graph: whatever mechanism insists a session leave its takeaways behind must be satisfiable only by graph writes, never by touching a prose file, or the prose file becomes the memory and the graph becomes decoration. The agent must then be able to ask its own history — what was decided about X, when, by whom, and against what state of the design — using the same query surface a person uses.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:stale-seat-knows",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A seat learns the shared design moved before it writes over it",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A session's live graph is a long-lived cache of the committed design export. Before that session writes the export back, reflow2 must tell it that the committed record has moved since it last synced — the way git refuses a non-fast-forward push rather than silently winning. A stale export is not a conflicting export, it is a complete one, so the merge driver merges it cleanly and the other seat's work disappears without a conflict marker.",
+        "status": "proposed"
       }
     },
     {
@@ -19014,6 +19527,17 @@
         "level": "integration",
         "method": "test",
         "name": "compare.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:degraded-surface",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "Measured against a REAL held lock: a peer handshakes, the reason arrives in its instructions, one unmistakable tool is served with remedies, a free graph still gets the whole surface — and a held graph exports with the caveat, leaving no residue (tools/test_degraded_server.py, 9 cases)",
         "status": "passing"
       }
     },
@@ -19531,7 +20055,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:08e8d1d0e51a716439595d0c8cacad4de66ce7ba7fdf76736f1fe583ffbd4d62",
+  "prev_content_hash": "sha256:ff00433243e7b71e4fad848d6c79bbcbf67bd4f10fafbc43367bd5086be9e312",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
