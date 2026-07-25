@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5eef9455860ab3f3e02859444d9dc75c4b0e791dcb88f9b27c1e40bfdff77503",
+  "content_hash": "sha256:2b7b98c89b2906e4228488f7ae46b591dec21b86662c88d088120316696ea38f",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -787,6 +787,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:promote-brainstorms",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:protocol-version-current",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -1170,6 +1176,12 @@
       "to_id": "epoch:kpp-capture"
     },
     {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:kpp-capture:dec:nested-graphs",
+      "properties": {},
+      "to_id": "epoch:kpp-capture"
+    },
+    {
       "edge_type": "AUTHORED_BY",
       "from_id": "art:alternatives",
       "properties": {
@@ -1495,6 +1507,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:analyse-at-any-level",
+      "properties": {
+        "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:completion-computed",
       "properties": {
         "acted_at": "2026-07-24",
@@ -1531,6 +1552,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:design-composes",
+      "properties": {
+        "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:drift-has-direction",
       "properties": {
         "acted_at": "2026-07-24",
@@ -1552,6 +1582,24 @@
       "from_id": "req:inviolable-intent",
       "properties": {
         "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:key-interfaces",
+      "properties": {
+        "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:modularity-computed",
+      "properties": {
+        "acted_at": "2026-07-25",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -3519,6 +3567,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:promote-brainstorms",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:protocol-version-current",
       "properties": {
         "accepted_baseline": true,
@@ -4013,6 +4070,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:analyse-at-any-level"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:as-built-honest"
     },
     {
@@ -4026,6 +4089,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:design-anything"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:design-composes"
     },
     {
       "edge_type": "CONTAINS",
@@ -4085,7 +4154,19 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:key-interfaces"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:many-designs-one-service"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:modularity-computed"
     },
     {
       "edge_type": "CONTAINS",
@@ -7723,6 +7804,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:design-composes",
+      "properties": {},
+      "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:design-composes",
+      "properties": {},
+      "to_id": "decision:ack:2066530ed8b00fb8"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:design-reachable-without-the-repo",
       "properties": {},
       "to_id": "dec:central-host"
@@ -7732,6 +7825,12 @@
       "from_id": "req:design-reachable-without-the-repo",
       "properties": {},
       "to_id": "decision:ack:90a90e90df05c31a"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:key-interfaces",
+      "properties": {},
+      "to_id": "dec:mosa-conformance"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7750,6 +7849,12 @@
       "from_id": "req:many-designs-one-service",
       "properties": {},
       "to_id": "rule:no-foreclosure"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:modularity-computed",
+      "properties": {},
+      "to_id": "dec:mosa-conformance"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7828,6 +7933,12 @@
       "from_id": "dec:exploratory-staging",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:dec:exploratory-staging"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:nested-graphs",
+      "properties": {},
+      "to_id": "snap:epoch:kpp-capture:dec:nested-graphs"
     },
     {
       "edge_type": "INCLUDES",
@@ -11438,6 +11549,12 @@
       "edge_type": "SATISFIES",
       "from_id": "cap:scoped-analysis",
       "properties": {},
+      "to_id": "req:analyse-at-any-level"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:scoped-analysis",
+      "properties": {},
       "to_id": "req:concurrent-planning"
     },
     {
@@ -14064,6 +14181,14 @@
       }
     },
     {
+      "node_id": "chg:promote-brainstorms",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Anthony promotes the nested-graphs and MOSA brainstorms into intent: four requirements out of two ideas"
+      }
+    },
+    {
       "node_id": "chg:protocol-version-current",
       "node_type": "ChangeEvent",
       "properties": {
@@ -15098,7 +15223,7 @@
       "properties": {
         "decision": "UNDECIDED, RECORDED AS BRAINSTORMING. Anthony, 2026-07-25, supplied the DoD MOSA Implementation Guidebook (OUSD(R&E) Systems Engineering and Architecture, February 2025, Distribution A) and was explicit about the frame: \"just taking principles, concepts and ideas from this. not looking to implement mosa exactly over this document.\" So this records what the guidebook's concepts illuminate about reflow2, not a plan to become a MOSA tool. THE DEFINITION IT GIVES: \"an acquisition and design approach consisting of a technical and business architecture that supports using system interfaces compliant with widely supported and consensus-based standards... A MOSA system structure allows for severable components to be incrementally added, removed, or replaced throughout the life cycle\" (10 U.S.C. 4401, mandated for all DoD acquisition programs to the maximum extent practicable). ITS FIVE-STEP FRAMEWORK is a process, not a document: Plan, Modularize, Identify Interfaces, Define Interfaces, Standardize Interfaces — and reflow2 can already model a process rather than only a product (cap:model-process, Flow nodes), so the framework is expressible as a Flow whose steps the graph can be checked against. THE FINDING THAT MATTERS, from Table D-1 \"MOSA Conformance Criteria and Verification Methods\": most of what MOSA asks a program to demonstrate, reflow2 already computes for other reasons. Their MODULARITY criterion — \"encapsulated, cohesive, loosely coupled, and organized into functional categories\" — is the Leiden modularity score, community detection and the god-component detector that graph_report already prints. Their MOSA OBJECTIVES criterion — \"demonstrate severable modular components\" — is propagate_change: if the blast radius of a change inside a module stops at that module's interfaces the module is severable, and if it leaks past them the module is not modular whatever the architecture diagram says. That is severability as a COMPUTED property rather than an assertion, which is the same move dec:certainty-derived made for requirement status and cap:derived-completion made for delivery. Their MOSA MODULES criterion — \"implement minimal functions, are functionally independent, encapsulated, and traceable to requirements\" — is the god-component detector plus the golden thread. Their LIFE CYCLE CHARACTERISTICS criterion — severable, replaceable, interoperable, allowing competition — is the severability computation plus the alternatives layer, where interchangeable suppliers behind one interface are exactly an analysis of alternatives. WHAT IS GENUINELY MISSING, and it is one vocabulary item and one check. (1) NOTHING MARKS AN INTERFACE AS KEY. MOSA's whole discipline turns on designating major/modular system interfaces and then holding them stable and open; reflow2 has Interface nodes, provides/consumes and SPECIFIES, but no way to say \"this one is the published boundary and that one is internal plumbing\". BL-45 found the identical hole from the opposite direction — external dependencies between reflow2 projects — and recorded it as \"nothing marks an Interface external-facing\". Two independent routes to one missing property is the strongest evidence this design has for a vocabulary addition. (2) NOTHING CHECKS STANDARDS COMPLIANCE, and the vocabulary for it is present and unused: DesignRule is defined as a chosen standard or convention with an `enforced` flag, and there are zero DesignRules in any graph — the same schema-present-practice-absent shape as the temporal axis and the KPP vocabulary before them. THE COUNTER-ARGUMENT, recorded beside the idea rather than used to bury it: MOSA is domain vocabulary for defence acquisition, and req:design-anything says the vocabulary stays neutral. A MOSA conformance report is therefore a VIEW — a projection over computations that already exist, in the acquisition community's words — and not a set of new node types. Building it as a view keeps the core neutral (dec:views-are-projections) and any renderer fill-in remains a defect. If it were ever built as schema, reflow2 would have taken on one domain's language as its own, which is the thing it has refused since the beginning.",
         "name": "OPEN — should reflow2 report MOSA conformance, given it already computes most of the criteria?",
-        "rationale": "Held as brainstorming because Anthony framed it that way and because the honest scope is not obvious: the difference between \"reflow2 can answer most MOSA conformance questions already\" (true, and interesting) and \"reflow2 should ship a MOSA report\" (a product decision with a domain commitment inside it). The route worth taking first, if any: designate key interfaces, because that single property is wanted independently by BL-45's system-of-systems thread and by MOSA's central discipline, and because it makes a real computation possible — a change that crosses a key interface is a different risk from one that stays behind it, which is the severability check MOSA asks for and reflow2 could compute today. Worth noting what this does NOT need: none of it requires the federated graph-per-system architecture from dec:nested-graphs. Severability, modularity and key interfaces are all computable inside one graph, which is a point in favour of the scope filter that was just built over the larger architectural move.",
+        "rationale": "Recorded 2026-07-25 as brainstorming from the DoD MOSA Implementation Guidebook Anthony supplied, on his framing: principles and concepts, not an implementation of MOSA. PROMOTED THE SAME DAY on his word (\"let's promote both\") into the two things the guidebook actually exposed as missing, both now accepted: req:key-interfaces (the design says which interfaces are the published boundaries, and computations read the distinction) and req:modularity-computed (severability and cohesion are computed from the graph, not asserted by the diagram). Both are GOVERNED_BY this decision. WHAT STAYS OPEN is the question this decision was opened on, and it is narrower now: whether reflow2 ships a MOSA-BRANDED report. The requirements are domain-neutral by construction — published boundary, severable part — so they can be built without answering it, and the acquisition community's words for the same criteria belong in a view over the computation rather than in the schema (dec:views-are-projections, req:design-anything). Deciding otherwise would adopt one domain's language as reflow2's own, which is the thing it has refused since the beginning. SEQUENCING, and it is not arbitrary: req:key-interfaces comes first because req:modularity-computed depends on it — severability is only checkable once the design knows where a boundary is. req:design-composes also links through published boundaries, so the same property serves the federation thread; that is the second independent route to it, after BL-45 found the identical hole from the system-of-systems side on 2026-07-20.",
         "status": "proposed"
       }
     },
@@ -15119,7 +15244,7 @@
       "properties": {
         "decision": "UNDECIDED, and RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-07-25, explicitly not convinced by the collaboration design and thinking out loud: \"could you have small/mini reflow2 graphs inside itself... coming from a system of systems engineering approach, reflow2 may lay out the graph and how all the systems need to interact and where there are gaps, but what if we now had a mini-reflow2 graph for each system? And a mini-mini-reflow2 of the components in the system... the idea is that reflow2 has the tools to analyze the graph at each level and ensure there are no gaps and that it works with the higher level systems or system-of-systems.\" WHAT IS ALREADY TRUE, because it changes what the idea is asking for. Levels exist and are already checked: Component.level is an enum of component / subsystem / system / system_of_systems / enterprise, CONTAINS between Components is the axis-Y spine, and hierarchy_issues already reports level_mismatch, missing_intermediate_level and orphan_level — the carburetor-to-body problem, imported from chain_reflow's matryoshka insight (docs/three-axes.md). And the multi-graph primitive exists unused: every node and edge carries graph_id, pinned to the constant \"reflow2\". So the question is not whether reflow2 can express nesting. It can. The question is whether a level should be a SUBTREE of one graph or a GRAPH OF ITS OWN. THREE OPTIONS. (a) ONE GRAPH, ZOOM BY LEVEL — today's shape. What is missing is not nesting but SCOPING: no read takes a subtree as its subject, so detect_gaps and graph_report always answer for the whole design. Adding a scope argument is a filter, not an architecture, and it delivers most of what was asked — the tools analysing each level. (b) A GRAPH PER SYSTEM, COMPOSED — Anthony's idea. It buys four things one graph cannot: an independent write lock per system, which is a different and stronger answer to the collaboration problem than region claims, because separate graphs are PHYSICALLY separate where a claim is only advisory; an independent lifecycle, so a subsystem can be released, adopted or handed to a vendor on its own; selective publishing, which is exactly req:design-reachable-without-the-repo; and per-level scale, since detectors run over hundreds of nodes instead of tens of thousands. (c) A GRAPH PER OWNERSHIP BOUNDARY, LEVELS INSIDE EACH — the hybrid, and the shape federated systems engineering actually uses: you split where AUTHORITY splits, not where the hierarchy happens to have a layer. THE FOUR HARD PARTS of (b), each one real: the golden thread cannot cross a store boundary, because the schema validates both endpoints of every edge — so a parent's Component pointing at a child's design needs a typed COORDINATE (graph id + node id + the export's content hash at the moment the reference was made), which is precisely the choice dec:fork-point-address already made for fork points over a native ref layer. Gap detection goes blind at the seam: a parent requirement whose satisfying capability lives in a child graph would fire unsatisfied forever unless the child's evidence rolls up — and that roll-up is cap:derived-completion's computation applied one level higher, which is encouraging rather than novel. Freshness becomes load-bearing: a parent's view of a child is a claim about a VERSION of that child, so it is a dated examined claim and never a live truth (the cap:freshness and confirmation-ledger shape). And the seam becomes the new collision point: two people changing the interface across the boundary still collide, now in the one place with no merge machinery. THE TENSION WORTH KNOWING ABOUT: docs/org-scale-vision.md records the opposite destination — \"one graph the whole company plans in\", with the CEO's objectives at the top and everything tracing upward. Federation and one-big-graph cannot both be the end state, and nothing in the design has ever chosen between them. THE DISCRIMINATOR, offered as a finding and not a decision: depth alone does not justify a separate graph. Nesting three levels of graphs costs a coordinate, a roll-up and a freshness check at every seam, and buys nothing that a scope filter would not have delivered — unless something at that level is separately OWNED, separately RELEASED, or separately SHARED. Where those hold, a graph of its own is right. Where they do not, it is ceremony.",
         "name": "OPEN — one graph with levels, or a graph per system composed into a bigger one?",
-        "rationale": "Recorded because Anthony said plainly he is not convinced by the collaboration design, and an unconvinced author is a finding, not a disagreement to be argued down. The three options and the ranking above are analysis offered for him to judge — the brainstorm skill's rule is that a counter-argument is recorded BESIDE an idea rather than used to talk someone out of it, and this decision is the first real test of that rule. Held proposed with nothing built, and deliberately without a Requirement: if federation is the answer it changes the shape of several settled things at once (dec:repo-file-embedded's single file, dec:central-host's hosting question, the whole org-scale destination), and that is a decision to make deliberately rather than to discover halfway through an implementation. The cheap next step, if he wants motion without commitment: add a scope argument to the existing detectors — option (a) — because it is a filter over machinery that already exists, it tests whether per-level analysis is what he actually wants, and it is a strict subset of what option (b) would need anyway, so it forecloses nothing (rule:no-foreclosure).",
+        "rationale": "Recorded 2026-07-25 because Anthony said plainly he was not convinced by the collaboration design, and an unconvinced author is a finding rather than a disagreement to be argued down. PROMOTED THE SAME DAY on his word (\"let's promote both\"): the brainstorm produced two accepted requirements and stays open on the mechanism, which is the split that keeps both halves honest. req:analyse-at-any-level is the part he needed day to day and is ALREADY DELIVERED by cap:scoped-analysis (option (a), built first because it forecloses nothing). req:design-composes is the federation intent — a system's design as a unit that composes through interfaces — GOVERNED_BY this decision, so nothing gets built toward it until the mechanism is chosen. THIS DECISION THEREFORE STAYS PROPOSED, and that is not hedging: promoting an idea to intent is not the same act as choosing between three architectures, and collapsing this one would assert a shape Anthony has never chosen. Its options and the four hard parts of federation are unchanged above. The discriminator recorded then still stands as the thing to test when it is decided: depth alone does not earn a separate graph — ownership, separate release, or separate sharing does. NOTE FOR WHOEVER COLLAPSES IT: docs/org-scale-vision.md still records the opposite destination (one graph the whole company plans in), and req:design-composes now sits in the graph as accepted intent pointing the other way. That tension is real, on the record, and undecided; it is the strongest reason this decision should be made deliberately rather than discovered.",
         "status": "proposed"
       }
     },
@@ -15270,6 +15395,16 @@
         "decision": "Accepted the gap gap:101a69b0a4f8eed6.",
         "name": "Reviewed: gap:101a69b0a4f8eed6",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24). Naming the check now because this one is unusually easy to fake, and the obvious test would be worthless: asserting that requirements recovered from a suite come back looking correct proves nothing, since they were derived from that suite. The real check is the NEGATIVE one — recover intent from a passing suite, then assert those requirements do NOT read as verified or delivered on the strength of the same tests that produced them, and that cap:derived-completion (BL-104) refuses to count them. A companion case should recover from a FAILING test and assert it lands as an open gap rather than a satisfied requirement, since that is the one signal in this area that cannot be circular. If this capability is ever built and its verification only demonstrates successful extraction, the verification is wrong even when it passes.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:2066530ed8b00fb8",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:2066530ed8b00fb8.",
+        "name": "Reviewed: gap:2066530ed8b00fb8",
+        "rationale": "User (who:ajs, 2026-07-25): accepted intent, BLOCKED on dec:nested-graphs — the same disposition req:concurrent-planning and the two hosting requirements carry, and left `accepted` rather than `deferred` for the same reason: deferred reads as \"parked, nobody act\", and this is real intent with exactly one thing in front of it. Nothing should be built toward it until the mechanism is chosen, because the three options need materially different machinery: option (a) needs nothing new, option (b) needs a cross-design coordinate, an evidence roll-up and a staleness model at every seam, and option (c) needs all of that plus a rule for where the boundaries fall. Guessing would build for the road not taken. Two things are NOT blocked and are deliberately left as open gaps rather than swept in here: req:key-interfaces and req:modularity-computed. Both serve this requirement when it is built, both are useful without it, and both are the honest next rung — so their gaps stay open, because a gap that names real work owed is doing its job.",
         "status": "accepted"
       }
     },
@@ -17108,6 +17243,20 @@
       }
     },
     {
+      "node_id": "req:analyse-at-any-level",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Any level of the design can be analysed on its own, and a narrowed answer says what it left out",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A person or team responsible for one part of a design must be able to point the detectors at that part and be answered about it — \"is my subsystem coherent, what is it owed\" — without reading the whole program. Anthony, 2026-07-25, from the satellite case: an organisation building a satellite capability has a space segment, a ground/user segment and a control segment; his team owns the satellite, and more specifically inter-satellite laser communications. He must understand the system of systems, but day to day he needs his own part. Two properties are inseparable from the first. A narrowed answer must NAME WHAT IT WITHHELD — findings elsewhere in the design, and findings that belong to no part in particular — because a team shown only its own corner will conclude the program is healthy, which is the silent-drop failure req:no-silent-fallback forbids, one level up from a truncated read. And narrowing must never become the tool deciding what a team is allowed to worry about: a program-level finding that touches their work still reaches them, marked as the program's rather than theirs. Deliberately silent on WHERE the levels live: a subtree of one graph and a design of its own are both answers to this, and that is the architecture question recorded as dec:nested-graphs.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:as-built-honest",
       "node_type": "Requirement",
       "properties": {
@@ -17199,6 +17348,20 @@
         "priority": "high",
         "provenance": "authored",
         "statement": "Software, hardware, a document, a process — the vocabulary stays neutral.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:design-composes",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A system's design can be a unit of its own that composes with the designs around it",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-07-25, promoting the idea he had been thinking out loud about: \"being able to have multiple repos that are linked by interface specifications (reflow2 could take both graphs and figure out how to resolve differences between those two repos to ensure they work together)... the idea would allow teams to focus in their most immediate concern and let the interface take care of how it works with all the other systems/components.\" The intent is that a design need not be one document for one program: a team owning a system can hold ITS design as a unit — its own store, its own lifecycle, its own published surface — and that unit composes with the systems around it through the interfaces between them, so the day-to-day view is genuinely local and the cross-system agreement is carried by the contract rather than by everyone reading everything. Four things follow, each a real obligation rather than a detail. The link between two designs cannot be an edge, because the schema validates both endpoints of every edge and they live in different stores; it must be a COORDINATE that names the other design, the node in it, and the version of it being built against. A parent's view of a composed child must ROLL UP the child's evidence — what it delivers and what it has proven — or a requirement satisfied inside the child fires as unsatisfied in the parent forever. That view is a dated claim about a VERSION of the child, never a live truth, so staleness is part of the model and not an afterthought. And the seam becomes the place where two teams genuinely collide, which is precisely where the merge machinery does not yet reach. This restates in the design what BL-45 recorded on 2026-07-20 from the same author, and it is deliberately silent on federation-versus-one-graph, which is dec:nested-graphs.",
         "status": "accepted"
       }
     },
@@ -17350,6 +17513,20 @@
       }
     },
     {
+      "node_id": "req:key-interfaces",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The design says which interfaces are the published boundaries, and computations read that distinction",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Some interfaces are the boundary a system is known by; most are internal plumbing. The design must be able to say which — and the distinction must earn its keep by being read, not merely stored (dec:edge-orthogonality). From the MOSA guidebook Anthony supplied (OUSD(R&E), February 2025), whose entire discipline turns on designating modular system interfaces and then holding them stable and open, and independently from BL-45's system-of-systems thread, which found the same hole from the other side: nothing marks an Interface external-facing, so \"visible to others\" versus \"mine to change\" is undeclarable. Two independent routes to one missing property. What must read it, or the designation is decoration: a change that crosses a published boundary is a different risk from one that stays behind it, and impact analysis should say which it is BEFORE the edit; a design that publishes a surface should be able to export exactly that surface and nothing internal; and a composed design (req:design-composes) links through published boundaries, never through another system's internals. What this must NOT become: an assertion that a boundary is stable. Whether a published interface has in fact held is a matter of evidence — its drift history — not a property anyone sets.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:many-designs-one-service",
       "node_type": "Requirement",
       "properties": {
@@ -17360,6 +17537,20 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A person works on more than one project at a time, so reflow2 must be able to hold more than one design without their contents mixing, and a session must state which design it is operating on before it can read or write. Anthony, 2026-07-25: he has reflow2 itself and storyflow; his brother has several. Three properties follow. Selection is EXPLICIT — a session that has not named its design must be refused rather than defaulted to the last one used or the only one present, because a tool call landing in the wrong project is a silent corruption that no gap detector would ever notice. Segregation is enforced by the store, not by convention: every node and edge already carries a graph_id, which is exactly the primitive this needs, and today it is pinned to the constant \"reflow2\" — so the mechanism exists and is unused, the same shape as the temporal axis and the inviolable-intent vocabulary before them. And the identity of a design must be stable across machines, so the same project reached from two places is one design rather than two that happen to share a name. This is deliberately silent on where the designs live: one process per design and one holding many are both answers to it, and that is the hosting question, not this requirement.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:modularity-computed",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Modularity is computed from the design, not asserted by the architecture diagram",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A design that calls something a module must be able to be CHECKED on it. From the MOSA guidebook's conformance criteria (Table D-1: \"demonstrate severable modular components\"; components \"encapsulated, cohesive, loosely coupled\"), reframed to reflow2's own rule that a claim is derived from evidence rather than set by hand — the same move already made for requirement certainty and for delivery. The operative test is severability, and reflow2 already owns the machinery: if the blast radius of a change inside a part stops at that part's published boundaries, the part is severable; if it leaks past them, the part is not modular whatever the diagram says. Cohesion and coupling are already computed (community structure, the modularity score, the god-component finding) — the gap is severability, which needs req:key-interfaces to know where a boundary is. Two guards. This reports, never scores: a coarse-but-honest module is not a defect, and a single opaque part legitimately encapsulates everything beneath it (dec:report-dont-judge). And the vocabulary stays neutral (req:design-anything) — the acquisition community's words for these criteria belong in a VIEW over the computation, never in the schema, or reflow2 will have adopted one domain's language as its own.",
         "status": "accepted"
       }
     },
@@ -17577,6 +17768,16 @@
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-24\",\"role\":\"author\"}}]",
         "state": "{\"decision\":\"UNDECIDED. REFRAMED 2026-07-25 by Anthony, and the reframe is the useful part: what he and his brother were asking for is not a staging GATE, it is a KIND. \\\"I think I now realize what my brother's idea was trying to say — it is like a brainstorming session where you can work through ideas without committing to anything yet. These would be more like 'ideas' not yet fleshed out and could be held in the graph as just that, 'brainstorming ideas'.\\\" That dissolves the contradiction this decision was opened over. The git study rejected the index because a gate between every edit and the graph is where intent goes to be forgotten; a brainstorm is the opposite move — the idea DOES enter the graph, immediately, labelled as what it is. Nothing waits outside, so nothing is lost, and the design still never claims a half-formed thought as intent. THE QUESTION THAT REMAINS IS THE VOCABULARY ONE, and dec:edge-orthogonality decides it: a distinction earns its keep only if a computation reads it. So what would read `brainstorm`? The candidates, none of them chosen: gap detection must NOT nag about an idea nobody committed to (an unsatisfied brainstorm is not a hole in the design, and today an unsatisfied Requirement fires forever); delivery and certainty counts must exclude it, or the denominator becomes meaningless; promotion must be an explicit human act — a brainstorm becoming a Requirement is the same signature-forging risk dec:certainty-derived guards, one step earlier; and a brainstorm nobody has touched in months is a candidate for retirement rather than an accusation. If none of those is built, the label is decoration and the honest answer is to keep using `proposed` Decisions the way this session already did for the worktree ideas (dec:concurrent-work-isolation). PRIOR FRAMING, KEPT because it is what was true yesterday: the ask read as an opt-in \\\"think first, commit later\\\" mode; what already works is that a session making no write calls IS rubber-ducking, and the read tools are the ducking aids; and the narrow question was what happens at the END of such a session — one deliberate commit, with discarded branches either dropped or preserved as unchosen alternatives under a decision point. That question survives the reframe and is now the second half of it: if ideas land as ideas, the end of a brainstorm is a promotion step, not a commit step.\",\"name\":\"OPEN — do half-formed ideas get a place in the graph, distinct from things the design asserts?\",\"rationale\":\"Raised by Anthony and his brother 2026-07-24, reframed by Anthony 2026-07-25 while brainstorming the concurrency ideas — which is itself the evidence for the feature: he produced four options he explicitly did not want to commit to, and the only place to put them was a `proposed` Decision, a node type meant for a choice someone is actually facing. That works, and it is why this is not urgent; it is also a slightly wrong fit, and knowing why is worth recording. Still held proposed because the vocabulary question above is unanswered, and because it may be a SKILL rather than a schema change: a brainstorm skill that records ideas as proposed Decisions and asks before promoting any of them would test the practice without spending a schema change and an upgrade doc on a noun. Anthony's own words put it in that bracket — 'maybe a future skill'.\",\"status\":\"proposed\"}",
         "target_id": "dec:exploratory-staging",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:kpp-capture:dec:nested-graphs",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Capability\",\"other_id\":\"cap:scoped-analysis\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-25\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"UNDECIDED, and RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-07-25, explicitly not convinced by the collaboration design and thinking out loud: \\\"could you have small/mini reflow2 graphs inside itself... coming from a system of systems engineering approach, reflow2 may lay out the graph and how all the systems need to interact and where there are gaps, but what if we now had a mini-reflow2 graph for each system? And a mini-mini-reflow2 of the components in the system... the idea is that reflow2 has the tools to analyze the graph at each level and ensure there are no gaps and that it works with the higher level systems or system-of-systems.\\\" WHAT IS ALREADY TRUE, because it changes what the idea is asking for. Levels exist and are already checked: Component.level is an enum of component / subsystem / system / system_of_systems / enterprise, CONTAINS between Components is the axis-Y spine, and hierarchy_issues already reports level_mismatch, missing_intermediate_level and orphan_level — the carburetor-to-body problem, imported from chain_reflow's matryoshka insight (docs/three-axes.md). And the multi-graph primitive exists unused: every node and edge carries graph_id, pinned to the constant \\\"reflow2\\\". So the question is not whether reflow2 can express nesting. It can. The question is whether a level should be a SUBTREE of one graph or a GRAPH OF ITS OWN. THREE OPTIONS. (a) ONE GRAPH, ZOOM BY LEVEL — today's shape. What is missing is not nesting but SCOPING: no read takes a subtree as its subject, so detect_gaps and graph_report always answer for the whole design. Adding a scope argument is a filter, not an architecture, and it delivers most of what was asked — the tools analysing each level. (b) A GRAPH PER SYSTEM, COMPOSED — Anthony's idea. It buys four things one graph cannot: an independent write lock per system, which is a different and stronger answer to the collaboration problem than region claims, because separate graphs are PHYSICALLY separate where a claim is only advisory; an independent lifecycle, so a subsystem can be released, adopted or handed to a vendor on its own; selective publishing, which is exactly req:design-reachable-without-the-repo; and per-level scale, since detectors run over hundreds of nodes instead of tens of thousands. (c) A GRAPH PER OWNERSHIP BOUNDARY, LEVELS INSIDE EACH — the hybrid, and the shape federated systems engineering actually uses: you split where AUTHORITY splits, not where the hierarchy happens to have a layer. THE FOUR HARD PARTS of (b), each one real: the golden thread cannot cross a store boundary, because the schema validates both endpoints of every edge — so a parent's Component pointing at a child's design needs a typed COORDINATE (graph id + node id + the export's content hash at the moment the reference was made), which is precisely the choice dec:fork-point-address already made for fork points over a native ref layer. Gap detection goes blind at the seam: a parent requirement whose satisfying capability lives in a child graph would fire unsatisfied forever unless the child's evidence rolls up — and that roll-up is cap:derived-completion's computation applied one level higher, which is encouraging rather than novel. Freshness becomes load-bearing: a parent's view of a child is a claim about a VERSION of that child, so it is a dated examined claim and never a live truth (the cap:freshness and confirmation-ledger shape). And the seam becomes the new collision point: two people changing the interface across the boundary still collide, now in the one place with no merge machinery. THE TENSION WORTH KNOWING ABOUT: docs/org-scale-vision.md records the opposite destination — \\\"one graph the whole company plans in\\\", with the CEO's objectives at the top and everything tracing upward. Federation and one-big-graph cannot both be the end state, and nothing in the design has ever chosen between them. THE DISCRIMINATOR, offered as a finding and not a decision: depth alone does not justify a separate graph. Nesting three levels of graphs costs a coordinate, a roll-up and a freshness check at every seam, and buys nothing that a scope filter would not have delivered — unless something at that level is separately OWNED, separately RELEASED, or separately SHARED. Where those hold, a graph of its own is right. Where they do not, it is ceremony.\",\"name\":\"OPEN — one graph with levels, or a graph per system composed into a bigger one?\",\"rationale\":\"Recorded because Anthony said plainly he is not convinced by the collaboration design, and an unconvinced author is a finding, not a disagreement to be argued down. The three options and the ranking above are analysis offered for him to judge — the brainstorm skill's rule is that a counter-argument is recorded BESIDE an idea rather than used to talk someone out of it, and this decision is the first real test of that rule. Held proposed with nothing built, and deliberately without a Requirement: if federation is the answer it changes the shape of several settled things at once (dec:repo-file-embedded's single file, dec:central-host's hosting question, the whole org-scale destination), and that is a decision to make deliberately rather than to discover halfway through an implementation. The cheap next step, if he wants motion without commitment: add a scope argument to the existing detectors — option (a) — because it is a filter over machinery that already exists, it tests whether per-level analysis is what he actually wants, and it is a strict subset of what option (b) would need anyway, so it forecloses nothing (rule:no-foreclosure).\",\"status\":\"proposed\"}",
+        "target_id": "dec:nested-graphs",
         "target_type": "Decision"
       }
     },
@@ -18115,7 +18316,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ea12b3eef90f70eacf0f56e441f40d8d91ba3b08482fab0bf86c186db00c1aa9",
+  "prev_content_hash": "sha256:5eef9455860ab3f3e02859444d9dc75c4b0e791dcb88f9b27c1e40bfdff77503",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

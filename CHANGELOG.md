@@ -33,6 +33,33 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Four requirements promoted out of two brainstorms** (Anthony, 2026-07-25).
+  The nested-graphs and MOSA ideas stop being musings and become intent, while the
+  two decisions stay open on *how* — because promoting an idea and choosing an
+  architecture are different acts.
+
+  - **`req:analyse-at-any-level`** — any level of the design can be analysed on its
+    own, and a narrowed answer names what it withheld. **Already delivered** by
+    `cap:scoped-analysis`, so this requirement arrives satisfied: it names the
+    intent behind the feature built an hour earlier.
+  - **`req:design-composes`** — a system's design can be a unit of its own that
+    composes with the designs around it, linked by interface specifications rather
+    than by everyone reading everything. Accepted and **blocked** on
+    `dec:nested-graphs`: the three options need materially different machinery, and
+    guessing would build for the road not taken.
+  - **`req:key-interfaces`** — the design says which interfaces are published
+    boundaries versus internal plumbing, *and computations read the distinction*.
+    Wanted independently by MOSA's central discipline and by BL-45's
+    system-of-systems thread; open work, and the next rung.
+  - **`req:modularity-computed`** — severability and cohesion are computed from the
+    graph rather than asserted by the architecture diagram: if the blast radius of
+    a change inside a part escapes that part's published boundaries, the part is
+    not modular whatever the diagram says. Sequenced behind key interfaces, which
+    is what tells the computation where a boundary is.
+
+  All 39 requirements are now user-confirmed, and the gate carries two honest notes
+  — the two pieces of open work above.
+
 - **Scoped detection — a team can ask about its own part of the design**
   (`cap:scoped-analysis`). `detect_gaps` and `detect_defects` now take `scope` (a
   node id) and `depth`. From Anthony's satellite case: a program with space,
