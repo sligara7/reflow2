@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3da1285bbe79c86bab0008fe7d5a6c8c817cedcf09d7dde6d575dcff83c9f2ec",
+  "content_hash": "sha256:ed0ceb02a36233aaa4e20c0f56d4855ab8e8d656e7c0e2bfc561bf47b7ae415d",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -16,6 +16,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:atomic-requirement",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -539,6 +547,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:atomic-requirement",
+      "properties": {},
+      "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:bl104-built",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -992,6 +1006,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cap:atomic-requirement",
+      "properties": {
+        "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -1486,6 +1509,15 @@
         "action": "modified"
       },
       "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:atomic-requirement",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:atomic-requirement"
     },
     {
       "edge_type": "CHANGED",
@@ -4717,6 +4749,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:adopt",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:adopt",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -4741,6 +4779,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:allocate",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:allocate",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -4748,6 +4792,12 @@
       "from_id": "cap:allocate",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:atomic-requirement",
+      "properties": {},
+      "to_id": "decision:ack:bab6219e3365123a"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4760,6 +4810,12 @@
       "from_id": "cap:budget",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:budget",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4796,6 +4852,12 @@
       "from_id": "cap:change",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4843,6 +4905,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:compare-alternatives",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-alternatives",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -4874,6 +4942,12 @@
       "from_id": "cap:compare-designs",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-designs",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -4933,6 +5007,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:decision-point",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:decision-point",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -4952,6 +5032,12 @@
       "from_id": "cap:derived-completion",
       "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:derived-completion",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5011,6 +5097,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:detect",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:detect",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5035,6 +5127,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:dimensions",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:dimensions",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5054,6 +5152,12 @@
       "from_id": "cap:drift-direction",
       "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:drift-direction",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5131,6 +5235,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:freshness",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:freshness",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5150,6 +5260,12 @@
       "from_id": "cap:genesis",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:genesis",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5191,6 +5307,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:heal",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:heal",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5215,6 +5337,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:hierarchy",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:hierarchy",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5239,6 +5367,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:ingest",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:ingest",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5258,6 +5392,12 @@
       "from_id": "cap:kit",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kit",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5305,6 +5445,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:loop-status",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:loop-status",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5324,6 +5470,12 @@
       "from_id": "cap:mcp-surface",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mcp-surface",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5365,6 +5517,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:merge-designs",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-designs",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5390,6 +5548,12 @@
       "from_id": "cap:merge-rerere",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-rerere",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5426,6 +5590,12 @@
       "from_id": "cap:model-process",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:model-process",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5491,6 +5661,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:portability",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:portability",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5515,6 +5691,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:propagate",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:propagate",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5539,6 +5721,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:questions",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:questions",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5558,6 +5746,12 @@
       "from_id": "cap:read-loop-hint",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:read-loop-hint",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5587,6 +5781,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-built",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-built",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5611,6 +5811,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-deployed",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-deployed",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5630,6 +5836,12 @@
       "from_id": "cap:reconcile-verified",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-verified",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5689,6 +5901,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:report",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:report",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5696,6 +5914,12 @@
       "from_id": "cap:report",
       "properties": {},
       "to_id": "decision:ack:9b2071dba7dfe759"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:requirement-lineage",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5743,6 +5967,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:search",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:search",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5773,6 +6003,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:stamp",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:stamp",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5792,6 +6028,12 @@
       "from_id": "cap:store",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:store",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -5827,6 +6069,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:surface",
       "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:surface",
+      "properties": {},
       "to_id": "decision:ack:695a599323c7edfe"
     },
     {
@@ -5846,6 +6094,12 @@
       "from_id": "cap:vocabulary",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:vocabulary",
+      "properties": {},
+      "to_id": "decision:ack:593e26aed260f0a3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9155,6 +9409,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:atomic-requirement",
+      "properties": {},
+      "to_id": "req:requirement-lineage"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:budget",
       "properties": {},
       "to_id": "req:golden-thread"
@@ -10624,6 +10884,19 @@
       }
     },
     {
+      "node_id": "cap:atomic-requirement",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The stopping rule for the tree cap:requirement-lineage now holds (Anthony, 2026-07-25). A requirement is ATOMIC when it cannot be split further without losing meaning and one person or team can build and test it. Without a termination condition a decomposition goes wrong in BOTH directions, and the second is the dangerous one because it looks like rigour: under-decomposed leaves a compound requirement nobody can test cleanly; OVER-decomposed turns requirements into task lists and code design (\\\"the system must lock the account after three failed attempts\\\" is atomic; \\\"the system must query the login_attempts column and check if the integer equals 3\\\" is not a requirement at all). THE SIGNALS SPLIT THE SAME WAY THE QUALITY CRITERIA DO (dec:three-party-checks), which is what makes this buildable rather than advice. CHEAP AND DETERMINISTIC — build first: NO CONJUNCTIONS, a literal scan of the statement for \\\"and\\\", \\\"or\\\", \\\"additionally\\\", which is a text check needing no model and catching the most common compound requirement; SINGLE OWNER, computable from the graph as whether the capabilities satisfying it allocate to ONE component, since a leaf whose delivery is spread across several parts is not one team's to own; SINGLE TESTING POINT, partly computable as whether it has exactly one check rather than several. SEMANTIC — the agent proposes, the human decides: ESTIMABLE, and OVER-DECOMPOSED, which is the same judgement as the minimally-constrained criterion in cap:requirement-quality seen from the other end — a requirement that dictates implementation and a requirement decomposed into implementation are the same error, and noticing that they are one thing means one detector can serve both. Pairs with cap:missing-sibling: that asks whether a family is missing a member, this asks whether its members are the right SIZE, and a family of uneven grain is a signal for both. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Know when to stop decomposing — and when someone went too far",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:budget",
       "node_type": "Capability",
       "properties": {
@@ -11366,6 +11639,14 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-23",
         "name": "Live-store catch-up: the 2026-07-23 session (f4109cb stamp-ordering, dc9bf96 refusal message) reconciled these checksums in the committed export via the build script while the live server was down; this accepts the same on-disk content in the live graph. Fixes restore intended behaviour — no design meaning."
+      }
+    },
+    {
+      "node_id": "chg:atomic-requirement",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The decomposition stopping rule captured: atomic requirements, and the over-decomposition failure"
       }
     },
     {
@@ -12787,6 +13068,16 @@
       }
     },
     {
+      "node_id": "decision:ack:593e26aed260f0a3",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:593e26aed260f0a3.",
+        "name": "Reviewed: gap:593e26aed260f0a3",
+        "rationale": "User (who:ajs, standing policy from 2026-07-23): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:requirement-lineage joined the set (35 → 36). Apt here too: whether decomposition roll-up produces a number that MEANS anything is answerable only by decomposing a real design and seeing whether the result matches what a person would say is done — which is a trial, not a check.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:66c6e5b6a10c8ac3",
       "node_type": "Decision",
       "properties": {
@@ -12883,6 +13174,16 @@
         "decision": "Accepted the gap gap:ac64f6e79aa8a17d.",
         "name": "Reviewed: gap:ac64f6e79aa8a17d",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities: what realizes this is documentation — the README, the getting-started material, the diagrams — and none of it is written yet. It arrives with BL-102, at which point those documents should be registered as artifacts like any other deliverable, since a doc that drifts from the design is the same defect as code that does.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:bab6219e3365123a",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:bab6219e3365123a.",
+        "name": "Reviewed: gap:bab6219e3365123a",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities. The check divides as the capability does, and the cheap half is genuinely cheap: the conjunction scan and the single-owner rule are deterministic and get ordinary fixture tests (\"must do X AND Y\" is flagged; a leaf whose satisfying capabilities allocate to three components is flagged). The over-decomposition half cannot be unit-tested for correctness — a test asserting the fixture was flagged only proves the fixture was flagged — so what must be pinned there is that a complaint about grain never edits or splits anything, only asks. Worth building the conjunction scan first regardless: it is a text check needing no model, it catches the commonest compound requirement, and it would have something to say about real designs on day one.",
         "status": "accepted"
       }
     },
@@ -15032,7 +15333,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:cda46c4df67c55e105f0d01c88582ea2563b307d39c45a581d7ab4619d24f573",
+  "prev_content_hash": "sha256:3da1285bbe79c86bab0008fe7d5a6c8c817cedcf09d7dde6d575dcff83c9f2ec",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
