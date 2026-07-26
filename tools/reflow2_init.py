@@ -516,6 +516,8 @@ IGNORE_LINES = [
      ".mcp.json"),
     ("", "opencode.json"),
     ("", ".vscode/mcp.json"),
+    ("# reflow2's loop-nudge hook — an absolute path to YOUR kit",
+     ".claude/settings.local.json"),
 ]
 
 
@@ -538,6 +540,108 @@ def already_tracked(project: Path, rel: str) -> bool:
         ).returncode == 0
     except (OSError, subprocess.SubprocessError):
         return False
+
+
+# The coherence loop's out-of-band trigger, wired to the harness's own events.
+#
+# WHY IT GOES IN settings.LOCAL.json: the command carries an absolute path to
+# THIS machine's kit, exactly like the MCP configs, and `.claude/settings.json`
+# is a file teams commit and share. A collaborator inheriting your path gets a
+# hook that fails silently — the "broken" state reflow2 now reports and the
+# worst of the three, because the settings file looks right. The local file is
+# per-machine by convention, so each person's own install writes their own.
+#
+# WHY IT POINTS AT THE KIT rather than a copy in the project: the script then
+# updates with the reflow2 package and nothing in the consumer's repository can
+# go stale (req:thin-install). `KIT` is wherever this installer is running from,
+# so the nudge always comes from the same install as the installer.
+HOOK_EVENTS = [
+    ("SessionStart", None),
+    ("PostToolUse", "mcp__reflow2__.*"),
+    ("PostToolUse", "Edit|Write|MultiEdit|NotebookEdit"),
+    ("Stop", None),
+]
+
+
+def hook_command() -> str:
+    return f'python3 "{REPO / "tools" / "loop_nudge.py"}"'
+
+
+def ensure_hooks(project: Path, force: bool) -> list[str]:
+    """Register the loop nudge, disturbing nothing else in the settings file.
+
+    Merged rather than written whole, and a reflow2 hook the user has repointed
+    is LEFT ALONE and reported — same rule as the MCP config, and for the same
+    reason: a hook is something people customise, and an installer that undoes
+    that silently is one nobody trusts near their settings again.
+    """
+    path = project / ".claude" / "settings.local.json"
+    command = hook_command()
+    script = REPO / "tools" / "loop_nudge.py"
+    if not script.exists():
+        return [
+            f".claude/settings.local.json  SKIPPED — {script} is not there, so registering a "
+            f"hook pointing at it would create the silently-broken state reflow2 warns about"
+        ]
+
+    data: dict = {}
+    if path.exists():
+        try:
+            data = json.loads(path.read_text())
+        except json.JSONDecodeError:
+            return [
+                f"{path.name}  SKIPPED (malformed JSON — left exactly as it is; reflow2 will "
+                f"tell every session that no nudge is installed)"
+            ]
+        if not isinstance(data, dict):
+            return [f"{path.name}  SKIPPED (not a JSON object — left alone)"]
+
+    hooks = data.setdefault("hooks", {})
+    if not isinstance(hooks, dict):
+        return [f"{path.name}  SKIPPED (its `hooks` is not an object — left alone)"]
+
+    added, kept = [], []
+    for event, matcher in HOOK_EVENTS:
+        groups = hooks.setdefault(event, [])
+        if not isinstance(groups, list):
+            kept.append(f"{event} (not a list — left alone)")
+            continue
+        # Ours if any hook in a matching group already runs the nudge.
+        existing = None
+        for group in groups:
+            if not isinstance(group, dict) or group.get("matcher") != matcher:
+                continue
+            for hook in group.get("hooks", []) or []:
+                if isinstance(hook, dict) and "loop_nudge" in str(hook.get("command", "")):
+                    existing = hook
+        if existing is not None:
+            if existing.get("command") == command or not force:
+                if existing.get("command") != command:
+                    kept.append(f"{event} (yours runs {existing['command']})")
+                continue
+            existing["command"] = command
+            added.append(f"{event} (repointed)")
+            continue
+        entry = {"type": "command", "command": command}
+        groups.append({"matcher": matcher, "hooks": [entry]} if matcher else {"hooks": [entry]})
+        added.append(event if not matcher else f"{event}[{matcher}]")
+
+    notes = []
+    if added:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(data, indent=2) + "\n")
+        notes.append(
+            f".claude/settings.local.json  (loop nudge registered: {', '.join(added)} — "
+            f"the session-end backstop the coherence loop rests on)"
+        )
+    if kept:
+        notes.append(
+            f".claude/settings.local.json  LEFT ALONE for {', '.join(kept)} "
+            f"(re-run with --force-hooks to repoint)"
+        )
+    if not notes:
+        notes.append(".claude/settings.local.json unchanged (loop nudge already registered)")
+    return notes
 
 
 def ensure_gitignore(project: Path) -> list[str]:
@@ -812,6 +916,10 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
     # previously had to hand-edit, and the one most likely to be got wrong.
     for spec in MCP_CONFIGS:
         done.append(write_mcp_config(project, spec, binary, force_mcp))
+    # The loop's session-end backstop. Without it nothing interrupts a session
+    # that finishes owing the design a check — and until 2026-07-25 the
+    # installer wired none, so every consumer project ran without one.
+    done.extend(ensure_hooks(project, force_mcp))
 
     # A file nobody points at is invisible: an agent reads the project's own
     # instructions and never learns reflow2 exists (BL-22's lesson — shipping

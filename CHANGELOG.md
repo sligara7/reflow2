@@ -52,9 +52,18 @@ This file is the third view: *what changed, and when*.
   (never reported as absent — claiming a net is missing when we only failed to
   look is the same lie in the other direction). When it is missing, the advisory
   rides the **handshake instructions**, the one channel every session reads
-  unasked, and `loop_status` carries it as a field. This is not theoretical:
-  `reflow2_init.py` installs no hooks, so **every consumer project has no
-  session-end nudge** — and until now nothing said so.
+  unasked, and `loop_status` carries it as a field.
+
+- **The installer registers the nudge**, closing the finding that check turned
+  up: until now `reflow2_init.py` wired no hooks, so every consumer project ran
+  with no session-end backstop. It goes in **`.claude/settings.local.json`**,
+  not the shared `settings.json` — the command carries an absolute path to *your*
+  kit, and a collaborator inheriting it gets a hook that fails silently, which
+  is the `broken` state above and the worst of them. It points at the **kit's**
+  script rather than a copy in the project, so it updates with the package and
+  nothing in your repo goes stale. Merged, never clobbered: your own hooks and
+  settings survive, a nudge you repointed is left alone and reported, and a
+  second run does not stack a duplicate.
 
 - **A claim names the session that made it, and a claim nobody is working says
   so** (`cap:claim-liveness`, `req:claims-have-owners`). Claims record a **seat**

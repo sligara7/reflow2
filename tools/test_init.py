@@ -131,8 +131,19 @@ class InstallerTest(unittest.TestCase):
             any("skills" in c for c in planned),
             f"no skill file may be installed or updated by an upgrade: {planned}",
         )
-        for tree in (".claude", ".grok"):
+        # No skills anywhere — `.claude/` itself is allowed to exist now, because
+        # the loop-nudge hook lives in `.claude/settings.local.json`. That file
+        # cannot churn the REPOSITORY, which is what this test is about: it is
+        # machine state carrying an absolute path, and the installer gitignores
+        # it for exactly that reason. Asserting on the whole directory was a
+        # proxy for "no copied kit files", and the proxy stopped meaning that.
+        for tree in (".claude/skills", ".grok/skills", ".grok"):
             self.assertFalse((p / tree).exists(), f"{tree} must not exist")
+        self.assertIn(
+            ".claude/settings.local.json",
+            (p / ".gitignore").read_text(),
+            "and the one file under .claude must be ignored, or it would churn",
+        )
 
     def test_the_installed_file_is_a_pointer_not_the_instructions(self):
         """The size difference IS the requirement: what a project holds must be
@@ -220,6 +231,91 @@ class InstallerTest(unittest.TestCase):
             any("git rm --cached" in c for c in init.planned_changes(p)),
             "--check must disclose it as well",
         )
+
+    def test_the_loop_nudge_hook_is_installed(self):
+        """Until 2026-07-25 the installer wired no hooks, so every consumer
+        project ran with no session-end backstop at all — the one trigger that
+        fires when an agent has stopped calling anything."""
+        p = self.project()
+        self.install(p)
+
+        settings = json.loads((p / ".claude/settings.local.json").read_text())
+        events = settings["hooks"]
+        self.assertIn("Stop", events, "the backstop is the point")
+        commands = [
+            hook["command"]
+            for groups in events.values()
+            for group in groups
+            for hook in group["hooks"]
+        ]
+        self.assertTrue(all("loop_nudge" in c for c in commands), commands)
+        # It points at the KIT, not at a copy in the project: the script then
+        # updates with the package and nothing here can go stale.
+        self.assertTrue(
+            all(str(init.REPO) in c for c in commands),
+            f"the hook must run the installed kit's script: {commands}",
+        )
+
+    def test_the_hook_goes_in_the_local_settings_not_the_shared_one(self):
+        """It carries an absolute path to THIS machine's kit. In the shared
+        settings.json a collaborator inherits a hook that fails silently —
+        which is the 'broken' state reflow2 reports, and the worst of them,
+        because the file looks right."""
+        p = self.project()
+        self.install(p)
+
+        self.assertTrue((p / ".claude/settings.local.json").exists())
+        self.assertFalse(
+            (p / ".claude/settings.json").exists(),
+            "the shared settings file is not ours to write",
+        )
+        self.assertIn(".claude/settings.local.json", (p / ".gitignore").read_text())
+
+    def test_other_hooks_and_settings_survive(self):
+        p = self.project()
+        (p / ".claude").mkdir()
+        (p / ".claude/settings.local.json").write_text(json.dumps({
+            "model": "opus",
+            "hooks": {"Stop": [{"hooks": [{"type": "command", "command": "echo mine"}]}]},
+        }))
+        self.install(p)
+
+        settings = json.loads((p / ".claude/settings.local.json").read_text())
+        self.assertEqual(settings["model"], "opus", "unrelated settings survive")
+        stop = [h["command"] for g in settings["hooks"]["Stop"] for h in g["hooks"]]
+        self.assertIn("echo mine", stop, "their own Stop hook survives")
+        self.assertTrue(any("loop_nudge" in c for c in stop), stop)
+
+    def test_a_hook_the_user_repointed_is_left_alone(self):
+        """Same rule as the MCP config: a hook is something people customise,
+        and an installer that undoes that silently is one nobody trusts near
+        their settings again."""
+        p = self.project()
+        (p / ".claude").mkdir()
+        (p / ".claude/settings.local.json").write_text(json.dumps({
+            "hooks": {"Stop": [{"hooks": [
+                {"type": "command", "command": "python3 /my/own/loop_nudge.py"}
+            ]}]},
+        }))
+
+        done = self.install(p)
+
+        stop = [
+            h["command"]
+            for g in json.loads((p / ".claude/settings.local.json").read_text())["hooks"]["Stop"]
+            for h in g["hooks"]
+        ]
+        self.assertEqual(stop, ["python3 /my/own/loop_nudge.py"], "their version stands")
+        self.assertTrue(any("LEFT ALONE" in d for d in done), f"and it is reported: {done}")
+
+    def test_installing_twice_does_not_duplicate_the_hook(self):
+        p = self.project()
+        self.install(p)
+        self.install(p)
+
+        settings = json.loads((p / ".claude/settings.local.json").read_text())
+        stop = [h for g in settings["hooks"]["Stop"] for h in g["hooks"]]
+        self.assertEqual(len(stop), 1, f"idempotent, or a re-run stacks nudges: {stop}")
 
     # ---- never overwrite what the project owns -----------------------------
 

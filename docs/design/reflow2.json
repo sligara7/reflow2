@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:673776bef57771ae6f1bee6b37fc78ca408cb16f8f16cdaae5d3cc51c64660af",
+  "content_hash": "sha256:a42c30c7eda7719658be9564fd1ea14159c92a4ecaf7500db445c89b7f61027d",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -4209,6 +4209,15 @@
         "action": "modified"
       },
       "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:nudge-path",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
     },
     {
       "edge_type": "CHANGED",
@@ -15315,7 +15324,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:340ee9f980c981ae9579532132090e272f3a93f7897cbb81337f4aa08682466d",
+        "checksum": "sha256:f2ae1369ea386f2badfbdf5a6f08dd43b13146bac70403458f3f6daf35189cec",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
         "status": "realized"
@@ -22501,7 +22510,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:28cf661d88ddbe6e0ae2d7cfbf9568bcb11f9300ac5806998d5b88999025b0bf",
+  "prev_content_hash": "sha256:673776bef57771ae6f1bee6b37fc78ca408cb16f8f16cdaae5d3cc51c64660af",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
