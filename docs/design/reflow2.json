@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f8245f4a0f63d9889059af725b489f266a8d07b0c1ab9aa302f854824c3d9f9b",
+  "content_hash": "sha256:bf8c1e4be41dec8c11e5af94435ddded2f31aa61892a1764cbd8a019304e5e6c",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1782,6 +1782,14 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:read-while-held-mechanism",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -6589,6 +6597,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "cap:store"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:read-while-held",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:read-while-held-mechanism"
     },
     {
       "edge_type": "DEPLOYED_TO",
@@ -13986,6 +14003,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:scope-read-while-held",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "dec:read-while-held-mechanism"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:search",
       "properties": {
         "completeness": "complete"
@@ -15521,6 +15546,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:scope-read-while-held",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:scope-read-while-held"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:search",
       "properties": {
         "action": "created"
@@ -16210,6 +16243,17 @@
         "checksum": "sha256:47fa2c2aa8b402bb",
         "location": "crates/reflow2-core/src/scope.rs",
         "name": "scope.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:scope-read-while-held",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea",
+        "location": "docs/scope-read-while-held.md",
+        "name": "scope-read-while-held.md",
         "status": "realized"
       }
     },
@@ -19261,6 +19305,16 @@
       }
     },
     {
+      "node_id": "dec:read-while-held-mechanism",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS A SCOPING FINDING, not a proposal. req:read-while-held is accepted; this is the mechanism, and RocksDB offers two that differ in the way that matters here. (a) READ-ONLY AT OPEN (`open_cf_descriptors_read_only`): a consistent view as of open, no lock, no extra directory, nothing to clean up — and no way to refresh, so seeing new writes means reopening. (b) SECONDARY (`open_cf_as_secondary`): also read-only but `try_catch_up_with_primary()` refreshes on demand, at the cost of its OWN secondary directory for private state — a second temp path to create, manage and remove, the same class of thing as --export-snapshot's scratch dir, which has already bitten twice (a leaked sidecar, and a residue test that stripped only the suffix it knew about). THE INTERACTION THAT DECIDES IT is with req:stale-seat-knows: (a) makes staleness BOUNDED AND KNOWABLE — the view is exactly as old as the open, and a seat can say so; (b) makes staleness FIXABLE but turns \"how stale am I right now?\" into a live question the seat must keep answering, which is the complete-but-older trap arriving from a new direction. Also note the read cache in StorageEngine: under (b), a value cached before a catch-up is stale in a way the caller cannot see.",
+        "name": "OPEN — does a locked-out seat get a snapshot at open, or a secondary it can catch up?",
+        "rationale": "Scoped 2026-07-26 by reading dynograph-foundation and tantivy rather than from memory, and the scoping changed the shape of the work: it is THREE crates, not one. dynograph-storage's exclusive open is necessary and not sufficient, because dynograph-text's TextIndex::open eagerly builds an IndexWriter and so takes tantivy's `.tantivy-writer.lock` — the full-text index lives INSIDE the store directory and reflow2 builds with the feature on, so a second reader fails there too. Nothing had ever reached that second lock because RocksDB's fires first. Tantivy's own source says a reader in another process is supported (META_LOCK exists to make it so), which makes the fix a small reader-only open rather than a workaround. reflow2's own layer adds a third: reindex_search runs on EVERY server start and is a write. Full write-up in docs/scope-read-while-held.md, including the two things that must be proven in implementation rather than assumed — two live Tantivy readers beside a writer, and a secondary catching up mid-session with the read cache in play.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:reopen-supersedes",
       "node_type": "Decision",
       "properties": {
@@ -21222,6 +21276,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered scope.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:scope-read-while-held",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered scope-read-while-held.md"
       }
     },
     {
@@ -23232,7 +23296,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a42c30c7eda7719658be9564fd1ea14159c92a4ecaf7500db445c89b7f61027d",
+  "prev_content_hash": "sha256:f8245f4a0f63d9889059af725b489f266a8d07b0c1ab9aa302f854824c3d9f9b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

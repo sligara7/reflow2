@@ -82,6 +82,11 @@ Three records, three questions — kept separate on purpose:
 - [design/reflow2.json](design/reflow2.json) — reflow2's own functional design as a reflow2 graph
   (~215 nodes), the durable record behind `tools/build_design_graph.py`.
 
+### 3⅛ · Scoped, not built — *what a piece of work would actually take*
+- [scope-read-while-held.md](scope-read-while-held.md) — reading a design another seat holds: it is THREE
+  crates rather than one (RocksDB's lock, tantivy's writer lock inside the store dir, and reflow2's
+  reindex-at-open), the read-only-vs-secondary trade, and the two things to prove before trusting either.
+
 ### 3¼ · Working together — *for the people using it*
 - [collaborating.md](collaborating.md) — two people, two machines, one design, over plain git: the
   one-time merge-driver setup, the daily loop, what merges automatically and what needs a person,
