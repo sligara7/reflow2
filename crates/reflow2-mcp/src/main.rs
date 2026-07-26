@@ -171,9 +171,32 @@ impl GraphSnapshot {
                 self.dir.display()
             );
         }
-        let sidecar = std::path::PathBuf::from(format!("{}.meta.json", self.dir.display()));
-        if sidecar.exists() {
-            let _ = std::fs::remove_file(&sidecar);
+        // EVERY sidecar, enumerated rather than named one at a time. The first
+        // version deleted `.meta.json` alone; adding `.id.json` for
+        // req:design-identity then leaked one snapshot identity file per run —
+        // and the residue test did not catch it, because it stripped the one
+        // suffix it knew about. A sidecar list that has to be updated in two
+        // places is a leak waiting for the next sidecar, so this globs.
+        let (Some(parent), Some(prefix)) = (
+            self.dir.parent(),
+            self.dir.file_name().and_then(|n| n.to_str()),
+        ) else {
+            return;
+        };
+        let Ok(entries) = std::fs::read_dir(parent) else {
+            return;
+        };
+        let sidecar_prefix = format!("{prefix}.");
+        for entry in entries.flatten() {
+            let name = entry.file_name();
+            // `<snapshot-dir>.anything` — a sibling of the copy, named after it.
+            // Never the directory itself, which is already gone.
+            if name
+                .to_str()
+                .is_some_and(|n| n.starts_with(&sidecar_prefix))
+            {
+                let _ = std::fs::remove_file(entry.path());
+            }
         }
     }
 }
@@ -210,6 +233,24 @@ fn snapshot_dir(graph_path: &str) -> anyhow::Result<GraphSnapshot> {
             format!(
                 "could not copy {} into the snapshot",
                 entry.path().display()
+            )
+        })?;
+    }
+
+    // THE COPY IS THE SAME DESIGN, so it must carry the same name
+    // (req:design-identity). The identity lives BESIDE the store, not in it, so
+    // copying the directory alone leaves the snapshot nameless — it would then
+    // mint a fresh id, look for the design under it, and find nothing. An empty
+    // export, reported as a success. Caught by the degraded-server suite the
+    // hour identity landed; without that test this would have started returning
+    // empty designs the next time anyone reconnected.
+    let source_identity = reflow2_core::identity::identity_path(graph_path);
+    if source_identity.exists() {
+        let target_identity = std::path::PathBuf::from(format!("{}.id.json", dir.display()));
+        std::fs::copy(&source_identity, &target_identity).with_context(|| {
+            format!(
+                "could not copy the design identity {} into the snapshot",
+                source_identity.display()
             )
         })?;
     }

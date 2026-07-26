@@ -44,6 +44,7 @@ pub mod genesis;
 pub mod graph;
 pub mod heal;
 pub mod hierarchy;
+pub mod identity;
 pub mod ingest;
 pub mod llm;
 pub mod merge;

@@ -123,13 +123,46 @@ impl DesignGraph {
         // unchanged for a real on-disk graph.
         let engine = StorageEngine::new_rocksdb(schema.clone(), path)?;
         let provenance = crate::provenance::check_and_stamp(path, &schema)?;
+        // Who is this design? (req:design-identity.) Established on first open
+        // and read on every one after, from a sibling file — the id namespaces
+        // every stored key, so it has to be known before the design can be.
+        //
+        // The closure is the migration, and it only runs when there is no
+        // identity file yet: a store that ALREADY holds a design under the old
+        // shared id keeps that id. Minting one instead would leave the design on
+        // disk and open a new empty one beside it, reporting nothing wrong.
+        let identity = crate::identity::resolve(path, DEFAULT_GRAPH_ID, || {
+            Self::holds_a_design_probe(&engine, DEFAULT_GRAPH_ID)
+        })?;
         Ok((
             Self {
                 engine,
-                graph_id: DEFAULT_GRAPH_ID.to_string(),
+                graph_id: identity.graph_id,
             },
             provenance,
         ))
+    }
+
+    /// Does this store already hold a design under `graph_id`?
+    ///
+    /// Asked once, on the open that establishes identity, and deliberately
+    /// cheap: a handful of the types every real design has. A false negative
+    /// would mint a new id for an existing design and hide it, so the list
+    /// errs wide rather than narrow — anything that has ever been captured
+    /// puts at least one of these in the store.
+    fn holds_a_design_probe(engine: &StorageEngine, graph_id: &str) -> bool {
+        [
+            node::PROJECT,
+            node::REQUIREMENT,
+            node::CAPABILITY,
+            node::COMPONENT,
+            node::DECISION,
+            node::ARTIFACT,
+            node::VERIFICATION,
+            node::FRAGMENT,
+        ]
+        .iter()
+        .any(|t| engine.count_nodes(graph_id, t).unwrap_or(0) > 0)
     }
 
     /// Use a non-default logical graph id (e.g. to host several designs in one

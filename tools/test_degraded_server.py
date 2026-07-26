@@ -229,10 +229,14 @@ class SnapshotReadTest(unittest.TestCase):
         # Precise glob: the snapshot names itself `reflow2-snapshot-<pid>`, and a
         # loose pattern would match this test's own scratch directory — which it
         # did, on the first run.
+        # ANY residue named after a snapshot, not just the suffixes we happen to
+        # know: the first version of this stripped `.meta.json` alone and so
+        # missed `.id.json` entirely when design identity added one (found
+        # 2026-07-25 by looking, not by this test — which is the finding).
         residue = [
             p
             for p in pathlib.Path(tempfile.gettempdir()).glob("reflow2-snapshot-*")
-            if p.name.removeprefix("reflow2-snapshot-").removesuffix(".meta.json").isdigit()
+            if p.name.removeprefix("reflow2-snapshot-").split(".")[0].isdigit()
         ]
         self.assertEqual(residue, [], f"left behind: {residue}")
 

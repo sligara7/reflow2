@@ -91,6 +91,15 @@ pub struct ListSkillsReq {}
 #[serde(deny_unknown_fields)]
 pub struct GetInstructionsReq {}
 
+#[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct DesignIdentityReq {
+    /// A new human-facing label for this design. The id never changes — every
+    /// stored key and every export ever written names it. Omit to just read.
+    #[serde(default)]
+    pub label: Option<String>,
+}
+
 #[tool_router(router = skills_router, vis = "pub")]
 impl ReflowService {
     /// The catalogue, with full trigger conditions.
@@ -169,6 +178,45 @@ impl ReflowService {
                      changes these instructions without changing anything in your repository. \
                      The skills they refer to come from list_skills / get_skill.",
         }))
+    }
+    /// Which design is this, and what is it called?
+    #[tool(
+        description = "Which design this graph holds: its durable id and its human label. The id is \
+                       assigned once, with no coordination, and never changes — it namespaces every \
+                       stored key and appears in every export, so two designs can tell each other \
+                       apart when they compose (mirror_surface). Pass `label` to RENAME the design; \
+                       the id is untouched. Read this when a session needs to say WHICH design it \
+                       is working in.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn design_identity(
+        &self,
+        Parameters(req): Parameters<DesignIdentityReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let Some(graph_path) = self.graph_path.as_deref() else {
+            // An in-memory graph has no sidecar to remember in, and saying so is
+            // better than inventing an identity that dies with the process.
+            return structured(json!({
+                "graph_id": self.graph.lock().await.graph_id().to_string(),
+                "label": null,
+                "note": "This is an in-memory graph — it has no durable identity, because there is \
+                         no store beside which to remember one.",
+            }));
+        };
+        if let Some(label) = req.label {
+            let identity = reflow2_core::identity::set_label(graph_path, &label)
+                .map_err(|e| McpError::invalid_params(e.to_string(), None))?;
+            return structured(serde_json::to_value(&identity).unwrap_or(json!({})));
+        }
+        let identity = reflow2_core::identity::resolve(
+            graph_path,
+            reflow2_core::DEFAULT_GRAPH_ID,
+            // Already established by the open that got us here; the probe is
+            // only for a graph meeting reflow2 for the first time.
+            || false,
+        )
+        .map_err(|e| McpError::internal_error(e.to_string(), None))?;
+        structured(serde_json::to_value(&identity).unwrap_or(json!({})))
     }
 }
 

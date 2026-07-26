@@ -31,6 +31,30 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A design knows its own name** (`cap:design-identity`, `req:design-identity`,
+  `dec:identity-out-of-band`). Every reflow2 graph used to answer to one
+  hardcoded id, so **no design could tell another design from itself** —
+  `mirror_surface` refuses a surface whose source is the importing graph, and
+  with a single constant that guard could never pass for any pair of real
+  designs. Composition between designs was impossible on disk.
+
+  An id is now established on first open and read on every one after, from
+  `<graph-path>.id.json` — a sibling of the store, because **the id namespaces
+  every stored key**: it has to be known before the design can be read. It is
+  minted with zero coordination (creation nanosecond, process, absolute path)
+  and no new dependency; the friendly label is a changeable layer on top, and
+  `design_identity` reads it or renames it. An unreadable identity is **refused,
+  never defaulted** — defaulting opens a *different* design at the same path and
+  reports nothing wrong.
+
+  **Existing graphs keep the name their data is stored under.** A store that
+  already holds a design under the old shared id adopts it, forever. Minting for
+  those would have left the design on disk and opened a new empty one beside it;
+  it is also what keeps every existing export valid, since `graph_id` is inside
+  the export's content hash.
+
 ### Changed
 
 - **The MCP configs are gitignored, and the graph path in them is relative.**

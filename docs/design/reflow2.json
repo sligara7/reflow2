@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:af6091157f2fc6ad71941faa625cdf56012a6dc829bdc9cf78f4247f8734c16a",
+  "content_hash": "sha256:dc8c1ce9c2c160a65f243c9894a3e7af0eb9c1a63ea4127cdae975ae2dde96b6",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -128,6 +128,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:design-identity",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:identity"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -828,6 +836,12 @@
       "from_id": "chg:degraded-surface",
       "properties": {},
       "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:design-identity",
+      "properties": {},
+      "to_id": "epoch:v0120"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2037,6 +2051,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-7c6456e82bb32b5e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-7d9bce8ed9339737",
       "properties": {
         "accepted_baseline": true,
@@ -2079,6 +2102,15 @@
         "action": "modified"
       },
       "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-bd7518c28700aa85",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -3540,6 +3572,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:design-identity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:design-identity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:design-identity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:design-identity",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:design-identity"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:documentation-subsystem",
       "properties": {
         "accepted_baseline": false,
@@ -4686,6 +4754,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cmp:identity"
     },
     {
       "edge_type": "CONTAINS",
@@ -6950,6 +7024,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:design-identity",
+      "properties": {},
+      "to_id": "dec:identity-out-of-band"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:design-identity",
+      "properties": {},
+      "to_id": "decision:ack:1f62e721f3cfa3da"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:detect",
       "properties": {},
       "to_id": "dec:anchored-first"
@@ -8573,6 +8659,12 @@
       "from_id": "cmp:heal",
       "properties": {},
       "to_id": "dec:merge-survivor-provenance"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:identity",
+      "properties": {},
+      "to_id": "decision:ack:35dde67d212688fb"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -12862,6 +12954,22 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:identity",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:design-identity"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:identity",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:ingest",
       "properties": {
         "completeness": "complete"
@@ -13182,6 +13290,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-design-identity",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:design-identity"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-served-skills",
       "properties": {
         "completeness": "complete"
@@ -13341,6 +13457,12 @@
       "from_id": "cap:derived-completion",
       "properties": {},
       "to_id": "req:completion-computed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:design-identity",
+      "properties": {},
+      "to_id": "req:design-identity"
     },
     {
       "edge_type": "SATISFIES",
@@ -13857,6 +13979,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:design-identity",
+      "properties": {},
+      "to_id": "cap:design-identity"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:detect",
       "properties": {},
       "to_id": "cap:detect"
@@ -14369,6 +14497,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:identity",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:ingest",
       "properties": {
         "action": "created"
@@ -14598,6 +14734,14 @@
         "action": "created"
       },
       "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-design-identity",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-design-identity"
     },
     {
       "edge_type": "YIELDED",
@@ -14908,7 +15052,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0c23ae8f781b3c60",
+        "checksum": "sha256:c6f463b01a3b6179b199ced99515676db1ad26caaf26ea8738a18d094601cf42",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -14933,6 +15077,17 @@
         "checksum": "sha256:30fc1a09862792a9",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:identity",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:a2f4a50e1dd13adb2c077a8673525c29a8feb8eae5198cd69a4528124e38e99f",
+        "location": "crates/reflow2-core/src/identity.rs",
+        "name": "identity.rs",
         "status": "realized"
       }
     },
@@ -15007,7 +15162,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:efde27a92468d6354f0591c658c91aae26422abe44577312aef52adfb59c912f",
+        "checksum": "sha256:7545dd803eddfb6f8cd21122a46307f60827ceda8801d3098ac9a9617b21e02f",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -15183,7 +15338,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b4d9cfc07a00a23eb177af08456bf4cfa7a4225e68cb5a70427d24f26a239129",
+        "checksum": "sha256:3c2923f5a5508615e33186d4b24dc0a09b5234e7cf1fa69ed0cab18fe714fedd",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -15205,7 +15360,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:61b6103196e422602afb185449f1ac037fdd17c033b26bd001a53e6e0799dd4e",
+        "checksum": "sha256:56043245107571ca3238ce6e971422f1cc06697c39f3d96b343102c3d4f8fd9d",
         "location": "crates/reflow2-mcp/src/skills.rs",
         "name": "skills.rs",
         "status": "realized"
@@ -15282,9 +15437,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a61a4afe2c63e9ee9f50eaac573bf3c710eb41d5e3beae49f7d561c52e2b9e41",
+        "checksum": "sha256:16fb0718f85e8b60eef1751497e56b7e1f002abb9027cf9f22c50ba2e85ff39b",
         "location": "tools/test_degraded_server.py",
         "name": "test_degraded_server.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-design-identity",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:96e2b3748bf0bfbb9b9da768218028db0e8e2491f0cf7352d4e7acf325b28da6",
+        "location": "crates/reflow2-mcp/tests/design_identity.rs",
+        "name": "design_identity.rs",
         "status": "realized"
       }
     },
@@ -15557,6 +15723,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Compute what is delivered, and expose the requirement lifecycle that is currently unused",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:design-identity",
+      "node_type": "Capability",
+      "properties": {
+        "description": "An id is established on first open and read on every one after, from <graph-path>.id.json — a sibling of the store, because the id namespaces every stored key and so must be known before the design can be read. Minted with zero coordination (creation nanosecond + process + absolute path through fnv1a, no dependency added); the friendly label is a changeable layer on top and never load-bearing. An unreadable identity is REFUSED, never defaulted, because defaulting opens a different design at the same path and reports nothing wrong. THE MIGRATION IS THE FEATURE: a store that already holds a design under the old shared id adopts that id forever, which is what keeps every existing export, chain link and committed record valid — graph_id is inside the export's content hash. Served as design_identity (read, or rename via label).",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A design is given a name nobody negotiates for, and keeps it",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -16319,6 +16498,14 @@
       }
     },
     {
+      "node_id": "chg:accept-7c6456e82bb32b5e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Residue check widened to any snapshot-named sibling — it had been stripping only the one suffix it knew about, and missed the new identity sidecar."
+      }
+    },
+    {
       "node_id": "chg:accept-7d9bce8ed9339737",
       "node_type": "ChangeEvent",
       "properties": {
@@ -16358,6 +16545,14 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-23",
         "name": "Live-store catch-up: same as art:graph — committed export already carried this checksum (a28d0a4); live store was behind because that session's server was down. Refusal-message fix (dc9bf96, BL-86) restores intended behaviour — no design meaning."
+      }
+    },
+    {
+      "node_id": "chg:accept-bd7518c28700aa85",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Field visibility widened to the crate so the skills module can read the graph path; no behaviour change."
       }
     },
     {
@@ -16730,6 +16925,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Field fix from the six-session fleet: reflow2 never exits silently, and a graph somebody else holds can still be exported"
+      }
+    },
+    {
+      "node_id": "chg:design-identity",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A design knows its own name — established once, adopted for existing graphs, refused rather than guessed"
       }
     },
     {
@@ -17265,6 +17468,19 @@
         "name": "hierarchy",
         "provenance": "authored",
         "purpose": "The hierarchy module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:identity",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "identity",
+        "provenance": "authored",
+        "purpose": "Which design this store holds: minting, adoption, refusal, and the label on top.",
         "status": "planned",
         "tier": "operational"
       }
@@ -18191,6 +18407,16 @@
       }
     },
     {
+      "node_id": "decision:ack:1f62e721f3cfa3da",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:1f62e721f3cfa3da.",
+        "name": "Reviewed: gap:1f62e721f3cfa3da",
+        "rationale": "Standing disposition: validation evidence lives in docs/trials/ and in field reports from real use, not as validation-kind Verifications, so the detector correctly reports what the graph cannot see. Re-acknowledged at 52 capabilities — the gap id derives from the affected SET, so every new capability mints a new id and the previous acknowledgement cannot carry. That churn is a finding about the acknowledgement mechanism, not about validation.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:2066530ed8b00fb8",
       "node_type": "Decision",
       "properties": {
@@ -18277,6 +18503,16 @@
         "decision": "Accepted the gap gap:33be77a4e91bc8ae.",
         "name": "Reviewed: gap:33be77a4e91bc8ae",
         "rationale": "User (who:ajs, 2026-07-25): accepted intent, BLOCKED rather than shelved — the same disposition req:concurrent-planning carries, and for the same reason. Deliberately left `accepted` rather than moved to `deferred`, because deferred reads as \"parked, nobody act\", whereas this is real intent with exactly one thing standing in front of it: dec:central-host, recorded as GOVERNED_BY so the link is queryable rather than only written here. Nothing should be built toward it until that decision collapses, because the cheapest hosted shape — one server process per project, with project selection becoming which URL the agent points at — satisfies most of this requirement with NO graph_id plumbing at all, while a multi-tenant single process needs graph_id threaded through every read and write. Building the second before the choice is made is building for the road not taken. What is owed meanwhile is only the non-foreclosure half (rule:no-foreclosure item 5): code must not ASSUME the graph_id constant where it could read the field. This acknowledgement expires if the affected node changes, which is correct — when the decision is made this should come back for a fresh look rather than stay quietly accepted.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:35dde67d212688fb",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:35dde67d212688fb.",
+        "name": "Reviewed: gap:35dde67d212688fb",
+        "rationale": "Built after v0.12.0 was cut, so it ships in the next release — dec:intent-preserved settled that a post-cut component is answered by the next manifest rather than backfilled into a shipped one. Same disposition as cmp:degraded, cmp:skills and cmp:sync before it.",
         "status": "accepted"
       }
     },
@@ -19756,6 +19992,16 @@
       }
     },
     {
+      "node_id": "frag:art:identity",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered identity.rs"
+      }
+    },
+    {
       "node_id": "frag:art:ingest",
       "node_type": "Fragment",
       "properties": {
@@ -20043,6 +20289,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered test_degraded_server.py"
+      }
+    },
+    {
+      "node_id": "frag:art:test-design-identity",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered design_identity.rs"
       }
     },
     {
@@ -21335,6 +21591,17 @@
       }
     },
     {
+      "node_id": "ver:design-identity",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "A new design mints a name of its own, it survives reopening, two designs are told apart, an unreadable identity is refused rather than defaulted, the label changes while the id cannot — and the migration case: a store already holding a design under the shared id KEEPS it and stays readable. Closes with the payoff: two independently created ON-DISK designs mirroring each other's published surface, which was impossible while every graph shared one constant (tests/design_identity.rs, 7 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:detect",
       "node_type": "Verification",
       "properties": {
@@ -21869,7 +22136,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d9c105c08d145a14f641cd2a2f49bae55c0e223f07338d9e831f9a2100a9d284",
+  "prev_content_hash": "sha256:af6091157f2fc6ad71941faa625cdf56012a6dc829bdc9cf78f4247f8734c16a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

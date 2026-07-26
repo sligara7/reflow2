@@ -1,0 +1,22 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Which design this graph holds: its durable id and its human label. The id is assigned once, with no coordination, and never changes — it namespaces every stored key and appears in every export, so two designs can tell each other apart when they compose (mirror_surface). Pass `label` to RENAME the design; the id is untouched. Read this when a session needs to say WHICH design it is working in.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "label": {
+        "default": null,
+        "description": "A new human-facing label for this design. The id never changes — every\nstored key and every export ever written names it. Omit to just read.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "name": "design_identity"
+}

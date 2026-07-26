@@ -71,13 +71,13 @@ type JsonObject = JsonMap<String, JsonValue>;
 /// The MCP service: one design graph behind a lock, plus the generated router.
 #[derive(Clone)]
 pub struct ReflowService {
-    graph: Arc<Mutex<DesignGraph>>,
+    pub(crate) graph: Arc<Mutex<DesignGraph>>,
     tool_router: ToolRouter<Self>,
     /// Where this seat's graph lives on disk, so it can remember which shared
-    /// export it is in step with (`req:stale-seat-knows`). `None` for an
-    /// in-memory graph, which has no sidecar to remember in and no partner to
-    /// collide with.
-    graph_path: Option<String>,
+    /// export it is in step with (`req:stale-seat-knows`) and which design it
+    /// is (`req:design-identity` — both live in sidecars beside the store).
+    /// `None` for an in-memory graph, which has no sidecar to remember in.
+    pub(crate) graph_path: Option<String>,
     /// Advanced whenever a mutating handler takes the graph (via `write_lock`).
     /// The coherence loop's owed-set can change only on a write, so this is the
     /// cheap signal that lets an orientation read skip recomputing `loop_status`
