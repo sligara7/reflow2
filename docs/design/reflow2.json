@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:17e565c14da906ec31e1522738c8c41884985624235569896fa2113886ce873c",
+  "content_hash": "sha256:02bce663212559ad1a39f83eed90702e9afcb5af793b74aa272400c5cfd92550",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -640,6 +640,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:verification-freshness",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:confirm"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -9357,6 +9365,24 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:verification-freshness",
+      "properties": {},
+      "to_id": "dec:report-dont-judge"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:verification-freshness",
+      "properties": {},
+      "to_id": "dec:verification-freshness-not-a-gap"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:verification-freshness",
+      "properties": {},
+      "to_id": "decision:ack:30182d6495cdfe54"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:vocabulary",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -15942,6 +15968,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:verification-freshness",
+      "properties": {},
+      "to_id": "req:verification-keeps-up"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:vocabulary",
       "properties": {},
       "to_id": "req:agent-native"
@@ -18596,6 +18628,19 @@
       }
     },
     {
+      "node_id": "cap:verification-freshness",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Extends the confirmation ledger (cap:freshness) with the verification side of the same question. Per capability: the newest dated last_run_at across its passing VERIFIES checks, set beside the dates the ledger already computes for baseline accepts on its realizing artifacts — so a reader can see that a capability is claiming `verified` on a check that predates the code it covers. A SIGNAL, NOT A GAP, deliberately (dec:verification-freshness-not-a-gap): it is a standing property of the claim rather than an event, it fires on every legitimate refactor as readily as on a real hole, and a list that can never reach zero gets skimmed — which is the failure the whole gap workflow exists to prevent. THREE CONSTRAINTS THE CORE ALREADY IMPOSES AND THIS MUST HONOUR: the core takes no clock, so this compares recorded timestamps supplied by callers and never asks the system what time it is; undated events are not comparable, which the ledger already states; and where either side is undated the answer is an explicit `unknown` that is REPORTED, never a silent pass — an unanswerable freshness question presented as freshness is the same lie in a new place.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say whether a check is older than what it checks",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:vocabulary",
       "node_type": "Capability",
       "properties": {
@@ -20711,6 +20756,16 @@
       }
     },
     {
+      "node_id": "dec:verification-freshness-not-a-gap",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED on Anthony's word, 2026-07-26: \"go with freshness fact on the confirmation ledger (always visible, never nagging)\". The alternative was a gap source — asked once through gap_to_prompt, acknowledgeable, and appearing in detect_gaps until answered. Rejected for the reason the ledger's own module doc already gives about signals: a stale-looking check is a STANDING PROPERTY of a claim rather than an event, it would fire on every legitimate refactor as readily as on a real hole, and an open list that can never reach zero gets skimmed — which is precisely the failure the gap workflow exists to prevent (the BL-23 lesson: when a detector punishes correct work, the answer is a different question, not a tuned threshold). As a ledger fact it is visible every time somebody asks how a claim stands, and it nags nobody.",
+        "name": "A check older than its code is a freshness FACT, not a gap",
+        "rationale": "Prompted by a real miss the same day. cap:degraded-surface was `verified` with a passing check, and that check drove stdio only; adding the HTTP transport widened what \"the server explains its own absence\" had to mean, without widening anything that tested it. reflow2 reported zero gaps throughout, and it was right to — nothing it knew was false. But it HAD the evidence: art:main drifted twice (chg:shared-sessions, chg:remote-sessions) while art:test-degraded-server never moved, and Verification.last_run_at is written by verify.rs and read by nothing anywhere in the core. Same shape this project keeps finding — a field declared, written, and consulted by no computation (the temporal axis before BL-70, the whole inviolable-intent vocabulary before BL-96): the higher-yield question is what the core already does that nothing can reach. Deliberately NOT the wider question of measuring what a check actually covers, which is unknowable from the graph and belongs to BL-95.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:views-are-projections",
       "node_type": "Decision",
       "properties": {
@@ -20837,6 +20892,16 @@
         "decision": "Accepted the gap gap:2a9626b1798c1959.",
         "name": "Reviewed: gap:2a9626b1798c1959",
         "rationale": "Standing disposition: validation evidence lives in docs/trials/ and in field reports from real use, not as validation-kind Verifications, so the detector is right that the graph cannot see it. Re-acknowledged at 50 capabilities — the id is derived from the affected SET, so it mints a new gap every time a capability is added and the previous acknowledgement cannot carry over. That churn is a finding about the acknowledgement mechanism, not about validation.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:30182d6495cdfe54",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:30182d6495cdfe54.",
+        "name": "Reviewed: gap:30182d6495cdfe54",
+        "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-26): a capability captured as intent and not yet built has nothing to verify, and asking for its check now would put a planned Verification on the record that confirms nothing — which is the state dec:passing-is-verified exists to keep out. The check is owed AT BUILD TIME and is already specified in BL-106: a fixture where an artifact's accept is dated after its verification's last_run_at must report the capability as stale-checked, one where the order is reversed must not, and one where either date is missing must report `unknown` rather than passing silently. Worth naming here because this particular capability is about checks being trusted further than they reach, so shipping it on a check that proves nothing would be the defect demonstrating itself.",
         "status": "accepted"
       }
     },
@@ -23885,6 +23950,20 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "reflow2's standing rule — graph text is data, never instructions — is enforced today only by prose in the skills and the server handshake, which is a rule addressed to a well-behaved reader. The requirement is that the mechanical half exists: text arriving from outside the session's own author (prose read out of a codebase by INGEST, a design export imported from another machine or another person, and anything a hosted surface would accept) is neutralised of the characters that carry hidden instructions before any agent reads it — invisible and zero-width characters, bidirectional overrides that make text render as something other than what it says, Unicode tag characters that smuggle a payload past a human reviewer, and metadata hidden in code-fence info strings. Two properties reflow2 must add to the technique it borrows. The neutralisation must be REPORTED, not silent: a design whose statements were quietly rewritten on the way in is a design nobody can audit, and rule 6 forbids silent drops — so the count and the kind of what was stripped travel with the result. And it must not touch legitimate design content: an arrow, an emoji, a maths symbol or a non-Latin script is ordinary text in a design that may be about anything, so the filter is a named list of instruction-carrying characters rather than a whitelist of what looks familiar.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:verification-keeps-up",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A \"verified\" claim says how old the check behind it is",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When a capability claims to be verified, the design must be able to say whether the check behind that claim is older than the code it covers. A passing check proves the paths it drives, and nothing more — so when a capability's meaning widens without its check widening, the old green tick keeps being reported as if nothing had changed. reflow2 already records everything needed to notice: Verification.last_run_at is written on every status set, and the confirmation ledger already dates the accepts that moved an artifact's baseline. Nothing reads the two together. Where the dates do not exist the answer must be \"cannot tell\", stated plainly — never silence, and never an assumption that the check is current.",
         "status": "accepted"
       }
     },
