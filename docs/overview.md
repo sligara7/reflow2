@@ -94,6 +94,8 @@ Three records, three questions — kept separate on purpose:
   to a collaborator as-is.
 
 ### 3½ · Upgrade notes — *read before updating a consumer project*
+- [upgrading-to-v0.15.0.md](upgrading-to-v0.15.0.md) — two more ways to say how you checked
+  (`demonstration`, `observation`); additive, nothing to do, and an older reflow2 can still read.
 - [upgrading-to-v0.13.0.md](upgrading-to-v0.13.0.md) — your design gets a durable name, claims say who
   made them, and the installer registers the session-end nudge you did not have.
 - [upgrading-to-v0.12.0.md](upgrading-to-v0.12.0.md) — the skills leave your repository: served over MCP

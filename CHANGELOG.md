@@ -31,6 +31,17 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.15.0] — 2026-07-26
+
+**Upgrading:** [docs/upgrading-to-v0.15.0.md](docs/upgrading-to-v0.15.0.md). A minor bump because
+the schema moved; nothing breaks, nothing in your repository changes, and there is nothing for you
+to do. An older reflow2 can still *read* a graph written by this one — tested, not assumed.
+
+**Take this one if you run the shared server.** v0.14.0 shipped with a hole in exactly that path:
+when the graph was already held and `--http` was given, the explanation went to stdio and nothing
+listened on the port, so every session pointed at that URL saw a refused connection —
+indistinguishable from reflow2 never having been configured. Found and fixed the same day.
+
 ### Added
 
 - **`demonstration` and `observation` are verification methods**
