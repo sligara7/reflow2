@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b6404ffb6fccd87f931b3283ff1663ec41910530c265f5e6ccdf844b464acbe4",
+  "content_hash": "sha256:9aeeb13f833640e7c1f8e8a57d986ced7b5a9f6f5aeff5026ba81304e0128a01",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2171,6 +2171,15 @@
         "action": "modified"
       },
       "to_id": "art:merge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-580d509cd2ed1306",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:scope-corpus-ingest"
     },
     {
       "edge_type": "CHANGED",
@@ -15914,6 +15923,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:storyflow-resolution-study",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:structure",
       "properties": {
         "completeness": "complete"
@@ -17499,6 +17516,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:storyflow-resolution-study",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:storyflow-resolution-study"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:structure",
       "properties": {
         "action": "created"
@@ -18172,7 +18197,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:5ba77734f3a552e5219709cce2cf05f0aa6a9603548445204e513521db0fe4d3",
+        "checksum": "sha256:e08ff268bcd31710b0b3e77d47f1eeb2165ba9cb5b63ca48efaad441d6f32e22",
         "location": "docs/scope-corpus-ingest.md",
         "name": "scope-corpus-ingest.md",
         "status": "realized"
@@ -18252,6 +18277,17 @@
         "checksum": "sha256:c09cc6f310635d1b2fb9a888f38c323fbd2ae2fb9e816586a32f2c00c87a46fb",
         "location": "SKILLS.md",
         "name": "SKILLS.md",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:storyflow-resolution-study",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:909bcf9e9ca51cd8eed0407cc8845225af5d2c842faabf4028fc12bd23789fee",
+        "location": "docs/storyflow-resolution-nuggets.md",
+        "name": "storyflow-resolution-nuggets.md",
         "status": "realized"
       }
     },
@@ -19479,6 +19515,15 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-24",
         "name": "Initial baseline of the BL-80 three-way-merge module (merge.rs, authored 2026-07-22; realizes cap:merge-designs + cap:merge-rerere, verified by ver:merge). Previously no_baseline — recording the as-built fingerprint so future edits are caught; no design change."
+      }
+    },
+    {
+      "node_id": "chg:accept-580d509cd2ed1306",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-26",
+        "name": "Two findings updated in place after reading storyflow's entity resolution (art:storyflow-resolution-study), rather than leaving a scope document that its own companion study contradicts. Finding 4 gains the part that makes it cheap: dynograph-core ALREADY parses ResolutionConfig with both thresholds onto every node type and DesignGraph::schema() is already public, so the reader exists and only the call site is missing — and reflow2's declared per-type values (80-88) are all BELOW the hardcoded 90, so ingest is stricter than its own schema asks and merges LESS than intended. Finding 5's open question narrows from what-shape to which-numbers, because storyflow's answer is the two-band model with an ask-band in the middle, which satisfies dec:ask-not-repair exactly. And the study adds a mechanism the scope missed: ratio scoring is length-sensitive, so the most common corpus case fails at any threshold and needs a structural token-subset test instead."
       }
     },
     {
@@ -23474,6 +23519,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered SKILLS.md"
+      }
+    },
+    {
+      "node_id": "frag:art:storyflow-resolution-study",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered storyflow-resolution-nuggets.md"
       }
     },
     {

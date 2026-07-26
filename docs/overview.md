@@ -113,6 +113,9 @@ Three records, three questions — kept separate on purpose:
 - [reflow-v3-nuggets.md](reflow-v3-nuggets.md) — ideas carried over from the original Reflow.
 - [reflow-audit.md](reflow-audit.md) — the deep pass behind it: all 25 workflows and all 51 tools, each with an adopt / obsoleted / do-not-port verdict, plus the cautions and rule-4 counter-examples found along the way.
 - [chain-reflow-nuggets.md](chain-reflow-nuggets.md) — ideas from Chain Reflow (matryoshka, causality, linking).
+- [storyflow-resolution-nuggets.md](storyflow-resolution-nuggets.md) — how storyflow answers "are these two the
+  same thing?" (Bob / Bobby / Robert; Auth / Auth Service): two thresholds with an ask-band between them, and the
+  token-subset pass that ratio scoring can never catch. The reader for it is already in reflow2's pinned foundation.
 - [github-mcp-nuggets.md](github-mcp-nuggets.md) — what a *hosted* MCP server at scale teaches: what to import,
   what not to, and the non-foreclosure rule that came out of it.
 - [planning-at-scale.md](planning-at-scale.md) — a thousand simultaneous planners on an echeloned plan (the

@@ -112,6 +112,14 @@ vocabulary before BL-96, `DriftEvent.resolved` before BL-35, `Verification.last_
 a per-type threshold earns its keep, because `Requirement` and `Component` do not deserve the same
 similarity bar.
 
+> **Updated 2026-07-26, after [storyflow-resolution-nuggets.md](storyflow-resolution-nuggets.md):
+> this is cheaper than it looks and the constant is worse than it looks.** `dynograph-core` — the
+> version reflow2 is *already pinned to* — parses a `ResolutionConfig` onto every node type carrying
+> **two** thresholds, `fuzzy_threshold` and `auto_merge_threshold`, and `DesignGraph::schema()` is
+> already public. So the reader exists; only the call site is missing. And reflow2's declared
+> per-type values are **80–88**, all *below* the hardcoded 90 — so ingest is currently stricter than
+> its own schema asks, merging **less** than intended, not more.
+
 ## Finding 5 — auto-merge at 90 versus `dec:ask-not-repair`
 
 `dec:ask-not-repair` says suspected duplicates are **asked, never silently merged**. `ingest`
@@ -128,6 +136,18 @@ documents is unusable.
 band, route the ambiguous band into a *batched* question (one prompt listing N candidate pairs,
 answered once), and never merge across a band boundary without a record. That is a design question
 about where the bands sit, and it is the user's call.
+
+> **Answered in shape, 2026-07-26, by
+> [storyflow-resolution-nuggets.md](storyflow-resolution-nuggets.md).** storyflow has fought this in
+> production for years and its answer is exactly the two-band model above, declared per node type —
+> below `fuzzy_threshold` ignore, between the two **ask**, at/above `auto_merge_threshold` act. That
+> satisfies `dec:ask-not-repair` precisely: the rule governs the middle band, and the top band is not
+> a suspicion. It narrows this open question from *what shape* to *which numbers*.
+>
+> The study also adds a mechanism this scope missed entirely: ratio scoring is **length-sensitive**,
+> so `Auth` versus `Authentication Service` — the single most common corpus case — scores below any
+> threshold you choose. No tuning fixes it; it needs a structural **token-subset** test, with the
+> longer, more specific name surviving. Without that pass the bands alone will not do the job.
 
 ## Provenance and epochs at corpus scale
 
