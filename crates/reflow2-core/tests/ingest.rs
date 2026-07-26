@@ -694,3 +694,105 @@ fn a_phantom_component_in_a_contract_is_dropped_not_written() {
         "no phantom edge may be written"
     );
 }
+
+/// The band between a type's `fuzzy_threshold` and its `auto_merge_threshold`
+/// was invisible until 2026-07-26: a name that resembled an existing node but
+/// not closely enough to merge was simply created as a second node, and nothing
+/// said so. That is the failure a corpus makes constantly — "Auth Service" in
+/// one document and a near-variant in another, quietly becoming two components.
+///
+/// Capability declares `fuzzy_threshold: 82`; nothing declares an
+/// `auto_merge_threshold`, so the foundation's default of 90 applies. A name
+/// scoring in [82, 90) must therefore be REPORTED and NOT merged.
+#[test]
+fn a_near_match_below_auto_merge_is_reported_not_merged() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:v1".into(),
+            ..Default::default()
+        },
+        &mock_cap("cap:auth", "Auth Service", false),
+    )
+    .unwrap();
+
+    // "Auth Service" vs "Authentication Service" scores 84 — the canonical
+    // corpus case, and squarely in the ask-band. Before this change reflow2
+    // silently created two components for it.
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:v2".into(),
+                ..Default::default()
+            },
+            &mock_cap("cap:auth-2", "Authentication Service", false),
+        )
+        .unwrap();
+
+    assert!(
+        report.fuzzy_merges.is_empty(),
+        "a score below auto-merge must NOT merge: {:?}",
+        report.fuzzy_merges
+    );
+    assert_eq!(
+        report.merge_candidates.len(),
+        1,
+        "and it must be reported rather than silently duplicated: {report:?}"
+    );
+    let c = &report.merge_candidates[0];
+    assert_eq!(c.extracted_id, "cap:auth-2");
+    assert_eq!(c.candidate_id, "cap:auth");
+    assert_eq!(
+        c.auto_merge_threshold, 90,
+        "the default, since none declared"
+    );
+    assert!(
+        c.score >= 82 && c.score < 90,
+        "the candidate must sit in the ask-band, got {}",
+        c.score
+    );
+
+    // Both nodes exist: nothing was destroyed by a number.
+    assert_eq!(g.count_nodes(node::CAPABILITY).unwrap(), 2);
+    assert!(
+        g.get_node(node::CAPABILITY, "cap:auth-2")
+            .unwrap()
+            .is_some()
+    );
+}
+
+/// The other half, and the one that guards against a regression dressed up as a
+/// fix: reading the thresholds from the schema must not change what MERGES.
+/// The old hardcoded 90 happened to equal the foundation's default auto-merge
+/// threshold, so an identical name merges exactly as it always did.
+#[test]
+fn reading_thresholds_from_the_schema_does_not_change_what_merges() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:v1".into(),
+            ..Default::default()
+        },
+        &mock_cap("cap:cache", "Caching", false),
+    )
+    .unwrap();
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:v2".into(),
+                ..Default::default()
+            },
+            &mock_cap("cap:cache-2", "Caching", false),
+        )
+        .unwrap();
+
+    assert_eq!(report.fuzzy_merges.len(), 1, "an exact name still merges");
+    assert!(
+        report.merge_candidates.is_empty(),
+        "and a merge is not also reported as a question"
+    );
+}

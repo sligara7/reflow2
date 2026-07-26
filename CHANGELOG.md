@@ -31,6 +31,31 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A near-match that is not certain is now a question, not a silent duplicate**
+  (`IngestReport.merge_candidates`). `ingest` reads the two thresholds the schema
+  has always declared — `fuzzy_threshold` and `auto_merge_threshold` — instead of
+  one hardcoded constant, and the band between them finally does something.
+
+  Below `fuzzy_threshold`: a new node, as before. At or above
+  `auto_merge_threshold`: merged, as before. **Between them: created *and*
+  reported**, so the ambiguous case is put to a person rather than settled by
+  arithmetic (`dec:ask-not-repair`).
+
+  The fault was not where it first looked. The foundation's *default*
+  auto-merge threshold is 90 — exactly the constant reflow2 had hardcoded — so
+  the merging half was accidentally right, and a test pins that reading the
+  schema changes nothing about what merges. What was missing was the band below
+  it. Measured: **"Auth Service" vs "Authentication Service" scores 84**, so the
+  single most common corpus case sat in the invisible band and quietly became two
+  components.
+
+  The model comes from storyflow, which has fought this for years
+  ([docs/storyflow-resolution-nuggets.md](docs/storyflow-resolution-nuggets.md)) —
+  the first finding to travel between the two projects since they diverged.
+
+
 ## [0.15.0] — 2026-07-26
 
 **Upgrading:** [docs/upgrading-to-v0.15.0.md](docs/upgrading-to-v0.15.0.md). A minor bump because

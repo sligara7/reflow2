@@ -112,13 +112,19 @@ vocabulary before BL-96, `DriftEvent.resolved` before BL-35, `Verification.last_
 a per-type threshold earns its keep, because `Requirement` and `Component` do not deserve the same
 similarity bar.
 
-> **Updated 2026-07-26, after [storyflow-resolution-nuggets.md](storyflow-resolution-nuggets.md):
-> this is cheaper than it looks and the constant is worse than it looks.** `dynograph-core` — the
-> version reflow2 is *already pinned to* — parses a `ResolutionConfig` onto every node type carrying
-> **two** thresholds, `fuzzy_threshold` and `auto_merge_threshold`, and `DesignGraph::schema()` is
-> already public. So the reader exists; only the call site is missing. And reflow2's declared
-> per-type values are **80–88**, all *below* the hardcoded 90 — so ingest is currently stricter than
-> its own schema asks, merging **less** than intended, not more.
+> **BUILT 2026-07-26.** `dynograph-core` — the version reflow2 is *already pinned to* — parses a
+> `ResolutionConfig` onto every node type carrying **two** thresholds, `fuzzy_threshold` and
+> `auto_merge_threshold`, and `DesignGraph::schema()` is already public: the reader existed, only
+> the call site was missing. `ingest` now reads both.
+>
+> **The fault was not where this section first said it was.** The foundation's *default*
+> `auto_merge_threshold` is **90** — exactly the constant reflow2 had hardcoded. So the merging half
+> was accidentally correct all along, and re-reading it from the schema changes nothing about what
+> merges (pinned by a test). What was missing was the **band below it**: a near-match scoring
+> between a type's `fuzzy_threshold` (80–88) and 90 was silently created as a second node, with
+> nothing reported. Measured: **"Auth Service" vs "Authentication Service" scores 84** — the
+> canonical corpus case sat in that invisible band. It is now reported as a `merge_candidate` and
+> still created, so nothing is decided by arithmetic and nothing is lost.
 
 ## Finding 5 — auto-merge at 90 versus `dec:ask-not-repair`
 

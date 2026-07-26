@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9aeeb13f833640e7c1f8e8a57d986ced7b5a9f6f5aeff5026ba81304e0128a01",
+  "content_hash": "sha256:798043273f4701402d3e54ad6c9f214e1770602973ec4a178e2e8c1162e22c65",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1026,6 +1026,12 @@
       "from_id": "chg:requirement-quality-capture",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:resolution-bands",
+      "properties": {},
+      "to_id": "epoch:v0150"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4664,6 +4670,42 @@
         "action": "added"
       },
       "to_id": "cap:requirement-quality"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:resolution-bands",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:resolution-bands",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:scope-corpus-ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:resolution-bands",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:storyflow-resolution-study"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:resolution-bands",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:ingest"
     },
     {
       "edge_type": "CHANGED",
@@ -17955,7 +17997,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e5e40cef15b45dfe",
+        "checksum": "sha256:16977203addb8635",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
         "status": "realized"
@@ -18197,7 +18239,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:e08ff268bcd31710b0b3e77d47f1eeb2165ba9cb5b63ca48efaad441d6f32e22",
+        "checksum": "sha256:c1246d07a570d11ca8a76c3b7141fce085dfe1f760af41b671bbdf419cd3ef08",
         "location": "docs/scope-corpus-ingest.md",
         "name": "scope-corpus-ingest.md",
         "status": "realized"
@@ -18285,7 +18327,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:909bcf9e9ca51cd8eed0407cc8845225af5d2c842faabf4028fc12bd23789fee",
+        "checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83",
         "location": "docs/storyflow-resolution-nuggets.md",
         "name": "storyflow-resolution-nuggets.md",
         "status": "realized"
@@ -20197,6 +20239,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Requirement quality criteria captured, split by which party can judge each"
+      }
+    },
+    {
+      "node_id": "chg:resolution-bands",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Ingest reads the schema's two thresholds, and the ask-band stops being invisible"
       }
     },
     {

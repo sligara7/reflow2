@@ -40,13 +40,18 @@ pub struct ResolutionConfig {
 `DesignGraph::schema()` is public and already used at `graph.rs:214`, so reading
 `def.resolution` is a few lines, no foundation change, no new tag, no rebuild.
 
-Meanwhile `ingest.rs` uses a hardcoded `FUZZY_MATCH_THRESHOLD: u32 = 90` — and reflow2's own schema
-declares per-type thresholds of **80–88**. So the constant is not merely ignoring the config, it is
-*stricter than every declared value*: **reflow2 currently merges less than its own schema asks for**,
-and no reflow2 type declares an `auto_merge_threshold` at all, so the two-band model is unused.
+`ingest.rs` used a hardcoded `FUZZY_MATCH_THRESHOLD: u32 = 90`. **Built 2026-07-26; it now reads
+both** — and the fault turned out to sit somewhere more interesting than first written here.
+
+The foundation's *default* `auto_merge_threshold` is **90**, exactly the hardcoded constant. So the
+merging half was accidentally right, and reading it from the schema changes nothing about what
+merges. What was missing was the **entire band below it**. reflow2 declares `fuzzy_threshold` of
+80–88 per type and no `auto_merge_threshold` at all, so a near-match scoring in [82, 90) was created
+as a second node with nothing said. Measured: **"Auth Service" vs "Authentication Service" scores
+84** — the canonical corpus case lived in that invisible band.
 
 This is the fifth instance of the shape this project keeps finding — declared, and read by nothing.
-Unlike the others, the reader already exists upstream.
+Unlike the others, the reader already existed upstream, which is why the fix was a few lines.
 
 ---
 

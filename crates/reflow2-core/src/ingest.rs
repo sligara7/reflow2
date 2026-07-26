@@ -263,6 +263,28 @@ pub struct FuzzyMerge {
     pub score: u32,
 }
 
+/// A near-match that was NOT merged: it cleared the type's `fuzzy_threshold`
+/// but fell short of its `auto_merge_threshold`, so it is reported for a human
+/// to judge rather than decided by a number.
+///
+/// This band was invisible before 2026-07-26 — a name scoring 85 against an
+/// existing node was simply created as a second node, and nothing said so. That
+/// is the failure a corpus makes constantly: `Auth Service` in one document and
+/// `Auth  Service` in another, quietly becoming two components.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct MergeCandidate {
+    /// The id the extraction produced — created as a NEW node, not merged.
+    pub extracted_id: String,
+    /// The existing node it resembles.
+    pub candidate_id: String,
+    /// The node type.
+    pub node_type: &'static str,
+    /// The fuzzy score (0–100) it reached.
+    pub score: u32,
+    /// The score it would have had to reach to merge without asking.
+    pub auto_merge_threshold: u32,
+}
+
 /// Whether the ingest ran fully clean or degraded.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
 #[serde(rename_all = "snake_case")]
@@ -288,6 +310,11 @@ pub struct IngestReport {
     /// Cross-id fuzzy dedups: a new id resolved to an existing node by name
     /// similarity instead of creating a duplicate. Auditable, never silent.
     pub fuzzy_merges: Vec<FuzzyMerge>,
+    /// Near-matches deliberately NOT merged — above the type's fuzzy threshold,
+    /// below its auto-merge threshold. Created as new nodes AND reported, so the
+    /// ambiguous band is a question put to a person rather than a coin flip
+    /// resolved by a constant (`dec:ask-not-repair`).
+    pub merge_candidates: Vec<MergeCandidate>,
     /// Edges created this run.
     pub edges_created: usize,
     /// The `DesignEpoch` matched-evolved snapshots were pinned to (`Some` only
@@ -741,6 +768,7 @@ impl DesignGraph {
             nodes_evolved: st.nodes_evolved,
             nodes_unchanged: st.nodes_unchanged,
             fuzzy_merges: st.fuzzy_merges,
+            merge_candidates: st.merge_candidates,
             edges_created: st.edges_created,
             epoch_used,
             pass_errors: errors,
@@ -821,15 +849,31 @@ impl DesignGraph {
                         .push(format!("fuzzy-match {node_type} '{id}': {e}"));
                     self.integrate_new(st, node_type, id, new_map);
                 }
-                Ok(Some((canonical, score))) => {
-                    st.aliases.insert(id.to_string(), canonical.clone());
-                    st.fuzzy_merges.push(FuzzyMerge {
-                        extracted_id: id.to_string(),
-                        canonical_id: canonical.clone(),
-                        node_type,
-                        score,
-                    });
-                    self.integrate_existing(st, node_type, &canonical, new_map);
+                // The band decides the ACT. At or above auto-merge this is not a
+                // suspicion and merging is right; below it, merging would be a
+                // number overruling a person, so the node is created and the
+                // near-match reported instead (`dec:ask-not-repair`).
+                Ok(Some((candidate, score))) => {
+                    let (_, auto_merge) = self.resolution_thresholds(node_type);
+                    if score >= auto_merge {
+                        st.aliases.insert(id.to_string(), candidate.clone());
+                        st.fuzzy_merges.push(FuzzyMerge {
+                            extracted_id: id.to_string(),
+                            canonical_id: candidate.clone(),
+                            node_type,
+                            score,
+                        });
+                        self.integrate_existing(st, node_type, &candidate, new_map);
+                    } else {
+                        st.merge_candidates.push(MergeCandidate {
+                            extracted_id: id.to_string(),
+                            candidate_id: candidate,
+                            node_type,
+                            score,
+                            auto_merge_threshold: auto_merge,
+                        });
+                        self.integrate_new(st, node_type, id, new_map);
+                    }
                 }
                 Ok(None) => self.integrate_new(st, node_type, id, new_map),
             },
@@ -912,11 +956,36 @@ impl DesignGraph {
         }
     }
 
+    /// The two thresholds this node type asks for, read from the schema rather
+    /// than from a constant.
+    ///
+    /// `dynograph-core` has parsed both onto every node type all along —
+    /// `fuzzy_threshold` (worth considering) and `auto_merge_threshold` (certain
+    /// enough to act) — and until 2026-07-26 ingest read neither, using one
+    /// hardcoded 90 instead. That 90 happens to equal the foundation's DEFAULT
+    /// auto-merge threshold, so the merging half was accidentally right; what
+    /// was missing was the band BELOW it, where a near-match should be reported
+    /// and was instead silently created as a second node.
+    ///
+    /// A type that declares no `resolution` block gets the foundation's defaults
+    /// (70 / 90) rather than an invented pair, so the fallback is stated
+    /// upstream instead of here.
+    fn resolution_thresholds(&self, node_type: &str) -> (u32, u32) {
+        self.schema()
+            .node_types
+            .get(node_type)
+            .and_then(|def| def.resolution.as_ref())
+            .map_or(
+                (DEFAULT_FUZZY_THRESHOLD, DEFAULT_AUTO_MERGE_THRESHOLD),
+                |r| (r.fuzzy_threshold, r.auto_merge_threshold),
+            )
+    }
+
     /// Cross-id dedup: find an existing same-type node whose `name` matches the
-    /// extracted node's name at/above [`FUZZY_MATCH_THRESHOLD`] (token-order- and
-    /// case-insensitive, no embeddings). Returns the best canonical id + score.
-    /// Conservative on purpose — the ambiguous middle band is where the deferred
-    /// LLM adjudication / vector tiebreaker (EX-R2) belongs.
+    /// extracted node's name at or above this type's `fuzzy_threshold`
+    /// (token-order- and case-insensitive, no embeddings). Returns the best
+    /// candidate id + score; the CALLER decides whether that score is a merge or
+    /// a question, because the two bands are different acts.
     fn fuzzy_match(
         &self,
         node_type: &'static str,
@@ -926,6 +995,7 @@ impl DesignGraph {
         let Some(new_name) = new_map.get("name").and_then(Value::as_str) else {
             return Ok(None);
         };
+        let (fuzzy_threshold, _) = self.resolution_thresholds(node_type);
         let mut best: Option<(String, u32)> = None;
         for n in self.scan_nodes(node_type)? {
             if n.node_id == extracted_id {
@@ -933,7 +1003,7 @@ impl DesignGraph {
             }
             if let Some(existing_name) = n.properties.get("name").and_then(Value::as_str) {
                 let score = token_sort_ratio(new_name, existing_name);
-                if score >= FUZZY_MATCH_THRESHOLD && best.as_ref().is_none_or(|(_, b)| score > *b) {
+                if score >= fuzzy_threshold && best.as_ref().is_none_or(|(_, b)| score > *b) {
                     best = Some((n.node_id.clone(), score));
                 }
             }
@@ -1012,7 +1082,11 @@ impl DesignGraph {
 /// Minimum `token_sort_ratio` (0–100) for a cross-id fuzzy dedup. High on
 /// purpose: below this, resolution creates a new node rather than risk a wrong
 /// merge — the uncertain band is the deferred LLM/vector tiebreaker's job.
-const FUZZY_MATCH_THRESHOLD: u32 = 90;
+/// Fallbacks for a node type that declares no `resolution` block. Both mirror
+/// `dynograph-core`'s own defaults deliberately — a second opinion about what
+/// "close enough" means, held in two places, is how the two drift apart.
+const DEFAULT_FUZZY_THRESHOLD: u32 = 70;
+const DEFAULT_AUTO_MERGE_THRESHOLD: u32 = 90;
 
 /// The ingress trust boundary for INGEST: every extracted node's text passes
 /// through here on its way into the graph.
@@ -1062,6 +1136,7 @@ struct Integration<'a> {
     nodes_evolved: usize,
     nodes_unchanged: usize,
     fuzzy_merges: Vec<FuzzyMerge>,
+    merge_candidates: Vec<MergeCandidate>,
     edges_created: usize,
     warnings: Vec<String>,
     dropped_edges: Vec<DroppedEdge>,
@@ -1080,6 +1155,7 @@ impl<'a> Integration<'a> {
             nodes_evolved: 0,
             nodes_unchanged: 0,
             fuzzy_merges: Vec::new(),
+            merge_candidates: Vec::new(),
             edges_created: 0,
             warnings: Vec::new(),
             dropped_edges: Vec::new(),
