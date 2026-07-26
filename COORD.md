@@ -56,6 +56,7 @@ Add yourself if you're new here.
 
 
 
+- Sessions on ANOTHER MACHINE share one design (`--http-allow-host`) + cut v0.14.0 — @ajs — since 2026-07-26 — crates/reflow2-mcp/src/main.rs, tools/test_shared_sessions.py, docs/collaborating.md, Cargo.toml, CHANGELOG.md, docs/design/reflow2.json
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
