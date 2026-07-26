@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:20173f0edfb03e180ca1f7719161f39f9ba02cde4443e2f4aa5c8bbd69d8952a",
+  "content_hash": "sha256:2ad53c5065d1119e8b9291ae0395e43ae363bf24060ff4f533569ab0b86dbc98",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2031,6 +2031,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-03a23acf45b3fec0",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-041e39df97343a36",
       "properties": {
         "accepted_baseline": true,
@@ -2154,6 +2163,15 @@
         "action": "modified"
       },
       "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-6f1ba29acecb8d91",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:collaborating"
     },
     {
       "edge_type": "CHANGED",
@@ -16955,7 +16973,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:fe2f1a4c9ee8dcdcc3765ecb337301eb18bb94876417e0f974e825a5d62f5abf",
+        "checksum": "sha256:c21912e559c27f763ee7ad57e4564e64e4aa27b108ddbf5b107e8aa1a207b20e",
         "location": "docs/collaborating.md",
         "name": "collaborating.md",
         "status": "realized"
@@ -18556,6 +18574,15 @@
       }
     },
     {
+      "node_id": "chg:accept-03a23acf45b3fec0",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-26",
+        "name": "Same doc restructure, second pass: the three new failure modes went into the existing Troubleshooting table rather than only into the step-by-step prose — a table people already scan when something is wrong beats an instruction they read once during setup. Rows added: the server refusing to start because a session still launches its own reflow2, a remote 403 naming the unlisted host, and connect-failure pointed at the network rather than at reflow2."
+      }
+    },
+    {
       "node_id": "chg:accept-041e39df97343a36",
       "node_type": "ChangeEvent",
       "properties": {
@@ -18676,6 +18703,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-6f1ba29acecb8d91",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-26",
+        "name": "The multi-session section was restructured from an explanation into a four-step recipe anyone can follow, on Anthony's ask (\"simple instructions so anybody can set it up\"). No design element changed — cap:shared-sessions and cap:remote-sessions are exactly as built, and the why-it-works prose is kept below the steps rather than in front of them. Two things the old version did not say, both found by walking the setup on a real machine rather than from the code: (1) the sessions you already have EACH LAUNCH THEIR OWN reflow2 and one is holding the graph, so the server will not start until they are switched over — the first thing anyone hits, and it presents as a confusing lock error rather than as a missing step; (2) an SSH TUNNEL needs no --http-allow-host at all, because the far end then dials its own localhost, which the default allowlist already trusts — the simplest and most private route, and it was not documented anywhere."
       }
     },
     {

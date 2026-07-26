@@ -164,53 +164,116 @@ There are three cases and they are not equally hard.
 Each project has its own graph directory, so each session runs its own server and they never meet.
 This has always worked.
 
-### The same project, same machine — run one server and point them all at it
+### The same project — set it up in four steps
+
+The same four steps whether the other sessions are on this machine or another one. Only **step 3**
+differs, and it is the only place a second machine costs you anything extra.
+
+#### Step 1 — pick the machine that will hold the design
+
+One machine runs the server; every session anywhere talks to it. Pick the one that stays awake — a
+desktop rather than a laptop that travels. Everything below happens on **that** machine unless it
+says otherwise.
+
+#### Step 2 — start the server, and point this machine's own sessions at it
+
+This is the step people skip, and skipping it is confusing rather than obvious: **your existing
+sessions each launch their own reflow2 and one of them is already holding the graph.** A second
+reflow2 cannot open the same directory, so the server will not start until they let go. Switch them
+over first.
+
+In a terminal you leave open, from your project directory:
 
 ```bash
 reflow2-mcp --graph-path ./.reflow2/graph --http 127.0.0.1:8787
 ```
 
-Then every session's MCP config points at `http://127.0.0.1:8787/` instead of spawning its own
-process. They share one design, live: a requirement one session captures is visible to the others
-immediately. Each session is its own **seat**, so claims say who actually made them.
+Then change this machine's MCP config so sessions **connect** instead of launching their own. For
+Claude Code that is `.mcp.json` in the project:
 
-The reason this works — and the reason it needs a server rather than six processes — is that
-reflow2's store is single-writer **per process**. Six processes cannot each open the directory; one
-process holding it, with six sessions attached, still has exactly one writer. The constraint is
-satisfied rather than worked around.
+```json
+{
+  "mcpServers": {
+    "reflow2": { "type": "http", "url": "http://127.0.0.1:8787/" }
+  }
+}
+```
 
-### The same project, another machine — name the host you will dial
+Restart the sessions (in Claude Code, `/mcp` reconnects). They now share one design: a requirement
+one session captures is visible to the others immediately. Each session is its own **seat**, so
+claims say who actually made them.
 
-Same server, one more flag. On the machine holding the design:
+> If the server exits complaining that the graph is held, a session somewhere still has the old
+> config. Find it and restart it — the message names the path it could not open.
+
+#### Step 3 — connect the other machine
+
+Only for sessions on a **different** machine; skip this if they are all on this one. Pick whichever
+row describes you. All three are private networks, because there is no authentication.
+
+| Your situation | What to do |
+|---|---|
+| The other machine can SSH to this one | **An SSH tunnel — the simplest, and nothing to install.** |
+| Both on the same home or office network | A direct connection over the LAN. |
+| Different buildings, or different cities | A tailnet (Tailscale) or a VPN. |
+
+**SSH tunnel.** Leave the server exactly as step 2 started it — no extra flag, nothing exposed. On
+the *other* machine:
+
+```bash
+ssh -N -L 8787:127.0.0.1:8787 you@the-server-machine
+```
+
+Then give that machine the **same config as step 2** (`http://127.0.0.1:8787/`) and restart its
+session. It works because the tunnel makes the far end dial its own `localhost`, which reflow2
+already trusts. Encrypted, and no port is open to anyone else.
+
+**LAN or tailnet.** Here the other machine dials this one by name or address, so the server has to
+be told that name. Restart it as:
 
 ```bash
 reflow2-mcp --graph-path ./.reflow2/graph \
             --http 0.0.0.0:8787 \
-            --http-allow-host my-desktop.tail1234.ts.net
+            --http-allow-host 192.168.1.38          # or my-desktop.tail1234.ts.net
 ```
 
-On the other machine, point that session's MCP config at
-`http://my-desktop.tail1234.ts.net:8787/`. It is then an ordinary seat: its own session, its own
-claims, the same design.
+and point the other machine's config at the matching URL — `http://192.168.1.38:8787/` or
+`http://my-desktop.tail1234.ts.net:8787/`. Use *exactly* the host the other machine dials: if the
+URL says an IP address, the flag takes that IP address, not the hostname.
 
-**Why the extra flag.** The transport answers only requests whose `Host` header is on an
-allowlist — `localhost`, `127.0.0.1` and `::1` by default. That is DNS-rebinding protection: without
-it, a web page you visit could have your browser post to your own machine and rewrite your design.
-Since reflow2 has **no authentication**, that allowlist is the only thing in the way — so being
-reachable from elsewhere is a deliberate act, not a side effect of binding a public address.
+#### Step 4 — check it worked
+
+From a session on the other machine, ask your agent to capture something trivial in the design; from
+a session on this one, ask what the design says. If the second sees what the first wrote, with no
+export, no merge and no pull in between, you are done.
+
+If a remote session fails instead, the two likely answers are both visible: a **403** means the
+host it dialled was not named in step 3 (and the server said so when it started — check that
+terminal), and a connection refused or timeout means the network, not reflow2.
+
+### Why the second machine needs a host named
+
+The transport answers only requests whose `Host` header is on an allowlist — `localhost`,
+`127.0.0.1` and `::1` by default. That is DNS-rebinding protection: without it, a web page you visit
+could have your browser post to your own machine and rewrite your design. Since reflow2 has **no
+authentication**, that allowlist is the only thing in the way — so being reachable from elsewhere is
+a deliberate act, not a side effect of binding a public address. It is also why the SSH tunnel needs
+no flag: nothing about the server changed, only who can reach `localhost`.
 
 `--http-allow-host` is repeatable, takes `host` or `host:port`, and **extends** the default rather
 than replacing it, so naming a remote machine never locks out the local sessions already using the
-server. Name it exactly as the remote session will dial it: the value must match the URL's host,
-not the machine's hostname, if those differ.
+server. And if you bind a reachable address and forget the flag, the server says so at startup and
+names it, rather than leaving every remote session with a bare `403` and no explanation.
 
-If you bind a reachable address and forget the flag, remote sessions get a bare `403` — so the
-server says so on startup and names the flag, rather than leaving you to guess.
+The reason any of this needs a server rather than one process per session is that reflow2's store is
+single-writer **per process**. Six processes cannot each open the directory; one process holding it,
+with six sessions attached, still has exactly one writer. The constraint is satisfied rather than
+worked around.
 
-> **There is still no authentication.** Anything that can reach that port can write the design.
-> Put it on a private network — a tailnet, a VPN, an SSH tunnel — never a public interface. A
-> tailnet is the intended shape: `0.0.0.0` above is reachable only from that private network if
-> that is the only network the machine is on. If it is not, bind the tailnet address specifically.
+> **There is no authentication.** Anything that can reach that port can write the design. Keep it on
+> a private network — an SSH tunnel, a tailnet, a VPN — never a public interface. `0.0.0.0` binds
+> every network the machine is on, so if one of them is untrusted, bind the specific private address
+> instead.
 
 ### When one machine has to hold the design
 
@@ -307,6 +370,9 @@ Every failure mode here is a version of one thing: **divergence you allowed to g
 | The design in the repo does not match what your agent says | Your graph and the committed export have diverged | `compare_designs` against `docs/design/reflow2.json` |
 | Your agent's skills seem out of date | They are served by the server now, so they cannot be | Update reflow2 itself; nothing in the project needs changing |
 | `REFUSED: … would DELETE n node(s)` on export | Their work reached the file and your graph never caught up — reflow2 stopping real data loss | `git pull --rebase`, `import_graph` from the file, export again |
+| The `--http` server will not start: the graph is held | A session is still launching its own reflow2 instead of connecting to the server | Switch every session's MCP config to the `http` URL and restart them (step 2 above) |
+| A remote session gets `403 Forbidden` | It dialled a host the server was not told to answer for | Add `--http-allow-host <that exact host>` and restart the server — its startup line says this too |
+| A remote session cannot connect at all | The network, not reflow2 — the port is not reachable from there | Check the tunnel, LAN route or tailnet first; `curl http://<host>:8787/` from that machine |
 
 ---
 
