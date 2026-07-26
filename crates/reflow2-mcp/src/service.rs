@@ -26,7 +26,7 @@ use rmcp::{
 use schemars::JsonSchema;
 use serde::Deserialize;
 use serde_json::{Map as JsonMap, Value as JsonValue, json};
-use tokio::sync::Mutex;
+use tokio::sync::RwLock;
 
 use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
@@ -71,13 +71,23 @@ type JsonObject = JsonMap<String, JsonValue>;
 /// The MCP service: one design graph behind a lock, plus the generated router.
 #[derive(Clone)]
 pub struct ReflowService {
-    pub(crate) graph: Arc<Mutex<DesignGraph>>,
+    /// The design, behind a read/write lock rather than a mutex: several client
+    /// sessions share one server (`req:sessions-share-a-graph`), and a mutex
+    /// would queue every READ behind every other read. Writes still exclude
+    /// everything, which is what keeps a client from seeing a partial one.
+    pub(crate) graph: Arc<RwLock<DesignGraph>>,
     tool_router: ToolRouter<Self>,
     /// Where this seat's graph lives on disk, so it can remember which shared
     /// export it is in step with (`req:stale-seat-knows`) and which design it
     /// is (`req:design-identity` — both live in sidecars beside the store).
     /// `None` for an in-memory graph, which has no sidecar to remember in.
     pub(crate) graph_path: Option<String>,
+    /// THIS SESSION's seat, minted per service instance rather than per process
+    /// (`req:seat-per-client`). One server holds many client sessions — rmcp
+    /// builds a service per session — so a process-wide seat would report every
+    /// client as the same owner and make claim_report say six sessions are each
+    /// other.
+    pub(crate) seat: String,
     /// Advanced whenever a mutating handler takes the graph (via `write_lock`).
     /// The coherence loop's owed-set can change only on a write, so this is the
     /// cheap signal that lets an orientation read skip recomputing `loop_status`
@@ -1580,7 +1590,8 @@ impl ReflowService {
     /// thing the service needs to keep.
     fn wrap_at(graph: DesignGraph, graph_path: Option<String>) -> Self {
         Self {
-            graph: Arc::new(Mutex::new(graph)),
+            graph: Arc::new(RwLock::new(graph)),
+            seat: reflow2_core::identity::mint_seat(),
             graph_path,
             // The skills are served, not installed (dec:skills-served), and
             // their tools live in their own module — combined here so
@@ -1591,13 +1602,38 @@ impl ReflowService {
         }
     }
 
+    /// Another session on the SAME design.
+    ///
+    /// `req:sessions-share-a-graph`. rmcp builds one service per client session
+    /// (its `service_factory`), and this is what those sessions share and what
+    /// they do not: the graph and the write generation are shared, because they
+    /// are properties of the design; the **seat** and the read-hint memory are
+    /// fresh, because they are properties of whoever just connected.
+    ///
+    /// Deliberately not `Clone`'s job — cloning is the right thing in a dozen
+    /// places inside one session, and silently minting a new identity there
+    /// would be a bug that is very hard to see.
+    pub fn share(&self) -> Self {
+        Self {
+            graph: Arc::clone(&self.graph),
+            tool_router: self.tool_router.clone(),
+            graph_path: self.graph_path.clone(),
+            write_gen: Arc::clone(&self.write_gen),
+            // Fresh per session: a shared seat would report every client as the
+            // same owner, and a shared hint memory would land one session's
+            // nudge on whichever session read next.
+            seat: reflow2_core::identity::mint_seat(),
+            read_hint: Arc::new(std::sync::Mutex::new(ReadHintCache::default())),
+        }
+    }
+
     /// Take the graph for a mutating handler, advancing the write generation so
     /// the read-side loop_hint knows the owed-set may have moved (BL-91). Every
-    /// write site uses this in place of `self.graph.lock()`; over-counting a
+    /// write site uses this in place of `self.graph.read()`; over-counting a
     /// non-mutating pass only costs one extra `loop_status`, never correctness.
-    async fn write_lock(&self) -> tokio::sync::MutexGuard<'_, DesignGraph> {
+    async fn write_lock(&self) -> tokio::sync::RwLockWriteGuard<'_, DesignGraph> {
         self.write_gen.fetch_add(1, Ordering::Relaxed);
-        self.graph.lock().await
+        self.graph.write().await
     }
 
     /// The read-side sibling of the write tools' `with_loop_hint` (BL-91,
@@ -1694,7 +1730,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ScopeReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         match req.scope.as_deref() {
             None => ok_json(g.detect_gaps().map_err(dyno_err)?),
             Some(seed) => ok_json(
@@ -1717,7 +1753,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn loop_status(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         let status = g.loop_status().map_err(dyno_err)?;
         let mut payload = serde_json::to_value(&status).map_err(ser_err)?;
         // Whether the loop's own safety net exists (req:nudge-path-proven).
@@ -1749,7 +1785,7 @@ impl ReflowService {
         let opts = PropagateOptions {
             max_depth: req.max_depth.unwrap_or(5),
         };
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         let radius = g
             .propagate_change(&req.change_event_id, opts)
             .map_err(dyno_err)?;
@@ -1774,7 +1810,7 @@ impl ReflowService {
             max_depth: req.max_depth.unwrap_or(5),
         };
         let seeds: Vec<&str> = req.seed_ids.iter().map(String::as_str).collect();
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         let radius = g.propagate_from(&seeds, opts).map_err(dyno_err)?;
         if req.full.unwrap_or(false) {
             ok_json(radius)
@@ -1794,7 +1830,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn confirmation_ledger(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.confirmation_ledger().map_err(dyno_err)?)
     }
 
@@ -1808,7 +1844,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn graph_report(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         let mut report = serde_json::to_value(g.graph_report().map_err(dyno_err)?)
             .map_err(|e| McpError::internal_error(e.to_string(), None))?;
         report["served_by"] = served_by();
@@ -1820,7 +1856,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn graph_report_markdown(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         let report = g.graph_report().map_err(dyno_err)?;
         let mut md = report.to_markdown();
         // The rendering sibling of graph_report, and an orientation read in its
@@ -1844,7 +1880,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ScopeReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         match req.scope.as_deref() {
             None => ok_json(g.detect_defects().map_err(dyno_err)?),
             Some(seed) => ok_json(
@@ -1884,7 +1920,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn reviewed_defects(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         self.ok_read(&g, g.reviewed_defects().map_err(dyno_err)?)
     }
 
@@ -1922,7 +1958,7 @@ impl ReflowService {
             strategy,
             max_operations: req.max_operations,
         };
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.propose_heal(opts).map_err(dyno_err)?)
     }
 
@@ -1931,7 +1967,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn evaluate_allocation(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.evaluate_allocation().map_err(dyno_err)?)
     }
 
@@ -1943,7 +1979,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ProposeAllocationReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.propose_allocation(req.resolution).map_err(dyno_err)?)
     }
 
@@ -1952,7 +1988,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn hierarchy_issues(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.hierarchy_issues().map_err(dyno_err)?)
     }
 
@@ -1961,7 +1997,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn surprising_connections(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.surprising_connections().map_err(dyno_err)?)
     }
 
@@ -1970,7 +2006,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn dimension_drifts(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.dimension_drifts().map_err(dyno_err)?)
     }
 
@@ -1983,7 +2019,7 @@ impl ReflowService {
         Parameters(req): Parameters<DimensionDriftReq>,
     ) -> Result<CallToolResult, McpError> {
         let dim: Dimension = parse_enum(&req.dimension, "dimension")?;
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.dimension_drift(&req.target_id, dim).map_err(dyno_err)?)
     }
 
@@ -2183,7 +2219,9 @@ impl ReflowService {
                 req.depth.unwrap_or(2),
                 req.note.as_deref(),
                 req.at.as_deref(),
-                req.seat.as_deref(),
+                // This session's seat unless the caller names its own — a fleet
+                // worker with a durable handle, say. Never the process's.
+                Some(req.seat.as_deref().unwrap_or(&self.seat)),
             )
             .map_err(dyno_err)?,
         )
@@ -2213,7 +2251,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn claim_report(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.claim_report().map_err(dyno_err)?)
     }
 
@@ -2356,7 +2394,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<FlowReportReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.flow_report(&req.flow_id).map_err(dyno_err)?)
     }
 
@@ -2435,7 +2473,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn reviewed_gaps(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.reviewed_gaps().map_err(dyno_err)?)
     }
 
@@ -2650,7 +2688,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ReleaseReportReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.release_report(&req.release_id).map_err(dyno_err)?)
     }
 
@@ -2826,7 +2864,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<BudgetReportReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.budget_report(&req.constraint_id).map_err(dyno_err)?)
     }
 
@@ -3038,7 +3076,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ExportGraphToReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         let mut export = g.export_graph().map_err(dyno_err)?;
         let Some(path) = req.path else {
             return ok_json(export);
@@ -3156,7 +3194,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ExportSurfaceReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         let surface = g.export_surface().map_err(dyno_err)?;
         match req.path.as_deref() {
             None => ok_json(surface),
@@ -3227,7 +3265,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn mirrors(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         self.ok_read(&g, g.mirrors().map_err(dyno_err)?)
     }
 
@@ -3302,7 +3340,7 @@ impl ReflowService {
                 ))
             }
             None => {
-                let g = self.graph.lock().await;
+                let g = self.graph.read().await;
                 ok_json(
                     g.compare_with_base(&base, &req.base_path)
                         .map_err(dyno_err)?,
@@ -3396,7 +3434,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RecallResolutionsReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(
             g.recall_resolutions(&req.resolution_keys)
                 .map_err(dyno_err)?,
@@ -3474,7 +3512,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AlternativesForReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.alternatives_for(&req.decision_id).map_err(dyno_err)?)
     }
 
@@ -3512,7 +3550,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<DescribeSchemaReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         match (&req.node_type, &req.from, &req.to) {
             (None, None, None) => ok_json(g.describe_vocabulary()),
             (Some(t), None, None) if req.required_only => {
@@ -3538,7 +3576,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<TypedIdReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         let node = g.get_node(&req.node_type, &req.id).map_err(dyno_err)?;
         // One named shape both ways (BL-57): `{node: {...}}` when present,
         // `{node: null}` when absent. Before, present returned a bare object
@@ -3563,7 +3601,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ScanReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         let nodes = g.scan_nodes(&req.node_type).map_err(dyno_err)?;
         let total = nodes.len();
         let offset = req.offset.unwrap_or(0).min(total);
@@ -3705,7 +3743,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<SearchDesignReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         let result = g
             .search_design(
                 &req.query,
@@ -4143,7 +4181,7 @@ impl ReflowService {
         annotations(read_only_hint = true)
     )]
     pub async fn open_questions(&self) -> Result<CallToolResult, McpError> {
-        let g = self.graph.lock().await;
+        let g = self.graph.read().await;
         ok_json(g.open_questions().map_err(dyno_err)?)
     }
 

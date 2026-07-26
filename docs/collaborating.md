@@ -155,29 +155,46 @@ the affected region from the design rather than from a hand-typed list of files.
 
 ## Several sessions on one machine
 
-The same rules, one directory each. reflow2's store is **single-writer**: one session holds it, and
-any other session pointed at the same graph gets a server that serves exactly one tool
-(`reflow2_unavailable`) telling it why. That is a real limit, not a bug — but it is easy to work
-around, and the installer now does the work for you.
+**Different projects: nothing to do.** Each project has its own graph directory, so each session
+runs its own server and they never meet. This has always worked.
 
-**Give each session its own working directory** — a git worktree per session is the natural shape:
+**The same project, several sessions: run one server and point them all at it.**
 
 ```bash
-git worktree add ../proj-seat2 -b feat/seat2
+reflow2-mcp --graph-path ./.reflow2/graph --http 127.0.0.1:8787
 ```
 
-The MCP config records a **relative** graph path (`.reflow2/graph`), so a config copied into another
-worktree opens *that* worktree's store rather than the first one's. Each session gets its own graph,
-its own lock, and no contention. They reconcile the way any two people do: through the committed
-export, with the merge driver and the stale-export refusal protecting both.
+Then every session's MCP config points at `http://127.0.0.1:8787/` instead of spawning its own
+process. They share one design, live: a requirement one session captures is visible to the others
+immediately, with no export, no merge and no pull. Each session is its own **seat**, so claims say
+who actually made them.
 
-The configs themselves are **gitignored**, because they carry an absolute path to *your* binary —
-useless on anyone else's machine. Each person (and each worktree) runs the installer once and gets
-their own.
+The reason this works — and the reason it needs a server rather than six processes — is that
+reflow2's store is single-writer **per process**. Six processes cannot each open the directory; one
+process holding it, with six sessions attached, still has exactly one writer. The constraint is
+satisfied rather than worked around.
 
-If you upgraded from an older reflow2, the installer will tell you when a config is already
-committed: ignoring a tracked file changes nothing until you untrack it, so it prints the exact
-command (`git rm --cached .mcp.json`).
+> **There is no authentication.** Bind loopback, or a private network like a tailnet. Anything that
+> can reach the port can write the design.
+
+**Without a server**, a session that finds the graph already held gets a server serving exactly one
+tool (`reflow2_unavailable`) telling it why — and the fallback is a directory each, which a git
+worktree gives you naturally:
+>
+> ```bash
+> git worktree add ../proj-seat2 -b feat/seat2
+> cp .mcp.json ../proj-seat2/     # the graph path is relative, so it opens ITS OWN store
+> ```
+>
+> Each worktree then has its own graph, and they reconcile through the committed export like any two
+> people. That is still the right shape for two people on **different machines** — a server cannot
+> help there, and git survives one of you being offline.
+
+The MCP configs are **gitignored**, because they carry an absolute path to *your* binary — useless
+on anyone else's machine. Each person (and each worktree) runs the installer once and gets their own.
+If you upgraded from an older reflow2 and a config is already committed, the installer says so and
+prints the fix (`git rm --cached .mcp.json`) — ignoring a tracked file changes nothing until you
+untrack it.
 
 ## When something does conflict
 

@@ -31,6 +31,39 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **Several sessions can share one design, live** (`cap:shared-sessions`,
+  `req:sessions-share-a-graph`, `dec:central-host` **accepted**). Anthony,
+  2026-07-26: *"I want to have multiple sessions running and being able to use
+  the same reflow2 graph."*
+
+  ```bash
+  reflow2-mcp --graph-path ./.reflow2/graph --http 127.0.0.1:8787
+  ```
+
+  Point every session's MCP config at that address instead of spawning its own
+  process. A requirement one session captures is visible to the others
+  immediately — no export, no merge, no pull. **Different projects never needed
+  this**: each has its own graph directory, so each session runs its own server
+  and they never meet.
+
+  The reason it needs a server rather than six processes: the store is
+  single-writer **per process**. Six processes cannot each open the directory;
+  one process holding it with six sessions attached still has exactly one
+  writer, so the constraint is satisfied rather than worked around.
+
+  Two changes underneath. The graph moved from a `Mutex` to an `RwLock`, so
+  concurrent reads no longer queue behind each other — and the compiler audited
+  the read/write split on the way through: all 32 read sites genuinely need only
+  `&DesignGraph`. And **seats are now minted per session rather than per
+  process** (`req:seat-per-client`) — without that, a shared server would have
+  reported every client as the same owner, and `claim_report` would have told
+  six sessions they were each other. That one would have been silent.
+
+  **No authentication.** Bind loopback or a private network; anything that can
+  reach the port can write the design.
+
 ## [0.13.0] — 2026-07-25
 
 **Upgrading:** [docs/upgrading-to-v0.13.0.md](docs/upgrading-to-v0.13.0.md). Nothing breaks and

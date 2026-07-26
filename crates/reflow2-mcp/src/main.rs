@@ -20,6 +20,16 @@ struct Cli {
     #[arg(long, default_value = "./.reflow2/graph")]
     graph_path: String,
 
+    /// Serve over HTTP on this address instead of stdio, so SEVERAL sessions
+    /// share one design (`req:sessions-share-a-graph`). One process holds the
+    /// graph — the store is single-writer, and with one server there is still
+    /// exactly one writer — while every client session gets its own seat.
+    ///
+    /// Bind to a loopback or tailnet address: there is no authentication yet,
+    /// so anything that can reach the port can write the design.
+    #[arg(long, value_name = "ADDR")]
+    http: Option<String>,
+
     /// Print the whole design to stdout as a portable document and exit,
     /// instead of serving. The same thing the `export_graph` tool returns —
     /// available here so a script can back the design up without speaking MCP.
@@ -653,12 +663,16 @@ async fn main() -> anyhow::Result<()> {
                 eprintln!("reflow2: {note}");
             }
 
-            tracing::info!("reflow2-mcp serving over stdio");
-            let running = service
-                .serve(stdio())
-                .await
-                .context("failed to start MCP stdio server")?;
-            running.waiting().await.context("MCP server error")?;
+            if let Some(addr) = cli.http.clone() {
+                serve_http(service, &addr).await?;
+            } else {
+                tracing::info!("reflow2-mcp serving over stdio");
+                let running = service
+                    .serve(stdio())
+                    .await
+                    .context("failed to start MCP stdio server")?;
+                running.waiting().await.context("MCP server error")?;
+            }
         }
         Err(e) => {
             let explained = explain_open_failure(&e.into(), &cli.graph_path);
@@ -682,6 +696,65 @@ async fn main() -> anyhow::Result<()> {
         }
     }
     Ok(())
+}
+
+/// Serve one design to many client sessions over HTTP.
+///
+/// `req:sessions-share-a-graph`, and the shape is the whole point: the store is
+/// single-writer *per process*, so several sessions cannot each open the
+/// directory — but one process holding it, with many sessions connected, still
+/// has exactly one writer. rmcp builds a service per session through the
+/// factory below; `ReflowService::share` decides what those sessions share (the
+/// graph, the write generation) and what is theirs alone (their seat, their
+/// read-hint memory).
+///
+/// **No authentication.** Bind loopback or a private tailnet: anything that can
+/// reach this port can write the design. Said here and in the flag's help
+/// because the failure is silent — a design does not look tampered with.
+async fn serve_http(service: ReflowService, addr: &str) -> anyhow::Result<()> {
+    use rmcp::transport::streamable_http_server::{
+        StreamableHttpService, session::local::LocalSessionManager,
+    };
+
+    let listener = tokio::net::TcpListener::bind(addr)
+        .await
+        .with_context(|| format!("could not bind {addr}"))?;
+    let bound = listener
+        .local_addr()
+        .map(|a| a.to_string())
+        .unwrap_or_else(|_| addr.to_string());
+
+    let http = StreamableHttpService::new(
+        move || Ok(service.share()),
+        LocalSessionManager::default().into(),
+        Default::default(),
+    );
+
+    eprintln!(
+        "reflow2: serving over HTTP at http://{bound}/ — several sessions may share this design. \
+         There is NO authentication: reach it over loopback or a private network only."
+    );
+    tracing::info!("reflow2-mcp serving over http at {bound}");
+
+    loop {
+        let (stream, peer) = listener
+            .accept()
+            .await
+            .context("failed to accept an HTTP connection")?;
+        let io = hyper_util::rt::TokioIo::new(stream);
+        let svc = hyper_util::service::TowerToHyperService::new(http.clone());
+        // One task per connection: a slow or stuck client must never hold up
+        // the others, which is the whole reason several sessions can share this.
+        tokio::spawn(async move {
+            if let Err(e) = hyper::server::conn::http1::Builder::new()
+                .serve_connection(io, svc)
+                .with_upgrades()
+                .await
+            {
+                tracing::debug!("connection from {peer} ended: {e}");
+            }
+        });
+    }
 }
 
 #[cfg(test)]

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bf8c1e4be41dec8c11e5af94435ddded2f31aa61892a1764cbd8a019304e5e6c",
+  "content_hash": "sha256:73f53fee2e42457ca839714c37080b42ea2e7879228d8df8536fbf365b0414a2",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -547,6 +547,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:shared-sessions",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:skills-served",
       "properties": {
         "weight_basis": "estimated"
@@ -1026,6 +1034,12 @@
       "from_id": "chg:session-memory-capture",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:shared-sessions",
+      "properties": {},
+      "to_id": "epoch:v0130"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2192,6 +2206,15 @@
         "action": "modified"
       },
       "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-c299f999d01e4d26",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
     },
     {
       "edge_type": "CHANGED",
@@ -4595,6 +4618,51 @@
         "action": "added"
       },
       "to_id": "req:session-memory-in-graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:shared-sessions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:shared-sessions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:shared-sessions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:shared-sessions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:shared-sessions",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:shared-sessions"
     },
     {
       "edge_type": "CHANGED",
@@ -8628,6 +8696,18 @@
       "from_id": "cap:session-memory",
       "properties": {},
       "to_id": "decision:ack:be224976b1f4f6e1"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:shared-sessions",
+      "properties": {},
+      "to_id": "dec:central-host"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:shared-sessions",
+      "properties": {},
+      "to_id": "decision:ack:785c79650b436ed3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -14155,6 +14235,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-shared-sessions",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:shared-sessions"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-stale-seat",
       "properties": {
         "completeness": "complete"
@@ -14704,6 +14792,18 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:shared-sessions",
+      "properties": {},
+      "to_id": "req:seat-per-client"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:shared-sessions",
+      "properties": {},
+      "to_id": "req:sessions-share-a-graph"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:skills-served",
       "properties": {},
       "to_id": "req:thin-install"
@@ -15097,6 +15197,12 @@
       "from_id": "ver:served-skills",
       "properties": {},
       "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:shared-sessions",
+      "properties": {},
+      "to_id": "cap:shared-sessions"
     },
     {
       "edge_type": "VERIFIES",
@@ -15658,6 +15764,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-shared-sessions",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-shared-sessions"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-stale-seat",
       "properties": {
         "action": "created"
@@ -15811,7 +15925,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:dad9a5cd440cd681908a1fd89d1099b11e8be32f2a9fb6fefdfcff8830067e86",
+        "checksum": "sha256:8a871a36bc7696bc9279bf90265e5a7a89db30eac7bc81d17490f24db2536b45",
         "location": "docs/collaborating.md",
         "name": "collaborating.md",
         "status": "realized"
@@ -15998,7 +16112,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:59e54aa33b3fe08d40af88654311ee834a67de0d21f80eee38f61397fc8b12ad",
+        "checksum": "sha256:d4e51659a479603aa29befad2e00fa504d6b185bc35ee25961073a79bf04e4b8",
         "location": "crates/reflow2-core/src/identity.rs",
         "name": "identity.rs",
         "status": "realized"
@@ -16075,7 +16189,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d564589ca1c7b6bf17f9dadc61c700aaa191b4fd2d305b0cd36114cca0e27e80",
+        "checksum": "sha256:4791413598ece90862e40d317f1ea2da5cf03a039e9fc7b65af448d9c3273f48",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -16273,7 +16387,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2d3f53e0adc81c65e712be4489e1b889a92c2a75bfdb99566df166c4aa9a2c36",
+        "checksum": "sha256:ebef7c8a6a4789265fdaafdd1154cd0b22b33a25f73e4944a12e191d29c70384",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -16295,7 +16409,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:56043245107571ca3238ce6e971422f1cc06697c39f3d96b343102c3d4f8fd9d",
+        "checksum": "sha256:d437174ef98701bd2fcfdd2f4fa97daafeac687c899df764f036536ccf3a29a4",
         "location": "crates/reflow2-mcp/src/skills.rs",
         "name": "skills.rs",
         "status": "realized"
@@ -16408,6 +16522,17 @@
         "checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-shared-sessions",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:173a1476ccf61ff0ed34e36f6ca15be68f10c7a543f5d84fab663a15497560ca",
+        "location": "tools/test_shared_sessions.py",
+        "name": "test_shared_sessions.py",
         "status": "realized"
       }
     },
@@ -17258,6 +17383,19 @@
       }
     },
     {
+      "node_id": "cap:shared-sessions",
+      "node_type": "Capability",
+      "properties": {
+        "description": "--http <addr> serves the design over streamable HTTP so many client sessions share one process. The store is single-writer PER PROCESS, so this satisfies the constraint rather than working around it: one server means exactly one writer. rmcp builds a service per session through a factory, and ReflowService::share decides the split — the graph and the write generation are shared because they are properties of the design; the seat and the read-hint memory are minted fresh because they are properties of whoever just connected. The graph moved from a Mutex to an RwLock so concurrent reads do not queue behind each other, and the compiler audited the read/write split in the process: all 32 read sites genuinely need only &DesignGraph. No authentication — the flag's help and the startup line both say to bind loopback or a private network.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Several sessions work one design at once, through one server",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:skills-served",
       "node_type": "Capability",
       "properties": {
@@ -17560,6 +17698,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Added the overview breadcrumb required by AGENTS.md rule 2."
+      }
+    },
+    {
+      "node_id": "chg:accept-c299f999d01e4d26",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Read guard instead of mutex lock; no behaviour change."
       }
     },
     {
@@ -18156,6 +18302,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Session memory belongs in the graph, captured as it happens — and the current enforcement points at markdown"
+      }
+    },
+    {
+      "node_id": "chg:shared-sessions",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "One server, many sessions: several seats work the same design at once"
       }
     },
     {
@@ -18990,7 +19144,7 @@
         "decision": "UNDECIDED. Raised by Anthony 2026-07-25 from his own situation: he is in Long Island, his brother is in Washington State, they want to work on one design at the same time and to see each other's projects. FOUR ROADS, and the middle ones are not the obvious winners. (a) GIT IS ALREADY THE CENTRAL SERVER — the design is a file in the repo, the repo already spans both coasts, and the claims layer that shipped 2026-07-25 already answers \"who has what in hand\" the moment either side pulls. Nothing to host, nothing to secure, nothing to pay for, and no new place for the design to live. What it cannot do is tell you about a claim before the other person pushes. (b) A HOSTED MCP over HTTPS — one server process holding the graph, both people's agents connecting to it, so a claim is visible the moment it is made and a design is reachable by someone who never cloned the repo. Costs: reflow2-mcp serves stdio only today (rmcp's streamable-HTTP transport exists, the binary does not use it), authentication does not exist at all, and it puts the design on a machine — which weakens but does not erase dec:repo-file-embedded's objection, since the machine would be Anthony's own droplet rather than a vendor's. NOTE WHAT MAKES (b) CHEAPER THAN IT LOOKS: one server process with many clients is ALREADY compatible with the single-writer store, because there is still exactly one writer — the server. (c) HYBRID — host a read/publish surface for reaching and browsing designs, keep writes local and merge through git, so the durable record never moves. THE CHEAPEST FIRST CUT, worth naming because it needs almost no core work: one server process PER PROJECT, each with its own graph path and its own token, and project selection becomes which URL the agent points at — no graph_id plumbing, no multi-tenancy, and a per-project blast radius if one goes wrong. A private tailnet instead of public TLS removes the authentication problem for exactly two people, which is the population this actually has. (d) ONE LIVE SHARED WORKING TREE on a droplet — both people editing the same checkout simultaneously, seeing each other's edits, with a push to a \"true\" git repo every so often for permanent storage (Anthony, 2026-07-25). THE DESIGN HALF OF THIS IS (b) AND IS SOUND; THE CODE HALF INVERTS THE PROPERTY IT IS REACHING FOR. A shared checkout does not remove conflicts, it removes conflict DETECTION: with one copy there is no common ancestor to merge against, so two agents doing read-modify-write on one file interleave into last-write-wins with no marker, no three-way merge and nothing to review — strictly less safe than what they have now. It also shares the things git assumes are private (one index, one HEAD, one branch: `git checkout` on his side changes files under her mid-edit), shares the build directory and the graph's single-writer lock, and makes the droplet a single point of failure for two people who can currently both work on a plane. The batched push is its own cost: history granularity, attribution and bisect all collapse into one commit, the gates that are supposed to gate a commit are replaced by a timer, and \"every so often\" is precisely the size of the loss window when the droplet dies.",
         "name": "OPEN — does reflow2 gain a hosted surface (one MCP over HTTPS) alongside the repo file?",
         "rationale": "Held proposed, not built, because it sits against a decision made HOURS earlier on 2026-07-25 (dec:multi-writer-architecture: repo file plus merge on pull, no hosted service) and it must not be drifted into. Per dec:reopen-supersedes, the move is a NEW decision point rather than flipping that one back to proposed. What is genuinely new, and the reason this is not a rerun of the same argument: that decision answered \"how do two writers avoid clobbering each other\", and its rationale turned on concurrency being hypothetical and on not putting the user's design on someone else's machine. Neither objection addresses what was raised now — two machines that never share a filesystem, several projects per person, and wanting to READ and contribute to a design without cloning its repo. It is also the second field-sourced trigger in two days on the same seam, which is what cap:revise-trigger exists to notice; that it arrived by conversation rather than by detector is a finding about the detector, not about the trigger. THE HONEST COUNTER-ARGUMENT, recorded so nobody has to rediscover it: reflow2's loop is ask-the-human-and-record-the-decision, which is deliberate, attributable and slow — a shared live server optimises for simultaneity, which this tool does not need and may be harmed by. The thing the two of them described wanting is mostly non-colliding parallel work plus visibility, and git plus the claims layer already delivers most of that. What it does NOT deliver is the publishing case, and that is the strongest argument on the hosted side. WHAT OPTION (d) CLARIFIED, and it is the useful split: the appeal is real-time VISIBILITY, and visibility does not require a shared working tree. The graph is the artefact where simultaneity genuinely pays and where a single writer already exists to serialise it; source code is the artefact where the distributed copy is doing load-bearing work that a shared tree would silently undo. So the two halves of \"host it\" should be decided separately rather than together.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -19751,6 +19905,16 @@
         "decision": "Accepted the gap gap:75d815c93cad4c86.",
         "name": "Reviewed: gap:75d815c93cad4c86",
         "rationale": "User (who:ajs, standing policy from 2026-07-23): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:kpp joined the set (37 → 38). Pointed here: the tests prove a breach is computed from stated contributions, but whether the THRESHOLDS people set are the right ones, and whether a 0.95-severity finding actually stops someone trading away what it protects, cannot be established by any test. Those are answered by a real programme with real stakes — which is precisely the acquisition context the vocabulary came from.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:785c79650b436ed3",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:785c79650b436ed3.",
+        "name": "Reviewed: gap:785c79650b436ed3",
+        "rationale": "Standing disposition: validation evidence lives in docs/trials/ and in field reports from real use, not as validation-kind Verifications, so the detector correctly reports what the graph cannot see. Re-acknowledged at 55 — the id derives from the affected SET, so each new capability mints a new gap. Note for this one specifically: its validation is genuinely pending, because the operational question (\"does six concurrent sessions on one design actually work in practice?\") is answered by Anthony running it, not by a test.",
         "status": "accepted"
       }
     },
@@ -21419,6 +21583,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-shared-sessions",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_shared_sessions.py"
+      }
+    },
+    {
       "node_id": "frag:art:test-stale-seat",
       "node_type": "Fragment",
       "properties": {
@@ -22422,6 +22596,20 @@
       }
     },
     {
+      "node_id": "req:seat-per-client",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Who is working is a property of the session, not of the server process",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Seat identity is currently minted once per process, which is correct while one session owns one server and wrong the moment several sessions share one. A hosted server would report the same seat for every client, so every claim would carry the same owner and claim_report's liveness would answer a question nobody asked — the mechanism would look like it worked while telling all six sessions they are each other. The seat must come from the client: the transport already assigns a session id with zero coordination, which is exactly what dec:identity-out-of-band says a name should be. The read-side loop_hint's fire-on-change throttle has the same shape of bug — it is per-service state, so a hint earned by one session lands on whichever session reads next.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:session-memory-in-graph",
       "node_type": "Requirement",
       "properties": {
@@ -22432,6 +22620,20 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A working session produces decisions, findings and realizations, and those are design content: they belong in the graph, recorded at the moment they occur, so a later session can query them rather than read a narrative. Two properties follow. First, capture is incremental — a summary written at the end is the one a busy session never gets to, and an end-of-session digest is a retelling rather than a record. Second, the enforcement must point at the graph: whatever mechanism insists a session leave its takeaways behind must be satisfiable only by graph writes, never by touching a prose file, or the prose file becomes the memory and the graph becomes decoration. The agent must then be able to ask its own history — what was decided about X, when, by whom, and against what state of the design — using the same query surface a person uses.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:sessions-share-a-graph",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Several sessions on one machine work the same design at the same time",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-07-26: \"I want to have multiple sessions running and being able to use the same reflow2 graph.\" Six concurrent sessions must read and write ONE design concurrently, without a worktree each and without an export-and-merge round trip between them. The store is single-writer per process, so this is served by one server process holding the graph with many client sessions connected — there is still exactly one writer. Reads must not queue behind each other (the graph sits behind a lock that today serialises everything), each client must be its own seat, and a client must never be able to see a partial write.",
         "status": "accepted"
       }
     },
@@ -23194,6 +23396,17 @@
       }
     },
     {
+      "node_id": "ver:shared-sessions",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "Against a real server over real HTTP: two sessions get distinct MCP sessions, a write by one is visible to the other immediately with no export or merge, their claims carry DIFFERENT seats (the bug that would have been silent — seats were minted per process), four concurrent readers all finish, and the served kit reaches an HTTP client exactly as it reaches a stdio one (tools/test_shared_sessions.py, 4 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:skill-lint",
       "node_type": "Verification",
       "properties": {
@@ -23296,7 +23509,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f8245f4a0f63d9889059af725b489f266a8d07b0c1ab9aa302f854824c3d9f9b",
+  "prev_content_hash": "sha256:bf8c1e4be41dec8c11e5af94435ddded2f31aa61892a1764cbd8a019304e5e6c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

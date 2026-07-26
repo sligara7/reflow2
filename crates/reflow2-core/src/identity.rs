@@ -247,18 +247,37 @@ mod tests {
 /// that process still exists instead of trusting a flag somebody set.
 pub fn seat_id() -> String {
     static SEAT: std::sync::OnceLock<String> = std::sync::OnceLock::new();
-    SEAT.get_or_init(|| {
-        let nanos = std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .map(|d| d.as_nanos())
-            .unwrap_or(0);
-        let mint = format!(
-            "{:08x}",
-            crate::nodes::fnv1a(&format!("{nanos}")) & 0xffff_ffff
-        );
-        format!("{}:{}:{mint}", machine(), std::process::id())
-    })
-    .clone()
+    SEAT.get_or_init(mint_seat).clone()
+}
+
+/// A fresh seat, not the process-wide one.
+///
+/// `req:seat-per-client`. One server can hold many client sessions
+/// (`req:sessions-share-a-graph`), and the process-wide seat is exactly wrong
+/// there: every client would report the same owner, so every claim would name
+/// the same seat and the overlap report would tell six sessions they are each
+/// other. A session mints its own on connect.
+///
+/// **Honest limit, because it is easy to misread.** The seat carries a pid, so
+/// liveness answers "is the process that made this claim still running". Under
+/// one server that is the right answer about *the server*, and only a proxy for
+/// the session: a client that disconnects while the server lives still reads
+/// `live`. Per-session liveness needs the server's own session registry, which
+/// the core cannot see — recorded rather than papered over.
+pub fn mint_seat() -> String {
+    let nanos = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_nanos())
+        .unwrap_or(0);
+    // The address of a stack local disambiguates two mints in the same
+    // nanosecond within one process — which is exactly the case a shared server
+    // creates when two sessions connect at once.
+    let here = &nanos as *const u128 as usize;
+    let mint = format!(
+        "{:08x}",
+        crate::nodes::fnv1a(&format!("{nanos}|{here:x}")) & 0xffff_ffff
+    );
+    format!("{}:{}:{mint}", machine(), std::process::id())
 }
 
 /// This machine's name, for telling "their session died" from "their session is

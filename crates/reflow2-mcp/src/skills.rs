@@ -197,7 +197,7 @@ impl ReflowService {
             // An in-memory graph has no sidecar to remember in, and saying so is
             // better than inventing an identity that dies with the process.
             return structured(json!({
-                "graph_id": self.graph.lock().await.graph_id().to_string(),
+                "graph_id": self.graph.read().await.graph_id().to_string(),
                 "label": null,
                 "note": "This is an in-memory graph — it has no durable identity, because there is \
                          no store beside which to remember one.",

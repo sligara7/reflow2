@@ -94,6 +94,12 @@ jobs:
         # branches editing different parts of one export must merge with no
         # human, and a both-sides conflict must leave the path unmerged.
         run: python3 tools/test_merge_driver.py
+      - name: Shared-sessions suite (one server, several client sessions, one design)
+        # req:sessions-share-a-graph / req:seat-per-client: the store is
+        # single-writer PER PROCESS, so one server with many sessions is the
+        # answer rather than a worktree each. Real HTTP, real concurrent
+        # clients — the seat bug this guards would have been silent.
+        run: python3 tools/test_shared_sessions.py
       - name: Nudge-path suite (the REGISTERED hook, run as registered)
         # req:nudge-path-proven: test_loop_nudge covers the script's logic given
         # its inputs, and passed the whole time nobody had checked the hook was
