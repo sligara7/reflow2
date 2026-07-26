@@ -31,6 +31,31 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`demonstration` and `observation` are verification methods**
+  (`Verification.method`, schema). Anthony's taxonomy, 2026-07-26. Test,
+  analysis, inspection and **demonstration** are the four canonical verification
+  methods in DoD and INCOSE practice, and reflow2 carried only three of them —
+  so "we showed it working", which is how a great deal of acceptance actually
+  gets closed, had to be miscoded as `test`. `observation` — watching a system
+  run in the field without changing it — is the as-fielded method, distinct from
+  inspecting an artifact and from running a contrived example, and had no value
+  at all.
+
+  `review` and `simulation` are kept: they are the document and modelled
+  sub-cases people already use, and removing enum values would strand existing
+  nodes that carry them.
+
+  **This is additive and your graphs are safe, which was proven rather than
+  assumed.** A binary built with the previous value set reads a graph containing
+  `demonstration` and reports it faithfully; validation runs on write, and the
+  version stamp counts node and edge *types* (unchanged at 28 and 55). An older
+  reflow2 can therefore still read — it simply cannot write the new values. The
+  same call, and the same reasoning, as `DriftEvent.drift_type`'s earlier growth.
+
+  It is still a schema change, so the next release is at least a **minor** bump.
+
 ### Fixed
 
 - **The degraded surface now comes out of the door you asked for**

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:02bce663212559ad1a39f83eed90702e9afcb5af793b74aa272400c5cfd92550",
+  "content_hash": "sha256:517108e5b4146c8be1ba42e436ce88535616c5e8127cf6cfaaeb8270912ee2a9",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1104,6 +1104,12 @@
       "from_id": "chg:v050-as-released",
       "properties": {},
       "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:verification-methods",
+      "properties": {},
+      "to_id": "epoch:v0140"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4994,6 +5000,33 @@
         "action": "added"
       },
       "to_id": "rel:v050"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:verification-methods",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:verification-methods",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:verification-methods",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
     },
     {
       "edge_type": "CHANGED",
@@ -17515,7 +17548,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ebef7c8a6a4789265fdaafdd1154cd0b22b33a25f73e4944a12e191d29c70384",
+        "checksum": "sha256:ea68b64a0ace91de3882a84df2579b43831ac14d153bdee3b3d29dd37df30b50",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -17713,7 +17746,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d667d9a6a64a849e",
+        "checksum": "sha256:7c3bcd97918ee929",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
         "status": "realized"
@@ -19555,6 +19588,14 @@
       "properties": {
         "change_type": "resync",
         "name": "v0.5.0 as-released model: rel:v050 recorded (33 artifacts frozen at tag v0.5.0 + the skills tree), deployed active on the developer machine; rel:v040 retired and its deployment declaration withdrawn (upgraded in place); INCLUDES joined the traceability table so a release is part of the design network rather than an island"
+      }
+    },
+    {
+      "node_id": "chg:verification-methods",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Verification methods gain demonstration and observation"
       }
     },
     {

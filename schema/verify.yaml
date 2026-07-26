@@ -13,7 +13,13 @@ schema:
       properties:
         name: { type: string, required: true, indexed: true, fulltext: true }
         description: { type: string, fulltext: true }
-        method: { type: enum, values: [test, review, simulation, inspection, measurement, analysis], default: test, indexed: true }
+        # Additive enum growth, the same call as drift_type below and
+        # PROVEN rather than assumed on 2026-07-26: a binary built with the
+        # previous value set reads a graph containing `demonstration` and
+        # reports it faithfully. Validation runs on write, and the version
+        # stamp counts node/edge TYPES (unchanged at 28/55), so an older
+        # reflow2 stays able to read; it simply cannot write the new values.
+        method: { type: enum, values: [test, review, simulation, inspection, measurement, analysis, demonstration, observation], default: test, indexed: true, description: "HOW the check was made. Test, analysis, inspection and demonstration are the four canonical verification methods in DoD/INCOSE practice; `demonstration` (showing the feature working on a live example) was missing until 2026-07-26 and had to be miscoded as `test`, which is how a great deal of acceptance actually gets closed. `observation` is the as-fielded method — watching a system run without changing it — distinct from `inspection` (examining the artifact for flaws) and from `demonstration` (running a contrived example). `review` and `simulation` are kept as the document and modelled sub-cases people already use. A distinct axis from `kind`: these say how you looked, `kind` says whether you were checking the spec or the intent." }
         kind: { type: enum, values: [verification, validation], default: verification, indexed: true, description: "Verification = built right (meets the spec); validation = right thing (meets the operational intent/need). A distinct axis from method/level. Was the VALIDATES edge (retired, dec:edge-orthogonality); read by the unvalidated_capability gap." }
         level: { type: enum, values: [unit, integration, system, acceptance], default: unit, indexed: true }
         location: { type: string, description: "Path to the test/inspection artifact." }
@@ -22,10 +28,11 @@ schema:
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
       extraction_hint: >
-        A check that a Capability or Artifact is sound — a test, a review, a
-        simulation, a physical inspection or measurement. It VERIFIES its target;
-        `kind` says whether it checks the spec (verification) or the intent
-        (validation); folds in both individual cases and suites (use `level`).
+        A check that a Capability or Artifact is sound — a test, an analysis, an
+        inspection, a demonstration (the four canonical methods), a measurement,
+        an observation of the fielded system, a review, a simulation. It VERIFIES
+        its target; `kind` says whether it checks the spec (verification) or the
+        intent (validation); folds in both individual cases and suites (`level`).
 
     QualityGate:
       properties:

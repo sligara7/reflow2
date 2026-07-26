@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record a Verification — a check that something meets its intent: a test, a review, a simulation, a physical inspection, a measurement. Answers the `build_without_verification` and `unverified_capability` gaps. Pair it with `verifies` to say what it checks.",
+  "description": "Record a Verification — a check that something meets its intent. `method` says HOW you looked: test, analysis, inspection and demonstration are the four canonical ones, plus measurement, observation (watching it run in the field, unchanged), review and simulation. Answers the `build_without_verification` and `unverified_capability` gaps. Pair it with `verifies` to say what it checks.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -20,7 +20,7 @@
       },
       "method": {
         "default": null,
-        "description": "`test` (default) / `review` / `simulation` / `inspection` / `measurement` / `analysis`.",
+        "description": "HOW the check was made. `test` (default) / `analysis` / `inspection` /\n`demonstration` — the four canonical methods — plus `measurement`,\n`observation` (watching it run in the field, unchanged), `review` and\n`simulation`.",
         "type": [
           "string",
           "null"

@@ -747,7 +747,10 @@ pub struct LinkArtifactReq {
 pub struct VerificationReq {
     pub id: String,
     pub name: String,
-    /// `test` (default) / `review` / `simulation` / `inspection` / `measurement` / `analysis`.
+    /// HOW the check was made. `test` (default) / `analysis` / `inspection` /
+    /// `demonstration` — the four canonical methods — plus `measurement`,
+    /// `observation` (watching it run in the field, unchanged), `review` and
+    /// `simulation`.
     #[serde(default)]
     pub method: Option<String>,
     /// `unit` (default) / `integration` / `system` / `acceptance`.
@@ -2498,8 +2501,10 @@ impl ReflowService {
     // ---- P4 Verification / P5 Operation / Decisions (the write side) ----
 
     #[tool(
-        description = "Record a Verification — a check that something meets its intent: a test, a \
-                       review, a simulation, a physical inspection, a measurement. Answers the \
+        description = "Record a Verification — a check that something meets its intent. `method` \
+                       says HOW you looked: test, analysis, inspection and demonstration are the \
+                       four canonical ones, plus measurement, observation (watching it run in the \
+                       field, unchanged), review and simulation. Answers the \
                        `build_without_verification` and `unverified_capability` gaps. Pair it with \
                        `verifies` to say what it checks.",
         annotations(read_only_hint = false)

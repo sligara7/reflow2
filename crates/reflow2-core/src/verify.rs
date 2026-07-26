@@ -8,10 +8,19 @@
 //! could be raised and not closed.
 //!
 //! A `Verification` is deliberately broad: a unit test, a design review, a
-//! simulation, a physical inspection, a measurement. `method` and `level` carry
-//! that distinction rather than the type name, so a hardware inspection and a
+//! simulation, a physical inspection, a measurement, a live demonstration, an
+//! observation of the fielded system. `method` and `level` carry that
+//! distinction rather than the type name, so a hardware inspection and a
 //! `cargo test` run are the same kind of node with different properties — which
 //! is what lets the same coverage gap work across domains.
+//!
+//! `method` follows DoD/INCOSE practice, whose four canonical methods are test,
+//! analysis, inspection and **demonstration**. Demonstration and observation
+//! were added on 2026-07-26 (user's taxonomy): until then "we showed it
+//! working" had to be miscoded as `test`, which is how a great deal of
+//! acceptance is actually closed, and "we watched it run in the field" — the
+//! as-fielded method, distinct from inspecting an artifact or running a
+//! contrived example — had no value at all.
 
 use dynograph_core::DynoError;
 use dynograph_storage::{StoredEdge, StoredNode};

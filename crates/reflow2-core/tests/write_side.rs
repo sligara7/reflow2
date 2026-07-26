@@ -852,3 +852,56 @@ fn a_release_cannot_include_a_requirement() {
         "a release ships built things, not intent"
     );
 }
+
+/// The canonical DoD/INCOSE verification methods are test, analysis, inspection
+/// and DEMONSTRATION, and reflow2 carried only three of them until 2026-07-26 —
+/// so "we showed it working", which is how a great deal of acceptance actually
+/// gets closed, had to be miscoded as `test`. `observation` was missing too: the
+/// as-fielded method, watching a system run without changing it, distinct from
+/// inspecting an artifact and from running a contrived example.
+///
+/// Driven through the real constructor, because the enum is enforced by the
+/// schema on write — asserting the YAML says the right words would only prove
+/// the YAML says the right words.
+#[test]
+fn every_verification_method_is_accepted() {
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    for method in [
+        "test",
+        "review",
+        "simulation",
+        "inspection",
+        "measurement",
+        "analysis",
+        "demonstration",
+        "observation",
+    ] {
+        let node = g
+            .add_verification(
+                &format!("ver:{method}"),
+                method,
+                Some(method),
+                Some("system"),
+            )
+            .unwrap_or_else(|e| panic!("method `{method}` must be accepted: {e}"));
+        assert_eq!(
+            node.properties.get("method").and_then(|v| v.as_str()),
+            Some(method),
+            "the method must be stored as given, not defaulted"
+        );
+    }
+}
+
+/// The other half, so the enum is a vocabulary rather than a suggestion: an
+/// invented method must be REFUSED, not silently coerced to the default. A
+/// typo'd method that quietly became `test` would misreport how something was
+/// checked, which is the one thing this field exists to say.
+#[test]
+fn an_unknown_verification_method_is_refused() {
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    let bad = g.add_verification("ver:bad", "nonsense", Some("vibes"), Some("unit"));
+    assert!(
+        bad.is_err(),
+        "an unknown method must be refused rather than defaulted"
+    );
+}

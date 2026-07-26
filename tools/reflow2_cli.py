@@ -16,8 +16,11 @@ door onto it, for shells, scripts, and agents without an MCP connection.
 
 Options:
     --graph PATH   graph directory (default: ./.reflow2/graph, or $REFLOW2_GRAPH)
-    --bin PATH     reflow2-mcp binary (default: ./target/debug/reflow2-mcp,
-                   or $REFLOW2_BIN)
+    --bin PATH     reflow2-mcp binary. $REFLOW2_BIN wins; otherwise the first
+                   of ./target/release/reflow2-mcp, ./target/debug/reflow2-mcp
+                   that exists — RELEASE FIRST, which will quietly serve you a
+                   stale binary if you have one lying about and have been
+                   rebuilding debug. Pass --bin explicitly when it matters.
     --raw          print the raw JSON result with no indentation
 
 Exit codes: 0 ok · 1 tool or usage error · 2 could not start the server.
