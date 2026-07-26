@@ -336,3 +336,36 @@ pub fn seat_liveness(seat: &str) -> Liveness {
         Err(_) => Liveness::Unknown,
     }
 }
+
+/// Take the identity of a design being imported into an empty store.
+///
+/// The case: `--import` (or `import_graph`) into a fresh graph is a *restore* —
+/// same design, new store — and reflow2 says elsewhere that a copy of a design
+/// **is** that design. If the empty graph kept the id it minted at open, the
+/// round trip would not come back byte-identical, because `graph_id` is part of
+/// the export's content hash. The project's own smoke test caught exactly that
+/// the hour identity landed.
+///
+/// A graph that already holds a design keeps its own name, always. That is the
+/// other half of the same rule, and it is what makes the stale-seat remedy safe:
+/// absorbing the shared record into a working graph must never rename it.
+///
+/// Returns the adopted identity when it took, `None` when the graph kept its
+/// own. **Call before importing** — the import writes under the current id.
+pub fn adopt_on_import(
+    graph_path: &str,
+    document_graph_id: &str,
+    holds_a_design: bool,
+) -> Result<Option<DesignIdentity>, DynoError> {
+    if holds_a_design || document_graph_id.is_empty() {
+        return Ok(None);
+    }
+    let mut identity = resolve(graph_path, document_graph_id, || false)?;
+    if identity.graph_id == document_graph_id {
+        return Ok(None);
+    }
+    identity.graph_id = document_graph_id.to_string();
+    identity.origin = Origin::Adopted;
+    write(graph_path, &identity)?;
+    Ok(Some(identity))
+}

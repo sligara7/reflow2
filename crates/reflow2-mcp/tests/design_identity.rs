@@ -247,3 +247,74 @@ fn two_on_disk_designs_can_finally_mirror_each_other() {
     std::fs::remove_dir_all(&space_dir).ok();
     std::fs::remove_dir_all(&ground_dir).ok();
 }
+
+#[test]
+fn an_empty_store_takes_the_name_of_the_design_it_restores() {
+    // Found by the smoke test the hour identity landed: importing a whole
+    // design into a fresh graph is a RESTORE — same design, new store — and if
+    // the empty graph kept the id it minted at open, the round trip would stop
+    // coming back byte-identical, because graph_id is inside the content hash.
+    let source_dir = tmp("restore-source");
+    let restored_dir = tmp("restore-target");
+    let source_path = source_dir.join("graph");
+    let restored_path = restored_dir.join("graph");
+
+    let (original_id, document) = {
+        let mut g = DesignGraph::open_rocksdb(source_path.to_str().unwrap()).unwrap();
+        g.add_project("proj:r", "Restorable").unwrap();
+        g.add_requirement("req:r", "R", "Something.").unwrap();
+        (g.graph_id().to_string(), g.export_graph().unwrap())
+    };
+
+    let mut restored = DesignGraph::open_rocksdb(restored_path.to_str().unwrap()).unwrap();
+    let adopted = identity::adopt_on_import(
+        restored_path.to_str().unwrap(),
+        &document.graph_id,
+        restored.holds_a_design(),
+    )
+    .unwrap()
+    .expect("an empty store adopts");
+    restored = restored.with_graph_id(adopted.graph_id);
+    restored.import_graph(&document).unwrap();
+
+    assert_eq!(restored.graph_id(), original_id, "same design, new store");
+    assert_eq!(
+        restored.export_graph().unwrap().content_hash,
+        document.content_hash,
+        "and the round trip is byte-identical, which is what graph_id being in the hash costs"
+    );
+    std::fs::remove_dir_all(&source_dir).ok();
+    std::fs::remove_dir_all(&restored_dir).ok();
+}
+
+#[test]
+fn a_store_that_already_holds_a_design_keeps_its_name_when_importing() {
+    // The other half, and the one that protects the stale-seat remedy:
+    // absorbing the shared record into a working graph must never rename it.
+    let dir = tmp("import-into-live");
+    let path = dir.join("graph");
+    let path = path.to_str().unwrap();
+
+    let my_id = {
+        let mut mine = DesignGraph::open_rocksdb(path).unwrap();
+        mine.add_project("proj:mine", "Mine").unwrap();
+        let id = mine.graph_id().to_string();
+        let adopted =
+            identity::adopt_on_import(path, "somebody-elses-design", mine.holds_a_design())
+                .unwrap();
+        assert!(
+            adopted.is_none(),
+            "a graph with a design keeps its own name"
+        );
+        id
+    };
+
+    // Reopened in a separate scope: the store is single-writer, so holding the
+    // first handle open would deadlock against itself.
+    assert_eq!(
+        DesignGraph::open_rocksdb(path).unwrap().graph_id(),
+        my_id,
+        "and reopening confirms it, because a rename here would be silent"
+    );
+    std::fs::remove_dir_all(&dir).ok();
+}

@@ -31,6 +31,18 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.13.0] — 2026-07-25
+
+**Upgrading:** [docs/upgrading-to-v0.13.0.md](docs/upgrading-to-v0.13.0.md). Nothing breaks and
+nothing in your repository changes; there is one new file beside your graph, and re-running the
+installer registers the session-end nudge you did not have.
+
+Also in this release: importing a whole design into an **empty** store now takes that design's
+name — a restore is the same design in a new store, and without this the export round trip stopped
+coming back byte-identical (`graph_id` is inside the content hash). A store that already holds a
+design keeps its own name, which is what makes absorbing the shared record safe. Caught by the
+smoke test the hour identity landed.
+
 ### Added
 
 - **The loop's own safety net is checked, and its absence is announced**

@@ -89,6 +89,8 @@ Three records, three questions — kept separate on purpose:
   to a collaborator as-is.
 
 ### 3½ · Upgrade notes — *read before updating a consumer project*
+- [upgrading-to-v0.13.0.md](upgrading-to-v0.13.0.md) — your design gets a durable name, claims say who
+  made them, and the installer registers the session-end nudge you did not have.
 - [upgrading-to-v0.12.0.md](upgrading-to-v0.12.0.md) — the skills leave your repository: served over MCP
   instead of copied in, and the first release that *removes* files from a project.
 - [upgrading-to-v0.11.0.md](upgrading-to-v0.11.0.md) — two schema changes (Decision.status default,

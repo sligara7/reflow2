@@ -165,6 +165,13 @@ impl DesignGraph {
         .any(|t| engine.count_nodes(graph_id, t).unwrap_or(0) > 0)
     }
 
+    /// Does this graph hold a design at all? The public form of the probe that
+    /// decides whether an id is minted or adopted — asked again on import,
+    /// where an empty store takes the name of the design it restores.
+    pub fn holds_a_design(&self) -> bool {
+        Self::holds_a_design_probe(&self.engine, &self.graph_id)
+    }
+
     /// Use a non-default logical graph id (e.g. to host several designs in one
     /// storage instance). Chainable off a constructor.
     #[must_use]

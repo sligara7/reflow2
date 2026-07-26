@@ -582,6 +582,24 @@ async fn main() -> anyhow::Result<()> {
 
         let mut graph = reflow2_core::DesignGraph::open_rocksdb(&cli.graph_path)
             .map_err(|e| explain_open_failure(&e.into(), &cli.graph_path))?;
+        // Importing a whole design into an EMPTY store is a restore: same
+        // design, new store. It takes the document's name, or the round trip
+        // would not come back byte-identical (graph_id is inside the content
+        // hash). A store that already holds a design keeps its own name.
+        // Before the import, because the import writes under the current id.
+        if let Some(adopted) = reflow2_core::identity::adopt_on_import(
+            &cli.graph_path,
+            &doc.graph_id,
+            graph.holds_a_design(),
+        )
+        .context("failed to record the imported design's identity")?
+        {
+            eprintln!(
+                "reflow2: this store was empty, so it takes the imported design's name ({})",
+                adopted.graph_id
+            );
+            graph = graph.with_graph_id(adopted.graph_id);
+        }
         let report = graph
             .import_graph(&doc)
             .context("failed to import the design")?;
