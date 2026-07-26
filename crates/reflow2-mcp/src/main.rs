@@ -30,6 +30,18 @@ struct Cli {
     #[arg(long, value_name = "ADDR")]
     http: Option<String>,
 
+    /// A host name or `host:port` this server may be reached at, for sessions on
+    /// OTHER machines. Repeatable.
+    ///
+    /// Needed because the transport only answers requests whose `Host` header
+    /// is on an allowlist — `localhost`, `127.0.0.1` and `::1` by default. That
+    /// is DNS-rebinding protection, and with no authentication it is the only
+    /// thing standing between a web page you visit and your design, so reaching
+    /// this server from another machine is a deliberate act rather than a
+    /// side effect of binding a public address.
+    #[arg(long = "http-allow-host", value_name = "HOST")]
+    http_allow_host: Vec<String>,
+
     /// Print the whole design to stdout as a portable document and exit,
     /// instead of serving. The same thing the `export_graph` tool returns —
     /// available here so a script can back the design up without speaking MCP.
@@ -664,7 +676,7 @@ async fn main() -> anyhow::Result<()> {
             }
 
             if let Some(addr) = cli.http.clone() {
-                serve_http(service, &addr).await?;
+                serve_http(service, &addr, &cli.http_allow_host).await?;
             } else {
                 tracing::info!("reflow2-mcp serving over stdio");
                 let running = service
@@ -711,9 +723,13 @@ async fn main() -> anyhow::Result<()> {
 /// **No authentication.** Bind loopback or a private tailnet: anything that can
 /// reach this port can write the design. Said here and in the flag's help
 /// because the failure is silent — a design does not look tampered with.
-async fn serve_http(service: ReflowService, addr: &str) -> anyhow::Result<()> {
+async fn serve_http(
+    service: ReflowService,
+    addr: &str,
+    allow_hosts: &[String],
+) -> anyhow::Result<()> {
     use rmcp::transport::streamable_http_server::{
-        StreamableHttpService, session::local::LocalSessionManager,
+        StreamableHttpServerConfig, StreamableHttpService, session::local::LocalSessionManager,
     };
 
     let listener = tokio::net::TcpListener::bind(addr)
@@ -724,10 +740,33 @@ async fn serve_http(service: ReflowService, addr: &str) -> anyhow::Result<()> {
         .map(|a| a.to_string())
         .unwrap_or_else(|_| addr.to_string());
 
+    // The transport answers only requests whose Host header is allowlisted —
+    // loopback by default. Extend it, never replace it, so adding a remote name
+    // cannot accidentally lock out the local sessions already using this server.
+    let mut config = StreamableHttpServerConfig::default();
+    if !allow_hosts.is_empty() {
+        let mut hosts = config.allowed_hosts.clone();
+        hosts.extend(allow_hosts.iter().cloned());
+        config = config.with_allowed_hosts(hosts);
+    }
+
+    // Binding a non-loopback address without naming a host is the trap this
+    // warning exists for: remote sessions get an opaque 403 and nothing says
+    // why. Rule 4 — say what would have worked.
+    let bound_off_box = !bound.starts_with("127.") && !bound.starts_with("[::1]");
+    if bound_off_box && allow_hosts.is_empty() {
+        eprintln!(
+            "reflow2: WARNING — bound to {bound}, which is reachable off this machine, but no \
+             --http-allow-host was given. Requests from another machine will be REFUSED with 403 \
+             (the Host allowlist is loopback-only by default). Pass --http-allow-host <the name or \
+             address those sessions will use> to let them in."
+        );
+    }
+
     let http = StreamableHttpService::new(
         move || Ok(service.share()),
         LocalSessionManager::default().into(),
-        Default::default(),
+        config,
     );
 
     eprintln!(

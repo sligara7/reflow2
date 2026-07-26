@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:73f53fee2e42457ca839714c37080b42ea2e7879228d8df8536fbf365b0414a2",
+  "content_hash": "sha256:bb573b899e4ece8229e34d77c0ddf6806f0cc49e2a8d1ffb94ae503e84a26ce5",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -464,6 +464,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:remote-sessions",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:main"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -980,6 +988,12 @@
       "from_id": "chg:recover-from-tests",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:remote-sessions",
+      "properties": {},
+      "to_id": "epoch:v0130"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2035,6 +2049,15 @@
         "action": "modified"
       },
       "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-22c390d18e06606a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
     },
     {
       "edge_type": "CHANGED",
@@ -4375,6 +4398,51 @@
         "action": "added"
       },
       "to_id": "who:alex"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:remote-sessions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:remote-sessions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:remote-sessions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-shared-sessions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:remote-sessions",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:remote-sessions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:remote-sessions",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:sessions-across-machines"
     },
     {
       "edge_type": "CHANGED",
@@ -6799,6 +6867,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:adopt",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:adopt",
+      "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
@@ -6836,6 +6910,12 @@
       "from_id": "cap:adopt",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:allocate",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -6889,6 +6969,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:bounded-reads",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:bounded-reads",
+      "properties": {},
       "to_id": "decision:ack:260a7ea303ec87f1"
     },
     {
@@ -6902,6 +6988,12 @@
       "from_id": "cap:brainstorm",
       "properties": {},
       "to_id": "decision:ack:7a268920fdfe0ba7"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:budget",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -6956,6 +7048,12 @@
       "from_id": "cap:change",
       "properties": {},
       "to_id": "dec:two-sided-accept"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7045,6 +7143,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:claim-liveness",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:claim-liveness",
+      "properties": {},
       "to_id": "decision:ack:48b5379679665396"
     },
     {
@@ -7058,6 +7162,12 @@
       "from_id": "cap:cluster-claims",
       "properties": {},
       "to_id": "dec:multi-writer-architecture"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cluster-claims",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7094,6 +7204,12 @@
       "from_id": "cap:compare-alternatives",
       "properties": {},
       "to_id": "dec:parallel-alternatives"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-alternatives",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7148,6 +7264,12 @@
       "from_id": "cap:compare-designs",
       "properties": {},
       "to_id": "dec:export-hash-chain"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-designs",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7225,6 +7347,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:decision-point",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:decision-point",
+      "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
@@ -7267,6 +7395,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:degraded-surface",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:degraded-surface",
+      "properties": {},
       "to_id": "decision:ack:39bc6f37b50dc9c3"
     },
     {
@@ -7274,6 +7408,12 @@
       "from_id": "cap:derived-completion",
       "properties": {},
       "to_id": "dec:certainty-derived"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:derived-completion",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7321,6 +7461,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:design-identity",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:design-identity",
+      "properties": {},
       "to_id": "decision:ack:1f62e721f3cfa3da"
     },
     {
@@ -7352,6 +7498,12 @@
       "from_id": "cap:detect",
       "properties": {},
       "to_id": "dec:three-party-checks"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:detect",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7394,6 +7546,12 @@
       "from_id": "cap:detect",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:dimensions",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7442,6 +7600,12 @@
       "from_id": "cap:drift-direction",
       "properties": {},
       "to_id": "dec:two-sided-accept"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:drift-direction",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7531,6 +7695,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:freshness",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:freshness",
+      "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
@@ -7568,6 +7738,12 @@
       "from_id": "cap:freshness",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:genesis",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7619,6 +7795,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:git-merge-driver",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:heal",
       "properties": {},
       "to_id": "dec:ask-not-repair"
@@ -7633,6 +7815,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:heal",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:heal",
+      "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
@@ -7675,6 +7863,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:hierarchy",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:hierarchy",
+      "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
@@ -7717,6 +7911,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:ingest",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:ingest",
+      "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
@@ -7754,6 +7954,12 @@
       "from_id": "cap:ingest",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:key-interfaces",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7766,6 +7972,12 @@
       "from_id": "cap:key-interfaces",
       "properties": {},
       "to_id": "decision:ack:c9fd9c1708bed944"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kit",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7819,6 +8031,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:kpp",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kpp",
+      "properties": {},
       "to_id": "decision:ack:2162197689aecdb2"
     },
     {
@@ -7843,6 +8061,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:kpp-proposal",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kpp-proposal",
+      "properties": {},
       "to_id": "decision:ack:b5ecdffa784222a5"
     },
     {
@@ -7862,6 +8086,12 @@
       "from_id": "cap:loop-status",
       "properties": {},
       "to_id": "dec:loop-status-state-not-history"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:loop-status",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7904,6 +8134,12 @@
       "from_id": "cap:loop-status",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mcp-surface",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7963,6 +8199,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:merge-designs",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-designs",
+      "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
@@ -8006,6 +8248,12 @@
       "from_id": "cap:merge-rerere",
       "properties": {},
       "to_id": "dec:merge-rerere"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-rerere",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8065,6 +8313,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:mirror-surface",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mirror-surface",
+      "properties": {},
       "to_id": "decision:ack:6632226c74b49c3a"
     },
     {
@@ -8078,6 +8332,12 @@
       "from_id": "cap:missing-sibling",
       "properties": {},
       "to_id": "decision:ack:4a6cb8914622b724"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:model-process",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8120,6 +8380,12 @@
       "from_id": "cap:model-process",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:nudge-path-proven",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8197,6 +8463,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:portability",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:portability",
+      "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
@@ -8234,6 +8506,12 @@
       "from_id": "cap:portability",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:propagate",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8287,6 +8565,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:publish-surface",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:publish-surface",
+      "properties": {},
       "to_id": "decision:ack:6632226c74b49c3a"
     },
     {
@@ -8294,6 +8578,12 @@
       "from_id": "cap:publish-surface",
       "properties": {},
       "to_id": "decision:ack:85a8e6f0446bbbfd"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:questions",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8336,6 +8626,12 @@
       "from_id": "cap:questions",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:read-loop-hint",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8383,6 +8679,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-built",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-built",
+      "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
@@ -8425,6 +8727,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-deployed",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-deployed",
+      "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
@@ -8462,6 +8770,12 @@
       "from_id": "cap:reconcile-deployed",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-verified",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8519,6 +8833,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:remote-sessions",
+      "properties": {},
+      "to_id": "dec:central-host"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:remote-sessions",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:report",
       "properties": {},
       "to_id": "dec:certainty-derived"
@@ -8534,6 +8860,12 @@
       "from_id": "cap:report",
       "properties": {},
       "to_id": "dec:views-are-projections"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:report",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8576,6 +8908,12 @@
       "from_id": "cap:report",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:requirement-lineage",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8629,6 +8967,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:sanitize-ingress",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:sanitize-ingress",
+      "properties": {},
       "to_id": "decision:ack:260a7ea303ec87f1"
     },
     {
@@ -8647,7 +8991,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:scoped-analysis",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:scoped-analysis",
+      "properties": {},
       "to_id": "decision:ack:328f9220b2bcfe4e"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:search",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8707,6 +9063,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:shared-sessions",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:shared-sessions",
+      "properties": {},
       "to_id": "decision:ack:785c79650b436ed3"
     },
     {
@@ -8719,7 +9081,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:skills-served",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:skills-served",
+      "properties": {},
       "to_id": "decision:ack:2a9626b1798c1959"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:snapshot-read",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8737,7 +9111,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:stale-seat-refusal",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:stale-seat-refusal",
+      "properties": {},
       "to_id": "decision:ack:48cde54264aac425"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:stamp",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8780,6 +9166,12 @@
       "from_id": "cap:stamp",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:store",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8833,6 +9225,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:surface",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:surface",
+      "properties": {},
       "to_id": "decision:ack:22386cd2f1a1fa96"
     },
     {
@@ -8875,7 +9273,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:tool-search",
       "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:tool-search",
+      "properties": {},
       "to_id": "decision:ack:260a7ea303ec87f1"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:vocabulary",
+      "properties": {},
+      "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -14239,6 +14649,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "ver:remote-sessions"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-shared-sessions",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "ver:shared-sessions"
     },
     {
@@ -14720,6 +15138,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:remote-sessions",
+      "properties": {},
+      "to_id": "req:sessions-across-machines"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:report",
       "properties": {},
       "to_id": "req:modularity-computed"
@@ -15149,6 +15573,12 @@
       "from_id": "ver:reconcile-verified",
       "properties": {},
       "to_id": "cap:reconcile-verified"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:remote-sessions",
+      "properties": {},
+      "to_id": "cap:remote-sessions"
     },
     {
       "edge_type": "VERIFIES",
@@ -15925,7 +16355,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:8a871a36bc7696bc9279bf90265e5a7a89db30eac7bc81d17490f24db2536b45",
+        "checksum": "sha256:fe2f1a4c9ee8dcdcc3765ecb337301eb18bb94876417e0f974e825a5d62f5abf",
         "location": "docs/collaborating.md",
         "name": "collaborating.md",
         "status": "realized"
@@ -16189,7 +16619,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4791413598ece90862e40d317f1ea2da5cf03a039e9fc7b65af448d9c3273f48",
+        "checksum": "sha256:6f0cee725be374c0235839fee689cfe225e361f947488e52a87dc2d8e7f5a6e8",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -16530,7 +16960,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:173a1476ccf61ff0ed34e36f6ca15be68f10c7a543f5d84fab663a15497560ca",
+        "checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f",
         "location": "tools/test_shared_sessions.py",
         "name": "test_shared_sessions.py",
         "status": "realized"
@@ -17279,6 +17709,19 @@
       }
     },
     {
+      "node_id": "cap:remote-sessions",
+      "node_type": "Capability",
+      "properties": {
+        "description": "--http-allow-host <HOST>, repeatable, names a host or host:port this server will answer for, so sessions on other machines can attach to the same process. It is needed because the streamable-HTTP transport answers only requests whose Host header is on an allowlist — localhost, 127.0.0.1 and ::1 by default. That is DNS-rebinding protection, and with no authentication on reflow2 it is the only thing between a web page the user visits and their design, which is why reaching the server from another machine is an explicit flag rather than a side effect of binding a public address. The flag EXTENDS the default allowlist rather than replacing it, so naming a remote host cannot lock out the local sessions already using the server. And binding a non-loopback address without naming a host prints a warning naming what would have worked, because the failure mode it prevents is an opaque 403 with nothing saying why.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Reachable from another machine, but only on purpose",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:report",
       "node_type": "Capability",
       "properties": {
@@ -17537,6 +17980,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-22c390d18e06606a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-26",
+        "name": "cargo fmt reordered one `use` item (StreamableHttpService / StreamableHttpServerConfig) after the baseline was accepted. The design change to this file is already on the record as chg:remote-sessions; this delta is formatting only and carries no design meaning. Caught by the gate rather than noticed — accepting the baseline before running fmt is the sequencing mistake, and the gate is what makes it cost a minute instead of shipping a false checksum."
       }
     },
     {
@@ -18230,6 +18682,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Recovering intent from test evidence captured as an expansion of adopt; Alex recorded as a Contributor"
+      }
+    },
+    {
+      "node_id": "chg:remote-sessions",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Sessions on another machine: name the hosts the server will answer for"
       }
     },
     {
@@ -19585,6 +20045,16 @@
         "decision": "Accepted the gap gap:046d5d7e84c91989.",
         "name": "Reviewed: gap:046d5d7e84c91989",
         "rationale": "User (who:ajs, standing policy from 2026-07-23, applied again 2026-07-25): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:git-merge-driver joined the set (42 → 43). Unusually well fitted this time, and worth naming why: the driver's tests are run BY GIT on real branches, which is as close to validation as a test gets — and still not validation. What they cannot show is the thing the feature exists for: whether two people on opposite coasts, working different clusters of one design over a week, actually stop losing each other's work. That is a two-person field trial with the parallel-work skill in hand, and it is the first trial this project has had a genuine second participant for.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:07bb37be6d5cd129",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:07bb37be6d5cd129.",
+        "name": "Reviewed: gap:07bb37be6d5cd129",
+        "rationale": "User (who:ajs, standing policy from 2026-07-23, re-applied 2026-07-26): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:remote-sessions joined the set (55 → 56). Named here because this capability is the one whose validation is genuinely pending and knowable: the tests prove a remote Host header is accepted or refused as configured, which is the spec. What they cannot prove is the operational intent — that Anthony, on his OTHER machine, actually gets a working seat on this design over his own private network, with the DNS and the firewall and the sleeping laptop all in play. That validation is the first use, and it is about to happen.",
         "status": "accepted"
       }
     },
@@ -22624,6 +23094,20 @@
       }
     },
     {
+      "node_id": "req:sessions-across-machines",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A session on another machine works the same design, live",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Sessions running on a DIFFERENT machine must be able to work the same design at the same time, through the same one server, without exporting, merging or pulling. The third of the three cases: different projects on one machine has always worked; several sessions on one machine works through --http; this is the one where the seats are not on the same box. Because there is no authentication, being reachable off the machine must be a deliberate act — the server answers only for hosts that were named on the command line, and says so when a bind would otherwise fail silently.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:sessions-share-a-graph",
       "node_type": "Requirement",
       "properties": {
@@ -23302,6 +23786,18 @@
       }
     },
     {
+      "node_id": "ver:remote-sessions",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-26",
+        "level": "integration",
+        "method": "test",
+        "name": "Against a real server: a request carrying a host the server was NOT told about is refused, the same request with --http-allow-host naming that host completes a whole MCP session, and adding a remote host does not stop loopback sessions working (tools/test_shared_sessions.py)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:report",
       "node_type": "Verification",
       "properties": {
@@ -23509,7 +24005,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:bf8c1e4be41dec8c11e5af94435ddded2f31aa61892a1764cbd8a019304e5e6c",
+  "prev_content_hash": "sha256:85c3a9985c9671af15536a4c3e03b6f037921c427378b87e525ebd0ed8d61bd6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -23600,7 +24096,7 @@
       "Verification"
     ],
     "node_types": 28,
-    "reflow2_version": "0.12.0",
+    "reflow2_version": "0.13.0",
     "schema_version": 1
   }
 }

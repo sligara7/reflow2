@@ -153,12 +153,18 @@ Two rules make it work:
 Either write it in `COORD.md` or ask your agent to use reflow2's `claim_region`, which computes
 the affected region from the design rather than from a hand-typed list of files.
 
-## Several sessions on one machine
+## Several sessions sharing one design, live
 
-**Different projects: nothing to do.** Each project has its own graph directory, so each session
-runs its own server and they never meet. This has always worked.
+Everything above reconciles work **afterwards**, through git. This section is the other mode: several
+sessions on **one design at the same moment**, with no export, no merge and no pull between them.
+There are three cases and they are not equally hard.
 
-**The same project, several sessions: run one server and point them all at it.**
+### Different projects — nothing to do
+
+Each project has its own graph directory, so each session runs its own server and they never meet.
+This has always worked.
+
+### The same project, same machine — run one server and point them all at it
 
 ```bash
 reflow2-mcp --graph-path ./.reflow2/graph --http 127.0.0.1:8787
@@ -166,16 +172,52 @@ reflow2-mcp --graph-path ./.reflow2/graph --http 127.0.0.1:8787
 
 Then every session's MCP config points at `http://127.0.0.1:8787/` instead of spawning its own
 process. They share one design, live: a requirement one session captures is visible to the others
-immediately, with no export, no merge and no pull. Each session is its own **seat**, so claims say
-who actually made them.
+immediately. Each session is its own **seat**, so claims say who actually made them.
 
 The reason this works — and the reason it needs a server rather than six processes — is that
 reflow2's store is single-writer **per process**. Six processes cannot each open the directory; one
 process holding it, with six sessions attached, still has exactly one writer. The constraint is
 satisfied rather than worked around.
 
-> **There is no authentication.** Bind loopback, or a private network like a tailnet. Anything that
-> can reach the port can write the design.
+### The same project, another machine — name the host you will dial
+
+Same server, one more flag. On the machine holding the design:
+
+```bash
+reflow2-mcp --graph-path ./.reflow2/graph \
+            --http 0.0.0.0:8787 \
+            --http-allow-host my-desktop.tail1234.ts.net
+```
+
+On the other machine, point that session's MCP config at
+`http://my-desktop.tail1234.ts.net:8787/`. It is then an ordinary seat: its own session, its own
+claims, the same design.
+
+**Why the extra flag.** The transport answers only requests whose `Host` header is on an
+allowlist — `localhost`, `127.0.0.1` and `::1` by default. That is DNS-rebinding protection: without
+it, a web page you visit could have your browser post to your own machine and rewrite your design.
+Since reflow2 has **no authentication**, that allowlist is the only thing in the way — so being
+reachable from elsewhere is a deliberate act, not a side effect of binding a public address.
+
+`--http-allow-host` is repeatable, takes `host` or `host:port`, and **extends** the default rather
+than replacing it, so naming a remote machine never locks out the local sessions already using the
+server. Name it exactly as the remote session will dial it: the value must match the URL's host,
+not the machine's hostname, if those differ.
+
+If you bind a reachable address and forget the flag, remote sessions get a bare `403` — so the
+server says so on startup and names the flag, rather than leaving you to guess.
+
+> **There is still no authentication.** Anything that can reach that port can write the design.
+> Put it on a private network — a tailnet, a VPN, an SSH tunnel — never a public interface. A
+> tailnet is the intended shape: `0.0.0.0` above is reachable only from that private network if
+> that is the only network the machine is on. If it is not, bind the tailnet address specifically.
+
+### When one machine has to hold the design
+
+Live sharing has a centre: the machine running the server. If it sleeps, the others lose the
+design until it is back, and **neither of you can work offline**. The git route above has neither
+property, which is why it stays the default for two people working independently — and why they
+compose: share live while you are both at it, commit and push the export when you are done.
 
 **Without a server**, a session that finds the graph already held gets a server serving exactly one
 tool (`reflow2_unavailable`) telling it why — and the fallback is a directory each, which a git
@@ -187,8 +229,7 @@ worktree gives you naturally:
 > ```
 >
 > Each worktree then has its own graph, and they reconcile through the committed export like any two
-> people. That is still the right shape for two people on **different machines** — a server cannot
-> help there, and git survives one of you being offline.
+> people.
 
 The MCP configs are **gitignored**, because they carry an absolute path to *your* binary — useless
 on anyone else's machine. Each person (and each worktree) runs the installer once and gets their own.

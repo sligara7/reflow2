@@ -19,6 +19,12 @@ failure here is in a seam:
   4. Concurrent readers all finish. The graph moved from a mutex to a read/write
      lock for exactly this.
 
+Then `req:sessions-across-machines` — the same server, reached from ANOTHER
+machine (`RemoteSessions` below). A remote session is not simulated by mocking
+anything: what makes a request remote, to this transport, is the `Host` header
+it carries, so these tests dial loopback while sending the host a session on
+another machine would have dialled. That is the real path, byte for byte.
+
 stdlib only; skips cleanly when the binary is absent.
 """
 
@@ -34,6 +40,7 @@ import tempfile
 import threading
 import time
 import unittest
+import urllib.error
 import urllib.request
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
@@ -46,11 +53,57 @@ def free_port() -> int:
         return s.getsockname()[1]
 
 
-class Client:
-    """One MCP session over streamable HTTP. Responses arrive as SSE frames."""
+def start_server(graph_path, bind: str, *extra: str) -> subprocess.Popen:
+    """Start a server and wait for the port, rather than sleeping a guessed
+    amount. Raises with the server's own stderr if it died instead."""
+    server = subprocess.Popen(
+        [str(BINARY), "--graph-path", str(graph_path), "--http", bind, *extra],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        env={**os.environ, "RUST_LOG": "error"},
+    )
+    host, _, port = bind.rpartition(":")
+    # A wildcard bind is not an address you can connect to.
+    dial = "127.0.0.1" if host in ("0.0.0.0", "", "::") else host
+    deadline = time.time() + 60
+    while time.time() < deadline:
+        try:
+            with socket.create_connection((dial, int(port)), timeout=1):
+                return server
+        except OSError:
+            if server.poll() is not None:
+                raise AssertionError(f"server exited: {server.stderr.read()}")
+            time.sleep(0.2)
+    raise AssertionError(f"server never came up on {bind}")
 
-    def __init__(self, url: str, name: str):
+
+def stop_server(server: subprocess.Popen) -> str:
+    """Stop it and hand back what it said on stderr, closing both pipes. The
+    return value matters: the startup advisory is only ever on stderr, so a
+    test that wants to read it must not race the process being reaped."""
+    server.terminate()
+    try:
+        server.wait(timeout=10)
+    except subprocess.TimeoutExpired:
+        server.kill()
+        server.wait(timeout=10)
+    said = server.stderr.read()
+    server.stderr.close()
+    server.stdout.close()
+    return said
+
+
+class Client:
+    """One MCP session over streamable HTTP. Responses arrive as SSE frames.
+
+    `host` overrides the `Host` header — which is the entire difference between
+    a local session and one on another machine, as far as this transport is
+    concerned."""
+
+    def __init__(self, url: str, name: str, host: str | None = None):
         self.url = url
+        self.host = host
         self.session = None
         self.id = 1
         message, self.session = self._post(
@@ -74,6 +127,10 @@ class Client:
             "Content-Type": "application/json",
             "Accept": "application/json, text/event-stream",
         }
+        if self.host:
+            # An explicit Host suppresses the one urllib would derive from the
+            # URL, so the server sees exactly what a remote client would send.
+            headers["Host"] = self.host
         if self.session:
             headers["Mcp-Session-Id"] = self.session
         req = urllib.request.Request(
@@ -122,38 +179,11 @@ class SharedSessions(unittest.TestCase):
         cls.dir = pathlib.Path(tempfile.mkdtemp(prefix="reflow2-shared-"))
         port = free_port()
         cls.url = f"http://127.0.0.1:{port}/"
-        cls.server = subprocess.Popen(
-            [
-                str(BINARY),
-                "--graph-path",
-                str(cls.dir / ".reflow2" / "graph"),
-                "--http",
-                f"127.0.0.1:{port}",
-            ],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            env={**os.environ, "RUST_LOG": "error"},
-        )
-        # Wait for the port, rather than sleeping a guessed amount.
-        deadline = time.time() + 60
-        while time.time() < deadline:
-            try:
-                with socket.create_connection(("127.0.0.1", port), timeout=1):
-                    return
-            except OSError:
-                if cls.server.poll() is not None:
-                    raise AssertionError(f"server exited: {cls.server.stderr.read()}")
-                time.sleep(0.2)
-        raise AssertionError("server never came up")
+        cls.server = start_server(cls.dir / ".reflow2" / "graph", f"127.0.0.1:{port}")
 
     @classmethod
     def tearDownClass(cls):
-        cls.server.terminate()
-        try:
-            cls.server.wait(timeout=10)
-        except subprocess.TimeoutExpired:
-            cls.server.kill()
+        stop_server(cls.server)
         shutil.rmtree(cls.dir, ignore_errors=True)
 
     def test_two_sessions_share_one_design(self):
@@ -245,6 +275,108 @@ class SharedSessions(unittest.TestCase):
         client = Client(self.url, "instructions")
         self.assertIn("persistent, coherent design brain", client.instructions)
         self.assertIn("SKILLS ARE SERVED", client.instructions)
+
+
+REMOTE = "reflow2-box.example-tailnet.ts.net"
+
+
+class RemoteSessions(unittest.TestCase):
+    """`req:sessions-across-machines`. The third case, and the one with a real
+    obstacle in it: the transport answers only requests whose `Host` header is
+    on an allowlist — loopback by default. That is DNS-rebinding protection, and
+    since reflow2 has no authentication it is the only thing between a web page
+    the user visits and their design. So binding a reachable address is not
+    enough; the hosts a remote session will dial are named on purpose."""
+
+    @classmethod
+    def setUpClass(cls):
+        if not BINARY.exists():
+            raise unittest.SkipTest(f"{BINARY} not built (cargo build -p reflow2-mcp)")
+        cls.dir = pathlib.Path(tempfile.mkdtemp(prefix="reflow2-remote-"))
+
+        closed_port = free_port()
+        cls.closed_url = f"http://127.0.0.1:{closed_port}/"
+        cls.closed = start_server(cls.dir / "closed", f"127.0.0.1:{closed_port}")
+
+        open_port = free_port()
+        cls.open_url = f"http://127.0.0.1:{open_port}/"
+        cls.open = start_server(
+            cls.dir / "open", f"127.0.0.1:{open_port}", "--http-allow-host", REMOTE
+        )
+
+    @classmethod
+    def tearDownClass(cls):
+        stop_server(cls.closed)
+        stop_server(cls.open)
+        shutil.rmtree(cls.dir, ignore_errors=True)
+
+    def test_a_host_the_server_was_not_told_about_is_refused(self):
+        """The starting state, and the reason the flag exists at all: without
+        it, a session on another machine gets a 403 and nothing says why."""
+        with self.assertRaises(urllib.error.HTTPError) as caught:
+            Client(self.closed_url, "remote-unnamed", host=REMOTE)
+        self.assertEqual(caught.exception.code, 403, "an unnamed host is refused")
+        # A bare status code would pass on a 403 raised for some unrelated
+        # reason, which would make the differential below prove nothing.
+        self.assertIn("Host", caught.exception.read().decode(), "refused for THIS reason")
+
+    def test_a_named_host_gets_a_whole_session(self):
+        """Not just a 200 on the handshake — a remote seat must be able to do
+        the work: initialize, write, and read its own write back."""
+        remote = Client(self.open_url, "remote-named", host=REMOTE)
+        self.assertTrue(remote.session, "a named host completes the handshake")
+
+        remote.call("add_project", id="proj:remote", name="Remote")
+        remote.call(
+            "add_requirement",
+            id="req:from-afar",
+            name="From afar",
+            statement="Written by a session on another machine.",
+        )
+        seen = remote.call("get_node", node_type="Requirement", id="req:from-afar")
+        self.assertTrue(seen and seen.get("node"), "the remote seat's write landed")
+
+    def test_a_remote_seat_and_a_local_one_share_the_design(self):
+        """The whole point of case three: the two seats are not on the same
+        machine, and there is still one design, live, with no export or merge.
+        This also pins that the flag EXTENDS the default allowlist rather than
+        replacing it — naming a remote host must not lock out the loopback
+        sessions already using this server."""
+        remote = Client(self.open_url, "remote-shared", host=REMOTE)
+        local = Client(self.open_url, "local-shared")
+        self.assertNotEqual(remote.session, local.session)
+
+        remote.call("add_project", id="proj:both", name="Both")
+        remote.call("add_requirement", id="req:theirs", name="Theirs", statement="r")
+        local.call("add_requirement", id="req:ours", name="Ours", statement="l")
+
+        self.assertTrue(
+            local.call("get_node", node_type="Requirement", id="req:theirs")["node"],
+            "the local seat sees what the remote one wrote",
+        )
+        self.assertTrue(
+            remote.call("get_node", node_type="Requirement", id="req:ours")["node"],
+            "and the remote seat sees the local write",
+        )
+
+    def test_binding_off_the_box_without_naming_a_host_says_so(self):
+        """Rule 4, on the exact failure this feature is here to prevent: a
+        reachable bind with a loopback-only allowlist refuses every remote
+        session with an opaque 403. The server must say that BEFORE anyone
+        tries, and name what would have worked."""
+        port = free_port()
+        stderr = stop_server(start_server(self.dir / "wildcard", f"0.0.0.0:{port}"))
+
+        self.assertIn("WARNING", stderr, stderr)
+        self.assertIn("--http-allow-host", stderr, "it must name the remedy")
+        self.assertIn("403", stderr, "and the symptom it prevents")
+
+    def test_loopback_alone_is_still_warned_about_nothing(self):
+        """The counterpart, so the warning stays worth reading: the ordinary
+        one-machine case must not nag."""
+        port = free_port()
+        stderr = stop_server(start_server(self.dir / "loopback", f"127.0.0.1:{port}"))
+        self.assertNotIn("WARNING", stderr, stderr)
 
 
 if __name__ == "__main__":

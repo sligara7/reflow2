@@ -64,6 +64,38 @@ This file is the third view: *what changed, and when*.
   **No authentication.** Bind loopback or a private network; anything that can
   reach the port can write the design.
 
+- **…including sessions on another machine** (`cap:remote-sessions`,
+  `req:sessions-across-machines`). Anthony, 2026-07-26, on the third of the
+  three cases: *"I'd like to use on my other machine."*
+
+  ```bash
+  reflow2-mcp --graph-path ./.reflow2/graph \
+              --http 0.0.0.0:8787 \
+              --http-allow-host my-desktop.tail1234.ts.net
+  ```
+
+  Binding a reachable address was not enough, and the reason is worth knowing:
+  the transport answers only requests whose `Host` header is on an allowlist —
+  `localhost`, `127.0.0.1` and `::1` by default. That is DNS-rebinding
+  protection, and with no authentication on reflow2 it is the only thing between
+  a web page you visit and your design. So reaching the server from elsewhere is
+  a **deliberate act**: name the host those sessions will dial.
+
+  `--http-allow-host` is repeatable, takes `host` or `host:port`, and **extends**
+  the default list rather than replacing it — naming a remote machine can never
+  lock out the local sessions already using that server.
+
+  And the failure it prevents is announced rather than discovered: binding a
+  non-loopback address without naming a host previously refused every remote
+  session with a bare `403` and nothing saying why. The server now warns at
+  startup and names the flag that would have worked.
+
+  Proven against real servers, with the `Host` header a remote session would
+  actually send: an unnamed host refused (for *that* reason, not merely with
+  that status), a named host completing a whole session, a remote seat and a
+  loopback seat sharing one design, and the advisory firing on a wildcard bind
+  but staying quiet on a loopback one — 5 cases, in CI.
+
 ## [0.13.0] — 2026-07-25
 
 **Upgrading:** [docs/upgrading-to-v0.13.0.md](docs/upgrading-to-v0.13.0.md). Nothing breaks and
