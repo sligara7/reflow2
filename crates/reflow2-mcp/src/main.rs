@@ -676,7 +676,13 @@ async fn main() -> anyhow::Result<()> {
             }
 
             if let Some(addr) = cli.http.clone() {
-                serve_http(service, &addr, &cli.http_allow_host).await?;
+                serve_http(
+                    move || Ok(service.share()),
+                    &addr,
+                    &cli.http_allow_host,
+                    HttpSurface::Design,
+                )
+                .await?;
             } else {
                 tracing::info!("reflow2-mcp serving over stdio");
                 let running = service
@@ -696,18 +702,44 @@ async fn main() -> anyhow::Result<()> {
                  `reflow2_unavailable`, and the reason in the handshake instructions."
             );
             tracing::warn!("degraded mode: {reason}");
-            // ...and in-band, where the agent will actually see it.
-            let running = DegradedService::new(reason, cli.graph_path.clone())
-                .serve(stdio())
-                .await
-                .context("failed to start the degraded MCP server")?;
-            running
-                .waiting()
-                .await
-                .context("degraded MCP server error")?;
+            // ...and in-band, where the agent will actually see it — ON THE
+            // TRANSPORT THAT WAS ASKED FOR. Serving this on stdio when the
+            // caller said --http put the explanation somewhere nobody was
+            // listening: every session pointed at that URL got connection
+            // refused, which is indistinguishable from reflow2 not being
+            // configured at all, and that is the whole failure
+            // `req:never-silently-absent` exists to prevent (BL-105).
+            let degraded = DegradedService::new(reason, cli.graph_path.clone());
+            if let Some(addr) = cli.http.clone() {
+                serve_http(
+                    move || Ok(degraded.clone()),
+                    &addr,
+                    &cli.http_allow_host,
+                    HttpSurface::Degraded,
+                )
+                .await?;
+            } else {
+                let running = degraded
+                    .serve(stdio())
+                    .await
+                    .context("failed to start the degraded MCP server")?;
+                running
+                    .waiting()
+                    .await
+                    .context("degraded MCP server error")?;
+            }
         }
     }
     Ok(())
+}
+
+/// Which surface an HTTP server is carrying, so its startup line tells the
+/// truth. A degraded server is not "several sessions sharing this design" — it
+/// is one tool explaining why there is no design here to share.
+#[derive(Clone, Copy)]
+enum HttpSurface {
+    Design,
+    Degraded,
 }
 
 /// Serve one design to many client sessions over HTTP.
@@ -716,18 +748,29 @@ async fn main() -> anyhow::Result<()> {
 /// single-writer *per process*, so several sessions cannot each open the
 /// directory — but one process holding it, with many sessions connected, still
 /// has exactly one writer. rmcp builds a service per session through the
-/// factory below; `ReflowService::share` decides what those sessions share (the
-/// graph, the write generation) and what is theirs alone (their seat, their
-/// read-hint memory).
+/// factory passed in; `ReflowService::share` decides what those sessions share
+/// (the graph, the write generation) and what is theirs alone (their seat,
+/// their read-hint memory).
+///
+/// Generic over the service **because the degraded surface has to come out of
+/// the same door** (`req:never-silently-absent`). This took a factory of one
+/// concrete type until 2026-07-26, so the failure path could only ever answer
+/// on stdio: ask for `--http` against a held graph and the explanation went to
+/// a transport nobody was listening on, which is the exact outage the degraded
+/// surface exists to end, reintroduced on the newer transport.
 ///
 /// **No authentication.** Bind loopback or a private tailnet: anything that can
 /// reach this port can write the design. Said here and in the flag's help
 /// because the failure is silent — a design does not look tampered with.
-async fn serve_http(
-    service: ReflowService,
+async fn serve_http<S>(
+    factory: impl Fn() -> Result<S, std::io::Error> + Send + Sync + 'static,
     addr: &str,
     allow_hosts: &[String],
-) -> anyhow::Result<()> {
+    surface: HttpSurface,
+) -> anyhow::Result<()>
+where
+    S: rmcp::Service<rmcp::RoleServer> + Send + 'static,
+{
     use rmcp::transport::streamable_http_server::{
         StreamableHttpServerConfig, StreamableHttpService, session::local::LocalSessionManager,
     };
@@ -763,16 +806,22 @@ async fn serve_http(
         );
     }
 
-    let http = StreamableHttpService::new(
-        move || Ok(service.share()),
-        LocalSessionManager::default().into(),
-        config,
-    );
+    let http = StreamableHttpService::new(factory, LocalSessionManager::default().into(), config);
 
-    eprintln!(
-        "reflow2: serving over HTTP at http://{bound}/ — several sessions may share this design. \
-         There is NO authentication: reach it over loopback or a private network only."
-    );
+    match surface {
+        HttpSurface::Design => eprintln!(
+            "reflow2: serving over HTTP at http://{bound}/ — several sessions may share this \
+             design. There is NO authentication: reach it over loopback or a private network only."
+        ),
+        // Say what this one is, because it looks like a working server and is
+        // not: a session that connects gets the reason and one tool, and an
+        // operator who reads "serving over HTTP" and walks away would be wrong.
+        HttpSurface::Degraded => eprintln!(
+            "reflow2: serving the DEGRADED surface over HTTP at http://{bound}/ — the design could \
+             not be opened, so sessions that connect get the reason and `reflow2_unavailable`, \
+             not the design. Fix the cause above and restart to serve it properly."
+        ),
+    }
     tracing::info!("reflow2-mcp serving over http at {bound}");
 
     loop {

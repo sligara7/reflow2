@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2ad53c5065d1119e8b9291ae0395e43ae363bf24060ff4f533569ab0b86dbc98",
+  "content_hash": "sha256:2cf3e2a5a092a309a273865f778d1f213d9bfdc50ae52fbcf5ec0ba2d5d0b4da",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -868,6 +868,12 @@
       "from_id": "chg:deep-review-tier1",
       "properties": {},
       "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:degraded-follows-transport",
+      "properties": {},
+      "to_id": "epoch:v0140"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3729,6 +3735,42 @@
         "action": "modified"
       },
       "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:degraded-follows-transport",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:degraded-follows-transport",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:degraded-follows-transport",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:degraded-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:degraded-follows-transport",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ver:degraded-follows-transport"
     },
     {
       "edge_type": "CHANGED",
@@ -15978,6 +16020,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:degraded-follows-transport",
+      "properties": {},
+      "to_id": "cap:degraded-surface"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:degraded-surface",
       "properties": {},
       "to_id": "cap:degraded-surface"
@@ -17237,7 +17285,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6f0cee725be374c0235839fee689cfe225e361f947488e52a87dc2d8e7f5a6e8",
+        "checksum": "sha256:17f8bc6928a55569011f07403264ba5ef3239fd868cc91403d73b89361112940",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -17534,7 +17582,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:16fb0718f85e8b60eef1751497e56b7e1f002abb9027cf9f22c50ba2e85ff39b",
+        "checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef",
         "location": "tools/test_degraded_server.py",
         "name": "test_degraded_server.py",
         "status": "realized"
@@ -19150,6 +19198,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Deep-review tier-1 fixes (BL-53..56): HEAL refuses self-loop DUPLICATES merges (a sanctioned self-merge deleted the node with no undo); the installer proves file ownership by hash manifest — user edits are kept and reported, obsolete kit files pruned only when untouched, malformed configs left alone without crashing; install.sh fails loud instead of silently or falsely succeeding; release publishes only after every asset is verified attached; the smoke harness refuses to wipe an existing graph directory without --wipe"
+      }
+    },
+    {
+      "node_id": "chg:degraded-follows-transport",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "The degraded surface follows the transport that was asked for"
       }
     },
     {
@@ -24055,6 +24111,18 @@
         "level": "integration",
         "method": "test",
         "name": "compare.rs",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:degraded-follows-transport",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-26",
+        "level": "integration",
+        "method": "test",
+        "name": "The degraded surface comes out of the door the caller asked for: with the graph genuinely held by another process AND --http given, an HTTP client still completes the handshake, still finds the reason in its instructions, and can still call reflow2_unavailable — plus the startup line says DEGRADED rather than letting an operator read 'serving over HTTP' and walk away. 4 cases in tools/test_degraded_server.py, measured against a real held lock. It caught the fault it was written for: against the v0.14.0 code all four fail with 'nothing ever listened on the port the caller asked for', because main.rs's Err arm called serve(stdio()) and never read cli.http (BL-105).",
         "status": "passing"
       }
     },

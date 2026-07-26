@@ -17,6 +17,12 @@ explaining one, both measured against a REAL held lock rather than a mock:
      tool.
   2. `--export-snapshot` reads a graph somebody else is holding, and says loudly
      that the read is best-effort.
+  3. It does that ON THE TRANSPORT THAT WAS ASKED FOR (BL-105). Everything above
+     drove stdio, and for the whole of v0.14.0 that was all the failure path
+     could do: ask for `--http` against a held graph and the explanation went to
+     stdio while every session pointed at the URL got connection refused -- the
+     original outage, reintroduced on the newer transport, with a green suite
+     the entire time because nothing here had ever said the word "http".
 
 Hermetic and stdlib-only; skips cleanly when the binary is absent.
 """
@@ -159,6 +165,113 @@ class DegradedServerTest(unittest.TestCase):
         names = [t["name"] for t in rpc(peer, "tools/list", {}, 2)["result"]["tools"]]
         self.assertGreater(len(names), 50, "a free graph serves the real surface")
         self.assertNotIn("reflow2_unavailable", names)
+
+
+class DegradedOverHttpTest(unittest.TestCase):
+    """BL-105. The degraded surface must come out of the door the caller asked
+    for. Serving it on stdio when `--http` was given is the original outage
+    wearing new clothes: the explanation exists, and it is on a transport
+    nobody is listening to, so every session pointed at that URL sees a refused
+    connection -- indistinguishable from reflow2 never having been configured,
+    which is the precise thing `req:never-silently-absent` forbids."""
+
+    @classmethod
+    def setUpClass(cls):
+        if not BINARY.exists():
+            raise unittest.SkipTest(f"{BINARY} not built (cargo build -p reflow2-mcp)")
+        sys.path.insert(0, str(REPO / "tools"))
+
+    def setUp(self):
+        from test_shared_sessions import free_port
+
+        self.dir = pathlib.Path(tempfile.mkdtemp(prefix="reflow2-degraded-http-"))
+        self.graph = self.dir / "graph"
+        self.addCleanup(shutil.rmtree, self.dir, ignore_errors=True)
+        # A REAL holder, exactly as the other suite does it — the whole point is
+        # that this is measured against a genuinely locked graph, not a mock.
+        self.holder = serve(self.graph)
+        self.addCleanup(self.holder.terminate)
+        handshake(self.holder, "holder")
+        self.port = free_port()
+        self.url = f"http://127.0.0.1:{self.port}/"
+
+    def start_degraded_http(self):
+        """Start a server with --http against the held graph, and wait for the
+        port. Returns the process; fails with the server's own output if it
+        never listens, because 'no listener' IS the bug under test."""
+        import socket
+        import time
+
+        proc = subprocess.Popen(
+            [
+                str(BINARY),
+                "--graph-path",
+                str(self.graph),
+                "--http",
+                f"127.0.0.1:{self.port}",
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            env={**os.environ, "RUST_LOG": "error"},
+        )
+        self.addCleanup(proc.terminate)
+        deadline = time.time() + 30
+        while time.time() < deadline:
+            try:
+                with socket.create_connection(("127.0.0.1", self.port), timeout=1):
+                    return proc
+            except OSError:
+                if proc.poll() is not None:
+                    self.fail(
+                        "the degraded server exited instead of serving over HTTP "
+                        f"(this was the bug):\n{proc.stderr.read()}"
+                    )
+                time.sleep(0.2)
+        self.fail("nothing ever listened on the port the caller asked for")
+
+    def test_a_held_graph_still_serves_the_degraded_surface_over_http(self):
+        """The regression, in one assertion: an HTTP client gets a handshake
+        rather than a refused connection."""
+        from test_shared_sessions import Client
+
+        self.start_degraded_http()
+        peer = Client(self.url, "http-peer")
+        self.assertTrue(peer.session, "the HTTP client must complete a handshake")
+
+    def test_the_reason_reaches_an_http_client_too(self):
+        """Handshaking is not enough — the reason has to arrive where the agent
+        reads it, which is the instructions, on this transport as on stdio."""
+        from test_shared_sessions import Client
+
+        self.start_degraded_http()
+        instructions = Client(self.url, "http-peer").instructions
+
+        self.assertIn("UNAVAILABLE", instructions)
+        self.assertIn("already has the design graph", instructions)
+        self.assertIn("DO NOT conclude", instructions)
+
+    def test_the_one_tool_is_callable_over_http(self):
+        """And it must actually answer, not merely be advertised."""
+        from test_shared_sessions import Client
+
+        self.start_degraded_http()
+        peer = Client(self.url, "http-peer")
+        answer = peer.call("reflow2_unavailable")
+
+        self.assertIn("already has the design graph", json.dumps(answer))
+
+    def test_the_startup_line_does_not_claim_to_be_serving_the_design(self):
+        """A degraded server looks like a working one from the outside. An
+        operator who reads 'serving over HTTP' and walks away has been misled,
+        so the line has to say which surface this is."""
+        proc = self.start_degraded_http()
+        proc.terminate()
+        proc.wait(timeout=10)
+        stderr = proc.stderr.read()
+
+        self.assertIn("DEGRADED", stderr, stderr)
+        self.assertIn("could not be opened", stderr)
 
 
 class SnapshotReadTest(unittest.TestCase):

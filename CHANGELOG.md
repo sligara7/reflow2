@@ -31,6 +31,36 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **The degraded surface now comes out of the door you asked for**
+  (`ver:degraded-follows-transport`, BL-105). Shipped broken in v0.14.0 and
+  found the same day, by hand, while setting up the shared-server recipe on a
+  real machine — no detector caught it.
+
+  With the graph already held by another process **and** `--http` given,
+  reflow2 served its one-tool explanation over **stdio** and left nothing
+  listening on the port: `main.rs`'s failure arm called `serve(stdio())` and
+  never read the flag. So every session pointed at that URL got a refused
+  connection — indistinguishable from reflow2 never having been configured,
+  which is the precise outage `req:never-silently-absent` exists to end, and it
+  had been reintroduced on the transport added two commits later. An operator
+  running it by hand fared no better: it died as `failed to start the degraded
+  MCP server: connection closed: initialize request`, naming neither the lock
+  nor the remedy.
+
+  Both arms now hand rmcp a service factory, so each answers on the transport
+  that was requested, and the startup line says which surface it is carrying —
+  a degraded server looks like a working one from outside, and "serving over
+  HTTP" alone would let an operator walk away satisfied.
+
+  The existing check stayed green throughout because it only ever drove stdio;
+  `tools/test_degraded_server.py` contained no occurrence of `http` at all. It
+  has four new cases against a real held lock, and they were **mutation-checked
+  rather than assumed** — reverted against the v0.14.0 behaviour all four fail
+  with *"nothing ever listened on the port the caller asked for"*.
+
+
 ## [0.14.0] — 2026-07-26
 
 **Upgrading:** nothing breaks, nothing in your repository changes, and no schema moved. This is a
