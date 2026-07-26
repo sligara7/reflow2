@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bb573b899e4ece8229e34d77c0ddf6806f0cc49e2a8d1ffb94ae503e84a26ce5",
+  "content_hash": "sha256:20173f0edfb03e180ca1f7719161f39f9ba02cde4443e2f4aa5c8bbd69d8952a",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1354,6 +1354,12 @@
       "from_id": "rel:v0130",
       "properties": {},
       "to_id": "epoch:v0130"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0140",
+      "properties": {},
+      "to_id": "epoch:v0140"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6785,6 +6791,14 @@
     },
     {
       "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0140",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v040",
       "properties": {
         "status": "rolled_back"
@@ -11906,6 +11920,592 @@
     {
       "edge_type": "INCLUDES",
       "from_id": "rel:v0130",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:6df0a7aa74cf5803"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:24c417ac64030158"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:c87a79726aeb111b"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:9cace9045ec19152"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:fabb8097364ca9e2"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:9da41f6bdb9885f7"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:6002847b15115694"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:5b6cb19cd4efedd8a4940a54412d033f73a904b376953f4f0f58d3ffee989d57"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:fe2f1a4c9ee8dcdcc3765ecb337301eb18bb94876417e0f974e825a5d62f5abf"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:e26b3cba78fe4a67"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:5e77e752c0c60d06"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde"
+      },
+      "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:32d0609430669c46"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:fbe714849869c1d8"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:930d0dd59af1bb7b"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:74c0459e03ad38ce"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:cfe81e36af4e3dfd"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:cfdf82f1a6497595"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2"
+      },
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:e2e94e52eb601d53"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:34701500af93dbcf"
+      },
+      "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:1ed522ea05a4b6c4fb84ec6e7c5f1eb2a8f698e86ee61d515ee66c36053b7bf6"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:fa4fa10add42f5e8"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:30fc1a09862792a9"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:d4e51659a479603aa29befad2e00fa504d6b185bc35ee25961073a79bf04e4b8"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:e5e40cef15b45dfe"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:f2ae1369ea386f2badfbdf5a6f08dd43b13146bac70403458f3f6daf35189cec"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:feebbdb1438ff2c52e51cb0fbb004476378ffa97d3c9aa72890b7aa92f4b81b5"
+      },
+      "to_id": "art:kit-pointer"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:65a01535f32f023e"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:96619724a77479e7"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:6f0cee725be374c0235839fee689cfe225e361f947488e52a87dc2d8e7f5a6e8"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:075bab31f3c131b6"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:cddbea4165e0e3b0"
+      },
+      "to_id": "art:merge-driver-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:882d577621d9c62b"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:feca736d9d86d965"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:c5b7664a5df44b99"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14"
+      },
+      "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:26dde99a1df42e6f"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:bd4282a6b99d8308"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:99fc5da421a04f5e"
+      },
+      "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:c57347034efdfa68"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:dc88dfbc4e1aacbc"
+      },
+      "to_id": "art:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:950e86c78c9c7b58"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:47fa2c2aa8b402bb"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea"
+      },
+      "to_id": "art:scope-read-while-held"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:c421c3496192d22d"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:ebef7c8a6a4789265fdaafdd1154cd0b22b33a25f73e4944a12e191d29c70384"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:f56cbbe3e7ccb23b"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:d437174ef98701bd2fcfdd2f4fa97daafeac687c899df764f036536ccf3a29a4"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797"
+      },
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:c09cc6f310635d1b2fb9a888f38c323fbd2ae2fb9e816586a32f2c00c87a46fb"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:e646e8dd7928adac"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:e792e6bab2ad48527428df1c015f6ebe20fec9d79da22657f7ed088f8d605c56"
+      },
+      "to_id": "art:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:3a6dd54d084e1e41"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:16fb0718f85e8b60eef1751497e56b7e1f002abb9027cf9f22c50ba2e85ff39b"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:8f406602ed3bdb046af77130ca482951818dd4ccfeada8afd4cfc0a9c0ea5e10"
+      },
+      "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:31cb8acccf9b6e945cc793875c88c0b052794beaa97131024f526e57d21e8020"
+      },
+      "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f"
+      },
+      "to_id": "art:test-shared-sessions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d"
+      },
+      "to_id": "art:test-stale-seat"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:ef7dbb708e027df2"
+      },
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34"
+      },
+      "to_id": "art:upgrading-v0120"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995"
+      },
+      "to_id": "art:upgrading-v0130"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:d667d9a6a64a849e"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {
+        "as_checksum": "sha256:3b84a01ec0bae49d"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {},
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
+      "properties": {},
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0140",
       "properties": {},
       "to_id": "cmp:skills"
     },
@@ -20886,6 +21486,15 @@
       }
     },
     {
+      "node_id": "epoch:v0140",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.14.0 cut",
+        "sequence": 170
+      }
+    },
+    {
       "node_id": "epoch:v040",
       "node_type": "DesignEpoch",
       "properties": {
@@ -22415,9 +23024,20 @@
       "properties": {
         "name": "v0.13.0",
         "notes": "Cut 2026-07-25. A minor bump — CLAIMS gains a `seat` property (additive) — with docs/upgrading-to-v0.13.0.md written. THE RELEASE THAT MAKES CONCURRENCY HONEST, and every piece of it came from Anthony's own StoryFlow fleet. (1) A DESIGN KNOWS ITS OWN NAME: an id established on first open in <graph>.id.json, a sibling of the store because the id namespaces every stored key; minted with zero coordination; refused rather than defaulted when unreadable; and a store that already holds a design under the old shared id ADOPTS it, which is what keeps every committed export valid since graph_id is inside the content hash. Two on-disk designs can finally mirror each other. (2) CLAIMS NAME THEIR SESSION and claim_report COMPUTES liveness from the OS: a claim whose session exited is `gone`, listed in `stale` with its note, and excluded from overlaps, because a collision with nobody is not a collision; another machine is `unknown` and still counts. (3) THE LOOP'S SAFETY NET IS PROVEN AND INSTALLED: the nudge path is tested by running the REGISTERED hook command as registered, the server reports installed | absent | broken | unknown, the absence rides the handshake instructions, and reflow2_init now registers the hook it never used to — into .claude/settings.local.json, pointing at the kit so it updates with the package. Manifest: 68 artifacts with frozen cut-time checksums plus cmp:docs, cmp:skills and cmp:claims. Four of the five fleet lessons are now built; req:read-while-held remains blocked on dynograph-storage exposing open_as_secondary.",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.13.0"
+      }
+    },
+    {
+      "node_id": "rel:v0140",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.14.0",
+        "notes": "Cut 2026-07-26. A minor bump — no schema change, nothing breaks, nothing in a consumer repository changes — so no upgrade doc; the version moves because capabilities were added, not because anything is asked of the user. THE RELEASE THAT LETS SEVERAL SESSIONS SHARE ONE DESIGN, INCLUDING ACROSS MACHINES, and the value is in the three cases being told apart rather than blurred. (1) DIFFERENT PROJECTS ON ONE MACHINE never needed anything: each has its own graph directory, so each session runs its own server and they never meet — confirmed by measurement rather than assumed. (2) THE SAME PROJECT ON ONE MACHINE needs a SERVER (--http <addr>), because the store is single-writer PER PROCESS: six processes cannot each open the directory, but one process holding it with six sessions attached still has exactly one writer, so the constraint is satisfied rather than worked around. Underneath: the graph moved Mutex→RwLock so reads stop queueing (and the compiler audited the read/write split for free — all 32 read sites genuinely need only &DesignGraph), and seats are minted per SESSION rather than per process, without which a shared server reports every client as the same owner and claim_report tells six sessions they are each other. (3) THE SAME PROJECT FROM ANOTHER MACHINE additionally needs the host NAMED (--http-allow-host), because the transport answers only requests whose Host header is allowlisted — loopback by default. That is DNS-rebinding protection, and since reflow2 has no authentication it is the only thing between a web page the user visits and their design, so reachability off-box is a deliberate act rather than a side effect of binding a public address. The flag EXTENDS the default rather than replacing it, so naming a remote machine can never lock out the local sessions already on that server; and a reachable bind with no named host now WARNS at startup instead of refusing every remote session with a bare 403 and saying nothing. LIVE SHARING HAS A CENTRE and the docs say so: the machine running the server, which cannot sleep and cannot be offline — so it does not replace the git route for two people working independently. They compose: share live while both are at it, commit and push the export when done. Proven over real HTTP against real servers, with the Host header a remote session actually sends: 9 cases in CI. Manifest: 71 artifacts with frozen cut-time checksums plus cmp:docs, cmp:skills and cmp:claims. THE GATE EARNED ITS KEEP AGAIN — cargo fmt reordered an import after the checksum baseline had been accepted, and the drift was caught rather than shipped.",
+        "status": "deployed",
+        "unit_type": "binary",
+        "version": "0.14.0"
       }
     },
     {
@@ -24005,7 +24625,6 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:85c3a9985c9671af15536a4c3e03b6f037921c427378b87e525ebd0ed8d61bd6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -24096,7 +24715,7 @@
       "Verification"
     ],
     "node_types": 28,
-    "reflow2_version": "0.13.0",
+    "reflow2_version": "0.14.0",
     "schema_version": 1
   }
 }

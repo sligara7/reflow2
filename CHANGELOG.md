@@ -31,6 +31,24 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.14.0] — 2026-07-26
+
+**Upgrading:** nothing breaks, nothing in your repository changes, and no schema moved. This is a
+minor bump because it adds capabilities, not because it asks anything of you — update and carry on.
+If you only ever run one session per project, it changes nothing at all.
+
+**The release that lets several sessions share one design — including across machines.** All three
+cases are now covered and, importantly, they are not equally hard: different projects on one machine
+never needed anything; the same project on one machine needs a server, because the store is
+single-writer *per process*; the same project from **another** machine additionally needs you to
+name the host it will be dialled at, because the only thing guarding an unauthenticated server is
+the transport's Host allowlist.
+
+Live sharing has a centre — the machine running the server — so it does not replace the git route
+for two people working independently, and [docs/collaborating.md](docs/collaborating.md) now says
+which to reach for and why. They compose: share live while you are both at it, commit and push the
+export when you are done.
+
 ### Added
 
 - **Several sessions can share one design, live** (`cap:shared-sessions`,
