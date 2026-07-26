@@ -6,5 +6,6 @@
 
 pub mod degraded;
 pub mod dto;
+pub mod nudge;
 pub mod service;
 pub mod skills;

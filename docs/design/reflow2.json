@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:28cf661d88ddbe6e0ae2d7cfbf9568bcb11f9300ac5806998d5b88999025b0bf",
+  "content_hash": "sha256:673776bef57771ae6f1bee6b37fc78ca408cb16f8f16cdaae5d3cc51c64660af",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -352,6 +352,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:nudge-path-proven",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:nudge"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -934,6 +942,12 @@
       "from_id": "chg:multi-writer-decided",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:nudge-path",
+      "properties": {},
+      "to_id": "epoch:v0120"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4198,6 +4212,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:nudge-path",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:nudge-path",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:nudge-path-proven"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:promote-brainstorms",
       "properties": {
         "accepted_baseline": false,
@@ -4828,6 +4860,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cmp:nudge"
     },
     {
       "edge_type": "CONTAINS",
@@ -7920,6 +7958,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:nudge-path-proven",
+      "properties": {},
+      "to_id": "decision:ack:4d5e909b76d01f3c"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:onboarding",
       "properties": {},
       "to_id": "dec:views-are-projections"
@@ -8763,6 +8807,12 @@
       "from_id": "cmp:nodes",
       "properties": {},
       "to_id": "dec:fnv1a-foundational"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:nudge",
+      "properties": {},
+      "to_id": "decision:ack:cd7e9eaaeba49218"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -13168,6 +13218,22 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:nudge-detect",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:nudge-path-proven"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:nudge-detect",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:operate",
       "properties": {
         "completeness": "complete"
@@ -13389,6 +13455,14 @@
         "completeness": "complete"
       },
       "to_id": "ver:design-identity"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-nudge-path",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:nudge-path"
     },
     {
       "edge_type": "REALIZES",
@@ -13770,6 +13844,12 @@
       "from_id": "cap:model-process",
       "properties": {},
       "to_id": "req:design-anything"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:nudge-path-proven",
+      "properties": {},
+      "to_id": "req:nudge-path-proven"
     },
     {
       "edge_type": "SATISFIES",
@@ -14229,6 +14309,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:nudge-path",
+      "properties": {},
+      "to_id": "cap:nudge-path-proven"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:portability",
       "properties": {},
       "to_id": "cap:portability"
@@ -14683,6 +14769,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:nudge-detect",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:operate",
       "properties": {
         "action": "created"
@@ -14848,6 +14942,14 @@
         "action": "created"
       },
       "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-nudge-path",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-nudge-path"
     },
     {
       "edge_type": "YIELDED",
@@ -15308,6 +15410,17 @@
       }
     },
     {
+      "node_id": "art:nudge-detect",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856",
+        "location": "crates/reflow2-mcp/src/nudge.rs",
+        "name": "nudge.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:operate",
       "node_type": "Artifact",
       "properties": {
@@ -15444,7 +15557,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a31cc1389ddc910816f6fa8a3c9dfd86c5d29b47d271decd90dfab3074f8ee1d",
+        "checksum": "sha256:2d3f53e0adc81c65e712be4489e1b889a92c2a75bfdb99566df166c4aa9a2c36",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -15557,6 +15670,17 @@
         "checksum": "sha256:96e2b3748bf0bfbb9b9da768218028db0e8e2491f0cf7352d4e7acf325b28da6",
         "location": "crates/reflow2-mcp/tests/design_identity.rs",
         "name": "design_identity.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-nudge-path",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:31cb8acccf9b6e945cc793875c88c0b052794beaa97131024f526e57d21e8020",
+        "location": "tools/test_nudge_path.py",
+        "name": "test_nudge_path.py",
         "status": "realized"
       }
     },
@@ -16141,6 +16265,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Model a process, not only a product",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:nudge-path-proven",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Two halves. PROOF: tools/test_nudge_path.py reads .claude/settings.json, takes the command the harness would run, and runs THAT with the JSON a real Stop hook receives — asserting the {\"decision\":\"block\"} the harness actually consumes, that the reason names what happened, that a session which ran the loop check is left alone, and that the nudge fires once (on the harness's stop_hook_active) rather than holding a session hostage. BACKSTOP: the server looks for a registered Stop hook and reports installed | absent | broken (registered but the script is missing — the dangerous middle case, since the settings file looks right) | unknown (project dir undeterminable, never reported as absent). The advisory rides the HANDSHAKE INSTRUCTIONS, the one channel every session reads unasked, and loop_status carries the same as a machine-readable field. This matters because reflow2_init installs no hooks at all: every consumer project has no session-end nudge, and until now nothing said so.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "The loop's own safety net is checked, and its absence is announced",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -17183,6 +17320,14 @@
       }
     },
     {
+      "node_id": "chg:nudge-path",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The loop's safety net is run as registered, and its absence is announced to every session"
+      }
+    },
+    {
       "node_id": "chg:promote-brainstorms",
       "node_type": "ChangeEvent",
       "properties": {
@@ -17694,6 +17839,19 @@
         "name": "nodes",
         "provenance": "authored",
         "purpose": "The nodes module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:nudge",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "nudge",
+        "provenance": "authored",
+        "purpose": "Whether this project's session-end nudge exists, and saying so when it does not.",
         "status": "planned",
         "tier": "operational"
       }
@@ -18722,6 +18880,16 @@
       }
     },
     {
+      "node_id": "decision:ack:4d5e909b76d01f3c",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:4d5e909b76d01f3c.",
+        "name": "Reviewed: gap:4d5e909b76d01f3c",
+        "rationale": "Standing disposition: validation evidence lives in docs/trials/ and in field reports from real use rather than as validation-kind Verifications, so the detector correctly reports what the graph cannot see. Re-acknowledged at 54 capabilities — the id derives from the affected SET, so every new capability mints a new gap and the previous acknowledgement cannot carry. Worth noting the irony here: this very capability is about a mechanism nobody had checked, and the acknowledgement churn is the same shape of unexamined machinery.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:4dc755507da9ffe5",
       "node_type": "Decision",
       "properties": {
@@ -19038,6 +19206,16 @@
         "decision": "Accepted the gap gap:ca4e30e6002dfd13.",
         "name": "Reviewed: gap:ca4e30e6002dfd13",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities: nothing is built for claims yet. The decision that shapes it landed minutes ago (dec:multi-writer-architecture), so this is the newest work on the board rather than neglected work.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:cd7e9eaaeba49218",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:cd7e9eaaeba49218.",
+        "name": "Reviewed: gap:cd7e9eaaeba49218",
+        "rationale": "Built after v0.12.0 was cut, so it ships in the next release (dec:intent-preserved — a post-cut component is answered by the next manifest, never backfilled into a shipped one). Same disposition as cmp:degraded, cmp:skills, cmp:sync and cmp:identity.",
         "status": "accepted"
       }
     },
@@ -20237,6 +20415,16 @@
       }
     },
     {
+      "node_id": "frag:art:nudge-detect",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered nudge.rs"
+      }
+    },
+    {
       "node_id": "frag:art:operate",
       "node_type": "Fragment",
       "properties": {
@@ -20444,6 +20632,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered design_identity.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-nudge-path",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_nudge_path.py"
       }
     },
     {
@@ -22007,6 +22205,17 @@
       }
     },
     {
+      "node_id": "ver:nudge-path",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "The hook is registered, its script exists, and running the REGISTERED command with a real Stop payload produces the block decision the harness consumes — plus silence when the loop was checked, and once-only firing (tools/test_nudge_path.py, 9 cases). The server's detection covers installed / absent / broken / unmalformed-settings (nudge.rs, 4 cases). FOUND BY WRITING IT: the first version asserted a non-zero exit code and failed against a working hook — Stop hooks block by printing JSON and exiting 0, so the test had encoded the wrong contract.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:portability",
       "node_type": "Verification",
       "properties": {
@@ -22292,7 +22501,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:dc8c1ce9c2c160a65f243c9894a3e7af0eb9c1a63ea4127cdae975ae2dde96b6",
+  "prev_content_hash": "sha256:28cf661d88ddbe6e0ae2d7cfbf9568bcb11f9300ac5806998d5b88999025b0bf",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

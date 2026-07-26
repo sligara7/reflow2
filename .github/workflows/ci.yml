@@ -94,6 +94,12 @@ jobs:
         # branches editing different parts of one export must merge with no
         # human, and a both-sides conflict must leave the path unmerged.
         run: python3 tools/test_merge_driver.py
+      - name: Nudge-path suite (the REGISTERED hook, run as registered)
+        # req:nudge-path-proven: test_loop_nudge covers the script's logic given
+        # its inputs, and passed the whole time nobody had checked the hook was
+        # installed. This reads .claude/settings.json, runs the command it finds,
+        # and asserts the JSON block decision the harness actually consumes.
+        run: python3 tools/test_nudge_path.py
       - name: Stale-seat suite (two real graphs, one shared export file)
         # req:stale-seat-knows: a seat whose graph never caught up must not
         # replace the shared design with a complete-but-older document. Two

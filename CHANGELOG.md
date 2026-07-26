@@ -33,6 +33,29 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The loop's own safety net is checked, and its absence is announced**
+  (`cap:nudge-path-proven`, `req:nudge-path-proven`). The Stop hook is the only
+  trigger that fires when an agent has stopped calling anything, which makes it
+  the one that matters most — and nothing verified it. `test_loop_nudge.py`
+  covered the script's logic given its inputs and passed happily the whole time
+  nobody had checked the hook was registered.
+
+  `tools/test_nudge_path.py` now reads `.claude/settings.json`, takes the command
+  the harness would run, and runs **that** with the JSON a real Stop hook
+  receives — asserting the `{"decision":"block"}` the harness actually consumes,
+  that the reason names what happened, that a session which ran the loop check is
+  left alone, and that it fires **once**.
+
+  And the backstop, which matters more than the proof: the server reports
+  `installed` / `absent` / `broken` (registered but the script is missing — the
+  dangerous middle case, because the settings file *looks* right) / `unknown`
+  (never reported as absent — claiming a net is missing when we only failed to
+  look is the same lie in the other direction). When it is missing, the advisory
+  rides the **handshake instructions**, the one channel every session reads
+  unasked, and `loop_status` carries it as a field. This is not theoretical:
+  `reflow2_init.py` installs no hooks, so **every consumer project has no
+  session-end nudge** — and until now nothing said so.
+
 - **A claim names the session that made it, and a claim nobody is working says
   so** (`cap:claim-liveness`, `req:claims-have-owners`). Claims record a **seat**
   — `machine:pid:mint`, minted once per process with zero coordination — and
