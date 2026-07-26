@@ -83,6 +83,9 @@ Three records, three questions — kept separate on purpose:
   (~215 nodes), the durable record behind `tools/build_design_graph.py`.
 
 ### 3⅛ · Scoped, not built — *what a piece of work would actually take*
+- [scope-corpus-ingest.md](scope-corpus-ingest.md) — pointing reflow2 at a folder of documents: the
+  cross-document identity everyone expects to be the hard part is already built, and the real gaps are
+  that `ingest` extracts no Decisions and no Verifications, and cannot be called from a session at all.
 - [scope-read-while-held.md](scope-read-while-held.md) — reading a design another seat holds: it is THREE
   crates rather than one (RocksDB's lock, tantivy's writer lock inside the store dir, and reflow2's
   reindex-at-open), the read-only-vs-secondary trade, and the two things to prove before trusting either.
