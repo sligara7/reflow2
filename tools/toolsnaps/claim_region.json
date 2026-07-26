@@ -37,6 +37,14 @@
           "null"
         ]
       },
+      "seat": {
+        "default": null,
+        "description": "Who is claiming, as a SESSION rather than a person — defaults to this\nserver process, which is what makes liveness computable. Pass your own\nonly if you have a durable handle for the session (a fleet worker name);\nit is a name, never a lock.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "seed_id": {
         "description": "The node the region is computed from.",
         "type": "string"

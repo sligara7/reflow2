@@ -33,6 +33,25 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A claim names the session that made it, and a claim nobody is working says
+  so** (`cap:claim-liveness`, `req:claims-have-owners`). Claims record a **seat**
+  — `machine:pid:mint`, minted once per process with zero coordination — and
+  `claim_report` **computes** liveness by asking the operating system whether
+  that process still exists. Nothing writes "I am alive", so nothing can be
+  stale about it.
+
+  A claim whose session has exited is reported `gone`, listed in `stale` with
+  its note intact, and **kept out of `overlaps`**: a collision with nobody is
+  not a collision, and reporting it as one is how an advisory report starts
+  lying — people wait for somebody who left. A claim from another machine, or
+  from before seats were recorded, is `unknown` and *still counts* as a possible
+  collision, because reading it as free would invite someone to take work that
+  is actively being done.
+
+  Schema: `CLAIMS.seat`, additive. `claim_region` takes an optional `seat` for
+  callers with a durable session handle (a fleet worker name); it is a name,
+  never a lock.
+
 - **A design knows its own name** (`cap:design-identity`, `req:design-identity`,
   `dec:identity-out-of-band`). Every reflow2 graph used to answer to one
   hardcoded id, so **no design could tell another design from itself** —

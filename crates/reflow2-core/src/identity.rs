@@ -229,3 +229,110 @@ mod tests {
         assert!(a.chars().all(|c| c.is_ascii_hexdigit()));
     }
 }
+
+// ---------------------------------------------------------------------------
+// Seat identity — who is *working*, as opposed to what is being worked on.
+// ---------------------------------------------------------------------------
+
+/// This session's name, minted once per process.
+///
+/// `req:claims-have-owners`. A claim that does not say who made it cannot be
+/// told from a claim nobody is working any more, and a ghost claim makes the
+/// overlap report lie — which is worse than no report, because people act on it.
+///
+/// Same doctrine as the design's own name (`dec:identity-out-of-band`): nothing
+/// shared is read, so nothing can race at one seat or fifteen. The shape is
+/// `<machine>:<pid>:<mint>`, and it is chosen to make **liveness computable**
+/// rather than asserted — a later reader can ask the operating system whether
+/// that process still exists instead of trusting a flag somebody set.
+pub fn seat_id() -> String {
+    static SEAT: std::sync::OnceLock<String> = std::sync::OnceLock::new();
+    SEAT.get_or_init(|| {
+        let nanos = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .map(|d| d.as_nanos())
+            .unwrap_or(0);
+        let mint = format!(
+            "{:08x}",
+            crate::nodes::fnv1a(&format!("{nanos}")) & 0xffff_ffff
+        );
+        format!("{}:{}:{mint}", machine(), std::process::id())
+    })
+    .clone()
+}
+
+/// This machine's name, for telling "their session died" from "their session is
+/// on a different computer, and I cannot see it from here".
+///
+/// Public so tests can build a seat this machine will recognise, rather than
+/// reimplementing the lookup and disagreeing with it somewhere subtle.
+///
+/// Best effort by design, and honest when it fails: an unknown machine makes
+/// every foreign claim report as `Unknown` rather than as alive or dead, which
+/// is the only truthful answer available.
+pub fn machine() -> String {
+    // Each source is trimmed and emptiness-checked BEFORE falling through, so
+    // an empty HOSTNAME (set but blank, which happens in stripped environments)
+    // still reaches /etc/hostname instead of short-circuiting to unknown.
+    let non_empty = |s: String| Some(s.trim().to_string()).filter(|h| !h.is_empty());
+    std::env::var("HOSTNAME")
+        .ok()
+        .and_then(non_empty)
+        .or_else(|| {
+            std::fs::read_to_string("/etc/hostname")
+                .ok()
+                .and_then(non_empty)
+        })
+        .unwrap_or_else(|| "unknown-machine".to_string())
+}
+
+/// Is the session that made a claim still running?
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum Liveness {
+    /// The process is still there. Somebody is probably working this.
+    Live,
+    /// The session that made this claim has exited. The claim is a ghost —
+    /// still worth reading for what it says, never worth treating as held.
+    Gone,
+    /// Made on another machine, by a seat with no name, or on a machine that
+    /// could not identify itself. Reported as unknown rather than guessed:
+    /// calling a foreign claim dead would invite somebody to take work that is
+    /// actively being done.
+    Unknown,
+}
+
+/// Ask the operating system whether a seat is still running.
+///
+/// Computed, not remembered — nothing writes "I am alive" anywhere, so nothing
+/// can be stale. Cross-machine is deliberately `Unknown`: a pid means nothing
+/// on a computer that is not the one that minted it.
+pub fn seat_liveness(seat: &str) -> Liveness {
+    let parts: Vec<&str> = seat.split(':').collect();
+    let [host, pid, ..] = parts.as_slice() else {
+        return Liveness::Unknown;
+    };
+    if *host != machine() || *host == "unknown-machine" {
+        return Liveness::Unknown;
+    }
+    let Ok(pid) = pid.parse::<u32>() else {
+        return Liveness::Unknown;
+    };
+    if std::path::Path::new(&format!("/proc/{pid}")).exists() {
+        return Liveness::Live;
+    }
+    // No /proc (macOS): ask ps. One spawn per distinct seat, on a report path
+    // that runs when a person asks, never in a loop.
+    if std::path::Path::new("/proc").exists() {
+        // /proc exists but this pid is not in it: the process is genuinely gone.
+        return Liveness::Gone;
+    }
+    match std::process::Command::new("ps")
+        .args(["-p", &pid.to_string()])
+        .output()
+    {
+        Ok(out) if out.status.success() => Liveness::Live,
+        Ok(_) => Liveness::Gone,
+        Err(_) => Liveness::Unknown,
+    }
+}

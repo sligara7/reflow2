@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:dc8c1ce9c2c160a65f243c9894a3e7af0eb9c1a63ea4127cdae975ae2dde96b6",
+  "content_hash": "sha256:28cf661d88ddbe6e0ae2d7cfbf9568bcb11f9300ac5806998d5b88999025b0bf",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -64,6 +64,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:claim-liveness",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:claims"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -818,6 +826,12 @@
       "from_id": "chg:brainstorm-skill-built",
       "properties": {},
       "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:claim-liveness",
+      "properties": {},
+      "to_id": "epoch:v0120"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2012,6 +2026,15 @@
         "action": "modified"
       },
       "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-4e39bbf40ae22fb8",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
     },
     {
       "edge_type": "CHANGED",
@@ -3398,6 +3421,51 @@
         "action": "modified"
       },
       "to_id": "dec:exploratory-staging"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:claim-liveness",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:claim-liveness",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:claim-liveness",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:claim-liveness",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:claim-liveness",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:claim-liveness"
     },
     {
       "edge_type": "CHANGED",
@@ -6757,6 +6825,24 @@
       "from_id": "cap:change-an-existing-feature",
       "properties": {},
       "to_id": "decision:ack:f58dc09a846a8783"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:claim-liveness",
+      "properties": {},
+      "to_id": "dec:advisory-concurrency"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:claim-liveness",
+      "properties": {},
+      "to_id": "dec:identity-out-of-band"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:claim-liveness",
+      "properties": {},
+      "to_id": "decision:ack:48b5379679665396"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -12782,6 +12868,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:claim-liveness"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:claims",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cap:cluster-claims"
     },
     {
@@ -13406,6 +13500,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:claim-liveness",
+      "properties": {},
+      "to_id": "req:claims-have-owners"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:cluster-claims",
       "properties": {},
       "to_id": "req:concurrent-planning"
@@ -13946,6 +14046,12 @@
       "from_id": "ver:change",
       "properties": {},
       "to_id": "cap:change"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:claim-liveness",
+      "properties": {},
+      "to_id": "cap:claim-liveness"
     },
     {
       "edge_type": "VERIFIES",
@@ -14887,7 +14993,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bd100813c2f74603",
+        "checksum": "sha256:5b6cb19cd4efedd8a4940a54412d033f73a904b376953f4f0f58d3ffee989d57",
         "location": "crates/reflow2-core/src/claims.rs",
         "name": "claims.rs",
         "status": "realized"
@@ -15085,7 +15191,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a2f4a50e1dd13adb2c077a8673525c29a8feb8eae5198cd69a4528124e38e99f",
+        "checksum": "sha256:2e7192954fc043afa454a0aae7b88582d1bce92d6f014db9a1758c84a3c45eec",
         "location": "crates/reflow2-core/src/identity.rs",
         "name": "identity.rs",
         "status": "realized"
@@ -15338,7 +15444,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3c2923f5a5508615e33186d4b24dc0a09b5234e7cf1fa69ed0cab18fe714fedd",
+        "checksum": "sha256:a31cc1389ddc910816f6fa8a3c9dfd86c5d29b47d271decd90dfab3074f8ee1d",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -15621,6 +15727,19 @@
         "name": "Show where to extend or simplify a feature that already exists",
         "provenance": "authored",
         "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:claim-liveness",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Every claim records a seat — machine:pid:mint, minted once per process with zero coordination — defaulting to the session making it, overridable with a durable handle (a fleet worker name). claim_report then COMPUTES liveness by asking the operating system whether that process still exists: nothing writes \"I am alive\", so nothing can be stale. A claim whose session exited is reported `gone`, listed in `stale` with its note intact, and EXCLUDED from overlaps, because a collision with nobody is not a collision and reporting it as one is how an advisory report starts lying. A claim from another machine, or from before seats were recorded, is `unknown` and still counts as a possible collision — reading it as free would invite somebody to take work that is actively being done.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A claim names the session that made it, and a claim nobody is working says so",
+        "provenance": "authored",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -16463,6 +16582,14 @@
       }
     },
     {
+      "node_id": "chg:accept-4e39bbf40ae22fb8",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Correcting my own mistake: I had just written schema/core.yaml's hash onto this artifact, which points at crates/reflow2-core/src/schema.rs. That file is unchanged; this restores its real (16-char) baseline. schema/core.yaml is not a registered artifact, so the CLAIMS.seat addition needs no accept here."
+      }
+    },
+    {
       "node_id": "chg:accept-5517aad06e685a27",
       "node_type": "ChangeEvent",
       "properties": {
@@ -16893,6 +17020,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The brainstorm skill: ideas recorded as ideas, and the finding that the existing vocabulary already tells a musing from a choice"
+      }
+    },
+    {
+      "node_id": "chg:claim-liveness",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Claims name their session, and a claim nobody is working stops reading as held"
       }
     },
     {
@@ -18543,6 +18678,16 @@
         "decision": "Accepted the gap gap:4589232c9150f8fe.",
         "name": "Reviewed: gap:4589232c9150f8fe",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities: cap:onboarding is a skill over existing operations (BL-101) and no artifact exists yet. It arrives with the build.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:48b5379679665396",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:48b5379679665396.",
+        "name": "Reviewed: gap:48b5379679665396",
+        "rationale": "Standing disposition: validation evidence lives in docs/trials/ and in field reports from real use, not as validation-kind Verifications, so the detector correctly reports what the graph cannot see. Re-acknowledged at 53 capabilities — the id derives from the affected SET, so every new capability mints a new gap and the previous acknowledgement cannot carry. That churn is a finding about the acknowledgement mechanism, not about validation.",
         "status": "accepted"
       }
     },
@@ -21545,6 +21690,17 @@
       }
     },
     {
+      "node_id": "ver:claim-liveness",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "A claim records the session that made it; a claim from a session that exited is a ghost with its note kept; a ghost is not a collision; two live sessions on the same ground still collide; another machine is unknown rather than dead and still counts; a pre-seat claim is unknown rather than assumed live (tests/claims.rs, 6 new cases of 15). Proven end to end over stdio with a genuinely exited server process: gone vs live, zero false overlaps, the ghost named in `stale`.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:cluster-claims",
       "node_type": "Verification",
       "properties": {
@@ -22136,7 +22292,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:af6091157f2fc6ad71941faa625cdf56012a6dc829bdc9cf78f4247f8734c16a",
+  "prev_content_hash": "sha256:dc8c1ce9c2c160a65f243c9894a3e7af0eb9c1a63ea4127cdae975ae2dde96b6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

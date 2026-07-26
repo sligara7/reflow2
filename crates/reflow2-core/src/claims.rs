@@ -50,6 +50,14 @@ pub struct Claim {
     pub claimed_at: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub note: Option<String>,
+    /// The session that made it (`req:claims-have-owners`). Absent on claims
+    /// made before seats were recorded — reported as unknown, never assumed.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub seat: Option<String>,
+    /// Whether that session is still running. **Computed at read time** from
+    /// the operating system, never stored: nothing writes "I am alive", so
+    /// nothing can be stale about it.
+    pub liveness: crate::identity::Liveness,
 }
 
 /// Two claims whose computed regions intersect — the thing worth telling
@@ -68,7 +76,13 @@ pub struct ClaimReport {
     /// All claims, sorted by contributor then seed.
     pub claims: Vec<Claim>,
     /// Pairs of claims whose regions intersect, worst (largest overlap) first.
+    /// **Ghost claims are not in here** — see `stale`.
     pub overlaps: Vec<ClaimOverlap>,
+    /// Claims whose session has exited. Still listed in `claims`, because the
+    /// note on them is often exactly what a colleague wants to read — but kept
+    /// OUT of `overlaps`, because a collision with nobody is not a collision,
+    /// and reporting it as one is how an advisory report starts lying.
+    pub stale: Vec<Claim>,
     /// Said in the payload, not only in the docs: whoever reads this over the
     /// wire needs to know an overlap is a warning, not a refusal.
     pub advisory: &'static str,
@@ -76,7 +90,12 @@ pub struct ClaimReport {
 
 const ADVISORY: &str = "Claims are advisory: they never block a write, and they are only as fresh \
                         as the last pull. An overlap means two people may collide — the merge will \
-                        still resolve it correctly if they do.";
+                        still resolve it correctly if they do. Liveness is COMPUTED from the \
+                        claiming session, not stored: `gone` means that session has exited and the \
+                        claim is a ghost (excluded from overlaps), `unknown` means it was made on \
+                        another machine or before seats were recorded — unknown is never read as \
+                        free, because taking work somebody is actively doing is the expensive \
+                        mistake.";
 
 fn int_prop(props: &BTreeMap<String, Value>, key: &str, fallback: usize) -> usize {
     props
@@ -115,6 +134,7 @@ impl DesignGraph {
         depth: usize,
         note: Option<&str>,
         at: Option<&str>,
+        seat: Option<&str>,
     ) -> Result<Claim, DynoError> {
         if self.get_node(node::CONTRIBUTOR, contributor_id)?.is_none() {
             return Err(DynoError::NodeNotFound {
@@ -137,6 +157,14 @@ impl DesignGraph {
         if let Some(note) = note {
             props = props.set("note", note);
         }
+        // Default to THIS session rather than leaving it blank: a claim with no
+        // owner cannot be told from one nobody is working, and the whole point
+        // is that the report stops lying about which is which. A caller may pass
+        // its own seat (a fleet worker handle, say) — it is a name, not a lock.
+        let seat = seat
+            .map(str::to_string)
+            .unwrap_or_else(crate::identity::seat_id);
+        props = props.set("seat", seat.as_str());
         self.create_edge(
             edge::CLAIMS,
             node::CONTRIBUTOR,
@@ -151,6 +179,8 @@ impl DesignGraph {
             depth,
             claimed_at: at.map(str::to_string),
             note: note.map(str::to_string),
+            liveness: crate::identity::seat_liveness(&seat),
+            seat: Some(seat),
         })
     }
 
@@ -169,12 +199,21 @@ impl DesignGraph {
         for c in self.scan_nodes(node::CONTRIBUTOR)? {
             for e in self.outgoing(&c.node_id, Some(edge::CLAIMS))? {
                 let props: BTreeMap<String, Value> = e.properties.into_iter().collect();
+                let seat = str_prop(&props, "seat");
                 out.push(Claim {
                     contributor_id: c.node_id.clone(),
                     seed_id: e.to_id,
                     depth: int_prop(&props, "depth", 2),
                     claimed_at: str_prop(&props, "claimed_at"),
                     note: str_prop(&props, "note"),
+                    // Asked of the OS on every read. A claim from a session that
+                    // has since exited is a ghost, and a ghost reported as held
+                    // is what makes people wait for nobody.
+                    liveness: seat
+                        .as_deref()
+                        .map(crate::identity::seat_liveness)
+                        .unwrap_or(crate::identity::Liveness::Unknown),
+                    seat,
                 });
             }
         }
@@ -221,6 +260,16 @@ impl DesignGraph {
                 if claims[i].contributor_id == claims[j].contributor_id {
                     continue;
                 }
+                // A claim whose session has exited is not held by anybody, so
+                // an overlap with it is not a collision — that is exactly the
+                // ghost this requirement exists to stop reporting as live.
+                // `Unknown` still counts: it may well be somebody working on
+                // another machine, and the costly error is the other direction.
+                if claims[i].liveness == crate::identity::Liveness::Gone
+                    || claims[j].liveness == crate::identity::Liveness::Gone
+                {
+                    continue;
+                }
                 let shared: Vec<String> = regions[i]
                     .intersection(&regions[j])
                     .map(String::from)
@@ -242,9 +291,15 @@ impl DesignGraph {
                 .then(x.b.contributor_id.cmp(&y.b.contributor_id))
         });
 
+        let stale: Vec<Claim> = claims
+            .iter()
+            .filter(|c| c.liveness == crate::identity::Liveness::Gone)
+            .cloned()
+            .collect();
         Ok(ClaimReport {
             claims,
             overlaps,
+            stale,
             advisory: ADVISORY,
         })
     }

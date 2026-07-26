@@ -163,6 +163,7 @@ schema:
         depth: { type: int, default: 2, description: "How far from the seed the claimed region reaches, in hops." }
         claimed_at: { type: string }
         note: { type: string, description: "Why it is held / what is being done — the thing a colleague actually wants to know." }
+        seat: { type: string, description: "The SESSION that made the claim, as <machine>:<pid>:<mint> — assigned with zero coordination, never negotiated (dec:identity-out-of-band). It is what makes liveness COMPUTABLE: a claim whose session has exited is a ghost, and a ghost that reads as live makes the overlap report lie. A claim with no seat is from before this existed, and is reported as unknown rather than assumed live." }
 
     DECOMPOSES:
       from: Requirement

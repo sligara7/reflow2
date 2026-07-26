@@ -44,6 +44,7 @@ fn a_claim_records_who_holds_what_and_why() {
             2,
             Some("adding MFA"),
             Some("2026-07-25"),
+            None,
         )
         .unwrap();
     assert_eq!(c.contributor_id, "who:ann");
@@ -62,7 +63,7 @@ fn a_claim_does_not_block_anyone() {
     // this ever fails, the layer has become something the design does not
     // support and cannot honour.
     let mut g = team();
-    g.claim_region("who:ann", "req:auth", 2, None, None)
+    g.claim_region("who:ann", "req:auth", 2, None, None, None)
         .unwrap();
 
     // Bob edits squarely inside Ann's region. Nothing refuses him.
@@ -86,9 +87,9 @@ fn claiming_the_same_ground_is_allowed_and_reported_not_refused() {
     // not an error, because sometimes two people genuinely must work the same
     // ground and a tool that refused would simply be routed around.
     let mut g = team();
-    g.claim_region("who:ann", "req:auth", 2, Some("MFA"), None)
+    g.claim_region("who:ann", "req:auth", 2, Some("MFA"), None, None)
         .unwrap();
-    g.claim_region("who:bob", "cap:login", 1, Some("rate limiting"), None)
+    g.claim_region("who:bob", "cap:login", 1, Some("rate limiting"), None, None)
         .unwrap();
 
     let report = g.claim_report().unwrap();
@@ -111,9 +112,9 @@ fn claiming_the_same_ground_is_allowed_and_reported_not_refused() {
 #[test]
 fn regions_that_do_not_touch_do_not_collide() {
     let mut g = team();
-    g.claim_region("who:ann", "cap:logout", 0, None, None)
+    g.claim_region("who:ann", "cap:logout", 0, None, None, None)
         .unwrap();
-    g.claim_region("who:bob", "cap:export", 0, None, None)
+    g.claim_region("who:bob", "cap:export", 0, None, None, None)
         .unwrap();
     let report = g.claim_report().unwrap();
     assert_eq!(report.claims.len(), 2);
@@ -130,9 +131,9 @@ fn one_person_holding_two_overlapping_regions_is_not_a_collision() {
     // Reporting it would train people to ignore the overlap list, which is how
     // a signal dies.
     let mut g = team();
-    g.claim_region("who:ann", "req:auth", 2, None, None)
+    g.claim_region("who:ann", "req:auth", 2, None, None, None)
         .unwrap();
-    g.claim_region("who:ann", "cap:login", 2, None, None)
+    g.claim_region("who:ann", "cap:login", 2, None, None, None)
         .unwrap();
     let report = g.claim_report().unwrap();
     assert_eq!(report.claims.len(), 2);
@@ -146,7 +147,7 @@ fn the_region_follows_the_design_instead_of_freezing() {
     // membership list would silently stop covering it the moment someone added
     // an edge, and nobody would notice.
     let mut g = team();
-    g.claim_region("who:ann", "req:auth", 2, None, None)
+    g.claim_region("who:ann", "req:auth", 2, None, None, None)
         .unwrap();
     let before = g.claimed_region(&g.claims().unwrap()[0]).unwrap();
     assert!(!before.contains("cap:mfa"));
@@ -165,7 +166,7 @@ fn the_region_follows_the_design_instead_of_freezing() {
 #[test]
 fn releasing_a_claim_lets_the_ground_go() {
     let mut g = team();
-    g.claim_region("who:ann", "req:auth", 2, None, None)
+    g.claim_region("who:ann", "req:auth", 2, None, None, None)
         .unwrap();
     assert!(g.release_claim("who:ann", "req:auth").unwrap());
     assert!(g.claims().unwrap().is_empty());
@@ -181,11 +182,11 @@ fn a_claim_on_something_that_does_not_exist_is_refused() {
     // the export looking authoritative.
     let mut g = team();
     assert!(
-        g.claim_region("who:ann", "req:nope", 2, None, None)
+        g.claim_region("who:ann", "req:nope", 2, None, None, None)
             .is_err()
     );
     assert!(
-        g.claim_region("who:nobody", "req:auth", 2, None, None)
+        g.claim_region("who:nobody", "req:auth", 2, None, None, None)
             .is_err()
     );
 }
@@ -196,7 +197,7 @@ fn claims_do_not_drag_people_into_blast_radii() {
     // working on something is coordination, not design structure. If it
     // propagated, every impact analysis would start reporting people.
     let mut g = team();
-    g.claim_region("who:ann", "req:auth", 2, None, None)
+    g.claim_region("who:ann", "req:auth", 2, None, None, None)
         .unwrap();
     let radius = g.propagate_from(&["req:auth"], Default::default()).unwrap();
     assert!(
@@ -208,4 +209,174 @@ fn claims_do_not_drag_people_into_blast_radii() {
             .map(|i| &i.node_id)
             .collect::<Vec<_>>()
     );
+}
+
+// ---------------------------------------------------------------------------
+// req:claims-have-owners — a claim names its session, and liveness is computed
+// ---------------------------------------------------------------------------
+
+/// A seat on this machine whose process is definitely not running.
+///
+/// Built from a pid that cannot exist rather than by killing something: a test
+/// that spawns and reaps a process to get a dead pid races the OS reusing it.
+fn dead_seat() -> String {
+    // Built from a pid that cannot be running rather than by killing something:
+    // a test that spawns and reaps a process to get a dead pid races the OS
+    // reusing it. The machine name comes from the same function the check uses,
+    // so the two cannot disagree.
+    format!("{}:0:deadbeef", reflow2_core::identity::machine())
+}
+
+#[test]
+fn a_claim_records_the_session_that_made_it() {
+    let mut g = team();
+    let claim = g
+        .claim_region("who:ann", "req:auth", 2, Some("MFA"), None, None)
+        .unwrap();
+
+    let seat = claim.seat.expect("a claim must name its seat");
+    assert!(
+        seat.contains(&std::process::id().to_string()),
+        "defaulting to this session is what makes liveness computable: {seat}"
+    );
+    assert_eq!(
+        claim.liveness,
+        reflow2_core::identity::Liveness::Live,
+        "the session that just made it is, definitionally, still running"
+    );
+}
+
+#[test]
+fn a_claim_from_a_session_that_exited_is_reported_as_a_ghost() {
+    // THE test. A claim nobody is working must not read as held — that is the
+    // lie that makes an advisory report worse than no report, because people
+    // act on it and wait for somebody who left.
+    let mut g = team();
+    g.claim_region(
+        "who:ann",
+        "req:auth",
+        2,
+        Some("left hours ago"),
+        None,
+        Some(&dead_seat()),
+    )
+    .unwrap();
+
+    let report = g.claim_report().unwrap();
+
+    assert_eq!(report.claims.len(), 1);
+    assert_eq!(
+        report.claims[0].liveness,
+        reflow2_core::identity::Liveness::Gone
+    );
+    assert_eq!(report.stale.len(), 1, "and it is called out: {report:?}");
+    assert_eq!(
+        report.stale[0].note.as_deref(),
+        Some("left hours ago"),
+        "the ghost keeps its note — that is usually what a colleague wants to read"
+    );
+}
+
+#[test]
+fn a_ghost_claim_is_not_a_collision() {
+    // The consequence that matters: overlaps must mean "somebody is actually
+    // working this ground", or the report trains people to ignore it.
+    let mut g = team();
+    g.claim_region("who:ann", "req:auth", 2, None, None, Some(&dead_seat()))
+        .unwrap();
+    g.claim_region("who:bob", "req:auth", 2, None, None, None)
+        .unwrap();
+
+    let report = g.claim_report().unwrap();
+
+    assert!(
+        report.overlaps.is_empty(),
+        "a live claim overlapping a dead one is not a collision: {:?}",
+        report.overlaps
+    );
+    assert_eq!(report.claims.len(), 2, "but both are still listed");
+    assert_eq!(report.stale.len(), 1);
+}
+
+#[test]
+fn two_live_sessions_on_the_same_ground_still_collide() {
+    // The guard on the guard: liveness must not quietly suppress real overlaps.
+    let mut g = team();
+    g.claim_region("who:ann", "req:auth", 2, None, None, None)
+        .unwrap();
+    g.claim_region("who:bob", "req:auth", 2, None, None, None)
+        .unwrap();
+
+    let report = g.claim_report().unwrap();
+
+    assert_eq!(report.overlaps.len(), 1, "{report:?}");
+    assert!(report.stale.is_empty());
+}
+
+#[test]
+fn a_claim_from_another_machine_is_unknown_rather_than_dead() {
+    // Never read as free: taking work somebody is actively doing on another
+    // computer is the expensive mistake, and a pid means nothing over there.
+    let mut g = team();
+    g.claim_region(
+        "who:ann",
+        "req:auth",
+        2,
+        None,
+        None,
+        Some("some-other-box:4242:aabbccdd"),
+    )
+    .unwrap();
+    g.claim_region("who:bob", "req:auth", 2, None, None, None)
+        .unwrap();
+
+    let report = g.claim_report().unwrap();
+
+    assert_eq!(
+        report
+            .claims
+            .iter()
+            .find(|c| c.contributor_id == "who:ann")
+            .unwrap()
+            .liveness,
+        reflow2_core::identity::Liveness::Unknown
+    );
+    assert!(report.stale.is_empty(), "unknown is not gone");
+    assert_eq!(
+        report.overlaps.len(),
+        1,
+        "and it still counts as a possible collision: {report:?}"
+    );
+}
+
+#[test]
+fn a_claim_made_before_seats_existed_is_unknown_not_live() {
+    // Legacy claims carry no seat. Guessing "live" would be the old behaviour
+    // with a new label on it; guessing "gone" would invite somebody to take
+    // work in progress. Unknown is the only true answer.
+    let mut g = team();
+    g.claim_region("who:ann", "req:auth", 2, None, None, None)
+        .unwrap();
+    // Strip the seat the way a pre-v0.13 claim has none.
+    let edges = g.outgoing("who:ann", Some("CLAIMS")).unwrap();
+    let target = edges[0].to_id.clone();
+    g.delete_edge("CLAIMS", "who:ann", &target).unwrap();
+    g.create_edge(
+        "CLAIMS",
+        "Contributor",
+        "who:ann",
+        "Requirement",
+        &target,
+        reflow2_core::nodes::Props::new().set("depth", 2i64),
+    )
+    .unwrap();
+
+    let report = g.claim_report().unwrap();
+
+    assert_eq!(report.claims[0].seat, None);
+    assert_eq!(
+        report.claims[0].liveness,
+        reflow2_core::identity::Liveness::Unknown
+    );
+    assert!(report.stale.is_empty());
 }

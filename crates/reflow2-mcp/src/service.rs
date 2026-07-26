@@ -526,6 +526,12 @@ pub struct ClaimReq {
     /// Timestamp; the core takes no clock, so the caller supplies it.
     #[serde(default)]
     pub at: Option<String>,
+    /// Who is claiming, as a SESSION rather than a person — defaults to this
+    /// server process, which is what makes liveness computable. Pass your own
+    /// only if you have a durable handle for the session (a fleet worker name);
+    /// it is a name, never a lock.
+    #[serde(default)]
+    pub seat: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2162,6 +2168,7 @@ impl ReflowService {
                 req.depth.unwrap_or(2),
                 req.note.as_deref(),
                 req.at.as_deref(),
+                req.seat.as_deref(),
             )
             .map_err(dyno_err)?,
         )
