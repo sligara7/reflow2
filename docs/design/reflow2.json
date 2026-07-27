@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:798043273f4701402d3e54ad6c9f214e1770602973ec4a178e2e8c1162e22c65",
+  "content_hash": "sha256:db0aa7f43c5b97f536b395d76ad3b721540994656961b526104b467424a7d27a",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5012,6 +5012,24 @@
         "action": "modified"
       },
       "to_id": "cap:portability"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:token-subset-pass",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:token-subset-pass",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:ingest"
     },
     {
       "edge_type": "CHANGED",
@@ -17997,7 +18015,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:16977203addb8635",
+        "checksum": "sha256:6ba40ebcfd5b7057",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
         "status": "realized"
@@ -20335,6 +20353,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Export just the published surface — the one piece of composition that every architecture option needs"
+      }
+    },
+    {
+      "node_id": "chg:token-subset-pass",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The structural pass: a subset relation scoring cannot reach"
       }
     },
     {

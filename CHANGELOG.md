@@ -55,6 +55,28 @@ This file is the third view: *what changed, and when*.
   ([docs/storyflow-resolution-nuggets.md](docs/storyflow-resolution-nuggets.md)) —
   the first finding to travel between the two projects since they diverged.
 
+- **…and the near-matches scoring cannot reach are found structurally**
+  (`MatchKind::TokenSubset`). A similarity ratio falls as the length difference
+  grows, so `Gateway` vs `API Gateway` scores **74** — below every threshold
+  reflow2 declares — while being one of the commonest things a folder of
+  documents contains. No amount of tuning reaches it; it needs a different
+  question, so when scoring finds nothing reflow2 now asks whether one name's
+  words are a strict subset of another's.
+
+  Reported, **never merged on its own**: `Auth Service` is a strict subset of
+  `Legacy Auth Service`, and those are plainly two services. The report names the
+  longer, more specific side as `suggested_survivor` — storyflow's rule, and the
+  non-obvious half, since the naive "keep whichever node has more edges" collapses
+  the specific into the vague.
+
+  Names are normalised first (lowercase, punctuation trimmed, grammar words
+  dropped). The stopword list is deliberately **grammar only** — extending it to
+  `service`, `system` or `module` would collapse `Billing Service` and `Auth
+  Service` into the same two tokens.
+
+  Every merge and every candidate now carries a `match_kind`, so when one turns
+  out wrong it is clear whether to fix a threshold or a rule.
+
 
 ## [0.15.0] — 2026-07-26
 

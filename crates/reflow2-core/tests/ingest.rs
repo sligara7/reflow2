@@ -7,7 +7,8 @@ use reflow2_core::detect::GapSource;
 use reflow2_core::nodes::{edge, node};
 use reflow2_core::propagate::PropagateOptions;
 use reflow2_core::{
-    ChangeType, DesignGraph, IngestOptions, IngestStatus, MockLlmBackend, parse_snapshot_state,
+    ChangeType, DesignGraph, IngestOptions, IngestStatus, MatchKind, MockLlmBackend,
+    parse_snapshot_state,
 };
 
 const BRIEF: &str = "Build a widget that serves reads fast and works offline.";
@@ -794,5 +795,91 @@ fn reading_thresholds_from_the_schema_does_not_change_what_merges() {
     assert!(
         report.merge_candidates.is_empty(),
         "and a merge is not also reported as a question"
+    );
+}
+
+/// The case similarity SCORING can never reach. A ratio falls as the length
+/// difference grows, so `Gateway` vs `API Gateway` scores **74** — below the 82
+/// that Capability declares — while being one of the commonest things a corpus
+/// contains. No threshold tuning finds it; only a structural question does.
+///
+/// Reported, never merged: `Auth Service` is a strict subset of `Legacy Auth
+/// Service` too, and those are plainly two different services.
+#[test]
+fn a_token_subset_is_found_where_scoring_cannot_reach() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:v1".into(),
+            ..Default::default()
+        },
+        &mock_cap("cap:gw", "Gateway", false),
+    )
+    .unwrap();
+
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:v2".into(),
+                ..Default::default()
+            },
+            &mock_cap("cap:gw-2", "API Gateway", false),
+        )
+        .unwrap();
+
+    assert!(
+        report.fuzzy_merges.is_empty(),
+        "a subset relation must never merge on its own: {:?}",
+        report.fuzzy_merges
+    );
+    assert_eq!(
+        report.merge_candidates.len(),
+        1,
+        "the pair scoring 74 must still be surfaced: {report:?}"
+    );
+    let c = &report.merge_candidates[0];
+    assert_eq!(c.match_kind, MatchKind::TokenSubset, "found structurally");
+    assert_eq!(c.extracted_id, "cap:gw-2");
+    assert_eq!(c.candidate_id, "cap:gw");
+    // The LONGER, more specific name is the suggested survivor — storyflow's
+    // rule. Here that is the newly extracted "API Gateway".
+    assert_eq!(c.suggested_survivor, "cap:gw-2");
+
+    // Both nodes exist. Nothing was decided.
+    assert_eq!(g.count_nodes(node::CAPABILITY).unwrap(), 2);
+}
+
+/// Two unrelated names must not become a candidate just because the structural
+/// pass exists — a pass that fires on everything is worse than no pass.
+#[test]
+fn unrelated_names_produce_no_candidate() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:v1".into(),
+            ..Default::default()
+        },
+        &mock_cap("cap:gw", "Gateway", false),
+    )
+    .unwrap();
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:v2".into(),
+                ..Default::default()
+            },
+            &mock_cap("cap:bill", "Invoice Reconciliation", false),
+        )
+        .unwrap();
+
+    assert!(report.fuzzy_merges.is_empty());
+    assert!(
+        report.merge_candidates.is_empty(),
+        "unrelated names must stay unrelated: {:?}",
+        report.merge_candidates
     );
 }

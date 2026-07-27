@@ -261,6 +261,55 @@ pub struct FuzzyMerge {
     pub node_type: &'static str,
     /// The fuzzy score (0–100) that cleared the threshold.
     pub score: u32,
+    /// How the pair was found. Always `Fuzzy` today — a token-subset relation is
+    /// reported as a candidate rather than merged, because `Auth Service` is a
+    /// strict subset of `Legacy Auth Service` and those are plainly two things.
+    pub match_kind: MatchKind,
+}
+
+/// How a near-match was found. Recorded on every merge and every candidate,
+/// because when one later turns out wrong the discriminator is what says whether
+/// to fix a threshold or a rule (storyflow's `match_kind`, imported).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum MatchKind {
+    /// Name similarity score cleared the type's threshold.
+    Fuzzy,
+    /// One name's words are a strict subset of the other's. Found structurally,
+    /// because similarity SCORING cannot find it: a ratio falls as the length
+    /// difference grows, so `Gateway` vs `API Gateway` scores 74 — below every
+    /// threshold reflow2 declares — while being the case a corpus produces most.
+    /// No amount of threshold tuning reaches it; it needs a different question.
+    TokenSubset,
+}
+
+/// Words dropped before comparing names. **Grammar only, never domain nouns.**
+/// storyflow strips `the`/`of`/`a`/`an`/`and`; reflow2 must not extend that to
+/// `service`, `system`, `module` or `component`, however tempting — design prose
+/// is made of those words, and stripping them would collapse `Billing Service`
+/// and `Auth Service` into the same two tokens.
+const NAME_STOPWORDS: &[&str] = &[
+    "the", "of", "a", "an", "and", "or", "for", "to", "in", "on", "&",
+];
+
+/// Lowercase, split on whitespace, trim non-alphanumeric edges, drop stopwords
+/// and empties. `"The Auth Service"` → `["auth", "service"]`.
+fn name_tokens(name: &str) -> Vec<String> {
+    name.to_lowercase()
+        .split_whitespace()
+        .map(|t| t.trim_matches(|c: char| !c.is_alphanumeric()).to_string())
+        .filter(|t| !t.is_empty() && !NAME_STOPWORDS.contains(&t.as_str()))
+        .collect()
+}
+
+/// True when every word of `subset` appears in `superset` AND `subset` is
+/// strictly shorter. Equal token sets are excluded deliberately — those are the
+/// fuzzy pass's business, and reporting them twice would be noise.
+fn is_token_subset(subset: &[String], superset: &[String]) -> bool {
+    if subset.is_empty() || superset.is_empty() || subset.len() >= superset.len() {
+        return false;
+    }
+    subset.iter().all(|t| superset.contains(t))
 }
 
 /// A near-match that was NOT merged: it cleared the type's `fuzzy_threshold`
@@ -283,6 +332,14 @@ pub struct MergeCandidate {
     pub score: u32,
     /// The score it would have had to reach to merge without asking.
     pub auto_merge_threshold: u32,
+    /// How the pair was found — a score, or a structural subset relation.
+    pub match_kind: MatchKind,
+    /// Which side is the more SPECIFIC name, and so the one a merge should keep.
+    /// storyflow's rule, and it is the non-obvious half: the longer name wins
+    /// regardless of edge count, because the naive "keep whichever has more
+    /// edges" collapses the specific into the vague and is hard to undo.
+    /// Reported, never acted on — reflow2 asks (`dec:ask-not-repair`).
+    pub suggested_survivor: String,
 }
 
 /// Whether the ingest ran fully clean or degraded.
@@ -862,20 +919,58 @@ impl DesignGraph {
                             canonical_id: candidate.clone(),
                             node_type,
                             score,
+                            match_kind: MatchKind::Fuzzy,
                         });
                         self.integrate_existing(st, node_type, &candidate, new_map);
                     } else {
                         st.merge_candidates.push(MergeCandidate {
                             extracted_id: id.to_string(),
-                            candidate_id: candidate,
+                            candidate_id: candidate.clone(),
                             node_type,
                             score,
                             auto_merge_threshold: auto_merge,
+                            match_kind: MatchKind::Fuzzy,
+                            // A score says the two are alike, not which is more
+                            // specific; the existing node is suggested because it
+                            // is the one already carrying edges and history.
+                            suggested_survivor: candidate,
                         });
                         self.integrate_new(st, node_type, id, new_map);
                     }
                 }
-                Ok(None) => self.integrate_new(st, node_type, id, new_map),
+                // Nothing by score. Try the structural question before concluding
+                // this is a genuinely new thing — `Gateway` vs `API Gateway`
+                // scores 74, below every threshold reflow2 declares, and is the
+                // case a corpus produces most.
+                Ok(None) => {
+                    match self.token_subset_match(node_type, &new_map, id) {
+                        Err(e) => st
+                            .warnings
+                            .push(format!("token-subset match {node_type} '{id}': {e}")),
+                        Ok(Some((candidate, existing_is_longer))) => {
+                            let (_, auto_merge) = self.resolution_thresholds(node_type);
+                            let survivor = if existing_is_longer {
+                                candidate.clone()
+                            } else {
+                                id.to_string()
+                            };
+                            st.merge_candidates.push(MergeCandidate {
+                                extracted_id: id.to_string(),
+                                candidate_id: candidate,
+                                node_type,
+                                // No score cleared anything — this was found
+                                // structurally, and saying 0 would read as "not
+                                // similar" when the truth is "not measured".
+                                score: 0,
+                                auto_merge_threshold: auto_merge,
+                                match_kind: MatchKind::TokenSubset,
+                                suggested_survivor: survivor,
+                            });
+                        }
+                        Ok(None) => {}
+                    }
+                    self.integrate_new(st, node_type, id, new_map);
+                }
             },
         }
     }
@@ -1009,6 +1104,54 @@ impl DesignGraph {
             }
         }
         Ok(best)
+    }
+
+    /// The structural pass that scoring cannot do: find an existing same-type
+    /// node whose name tokens are a strict subset of the extracted node's, or
+    /// vice versa. Returns the candidate's id and which side is more specific.
+    ///
+    /// Runs only when the fuzzy pass found nothing, so a pair already reported by
+    /// score is not reported twice. Best = the smallest token-count difference,
+    /// which is the closest qualification rather than the most distant one.
+    fn token_subset_match(
+        &self,
+        node_type: &'static str,
+        new_map: &HashMap<String, Value>,
+        extracted_id: &str,
+    ) -> Result<Option<(String, bool)>, DynoError> {
+        let Some(new_name) = new_map.get("name").and_then(Value::as_str) else {
+            return Ok(None);
+        };
+        let new_tokens = name_tokens(new_name);
+        if new_tokens.is_empty() {
+            return Ok(None);
+        }
+        let mut best: Option<(String, bool, usize)> = None;
+        for n in self.scan_nodes(node_type)? {
+            if n.node_id == extracted_id {
+                continue;
+            }
+            let Some(existing_name) = n.properties.get("name").and_then(Value::as_str) else {
+                continue;
+            };
+            let existing_tokens = name_tokens(existing_name);
+            // `existing_is_longer` says which id to suggest as the survivor.
+            let (matched, existing_is_longer) = if is_token_subset(&new_tokens, &existing_tokens) {
+                (true, true)
+            } else if is_token_subset(&existing_tokens, &new_tokens) {
+                (true, false)
+            } else {
+                (false, false)
+            };
+            if !matched {
+                continue;
+            }
+            let gap = new_tokens.len().abs_diff(existing_tokens.len());
+            if best.as_ref().is_none_or(|(_, _, b)| gap < *b) {
+                best = Some((n.node_id.clone(), existing_is_longer, gap));
+            }
+        }
+        Ok(best.map(|(id, longer, _)| (id, longer)))
     }
 
     /// `Fragment YIELDED node {action}` — provenance link.

@@ -95,7 +95,10 @@ pub use heal::{
     HealProposal, HealReport, HealSeverity, HealStrategy, ReviewedDefect, SkippedOperation,
 };
 pub use hierarchy::{HierarchyIssue, HierarchyIssueKind, Level};
-pub use ingest::{DroppedEdge, IngestOptions, IngestReport, IngestStatus, PassError};
+pub use ingest::{
+    DroppedEdge, FuzzyMerge, IngestOptions, IngestReport, IngestStatus, MatchKind, MergeCandidate,
+    PassError,
+};
 pub use llm::{
     LlmBackend, LlmError, LlmParams, LlmRequest, LlmResponse, MockLlmBackend, complete_json,
 };
