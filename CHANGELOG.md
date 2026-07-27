@@ -52,6 +52,30 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **You can now drive INGEST yourself — no LLM provider involved** (`ingest_step`,
+  SP-3b/BL-7). The multi-pass extraction pipeline has existed for months and was
+  **unreachable from a session**: it needs an `LlmBackend`, reflow2 ships none,
+  and the calling agent cannot be reached mid-op because it is the outer caller.
+  So provenance Fragments, time-aware resolution, the resolution bands and the
+  structural subset pass all sat behind a door with no handle.
+
+  Call it with no answers; it replies with prompts; answer them in context and
+  call again with everything gathered so far, until it reports `done`. Usually
+  three or four rounds — later passes are gated on the discovery classifier and
+  threaded with the ids earlier ones produced, so they genuinely cannot be asked
+  up front.
+
+  **Nothing is written until the last round.** The earlier rounds replay the
+  whole pipeline against a throwaway graph, which is safe because every prompt is
+  issued before the integrate phase begins — so an abandoned handshake leaves no
+  half-design behind, and a test pins it. There is also **no server-side session
+  state**: each call is self-contained, so it survives a restart, works across
+  seats sharing one server, and cannot leak an abandoned run.
+
+  Prefer it over calling `add_*` yourself for anything document-shaped. That is
+  what buys you provenance back to the source text, snapshot-before-overwrite
+  when a re-ingest changes something, and the resolution work above.
+
 - **reflow2 can say what it has never been told about** (`coverage_report`,
   BL-95). Every other check reasons about nodes *already in the graph*, so a
   design covering a third of a system reported the same `0 open gaps` as one

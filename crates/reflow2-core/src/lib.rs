@@ -98,8 +98,8 @@ pub use heal::{
 };
 pub use hierarchy::{HierarchyIssue, HierarchyIssueKind, Level};
 pub use ingest::{
-    DroppedEdge, FuzzyMerge, IngestOptions, IngestReport, IngestStatus, MatchKind, MergeCandidate,
-    PassError,
+    DroppedEdge, FuzzyMerge, IngestOptions, IngestReport, IngestStatus, IngestStep, MatchKind,
+    MergeCandidate, PassError,
 };
 pub use llm::{
     LlmBackend, LlmError, LlmParams, LlmRequest, LlmResponse, MockLlmBackend, complete_json,

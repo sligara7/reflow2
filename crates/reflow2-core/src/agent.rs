@@ -182,6 +182,99 @@ impl AgentBackend {
     }
 }
 
+/// Serves the answers the agent has already given, and **collects the prompts it
+/// has not** — the primitive the repeated-round loop needs.
+///
+/// [`PromptCollector`] gathers everything and answers nothing;
+/// [`AgentBackend`] answers everything and gathers nothing. An op whose prompt
+/// sequence branches on earlier answers — `ingest`, whose phase-2 passes are
+/// gated on a phase-1 discovery classifier and threaded with phase-1 rosters —
+/// needs both at once: serve what is known so the run reaches further, and
+/// record what is newly reachable and still unanswered. Repeat until it collects
+/// nothing, which is the module docs' "prepare again picks up the newly-reachable
+/// prompts".
+///
+/// An unanswered request gets the stub and is recorded; the op then fails that
+/// pass into its own empty default (never cascading, per INGEST's discipline)
+/// and carries on, which is exactly what makes the next round reachable.
+pub struct PartialBackend {
+    answers: HashMap<String, String>,
+    stub: String,
+    outstanding: RefCell<Vec<AgentPrompt>>,
+    seen: RefCell<HashSet<String>>,
+    used: RefCell<HashSet<String>>,
+}
+
+impl PartialBackend {
+    /// Build from the answers gathered so far. An empty iterator makes this a
+    /// pure collector; a complete one makes it a pure server.
+    pub fn new(answers: impl IntoIterator<Item = AgentAnswer>) -> Self {
+        Self {
+            answers: answers.into_iter().map(|a| (a.id, a.text)).collect(),
+            stub: String::new(),
+            outstanding: RefCell::new(Vec::new()),
+            seen: RefCell::new(HashSet::new()),
+            used: RefCell::new(HashSet::new()),
+        }
+    }
+
+    /// Set the stub handed back for a prompt with no answer yet.
+    #[must_use]
+    pub fn with_stub(mut self, stub: impl Into<String>) -> Self {
+        self.stub = stub.into();
+        self
+    }
+
+    /// Prompts issued this run that had no answer, in first-seen order,
+    /// deduplicated by id. Empty means the run had everything it asked for.
+    pub fn outstanding(&self) -> Vec<AgentPrompt> {
+        self.outstanding.borrow().clone()
+    }
+
+    /// Ids supplied but never requested — stale answers from an earlier shape of
+    /// the input, reported rather than ignored.
+    pub fn unused_answers(&self) -> Vec<String> {
+        let used = self.used.borrow();
+        let mut unused: Vec<String> = self
+            .answers
+            .keys()
+            .filter(|id| !used.contains(*id))
+            .cloned()
+            .collect();
+        unused.sort();
+        unused
+    }
+}
+
+impl LlmBackend for PartialBackend {
+    fn name(&self) -> &str {
+        "agent-partial"
+    }
+
+    fn complete(&self, request: &LlmRequest) -> Result<LlmResponse, LlmError> {
+        let id = prompt_id(request);
+        if let Some(text) = self.answers.get(&id) {
+            self.used.borrow_mut().insert(id);
+            return Ok(LlmResponse {
+                text: text.clone(),
+                model: Some("agent".to_string()),
+            });
+        }
+        if self.seen.borrow_mut().insert(id.clone()) {
+            self.outstanding.borrow_mut().push(AgentPrompt {
+                id,
+                system: request.system.clone(),
+                prompt: request.prompt.clone(),
+                expect_json: request.expect_json,
+            });
+        }
+        Ok(LlmResponse {
+            text: self.stub.clone(),
+            model: Some("agent-partial".to_string()),
+        })
+    }
+}
+
 impl LlmBackend for AgentBackend {
     fn name(&self) -> &str {
         "agent"

@@ -58,6 +58,7 @@ use dynograph_resolution::token_sort_ratio;
 use dynograph_storage::StoredNode;
 use serde::Deserialize;
 
+use crate::agent::{AgentAnswer, AgentBackend, AgentPrompt, PartialBackend};
 use crate::graph::DesignGraph;
 use crate::llm::{LlmBackend, LlmRequest, complete_json};
 use crate::nodes::{Props, edge, node};
@@ -545,6 +546,77 @@ fn roster<'a>(items: impl IntoIterator<Item = (&'a str, &'a str)>) -> String {
         .map(|(id, name)| format!("- {id} — {name}"))
         .collect::<Vec<_>>()
         .join("\n")
+}
+
+/// One turn of the agent-native ingest handshake (SP-3b).
+#[derive(Debug, serde::Serialize)]
+#[serde(tag = "status", rename_all = "snake_case")]
+pub enum IngestStep {
+    /// The run needs these answered before it can go further. Answer them and
+    /// call again with the SAME input and options, passing every answer gathered
+    /// so far — earlier ones included, because the run is replayed from the top
+    /// rather than resumed.
+    NeedsLlm {
+        /// Prompts newly reachable this round, in the order the pipeline asked.
+        prompts: Vec<AgentPrompt>,
+        /// Answers supplied that no pass requested — stale, and reported rather
+        /// than ignored, because a leftover answer usually means the input
+        /// changed underneath the handshake.
+        unused_answers: Vec<String>,
+    },
+    /// Every prompt was answered and the design was written.
+    Done { report: Box<IngestReport> },
+}
+
+impl DesignGraph {
+    /// Drive INGEST with the ambient agent as the model (SP-3b).
+    ///
+    /// `ingest` needs an [`LlmBackend`], and the agent-native surface has no
+    /// provider: the *calling agent* is the model, and it cannot be reached
+    /// mid-op because it is the outer caller. This is the collect-then-serve
+    /// handshake from `agent.rs`, driven for an op whose prompt sequence
+    /// **branches on earlier answers** — phase-2 passes are gated on a phase-1
+    /// discovery classifier and threaded with phase-1 rosters, so the rounds
+    /// cannot be collapsed into one.
+    ///
+    /// Call with no answers; answer what comes back; call again with everything
+    /// gathered so far. Repeat until `Done`. Typically three rounds.
+    ///
+    /// **Nothing is written until the last one.** The prepare rounds replay the
+    /// whole pipeline against a throwaway in-memory graph, which is safe because
+    /// every prompt is issued before INGEST's integrate phase begins — so a
+    /// half-answered run cannot leave half a design behind. It also means the
+    /// handshake holds **no server-side session state**: each call is
+    /// self-contained, so it survives a restart, works across seats sharing one
+    /// server, and cannot leak an abandoned run.
+    pub fn ingest_step(
+        &mut self,
+        input: &str,
+        options: &IngestOptions,
+        answers: Vec<AgentAnswer>,
+    ) -> Result<IngestStep, DynoError> {
+        // Prepare: replay against a scratch graph to see what is still needed.
+        let probe = PartialBackend::new(answers.clone());
+        let mut scratch = DesignGraph::open_in_memory()?;
+        // The scratch run's own result is discarded; only what it ASKED matters.
+        // Its errors are the expected consequence of stubbed answers, not a
+        // failure of this call.
+        let _ = scratch.ingest(input, options, &probe);
+        let prompts = probe.outstanding();
+        if !prompts.is_empty() {
+            return Ok(IngestStep::NeedsLlm {
+                prompts,
+                unused_answers: probe.unused_answers(),
+            });
+        }
+
+        // Serve: nothing outstanding, so replay for real against this design.
+        let backend = AgentBackend::from_answers(answers);
+        let report = self.ingest(input, options, &backend)?;
+        Ok(IngestStep::Done {
+            report: Box::new(report),
+        })
+    }
 }
 
 impl DesignGraph {

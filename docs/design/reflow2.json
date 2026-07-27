@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:21e6644c44ed6c1d65b7d73b989aaa6059c25493d8823825140e343f922208b9",
+  "content_hash": "sha256:42e3d0d150e1b36f115eb9dc7263618fa546202a08a0364b5105e8cfce1af016",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -711,6 +711,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:8ae5b0690a0d618b",
+      "properties": {},
+      "to_id": "req:design-the-simulator"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:8ce3d04154396568",
       "properties": {},
       "to_id": "req:nudge-path-proven"
@@ -930,6 +936,12 @@
       "from_id": "chg:import-adopts-identity",
       "properties": {},
       "to_id": "epoch:v0130"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:ingest-handshake",
+      "properties": {},
+      "to_id": "epoch:v0150"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4190,6 +4202,51 @@
         "action": "modified"
       },
       "to_id": "cap:design-identity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:ingest-handshake",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:ingest-handshake",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:ingest-handshake",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:ingest-handshake",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:corpus-ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:ingest-handshake",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:ingest"
     },
     {
       "edge_type": "CHANGED",
@@ -16186,6 +16243,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:ingest-handshake-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:ingest-handshake"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:init",
       "properties": {
         "completeness": "complete"
@@ -17387,6 +17452,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:ingest-handshake",
+      "properties": {},
+      "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:key-interfaces",
       "properties": {},
       "to_id": "cap:key-interfaces"
@@ -17889,6 +17960,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:ingest-handshake-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:ingest-handshake-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:init",
       "properties": {
         "action": "created"
@@ -18250,7 +18329,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:24c417ac64030158",
+        "checksum": "sha256:c33a33c15e2611b3",
         "location": "crates/reflow2-core/src/agent.rs",
         "name": "agent.rs",
         "status": "realized"
@@ -18558,9 +18637,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:17abd1e148d03253",
+        "checksum": "sha256:72c167ebef5a7f98",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:ingest-handshake-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a",
+        "location": "crates/reflow2-core/tests/ingest_handshake.rs",
+        "name": "tests/ingest_handshake.rs",
         "status": "realized"
       }
     },
@@ -18833,7 +18923,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c0314f4a3d6a13d48d9cf8f45820ac0a44e338528c390cdd815e9d98ba1c9323",
+        "checksum": "sha256:f0ba3c3ba684e5cbe2bafc08ec9a7856be7cce75863932604a0bd7f4c34ee371",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -20688,6 +20778,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "An empty store takes the name of the design it restores, so the round trip stays byte-identical"
+      }
+    },
+    {
+      "node_id": "chg:ingest-handshake",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "SP-3b: the agent drives INGEST, with no provider"
       }
     },
     {
@@ -23943,6 +24041,16 @@
       }
     },
     {
+      "node_id": "frag:art:ingest-handshake-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tests/ingest_handshake.rs"
+      }
+    },
+    {
       "node_id": "frag:art:init",
       "node_type": "Fragment",
       "properties": {
@@ -24485,6 +24593,18 @@
         "question": "Should every design get a permanent name of its own the moment it is created — one it keeps forever, even if the folder is renamed or copied to another machine — with the friendly title just a label on top? Right now every design answers to the same built-in name, so two designs cannot tell each other apart, which is what makes linking one plan to another meaningless. The fleet's way of doing this is to use the identifier the system already handed out, so nobody has to coordinate to be unique.",
         "rephrase_degraded": false,
         "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:8ae5b0690a0d618b",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-27",
+        "context_setter": "Nothing satisfies requirement “Where a design admits it, design its simulator too — and test there first”",
+        "gap_id": "gap:8ae5b0690a0d618b",
+        "question": "You said reflow2 should help people build a practice version of whatever they are designing — a simulator or digital twin — and try the design out there before building the real thing. Nothing in reflow2 does that yet. Do you want it built, do you want it kept on the list for later, or was it just a thought you would rather drop?",
+        "rephrase_degraded": false,
+        "status": "asked"
       }
     },
     {
@@ -25872,6 +25992,18 @@
       }
     },
     {
+      "node_id": "ver:ingest-handshake",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-27",
+        "level": "integration",
+        "method": "test",
+        "name": "The ambient agent drives INGEST to completion with no LLM provider, and the design lands with its provenance Fragment; an ABANDONED handshake writes NOTHING (the prepare rounds replay against a throwaway graph, so a half-answered run cannot strand half a design); the same input takes the same rounds, since each call is self-contained and no session state is held; and an answer nothing asked for is reported rather than ignored. 4 Rust cases, plus an end-to-end run over real MCP against the built binary: 4 rounds, 6 nodes, with the recovered Decision and Component both present (crates/reflow2-core/tests/ingest_handshake.rs)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:key-interfaces",
       "node_type": "Verification",
       "properties": {
@@ -26329,7 +26461,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0bad665dabb5ca99eee96933a70d7ec36b1e14f644dedac7e2ce6d2e5818f0e8",
+  "prev_content_hash": "sha256:21e6644c44ed6c1d65b7d73b989aaa6059c25493d8823825140e343f922208b9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

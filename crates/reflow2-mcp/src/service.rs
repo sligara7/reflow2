@@ -32,8 +32,8 @@ use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
     AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_SCOPE_DEPTH, DesignGraph,
     Dimension, DriftDisposition, DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions,
-    HealProposal, HealStrategy, LinkArtifactOptions, LoopStatus, ObservedArtifact, ObservedPath,
-    PromptCollector, PropagateOptions, ReconcileOptions, StoredNode, Value,
+    HealProposal, HealStrategy, IngestOptions, LinkArtifactOptions, LoopStatus, ObservedArtifact,
+    ObservedPath, PromptCollector, PropagateOptions, ReconcileOptions, StoredNode, Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -1264,6 +1264,34 @@ pub struct ProposeHealReq {
     /// Cap on structural operations; extras surface in `skipped_operations`.
     #[serde(default)]
     pub max_operations: Option<usize>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct IngestStepReq {
+    /// The freeform design material to extract from — a brief, a spec, a review
+    /// note, one document out of a folder.
+    pub input: String,
+    /// Provenance Fragment id for this run. Distinct per document: reusing one
+    /// is refused, because it would overwrite the prior run's Fragment and
+    /// reopen its epoch.
+    pub fragment_id: String,
+    /// Human title for the provenance Fragment (e.g. the file name).
+    #[serde(default)]
+    pub fragment_title: Option<String>,
+    /// How this content entered the graph (`authored` / `imported` / …).
+    #[serde(default)]
+    pub provenance: Option<String>,
+    /// The epoch matched-evolved snapshots pin to. Pass ONE epoch for a whole
+    /// corpus run, or 500 documents open 500 epochs and the history reads as
+    /// five hundred unrelated events instead of one ingest.
+    #[serde(default)]
+    pub epoch_id: Option<String>,
+    /// Every answer gathered so far, earlier rounds included — the run is
+    /// replayed from the top rather than resumed, which is what keeps the
+    /// handshake stateless.
+    #[serde(default)]
+    pub answers: Vec<JsonObject>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -3862,6 +3890,51 @@ impl ReflowService {
         };
         let mut g = self.write_lock().await;
         ok_json(g.reconcile_artifacts(&observed, &opts).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Extract a design from freeform text, with YOU as the model — no LLM \
+                       provider is involved. Call it with no `answers`; it replies \
+                       `status: needs_llm` and a list of prompts; answer each in context and call \
+                       again with the SAME input and fragment_id plus EVERY answer so far, \
+                       including earlier rounds. Repeat until `status: done`. Usually three \
+                       rounds, because later passes are gated on the discovery classifier and \
+                       threaded with the ids the earlier ones produced, so they cannot be asked \
+                       up front. NOTHING IS WRITTEN until the final round: the earlier ones \
+                       replay against a throwaway graph, so an abandoned handshake leaves no \
+                       half-design behind. There is no server-side session — each call is \
+                       self-contained, so it survives a restart and works across seats sharing \
+                       one server. Prefer this over calling add_* yourself for anything \
+                       document-shaped: it is what gives you provenance Fragments back to the \
+                       source, snapshot-before-overwrite when a re-ingest changes something, the \
+                       resolution bands that ask instead of guessing, and the structural pass \
+                       that catches `Auth` versus `Authentication Service`.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn ingest_step(
+        &self,
+        Parameters(req): Parameters<IngestStepReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let answers: Vec<AgentAnswer> = req
+            .answers
+            .into_iter()
+            .map(|a| serde_json::from_value(JsonValue::Object(a)))
+            .collect::<Result<_, _>>()
+            .map_err(|e| McpError::invalid_params(format!("invalid answer: {e}"), None))?;
+        let options = IngestOptions {
+            fragment_id: req.fragment_id.clone(),
+            fragment_title: req
+                .fragment_title
+                .unwrap_or_else(|| req.fragment_id.clone()),
+            provenance: req.provenance.unwrap_or_else(|| "authored".to_string()),
+            epoch_id: req.epoch_id,
+            ..IngestOptions::default()
+        };
+        let mut g = self.write_lock().await;
+        ok_json(
+            g.ingest_step(&req.input, &options, answers)
+                .map_err(dyno_err)?,
+        )
     }
 
     #[tool(

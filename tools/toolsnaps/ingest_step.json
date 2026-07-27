@@ -1,0 +1,59 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Extract a design from freeform text, with YOU as the model — no LLM provider is involved. Call it with no `answers`; it replies `status: needs_llm` and a list of prompts; answer each in context and call again with the SAME input and fragment_id plus EVERY answer so far, including earlier rounds. Repeat until `status: done`. Usually three rounds, because later passes are gated on the discovery classifier and threaded with the ids the earlier ones produced, so they cannot be asked up front. NOTHING IS WRITTEN until the final round: the earlier ones replay against a throwaway graph, so an abandoned handshake leaves no half-design behind. There is no server-side session — each call is self-contained, so it survives a restart and works across seats sharing one server. Prefer this over calling add_* yourself for anything document-shaped: it is what gives you provenance Fragments back to the source, snapshot-before-overwrite when a re-ingest changes something, the resolution bands that ask instead of guessing, and the structural pass that catches `Auth` versus `Authentication Service`.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "answers": {
+        "default": [],
+        "description": "Every answer gathered so far, earlier rounds included — the run is\nreplayed from the top rather than resumed, which is what keeps the\nhandshake stateless.",
+        "items": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "epoch_id": {
+        "default": null,
+        "description": "The epoch matched-evolved snapshots pin to. Pass ONE epoch for a whole\ncorpus run, or 500 documents open 500 epochs and the history reads as\nfive hundred unrelated events instead of one ingest.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "fragment_id": {
+        "description": "Provenance Fragment id for this run. Distinct per document: reusing one\nis refused, because it would overwrite the prior run's Fragment and\nreopen its epoch.",
+        "type": "string"
+      },
+      "fragment_title": {
+        "default": null,
+        "description": "Human title for the provenance Fragment (e.g. the file name).",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "input": {
+        "description": "The freeform design material to extract from — a brief, a spec, a review\nnote, one document out of a folder.",
+        "type": "string"
+      },
+      "provenance": {
+        "default": null,
+        "description": "How this content entered the graph (`authored` / `imported` / …).",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "input",
+      "fragment_id"
+    ],
+    "type": "object"
+  },
+  "name": "ingest_step"
+}
