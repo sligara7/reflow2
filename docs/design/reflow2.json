@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:33a283052b0ae743a8b35a5f9d7c9c7e42a2af6476ca82d5bac7b74d9b38251d",
+  "content_hash": "sha256:8faed13a3d6cc7a877e47467b51994d60578b9ba433b10306c236da9f0623ec9",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -696,6 +696,12 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "req:complementary-pairing",
+      "properties": {},
+      "to_id": "req:seam-incompatibility"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -7308,6 +7314,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:complementary-pairing",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:composed-analysis"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:nudge-path-proven",
       "properties": {
         "optional": false,
@@ -10830,6 +10845,12 @@
       "from_id": "req:claims-have-owners",
       "properties": {},
       "to_id": "decision:ack:95ddc1083445d73d"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:complementary-pairing",
+      "properties": {},
+      "to_id": "dec:pairing-role-placement"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -23602,6 +23623,16 @@
       }
     },
     {
+      "node_id": "dec:pairing-role-placement",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "OPEN — Anthony's word needed. Anthony described the role as an attribute of each NODE in an architecture (publish / subscribe / both / non_external). reflow2 already carries something very close: `Interface.designation` (internal | published), with PROVIDES and CONSUMES naming who stands on which side. So the question is whether the pairing role extends the Interface, or becomes a property every node type carries.\n\nALTERNATIVES WEIGHED. (1) Extend `Interface.designation` — RECOMMENDED. (2) A role property on every node, Anthony's original shape: most general, lets any node participate in a seam; costs correctness, because a Component both publishes and subscribes so the value collapses to `both` and pairs with everything, and it adds a property to 28 node types for a case nothing currently needs. (3) Neither — keep pairing manual as mirror_surface does today and let compose_and_analyse surface a bad seam as an ordinary gap once a human has wired the two sides; cheapest, but leaves exactly the hand-wiring that made this idea worth having.",
+        "name": "Where the publish/subscribe role lives: on the Interface, or on every node",
+        "rationale": "WHY THE INTERFACE. An Interface IS a boundary — it is the one node type whose entire reason for existing is to be the place two things meet, which is exactly what pairs. The publish side already exists there, is already exported by export_surface, and already withholds internals correctly. And a role is not intrinsic to a node: the same Component publishes one contract and subscribes to another, so a single role on the Component would be wrong about half the time. Anthony's `both` value is the tell — it is needed only because the attribute is sitting on the wrong noun. On an Interface, `both` is rare and meaningful (a genuinely bidirectional contract) rather than a shrug.\n\nWHAT MUST BE ADDED WHICHEVER WAY IT GOES, because this is the actual missing half: a way to declare what a design NEEDS from outside — a REQUIRED boundary — standing on its own, without the consumer first having modelled the provider's contract inside its own design. Concretely, a third value alongside `internal` and `published`, plus the matchable KEY Anthony named (an id and a description), which is what one design's `required` is matched against another's `published`. Without a key, pairing falls back to fuzzy name matching alone, and names are exactly what two organisations that never coordinated will have chosen differently.\n\nNOT SETTLED HERE: how a pair is recorded — an edge between the two Interfaces, or mirroring one into the other. MIRRORS already exists for the second; there is no edge type meaning \"these two boundaries are the same boundary seen from opposite sides\", and adding one WOULD move the version stamp and lock out older reflow2 installs.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:parallel-alternatives",
       "node_type": "Decision",
       "properties": {
@@ -26563,6 +26594,20 @@
       }
     },
     {
+      "node_id": "req:complementary-pairing",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Pair two designs by complementary role, so the seam is computed rather than hand-wired",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony's idea (2026-07-27), and the analogy he reached for is load-bearing rather than decorative: RNA strands pair because the bases are COMPLEMENTARY — adenine with uracil, guanine with cytosine — never like-with-like. Applied here: each boundary in a design declares a ROLE — it publishes, it subscribes, it does both, or it is not external at all — and each project publishes only its publish-or-both boundaries with an id and a description. The first act when combining two designs is then mechanical: match every publisher against every subscriber, associate them, and from that point treat the pair as ONE graph and run every ordinary reflow2 check over it — gaps, defects, god nodes, surprising connections, the lot. The pairing is what makes composition cheap; everything after it is machinery that already exists (cap:composed-analysis).\n\nWHAT REFLOW2 ALREADY HAS, so this is not built from nothing. `Interface.designation` is exactly the publish flag (`internal | published`, defaulting to internal because publishing is a commitment). `export_surface` emits the published Interfaces plus the Components on either side and withholds the rest. `mirror_surface` brings another design's surface in as foreign nodes. `PROVIDES` (Component→Interface) and `CONSUMES` (*→Interface) already carry the two roles at the EDGE level. So the publish half of this exists end to end.\n\nWHAT IS GENUINELY MISSING, and it is the whole idea: THE SUBSCRIBE SIDE IS NOT DECLARABLE. A design says what it OFFERS; it has no way to say what it NEEDS from outside in a form another design can be matched against. Today a consumer's need is a CONSUMES edge pointing at an Interface the consumer modelled INSIDE ITS OWN design — so a match only happens if the consumer already guessed the provider's contract and named it compatibly. Nothing declares \"I require a boundary shaped like this, from someone\". Without that half there is no complementary strand to pair with, and composition can only find seam problems the consumer had already anticipated well enough to model.\n\nTHREE OUTCOMES, NOT ONE, and all three are the useful signal: a publisher matched to a subscriber (the seam, now computed); a publisher NOBODY subscribes to (dead surface, or a consumer that has not modelled its dependency); a subscriber NOTHING publishes (an unmet need — the strongest incompatibility signal there is, and the one that should be loudest). Two publishers of one key is a fourth: a duplicated provider, which is a conflict rather than a match.\n\nWHERE THE ANALOGY BREAKS, and the break is the hard part. Base pairing is 1:1 and settled by chemistry; publish/subscribe is 1:N and settled by whatever humans NAMED things. `auth-api` against `AuthService` is the Bob/Bobby/Robert problem again, and reflow2 already solved that shape once: the two-band resolution ingest uses (below fuzzy_threshold = no match, between = a reported candidate, above auto_merge_threshold = act) plus the token-subset structural pass that catches `Gateway` vs `API Gateway`. Pairing should reuse that machinery rather than invent a second matcher — and should ASK about the middle band rather than guess, per dec:ask-not-repair.\n\nUNLABELLED MUST NOT READ AS `non_external`. If a boundary nobody has classified silently counts as internal, a design that never did the labelling pairs with nothing and reports a clean seam — the same blindness cap:coverage was built to end, where a design covering a third of a system reported the same \"0 gaps\" as one covering all of it. The pairing report must count and name what carries no role, the way coverage_report does.\n\nOPEN CHOICE, deliberately not settled here: whether the role lives on the Interface (extending `designation`, which already means almost this) or becomes an attribute of EVERY node as Anthony described. See dec:pairing-role-placement.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:completion-computed",
       "node_type": "Requirement",
       "properties": {
@@ -28146,7 +28191,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:144a240933ebc790083e5c0f8c138bd7e6350e76112cf1951f0125e0cd7d6f6f",
+  "prev_content_hash": "sha256:33a283052b0ae743a8b35a5f9d7c9c7e42a2af6476ca82d5bac7b74d9b38251d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
