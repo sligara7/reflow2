@@ -88,10 +88,30 @@ class Reflow2Check(unittest.TestCase):
         finally:
             s.close()
 
-    def gate(self, export, root=None):
+    def gate(self, export, root=None, cwd=None):
         cmd = [sys.executable, str(CHECK), "--export", str(export),
                "--root", str(root or self.tmp), "--bin", BIN]
-        return subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=120,
+                              cwd=str(cwd) if cwd else None)
+
+    def git_repo_with_export(self) -> tuple[pathlib.Path, pathlib.Path]:
+        """A real git repo holding a committed export. The lineage check reads
+        git, so a fixture that mocked it would prove nothing about the thing
+        that actually broke."""
+        repo = self.tmp / "repo"
+        repo.mkdir()
+        for args in (["init", "-q"], ["config", "user.email", "t@t"],
+                     ["config", "user.name", "t"]):
+            subprocess.run(["git", *args], cwd=repo, check=True,
+                           capture_output=True, timeout=60)
+        export = self.export(coherent)
+        committed = repo / "design.json"
+        shutil.copy(export, committed)
+        subprocess.run(["git", "add", "design.json"], cwd=repo, check=True,
+                       capture_output=True, timeout=60)
+        subprocess.run(["git", "commit", "-qm", "first export"], cwd=repo,
+                       check=True, capture_output=True, timeout=60)
+        return repo, committed
 
     # ---- the trio ---------------------------------------------------------
 
@@ -172,6 +192,91 @@ class Reflow2Check(unittest.TestCase):
         self.assertEqual(r.returncode, 0, f"no_baseline must not gate\n{r.stdout}")
         self.assertIn("no_baseline", r.stdout)
 
+
+
+
+class ExportChain(unittest.TestCase):
+    """BL-107. `dec:export-hash-chain` gives the design a history independent of
+    git — each export records the `content_hash` of the one it replaced. Six
+    consecutive commits lost that link in July 2026 while the gate reported 0
+    notes, the loop stayed clean and `detect_gaps` stayed zero, because nothing
+    read the chain. These are the checks that would have said so."""
+
+    setUp = Reflow2Check.setUp
+    tearDown = Reflow2Check.tearDown
+    export = Reflow2Check.export
+    gate = Reflow2Check.gate
+    git_repo_with_export = Reflow2Check.git_repo_with_export
+
+    @classmethod
+    def setUpClass(cls):
+        if BIN is None:
+            raise unittest.SkipTest("reflow2-mcp not built")
+
+    def second_export(self, repo: pathlib.Path):
+        """Export again into the repo, after a real change, so the working file
+        genuinely replaces the committed one."""
+        s = Server(BIN, str(self.tmp / "graph2"))
+        try:
+            coherent(s)
+            s.call("add_requirement", {"id": "req:later", "name": "Later",
+                                       "statement": "added after the first export"})
+            path = repo / "design.json"
+            s.call("export_graph", {"path": str(path), "overwrite": True})
+        finally:
+            s.close()
+        return path
+
+    def test_a_sound_chain_passes(self):
+        repo, _ = self.git_repo_with_export()
+        export = self.second_export(repo)
+        doc = json.loads(export.read_text())
+        self.assertIsNotNone(doc.get("prev_content_hash"),
+                             "exporting onto the committed file must link to it")
+        r = self.gate(export, root=repo, cwd=repo)
+        self.assertNotIn("LINEAGE", r.stdout, f"a sound chain must not complain\n{r.stdout}")
+
+    def test_a_severed_chain_fails(self):
+        """The exact shape of the July 2026 mistake: export elsewhere, copy the
+        file into place, and the link is simply absent."""
+        repo, _ = self.git_repo_with_export()
+        export = self.second_export(repo)
+        doc = json.loads(export.read_text())
+        doc["prev_content_hash"] = None
+        export.write_text(json.dumps(doc, sort_keys=True, indent=2, ensure_ascii=False))
+
+        r = self.gate(export, root=repo, cwd=repo)
+        self.assertEqual(r.returncode, 1, f"a severed chain must fail\n{r.stdout}")
+        self.assertIn("LINEAGE", r.stdout)
+        self.assertIn("records nothing", r.stdout, "it must say what it found")
+
+    def test_a_chain_linked_to_the_wrong_thing_fails(self):
+        """The subtler half, and the one that actually happened last: the link is
+        present but points at a file that was never the predecessor."""
+        repo, _ = self.git_repo_with_export()
+        export = self.second_export(repo)
+        doc = json.loads(export.read_text())
+        doc["prev_content_hash"] = "sha256:" + "0" * 64
+        export.write_text(json.dumps(doc, sort_keys=True, indent=2, ensure_ascii=False))
+
+        r = self.gate(export, root=repo, cwd=repo)
+        self.assertEqual(r.returncode, 1, f"a wrong link must fail\n{r.stdout}")
+        self.assertIn("LINEAGE", r.stdout)
+
+    def test_unchanged_content_is_not_a_break(self):
+        """The chain deliberately does not advance while content is unchanged —
+        a check that called that a break would fire on every commit that touches
+        anything else, and would be turned off within a day."""
+        repo, committed = self.git_repo_with_export()
+        r = self.gate(committed, root=repo, cwd=repo)
+        self.assertNotIn("LINEAGE", r.stdout, f"unchanged content is not a break\n{r.stdout}")
+
+    def test_outside_a_git_repo_the_question_is_skipped(self):
+        """An unanswerable question is skipped, never guessed — a consumer
+        without git must still be able to run the gate."""
+        export = self.export(coherent)
+        r = self.gate(export)
+        self.assertNotIn("LINEAGE", r.stdout, f"no git, no claim\n{r.stdout}")
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

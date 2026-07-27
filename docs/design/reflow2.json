@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f9885600607df4aca0725998acd82d65dbdeae2d4718d0e1cab85a0018634de4",
+  "content_hash": "sha256:1a27e75e5ef981405f190bf8c237b22b4eecc0e6d4e89c6d16896395f1ab47ea",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -4319,6 +4319,24 @@
         "action": "modified"
       },
       "to_id": "cap:kpp-proposal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:lineage-check",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:lineage-check",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:coverage"
     },
     {
       "edge_type": "CHANGED",
@@ -17822,7 +17840,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6002847b15115694",
+        "checksum": "sha256:cc5e4e0afecb34e3",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
         "status": "realized"
@@ -20196,6 +20214,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Build the KPP capture half: the ask-don't-promote skill, and a typed way to record what the user confirms"
+      }
+    },
+    {
+      "node_id": "chg:lineage-check",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The gate reads the export chain, so a severed lineage stops being silent"
       }
     },
     {
@@ -25733,7 +25759,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:db0aa7f43c5b97f536b395d76ad3b721540994656961b526104b467424a7d27a",
+  "prev_content_hash": "sha256:f9885600607df4aca0725998acd82d65dbdeae2d4718d0e1cab85a0018634de4",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -156,6 +156,99 @@ def hash_file(path: str, registered: str | None) -> str | None:
     return f"sha256:{digest}"
 
 
+def _git(args: list[str], cwd: str) -> str | None:
+    """Run a git command, or None if git is unavailable or the command failed.
+    Never raises: the lineage check is a bonus, and a project without git must
+    still be able to run the gate."""
+    try:
+        out = subprocess.run(
+            ["git", *args], capture_output=True, text=True, timeout=60, cwd=cwd
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return out.stdout if out.returncode == 0 else None
+
+
+def _repo_relative(path: str) -> tuple[str, str] | None:
+    """`(repo_root, path_within_repo)`, or None when the file is not in a git
+    working tree. `git show REV:path` only understands repo-relative paths, so
+    an absolute --export would otherwise skip the check without saying so."""
+    directory = os.path.dirname(os.path.abspath(path)) or "."
+    top = _git(["rev-parse", "--show-toplevel"], directory)
+    if not top:
+        return None
+    root = top.strip()
+    try:
+        rel = os.path.relpath(os.path.abspath(path), root)
+    except ValueError:
+        return None
+    if rel.startswith(".."):
+        return None
+    return root, rel.replace(os.sep, "/")
+
+
+def _export_at(rev: str, root: str, rel: str) -> dict | None:
+    """The export document as of a git revision, or None when there isn't one
+    (untracked, or the revision predates the file)."""
+    out = _git(["show", f"{rev}:{rel}"], root)
+    if not out or not out.strip():
+        return None
+    try:
+        return json.loads(out)
+    except ValueError:
+        return None
+
+
+def check_export_chain(path: str, doc: dict) -> str | None:
+    """Verify this export links to its predecessor (`dec:export-hash-chain`).
+
+    The chain gives the design a history independent of git: each export records
+    the `content_hash` of the one it replaced. `export_graph --path` builds that
+    link from **whatever file is already at the target path**, so exporting to a
+    scratch path and copying the result into place severs it — silently, which is
+    how six consecutive commits lost the link in July 2026 with the gate green,
+    the loop clean and zero gaps every time (BL-107).
+
+    Two contexts, one rule. Before a commit the working file is new and its
+    predecessor is HEAD's version; in CI the working file IS HEAD's version, so
+    the pair to check is HEAD against HEAD~1. Either way we compare a document
+    with the one it replaced.
+
+    Returns a failure message, or None when sound OR when there is nothing to
+    check against — an unanswerable question is skipped, never guessed. The
+    chain deliberately does not advance while content is unchanged, and a first
+    export has no predecessor; neither is a break.
+    """
+    located = _repo_relative(path)
+    if located is None:
+        return None  # not in a git working tree — nothing to compare against
+    root, rel = located
+    head = _export_at("HEAD", root, rel)
+    if head is None:
+        return None  # untracked, no commits yet, or the commit introducing it
+    if head.get("content_hash") != doc.get("content_hash"):
+        current, previous = doc, head  # a new export, not yet committed
+    else:
+        previous = _export_at("HEAD~1", root, rel)
+        if previous is None:
+            return None  # HEAD is the first commit carrying this export
+        current = head
+    if previous.get("content_hash") == current.get("content_hash"):
+        return None  # content unchanged — the chain is not meant to advance
+    expected = previous.get("content_hash")
+    actual = current.get("prev_content_hash")
+    if not expected or actual == expected:
+        return None
+    was = "nothing" if actual is None else actual
+    return (
+        f"LINEAGE  '{path}' does not link to the export it replaced: it records "
+        f"{was} where {expected} is expected. The design's history is independent "
+        f"of git and this severs it. Cause is almost always exporting to another "
+        f"path and copying the file into place — export_graph builds the link "
+        f"from the file already at the target, so export straight to '{path}'."
+    )
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--export", default="design.json", help="committed design export (JSON)")
@@ -206,6 +299,11 @@ def main() -> int:
             )
     else:
         notes.append("integrity: export predates content hashing (no content_hash)")
+
+    # LINEAGE (BL-107) — a severed chain used to be completely silent.
+    broken_chain = check_export_chain(opts.export, doc)
+    if broken_chain:
+        failures.append(broken_chain)
 
     with tempfile.TemporaryDirectory(prefix="reflow2-check-") as tmp:
         graph = os.path.join(tmp, "graph")

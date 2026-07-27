@@ -31,6 +31,25 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **A severed design-history chain is no longer silent** (BL-107). Each committed
+  export records the `content_hash` of the one it replaced, giving the design a
+  lineage independent of git. `export_graph` builds that link from **whatever
+  file is already at the target path** — so exporting somewhere else and copying
+  the result into place severs it, which is what happened for six consecutive
+  commits here while the gate reported 0 notes every time.
+
+  `reflow2_check.py` now compares an export against the one it replaced and
+  fails loud on a break. Two contexts, one rule: before a commit the working
+  file's predecessor is HEAD's version; in CI the working file *is* HEAD's
+  version, so the pair checked is HEAD against HEAD~1.
+
+  Both ways of being wrong about this are avoided and tested. Unchanged content
+  is **not** a break — the chain is not meant to advance — and a first export has
+  no predecessor. Outside a git working tree the question is skipped rather than
+  guessed, so a project without git can still run the gate.
+
 ### Added
 
 - **Ingest recovers the rationale layer — *why* it was built that way**
