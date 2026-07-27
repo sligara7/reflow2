@@ -185,6 +185,21 @@ python3 tools/toolsnap.py                                # tool schemas vs commi
 python3 tools/skill_lint.py                              # after any skill or tool-surface edit
 ```
 
+**Export the design EXACTLY ONCE per commit, straight onto the committed file.** The gate checks
+this since BL-107 and will fail the build if you get it wrong:
+
+```bash
+git checkout docs/design/reflow2.json    # start from what is committed
+# …then export_graph --path docs/design/reflow2.json --overwrite, ONCE, last of all
+```
+
+Each export records the `content_hash` of the one it replaced, which gives the design a history
+independent of git. That link is built from **whatever file is already at the target path**, so
+there are two ways to break it and both are silent without the gate: exporting somewhere else and
+copying the file into place (there was nothing to link to), or exporting **twice** between commits
+(the committed record then links to an intermediate that was never committed, leaving a hole).
+Make every graph write first; restore and export once at the end.
+
 **CI enforces these on every push** (`.github/workflows/ci.yml`): a fast core job
 (core tests, clippy `-D warnings`, fmt, schema, installer suite, skill lint) and a full job
 (workspace tests, the smoke test and the exit-zero instruments against the real binary). Green

@@ -306,9 +306,17 @@ def main() -> int:
             str(rel) for rel, src in source_files.items()
             if rel in mirror_files and (mirror / rel).read_bytes() != src.read_bytes()
         )
+        # The remedy is a plain copy, NOT `reflow2_init.py .`. Since v0.12.0 the
+        # kit is served rather than installed, so pointing the installer at this
+        # repository treats it as a consumer project and DELETES the mirrors
+        # instead of refreshing them — which is exactly what happened to someone
+        # following the old wording on 2026-07-27.
+        remedy = " ".join(
+            f"cp getting-started/skills/{rel} {mirror}/{rel}" for rel in differing
+        )
         check(f"{label}: every file byte-identical to the source",
               not differing,
-              f"stale: {differing} — run `python3 tools/reflow2_init.py .` to refresh")
+              f"stale: {differing} — copy the source over the mirror: {remedy}")
 
     if failures:
         print(f"\n{len(failures)} check(s) FAILED")

@@ -52,6 +52,30 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **reflow2 can say what it has never been told about** (`coverage_report`,
+  BL-95). Every other check reasons about nodes *already in the graph*, so a
+  design covering a third of a system reported the same `0 open gaps` as one
+  covering all of it — and the unmodelled part is largest exactly where the
+  system is largest. In this repository, `merge.rs` and `alternatives.rs` (1,886
+  lines, shipped in v0.10.0) sat unmodelled for two days with nothing firing.
+
+  You sweep the tree and supply what you saw — reflow2 does no file I/O, so its
+  answer is only ever as wide as your sweep. It replies with the regions no node
+  claims, rolled up to the shallowest wholly-unclaimed directory and ranked by
+  mass, so the biggest silence sorts first and a vendored tree arrives as one
+  finding rather than 900.
+
+  **It is not a score and there is nothing to pass.** An artifact whose location
+  is a directory claims everything beneath it, so modelling a vendored mass as
+  one opaque unit is *correct* — a file-count ratio would have scored that as
+  1-of-901 covered and called the right answer a failure. That trap has its own
+  test. Exclusions come back named with the rule that excluded them, because "we
+  ignored it" and "it is covered" must never look alike.
+
+  The `adopt` skill now ends by asking, so a thin pass is measured rather than
+  felt. What is **not** built, and recorded rather than half-done: the sweep is
+  not persisted, so `detect_gaps` cannot yet raise coverage from graph state.
+
 - **Ingest recovers test evidence too** (`[pass:verifications]`) — the last of
   the three things a body of documents was asked for, after requirements and
   rationale. Checks come back with the source's own account of what was done and

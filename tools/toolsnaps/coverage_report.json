@@ -1,0 +1,41 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "What has the design never been told about? You sweep the tree and supply what you saw (reflow2 does no file I/O); this answers with the regions no node claims, rolled up to the shallowest wholly-unclaimed directory and ranked by mass, so the biggest silence sorts first. Every other detector reasons about nodes ALREADY in the graph, so without this a design covering 30% of a system reports the same `0 open gaps` as one covering all of it. Deliberately not a score and never a pass/fail: a registered artifact whose location is a directory claims everything beneath it, so modelling a vendored mass as one opaque unit is correct rather than a hole. Exclusions come back named. Run it at the end of an adopt pass, so a thin pass is measured rather than felt.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "exclusions": {
+        "default": [],
+        "description": "Paths (or directory prefixes) you deliberately left out — build output,\nvendored trees, generated code. Each excluded path comes back NAMED with\nthe rule that excluded it, because \"we ignored it\" and \"it is covered\"\nmust never look alike.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "observed": {
+        "description": "What your sweep saw, one entry per path:\n`{ \"path\": \"src/thing.rs\", \"mass\": 1200 }`. `mass` is your own unit —\nbytes, lines, entries — used only to rank the silences; omit it and\nranking falls back to how many paths a region holds.",
+        "items": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "swept_at": {
+        "default": null,
+        "description": "When the sweep was taken (reflow2 takes no clock). An undated sweep is\nreported as undated rather than assumed current.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "observed"
+    ],
+    "type": "object"
+  },
+  "name": "coverage_report"
+}

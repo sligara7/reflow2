@@ -32,8 +32,8 @@ use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
     AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_SCOPE_DEPTH, DesignGraph,
     Dimension, DriftDisposition, DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions,
-    HealProposal, HealStrategy, LinkArtifactOptions, LoopStatus, ObservedArtifact, PromptCollector,
-    PropagateOptions, ReconcileOptions, StoredNode, Value,
+    HealProposal, HealStrategy, LinkArtifactOptions, LoopStatus, ObservedArtifact, ObservedPath,
+    PromptCollector, PropagateOptions, ReconcileOptions, StoredNode, Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -1264,6 +1264,26 @@ pub struct ProposeHealReq {
     /// Cap on structural operations; extras surface in `skipped_operations`.
     #[serde(default)]
     pub max_operations: Option<usize>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct CoverageReportReq {
+    /// What your sweep saw, one entry per path:
+    /// `{ "path": "src/thing.rs", "mass": 1200 }`. `mass` is your own unit —
+    /// bytes, lines, entries — used only to rank the silences; omit it and
+    /// ranking falls back to how many paths a region holds.
+    pub observed: Vec<JsonObject>,
+    /// Paths (or directory prefixes) you deliberately left out — build output,
+    /// vendored trees, generated code. Each excluded path comes back NAMED with
+    /// the rule that excluded it, because "we ignored it" and "it is covered"
+    /// must never look alike.
+    #[serde(default)]
+    pub exclusions: Vec<String>,
+    /// When the sweep was taken (reflow2 takes no clock). An undated sweep is
+    /// reported as undated rather than assumed current.
+    #[serde(default)]
+    pub swept_at: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -3842,6 +3862,37 @@ impl ReflowService {
         };
         let mut g = self.write_lock().await;
         ok_json(g.reconcile_artifacts(&observed, &opts).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "What has the design never been told about? You sweep the tree and supply \
+                       what you saw (reflow2 does no file I/O); this answers with the regions no \
+                       node claims, rolled up to the shallowest wholly-unclaimed directory and \
+                       ranked by mass, so the biggest silence sorts first. Every other detector \
+                       reasons about nodes ALREADY in the graph, so without this a design covering \
+                       30% of a system reports the same `0 open gaps` as one covering all of it. \
+                       Deliberately not a score and never a pass/fail: a registered artifact whose \
+                       location is a directory claims everything beneath it, so modelling a \
+                       vendored mass as one opaque unit is correct rather than a hole. Exclusions \
+                       come back named. Run it at the end of an adopt pass, so a thin pass is \
+                       measured rather than felt.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn coverage_report(
+        &self,
+        Parameters(req): Parameters<CoverageReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let observed: Vec<ObservedPath> = req
+            .observed
+            .into_iter()
+            .map(|o| serde_json::from_value(JsonValue::Object(o)))
+            .collect::<Result<_, _>>()
+            .map_err(|e| McpError::invalid_params(format!("invalid observation: {e}"), None))?;
+        let g = self.graph.read().await;
+        ok_json(
+            g.coverage_report(&observed, &req.exclusions, req.swept_at.as_deref())
+                .map_err(dyno_err)?,
+        )
     }
 
     #[tool(

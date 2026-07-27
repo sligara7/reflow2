@@ -34,6 +34,7 @@ pub mod budget;
 pub mod claims;
 pub mod compare;
 pub mod confirm;
+pub mod coverage;
 pub mod detect;
 pub mod dimensions;
 pub mod drift;
@@ -78,6 +79,7 @@ pub use compare::{
     LIVE_GRAPH_LABEL, NodeRef, PropertyDivergence, compare_designs,
 };
 pub use confirm::{ClaimConfirmation, ConfirmationLedger, ConfirmationState};
+pub use coverage::{CoverageReport, ObservedPath, UnclaimedRegion};
 pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, GapSource};
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};

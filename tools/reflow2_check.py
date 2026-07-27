@@ -243,9 +243,13 @@ def check_export_chain(path: str, doc: dict) -> str | None:
     return (
         f"LINEAGE  '{path}' does not link to the export it replaced: it records "
         f"{was} where {expected} is expected. The design's history is independent "
-        f"of git and this severs it. Cause is almost always exporting to another "
-        f"path and copying the file into place — export_graph builds the link "
-        f"from the file already at the target, so export straight to '{path}'."
+        f"of git and this severs it. Two causes, both fixed the same way. Either "
+        f"the export was written somewhere else and copied into place — the link "
+        f"is built from the file already at the target, so there was nothing to "
+        f"link to — or the design was exported MORE THAN ONCE since the last "
+        f"commit, chaining through an intermediate that will never be committed "
+        f"and leaving the committed history a hole. Restore the committed file "
+        f"(`git checkout {path}`) and export straight onto it, once."
     )
 
 

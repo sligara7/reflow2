@@ -129,10 +129,29 @@ The recovered design is a claim about the system; test it the way the trials tes
    an error in the model.** Fix the model where it is wrong; `acknowledge_gap` with the user's
    reason where the system is genuinely like that; and what remains open is real work the
    system's owners now know about.
-3. Close with **where-am-i**: narrate what the design now says, what was inferred versus
-   authored, what is confirmed by a real run versus merely recorded — and the open questions.
-   That narration, plus the open gap list, *is* the redocumentation deliverable.
+3. **Measure what you did not model.** Sweep the tree yourself and hand the paths to
+   `coverage_report` — reflow2 does no file I/O, so its answer is only as wide as your sweep.
+   Name your exclusions (build output, vendored trees, generated code); they come back listed,
+   because *"we ignored it"* and *"it is covered"* must never look alike.
 
-Adopt is done when the graph and the system agree and every remaining gap is either
-acknowledged or genuinely open — not when every gap is closed. A system adopted honestly
-usually *should* have open gaps; they are what "under design control" means.
+   **This step exists because every other check is blind to it.** Gaps, defects and reconcile
+   all reason about nodes that are *already in the graph*, so a pass that modelled a third of
+   the system reports the same `0 open gaps` as one that modelled all of it — and the
+   unmodelled part is largest exactly where the system is largest. Report the unclaimed regions
+   to the user, biggest first, and say plainly which parts of their system the design has never
+   heard of.
+
+   It is not a score and there is no target. An artifact whose `location` is a directory claims
+   everything beneath it, so a vendored mass modelled as one opaque unit is *correct* — the
+   granularity rule in Phase 3 stands, and this step must never be used to argue against it.
+
+4. Close with **where-am-i**: narrate what the design now says, what was inferred versus
+   authored, what is confirmed by a real run versus merely recorded — and the open questions.
+   That narration, plus the open gap list **and the unclaimed regions**, *is* the
+   redocumentation deliverable.
+
+Adopt is done when the graph and the system agree, every remaining gap is either acknowledged
+or genuinely open, and the user has been told what the design does not cover — not when every
+gap is closed. A system adopted honestly usually *should* have open gaps and uncovered regions;
+naming them is what "under design control" means, and hiding them is how a thin pass gets
+mistaken for a complete one.
