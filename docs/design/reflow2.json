@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:db0aa7f43c5b97f536b395d76ad3b721540994656961b526104b467424a7d27a",
+  "content_hash": "sha256:f9885600607df4aca0725998acd82d65dbdeae2d4718d0e1cab85a0018634de4",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -3752,6 +3752,33 @@
         "action": "modified"
       },
       "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decisions-pass",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decisions-pass",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:corpus-ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decisions-pass",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:ingest"
     },
     {
       "edge_type": "CHANGED",
@@ -18015,7 +18042,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6ba40ebcfd5b7057",
+        "checksum": "sha256:9f5fb72520c5e207",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
         "status": "realized"
@@ -20044,6 +20071,14 @@
       }
     },
     {
+      "node_id": "chg:decisions-pass",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Ingest recovers the rationale layer: why it was built that way"
+      }
+    },
+    {
       "node_id": "chg:deep-review-tier1",
       "node_type": "ChangeEvent",
       "properties": {
@@ -21228,10 +21263,10 @@
       "node_id": "dec:corpus-ingest-mechanism",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS A SCOPING FINDING, not a proposal — the fork everything else in cap:corpus-ingest depends on. reflow2's `ingest` takes an LlmBackend and reflow2 ships NO provider (agent-native: the ambient agent is the LLM), and there is no ingest tool among the 108 served — so core ingest is unreachable from a session today, and the only working path is the adopt skill, where the AGENT reads the files and calls the ordinary write tools. (a) AGENT-DRIVEN SKILL: a skill walks the folder and the agent extracts per document. No provider dependency, consistent with every other reflow2 skill, cheapest. THE COST IS WHERE THE DISCIPLINE LIVES: ingest.rs enforces never-cascade-fail, no phantom edges, provenance on everything and time-aware resolution IN CODE; a skill can only ask an agent to do those things, and an instruction is weaker than a type system — which is the failure docs/sharpening.md names, shaping the model until the tool goes quiet. (b) THE SP-3b HANDSHAKE: put ingest on the MCP surface with the AGENT as the backend — reflow2 returns the extraction prompts, the agent returns the JSON. Still no provider dependency, and every discipline stays in Rust where it is enforced. More work. (b) is also what makes the missing extraction passes worth writing, because a pass in Rust is reusable by every future ingest while a pass written into a skill is prose.",
-        "name": "OPEN — does a folder of documents go through a skill, or through the ingest handshake?",
+        "decision": "DECIDED (b) THE SP-3b HANDSHAKE, on Anthony's word 2026-07-27. `ingest` goes on the MCP surface with the AGENT as the backend: reflow2 returns the extraction prompts and the agent returns the JSON. No LLM provider dependency is added, so the agent-native deferral stands. (a) an agent-driven skill walking the folder was rejected, not unconsidered: it is cheaper and consistent with every other reflow2 skill, but it moves the disciplines ingest.rs enforces IN CODE — never cascade-fail, no phantom edges, provenance on everything, time-aware resolution, and now the resolution bands and the structural subset pass — into prose an agent is asked to follow. An instruction is weaker than a type system, and docs/sharpening.md names that exact failure: shaping the model until the tool goes quiet. THE DECIDING CONSEQUENCE is what it does to the missing extraction passes: a pass written in Rust behind the handshake is reusable by every future ingest and testable without a model, while the same pass written into a skill is prose that cannot be regression-tested at all. Since Decision and Verification passes are the two-thirds of the requester's ask that reflow2 cannot currently see, the option that makes those passes worth writing is the option that delivers the feature.",
+        "name": "A folder of documents goes through the ingest handshake, not a skill",
         "rationale": "Scoped 2026-07-26 by reading ingest.rs, graph.rs and the schema after Anthony asked whether reflow2 could take a colleague's years of markdown. The reading moved the work in BOTH directions. (1) BL-97 called cross-document identity the hard part; it is largely BUILT — fuzzy_match resolves each extracted node against every existing node of that type in the whole graph, so ingesting forty specs already converges, with the merges reported and prior states snapshotted rather than clobbered. What is missing there is COST, not capability: scan_nodes is a full type scan run once per extracted node, so a corpus is quadratic. (2) The gap nobody had named is COVERAGE OF THE ASK: ingest creates exactly eight node types, and Verification and Decision are not among them. The request was 'requirements, test results, designer intent' — reflow2 extracts the first and neither of the others, so a corpus run today would return a design with no test evidence and no rationale, from documents containing both, and nothing would say so. Full write-up in docs/scope-corpus-ingest.md, including the auto-merge-at-90 tension with dec:ask-not-repair at corpus scale, and the fifth instance of this project's recurring shape: the schema's per-type resolution thresholds are declared and read by nothing.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -25698,6 +25733,7 @@
       }
     }
   ],
+  "prev_content_hash": "sha256:db0aa7f43c5b97f536b395d76ad3b721540994656961b526104b467424a7d27a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

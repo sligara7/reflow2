@@ -33,6 +33,28 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Ingest recovers the rationale layer — *why* it was built that way**
+  (`[pass:decisions]`). The pass that makes an old body of documents worth
+  ingesting at all: reasoning is what a codebase cannot be re-read to recover,
+  and it is what leaves when the people do.
+
+  `ingest` extracted none of it before. The discovery gate has classified
+  `decisions` all along and nothing consumed the flag — so a document saying
+  *"we chose cache-aside because write-through amplified writes"* produced a
+  capability and no record of the choice.
+
+  Extracted choices carry their `rationale` in the source's own terms, and each
+  `governs_ids` becomes a `GOVERNED_BY` edge from the governed node. An id whose
+  type cannot be read from its prefix is **reported and dropped**, never written
+  against a guessed type.
+
+  **They land `proposed`, never `accepted`** — pinned by a test, because it is
+  the kind of thing a later reader "fixes". An extraction is an agent's reading
+  of somebody's document, not the user's signature, and an accepted Decision is
+  what `where-am-i` reads back as "what you decided", what the fork layer treats
+  as binding, and what the KPP contradiction check reads as a trade already made.
+  Requirements from ingest land `proposed` for the same reason.
+
 - **A near-match that is not certain is now a question, not a silent duplicate**
   (`IngestReport.merge_candidates`). `ingest` reads the two thresholds the schema
   has always declared — `fuzzy_threshold` and `auto_merge_threshold` — instead of

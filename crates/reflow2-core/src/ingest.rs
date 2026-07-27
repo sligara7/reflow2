@@ -43,8 +43,10 @@
 //! pluggable seam (see the interaction-surface decision). Also deferred: the
 //! **SME** augmentation pass,
 //! real parallelism (passes run sequentially here), per-pass timeout/retry,
-//! metrics, and the remaining passes (flows, actors, decisions,
-//! artifacts, resources, inference, dimensions, changes). This
+//! metrics, and the remaining passes (flows, actors,
+//! artifacts, resources, inference, dimensions, changes). The **decisions**
+//! pass landed 2026-07-27 — the rationale layer is what an old corpus is
+//! richest in and what a codebase cannot be re-read to recover. This
 //! increment implements the spine:
 //! project/requirements/constraints/capabilities → components → interfaces →
 //! satisfies/dependencies.
@@ -195,6 +197,39 @@ struct ExtractedInterface {
 }
 
 #[derive(Debug, Default, Deserialize)]
+struct DecisionsOut {
+    #[serde(default)]
+    decisions: Vec<ExtractedDecision>,
+}
+
+/// A choice the source material records having been made, and why.
+///
+/// The pass that makes an old corpus worth ingesting at all: *why* something
+/// was built the way it was is exactly what is lost when the people leave, and
+/// it is the one thing a codebase cannot be re-read to recover.
+///
+/// **No status field, deliberately.** Everything ingest creates lands at the
+/// schema default, and for `Decision` that default is `proposed` — set that way
+/// (req:decision-status-not-asserted) because an `accepted` Decision is what
+/// where-am-i reads back as "what you decided", what the fork layer treats as
+/// binding, and what the KPP contradiction check reads as a trade already made.
+/// An extraction is the agent's reading of a document, not the user's signature,
+/// so reaching `accepted` stays a separate act. Requirements from ingest land
+/// `proposed` for the same reason; this is consistency, not new doctrine.
+#[derive(Debug, Deserialize)]
+struct ExtractedDecision {
+    id: String,
+    name: String,
+    decision: String,
+    #[serde(default)]
+    rationale: Option<String>,
+    /// Ids from the phase-1/2 rosters that this choice shapes. Each becomes a
+    /// GOVERNED_BY edge from the governed node to the Decision.
+    #[serde(default)]
+    governs_ids: Vec<String>,
+}
+
+#[derive(Debug, Default, Deserialize)]
 struct SatisfiesOut {
     #[serde(default)]
     satisfies: Vec<SatisfiesEdge>,
@@ -281,6 +316,19 @@ pub enum MatchKind {
     /// threshold reflow2 declares — while being the case a corpus produces most.
     /// No amount of threshold tuning reaches it; it needs a different question.
     TokenSubset,
+}
+
+/// Resolve a governed node's type from reflow2's typed-id convention. Returns
+/// `None` for anything unrecognised, so a malformed id is reported and dropped
+/// rather than written against a guessed type (rule 4).
+fn governed_node_type(id: &str) -> Option<&'static str> {
+    match id.split(':').next()? {
+        "req" => Some(node::REQUIREMENT),
+        "cap" => Some(node::CAPABILITY),
+        "cmp" | "sys" => Some(node::COMPONENT),
+        "ifc" => Some(node::INTERFACE),
+        _ => None,
+    }
 }
 
 /// Words dropped before comparing names. **Grammar only, never domain nouns.**
@@ -596,6 +644,36 @@ impl DesignGraph {
             Vec::new()
         };
 
+        // Decisions: the rationale layer. Gated on discovery like every other
+        // phase-2 pass, and given the rosters built so far so `governs_ids`
+        // names real nodes instead of inventing them. Deliberately NOT gated on
+        // components existing — a document can record why a requirement was
+        // written long before anything was built to serve it, and that is
+        // exactly the material an old corpus is richest in.
+        let decisions = if discovery.decisions {
+            let governable = format!(
+                "Requirements:\n{}\n\nCapabilities:\n{cap_roster}\n\nComponents:\n{cmp_roster}",
+                roster(
+                    requirements
+                        .iter()
+                        .map(|r| (r.id.as_str(), r.name.as_str()))
+                )
+            );
+            run_pass::<DecisionsOut>(
+                backend,
+                "decisions",
+                pass_prompt(
+                    input,
+                    r#"[pass:decisions] What choices does this text record having been MADE, and why? Return JSON {"decisions":[{"id":"dec:<slug>","name":"the question that was settled","decision":"what was chosen","rationale":"why, in the source's own terms","governs_ids":["req:...","cap:...","cmp:..."]}]} using only ids from the roster. Extract only choices the text states were taken, with the reasoning it gives — never infer a rationale the source does not offer, and never record an option someone merely considered as a decision. Omit governs_ids you cannot ground."#,
+                    Some(&governable),
+                ),
+                &mut errors,
+            )
+            .decisions
+        } else {
+            Vec::new()
+        };
+
         // ---- EXTRACT · Phase 3 (edge passes over rosters) ----
         let req_roster = roster(
             requirements
@@ -712,6 +790,18 @@ impl DesignGraph {
                 .set("purpose", c.purpose.as_str());
             self.integrate_node(&mut st, node::COMPONENT, &c.id, props);
         }
+        for d in &decisions {
+            // `status` is left unset on purpose — the schema default is
+            // `proposed`, and asserting `accepted` here would forge the user's
+            // signature on someone else's reasoning.
+            let mut props = Props::new()
+                .set("name", d.name.as_str())
+                .set("decision", d.decision.as_str());
+            if let Some(r) = d.rationale.as_deref() {
+                props = props.set("rationale", r);
+            }
+            self.integrate_node(&mut st, node::DECISION, &d.id, props);
+        }
         for i in &interfaces {
             let mut props = Props::new().set("name", i.name.as_str());
             if let Some(m) = i.medium.as_deref() {
@@ -744,6 +834,32 @@ impl DesignGraph {
                 );
             }
         }
+        // GOVERNED_BY — the governed node points at the choice that shaped it.
+        // The endpoint type is resolved from the id prefix rather than asked
+        // for, because a pass that had to name both the id and its type would
+        // give an extraction two ways to be inconsistent instead of one.
+        for d in &decisions {
+            for governed in &d.governs_ids {
+                let Some(from_type) = governed_node_type(governed) else {
+                    st.warnings.push(format!(
+                        "decision '{}' governs '{governed}', whose type is not recognisable from \
+                         its id; edge dropped rather than guessed",
+                        d.id
+                    ));
+                    continue;
+                };
+                self.integrate_edge(
+                    &mut st,
+                    edge::GOVERNED_BY,
+                    from_type,
+                    governed,
+                    node::DECISION,
+                    &d.id,
+                    Props::new(),
+                );
+            }
+        }
+
         // PROVIDES / CONSUMES — both sides of each contract. An interface whose
         // provider or consumers the extraction could not ground stays unpaired
         // on purpose: DETECT raises it as a question rather than ingest guessing.

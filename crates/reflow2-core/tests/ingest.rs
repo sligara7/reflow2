@@ -883,3 +883,127 @@ fn unrelated_names_produce_no_candidate() {
         report.merge_candidates
     );
 }
+
+/// A backend whose discovery gate reports decisions present, and which returns
+/// one recorded choice governing the requirement.
+fn mock_with_decision(governs: &str) -> MockLlmBackend {
+    MockLlmBackend::new()
+        .on_contains(
+            "[pass:project_intent]",
+            r#"{"project":{"id":"proj:w","name":"Widget","mode":"flexible"}}"#,
+        )
+        .on_contains(
+            "[pass:requirements]",
+            r#"{"requirements":[{"id":"req:lat","name":"Latency","statement":"under 200ms"}]}"#,
+        )
+        .on_contains("[pass:constraints]", r#"{"constraints":[]}"#)
+        .on_contains(
+            "[pass:capabilities]",
+            r#"{"capabilities":[{"id":"cap:cache","name":"Caching","description":"serve reads"}]}"#,
+        )
+        .on_contains(
+            "[pass:discovery]",
+            r#"{"components":false,"interfaces":false,"actors":false,"decisions":true,"artifacts":false,"verifications":false,"flows":false,"resources":false}"#,
+        )
+        .on_contains(
+            "[pass:decisions]",
+            format!(
+                r#"{{"decisions":[{{"id":"dec:cache-aside","name":"How reads are cached","decision":"Cache-aside with a 60s TTL","rationale":"The team measured write amplification on write-through and rejected it","governs_ids":["{governs}"]}}]}}"#
+            ),
+        )
+        .on_contains("[pass:satisfies]", r#"{"satisfies":[]}"#)
+        .on_contains("[pass:dependencies]", r#"{"dependencies":[]}"#)
+}
+
+/// The rationale layer — *why* something was built the way it was — is what an
+/// old corpus is richest in and what a codebase cannot be re-read to recover.
+/// Until 2026-07-27 ingest extracted none of it: the discovery gate classified
+/// `decisions` and nothing consumed the flag.
+#[test]
+fn a_recorded_choice_is_extracted_with_its_reasoning() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions::default(),
+            &mock_with_decision("req:lat"),
+        )
+        .unwrap();
+    assert_eq!(report.status, IngestStatus::Ok, "{report:?}");
+
+    let d = g
+        .get_node(node::DECISION, "dec:cache-aside")
+        .unwrap()
+        .expect("the decision must be created");
+    assert_eq!(
+        d.properties.get("decision").and_then(|v| v.as_str()),
+        Some("Cache-aside with a 60s TTL")
+    );
+    assert!(
+        d.properties
+            .get("rationale")
+            .and_then(|v| v.as_str())
+            .is_some_and(|r| r.contains("write amplification")),
+        "the source's own reasoning must survive, not be paraphrased away"
+    );
+
+    // The requirement points at the choice that shaped it.
+    let gov = g.outgoing("req:lat", Some(edge::GOVERNED_BY)).unwrap();
+    assert_eq!(gov.len(), 1);
+    assert_eq!(gov[0].to_id, "dec:cache-aside");
+}
+
+/// The doctrine most likely to be "fixed" wrongly by a later reader, so it is
+/// pinned. An extraction is the agent's reading of somebody's document, not the
+/// user's signature — and an `accepted` Decision is what where-am-i reads back
+/// as "what you decided", what the fork layer treats as binding, and what the
+/// KPP contradiction check reads as a trade already made.
+#[test]
+fn an_extracted_decision_is_proposed_never_accepted() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions::default(),
+        &mock_with_decision("req:lat"),
+    )
+    .unwrap();
+
+    let d = g
+        .get_node(node::DECISION, "dec:cache-aside")
+        .unwrap()
+        .unwrap();
+    assert_eq!(
+        d.properties.get("status").and_then(|v| v.as_str()),
+        Some("proposed"),
+        "ingest must not assert that a recovered choice was ratified here"
+    );
+}
+
+/// An id whose type cannot be read from its prefix is REPORTED and dropped, not
+/// written against a guessed type. Rule 4 — no silent drops, no invented facts.
+#[test]
+fn a_governed_id_with_an_unknown_prefix_is_reported_not_guessed() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions::default(),
+            &mock_with_decision("wat:mystery"),
+        )
+        .unwrap();
+
+    assert!(
+        g.get_node(node::DECISION, "dec:cache-aside")
+            .unwrap()
+            .is_some(),
+        "the decision itself still lands"
+    );
+    assert!(
+        report
+            .warnings
+            .iter()
+            .any(|w| w.contains("wat:mystery") && w.contains("not recognisable")),
+        "the dropped edge must be named: {:?}",
+        report.warnings
+    );
+}
