@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0bad665dabb5ca99eee96933a70d7ec36b1e14f644dedac7e2ce6d2e5818f0e8",
+  "content_hash": "sha256:21e6644c44ed6c1d65b7d73b989aaa6059c25493d8823825140e343f922208b9",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -24975,6 +24975,20 @@
       }
     },
     {
+      "node_id": "req:design-the-simulator",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Where a design admits it, design its simulator too — and test there first",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A design usually has to operate in an environment. Where it is reasonable to build a simulated version of that environment — or a digital twin of the design itself — reflow2 should treat THE SIMULATOR AS SOMETHING TO BE DESIGNED, not as an implementation detail that appears later, and should support a progression: exercise the design in simulation first, iron out what that reveals, then move to progressively more realistic tests and only then to real fielding. The payoff is risk removed before it is expensive: an issue found in simulation costs a rebuild, the same issue found in the field costs a deployment and sometimes a system. THE CAVEAT IS PART OF THE REQUIREMENT, not a footnote — not every design admits a meaningful simulation, and a tool that insisted on one would produce elaborate fictions for the designs that do not. So the first question is whether a simulator is feasible and worth it for THIS design, asked rather than assumed, and a design that answers no must be able to say so on the record without being nagged.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:deterministic-core",
       "node_type": "Requirement",
       "properties": {
@@ -26315,7 +26329,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:85cd206232d76c341bf759d374ad6beb3955477304e6ef5e84a25c1218aa2abc",
+  "prev_content_hash": "sha256:0bad665dabb5ca99eee96933a70d7ec36b1e14f644dedac7e2ce6d2e5818f0e8",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
