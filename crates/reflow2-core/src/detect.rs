@@ -1826,7 +1826,17 @@ impl DesignGraph {
         // per-capability alarms at 0.55 (`dec:component-verified-computed`).
         let mut riding: BTreeMap<String, Vec<String>> = BTreeMap::new();
         for n in self.scan_nodes(node::CAPABILITY)? {
-            if !self.incoming(&n.node_id, Some(edge::VERIFIES))?.is_empty() {
+            // A check that has not passed is not proof. Until 2026-07-27 this
+            // skipped on ANY incoming VERIFIES, so attaching a `planned`
+            // Verification silenced the question — which is precisely what the
+            // detect-and-ask skill already warns against ("a check left at
+            // planned does not count as confirmation"). The skill said it; the
+            // detector did not enforce it, and the gap between those two is
+            // where a design goes quiet without getting better. Measured before
+            // changing: zero capabilities on reflow2's own graph were riding a
+            // non-passing check, so this tightens the rule without moving any
+            // existing verdict.
+            if self.has_passing_verification(&n.node_id)? {
                 continue;
             }
             let mut carrier = None;
@@ -1856,10 +1866,22 @@ impl DesignGraph {
                 ),
                 affected_ids: vec![n.node_id.clone()],
                 suggested_depth: 2,
-                evidence: format!(
-                    "Capability '{}' has 0 incoming VERIFIES; project has {} verification(s).",
-                    n.node_id, pop.verifications
-                ),
+                evidence: {
+                    let attached = self.incoming(&n.node_id, Some(edge::VERIFIES))?.len();
+                    if attached == 0 {
+                        format!(
+                            "Capability '{}' has 0 incoming VERIFIES; project has {} \
+                             verification(s).",
+                            n.node_id, pop.verifications
+                        )
+                    } else {
+                        format!(
+                            "Capability '{}' has {attached} incoming VERIFIES, none of them \
+                             passing; a check that has not passed is not proof.",
+                            n.node_id
+                        )
+                    }
+                },
             });
         }
         for (component, mut caps) in riding {

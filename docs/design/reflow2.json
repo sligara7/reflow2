@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1a27e75e5ef981405f190bf8c237b22b4eecc0e6d4e89c6d16896395f1ab47ea",
+  "content_hash": "sha256:85cd206232d76c341bf759d374ad6beb3955477304e6ef5e84a25c1218aa2abc",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1116,6 +1116,12 @@
       "from_id": "chg:verification-methods",
       "properties": {},
       "to_id": "epoch:v0140"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:verifications-pass",
+      "properties": {},
+      "to_id": "epoch:v0150"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5147,6 +5153,51 @@
         "action": "modified"
       },
       "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:verifications-pass",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:verifications-pass",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:verifications-pass",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:corpus-ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:verifications-pass",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:verifications-pass",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:ingest"
     },
     {
       "edge_type": "CHANGED",
@@ -17906,7 +17957,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:32d0609430669c46",
+        "checksum": "sha256:bba1328a493968c4",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -18060,7 +18111,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9f5fb72520c5e207",
+        "checksum": "sha256:17abd1e148d03253",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
         "status": "realized"
@@ -20446,6 +20497,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Verification methods gain demonstration and observation"
+      }
+    },
+    {
+      "node_id": "chg:verifications-pass",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Test evidence is extracted, and a claim is not allowed to count as proof"
       }
     },
     {
@@ -25759,7 +25818,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f9885600607df4aca0725998acd82d65dbdeae2d4718d0e1cab85a0018634de4",
+  "prev_content_hash": "sha256:1a27e75e5ef981405f190bf8c237b22b4eecc0e6d4e89c6d16896395f1ab47ea",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

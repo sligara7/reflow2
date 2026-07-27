@@ -149,7 +149,7 @@ fn complete_thread_yields_no_traceability_gaps() {
     g.create_node(
         node::VERIFICATION,
         "ver:a",
-        Props::new().set("name", "test a"),
+        Props::new().set("name", "test a").set("status", "passing"),
     )
     .unwrap();
     g.create_node(node::RELEASE, "rel:a", Props::new().set("name", "v1.0"))
@@ -179,7 +179,28 @@ fn complete_thread_yields_no_traceability_gaps() {
     g.create_node(
         node::VERIFICATION,
         "ver:b",
-        Props::new().set("name", "test a2"),
+        Props::new().set("name", "test a2").set("status", "passing"),
+    )
+    .unwrap();
+    // Validation as well as verification: a "complete thread" is complete on
+    // both axes, and a capability with only a passing verification-kind check
+    // correctly raises `unvalidated_capability`.
+    g.create_node(
+        node::VERIFICATION,
+        "ver:a-validation",
+        Props::new()
+            .set("name", "accepted by the user")
+            .set("status", "passing")
+            .set("kind", "validation"),
+    )
+    .unwrap();
+    g.create_edge(
+        edge::VERIFIES,
+        node::VERIFICATION,
+        "ver:a-validation",
+        node::CAPABILITY,
+        "cap:a",
+        Props::new(),
     )
     .unwrap();
     g.create_edge(

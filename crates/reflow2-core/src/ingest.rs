@@ -44,8 +44,8 @@
 //! **SME** augmentation pass,
 //! real parallelism (passes run sequentially here), per-pass timeout/retry,
 //! metrics, and the remaining passes (flows, actors,
-//! artifacts, resources, inference, dimensions, changes). The **decisions**
-//! pass landed 2026-07-27 — the rationale layer is what an old corpus is
+//! artifacts, resources, inference, dimensions, changes). The **decisions** and
+//! **verifications** passes landed 2026-07-27 — the rationale layer is what an old corpus is
 //! richest in and what a codebase cannot be re-read to recover. This
 //! increment implements the spine:
 //! project/requirements/constraints/capabilities → components → interfaces →
@@ -230,6 +230,41 @@ struct ExtractedDecision {
 }
 
 #[derive(Debug, Default, Deserialize)]
+struct VerificationsOut {
+    #[serde(default)]
+    verifications: Vec<ExtractedVerification>,
+}
+
+/// A check the source material records having been made — a test run, an
+/// inspection, a demonstration, a measurement.
+///
+/// **No status field, and that is the whole safety of this pass.** Everything
+/// ingest creates lands at the schema default, which for `Verification` is
+/// `planned`. A document saying "the load test passed" is a CLAIM about a
+/// result; recording it as `passing` would let prose promote a capability to
+/// verified, which is the exact "green while nothing was checked" failure this
+/// project spent 2026-07-26 finding in its own code. The claim is preserved in
+/// `description`, in the source's words, where a person can read it and decide.
+///
+/// This is safe to attach only because `unverified_capability` was tightened
+/// the same day to require a PASSING check: before that, hanging a `planned`
+/// Verification off a capability silenced the question.
+#[derive(Debug, Deserialize)]
+struct ExtractedVerification {
+    id: String,
+    name: String,
+    /// What the source says about the check and its outcome, in its own terms.
+    #[serde(default)]
+    description: Option<String>,
+    /// How it was checked, as a schema `method` value.
+    #[serde(default)]
+    method: Option<String>,
+    /// Ids the check covers. Each becomes a VERIFIES edge.
+    #[serde(default)]
+    verifies_ids: Vec<String>,
+}
+
+#[derive(Debug, Default, Deserialize)]
 struct SatisfiesOut {
     #[serde(default)]
     satisfies: Vec<SatisfiesEdge>,
@@ -318,15 +353,16 @@ pub enum MatchKind {
     TokenSubset,
 }
 
-/// Resolve a governed node's type from reflow2's typed-id convention. Returns
-/// `None` for anything unrecognised, so a malformed id is reported and dropped
-/// rather than written against a guessed type (rule 4).
-fn governed_node_type(id: &str) -> Option<&'static str> {
+/// Resolve a node's type from reflow2's typed-id convention. Returns `None` for
+/// anything unrecognised, so a malformed id is reported and dropped rather than
+/// written against a guessed type (rule 4).
+fn node_type_from_id(id: &str) -> Option<&'static str> {
     match id.split(':').next()? {
         "req" => Some(node::REQUIREMENT),
         "cap" => Some(node::CAPABILITY),
         "cmp" | "sys" => Some(node::COMPONENT),
         "ifc" => Some(node::INTERFACE),
+        "art" => Some(node::ARTIFACT),
         _ => None,
     }
 }
@@ -674,6 +710,28 @@ impl DesignGraph {
             Vec::new()
         };
 
+        // Verifications: the evidence layer. Gated on discovery and on there
+        // being something to check — a check with nothing to verify is an
+        // orphan, and DETECT would only ask about it.
+        let verifications = if discovery.verifications
+            && !(capabilities.is_empty() && components.is_empty())
+        {
+            let checkable = format!("Capabilities:\n{cap_roster}\n\nComponents:\n{cmp_roster}");
+            run_pass::<VerificationsOut>(
+                backend,
+                "verifications",
+                pass_prompt(
+                    input,
+                    r#"[pass:verifications] What checks does this text record — tests run, inspections, demonstrations, measurements, analyses? Return JSON {"verifications":[{"id":"ver:<slug>","name":"what was checked","description":"what the source says about the check AND its outcome, in its own words","method":"test|analysis|inspection|demonstration|measurement|observation|review|simulation","verifies_ids":["cap:...","cmp:..."]}]} using only ids from the roster. Record what the source claims; do NOT state an outcome the text does not give, and do not treat an intention to test as a test that happened. Omit verifies_ids you cannot ground."#,
+                    Some(&checkable),
+                ),
+                &mut errors,
+            )
+            .verifications
+        } else {
+            Vec::new()
+        };
+
         // ---- EXTRACT · Phase 3 (edge passes over rosters) ----
         let req_roster = roster(
             requirements
@@ -802,6 +860,26 @@ impl DesignGraph {
             }
             self.integrate_node(&mut st, node::DECISION, &d.id, props);
         }
+        for v in &verifications {
+            // `status` is left unset: the schema default is `planned`, and a
+            // document's claim that something passed is not reflow2 observing
+            // it pass. The claim itself survives in `description`.
+            let mut props = Props::new().set("name", v.name.as_str());
+            if let Some(d) = v.description.as_deref() {
+                props = props.set("description", d);
+            }
+            if let Some(m) = v.method.as_deref() {
+                if VERIFICATION_METHODS.contains(&m) {
+                    props = props.set("method", m);
+                } else {
+                    st.warnings.push(format!(
+                        "verification '{}' method '{m}' not a schema value; using the default",
+                        v.id
+                    ));
+                }
+            }
+            self.integrate_node(&mut st, node::VERIFICATION, &v.id, props);
+        }
         for i in &interfaces {
             let mut props = Props::new().set("name", i.name.as_str());
             if let Some(m) = i.medium.as_deref() {
@@ -840,7 +918,7 @@ impl DesignGraph {
         // give an extraction two ways to be inconsistent instead of one.
         for d in &decisions {
             for governed in &d.governs_ids {
-                let Some(from_type) = governed_node_type(governed) else {
+                let Some(from_type) = node_type_from_id(governed) else {
                     st.warnings.push(format!(
                         "decision '{}' governs '{governed}', whose type is not recognisable from \
                          its id; edge dropped rather than guessed",
@@ -855,6 +933,29 @@ impl DesignGraph {
                     governed,
                     node::DECISION,
                     &d.id,
+                    Props::new(),
+                );
+            }
+        }
+
+        // VERIFIES — the check points at what it covers.
+        for v in &verifications {
+            for target in &v.verifies_ids {
+                let Some(to_type) = node_type_from_id(target) else {
+                    st.warnings.push(format!(
+                        "verification '{}' covers '{target}', whose type is not recognisable \
+                         from its id; edge dropped rather than guessed",
+                        v.id
+                    ));
+                    continue;
+                };
+                self.integrate_edge(
+                    &mut st,
+                    edge::VERIFIES,
+                    node::VERIFICATION,
+                    &v.id,
+                    to_type,
+                    target,
                     Props::new(),
                 );
             }
@@ -1454,6 +1555,20 @@ const MEDIUM_VALUES: &[&str] = &[
     "mechanical",
     "electrical",
     "human",
+];
+
+/// Schema `method` values. Mirrors schema/verify.yaml; an unknown value is
+/// warned about and dropped to the default rather than written, because a
+/// method that failed validation would take the whole node down with it.
+const VERIFICATION_METHODS: &[&str] = &[
+    "test",
+    "review",
+    "simulation",
+    "inspection",
+    "measurement",
+    "analysis",
+    "demonstration",
+    "observation",
 ];
 const DEPENDENCY_TYPE_VALUES: &[&str] = &[
     "function_call",

@@ -1007,3 +1007,126 @@ fn a_governed_id_with_an_unknown_prefix_is_reported_not_guessed() {
         report.warnings
     );
 }
+
+fn mock_with_verification(covers: &str, method: &str) -> MockLlmBackend {
+    MockLlmBackend::new()
+        .on_contains(
+            "[pass:project_intent]",
+            r#"{"project":{"id":"proj:w","name":"Widget","mode":"flexible"}}"#,
+        )
+        .on_contains(
+            "[pass:requirements]",
+            r#"{"requirements":[{"id":"req:lat","name":"Latency","statement":"under 200ms"}]}"#,
+        )
+        .on_contains("[pass:constraints]", r#"{"constraints":[]}"#)
+        .on_contains(
+            "[pass:capabilities]",
+            r#"{"capabilities":[{"id":"cap:cache","name":"Caching","description":"serve reads"}]}"#,
+        )
+        .on_contains(
+            "[pass:discovery]",
+            r#"{"components":false,"interfaces":false,"actors":false,"decisions":false,"artifacts":false,"verifications":true,"flows":false,"resources":false}"#,
+        )
+        .on_contains(
+            "[pass:verifications]",
+            format!(
+                r#"{{"verifications":[{{"id":"ver:load","name":"Load test at 5k rps","description":"Ran 2024-03-12; p99 measured at 140ms, which the report calls a pass","method":"{method}","verifies_ids":["{covers}"]}}]}}"#
+            ),
+        )
+        .on_contains("[pass:satisfies]", r#"{"satisfies":[]}"#)
+        .on_contains("[pass:dependencies]", r#"{"dependencies":[]}"#)
+}
+
+/// Test evidence is the other third of what a body of documents holds, and
+/// ingest recorded none of it before 2026-07-27 — the discovery gate classified
+/// `verifications` and nothing consumed the flag.
+#[test]
+fn a_recorded_check_is_extracted_with_its_method() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions::default(),
+            &mock_with_verification("cap:cache", "measurement"),
+        )
+        .unwrap();
+    assert_eq!(report.status, IngestStatus::Ok, "{report:?}");
+
+    let v = g
+        .get_node(node::VERIFICATION, "ver:load")
+        .unwrap()
+        .expect("the check must be created");
+    assert_eq!(
+        v.properties.get("method").and_then(|x| x.as_str()),
+        Some("measurement")
+    );
+    assert!(
+        v.properties
+            .get("description")
+            .and_then(|x| x.as_str())
+            .is_some_and(|d| d.contains("140ms")),
+        "the source's own account of the outcome must survive"
+    );
+
+    let cov = g.outgoing("ver:load", Some(edge::VERIFIES)).unwrap();
+    assert_eq!(cov.len(), 1);
+    assert_eq!(cov[0].to_id, "cap:cache");
+}
+
+/// **The one that matters.** A document saying a test passed is a CLAIM, not
+/// reflow2 watching it pass. Landing it `passing` would let prose promote a
+/// capability to verified — the exact "green while nothing was checked" failure
+/// this project found in its own code the day before. The claim is kept as
+/// text; the status is not asserted, and the gap keeps asking.
+#[test]
+fn an_extracted_check_is_planned_and_does_not_silence_the_gap() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions::default(),
+        &mock_with_verification("cap:cache", "test"),
+    )
+    .unwrap();
+
+    let v = g.get_node(node::VERIFICATION, "ver:load").unwrap().unwrap();
+    assert_eq!(
+        v.properties.get("status").and_then(|x| x.as_str()),
+        Some("planned"),
+        "a document's claim is not an observed outcome"
+    );
+
+    let still_asking = g.detect_gaps().unwrap().into_iter().any(|gap| {
+        gap.gap_source == GapSource::UnverifiedCapability
+            && gap.affected_ids.contains(&"cap:cache".to_string())
+    });
+    assert!(
+        still_asking,
+        "attaching an unproven check must NOT silence unverified_capability"
+    );
+}
+
+/// An unknown method warns and falls back rather than taking the node down —
+/// the same bargain the interface `medium` makes.
+#[test]
+fn an_unknown_verification_method_warns_and_defaults() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions::default(),
+            &mock_with_verification("cap:cache", "vibes"),
+        )
+        .unwrap();
+
+    let v = g.get_node(node::VERIFICATION, "ver:load").unwrap().unwrap();
+    assert_eq!(
+        v.properties.get("method").and_then(|x| x.as_str()),
+        Some("test"),
+        "the schema default stands in"
+    );
+    assert!(
+        report.warnings.iter().any(|w| w.contains("vibes")),
+        "and the substitution is reported: {:?}",
+        report.warnings
+    );
+}

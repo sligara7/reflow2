@@ -40,16 +40,40 @@ fn baseline() -> DesignGraph {
         Props::new().set("name", "cache.rs"),
     )
     .unwrap();
+    // `status: passing` is load-bearing, not decoration. A "complete thread"
+    // means the check PASSED — a Verification left at the default `planned`
+    // proves nothing, and until 2026-07-27 attaching one was enough to silence
+    // `unverified_capability`. This fixture asserted the thread was complete
+    // while its checks had never run; saying `passing` is what makes the
+    // assertion below true rather than merely green.
     g.create_node(
         node::VERIFICATION,
         "ver:cap",
-        Props::new().set("name", "cap smoke test"),
+        Props::new()
+            .set("name", "cap smoke test")
+            .set("status", "passing"),
+    )
+    .unwrap();
+    // Both axes, because "complete" means both. `kind: verification` asks was it
+    // built right; `kind: validation` asks was it the right thing. A capability
+    // with only the first raises `unvalidated_capability` — correctly — so a
+    // fixture claiming a complete thread has to carry both or it is asserting
+    // something it has not done.
+    g.create_node(
+        node::VERIFICATION,
+        "ver:cap-validation",
+        Props::new()
+            .set("name", "cap accepted by the user")
+            .set("status", "passing")
+            .set("kind", "validation"),
     )
     .unwrap();
     g.create_node(
         node::VERIFICATION,
         "ver:art",
-        Props::new().set("name", "artifact bench"),
+        Props::new()
+            .set("name", "artifact bench")
+            .set("status", "passing"),
     )
     .unwrap();
     g.create_node(node::RELEASE, "rel:v1", Props::new().set("name", "v1.0"))
@@ -70,6 +94,15 @@ fn baseline() -> DesignGraph {
         edge::VERIFIES,
         node::VERIFICATION,
         "ver:cap",
+        node::CAPABILITY,
+        "cap:fast",
+        Props::new(),
+    )
+    .unwrap();
+    g.create_edge(
+        edge::VERIFIES,
+        node::VERIFICATION,
+        "ver:cap-validation",
         node::CAPABILITY,
         "cap:fast",
         Props::new(),

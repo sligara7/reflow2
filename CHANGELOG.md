@@ -52,6 +52,38 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Ingest recovers test evidence too** (`[pass:verifications]`) — the last of
+  the three things a body of documents was asked for, after requirements and
+  rationale. Checks come back with the source's own account of what was done and
+  what it found, and a `method` from the eight schema values.
+
+  **They land `planned`, never `passing`.** A document saying "the load test
+  passed" is a *claim about a result*, not reflow2 watching it pass — and
+  recording it as passing would let prose promote a capability to verified, which
+  is precisely the "green while nothing was checked" failure found in this
+  project's own code the day before. The claim survives in `description` where a
+  person can read it and decide.
+
+### Fixed
+
+- **A check that has not passed no longer counts as proof** (`unverified_capability`).
+  The gap skipped a capability on *any* incoming `VERIFIES`, so attaching a
+  `planned` Verification silenced the question — which is exactly what the
+  detect-and-ask skill already warned against ("a check left at planned does not
+  count as confirmation"). The skill said it; the detector did not enforce it,
+  and that gap is where a design goes quiet without getting better. It now
+  requires a **passing** check, and its evidence line distinguishes "no checks at
+  all" from "checks that have not passed".
+
+  Measured before changing: **zero** capabilities on reflow2's own graph were
+  riding a non-passing check, so no existing verdict moved. Two test fixtures did
+  change, and both were encoding the old behaviour — each asserted "a complete
+  thread has nothing to flag" while its checks had never run.
+
+  This is also what makes extracting test evidence safe: without it, ingesting a
+  document that mentions testing would have quietly answered reflow2's own
+  question about whether anything was proven.
+
 - **Ingest recovers the rationale layer — *why* it was built that way**
   (`[pass:decisions]`). The pass that makes an old body of documents worth
   ingesting at all: reasoning is what a codebase cannot be re-read to recover,
