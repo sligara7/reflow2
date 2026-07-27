@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ab62bae583601835c0a9493f0cb3d5dd0a266593902e253cb81779109f09f0fc",
+  "content_hash": "sha256:144a240933ebc790083e5c0f8c138bd7e6350e76112cf1951f0125e0cd7d6f6f",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -746,6 +746,12 @@
       "from_id": "question:95ddc1083445d73d",
       "properties": {},
       "to_id": "req:claims-have-owners"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:a5e8c988e4547af5",
+      "properties": {},
+      "to_id": "req:composed-analysis"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -25922,6 +25928,18 @@
       }
     },
     {
+      "node_id": "question:a5e8c988e4547af5",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-27",
+        "context_setter": "Nothing satisfies requirement “Import one design into another and analyse the whole”",
+        "gap_id": "gap:a5e8c988e4547af5",
+        "question": "You want to pull a dependency's design into your own and then run reflow2's normal checks over both together. reflow2 cannot do that yet: loading one design into another overwrites anything sharing a name, because that loader was built for reloading a design onto itself. Making both sit side by side is real work — do you want it, and does it come before the connection-details work or after?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:a752db1dd8a251b2",
       "node_type": "Question",
       "properties": {
@@ -26293,6 +26311,20 @@
       }
     },
     {
+      "node_id": "req:composed-analysis",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Import one design into another and analyse the whole",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 must be able to bring a dependency's design into a consuming design and run its ordinary analysis over the combined whole, so that composition problems appear as ordinary gaps rather than requiring a bespoke comparator. WHAT BLOCKS IT TODAY IS CONCRETE, not vague: import_graph writes every node under its ORIGINAL id with upsert semantics, so importing design Z into design A means Z's `cap:store` silently overwrites A's `cap:store`. It was built for layering a design onto itself — its own doc says an export can be layered onto a design it references — and using it to compose two DIFFERENT designs would corrupt the consumer without saying so. The other two composition mechanisms do not do this either, and it is worth being exact about why: mirror_surface deliberately imports only the published SURFACE and keeps it foreign, and merge_designs is a three-way merge of two versions of the SAME design. So a fourth thing is needed — a NAMESPACED import where both designs coexist and are separately identifiable. TWO THINGS THAT MUST NOT BE LOST. First, the combined graph must never be mistaken for the consumer's own design: every imported node stays attributable to where it came from, and an export of A must not start shipping Z's internals. Second, project-level detectors would now reason over both designs, so a consumer would see gaps belonging to its dependency — noise that would get the whole feature switched off. cap:scoped-analysis already narrows detection to a region and reports what it left out, so scoping the combined analysis to the seam is the likely answer rather than a new filter. NOTE THE TENSION WITH dec:nested-graphs, which chose a graph per ownership boundary precisely because edges cannot cross stores: this does not overturn that decision — the designs stay separately owned and separately released — but it does mean a THIRD, analysis-only composition alongside the two that exist.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:concurrent-planning",
       "node_type": "Requirement",
       "properties": {
@@ -26385,7 +26417,7 @@
         "name": "Declare which version of another design you depend on, not just record what you took",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "A project that composes with another design must be able to DECLARE which version of it that dependency is on — a tag, a commit, a release — in a checked-in manifest a person edits, the way Cargo.toml, pyproject.toml, pixi.toml or uv.toml declare code dependencies. Anthony's framing, 2026-07-27: when two projects evolve separately you need to know which version yours depended upon. WHAT ALREADY EXISTS IS THE OTHER HALF, and the distinction is the whole point. cap:mirror-surface already RECORDS the coordinate after the fact — mirror_content_hash is the content hash of the surface document a mirror was made from, and mirrored_at dates it, deliberately as a dated claim rather than a live truth. That is what you GOT. A manifest is what you MEANT: human-meaningful (v0.11.0, not a 64-character hash), authored rather than derived, reviewable in a diff, and readable before any graph is opened. HAVING BOTH IS WHAT MAKES THE CHECK POSSIBLE: declared-versus-mirrored answers 'am I actually composing against the version I said', and declared-versus-upstream answers 'has what I depend on moved since'. Either question is unanswerable with only one of the two halves. The manifest must also survive the case where the dependency's design is not available at all, because declaring a dependency you cannot currently resolve is a normal state and silence about it would be the failure.",
+        "statement": "A project that composes with another design must be able to DECLARE which version of it that dependency is on — a tag, a commit, a release — in a checked-in manifest a person edits, the way Cargo.toml, pyproject.toml, pixi.toml or uv.toml declare code dependencies. Anthony's framing, 2026-07-27: when two projects evolve separately you need to know which version yours depended upon. WHAT ALREADY EXISTS IS THE OTHER HALF, and the distinction is the whole point. cap:mirror-surface already RECORDS the coordinate after the fact — mirror_content_hash is the content hash of the surface document a mirror was made from, and mirrored_at dates it, deliberately as a dated claim rather than a live truth. That is what you GOT. A manifest is what you MEANT: human-meaningful (v0.11.0, not a 64-character hash), authored rather than derived, reviewable in a diff, and readable before any graph is opened. HAVING BOTH IS WHAT MAKES THE CHECK POSSIBLE: declared-versus-mirrored answers 'am I actually composing against the version I said', and declared-versus-upstream answers 'has what I depend on moved since'. Either question is unanswerable with only one of the two halves. THE MANIFEST MUST ALSO RECORD WHICH REFLOW2 WROTE IT (Anthony, same day) — the same discipline the export stamp already follows, and for the same reason: a manifest is read by a binary that may be older or newer than the one that produced it, and a file that cannot say which vocabulary it was written against forces the reader to guess. reflow2 already refuses rather than guesses when an export's stamp is unreadable; the manifest should be no weaker. The manifest must also survive the case where the dependency's design is not available at all, because declaring a dependency you cannot currently resolve is a normal state and silence about it would be the failure.",
         "status": "proposed"
       }
     },
@@ -26818,7 +26850,7 @@
         "name": "When two linked designs disagree at a seam, say so",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "Two designs linked through mirrored published surfaces must be checkable for INCOMPATIBILITY, not merely for whether a contract has both sides. Today the detectors answer \"is this interface unprovided or unconsumed\" — a wiring question. The question that bites in system-of-systems work is different: both sides exist, both are confident, and they disagree — one speaks JSON where the other expects protobuf, one is asynchronous where the other assumes request-response, one imposes a rate limit the other's retry policy will breach. That is the failure that survives integration testing right up to the point where it does not. Depends on req:interface-spec-complete: a seam can only be compared in the terms the published spec carries, so structuring the spec is the prerequisite, not a parallel nicety.",
+        "statement": "Two linked designs must be checkable for INCOMPATIBILITY, not merely for whether a contract has both sides. Today the detectors answer \"is this interface unprovided or unconsumed\" — a wiring question. The one that bites in system-of-systems work is different: both sides exist, both are confident, and they disagree — one speaks JSON where the other expects protobuf, one is asynchronous where the other assumes request-response, one imposes a rate limit the other's retry policy will breach. That is the failure that survives integration testing right up to the point where it does not. THE MECHANISM IS ANTHONY'S, 2026-07-27, and it is better than the bespoke comparator this requirement first implied: IMPORT one graph into the other and run reflow2's ORDINARY checks — detect_gaps, check-health, the lot — over the combined design. The seam's problems then surface as the gaps they already are (an interface with no provider once both sides are present, a requirement nothing satisfies across the join, a duplicate that is really one thing named twice) instead of needing a new detector nobody else benefits from. It is the same principle this project keeps rediscovering: prefer making the existing computation SEE more over writing a new one. Depends on req:composed-analysis for the import, and on req:interface-spec-complete for the terms to compare in.",
         "status": "proposed"
       }
     },
@@ -27824,7 +27856,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:190664c7e437b7aee17bcd3389635230b0358f3a3c592eec51e90c542d36cbbb",
+  "prev_content_hash": "sha256:ab62bae583601835c0a9493f0cb3d5dd0a266593902e253cb81779109f09f0fc",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
