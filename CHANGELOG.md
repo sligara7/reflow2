@@ -31,6 +31,21 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.16.0] — 2026-07-27
+
+**Upgrading:** [docs/upgrading-to-v0.16.0.md](docs/upgrading-to-v0.16.0.md), and this one is **not
+optional if you share a design**. A new edge type moves the version stamp, so a reflow2 older than
+this cannot open a design written by it — loudly refused, never silently half-read. Upgrade every
+machine and session that touches a shared graph, together. Working alone on one machine: update and
+carry on.
+
+**The release that makes a pile of documents into a design.** `ingest` had existed for months and
+was unreachable from a session; now your own agent drives it, and it recovers rationale and test
+evidence rather than requirements alone. Around that: near-matches are asked about instead of
+guessed, reflow2 can finally say what it has never been told about, and a check can say whether it
+was run against a model or against reality.
+
+
 ### Fixed
 
 - **A severed design-history chain is no longer silent** (BL-107). Each committed
