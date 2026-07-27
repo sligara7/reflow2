@@ -465,3 +465,130 @@ fn verification_event_id(verification_id: &str, declared: &str, observed: &str) 
         ))
     )
 }
+
+/// Where a capability's evidence actually came from.
+///
+/// `req:design-the-simulator`, the half a computation can defend. Until
+/// 2026-07-27 a check run against a simulation rig and the same check run in the
+/// field were indistinguishable to reflow2 — both were simply "passing" — so a
+/// capability proven only against a model read exactly like one proven against
+/// reality. That is the risk the requirement exists to surface: issues are cheap
+/// to fix in simulation and expensive in the field, which is only an argument
+/// for simulating first if somebody can still tell the two apart afterwards.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct CapabilityEvidence {
+    pub capability_id: String,
+    pub capability_name: String,
+    /// Environments its PASSING checks were performed in, deduplicated, sorted.
+    pub proven_in: Vec<String>,
+    /// …of those, the ones whose `env_type` is `simulation`.
+    pub simulated_environments: Vec<String>,
+    /// Passing checks that name no environment at all. Reported rather than
+    /// assumed real — an unstated place is unknown, not the field.
+    pub unplaced_checks: usize,
+    /// Every passing check was performed in a simulated environment, and at
+    /// least one said where. The claim worth surfacing.
+    pub simulation_only: bool,
+}
+
+/// The evidence picture across the design.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct EvidenceReport {
+    pub capabilities: Vec<CapabilityEvidence>,
+    /// Capabilities whose every placed passing check was a simulation.
+    pub simulation_only: usize,
+    /// Capabilities with passing checks that say nowhere they were run.
+    pub with_unplaced_checks: usize,
+}
+
+impl DesignGraph {
+    /// Report where each capability's passing evidence was actually obtained
+    /// (`req:design-the-simulator`).
+    ///
+    /// **Reports; never ranks.** reflow2 says "proven only in simulation", which
+    /// it can defend from `env_type` alone. It deliberately does NOT assert that
+    /// lab beats staging beats field: which of those counts as more real is
+    /// domain-specific, and an ordering that is wrong somewhere gets worked
+    /// around rather than corrected (`dec:report-dont-judge`, and BL-42's lesson
+    /// that a detector punishing correct work needs a different question).
+    ///
+    /// A check naming no environment is counted as **unplaced**, never assumed
+    /// to be real — silence is not evidence of the field.
+    pub fn evidence_report(&self) -> Result<EvidenceReport, DynoError> {
+        let mut capabilities = Vec::new();
+        for cap in self.scan_nodes(node::CAPABILITY)? {
+            let mut proven_in: Vec<String> = Vec::new();
+            let mut simulated: Vec<String> = Vec::new();
+            let mut unplaced = 0usize;
+            let mut any_passing = false;
+
+            for e in self.incoming(&cap.node_id, Some(edge::VERIFIES))? {
+                let Some(v) = self.get_node(node::VERIFICATION, &e.from_id)? else {
+                    continue;
+                };
+                let passing = v
+                    .properties
+                    .get("status")
+                    .and_then(dynograph_core::Value::as_str)
+                    .is_some_and(|s| s == "passing");
+                if !passing {
+                    continue;
+                }
+                any_passing = true;
+                let places = self.outgoing(&v.node_id, Some(edge::PERFORMED_IN))?;
+                if places.is_empty() {
+                    unplaced += 1;
+                    continue;
+                }
+                for place in places {
+                    let Some(env) = self.get_node(node::ENVIRONMENT, &place.to_id)? else {
+                        continue;
+                    };
+                    if !proven_in.contains(&env.node_id) {
+                        proven_in.push(env.node_id.clone());
+                    }
+                    let simulation = env
+                        .properties
+                        .get("env_type")
+                        .and_then(dynograph_core::Value::as_str)
+                        .is_some_and(|t| t == "simulation");
+                    if simulation && !simulated.contains(&env.node_id) {
+                        simulated.push(env.node_id.clone());
+                    }
+                }
+            }
+            if !any_passing {
+                continue; // nothing proven yet — unverified_capability's question
+            }
+            proven_in.sort();
+            simulated.sort();
+            // Only claimable when something said where: all-unplaced is unknown,
+            // not simulated.
+            let simulation_only = !proven_in.is_empty() && proven_in.len() == simulated.len();
+            capabilities.push(CapabilityEvidence {
+                capability_id: cap.node_id.clone(),
+                capability_name: cap
+                    .properties
+                    .get("name")
+                    .and_then(dynograph_core::Value::as_str)
+                    .unwrap_or(&cap.node_id)
+                    .to_string(),
+                proven_in,
+                simulated_environments: simulated,
+                unplaced_checks: unplaced,
+                simulation_only,
+            });
+        }
+        capabilities.sort_by(|a, b| a.capability_id.cmp(&b.capability_id));
+        let simulation_only = capabilities.iter().filter(|c| c.simulation_only).count();
+        let with_unplaced_checks = capabilities
+            .iter()
+            .filter(|c| c.unplaced_checks > 0)
+            .count();
+        Ok(EvidenceReport {
+            capabilities,
+            simulation_only,
+            with_unplaced_checks,
+        })
+    }
+}

@@ -1268,6 +1268,16 @@ pub struct ProposeHealReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct PerformedInReq {
+    /// The check that was carried out.
+    pub verification_id: String,
+    /// The Environment it was carried out in. Its `env_type` is what says
+    /// whether that place was a simulation.
+    pub environment_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct IngestStepReq {
     /// The freeform design material to extract from — a brief, a spec, a review
     /// note, one document out of a folder.
@@ -3935,6 +3945,50 @@ impl ReflowService {
             g.ingest_step(&req.input, &options, answers)
                 .map_err(dyno_err)?,
         )
+    }
+
+    #[tool(
+        description = "Record WHERE a check was actually carried out (PERFORMED_IN). Without it a \
+                       check run on a simulation rig and the same check run in the field are \
+                       indistinguishable, so a capability proven only against a model reads \
+                       exactly like one proven against reality. Point it at an Environment whose \
+                       `env_type` says what kind of place that is — `simulation` for a rig, a \
+                       digital twin, a physics model.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn performed_in(
+        &self,
+        Parameters(req): Parameters<PerformedInReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(EdgeDto::from(
+            g.create_edge(
+                reflow2_core::nodes::edge::PERFORMED_IN,
+                reflow2_core::nodes::node::VERIFICATION,
+                &req.verification_id,
+                reflow2_core::nodes::node::ENVIRONMENT,
+                &req.environment_id,
+                reflow2_core::nodes::Props::new(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Where did each capability's evidence actually come from? Lists the \
+                       environments its PASSING checks were performed in, and flags the ones \
+                       proven ONLY in simulation — the risk that simulating first is supposed to \
+                       buy down, which only works if you can still tell model from reality \
+                       afterwards. REPORTS, NEVER RANKS: it will not claim lab beats staging \
+                       beats field, because which of those is 'more real' is domain-specific and \
+                       a wrong ordering gets worked around rather than corrected. A check naming \
+                       no environment is counted as UNPLACED, never assumed real — silence is not \
+                       evidence of the field.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn evidence_report(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.evidence_report().map_err(dyno_err)?)
     }
 
     #[tool(

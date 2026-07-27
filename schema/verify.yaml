@@ -67,6 +67,16 @@ schema:
 
   edge_types:
 
+    PERFORMED_IN:
+      from: Verification
+      to: Environment
+      extraction_hint: >
+        WHERE a check was actually carried out. Without this a check run on a
+        simulation rig and the same check run in the field are indistinguishable,
+        so a capability proven only against a model reads exactly like one proven
+        against reality — which is the risk req:design-the-simulator exists to
+        make visible. Absent means unstated, never assumed real.
+
     VERIFIES:
       from: Verification
       to: "*"

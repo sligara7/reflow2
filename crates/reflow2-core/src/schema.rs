@@ -55,13 +55,17 @@ mod tests {
         let schema = load_schema().expect("the 10 domains must merge and validate");
         // The vocabulary the docs and README commit to. History: 26→27 nodes
         // was BL-4 (Question), 53→54 edges is BL-34 (INCLUDES — the
+        // 55→56 is PERFORMED_IN (2026-07-27, req:design-the-simulator), and
+        // unlike an added enum value this one MOVES THE STAMP: an older reflow2
+        // refuses a graph carrying more edge types than it knows (BL-94), so it
+        // needs an upgrade note rather than a shrug.
         // as-released view); 55→53 edges is the edge-orthogonality retirement of
         // VALIDATES + ENABLES (dec:edge-orthogonality — VALIDATES moved to
         // Verification.kind, ENABLES folded into CAUSES). Every bump moves
         // GraphStamp, so a graph written by this schema is refused by older
         // binaries — deliberate, loud, and worth a CHANGELOG entry each time (BL-19).
         assert_eq!(schema.node_types.len(), 28, "expected 28 node types");
-        assert_eq!(schema.edge_types.len(), 55, "expected 55 edge types");
+        assert_eq!(schema.edge_types.len(), 56, "expected 56 edge types");
     }
 
     #[test]

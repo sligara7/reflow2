@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:42e3d0d150e1b36f115eb9dc7263618fa546202a08a0364b5105e8cfce1af016",
+  "content_hash": "sha256:a4399674a444a767f28e6d97fc3096dc43a8f1caa0340820c48f1d5a0fe16ac2",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -168,6 +168,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:evidence-fidelity",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:verify"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4052,6 +4060,69 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:evidence-fidelity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:evidence-fidelity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:evidence-fidelity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:evidence-fidelity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:evidence-fidelity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:evidence-fidelity",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:evidence-fidelity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:evidence-fidelity",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:design-the-simulator"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:federation-decided",
       "properties": {
         "accepted_baseline": true,
@@ -7311,6 +7382,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:adopt",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:adopt",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -7365,6 +7442,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:allocate",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:allocate",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -7390,6 +7473,12 @@
       "from_id": "cap:bounded-reads",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:bounded-reads",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7450,6 +7539,12 @@
       "from_id": "cap:budget",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:budget",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7521,6 +7616,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:change",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -7585,6 +7686,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:claim-liveness",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:cluster-claims",
       "properties": {},
       "to_id": "dec:advisory-concurrency"
@@ -7624,6 +7731,12 @@
       "from_id": "cap:cluster-claims",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cluster-claims",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7695,6 +7808,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:compare-alternatives",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-alternatives",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -7761,6 +7880,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:compare-designs",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-designs",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -7798,6 +7923,12 @@
       "from_id": "cap:coverage",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:coverage",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7857,6 +7988,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:decision-point",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:decision-point",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -7876,6 +8013,12 @@
       "from_id": "cap:degraded-surface",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:degraded-surface",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -7929,6 +8072,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:derived-completion",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:derived-completion",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -7954,6 +8103,12 @@
       "from_id": "cap:design-identity",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:design-identity",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8037,6 +8192,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:detect",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:detect",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8091,6 +8252,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:dimensions",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:dimensions",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8133,6 +8300,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:drift-direction",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:drift-direction",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8140,6 +8313,18 @@
       "from_id": "cap:drift-direction",
       "properties": {},
       "to_id": "decision:ack:f78628387e7c41cc"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:evidence-fidelity",
+      "properties": {},
+      "to_id": "dec:report-dont-judge"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:evidence-fidelity",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8247,6 +8432,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:freshness",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:freshness",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8301,6 +8492,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:genesis",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:genesis",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8320,6 +8517,12 @@
       "from_id": "cap:git-merge-driver",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:git-merge-driver",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8385,6 +8588,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:heal",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:heal",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8439,6 +8648,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:hierarchy",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:hierarchy",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8488,6 +8703,12 @@
       "from_id": "cap:ingest",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:ingest",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8512,6 +8733,12 @@
       "from_id": "cap:key-interfaces",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:key-interfaces",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8571,6 +8798,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:kit",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kit",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8607,6 +8840,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:kpp",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kpp",
+      "properties": {},
       "to_id": "decision:ack:d610aa40cddc6c70"
     },
     {
@@ -8632,6 +8871,12 @@
       "from_id": "cap:kpp-proposal",
       "properties": {},
       "to_id": "decision:ack:b5ecdffa784222a5"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kpp-proposal",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8703,6 +8948,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:loop-status",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:loop-status",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8752,6 +9003,12 @@
       "from_id": "cap:mcp-surface",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mcp-surface",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8823,6 +9080,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:merge-designs",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-designs",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8883,6 +9146,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:merge-rerere",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-rerere",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8914,6 +9183,12 @@
       "from_id": "cap:mirror-surface",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mirror-surface",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8979,6 +9254,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:model-process",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:model-process",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8998,6 +9279,12 @@
       "from_id": "cap:nudge-path-proven",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:nudge-path-proven",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9117,6 +9404,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:portability",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:portability",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9166,6 +9459,12 @@
       "from_id": "cap:propagate",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:propagate",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9205,6 +9504,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:publish-surface",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:questions",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -9255,6 +9560,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:questions",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:questions",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9298,6 +9609,12 @@
       "from_id": "cap:read-loop-hint",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:read-loop-hint",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9363,6 +9680,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-built",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-built",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9417,6 +9740,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-deployed",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-deployed",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9466,6 +9795,12 @@
       "from_id": "cap:reconcile-verified",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-verified",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9502,6 +9837,12 @@
       "from_id": "cap:remote-sessions",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:remote-sessions",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9573,6 +9914,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:report",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:report",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9604,6 +9951,12 @@
       "from_id": "cap:requirement-lineage",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:requirement-lineage",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9657,6 +10010,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:sanitize-ingress",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:sanitize-ingress",
+      "properties": {},
       "to_id": "rule:no-foreclosure"
     },
     {
@@ -9682,6 +10041,12 @@
       "from_id": "cap:scoped-analysis",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:scoped-analysis",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9730,6 +10095,12 @@
       "from_id": "cap:search",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:search",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9769,6 +10140,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:shared-sessions",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:skills-served",
       "properties": {},
       "to_id": "dec:skills-served"
@@ -9793,6 +10170,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:skills-served",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:snapshot-read",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -9808,6 +10191,12 @@
       "from_id": "cap:snapshot-read",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:snapshot-read",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9832,6 +10221,12 @@
       "from_id": "cap:stale-seat-refusal",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:stale-seat-refusal",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9880,6 +10275,12 @@
       "from_id": "cap:stamp",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:stamp",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9934,6 +10335,12 @@
       "from_id": "cap:store",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:store",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9999,6 +10406,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:surface",
       "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:surface",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -10018,6 +10431,12 @@
       "from_id": "cap:tool-search",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:tool-search",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10084,6 +10503,12 @@
       "from_id": "cap:vocabulary",
       "properties": {},
       "to_id": "decision:ack:b25bb8d8db80dfd3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:vocabulary",
+      "properties": {},
+      "to_id": "decision:ack:c8cfb3f3be9183af"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -16139,6 +16564,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:evidence-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:evidence-fidelity"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:export",
       "properties": {
         "completeness": "complete"
@@ -16855,6 +17288,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:evidence-fidelity",
+      "properties": {},
+      "to_id": "req:design-the-simulator"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:explains-itself",
       "properties": {},
       "to_id": "req:explains-itself"
@@ -17416,6 +17855,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:evidence-fidelity",
+      "properties": {},
+      "to_id": "cap:evidence-fidelity"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:freshness",
       "properties": {},
       "to_id": "cap:freshness"
@@ -17869,6 +18314,14 @@
         "action": "created"
       },
       "to_id": "art:dto"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:evidence-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:evidence-test"
     },
     {
       "edge_type": "YIELDED",
@@ -18523,6 +18976,17 @@
       }
     },
     {
+      "node_id": "art:evidence-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896",
+        "location": "crates/reflow2-core/tests/evidence.rs",
+        "name": "tests/evidence.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:export",
       "node_type": "Artifact",
       "properties": {
@@ -18747,7 +19211,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:882d577621d9c62b",
+        "checksum": "sha256:3b6fc9d03065fa2f",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
         "status": "realized"
@@ -18868,7 +19332,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:950e86c78c9c7b58",
+        "checksum": "sha256:b17aa6b0d727eed3",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
         "status": "realized"
@@ -18923,7 +19387,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f0ba3c3ba684e5cbe2bafc08ec9a7856be7cce75863932604a0bd7f4c34ee371",
+        "checksum": "sha256:b5c6a0fda0f4f7e83c8b522b61e477ca0bee926d906c09582f53e0e90a1ab54e",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -19143,7 +19607,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7c3bcd97918ee929",
+        "checksum": "sha256:d391003bb5042e18",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
         "status": "realized"
@@ -19154,7 +19618,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3b84a01ec0bae49d",
+        "checksum": "sha256:6a9bc6a55e09e47e",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
         "status": "realized"
@@ -19430,6 +19894,19 @@
         "name": "Say which way the design and the build have diverged, and bring the design back up",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:evidence-fidelity",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A check now records WHERE it was carried out (PERFORMED_IN → Environment), and Environment.env_type gains `simulation`. evidence_report then answers, per capability, which environments its PASSING checks were performed in and whether every one of them was a simulation. THE REASON THIS IS THE FIRST RUNG of req:design-the-simulator: the argument for simulating first is that issues are cheap to fix there and expensive in the field, and that argument only holds if somebody can still tell the two apart afterwards — until 2026-07-27 reflow2 could not, because a rig run and a production run were both simply `passing`. REPORTS, NEVER RANKS (Anthony's call, dec:report-dont-judge): it says `proven only in simulation`, which env_type alone can defend, and refuses to assert that lab beats staging beats field — which of those counts as more real is domain-specific, and an ordering that is wrong somewhere gets worked around rather than corrected (BL-42's lesson). SILENCE IS NOT EVIDENCE OF THE FIELD: a passing check naming no environment is counted as UNPLACED, never assumed real, because the flattering reading is the dangerous one. A capability with nothing passing is absent from the report entirely — that is unverified_capability's question, not this one's. THE SIMULATOR AS A DESIGNED THING is deliberately NOT built here: the requirement's other half wants the simulator to have its own requirements and fidelity claims, and nothing yet expresses what a given rig stands in for. Recorded rather than half-built, and no vocabulary was added for it, because a declared edge no computation reads is the trap this project has now hit five times.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Tell proof against a model from proof against reality",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -20746,6 +21223,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Directional drift built: reconcile now says understated / overstated / diverged and names the delta"
+      }
+    },
+    {
+      "node_id": "chg:evidence-fidelity",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A check records where it ran, so simulation stops looking like reality"
       }
     },
     {
@@ -22849,6 +23334,16 @@
       }
     },
     {
+      "node_id": "decision:ack:c8cfb3f3be9183af",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:c8cfb3f3be9183af.",
+        "name": "Reviewed: gap:c8cfb3f3be9183af",
+        "rationale": "User (who:ajs, standing policy from 2026-07-23, re-applied 2026-07-27): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:evidence-fidelity joined the set (57 → 58). Sharply ironic for this one and worth saying so: the capability that just taught reflow2 to distinguish proof-against-a-model from proof-against-reality is itself proven only by unit tests against a synthetic graph. Its validation is whether, on a real design with a real rig, \"proven only in simulation\" is a sentence that changes what someone does next — which is a trial, exactly as this standing disposition says.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:c9fd9c1708bed944",
       "node_type": "Decision",
       "properties": {
@@ -23931,6 +24426,16 @@
       }
     },
     {
+      "node_id": "frag:art:evidence-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tests/evidence.rs"
+      }
+    },
+    {
       "node_id": "frag:art:export",
       "node_type": "Fragment",
       "properties": {
@@ -24599,12 +25104,13 @@
       "node_id": "question:8ae5b0690a0d618b",
       "node_type": "Question",
       "properties": {
+        "answer": "\"I actually want to design and build it\" (Anthony, 2026-07-27). Not deferred and not dropped — the simulator thread is accepted work, and the design starts now.",
         "asked_at": "2026-07-27",
         "context_setter": "Nothing satisfies requirement “Where a design admits it, design its simulator too — and test there first”",
         "gap_id": "gap:8ae5b0690a0d618b",
         "question": "You said reflow2 should help people build a practice version of whatever they are designing — a simulator or digital twin — and try the design out there before building the real thing. Nothing in reflow2 does that yet. Do you want it built, do you want it kept on the list for later, or was it just a thought you would rather drop?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -25105,7 +25611,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A design usually has to operate in an environment. Where it is reasonable to build a simulated version of that environment — or a digital twin of the design itself — reflow2 should treat THE SIMULATOR AS SOMETHING TO BE DESIGNED, not as an implementation detail that appears later, and should support a progression: exercise the design in simulation first, iron out what that reveals, then move to progressively more realistic tests and only then to real fielding. The payoff is risk removed before it is expensive: an issue found in simulation costs a rebuild, the same issue found in the field costs a deployment and sometimes a system. THE CAVEAT IS PART OF THE REQUIREMENT, not a footnote — not every design admits a meaningful simulation, and a tool that insisted on one would produce elaborate fictions for the designs that do not. So the first question is whether a simulator is feasible and worth it for THIS design, asked rather than assumed, and a design that answers no must be able to say so on the record without being nagged.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -25926,6 +26432,18 @@
       }
     },
     {
+      "node_id": "ver:evidence-fidelity",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-27",
+        "level": "unit",
+        "method": "test",
+        "name": "A capability proven only on a rig says so; ONE real check ends the simulation-only claim (reaching reality must show, since leaving the rig is the point of the progression); a passing check naming no environment is UNPLACED and explicitly not assumed real — unknown is not simulated either; and a capability with nothing passing is absent from the report entirely rather than appearing as proven-nowhere, because that is unverified_capability's question (crates/reflow2-core/tests/evidence.rs, 4 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:freshness",
       "node_type": "Verification",
       "properties": {
@@ -26461,7 +26979,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:21e6644c44ed6c1d65b7d73b989aaa6059c25493d8823825140e343f922208b9",
+  "prev_content_hash": "sha256:42e3d0d150e1b36f115eb9dc7263618fa546202a08a0364b5105e8cfce1af016",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -26502,6 +27020,7 @@
       "OCCURS_DURING",
       "OPERATES_IN",
       "PART_OF_FLOW",
+      "PERFORMED_IN",
       "PRECEDES",
       "PRODUCES",
       "PROVIDES",
@@ -26520,7 +27039,7 @@
       "VIOLATES_RULE",
       "YIELDED"
     ],
-    "edge_types": 55,
+    "edge_types": 56,
     "node_type_names": [
       "Actor",
       "Anchor",

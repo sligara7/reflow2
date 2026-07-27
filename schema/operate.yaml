@@ -28,7 +28,13 @@ schema:
       properties:
         name: { type: string, required: true, indexed: true, fulltext: true }
         description: { type: string, fulltext: true }
-        env_type: { type: enum, values: [development, staging, production, field, lab, physical_site], default: production, indexed: true }
+        # `simulation` added 2026-07-27 (req:design-the-simulator). Additive enum
+        # growth, the same call as Verification.method's — validation runs on
+        # write, the stamp counts node/edge TYPES, so older graphs stay readable.
+        # A simulator IS an operating context: the extraction hint below already
+        # says swapping the Environment swaps the constraint space, which is
+        # exactly the difference between a rig and the real world.
+        env_type: { type: enum, values: [development, staging, production, field, lab, physical_site, simulation], default: production, indexed: true, description: "Where this context sits on the reality axis. `simulation` is a modelled stand-in — a rig, a digital twin, a physics model — and reflow2 reads it to say when a capability is proven ONLY in simulation. Deliberately NOT ranked against lab/staging/field: which of those is 'more real' is domain-specific, and asserting an order would be wrong somewhere and worked around rather than corrected (dec:report-dont-judge)." }
         location: { type: string, description: "Cloud region, host, physical site, or jurisdiction." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }

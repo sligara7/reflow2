@@ -92,6 +92,7 @@ pub mod edge {
     /// `Fragment → *` — a note/review/pseudocode fragment annotates a node.
     pub const ANNOTATES: &str = "ANNOTATES";
     /// `Verification → *` — a Verification checks a Capability/Artifact/Component.
+    pub const PERFORMED_IN: &str = "PERFORMED_IN";
     pub const VERIFIES: &str = "VERIFIES";
     /// `* → *` — a node depends on another (a lateral structural coupling).
     pub const DEPENDS_ON: &str = "DEPENDS_ON";

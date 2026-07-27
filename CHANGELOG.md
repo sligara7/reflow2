@@ -52,6 +52,31 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A check can say WHERE it was run, so a simulation stops looking like reality**
+  (`PERFORMED_IN`, `evidence_report`, `req:design-the-simulator`). The argument
+  for testing in simulation first is that issues are cheap to fix there and
+  expensive in the field — and that only holds if you can still tell the two
+  apart afterwards. reflow2 could not: a check run on a rig and the same check
+  run in production were both simply `passing`.
+
+  `Environment.env_type` gains `simulation`, a check points at the environment it
+  was performed in, and `evidence_report` says which environments proved each
+  capability and flags the ones **proven only in simulation**.
+
+  **It reports and never ranks.** It will not claim lab beats staging beats
+  field: which of those is "more real" is domain-specific, and an ordering that
+  is wrong somewhere gets worked around rather than corrected. And a passing
+  check that names no environment is counted as **unplaced**, never assumed
+  real — silence is not evidence of the field.
+
+  ⚠️ **This adds an edge type (55 → 56), and that is a harder change than the
+  enum growth above.** The version stamp counts node and edge *types*, so an
+  older reflow2 will **refuse** to open a design written by this one — loudly,
+  not silently, which is the point, but it means every machine and session
+  sharing a design must upgrade together. The next release needs its own upgrade
+  note saying so; `demonstration` / `observation` / `simulation` are property
+  values and do not do this.
+
 - **You can now drive INGEST yourself — no LLM provider involved** (`ingest_step`,
   SP-3b/BL-7). The multi-pass extraction pipeline has existed for months and was
   **unreachable from a session**: it needs an `LlmBackend`, reflow2 ships none,
