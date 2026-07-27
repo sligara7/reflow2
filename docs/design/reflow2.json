@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:190664c7e437b7aee17bcd3389635230b0358f3a3c592eec51e90c542d36cbbb",
+  "content_hash": "sha256:ab62bae583601835c0a9493f0cb3d5dd0a266593902e253cb81779109f09f0fc",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -776,6 +776,24 @@
       "from_id": "question:c7c58ee8f8328d68",
       "properties": {},
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:cd62eeed39ec7a7b",
+      "properties": {},
+      "to_id": "req:interface-spec-complete"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1642916ad2d7d36",
+      "properties": {},
+      "to_id": "req:seam-incompatibility"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d6f1644ca908ae5d",
+      "properties": {},
+      "to_id": "req:design-dependencies-declared"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -25967,6 +25985,42 @@
       }
     },
     {
+      "node_id": "question:cd62eeed39ec7a7b",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-27",
+        "context_setter": "Nothing satisfies requirement “A published interface carries enough to check compatibility, not just prose”",
+        "gap_id": "gap:cd62eeed39ec7a7b",
+        "question": "When one project publishes how to connect to it, reflow2 currently records the technology and little else — the rest is one block of free text. That means two projects can be linked and reflow2 still cannot tell you they disagree. Do you want it to capture the connection details properly (data formats, endpoints, security, error codes, rate limits), and if so is that the next thing you want built?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
+      "node_id": "question:d1642916ad2d7d36",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-27",
+        "context_setter": "Nothing satisfies requirement “When two linked designs disagree at a seam, say so”",
+        "gap_id": "gap:d1642916ad2d7d36",
+        "question": "reflow2 can tell you when a connection between two projects is missing a side, but not when both sides exist and simply disagree — one sending a format the other does not expect, or one assuming a speed the other cannot meet. That is the failure that survives testing until it does not. Do you want reflow2 to catch that, knowing it only works once the connection details above are captured properly?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
+      "node_id": "question:d6f1644ca908ae5d",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-27",
+        "context_setter": "Nothing satisfies requirement “Declare which version of another design you depend on, not just record what you took”",
+        "gap_id": "gap:d6f1644ca908ae5d",
+        "question": "reflow2 already notes which version of another project's design you actually copied, and when. What it has no place for is you SAYING which version you mean to depend on — a checked-in file like Cargo.toml. With both, it could tell you whether you are using the version you intended, and whether the other project has moved on since. Do you want that file, and should it come before or after the interface work?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:e68c76afcb57424c",
       "node_type": "Question",
       "properties": {
@@ -27770,7 +27824,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a4399674a444a767f28e6d97fc3096dc43a8f1caa0340820c48f1d5a0fe16ac2",
+  "prev_content_hash": "sha256:190664c7e437b7aee17bcd3389635230b0358f3a3c592eec51e90c542d36cbbb",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
