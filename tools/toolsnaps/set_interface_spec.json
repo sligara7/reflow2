@@ -1,0 +1,84 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Fill in what a consumer of this contract must AGREE with — the paradigm (sync/async), the payload format, the field-level schema, the endpoint and permitted operations, authentication, transport security, and the error model. Structured rather than prose because prose cannot be compared: two designs can be linked and still not be checkable for disagreement unless the seam is described in comparable terms. Every field is optional and omitting one LEAVES IT ALONE, so a spec can be filled in over time by different people. Unset reads as `unspecified`, never a flattering default — silence about authentication must not read as `none`. Rate limits, timeouts and concurrency do NOT belong here: they are numeric limits with a unit and a direction, so record them as a `Constraint` and point it at this interface with `constrains`.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "auth": {
+        "default": null,
+        "description": "`none` / `api_key` / `oauth2` / `jwt` / `mtls` / `basic` / `signature` /\n`kerberos` / `physical`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "endpoint": {
+        "default": null,
+        "description": "Where a request goes — URL, path, port, queue/topic, address, symbol.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "error_model": {
+        "default": null,
+        "description": "Status vocabulary and the shape of a failure response.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "interface_id": {
+        "type": "string"
+      },
+      "operations": {
+        "default": null,
+        "description": "Permitted actions — HTTP verbs, RPC methods, read/write commands.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "paradigm": {
+        "default": null,
+        "description": "`synchronous` / `asynchronous` / `streaming` / `batch`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "payload_format": {
+        "default": null,
+        "description": "`json` / `xml` / `protobuf` / `avro` / `msgpack` / `binary` / `text` /\n`csv` / `form` / `none`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "payload_schema": {
+        "default": null,
+        "description": "Where the field-level contract lives, or the contract itself.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "transport_security": {
+        "default": null,
+        "description": "`none` / `tls` / `mtls` / `ipsec` / `vpn` / `air_gapped` / `physical`.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "interface_id"
+    ],
+    "type": "object"
+  },
+  "name": "set_interface_spec"
+}

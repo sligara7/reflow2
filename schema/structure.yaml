@@ -33,7 +33,27 @@ schema:
         name: { type: string, required: true, indexed: true, fulltext: true }
         description: { type: string, fulltext: true }
         medium: { type: enum, values: [REST, gRPC, event, graphql, cli, library, data, mechanical, electrical, human], default: REST, indexed: true, description: "How the contract is carried." }
-        spec: { type: string, description: "Endpoint path, signature, connector spec, or protocol detail." }
+        spec: { type: string, description: "Free-text detail that the structured fields below do not carry — a prose note, a link to an OpenAPI document, a connector drawing. Kept because no field set covers every domain, but it is NOT where the things two systems must agree on belong: those are structured, because prose cannot be compared." }
+        # req:interface-spec-complete (Anthony, 2026-07-27). A published contract
+        # has to carry what two systems must AGREE on, in terms a computation can
+        # compare — otherwise two designs can be linked and reflow2 still cannot
+        # say they disagree. Additive properties, so the version stamp (which
+        # counts node/edge TYPES) does not move and older graphs stay readable.
+        #
+        # NOT here on purpose: rate limits, timeouts, max concurrency. Those are
+        # numeric limits with a unit and a direction, which is exactly what
+        # `Constraint` already carries (quantity/limit/direction) and what
+        # `budget_report` already rolls up — and CONSTRAINS is `*`→`*`, so a
+        # Constraint can bind an Interface today. Adding parallel properties
+        # would be a second place to say the same thing, and the two would drift.
+        paradigm: { type: enum, values: [synchronous, asynchronous, streaming, batch, unspecified], default: unspecified, indexed: true, description: "Request-response, event-driven, a continuous stream, or scheduled batches. A hard incompatibility when two sides differ: a consumer written against request-response cannot simply be pointed at an event feed. `unspecified` is the honest default — silence is not a claim that it is synchronous." }
+        payload_format: { type: enum, values: [json, xml, protobuf, avro, msgpack, binary, text, csv, form, none, unspecified], default: unspecified, indexed: true, description: "How the payload is serialized on the wire. The other hard incompatibility: one side speaking protobuf where the other expects JSON fails immediately and totally." }
+        payload_schema: { type: string, description: "Where the field-level contract lives, or the contract itself — mandatory versus optional fields, types, formatting rules (ISO 8601 dates and the like). A pointer is fine and usually better than an inline copy that will drift from the source." }
+        endpoint: { type: string, description: "Where a request goes: a URL or path, a port, a queue or topic name, a memory address, a function symbol. What a consumer needs to actually reach this." }
+        operations: { type: string, description: "The actions this contract permits — HTTP verbs, RPC method names, read/write commands. A consumer calling an operation the provider does not offer is a mismatch, which is why this is recorded rather than left implicit in `spec`." }
+        auth: { type: enum, values: [none, api_key, oauth2, jwt, mtls, basic, signature, kerberos, physical, unspecified], default: unspecified, indexed: true, description: "How the caller proves who it is. A mismatch here is a mismatch that shows up at the worst time: the consumer that assumed `none` gets 401s in production. `physical` covers the hardware case, where access IS the credential." }
+        transport_security: { type: enum, values: [none, tls, mtls, ipsec, vpn, air_gapped, physical, unspecified], default: unspecified, indexed: true, description: "How the data is protected in motion. Distinct from `auth`: one is who you are, the other is who can read it. A provider offering `none` against a consumer requiring `tls` is a refusal to connect, not a degradation." }
+        error_model: { type: string, description: "How failures are signalled and structured — the status vocabulary (HTTP codes, custom bitmasks, error enums) and the shape of a failure response, so a consumer can parse the reason automatically rather than string-matching prose." }
         designation: { type: enum, values: [internal, published], default: internal, indexed: true, description: "Whether this contract is a PUBLISHED boundary others are entitled to rely on, or INTERNAL plumbing the owner may change freely. `published` is what MOSA calls a modular/major system interface (10 U.S.C. 4401) and what a systems-engineering ICD publishes; it is also the surface a composed design links through rather than reaching into another system's internals (req:key-interfaces, req:design-composes). Default `internal` on purpose: publishing is a commitment, and defaulting to it would assert one nobody made — the same reasoning that makes a new Decision `proposed`. Read by impact analysis, which reports which published boundaries a change crosses, so severability is computed rather than asserted (req:modularity-computed). NOT a claim that the boundary has held: whether it actually stayed stable is its drift history, which is evidence, not a property anyone sets." }
         provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this node entered the graph. Same vocabulary as Fragment.provenance." }
       embedding_field: description

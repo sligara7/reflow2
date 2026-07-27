@@ -616,6 +616,71 @@ impl DesignGraph {
         self.create_node(node::INTERFACE, id, Props::new().set("name", name))
     }
 
+    /// Fill in what a consumer of this contract must agree with
+    /// (`req:interface-spec-complete`).
+    ///
+    /// Separate from creation, like `set_verification_status`, because the
+    /// contract usually gets named long before anyone knows its payload format —
+    /// and a constructor demanding all of it would push people to guess.
+    ///
+    /// Every field is optional and omitting one LEAVES IT ALONE rather than
+    /// clearing it, so this can be called repeatedly as a spec is filled in. The
+    /// unset value is `unspecified` on the enums, never a plausible-looking
+    /// default: silence about authentication must not read as "none".
+    ///
+    /// Rate limits, timeouts and concurrency are deliberately NOT here — they
+    /// are numeric limits with a unit and a direction, which is what
+    /// `Constraint` already carries and what `budget_report` already rolls up.
+    /// `CONSTRAINS` accepts an Interface as its target today.
+    #[allow(clippy::too_many_arguments)]
+    pub fn set_interface_spec(
+        &mut self,
+        interface_id: &str,
+        paradigm: Option<&str>,
+        payload_format: Option<&str>,
+        payload_schema: Option<&str>,
+        endpoint: Option<&str>,
+        operations: Option<&str>,
+        auth: Option<&str>,
+        transport_security: Option<&str>,
+        error_model: Option<&str>,
+    ) -> Result<StoredNode, DynoError> {
+        let Some(existing) = self.get_node(node::INTERFACE, interface_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::INTERFACE.to_string(),
+                node_id: interface_id.to_string(),
+            });
+        };
+        let incoming = [
+            ("paradigm", paradigm),
+            ("payload_format", payload_format),
+            ("payload_schema", payload_schema),
+            ("endpoint", endpoint),
+            ("operations", operations),
+            ("auth", auth),
+            ("transport_security", transport_security),
+            ("error_model", error_model),
+        ];
+        let mut props = Props::new();
+        // Carry everything already stored, then overlay only what was supplied —
+        // so a caller filling in the payload format cannot silently erase the
+        // authentication somebody else recorded.
+        for (k, v) in &existing.properties {
+            if !incoming
+                .iter()
+                .any(|(name, given)| name == k && given.is_some())
+            {
+                props = props.set(k, v.clone());
+            }
+        }
+        for (name, given) in incoming {
+            if let Some(value) = given {
+                props = props.set(name, value);
+            }
+        }
+        self.create_node(node::INTERFACE, interface_id, props)
+    }
+
     /// Designate a contract as a **published boundary** others may rely on, or
     /// back to **internal** plumbing the owner may change freely.
     ///

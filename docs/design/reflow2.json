@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:144a240933ebc790083e5c0f8c138bd7e6350e76112cf1951f0125e0cd7d6f6f",
+  "content_hash": "sha256:33a283052b0ae743a8b35a5f9d7c9c7e42a2af6476ca82d5bac7b74d9b38251d",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -96,6 +96,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:composed-analysis",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -248,6 +256,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:interface-spec",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:graph"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -911,6 +927,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:composed-analysis",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:deep-review-tier1",
       "properties": {},
       "to_id": "epoch:v050-hardening"
@@ -980,6 +1002,12 @@
       "from_id": "chg:instructions-served",
       "properties": {},
       "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:interface-spec",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2305,6 +2333,15 @@
         "action": "modified"
       },
       "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-870d9c0cae791b62",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:readme"
     },
     {
       "edge_type": "CHANGED",
@@ -3730,6 +3767,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:composed-analysis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:compose"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:composed-analysis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:compose-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:composed-analysis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:composed-analysis",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:composed-analysis"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:coverage-built",
       "properties": {
         "accepted_baseline": true,
@@ -4420,6 +4493,33 @@
         "action": "modified"
       },
       "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:interface-spec",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:interface-spec",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:interface-spec-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:interface-spec",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:interface-spec"
     },
     {
       "edge_type": "CHANGED",
@@ -16991,6 +17091,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:v0160",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v040",
       "properties": {},
       "to_id": "epoch:v050-cut"
@@ -17173,6 +17279,22 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:compose",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:composed-analysis"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:compose-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:composed-analysis"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:confirm",
       "properties": {
         "completeness": "complete"
@@ -17319,6 +17441,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:graph",
       "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:interface-spec"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:graph",
+      "properties": {
         "completeness": "partial"
       },
       "to_id": "cap:requirement-lineage"
@@ -17386,6 +17516,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:interface-spec-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:interface-spec"
     },
     {
       "edge_type": "REALIZES",
@@ -17921,6 +18059,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:composed-analysis",
+      "properties": {},
+      "to_id": "req:composed-analysis"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:corpus-ingest",
       "properties": {},
       "to_id": "req:corpus-ingest"
@@ -18062,6 +18206,12 @@
       "from_id": "cap:ingest",
       "properties": {},
       "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:interface-spec",
+      "properties": {},
+      "to_id": "req:interface-spec-complete"
     },
     {
       "edge_type": "SATISFIES",
@@ -18500,6 +18650,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:composed-analysis",
+      "properties": {},
+      "to_id": "cap:composed-analysis"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:coverage",
       "properties": {},
       "to_id": "cap:coverage"
@@ -18605,6 +18761,12 @@
       "from_id": "ver:ingest-handshake",
       "properties": {},
       "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:interface-spec",
+      "properties": {},
+      "to_id": "cap:interface-spec"
     },
     {
       "edge_type": "VERIFIES",
@@ -19601,6 +19763,28 @@
       }
     },
     {
+      "node_id": "art:compose",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558",
+        "location": "crates/reflow2-core/src/compose.rs",
+        "name": "compose.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:compose-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39",
+        "location": "crates/reflow2-core/tests/compose.rs",
+        "name": "tests/compose.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:confirm",
       "node_type": "Artifact",
       "properties": {
@@ -19770,7 +19954,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1ed522ea05a4b6c4fb84ec6e7c5f1eb2a8f698e86ee61d515ee66c36053b7bf6",
+        "checksum": "sha256:7c9f543fdd79d271f1bcebf91ac7f0df6b51a87af3ffc277d8ed77eabe37c3af",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -19839,6 +20023,17 @@
         "checksum": "sha256:f2ae1369ea386f2badfbdf5a6f08dd43b13146bac70403458f3f6daf35189cec",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:interface-spec-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:b640aed1b08ef002936d2957cedc2594bb94ca5189905b531023fb212ec8a433",
+        "location": "crates/reflow2-core/tests/interface_spec.rs",
+        "name": "tests/interface_spec.rs",
         "status": "realized"
       }
     },
@@ -20001,7 +20196,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:374685376e1850ec",
+        "checksum": "sha256:89b5dd2ab01635c57260235fa8afd6e757991e1bfdf576153a54bdf944dba071",
         "location": "README.md",
         "name": "README.md",
         "status": "realized"
@@ -20100,7 +20295,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b5c6a0fda0f4f7e83c8b522b61e477ca0bee926d906c09582f53e0e90a1ab54e",
+        "checksum": "sha256:12bafcbe73521190acf1fb91c47087e0dd029423832ae6dc14c11efbecd86ec0",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -20505,6 +20700,19 @@
       }
     },
     {
+      "node_id": "cap:composed-analysis",
+      "node_type": "Capability",
+      "properties": {
+        "description": "compose_and_analyse imports another design alongside this one and runs reflow2's ORDINARY checks — detect_gaps and detect_defects — over the combined whole, so seam problems arrive as the gaps they already are rather than needing a bespoke comparator. Anthony's mechanism, and better than the comparison the requirement first implied: make the existing computation SEE more rather than write a new one. WHY IT IS NOT import_graph: that writes every node under its ORIGINAL id with upsert semantics, because it exists to layer an export onto the design it came from — point it at a DIFFERENT design and the dependency's cmp:store silently overwrites the consumer's, which is corruption with no error. Ids are therefore namespaced to {namespace}::{id}, edges rewritten with them, and an empty namespace is REFUSED rather than allowed to collide by omission. NOTHING IS WRITTEN TO EITHER DESIGN: the combined graph is built in memory and thrown away, following the ingest handshake's prepare-round precedent. That disposes of both hazards the requirement named — an export of yours can never start carrying theirs, and there is no residue to clean up — and it is pinned by a test asserting your export's content_hash is byte-identical afterwards. FINDINGS ARE ATTRIBUTED ours / theirs / seam, because a consumer shown its dependency's internal gaps as if they were its own will switch the feature off, and rightly. The seam bucket is the point: findings neither design could have produced alone. Sits alongside the two composition mechanisms that already existed without replacing either — mirror_surface takes the published surface only and keeps it foreign, merge_designs reconciles two versions of the SAME design — and it does not overturn dec:nested-graphs, since ownership and release stay separate; this is a third, analysis-only composition.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Analyse two designs together without merging them",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:corpus-ingest",
       "node_type": "Capability",
       "properties": {
@@ -20735,6 +20943,19 @@
         "name": "Extract a design from freeform text",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:interface-spec",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Interface gains the properties two systems actually have to agree on, structured so a computation can compare them: paradigm (synchronous / asynchronous / streaming / batch), payload_format, payload_schema, endpoint, operations, auth, transport_security and error_model, set through set_interface_spec. Before this, Interface carried the technology (medium) and its published/internal designation, and everything else went into one free-text `spec` string — so two designs could be linked and reflow2 still could not say they disagreed, because prose cannot be compared. EVERY FIELD IS OPTIONAL AND OMITTING ONE LEAVES IT ALONE, so a spec can be filled in over time and by different people without one person's entry erasing another's — pinned by a test. UNSET READS AS `unspecified`, NEVER A FLATTERING DEFAULT: silence about authentication must not read as `none`, which would tell a consumer the contract is open when nobody has said anything at all. An invented enum value is refused rather than stored, because the vocabulary is what two designs get compared in and a typo'd auth scheme would make a sound seam look mismatched. DELIBERATELY NOT ADDED: rate limits, timeouts and maximum concurrency. Those are numeric limits with a unit and a direction, which is exactly what Constraint already carries (quantity/limit/direction) and budget_report already rolls up, and CONSTRAINS is already `*`→`*` so a Constraint can bind an Interface today — a second place to say the same number would drift from the first. That decision is pinned by its own test rather than left as a comment. Additive properties only, so the version stamp (which counts node and edge TYPES) does not move and older graphs stay readable.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A published contract says what a consumer must agree with",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -21481,6 +21702,14 @@
       }
     },
     {
+      "node_id": "chg:accept-870d9c0cae791b62",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted a new baseline: the change carries no design meaning"
+      }
+    },
+    {
       "node_id": "chg:accept-9ed800f22aff9099",
       "node_type": "ChangeEvent",
       "properties": {
@@ -21879,6 +22108,14 @@
       }
     },
     {
+      "node_id": "chg:composed-analysis",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Two designs analysed together without either being written to: the dependency's ids are namespaced into an in-memory graph and reflow2's ordinary detectors run over the whole, every finding attributed ours/theirs/seam"
+      }
+    },
+    {
       "node_id": "chg:coverage-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -22012,6 +22249,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The working instructions follow the skills into the server; a project keeps only a pointer"
+      }
+    },
+    {
+      "node_id": "chg:interface-spec",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "An Interface carries its whole contract — paradigm, payload format and schema, endpoint, operations, auth, transport security, error model — with unrecorded fields reading as unspecified, never as none"
       }
     },
     {
@@ -23927,6 +24172,16 @@
       }
     },
     {
+      "node_id": "decision:ack:7dfea41c0d708eab",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:7dfea41c0d708eab.",
+        "name": "Reviewed: gap:7dfea41c0d708eab",
+        "rationale": "Standing acknowledgement, unchanged in substance and re-stated because the rollup's id moves whenever the capability set does: validation for this project is the trials programme — reflow2 being used on real designs (this repo, storyflow, the fleet) — not a validation-kind Verification per capability. Recording 60 near-identical validation nodes would be ceremony that makes the number go green without anyone having checked anything, which is exactly the dishonesty `dec:passing-is-verified` exists to prevent.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:85a8e6f0446bbbfd",
       "node_type": "Decision",
       "properties": {
@@ -24341,6 +24596,15 @@
         "epoch_type": "revision",
         "name": "KPP capture half built (2026-07-25)",
         "sequence": 120
+      }
+    },
+    {
+      "node_id": "epoch:linking-repos",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Linking repos: a design analysed against its dependency's design, and an interface that publishes a complete contract (2026-07-27, post-v0.16.0)",
+        "sequence": 200
       }
     },
     {
@@ -25931,12 +26195,13 @@
       "node_id": "question:a5e8c988e4547af5",
       "node_type": "Question",
       "properties": {
+        "answer": "\"go with req:composed-analysis and req:interface-spec-complete next\" (Anthony, 2026-07-27). Build it, and build it before the seam work — which is the order the dependency already implied.",
         "asked_at": "2026-07-27",
         "context_setter": "Nothing satisfies requirement “Import one design into another and analyse the whole”",
         "gap_id": "gap:a5e8c988e4547af5",
         "question": "You want to pull a dependency's design into your own and then run reflow2's normal checks over both together. reflow2 cannot do that yet: loading one design into another overwrites anything sharing a name, because that loader was built for reloading a design onto itself. Making both sit side by side is real work — do you want it, and does it come before the connection-details work or after?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -26006,12 +26271,13 @@
       "node_id": "question:cd62eeed39ec7a7b",
       "node_type": "Question",
       "properties": {
+        "answer": "\"go with req:composed-analysis and req:interface-spec-complete next\" (Anthony, 2026-07-27). Build it. Paired with composed-analysis: the import makes two designs analysable together, this makes the seam between them describable in comparable terms.",
         "asked_at": "2026-07-27",
         "context_setter": "Nothing satisfies requirement “A published interface carries enough to check compatibility, not just prose”",
         "gap_id": "gap:cd62eeed39ec7a7b",
         "question": "When one project publishes how to connect to it, reflow2 currently records the technology and little else — the rest is one block of free text. That means two projects can be linked and reflow2 still cannot tell you they disagree. Do you want it to capture the connection details properly (data formats, endpoints, security, error codes, rate limits), and if so is that the next thing you want built?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -26321,7 +26587,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "reflow2 must be able to bring a dependency's design into a consuming design and run its ordinary analysis over the combined whole, so that composition problems appear as ordinary gaps rather than requiring a bespoke comparator. WHAT BLOCKS IT TODAY IS CONCRETE, not vague: import_graph writes every node under its ORIGINAL id with upsert semantics, so importing design Z into design A means Z's `cap:store` silently overwrites A's `cap:store`. It was built for layering a design onto itself — its own doc says an export can be layered onto a design it references — and using it to compose two DIFFERENT designs would corrupt the consumer without saying so. The other two composition mechanisms do not do this either, and it is worth being exact about why: mirror_surface deliberately imports only the published SURFACE and keeps it foreign, and merge_designs is a three-way merge of two versions of the SAME design. So a fourth thing is needed — a NAMESPACED import where both designs coexist and are separately identifiable. TWO THINGS THAT MUST NOT BE LOST. First, the combined graph must never be mistaken for the consumer's own design: every imported node stays attributable to where it came from, and an export of A must not start shipping Z's internals. Second, project-level detectors would now reason over both designs, so a consumer would see gaps belonging to its dependency — noise that would get the whole feature switched off. cap:scoped-analysis already narrows detection to a region and reports what it left out, so scoping the combined analysis to the seam is the likely answer rather than a new filter. NOTE THE TENSION WITH dec:nested-graphs, which chose a graph per ownership boundary precisely because edges cannot cross stores: this does not overturn that decision — the designs stay separately owned and separately released — but it does mean a THIRD, analysis-only composition alongside the two that exist.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -26580,7 +26846,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "When a design publishes an Interface, the published spec must carry the things two systems actually have to agree on, in a form a computation can compare — not a free-text blob a human has to read. The user's six characteristics: (1) ARCHITECTURAL STYLE AND PROTOCOL — the technology (REST, gRPC, GraphQL, WebSockets; RS-232, PCIe, CAN bus) and the communication paradigm, synchronous request-response versus asynchronous event-driven; (2) DATA STRUCTURE AND TYPES — payload serialization (JSON, XML, protobuf, raw binary) and a schema saying which fields are mandatory, their types, and their formatting constraints; (3) OPERATIONS AND ENDPOINTS — where to send a request (URL, port, memory address, function name) and what actions are permitted (HTTP verbs, RPC methods, read/write commands); (4) AUTHENTICATION AND SECURITY — how identity is verified (API keys, OAuth2, TLS certificates, cryptographic signatures) and how data is protected in transit and at rest; (5) ERROR HANDLING AND STATE CODES — the status vocabulary and a consistent failure structure the consumer can parse automatically; (6) PERFORMANCE AND CONSTRAINTS — rate limits, throttling, maximum concurrency, and timeout thresholds. THE POINT IS NOT COMPLETENESS FOR ITS OWN SAKE: it is that two designs cannot be checked for INCOMPATIBILITY at their seam unless the seam is described in comparable terms. Today reflow2 structures roughly one and a half of these six (medium, and designation) and puts the rest into one free-text `spec` string or nowhere at all — so mirror_surface can link two designs and still not tell you they disagree.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -27206,6 +27472,18 @@
       }
     },
     {
+      "node_id": "ver:composed-analysis",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-27",
+        "level": "integration",
+        "method": "test",
+        "name": "Two designs that both name something `cmp:store` do NOT overwrite each other, and the consumer's design is untouched — the corruption a plain import would cause silently; findings are attributed ours/theirs/seam with a seam finding required to name ids from BOTH sides; composing is READ-ONLY, pinned by the consumer's export content_hash being byte-identical afterwards and carrying none of the dependency's nodes; and an empty namespace is REFUSED rather than allowed to collide by omission (crates/reflow2-core/tests/compose.rs, 5 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:coverage",
       "node_type": "Verification",
       "properties": {
@@ -27395,6 +27673,18 @@
         "level": "integration",
         "method": "test",
         "name": "The ambient agent drives INGEST to completion with no LLM provider, and the design lands with its provenance Fragment; an ABANDONED handshake writes NOTHING (the prepare rounds replay against a throwaway graph, so a half-answered run cannot strand half a design); the same input takes the same rounds, since each call is self-contained and no session state is held; and an answer nothing asked for is reported rather than ignored. 4 Rust cases, plus an end-to-end run over real MCP against the built binary: 4 rounds, 6 nodes, with the recovered Decision and Component both present (crates/reflow2-core/tests/ingest_handshake.rs)",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:interface-spec",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-27",
+        "level": "unit",
+        "method": "test",
+        "name": "A contract records paradigm, payload format, schema, endpoint, operations, auth, transport security and error model; UNRECORDED FIELDS READ AS `unspecified` NOT `none` (the flattering default would tell a consumer an unspecified contract is open); filling one field leaves the others and the name alone, so a spec completed by several people over time loses nothing; an invented enum value is refused rather than stored; and performance limits bind the interface as a Constraint via CONSTRAINS rather than as duplicate properties (crates/reflow2-core/tests/interface_spec.rs, 5 cases)",
         "status": "passing"
       }
     },
@@ -27856,7 +28146,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ab62bae583601835c0a9493f0cb3d5dd0a266593902e253cb81779109f09f0fc",
+  "prev_content_hash": "sha256:144a240933ebc790083e5c0f8c138bd7e6350e76112cf1951f0125e0cd7d6f6f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -31,6 +31,48 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **Two designs can be analysed together without either being written to**
+  (`compose_and_analyse`, `req:composed-analysis`). The user's framing, and it is
+  the better one: to check whether a project and its dependency line up, import
+  one design into the other and run reflow2's **ordinary** checks over the whole,
+  so seam problems surface as the gaps they already are instead of needing a
+  bespoke comparator.
+
+  It cannot be `import_graph`, and the reason is worth stating: `import_graph`
+  writes every node under its **original** id with upsert semantics — point it at
+  a different design and the dependency's `cmp:store` silently overwrites yours.
+  So the other design's ids are namespaced as `{namespace}::{id}`, the combined
+  graph is built **in memory and thrown away**, and every finding is attributed
+  **ours**, **theirs**, or **seam**. Your export is byte-identical afterwards and
+  never starts shipping the dependency's internals. An empty namespace is
+  refused rather than allowed to collide by omission.
+
+  This is a third composition mechanism, not a replacement: `mirror_surface`
+  imports another design's published surface and keeps it foreign;
+  `merge_designs` reconciles two versions of the *same* design; this one analyses
+  two *different* designs and persists nothing.
+
+- **An interface can publish its whole contract** (`set_interface_spec`,
+  `req:interface-spec-complete`). `Interface` gains `paradigm`,
+  `payload_format`, `payload_schema`, `endpoint`, `operations`, `auth`,
+  `transport_security` and `error_model` — the things two systems actually have
+  to agree on, in a form a computation can compare rather than a free-text blob
+  a human has to read. Two designs cannot be checked for incompatibility at a
+  seam unless the seam is described in comparable terms.
+
+  A field nobody has recorded reads as **unspecified**, never as **none** — the
+  flattering default would tell a consumer that an unrecorded contract is an open
+  one. Filling one field leaves the rest and the name alone, so a spec completed
+  by several people over time loses nothing. Rate limits, concurrency caps and
+  timeouts stay as `Constraint`s bound by `CONSTRAINS`, which already carries
+  `quantity`/`limit`/`direction` — duplicating them as interface properties would
+  give the same fact two homes.
+
+  These are **property** additions, not new node or edge types, so they do not
+  move the version stamp and do not lock out an older reflow2.
+
 ## [0.16.0] — 2026-07-27
 
 **Upgrading:** [docs/upgrading-to-v0.16.0.md](docs/upgrading-to-v0.16.0.md), and this one is **not

@@ -33,6 +33,7 @@ pub mod artifact;
 pub mod budget;
 pub mod claims;
 pub mod compare;
+pub mod compose;
 pub mod confirm;
 pub mod coverage;
 pub mod detect;
@@ -78,6 +79,7 @@ pub use compare::{
     ChangedEdge, ChangedNode, DesignDiff, DiffAncestry, DiffBand, DiffSummary, EdgeRef,
     LIVE_GRAPH_LABEL, NodeRef, PropertyDivergence, compare_designs,
 };
+pub use compose::{ComposedFinding, ComposedReport, Side};
 pub use confirm::{ClaimConfirmation, ConfirmationLedger, ConfirmationState};
 pub use coverage::{CoverageReport, ObservedPath, UnclaimedRegion};
 pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, GapSource};

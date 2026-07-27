@@ -1268,6 +1268,49 @@ pub struct ProposeHealReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct InterfaceSpecReq {
+    pub interface_id: String,
+    /// `synchronous` / `asynchronous` / `streaming` / `batch`.
+    #[serde(default)]
+    pub paradigm: Option<String>,
+    /// `json` / `xml` / `protobuf` / `avro` / `msgpack` / `binary` / `text` /
+    /// `csv` / `form` / `none`.
+    #[serde(default)]
+    pub payload_format: Option<String>,
+    /// Where the field-level contract lives, or the contract itself.
+    #[serde(default)]
+    pub payload_schema: Option<String>,
+    /// Where a request goes — URL, path, port, queue/topic, address, symbol.
+    #[serde(default)]
+    pub endpoint: Option<String>,
+    /// Permitted actions — HTTP verbs, RPC methods, read/write commands.
+    #[serde(default)]
+    pub operations: Option<String>,
+    /// `none` / `api_key` / `oauth2` / `jwt` / `mtls` / `basic` / `signature` /
+    /// `kerberos` / `physical`.
+    #[serde(default)]
+    pub auth: Option<String>,
+    /// `none` / `tls` / `mtls` / `ipsec` / `vpn` / `air_gapped` / `physical`.
+    #[serde(default)]
+    pub transport_security: Option<String>,
+    /// Status vocabulary and the shape of a failure response.
+    #[serde(default)]
+    pub error_model: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ComposeReq {
+    /// The other design, as an export document (what `export_graph` returns).
+    pub design: JsonObject,
+    /// Prefix for the other design's ids — usually its `graph_id`. Required:
+    /// without it the two designs' ids would collide, which is the entire
+    /// reason this is not `import_graph`.
+    pub namespace: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct PerformedInReq {
     /// The check that was carried out.
     pub verification_id: String,
@@ -3943,6 +3986,70 @@ impl ReflowService {
         let mut g = self.write_lock().await;
         ok_json(
             g.ingest_step(&req.input, &options, answers)
+                .map_err(dyno_err)?,
+        )
+    }
+
+    #[tool(
+        description = "Fill in what a consumer of this contract must AGREE with — the paradigm \
+                       (sync/async), the payload format, the field-level schema, the endpoint and \
+                       permitted operations, authentication, transport security, and the error \
+                       model. Structured rather than prose because prose cannot be compared: two \
+                       designs can be linked and still not be checkable for disagreement unless \
+                       the seam is described in comparable terms. Every field is optional and \
+                       omitting one LEAVES IT ALONE, so a spec can be filled in over time by \
+                       different people. Unset reads as `unspecified`, never a flattering default \
+                       — silence about authentication must not read as `none`. Rate limits, \
+                       timeouts and concurrency do NOT belong here: they are numeric limits with \
+                       a unit and a direction, so record them as a `Constraint` and point it at \
+                       this interface with `constrains`.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn set_interface_spec(
+        &self,
+        Parameters(req): Parameters<InterfaceSpecReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(NodeDto::from(
+            g.set_interface_spec(
+                &req.interface_id,
+                req.paradigm.as_deref(),
+                req.payload_format.as_deref(),
+                req.payload_schema.as_deref(),
+                req.endpoint.as_deref(),
+                req.operations.as_deref(),
+                req.auth.as_deref(),
+                req.transport_security.as_deref(),
+                req.error_model.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Analyse THIS design together with another one — a dependency, a partner \
+                       system — and report what only shows up when both are present. Rather than \
+                       comparing them, it imports theirs alongside yours and runs reflow2's \
+                       ORDINARY checks over the whole, so seam problems arrive as the gaps they \
+                       already are: a contract with no provider once both sides are visible, a \
+                       requirement nothing satisfies across the join, a duplicate that is one \
+                       thing named twice. Findings are attributed OURS / THEIRS / SEAM, and the \
+                       seam ones are what neither design could have found alone. NOTHING IS \
+                       WRITTEN: the combined graph is built in memory and thrown away, so your \
+                       design is unchanged and your exports never start carrying theirs. Ids are \
+                       namespaced, because two designs routinely name different things the same \
+                       and a plain import would silently overwrite yours.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn compose_and_analyse(
+        &self,
+        Parameters(req): Parameters<ComposeReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let doc = serde_json::from_value(JsonValue::Object(req.design))
+            .map_err(|e| McpError::invalid_params(format!("invalid design document: {e}"), None))?;
+        let g = self.graph.read().await;
+        ok_json(
+            g.compose_and_analyse(&doc, &req.namespace)
                 .map_err(dyno_err)?,
         )
     }

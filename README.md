@@ -113,8 +113,8 @@ OBSOLETES, DUPLICATES, CONSTRAINS, ANTICIPATES, MASKS.
 ```
 reflow2/
   crates/
-    reflow2-core/    # the deterministic, LLM-free coherence engine (30 modules)
-    reflow2-mcp/     # the agent-native MCP stdio server (~78 tools) — the binary you run
+    reflow2-core/    # the deterministic, LLM-free coherence engine (40 modules)
+    reflow2-mcp/     # the agent-native MCP server, stdio or HTTP (114 tools) — the binary you run
   schema/            # 10 composable dynograph schema domains (28 node / 56 edge types)
     core / functional / structure / build / verify / operate
     environment / temporal / inference / dimensions

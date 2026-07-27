@@ -1,0 +1,27 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Analyse THIS design together with another one — a dependency, a partner system — and report what only shows up when both are present. Rather than comparing them, it imports theirs alongside yours and runs reflow2's ORDINARY checks over the whole, so seam problems arrive as the gaps they already are: a contract with no provider once both sides are visible, a requirement nothing satisfies across the join, a duplicate that is one thing named twice. Findings are attributed OURS / THEIRS / SEAM, and the seam ones are what neither design could have found alone. NOTHING IS WRITTEN: the combined graph is built in memory and thrown away, so your design is unchanged and your exports never start carrying theirs. Ids are namespaced, because two designs routinely name different things the same and a plain import would silently overwrite yours.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "design": {
+        "additionalProperties": true,
+        "description": "The other design, as an export document (what `export_graph` returns).",
+        "type": "object"
+      },
+      "namespace": {
+        "description": "Prefix for the other design's ids — usually its `graph_id`. Required:\nwithout it the two designs' ids would collide, which is the entire\nreason this is not `import_graph`.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "design",
+      "namespace"
+    ],
+    "type": "object"
+  },
+  "name": "compose_and_analyse"
+}
