@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:8faed13a3d6cc7a877e47467b51994d60578b9ba433b10306c236da9f0623ec9",
+  "content_hash": "sha256:c2747565b8f9738a4f8212ad8e635c77935c666399835f513c95644140c43b8f",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -702,6 +702,12 @@
       "from_id": "req:complementary-pairing",
       "properties": {},
       "to_id": "req:seam-incompatibility"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:058f1891de605d77",
+      "properties": {},
+      "to_id": "req:complementary-pairing"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -24523,6 +24529,16 @@
       }
     },
     {
+      "node_id": "decision:ack:heal:4b023a9e7da76757",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the structural defect heal:4b023a9e7da76757.",
+        "name": "Reviewed: heal:4b023a9e7da76757",
+        "rationale": "Correct as read, and correct to leave standing for now: req:complementary-pairing anticipates req:seam-incompatibility and nothing follows through because BOTH are `proposed` and waiting on Anthony's word. Manufacturing a follow-through would assert a design commitment nobody has made — the same forgery `dec:certainty-derived` forbids. Withdraw this acknowledgement when either requirement is accepted; the follow-through is then real work, not bookkeeping.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:heal:554698fdd93307a7",
       "node_type": "Decision",
       "properties": {
@@ -26080,6 +26096,18 @@
         "name": "Reflow 2.0",
         "objective": "Keep a design coherent from concept through operations",
         "status": "active"
+      }
+    },
+    {
+      "node_id": "question:058f1891de605d77",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-27",
+        "context_setter": "Nothing satisfies requirement “Pair two designs by complementary role, so the seam is computed rather than hand-wired”",
+        "gap_id": "gap:058f1891de605d77",
+        "question": "Does the publish/subscribe role belong on the interface itself — extending the `published` flag with a third value meaning \"I need one of these from outside\" — or on every node, as you described it? Recommendation: the interface. A component both publishes and subscribes, so a single role on a component collapses to `both` and pairs with everything, which is the only reason `both` is needed at all. On an interface, `both` stays rare and means something real.",
+        "rephrase_degraded": false,
+        "status": "asked"
       }
     },
     {
@@ -28191,7 +28219,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:33a283052b0ae743a8b35a5f9d7c9c7e42a2af6476ca82d5bac7b74d9b38251d",
+  "prev_content_hash": "sha256:8faed13a3d6cc7a877e47467b51994d60578b9ba433b10306c236da9f0623ec9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
