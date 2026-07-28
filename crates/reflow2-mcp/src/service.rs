@@ -1174,7 +1174,7 @@ pub struct InterfaceDesignationReq {
 #[serde(deny_unknown_fields)]
 pub struct SeamReportReq {
     /// The other design, as a published-surface or full export document.
-    pub design: serde_json::Value,
+    pub design: serde_json::Map<String, JsonValue>,
     /// Which boundary of ours answers which of theirs. Supplied rather than
     /// computed, because the subscribe side is not declarable yet.
     pub pairs: Vec<SeamPairDto>,
@@ -3024,7 +3024,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<SeamReportReq>,
     ) -> Result<CallToolResult, McpError> {
-        let other: reflow2_core::GraphExport = serde_json::from_value(req.design)
+        let other: reflow2_core::GraphExport = serde_json::from_value(JsonValue::Object(req.design))
             .map_err(|e| McpError::invalid_params(format!("not an export document: {e}"), None))?;
         let pairs: Vec<(String, String)> =
             req.pairs.into_iter().map(|p| (p.ours, p.theirs)).collect();
