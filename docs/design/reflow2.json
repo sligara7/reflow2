@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ddeff20ec46472bbc1fb936e422ed01d7f78e5f09bed57475514505a812fa975",
+  "content_hash": "sha256:3cc3604ccadfc7a8f13cc3051197c0da88312adc1f121b693a9e882dd58cbc17",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -23526,7 +23526,7 @@
       "node_id": "cap:changelog-view",
       "node_type": "Capability",
       "properties": {
-        "description": "Derive a Keep a Changelog-shaped draft (keepachangelog.com, Anthony's pointer 2026-07-28) between any two Releases or Epochs, from what the graph already records: the INCLUDES delta between two Release manifests (what appeared, what left) plus the dated ChangeEvents and drift accepts between their epochs, classified into the KaC buckets — Added / Changed / Deprecated / Removed / Fixed — mapped from the vocabulary the graph already carries (new nodes and link_artifact baselines -> Added; design_updated accepts and amended statements -> Changed; retire-from-design with history -> Deprecated/Removed; design_holds accepts with change_type test_failure_fix -> Fixed). The [Unreleased] section is the standing case: everything dated after the last deployed Release — which makes 'what would this increment's changelog say?' answerable BEFORE cutting it, the capability-increment sibling of what-next. Two KaC principles carried over as constraints: changelogs are FOR HUMANS, curated — this emits a DRAFT a person edits, never a commit-log dump (KaC names raw logs an antipattern; dec:report-dont-judge is the same rule here) — and every entry says what a CONSUMER does about it, which the graph cannot know alone. Kin to cap:compare-designs (two as-designed records); this compares two moments of ONE design and renders the difference in the format industry already reads.",
+        "description": "Derive a Keep a Changelog-shaped draft (keepachangelog.com, Anthony's pointer 2026-07-28) between any two Releases or Epochs, from what the graph already records: the INCLUDES delta between two Release manifests (what appeared, what left) plus the dated ChangeEvents and drift accepts between their epochs, classified into the KaC buckets — Added / Changed / Deprecated / Removed / Fixed — mapped from the vocabulary the graph already carries (new nodes and link_artifact baselines -> Added; design_updated accepts and amended statements -> Changed; retire-from-design with history -> Deprecated/Removed; design_holds accepts with change_type test_failure_fix -> Fixed). The [Unreleased] section is the standing case: everything dated after the last deployed Release — which makes 'what would this increment's changelog say?' answerable BEFORE cutting it, the capability-increment sibling of what-next. Two KaC principles carried over as constraints: changelogs are FOR HUMANS, curated — this emits a DRAFT a person edits, never a commit-log dump (KaC names raw logs an antipattern; dec:report-dont-judge is the same rule here) — and every entry says what a CONSUMER does about it, which the graph cannot know alone. Kin to cap:compare-designs (two as-designed records); this compares two moments of ONE design and renders the difference in the format industry already reads. DIRECTIONALITY, Anthony's formulation 2026-07-28, which is the load-bearing claim: 'our delta is a graph/machine version of a human changelog; the agent could derive the human changelog from the graph delta. Basically: graph delta --via_agent--> human changelog.' The graph delta is the primary, machine-readable record; the human changelog is a derived rendering, and never the other way around -- when the two disagree, the graph is what is interrogated and the changelog is what gets regenerated.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "A changelog is a derivable view of the graph's own delta",
@@ -31830,7 +31830,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2dbd7247402d4ff61ab9d7f5cf3a685fa7f222baaff1916854cf70aea23bea1f",
+  "prev_content_hash": "sha256:ddeff20ec46472bbc1fb936e422ed01d7f78e5f09bed57475514505a812fa975",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
