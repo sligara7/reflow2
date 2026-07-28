@@ -56,7 +56,6 @@ Add yourself if you're new here.
 
 
 
-- CI red on main: seam_report.design fails BL-28 (type-less schema) — @ajs — since 2026-07-28 — crates/reflow2-mcp/src/service.rs
 - **Install once per machine — no project needs setting up** — @ajs — since 2026-07-28 — getting-started/{commands,SETUP.md,README.md}, .claude/commands/, tools/{loop_nudge,test_loop_nudge,test_nudge_path,reflow2_install,reflow2_init,install.sh}, crates/reflow2-mcp/src/{latent.rs,lib.rs,main.rs}, crates/reflow2-mcp/tests/latent_mode.rs, .github/workflows/release.yml. *`req:no-setup-per-project` + `dec:install-once-per-machine`, both Anthony's word: reflow2 registers once at user scope and no project is set up at all, made safe by `--only-if-present` (latent surface: a directory with no design gets one tool and nothing is created in it).*
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
@@ -83,6 +82,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- **CI red on main since seam_report landed: its `design` param advertised no type (BL-28)** — LANDED across e7f897b (retype as `Map<String, JsonValue>`, the MirrorSurfaceReq idiom), 3683608 (fmt + the design gate's own drift catch, reconciled two-sided as `design_holds`, chg:accept-975fcb51ce6ec113), 31453f1 (toolsnap golden regenerated — the surface change made reviewable, as BL-76 intends). Run 30371232790 green. Notable: this machine has no Rust toolchain, so the reconcile ran through the released 0.17.0 binary against a scratch import, and the toolsnap diff was applied from CI's own output. Main is releasable again — the machine-wide installer (69d9a4d) still needs a cut release to actually reach a user. — @ajs — 2026-07-28 — crates/reflow2-mcp/src/service.rs, docs/design/reflow2.json, tools/toolsnaps/seam_report.json
 
 - **BL-12 rung: sharing becomes the DEFAULT (`--shared`)** — LANDED in 280397c ("Sharing a design between sessions becomes the default, and needs no setup"). A session finds the server holding its graph, starts a detached one if there is none, and proxies to it, so N concurrent sessions read and write one design with no setup. The claim line outlived the work: it was held by @api-boss from the StoryFlow fleet on ANOTHER machine, which is not a seat that works this repo — cleared by @ajs 2026-07-28 on Anthony's word. *If you are reading this because you claimed something here and cannot find your line: a claim from a seat that has left the machine is stale by definition, and clearing it is not the same as taking the work.* — @api-boss — 2026-07-27
 
