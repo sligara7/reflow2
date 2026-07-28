@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:dab6223fdd41aa9e2da60fb69a2e319711dc32ea1b7ad593704eb23490ff50d7",
+  "content_hash": "sha256:433a42fd90a396bd20ce770649d07ca9d8b97c1ad635c9784d010fc09d31a320",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -23541,7 +23541,7 @@
       "node_id": "cap:delta-reconcile",
       "node_type": "Capability",
       "properties": {
-        "description": "Orchestrate the existing reconcile family against the repository's own history: anchor on the last reconciled point (the newest dated ChangeEvent/DriftEvent accepts, and the committed export's lineage), have the agent sweep git for commits and paths touched since, then run reconcile_artifacts (drifted + missing + unknown-to-the-design files) and coverage_report (regions no node claims) over that sweep, and walk each finding to an answer: set_artifact_checksum two-sided for drift, link_artifact for new work worth claiming, retire-from-design for what left, and a mini adopt pass where a changed region's intent must be recovered rather than assumed. Distinct from adopt (nothing was ever under design control) and from plain reconcile_artifacts (which answers only the paths it is handed, with no notion of 'since'). Expected shape: a skill over existing ops — reflow2 performs no file I/O, so git evidence is swept and supplied by the agent.",
+        "description": "The pull for the graph: after git pull, bring this machine's live store and the working tree back into one coherent state, orchestrating what already exists. Layer 1 syncs the record — find the base (the newest export in git history both lines share), snapshot the live store (--export-snapshot works while the long-running session's server holds the lock), then fast-forward (import_graph upsert-layering, built for layering a design onto itself) when the store never moved, or the file-pure three-way (--merge to see conflicts, decide, --merge-apply) when both moved, then import the merged document and re-export straight onto the committed file so the lineage chain links. Layer 2 reconciles the code — commits in the pull that never updated the graph: reconcile_artifacts and coverage_report over the paths git names since the base, each finding walked to a two-sided answer (set_artifact_checksum / link_artifact / retire), a mini adopt pass where intent must be recovered. Precedent: the 'Live-store catch-up' ChangeEvents of 2026-07-23 did layer 1 by hand; this packages that discipline. reflow2 performs no file I/O — git evidence is swept and supplied by the agent.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Delta reconcile: present what changed since the graph last matched",
@@ -30086,7 +30086,7 @@
         "name": "The graph can catch up after unrecorded change",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "When the project changes outside the loop — commits made by a session or person that never touched the design graph — the design must be able to catch up on demand: compute the delta between what the graph last reconciled and what the repository holds now, and walk every element of that delta through the same two-sided question an ordinary drift accept carries (did the design hold, or did it move?). Catching up is an interrogation, never a bulk import: the graph re-earns coherence, it does not absorb whatever happened. Anthony, 2026-07-28: 'if I work on something and then another session changes something and commits it, but doesn't update the reflow2 graph, I'd like to run the delta that would compare what was in the graph prior and what has changed since we last worked on the project — then update the graph with the delta.'",
+        "statement": "When work arrives from elsewhere — a git pull bringing commits made on another machine or by a session that never touched this machine's live store — the design must be able to catch up on demand, in two layers. LAYER 1, THE RECORD: a machine's live store is a long-lived cache of the committed export (req:stale-seat-knows states the write-side guard; this is the read side). After a pull, the store must take on the pulled record's changes: fast-forward when only the record moved, three-way merge (base = the last export both sides share, from git history) when both moved — never a blind overwrite in either direction. LAYER 2, THE CODE: commits in the pull that changed the project without updating the graph must then be walked against the synced graph through the ordinary two-sided drift questions. Catching up is an interrogation, never a bulk import: the graph re-earns coherence, it does not absorb whatever happened. Anthony's scenario, 2026-07-28 (amending his first wording of today): 'I have been working reflow2 from a home computer mostly; I'm doing this in another session on a different computer. When I get home I'd like to git pull the latest, then run delta and it should reconcile any deltas with what it had. I often don't restart the claude code session at home, so the graph it has will be in whatever state I left it.'",
         "status": "proposed"
       }
     },
@@ -31660,7 +31660,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:bcb91fc416edbde738e16027035c3d7295c00a0f819fdcb447438cadc382004c",
+  "prev_content_hash": "sha256:dab6223fdd41aa9e2da60fb69a2e319711dc32ea1b7ad593704eb23490ff50d7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
