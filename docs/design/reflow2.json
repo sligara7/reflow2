@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:7f2d40ddb983f57962eed467bc7109c101382bcf9c0fcccec616ca7496eb9a85",
+  "content_hash": "sha256:2d129556e9a75171138b5df2a935a446315c86354004af2d66ef82ccc486d8ff",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -723,6 +723,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:5aa0248a4e730d34",
+      "properties": {},
+      "to_id": "req:kit-reaches-the-agent"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:634fc0554d9ccfc6",
       "properties": {},
       "to_id": "cap:store"
@@ -828,6 +834,12 @@
       "from_id": "question:d6f1644ca908ae5d",
       "properties": {},
       "to_id": "req:design-dependencies-declared"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:df7741cad6b4f533",
+      "properties": {},
+      "to_id": "req:publishable-promise"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -26152,6 +26164,18 @@
       }
     },
     {
+      "node_id": "question:5aa0248a4e730d34",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-28",
+        "context_setter": "Nothing satisfies requirement “The install must land its pointer where the agent will actually read it”",
+        "gap_id": "gap:5aa0248a4e730d34",
+        "question": "Installing reflow2 into dynograph-foundation reported success and left it invisible — you opened a session and saw nothing, because the installer wrote AGENTS.md into a repo that had no instruction file, and Claude Code reads CLAUDE.md first. Should the installer write to whichever file the agent will actually open, rather than only adding to files that already exist? And separately: should the eight slash commands (/gaps, /health, /where and the rest) ship with the kit, so a consumer project gets the same ergonomics reflow2's own repo has — or does that cut against the decision to serve everything from the server rather than copy it?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:634fc0554d9ccfc6",
       "node_type": "Question",
       "properties": {
@@ -26375,6 +26399,18 @@
         "context_setter": "Nothing satisfies requirement “Declare which version of another design you depend on, not just record what you took”",
         "gap_id": "gap:d6f1644ca908ae5d",
         "question": "reflow2 already notes which version of another project's design you actually copied, and when. What it has no place for is you SAYING which version you mean to depend on — a checked-in file like Cargo.toml. With both, it could tell you whether you are using the version you intended, and whether the other project has moved on since. Do you want that file, and should it come before or after the interface work?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
+      "node_id": "question:df7741cad6b4f533",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-28",
+        "context_setter": "Nothing satisfies requirement “A published surface must be able to carry a behavioural promise, not only structure”",
+        "gap_id": "gap:df7741cad6b4f533",
+        "question": "When one project publishes what another may rely on, it can currently list the connection points but cannot state what any of them PROMISES to do. So dynograph's real commitment — that a missing database fails loudly rather than silently losing your data — has no way to reach the people depending on it, and today survives only as a comment in our own build file. Should I make a promise markable as publishable, so it travels with the surface and gets checked like everything else? This is my recommended next build: small, reuses machinery that already works, and until it exists every published surface reflow2 produces is missing half of what one is for.",
         "rephrase_degraded": false,
         "status": "asked"
       }
@@ -28263,7 +28299,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f8cb8eb6806c853dda6912cf7f4782dd99c2aa88fc725451aee57c4eb1a9dc74",
+  "prev_content_hash": "sha256:7f2d40ddb983f57962eed467bc7109c101382bcf9c0fcccec616ca7496eb9a85",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
