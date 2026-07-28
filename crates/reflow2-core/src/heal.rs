@@ -31,7 +31,7 @@
 
 use std::collections::{BTreeSet, HashMap};
 
-use dynograph_core::DynoError;
+use dynograph_core::{DynoError, Value};
 use dynograph_storage::StoredEdge;
 
 use crate::graph::DesignGraph;
@@ -656,7 +656,29 @@ impl DesignGraph {
         }
 
         // contradiction — a CONTRADICTS edge (unresolved in this increment).
+        //
+        // `alignment: supporting` is NOT a contradiction and must not be
+        // reported as one. The schema has carried that value from the start —
+        // "two decisions/requirements/claims that conflict (or, with
+        // alignment=supporting, reinforce)" — and this loop read the edge TYPE
+        // and never the property, so every correctly-modelled corroboration
+        // came back as a structural defect.
+        //
+        // Found in use on 2026-07-28: `dec:commands-are-the-exception`
+        // QUALIFIES `dec:skills-served` — same reasoning, narrower scope — and
+        // recording that relationship the way the schema prescribes turned the
+        // graph red. The damage is not the noise: it is that the only ways out
+        // were to acknowledge a defect that is not one, or to stop recording
+        // corroboration at all. A property the detector ignores is a property
+        // that lies.
         for e in self.all_edges_of_type(edge::CONTRADICTS, &index)? {
+            if e.properties
+                .get("alignment")
+                .and_then(Value::as_str)
+                .is_some_and(|a| a == "supporting")
+            {
+                continue;
+            }
             let affected = vec![e.from_id.clone(), e.to_id.clone()];
             issues.push(HealIssue {
                 id: issue_id(HealCategory::Contradiction, &affected),

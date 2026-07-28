@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:89fcbc93b509b0433011644eb9868b02ab649f5f84345a38beb249bdb1d92b7b",
+  "content_hash": "sha256:716f071c1dbadd8bca9a13a0f50f29208cc1a58861ba65c5ea67164ed0ab3810",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -651,6 +651,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:supporting-is-not-conflict",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:surface",
       "properties": {
         "weight_basis": "estimated"
@@ -1228,6 +1236,12 @@
       "from_id": "chg:stub-survivor-reconciliation",
       "properties": {},
       "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:supporting-is-not-conflict",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5584,6 +5598,33 @@
         "action": "modified"
       },
       "to_id": "req:platform"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:supporting-is-not-conflict",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:contradiction-alignment-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:supporting-is-not-conflict",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:supporting-is-not-conflict",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:supporting-is-not-conflict"
     },
     {
       "edge_type": "CHANGED",
@@ -17605,6 +17646,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:contradiction-alignment-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:supporting-is-not-conflict"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:coverage",
       "properties": {
         "completeness": "complete"
@@ -17770,6 +17819,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:heal",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:supporting-is-not-conflict"
     },
     {
       "edge_type": "REALIZES",
@@ -18908,6 +18965,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:supporting-is-not-conflict",
+      "properties": {},
+      "to_id": "req:supporting-is-not-conflict"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:surface",
       "properties": {},
       "to_id": "req:no-se-knowledge"
@@ -19349,6 +19412,12 @@
       "from_id": "ver:store",
       "properties": {},
       "to_id": "cap:store"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:supporting-is-not-conflict",
+      "properties": {},
+      "to_id": "cap:supporting-is-not-conflict"
     },
     {
       "edge_type": "VERIFIES",
@@ -20162,6 +20231,17 @@
       }
     },
     {
+      "node_id": "art:contradiction-alignment-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed",
+        "location": "crates/reflow2-core/tests/contradiction_alignment.rs",
+        "name": "tests/contradiction_alignment.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:coverage",
       "node_type": "Artifact",
       "properties": {
@@ -20331,7 +20411,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fa4fa10add42f5e8",
+        "checksum": "sha256:30d3e7a27a3b198c46498bf1befd6511166bf8649c8837e6d78ac36cbb5d0852",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -21879,6 +21959,19 @@
       }
     },
     {
+      "node_id": "cap:supporting-is-not-conflict",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The contradiction detector reads `alignment`: a CONTRADICTS edge marked `supporting` reinforces and is not reported as a defect, while an `opposing` edge and an edge that says nothing both stay contradictions — so existing designs keep their meaning and real conflicts still surface.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Corroboration reads as corroboration",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:surface",
       "node_type": "Capability",
       "properties": {
@@ -22930,6 +23023,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Reconcile genesis-stub survivor nodes with the committed model (user-approved 2026-07-20): merge cap:install→cap:kit, cap:artifacts→cap:reconcile-built, req:past-preserved→req:intent-preserved; wire cap:store; satisfy req:platform via cap:kit; verify cap:adopt from the storyflow trial"
+      }
+    },
+    {
+      "node_id": "chg:supporting-is-not-conflict",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "The contradiction detector reads `alignment`, so recording that one decision qualifies another no longer turns the graph red"
       }
     },
     {
@@ -27791,6 +27892,20 @@
       }
     },
     {
+      "node_id": "req:supporting-is-not-conflict",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A property the detector ignores is a property that lies",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "FOUND BY USING THE GRAPH, 2026-07-28, and the third defect this week that inspection had not found and one real use did.\n\nWHAT HAPPENED. Anthony decided the slash commands should ship with the kit, which QUALIFIES `dec:skills-served` rather than overturning it — same reasoning, narrower scope. The schema has carried the vocabulary for that relationship from the beginning: CONTRADICTS is documented as \"two decisions/requirements/claims that conflict (OR, WITH alignment=supporting, REINFORCE)\". So the corroboration was recorded exactly as prescribed, with `alignment: supporting` — and `detect_defects` reported a structural defect, because the contradiction loop read the edge TYPE and never looked at the property.\n\nWHY THE NOISE WAS NOT THE DAMAGE. The damage was that both ways out were wrong. Acknowledge it, and a defect that is not one enters `reviewed_defects` as if a judgement had been made. Stop drawing the edge, and the design silently loses the fact that one decision qualifies another — which is precisely the kind of reasoning a design graph exists to keep. And an open list that can never reach zero gets SKIMMED, which is the failure the whole detect-and-ask discipline is built to prevent.\n\nTHE GENERAL RULE, worth stating beyond this instance: A SCHEMA PROPERTY THAT NO COMPUTATION READS IS A PROPERTY THAT LIES. It invites people to record something true, and then behaves as though they had not. reflow2 has now been bitten by this shape three times in two days — `orphan_node` ignoring DOCUMENTS so a well-documented artifact reads as loose; `export_surface` withholding every Requirement so a published promise could not travel; and this. Each was a value the schema offered and no detector consulted.\n\nWHAT THE FIX MUST NOT DO, and this is the load-bearing half: it must not silence the detector. An `opposing` edge is still a contradiction, and an edge that says NOTHING is still a contradiction — silence is not a claim of support, and every design written before today keeps its meaning exactly. A fix that made real conflicts vanish would be far worse than the noise it removed, so both counterweights are pinned by tests rather than asserted in a comment.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:survives-upgrade",
       "node_type": "Requirement",
       "properties": {
@@ -28734,6 +28849,18 @@
       }
     },
     {
+      "node_id": "ver:supporting-is-not-conflict",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-28",
+        "level": "unit",
+        "method": "test",
+        "name": "A supporting CONTRADICTS edge produces no contradiction; an opposing one still does; and one with no alignment still does, so no design written before the fix changes behaviour (crates/reflow2-core/tests/contradiction_alignment.rs, 3 cases). MUTATION-CHECKED: removing the alignment check fails exactly the supporting case and leaves the two counterweights green — which is what proves the fix did not simply silence the detector.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:surface",
       "node_type": "Verification",
       "properties": {
@@ -28790,7 +28917,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ba3335b8d7e0719ed95f6facd4478216e5ef73ea16d0482b10f65b98acae70b6",
+  "prev_content_hash": "sha256:89fcbc93b509b0433011644eb9868b02ab649f5f84345a38beb249bdb1d92b7b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
