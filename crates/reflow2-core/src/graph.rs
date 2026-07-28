@@ -722,6 +722,65 @@ impl DesignGraph {
         self.create_node(node::INTERFACE, interface_id, props)
     }
 
+    /// Mark a requirement as a promise this design publishes, or take that back
+    /// (`req:publishable-promise`).
+    ///
+    /// A behavioural commitment — "fails loud rather than falling back",
+    /// "ordering is preserved" — lives in a Requirement, and every Requirement
+    /// was withheld from `export_surface` as internal. So a design could hold a
+    /// promise, a consumer could depend on it, and the published surface could
+    /// not carry it between them. Found by a real trial: the promise ended up
+    /// asserted in a *comment in the consumer's build file*, on the wrong side of
+    /// the seam.
+    ///
+    /// Publishing is a commitment, so `internal` is the default and reaching
+    /// `published` is a deliberate act — the same rule, for the same reason, as
+    /// [`set_interface_designation`](Self::set_interface_designation).
+    pub fn set_requirement_designation(
+        &mut self,
+        requirement_id: &str,
+        designation: &str,
+    ) -> Result<StoredNode, DynoError> {
+        if !matches!(designation, "internal" | "published") {
+            return Err(DynoError::Validation {
+                node_type: node::REQUIREMENT.into(),
+                property: "designation".into(),
+                message: format!(
+                    "'{designation}' is not a requirement designation (one of internal, published)"
+                ),
+            });
+        }
+        let Some(existing) = self.get_node(node::REQUIREMENT, requirement_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::REQUIREMENT.into(),
+                node_id: requirement_id.into(),
+            });
+        };
+        let mut props = Props::new().set("designation", designation);
+        for (k, v) in &existing.properties {
+            if k != "designation" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::REQUIREMENT, requirement_id, props)
+    }
+
+    /// The promises this design publishes, by id — the behavioural half of a
+    /// published surface (`req:publishable-promise`).
+    pub fn published_promises(&self) -> Result<std::collections::BTreeSet<String>, DynoError> {
+        Ok(self
+            .scan_nodes(node::REQUIREMENT)?
+            .into_iter()
+            .filter(|n| {
+                n.properties
+                    .get("designation")
+                    .and_then(Value::as_str)
+                    .is_some_and(|d| d == "published")
+            })
+            .map(|n| n.node_id)
+            .collect())
+    }
+
     /// The published boundaries in this design, by id — the set impact analysis
     /// checks a blast radius against.
     pub fn published_interfaces(&self) -> Result<std::collections::BTreeSet<String>, DynoError> {

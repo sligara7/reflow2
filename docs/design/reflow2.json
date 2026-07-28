@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2d129556e9a75171138b5df2a935a446315c86354004af2d66ef82ccc486d8ff",
+  "content_hash": "sha256:57b448d3f661ed1cc652498d93c69b3c3cb4963b8757d71ab7b1725e648aae59",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -428,6 +428,14 @@
     {
       "edge_type": "ALLOCATED_TO",
       "from_id": "cap:publish-surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:publishable-promise",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -1092,6 +1100,12 @@
       "from_id": "chg:protocol-version-current",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:publishable-promise",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4884,6 +4898,51 @@
         "action": "modified"
       },
       "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:publishable-promise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:publishable-promise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:publishable-promise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:publishable-promise-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:publishable-promise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:publishable-promise",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:publishable-promise"
     },
     {
       "edge_type": "CHANGED",
@@ -17450,6 +17509,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:publishable-promise"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:export",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cmp:export"
     },
     {
@@ -17723,6 +17790,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:publishable-promise-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:publishable-promise"
     },
     {
       "edge_type": "REALIZES",
@@ -18429,6 +18504,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:publishable-promise",
+      "properties": {},
+      "to_id": "req:publishable-promise"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:questions",
       "properties": {},
       "to_id": "req:no-se-knowledge"
@@ -18924,6 +19005,12 @@
       "from_id": "ver:publish-surface",
       "properties": {},
       "to_id": "cap:publish-surface"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:publishable-promise",
+      "properties": {},
+      "to_id": "cap:publishable-promise"
     },
     {
       "edge_type": "VERIFIES",
@@ -19943,7 +20030,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cfe81e36af4e3dfd",
+        "checksum": "sha256:f44a5c6499968fb4cb8a0c98df80d64271cd7b098e3f8bd6c13a9f0c16a08337",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
         "status": "realized"
@@ -20009,7 +20096,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7c9f543fdd79d271f1bcebf91ac7f0df6b51a87af3ffc277d8ed77eabe37c3af",
+        "checksum": "sha256:740243e814239672205d9528f99c658e943b09dfcd7681c7a3707529e235784b",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -20247,6 +20334,17 @@
       }
     },
     {
+      "node_id": "art:publishable-promise-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420",
+        "location": "crates/reflow2-core/tests/publishable_promise.rs",
+        "name": "tests/publishable_promise.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:readme",
       "node_type": "Artifact",
       "properties": {
@@ -20350,7 +20448,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:12bafcbe73521190acf1fb91c47087e0dd029423832ae6dc14c11efbecd86ec0",
+        "checksum": "sha256:4ecaa4dd142b7ff0e5f39d611a966f7ee6a38d1ad10bc6867de2cacd3d5ebc5d",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -21232,6 +21330,19 @@
         "name": "Publish just the boundary — the contracts others may rely on, and nothing internal",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:publishable-promise",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A Requirement can be designated `published`, and `export_surface` then carries it alongside the boundaries — so a design can state what it UNDERTAKES TO DO, not only what it exposes. Opt-in per requirement, `internal` by default because publishing is a commitment; undesignated intent is still withheld and still counted. A surface with no promises says so in as many words, so \"none stated\" never reads as \"none exist\".",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Publish a promise, not just a boundary",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -22400,6 +22511,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "Advertise the SDK's current MCP protocol, and make the version checkable"
+      }
+    },
+    {
+      "node_id": "chg:publishable-promise",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A published surface can carry a behavioural promise: Requirement gains a `designation`, and export_surface carries the published ones alongside the boundaries"
       }
     },
     {
@@ -26407,12 +26526,13 @@
       "node_id": "question:df7741cad6b4f533",
       "node_type": "Question",
       "properties": {
+        "answer": "Yes — build it. (Anthony, 2026-07-28: \"go with req:publishable-promise next\".) Built as the recommended option: a `designation` on Requirement mirroring the one on Interface, so a promise travels with the surface and every existing check applies to it unchanged, rather than a prose companion sitting outside all of them.",
         "asked_at": "2026-07-28",
         "context_setter": "Nothing satisfies requirement “A published surface must be able to carry a behavioural promise, not only structure”",
         "gap_id": "gap:df7741cad6b4f533",
         "question": "When one project publishes what another may rely on, it can currently list the connection points but cannot state what any of them PROMISES to do. So dynograph's real commitment — that a missing database fails loudly rather than silently losing your data — has no way to reach the people depending on it, and today survives only as a comment in our own build file. Should I make a promise markable as publishable, so it travels with the surface and gets checked like everything else? This is my recommended next build: small, reuses machinery that already works, and until it exists every published surface reflow2 produces is missing half of what one is for.",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -27175,7 +27295,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "FOUND BY A REAL TRIAL, 2026-07-28, and it is reflow2's defect rather than either project's: the dynograph-foundation session, publishing its offer to the reflow2 session, could not express the one commitment its consumer most needed.\n\nTHE MECHANISM, exactly. `export_surface` emits published Interfaces, the Components either side of them, and the contract artifacts. It withholds everything else as internal — including every Requirement, deliberately, because a consumer has no business reading its dependency's internal intent. But BEHAVIOURAL COMMITMENTS LIVE IN REQUIREMENTS. So the document reflow2 offers as \"the published surface\" carries structure and no promises, and there is no way to publish one.\n\nTHE CONCRETE CASE. reflow2's own Cargo.toml asserts, in a comment, that dynograph's `open_rocksdb` \"fails loud (foundation contract), rather than silently falling back to memory\". That is a real, load-bearing promise — a silent fallback to an in-memory store would lose a consumer's data with no error. dynograph's graph HAS it, as an accepted Requirement (\"A build without RocksDB must work, and must fail loud rather than fall back\"). The provider holds the promise, the consumer depends on the promise, and the surface export cannot carry it between them. So it lives where it is useless: a prose comment in the consumer's build file, on the wrong side of the seam, where the provider will never see it change.\n\nWHY THIS IS WORSE THAN A MISSING FEATURE. A published surface that structurally cannot contain half of what a published surface is for will be *believed* — it says \"published surface\" on the tin, it counts what it withheld, and it looks complete. A consumer reading it concludes the provider promises nothing behavioural, when in fact the provider promises plenty and simply cannot say so.\n\nTWO WAYS OUT, and they are not equal. (1) A prose companion document alongside the export — cheap, and it sits outside every check reflow2 has, so it drifts exactly like `docs/endpoints.md` did in the provider's own repo. (2) A `designation` on Requirement, the way Interface already carries one, so a behavioural promise can be marked publishable and travel with the surface — the export machinery, the withholding count, and the drift checks all then apply to it unchanged. Option 2 is the recommendation: it reuses the mechanism whose semantics are already settled (`internal` by default, because publishing is a commitment nobody should make by accident) rather than inventing a second, unchecked channel.\n\nNOT A LICENCE TO PUBLISH REQUIREMENTS WHOLESALE. Most requirements are internal intent and must stay withheld. The designation is opt-in per requirement, exactly as it is per interface, and the default stays `internal`.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -28025,6 +28145,18 @@
       }
     },
     {
+      "node_id": "ver:publishable-promise",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-28",
+        "level": "integration",
+        "method": "test",
+        "name": "A designated promise travels with the surface while undesignated intent stays home and is counted; nothing is published by default; a promise-free surface SAYS it is promise-free and distinguishes \"none stated\" from \"none exist\"; a promise count appears in the note; designation can be withdrawn; designating leaves status and statement alone; an invented designation and a non-existent requirement are both refused (crates/reflow2-core/tests/publishable_promise.rs, 9 cases). MUTATION-CHECKED: removing the one line that carries promises fails exactly the case that names the defect, and nothing else.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:questions",
       "node_type": "Verification",
       "properties": {
@@ -28299,7 +28431,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:7f2d40ddb983f57962eed467bc7109c101382bcf9c0fcccec616ca7496eb9a85",
+  "prev_content_hash": "sha256:2d129556e9a75171138b5df2a935a446315c86354004af2d66ef82ccc486d8ff",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

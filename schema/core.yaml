@@ -51,6 +51,21 @@ schema:
         status: { type: enum, values: [proposed, accepted, deferred, dropped, met], default: proposed, indexed: true }
         lineage: { type: enum, values: [original, decomposed, derived], default: original, indexed: true, description: "Where this requirement came from, which is distinct from `provenance` (how it entered the graph). `original` is the stakeholder's own word. `decomposed` is a 1:1 split of a parent adding no new information — it DECOMPOSES that parent, and satisfying every child satisfies it. `derived` is technical necessity nobody asked for, created by a design decision — it is GOVERNED_BY that Decision, and if the decision is re-opened the requirement may lose its reason to exist. The classes behave differently under delivery roll-up and under re-forking, which is why the distinction is stored rather than inferred." }
         provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this node entered the graph. Same vocabulary as Fragment.provenance. `inferred` is the load-bearing one: a requirement read back out of the code that implements it is satisfied by construction and can never contradict anything, so it must be distinguishable from one a stakeholder actually stated." }
+        # Added 2026-07-28 by req:publishable-promise, found by a real cross-repo
+        # trial: dynograph-foundation published its surface to reflow2 and could
+        # not express the one commitment its consumer most needed — that
+        # `open_rocksdb` fails loud rather than silently falling back to memory.
+        # export_surface withholds every Requirement as internal, and behavioural
+        # commitments LIVE in Requirements, so the published surface carried
+        # structure and no promises. The consumer's build file ended up asserting
+        # the provider's promise in a code comment, on the wrong side of the seam,
+        # where the provider would never see it change.
+        #
+        # Same enum, same default and the same reason for the default as
+        # Interface.designation: publishing is a commitment, and defaulting to it
+        # would assert one nobody made. Most requirements are internal intent and
+        # must stay withheld — this is opt-in, per requirement.
+        designation: { type: enum, values: [internal, published], default: internal, indexed: true, description: "Whether this requirement is a PROMISE THIS DESIGN PUBLISHES — a behavioural commitment a consumer is entitled to rely on — or internal intent nobody outside gets to see. `published` is what an ICD states in prose and what no structural export can carry: 'fails loud rather than falling back', 'ordering is preserved', 'an empty result means no match, not an error'. Read by `export_surface`, which withholds every `internal` requirement and carries every `published` one, so a promise travels with the boundary it constrains and every existing drift and reconcile check applies to it unchanged. Default `internal` on purpose (req:publishable-promise): most requirements are the design's own reasoning, and publishing one is a commitment that must be made deliberately — the same rule as Interface.designation. NOT a claim the promise is kept: whether it held is its verification and drift history, which is evidence rather than a property anyone sets." }
       embedding_field: statement
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
       extraction_hint: >

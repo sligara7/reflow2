@@ -33,6 +33,31 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A published surface can carry a behavioural promise** (`set_requirement_designation`,
+  `req:publishable-promise`). `Requirement` gains a `designation` (`internal` |
+  `published`), and `export_surface` carries the published ones alongside the
+  boundaries.
+
+  Found by a real cross-repo trial rather than by review: a provider design
+  published its surface to a consumer design and **could not express the one
+  commitment the consumer most needed** — that a missing on-disk backend fails
+  loud rather than silently falling back to memory. `export_surface` withheld
+  every `Requirement` as internal, behavioural commitments *live* in
+  Requirements, so the document said what the boundaries **are** and nothing
+  about what any of them undertakes to **do**. The promise survived only as a
+  comment in the *consumer's* build file — on the wrong side of the seam, where
+  the provider would never see it change.
+
+  Opt-in per requirement and `internal` by default, for the same reason
+  `Interface.designation` is: publishing is a commitment, and defaulting to it
+  would assert one nobody made. Undesignated intent is still withheld and still
+  counted. A surface with no promises now **says so** — "none stated" must never
+  read as "none exist", which is the same false-green rule the trial turned up
+  elsewhere.
+
+  Property addition only, so the version stamp does not move and no older
+  reflow2 is locked out.
+
 - **Two designs can be analysed together without either being written to**
   (`compose_and_analyse`, `req:composed-analysis`). The user's framing, and it is
   the better one: to check whether a project and its dependency line up, import

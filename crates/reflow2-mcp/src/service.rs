@@ -1172,6 +1172,15 @@ pub struct InterfaceDesignationReq {
 
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct RequirementDesignationReq {
+    pub requirement_id: String,
+    /// `internal` (the default state) or `published` — a behavioural promise a
+    /// consumer of this design is entitled to rely on.
+    pub designation: String,
+}
+
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ScopeReq {
     /// Narrow the answer to the part of the design around this node — a
     /// Component a team owns, a Project, a Capability. Omit for the whole design,
@@ -2927,6 +2936,30 @@ impl ReflowService {
         let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.set_interface_designation(&req.interface_id, &req.designation)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Designate a Requirement as a PROMISE THIS DESIGN PUBLISHES — a behavioural \
+                       commitment a consumer may rely on — or back to INTERNAL intent nobody \
+                       outside sees. Use it for the things an ICD states in prose and no \
+                       structural export can carry: 'a missing store fails loud rather than \
+                       falling back', 'ordering is preserved', 'an empty result means no match, \
+                       not an error'. Published requirements travel with export_surface; \
+                       everything else is still withheld and still counted. Internal until \
+                       someone says otherwise, because publishing is a commitment — the same rule \
+                       as set_interface_designation. It is NOT a claim the promise is kept; \
+                       whether it held is its verification and drift history.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn set_requirement_designation(
+        &self,
+        Parameters(req): Parameters<RequirementDesignationReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(NodeDto::from(
+            g.set_requirement_designation(&req.requirement_id, &req.designation)
                 .map_err(dyno_err)?,
         ))
     }

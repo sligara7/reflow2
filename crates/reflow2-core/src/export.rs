@@ -429,6 +429,20 @@ impl DesignGraph {
                 }
             }
         }
+        // The promises this design publishes (`req:publishable-promise`). A
+        // structural surface says what the boundaries ARE and cannot say what any
+        // of them undertakes to DO — "fails loud rather than falling back",
+        // "ordering is preserved" — because a behavioural commitment lives in a
+        // Requirement and every Requirement was withheld. Found by a real trial,
+        // where the promise ended up asserted in a comment in the CONSUMER's
+        // build file, on the wrong side of the seam.
+        //
+        // Opt-in, exactly like the boundaries: only requirements the owner
+        // deliberately designated `published` travel. Everything else is still
+        // withheld and still counted.
+        let promises = self.published_promises()?;
+        keep.extend(promises.iter().cloned());
+
         // The Project, so a recipient knows whose surface this is.
         for p in self.scan_nodes(node::PROJECT)? {
             keep.insert(p.node_id);
@@ -450,6 +464,20 @@ impl DesignGraph {
 
         let withheld_nodes = total_nodes - nodes.len();
         let withheld_edges = total_edges - edges.len();
+        // Said plainly whichever way it comes out, because "no promises" and
+        // "promises you cannot see" must never look alike (`req:publishable-promise`).
+        let promise_note = if promises.is_empty() {
+            " NO BEHAVIOURAL PROMISES are published: this surface says what the boundaries ARE \
+             and nothing about what they undertake to DO. Read that as \"none stated\", never as \
+             \"none exist\" — designate a Requirement `published` to commit to one."
+                .to_string()
+        } else {
+            format!(
+                " {} behavioural promise(s) published alongside the structure — commitments a \
+                 consumer is entitled to rely on, not just contracts it may call.",
+                promises.len()
+            )
+        };
         let note = if published.is_empty() {
             // The dangerous case: an empty surface looks exactly like a design
             // with nothing to share, and someone could publish it believing they
@@ -460,14 +488,14 @@ impl DesignGraph {
                  nothing. {withheld_nodes} node(s) and {withheld_edges} edge(s) were withheld as \
                  internal. If you meant to publish a boundary, designate it first \
                  (set_interface_designation) — an empty surface is indistinguishable from a design \
-                 with nothing in it."
+                 with nothing in it.{promise_note}"
             )
         } else {
             format!(
                 "Published surface: {} boundary(ies), {} node(s) exposed. WITHHELD as internal: \
-                 {withheld_nodes} node(s), {withheld_edges} edge(s) — requirements, capabilities, \
-                 decisions, verifications and history stay home. This is a partial design by \
-                 design; it is not a backup and cannot be imported as one.",
+                 {withheld_nodes} node(s), {withheld_edges} edge(s) — undesignated requirements, \
+                 capabilities, decisions, verifications and history stay home. This is a partial \
+                 design by design; it is not a backup and cannot be imported as one.{promise_note}",
                 published.len(),
                 nodes.len()
             )
