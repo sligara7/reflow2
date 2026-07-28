@@ -31,6 +31,36 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **An install can no longer report success while leaving the kit invisible**
+  (`req:kit-reaches-the-agent`). When a project owns **no instruction file at
+  all**, `reflow2_init.py` now **creates** the primary-harness convention
+  (`CLAUDE.md`) carrying a pointer to `AGENTS.md`, instead of only appending to
+  files that already exist.
+
+  Found in use, not in review: installing into a repo that had neither
+  `AGENTS.md` nor `CLAUDE.md` wrote a fresh `AGENTS.md`, printed a success
+  report, and the next session saw no reflow2 anything — because Claude Code
+  reads `CLAUDE.md` first and never opened it. This is the **same defect class**
+  the installer already documents from storyflow, in the opposite direction: that
+  fix protected an *existing* `CLAUDE.md`, and did not cover a project with no
+  instruction file at all — which is the ordinary state of a repo that has never
+  been agent-worked, and therefore of an adopt target. The rule is not "protect
+  what exists" but **reach what reads**.
+
+  Deliberately narrow. Creation happens *only* when the project owns no
+  instruction convention whatsoever, so a repo that already has one does not get
+  another invented, and `GEMINI.md`/`.cursorrules`/the rest are never written
+  into a project that asked for none of them. The created file stays a pointer
+  rather than becoming a second home for instructions.
+
+  Still open, and Anthony's call rather than this change's: whether the eight
+  slash commands (`/gaps`, `/health`, `/where`, …) should ship with the kit. They
+  are pure pointers with no version-coupled content, so they do not carry the
+  staleness `dec:skills-served` was written to prevent — but it touches that
+  decision, so it is not being decided here.
+
 ### Added
 
 - **A published surface can carry a behavioural promise** (`set_requirement_designation`,

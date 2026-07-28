@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bf633902c265683b7dc32f9b7c2c885fbff4cde59b4b0896ebc42a5e64de4add",
+  "content_hash": "sha256:a68dae69d9395e9c9fff0c2cd98e30dece1dde318a31e3d44bd40067a9551106",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -256,6 +256,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:install-reaches-the-agent",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:init"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1028,6 +1036,12 @@
       "from_id": "chg:ingest-handshake",
       "properties": {},
       "to_id": "epoch:v0150"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:install-reaches-the-agent",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4496,6 +4510,33 @@
         "action": "modified"
       },
       "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:install-reaches-the-agent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:install-reaches-the-agent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:install-reaches-the-agent",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:install-reaches-the-agent"
     },
     {
       "edge_type": "CHANGED",
@@ -17715,6 +17756,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:install-reaches-the-agent"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:init",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cmp:init"
     },
     {
@@ -18087,6 +18136,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-init",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:install-reaches-the-agent"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-nudge-path",
       "properties": {
         "completeness": "complete"
@@ -18414,6 +18471,12 @@
       "from_id": "cap:ingest",
       "properties": {},
       "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:install-reaches-the-agent",
+      "properties": {},
+      "to_id": "req:kit-reaches-the-agent"
     },
     {
       "edge_type": "SATISFIES",
@@ -18975,6 +19038,12 @@
       "from_id": "ver:ingest-handshake",
       "properties": {},
       "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:install-reaches-the-agent",
+      "properties": {},
+      "to_id": "cap:install-reaches-the-agent"
     },
     {
       "edge_type": "VERIFIES",
@@ -20240,7 +20309,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2a742336419ce87bd4608b5545a5cdc60553d4b948efe4f77e02da06acc8576d",
+        "checksum": "sha256:c3344ca80cbb0243dd20774c933eef7b1fa9acd3b7634fae721f5e7767c04e02",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
         "status": "realized"
@@ -20650,6 +20719,17 @@
         "checksum": "sha256:8f406602ed3bdb046af77130ca482951818dd4ccfeada8afd4cfc0a9c0ea5e10",
         "location": "crates/reflow2-mcp/tests/design_identity.rs",
         "name": "design_identity.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-init",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:44022cb169c3c5230d760fd0288fdbc9c895f4b81d80a8fd34602830b1259dd4",
+        "location": "tools/test_init.py",
+        "name": "test_init.py",
         "status": "realized"
       }
     },
@@ -21174,6 +21254,19 @@
         "name": "Extract a design from freeform text",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:install-reaches-the-agent",
+      "node_type": "Capability",
+      "properties": {
+        "description": "When a project owns no instruction file at all — the ordinary state of a repo that has never been agent-worked, and therefore of an adopt target — the installer CREATES the primary-harness convention carrying a pointer to the kit's own file, instead of only appending to files that already exist. Narrow on purpose: a project that already owns any instruction convention gets a line appended to it and nothing invented, and the created file stays a pointer rather than a second home for instructions.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "The install lands where the agent will actually read it",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -22485,6 +22578,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "SP-3b: the agent drives INGEST, with no provider"
+      }
+    },
+    {
+      "node_id": "chg:install-reaches-the-agent",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "The installer creates the primary-harness instruction file when a project owns none, so an install cannot report success while leaving the kit invisible"
       }
     },
     {
@@ -26357,12 +26458,13 @@
       "node_id": "question:058f1891de605d77",
       "node_type": "Question",
       "properties": {
+        "answer": "Anthony, 2026-07-27: \"go with your recommendation: the interface.\" Recorded as `dec:pairing-role-placement` (accepted) and `req:complementary-pairing` moved to accepted. The role extends `Interface.designation` rather than becoming a per-node attribute — a Component both publishes and subscribes, so a per-node role collapses to `both` and pairs with everything. AMENDED 2026-07-28 after the dynograph-foundation trial refuted the first draft of the matching key: base-compatibility is `medium` PLUS `transport_security` PLUS `auth`, because role-plus-medium alone would pair a consumer requiring REST against a public unauthenticated liveness probe. The gap stays open because the requirement is accepted but NOT YET BUILT — that is the honest state, not an unanswered question.",
         "asked_at": "2026-07-27",
         "context_setter": "Nothing satisfies requirement “Pair two designs by complementary role, so the seam is computed rather than hand-wired”",
         "gap_id": "gap:058f1891de605d77",
         "question": "Does the publish/subscribe role belong on the interface itself — extending the `published` flag with a third value meaning \"I need one of these from outside\" — or on every node, as you described it? Recommendation: the interface. A component both publishes and subscribes, so a single role on a component collapses to `both` and pairs with everything, which is the only reason `both` is needed at all. On an interface, `both` stays rare and means something real.",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -26394,12 +26496,13 @@
       "node_id": "question:5aa0248a4e730d34",
       "node_type": "Question",
       "properties": {
+        "answer": "Anthony, 2026-07-28: \"go with your recommended order, start with the kit install.\" PART ONE BUILT — the installer now reaches the file the agent actually reads: when a project owns NO instruction file, the primary-harness convention (`CLAUDE.md`) is CREATED carrying a pointer to `AGENTS.md`, rather than only appending to files that already exist. Kept deliberately narrow: creation happens only when the project owns no instruction file at all, so a repo that already has one does not get another invented, and the created file stays a pointer rather than becoming a second home for instructions. PART TWO — whether the eight slash commands ship with the kit — is NOT answered and stays open: it touches `dec:skills-served`, and I flagged it as Anthony's call rather than mine.",
         "asked_at": "2026-07-28",
         "context_setter": "Nothing satisfies requirement “The install must land its pointer where the agent will actually read it”",
         "gap_id": "gap:5aa0248a4e730d34",
         "question": "Installing reflow2 into dynograph-foundation reported success and left it invisible — you opened a session and saw nothing, because the installer wrote AGENTS.md into a repo that had no instruction file, and Claude Code reads CLAUDE.md first. Should the installer write to whichever file the agent will actually open, rather than only adding to files that already exist? And separately: should the eight slash commands (/gaps, /health, /where and the rest) ship with the kit, so a consumer project gets the same ergonomics reflow2's own repo has — or does that cut against the decision to serve everything from the server rather than copy it?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -28068,6 +28171,18 @@
       }
     },
     {
+      "node_id": "ver:install-reaches-the-agent",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-28",
+        "level": "integration",
+        "method": "test",
+        "name": "A project with NO instruction file still gets one the primary harness reads; the created file is a pointer and not a second home for instructions (size-bounded); a project's own existing instruction file is appended to rather than replaced; and a project that already owns any convention gets NOTHING invented (tools/test_init.py, 4 cases). MUTATION-CHECKED: restoring the old only-append-to-what-exists behaviour fails exactly the two cases that name the defect.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:interface-spec",
       "node_type": "Verification",
       "properties": {
@@ -28549,7 +28664,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:959b794a7839745926288154bb57e46c801ed498512c2c80d18ab9fb15cbae56",
+  "prev_content_hash": "sha256:bf633902c265683b7dc32f9b7c2c885fbff4cde59b4b0896ebc42a5e64de4add",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

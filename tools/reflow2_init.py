@@ -452,26 +452,82 @@ POINTER_LINE = (
 )
 
 
+# The conventions a harness reads FIRST and will not find any other way. If a
+# project owns none of INSTRUCTION_FILES, a pointer is CREATED here rather than
+# only appended to what already exists (req:kit-reaches-the-agent).
+#
+# Found in use on 2026-07-28: dynograph-foundation had neither AGENTS.md nor
+# CLAUDE.md, so the install wrote a fresh AGENTS.md, reported success, and left
+# the kit invisible — Claude Code reads CLAUDE.md first and never opened it. That
+# is the SAME defect class this file already documents from storyflow, in the
+# opposite direction: the earlier fix protected an EXISTING CLAUDE.md and did not
+# cover a project with no instruction file at all, which is the ordinary state of
+# a repo that has never been agent-worked, and therefore the ordinary state of an
+# adopt target.
+#
+# So the rule is not "protect what exists" but REACH WHAT READS. Kept to
+# CLAUDE.md deliberately rather than creating every convention: writing
+# GEMINI.md, .cursorrules and the rest into a repo that asked for none of them is
+# spam, and the sidecar we create (AGENTS.md) already IS the agents.md
+# convention that the others increasingly follow.
+CREATE_IF_NO_INSTRUCTION_FILE = ["CLAUDE.md"]
+
+
 def pointer_targets(project: Path, reflow2_doc: str) -> list[Path]:
     """The project's own instruction files that should point at reflow2's.
 
     Every convention in [`INSTRUCTION_FILES`] that exists, except the file
     reflow2's own instructions live in — a file must not point at itself.
+
+    When the project owns NONE of them, the primary-harness conventions in
+    [`CREATE_IF_NO_INSTRUCTION_FILE`] are returned even though they do not exist
+    yet, so [`ensure_pointer`] creates them. An install that writes a file no
+    harness opens has not installed anything, however loudly it reports success.
     """
-    return [
+    existing = [
         project / rel
         for rel in INSTRUCTION_FILES
         if rel != reflow2_doc and (project / rel).exists()
     ]
+    if existing:
+        return existing
+    return [
+        project / rel for rel in CREATE_IF_NO_INSTRUCTION_FILE if rel != reflow2_doc
+    ]
 
 
 def ensure_pointer(instruction_file: Path, reflow2_doc: str) -> str | None:
-    """Append one marked pointer line to an instruction file the project owns,
-    unless it already mentions reflow2's. Returns a report line, or None."""
+    """Point an instruction file at reflow2's, creating it only if the project
+    has no instruction file at all.
+
+    Appends one marked line to a file the project owns. When the file does not
+    exist — which [`pointer_targets`] only allows for the primary-harness
+    conventions, and only when the project owns no instruction file whatsoever —
+    it is created carrying that same line and nothing else. Deliberately minimal:
+    a file reflow2 invents in someone's repo should say where to look and get out
+    of the way, not become a second place project instructions live.
+    """
+    line = POINTER_LINE.format(side=reflow2_doc)
+    if not instruction_file.exists():
+        instruction_file.parent.mkdir(parents=True, exist_ok=True)
+        instruction_file.write_text(
+            f"# {instruction_file.name}\n\n"
+            f"**Read [{reflow2_doc}]({reflow2_doc}).** It is the primary instruction file for "
+            f"this repo and follows the [agents.md](https://agents.md) convention, so every "
+            f"agent working here reads the same thing.\n\n"
+            f"This file exists only because some harnesses read `{instruction_file.name}` "
+            f"first. Keeping the content in one place rather than duplicating it is "
+            f"deliberate: a rule only one collaborator's tool ever sees is worse than no rule "
+            f"at all.\n\n" + line + "\n"
+        )
+        return (
+            f"{instruction_file.name}  (CREATED — this project had no instruction file, and "
+            f"{reflow2_doc} alone is not read first by every harness; without this the install "
+            f"succeeds and the kit stays invisible)"
+        )
     text = instruction_file.read_text()
     if reflow2_doc in text:
         return None
-    line = POINTER_LINE.format(side=reflow2_doc)
     instruction_file.write_text(text.rstrip("\n") + "\n\n" + line + "\n")
     return (
         f"{instruction_file.name}  (appended one marked line pointing at "

@@ -71,6 +71,63 @@ class InstallerTest(unittest.TestCase):
         stamp = json.loads((p / ".reflow2" / "kit-version.json").read_text())
         self.assertIn("reflow2_version", stamp)
 
+    # ---- the pointer reaches the file the agent actually reads -------------
+    #
+    # req:kit-reaches-the-agent. Found in USE, not in review: installing into
+    # dynograph-foundation reported success and left the kit invisible, because
+    # that repo had no instruction file at all and Claude Code reads CLAUDE.md
+    # first. Same defect class this installer already documents from storyflow,
+    # opposite direction — the earlier fix protected an EXISTING CLAUDE.md.
+
+    def test_a_project_with_no_instruction_file_still_gets_reached(self):
+        p = self.project()
+        self.install(p)
+
+        claude = p / "CLAUDE.md"
+        self.assertTrue(
+            claude.exists(),
+            "a repo with no instruction file must still get one the primary harness reads — "
+            "AGENTS.md alone is what made the install succeed and stay invisible",
+        )
+        self.assertIn("AGENTS.md", claude.read_text())
+
+    def test_the_created_pointer_is_a_pointer_and_not_a_second_home_for_instructions(self):
+        p = self.project()
+        self.install(p)
+
+        text = (p / "CLAUDE.md").read_text()
+        self.assertIn("reflow2 is installed here", text)
+        # Deliberately small. A file reflow2 invents in someone's repo says where
+        # to look and gets out of the way; duplicating the instructions would
+        # create the second copy that goes stale, which is dec:skills-served's
+        # whole complaint.
+        self.assertLess(
+            len(text), 1200, f"the created pointer should stay a pointer:\n{text}"
+        )
+
+    def test_an_existing_instruction_file_is_appended_to_not_replaced(self):
+        p = self.project()
+        (p / "CLAUDE.md").write_text("# House rules\n\nRun the linter before pushing.\n")
+        self.install(p)
+
+        text = (p / "CLAUDE.md").read_text()
+        self.assertIn("Run the linter before pushing.", text, "the project's own rules must survive")
+        self.assertIn("AGENTS.md", text)
+
+    def test_nothing_is_invented_when_the_project_already_has_a_convention(self):
+        # The counterweight to the fix: writing CLAUDE.md, GEMINI.md and the rest
+        # into a repo that asked for none of them is spam. Creation happens ONLY
+        # when the project owns no instruction file whatsoever.
+        p = self.project()
+        (p / "GEMINI.md").write_text("# Gemini\n\nProject notes.\n")
+        self.install(p)
+
+        self.assertFalse(
+            (p / "CLAUDE.md").exists(),
+            "a project that already has an instruction file must not have another invented",
+        )
+        self.assertIn("AGENTS.md", (p / "GEMINI.md").read_text())
+
     def test_an_upgrade_touches_nothing_in_the_project(self):
         # Re-running the SAME version changes nothing. Necessary, and weaker
         # than the requirement — test_a_new_release_touches_nothing below is
