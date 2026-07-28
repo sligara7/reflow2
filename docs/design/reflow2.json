@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5650b5562bf400cd167d565e3736fb79abb5603c2346a7ba4bc676cd95a30839",
+  "content_hash": "sha256:2dbd7247402d4ff61ab9d7f5cf3a685fa7f222baaff1916854cf70aea23bea1f",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2228,6 +2228,15 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "req:graph-catches-up",
+      "properties": {
+        "acted_at": "2026-07-28",
+        "role": "author"
+      },
+      "to_id": "ctr:anthony"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:graph-indexes-snapshots",
       "properties": {
         "acted_at": "2026-07-28",
         "role": "author"
@@ -26499,7 +26508,7 @@
       "properties": {
         "decision": "OPEN (proposed): the storage mechanism for planned epochs is undecided, and deciding it by drift would repeat the mistake BL-100 names. Three candidates are on the table, none chosen.",
         "name": "Where does a planned epoch live — a git branch, the graph, or both?",
-        "rationale": "(a) EPOCH BRANCHES, Anthony's framing: a git branch per planned epoch (project_x:epoch_1) holding the expected export — full-document snapshots, diffable with the delta machinery (--diff between two epoch branches IS the roadmap step), zero schema change, and git is already the transport for graphs; cost: the roadmap lives outside the graph, invisible to detectors, and n branches of a mutable file invite the lineage problems BL-107 just closed. (b) IN-GRAPH FUTURE EPOCHS: Epoch nodes with sequence numbers beyond the present, planned capabilities/requirements pinned AT_EPOCH — the schema already carries Epoch, pin_at_epoch, and an ANTICIPATES edge; the roadmap stays inside the design where detect_gaps and propagate can see it, and one graph answers 'what holds at epoch_n' by filter rather than by checkout; cost: no single document you can hand someone as 'the architecture at epoch_2', and the axis-Z machinery was built pointing backward — whether snapshots and epochs tolerate future-dated pins must be checked, not assumed. (c) HYBRID: the roadmap lives in-graph (b), and a planned epoch is EXPORTED to a tag/branch on demand as a derived artifact — the graph stays the source of truth, the branch is a rendering; cost: two representations that can drift from each other, which is this project's least favorite failure mode. The multi-repo half (an ecosystem epoch = a set of per-repo pins) composes with reflow2.toml/declare_dependency from BL-109 in all three candidates.",
+        "rationale": "(a) EPOCH BRANCHES, Anthony's first framing: a git branch per planned epoch holding the expected export — full-document snapshots, diffable with the delta machinery, zero schema change; cost: the roadmap lives outside the graph, invisible to detectors, and n branches of a mutable file invite the lineage problems BL-107 closed. (b) IN-GRAPH FUTURE EPOCHS: Epoch nodes with future sequences, planned nodes pinned AT_EPOCH, the unused ANTICIPATES edge (confidence property) finally reached; roadmap visible to detect_gaps and propagate; cost: no single handable document, and axis-Z was built pointing backward. (c) HYBRID: roadmap in-graph, planned epochs exported to refs on demand; cost: two representations that can drift. AMENDED 2026-07-28, same day, after Anthony's second pass: git already does versions/tags/releases well (industry ships small increments fast — his brother's project, ~2 minors/week), which strengthens git as the SNAPSHOT STORE — but his bottom line reframes the choice: the graph must be the INDEX (see req:graph-indexes-snapshots), so the real shape is likely (c-refined): git stores snapshots under refs it is already good at, the graph owns the map from epoch_n/increment_n to ref plus the planned content, and a user never remembers a branch name. The rel:v0180 <-> tag v0.18.0 pattern is this exact division of labor, already shipping, pointed backward. Still OPEN: whether (b)'s in-graph planned content is required for detectors to reason about the roadmap, or whether the index alone suffices.",
         "status": "proposed"
       }
     },
@@ -30093,7 +30102,7 @@
         "name": "An epoch can be planned, not only recorded",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "The temporal axis must run forward as well as back: the design must be able to say what the architecture is EXPECTED to be at named future epochs — a capability roadmap in discrete epochs (epoch_1, epoch_2, ... epoch_n), each carrying the requirements and capabilities that hold AT that epoch — and compare any two epochs, or an epoch against the present, as a delta. With many moving parts — an ecosystem of coupled repos, each with its own graph — an ecosystem epoch must be able to pin the set of per-repo design versions it means, or the question 'which epoch are we talking about?' has no answer, which is the failure this exists to prevent. Anthony, 2026-07-28, marked as an idea, not a commitment: 'using the bluesky ecosystem as an example, it is constantly evolving. One thing we often struggled with was which epoch are we talking about and what are the requirements for that particular epoch. We'd try to map these out in a capability roadmap, but it was super difficult when you have many moving parts. Curious if we could have sort of epoch branches that provided snapshots of the architecture at various moments in their own branch: project_x:epoch_1 captures what we expect the graph to look like at epoch_1.'",
+        "statement": "The temporal axis must run forward as well as back, in TWO PAIRED VIEWS of the same architecture (Anthony, 2026-07-28: 'in systems engineering, I think this would be 2 views of the same system'): increments in TIME — epochs, what the architecture is expected to be at epoch_1..n — and increments in CAPABILITY — what each small, frequent release adds, the release-fast-in-small-increments practice now common in industry (his brother's project ships ~2 minor releases a week). Both views must exist, each comparable as a delta: any two epochs, any two increments, or either against the present. With many moving parts — an ecosystem of coupled repos, each with its own graph — an epoch or increment must pin the set of per-repo design versions it means, or the question 'which epoch are we talking about?' has no answer, which is the failure this exists to prevent. Original idea 2026-07-28 ('epoch branches: project_x:epoch_1 captures what we expect the graph to look like at epoch_1'), amended the same day with the two-views framing.",
         "status": "proposed"
       }
     },
@@ -30154,6 +30163,21 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "When work arrives from elsewhere — a git pull bringing commits made on another machine or by a session that never touched this machine's live store — the design must be able to catch up on demand, in two layers. LAYER 1, THE RECORD: a machine's live store is a long-lived cache of the committed export (req:stale-seat-knows states the write-side guard; this is the read side). After a pull, the store must take on the pulled record's changes: fast-forward when only the record moved, three-way merge (base = the last export both sides share, from git history) when both moved — never a blind overwrite in either direction. LAYER 2, THE CODE: commits in the pull that changed the project without updating the graph must then be walked against the synced graph through the ordinary two-sided drift questions. Catching up is an interrogation, never a bulk import: the graph re-earns coherence, it does not absorb whatever happened. Anthony's scenario, 2026-07-28 (amending his first wording of today): 'I have been working reflow2 from a home computer mostly; I'm doing this in another session on a different computer. When I get home I'd like to git pull the latest, then run delta and it should reconcile any deltas with what it had. I often don't restart the claude code session at home, so the graph it has will be in whatever state I left it.'",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:graph-indexes-snapshots",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The graph is the index of its own snapshots",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Git already stores versions, tags, branches and releases well, and reflow2 must not duplicate that. What reflow2 must own is the MAP: the graph tracks its own snapshots — which epoch_n or increment_n a thing belongs to, and where that snapshot lives (the git ref) — so a user asks the graph and never has to remember which branch holds which epoch. Anthony, 2026-07-28: 'what does this mean for reflow2 when most of what I discussed is what git already does? I think the answer is that the graph should track the snapshots (it is one graph in time) and therefore which epoch_n or increment_n something is. A user shouldn't have to remember which git branch a particular epoch or increment is in.' The in-repo precedent already exists for the backward direction: rel:v0180 lives in the graph, tag v0.18.0 lives in git, and the graph node names the version — nobody greps tags to learn what shipped. This requirement extends that same division of labor forward.",
         "status": "proposed"
       }
     },
@@ -31742,7 +31766,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:16a5de63d46d0ca972135efde50a4dbfbc3c1a1a0ae6628a5d0bd7626881834a",
+  "prev_content_hash": "sha256:5650b5562bf400cd167d565e3736fb79abb5603c2346a7ba4bc676cd95a30839",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
