@@ -383,3 +383,78 @@ fn a_design_with_no_requirements_makes_no_certainty_claim() {
     assert!(r.requirement_certainty.is_none());
     assert!(!r.to_markdown().contains("Requirement certainty"));
 }
+
+/// `status` without `last_run_at` is a measurement presented as a property.
+///
+/// Both report surfaces now carry the recency, because the two defects that
+/// produced this fix were found on different surfaces: the failing one through a
+/// gap, the passing one **by accident**, since a passing check raises no gap at
+/// all. Fixing only the loud half would have left the dangerous half silent.
+#[test]
+fn both_report_surfaces_carry_when_each_check_last_ran() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("prj:p", "P").unwrap();
+    g.add_capability("cap:a", "A", "does a", Some("realized"))
+        .unwrap();
+    g.add_verification("ver:ran", "ran tests", Some("test"), Some("unit"))
+        .unwrap();
+    g.verifies("ver:ran", node::CAPABILITY, "cap:a").unwrap();
+    g.set_verification_status("ver:ran", "passing", Some("2026-07-25T18:49:11Z"))
+        .unwrap();
+    // The asserted-not-measured case: a verdict with no run behind it.
+    g.add_verification("ver:never", "never run", Some("test"), Some("unit"))
+        .unwrap();
+    g.set_verification_status("ver:never", "passing", None)
+        .unwrap();
+
+    for (surface, rows) in [
+        ("loop_status", g.loop_status().unwrap().verifications),
+        ("graph_report", g.graph_report().unwrap().verifications),
+    ] {
+        let ran = rows
+            .iter()
+            .find(|v| v.verification_id == "ver:ran")
+            .unwrap_or_else(|| panic!("{surface} must list every check"));
+        assert_eq!(
+            ran.last_run_at.as_deref(),
+            Some("2026-07-25T18:49:11Z"),
+            "{surface} must carry when the check last ran"
+        );
+        assert_eq!(ran.verifies, 1, "{surface} must say how much it speaks for");
+
+        let never = rows
+            .iter()
+            .find(|v| v.verification_id == "ver:never")
+            .unwrap_or_else(|| panic!("{surface} must list the unrun check too"));
+        assert!(
+            never.last_run_at.is_none(),
+            "{surface}: a check that never ran must report None, not a fabricated time"
+        );
+    }
+}
+
+/// Visibility, not a new nag. A counter here would make `clean` unreachable on
+/// any design whose last run was yesterday — the permanently-red-check failure
+/// rebuilt inside the tool meant to prevent it.
+#[test]
+fn surfacing_recency_does_not_make_the_loop_dirty() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("prj:p", "P").unwrap();
+    let before = g.loop_status().unwrap();
+    g.add_verification("ver:old", "old tests", Some("test"), Some("unit"))
+        .unwrap();
+    g.set_verification_status("ver:old", "passing", Some("2020-01-01T00:00:00Z"))
+        .unwrap();
+    let after = g.loop_status().unwrap();
+    assert_eq!(
+        before.clean, after.clean,
+        "a stale-but-passing check must be VISIBLE without changing whether the loop is clean"
+    );
+    assert!(
+        after
+            .verifications
+            .iter()
+            .any(|v| v.verification_id == "ver:old"),
+        "…and it must actually be visible"
+    );
+}

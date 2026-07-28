@@ -245,6 +245,42 @@ pub struct AllocationSummary {
     pub god_components: Vec<String>,
 }
 
+/// What a check says, and **when it last said it**.
+///
+/// `status` is a measurement taken at an instant; every surface that reported it
+/// without its timestamp presented it as a standing property of the system. That
+/// cost one fleet twice in a single shift (2026-07-27), in both directions:
+///
+/// * a verification read `passing` while the service behind it was 100% dead —
+///   the status had been recorded from a transcript and never re-run;
+/// * two others read `failing` for 24 capabilities on a run that predated the
+///   fixes by three days.
+///
+/// The second was found in minutes because a failing check raises a gap. **The
+/// first was found by accident, because a passing check raises nothing at all** —
+/// so the silent half is the dangerous half, and it is the half this type exists
+/// for. An audit of that graph found ELEVEN verifications sharing one batch
+/// timestamp, nine of them green and covering 26 targets that no detector would
+/// ever have mentioned.
+///
+/// **No clock is consulted.** The recorded time is surfaced verbatim and the
+/// reader compares two dates. Deriving "3 days ago" would put `now` into a
+/// report that callers diff and test against, and non-determinism is a worse
+/// trade than a human subtraction.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct VerificationRecency {
+    pub verification_id: String,
+    pub name: String,
+    /// `planned` / `passing` / `failing` / `skipped` / `blocked`.
+    pub status: String,
+    /// When it last ran. `None` means it never did — and a `passing` or
+    /// `failing` with `None` is an **assertion**, not a measurement.
+    pub last_run_at: Option<String>,
+    /// How many nodes this check speaks for. A stale check with a large fan-out
+    /// is asserting more than one about a single capability.
+    pub verifies: usize,
+}
+
 /// The rolled-up state of the design graph.
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct GraphReport {
@@ -267,6 +303,9 @@ pub struct GraphReport {
     pub top_gaps: Vec<GapCandidate>,
     /// Gaps beyond the shown top (never silently dropped).
     pub gaps_truncated: usize,
+    /// Every check with its status AND when it last ran. A green report that
+    /// rests on a three-day-old run should say so on its face.
+    pub verifications: Vec<VerificationRecency>,
     /// Allocation health, when components exist.
     pub allocation: Option<AllocationSummary>,
     /// The most surprising couplings (capped).
@@ -331,6 +370,12 @@ pub struct LoopStatus {
     /// The debt as ordered to-do lines, most blocking first. Empty when the
     /// loop is clean — and emptiness is asserted, not implied.
     pub next: Vec<String>,
+    /// Every check with its status AND when it last ran, so a reader can see a
+    /// stale verdict without it having to become a gap first. Deliberately does
+    /// NOT feed `clean`: this is visibility, not a new nag — a counter here
+    /// would make `clean` unreachable on any design whose last run was
+    /// yesterday, which is the permanently-red-check failure rebuilt.
+    pub verifications: Vec<VerificationRecency>,
     /// Every counter zero.
     pub clean: bool,
 }
@@ -372,6 +417,47 @@ impl DesignGraph {
     }
 
     /// Compute the loop's outstanding debt. See [`LoopStatus`].
+    /// Every check with its status and the time it last ran, sorted so the
+    /// output is stable to diff.
+    ///
+    /// One computation feeding both `loop_status` and `graph_report`: the whole
+    /// point is that a reader sees recency wherever they look, and two
+    /// implementations would eventually disagree about which surface tells the
+    /// truth.
+    pub fn verification_recency(&self) -> Result<Vec<VerificationRecency>, DynoError> {
+        let mut out = Vec::new();
+        for v in self.scan_nodes(node::VERIFICATION)? {
+            let verifies = self.outgoing(&v.node_id, Some(edge::VERIFIES))?.len();
+            out.push(VerificationRecency {
+                verification_id: v.node_id.clone(),
+                name: prop_str(&v, "name", &v.node_id).to_string(),
+                status: prop_str(&v, "status", "planned").to_string(),
+                last_run_at: v
+                    .properties
+                    .get("last_run_at")
+                    .and_then(dynograph_core::Value::as_str)
+                    .filter(|t| !t.is_empty())
+                    .map(str::to_string),
+                verifies,
+            });
+        }
+        // Failing first, then by id: the loud ones lead, and a stable order
+        // means a diff of two reports shows what CHANGED, not what moved.
+        out.sort_by(|a, b| {
+            let rank = |s: &str| match s {
+                "failing" => 0,
+                "blocked" => 1,
+                "skipped" => 2,
+                "passing" => 3,
+                _ => 4,
+            };
+            rank(&a.status)
+                .cmp(&rank(&b.status))
+                .then_with(|| a.verification_id.cmp(&b.verification_id))
+        });
+        Ok(out)
+    }
+
     pub fn loop_status(&self) -> Result<LoopStatus, DynoError> {
         let questions = self.open_questions()?;
         let surfaced: std::collections::BTreeSet<&str> =
@@ -475,6 +561,7 @@ impl DesignGraph {
             unproven_capabilities,
             undispositioned_drift,
             unexamined_claims,
+            verifications: self.verification_recency()?,
             clean: next.is_empty(),
             next,
         })
@@ -776,6 +863,7 @@ impl DesignGraph {
             defect_count,
             top_gaps: gaps,
             gaps_truncated,
+            verifications: self.verification_recency()?,
             allocation,
             surprising,
             surprising_truncated,
