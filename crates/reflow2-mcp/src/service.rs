@@ -3024,8 +3024,10 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<SeamReportReq>,
     ) -> Result<CallToolResult, McpError> {
-        let other: reflow2_core::GraphExport = serde_json::from_value(JsonValue::Object(req.design))
-            .map_err(|e| McpError::invalid_params(format!("not an export document: {e}"), None))?;
+        let other: reflow2_core::GraphExport =
+            serde_json::from_value(JsonValue::Object(req.design)).map_err(|e| {
+                McpError::invalid_params(format!("not an export document: {e}"), None)
+            })?;
         let pairs: Vec<(String, String)> =
             req.pairs.into_iter().map(|p| (p.ours, p.theirs)).collect();
         let g = self.graph.read().await;

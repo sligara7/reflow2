@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4f18a0d3476371278dd009fb0c8fceaabc439b3495b198644c85f97e6f34c902",
+  "content_hash": "sha256:b5a13f34504b7d7768904c66587c2fd7419d513756947c84c741a3535e13bc4a",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2539,6 +2539,15 @@
         "action": "modified"
       },
       "to_id": "art:readme"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-975fcb51ce6ec113",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -22073,7 +22082,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9d418b27c66e2f059ddffe1e393b5663330f9a2f3c4b7bad3a4c19cc70fa773c",
+        "checksum": "sha256:c32d352e45b82d1227df7b8ed6532a8173981dfe63945b28c3c0b7695c8ab0c0",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -23623,6 +23632,15 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Accepted a new baseline: the change carries no design meaning"
+      }
+    },
+    {
+      "node_id": "chg:accept-975fcb51ce6ec113",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-07-28T14:52:00-04:00",
+        "name": "BL-28: seam_report.design was serde_json::Value, which schemars renders type-less; retyped as Map<String,JsonValue> (house idiom, cf. MirrorSurfaceReq.document). Tool contract unchanged."
       }
     },
     {
@@ -28113,38 +28131,45 @@
       "node_id": "ifc:core-api",
       "node_type": "Interface",
       "properties": {
+        "auth": "unspecified",
         "designation": "published",
         "medium": "library",
         "name": "DesignGraph API",
         "paradigm": "synchronous",
+        "payload_format": "unspecified",
         "provenance": "authored",
-        "spec": "Corrected 2026-07-28: this claimed `medium: REST` because REST was the schema default, and it is a Rust library API linked directly by callers — no transport, no wire, no endpoint. The false value was never chosen by anyone; it arrived by default."
+        "spec": "Corrected 2026-07-28: this claimed `medium: REST` because REST was the schema default, and it is a Rust library API linked directly by callers — no transport, no wire, no endpoint. The false value was never chosen by anyone; it arrived by default.",
+        "transport_security": "unspecified"
       }
     },
     {
       "node_id": "ifc:graph-export",
       "node_type": "Interface",
       "properties": {
+        "auth": "unspecified",
         "designation": "published",
         "medium": "data",
         "name": "Design export document",
         "paradigm": "batch",
         "payload_format": "json",
         "provenance": "authored",
-        "spec": "Corrected 2026-07-28: claimed `medium: REST` by default. It is a JSON document written to a path and read back — a data contract, not a network one. Its shape is the export schema (nodes, edges, graph_id, stamp, content_hash, prev_content_hash)."
+        "spec": "Corrected 2026-07-28: claimed `medium: REST` by default. It is a JSON document written to a path and read back — a data contract, not a network one. Its shape is the export schema (nodes, edges, graph_id, stamp, content_hash, prev_content_hash).",
+        "transport_security": "unspecified"
       }
     },
     {
       "node_id": "ifc:mcp-tools",
       "node_type": "Interface",
       "properties": {
+        "auth": "unspecified",
         "designation": "published",
         "medium": "REST",
         "name": "MCP tool surface",
         "paradigm": "synchronous",
         "payload_format": "json",
         "provenance": "authored",
-        "spec": "MEDIUM IS KNOWN-WRONG AND THE CORRECTION IS OWED. `REST` here was never chosen — it arrived as the schema default, which was changed to `unspecified` on 2026-07-28 (req:seam-incompatibility) precisely because a default must not assert a technology. This value could not be corrected in the same session: the live MCP server is the binary from session start and its schema predates the new enum value, so it refused the write. Fix after an /mcp reconnect. AND THE VOCABULARY HAS NO RIGHT ANSWER YET, which is the more interesting half: MCP is JSON-RPC 2.0 carried over EITHER a stdio pipe to a launched process OR streamable HTTP, and reflow2 serves both from one surface. `REST` is wrong (not resource-oriented; the HTTP transport is a single endpoint), `cli` is wrong for the HTTP case, `gRPC` is a different protocol. The enum wants `json_rpc`, or a way for one contract to name two media. Raised for Anthony rather than guessed: inventing schema vocabulary is a design decision, and asserting a wrong-but-plausible value is the exact failure that produced this whole correction."
+        "spec": "MEDIUM IS KNOWN-WRONG AND THE CORRECTION IS OWED. `REST` here was never chosen — it arrived as the schema default, which was changed to `unspecified` on 2026-07-28 (req:seam-incompatibility) precisely because a default must not assert a technology. This value could not be corrected in the same session: the live MCP server is the binary from session start and its schema predates the new enum value, so it refused the write. Fix after an /mcp reconnect. AND THE VOCABULARY HAS NO RIGHT ANSWER YET, which is the more interesting half: MCP is JSON-RPC 2.0 carried over EITHER a stdio pipe to a launched process OR streamable HTTP, and reflow2 serves both from one surface. `REST` is wrong (not resource-oriented; the HTTP transport is a single endpoint), `cli` is wrong for the HTTP case, `gRPC` is a different protocol. The enum wants `json_rpc`, or a way for one contract to name two media. Raised for Anthony rather than guessed: inventing schema vocabulary is a design decision, and asserting a wrong-but-plausible value is the exact failure that produced this whole correction.",
+        "transport_security": "unspecified"
       }
     },
     {
@@ -28646,7 +28671,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "A system that already exists can be brought under design control",
         "priority": "medium",
         "provenance": "authored",
@@ -28659,7 +28686,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "An agent can drive the whole loop",
         "priority": "high",
         "provenance": "authored",
@@ -28672,6 +28701,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Any level of the design can be analysed on its own, and a narrowed answer says what it left out",
@@ -28686,7 +28716,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "As-designed vs as-built divergence is detectable",
         "priority": "medium",
         "provenance": "authored",
@@ -28699,6 +28731,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "A claim names its owner, and a claim with no live owner is reported stale",
@@ -28713,7 +28746,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "Design stays coherent across its lifecycle",
         "priority": "critical",
         "provenance": "authored",
@@ -28726,6 +28761,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Pair two designs by complementary role, so the seam is computed rather than hand-wired",
@@ -28740,6 +28776,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Whether intent has been delivered is computed from the golden thread, never asserted",
@@ -28754,6 +28791,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Import one design into another and analyse the whole",
@@ -28768,6 +28806,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Several people can plan against one design without colliding",
@@ -28782,6 +28821,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "A whole corpus of existing specifications can be brought into the design in one pass",
@@ -28796,6 +28836,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "The design must be able to say how much of the system it has never modelled",
@@ -28810,6 +28851,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Recording an open question must never assert that it was settled",
@@ -28824,7 +28866,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "Design anything, not only software",
         "priority": "high",
         "provenance": "authored",
@@ -28837,6 +28881,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "A system's design can be a unit of its own that composes with the designs around it",
@@ -28851,6 +28896,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Declare which version of another design you depend on, not just record what you took",
@@ -28865,6 +28911,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "A durable design knows its own name, and remembers it across opens",
@@ -28879,6 +28926,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Someone without the repo can reach a design, read it, and contribute to it",
@@ -28893,6 +28941,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Where a design admits it, design its simulator too — and test there first",
@@ -28907,7 +28956,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "The core is deterministic and LLM-free",
         "priority": "medium",
         "provenance": "authored",
@@ -28920,6 +28971,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Drift is reported with its direction and its meaning, not just its magnitude",
@@ -28934,7 +28986,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "The driving agents are coding agents, not humans",
         "priority": "medium",
         "provenance": "authored",
@@ -28947,6 +29001,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "reflow2 explains what it is and how to run it before it explains what it believes",
@@ -28961,7 +29016,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "Install is one command, update is one word",
         "priority": "low",
         "provenance": "authored",
@@ -28974,7 +29031,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "Every artifact traces to the intent it serves",
         "priority": "high",
         "provenance": "authored",
@@ -28987,7 +29046,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "Gaps become questions, not guesses",
         "priority": "medium",
         "provenance": "authored",
@@ -29000,7 +29061,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "The past is never overwritten",
         "priority": "high",
         "provenance": "authored",
@@ -29013,6 +29076,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "A published interface carries enough to check compatibility, not just prose",
@@ -29027,6 +29091,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Intent that must hold no matter what is recorded as inviolable, and a violation is computed, not remembered",
@@ -29041,7 +29106,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "Invoked as an MCP server over stdio",
         "priority": "medium",
         "provenance": "authored",
@@ -29054,6 +29121,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "The design says which interfaces are the published boundaries, and computations read that distinction",
@@ -29068,6 +29136,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "The install must land its pointer where the agent will actually read it",
@@ -29082,6 +29151,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "One reflow2 can hold several designs, and a session says which one it is working on",
@@ -29096,6 +29166,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Modularity is computed from the design, not asserted by the architecture diagram",
@@ -29110,6 +29181,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "A session that has no design graph is told so, in band",
@@ -29124,7 +29196,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "The user never needs systems engineering",
         "priority": "high",
         "provenance": "authored",
@@ -29137,6 +29211,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Setting up a project is not a step — reflow2 is installed once per machine",
@@ -29151,7 +29226,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "No silent fallbacks or drops",
         "priority": "critical",
         "provenance": "authored",
@@ -29164,7 +29241,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "The loop nudge covers the session that never touches the graph",
         "priority": "medium",
         "provenance": "authored",
@@ -29177,6 +29256,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "The path the coherence loop relies on to interrupt an agent is proven to interrupt one",
@@ -29191,6 +29271,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Someone who did not build the system can be told where a new piece of work belongs",
@@ -29205,7 +29286,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "The design persists in-repo alongside the code",
         "priority": "medium",
         "provenance": "authored",
@@ -29218,7 +29301,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "Runs on Linux and macOS developer machines",
         "priority": "medium",
         "provenance": "authored",
@@ -29231,6 +29316,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "A published surface must be able to carry a behavioural promise, not only structure",
@@ -29245,7 +29331,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "A read reminds the agent of loop debt at the moment of attention",
         "priority": "medium",
         "provenance": "authored",
@@ -29258,6 +29346,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Reading the design does not require owning it",
@@ -29272,7 +29361,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "Released equals designed",
         "priority": "critical",
         "provenance": "authored",
@@ -29285,6 +29376,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "A requirement knows where it came from: stated, decomposed from a parent, or derived from a decision",
@@ -29299,6 +29391,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "The open structural-defect list means still-needs-attention",
@@ -29313,7 +29406,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "The roads not taken are preserved and forkable",
         "priority": "medium",
         "provenance": "authored",
@@ -29326,6 +29421,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "When two linked designs disagree at a seam, say so",
@@ -29340,6 +29436,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Who is working is a property of the session, not of the server process",
@@ -29354,6 +29451,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "What a session learns is written to the graph as it is learned, not summarized into a file on the way out",
@@ -29368,6 +29466,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "A session on another machine works the same design, live",
@@ -29382,6 +29481,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Several sessions on one machine work the same design at the same time",
@@ -29396,6 +29496,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "A seat learns the shared design moved before it writes over it",
@@ -29410,6 +29511,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "A property the detector ignores is a property that lies",
@@ -29424,7 +29526,9 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
+        "lineage": "original",
         "name": "A design survives a reflow2 upgrade",
         "priority": "high",
         "provenance": "authored",
@@ -29437,6 +29541,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "After setup, a project never has to change again for reflow2 to move",
@@ -29451,6 +29556,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "Text that enters the graph from outside is neutralised at the boundary, and the neutralisation is reported",
@@ -29465,6 +29571,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "A \"verified\" claim says how old the check behind it is",
@@ -29479,6 +29586,7 @@
       "node_type": "Requirement",
       "properties": {
         "concern": "core",
+        "designation": "internal",
         "kind": "functional",
         "lineage": "original",
         "name": "The design can say what to work on next, and why that and not something else",
@@ -30503,7 +30611,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:55617c5c8d80c866d9f6320e2e140689e77873348857f55574654e41a07da106",
+  "prev_content_hash": "sha256:4f18a0d3476371278dd009fb0c8fceaabc439b3495b198644c85f97e6f34c902",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -30544,6 +30652,7 @@
       "OCCURS_DURING",
       "OPERATES_IN",
       "PART_OF_FLOW",
+      "PERFORMED_IN",
       "PRECEDES",
       "PRODUCES",
       "PROVIDES",
@@ -30562,7 +30671,7 @@
       "VIOLATES_RULE",
       "YIELDED"
     ],
-    "edge_types": 55,
+    "edge_types": 56,
     "node_type_names": [
       "Actor",
       "Anchor",
@@ -30594,7 +30703,7 @@
       "Verification"
     ],
     "node_types": 28,
-    "reflow2_version": "0.13.0",
+    "reflow2_version": "0.17.0",
     "schema_version": 1
   }
 }
