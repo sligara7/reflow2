@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bcb91fc416edbde738e16027035c3d7295c00a0f819fdcb447438cadc382004c",
+  "content_hash": "sha256:dab6223fdd41aa9e2da60fb69a2e319711dc32ea1b7ad593704eb23490ff50d7",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -136,6 +136,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:delta-reconcile",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1801,6 +1809,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:delta-reconcile",
+      "properties": {
+        "acted_at": "2026-07-28",
+        "role": "author"
+      },
+      "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cap:fork-alternatives",
       "properties": {
         "acted_at": "2026-07-22",
@@ -2180,6 +2197,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:graph-catches-up",
+      "properties": {
+        "acted_at": "2026-07-28",
+        "role": "author"
+      },
+      "to_id": "ctr:anthony"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -20612,6 +20638,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:delta-reconcile",
+      "properties": {},
+      "to_id": "req:graph-catches-up"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:derived-completion",
       "properties": {},
       "to_id": "req:completion-computed"
@@ -23506,6 +23538,19 @@
       }
     },
     {
+      "node_id": "cap:delta-reconcile",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Orchestrate the existing reconcile family against the repository's own history: anchor on the last reconciled point (the newest dated ChangeEvent/DriftEvent accepts, and the committed export's lineage), have the agent sweep git for commits and paths touched since, then run reconcile_artifacts (drifted + missing + unknown-to-the-design files) and coverage_report (regions no node claims) over that sweep, and walk each finding to an answer: set_artifact_checksum two-sided for drift, link_artifact for new work worth claiming, retire-from-design for what left, and a mini adopt pass where a changed region's intent must be recovered rather than assumed. Distinct from adopt (nothing was ever under design control) and from plain reconcile_artifacts (which answers only the paths it is handed, with no notion of 'since'). Expected shape: a skill over existing ops — reflow2 performs no file I/O, so git evidence is swept and supplied by the agent.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Delta reconcile: present what changed since the graph last matched",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:derived-completion",
       "node_type": "Capability",
       "properties": {
@@ -26186,6 +26231,24 @@
         "name": "Pairing sees boundaries, not the types that cross them",
         "priority": "medium",
         "statement": "A HARD LIMIT ON WHAT `req:complementary-pairing` CAN EVER CATCH, found by the dynograph-foundation trial on 2026-07-28 and not by review.\n\nTHE CASE, verified from both sides. dynograph-foundation's `ifc:storage-api` exposes `search_fulltext`, whose signature returns `Vec<dynograph_text::TextHit>`. reflow2 consumes that call and reads all three of the struct's public fields — `node_id`, `node_type`, `score` (`crates/reflow2-core/src/search.rs:67-79`). So reflow2 structurally depends on a type belonging to `dynograph-text`, a crate it NEVER NAMES as a dependency, through a boundary belonging to `dynograph-storage`. Two separately published boundaries are entangled by a type that crosses one of them, and the offer document says they are separate.\n\nWHY PAIRING CANNOT SEE IT. Every axis in the pairing key is a property OF A BOUNDARY: `medium`, `transport_security`, `auth`, the name, the payload format. This seam agrees on all of them. Provider publishes a `library` boundary, consumer requires a `library` boundary, both `unspecified` on transport and auth because a linked crate has neither — the match is clean and correct at every level the rule inspects. The break lives one layer down, in a struct's field list, which no boundary property mentions. A change to `TextHit` breaks a consumer that no document either side holds would predict.\n\nTHE GENERAL FORM: a type that crosses a boundary is part of the contract, and the offer models boundaries, not types. `payload_format` says `json` and not which fields; `payload_schema` can point at a schema for a wire format, but nothing does the equivalent for a linked-library signature, where the \"wire\" is the type system itself.\n\nCONSEQUENCE FOR THE PAIRING RULE — this is what makes it a constraint rather than a to-do. Pairing must NOT report a clean match as evidence of compatibility. It can honestly say \"these two boundaries can be connected\"; it cannot say \"and nothing crossing them will break you\". Those are different claims, and conflating them rebuilds the false green the same trial already produced once. The pairing report should say what it did not examine, the way `coverage_report` says what it never heard of.\n\nWHAT WOULD ACTUALLY CLOSE IT, noted so the constraint is not mistaken for permanent: comparing the TYPES that cross a boundary, not just the boundary. For a library seam that is signature and struct-shape comparison — real work, language-specific, and nothing reflow2 does today is close to it. For a wire seam `payload_schema` already points at the answer if both sides fill it in. Until one of those exists, this limit stands and must be STATED rather than discovered.\n\nTWO SMALLER LESSONS FROM THE SAME FINDING. First, the counterparty found it, not the owner of either half — reflow2 could not see that its own `cmp:search` edge pointed at the wrong boundary, and dynograph could not see that its type had escaped. Second, both sides had over-attributed a DIFFERENT risk (`TextError::ReadOnly`) in opposite directions for a day, because both were reasoning about the type and neither had read the call: `search_fulltext` flattens `TextError` to a string, so it never crosses at all. The type that crosses is the one that matters, and only the signature says which that is."
+      }
+    },
+    {
+      "node_id": "ctr:anthony",
+      "node_type": "Contributor",
+      "properties": {
+        "handle": "@ajs",
+        "kind": "person",
+        "name": "Anthony Sligar"
+      }
+    },
+    {
+      "node_id": "ctr:claude-fable",
+      "node_type": "Contributor",
+      "properties": {
+        "handle": "claude-code",
+        "kind": "automated_agent",
+        "name": "Claude (Fable 5)"
       }
     },
     {
@@ -30013,6 +30076,21 @@
       }
     },
     {
+      "node_id": "req:graph-catches-up",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The graph can catch up after unrecorded change",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When the project changes outside the loop — commits made by a session or person that never touched the design graph — the design must be able to catch up on demand: compute the delta between what the graph last reconciled and what the repository holds now, and walk every element of that delta through the same two-sided question an ordinary drift accept carries (did the design hold, or did it move?). Catching up is an interrogation, never a bulk import: the graph re-earns coherence, it does not absorb whatever happened. Anthony, 2026-07-28: 'if I work on something and then another session changes something and commits it, but doesn't update the reflow2 graph, I'd like to run the delta that would compare what was in the graph prior and what has changed since we last worked on the project — then update the graph with the delta.'",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:human-decides",
       "node_type": "Requirement",
       "properties": {
@@ -31582,7 +31660,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e8074430dbbca097fcc944cb6fcf40f8062aca55f13a1e236defa2b7ca6bddd0",
+  "prev_content_hash": "sha256:bcb91fc416edbde738e16027035c3d7295c00a0f819fdcb447438cadc382004c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
