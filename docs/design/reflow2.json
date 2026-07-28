@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3e43d6f376c8bcfc39cf428b7146b48cad74990e80cd7ed18a4af072888ea30f",
+  "content_hash": "sha256:9e7be9439fa2551b3f5aaa7a33c715aae15aa19b6bc45b66e3310f79d76b3e94",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2661,6 +2661,15 @@
         "action": "modified"
       },
       "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-a05cd36cbc1b30d9",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:machine-install"
     },
     {
       "edge_type": "CHANGED",
@@ -22911,7 +22920,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:81bcc3e38fce30890b84f61ff5cb8151fa65b889058b106e6d0d5dbe96e16d18",
+        "checksum": "sha256:b41bc1c569e39c7ab7d8d72d667fe56870b53eb720be82e6e4b6d7b870023c82",
         "location": "tools/reflow2_install.py",
         "name": "reflow2_install.py",
         "status": "realized"
@@ -24777,6 +24786,15 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Same bytes — re-registered in the sha256: dialect the gate compares in."
+      }
+    },
+    {
+      "node_id": "chg:accept-a05cd36cbc1b30d9",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-07-28",
+        "name": "`claude mcp get` takes a NAME and no `--scope` (only `add` and `remove` do), so the registration check passed an unknown option, fell through its exception path and answered \"not registered\" regardless of truth. Found by running --check on a machine that had genuinely never been installed: the answer looked right for the wrong reason. The check now asks the question the CLI can actually answer — is a server of this name visible at ANY scope — and says so in its own output rather than guessing \"create\" vs \"update\". Behaviour of the install itself is unchanged: registration was always unconditional, because it is idempotent."
       }
     },
     {
@@ -31897,7 +31915,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:53036dfeb660876a5ed8f5ddf10e8f2b7fb57f502465b1841e13b407304a6ccc",
+  "prev_content_hash": "sha256:3e43d6f376c8bcfc39cf428b7146b48cad74990e80cd7ed18a4af072888ea30f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

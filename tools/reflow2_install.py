@@ -120,19 +120,29 @@ def claude_cli() -> str | None:
 
 
 def claude_server_registered() -> bool:
-    """Whether Claude Code already has a user-scope `reflow2`.
+    """Whether Claude Code can see a `reflow2` server AT ALL — any scope.
 
     Asked through the CLI rather than by reading a config file, because which
-    file holds user scope is Claude Code's business and has moved before. A CLI
-    that is absent or errors answers "no" — the register step is idempotent, so
-    a wrong "no" costs a re-registration and never a broken config.
+    file holds user scope is Claude Code's business and has moved before.
+
+    IT CANNOT ANSWER THE SCOPED QUESTION, and saying so is the point: `claude
+    mcp get` takes a NAME and no `--scope` (only `add` and `remove` do), so a
+    project-scope server from a `.mcp.json` in the working directory answers
+    yes here too. This is therefore used for REPORTING only — never to decide
+    whether to register, which is done unconditionally because it is idempotent.
+
+    Found 2026-07-28 by running the installer's own `--check` on a machine that
+    had never been installed: the call passed `--scope user`, the CLI rejected
+    the unknown option, the exception path answered "no", and the answer looked
+    right for the wrong reason. A check that cannot be wrong in only one
+    direction is a check that has to say what it is measuring.
     """
     cli = claude_cli()
     if not cli:
         return False
     try:
         out = subprocess.run(
-            [cli, "mcp", "get", SERVER_NAME, "--scope", "user"],
+            [cli, "mcp", "get", SERVER_NAME],
             capture_output=True, text=True, timeout=30,
         )
         return out.returncode == 0
@@ -147,8 +157,12 @@ def register_claude(binary: Path, check: bool) -> str:
                 f"          claude mcp add -s user {SERVER_NAME} -- {binary} "
                 f"{' '.join(SERVER_ARGS)}")
     if check:
-        verb = "update" if claude_server_registered() else "create"
-        return f"{verb}  Claude Code user-scope MCP server `{SERVER_NAME}`"
+        # Deliberately not "update" vs "create": the CLI cannot say which scope
+        # an existing `reflow2` lives in, and guessing would report a
+        # project-scope server as though user scope were already set up.
+        seen = " (a server of this name is already visible — scope unknown)" \
+            if claude_server_registered() else ""
+        return f"register  Claude Code user-scope MCP server `{SERVER_NAME}`{seen}"
     # Remove first: `add` refuses a name that exists, and re-registering is how
     # an upgrade moves the binary path. Failure to remove is fine (absent).
     subprocess.run([cli, "mcp", "remove", SERVER_NAME, "--scope", "user"],
