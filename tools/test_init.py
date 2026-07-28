@@ -128,6 +128,39 @@ class InstallerTest(unittest.TestCase):
         )
         self.assertIn("AGENTS.md", (p / "GEMINI.md").read_text())
 
+    def test_the_slash_commands_ship_with_the_kit(self):
+        # Anthony's call, 2026-07-28: the one narrow exception to
+        # dec:skills-served. A command carries no version-coupled content — it
+        # names a skill and says how to report it — so a copy cannot go stale
+        # the way a copied SKILL does. Without them the install is experienced
+        # as broken rather than thin: the skills are reachable and nothing tells
+        # you they are.
+        p = self.project()
+        self.install(p)
+
+        cmds = p / ".claude" / "commands"
+        self.assertTrue(cmds.is_dir(), "the kit's slash commands must be installed")
+        names = {f.name for f in cmds.glob("*.md")}
+        self.assertIn("gaps.md", names)
+        self.assertIn("where.md", names)
+        # Whatever the kit holds is what lands — no curated subset that drifts
+        # from the source.
+        kit = {f.name for f in (init.KIT / "commands").glob("*.md")}
+        self.assertEqual(names, kit)
+
+    def test_skills_are_still_not_copied(self):
+        # The counterweight. Shipping commands must NOT be read as reopening
+        # dec:skills-served: the skills themselves stay served, because a stale
+        # skill is wrong in ways nobody notices.
+        p = self.project()
+        self.install(p)
+
+        for tree in (".claude/skills", ".grok/skills"):
+            self.assertFalse(
+                (p / tree).exists(),
+                f"{tree} must still not be installed — commands are the exception, not skills",
+            )
+
     def test_an_upgrade_touches_nothing_in_the_project(self):
         # Re-running the SAME version changes nothing. Necessary, and weaker
         # than the requirement — test_a_new_release_touches_nothing below is

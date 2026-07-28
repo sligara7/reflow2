@@ -290,6 +290,44 @@ def main() -> int:
     check("allowlist shadows no real tool name",
           not shadowing, f"these ARE served tools: {shadowing}")
 
+    # Slash commands ship with the kit since 2026-07-28 — the one narrow
+    # exception to dec:skills-served, allowed because a command carries no
+    # version-coupled content. The single way a command CAN rot is by naming a
+    # skill that no longer exists, so that is checked here rather than
+    # discovered in a consumer's repo, where the symptom is an agent saying it
+    # cannot find a skill the user was told to use.
+    print("== commands ==")
+    command_src = REPO / "getting-started/commands"
+    command_mirror = REPO / ".claude/commands"
+    skill_names = {d.name for d in SKILLS.iterdir() if d.is_dir()}
+    named = re.compile(r"\*\*([a-z0-9]+(?:-[a-z0-9]+)*)\*\*\s+skill")
+    dangling = []
+    for cmd in sorted(command_src.glob("*.md")):
+        for skill in named.findall(cmd.read_text()):
+            if skill not in skill_names:
+                dangling.append(f"{cmd.name} -> {skill}")
+    check("every command names a skill that exists",
+          not dangling,
+          f"these commands point at skills that are not served: {dangling}")
+
+    cmd_src_files = {f.name for f in command_src.glob("*.md")}
+    if command_mirror.exists():
+        cmd_mirror_files = {f.name for f in command_mirror.glob("*.md")}
+        check(".claude/commands: same file set as getting-started/commands",
+              cmd_src_files == cmd_mirror_files,
+              f"missing: {sorted(cmd_src_files - cmd_mirror_files)} "
+              f"extra: {sorted(cmd_mirror_files - cmd_src_files)}")
+        cmd_differing = sorted(
+            n for n in cmd_src_files & cmd_mirror_files
+            if (command_mirror / n).read_bytes() != (command_src / n).read_bytes()
+        )
+        check(".claude/commands: every file byte-identical to the source",
+              not cmd_differing,
+              f"differing: {cmd_differing} — copy them: "
+              f"cp getting-started/commands/*.md .claude/commands/")
+    else:
+        check(".claude/commands exists (this repo runs its own commands)", False)
+
     print("== mirrors ==")
     source_files = {f.relative_to(SKILLS): f for f in SKILLS.rglob("*") if f.is_file()}
     for mirror in MIRRORS:

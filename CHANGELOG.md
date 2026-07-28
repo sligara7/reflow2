@@ -55,11 +55,16 @@ This file is the third view: *what changed, and when*.
   into a project that asked for none of them. The created file stays a pointer
   rather than becoming a second home for instructions.
 
-  Still open, and Anthony's call rather than this change's: whether the eight
-  slash commands (`/gaps`, `/health`, `/where`, …) should ship with the kit. They
-  are pure pointers with no version-coupled content, so they do not carry the
-  staleness `dec:skills-served` was written to prevent — but it touches that
-  decision, so it is not being decided here.
+  **And the eight slash commands now ship with the kit** (`/gaps`, `/health`,
+  `/where`, `/req`, `/decisions`, `/debt`, `/brainstorm`, `/kpp`) — the one
+  narrow exception to `dec:skills-served`, recorded as
+  `dec:commands-are-the-exception`. Skills stay served, because a stale skill is
+  silently wrong. A command is four lines naming a skill, with no version-coupled
+  content, so a stale one is still correct — the skill behind it is fetched fresh.
+  The single way a command *can* rot is by naming a skill that no longer exists,
+  and `skill_lint` now fails on exactly that, so it is caught here rather than in
+  someone else's repo. Without them a consumer install was experienced as
+  **broken rather than thin**: the skills were reachable and nothing said so.
 
 ### Added
 

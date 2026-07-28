@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ba3335b8d7e0719ed95f6facd4478216e5ef73ea16d0482b10f65b98acae70b6",
+  "content_hash": "sha256:89fcbc93b509b0433011644eb9868b02ab649f5f84345a38beb249bdb1d92b7b",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -967,6 +967,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:commands-ship",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:composed-analysis",
       "properties": {},
       "to_id": "epoch:linking-repos"
@@ -1612,6 +1618,12 @@
       "from_id": "snap:epoch:kpp-capture:req:reviewed-defects",
       "properties": {},
       "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:linking-repos:cap:install-reaches-the-agent",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3844,6 +3856,42 @@
         "action": "modified"
       },
       "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:commands-ship",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:commands-ship",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:commands-ship",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:commands-ship",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:install-reaches-the-agent"
     },
     {
       "edge_type": "CHANGED",
@@ -6388,6 +6436,15 @@
       "from_id": "sys:vocabulary",
       "properties": {},
       "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:commands-are-the-exception",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "Qualifies rather than overturns: skills stay served because a stale skill is silently wrong; commands are installed because a stale command is still correct, and the one way it could rot (naming a skill that no longer exists) is now a lint failure."
+      },
+      "to_id": "dec:skills-served"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -9086,6 +9143,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:install-reaches-the-agent",
+      "properties": {},
+      "to_id": "dec:commands-are-the-exception"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:key-interfaces",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -11243,6 +11306,12 @@
       "from_id": "cap:design-identity",
       "properties": {},
       "to_id": "snap:epoch:v0130:cap:design-identity"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:install-reaches-the-agent",
+      "properties": {},
+      "to_id": "snap:epoch:linking-repos:cap:install-reaches-the-agent"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -18040,6 +18109,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:skill-lint",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "ver:install-reaches-the-agent"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:skills",
       "properties": {
         "completeness": "complete"
@@ -20309,7 +20386,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c3344ca80cbb0243dd20774c933eef7b1fa9acd3b7634fae721f5e7767c04e02",
+        "checksum": "sha256:dfd18a9b785f6a8ad64537499caaf9d64a05e906ba059fe1cc2f8ae91cf1aac7",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
         "status": "realized"
@@ -20613,6 +20690,17 @@
       }
     },
     {
+      "node_id": "art:skill-lint",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:0c26424b1fea0cec87c4e3f53f287c09d946ce8bff8c5ec164873c89603f8afb",
+        "location": "tools/skill_lint.py",
+        "name": "skill_lint.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:skills",
       "node_type": "Artifact",
       "properties": {
@@ -20727,7 +20815,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:44022cb169c3c5230d760fd0288fdbc9c895f4b81d80a8fd34602830b1259dd4",
+        "checksum": "sha256:5d3f5c3b7ee5b14757e11779e086d82853401f3e8ceac245cd1dabc86f25a31a",
         "location": "tools/test_init.py",
         "name": "test_init.py",
         "status": "realized"
@@ -22445,6 +22533,14 @@
       }
     },
     {
+      "node_id": "chg:commands-ship",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The eight slash commands ship with the kit — the narrow exception to serving everything, with the one way a command can rot closed by a lint"
+      }
+    },
+    {
       "node_id": "chg:composed-analysis",
       "node_type": "ChangeEvent",
       "properties": {
@@ -23690,6 +23786,16 @@
         "decision": "Requirement certainty is a computed reading, never a stored third axis: status accepted/met → user-confirmed; status deferred/dropped → settled out (also the user's word); status proposed → asserted (provenance authored/planned/imported) or recovered (provenance inferred/reconciled/healed). The load-bearing doctrine: an agent captures requirements at proposed and ONLY the user's answer moves the status — accepted, met, deferred and dropped are all user-only verbs. Reports render the certainty breakdown directly so no session reconstructs it in prose.",
         "name": "A Requirement's certainty is derived from status × provenance; every move off proposed is the user's word",
         "rationale": "User decided all three axes 2026-07-22 (BL-75 vocabulary session, from their fleet trial: where-am-i had to caveat user-confirmed vs recovered in prose every session). Derived over stored for the BL-73 reason — a third stored property can contradict the two axes that already span the space, and the backlog's own warning was 'decide deliberately, not additively'. Every-move-off-proposed rather than accepted-only because an agent dropping a requirement on its own judgment is exactly the silent decision the loop exists to prevent — and this is BL-12 sketch idea 2's example made real ('a requirement moves to accepted only on the human's say-so'), enforced culturally in the skills and the tool description today; the mechanical half stays with BL-41. 'Recovered' over the trial's 'adopted' because it matches the graph's own vocabulary (cap:adopt: 'Recover a design from an existing system') and names the fact, not the workflow. No schema change: the whole defect was the read side — the second time this week (BL-73) the vocabulary was already sufficient and unread.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:commands-are-the-exception",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "The eight slash commands (`/gaps`, `/health`, `/where`, `/req`, `/decisions`, `/debt`, `/brainstorm`, `/kpp`) are INSTALLED into a consumer project's `.claude/commands/`. Skills, working instructions and everything else remain SERVED. Anthony's call, 2026-07-28.",
+        "name": "Slash commands ship with the kit — the one narrow exception to serving everything",
+        "rationale": "QUALIFIES `dec:skills-served` rather than overturning it, and the distinction is what makes the exception safe.\n\nWHY THAT DECISION EXISTS: a copied skill goes stale, and the agent then loads last release's content in preference to what the server would serve. That happened here for four releases running without anything noticing, which is why nothing is copied.\n\nWHY A COMMAND IS DIFFERENT: each is four lines that name a skill and say how to report the answer. There is no version-coupled content in it. When the skill behind it changes, the command is still correct, because the skill is fetched fresh at use time — the command is a pointer, and the thing it points at is the thing that moves.\n\nTHE ONE WAY IT CAN ROT, and it is now closed: a command could name a skill that no longer exists. `skill_lint` fails on exactly that, so the failure is caught in this repo rather than discovered in a consumer's, where the symptom would be an agent reporting it cannot find a skill the user was told to use. The mirror is byte-checked too, so `.claude/commands` cannot drift from the kit source.\n\nWHAT IT COSTS IF WE ARE WRONG: eight small files in a consumer repo, each independently deletable, none of which changes behaviour when stale. Compare the cost of a stale skill, which silently answers with last release's method.\n\nWHY IT WAS WORTH DOING AT ALL: without them a consumer install is experienced as BROKEN rather than thin — the skills are reachable and nothing tells you they are. That is the same invisibility `req:kit-reaches-the-agent` was raised for, one layer up: the pointer now reaches the agent, and the commands are what make the reachable thing usable.",
         "status": "accepted"
       }
     },
@@ -27814,6 +27920,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:linking-repos:cap:install-reaches-the-agent",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:init\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:install-reaches-the-agent\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:init\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:commands-are-the-exception\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:kit-reaches-the-agent\",\"properties\":{}}]",
+        "state": "{\"description\":\"When a project owns no instruction file at all — the ordinary state of a repo that has never been agent-worked, and therefore of an adopt target — the installer CREATES the primary-harness convention carrying a pointer to the kit's own file, instead of only appending to files that already exist. Narrow on purpose: a project that already owns any instruction convention gets a line appended to it and nothing invented, and the created file stays a pointer rather than a second home for instructions.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"The install lands where the agent will actually read it\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
+        "target_id": "cap:install-reaches-the-agent",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:linking-repos:cap:shared-sessions",
       "node_type": "Snapshot",
       "properties": {
@@ -28188,7 +28304,7 @@
         "last_run_at": "2026-07-28",
         "level": "integration",
         "method": "test",
-        "name": "A project with NO instruction file still gets one the primary harness reads; the created file is a pointer and not a second home for instructions (size-bounded); a project's own existing instruction file is appended to rather than replaced; and a project that already owns any convention gets NOTHING invented (tools/test_init.py, 4 cases). MUTATION-CHECKED: restoring the old only-append-to-what-exists behaviour fails exactly the two cases that name the defect.",
+        "name": "A project with NO instruction file still gets one the primary harness reads; the created file is a pointer, not a second home for instructions (size-bounded); an existing instruction file is appended to, not replaced; a project that already owns a convention gets NOTHING invented; the eight slash commands ship and match the kit source exactly; and SKILLS ARE STILL NOT COPIED, so the exception stays an exception (tools/test_init.py, 6 cases). Plus the guards that make shipping commands safe: a command naming a skill that does not exist FAILS the lint, and the .claude/commands mirror is byte-checked against the kit (tools/skill_lint.py). MUTATION-CHECKED three ways: restoring the only-append behaviour, emptying TREES, and pointing a command at a non-existent skill each fail exactly the check that names them.",
         "status": "passing"
       }
     },
@@ -28674,7 +28790,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a68dae69d9395e9c9fff0c2cd98e30dece1dde318a31e3d44bd40067a9551106",
+  "prev_content_hash": "sha256:ba3335b8d7e0719ed95f6facd4478216e5ef73ea16d0482b10f65b98acae70b6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

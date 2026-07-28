@@ -133,7 +133,31 @@ def foreign_owner(src: Path, dst: Path) -> str | None:
 # prune path below remove the copies a previous install left — untouched ones
 # deleted, edited ones kept and reported. Deleting the mechanism would have
 # stranded every existing install with skills that shadow the served ones.
-TREES: list[tuple[Path, str]] = []
+# Directory trees copied wholesale into the project.
+#
+# SLASH COMMANDS ARE THE ONE EXCEPTION TO `dec:skills-served`, and the exception
+# is narrow enough to state precisely (Anthony's call, 2026-07-28,
+# req:kit-reaches-the-agent).
+#
+# That decision says nothing is copied into a consumer repo, because a copy goes
+# stale and the agent then loads last release's content in preference to what the
+# server would serve. The skills themselves are the case it was written for: they
+# are long, they change with almost every release, and a stale one is wrong in
+# ways nobody notices.
+#
+# A command is a different animal. Each is four lines that name a skill and say
+# how to report it — no version-coupled content, nothing that goes stale when the
+# skill behind it changes, because the skill is still fetched fresh at use time.
+# What a command CAN go stale about is naming a skill that no longer exists, and
+# `skill_lint` now fails on exactly that, so the one real failure mode is caught
+# in this repo rather than discovered in someone else's.
+#
+# Without them a consumer install is experienced as broken rather than thin: the
+# skills are reachable but nothing tells you they are, which is the same
+# invisibility this requirement was raised for.
+TREES: list[tuple[Path, str]] = [
+    (KIT / "commands", ".claude/commands"),
+]
 
 
 # Frontmatter every harness agrees on. A skill whose `name` is malformed, or
