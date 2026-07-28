@@ -1172,6 +1172,52 @@ pub struct InterfaceDesignationReq {
 
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct DeclareDependencyReq {
+    /// Stable id, e.g. `dep:dynograph-foundation`.
+    pub id: String,
+    pub name: String,
+    /// Where it comes from — a git URL, a registry, a path.
+    pub source: String,
+    /// The version this design MEANS to depend on: a tag, a commit, a release.
+    pub version: String,
+    /// The parts actually taken — crate names, service names.
+    #[serde(default)]
+    pub components: Vec<String>,
+    /// Build switches forwarded to the dependency BY NAME. A renamed feature is
+    /// a build break no API diff would mention, so it belongs in the record.
+    #[serde(default)]
+    pub features: Vec<String>,
+    /// Which build file the pin actually lives in.
+    #[serde(default)]
+    pub declared_in: Option<String>,
+    #[serde(default)]
+    pub note: Option<String>,
+}
+
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ReconcileDependenciesReq {
+    /// What the build ACTUALLY resolves, read from the build files now. Omit to
+    /// report the declarations without checking them.
+    #[serde(default)]
+    pub observed: Vec<ObservedDependencyDto>,
+}
+
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ObservedDependencyDto {
+    pub name: String,
+    pub version: String,
+    #[serde(default)]
+    pub components: Vec<String>,
+    #[serde(default)]
+    pub features: Vec<String>,
+    #[serde(default)]
+    pub observed_in: Option<String>,
+}
+
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct RequirementDesignationReq {
     pub requirement_id: String,
     /// `internal` (the default state) or `published` — a behavioural promise a
@@ -2938,6 +2984,68 @@ impl ReflowService {
             g.set_interface_designation(&req.interface_id, &req.designation)
                 .map_err(dyno_err)?,
         ))
+    }
+
+    #[tool(
+        description = "Declare which version of ANOTHER DESIGN this one depends on — the pin a \
+                       seam analysis is taken AS OF. Records the source, the version (a tag or \
+                       commit), the parts taken, and the build switches forwarded BY NAME, \
+                       because a renamed feature is a downstream build break that no API diff or \
+                       surface export would mention. This is what you MEAN to depend on; \
+                       reconcile_dependencies compares it against what the build actually \
+                       resolves. A declaration without a version is refused: the version is the \
+                       whole point.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn declare_dependency(
+        &self,
+        Parameters(req): Parameters<DeclareDependencyReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let decl = reflow2_core::DependencyDeclaration {
+            id: req.id,
+            name: req.name,
+            source: req.source,
+            version: req.version,
+            components: req.components,
+            features: req.features,
+            declared_in: req.declared_in,
+            note: req.note,
+        };
+        let mut g = self.write_lock().await;
+        g.declare_dependency(&decl).map_err(dyno_err)?;
+        ok_json(g.dependency_manifest().map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Check the declared dependencies against what the build ACTUALLY resolves, \
+                       and return the reflow2.toml manifest. Catches the two opposite failures: \
+                       the build taking something nothing declares (the reliance nobody agreed \
+                       to, which breaks with nobody at fault) and a declaration the build no \
+                       longer takes (a stale promise). Pass `observed` read fresh from the build \
+                       files — Cargo.toml, docker-compose.yml, versions.env, whatever holds the \
+                       pins. Declaring nothing reads as 'nobody has said', never as 'depends on \
+                       nothing'.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn reconcile_dependencies(
+        &self,
+        Parameters(req): Parameters<ReconcileDependenciesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let observed: Vec<reflow2_core::ObservedDependency> = req
+            .observed
+            .into_iter()
+            .map(|o| reflow2_core::ObservedDependency {
+                name: o.name,
+                version: o.version,
+                components: o.components,
+                features: o.features,
+                observed_in: o.observed_in,
+            })
+            .collect();
+        let g = self.graph.read().await;
+        let report = g.reconcile_dependencies(&observed).map_err(dyno_err)?;
+        let manifest = g.dependency_manifest().map_err(dyno_err)?;
+        ok_json(serde_json::json!({ "report": report, "manifest": manifest }))
     }
 
     #[tool(

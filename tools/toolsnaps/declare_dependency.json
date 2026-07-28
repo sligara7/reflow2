@@ -1,0 +1,66 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Declare which version of ANOTHER DESIGN this one depends on — the pin a seam analysis is taken AS OF. Records the source, the version (a tag or commit), the parts taken, and the build switches forwarded BY NAME, because a renamed feature is a downstream build break that no API diff or surface export would mention. This is what you MEAN to depend on; reconcile_dependencies compares it against what the build actually resolves. A declaration without a version is refused: the version is the whole point.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "components": {
+        "default": [],
+        "description": "The parts actually taken — crate names, service names.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "declared_in": {
+        "default": null,
+        "description": "Which build file the pin actually lives in.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "features": {
+        "default": [],
+        "description": "Build switches forwarded to the dependency BY NAME. A renamed feature is\na build break no API diff would mention, so it belongs in the record.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "id": {
+        "description": "Stable id, e.g. `dep:dynograph-foundation`.",
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "note": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "source": {
+        "description": "Where it comes from — a git URL, a registry, a path.",
+        "type": "string"
+      },
+      "version": {
+        "description": "The version this design MEANS to depend on: a tag, a commit, a release.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "source",
+      "version"
+    ],
+    "type": "object"
+  },
+  "name": "declare_dependency"
+}

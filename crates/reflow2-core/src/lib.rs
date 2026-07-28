@@ -36,6 +36,7 @@ pub mod compare;
 pub mod compose;
 pub mod confirm;
 pub mod coverage;
+pub mod depends;
 pub mod detect;
 pub mod dimensions;
 pub mod drift;
@@ -82,6 +83,7 @@ pub use compare::{
 pub use compose::{ComposedFinding, ComposedReport, Side};
 pub use confirm::{ClaimConfirmation, ConfirmationLedger, ConfirmationState};
 pub use coverage::{CoverageReport, ObservedPath, UnclaimedRegion};
+pub use depends::{DependencyDeclaration, DependencyFinding, DependencyReport, ObservedDependency};
 pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, GapSource};
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};

@@ -1,0 +1,16 @@
+# reflow2 dependency declarations — which version of another design this
+# design depends on. GENERATED: re-derive it from the build files rather
+# than editing by hand, because a hand-kept pin drifts from the build and
+# the build is what ships.
+
+[reflow2]
+version = "0.16.0"
+graph_id = "reflow2"
+
+[dependencies.dynograph-foundation]
+source = "https://github.com/sligara7/dynograph-foundation.git"
+version = "v0.11.0"
+components = ["dynograph-core", "dynograph-storage", "dynograph-graph", "dynograph-resolution", "dynograph-vector"]
+features = ["rocksdb", "fulltext"]
+declared_in = "Cargo.toml"
+note = "Derived from reflow2's own Cargo.toml, not hand-written. `dynograph-storage` is taken with default-features=false and reflow2 re-enables `rocksdb` and `fulltext` by forwarding to the dependency's feature NAMES — which the provider committed to as contract on 2026-07-28, so this reliance is declared AND accepted rather than declared and refused. NOTE ON v0.12.0: verified safe to take before release, by building reflow2 against the provider's unreleased working tree with --features fulltext and running the search suite — 9 passed. Their `search_fulltext` now returns `dynograph_storage::FulltextHit` instead of leaking `dynograph_text::TextHit`; reflow2 only reads the three fields, so the change is source-compatible here."

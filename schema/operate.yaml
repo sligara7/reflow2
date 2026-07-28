@@ -52,6 +52,25 @@ schema:
         description: { type: string, fulltext: true }
         resource_type: { type: string, indexed: true, description: "database / queue / secret / gpu / power / material / bandwidth — free text." }
         provider: { type: string, indexed: true, description: "Who supplies it (cloud provider, vendor, utility)." }
+        # Added 2026-07-28 by req:design-dependencies-declared. These four apply
+        # when `resource_type` is `design-dependency` — another DESIGN this one
+        # depends on, at a stated version.
+        #
+        # Declared here rather than stored undeclared, because a property the
+        # schema does not name is one `describe_schema` cannot show and no other
+        # tool can discover — the same "the record and the computation disagree"
+        # shape that produced three defects this week.
+        #
+        # And declared on Resource rather than as a new node type ON PURPOSE: the
+        # version stamp counts node and edge TYPES, so a new type would lock out
+        # every older reflow2 for a feature that does not need it. The fit is
+        # imperfect — Resource's own hint says database / queue / GPU / power —
+        # and that imperfection is the price of not breaking every existing
+        # install. Revisit if dependencies grow their own analysis.
+        version: { type: string, indexed: true, description: "For a `design-dependency`: the version this design MEANS to depend on — a tag, a commit, a release. The load-bearing field, because it is what a dependency's published surface can be taken AS OF. A seam analysis without it silently answers about whatever the provider's `main` happens to be." }
+        components: { type: string, description: "For a `design-dependency`: comma-separated parts actually taken — crate names, service names, whatever the dependency's unit of consumption is." }
+        features: { type: string, description: "For a `design-dependency`: comma-separated build switches this design forwards to the dependency BY NAME. Recorded because they are contract whether or not the provider treats them as one — a renamed feature is a downstream build break that no public-API diff, OpenAPI document or surface export would mention." }
+        declared_in: { type: string, description: "For a `design-dependency`: which build file the pin actually lives in (Cargo.toml, docker-compose.yml, versions.env), so the claim can be rechecked at its source rather than trusted. One dependency can be pinned in several files at once." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
       extraction_hint: >

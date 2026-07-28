@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:716f071c1dbadd8bca9a13a0f50f29208cc1a58861ba65c5ea67164ed0ab3810",
+  "content_hash": "sha256:0b29dee4e898b1b33f0565f60bdfa54c64d30221487fdc59fe9f059d31887022",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -144,6 +144,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:design-dependencies-declared",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1002,6 +1010,12 @@
       "from_id": "chg:degraded-surface",
       "properties": {},
       "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:dependencies-declared",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2271,6 +2285,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-11773dab9729328c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-17017303d729e5ee",
       "properties": {
         "accepted_baseline": true,
@@ -2340,6 +2363,15 @@
         "action": "modified"
       },
       "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-4bef64778366ed99",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends"
     },
     {
       "edge_type": "CHANGED",
@@ -4176,6 +4208,51 @@
         "action": "added"
       },
       "to_id": "cap:degraded-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependencies-declared",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependencies-declared",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependencies-declared",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependencies-declared",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependencies-declared",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:design-dependencies-declared"
     },
     {
       "edge_type": "CHANGED",
@@ -17686,6 +17763,30 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:dependency-manifest",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:depends",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:depends-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:design-dependencies-declared"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
         "completeness": "partial"
@@ -18373,6 +18474,14 @@
       "to_id": "cmp:vocabulary"
     },
     {
+      "edge_type": "REQUIRES_RESOURCE",
+      "from_id": "proj:reflow2",
+      "properties": {
+        "criticality": "required"
+      },
+      "to_id": "dep:dynograph-foundation"
+    },
+    {
       "edge_type": "SATISFIES",
       "from_id": "cap:adopt",
       "properties": {},
@@ -18497,6 +18606,12 @@
       "from_id": "cap:derived-completion",
       "properties": {},
       "to_id": "req:completion-computed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:design-dependencies-declared",
+      "properties": {},
+      "to_id": "req:design-dependencies-declared"
     },
     {
       "edge_type": "SATISFIES",
@@ -19100,6 +19215,12 @@
       "from_id": "ver:derived-completion",
       "properties": {},
       "to_id": "cap:derived-completion"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:design-dependencies-declared",
+      "properties": {},
+      "to_id": "cap:design-dependencies-declared"
     },
     {
       "edge_type": "VERIFIES",
@@ -20275,6 +20396,39 @@
       }
     },
     {
+      "node_id": "art:dependency-manifest",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "config",
+        "checksum": "sha256:873c4b37f3eafb2ee261a8168326ebcadb6adf86ed0b22c3878fa78eb67556b0",
+        "location": "reflow2.toml",
+        "name": "reflow2.toml",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:depends",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:3bf2ed7ba5a6bccd928828657c0cc7e6b051e6b96c569f5f73528e6baf184d03",
+        "location": "crates/reflow2-core/src/depends.rs",
+        "name": "depends.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:depends-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:4b1842af22cfbae2c7b112540fe0e98cc857d8369104e9112f66f1d7c650ad31",
+        "location": "crates/reflow2-core/tests/depends.rs",
+        "name": "tests/depends.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:detect",
       "node_type": "Artifact",
       "properties": {
@@ -20752,7 +20906,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4ecaa4dd142b7ff0e5f39d611a966f7ee6a38d1ad10bc6867de2cacd3d5ebc5d",
+        "checksum": "sha256:6658b89a755136293e7b37a3687ba9603ce2a5bff48cb2e0c5717965318cbf3d",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -21253,6 +21407,19 @@
         "name": "Compute what is delivered, and expose the requirement lifecycle that is currently unused",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:design-dependencies-declared",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A dependency declaration records the source, the version a design MEANS to depend on, the parts taken and the build switches forwarded by name; `reconcile_dependencies` compares that against what the build actually resolves and reports both opposite failures — the build taking something nothing declares, and a declaration the build no longer takes. `dependency_manifest` emits `reflow2.toml`, stamped with which reflow2 produced it. Declaring nothing reads as \"nobody has said\", never as \"depends on nothing\".",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Declare which version of another design you depend on, and check it against the build",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -22055,6 +22222,14 @@
       }
     },
     {
+      "node_id": "chg:accept-11773dab9729328c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted a new baseline: the change carries no design meaning"
+      }
+    },
+    {
       "node_id": "chg:accept-17017303d729e5ee",
       "node_type": "ChangeEvent",
       "properties": {
@@ -22123,6 +22298,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Same bytes — re-registered in the sha256: dialect the gate compares in (the bare-hex false-drift bug, fixed in artifact.rs this session)."
+      }
+    },
+    {
+      "node_id": "chg:accept-4bef64778366ed99",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted a new baseline: the change carries no design meaning"
       }
     },
     {
@@ -22687,6 +22870,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Field fix from the six-session fleet: reflow2 never exits silently, and a graph somebody else holds can still be exported"
+      }
+    },
+    {
+      "node_id": "chg:dependencies-declared",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A design can declare which version of another design it depends on, and reflow2 checks that claim against what the build actually resolves"
       }
     },
     {
@@ -24788,6 +24979,16 @@
         "decision": "Accepted the gap gap:85a8e6f0446bbbfd.",
         "name": "Reviewed: gap:85a8e6f0446bbbfd",
         "rationale": "User (who:ajs, standing policy from 2026-07-23, applied again 2026-07-25): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:publish-surface joined the set (45 → 46). The trial here writes itself and is the sharpest one this project has had available: publish reflow2's own surface — ifc:mcp-tools and ifc:graph-export are now designated, so the document is real — hand it to Alex, and see whether he can build against it WITHOUT the repo. That is req:design-reachable-without-the-repo tested by the only person who can test it. What the seven tests cannot tell us is whether the boundary set is RIGHT: a design that designates too little publishes a useless surface, and one that designates too much has published its internals under another name. Only a consumer discovers which.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:8692d02c7fa57cd9",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:8692d02c7fa57cd9.",
+        "name": "Reviewed: gap:8692d02c7fa57cd9",
+        "rationale": "Standing acknowledgement, re-stated because the rollup's id hashes the affected set and so moves whenever the capability set does — 61, 62, 63, now 64. Validation for this project is the trials programme: reflow2 used on real designs. In the last two days that meant an adopt pass over dynograph-foundation, a live two-session seam exercise, and a consumer-side compatibility build against an unreleased provider tree — which between them found six defects nobody had reviewed their way to, three of them in reflow2 itself. Recording 64 near-identical validation nodes would turn the number green without anyone having checked anything, which is the dishonesty `dec:passing-is-verified` exists to prevent.",
         "status": "accepted"
       }
     },
@@ -26942,12 +27143,13 @@
       "node_id": "question:d6f1644ca908ae5d",
       "node_type": "Question",
       "properties": {
+        "answer": "Anthony, 2026-07-28: build it, derived from build files rather than hand-authored. BUILT. `reflow2.toml` is generated from declarations held in the graph and carries which reflow2 wrote it (his earlier ask). Two facts are kept apart deliberately: what you MEAN to depend on (the declaration, durable and committed) and what your build ACTUALLY resolves (the observation, read fresh each time) — storing only the first gives a document that drifts, storing only the second gives a fact nothing can contradict. `reconcile_dependencies` compares them and catches both opposite failures. Core does not parse Cargo.toml: the caller supplies the observation, as `reconcile_artifacts` and `coverage_report` already do, because storyflow pins one dependency across a Cargo.toml, a docker-compose.yml and a versions.env, and a Cargo-only core would model a third of that seam and report the rest as absent.",
         "asked_at": "2026-07-27",
         "context_setter": "Nothing satisfies requirement “Declare which version of another design you depend on, not just record what you took”",
         "gap_id": "gap:d6f1644ca908ae5d",
         "question": "reflow2 already notes which version of another project's design you actually copied, and when. What it has no place for is you SAYING which version you mean to depend on — a checked-in file like Cargo.toml. With both, it could tell you whether you are using the version you intended, and whether the other project has moved on since. Do you want that file, and should it come before or after the interface work?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -27357,7 +27559,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A project that composes with another design must be able to DECLARE which version of it that dependency is on — a tag, a commit, a release — in a checked-in manifest a person edits, the way Cargo.toml, pyproject.toml, pixi.toml or uv.toml declare code dependencies. Anthony's framing, 2026-07-27: when two projects evolve separately you need to know which version yours depended upon. WHAT ALREADY EXISTS IS THE OTHER HALF, and the distinction is the whole point. cap:mirror-surface already RECORDS the coordinate after the fact — mirror_content_hash is the content hash of the surface document a mirror was made from, and mirrored_at dates it, deliberately as a dated claim rather than a live truth. That is what you GOT. A manifest is what you MEANT: human-meaningful (v0.11.0, not a 64-character hash), authored rather than derived, reviewable in a diff, and readable before any graph is opened. HAVING BOTH IS WHAT MAKES THE CHECK POSSIBLE: declared-versus-mirrored answers 'am I actually composing against the version I said', and declared-versus-upstream answers 'has what I depend on moved since'. Either question is unanswerable with only one of the two halves. THE MANIFEST MUST ALSO RECORD WHICH REFLOW2 WROTE IT (Anthony, same day) — the same discipline the export stamp already follows, and for the same reason: a manifest is read by a binary that may be older or newer than the one that produced it, and a file that cannot say which vocabulary it was written against forces the reader to guess. reflow2 already refuses rather than guesses when an export's stamp is unreadable; the manifest should be no weaker. The manifest must also survive the case where the dependency's design is not available at all, because declaring a dependency you cannot currently resolve is a normal state and silence about it would be the failure.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -27975,6 +28177,20 @@
       }
     },
     {
+      "node_id": "dep:dynograph-foundation",
+      "node_type": "Resource",
+      "properties": {
+        "components": "dynograph-core,dynograph-storage,dynograph-graph,dynograph-resolution,dynograph-vector",
+        "declared_in": "Cargo.toml",
+        "description": "Derived from reflow2's own Cargo.toml, not hand-written. `dynograph-storage` is taken with default-features=false and reflow2 re-enables `rocksdb` and `fulltext` by forwarding to the dependency's feature NAMES — which the provider committed to as contract on 2026-07-28, so this reliance is declared AND accepted rather than declared and refused. NOTE ON v0.12.0: verified safe to take before release, by building reflow2 against the provider's unreleased working tree with --features fulltext and running the search suite — 9 passed. Their `search_fulltext` now returns `dynograph_storage::FulltextHit` instead of leaking `dynograph_text::TextHit`; reflow2 only reads the three fields, so the change is source-compatible here.",
+        "features": "rocksdb,fulltext",
+        "name": "dynograph-foundation",
+        "provider": "https://github.com/sligara7/dynograph-foundation.git",
+        "resource_type": "design-dependency",
+        "version": "v0.11.0"
+      }
+    },
+    {
       "node_id": "snap:epoch:kpp-capture:cap:kpp-proposal",
       "node_type": "Snapshot",
       "properties": {
@@ -28262,6 +28478,18 @@
         "level": "integration",
         "method": "test",
         "name": "Delivery is derived from the thread, and goes backwards when the evidence does",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:design-dependencies-declared",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-28",
+        "level": "integration",
+        "method": "test",
+        "name": "A declaration round-trips intact; one without a version is REFUSED because the version is what a surface is taken as-of; a build taking something undeclared is reported (the reliance nobody agreed to); a pin the build has moved past is reported; a declaration the build no longer takes is reported; a feature forwarded by name but never declared is reported; agreement says so plainly; declaring nothing reads as \"nobody has said\" rather than \"depends on nothing\"; and the manifest names which reflow2 wrote it, empty or not (crates/reflow2-core/tests/depends.rs, 10 cases). PROVEN ON THE REAL DEPENDENCY: reflow2's actual v0.11.0 pin reconciles with 0 findings, and a simulated undeclared bump to v0.12.0 correctly reports both the version mismatch and the newly-taken crate.",
         "status": "passing"
       }
     },
@@ -28917,7 +29145,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:89fcbc93b509b0433011644eb9868b02ab649f5f84345a38beb249bdb1d92b7b",
+  "prev_content_hash": "sha256:716f071c1dbadd8bca9a13a0f50f29208cc1a58861ba65c5ea67164ed0ab3810",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -1,0 +1,60 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Check the declared dependencies against what the build ACTUALLY resolves, and return the reflow2.toml manifest. Catches the two opposite failures: the build taking something nothing declares (the reliance nobody agreed to, which breaks with nobody at fault) and a declaration the build no longer takes (a stale promise). Pass `observed` read fresh from the build files — Cargo.toml, docker-compose.yml, versions.env, whatever holds the pins. Declaring nothing reads as 'nobody has said', never as 'depends on nothing'.",
+  "inputSchema": {
+    "$defs": {
+      "ObservedDependencyDto": {
+        "additionalProperties": false,
+        "properties": {
+          "components": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "features": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "name": {
+            "type": "string"
+          },
+          "observed_in": {
+            "default": null,
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "version"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "observed": {
+        "description": "What the build ACTUALLY resolves, read from the build files now. Omit to\nreport the declarations without checking them.",
+        "items": {
+          "$ref": "#/$defs/ObservedDependencyDto"
+        },
+        "type": "array"
+      }
+    },
+    "type": "object"
+  },
+  "name": "reconcile_dependencies"
+}

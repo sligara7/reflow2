@@ -31,6 +31,46 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A design can declare which version of another design it depends on**
+  (`declare_dependency`, `reconcile_dependencies`, `reflow2.toml`,
+  `req:design-dependencies-declared`).
+
+  The cross-repo trial made this load-bearing rather than convenient: a seam
+  analysis compares your design against a dependency's published surface, both
+  sides move, and **without a recorded pin there is nothing to take a surface
+  *as of***. Proven rather than supposed — reflow2 pins dynograph-foundation at
+  `v0.11.0` while storyflow pins `v0.9.4`, two minors apart, and the provider
+  could not produce an as-of-tag surface at all. An offer from `main` described
+  **neither** consumer's real contract.
+
+  Two facts are kept apart on purpose: **what you mean to depend on** (the
+  declaration — durable, committed, and the thing a provider can acknowledge)
+  and **what your build actually resolves** (the observation — read fresh every
+  time, because that is what ships). Storing only the first gives a document
+  that drifts; storing only the second gives a fact nothing can contradict.
+  Comparing them is what makes *"am I relying on something I never declared?"*
+  answerable — the state the trial named as the dangerous one, because it breaks
+  with nobody at fault.
+
+  `reflow2.toml` is **generated**, and carries which reflow2 wrote it, for the
+  same reason the export carries a version stamp. Declaring nothing reads as
+  "nobody has said", never as "depends on nothing".
+
+  **Core does not parse `Cargo.toml`.** The caller supplies the observation, as
+  `reconcile_artifacts` and `coverage_report` already do — because storyflow
+  pins *one* dependency across a `Cargo.toml`, a `docker-compose.yml` and a
+  `versions.env`, and a Cargo-only core would model a third of that seam and
+  report the rest as absent.
+
+- **`Resource` gains `version`, `components`, `features` and `declared_in`** for
+  the `design-dependency` case. Declared on `Resource` rather than as a new node
+  type deliberately: the version stamp counts node and edge *types*, so a new
+  type would lock out every older reflow2 for a feature that does not need it.
+  The fit is imperfect and the imperfection is the price of not breaking every
+  existing install.
+
 ### Fixed
 
 - **An install can no longer report success while leaving the kit invisible**
