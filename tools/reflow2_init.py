@@ -324,11 +324,30 @@ def binary_is_stale(binary: Path) -> str | None:
 #
 # `extract` pulls the binary path back out of an existing entry so a customised
 # config can be recognised and left alone.
+#
+# EVERY generated config passes `--shared`, and that default is the whole point
+# of the flag existing. Without it each session spawns its own process against
+# the same directory, the store's single-writer lock admits exactly one, and
+# every other session gets the degraded surface — so a second concurrent session
+# is broken *by the configuration we ship*, not by anything the user did.
+#
+# That is not hypothetical. A StoryFlow fleet of three sessions plus a worker
+# pool ran for five days on this default and concluded the design graph was
+# single-holder by nature: they built a HOLD/RELEASE convention around it, voted
+# on giving each session its own graph, and read the design through best-effort
+# store copies. `--http` — which would have solved it — had shipped in the very
+# binary they were running. A capability you have to reconfigure your way into
+# is one most users never reach, so sharing is now what you get by default and
+# working alone is the special case (it costs nothing: one session simply starts
+# one server and is its only client).
 MCP_CONFIGS = [
     {
         "path": ".mcp.json",
         "key": "mcpServers",
-        "entry": lambda b, g: {"command": str(b), "args": ["--graph-path", str(g)]},
+        "entry": lambda b, g: {
+            "command": str(b),
+            "args": ["--graph-path", str(g), "--shared"],
+        },
         "extract": lambda e: e.get("command"),
         "extra": {},
     },
@@ -337,7 +356,7 @@ MCP_CONFIGS = [
         "key": "mcp",
         "entry": lambda b, g: {
             "type": "local",
-            "command": [str(b), "--graph-path", str(g)],
+            "command": [str(b), "--graph-path", str(g), "--shared"],
             "enabled": True,
         },
         # OpenCode takes command+args as one array; the binary is its head.
@@ -347,7 +366,10 @@ MCP_CONFIGS = [
     {
         "path": ".vscode/mcp.json",
         "key": "servers",
-        "entry": lambda b, g: {"command": str(b), "args": ["--graph-path", str(g)]},
+        "entry": lambda b, g: {
+            "command": str(b),
+            "args": ["--graph-path", str(g), "--shared"],
+        },
         "extract": lambda e: e.get("command"),
         "extra": {},
     },

@@ -56,6 +56,7 @@ Add yourself if you're new here.
 
 
 
+- **BL-12 rung: sharing becomes the DEFAULT (`--shared`)** — @api-boss (StoryFlow fleet, session `e9dcca9b`) — since 2026-07-27 — crates/reflow2-mcp/src/{shared,proxy,main}.rs, crates/reflow2-mcp/Cargo.toml, tools/reflow2_init.py, tools/test_init.py. *A session finds the server holding its graph, starts a detached one if there is none, and proxies to it — so N concurrent sessions read and write one design with no setup. Not a new capability: `--http` already did the sharing (v0.14.0). The gap was that nothing FOUND the server and the installer shipped the single-writer config, which cost a real fleet five days.*
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 

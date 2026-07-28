@@ -30,6 +30,57 @@ struct Cli {
     #[arg(long, value_name = "ADDR")]
     http: Option<String>,
 
+    /// Share this design with every other session automatically — the mode a
+    /// consumer's MCP config should use.
+    ///
+    /// `--http` already lets several sessions share one design, and it works;
+    /// what it needs is somebody to start a server, choose a port, and put that
+    /// port in every client's config. This does all three by itself: find the
+    /// server holding this graph, start a detached one if there is none, and
+    /// speak to it on this session's behalf.
+    ///
+    /// The point of the detour through stdio, rather than pointing the client
+    /// straight at a URL: a client configured with a bare URL and nothing
+    /// listening gets connection-refused, which an agent cannot tell apart from
+    /// "reflow2 was never configured here". Keeping a process on stdio means
+    /// there is always something able to say what happened
+    /// (`req:never-silently-absent`).
+    ///
+    /// **No session owns the server.** It runs in its own process group, so the
+    /// session that happened to start it can end — or be Ctrl-C'd — without
+    /// taking anybody else's design brain with it.
+    #[arg(long)]
+    shared: bool,
+
+    /// Be the shared server: hold the graph and serve every session that
+    /// attaches. Normally started for you by `--shared`, not run by hand.
+    ///
+    /// Binds loopback on an OS-assigned port and publishes where it landed to
+    /// `<graph-path>.server.json`, so sessions find it without a port having to
+    /// be agreed in advance.
+    #[arg(long = "serve-shared")]
+    serve_shared: bool,
+
+    /// Where a `--serve-shared` server writes its diagnostics. Defaults to
+    /// `<graph-path>.server.log`.
+    #[arg(long = "server-log", value_name = "FILE")]
+    server_log: Option<String>,
+
+    /// Minutes a shared server stays up with no session talking to it, before
+    /// exiting and releasing the store's write lock. 0 disables expiry.
+    ///
+    /// It expires at all because holding the lock blocks every CLI use of the
+    /// graph; it expires *slowly* because restarting costs an attached session a
+    /// retry. Sessions recover from expiry on their own — the proxy starts a
+    /// replacement and replays the request.
+    #[arg(long = "idle-timeout", value_name = "MINUTES", default_value_t = 120)]
+    idle_timeout: u64,
+
+    /// Stop the shared server holding this graph, if there is one, and exit.
+    /// The way to release the write lock for maintenance without hunting a pid.
+    #[arg(long = "stop-shared")]
+    stop_shared: bool,
+
     /// A host name or `host:port` this server may be reached at, for sessions on
     /// OTHER machines. Repeatable.
     ///
@@ -648,6 +699,120 @@ async fn main() -> anyhow::Result<()> {
         return Ok(());
     }
 
+    // Stop-the-shared-server-and-exit. Releasing the write lock for maintenance
+    // should not require hunting a pid out of `ps`.
+    if cli.stop_shared {
+        match reflow2_mcp::shared::read_rendezvous(&cli.graph_path) {
+            None => {
+                eprintln!(
+                    "reflow2: no shared server is recorded for {} — nothing to stop.",
+                    cli.graph_path
+                );
+            }
+            Some(r) => {
+                // SIGTERM, not SIGKILL: the server removes its rendezvous on the
+                // way out, and a killed one would leave a record pointing at a
+                // dead port for the next session to probe and discard.
+                #[cfg(unix)]
+                let stopped = std::process::Command::new("kill")
+                    .arg(r.pid.to_string())
+                    .status()
+                    .map(|s| s.success())
+                    .unwrap_or(false);
+                #[cfg(not(unix))]
+                let stopped = false;
+                if stopped {
+                    eprintln!(
+                        "reflow2: asked the shared server (pid {}) at {} to stop.",
+                        r.pid, r.url
+                    );
+                } else {
+                    // It may already be gone; the stale record is the thing to
+                    // clear either way, and saying which happened is the point.
+                    eprintln!(
+                        "reflow2: no live process at pid {} — clearing the stale record instead.",
+                        r.pid
+                    );
+                    reflow2_mcp::shared::remove_rendezvous(&cli.graph_path);
+                }
+            }
+        }
+        return Ok(());
+    }
+
+    // Be-the-shared-server-and-serve. Started for a session by --shared; it is
+    // an ordinary HTTP server that additionally publishes where it landed, so
+    // peers can find it without a port being agreed in advance.
+    if cli.serve_shared {
+        let (service, provenance) = ReflowService::new_reporting(&cli.graph_path).map_err(|e| {
+            // A daemon that loses the store-lock race is the NORMAL outcome when
+            // several sessions start at once — exactly one wins. Say so plainly
+            // in the log, because "failed to open" reads like a defect and this
+            // is the mechanism working.
+            let explained = explain_open_failure(&e.into(), &cli.graph_path);
+            eprintln!(
+                "reflow2: not becoming the shared server for {} — {explained:#}\nIf several \
+                 sessions started together this is expected: the store lock picks one winner and \
+                 the rest exit here. The sessions that spawned us will attach to the winner.",
+                cli.graph_path
+            );
+            explained
+        })?;
+        if let Some(note) = provenance {
+            eprintln!("reflow2: {note}");
+        }
+        serve_http(
+            move || Ok(service.share()),
+            cli.http.as_deref().unwrap_or("127.0.0.1:0"),
+            &cli.http_allow_host,
+            HttpSurface::Design,
+            Some(SharedServer {
+                graph_path: cli.graph_path.clone(),
+                idle_timeout_minutes: cli.idle_timeout,
+            }),
+        )
+        .await?;
+        return Ok(());
+    }
+
+    // Shared-session mode: attach to the server for this design (starting one if
+    // there is none) and be this session's end of it.
+    if cli.shared {
+        let log = cli.server_log.clone().map(std::path::PathBuf::from);
+        match reflow2_mcp::shared::ensure_server_async(&cli.graph_path, log.as_deref()).await {
+            Ok(url) => {
+                eprintln!(
+                    "reflow2: sharing the design at {} through {url} — other sessions on this \
+                     design are on the same server, and writes are visible to all of them \
+                     immediately.",
+                    cli.graph_path
+                );
+                return reflow2_mcp::proxy::run(&url, &cli.graph_path).await;
+            }
+            Err(e) => {
+                // The whole point of staying on stdio: this session can still be
+                // told why it has no design brain, in band, where an agent reads
+                // it (`req:never-silently-absent`).
+                let reason = format!("{e:#}");
+                eprintln!("reflow2: {reason}");
+                eprintln!(
+                    "reflow2: serving a DEGRADED surface so this session can find out why — one \
+                     tool, `reflow2_unavailable`, and the reason in the handshake instructions."
+                );
+                let degraded = DegradedService::new(reason, cli.graph_path.clone());
+                let running = degraded
+                    .serve(stdio())
+                    .await
+                    .context("failed to start the degraded MCP server")?;
+                running
+                    .waiting()
+                    .await
+                    .context("degraded MCP server error")?;
+                return Ok(());
+            }
+        }
+    }
+
     // The serve path is the MOST common place to hit the single-writer lock —
     // a second editor session against the same graph — so it needs the same
     // plain explanation --export/--import already get, not a raw RocksDB error
@@ -681,6 +846,7 @@ async fn main() -> anyhow::Result<()> {
                     &addr,
                     &cli.http_allow_host,
                     HttpSurface::Design,
+                    None,
                 )
                 .await?;
             } else {
@@ -716,6 +882,7 @@ async fn main() -> anyhow::Result<()> {
                     &addr,
                     &cli.http_allow_host,
                     HttpSurface::Degraded,
+                    None,
                 )
                 .await?;
             } else {
@@ -740,6 +907,14 @@ async fn main() -> anyhow::Result<()> {
 enum HttpSurface {
     Design,
     Degraded,
+}
+
+/// The extra duties of a server that sessions are meant to FIND: publish where
+/// it landed, and do not hold the store's write lock forever after everyone has
+/// gone home.
+struct SharedServer {
+    graph_path: String,
+    idle_timeout_minutes: u64,
 }
 
 /// Serve one design to many client sessions over HTTP.
@@ -767,6 +942,7 @@ async fn serve_http<S>(
     addr: &str,
     allow_hosts: &[String],
     surface: HttpSurface,
+    shared: Option<SharedServer>,
 ) -> anyhow::Result<()>
 where
     S: rmcp::Service<rmcp::RoleServer> + Send + 'static,
@@ -808,6 +984,68 @@ where
 
     let http = StreamableHttpService::new(factory, LocalSessionManager::default().into(), config);
 
+    // Publish AFTER the bind and the store open, never before: a rendezvous that
+    // exists must mean "a server got all the way up", because that is the only
+    // claim a waiting session can act on. Publishing on intent would send peers
+    // at a port that may never answer.
+    let activity = std::sync::Arc::new(reflow2_mcp::shared::Activity::new());
+    if let Some(cfg) = &shared {
+        reflow2_mcp::shared::publish_rendezvous(
+            &cfg.graph_path,
+            &reflow2_mcp::shared::Rendezvous {
+                url: format!("http://{bound}/"),
+                pid: std::process::id(),
+                graph_path: cfg.graph_path.clone(),
+                version: env!("CARGO_PKG_VERSION").to_string(),
+            },
+        )?;
+        eprintln!(
+            "reflow2: shared server for {} is up at http://{bound}/ (pid {}). Sessions find it \
+             through {}.",
+            cfg.graph_path,
+            std::process::id(),
+            reflow2_mcp::shared::rendezvous_path(&cfg.graph_path).display()
+        );
+
+        // Clean up on the way out. Best-effort by nature — SIGKILL cannot run
+        // this — which is why a stale record is designed to be survivable: a
+        // session probes before trusting one.
+        let graph_path = cfg.graph_path.clone();
+        tokio::spawn(async move {
+            if let Ok(mut term) =
+                tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())
+            {
+                term.recv().await;
+                reflow2_mcp::shared::remove_rendezvous(&graph_path);
+                eprintln!("reflow2: shared server stopping on SIGTERM; rendezvous removed.");
+                std::process::exit(0);
+            }
+        });
+
+        // Expire when nobody is using it, so the store's write lock is not held
+        // against the CLI forever. Sessions recover from this on their own.
+        if cfg.idle_timeout_minutes > 0 {
+            let graph_path = cfg.graph_path.clone();
+            let limit = std::time::Duration::from_secs(cfg.idle_timeout_minutes * 60);
+            let activity = std::sync::Arc::clone(&activity);
+            tokio::spawn(async move {
+                loop {
+                    tokio::time::sleep(std::time::Duration::from_secs(60)).await;
+                    if activity.idle_for() >= limit {
+                        reflow2_mcp::shared::remove_rendezvous(&graph_path);
+                        eprintln!(
+                            "reflow2: shared server for {graph_path} idle for {} minutes — \
+                             exiting and releasing the store's write lock. A session that needs it \
+                             again will start a replacement automatically.",
+                            limit.as_secs() / 60
+                        );
+                        std::process::exit(0);
+                    }
+                }
+            });
+        }
+    }
+
     match surface {
         HttpSurface::Design => eprintln!(
             "reflow2: serving over HTTP at http://{bound}/ — several sessions may share this \
@@ -829,6 +1067,7 @@ where
             .accept()
             .await
             .context("failed to accept an HTTP connection")?;
+        activity.touch();
         let io = hyper_util::rt::TokioIo::new(stream);
         let svc = hyper_util::service::TowerToHyperService::new(http.clone());
         // One task per connection: a slow or stuck client must never hold up
