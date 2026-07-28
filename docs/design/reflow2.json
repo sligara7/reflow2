@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:53036dfeb660876a5ed8f5ddf10e8f2b7fb57f502465b1841e13b407304a6ccc",
+  "content_hash": "sha256:3e43d6f376c8bcfc39cf428b7146b48cad74990e80cd7ed18a4af072888ea30f",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -6389,6 +6389,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "dec:one-retire-edge"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:adopt-existing"
     },
     {
@@ -6420,6 +6426,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:defaults-do-not-assert"
     },
     {
       "edge_type": "CONTAINS",
@@ -26783,6 +26795,16 @@
       }
     },
     {
+      "node_id": "dec:one-retire-edge",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNDECIDED, and it is Anthony's call. The schema declares BOTH `SUPERSEDES` and `OBSOLETES` for the same relationship — one node retiring another on the record — and NEITHER is read by any computation. The choice is which one is the real vocabulary, and then making it mean something. Option A: keep `OBSOLETES` (the one the code and the retire-from-design skill already use) and delete `SUPERSEDES` from the schema and from docs/three-axes.md. Option B: keep `SUPERSEDES` (the one the schema's own doc comment describes as \"target retired on the record\") and migrate the code. Option C: both survive with a stated distinction — but nobody has yet said what that distinction would be, and two words for one relationship is how a vocabulary rots.",
+        "name": "OPEN — retirement is two edge types and neither is consulted: which one survives?",
+        "rationale": "FOUND BY THE SCHEMA SWEEP, 2026-07-28, and it is the `req:supporting-is-not-conflict` shape at edge level rather than property level.\n\nWHAT WAS MEASURED. `SUPERSEDES` has ZERO references in the entire Rust source: nothing creates it, nothing reads it. It is nonetheless documented in `nodes.rs` (\"source supersedes target — target retired on the record\") and named in `docs/three-axes.md` as part of what covers the time axis. `OBSOLETES` is the one actually in use — `collapse_decision` draws it when a chosen alternative retires the losers, and the retire-from-design skill instructs users to draw it for a capability or component with a successor. But `OBSOLETES` has NO READER either: grep across the whole core crate finds the constant, the one create site, and a doc comment. No rollup, detector or report consults it.\n\nWHAT THAT MEANS TODAY, stated exactly rather than dramatised: retiring something marks it and changes nothing downstream. A retired capability still counts in every rollup, still raises its gaps, still appears in delivery arithmetic. It is currently LATENT — reflow2's own design contains zero instances of either edge, so the retire path has never been exercised on this project — but the skill is actively telling users to draw an edge that has no effect, which is worse than an edge nobody knows about.\n\nWHY IT IS NOT JUST HOUSEKEEPING. `req:intent-preserved` (\"the past is never overwritten\") is the requirement retirement serves, and the retire-from-design skill exists precisely to force the question \"was this ever true?\" — history retired on the record versus a mistake deleted. That whole discipline currently terminates in an edge nothing reads. Whichever edge survives, the deciding question is the same: what SHOULD consult it — delivery roll-up, the gap detectors, `graph_report`'s counts — and does a retired node stop counting, or count separately?\n\nDELIBERATELY LEFT `proposed`: this is a vocabulary choice with migration consequences for anyone who already drew either edge, and `dec:certainty-derived` forbids recording it as settled on the user's behalf.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:operational-spof",
       "node_type": "Decision",
       "properties": {
@@ -30036,6 +30058,21 @@
       }
     },
     {
+      "node_id": "req:defaults-do-not-assert",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A default must not assert what nobody chose",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "FOUND BY A DELIBERATE SWEEP, 2026-07-28, asking the question `req:supporting-is-not-conflict` implies but does not answer: what ELSE does the schema claim that no computation checks? The sweep was Anthony's call after the same defect shape appeared six times in three days.\n\nTHE MEASURED FINDING. Ten properties are materialised onto every node by the store's schema defaults and appear ZERO times in the entire Rust source — not in a detector, not in a report, not in a test. Measured against reflow2's own 860-node design:\n\n- `Requirement.concern` — `core` on 67 of 67\n- `Capability.tier` — `operational` on 84 of 84\n- `Component.tier` — `operational` on 53 of 53\n- `Capability.is_entry_point` / `is_exit_point` — `false` on 84 of 84\n- `Constraint.concern`, `DesignRule.enforced`, `Actor.actor_type`, `EnvironmentRule.mandatory`, `EnvironmentRule.rule_type`, `Flow.tier` — likewise defaulted, likewise unread\n\nSingle-valued across the whole design, every one. A property that never varies is not carrying information; it is asserting one.\n\nTHE WORST INSTANCE, and the reason this is intent rather than tidiness. `Requirement.concern`'s enum is core / logistics / sustainment / safety / security / cost / schedule / manufacturability / usability / environmental — and the schema's own description says logistics and sustainment are there to carry \"the ILS considerations an SME surfaces\". That is the systems-engineering angle this project exists to serve, encoded in the schema and then asserted away: every requirement claims `core`, there is NO WRITER for it on the MCP surface (only the `create_node` escape hatch — the same shape as the KPP `objective` finding), and nothing reads it. So \"which of these are the safety requirements?\" cannot be answered, and the graph does not answer \"unknown\" — it answers \"none\".\n\nTHE RULE, AND IT IS ALREADY PROVEN HERE. `Interface.medium` defaulting to `REST` was fixed on 2026-07-28 for exactly this reason, and `ver:interface-spec` states the principle in the form it should now generalise: \"UNRECORDED FIELDS READ AS `unspecified` NOT `none` — the flattering default would tell a consumer an unspecified contract is open.\" So: A DEFAULT MAY RECORD ABSENCE; IT MAY NOT RECORD A CHOICE. Where a property has a substantive default nobody selected, the default becomes `unspecified` and silence reads as silence.\n\nWHY IT IS NOT MERELY COSMETIC. `export_surface` publishes a design's boundary to another design; a mirrored surface carrying `tier: operational` and `concern: core` ships assertions nobody made across a seam, which is the same failure `req:publishable-promise` was raised for one layer down. And the moment any future computation DOES read one of these — the SME view `concern` was designed for — it reads a value the schema invented.\n\nTHE COUNTERWEIGHT, and it is what stops this being a blanket rewrite: a default that records a genuine absence is CORRECT and must stay. `provenance: authored` and `status: proposed` are real defaults meaning a real thing. The test is whether the default names a CHOICE among alternatives (tier, concern, rule_type) or the ABSENCE of one — only the first kind lies. Changing a default is also not retroactive: nodes written before the change keep the value they were given, so a sweep of existing designs is a separate, deliberate act.\n\nSIBLING FINDINGS FROM THE SAME SWEEP, recorded here rather than lost. (1) Fifteen properties are WRITTEN and never consulted — the sharpest is `DriftEvent.severity`, written from `kind.severity()` at three call sites while ranking independently re-derives it via `severity_rank(kind)`, so the stored copy can silently diverge from the mapping that actually governs; also `DesignEpoch.sequence`, which COORD entries quote as meaningful (\"epoch:v0180 at sequence 210\") and nothing orders by. (2) `req:supporting-is-not-conflict` is an instance of ITSELF: it carries `concern: core`, one of the properties nothing reads.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:design-anything",
       "node_type": "Requirement",
       "properties": {
@@ -31860,7 +31897,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1845bb3b601b835356908572c1694df549c20da7622a165d86ec929e480d87ef",
+  "prev_content_hash": "sha256:53036dfeb660876a5ed8f5ddf10e8f2b7fb57f502465b1841e13b407304a6ccc",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
