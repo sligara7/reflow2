@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0a8046eca9ff85b765fe9e39997ae3398f42a2656d2ae63347796813d398bc52",
+  "content_hash": "sha256:55617c5c8d80c866d9f6320e2e140689e77873348857f55574654e41a07da106",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -25610,6 +25610,16 @@
       }
     },
     {
+      "node_id": "decision:ack:1c044be82819a511",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:1c044be82819a511.",
+        "name": "Reviewed: gap:1c044be82819a511",
+        "rationale": "Standing acknowledgement, re-stated because the rollup's id hashes the affected set and moves whenever the capability set does — 61, 62, 63, 64, now 65. Validation for this project is the trials programme: reflow2 used on real designs. In two days that meant an adopt pass over dynograph-foundation, a live two-session seam exercise, a consumer-side compatibility build against an unreleased provider tree, and a release cut — which between them found seven defects nobody reviewed their way to, five of them in reflow2 itself. Recording 65 near-identical validation nodes would turn the number green without anyone having checked anything, which is the dishonesty `dec:passing-is-verified` exists to prevent.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:1f62e721f3cfa3da",
       "node_type": "Decision",
       "properties": {
@@ -30205,7 +30215,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:73cc2b8b2d89b6817f76620563af17ce7c0e7b7dca52c4eb00f6d83c40523d14",
+  "prev_content_hash": "sha256:0a8046eca9ff85b765fe9e39997ae3398f42a2656d2ae63347796813d398bc52",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
