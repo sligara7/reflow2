@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2dbd7247402d4ff61ab9d7f5cf3a685fa7f222baaff1916854cf70aea23bea1f",
+  "content_hash": "sha256:ddeff20ec46472bbc1fb936e422ed01d7f78e5f09bed57475514505a812fa975",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1788,6 +1788,15 @@
         "role": "author"
       },
       "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cap:changelog-view",
+      "properties": {
+        "acted_at": "2026-07-28",
+        "role": "author"
+      },
+      "to_id": "ctr:anthony"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -6233,6 +6242,18 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:changelog-view"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:delta-reconcile"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:detect"
     },
     {
@@ -6431,6 +6452,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:epochs-can-be-planned"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:explains-itself"
     },
     {
@@ -6444,6 +6471,18 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:golden-thread"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:graph-catches-up"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:graph-indexes-snapshots"
     },
     {
       "edge_type": "CONTAINS",
@@ -6510,6 +6549,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:platform"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:pr-is-a-delta"
     },
     {
       "edge_type": "CONTAINS",
@@ -20623,6 +20668,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:changelog-view",
+      "properties": {},
+      "to_id": "req:epochs-can-be-planned"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:claim-liveness",
       "properties": {},
       "to_id": "req:claims-have-owners"
@@ -23472,6 +23523,19 @@
       }
     },
     {
+      "node_id": "cap:changelog-view",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Derive a Keep a Changelog-shaped draft (keepachangelog.com, Anthony's pointer 2026-07-28) between any two Releases or Epochs, from what the graph already records: the INCLUDES delta between two Release manifests (what appeared, what left) plus the dated ChangeEvents and drift accepts between their epochs, classified into the KaC buckets — Added / Changed / Deprecated / Removed / Fixed — mapped from the vocabulary the graph already carries (new nodes and link_artifact baselines -> Added; design_updated accepts and amended statements -> Changed; retire-from-design with history -> Deprecated/Removed; design_holds accepts with change_type test_failure_fix -> Fixed). The [Unreleased] section is the standing case: everything dated after the last deployed Release — which makes 'what would this increment's changelog say?' answerable BEFORE cutting it, the capability-increment sibling of what-next. Two KaC principles carried over as constraints: changelogs are FOR HUMANS, curated — this emits a DRAFT a person edits, never a commit-log dump (KaC names raw logs an antipattern; dec:report-dont-judge is the same rule here) — and every entry says what a CONSUMER does about it, which the graph cannot know alone. Kin to cap:compare-designs (two as-designed records); this compares two moments of ONE design and renders the difference in the format industry already reads.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A changelog is a derivable view of the graph's own delta",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:claim-liveness",
       "node_type": "Capability",
       "properties": {
@@ -23592,7 +23656,7 @@
       "node_id": "cap:delta-reconcile",
       "node_type": "Capability",
       "properties": {
-        "description": "The pull for the graph: after git pull, bring this machine's live store and the working tree back into one coherent state, orchestrating what already exists. Layer 1 syncs the record — find the base (the newest export in git history both lines share), snapshot the live store (--export-snapshot works while the long-running session's server holds the lock), then fast-forward (import_graph upsert-layering, built for layering a design onto itself) when the store never moved, or the file-pure three-way (--merge to see conflicts, decide, --merge-apply) when both moved, then import the merged document and re-export straight onto the committed file so the lineage chain links. Layer 2 reconciles the code — commits in the pull that never updated the graph: reconcile_artifacts and coverage_report over the paths git names since the base, each finding walked to a two-sided answer (set_artifact_checksum / link_artifact / retire), a mini adopt pass where intent must be recovered. REVIEW MODE (req:pr-is-a-delta): the same layer-2 reading pointed at a candidate change instead of a landed one — checkout or worktree of the PR, drifted-artifact set, propagate to the capabilities/interfaces/requirements they realize, touched published or consumed interfaces named explicitly — and strictly read-only: no accepts, no writes, a report; the write half runs only when the change lands. Precedent: the 'Live-store catch-up' ChangeEvents of 2026-07-23 did layer 1 by hand; this packages that discipline. reflow2 performs no file I/O — git evidence is swept and supplied by the agent.",
+        "description": "The pull for the graph: after git pull, bring this machine's live store and the working tree back into one coherent state, orchestrating what already exists. Layer 1 syncs the record — find the base (the newest export in git history both lines share), snapshot the live store (--export-snapshot works while the long-running session's server holds the lock), then fast-forward (import_graph upsert-layering, built for layering a design onto itself) when the store never moved, or the file-pure three-way (--merge to see conflicts, decide, --merge-apply) when both moved, then import the merged document and re-export straight onto the committed file so the lineage chain links. Layer 2 reconciles the code — commits in the pull that never updated the graph: reconcile_artifacts and coverage_report over the paths git names since the base, each finding walked to a two-sided answer (set_artifact_checksum / link_artifact / retire), a mini adopt pass where intent must be recovered. REVIEW MODE (req:pr-is-a-delta): the same layer-2 reading pointed at a candidate change instead of a landed one — checkout or worktree of the PR, drifted-artifact set, propagate to the capabilities/interfaces/requirements they realize, touched published or consumed interfaces named explicitly — and strictly read-only: no accepts, no writes, a report; the write half runs only when the change lands. Precedent: the 'Live-store catch-up' ChangeEvents of 2026-07-23 did layer 1 by hand; this packages that discipline. reflow2 performs no file I/O — git evidence is swept and supplied by the agent. CHANGELOG, both directions (Anthony, 2026-07-28, via keepachangelog.com): as INPUT, layer 2's intent recovery harvests the project's own changelog for the pulled range first — a changelog is the delta a human already curated, better evidence of intent than any diff — and as OUTPUT, the delta report is changelog-shaped (the KaC buckets via cap:changelog-view), so what the reconcile found reads like a document industry already knows how to read.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Delta reconcile: present what changed since the graph last matched",
@@ -31766,7 +31830,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5650b5562bf400cd167d565e3736fb79abb5603c2346a7ba4bc676cd95a30839",
+  "prev_content_hash": "sha256:2dbd7247402d4ff61ab9d7f5cf3a685fa7f222baaff1916854cf70aea23bea1f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
