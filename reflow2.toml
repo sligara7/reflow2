@@ -4,13 +4,13 @@
 # the build is what ships.
 
 [reflow2]
-version = "0.16.0"
+version = "0.17.0"
 graph_id = "reflow2"
 
 [dependencies.dynograph-foundation]
 source = "https://github.com/sligara7/dynograph-foundation.git"
-version = "v0.11.0"
+version = "v0.12.0"
 components = ["dynograph-core", "dynograph-storage", "dynograph-graph", "dynograph-resolution", "dynograph-vector"]
 features = ["rocksdb", "fulltext"]
 declared_in = "Cargo.toml"
-note = "Derived from reflow2's own Cargo.toml, not hand-written. `dynograph-storage` is taken with default-features=false and reflow2 re-enables `rocksdb` and `fulltext` by forwarding to the dependency's feature NAMES — which the provider committed to as contract on 2026-07-28, so this reliance is declared AND accepted rather than declared and refused. NOTE ON v0.12.0: verified safe to take before release, by building reflow2 against the provider's unreleased working tree with --features fulltext and running the search suite — 9 passed. Their `search_fulltext` now returns `dynograph_storage::FulltextHit` instead of leaking `dynograph_text::TextHit`; reflow2 only reads the three fields, so the change is source-compatible here."
+note = "Derived from reflow2's own Cargo.toml, not hand-written. Bumped v0.11.0 -> v0.12.0 on 2026-07-28 for a stated reason rather than as housekeeping (AGENTS.md forbids the latter): v0.12.0 closes a type leak reflow2 was structurally exposed to — `search_fulltext` returned `dynograph_text::TextHit`, from a crate reflow2 never names and reaches only through an optional feature — and it makes the `rocksdb` and `fulltext` feature NAMES a committed contract upstream, which is exactly the reliance this declaration records. Verified before the tag existed by building this consumer against the provider's unreleased tree. MIGRATION CHECKED, not assumed: `keys.rs` and `backend.rs` are untouched between the tags, so a graph written by v0.11.0 reads identically."

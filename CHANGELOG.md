@@ -31,6 +31,29 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.17.0] — 2026-07-28
+
+**Upgrading:** [docs/upgrading-to-v0.17.0.md](docs/upgrading-to-v0.17.0.md). **Nobody is locked
+out** — this release adds no node or edge types, so the version stamp does not move and an older
+reflow2 still opens a design written by it. The one cost is a slow first build: the
+dynograph-foundation pin moved v0.11.0 → v0.12.0, forcing a `librocksdb-sys` rebuild.
+
+**The release that made two repos check each other.** Almost everything here was found by running
+reflow2 against a second real project rather than by reviewing it — a provider published its
+surface, this consumer composed against it, and each side found defects the other could not see.
+Three of the fixes are in reflow2 itself.
+
+### Changed
+
+- **The dynograph-foundation pin moves to v0.12.0**, and not as housekeeping. It closes a type leak
+  this project was structurally exposed to — `search_fulltext` returned `dynograph_text::TextHit`,
+  a type from a crate reflow2 never names and reaches only through an optional feature — and it
+  makes the `rocksdb` and `fulltext` feature names, which reflow2 forwards to *by name*, a
+  committed contract upstream rather than an internal this build silently rested on. Verified safe
+  before the tag existed, by building and testing this consumer against the provider's unreleased
+  tree. **No storage format changed**: `keys.rs` and `backend.rs` are untouched between the tags,
+  so a graph written by the previous foundation reads identically.
+
 ### Added
 
 - **A design can declare which version of another design it depends on**

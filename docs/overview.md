@@ -97,6 +97,9 @@ Three records, three questions — kept separate on purpose:
   to a collaborator as-is.
 
 ### 3½ · Upgrade notes — *read before updating a consumer project*
+- [upgrading-to-v0.17.0.md](upgrading-to-v0.17.0.md) — **nobody is locked out**; no type was added, so
+  the stamp does not move. One slow first build: the foundation pin moved, and the note says what it
+  bought and why a graph written by the old one still reads.
 - [upgrading-to-v0.16.0.md](upgrading-to-v0.16.0.md) — **upgrade everywhere, together**: a new edge
   type moves the version stamp, so an older reflow2 is locked out of a design written by this one.
 - [upgrading-to-v0.15.0.md](upgrading-to-v0.15.0.md) — two more ways to say how you checked

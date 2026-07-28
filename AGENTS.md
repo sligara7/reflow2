@@ -245,7 +245,7 @@ not the centre.
 
 - The graph store is **[dynograph-foundation](https://github.com/sligara7/dynograph-foundation)**,
   consumed as library crates **by git tag** (see the workspace `Cargo.toml` for the pinned tag;
-  `v0.11.0` at time of writing): `dynograph-core` (schema + `Value`), `dynograph-storage`
+  `v0.12.0` at time of writing): `dynograph-core` (schema + `Value`), `dynograph-storage`
   (`default-features = false` so RocksDB is opt-in; the core runs on the in-memory backend),
   `dynograph-graph` (pure graph-theory algorithms). To iterate against an unreleased foundation
   locally, uncomment the `[patch]` block in the root `Cargo.toml` — do not commit it uncommented.
@@ -339,7 +339,7 @@ extraction pipeline with the calling agent as the model, so INGEST is finally re
 session rather than only from a test. See the coverage
 matrix for the exact deferral list. Everything else in the loop — the MCP surface, GENESIS,
 INGEST's core, the consumer kit, search, the reconcile family — is built and shipping as of
-v0.16.0.
+v0.17.0.
 
 ---
 
@@ -378,7 +378,7 @@ Three complementary lenses on the graph: **phases** (P0–P5 lifecycle), **three
 
 ## Current state (important)
 
-**Shipping at v0.16.0.** The deterministic core, the agent-native MCP surface, and the consumer
+**Shipping at v0.17.0.** The deterministic core, the agent-native MCP surface, and the consumer
 kit are all built, released as prebuilt binaries, and cold-start-verified. As of v0.12.0 the kit
 is *served* rather than installed: a project holds a pointer file and the MCP config, and both the
 skills and the working instructions come from the binary (`req:thin-install`). The interaction

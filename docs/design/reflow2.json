@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0b29dee4e898b1b33f0565f60bdfa54c64d30221487fdc59fe9f059d31887022",
+  "content_hash": "sha256:73cc2b8b2d89b6817f76620563af17ce7c0e7b7dca52c4eb00f6d83c40523d14",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1049,6 +1049,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:foundation-v0120",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:github-mcp-imports",
       "properties": {},
       "to_id": "epoch:kpp-capture"
@@ -1656,6 +1662,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:linking-repos:cap:shared-sessions",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:linking-repos:dep:dynograph-foundation",
       "properties": {},
       "to_id": "epoch:linking-repos"
     },
@@ -4487,6 +4499,24 @@
         "action": "modified"
       },
       "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-v0120",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-v0120",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dep:dynograph-foundation"
     },
     {
       "edge_type": "CHANGED",
@@ -11487,6 +11517,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dep:dynograph-foundation",
+      "properties": {},
+      "to_id": "snap:epoch:linking-repos:dep:dynograph-foundation"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "req:key-interfaces",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:req:key-interfaces"
@@ -15492,6 +15528,858 @@
       "from_id": "rel:v0160",
       "properties": {},
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:compose"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:compose-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:contradiction-alignment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:coverage-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:evidence-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:ingest-handshake-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:interface-spec-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:kit-pointer"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:merge-driver-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:publishable-promise-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:scope-corpus-ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:scope-read-while-held"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:storyflow-resolution-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:test-shared-sessions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:test-stale-seat"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:upgrading-v0120"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:upgrading-v0130"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:upgrading-v0150"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:upgrading-v0160"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "sys:agent-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "sys:documentation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "sys:human-channel"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "sys:intake"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "sys:store"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "sys:time-history"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "sys:vocabulary"
     },
     {
       "edge_type": "INCLUDES",
@@ -20400,7 +21288,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:873c4b37f3eafb2ee261a8168326ebcadb6adf86ed0b22c3878fa78eb67556b0",
+        "checksum": "sha256:edc54aa9550a49fab479cbbeb7639908aa4a037a9bd2a7bd43724627338934ba",
         "location": "reflow2.toml",
         "name": "reflow2.toml",
         "status": "realized"
@@ -22926,6 +23814,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Anthony collapses the nested-graphs decision: a graph per ownership boundary, levels inside each"
+      }
+    },
+    {
+      "node_id": "chg:foundation-v0120",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The dynograph-foundation pin moves v0.11.0 to v0.12.0, closing a type leak reflow2 was structurally exposed to and making the forwarded feature names a committed contract upstream"
       }
     },
     {
@@ -27267,6 +28163,17 @@
       }
     },
     {
+      "node_id": "rel:v0170",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.17.0",
+        "notes": "Cut 2026-07-28. A MINOR bump that locks NOBODY out: no node or edge type was added, so the stamp holds at 28/56 and an older reflow2 still opens a design written by this one — the opposite of v0.16.0, and the upgrade note leads with it. The one real cost is a slow first build, because the dynograph-foundation pin moved v0.11.0 → v0.12.0.\n\nTHE RELEASE THAT MADE TWO REPOS CHECK EACH OTHER. Almost everything here was found by running reflow2 against a second real project rather than by reviewing it: dynograph-foundation published its surface, reflow2 composed against it, and each side found defects the other could not see. Three of the fixes are in reflow2 itself, and every one was invisible to inspection and obvious the moment something real ran through it.\n\n(1) A PUBLISHED SURFACE CAN CARRY A PROMISE (req:publishable-promise). export_surface withheld every Requirement as internal, behavioural commitments LIVE in Requirements, so the document offered as 'the published surface' carried structure and no promises. Found when a real provider could not tell a real consumer the one thing it most needed — that a missing store fails loud rather than silently falling back to memory. The promise survived only as a comment in the CONSUMER's build file, on the wrong side of the seam. Requirement.designation fixes it by reusing the mechanism whose semantics were already settled, so every existing check applies unchanged rather than through a second, unchecked channel.\n\n(2) DECLARE WHICH VERSION OF ANOTHER DESIGN YOU DEPEND ON (req:design-dependencies-declared). The trial made it load-bearing: without a recorded pin there is nothing to take a surface AS OF, and the two real consumers sit two minors apart, so an offer from main described neither. Two facts kept apart — what you MEAN to depend on, and what the build ACTUALLY resolves — because storing only one gives either a document that drifts or a fact nothing can contradict. Proven on the real dependency and on a simulated undeclared bump.\n\n(3) TWO DESIGNS ANALYSED TOGETHER without either being written to (compose_and_analyse), and AN INTERFACE THAT PUBLISHES ITS WHOLE CONTRACT (set_interface_spec). The composition's most useful result was a ZERO: with the seam hand-drawn, the ordinary detectors found nothing, which proved they check CONNECTIVITY and not COMPATIBILITY — no ordinary detector compares two nodes' properties across a pair. That measurement is what req:seam-incompatibility now rests on.\n\n(4) THE INSTALL REACHES THE FILE THE AGENT READS. Installing into a repo with no instruction file wrote AGENTS.md, reported success, and stayed invisible to a harness that reads CLAUDE.md first — the same defect class the installer already documented from storyflow, in the opposite direction. The rule is now REACH WHAT READS. The eight slash commands ship with the kit as the one narrow exception to serving everything (dec:commands-are-the-exception), with the single way a command can rot — naming a skill that no longer exists — closed by a lint.\n\n(5) CORROBORATION READS AS CORROBORATION. Recording that one decision QUALIFIES another turned the graph red, because the contradiction detector read the edge type and never alignment. Fixed with both counterweights tested: an opposing edge and an edge that says nothing are still contradictions, so no design written before this release changes meaning.\n\nTHE FOUNDATION BUMP WAS NOT HOUSEKEEPING, which AGENTS.md forbids. v0.12.0 closes a type leak reflow2 was structurally exposed to — search_fulltext returned dynograph_text::TextHit, from a crate reflow2 never names and reaches only through an optional feature — and makes the rocksdb and fulltext feature NAMES a committed contract upstream. Verified safe BEFORE the tag existed by building this consumer against the provider's unreleased tree. Migration checked rather than assumed: keys.rs and backend.rs are untouched between the tags, so a graph written by v0.11.0 reads identically.",
+        "status": "built",
+        "unit_type": "binary",
+        "version": "0.17.0"
+      }
+    },
+    {
       "node_id": "rel:v040",
       "node_type": "Release",
       "properties": {
@@ -28182,12 +29089,12 @@
       "properties": {
         "components": "dynograph-core,dynograph-storage,dynograph-graph,dynograph-resolution,dynograph-vector",
         "declared_in": "Cargo.toml",
-        "description": "Derived from reflow2's own Cargo.toml, not hand-written. `dynograph-storage` is taken with default-features=false and reflow2 re-enables `rocksdb` and `fulltext` by forwarding to the dependency's feature NAMES — which the provider committed to as contract on 2026-07-28, so this reliance is declared AND accepted rather than declared and refused. NOTE ON v0.12.0: verified safe to take before release, by building reflow2 against the provider's unreleased working tree with --features fulltext and running the search suite — 9 passed. Their `search_fulltext` now returns `dynograph_storage::FulltextHit` instead of leaking `dynograph_text::TextHit`; reflow2 only reads the three fields, so the change is source-compatible here.",
+        "description": "Derived from reflow2's own Cargo.toml, not hand-written. Bumped v0.11.0 -> v0.12.0 on 2026-07-28 for a stated reason rather than as housekeeping (AGENTS.md forbids the latter): v0.12.0 closes a type leak reflow2 was structurally exposed to — `search_fulltext` returned `dynograph_text::TextHit`, from a crate reflow2 never names and reaches only through an optional feature — and it makes the `rocksdb` and `fulltext` feature NAMES a committed contract upstream, which is exactly the reliance this declaration records. Verified before the tag existed by building this consumer against the provider's unreleased tree. MIGRATION CHECKED, not assumed: `keys.rs` and `backend.rs` are untouched between the tags, so a graph written by v0.11.0 reads identically.",
         "features": "rocksdb,fulltext",
         "name": "dynograph-foundation",
         "provider": "https://github.com/sligara7/dynograph-foundation.git",
         "resource_type": "design-dependency",
-        "version": "v0.11.0"
+        "version": "v0.12.0"
       }
     },
     {
@@ -28268,6 +29175,16 @@
         "state": "{\"description\":\"--http <addr> serves the design over streamable HTTP so many client sessions share one process. The store is single-writer PER PROCESS, so this satisfies the constraint rather than working around it: one server means exactly one writer. rmcp builds a service per session through a factory, and ReflowService::share decides the split — the graph and the write generation are shared because they are properties of the design; the seat and the read-hint memory are minted fresh because they are properties of whoever just connected. The graph moved from a Mutex to an RwLock so concurrent reads do not queue behind each other, and the compiler audited the read/write split in the process: all 32 read sites genuinely need only &DesignGraph. No authentication — the flag's help and the startup line both say to bind loopback or a private network.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Several sessions work one design at once, through one server\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
         "target_id": "cap:shared-sessions",
         "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:linking-repos:dep:dynograph-foundation",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REQUIRES_RESOURCE\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{\"criticality\":\"required\"}}]",
+        "state": "{\"components\":\"dynograph-core,dynograph-storage,dynograph-graph,dynograph-resolution,dynograph-vector\",\"declared_in\":\"Cargo.toml\",\"description\":\"Derived from reflow2's own Cargo.toml, not hand-written. Bumped v0.11.0 -> v0.12.0 on 2026-07-28 for a stated reason rather than as housekeeping (AGENTS.md forbids the latter): v0.12.0 closes a type leak reflow2 was structurally exposed to — `search_fulltext` returned `dynograph_text::TextHit`, from a crate reflow2 never names and reaches only through an optional feature — and it makes the `rocksdb` and `fulltext` feature NAMES a committed contract upstream, which is exactly the reliance this declaration records. Verified before the tag existed by building this consumer against the provider's unreleased tree. MIGRATION CHECKED, not assumed: `keys.rs` and `backend.rs` are untouched between the tags, so a graph written by v0.11.0 reads identically.\",\"features\":\"rocksdb,fulltext\",\"name\":\"dynograph-foundation\",\"provider\":\"https://github.com/sligara7/dynograph-foundation.git\",\"resource_type\":\"design-dependency\",\"version\":\"v0.12.0\"}",
+        "target_id": "dep:dynograph-foundation",
+        "target_type": "Resource"
       }
     },
     {
@@ -29145,7 +30062,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:716f071c1dbadd8bca9a13a0f50f29208cc1a58861ba65c5ea67164ed0ab3810",
+  "prev_content_hash": "sha256:0b29dee4e898b1b33f0565f60bdfa54c64d30221487fdc59fe9f059d31887022",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -29237,7 +30154,7 @@
       "Verification"
     ],
     "node_types": 28,
-    "reflow2_version": "0.16.0",
+    "reflow2_version": "0.17.0",
     "schema_version": 1
   }
 }

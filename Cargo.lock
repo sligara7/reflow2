@@ -484,8 +484,8 @@ checksum = "d0881ea181b1df73ff77ffaaf9c7544ecc11e82fba9b5f27b262a3c73a332555"
 
 [[package]]
 name = "dynograph-core"
-version = "0.11.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.11.0#1fbd81c6e7a35b1b0fa128c7dc8abaf4e49d1213"
+version = "0.12.0"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.12.0#b5a9f7416eb00fa99b36923cbbe3045fb7f22012"
 dependencies = [
  "serde",
  "serde_json",
@@ -496,13 +496,13 @@ dependencies = [
 
 [[package]]
 name = "dynograph-graph"
-version = "0.11.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.11.0#1fbd81c6e7a35b1b0fa128c7dc8abaf4e49d1213"
+version = "0.12.0"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.12.0#b5a9f7416eb00fa99b36923cbbe3045fb7f22012"
 
 [[package]]
 name = "dynograph-resolution"
-version = "0.11.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.11.0#1fbd81c6e7a35b1b0fa128c7dc8abaf4e49d1213"
+version = "0.12.0"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.12.0#b5a9f7416eb00fa99b36923cbbe3045fb7f22012"
 dependencies = [
  "dynograph-core",
  "dynograph-vector",
@@ -510,8 +510,8 @@ dependencies = [
 
 [[package]]
 name = "dynograph-storage"
-version = "0.11.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.11.0#1fbd81c6e7a35b1b0fa128c7dc8abaf4e49d1213"
+version = "0.12.0"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.12.0#b5a9f7416eb00fa99b36923cbbe3045fb7f22012"
 dependencies = [
  "dynograph-core",
  "dynograph-text",
@@ -524,8 +524,8 @@ dependencies = [
 
 [[package]]
 name = "dynograph-text"
-version = "0.11.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.11.0#1fbd81c6e7a35b1b0fa128c7dc8abaf4e49d1213"
+version = "0.12.0"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.12.0#b5a9f7416eb00fa99b36923cbbe3045fb7f22012"
 dependencies = [
  "tantivy",
  "thiserror",
@@ -533,8 +533,8 @@ dependencies = [
 
 [[package]]
 name = "dynograph-vector"
-version = "0.11.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.11.0#1fbd81c6e7a35b1b0fa128c7dc8abaf4e49d1213"
+version = "0.12.0"
+source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.12.0#b5a9f7416eb00fa99b36923cbbe3045fb7f22012"
 dependencies = [
  "rand",
 ]
@@ -1286,7 +1286,7 @@ dependencies = [
 
 [[package]]
 name = "reflow2-core"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "dynograph-core",
  "dynograph-graph",
@@ -1300,7 +1300,7 @@ dependencies = [
 
 [[package]]
 name = "reflow2-mcp"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "anyhow",
  "bytes",
