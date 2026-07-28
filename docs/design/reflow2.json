@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:959b794a7839745926288154bb57e46c801ed498512c2c80d18ab9fb15cbae56",
+  "content_hash": "sha256:bf633902c265683b7dc32f9b7c2c885fbff4cde59b4b0896ebc42a5e64de4add",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5675,6 +5675,30 @@
         "action": "added"
       },
       "to_id": "req:what-next"
+    },
+    {
+      "edge_type": "CONSTRAINS",
+      "from_id": "con:pairing-stops-at-the-boundary",
+      "properties": {
+        "basis": "evidence"
+      },
+      "to_id": "cap:publish-surface"
+    },
+    {
+      "edge_type": "CONSTRAINS",
+      "from_id": "con:pairing-stops-at-the-boundary",
+      "properties": {
+        "basis": "evidence"
+      },
+      "to_id": "req:complementary-pairing"
+    },
+    {
+      "edge_type": "CONSTRAINS",
+      "from_id": "con:pairing-stops-at-the-boundary",
+      "properties": {
+        "basis": "evidence"
+      },
+      "to_id": "req:seam-incompatibility"
     },
     {
       "edge_type": "CONSUMES",
@@ -23457,6 +23481,18 @@
       }
     },
     {
+      "node_id": "con:pairing-stops-at-the-boundary",
+      "node_type": "Constraint",
+      "properties": {
+        "category": "technical",
+        "concern": "core",
+        "direction": "maximum",
+        "name": "Pairing sees boundaries, not the types that cross them",
+        "priority": "medium",
+        "statement": "A HARD LIMIT ON WHAT `req:complementary-pairing` CAN EVER CATCH, found by the dynograph-foundation trial on 2026-07-28 and not by review.\n\nTHE CASE, verified from both sides. dynograph-foundation's `ifc:storage-api` exposes `search_fulltext`, whose signature returns `Vec<dynograph_text::TextHit>`. reflow2 consumes that call and reads all three of the struct's public fields — `node_id`, `node_type`, `score` (`crates/reflow2-core/src/search.rs:67-79`). So reflow2 structurally depends on a type belonging to `dynograph-text`, a crate it NEVER NAMES as a dependency, through a boundary belonging to `dynograph-storage`. Two separately published boundaries are entangled by a type that crosses one of them, and the offer document says they are separate.\n\nWHY PAIRING CANNOT SEE IT. Every axis in the pairing key is a property OF A BOUNDARY: `medium`, `transport_security`, `auth`, the name, the payload format. This seam agrees on all of them. Provider publishes a `library` boundary, consumer requires a `library` boundary, both `unspecified` on transport and auth because a linked crate has neither — the match is clean and correct at every level the rule inspects. The break lives one layer down, in a struct's field list, which no boundary property mentions. A change to `TextHit` breaks a consumer that no document either side holds would predict.\n\nTHE GENERAL FORM: a type that crosses a boundary is part of the contract, and the offer models boundaries, not types. `payload_format` says `json` and not which fields; `payload_schema` can point at a schema for a wire format, but nothing does the equivalent for a linked-library signature, where the \"wire\" is the type system itself.\n\nCONSEQUENCE FOR THE PAIRING RULE — this is what makes it a constraint rather than a to-do. Pairing must NOT report a clean match as evidence of compatibility. It can honestly say \"these two boundaries can be connected\"; it cannot say \"and nothing crossing them will break you\". Those are different claims, and conflating them rebuilds the false green the same trial already produced once. The pairing report should say what it did not examine, the way `coverage_report` says what it never heard of.\n\nWHAT WOULD ACTUALLY CLOSE IT, noted so the constraint is not mistaken for permanent: comparing the TYPES that cross a boundary, not just the boundary. For a library seam that is signature and struct-shape comparison — real work, language-specific, and nothing reflow2 does today is close to it. For a wire seam `payload_schema` already points at the answer if both sides fill it in. Until one of those exists, this limit stands and must be STATED rather than discovered.\n\nTWO SMALLER LESSONS FROM THE SAME FINDING. First, the counterparty found it, not the owner of either half — reflow2 could not see that its own `cmp:search` edge pointed at the wrong boundary, and dynograph could not see that its type had escaped. Second, both sides had over-attributed a DIFFERENT risk (`TextError::ReadOnly`) in opposite directions for a day, because both were reasoning about the type and neither had read the call: `search_fulltext` flattens `TextError` to a string, so it never crosses at all. The type that crosses is the one that matters, and only the signature says which that is."
+      }
+    },
+    {
       "node_id": "who:ajs",
       "node_type": "Contributor",
       "properties": {
@@ -28513,7 +28549,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:57b448d3f661ed1cc652498d93c69b3c3cb4963b8757d71ab7b1725e648aae59",
+  "prev_content_hash": "sha256:959b794a7839745926288154bb57e46c801ed498512c2c80d18ab9fb15cbae56",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
