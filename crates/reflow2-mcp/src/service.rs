@@ -1172,6 +1172,25 @@ pub struct InterfaceDesignationReq {
 
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct SeamReportReq {
+    /// The other design, as a published-surface or full export document.
+    pub design: serde_json::Value,
+    /// Which boundary of ours answers which of theirs. Supplied rather than
+    /// computed, because the subscribe side is not declarable yet.
+    pub pairs: Vec<SeamPairDto>,
+}
+
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct SeamPairDto {
+    /// An Interface id in THIS design.
+    pub ours: String,
+    /// An Interface id in the OTHER design, un-namespaced.
+    pub theirs: String,
+}
+
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct DeclareDependencyReq {
     /// Stable id, e.g. `dep:dynograph-foundation`.
     pub id: String,
@@ -2984,6 +3003,33 @@ impl ReflowService {
             g.set_interface_designation(&req.interface_id, &req.designation)
                 .map_err(dyno_err)?,
         ))
+    }
+
+    #[tool(
+        description = "Compare paired boundaries across a seam and say where two designs \
+                       DISAGREE — the check the ordinary detectors cannot do, because they \
+                       reason about structure and a contract mismatch is a comparison of \
+                       PROPERTIES ACROSS A PAIR. Compares medium, paradigm, payload format, \
+                       auth, transport security, operations, error model and payload schema. \
+                       THREE RULES WORTH KNOWING: `unspecified` on either side reports as \
+                       UNSTATED, never as agreement, so 0 incompatibilities can never be read \
+                       as compatible; free-text axes report as DIFFERS for a person to read, \
+                       never as incompatible, because a machine cannot tell a real mismatch \
+                       from different wording; and the report always names what it did NOT \
+                       examine — the types that CROSS these boundaries are part of the contract \
+                       and are invisible to it.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn seam_report(
+        &self,
+        Parameters(req): Parameters<SeamReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let other: reflow2_core::GraphExport = serde_json::from_value(req.design)
+            .map_err(|e| McpError::invalid_params(format!("not an export document: {e}"), None))?;
+        let pairs: Vec<(String, String)> =
+            req.pairs.into_iter().map(|p| (p.ours, p.theirs)).collect();
+        let g = self.graph.read().await;
+        ok_json(g.seam_report(&other, &pairs).map_err(dyno_err)?)
     }
 
     #[tool(

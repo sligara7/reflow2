@@ -1,0 +1,48 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Compare paired boundaries across a seam and say where two designs DISAGREE — the check the ordinary detectors cannot do, because they reason about structure and a contract mismatch is a comparison of PROPERTIES ACROSS A PAIR. Compares medium, paradigm, payload format, auth, transport security, operations, error model and payload schema. THREE RULES WORTH KNOWING: `unspecified` on either side reports as UNSTATED, never as agreement, so 0 incompatibilities can never be read as compatible; free-text axes report as DIFFERS for a person to read, never as incompatible, because a machine cannot tell a real mismatch from different wording; and the report always names what it did NOT examine — the types that CROSS these boundaries are part of the contract and are invisible to it.",
+  "inputSchema": {
+    "$defs": {
+      "SeamPairDto": {
+        "additionalProperties": false,
+        "properties": {
+          "ours": {
+            "description": "An Interface id in THIS design.",
+            "type": "string"
+          },
+          "theirs": {
+            "description": "An Interface id in the OTHER design, un-namespaced.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ours",
+          "theirs"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "design": {
+        "description": "The other design, as a published-surface or full export document."
+      },
+      "pairs": {
+        "description": "Which boundary of ours answers which of theirs. Supplied rather than\ncomputed, because the subscribe side is not declarable yet.",
+        "items": {
+          "$ref": "#/$defs/SeamPairDto"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "design",
+      "pairs"
+    ],
+    "type": "object"
+  },
+  "name": "seam_report"
+}

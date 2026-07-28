@@ -32,7 +32,28 @@ schema:
       properties:
         name: { type: string, required: true, indexed: true, fulltext: true }
         description: { type: string, fulltext: true }
-        medium: { type: enum, values: [REST, gRPC, event, graphql, cli, library, data, mechanical, electrical, human], default: REST, indexed: true, description: "How the contract is carried." }
+        # `unspecified` added and made the default on 2026-07-28
+        # (req:seam-incompatibility). `REST` was the default, so EVERY Interface
+        # created without a stated medium claimed to be REST — and this project's
+        # own three said so while being a Rust library API, a document format and
+        # an MCP tool surface. A default that asserts a technology nobody chose is
+        # the same defect `designation` already avoids by defaulting to
+        # `internal`: publishing is a commitment, and so is naming a protocol.
+        #
+        # It is not cosmetic. `medium` is a pairing-key axis
+        # (req:complementary-pairing), so a library boundary silently reading as
+        # REST would pair against a REST provider and the rule would confidently
+        # produce a wrong answer. And seam checking treats `unspecified` as
+        # "nobody has said" rather than as agreement, which a defaulted `REST` on
+        # both sides would have falsely satisfied.
+        #
+        # Enum VALUES are not counted by the version stamp, so this locks nobody
+        # out. Note that defaults apply ON CREATE, never retroactively: every
+        # Interface written before today keeps whatever it already has, so an
+        # existing design may still claim a medium nobody chose. Those have to be
+        # corrected by hand — which is what makes this worth reporting rather
+        # than silently changing.
+        medium: { type: enum, values: [REST, gRPC, event, graphql, cli, library, data, mechanical, electrical, human, unspecified], default: unspecified, indexed: true, description: "How the contract is carried. `unspecified` is the honest default — silence is not a claim that a boundary is REST. Read by seam checking and by boundary pairing, where a wrong value is worse than an absent one: two boundaries can only be wired together if their media match, so an unstated medium must read as UNKNOWN and never as agreement." }
         spec: { type: string, description: "Free-text detail that the structured fields below do not carry — a prose note, a link to an OpenAPI document, a connector drawing. Kept because no field set covers every domain, but it is NOT where the things two systems must agree on belong: those are structured, because prose cannot be compared." }
         # req:interface-spec-complete (Anthony, 2026-07-27). A published contract
         # has to carry what two systems must AGREE on, in terms a computation can

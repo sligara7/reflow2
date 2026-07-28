@@ -31,6 +31,52 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **Say when two linked designs disagree at a boundary** (`seam_report`,
+  `req:seam-incompatibility`). Compares paired boundaries across the eight axes
+  an interface spec carries — medium, paradigm, payload format, auth, transport
+  security, operations, error model, payload schema — and classifies each as
+  **agreed**, **incompatible**, **differs**, or **unstated**.
+
+  Built to a specification that came from a *measurement*, not an opinion: with a
+  seam hand-drawn between two real designs, `compose_and_analyse` plus every
+  ordinary detector produced **zero** findings. They reason about structure, and a
+  contract mismatch is a comparison of properties **across a pair** — which
+  nothing did. The silence was not the absence of problems; it was the absence of
+  anyone looking.
+
+  Three rules it will not bend on. **`unspecified` is never agreement** — an axis
+  nobody stated reports as unstated and is counted separately, so "0
+  incompatibilities" can never be read as "compatible". **Free text is never
+  called incompatible** — a machine cannot tell a real mismatch from two people
+  wording the same contract differently, so `operations`, `error_model` and
+  `payload_schema` report as *differs, a person must read this*. And **the report
+  always names what it did not examine**: the types that *cross* a boundary are
+  part of the contract and invisible to it, so even a clean seam says so.
+
+  Pairing is supplied rather than computed, because the subscribe side is not
+  declarable until `req:complementary-pairing` lands.
+
+### Fixed
+
+- **`Interface.medium` no longer defaults to `REST`.** Every interface created
+  without a stated medium *claimed to be REST* — so two boundaries that had each
+  said nothing came back "agreed" on a value neither had chosen. Found because
+  three of the seam tests failed, correctly.
+
+  It is not cosmetic: `medium` is a pairing-key axis, so a library boundary
+  silently reading as REST would pair against a REST provider and the rule would
+  confidently produce a wrong answer. The default is now `unspecified`, the same
+  principle `designation` already follows — publishing is a commitment, and so is
+  naming a protocol.
+
+  **reflow2's own three interfaces were all wrong** and two are corrected
+  (`ifc:core-api` → `library`, `ifc:graph-export` → `data`). Enum values are not
+  counted by the version stamp, so this locks nobody out — but **defaults apply
+  on create, never retroactively**, so every interface written before today keeps
+  what it has. An existing design may still claim a medium nobody chose.
+
 ## [0.17.0] — 2026-07-28
 
 **Upgrading:** [docs/upgrading-to-v0.17.0.md](docs/upgrading-to-v0.17.0.md). **Nobody is locked

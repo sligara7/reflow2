@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:73cc2b8b2d89b6817f76620563af17ce7c0e7b7dca52c4eb00f6d83c40523d14",
+  "content_hash": "sha256:0a8046eca9ff85b765fe9e39997ae3398f42a2656d2ae63347796813d398bc52",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -576,6 +576,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:seam-incompatibility",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1202,6 +1210,12 @@
       "from_id": "chg:scoped-analysis-built",
       "properties": {},
       "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:seam-incompatibility",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5444,6 +5458,42 @@
         "action": "added"
       },
       "to_id": "cap:scoped-analysis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seam-incompatibility",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seam-incompatibility",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:seam-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seam-incompatibility",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seam-incompatibility",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:seam-incompatibility"
     },
     {
       "edge_type": "CHANGED",
@@ -19115,6 +19165,22 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:seam",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:seam-incompatibility"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:seam-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:seam-incompatibility"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:search",
       "properties": {
         "completeness": "complete"
@@ -19890,6 +19956,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:seam-incompatibility",
+      "properties": {},
+      "to_id": "req:seam-incompatibility"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:search",
       "properties": {},
       "to_id": "req:agent-native"
@@ -20373,6 +20445,12 @@
       "from_id": "ver:scoped-analysis",
       "properties": {},
       "to_id": "cap:scoped-analysis"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:seam-incompatibility",
+      "properties": {},
+      "to_id": "cap:seam-incompatibility"
     },
     {
       "edge_type": "VERIFIES",
@@ -21779,6 +21857,28 @@
       }
     },
     {
+      "node_id": "art:seam",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:804d1c8049e214ff9a85eb4585da0dcc2485d069d485373bcb80466337632ce9",
+        "location": "crates/reflow2-core/src/seam.rs",
+        "name": "seam.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:seam-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:fff30cbf555374587e171bda10683c87da94cce7515a982bc96e3d1505186fdc",
+        "location": "crates/reflow2-core/tests/seam.rs",
+        "name": "tests/seam.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:search",
       "node_type": "Artifact",
       "properties": {
@@ -21794,7 +21894,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6658b89a755136293e7b37a3687ba9603ce2a5bff48cb2e0c5717965318cbf3d",
+        "checksum": "sha256:9d418b27c66e2f059ddffe1e393b5663330f9a2f3c4b7bad3a4c19cc70fa773c",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -22906,6 +23006,19 @@
         "name": "A team asks the detectors about its own part, and is told what it did not see",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:seam-incompatibility",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Compares paired boundaries across the eight axes an interface spec carries and reports where two designs conflict, where they merely differ in wording, and where NOBODY HAS SAID. Built because a measurement showed the ordinary detectors cannot do it: with a seam hand-drawn between two real designs they produced zero findings, since they reason about structure and a contract mismatch is a comparison of properties across a pair. Always names its own blind spot — the types that cross a boundary are part of the contract and invisible to it.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say when two linked designs disagree at a boundary",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -24038,6 +24151,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Scoped detection: detect_gaps and detect_defects answer for one part of the design, and name what they left out"
+      }
+    },
+    {
+      "node_id": "chg:seam-incompatibility",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Two linked designs can be compared boundary by boundary, and Interface.medium stops defaulting to REST — a default that had been asserting a technology nobody chose"
       }
     },
     {
@@ -27732,9 +27853,12 @@
       "node_id": "ifc:core-api",
       "node_type": "Interface",
       "properties": {
-        "medium": "REST",
+        "designation": "published",
+        "medium": "library",
         "name": "DesignGraph API",
-        "provenance": "authored"
+        "paradigm": "synchronous",
+        "provenance": "authored",
+        "spec": "Corrected 2026-07-28: this claimed `medium: REST` because REST was the schema default, and it is a Rust library API linked directly by callers — no transport, no wire, no endpoint. The false value was never chosen by anyone; it arrived by default."
       }
     },
     {
@@ -27742,9 +27866,12 @@
       "node_type": "Interface",
       "properties": {
         "designation": "published",
-        "medium": "REST",
+        "medium": "data",
         "name": "Design export document",
-        "provenance": "authored"
+        "paradigm": "batch",
+        "payload_format": "json",
+        "provenance": "authored",
+        "spec": "Corrected 2026-07-28: claimed `medium: REST` by default. It is a JSON document written to a path and read back — a data contract, not a network one. Its shape is the export schema (nodes, edges, graph_id, stamp, content_hash, prev_content_hash)."
       }
     },
     {
@@ -27754,7 +27881,10 @@
         "designation": "published",
         "medium": "REST",
         "name": "MCP tool surface",
-        "provenance": "authored"
+        "paradigm": "synchronous",
+        "payload_format": "json",
+        "provenance": "authored",
+        "spec": "MEDIUM IS KNOWN-WRONG AND THE CORRECTION IS OWED. `REST` here was never chosen — it arrived as the schema default, which was changed to `unspecified` on 2026-07-28 (req:seam-incompatibility) precisely because a default must not assert a technology. This value could not be corrected in the same session: the live MCP server is the binary from session start and its schema predates the new enum value, so it refused the write. Fix after an /mcp reconnect. AND THE VOCABULARY HAS NO RIGHT ANSWER YET, which is the more interesting half: MCP is JSON-RPC 2.0 carried over EITHER a stdio pipe to a launched process OR streamable HTTP, and reflow2 serves both from one surface. `REST` is wrong (not resource-oriented; the HTTP transport is a single endpoint), `cli` is wrong for the HTTP case, `gRPC` is a different protocol. The enum wants `json_rpc`, or a way for one contract to name two media. Raised for Anthony rather than guessed: inventing schema vocabulary is a design decision, and asserting a wrong-but-plausible value is the exact failure that produced this whole correction."
       }
     },
     {
@@ -28027,12 +28157,13 @@
       "node_id": "question:d1642916ad2d7d36",
       "node_type": "Question",
       "properties": {
+        "answer": "Anthony, 2026-07-28: \"go ahead with req:seam-incompatibility\". BUILT as `seam_report`. Compares paired boundaries across eight axes — medium, paradigm, payload_format, auth, transport_security, operations, error_model, payload_schema — and classifies each as agreed / incompatible / differs / unstated. Three rules, all from what the trial established: `unspecified` on either side is UNSTATED and never agreement, so \"0 incompatibilities\" can never be read as compatible; free-text axes report as DIFFERS for a person, never as incompatible, because a machine cannot tell a real mismatch from different wording; and the report always names what it did NOT examine (con:pairing-stops-at-the-boundary — the types that CROSS a boundary are invisible to it). Pairing is supplied rather than computed, because the subscribe side is not declarable until req:complementary-pairing lands.",
         "asked_at": "2026-07-27",
         "context_setter": "Nothing satisfies requirement “When two linked designs disagree at a seam, say so”",
         "gap_id": "gap:d1642916ad2d7d36",
         "question": "reflow2 can tell you when a connection between two projects is missing a side, but not when both sides exist and simply disagree — one sending a format the other does not expect, or one assuming a speed the other cannot meet. That is the failure that survives testing until it does not. Do you want reflow2 to catch that, knowing it only works once the connection details above are captured properly?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -28927,7 +29058,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "NOW ANSWERED BY MEASUREMENT RATHER THAN ARGUMENT (trial against dynograph-foundation, 2026-07-28). The open question was whether `compose_and_analyse` plus the ordinary detectors is enough, or whether a dedicated incompatibility check is needed. It is not enough, and the trial shows exactly where the line falls.\n\nWHAT WAS RUN. dynograph-foundation published its offer (`docs/published-surface.json`, 15 boundaries: 11 library, 3 REST, 1 data). reflow2 composed against it in a throwaway graph seeded from its own committed export. Their 31 nodes and 61 edges imported with ZERO skipped edges.\n\nROUND ONE, before any matching: 0 seam findings, and one loud structural signal — \"29 nodes form a cluster disconnected from the rest of the design\". That is the detector correctly reporting that two designs were placed side by side and nothing joined them. Useful, and exactly right.\n\nROUND TWO, after drawing seven CONSUMES edges by hand from reflow2's components to their published boundaries (store→storage-api and core-api, schema→schema-doc, search→text-api, ingest→resolution-api, heal→graph-api, dimensions→vector-api): the disconnected-cluster finding DISAPPEARED, and the seam produced **zero findings of any kind**. What remained were two findings wholly inside the provider's design.\n\nWHAT THAT PROVES. Composition plus the ordinary detectors checks CONNECTIVITY, not COMPATIBILITY. The existing detectors reason about structure — missing intent, unsatisfied requirements, orphans, cycles, single points of failure — and a well-formed seam trips none of them. But a contract mismatch is a comparison of PROPERTIES ACROSS A PAIR of interfaces: my expected payload format against theirs, my required auth against theirs, my assumed paradigm against theirs, a behavioural promise against its absence. No ordinary detector compares two nodes' properties against each other, so no ordinary detector can ever produce that finding. The silence was not the absence of problems; it was the absence of anyone looking.\n\nTHE SECOND HALF, and it is worse. The seven seam edges were HAND-ASSERTED and nothing checked them. I claimed `cmp:store` consumes `dynograph::ifc:storage-api` and the graph accepted it without question. A WRONG hand-match produces exactly the same clean result as a right one — so today the seam analysis is only as good as the assertion nobody verified. That is `req:complementary-pairing`'s job on the matching side, and this requirement's job on the terms side.\n\nWHAT IT MUST CHECK, from the properties `req:interface-spec-complete` already put on Interface: `paradigm` (a consumer written for request-response cannot be pointed at an event feed), `payload_format` (protobuf against JSON fails immediately and totally), `auth` and `transport_security` (the consumer that assumed `none` gets 401s in production; a provider offering `none` against a consumer requiring `tls` is a refusal to connect), `operations` (calling an operation the provider does not offer), `error_model`, and `payload_schema`. Plus the behavioural terms that `req:publishable-promise` would let a surface carry at all.\n\nREPORT, DO NOT JUDGE. A mismatch is a finding to put to the two sides, not a verdict — `unspecified` on either side is an unknown, not a conflict, and must read as \"nobody has said\" rather than as agreement. The false-green rule from the trial applies here too: silence must never be reported as compatibility.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -29902,6 +30033,18 @@
       }
     },
     {
+      "node_id": "ver:seam-incompatibility",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-28",
+        "level": "integration",
+        "method": "test",
+        "name": "A stated conflict on a closed vocabulary is an incompatibility and says why it matters; BOTH SIDES SILENT reports as unstated with agreed=0 and a note refusing to be read as a clean bill; ONE side silent is also unstated, so a stated `none` against silence is not agreement on `none`; free-text differences report as DIFFERS and never as incompatible; genuine agreement counts as agreed; a medium mismatch is reported because it cannot be wired at all; an unresolvable pair names WHICH SIDE is missing; comparing nothing says NOTHING WAS COMPARED rather than looking like a pass; and even a clean seam names its blind spot (crates/reflow2-core/tests/seam.rs, 9 cases). THE SCHEMA FAILED THREE OF THESE FIRST, correctly: Interface.medium defaulted to REST, so two silent boundaries \"agreed\" on a value neither had chosen.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:search",
       "node_type": "Verification",
       "properties": {
@@ -30062,7 +30205,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0b29dee4e898b1b33f0565f60bdfa54c64d30221487fdc59fe9f059d31887022",
+  "prev_content_hash": "sha256:73cc2b8b2d89b6817f76620563af17ce7c0e7b7dca52c4eb00f6d83c40523d14",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
