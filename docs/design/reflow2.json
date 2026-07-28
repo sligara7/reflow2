@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1845bb3b601b835356908572c1694df549c20da7622a165d86ec929e480d87ef",
+  "content_hash": "sha256:53036dfeb660876a5ed8f5ddf10e8f2b7fb57f502465b1841e13b407304a6ccc",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -30526,7 +30526,7 @@
         "name": "A plan is a dated claim whose movement is on the record",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "A planned epoch or increment is a claim about the future, and its reliability decays with horizon — Anthony, 2026-07-28: 'the further out you plan your epochs, the more volatile they are, almost like what the Black-Scholes model was created for. There will always be a delta between what was planned for a particular epoch and what was actually delivered when we arrive at it.' Three obligations follow. (1) A planned claim carries its confidence, and far claims carry less — the ANTICIPATES edge's existing confidence property (0.0-1.0) is the vocabulary hook. (2) Arriving at an epoch produces the planned-vs-delivered delta as a matter of course, and REPLANNING IS RECORDED: when a planned epoch's content moves, the plan's own change is a dated event on the record, so 'what did we believe at the time?' stays answerable — the same axis-Z discipline the as-built record already gets. (3) Firmness is two-dimensional and the dimensions move independently: a KPP (req:inviolable-intent, cap:kpp) is inviolable in CONTENT — it cannot be weakened to make a plan work — but may SLIP IN TIME to a later increment or epoch, and the slip is a recorded dated event, never a silent re-pin; ordinary requirements may flex in both content and time as factors affect the project. Evidence for the open dec:plan-time-axis question of whether scheduled time becomes a first-class axis.",
+        "statement": "A planned epoch or increment is a claim about the future, and its reliability decays with horizon — Anthony, 2026-07-28: 'the further out you plan your epochs, the more volatile they are, almost like what the Black-Scholes model was created for. There will always be a delta between what was planned for a particular epoch and what was actually delivered when we arrive at it.' Three obligations follow. (1) A planned claim carries its confidence, and far claims carry less — the ANTICIPATES edge's existing confidence property (0.0-1.0) is the vocabulary hook. (2) Arriving at an epoch produces the planned-vs-delivered delta as a matter of course, and REPLANNING IS RECORDED: when a planned epoch's content moves, the plan's own change is a dated event on the record, so 'what did we believe at the time?' stays answerable — the same axis-Z discipline the as-built record already gets. (3) Firmness is two-dimensional and the dimensions move independently: a KPP (req:inviolable-intent, cap:kpp) is inviolable in CONTENT — it cannot be weakened to make a plan work — but may SLIP IN TIME to a later increment or epoch, and the slip is a recorded dated event, never a silent re-pin; ordinary requirements may flex in both content and time as factors affect the project. Evidence for the open dec:plan-time-axis question of whether scheduled time becomes a first-class axis. PARTIAL SATISFACTION AT ARRIVAL (Anthony, 2026-07-28, raised as a nuance, not decided): 'what happens if a requirement is only partially satisfied? Does the part that was not satisfied get transferred to the following epoch/increment, or is it discontinued?' The candidate mechanism is already in the design: a partially-met requirement is DECOMPOSED (req:requirement-lineage — the split is on the record, both children knowing their parent), the satisfied child closes at this epoch, and the remainder's fate is the one question that must be ASKED, never defaulted: transferred (re-pinned to a later epoch, a recorded slip) or discontinued (retire-from-design's discipline — dropped on the user's word, with the reason). The status vocabulary already carries both answers (deferred / dropped). He expects further nuances of arrival semantics; the modalities and rules here are an open list, not a closed one.",
         "status": "proposed"
       }
     },
@@ -31860,7 +31860,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:037ceeaec6ed665a5341dc8a96eaa1603b0a833ad31f1165a913f8dad50433c9",
+  "prev_content_hash": "sha256:1845bb3b601b835356908572c1694df549c20da7622a165d86ec929e480d87ef",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
