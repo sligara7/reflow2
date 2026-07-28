@@ -184,6 +184,32 @@ class InstallerTest(unittest.TestCase):
             pathlib.Path(mcp["command"]).is_absolute(),
             "but the binary path must stay absolute",
         )
+
+    def test_every_generated_config_shares_the_design_by_default(self):
+        """Two sessions on ONE project must both work — the default decides it.
+
+        Without `--shared` each session spawns its own process against the same
+        store, the single-writer lock admits one, and every other session gets
+        the degraded surface. That is a broken second session caused by the
+        configuration we ship, and it cost a real fleet five days: they built a
+        turn-taking convention around a limitation that a flag in the binary they
+        were already running had removed.
+
+        Asserted for EVERY harness, not just `.mcp.json`: the failure is per
+        config file, so a check that covered one would go green while a user on
+        another editor kept hitting the lock.
+        """
+        p = self.project()
+        self.install(p)
+
+        mcp = json.loads((p / ".mcp.json").read_text())["mcpServers"]["reflow2"]
+        self.assertIn("--shared", mcp["args"], ".mcp.json must share by default")
+
+        oc = json.loads((p / "opencode.json").read_text())["mcp"]["reflow2"]
+        self.assertIn("--shared", oc["command"], "opencode.json must share by default")
+
+        vs = json.loads((p / ".vscode/mcp.json").read_text())["servers"]["reflow2"]
+        self.assertIn("--shared", vs["args"], ".vscode/mcp.json must share by default")
         # Same for the other two harnesses, or the guarantee is one-harness deep.
         oc = json.loads((p / "opencode.json").read_text())["mcp"]["reflow2"]
         self.assertFalse(pathlib.Path(oc["command"][2]).is_absolute(), oc["command"])

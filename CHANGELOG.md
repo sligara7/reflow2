@@ -33,6 +33,53 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Sharing one design between sessions is now the DEFAULT, and needs no setup**
+  (`--shared`; `req:sessions-share-a-graph` completed). Point every session at
+  the same graph and they all read and write it, concurrently, with nobody
+  starting a server or choosing a port:
+
+  ```jsonc
+  // what reflow2_init.py now writes
+  {"command": "…/reflow2-mcp", "args": ["--graph-path", ".reflow2/graph", "--shared"]}
+  ```
+
+  A `--shared` session looks for the server holding that graph, starts a
+  **detached** one if there is none, and speaks to it on the session's behalf.
+  **No session owns the server** — it runs in its own process group, so the
+  session that happened to start it can end without taking anyone else's design
+  brain with it. An idle server expires (`--idle-timeout`, default 120 minutes)
+  so the store's write lock is not held against the CLI forever, and an attached
+  session recovers from that by itself.
+
+  **This is not a new capability — it is the missing half of one that shipped in
+  v0.14.0.** `--http` already let several sessions share a design; what it never
+  had was a way for a session to *find* that server, so using it meant a human
+  starting a daemon, picking a port, and editing every client's config. Nobody
+  did, because the installed default did the opposite.
+
+  **What that cost, measured rather than imagined.** A StoryFlow fleet of three
+  lead sessions and a worker pool ran for five days believing the design graph
+  was single-holder *by nature*. They built a HOLD/RELEASE convention around it,
+  voted 3/3 on whether to give each session its own graph, read the design
+  through best-effort store copies, and wrote *"workers do NOT run reflow2"* into
+  their standing protocol — while the binary they were running had `--http` the
+  whole time. The lesson is not that they missed a flag; it is that **a
+  capability you have to reconfigure your way into is one most users never
+  reach**, and reflow2 shipped the configuration that made concurrent sessions
+  fail. Sharing is now what you get, and working alone is the special case (it
+  costs nothing: one session starts one server and is its only client).
+
+  Proven on the default path, not on a hand-built server: four sessions started
+  simultaneously against no server elect **exactly one** — the store's own write
+  lock is the arbiter, so there is no check-then-start race — and all four then
+  share one design. Killing a session leaves its peers writing; `SIGKILL`ing the
+  server leaves a deliberately stale rendezvous behind and the next tool call on
+  an attached session still succeeds, with the pre-crash design intact.
+
+- **`--stop-shared`** — stop the shared server holding a graph and release the
+  write lock, without hunting a pid. A stale record left by a killed server is
+  cleared rather than reported as a running one.
+
 - **Two designs can be analysed together without either being written to**
   (`compose_and_analyse`, `req:composed-analysis`). The user's framing, and it is
   the better one: to check whether a project and its dependency line up, import

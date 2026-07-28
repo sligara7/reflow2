@@ -7,5 +7,7 @@
 pub mod degraded;
 pub mod dto;
 pub mod nudge;
+pub mod proxy;
 pub mod service;
+pub mod shared;
 pub mod skills;
