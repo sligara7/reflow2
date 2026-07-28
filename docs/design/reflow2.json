@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e8074430dbbca097fcc944cb6fcf40f8062aca55f13a1e236defa2b7ca6bddd0",
+  "content_hash": "sha256:bcb91fc416edbde738e16027035c3d7295c00a0f819fdcb447438cadc382004c",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -7997,6 +7997,14 @@
     {
       "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v0160",
+      "properties": {
+        "status": "rolled_back"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0180",
       "properties": {
         "status": "active"
       },
@@ -29525,7 +29533,7 @@
       "properties": {
         "name": "v0.16.0",
         "notes": "Cut 2026-07-27. A MINOR bump, and the FIRST since v0.11.0 that genuinely locks an older reflow2 OUT: PERFORMED_IN takes the schema from 55 edge types to 56, and the version stamp counts edge TYPES, so a reflow2 older than this refuses a design written by it — loudly, never silently half-read. Machines sharing a graph must upgrade together; docs/upgrading-to-v0.16.0.md leads with that. The enum growth in the same window (Verification.method += demonstration/observation in v0.15.0, Environment.env_type += simulation here) does NOT do this, and the doc says why. THE RELEASE THAT MAKES A PILE OF DOCUMENTS INTO A DESIGN. (1) SP-3b/BL-7 CLOSED after months: `ingest` needed a language model, reflow2 ships no provider, and the calling agent could not be reached mid-run — so the whole extraction pipeline was unreachable from a session. `ingest_step` is the repeated-round collect-then-serve handshake agent.rs had specified since SP-2 and nothing had driven; three or four rounds, NOTHING WRITTEN until the last (prepare rounds replay against a throwaway graph, so an abandoned handshake strands nothing), and NO server-side session state, so it survives a restart and works across seats. (2) It now recovers RATIONALE and TEST EVIDENCE, not requirements alone — and both land unasserted, a recovered Decision `proposed` and a recovered Verification `planned`, because an extraction is an agent's reading of somebody's document rather than the user's signature. Making that safe required tightening unverified_capability to demand a PASSING check: it had skipped on any incoming VERIFIES, so attaching a planned one silenced the question the detect-and-ask skill has always said it should not. (3) NEAR-MATCHES ARE ASKED ABOUT: ingest reads the two thresholds the schema had declared and nothing read, and the band between them reports instead of guessing; a structural token-subset pass catches what scoring cannot, since `Gateway` vs `API Gateway` scores 74 — below any threshold, because ratios fall as length differs. Imported from storyflow, which has fought this for years. (4) BL-95: coverage_report says what the design has never been TOLD ABOUT — every other check reasons about nodes already in the graph, so a design covering a third of a system reported the same `0 open gaps` as one covering all of it. Rolled up and ranked by mass, never a score: an artifact whose location is a directory claims what is beneath it. adopt now ends by asking. (5) req:design-the-simulator ACCEPTED and its first rung built: a check records WHERE it ran, so `proven only in simulation` becomes sayable — the reason for the schema change, since simulating first only pays if you can still tell model from reality afterwards. (6) BL-107: the export lineage chain is now CHECKED by the gate, found because I broke it for six commits while nothing noticed. Manifest: 78 artifacts with frozen cut-time checksums plus cmp:docs, cmp:skills, cmp:claims.",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.16.0"
       }
@@ -29536,7 +29544,7 @@
       "properties": {
         "name": "v0.17.0",
         "notes": "Cut 2026-07-28. A MINOR bump that locks NOBODY out: no node or edge type was added, so the stamp holds at 28/56 and an older reflow2 still opens a design written by this one — the opposite of v0.16.0, and the upgrade note leads with it. The one real cost is a slow first build, because the dynograph-foundation pin moved v0.11.0 → v0.12.0.\n\nTHE RELEASE THAT MADE TWO REPOS CHECK EACH OTHER. Almost everything here was found by running reflow2 against a second real project rather than by reviewing it: dynograph-foundation published its surface, reflow2 composed against it, and each side found defects the other could not see. Three of the fixes are in reflow2 itself, and every one was invisible to inspection and obvious the moment something real ran through it.\n\n(1) A PUBLISHED SURFACE CAN CARRY A PROMISE (req:publishable-promise). export_surface withheld every Requirement as internal, behavioural commitments LIVE in Requirements, so the document offered as 'the published surface' carried structure and no promises. Found when a real provider could not tell a real consumer the one thing it most needed — that a missing store fails loud rather than silently falling back to memory. The promise survived only as a comment in the CONSUMER's build file, on the wrong side of the seam. Requirement.designation fixes it by reusing the mechanism whose semantics were already settled, so every existing check applies unchanged rather than through a second, unchecked channel.\n\n(2) DECLARE WHICH VERSION OF ANOTHER DESIGN YOU DEPEND ON (req:design-dependencies-declared). The trial made it load-bearing: without a recorded pin there is nothing to take a surface AS OF, and the two real consumers sit two minors apart, so an offer from main described neither. Two facts kept apart — what you MEAN to depend on, and what the build ACTUALLY resolves — because storing only one gives either a document that drifts or a fact nothing can contradict. Proven on the real dependency and on a simulated undeclared bump.\n\n(3) TWO DESIGNS ANALYSED TOGETHER without either being written to (compose_and_analyse), and AN INTERFACE THAT PUBLISHES ITS WHOLE CONTRACT (set_interface_spec). The composition's most useful result was a ZERO: with the seam hand-drawn, the ordinary detectors found nothing, which proved they check CONNECTIVITY and not COMPATIBILITY — no ordinary detector compares two nodes' properties across a pair. That measurement is what req:seam-incompatibility now rests on.\n\n(4) THE INSTALL REACHES THE FILE THE AGENT READS. Installing into a repo with no instruction file wrote AGENTS.md, reported success, and stayed invisible to a harness that reads CLAUDE.md first — the same defect class the installer already documented from storyflow, in the opposite direction. The rule is now REACH WHAT READS. The eight slash commands ship with the kit as the one narrow exception to serving everything (dec:commands-are-the-exception), with the single way a command can rot — naming a skill that no longer exists — closed by a lint.\n\n(5) CORROBORATION READS AS CORROBORATION. Recording that one decision QUALIFIES another turned the graph red, because the contradiction detector read the edge type and never alignment. Fixed with both counterweights tested: an opposing edge and an edge that says nothing are still contradictions, so no design written before this release changes meaning.\n\nTHE FOUNDATION BUMP WAS NOT HOUSEKEEPING, which AGENTS.md forbids. v0.12.0 closes a type leak reflow2 was structurally exposed to — search_fulltext returned dynograph_text::TextHit, from a crate reflow2 never names and reaches only through an optional feature — and makes the rocksdb and fulltext feature NAMES a committed contract upstream. Verified safe BEFORE the tag existed by building this consumer against the provider's unreleased tree. Migration checked rather than assumed: keys.rs and backend.rs are untouched between the tags, so a graph written by v0.11.0 reads identically.",
-        "status": "built",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.17.0"
       }
@@ -29547,7 +29555,7 @@
       "properties": {
         "name": "v0.18.0",
         "notes": "Cut 2026-07-28. A MINOR bump that locks NOBODY out and rebuilds NOTHING: no node or edge type was added (stamp holds at 28/56) and the dynograph-foundation pin stays at v0.12.0.\n\nTHE RELEASE THAT MAKES INSTALL ONCE-PER-MACHINE REAL. v0.17.0's install.sh on main already promised machine-wide registration, but the v0.17.0 assets predate the promise: the kit tarball lacked reflow2_install.py and the binary refused --only-if-present, so the curl install died at its final step on every machine (observed live on the maintainer's own machine, 2026-07-28, and bridged there by a hand-rolled shim). This release is the first whose assets actually carry req:no-setup-per-project: the machine-wide installer, the latent surface (cap:latent-surface -- one tool served where no design exists, nothing created), and /genesis + /adopt as discoverable doors.\n\nAlso ships: seam disagreement reporting finished honestly -- seam_report's design parameter now DECLARES it takes an object (BL-28), the defect that held main red between the cuts, fixed with the design gate's own drift catch reconciled two-sided (chg:accept-975fcb51ce6ec113); and Interface.medium no longer defaults to REST, so two silences cannot agree on a protocol neither chose.\n\nVerified by CI run 30371232790 (workspace tests, clippy, fmt, 117 toolsnaps, smoke over real stdio, design gate, doc versions, skill lint) -- this machine holds no Rust toolchain, so the release rides the same runners that build the binaries. Epoch note: v0.17.0 was cut without an epoch or deploy/retire bookkeeping; this cut records its own epoch (sequence 210) and the deploy is recorded separately once the published assets are observed installed.",
-        "status": "built",
+        "status": "deployed",
         "unit_type": "binary",
         "version": "0.18.0"
       }
@@ -31574,7 +31582,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b5a13f34504b7d7768904c66587c2fd7419d513756947c84c741a3535e13bc4a",
+  "prev_content_hash": "sha256:e8074430dbbca097fcc944cb6fcf40f8062aca55f13a1e236defa2b7ca6bddd0",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -31666,7 +31674,7 @@
       "Verification"
     ],
     "node_types": 28,
-    "reflow2_version": "0.17.0",
+    "reflow2_version": "0.18.0",
     "schema_version": 1
   }
 }
