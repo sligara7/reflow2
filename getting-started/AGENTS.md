@@ -68,7 +68,7 @@ loads it and it takes precedence over the served one of the same name.
    `detect_defects` call resets the count); and when a session tries to finish with writes
    nobody checked, it blocks the stop **once** with what to do (`loop_status`, then
    detect-and-ask / check-health if debt is named). It never blocks twice, and it never reads
-   the graph — your session's server holds the single-writer lock; the hook counts events and
+   the graph — the shared server holds the store open; the hook counts events and
    the graph answers what is owed.
 
    For Claude Code, wire all three into the project's `.claude/settings.json` (adjust the kit
@@ -190,13 +190,19 @@ loads it and it takes precedence over the served one of the same name.
 
 ## Restoring a design
 
-The graph lives at `.reflow2/graph` and is **single-writer** — while your editor's MCP session is
-running it holds the graph exclusively. To restore a backup, or to load a design built on another
-machine, stop that session and run:
+The graph lives at `.reflow2/graph`. The **store** is single-writer, but that no longer means one
+session: sessions share it through one server (`--shared`, the installed default), so several
+sessions read and write the same design at once. What it does mean is that a command which opens the
+store **directly** — like the import below — cannot run while that server holds it. Stop the server
+first, which does not require hunting a pid:
 
 ```bash
+reflow2-mcp --graph-path .reflow2/graph --stop-shared
 reflow2-mcp --graph-path .reflow2/graph --import .reflow2/backups/design-<utc>.json
 ```
+
+Your sessions start a replacement automatically on their next tool call, so there is nothing to
+restart afterwards.
 
 It is an upsert: ids already present are overwritten, anything absent is left alone. `--export`
 writes one back out. If a session is still holding the graph the command says so rather than failing
