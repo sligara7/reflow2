@@ -833,7 +833,19 @@ def planned_changes(project: Path) -> list[str]:
         foreign_owner(src, project / rel) for src, rel in FILES if rel == "AGENTS.md"
     ) else "AGENTS.md"
     for target in pointer_targets(project, reflow2_doc):
-        if reflow2_doc not in target.read_text():
+        # The target may not exist yet: `pointer_targets` deliberately returns
+        # the primary-harness conventions when the project owns NO instruction
+        # file, because that is the case `ensure_pointer` has to create rather
+        # than skip. This branch is the CHECK side of the same fact and read the
+        # file unguarded, so `--check` crashed on the very case the create path
+        # exists for — an empty project directory, which is the first thing a
+        # new user points this at.
+        if not target.exists():
+            changes.append(
+                f"create  {target.name} (this project has no instruction file; "
+                f"without it the install stays invisible to the primary harness)"
+            )
+        elif reflow2_doc not in target.read_text():
             changes.append(
                 f"append  one marked pointer line to your {target.name} (→ {reflow2_doc})"
             )
@@ -863,6 +875,16 @@ def backup_graph(project: Path, binary: Path) -> str | None:
 
     Kept beside the graph, not in /tmp: systemd-tmpfiles clears that, which
     would quietly throw away the thing being kept.
+
+    FALLS BACK TO `--export-snapshot` WHEN THE GRAPH IS HELD, and since sharing
+    became the default that is the ORDINARY case, not an edge one: a plain
+    `--export` opens the store, the shared server already holds the single-writer
+    lock, and the backup was skipped on every update of a project anyone had open
+    — which is exactly when a backup is worth having. Found by running it on
+    brainmaker, 2026-07-28: "backup SKIPPED — could not export the graph". The
+    snapshot is best-effort and not crash-consistent, which is the right trade
+    for insurance taken before a step that is not going to touch the graph
+    anyway; a failure of BOTH is still only reported, never fatal.
     """
     graph = project / ".reflow2" / "graph"
     if not graph.exists():
@@ -871,6 +893,11 @@ def backup_graph(project: Path, binary: Path) -> str | None:
         [str(binary), "--graph-path", str(graph), "--export"],
         capture_output=True, text=True, timeout=120,
     )
+    if out.returncode != 0:
+        out = subprocess.run(
+            [str(binary), "--graph-path", str(graph), "--export-snapshot"],
+            capture_output=True, text=True, timeout=120,
+        )
     if out.returncode != 0:
         # Report rather than abort: a failed backup should not block an update
         # that might be exactly what fixes the binary that could not read it.

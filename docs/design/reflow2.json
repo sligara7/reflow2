@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:55617c5c8d80c866d9f6320e2e140689e77873348857f55574654e41a07da106",
+  "content_hash": "sha256:4f18a0d3476371278dd009fb0c8fceaabc439b3495b198644c85f97e6f34c902",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -323,11 +323,35 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:latent-surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:latent-surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:loop-status",
       "properties": {
         "weight_basis": "estimated"
       },
       "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:machine-wide-install",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:init"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2365,6 +2389,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-2d7b12d88e41ddfc",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-3d017e3cb13d7350",
       "properties": {
         "accepted_baseline": true,
@@ -2506,6 +2539,15 @@
         "action": "modified"
       },
       "to_id": "art:readme"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-9812364d92115544",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:latent"
     },
     {
       "edge_type": "CHANGED",
@@ -4693,6 +4735,69 @@
         "action": "modified"
       },
       "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:install-once-per-machine",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:install-once-per-machine",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:latent"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:install-once-per-machine",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:install-once-per-machine",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:install-once-per-machine",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:install-once-per-machine",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:install-once-per-machine",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-nudge-path"
     },
     {
       "edge_type": "CHANGED",
@@ -9521,6 +9626,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:latent-surface",
+      "properties": {},
+      "to_id": "dec:install-once-per-machine"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:loop-status",
       "properties": {},
       "to_id": "dec:loop-status-state-not-history"
@@ -9584,6 +9695,12 @@
       "from_id": "cap:loop-status",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:machine-wide-install",
+      "properties": {},
+      "to_id": "dec:install-once-per-machine"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -18957,6 +19074,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:latent",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:latent-surface"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:llm",
       "properties": {
         "completeness": "complete"
@@ -18970,6 +19095,14 @@
         "completeness": "complete"
       },
       "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:machine-install",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:machine-wide-install"
     },
     {
       "edge_type": "REALIZES",
@@ -19746,6 +19879,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:latent-surface",
+      "properties": {},
+      "to_id": "req:no-setup-per-project"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:loop-status",
       "properties": {},
       "to_id": "req:coherence"
@@ -19755,6 +19894,12 @@
       "from_id": "cap:loop-status",
       "properties": {},
       "to_id": "req:nudge-covers-bypass"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:machine-wide-install",
+      "properties": {},
+      "to_id": "req:no-setup-per-project"
     },
     {
       "edge_type": "SATISFIES",
@@ -20304,6 +20449,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:latent-mode",
+      "properties": {},
+      "to_id": "cap:latent-surface"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:loop-nudge",
       "properties": {},
       "to_id": "art:loop-nudge"
@@ -20355,6 +20506,12 @@
       "from_id": "ver:nudge-path",
       "properties": {},
       "to_id": "cap:nudge-path-proven"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:nudge-silent-without-design",
+      "properties": {},
+      "to_id": "cap:machine-wide-install"
     },
     {
       "edge_type": "VERIFIES",
@@ -21586,7 +21743,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:dfd18a9b785f6a8ad64537499caaf9d64a05e906ba059fe1cc2f8ae91cf1aac7",
+        "checksum": "sha256:49199cc1c858f4cf5b48e370f4b5203bd7989d341951399a28eebde91725c06e",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
         "status": "realized"
@@ -21626,6 +21783,17 @@
       }
     },
     {
+      "node_id": "art:latent",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:15b7f82fc8a05031a7c77c92d6a5624442c047df47104973f8dc9091362045be",
+        "location": "crates/reflow2-mcp/src/latent.rs",
+        "name": "latent.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:llm",
       "node_type": "Artifact",
       "properties": {
@@ -21641,9 +21809,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:96619724a77479e7",
+        "checksum": "sha256:fca6650697d55f63fc9dd71af518f9f9cfdebb82efd450cce36d7d991ca8dce7",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:machine-install",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:81bcc3e38fce30890b84f61ff5cb8151fa65b889058b106e6d0d5dbe96e16d18",
+        "location": "tools/reflow2_install.py",
+        "name": "reflow2_install.py",
         "status": "realized"
       }
     },
@@ -21652,7 +21831,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c52244a071410862ea4478f8b189bcf0e536a4ba9bf82287740276226a768dab",
+        "checksum": "sha256:1227be44eed10bc6089eadca9117340df372164f487070910129a987a8fd849b",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -21905,7 +22084,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:f56cbbe3e7ccb23b",
+        "checksum": "sha256:f6e66fec577e59d755de63c38fc02c7227eb28a64a7e33dc6cd4ab60a2c6b293",
         "location": "getting-started/SETUP.md",
         "name": "getting-started/SETUP.md",
         "status": "realized"
@@ -22048,7 +22227,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:31cb8acccf9b6e945cc793875c88c0b052794beaa97131024f526e57d21e8020",
+        "checksum": "sha256:27f84b4a505d648f2b2b86033ed818a01f6adf50e59ab8a25e76d293daa57162",
         "location": "tools/test_nudge_path.py",
         "name": "test_nudge_path.py",
         "status": "realized"
@@ -22659,6 +22838,19 @@
       }
     },
     {
+      "node_id": "cap:latent-surface",
+      "node_type": "Capability",
+      "properties": {
+        "description": "With `--only-if-present`, a session opened where no design has been started is served the LATENT surface: the handshake says reflow2 is installed and available and that this directory has no design, exactly one tool is served (`reflow2_start_design`), and NOTHING is created — no store, no state, no files. The check is a filesystem test on the graph's own directory, because opening is the thing that would create. Distinct from the degraded surface on purpose: degraded means a graph exists and could not be opened, which is an outage; latent means nobody ever made one, which is ordinary. The loop-nudge hook is gated by the same test, so a machine-wide hook registration is silent everywhere reflow2 is not being used.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A directory with no design costs nothing",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:loop-status",
       "node_type": "Capability",
       "properties": {
@@ -22668,6 +22860,19 @@
         "name": "Say what the loop is owed",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:machine-wide-install",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Registers reflow2 with the user's agent at USER scope, so no project ever needs setting up: the MCP server (Claude Code via `claude mcp add -s user`, OpenCode via its user config), the ten slash commands into `~/.claude/commands/`, the coherence-loop hooks into `~/.claude/settings.json`, and a `reflow2` command on PATH whose subcommands are `install`, `init` and `check`. Idempotent and merge-only — it never overwrites a config it did not write, reports every file it left alone and why, has `--check` and `--uninstall`, and refuses to report success when a step failed. Run by `install.sh` automatically, so the release one-liner is the whole install for any user.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Install reflow2 once for every project on a machine",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -23276,6 +23481,15 @@
       }
     },
     {
+      "node_id": "chg:accept-2d7b12d88e41ddfc",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-07-28",
+        "name": "First registration — the file was written for cap:machine-wide-install in the same session that recorded it."
+      }
+    },
+    {
       "node_id": "chg:accept-3d017e3cb13d7350",
       "node_type": "ChangeEvent",
       "properties": {
@@ -23409,6 +23623,15 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Accepted a new baseline: the change carries no design meaning"
+      }
+    },
+    {
+      "node_id": "chg:accept-9812364d92115544",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-07-28",
+        "name": "First registration — the file was written for cap:latent-surface in the same session that recorded it."
       }
     },
     {
@@ -23967,6 +24190,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "SP-3b: the agent drives INGEST, with no provider"
+      }
+    },
+    {
+      "node_id": "chg:install-once-per-machine",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The startup path collapses to one machine-wide install; the hook and the server both go silent where there is no design"
       }
     },
     {
@@ -25279,6 +25510,16 @@
       }
     },
     {
+      "node_id": "dec:install-once-per-machine",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "The install registers reflow2 with the agent at USER scope — the MCP server, the ten slash commands, the coherence-loop hooks and a `reflow2` command on PATH — so every project on the machine has it with no per-project setup. `reflow2_init.py` survives, but its job narrows: it writes the pointer file and project-scope config for a repo OTHER PEOPLE work on, so their agent is told reflow2 governs this code. Solo work needs none of it. Anthony's call, 2026-07-28, choosing \"machine-wide, repo init optional\" over \"machine-wide only\" and over \"keep per-project, just make it one word\".",
+        "name": "reflow2 installs once per machine; the in-repo half is optional and only for repos you share",
+        "rationale": "WHY NOT \"MACHINE-WIDE ONLY\", which is simpler: a teammate cloning the repo would get no signal that reflow2 governs it unless they had already installed reflow2 themselves and thought to look. That is the invisibility `req:kit-reaches-the-agent` was raised for, and retiring the per-project installer would rebuild it deliberately.\n\nWHY NOT \"JUST MAKE IT ONE WORD\" (`reflow2 init .` instead of a python path): it fixes the typing and none of the arithmetic. Still one step per project, still a re-run after every upgrade, and still the case that a user who forgets it experiences reflow2 as absent.\n\nWHAT MADE MACHINE-WIDE SAFE TO CHOOSE AT ALL, and without it the answer would have been different: the server is registered with `--only-if-present`, so a directory that never opted into a design gets the LATENT surface and nothing is created in it. Without that flag, a user-scope registration would drop a RocksDB store into every folder a session is ever opened in — and litter in someone's repo is a worse first impression than the setup step it removed. The loop-nudge hook is gated the same way and for the same reason: registered globally, silent wherever `.reflow2/` does not exist.\n\nWHAT THIS DOES NOT CHANGE: `dec:skills-served` and `req:thin-install` stand exactly as they were. The skills and working instructions are still served, still never copied, and upgrading reflow2 still produces no diff in a consumer repo. This decision is about WHERE the pointers are installed, not about what is served — and it makes the thin install thinner, since the common case now installs nothing into a project at all.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:linked-repos-poc",
       "node_type": "Decision",
       "properties": {
@@ -26435,6 +26676,15 @@
         "epoch_type": "baseline",
         "name": "Genesis",
         "sequence": 0
+      }
+    },
+    {
+      "node_id": "epoch:install-once",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Install once per machine: no project needs setting up, and a directory with no design costs nothing (2026-07-28, post-v0.17.0)",
+        "sequence": 23
       }
     },
     {
@@ -28883,6 +29133,20 @@
       }
     },
     {
+      "node_id": "req:no-setup-per-project",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Setting up a project is not a step — reflow2 is installed once per machine",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "FROM ANTHONY, 2026-07-28, twice in one session and the second time as scope: \"we need to make this as easy as possible. it is getting too hard to just start a project and then there are multiple steps after just to get it working\" — and then, decisively: \"my brother is using reflow2 on his machine. I'm using it another machine and this machine to develop it and use it. this isn't a fix for just this machine - it is a fix to make this easy for all users that ever use reflow2 from now on.\"\n\nWHAT HE HAD MEASURED, on a real project (brainmaker) minutes before saying it: install the binary, run a per-project installer naming an absolute path into a reflow2 checkout, restart the agent, then type a slash command that had never shipped. Four steps to reach the first design action, three of them after the install, and the last one failed.\n\nTHE OBSERVATION THAT MAKES IT SOLVABLE: none of reflow2's per-project footprint is per-project in NATURE. `--graph-path .reflow2/graph` is relative to the working directory, so ONE registration still gives every project its own graph. The slash commands are pointers at served skills, so one global copy carries nothing that can go stale. The loop hooks are the same script in every project. What is genuinely per-repo is only the committed design export, and a pointer file for a repo whose OTHER contributors' agents must be told reflow2 governs it.\n\nSO THE REQUIREMENT IS: after a one-time machine install, a user starts designing any project by opening their agent in a directory and asking — no installer, no config, no restart, no per-project step of any kind. Setup that survives per project is a defect, not a feature.\n\nTHE COUNTERWEIGHT, and it is what makes this honest rather than merely convenient: a machine-wide install must cost a directory that will never be designed exactly NOTHING. No graph created, no hook output, no state written. Most directories on a machine should stay untouched, and they must stay untouched by construction rather than by the user avoiding them.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:no-silent-fallback",
       "node_type": "Requirement",
       "properties": {
@@ -29780,6 +30044,18 @@
       }
     },
     {
+      "node_id": "ver:latent-mode",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-28",
+        "level": "unit",
+        "method": "test",
+        "name": "latent_mode.rs — an undesigned directory is latent, and a designed one never is",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:loop-nudge",
       "node_type": "Verification",
       "properties": {
@@ -29867,6 +30143,18 @@
         "level": "unit",
         "method": "test",
         "name": "The hook is registered, its script exists, and running the REGISTERED command with a real Stop payload produces the block decision the harness consumes — plus silence when the loop was checked, and once-only firing (tools/test_nudge_path.py, 9 cases). The server's detection covers installed / absent / broken / unmalformed-settings (nudge.rs, 4 cases). FOUND BY WRITING IT: the first version asserted a non-zero exit code and failed against a working hook — Stop hooks block by printing JSON and exiting 0, so the test had encoded the wrong contract.",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:nudge-silent-without-design",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-28",
+        "level": "integration",
+        "method": "test",
+        "name": "test_loop_nudge.py — the hook is silent and stateless where no design was started",
         "status": "passing"
       }
     },
@@ -30215,7 +30503,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0a8046eca9ff85b765fe9e39997ae3398f42a2656d2ae63347796813d398bc52",
+  "prev_content_hash": "sha256:55617c5c8d80c866d9f6320e2e140689e77873348857f55574654e41a07da106",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -30256,7 +30544,6 @@
       "OCCURS_DURING",
       "OPERATES_IN",
       "PART_OF_FLOW",
-      "PERFORMED_IN",
       "PRECEDES",
       "PRODUCES",
       "PROVIDES",
@@ -30275,7 +30562,7 @@
       "VIOLATES_RULE",
       "YIELDED"
     ],
-    "edge_types": 56,
+    "edge_types": 55,
     "node_type_names": [
       "Actor",
       "Anchor",
@@ -30307,7 +30594,7 @@
       "Verification"
     ],
     "node_types": 28,
-    "reflow2_version": "0.17.0",
+    "reflow2_version": "0.13.0",
     "schema_version": 1
   }
 }

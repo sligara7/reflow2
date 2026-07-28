@@ -77,11 +77,21 @@ EXTRA_WRITE_OPS = {
 # backstop (BL-90). A session that touches reflow2 at all never trips it.
 EDIT_TOOLS = {"Edit", "Write", "MultiEdit", "NotebookEdit"}
 
+# Deliberately says reflow2 is INSTALLED here, never that a design EXISTS here.
+# The hook cannot know: it runs before the server is reachable, and the graph
+# meta file carries no node counts. The old text asserted a design graph and
+# sent the agent to where-am-i — which, in a project set up minutes ago, is a
+# constant stating something nobody measured, and the skill's own text says to
+# use genesis instead when the graph is empty. So the line names BOTH doors and
+# lets one cheap call decide which one this is.
 SESSION_START_TEXT = (
-    "reflow2: this project has a design graph. Orient first — open_questions, "
-    "then the where-am-i skill — before touching code. While you work, "
-    "loop_status is the one cheap call that says what the coherence loop is "
-    "owed; the Stop hook will nudge if graph writes finish without one."
+    "reflow2: this project has reflow2 installed. Orient first, before touching "
+    "code: call open_questions — if this design is empty, start it with the "
+    "genesis skill (new project) or the adopt skill (code that already exists); "
+    "if it is not, read it back with the where-am-i skill. Skills are SERVED, "
+    "not installed: get_skill fetches one, list_skills names them all. While "
+    "you work, loop_status is the one cheap call that says what the coherence "
+    "loop is owed; the Stop hook will nudge if graph writes finish without one."
 )
 
 
@@ -137,12 +147,33 @@ def env_threshold(name: str, default: int) -> int:
         return default
 
 
+def design_present() -> bool:
+    """Whether this working directory has opted into being designed.
+
+    The same test the server's latent mode makes, for the same reason and it
+    must stay the same: since 2026-07-28 reflow2 can be installed ONCE per
+    machine, which registers these hooks globally. A hook that nudged about
+    coherence in a directory with no design would fire in every repo the user
+    ever opens — and the one thing a trigger cannot survive is being noise.
+
+    Deliberately a directory test and not a graph read: the session's own server
+    holds the single-writer lock, and this script must stay cheap enough to run
+    on every tool call.
+    """
+    return Path(".reflow2").exists()
+
+
 def main() -> int:
     try:
         event = json.load(sys.stdin)
     except (ValueError, OSError):
         return 0
     if not isinstance(event, dict):
+        return 0
+    # Silent everywhere reflow2 is not being used. Checked before anything is
+    # read or counted, so a non-reflow2 project costs one stat call and leaves
+    # no state behind.
+    if not design_present():
         return 0
     kind = event.get("hook_event_name", "")
     session = str(event.get("session_id") or "unknown")

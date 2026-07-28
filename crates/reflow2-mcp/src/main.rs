@@ -52,6 +52,20 @@ struct Cli {
     #[arg(long)]
     shared: bool,
 
+    /// Serve the design surface only where a design has been opted into — the
+    /// mode a MACHINE-WIDE registration should use, so reflow2 can be installed
+    /// once instead of once per project.
+    ///
+    /// `--graph-path` is relative to the working directory and the store is
+    /// created if absent, so a user-scope MCP registration would otherwise put a
+    /// RocksDB store in every directory a session is ever opened in. With this
+    /// flag, a directory whose graph (or the directory that would contain it)
+    /// does not exist gets the LATENT surface instead: a server that starts,
+    /// says no design has been started here, and offers the one tool that starts
+    /// one. Nothing is created until somebody asks for it.
+    #[arg(long = "only-if-present")]
+    only_if_present: bool,
+
     /// Be the shared server: hold the graph and serve every session that
     /// attaches. Normally started for you by `--shared`, not run by hand.
     ///
@@ -737,6 +751,29 @@ async fn main() -> anyhow::Result<()> {
                 }
             }
         }
+        return Ok(());
+    }
+
+    // Latent mode: reflow2 is installed on this machine, this directory has not
+    // opted into a design, and NOTHING should be created for it.
+    //
+    // The check happens here — before --serve-shared and --shared, and after
+    // every CLI-only mode — because both of those open or spawn something that
+    // creates the store. It is deliberately a filesystem test rather than a
+    // graph open: opening is the thing that would create.
+    if cli.only_if_present && !reflow2_mcp::latent::design_present(&cli.graph_path) {
+        eprintln!(
+            "reflow2: no design has been started in this directory ({} does not exist), so the \
+             design surface is not served here. This is normal on a machine-wide install; the \
+             session is told so in band and offered `reflow2_start_design`.",
+            cli.graph_path
+        );
+        let latent = reflow2_mcp::latent::LatentService::new(cli.graph_path.clone());
+        let running = latent
+            .serve(stdio())
+            .await
+            .context("failed to start the latent MCP server")?;
+        running.waiting().await.context("latent MCP server error")?;
         return Ok(());
     }
 

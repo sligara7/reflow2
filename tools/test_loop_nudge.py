@@ -51,6 +51,10 @@ class LoopNudge(unittest.TestCase):
     def setUp(self):
         self._tmp = tempfile.TemporaryDirectory(prefix="loop-nudge-test-")
         self.project = pathlib.Path(self._tmp.name)
+        # A project that has opted into being designed. Since the hooks can be
+        # registered machine-wide, the script is a no-op without this — which is
+        # its own case, below.
+        (self.project / ".reflow2").mkdir()
 
     def tearDown(self):
         self._tmp.cleanup()
@@ -69,6 +73,37 @@ class LoopNudge(unittest.TestCase):
         self.assertEqual(r.returncode, 0)
         self.assertIn("Orient first", r.stdout)
         self.assertIn("loop_status", r.stdout)
+
+    def test_session_start_names_both_doors_and_asserts_no_design(self):
+        """A project set up minutes ago gets this line too.
+
+        The hook cannot know whether a design exists — it runs before the
+        server is reachable and the graph meta file carries no node counts —
+        so the line must not claim one does, and must name the skill for the
+        empty case. Anthony, 2026-07-28: set up a fresh project, typed
+        `/genesis`, and got nothing; the session had meanwhile been told a
+        design graph was here and to read it back with where-am-i.
+        """
+        r = run_hook(self.project, {"hook_event_name": "SessionStart",
+                                    "session_id": "s1"})
+        self.assertNotIn("has a design graph", r.stdout)
+        for door in ("genesis", "adopt", "where-am-i"):
+            self.assertIn(door, r.stdout)
+
+    def test_silent_and_stateless_where_no_design_was_started(self):
+        """The hooks can be registered ONCE for the whole machine, so this
+        script runs in every directory the user opens — including the ones that
+        will never have a design. It must say nothing, count nothing and leave
+        nothing behind there, or a machine-wide install is pure noise."""
+        import shutil
+        shutil.rmtree(self.project / ".reflow2")
+        for payload in ({"hook_event_name": "SessionStart", "session_id": "s1"},
+                        post_tool("mcp__reflow2__add_requirement"),
+                        edit_tool(), stop()):
+            r = run_hook(self.project, payload)
+            self.assertEqual(r.returncode, 0)
+            self.assertEqual(r.stdout, "")
+        self.assertFalse((self.project / ".reflow2").exists())
 
     def test_graph_writes_are_counted_per_session(self):
         for tool in ("mcp__reflow2__add_capability", "mcp__reflow2__satisfies",

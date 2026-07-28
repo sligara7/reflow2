@@ -1,8 +1,9 @@
-# Setup — build `reflow2-mcp` and connect your agent
+# Setup — one command, once, for every project you will ever have
 
-reflow2 runs as a local MCP server your agent talks to. One-time build, then it's just a binary.
+reflow2 runs as a local MCP server your agent talks to. **You install it once per machine.
+There is no per-project setup.**
 
-## 0. The no-build path: install a prebuilt release
+## Install
 
 If a [GitHub release](https://github.com/sligara7/reflow2/releases) exists for your platform
 (Linux x86_64, macOS arm64/x86_64), you need **no toolchain at all** — no Rust, no C++, no
@@ -12,20 +13,56 @@ If a [GitHub release](https://github.com/sligara7/reflow2/releases) exists for y
 curl -fsSL https://raw.githubusercontent.com/sligara7/reflow2/main/tools/install.sh | sh
 ```
 
-It installs the `reflow2-mcp` binary to `~/.local/bin` and the consumer kit to
-`~/.local/share/reflow2/kit`, verifies checksums, and prints the exact next command. The repo
-is public, so plain `curl` works with no authentication — you only need the
-[GitHub CLI](https://cli.github.com) (`gh auth login`) if you fork it privately. Then set up
-any project with:
+That is the whole install. It puts the `reflow2-mcp` binary in `~/.local/bin` and the kit in
+`~/.local/share/reflow2/kit`, verifies checksums, and then **registers reflow2 with your agent
+for every project on this machine**: the MCP server at user scope, the slash commands in
+`~/.claude/commands/`, and the coherence-loop hooks in `~/.claude/settings.json`. The repo is
+public, so plain `curl` works with no authentication — you only need the
+[GitHub CLI](https://cli.github.com) (`gh auth login`) if you fork it privately.
+
+## Start a design
 
 ```bash
-python3 ~/.local/share/reflow2/kit/tools/reflow2_init.py <your-project> --binary ~/.local/bin/reflow2-mcp
+mkdir my-thing && cd my-thing
+claude                     # or grok / opencode
 ```
 
-To update later, re-run the installer — it replaces the binary and kit **together** (the skew
-a mismatched pair causes is exactly what `served_by` exists to catch) and never touches your
-design graphs. Everything below is the from-source path: for contributors, unsupported
-platforms, or running ahead of the latest release.
+then, in the agent:
+
+```
+/genesis I want to build ...      # a new project — a paragraph is plenty
+/adopt                            # or: code that already exists
+```
+
+**That's it.** No installer to run in the project, no config to write, no restart. The design
+graph is created in `my-thing/.reflow2/` the moment you start one.
+
+**Directories you never design stay untouched.** reflow2 is registered with `--only-if-present`,
+so a session opened in a folder that has no design gets a server which says exactly that and
+serves one tool (`reflow2_start_design`) — and creates nothing. Most folders on your machine
+should stay that way, and they will.
+
+To update: re-run the installer. It replaces the binary and kit **together** (the skew a
+mismatched pair causes is exactly what `served_by` exists to catch), re-registers everything at
+the new path, and never touches your design graphs. To remove the registration:
+`reflow2 install --uninstall`.
+
+## Optional: a repo you share
+
+The machine-wide install is for **you**. If a project has other people (or other machines)
+working on it, add the in-repo half so *their* agent is told reflow2 governs this code:
+
+```bash
+cd my-thing && reflow2 init .
+```
+
+That writes a short pointer file, a project-scope MCP config and `.gitignore` lines — and
+nothing else. Commit the pointer file and your design export; the graph directory stays local.
+
+---
+
+Everything below is the **from-source path**: for contributors, unsupported platforms, or
+running ahead of the latest release.
 
 ## 1. Install the build toolchain
 
@@ -71,39 +108,52 @@ cd reflow2
 cargo build -p reflow2-mcp --release        # first build compiles RocksDB (~10 min, then cached)
 ```
 
-The binary lands at `reflow2/target/release/reflow2-mcp`. Print its absolute path — you'll paste
-it into `.mcp.json` in the next step:
+The binary lands at `reflow2/target/release/reflow2-mcp`.
+
+## 3. Register it for every project on this machine
 
 ```bash
-echo "$(pwd)/target/release/reflow2-mcp"
+python3 tools/reflow2_install.py
 ```
 
-## 3. Register the MCP server in your project
+Same thing the release installer does, pointed at the binary you just built: the MCP server at
+user scope for Claude Code and OpenCode, the slash commands in `~/.claude/commands/`, the
+coherence-loop hooks in `~/.claude/settings.json`, and a `reflow2` command on your `PATH`.
+`--check` shows what it would change without writing; `--uninstall` takes it back out.
 
-reflow2's design graph lives in your **project** repo (so it travels with the code). In your
-project root, create `.mcp.json` — **grok build and claude code both read this format**:
+Then start a design in any directory — see **[Start a design](#start-a-design)** above. Nothing
+to do per project.
+
+<details>
+<summary>Registering by hand instead</summary>
+
+The server definition, if you would rather write it yourself. `--only-if-present` is what makes a
+machine-wide registration safe: without it, every directory you open a session in gets a design
+graph created in it.
+
+```bash
+claude mcp add -s user reflow2 -- /absolute/path/to/reflow2-mcp \
+  --graph-path .reflow2/graph --shared --only-if-present
+```
+
+For a single project instead, `.mcp.json` in the project root takes the same shape (grok build
+and claude code both read it), and there you can drop `--only-if-present` because the project
+plainly has a design:
 
 ```json
 {
   "mcpServers": {
     "reflow2": {
       "command": "/absolute/path/to/reflow2-mcp",
-      "args": ["--graph-path", "./.reflow2/graph"]
+      "args": ["--graph-path", ".reflow2/graph", "--shared"]
     }
   }
 }
 ```
 
-(If `reflow2-mcp` is on your `PATH`, `"command": "reflow2-mcp"` is enough.)
-
 Alternatives for grok build: `grok mcp add`, or the in-session `/mcps` modal, or an entry in
 `~/.grok/config.toml` — all read the same server definition.
-
-**Or skip all of it:** `python3 tools/reflow2_init.py /path/to/project` writes the config for
-every agent it knows about — `.mcp.json` (claude code, and grok build reads it too),
-`opencode.json`, and `.vscode/mcp.json` — with the binary path resolved, and installs the skills
-into every directory those agents search. It merges rather than overwrites, so other MCP servers
-and your own settings survive. Re-run it any time to update.
+</details>
 
 ## 4. Verify the build works (before wiring up your agent)
 
@@ -136,45 +186,24 @@ printf '%s\n' \
 
 **Three PASSes → you're ready** to register the server (step 3) and point your agent at the repo.
 
-### Set up a project
-
-From the reflow2 repo:
-
-```bash
-python3 tools/reflow2_init.py ~/projects/my-thing
-```
-
-That installs everything the agent needs and points the MCP config at the binary you just built.
-Re-run it any time to pick up reflow2 updates — it won't touch your design graph or your own
-files. `--check` shows what would change without writing.
-
-### Keeping up to date
-
-reflow2 moves; your project's copy of the kit doesn't. To pick up changes, from the reflow2 repo:
-
-```bash
-git pull                                    # 1. get the new reflow2
-cargo build -p reflow2-mcp --release        # 2. rebuild the server
-python3 tools/reflow2_init.py ~/projects/my-thing   # 3. refresh the project
-```
-
-**The order matters.** Doing 1 and 3 without 2 leaves your project with current instructions
-driving an old server — same tool names, different behaviour, and nothing obviously wrong until
-something misbehaves. `reflow2_init.py` checks for exactly that and warns you; run it with
-`--check` first if you'd rather look before touching anything.
-
-Your design graph and your own files are never touched by an update.
-
-### Starting a design
-
-Open your agent in the project folder and prompt it with **a short overview of what you're
-trying to design or build** — a paragraph is plenty, in your own words. That's the whole
-kickoff: reflow2 bootstraps from it and starts asking you about the parts you left out.
-
-You don't need to know systems engineering, and you don't need the brief to be complete. The
-gaps are the point — it will find them and ask.
 If **Check 1** fails, the build didn't finish — re-run step 2 and read the error. If **2 or 3**
 fails after Check 1 passes, re-run and copy the full output (`2>&1`) for help.
+
+### Keeping up to date, from source
+
+```bash
+git pull                                     # 1. get the new reflow2
+cargo build -p reflow2-mcp --release         # 2. rebuild the server
+python3 tools/reflow2_install.py             # 3. re-point the registration at it
+```
+
+**The order matters.** Doing 1 and 3 without 2 leaves you with current instructions driving an
+old server — same tool names, different behaviour, and nothing obviously wrong until something
+misbehaves. Step 3 is only needed when the binary's *path* changes; if it doesn't, the new build
+is picked up the next time an agent starts.
+
+Your design graphs are never touched by an update, and nothing in any project needs refreshing —
+the skills and working instructions are served by the server, not copied into your repos.
 
 ### Optional: the full loop check
 
@@ -205,26 +234,40 @@ open. Ask that any time you lose the thread mid-session too — you don't have t
 If the agent asks *"shall we start building or keep filling in gaps?"* and you'd rather stop for
 the day, stopping is a perfectly good answer. Everything decided so far is already recorded.
 
-**One agent at a time** — see the note below.
+**Several agents at once is fine** — see the note below.
 
 ## Notes
 
-- The graph directory (`./.reflow2/graph`) is a machine-local RocksDB store, created on first
-  use — the installer gitignores `.reflow2/`, so **don't commit the directory**. To share a
+- The graph directory (`./.reflow2/graph`) is a machine-local RocksDB store, created when you
+  start a design. **Don't commit the directory** — add `.reflow2/` to the repo's `.gitignore`,
+  which `reflow2 init .` does for you if you run it. To share a
   design via git, commit an **export**: `reflow2-mcp --graph-path .reflow2/graph --export >
   design.json` produces a deterministic, diffable JSON your teammate loads with `--import`.
-  The export is the durable record; the RocksDB dir is a local cache of it.
+  The export is the durable record; the RocksDB dir is a local cache of it. The simplest way to
+  get one is to ask your agent to export the design — a shared server holds the write lock, so a
+  CLI `--export` needs `--stop-shared` first, or `--export-snapshot` for a best-effort read of a
+  graph somebody else is holding.
 - **Gate CI on the committed export.** `tools/reflow2_check.py` (in the kit) rehashes every
   registered artifact against the working tree and runs the gap detectors, exiting non-zero on
   unaccepted drift or a serious open gap — so the design is checked on every commit, not once a
   session. The **ci-gate** skill has the copy-paste CI step and the honest ways to turn a red
   build green.
-- **One agent at a time.** The graph is a RocksDB store and only one `reflow2-mcp` process can
-  hold it. If a second agent starts against the same `--graph-path`, it exits immediately with
-  `While lock file: .../LOCK: Resource temporarily unavailable`. That is the lock doing its job,
-  not a broken build — close the other agent (or point this one at a different graph) and retry.
-  Sharing a design *sequentially* works fine, including across machines via git; several agents
-  working the same graph at once is a future effort.
+- **Several sessions can work one design at once**, and `reflow2_init.py` configures that by
+  default (`--shared`). The store itself is still single-writer — only one process may hold the
+  RocksDB directory — so the sharing works by there being exactly one *server*: the first session
+  starts a detached one, every later session finds it through `.reflow2/graph.server.json` and
+  attaches. No session owns it, so the one that happened to start it can close without taking
+  anybody else's design brain with it. To release the write lock for maintenance (a CLI
+  `--export`, a backup), stop it explicitly:
+
+  ```bash
+  reflow2-mcp --graph-path .reflow2/graph --stop-shared
+  ```
+
+  If you configured the server by hand rather than with `reflow2_init.py` and left `--shared`
+  off, a second agent against the same `--graph-path` exits with `While lock file: .../LOCK:
+  Resource temporarily unavailable`. That is the lock doing its job — add `--shared` to the
+  config rather than closing the other agent.
 - Logs go to stderr; stdout is the JSON-RPC channel — don't redirect stdout into logs.
 - Cross-platform: RocksDB builds on Windows too (MSVC + `cmake`), but only macOS and Linux are
   exercised today.

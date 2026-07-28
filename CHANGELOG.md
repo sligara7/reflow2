@@ -33,6 +33,31 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **reflow2 installs once per machine — starting a project is no longer a thing
+  you do** (`req:no-setup-per-project`, `dec:install-once-per-machine`). The
+  release installer now registers reflow2 with your agent for *every* project:
+  the MCP server at user scope, the ten slash commands in `~/.claude/commands/`,
+  the coherence-loop hooks in `~/.claude/settings.json`, and a `reflow2` command
+  on `PATH` (`install` / `init` / `check`). Starting a design is then
+  `cd anywhere && claude` and `/genesis` — no per-project installer, no config,
+  no restart. `reflow2_init.py` keeps its job for a repo you SHARE, where a
+  teammate's agent must be told reflow2 governs the code, and `tools/reflow2_install.py`
+  has `--check` and `--uninstall`.
+- **A directory with no design costs nothing** (`--only-if-present`,
+  `cap:latent-surface`). What makes the machine-wide registration safe: the
+  store is created if absent, so without this a user-scope server would drop a
+  RocksDB store into every directory a session was ever opened in. Where no
+  design has been started, reflow2 now serves the LATENT surface — the handshake
+  says it is installed and available and that this directory has no design,
+  exactly one tool is served (`reflow2_start_design`), and nothing is created.
+  Deliberately distinct from the degraded surface, which means a graph exists
+  and could not be opened. `loop_nudge.py` is gated by the same test, so
+  machine-wide hooks are silent wherever `.reflow2/` does not exist.
+- **`/genesis` and `/adopt` ship as slash commands.** The eight that shipped
+  before were all mid-loop ones, so a brand-new project had no discoverable way
+  in — found by setting one up and typing `/genesis` to no effect. Each names
+  the other for the wrong-door case.
+
 - **Say when two linked designs disagree at a boundary** (`seam_report`,
   `req:seam-incompatibility`). Compares paired boundaries across the eight axes
   an interface spec carries — medium, paradigm, payload format, auth, transport
@@ -59,6 +84,22 @@ This file is the third view: *what changed, and when*.
   declarable until `req:complementary-pairing` lands.
 
 ### Fixed
+
+- **The session-start line no longer asserts a design exists.** It claimed "this
+  project has a design graph" and sent the agent to **where-am-i** — in a project
+  created minutes earlier, a constant stating something nobody measured, and the
+  skill's own text says to use **genesis** when the graph is empty. It now names
+  both doors and lets one cheap call decide which.
+- **`reflow2_init.py --check` crashed on an empty project directory** — the first
+  thing a new user points it at. It read a pointer target without checking it
+  exists, while `pointer_targets` deliberately returns files that do not exist
+  yet for a project owning no instruction file. The check path now reports the
+  create the write path was already making.
+- **`reflow2_init.py`'s pre-update backup was skipped whenever the design was
+  shared.** It used a plain `--export`, which opens the store — and since sharing
+  became the default the shared server holds the lock, so the backup silently did
+  not happen exactly when it was worth having. It now falls back to
+  `--export-snapshot`.
 
 - **`Interface.medium` no longer defaults to `REST`.** Every interface created
   without a stated medium *claimed to be REST* — so two boundaries that had each

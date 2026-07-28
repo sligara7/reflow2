@@ -115,6 +115,10 @@ class TheNudgeActuallyFires(unittest.TestCase):
             self.skipTest("no nudge hook registered")
         self.dir = pathlib.Path(tempfile.mkdtemp(prefix="reflow2-nudgepath-"))
         self.addCleanup(shutil.rmtree, self.dir, ignore_errors=True)
+        # A directory that has opted into being designed. The hook is silent
+        # without this, by design — it can be registered machine-wide and must
+        # not fire in projects that have no design.
+        (self.dir / ".reflow2").mkdir()
         self.session = f"nudge-path-{os.getpid()}"
 
     def post_tool_use(self, tool: str):

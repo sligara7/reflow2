@@ -147,8 +147,33 @@ case ":$PATH:" in
      say "  export PATH=\"$BIN_DIR:\$PATH\"" ;;
 esac
 
-say ""
-say "Next — set up a project (creates the design environment, touches nothing else):"
-say "  python3 $KIT_DIR/kit/tools/reflow2_init.py <your-project-dir> --binary $BIN_DIR/reflow2-mcp"
+# ---- machine-wide registration ----------------------------------------------
+# The install is not finished when the files land. Until 2026-07-28 it stopped
+# here and told the user to run a per-project installer, and getting to a first
+# design action still cost an agent restart and a slash command that was not
+# shipped — Anthony, having done it: "there are multiple steps after just to get
+# it working." None of those steps were per-project in nature, so none of them
+# are steps any more: this registers the server, the commands and the loop hooks
+# once, for every project on the machine.
+#
+# Safe to do unasked because the server is registered with --only-if-present: a
+# directory that never opts into a design gets the latent surface and nothing is
+# created in it. Reversible with `reflow2 install --uninstall`.
+if command -v python3 > /dev/null 2>&1; then
+  say ""
+  if python3 "$KIT_DIR/kit/tools/reflow2_install.py" --binary "$BIN_DIR/reflow2-mcp"; then
+    :
+  else
+    say ""
+    say "The machine-wide registration did not complete. reflow2 IS installed; finish with:"
+    say "  python3 $KIT_DIR/kit/tools/reflow2_install.py --binary $BIN_DIR/reflow2-mcp"
+  fi
+else
+  say ""
+  say "NOTE: python3 was not found, so reflow2 was not registered with your agent."
+  say "Install python3 and run:"
+  say "  python3 $KIT_DIR/kit/tools/reflow2_install.py --binary $BIN_DIR/reflow2-mcp"
+fi
+
 say ""
 say "To update later: re-run this installer. Your design graphs are never touched."
