@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.18.0] — 2026-07-28
+
 ### Added
 
 - **reflow2 installs once per machine — starting a project is no longer a thing
@@ -117,6 +119,13 @@ This file is the third view: *what changed, and when*.
   counted by the version stamp, so this locks nobody out — but **defaults apply
   on create, never retroactively**, so every interface written before today keeps
   what it has. An existing design may still claim a medium nobody chose.
+
+- **`seam_report`'s `design` parameter declares its type** (BL-28). schemars
+  renders `serde_json::Value` as an "any" schema with no `type`, which the smoke
+  test's own check refuses — every advertised parameter must say what it
+  accepts. It now advertises `object`, the export document it always required;
+  a stringified export is rejected at the schema instead of deeper in. This is
+  what held main red between the v0.17.0 cut and this one.
 
 ## [0.17.0] — 2026-07-28
 
