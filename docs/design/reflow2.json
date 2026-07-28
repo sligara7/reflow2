@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3cc3604ccadfc7a8f13cc3051197c0da88312adc1f121b693a9e882dd58cbc17",
+  "content_hash": "sha256:037ceeaec6ed665a5341dc8a96eaa1603b0a833ad31f1165a913f8dad50433c9",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2295,6 +2295,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:plans-move-honestly",
+      "properties": {
+        "acted_at": "2026-07-28",
+        "role": "author"
+      },
+      "to_id": "ctr:anthony"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -6543,6 +6552,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:persistence"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:plans-move-honestly"
     },
     {
       "edge_type": "CONTAINS",
@@ -30501,6 +30516,21 @@
       }
     },
     {
+      "node_id": "req:plans-move-honestly",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A plan is a dated claim whose movement is on the record",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A planned epoch or increment is a claim about the future, and its reliability decays with horizon — Anthony, 2026-07-28: 'the further out you plan your epochs, the more volatile they are, almost like what the Black-Scholes model was created for. There will always be a delta between what was planned for a particular epoch and what was actually delivered when we arrive at it.' Three obligations follow. (1) A planned claim carries its confidence, and far claims carry less — the ANTICIPATES edge's existing confidence property (0.0-1.0) is the vocabulary hook. (2) Arriving at an epoch produces the planned-vs-delivered delta as a matter of course, and REPLANNING IS RECORDED: when a planned epoch's content moves, the plan's own change is a dated event on the record, so 'what did we believe at the time?' stays answerable — the same axis-Z discipline the as-built record already gets. (3) Firmness is two-dimensional and the dimensions move independently: a KPP (req:inviolable-intent, cap:kpp) is inviolable in CONTENT — it cannot be weakened to make a plan work — but may SLIP IN TIME to a later increment or epoch, and the slip is a recorded dated event, never a silent re-pin; ordinary requirements may flex in both content and time as factors affect the project. Evidence for the open dec:plan-time-axis question of whether scheduled time becomes a first-class axis.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:platform",
       "node_type": "Requirement",
       "properties": {
@@ -31830,7 +31860,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ddeff20ec46472bbc1fb936e422ed01d7f78e5f09bed57475514505a812fa975",
+  "prev_content_hash": "sha256:3cc3604ccadfc7a8f13cc3051197c0da88312adc1f121b693a9e882dd58cbc17",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
