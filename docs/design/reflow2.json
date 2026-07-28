@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:16a5de63d46d0ca972135efde50a4dbfbc3c1a1a0ae6628a5d0bd7626881834a",
+  "content_hash": "sha256:5650b5562bf400cd167d565e3736fb79abb5603c2346a7ba4bc676cd95a30839",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1962,6 +1962,24 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:epoch-roadmap-storage",
+      "properties": {
+        "acted_at": "2026-07-28",
+        "role": "author"
+      },
+      "to_id": "ctr:anthony"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:epoch-roadmap-storage",
+      "properties": {
+        "acted_at": "2026-07-28",
+        "role": "reviewer"
+      },
+      "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:exploratory-staging",
       "properties": {
         "acted_at": "2026-07-24",
@@ -2188,6 +2206,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:epochs-can-be-planned",
+      "properties": {
+        "acted_at": "2026-07-28",
+        "role": "author"
+      },
+      "to_id": "ctr:anthony"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -26467,6 +26494,16 @@
       }
     },
     {
+      "node_id": "dec:epoch-roadmap-storage",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "OPEN (proposed): the storage mechanism for planned epochs is undecided, and deciding it by drift would repeat the mistake BL-100 names. Three candidates are on the table, none chosen.",
+        "name": "Where does a planned epoch live — a git branch, the graph, or both?",
+        "rationale": "(a) EPOCH BRANCHES, Anthony's framing: a git branch per planned epoch (project_x:epoch_1) holding the expected export — full-document snapshots, diffable with the delta machinery (--diff between two epoch branches IS the roadmap step), zero schema change, and git is already the transport for graphs; cost: the roadmap lives outside the graph, invisible to detectors, and n branches of a mutable file invite the lineage problems BL-107 just closed. (b) IN-GRAPH FUTURE EPOCHS: Epoch nodes with sequence numbers beyond the present, planned capabilities/requirements pinned AT_EPOCH — the schema already carries Epoch, pin_at_epoch, and an ANTICIPATES edge; the roadmap stays inside the design where detect_gaps and propagate can see it, and one graph answers 'what holds at epoch_n' by filter rather than by checkout; cost: no single document you can hand someone as 'the architecture at epoch_2', and the axis-Z machinery was built pointing backward — whether snapshots and epochs tolerate future-dated pins must be checked, not assumed. (c) HYBRID: the roadmap lives in-graph (b), and a planned epoch is EXPORTED to a tag/branch on demand as a derived artifact — the graph stays the source of truth, the branch is a rendering; cost: two representations that can drift from each other, which is this project's least favorite failure mode. The multi-repo half (an ecosystem epoch = a set of per-repo pins) composes with reflow2.toml/declare_dependency from BL-109 in all three candidates.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:exploratory-staging",
       "node_type": "Decision",
       "properties": {
@@ -30046,6 +30083,21 @@
       }
     },
     {
+      "node_id": "req:epochs-can-be-planned",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "An epoch can be planned, not only recorded",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "The temporal axis must run forward as well as back: the design must be able to say what the architecture is EXPECTED to be at named future epochs — a capability roadmap in discrete epochs (epoch_1, epoch_2, ... epoch_n), each carrying the requirements and capabilities that hold AT that epoch — and compare any two epochs, or an epoch against the present, as a delta. With many moving parts — an ecosystem of coupled repos, each with its own graph — an ecosystem epoch must be able to pin the set of per-repo design versions it means, or the question 'which epoch are we talking about?' has no answer, which is the failure this exists to prevent. Anthony, 2026-07-28, marked as an idea, not a commitment: 'using the bluesky ecosystem as an example, it is constantly evolving. One thing we often struggled with was which epoch are we talking about and what are the requirements for that particular epoch. We'd try to map these out in a capability roadmap, but it was super difficult when you have many moving parts. Curious if we could have sort of epoch branches that provided snapshots of the architecture at various moments in their own branch: project_x:epoch_1 captures what we expect the graph to look like at epoch_1.'",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:explains-itself",
       "node_type": "Requirement",
       "properties": {
@@ -31690,7 +31742,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:433a42fd90a396bd20ce770649d07ca9d8b97c1ad635c9784d010fc09d31a320",
+  "prev_content_hash": "sha256:16a5de63d46d0ca972135efde50a4dbfbc3c1a1a0ae6628a5d0bd7626881834a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
