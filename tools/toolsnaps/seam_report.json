@@ -28,7 +28,9 @@
     "additionalProperties": false,
     "properties": {
       "design": {
-        "description": "The other design, as a published-surface or full export document."
+        "additionalProperties": true,
+        "description": "The other design, as a published-surface or full export document.",
+        "type": "object"
       },
       "pairs": {
         "description": "Which boundary of ours answers which of theirs. Supplied rather than\ncomputed, because the subscribe side is not declarable yet.",
