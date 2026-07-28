@@ -56,6 +56,7 @@ Add yourself if you're new here.
 
 
 
+- CI red on main: seam_report.design fails BL-28 (type-less schema) — @ajs — since 2026-07-28 — crates/reflow2-mcp/src/service.rs
 - **Install once per machine — no project needs setting up** — @ajs — since 2026-07-28 — getting-started/{commands,SETUP.md,README.md}, .claude/commands/, tools/{loop_nudge,test_loop_nudge,test_nudge_path,reflow2_install,reflow2_init,install.sh}, crates/reflow2-mcp/src/{latent.rs,lib.rs,main.rs}, crates/reflow2-mcp/tests/latent_mode.rs, .github/workflows/release.yml. *`req:no-setup-per-project` + `dec:install-once-per-machine`, both Anthony's word: reflow2 registers once at user scope and no project is set up at all, made safe by `--only-if-present` (latent surface: a directory with no design gets one tool and nothing is created in it).*
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
