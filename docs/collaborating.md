@@ -175,33 +175,64 @@ One machine runs the server; every session anywhere talks to it. Pick the one th
 desktop rather than a laptop that travels. Everything below happens on **that** machine unless it
 says otherwise.
 
-#### Step 2 — start the server, and point this machine's own sessions at it
+#### Step 2 — nothing, if your config was written by a current reflow2
 
-This is the step people skip, and skipping it is confusing rather than obvious: **your existing
-sessions each launch their own reflow2 and one of them is already holding the graph.** A second
-reflow2 cannot open the same directory, so the server will not start until they let go. Switch them
-over first.
+**Several sessions on one machine share a design by default.** `reflow2_init.py` writes `--shared`
+into every MCP config it generates, and a `--shared` session finds the server holding its graph,
+starts one if there is none, and talks to it. No server to start, no port to choose, no config to
+edit. Skip to step 3, or stop reading if everyone is on this machine.
 
-In a terminal you leave open, from your project directory:
+```json
+{
+  "mcpServers": {
+    "reflow2": {
+      "command": "/home/you/.local/bin/reflow2-mcp",
+      "args": ["--graph-path", ".reflow2/graph", "--shared"]
+    }
+  }
+}
+```
+
+If yours has no `--shared`, it predates this: re-run `reflow2_init.py <project>` (or add the flag by
+hand) and reconnect. **A config without it makes every session after the first fail** — each one
+launches its own reflow2, the store admits one writer, and the rest get the degraded server. That
+was the shipped default for a long time and it is worth naming, because the failure looks like a
+property of reflow2 rather than of a config line: a fleet of six sessions spent five days taking
+turns, and building a protocol for taking turns, around a limitation their binary had already lost.
+
+**Who owns the server: nobody.** It runs in its own process group, so the session that happened to
+start it can be closed, crash, or be Ctrl-C'd without disturbing the others. When no session has used
+it for a while it exits and releases the store's write lock (`--idle-timeout`, default 120 minutes),
+because holding that lock blocks `--import`, a live `--diff`, and anything else that opens the graph
+directly. Sessions recover from that on their own — the next tool call starts a replacement and is
+retried, so you will not notice.
+
+To stop it deliberately — before a backup, say, or to run a CLI command against the store:
+
+```bash
+reflow2-mcp --graph-path ./.reflow2/graph --stop-shared
+```
+
+**Running the server yourself is still supported and is what step 3 needs**, because a server that
+other *machines* dial has to bind an address you choose:
 
 ```bash
 reflow2-mcp --graph-path ./.reflow2/graph --http 127.0.0.1:8787
 ```
 
-Then change this machine's MCP config so sessions **connect** instead of launching their own. For
-Claude Code that is `.mcp.json` in the project:
+Sessions can then be pointed straight at it, no `--shared` involved:
 
 ```json
-{
-  "mcpServers": {
-    "reflow2": { "type": "http", "url": "http://127.0.0.1:8787/" }
-  }
-}
+{ "mcpServers": { "reflow2": { "type": "http", "url": "http://127.0.0.1:8787/" } } }
 ```
 
-Restart the sessions (in Claude Code, `/mcp` reconnects). They now share one design: a requirement
-one session captures is visible to the others immediately. Each session is its own **seat**, so
-claims say who actually made them.
+The trade is worth knowing: a URL in the config is one process fewer, but if that server is not
+running the session gets connection-refused, which an agent cannot tell apart from *"reflow2 was
+never configured for this project"*. `--shared` keeps a process on stdio precisely so there is always
+something able to say what went wrong.
+
+Either way, sessions share one design: a requirement one captures is visible to the others
+immediately, and each session is its own **seat**, so claims say who actually made them.
 
 > If the server exits complaining that the graph is held, a session somewhere still has the old
 > config. Find it and restart it — the message names the path it could not open.
@@ -366,11 +397,13 @@ Every failure mode here is a version of one thing: **divergence you allowed to g
 |---|---|---|
 | `push` rejected, *non-fast-forward* | They published while you worked. Working as intended. | `git pull --rebase` then push again |
 | Conflict in `reflow2.json` on every pull | The merge driver is not configured on this clone | Re-run the two `git config` lines above |
-| Your agent shows no reflow2 tools, or one called `reflow2_unavailable` | Another session on your machine holds the graph, or the graph was written by a different reflow2 | Call that tool — it names the reason and the fix |
+| Your agent shows no reflow2 tools, or one called `reflow2_unavailable` | Usually a config without `--shared`: every session after the first is launching its own reflow2 and losing the store lock. Or the graph was written by a different reflow2 | Call that tool — it names the reason. Then check the config carries `--shared` (step 2) |
 | The design in the repo does not match what your agent says | Your graph and the committed export have diverged | `compare_designs` against `docs/design/reflow2.json` |
 | Your agent's skills seem out of date | They are served by the server now, so they cannot be | Update reflow2 itself; nothing in the project needs changing |
 | `REFUSED: … would DELETE n node(s)` on export | Their work reached the file and your graph never caught up — reflow2 stopping real data loss | `git pull --rebase`, `import_graph` from the file, export again |
 | The `--http` server will not start: the graph is held | A session is still launching its own reflow2 instead of connecting to the server | Switch every session's MCP config to the `http` URL and restart them (step 2 above) |
+| Every session stalls ~30s and *then* shows `reflow2_unavailable` | Something is holding the store that is not a shared server — an older reflow2 in stdio mode, or a stray process. Sessions wait out the election, then degrade rather than hang | `--stop-shared` if it is a shared server; otherwise stop that process. Flip configs to `--shared` **after** it is gone, or the first impression of a working setup is a 30-second stall |
+| A session opens the WRONG design after you copied a project | The copy carried `<graph>.server.json` with it, naming the original's server | Nothing — reflow2 refuses it and elects a server for the copy. If you see this in a log, it is the guard working |
 | A remote session gets `403 Forbidden` | It dialled a host the server was not told to answer for | Add `--http-allow-host <that exact host>` and restart the server — its startup line says this too |
 | A remote session cannot connect at all | The network, not reflow2 — the port is not reachable from there | Check the tunnel, LAN route or tailnet first; `curl http://<host>:8787/` from that machine |
 
