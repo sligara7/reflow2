@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:57b448d3f661ed1cc652498d93c69b3c3cb4963b8757d71ab7b1725e648aae59",
+  "content_hash": "sha256:959b794a7839745926288154bb57e46c801ed498512c2c80d18ab9fb15cbae56",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1181,6 +1181,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:shared-by-default",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:shared-sessions",
       "properties": {},
       "to_id": "epoch:v0130"
@@ -1592,6 +1598,12 @@
       "from_id": "snap:epoch:kpp-capture:req:reviewed-defects",
       "properties": {},
       "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:linking-repos:cap:shared-sessions",
+      "properties": {},
+      "to_id": "epoch:linking-repos"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5285,6 +5297,42 @@
         "action": "added"
       },
       "to_id": "req:session-memory-in-graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:shared-by-default",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:shared-by-default",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:shared-by-default",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:shared-by-default",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:shared-sessions"
     },
     {
       "edge_type": "CHANGED",
@@ -11154,6 +11202,12 @@
       "from_id": "cap:sanitize-ingress",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:cap:sanitize-ingress"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:shared-sessions",
+      "properties": {},
+      "to_id": "snap:epoch:linking-repos:cap:shared-sessions"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -19887,7 +19941,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c21912e559c27f763ee7ad57e4564e64e4aa27b108ddbf5b107e8aa1a207b20e",
+        "checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3",
         "location": "docs/collaborating.md",
         "name": "collaborating.md",
         "status": "realized"
@@ -20162,7 +20216,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f2ae1369ea386f2badfbdf5a6f08dd43b13146bac70403458f3f6daf35189cec",
+        "checksum": "sha256:2a742336419ce87bd4608b5545a5cdc60553d4b948efe4f77e02da06acc8576d",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
         "status": "realized"
@@ -20228,7 +20282,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:17f8bc6928a55569011f07403264ba5ef3239fd868cc91403d73b89361112940",
+        "checksum": "sha256:c52244a071410862ea4478f8b189bcf0e536a4ba9bf82287740276226a768dab",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -22618,6 +22672,14 @@
       }
     },
     {
+      "node_id": "chg:shared-by-default",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Sharing a design between sessions becomes the default: a session finds the server holding its graph, starts a detached one if there is none, and proxies to it — no session owns the server"
+      }
+    },
+    {
       "node_id": "chg:shared-sessions",
       "node_type": "ChangeEvent",
       "properties": {
@@ -24652,6 +24714,16 @@
         "decision": "Accepted the gap gap:f58dc09a846a8783.",
         "name": "Reviewed: gap:f58dc09a846a8783",
         "rationale": "Accepted at component granularity for now, with the same caveat recorded when cap:onboarding first joined this: neither skill has been written, so the detector reads them as covered because they are allocated to a component that carries a passing check. That is detector generosity, not evidence. When either is built it should get its own verification rather than inheriting the skills suite's.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:f66d5a4a818d9fbe",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:f66d5a4a818d9fbe.",
+        "name": "Reviewed: gap:f66d5a4a818d9fbe",
+        "rationale": "Standing acknowledgement, re-stated because the rollup's id moves whenever the capability set does: validation for this project is the trials programme — reflow2 used on real designs, which this week meant an adopt pass over dynograph-foundation and a live two-session seam exercise that found four defects nobody had reviewed their way to. It is not a validation-kind Verification per capability. Recording 61 near-identical validation nodes would make the number go green without anyone having checked anything, which is the dishonesty `dec:passing-is-verified` exists to prevent.",
         "status": "accepted"
       }
     },
@@ -27593,6 +27665,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:linking-repos:cap:shared-sessions",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:shared-sessions\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:main\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:central-host\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:07bb37be6d5cd129\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:785c79650b436ed3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:b25bb8d8db80dfd3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:c8cfb3f3be9183af\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:seat-per-client\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:sessions-share-a-graph\",\"properties\":{}}]",
+        "state": "{\"description\":\"--http <addr> serves the design over streamable HTTP so many client sessions share one process. The store is single-writer PER PROCESS, so this satisfies the constraint rather than working around it: one server means exactly one writer. rmcp builds a service per session through a factory, and ReflowService::share decides the split — the graph and the write generation are shared because they are properties of the design; the seat and the read-hint memory are minted fresh because they are properties of whoever just connected. The graph moved from a Mutex to an RwLock so concurrent reads do not queue behind each other, and the compiler audited the read/write split in the process: all 32 read sites genuinely need only &DesignGraph. No authentication — the flag's help and the startup line both say to bind loopback or a private network.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Several sessions work one design at once, through one server\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:shared-sessions",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:surface-export:cap:portability",
       "node_type": "Snapshot",
       "properties": {
@@ -28431,7 +28513,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2d129556e9a75171138b5df2a935a446315c86354004af2d66ef82ccc486d8ff",
+  "prev_content_hash": "sha256:57b448d3f661ed1cc652498d93c69b3c3cb4963b8757d71ab7b1725e648aae59",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
