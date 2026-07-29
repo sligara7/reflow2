@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b22d4d0ba3a07aff8387474baf38be939e2b41cc6518485e6b6eda781c8d7e4e",
+  "content_hash": "sha256:143413a5f600aac2d0b2a5ba45d3d5feeb85da2ea54bc7fb8f67c4376c695e61",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -8589,6 +8589,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:context-is-a-modelled-quantity",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:edge-defaults-do-not-assert"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:drift-rolls-up-to-a-score",
       "properties": {
         "optional": false,
@@ -12695,6 +12704,12 @@
       "from_id": "req:concurrent-planning",
       "properties": {},
       "to_id": "decision:ack:65b894fcc73c3961"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:context-is-a-modelled-quantity",
+      "properties": {},
+      "to_id": "decision:ack:755a5d5272eb702d"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -28619,6 +28634,16 @@
       }
     },
     {
+      "node_id": "decision:ack:755a5d5272eb702d",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:755a5d5272eb702d.",
+        "name": "Reviewed: gap:755a5d5272eb702d",
+        "rationale": "Deferred on Anthony's word, 2026-07-28, closing the reflow workflow review. Accepted and not dropped. Deferred rather than built because it should be decided TOGETHER with req:edge-defaults-do-not-assert, not before it: weight_basis asserting \"estimated\" over an absent weight and the weight facet being empty are two faces of one question, and fixing the default in isolation might delete the slot this requirement needs. Three things are genuinely open and none is mechanical: the granularity of an estimate (per capability, per tool call, per skill); whether estimates are authored, measured from real sessions, or both — weight_basis already distinguishes estimated / evidence / measured, which is itself evidence the facet was designed for this; and what a threshold even means when there is no fixed window, since models differ and reflow's 160k CRITICAL / 140k WARNING were its own environment's numbers, not a law. Recording one figure as if it were universal would be the asserting default this family of requirements exists to prevent.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:75651a693cc63b9c",
       "node_type": "Decision",
       "properties": {
@@ -31501,6 +31526,21 @@
       }
     },
     {
+      "node_id": "req:context-is-a-modelled-quantity",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Context consumption is modelled, so a path that will not fit is knowable before it is walked",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 handles agent context only at RUNTIME and reactively. cap:bounded-reads answers an oversized read with a bounded page that says what it left out; cap:tool-search finds the right tool on a surface too large to hold in context. Both are good and both are mitigations applied per call, after the cost has already been incurred. Nothing predicts, before a path is walked, whether walking it will fit. THE PRIOR ART, from reflow's 99-meta_analysis.json and the --context-flow mode of system_of_systems_graph_v2.py: context consumption was a first-class modelled quantity. It was a FUNCTION ATTRIBUTE (context_consumption, listed alongside inputs/outputs and marked \"CRITICAL for AI agent analysis\"), it was THE PRIMARY EDGE WEIGHT — \"Context consumption as edge weight enables bottleneck analysis\" — and it carried estimation guidelines so the numbers were comparable rather than invented per author (read_small_config 1000-2000 tokens, read_workflow_file 5000-15000, read_large_architecture 15000-30000, generate_architecture 5000-15000, run_analysis 5000-10000). From that, analyze_functional_architecture.py computed CONTEXT PATH ANALYSIS — cumulative context along all paths — against hard thresholds: CRITICAL above 160k tokens, WARNING above 140k. So \"an agent cannot get through this path\" was answerable at design time, from the graph, before anyone ran it. THE SLOT ALREADY EXISTS IN reflow2 AND IS EMPTY, which is what makes this a smaller change than it sounds. DEPENDS_ON declares the whole coupling-weight facet and the schema comment states its intended use: \"Coupling-weight facet (graph-analysis.md). weight is a STRENGTH (higher = tighter); invert to a cost for shortest-path/closeness.\" Measured against reflow2's own 3,250-edge design: 232 edges carry weight_basis, and ZERO carry weight, frequency or data_volume. The facet is declared and wholly unpopulated. THIS EXPLAINS req:edge-defaults-do-not-assert RATHER THAN REPEATING IT: weight_basis asserts \"estimated\" over an absent weight because the weights were MEANT to be there, and reflow shows what for — invert the weight to a cost, sum along the path, flag what will not fit. Fixing the default and populating the facet are two answers to the same question and should be decided together. OPEN, and not decided here: whether reflow2 should estimate context per capability, per tool call, or per skill; whether the estimate is authored, measured from real sessions, or both (weight_basis already has the vocabulary for that distinction — estimated / evidence / measured — which is further evidence the facet was designed for exactly this); and what a threshold means for a system with no fixed window, since models differ and the number reflow hardcoded was its own. Found 2026-07-28 reviewing 99-meta_analysis.json. Anthony's word: capture it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:corpus-ingest",
       "node_type": "Requirement",
       "properties": {
@@ -33530,7 +33570,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0e7cf36f68c2ca2855c316855b5b07575c08e606b86bf0e8793f87cd5e1f196e",
+  "prev_content_hash": "sha256:b22d4d0ba3a07aff8387474baf38be939e2b41cc6518485e6b6eda781c8d7e4e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
