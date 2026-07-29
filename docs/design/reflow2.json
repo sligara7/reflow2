@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b0f8837e425db844c0d26e44fada430f66d1fb9e4afa10a5b8d6d4c6352a848b",
+  "content_hash": "sha256:be5de974cafa76d3611d80ae994e7306219d4899e00a148fdfa32a020584bc42",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -8664,12 +8664,30 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:mode-is-chosen-and-changeable",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:defaults-do-not-assert"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:nudge-path-proven",
       "properties": {
         "optional": false,
         "weight_basis": "estimated"
       },
       "to_id": "cap:read-loop-hint"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:one-design-or-several-is-asked",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:design-identity"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -8688,6 +8706,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:read-while-held-mechanism"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:scenarios-are-modelled",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:model-process"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -12871,6 +12898,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:mode-is-chosen-and-changeable",
+      "properties": {},
+      "to_id": "decision:ack:3f600ff329ecb31a"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:modularity-computed",
       "properties": {},
       "to_id": "dec:mosa-conformance"
@@ -12880,6 +12913,12 @@
       "from_id": "req:nudge-path-proven",
       "properties": {},
       "to_id": "decision:ack:8ce3d04154396568"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:one-design-or-several-is-asked",
+      "properties": {},
+      "to_id": "decision:ack:94d6436f52168f32"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -12898,6 +12937,12 @@
       "from_id": "req:read-while-held",
       "properties": {},
       "to_id": "decision:ack:b53c7315f39f3640"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:scenarios-are-modelled",
+      "properties": {},
+      "to_id": "decision:ack:73e198ee5e28f1f1"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -28494,6 +28539,16 @@
       }
     },
     {
+      "node_id": "decision:ack:3f600ff329ecb31a",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:3f600ff329ecb31a.",
+        "name": "Reviewed: gap:3f600ff329ecb31a",
+        "rationale": "Deferred on Anthony's word, 2026-07-28, with the rest of the reflow workflow review — and explicitly WITH \"what rigid should mean\" left parked, which he confirmed the same day. Accepted and not dropped. It is the sharpest instance of the defaults family: unlike the ten properties in the original sweep, which are asserted and UNREAD, Project.mode is asserted AND ACTED UPON (heal.rs:431 changes HEAL's behaviour on it), and reflow2's own Project carries the unchosen default flexible — the mode meaning \"the implementation drives the architecture\", in a project whose thesis is that the design is the memory. Deferred rather than built because the three parts are separable and only one is mechanical: making the value CHANGEABLE is a setter and is small; making it CHOSEN means deciding whether genesis asks (which risks re-adding the setup step req:no-setup-per-project deliberately removed) or whether mode reads as unspecified until someone says, per the rule ver:interface-spec already set for Interface.medium; and making it VISIBLE means deciding which reports surface it. The second is a design decision, not a patch, and it is coupled to the parked question of what rigid should mean beyond heal.rs:431 — that question cannot be answered usefully while the mode is unchoosable, so this is its prerequisite and should be settled first.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:41e84391c187d118",
       "node_type": "Decision",
       "properties": {
@@ -28694,6 +28749,16 @@
       }
     },
     {
+      "node_id": "decision:ack:73e198ee5e28f1f1",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:73e198ee5e28f1f1.",
+        "name": "Reviewed: gap:73e198ee5e28f1f1",
+        "rationale": "Deferred on Anthony's established disposition for this review, 2026-07-28 — every capture from the reflow workflow comparison is accepted, recorded and scheduled for a later increment rather than built now. Not dropped. Note it is the largest of the captures: adding a scenario or use-case object is new schema, not a check over existing data, and it would give validation somewhere to land — the same day, 67 capabilities were acknowledged as verified-but-not-validated precisely because operational intent has no node to attach to. Two things must be settled before building: whether a scenario is a new node type or a specialisation of Flow (already implemented in flow.rs with ordered steps, so the sequence half exists), and what happens to Actor, which is declared but appears once in the whole core as a line in report.rs's SNAPSHOT_TYPES and whose INTERACTS_WITH edge has no reader — the actor half of a scenario is currently unread vocabulary, so this cannot be built without also resolving that. Related to the behavioural-equivalence question held open the same day: a scenario replayed against an old and a new implementation is what would answer it.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:755a5d5272eb702d",
       "node_type": "Decision",
       "properties": {
@@ -28840,6 +28905,16 @@
         "decision": "Accepted the gap gap:946dd6b0bb464229.",
         "name": "Reviewed: gap:946dd6b0bb464229",
         "rationale": "Deferred on Anthony's word, 2026-07-28. Accepted and not dropped: reflow re-read the architecture anchor at phase transitions, at resync, and every 5 iterations, explicitly to \"remind yourself of design intent and constraints\"; reflow2's periodic re-injection carries loop DEBT instead, which says what you owe rather than what you were trying to build. Deferred and coupled to two open questions rather than blocked by them — the trigger depends on req:build-loop-is-bounded (parked the same day), and which node type carries the payload depends on dec:anchor-retire-or-implement (Snapshot at 14 instances versus Anchor at zero and still advertised). The recording vocabulary already exists, so when this is built it is the re-reading that is new, not the schema.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:94d6436f52168f32",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:94d6436f52168f32.",
+        "name": "Reviewed: gap:94d6436f52168f32",
+        "rationale": "Deferred on Anthony's established disposition for this review, 2026-07-28. Accepted and not dropped: reflow asked \"is this a system-of-systems?\" once, at setup, and recorded the answer, while reflow2 settles the same boundary implicitly by wherever someone ran init. Deferred because the SHAPE is constrained by work already accepted and getting it wrong would undo that work: req:no-setup-per-project and cap:latent-surface deliberately removed setup steps and made a directory with no design cost nothing, so this must not become a question asked at genesis. The likely form is therefore a detector — notice when one graph is carrying what look like several systems, or several graphs describing one, and ask THEN — which is report-and-ask per dec:report-dont-judge rather than a prompt. Designing that detector is the work, and it is not started.",
         "status": "accepted"
       }
     },
@@ -32126,6 +32201,21 @@
       }
     },
     {
+      "node_id": "req:mode-is-chosen-and-changeable",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The governance mode is chosen, visible and changeable — it is the one asserted default that is actually acted upon",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Project.mode decides whether the design or the implementation is the source of truth, and reflow2 applies it by default, never asks for it, and provides no way to change it. THE MEASURED STATE, 2026-07-28. genesis.rs takes mode OPTIONALLY — \"if let Some(mode) = opts.mode\" — and its own comment states the consequence: \"Scaffold the Project (schema applies mode=flexible, status=active when unset)\". project_mode_of falls back to \"flexible\" again on read. The string \"mode\" does not appear anywhere in crates/reflow2-mcp/src/service.rs, so there is no set_project_mode and no setter of any kind on the served surface; after genesis it is reachable only through the create_node escape hatch — the same shape as the KPP objective finding and Requirement.concern. And reflow2's OWN Project carries mode = flexible, which nobody chose. WHY THIS IS WORSE THAN THE TEN PROPERTIES IN THE ORIGINAL SWEEP, and the difference is the whole point. Those defaults are asserted AND UNREAD — Requirement.concern sitting at core on 67 of 67 is inert, carrying no information and driving nothing. This one is asserted AND ACTED UPON: heal.rs:431 reads it, and in rigid mode HEAL only proposes and never auto-applies. So req:defaults-do-not-assert has, in this property, its first instance where the invented value changes what the system DOES. flexible is not a neutral setting either. In the vocabulary reflow2 inherited it means the architecture is NOT the source of truth, the implementation drives the architecture, and the response to drift is to update the design to match the build. That is a governance decision. reflow2 — a project whose thesis is that the design is the memory — is currently running in the mode that says the implementation drives the design, not because anyone decided so but because opts.mode was None. THE PRIOR ART IS A FAILURE, NOT A MODEL, and it corroborates rather than instructs. reflow defined development_mode in workflow_master.json with seven behavioural commitments per mode (architecture_source_of_truth, implementation_drives_architecture, drift_response, new_functionality_policy, change_request_required, auto_update_architecture_on_resync, plus the discovered-items routing), REQUIRED it as the P0-to-P1 transition prerequisite (\"fields_must_be_set: development_mode.mode\"), READ it in resync_protocol.json to choose between updating the architecture and realigning the implementation, and TESTED for it in 97-GAN-inspired-test.json — and NO WORKFLOW STEP ANYWHERE SETS IT. Not 00a, not 00b, not the 01 through 04 series. Its own META-04H check HA-005, \"Transition Prerequisites Satisfiability\", exists to catch exactly that and did not. So both systems arrive at the same place by different routes: a governance mode that everything consults and nothing establishes. THREE THINGS THIS REQUIRES, and they are separable. (1) The value is CHOSEN — genesis asks, or the mode reads as unspecified until someone says, per the rule ver:interface-spec already sets for Interface.medium: a default may record absence, never a choice. (2) The value is CHANGEABLE — a project's governance legitimately moves as it matures, exploratory to controlled, and today it cannot; brainmaker reported this from the field, half-right, since the sharper fact is that genesis does not set it at all, it defaults it. (3) The value is VISIBLE — a mode that silently changes HEAL's behaviour should be readable in the reports that say where the design stands. What rigid should MEAN beyond heal.rs:431 stays open and parked separately; this requirement is the prior question, because rigid cannot mean anything useful while the mode is unchoosable and unchangeable. Found 2026-07-28 reviewing 00a-basic_setup.json. Anthony's word: capture it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:modularity-computed",
       "node_type": "Requirement",
       "properties": {
@@ -32243,6 +32333,21 @@
         "provenance": "authored",
         "statement": "A person inheriting a mature design must be able to ask \"we need to add this — where does it go?\" and be answered from the graph: which existing part should own it, what the change would touch, which decisions already govern that area and must not be casually contradicted, what intent it must not break, and who authored the reasoning so they can be asked. Answering \"what is this system and what has been decided\" is necessary but not sufficient; the requirement is satisfied only when the second question — where and how do I add to it — is also answered, and when the answer says honestly which parts of the real system the design does not cover.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:one-design-or-several-is-asked",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Whether this is one design or several is a question asked once, not a consequence of where init was run",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 decides the boundary of a design by FILESYSTEM LAYOUT: a design is whatever lives under one directory's .reflow2/graph, fixed by wherever someone ran init, and nothing ever asks whether that is the right boundary. Genesis creates one Project and proceeds. THE PRIOR ART, from reflow's 00-setup.json: S-04-decision is a first-class decision point named \"System-of-Systems Decision\" — determine, before anything is built, whether this is a system-of-systems integration project. If yes, S-04 decomposes the concept into multiple independent systems: analyse the SoS requirements, DEFINE SYSTEM BOUNDARIES (\"clarify which capabilities belong to which system\"), IDENTIFY INTEGRATION POINTS (\"understand how systems will interact\"), and create a separate directory per identified system so each gets its own design. The question was asked once, at the start, and answered on the record. reflow2 HAS THE MACHINERY AND NOT THE QUESTION, which is the whole of this requirement. compare_designs, cap:composed-analysis (analyse two designs together without merging them), cap:mirror-surface (compose by mirroring the other's published surface), cap:seam-incompatibility (say when two linked designs disagree at a boundary), cap:merge-designs, cap:design-dependencies-declared, req:complementary-pairing and req:version-combination-is-an-object all assume the split already happened and someone else decided where. Nothing helps make that decision, records it, or revisits it. WHY IT IS NOT ACADEMIC: the operating context this project is built for is several organisations with competing, partially-built, differently-motivated designs, and an ecosystem of coupled repositories each carrying its own graph. In that world \"is this one design or three, and where are the seams?\" is the first real design decision, it is made implicitly today by where a directory happens to sit, and it is the one decision that determines whether all the composition machinery above ever gets used. NOTE THE TENSION TO RESOLVE, recorded rather than glossed: reflow2 deliberately installs once per machine and makes a directory with no design cost nothing (req:no-setup-per-project, cap:latent-surface). Asking a question at genesis must not become a setup step, which is exactly what that work removed. The likely shape is therefore not a prompt but a detector — notice when one graph is carrying what looks like several systems, or when several graphs are describing one, and ask THEN, which is the report-and-ask pattern the project already uses. Found 2026-07-28 reviewing 00-setup.json. Anthony's word: capture it.",
+        "status": "proposed"
       }
     },
     {
@@ -32408,6 +32513,21 @@
         "provenance": "authored",
         "statement": "reflow2 preserves not only what was decided but what was considered and rejected: every Decision keeps its unchosen alternatives as first-class, forkable siblings, and any past decision can be re-opened at its epoch and a different branch taken from that point. The design is a navigable decision tree, not only a linear history — the extension of req:intent-preserved from 'the past is never overwritten' to 'the roads not taken are never lost either.' The unchosen option and its rationale are stored; the alternative's consequence design is computed on demand by replay, never eagerly maintained.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:scenarios-are-modelled",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "An operational scenario is a design object, so validation has something to point at",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 has no vocabulary for a scenario, a use case, or an operational thread. Grepping the whole schema for scenario, use_case, persona, journey and operational_view returns nothing. The consequence is not a missing view; it is that VALIDATION HAS NOTHING TO POINT AT. Verification.kind already distinguishes verification (built right, meets the spec) from validation (the right thing, meets the operational intent) and the unvalidated_capability gap already reads that distinction — but the design cannot state what the operational intent IS. That is why, on 2026-07-28, 67 capabilities were acknowledged as verified-but-not-validated with the reason \"validation is tracked OUTSIDE this graph\": the real evidence is the brownfield ophyd-service trial, the greenfield aidrone trial and sustained fleet use, all of which live in prose in docs/trials-private/. They live in prose because there is no node they could attach to. A scenario is precisely the missing anchor — a named narrative of an actor achieving something through a sequence of steps, which is what a passing validation would be a validation OF. THE PRIOR ART: reflow's 00-setup.json required THREE foundational documents before any design work began — SYSTEM_MISSION_STATEMENT.md (purpose, objectives, key stakeholders), SUCCESS_CRITERIA.md (measurable criteria, performance, functional and non-functional requirements), and USER_SCENARIOS.md (\"detailed user scenarios, user personas, use cases, user journey maps\"). Two of the three map onto reflow2 cleanly: the mission statement onto Project.objective, the success criteria onto Requirements plus the KPP machinery of req:inviolable-intent. The third maps onto nothing. THE PIECES EXIST AND ONE OF THEM IS HALF-DEAD, which is why this is a vocabulary gap rather than a missing subsystem. Flow is fully implemented — flow.rs carries add_flow, part_of_flow with step_order, and flow_report, realizing cap:model-process — so an ordered sequence of capabilities is already expressible. Actor is not: in the entire core it appears ONCE, at report.rs:35 inside SNAPSHOT_TYPES, where it is counted and nothing more, and INTERACTS_WITH — the relationship Actor's own schema hint describes (\"Actors sit at the boundary; they INTERACT_WITH Capabilities or Flows and often originate Requirements\") — has no reader anywhere. So the actor half of a scenario is declared and unread, another member of the family with req:functional-vocabulary-computes. WHY IT MATTERS PARTICULARLY HERE: operational scenarios are a standard viewpoint in the practice this project exists to serve (DoDAF OV-1 and OV-6, UAF), not a nicety. And a scenario is also the natural home for the behavioural-equivalence question held open the same day — \"does the new implementation still do what the old one did\" is answered by replaying a scenario against both, which is what reflow's 01f migration workflow did with golden tests. Found 2026-07-28 reviewing 00-setup.json. Anthony's word: capture it.",
+        "status": "proposed"
       }
     },
     {
@@ -33655,7 +33775,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:143413a5f600aac2d0b2a5ba45d3d5feeb85da2ea54bc7fb8f67c4376c695e61",
+  "prev_content_hash": "sha256:b0f8837e425db844c0d26e44fada430f66d1fb9e4afa10a5b8d6d4c6352a848b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
