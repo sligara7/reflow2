@@ -37,6 +37,23 @@ dynograph-resolution = { git = "https://github.com/sligara7/dynograph-foundation
 # axis: DimensionObservation rollup + per-epoch quality drift. Embeddings-optional.
 dynograph-vector = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.12.0" }
 
+# Debug info: line tables only.
+#
+# The default `debug = true` emits full DWARF — variable layouts, type DIEs, the
+# lot — for every unit in the workspace AND every dependency. On this project
+# that grew `target/debug/deps` to 87 GB (98 GB for `target/` overall) and drove
+# rustc's peak RSS high enough that a 4-job `cargo test --workspace` tripped
+# systemd-oomd, which kills the entire VTE scope: shell, agent and MCP server at
+# once. See `.cargo/config.toml` for the companion jobs cap.
+#
+# `line-tables-only` keeps what we actually use day to day — panic backtraces
+# with file:line, and `RUST_BACKTRACE=1` output that still points at real source
+# — while dropping the variable/type detail only an interactive debugger reads.
+# If you need to step through in gdb/lldb, build that one session with
+# `RUSTFLAGS="-C debuginfo=2"` rather than changing this back.
+[profile.dev]
+debug = "line-tables-only"
+
 # For local cross-repo dev against an unreleased foundation, uncomment and point
 # each crate at ../dynograph-foundation/crates/*. Do not commit uncommented.
 # [patch."https://github.com/sligara7/dynograph-foundation.git"]
