@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9e7be9439fa2551b3f5aaa7a33c715aae15aa19b6bc45b66e3310f79d76b3e94",
+  "content_hash": "sha256:6504e7f0f081cf918dd9e2a484cb8ae0b6c23e19abdc5ae5e915769eb9b392fa",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -795,6 +795,48 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:4dfe80425e7f885e",
+      "properties": {},
+      "to_id": "cap:brainstorm"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:4dfe80425e7f885e",
+      "properties": {},
+      "to_id": "cap:change-an-existing-feature"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:4dfe80425e7f885e",
+      "properties": {},
+      "to_id": "cap:delta-reconcile"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:4dfe80425e7f885e",
+      "properties": {},
+      "to_id": "cap:onboarding"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:4dfe80425e7f885e",
+      "properties": {},
+      "to_id": "cap:parallel-work"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:4dfe80425e7f885e",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:52b1ed1377382961",
+      "properties": {},
+      "to_id": "req:plans-move-honestly"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:5aa0248a4e730d34",
       "properties": {},
       "to_id": "req:kit-reaches-the-agent"
@@ -822,6 +864,12 @@
       "from_id": "question:7d8edafb0bd7aea3",
       "properties": {},
       "to_id": "req:design-identity"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:896e6b1107e0b6b4",
+      "properties": {},
+      "to_id": "cap:changelog-view"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -873,6 +921,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:b0ef8ce1e452f881",
+      "properties": {},
+      "to_id": "req:defaults-do-not-assert"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:b53c7315f39f3640",
       "properties": {},
       "to_id": "req:read-while-held"
@@ -900,6 +954,408 @@
       "from_id": "question:d1642916ad2d7d36",
       "properties": {},
       "to_id": "req:seam-incompatibility"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:adopt"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:allocate"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:budget"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:change"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:claim-liveness"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:compare-alternatives"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:compare-designs"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:composed-analysis"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:coverage"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:decision-point"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:degraded-surface"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:derived-completion"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:design-identity"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:detect"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:dimensions"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:drift-direction"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:evidence-fidelity"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:freshness"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:genesis"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:git-merge-driver"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:hierarchy"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:install-reaches-the-agent"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:interface-spec"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:key-interfaces"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:kpp"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:kpp-proposal"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:latent-surface"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:machine-wide-install"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:merge-designs"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:merge-rerere"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:mirror-surface"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:model-process"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:nudge-path-proven"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:portability"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:propagate"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:publish-surface"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:publishable-promise"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:questions"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:read-loop-hint"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:reconcile-deployed"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:reconcile-verified"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:remote-sessions"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:report"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:requirement-lineage"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:sanitize-ingress"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:scoped-analysis"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:seam-incompatibility"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:search"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:snapshot-read"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:stale-seat-refusal"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:stamp"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:store"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:supporting-is-not-conflict"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:surface"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:tool-search"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:d1c2d599af5b45ce",
+      "properties": {},
+      "to_id": "cap:vocabulary"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -6926,6 +7382,26 @@
       "to_id": "dec:skills-served"
     },
     {
+      "edge_type": "CONTRADICTS",
+      "from_id": "req:framework-is-chosen-not-defaulted",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 0.9,
+        "evidence": "Corroboration, not conflict. The original reflow independently reached the same rule and wrote it as LESSON-01 of 00b-framework_selection.json — 'Do NOT default to UAF!' — with the reason that framework choice GATES which analyses are available, so a silent default chooses the analyses too. reflow2's Project.domain is that decision reduced to unread free text."
+      },
+      "to_id": "req:defaults-do-not-assert"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "req:functional-vocabulary-computes",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 0.9,
+        "evidence": "Corroboration, not conflict. is_entry_point and is_exit_point default to false on every Capability, which asserts 'not an entry point' across the whole design without anyone choosing it — a concrete field instance of the general rule. Found 2026-07-28 via the system_of_systems_graph_v2.py comparison, where three ported functional-mode detectors turned out to be unimplementable because of it."
+      },
+      "to_id": "req:defaults-do-not-assert"
+    },
+    {
       "edge_type": "DEPENDS_ON",
       "from_id": "cmp:agent",
       "properties": {
@@ -8056,6 +8532,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:adopt-says-how-much-it-got",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:adopt-existing"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:complementary-pairing",
       "properties": {
         "optional": false,
@@ -8089,6 +8574,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:read-while-held-mechanism"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:version-combination-is-an-object",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:epochs-can-be-planned"
     },
     {
       "edge_type": "DEPLOYED_TO",
@@ -8300,6 +8794,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:adopt",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:adopt",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8360,6 +8860,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:allocate",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:allocate",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8394,9 +8900,21 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:bounded-reads",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:brainstorm",
       "properties": {},
       "to_id": "dec:exploratory-staging"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:brainstorm",
+      "properties": {},
+      "to_id": "decision:ack:4dfe80425e7f885e"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8457,6 +8975,12 @@
       "from_id": "cap:budget",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:budget",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8534,7 +9058,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:change",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change-an-existing-feature",
+      "properties": {},
+      "to_id": "decision:ack:4dfe80425e7f885e"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8565,6 +9101,24 @@
       "from_id": "cap:change-an-existing-feature",
       "properties": {},
       "to_id": "decision:ack:f58dc09a846a8783"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:changelog-view",
+      "properties": {},
+      "to_id": "decision:ack:127934176c8341bd"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:changelog-view",
+      "properties": {},
+      "to_id": "decision:ack:896e6b1107e0b6b4"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:changelog-view",
+      "properties": {},
+      "to_id": "decision:ack:ebf17b5d2c53cf03"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8601,6 +9155,12 @@
       "from_id": "cap:claim-liveness",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:claim-liveness",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8655,6 +9215,12 @@
       "from_id": "cap:cluster-claims",
       "properties": {},
       "to_id": "decision:ack:ca4e30e6002dfd13"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cluster-claims",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8721,6 +9287,12 @@
       "from_id": "cap:compare-alternatives",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-alternatives",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8798,7 +9370,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:compare-designs",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:compare-designs",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:composed-analysis",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8841,6 +9425,12 @@
       "from_id": "cap:coverage",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:coverage",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8906,6 +9496,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:decision-point",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:decision-point",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -8931,6 +9527,18 @@
       "from_id": "cap:degraded-surface",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:degraded-surface",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:delta-reconcile",
+      "properties": {},
+      "to_id": "decision:ack:4dfe80425e7f885e"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -8990,7 +9598,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:derived-completion",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:derived-completion",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:design-dependencies-declared",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9021,6 +9641,12 @@
       "from_id": "cap:design-identity",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:design-identity",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9110,6 +9736,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:detect",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:detect",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9170,6 +9802,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:dimensions",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:dimensions",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9218,6 +9856,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:drift-direction",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:drift-direction",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9237,6 +9881,12 @@
       "from_id": "cap:evidence-fidelity",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:evidence-fidelity",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9350,6 +10000,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:freshness",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:freshness",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9410,6 +10066,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:genesis",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:genesis",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9435,6 +10097,12 @@
       "from_id": "cap:git-merge-driver",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:git-merge-driver",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9506,6 +10174,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:heal",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:heal",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9566,6 +10240,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:hierarchy",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:hierarchy",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9621,6 +10301,12 @@
       "from_id": "cap:ingest",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:ingest",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9633,6 +10319,18 @@
       "from_id": "cap:install-reaches-the-agent",
       "properties": {},
       "to_id": "dec:commands-are-the-exception"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:install-reaches-the-agent",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:interface-spec",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9666,6 +10364,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:key-interfaces",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:kit",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -9717,6 +10421,12 @@
       "from_id": "cap:kit",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kit",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9764,6 +10474,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:kpp",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kpp",
+      "properties": {},
       "to_id": "decision:ack:d610aa40cddc6c70"
     },
     {
@@ -9800,6 +10516,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:kpp-proposal",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:kpp-proposal",
+      "properties": {},
       "to_id": "decision:ack:d610aa40cddc6c70"
     },
     {
@@ -9813,6 +10535,12 @@
       "from_id": "cap:latent-surface",
       "properties": {},
       "to_id": "dec:install-once-per-machine"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:latent-surface",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9878,6 +10606,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:loop-status",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:loop-status",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -9885,6 +10619,12 @@
       "from_id": "cap:machine-wide-install",
       "properties": {},
       "to_id": "dec:install-once-per-machine"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:machine-wide-install",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -9939,6 +10679,12 @@
       "from_id": "cap:mcp-surface",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mcp-surface",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10016,6 +10762,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:merge-designs",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-designs",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -10082,6 +10834,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:merge-rerere",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:merge-rerere",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -10119,6 +10877,12 @@
       "from_id": "cap:mirror-surface",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mirror-surface",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10190,6 +10954,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:model-process",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:model-process",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -10218,6 +10988,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:nudge-path-proven",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:onboarding",
       "properties": {},
       "to_id": "dec:views-are-projections"
@@ -10233,6 +11009,12 @@
       "from_id": "cap:onboarding",
       "properties": {},
       "to_id": "decision:ack:4ac1c3ccf483b4d6"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:onboarding",
+      "properties": {},
+      "to_id": "decision:ack:4dfe80425e7f885e"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10257,6 +11039,12 @@
       "from_id": "cap:onboarding",
       "properties": {},
       "to_id": "decision:ack:f58dc09a846a8783"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:parallel-work",
+      "properties": {},
+      "to_id": "decision:ack:4dfe80425e7f885e"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10340,6 +11128,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:portability",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:portability",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -10395,6 +11189,12 @@
       "from_id": "cap:propagate",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:propagate",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10440,6 +11240,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:publish-surface",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:publishable-promise",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:questions",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -10496,6 +11308,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:questions",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:questions",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -10545,6 +11363,12 @@
       "from_id": "cap:read-loop-hint",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:read-loop-hint",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10616,6 +11440,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-built",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-built",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -10676,6 +11506,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-deployed",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-deployed",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -10731,6 +11567,12 @@
       "from_id": "cap:reconcile-verified",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:reconcile-verified",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10773,6 +11615,12 @@
       "from_id": "cap:remote-sessions",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:remote-sessions",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10850,6 +11698,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:report",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:report",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -10887,6 +11741,12 @@
       "from_id": "cap:requirement-lineage",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:requirement-lineage",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -10946,6 +11806,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:sanitize-ingress",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:sanitize-ingress",
+      "properties": {},
       "to_id": "rule:no-foreclosure"
     },
     {
@@ -10977,6 +11843,18 @@
       "from_id": "cap:scoped-analysis",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:scoped-analysis",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:seam-incompatibility",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -11031,6 +11909,12 @@
       "from_id": "cap:search",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:search",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -11076,6 +11960,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:shared-sessions",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:skills-served",
       "properties": {},
       "to_id": "dec:skills-served"
@@ -11106,6 +11996,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:skills-served",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:snapshot-read",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -11127,6 +12023,12 @@
       "from_id": "cap:snapshot-read",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:snapshot-read",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -11160,6 +12062,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:stale-seat-refusal",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:stamp",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -11211,6 +12119,12 @@
       "from_id": "cap:stamp",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:stamp",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -11276,7 +12190,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:store",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:store",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:supporting-is-not-conflict",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -11342,6 +12268,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:surface",
       "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:surface",
+      "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
     },
     {
@@ -11367,6 +12299,12 @@
       "from_id": "cap:tool-search",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:tool-search",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -11439,6 +12377,12 @@
       "from_id": "cap:vocabulary",
       "properties": {},
       "to_id": "decision:ack:c8cfb3f3be9183af"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:vocabulary",
+      "properties": {},
+      "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -11546,6 +12490,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cmp:skills",
       "properties": {},
+      "to_id": "decision:ack:4dfe80425e7f885e"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:skills",
+      "properties": {},
       "to_id": "decision:ack:7a268920fdfe0ba7"
     },
     {
@@ -11646,6 +12596,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:defaults-do-not-assert",
+      "properties": {},
+      "to_id": "decision:ack:b0ef8ce1e452f881"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:design-composes",
       "properties": {},
       "to_id": "dec:nested-graphs"
@@ -11682,6 +12638,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:graph-indexes-snapshots",
+      "properties": {},
+      "to_id": "decision:ack:6bce37248bacaa09"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:key-interfaces",
       "properties": {},
       "to_id": "dec:mosa-conformance"
@@ -11715,6 +12677,12 @@
       "from_id": "req:nudge-path-proven",
       "properties": {},
       "to_id": "decision:ack:8ce3d04154396568"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:plans-move-honestly",
+      "properties": {},
+      "to_id": "decision:ack:52b1ed1377382961"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -27043,6 +28011,16 @@
       }
     },
     {
+      "node_id": "decision:ack:127934176c8341bd",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:127934176c8341bd.",
+        "name": "Reviewed: gap:127934176c8341bd",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. The capability is captured intent at status=planned with nothing built against it, so there is nothing yet to verify; adding a Verification now would leave a check at 'planned' that confirms nothing. Revisit when the increment is scheduled, together with the unallocated and unrealized gaps on the same node.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:19822d94e3adcd21",
       "node_type": "Decision",
       "properties": {
@@ -27273,6 +28251,26 @@
       }
     },
     {
+      "node_id": "decision:ack:4dfe80425e7f885e",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:4dfe80425e7f885e.",
+        "name": "Reviewed: gap:4dfe80425e7f885e",
+        "rationale": "Component granularity accepted on Anthony's word, 2026-07-28. The cmp:skills bundle verification is a real passing check exactly one hop from each of these five capabilities, and the capabilities are skill documents whose behaviour is largely the text the agent reads — so a per-capability check would largely re-assert what the bundle check already exercises. Judgement made once, deliberately, rather than left to accumulate. Revisit if any of the five grows machinery of its own beyond its text (parallel-work and delta-reconcile are the likeliest to).",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:52b1ed1377382961",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:52b1ed1377382961.",
+        "name": "Reviewed: gap:52b1ed1377382961",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. Captured the same day as part of the roadmap/epoch intent and accepted as a requirement; scheduled for a later increment rather than built now. Not dropped — the plan-volatility discipline (dated confidence, recorded replanning, KPPs inviolable in content but able to slip in time) stands as intent. Revisit when the epoch/increment axis is actually built.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:532359c4b9e132a3",
       "node_type": "Decision",
       "properties": {
@@ -27349,6 +28347,16 @@
         "decision": "Accepted the gap gap:6ac59b7adcc72d03.",
         "name": "Reviewed: gap:6ac59b7adcc72d03",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24). Naming the check now, because this one has an unusually good fixture available: reflow2's own graph. When built, the verification should assert that requirements demonstrably shipped — invoked over MCP, persists in-repo, runs on Linux and macOS — come back DELIVERED without anyone having hand-set a status, and that a requirement whose satisfying capability has a failing check does NOT. The second half is the real test: today ver:search-natural-language is failing, so cap:search must not read as delivered, and req:agent-native must reflect that. A derivation that cannot go backwards is just a slower assertion.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:6bce37248bacaa09",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:6bce37248bacaa09.",
+        "name": "Reviewed: gap:6bce37248bacaa09",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. Captured the same day and accepted: the graph owns the MAP from epoch/increment to the git ref that holds it, rather than duplicating what git already stores. Scheduled for a later increment. The backward-direction precedent already exists in-repo (rel:v0180 in the graph, tag v0.18.0 in git), so this extends a working division of labour rather than opening a new one.",
         "status": "accepted"
       }
     },
@@ -27463,6 +28471,16 @@
       }
     },
     {
+      "node_id": "decision:ack:896e6b1107e0b6b4",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:896e6b1107e0b6b4.",
+        "name": "Reviewed: gap:896e6b1107e0b6b4",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. Ownership is deliberately unassigned: the capability was captured the same day and is intent awaiting a later increment, so naming a component now would assert an allocation nobody chose. Revisit together with the other two changelog-view gaps (unrealized, unverified) when the increment is scheduled.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:8ce3d04154396568",
       "node_type": "Decision",
       "properties": {
@@ -27539,6 +28557,16 @@
         "decision": "Accepted the gap gap:acaf4106e0b94ec0.",
         "name": "Reviewed: gap:acaf4106e0b94ec0",
         "rationale": "APPROVED WORK, NOT YET BUILT. Anthony accepted the requirement and the fleet-lessons recommendation on 2026-07-25 (\"go with your recommendations. they are approved\"), so the gap is true and correct: nothing satisfies it yet. Acknowledged so the open list keeps meaning \"needs a decision\" rather than \"needs typing\" — this needs typing. The acknowledgement expires the moment the requirement gains a capability, which is exactly when it should.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:b0ef8ce1e452f881",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:b0ef8ce1e452f881.",
+        "name": "Reviewed: gap:b0ef8ce1e452f881",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. The rule stands and is explicitly NOT dropped: a default must not assert a choice nobody made. Enforcement is deferred to a later increment, including the schema sweep of the ten defaults that assert an unchosen value — the clearest being Requirement.concern, which sits at 'core' on 67 of 67 nodes with zero code references, so the value carries no information and no one selected it.",
         "status": "accepted"
       }
     },
@@ -27643,6 +28671,16 @@
       }
     },
     {
+      "node_id": "decision:ack:d1c2d599af5b45ce",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:d1c2d599af5b45ce.",
+        "name": "Reviewed: gap:d1c2d599af5b45ce",
+        "rationale": "Acknowledged on Anthony's word, 2026-07-28: validation is tracked OUTSIDE this graph and deliberately so. The real fitness-for-purpose evidence is the trials — the brownfield trial on ophyd-service and the greenfield trial on aidrone, both logged in docs/trials-private/ — plus sustained real usage of the StoryFlow fleet. None of these are modelled as Verification nodes of kind=validation, and backfilling 67 of them would manufacture records where the evidence lives in prose and in use. The spec-level verifications that DO exist are genuine and passing; this gap marks the boundary of what the graph claims to know, not a hole in the testing. Revisit if trial findings start needing to be traceable per-capability.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:d31369434b7b1347",
       "node_type": "Decision",
       "properties": {
@@ -27729,6 +28767,16 @@
         "decision": "Accepted the gap gap:e9ba5784cf1cfa36.",
         "name": "Reviewed: gap:e9ba5784cf1cfa36",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities: this is a skill over existing operations (search, propagate, the Decision layer) and no artifact exists yet. It arrives with the build, alongside cap:onboarding, which it shares a component and most of its machinery with.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:ebf17b5d2c53cf03",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:ebf17b5d2c53cf03.",
+        "name": "Reviewed: gap:ebf17b5d2c53cf03",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. Nothing is built for it because the capability was captured the same day and is scheduled for a later increment — as-designed and as-built agree that this is unbuilt, which is the honest state rather than a defect. Revisit with the unallocated and unverified gaps on the same node.",
         "status": "accepted"
       }
     },
@@ -29425,6 +30473,30 @@
       }
     },
     {
+      "node_id": "question:4dfe80425e7f885e",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Anthony, 2026-07-28: accept component granularity here. The cmp:skills bundle check is a real passing verification one hop away, and these five are skill documents whose behaviour is largely the text itself.",
+        "context_setter": "5 capability(ies) verified only at component granularity via “skills”",
+        "gap_id": "gap:4dfe80425e7f885e",
+        "question": "One test covers the whole skills bundle, and that test passes — but five specific things it contains (brainstorm, changing an existing feature, delta-reconcile, onboarding, and parallel work) have no test of their own. Is the one bundle-level test good enough for these five, or should any of them be proven on its own?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:52b1ed1377382961",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Anthony, 2026-07-28: park as deferred. The requirement is accepted; it was captured today and is scheduled for a later increment, not dropped and not being built now.",
+        "context_setter": "Nothing satisfies requirement “A plan is a dated claim whose movement is on the record”",
+        "gap_id": "gap:52b1ed1377382961",
+        "question": "You wrote down that when a plan changes, the change itself should be dated and kept on the record — so you can always answer \"what did we believe back then?\" But nothing has been built to do that yet. Build it now, park it, or drop it?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
       "node_id": "question:5aa0248a4e730d34",
       "node_type": "Question",
       "properties": {
@@ -29483,6 +30555,18 @@
         "context_setter": "Nothing satisfies requirement “A durable design knows its own name, and remembers it across opens”",
         "gap_id": "gap:7d8edafb0bd7aea3",
         "question": "Should every design get a permanent name of its own the moment it is created — one it keeps forever, even if the folder is renamed or copied to another machine — with the friendly title just a label on top? Right now every design answers to the same built-in name, so two designs cannot tell each other apart, which is what makes linking one plan to another meaningless. The fleet's way of doing this is to use the identifier the system already handed out, so nobody has to coordinate to be unique.",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:896e6b1107e0b6b4",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Anthony, 2026-07-28: park as deferred. Ownership of the changelog view is deliberately not assigned yet; the capability is captured intent awaiting a later increment.",
+        "context_setter": "Capability “A changelog is a derivable view of the graph's own delta” isn't assigned to any part",
+        "gap_id": "gap:896e6b1107e0b6b4",
+        "question": "You've described wanting the system to write a human-readable changelog automatically from the history it already keeps — but you haven't said which part of the system would actually do that job. Which piece should own it?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -29592,6 +30676,18 @@
       }
     },
     {
+      "node_id": "question:b0ef8ce1e452f881",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Anthony, 2026-07-28: park with the others. The rule stands — it is not dropped — but enforcement (including the schema sweep of the ten defaults that assert an unchosen value) is deferred to a later increment.",
+        "context_setter": "Nothing satisfies requirement “A default must not assert what nobody chose”",
+        "gap_id": "gap:b0ef8ce1e452f881",
+        "question": "You wrote down a rule that the system should never quietly fill in an answer on someone's behalf and then treat it as if they'd chosen it — but nothing has been built to enforce that rule yet. Do you want to build it now, park it for later, or drop the rule?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
       "node_id": "question:b53c7315f39f3640",
       "node_type": "Question",
       "properties": {
@@ -29650,6 +30746,18 @@
         "context_setter": "Nothing satisfies requirement “When two linked designs disagree at a seam, say so”",
         "gap_id": "gap:d1642916ad2d7d36",
         "question": "reflow2 can tell you when a connection between two projects is missing a side, but not when both sides exist and simply disagree — one sending a format the other does not expect, or one assuming a speed the other cannot meet. That is the failure that survives testing until it does not. Do you want reflow2 to catch that, knowing it only works once the connection details above are captured properly?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:d1c2d599af5b45ce",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Anthony, 2026-07-28: acknowledge — validation is tracked outside the graph. The real validation is the trials (brownfield ophyd-service, greenfield aidrone) recorded in docs/trials-private/, plus the StoryFlow fleet usage, none of which are modelled as Verification nodes.",
+        "context_setter": "67 verified capabilities not validated",
+        "gap_id": "gap:d1c2d599af5b45ce",
+        "question": "Your tests prove these 67 features do what you specified — but nothing on record shows anyone actually used them for real and confirmed they solve the problem you built them for. Do you want to start recording that real-world confirmation, or is that something you're tracking outside this system?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -29893,6 +31001,21 @@
         "provenance": "authored",
         "statement": "Requirements, functions and structure can be recovered from a running system.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:adopt-says-how-much-it-got",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Adopting an existing system reports how much of it was actually recovered",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2's adopt skill produces a graph of an existing system but has no measure of COMPLETENESS — nothing says what fraction of the codebase reached the design, so \"we adopted it\" cannot be distinguished from \"we adopted the parts we happened to read.\" The original reflow gated on exactly this: workflow 01e-reverse_engineering.json step RE-06 (Validation and Gap Analysis) computed an extraction coverage percentage by validating the extracted architecture back against the code — identifying unmapped functions (code not in the architecture), undocumented interfaces, and inconsistencies between architecture and code behaviour — and its agent guidance made it a stop condition: \"Extraction coverage < 80% requires manual review before proceeding.\" Its completion criteria repeat it as a required gate. DISTINCT FROM WHAT reflow2 ALREADY HAS. coverage_report measures whether INTENT has been delivered (requirements against the golden thread, per req:completion-computed); this measures whether the AS-BUILT LAYER IS COMPLETE — a different axis and the one adopt needs, because an honest brownfield model must be able to say what it did not see. reconcile_artifacts compares recorded artifacts against disk, which is nearer, but it checks the artifacts the design already names rather than finding the code the design never mentioned. The adopt skill's own doctrine already makes the case: \"You only get what you see is not a limitation to paper over: the graph marks what was inferred, confesses what it cannot know\" — a coverage figure is that confession made quantitative. Note the granularity caveat adopt is right about: node count tracks distinct contracts and capabilities, NOT lines of code (a 110k-LOC system landed at ~78 nodes while reflow2's own ~34k LOC lands near ~100), so this measure must be expressed in terms adopt actually models — unmapped entry points, unmodelled contracts, untouched modules — never as a nodes-per-LOC ratio, which would punish a coarse-but-honest model. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "status": "proposed"
       }
     },
     {
@@ -30256,6 +31379,21 @@
       }
     },
     {
+      "node_id": "req:framework-is-chosen-not-defaulted",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Which modelling framework is in use must be a recorded choice, not a silent default",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "The original reflow made framework selection an explicit, user-confirmed architectural decision; reflow2 has no equivalent, and its only vestige is Project.domain — free text, written by genesis, read by nothing. reflow carried definitions/framework_registry.json with seven frameworks (uaf, decision_flow, systems_biology, social_network, ecological, complex_adaptive, custom), each supplying a terminology mapping onto ONE universal graph (node = service / workflow_step / component / agent / species / adaptive_agent; edge = interface / transition / interaction / relationship). Workflow 00b-framework_selection.json spent nine actions on the choice: analyse system semantics first, evaluate EVERY framework rather than picking one, map which analyses each framework enables or blocks, score against objective criteria, present the recommendation, and require the user to EXPLICITLY CONFIRM before proceeding. Its rationale: 'Framework selection is an ARCHITECTURAL DECISION, not a configuration choice. Wrong framework = wrong insights.' Its stated lesson, LESSON-01: 'Do NOT default to UAF! Analyze system semantics against ALL frameworks. Framework choice determines which NetworkX analyses are available.' That last clause is the load-bearing part — the framework was not cosmetic relabelling, it GATED which analyses were available, so defaulting it silently chose the analyses too. Anthony's word 2026-07-28: add it. Recorded after the originating session was killed by an OOM before it could write. Note the shape: reflow already knew, and wrote down, the rule that reflow2 states as req:defaults-do-not-assert — and framework choice is the largest instance of it, because Project.domain currently defaults to nothing and asserts nothing while every detector behaves as if one framework were in force.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:frictionless-update",
       "node_type": "Requirement",
       "properties": {
@@ -30268,6 +31406,21 @@
         "provenance": "authored",
         "statement": "A consumer installs reflow2 with a single command from a stable public URL (curl | bash or the platform equivalent) and updates with a single short command; releases are frequent and very minor, so updating is routine and cheap rather than an event. Modeled on the Claude Code installer/update experience the user named as the target (2026-07-20).",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:functional-vocabulary-computes",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The functional vocabulary must compute something or not be declared",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2's schema declares a functional-analysis vocabulary that nothing in the core reads: Capability.is_entry_point and Capability.is_exit_point (schema/functional.yaml:20, both defaulting to false), plus inputs, outputs and capability_type. Only Flow.entry_point is actually read. add_capability cannot write any of them, so they are reachable only through the create_node escape hatch, and no detector consults them. Found 2026-07-28 by comparing reflow2 against the original reflow's system_of_systems_graph_v2.py (2,146 lines, NetworkX): three of that tool's five FUNCTIONAL-mode gap detectors are unimplementable in reflow2 purely because of this — unreachable_functions needs is_entry_point, dead_end_functions needs is_exit_point, unexplained_outputs needs outputs. The service-mode analysis DID come over and in better form (cycles, communities, centrality, orphans, unimplemented services, orphaned interfaces all have reflow2 detectors); the functional mode did not. The schema was ported and the computations were not, which is req:defaults-do-not-assert at the scale of a whole workflow: a property defaulting to false asserts 'this capability is not an entry point' on every node in the design, and nobody chose that. Anthony's word 2026-07-28: add it. Recorded after the originating session was killed by an OOM before it could write. The honest resolutions are to compute against the vocabulary or to remove it — storing it while nothing reads it is the shape this project keeps rediscovering (BL-96 inviolable-intent, BL-106 last_run_at, the temporal axis before BL-70). Sibling of req:defaults-do-not-assert, which is parked as deferred.",
+        "status": "proposed"
       }
     },
     {
@@ -30883,6 +32036,21 @@
         "provenance": "authored",
         "statement": "When a capability claims to be verified, the design must be able to say whether the check behind that claim is older than the code it covers. A passing check proves the paths it drives, and nothing more — so when a capability's meaning widens without its check widening, the old green tick keeps being reported as if nothing had changed. reflow2 already records everything needed to notice: Verification.last_run_at is written on every status set, and the confirmation ledger already dates the accepts that moved an artifact's baseline. Nothing reads the two together. Where the dates do not exist the answer must be \"cannot tell\", stated plainly — never silence, and never an assumption that the check is current.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:version-combination-is-an-object",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A combination of per-design versions is a named object that can be re-validated, not a one-off comparison",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When several coupled designs each carry their own version, the question that matters before deploying is not \"do these two agree at their seam?\" but \"does THIS SET of versions hold together?\" — and that set must be a durable, named, dated object the design can re-check, not a comparison run once and lost. reflow2 today has only pairwise machinery: cap:design-dependencies-declared (declare which version of another design you depend on), cap:seam-incompatibility (say when two linked designs disagree at a boundary), cap:composed-analysis (analyse two designs together without merging them), compare_designs (two as-designed records). Nothing names an N-way combination or lets it be validated again later. THE PRIOR ART IS reflow's OWN, and it worked: workflow 01b-bottom_up_integration.json step SE-08 (Mixed-Version Validation) created a version-specific index file — naming convention index_v{scenario}-{YYYYMMDD}.json, e.g. index_v2.0-auth-v1.0-gateway-20251030.json — pointing at specific versioned files rather than symlinks, then ran validation over that combination (checking interface contract compatibility, breaking changes between versions, integration issues, dependency conflicts), generated a system graph for that combination alone, and recorded the outcome so known-good combinations were documented. Its stated use case: \"Validate auth_service v2.0 works with api_gateway v1.0 before deploying.\" Also supported baseline snapshots for regression testing. THIS IS THE MECHANISM req:epochs-can-be-planned ALREADY ASKS FOR, captured 2026-07-28 in Anthony's own words: \"an epoch or increment must pin the set of per-repo design versions it means, or the question 'which epoch are we talking about?' has no answer, which is the failure this exists to prevent.\" reflow had built the pin; reflow2 stated the need without it. Operationally load-bearing for the ecosystem case rather than the single-repo one: several coupled repos, each with its own graph, evolving at different rates. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "status": "proposed"
       }
     },
     {
@@ -31915,7 +33083,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:3e43d6f376c8bcfc39cf428b7146b48cad74990e80cd7ed18a4af072888ea30f",
+  "prev_content_hash": "sha256:9e7be9439fa2551b3f5aaa7a33c715aae15aa19b6bc45b66e3310f79d76b3e94",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
