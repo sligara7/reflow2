@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2f972ef3b2530755881239032e8f51a35356aa0cdc9bb75da53e1b14980d4c57",
+  "content_hash": "sha256:927eed752c959bebf7d15637eff773f23948bc58c9818b72b9337e64c654b6a3",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -8541,6 +8541,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:build-loop-is-bounded",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:drift-has-direction"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:complementary-pairing",
       "properties": {
         "optional": false,
@@ -8556,6 +8565,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:defaults-do-not-assert"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:intent-is-reinjected",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:build-loop-is-bounded"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -12569,6 +12587,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:build-loop-is-bounded",
+      "properties": {},
+      "to_id": "decision:ack:c0ad59f11915ba50"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:claims-have-owners",
       "properties": {},
       "to_id": "dec:identity-out-of-band"
@@ -12674,6 +12698,20 @@
       "from_id": "req:graph-indexes-snapshots",
       "properties": {},
       "to_id": "decision:ack:6bce37248bacaa09"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:intent-is-reinjected",
+      "properties": {
+        "note": "Which node type carries the re-injected payload depends on this decision: Snapshot has 14 live instances and already generalizes the P2-to-P3 Anchor, while Anchor has zero and is still advertised by describe_schema."
+      },
+      "to_id": "dec:anchor-retire-or-implement"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:intent-is-reinjected",
+      "properties": {},
+      "to_id": "decision:ack:946dd6b0bb464229"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -27469,6 +27507,16 @@
       }
     },
     {
+      "node_id": "dec:anchor-retire-or-implement",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNDECIDED, recorded 2026-07-28. schema/structure.yaml:108 declares an Anchor node type with design_intent, key_decisions, checksum and created_at. Nothing in the core creates it, nothing reads it, there is no node::ANCHOR constant, and reflow2's own 886-node design contains ZERO instances. It was superseded: temporal.rs:62 describes Snapshot as \"a checksummed baseline (generalizes the P2 to P3 Anchor)\", and Snapshot has 14 live instances while DriftEvent has 37. THE PART THAT MAKES THIS MORE THAN TIDYING: describe_schema still returns Anchor to any agent asking what the vocabulary contains, and serves this hint with it — \"A checksummed baseline of the design taken when leaving P2 for a build round (P3). Not extracted from prose — created by the workflow at the structure to build transition. DriftEvents reference the Anchor they diverged from.\" No DriftEvent references an Anchor, because none exists. An agent that follows the discovery surface creates a node nothing will ever read, and believes it has anchored a build round. Three options. (a) RETIRE the type from the schema, which is the honest reading if Snapshot fully covers it — but removing a node type strands any graph that already carries one, the same objection that kept `review` and `simulation` in Verification.method when the taxonomy grew. (b) IMPLEMENT it, if the P2-to-P3 anchoring semantics are meant to survive as something distinct from a general Snapshot. (c) REDIRECT — keep the name as an alias or documented synonym of Snapshot so old graphs still load, while the discovery surface stops advertising it as a separate thing to create. Whichever is chosen, the question underneath is the same one dec:one-retire-edge asks about edges: what should CONSULT the retirement, and does a retired vocabulary item stop being offered or get offered with a warning?",
+        "name": "OPEN — the Anchor node type is superseded by Snapshot but still advertised: retire it or implement it?",
+        "rationale": "Found 2026-07-28 reviewing the original reflow's workflow_master.json, whose architecture_anchor is the mechanism this type was modelled on. Recorded rather than fixed because all three options are defensible and the choice is Anthony's — it is a vocabulary call, and those have been his every time. Note the shape it shares with the other findings from this review: a schema declaring something no computation reaches (req:functional-vocabulary-computes), a default asserting a choice nobody made (req:defaults-do-not-assert, req:edge-defaults-do-not-assert), and now a whole TYPE advertised on the discovery surface after being superseded. This is the same defect at node-type granularity, which is the level the earlier sweeps did not examine — they measured properties, not types.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:anchored-first",
       "node_type": "Decision",
       "properties": {
@@ -28560,6 +28608,16 @@
       }
     },
     {
+      "node_id": "decision:ack:946dd6b0bb464229",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:946dd6b0bb464229.",
+        "name": "Reviewed: gap:946dd6b0bb464229",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. Accepted and not dropped: reflow re-read the architecture anchor at phase transitions, at resync, and every 5 iterations, explicitly to \"remind yourself of design intent and constraints\"; reflow2's periodic re-injection carries loop DEBT instead, which says what you owe rather than what you were trying to build. Deferred and coupled to two open questions rather than blocked by them — the trigger depends on req:build-loop-is-bounded (parked the same day), and which node type carries the payload depends on dec:anchor-retire-or-implement (Snapshot at 14 instances versus Anchor at zero and still advertised). The recording vocabulary already exists, so when this is built it is the re-reading that is new, not the schema.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:95ddc1083445d73d",
       "node_type": "Decision",
       "properties": {
@@ -28706,6 +28764,16 @@
         "decision": "Accepted the gap gap:be224976b1f4f6e1.",
         "name": "Reviewed: gap:be224976b1f4f6e1",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24): cap:session-memory was captured today and nothing is built, so a Verification would have nothing to run against. Worth naming the check it will need when it is built, because it is not the obvious one: the test is not \"does a node get written\" but \"does a LATER session, with no memory of this one, find what this session decided by asking a question in its own words\". That makes it an integration check spanning the trigger, the epoch anchor and the query surface — and it cannot pass while ver:search-natural-language is failing, since the query half is the same machinery. Sequence it after the foundation search fix lands.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:c0ad59f11915ba50",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:c0ad59f11915ba50.",
+        "name": "Reviewed: gap:c0ad59f11915ba50",
+        "rationale": "Deferred on Anthony's word, 2026-07-28, with the other captures from the reflow workflow review. Accepted and not dropped: reflow2 measures erosion under repeated build rounds (the erosion trial is a regression gate) and never bounds it, where reflow halted after three P3/P4 loops and forced a resync up to architecture, escalating to functional analysis above a drift score of 0.5. Deferred because the trigger is genuinely undecided — a loop COUNT needs a loop counter reflow2 does not have, so the honest trigger may be measured drift, elapsed writes, or both, and choosing wrong would produce a detector that fires on correct work (the BL-23 lesson: when a detector punishes correct work the answer is a different question, not a tuned threshold). Deliberately NOT treated as phase-model legacy: the mechanism is for work that does not terminate, which is the continual-evolution case.",
         "status": "accepted"
       }
     },
@@ -31153,6 +31221,21 @@
       }
     },
     {
+      "node_id": "req:build-loop-is-bounded",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The build loop is bounded, and exhausting the budget forces a return to the design",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 MEASURES design erosion under repeated build rounds and never BOUNDS it. tools/ carries the erosion trial whose stated question is \"not 'did a file change?' but: after N rounds of test-fails/fix-code/accept, does the design still describe what it should\" — so the decay is known, quantified, and regression-gated. Nothing, however, ever says STOP. A session can iterate test-fix indefinitely and reflow2 will report the drift afterwards rather than interrupt it. THE PRIOR ART, from reflow's workflow_master.json: iteration_budgets sets P3_P4_loops = 3 and P4_P3_loops = 3, and on_budget_exceeded triggers the resync protocol with target_phase P2 and escalate_to_P1_if \"drift_score > 0.5\". So after three build-test rounds work HALTS, and the agent is sent back up to architecture — or further, to functional analysis, if the drift is bad enough. The resync protocol itself is six ordered steps: halt_current_work, detect_drift, present_comparison, mode_specific_resolution, reset_iteration_counter, continue_or_escalate. DISTINCT FROM cap:budget, which rolls up a RESOURCE budget against a Constraint (mass, cost, power). This is an ITERATION budget on the design process itself, and reflow2 has no vocabulary for it. NOT MERELY A PHASE-MODEL ARTEFACT, which is the objection to expect: the mechanism is about work that does NOT terminate. A bounded loop with a forced return upward is precisely the discipline a continual evolution effort needs — Anthony's framing of design as (1) define the current state, (2) evolve it incrementally, with no clean start or exit criteria. The budget is what stops \"evolve incrementally\" from becoming \"drift indefinitely while the graph records it faithfully.\" Whether the trigger should be a loop COUNT (reflow's answer) or a measured drift threshold, or both, is open — reflow used both, counting loops and escalating on drift_score. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:claims-have-owners",
       "node_type": "Requirement",
       "properties": {
@@ -31585,6 +31668,21 @@
         "provenance": "authored",
         "statement": "Where the design is underspecified, the system must ask the human in plain language and record the answer, rather than silently choosing a default.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:intent-is-reinjected",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Design intent is read back into a long build, not only the debt the loop is owed",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A long build session forgets what it was trying to build. reflow's countermeasure was explicit: workflow_master.json takes an architecture_anchor at the P2-to-P3 transition — checksums over the service/functional/interface/graph specs plus captured fields design_intent_summary, key_decisions, constraints, service_count, function_count — and then RE-INJECTS it at three moments: phase_transitions, resync_protocol, and every_N_iterations with N = 5. Its llm_instructions make the purpose plain, on_phase_entry: \"Read architecture_anchor from working_memory.json ... Remind yourself of design intent and constraints.\" reflow2 HAS a periodic re-injection mechanism and it carries different cargo. cap:read-loop-hint surfaces loop DEBT when it is real — what capture/detect/ask/decide steps are owed — and the Stop hook nudges when graph writes finish without a loop check. That is valuable and is not this. Debt says what you OWE; intent says what you were TRYING TO BUILD. A session can be perfectly clean on debt and still have quietly stopped building the thing the design describes. The vocabulary for the payload largely exists — Snapshot is the checksummed baseline (14 instances against Anchor's zero, see dec:anchor-retire-or-implement), Decision carries key decisions, Constraint carries constraints — so the gap is the RE-READING, not the recording. Open underneath it: what triggers a re-injection in a system with no phase counter to count iterations against. reflow could say \"every 5 loops\" because it had a loop counter; reflow2's equivalent trigger might be elapsed writes, a drift threshold, or the same budget req:build-loop-is-bounded would introduce, which is why these two were captured together. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "status": "proposed"
       }
     },
     {
@@ -33187,7 +33285,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6504e7f0f081cf918dd9e2a484cb8ae0b6c23e19abdc5ae5e915769eb9b392fa",
+  "prev_content_hash": "sha256:2f972ef3b2530755881239032e8f51a35356aa0cdc9bb75da53e1b14980d4c57",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
