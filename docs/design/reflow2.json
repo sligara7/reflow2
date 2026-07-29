@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0e7cf36f68c2ca2855c316855b5b07575c08e606b86bf0e8793f87cd5e1f196e",
+  "content_hash": "sha256:b22d4d0ba3a07aff8387474baf38be939e2b41cc6518485e6b6eda781c8d7e4e",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -8652,6 +8652,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:schema-prose-is-checked",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:vocabulary"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:version-combination-is-an-object",
       "properties": {
         "optional": false,
@@ -12838,6 +12847,12 @@
       "from_id": "req:read-while-held",
       "properties": {},
       "to_id": "decision:ack:b53c7315f39f3640"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:schema-prose-is-checked",
+      "properties": {},
+      "to_id": "decision:ack:034e96a2e1a7f4d0"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -28154,6 +28169,16 @@
       }
     },
     {
+      "node_id": "decision:ack:034e96a2e1a7f4d0",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:034e96a2e1a7f4d0.",
+        "name": "Reviewed: gap:034e96a2e1a7f4d0",
+        "rationale": "Deferred on Anthony's word, 2026-07-28, with the rest of the reflow workflow review. Accepted and not dropped, and unusually concrete for a parked item: the mechanical half is specified in the requirement and needs no LLM — does every node type and edge type NAMED in a hint exist in the merged schema, and does every relationship a hint asserts have a corresponding edge type declared between those endpoints. Both are answerable from the schema alone and both would have caught the Anchor case, where two hints assert an Anchor-to-DriftEvent DEPENDS_ON with zero instances and no code path, while passing validate_schema.py cleanly. Deferred rather than built because it is coupled to dec:anchor-retire-or-implement: writing the check before deciding whether Anchor is retired, implemented or aliased would either red-light the build on a type about to be removed, or bless prose about to be rewritten. Decide the Anchor question first, then the check has a known-good corpus to run against. Also worth carrying forward: the check must not overreach — whether a hint's ADVICE is good stays a human question, and a linter that pretended otherwise would be the flattering default this design keeps refusing.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:046d5d7e84c91989",
       "node_type": "Decision",
       "properties": {
@@ -32271,6 +32296,21 @@
       }
     },
     {
+      "node_id": "req:schema-prose-is-checked",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Schema prose must not assert what the schema cannot hold, because the prose is what agents are told",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 validates the schema's STRUCTURE and never its PROSE, and the prose is the discovery surface. tools/validate_schema.py states its own scope: the two hard rules are that every edge from/to endpoint is `*` or a declared node type, and that fulltext:true appears only on string properties, plus serde-level constraints on property type and resolution.strategy — and then, verbatim, \"Everything else (extra keys like `description`) is accepted, matching serde's non-strict parse.\" So extraction_hint and description are free text no check ever reads. THE PART THAT MAKES THIS MORE THAN DOCUMENTATION HYGIENE: describe_schema serves extraction_hint VERBATIM to any agent asking what the vocabulary contains. Unvalidated prose is therefore not a comment — it is an instruction delivered to every agent that meets this schema, and a wrong one is wrong at scale, silently, forever. THE PROVEN INSTANCE, which is evidence rather than the point: schema/structure.yaml:108 and schema/verify.yaml:63 jointly assert, from both ends, a DEPENDS_ON relationship between Anchor and DriftEvent — \"DriftEvents reference the Anchor they diverged from\" and \"References the Anchor it diverged from via DEPENDS_ON\". That relationship has zero instances and no code path able to create one, because Anchor is a dead type superseded by Snapshot (see dec:anchor-retire-or-implement). BOTH HINTS PASS validate_schema.py CLEANLY, because it does not look at prose. An agent following either one creates a node nothing will read and believes it has anchored a build round. THE PRIOR ART, one level over: reflow's validate_workflow_files.py checked reference integrity inside its own definition files — \"tool references point to existing tools\", \"template references point to existing templates\", \"next_step references point to valid steps\" — with the stated benefit \"prevents deployment of malformed workflows that would break Reflow\". reflow2 has no equivalent for the vocabulary it serves. A MECHANICAL CHECK IS AVAILABLE, which is why this is a requirement rather than a wish: does every node type and edge type NAMED in a hint actually exist in the merged schema, and does every relationship a hint asserts have a corresponding edge type declared between those endpoints? Both are answerable without an LLM, from the schema alone, and both would have caught the Anchor case. What cannot be mechanised — whether a hint's advice is good — stays a human question and should not be pretended otherwise. THIS IS THE SAME FAMILY as req:defaults-do-not-assert, req:edge-defaults-do-not-assert and req:functional-vocabulary-computes, one layer up: those are data the schema asserts without warrant, this is PROSE the schema asserts without warrant — and it is the layer agents actually read. Found 2026-07-28 reviewing 98-reflow_feature_update.json. Anthony's word: capture it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:seam-incompatibility",
       "node_type": "Requirement",
       "properties": {
@@ -33490,7 +33530,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:64285aebe25474c0c4aa57646a9992dc095cc429292d4d73a4a4d157b0cd22a5",
+  "prev_content_hash": "sha256:0e7cf36f68c2ca2855c316855b5b07575c08e606b86bf0e8793f87cd5e1f196e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
