@@ -257,7 +257,9 @@ impl DesignGraph {
     }
 
     /// Create an edge of `edge_type` between typed endpoints. Endpoint types
-    /// are validated against the edge's declared `from`/`to`.
+    /// are validated against the edge's declared `from`/`to`, and both endpoint
+    /// nodes must already exist — a dangling edge is refused before anything is
+    /// written, never stored and reported later.
     pub fn create_edge(
         &mut self,
         edge_type: &str,
@@ -267,6 +269,51 @@ impl DesignGraph {
         to_id: &str,
         props: impl Into<std::collections::HashMap<String, Value>>,
     ) -> Result<StoredEdge, DynoError> {
+        // BOTH ENDPOINTS MUST EXIST. The schema validates the endpoint TYPES
+        // against the edge's declared `from`/`to`, which is a different question
+        // from whether the nodes are there — so until 2026-07-28 a `DEPENDS_ON`
+        // pointing at a capability that had never been created was accepted,
+        // stored, and reported by NOTHING: `detect_defects` returned zero,
+        // `detect_gaps` returned only unrelated phase gaps, and the target
+        // resolved to `None`. One mistyped id produced a dependency that read as
+        // fine and pointed into nothing, and every rollup that walks the golden
+        // thread walked off the end of it.
+        //
+        // Found by comparing reflow2 against the original reflow's
+        // `system_of_systems_graph_v2.py`, whose functional-mode gap detector
+        // has an `unmet_dependencies` bucket for exactly this. reflow2 had
+        // neither the prevention nor the detection.
+        //
+        // REFUSED AT WRITE rather than reported later, which is the choice
+        // `snapshot_node` and `add_change_event` already made ("every entry must
+        // name an existing node — the whole call is refused before anything is
+        // written"). A dangling edge is not a judgement call the user might
+        // reasonably disagree with, so `dec:report-dont-judge` does not apply:
+        // it is a graph that cannot be walked. Refusing keeps the store's
+        // invariant true for every reader, instead of asking each one to
+        // tolerate an endpoint that is not there.
+        // ORDERING: only for an edge type the schema knows. An unrecognised
+        // edge type is the more fundamental error and carries the better
+        // rejection — `edge_error` names the types that DO accept this pair and
+        // points at `describe_schema`, which is the fix for "the error tells me
+        // I'm wrong without telling me what's right" (the blind trial's
+        // complaint, after fourteen guesses at joining a Release to a
+        // Component). Checking endpoints first buried that: a caller guessing
+        // `PACKAGES` between two ids that don't exist yet was told only that
+        // `rel:1` was missing, never that `PACKAGES` is not an edge type at
+        // all — so they would create the nodes and guess wrong again.
+        // Vocabulary errors before instance errors.
+        if self.schema().edge_types.contains_key(edge_type) {
+            for (kind, id) in [(from_type, from_id), (to_type, to_id)] {
+                if self.get_node(kind, id)?.is_none() {
+                    return Err(DynoError::NodeNotFound {
+                        node_type: kind.to_string(),
+                        node_id: id.to_string(),
+                    });
+                }
+            }
+        }
+
         let mut props = props.into();
         if let Some(def) = self.schema().edge_types.get(edge_type) {
             widen_ints_for_float_props(&def.properties, &mut props);

@@ -905,3 +905,135 @@ fn an_unknown_verification_method_is_refused() {
         "an unknown method must be refused rather than defaulted"
     );
 }
+
+/// A design with two capabilities, so an edge between them is legitimate and a
+/// third id is unambiguously absent.
+fn two_capabilities() -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    g.add_capability("cap:a", "A", "the first capability", None)
+        .expect("cap:a");
+    g.add_capability("cap:b", "B", "the second capability", None)
+        .expect("cap:b");
+    g
+}
+
+/// An edge into a node that was never created is REFUSED at the write, not
+/// stored and reported later.
+///
+/// The schema validates endpoint *types* against the edge's declared
+/// `from`/`to`, which is a different question from whether the nodes are there —
+/// so a `DEPENDS_ON` naming a capability nobody had created used to be accepted,
+/// stored, and reported by nothing: `detect_defects` returned zero,
+/// `detect_gaps` returned nothing anchored on it, and the target resolved to
+/// `None`. One mistyped id produced a dependency that read as fine and pointed
+/// into nothing, and every rollup that walks the golden thread walked off the
+/// end of it.
+#[test]
+fn an_edge_into_a_missing_node_is_refused() {
+    let mut g = two_capabilities();
+    let bad = g.create_edge(
+        edge::DEPENDS_ON,
+        node::CAPABILITY,
+        "cap:a",
+        node::CAPABILITY,
+        "cap:typo",
+        [],
+    );
+    assert!(
+        bad.is_err(),
+        "an edge whose target does not exist must be refused, not stored"
+    );
+    assert!(
+        format!("{}", bad.unwrap_err()).contains("cap:typo"),
+        "the refusal must name the endpoint that is missing"
+    );
+    assert!(
+        g.outgoing("cap:a", Some(edge::DEPENDS_ON))
+            .expect("read back")
+            .is_empty(),
+        "a refused edge must leave nothing behind"
+    );
+}
+
+/// The same rule on the other end, so this is an invariant rather than a check
+/// on one argument: a source that does not exist is refused too.
+#[test]
+fn an_edge_out_of_a_missing_node_is_refused() {
+    let mut g = two_capabilities();
+    let bad = g.create_edge(
+        edge::DEPENDS_ON,
+        node::CAPABILITY,
+        "cap:ghost",
+        node::CAPABILITY,
+        "cap:b",
+        [],
+    );
+    assert!(
+        bad.is_err(),
+        "an edge whose source does not exist must be refused, not stored"
+    );
+    assert!(
+        format!("{}", bad.unwrap_err()).contains("cap:ghost"),
+        "the refusal must name the endpoint that is missing"
+    );
+}
+
+/// The other direction, which is the half that keeps the rule honest: refusing
+/// dangling endpoints must not refuse a legitimate edge. Without this, the
+/// cheapest way to pass the two tests above is to break `create_edge` entirely.
+#[test]
+fn an_edge_between_two_existing_nodes_is_still_accepted() {
+    let mut g = two_capabilities();
+    g.create_edge(
+        edge::DEPENDS_ON,
+        node::CAPABILITY,
+        "cap:a",
+        node::CAPABILITY,
+        "cap:b",
+        [],
+    )
+    .expect("both endpoints exist, so the edge must be accepted");
+    assert_eq!(
+        g.outgoing("cap:a", Some(edge::DEPENDS_ON))
+            .expect("read back")
+            .len(),
+        1,
+        "the accepted edge must be readable"
+    );
+}
+
+/// ORDERING: an unrecognised edge type is reported as such, even when the
+/// endpoints are also missing.
+///
+/// The endpoint check added above runs before the engine sees the edge, so on
+/// its first landing it pre-empted the edge-type rejection entirely: guessing
+/// `PACKAGES` between two ids that did not exist yet reported only that `rel:1`
+/// was missing, and never that `PACKAGES` is not an edge type at all. That
+/// buries the more fundamental error under the less fundamental one, and it
+/// costs the caller a whole round trip — they create the nodes, retry, and
+/// guess wrong again. It also silently broke the MCP layer's `edge_error`,
+/// whose entire purpose is answering "the error tells me I'm wrong without
+/// telling me what's right" by naming the types that DO accept the pair.
+///
+/// Vocabulary errors before instance errors.
+#[test]
+fn an_unknown_edge_type_is_named_even_when_the_endpoints_are_missing() {
+    let mut g = two_capabilities();
+    let bad = g.create_edge(
+        "PACKAGES", // not a schema edge type
+        node::CAPABILITY,
+        "cap:ghost", // and neither endpoint exists
+        node::CAPABILITY,
+        "cap:phantom",
+        [],
+    );
+    let msg = format!(
+        "{}",
+        bad.expect_err("an unknown edge type must still be refused")
+    );
+    assert!(
+        msg.contains("PACKAGES"),
+        "the rejection must name the unknown EDGE TYPE, not just a missing \
+         endpoint — got: {msg}"
+    );
+}
