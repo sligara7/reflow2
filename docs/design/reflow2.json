@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6504e7f0f081cf918dd9e2a484cb8ae0b6c23e19abdc5ae5e915769eb9b392fa",
+  "content_hash": "sha256:2f972ef3b2530755881239032e8f51a35356aa0cdc9bb75da53e1b14980d4c57",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -8550,6 +8550,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:edge-defaults-do-not-assert",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:defaults-do-not-assert"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:nudge-path-proven",
       "properties": {
         "optional": false,
@@ -12554,6 +12563,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:adopt-says-how-much-it-got",
+      "properties": {},
+      "to_id": "decision:ack:3a667fe34b66bffd"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:claims-have-owners",
       "properties": {},
       "to_id": "dec:identity-out-of-band"
@@ -12638,6 +12653,24 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:edge-defaults-do-not-assert",
+      "properties": {},
+      "to_id": "decision:ack:0a63dc6a6c47e039"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:framework-is-chosen-not-defaulted",
+      "properties": {},
+      "to_id": "decision:ack:967cb35c16df7571"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:functional-vocabulary-computes",
+      "properties": {},
+      "to_id": "decision:ack:dd3c69b16fec5439"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:graph-indexes-snapshots",
       "properties": {},
       "to_id": "decision:ack:6bce37248bacaa09"
@@ -12719,6 +12752,12 @@
       "from_id": "req:thin-install",
       "properties": {},
       "to_id": "dec:skills-served"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:version-combination-is-an-object",
+      "properties": {},
+      "to_id": "decision:ack:b0f6553a7bd01e49"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -28001,6 +28040,16 @@
       }
     },
     {
+      "node_id": "decision:ack:0a63dc6a6c47e039",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:0a63dc6a6c47e039.",
+        "name": "Reviewed: gap:0a63dc6a6c47e039",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. Accepted and not dropped. Measured, not asserted: 19 edge properties carry a schema default, four are single-valued wherever they appear, and 225 edges carry weight_basis while ZERO carry a weight — so those state the provenance of a coupling strength nobody recorded. Deferred because the fix is a schema change and the open question underneath it is not settled: should weight_basis default at all, or be absent until a weight exists (the answer ver:interface-spec already gave for Interface.medium)? That is a vocabulary call and Anthony's to make. Also non-retroactive by design — existing edges keep what they were given, so sweeping them is a separate deliberate act. Carries a method lesson worth keeping regardless of when it is built: the node sweep's test (\"a property that never varies is not carrying information\") is necessary but NOT sufficient on edges, because DEPENDS_ON.weight_basis genuinely varies and still refers to nothing.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:101a69b0a4f8eed6",
       "node_type": "Decision",
       "properties": {
@@ -28167,6 +28216,16 @@
         "decision": "Accepted the gap gap:39bc6f37b50dc9c3.",
         "name": "Reviewed: gap:39bc6f37b50dc9c3",
         "rationale": "Standing disposition, re-recorded: reflow2's validation evidence is the trial record in docs/trials/ and the field reports from real use (the 2026-07-25 fleet outage being the sharpest example — validation by a user losing their design brain, not by a test). Those are not modelled as validation-kind Verifications, so the detector is right that the graph cannot see them. NOTE THE REAL FINDING BEHIND THE CHURN: this gap's id is derived from the affected set, so every new verified capability mints a NEW gap id and the acknowledgement does not carry over — it has been re-acknowledged at 48 and 49 capabilities. An acknowledgement that expires because the design grew is expiring for the wrong reason; whether a set-scoped gap should be identified by its RULE rather than its members is a real question about the ack mechanism.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:3a667fe34b66bffd",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:3a667fe34b66bffd.",
+        "name": "Reviewed: gap:3a667fe34b66bffd",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. Accepted and not dropped: adopt has no completeness measure, so \"we adopted it\" cannot be told from \"we adopted what we happened to read\", where reflow's RE-06 computed extraction coverage and gated at 80%. Deferred rather than built because the honest measure has to be expressed in what adopt actually models — unmapped entry points, unmodelled contracts, untouched modules — and a naive nodes-per-LOC ratio would punish the coarse-but-honest granularity adopt correctly requires. That design work is the increment.",
         "status": "accepted"
       }
     },
@@ -28511,6 +28570,16 @@
       }
     },
     {
+      "node_id": "decision:ack:967cb35c16df7571",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:967cb35c16df7571.",
+        "name": "Reviewed: gap:967cb35c16df7571",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. Accepted and not dropped: reflow made framework selection a user-confirmed architectural decision (00b-framework_selection.json, nine actions, LESSON-01 \"Do NOT default to UAF!\") because the choice gated which analyses were available; reflow2's vestige is Project.domain, written by genesis and read by nothing. Building it means a framework registry and a selection handshake — a substantial increment, not a patch. Scheduled later.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:9b2071dba7dfe759",
       "node_type": "Decision",
       "properties": {
@@ -28567,6 +28636,16 @@
         "decision": "Accepted the gap gap:b0ef8ce1e452f881.",
         "name": "Reviewed: gap:b0ef8ce1e452f881",
         "rationale": "Deferred on Anthony's word, 2026-07-28. The rule stands and is explicitly NOT dropped: a default must not assert a choice nobody made. Enforcement is deferred to a later increment, including the schema sweep of the ten defaults that assert an unchosen value — the clearest being Requirement.concern, which sits at 'core' on 67 of 67 nodes with zero code references, so the value carries no information and no one selected it.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:b0f6553a7bd01e49",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:b0f6553a7bd01e49.",
+        "name": "Reviewed: gap:b0f6553a7bd01e49",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. Accepted and not dropped. It is the mechanism req:epochs-can-be-planned already asks for (\"an epoch or increment must pin the set of per-repo design versions it means\"), so it should be built WITH that requirement's increment rather than ahead of it — building the pin before the temporal axis exists would leave it with nothing to pin to. Both are parked together.",
         "status": "accepted"
       }
     },
@@ -28717,6 +28796,16 @@
         "decision": "Accepted the gap gap:dd3647889c878492.",
         "name": "Reviewed: gap:dd3647889c878492",
         "rationale": "Not a defect: cmp:sanitize was built after the last release cut on 2026-07-25, so \"ships in nothing\" is simply true and expected of anything newly built. It resolves at the next release, which must list it — the same disposition as cmp:claims earlier the same day, and the AGENTS.md release checklist already says the cut lists everything it actually ships rather than a hand-maintained roll-call. Distinct from the cmp:docs case, which needed a decision because it was a pre-existing deliverable the design had never modelled; this one needs only a release.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:dd3c69b16fec5439",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:dd3c69b16fec5439.",
+        "name": "Reviewed: gap:dd3c69b16fec5439",
+        "rationale": "Deferred on Anthony's word, 2026-07-28, alongside the other four captured from the reflow workflow review. The requirement is accepted, not dropped: is_entry_point / is_exit_point / inputs / outputs / capability_type are declared and read by nothing, which blocks three of reflow's five functional-mode detectors (unreachable_functions, dead_end_functions, unexplained_outputs). Both honest resolutions — compute against the vocabulary, or remove it — are real work scheduled for a later increment. Sibling of req:defaults-do-not-assert, itself parked the same day.",
         "status": "accepted"
       }
     },
@@ -31349,6 +31438,21 @@
       }
     },
     {
+      "node_id": "req:edge-defaults-do-not-assert",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Edge properties default like node properties do, and the sweep never looked at them",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "The 2026-07-28 schema sweep behind req:defaults-do-not-assert measured NODE properties — ten of them across Requirement, Capability, Component, Constraint, DesignRule, Actor, EnvironmentRule and Flow. It never looked at EDGE properties, and the same defect is there. FOUND BY TRIPPING OVER IT: creating a DEPENDS_ON with no properties at all returned {\"optional\": false, \"weight_basis\": \"estimated\"} — materialised while capturing a requirement about exactly this.\\n\\nMEASURED, not inspected, over the 3,226 edges of reflow2's own design. Nineteen edge properties carry a schema default. Four are single-valued wherever they appear, matching the default and never varying: ALLOCATED_TO.weight_basis = estimated on 96 of 96, DEPENDS_ON.optional = false on 123 of 123, PROVIDES.weight_basis and CONSUMES.weight_basis = estimated on 3 of 3 each.\\n\\nTHE SHARPEST FINDING IS WORSE THAN A DEFAULT THAT NEVER VARIES: it is a default that describes a value which does not exist. `weight_basis` is documented as \"How the weight was set: an LLM estimate, grounded in evidence, or measured from telemetry.\" 225 edges carry weight_basis — ALLOCATED_TO 96, DEPENDS_ON 123, PROVIDES 3, CONSUMES 3 — and ZERO of them carry a `weight`. Every one of those edges states the provenance of a coupling strength that was never recorded. Note that variation does not rescue it: DEPENDS_ON.weight_basis genuinely varies (evidence on 70, estimated on 53), so it passes the single-valued test the node sweep used, and it is still describing nothing. The node sweep's own test — \"a property that never varies is not carrying information\" — is necessary but NOT sufficient on edges, because a property can vary and still refer to an absent value.\\n\\nDEPENDS_ON.optional = false on 123 of 123 is a plain instance of the original rule: it asserts that every dependency in the design is MANDATORY, which is a real architectural claim and nobody made it.\\n\\nLATENT, and it will assert on first use: ten defaulted edge properties sit on edge types with zero instances in this design — ANNOTATES.resolved, CAUSES.basis (`correlational`), CAUSES.validation_status, CLAIMS.depth, COMPLIES_WITH.verified, PART_OF_FLOW.weight_basis, SUPPLEMENTS.grounding (`extrapolated`), and VIOLATES_RULE.proposer / severity / status. VIOLATES_RULE.severity defaults to `high`, so the first rule violation anyone records will claim high severity unprompted. CAUSES.basis defaulting to `correlational` is the same shape one level up, and the edge's own hint says \"Do not assert `causal` without a mechanism\" — the schema warns against asserting the strong value while defaulting the weaker one.\\n\\nTHE COUNTERWEIGHT FROM THE PARENT APPLIES UNCHANGED: a default recording genuine ABSENCE is correct and must stay; only a default naming a CHOICE among alternatives lies. AUTHORED_BY.role (author 63 / approver 7 / reviewer 2) and CHANGED.accepted_baseline (true 232 / false 188) both vary and both carry information — they are not in scope. Also unchanged: altering a default is not retroactive, so edges already written keep what they were given and a sweep of existing designs is a separate deliberate act.\\n\\nFound 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it. Not yet decided is whether `weight_basis` should default at all, or be absent until a weight exists — which is the same question ver:interface-spec answered for Interface.medium.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:epochs-can-be-planned",
       "node_type": "Requirement",
       "properties": {
@@ -33083,7 +33187,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9e7be9439fa2551b3f5aaa7a33c715aae15aa19b6bc45b66e3310f79d76b3e94",
+  "prev_content_hash": "sha256:6504e7f0f081cf918dd9e2a484cb8ae0b6c23e19abdc5ae5e915769eb9b392fa",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
