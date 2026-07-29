@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:927eed752c959bebf7d15637eff773f23948bc58c9818b72b9337e64c654b6a3",
+  "content_hash": "sha256:64285aebe25474c0c4aa57646a9992dc095cc429292d4d73a4a4d157b0cd22a5",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1389,6 +1389,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:anchor-decision-second-hint",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:atomic-requirement",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -2178,6 +2184,12 @@
       "from_id": "snap:epoch:linking-repos:dep:dynograph-foundation",
       "properties": {},
       "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reflow-workflow-review:dec:anchor-retire-or-implement",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3351,6 +3363,15 @@
         "action": "modified"
       },
       "to_id": "req:requirement-lineage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:anchor-decision-second-hint",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:anchor-retire-or-implement"
     },
     {
       "edge_type": "CHANGED",
@@ -8541,6 +8562,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:blocking-is-partial",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:pr-is-a-delta"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:build-loop-is-bounded",
       "properties": {
         "optional": false,
@@ -8556,6 +8586,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:composed-analysis"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:drift-rolls-up-to-a-score",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:drift-has-direction"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -12587,6 +12626,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:blocking-is-partial",
+      "properties": {},
+      "to_id": "decision:ack:1e7c0975c76f27fe"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:build-loop-is-bounded",
       "properties": {},
       "to_id": "decision:ack:c0ad59f11915ba50"
@@ -12674,6 +12719,12 @@
       "from_id": "req:design-reachable-without-the-repo",
       "properties": {},
       "to_id": "decision:ack:90a90e90df05c31a"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:drift-rolls-up-to-a-score",
+      "properties": {},
+      "to_id": "decision:ack:378cbdafd1fa41fb"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -12892,6 +12943,12 @@
       "from_id": "cap:skills-served",
       "properties": {},
       "to_id": "snap:epoch:surface-export:cap:skills-served"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:anchor-retire-or-implement",
+      "properties": {},
+      "to_id": "snap:epoch:reflow-workflow-review:dec:anchor-retire-or-implement"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -25978,6 +26035,14 @@
       }
     },
     {
+      "node_id": "chg:anchor-decision-second-hint",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Amend dec:anchor-retire-or-implement: a SECOND schema hint points at the dead Anchor type"
+      }
+    },
+    {
       "node_id": "chg:atomic-requirement",
       "node_type": "ChangeEvent",
       "properties": {
@@ -27510,7 +27575,7 @@
       "node_id": "dec:anchor-retire-or-implement",
       "node_type": "Decision",
       "properties": {
-        "decision": "UNDECIDED, recorded 2026-07-28. schema/structure.yaml:108 declares an Anchor node type with design_intent, key_decisions, checksum and created_at. Nothing in the core creates it, nothing reads it, there is no node::ANCHOR constant, and reflow2's own 886-node design contains ZERO instances. It was superseded: temporal.rs:62 describes Snapshot as \"a checksummed baseline (generalizes the P2 to P3 Anchor)\", and Snapshot has 14 live instances while DriftEvent has 37. THE PART THAT MAKES THIS MORE THAN TIDYING: describe_schema still returns Anchor to any agent asking what the vocabulary contains, and serves this hint with it — \"A checksummed baseline of the design taken when leaving P2 for a build round (P3). Not extracted from prose — created by the workflow at the structure to build transition. DriftEvents reference the Anchor they diverged from.\" No DriftEvent references an Anchor, because none exists. An agent that follows the discovery surface creates a node nothing will ever read, and believes it has anchored a build round. Three options. (a) RETIRE the type from the schema, which is the honest reading if Snapshot fully covers it — but removing a node type strands any graph that already carries one, the same objection that kept `review` and `simulation` in Verification.method when the taxonomy grew. (b) IMPLEMENT it, if the P2-to-P3 anchoring semantics are meant to survive as something distinct from a general Snapshot. (c) REDIRECT — keep the name as an alias or documented synonym of Snapshot so old graphs still load, while the discovery surface stops advertising it as a separate thing to create. Whichever is chosen, the question underneath is the same one dec:one-retire-edge asks about edges: what should CONSULT the retirement, and does a retired vocabulary item stop being offered or get offered with a warning?",
+        "decision": "UNDECIDED, recorded 2026-07-28. schema/structure.yaml:108 declares an Anchor node type with design_intent, key_decisions, checksum and created_at. Nothing in the core creates it, nothing reads it, there is no node::ANCHOR constant, and reflow2's own design contains ZERO instances. It was superseded: temporal.rs:62 describes Snapshot as \"a checksummed baseline (generalizes the P2 to P3 Anchor)\", and Snapshot has 14 live instances while DriftEvent has 37.\n\nTHE PART THAT MAKES THIS MORE THAN TIDYING: the schema still advertises the type, and does so from BOTH SIDES of a relationship that cannot exist.\n\n(1) describe_schema returns Anchor to any agent asking what the vocabulary contains, serving this hint with it — \"A checksummed baseline of the design taken when leaving P2 for a build round (P3). Not extracted from prose — created by the workflow at the structure to build transition. DriftEvents reference the Anchor they diverged from.\"\n\n(2) AMENDED 2026-07-28, reviewing resync_protocol.json and phase_transitions.json: DriftEvent's OWN extraction_hint (schema/verify.yaml:63) makes the matching claim from the other end — \"A recorded divergence between the design (graph/Anchor) and reality (filesystem/build). Produced by drift detection, not extracted from prose. References the Anchor it diverged from via DEPENDS_ON.\" No DriftEvent references an Anchor, because none exists; all 37 reference something else. So the vocabulary describes a DEPENDS_ON relationship between two types in both directions, and that relationship has zero instances and no code path that could create one. An agent reading either hint and following it creates a node nothing will ever read, and believes it has anchored a build round.\n\nThree options. (a) RETIRE the type from the schema, which is the honest reading if Snapshot fully covers it — but removing a node type strands any graph that already carries one, the same objection that kept `review` and `simulation` in Verification.method when the taxonomy grew. (b) IMPLEMENT it, if the P2-to-P3 anchoring semantics are meant to survive as something distinct from a general Snapshot. (c) REDIRECT — keep the name as an alias or documented synonym of Snapshot so old graphs still load, while the discovery surface stops advertising it as a separate thing to create.\n\nWhichever is chosen, TWO hints must move with it, not one — that is what the amendment adds. And the question underneath is the same one dec:one-retire-edge asks about edges: what should CONSULT the retirement, and does a retired vocabulary item stop being offered or get offered with a warning?",
         "name": "OPEN — the Anchor node type is superseded by Snapshot but still advertised: retire it or implement it?",
         "rationale": "Found 2026-07-28 reviewing the original reflow's workflow_master.json, whose architecture_anchor is the mechanism this type was modelled on. Recorded rather than fixed because all three options are defensible and the choice is Anthony's — it is a vocabulary call, and those have been his every time. Note the shape it shares with the other findings from this review: a schema declaring something no computation reaches (req:functional-vocabulary-computes), a default asserting a choice nobody made (req:defaults-do-not-assert, req:edge-defaults-do-not-assert), and now a whole TYPE advertised on the discovery surface after being superseded. This is the same defect at node-type granularity, which is the level the earlier sweeps did not examine — they measured properties, not types.",
         "status": "proposed"
@@ -28138,6 +28203,16 @@
       }
     },
     {
+      "node_id": "decision:ack:1e7c0975c76f27fe",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:1e7c0975c76f27fe.",
+        "name": "Reviewed: gap:1e7c0975c76f27fe",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. Accepted and not dropped: reflow could BLOCK the drifted features and continue with non-drifted work, where reflow2_check.py thresholds which findings count but answers with one sys.exit(1) and a wholly red build. Deferred because the shape is undecided, not because the need is doubted: whether a partial block is advisory (reported, never enforced, per dec:report-dont-judge) or actually refuses writes against the frozen region, and whether the frozen set is computed from the drift's blast radius or named by the user. Those choices change what gets built. The inputs already exist — propagate_change gives the affected set, claim_region gives the part someone holds, and status proposed already means not agreed — so what is missing is a reader, which is why this is smaller than it looks once the shape is settled.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:1f62e721f3cfa3da",
       "node_type": "Decision",
       "properties": {
@@ -28254,6 +28329,16 @@
         "decision": "Accepted the gap gap:35dde67d212688fb.",
         "name": "Reviewed: gap:35dde67d212688fb",
         "rationale": "Built after v0.12.0 was cut, so it ships in the next release — dec:intent-preserved settled that a post-cut component is answered by the next manifest rather than backfilled into a shipped one. Same disposition as cmp:degraded, cmp:skills and cmp:sync before it.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:378cbdafd1fa41fb",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:378cbdafd1fa41fb.",
+        "name": "Reviewed: gap:378cbdafd1fa41fb",
+        "rationale": "Deferred on Anthony's word, 2026-07-28, with the rest of the reflow workflow review. Accepted and not dropped. Deferred for a hard reason rather than scheduling: the per-event input is not yet trustworthy. DriftEvent.severity is one of the WRITTEN-and-never-consulted properties the 2026-07-28 sweep recorded — written from kind.severity() at three call sites while ranking re-derives it via severity_rank(kind) — so a rollup would compute a confident scalar from a base the code already disagrees with. Fix the single-source question first, then build the score. Also genuinely open: reflow's retreat targets were P3/P2/P1 because it had phases, and reflow2's equivalent is which LAYER of the golden thread a score sends you back to (realization, allocation, intent). The scalar is portable; the destinations are not, and choosing them is design work not yet done.",
         "status": "accepted"
       }
     },
@@ -29110,6 +29195,15 @@
         "epoch_type": "revision",
         "name": "Linking repos: a design analysed against its dependency's design, and an interface that publishes a complete contract (2026-07-27, post-v0.16.0)",
         "sequence": 200
+      }
+    },
+    {
+      "node_id": "epoch:reflow-workflow-review",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Reading the original reflow's workflows back against reflow2 (2026-07-28)",
+        "sequence": 220
       }
     },
     {
@@ -31221,6 +31315,21 @@
       }
     },
     {
+      "node_id": "req:blocking-is-partial",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Work that drifted can be frozen without freezing the work that did not",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2's response to unacceptable drift is all-or-nothing. tools/reflow2_check.py thresholds WHICH findings count — anchored gaps at or above --gap-threshold (default 0.8) fail the build — but the response is a single sys.exit(1) and the whole build goes red. There is no state in which some capabilities are frozen pending a decision while the rest of the work proceeds. reflow could do this. Its rigid-mode resync offered the user two options, and option B was: \"Document each drift item as change request, add to context/change_requests.json, BLOCK implementation of drifted features, continue with non-drifted work.\" The RESYNC_to_P1 path for major drift in rigid mode likewise says \"BLOCK until change request approved\" — a targeted freeze, not a stopped project. WHY THIS MATTERS MORE THAN IT SOUNDS. On a system being evolved incrementally against functional production code — Anthony's actual case at NSLS-II, a ten-year-old bluesky stack evolving on the fly — \"stop everything until this is resolved\" is almost never the right answer, and \"carry on regardless\" is never the right answer either. Partial blocking is the only response that matches how the work actually proceeds: quarantine what is contested, keep delivering what is not. It is also what makes a gate survivable in a shared repo, where one contested capability currently reddens the build for everyone. WHAT reflow2 ALREADY HAS, so this is a smaller change than it appears: the graph can already say which capabilities are affected (propagate_change gives the blast radius; scope + claim_region give \"the part I hold\"), and status/proposed already expresses \"not agreed yet\". What is missing is that nothing READS those to scope a refusal — the gate asks one global question and gives one global answer. OPEN: whether a partial block is advisory (reported, not enforced, per dec:report-dont-judge) or actually refuses writes against the frozen region, and whether the frozen set is computed from the drift's blast radius or named by the user. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:build-loop-is-bounded",
       "node_type": "Requirement",
       "properties": {
@@ -31503,6 +31612,21 @@
         "provenance": "authored",
         "statement": "When the design and the build diverge, reflow2 must say which way and about what — not merely that a file's contents moved. Three things follow. Direction: a system that has grown capability the design never recorded is a different condition from one whose design overstates it, and today both arrive as an identical checksum change, so understatement is invisible exactly where it is largest. Meaning: the report must say what the design now claims wrongly, because asking someone to decide whether the design still holds while telling them only that bytes changed puts the entire burden of finding the delta on the person least likely to have time for it — which is how the design goes stale despite a mechanism designed to stop it. And write-back: where the design was recovered from documents, bringing the design up to date must be able to reach those documents, or the source everyone actually reads stays wrong while the graph quietly becomes right.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:drift-rolls-up-to-a-score",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Drift rolls up to one number, and how far the work retreats is computed from it",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 records drift per event and never rolls it up, so there is no answer to \"how bad is it overall, and how far back do we have to go?\" DriftEvent carries severity (low/medium/high/critical) and drift_type (missing_artifact, spec_mismatch, undocumented_addition, status_mismatch, checksum_change, and the three deployment_* kinds), and 37 of them exist in reflow2's own design — but nothing aggregates them into a single figure and nothing acts on the aggregate. THE PRIOR ART, from reflow's resync_protocol.json and phase_transitions.json: drift detection emitted a scalar drift_score in 0.0..1.0, and that one number decided HOW FAR THE WORK RETREATED — below 0.3 return to P3 and keep building, 0.3 to 0.5 return to P2 and revise the allocation, at or above 0.5 return to P1 and revise the functional analysis. The same number gated the forward transition too: P4 to P5 required \"architecture drift score < threshold\" among its quality gates, and major_drift (> 0.5) was classified severity critical with escalates_to P1. So one measure served three purposes — trigger, escalation target, and release gate. A PRECONDITION THAT MUST BE FIXED FIRST, and it is why this is not a small feature: the per-event input is currently untrustworthy. The 2026-07-28 sweep behind req:defaults-do-not-assert recorded DriftEvent.severity among the properties WRITTEN and never consulted — \"written from kind.severity() at three call sites while ranking independently re-derives it via severity_rank(kind), so the stored copy can silently diverge from the mapping that actually governs.\" A rollup over a stored value that the ranking already disagrees with would compute a confident number from an inconsistent base. Either the stored severity becomes the single source or the rollup reads the derivation, but not both. OPEN, and deliberately not decided here: whether the retreat target should be phase-shaped at all. reflow's answer was P3/P2/P1 because it had phases; reflow2's equivalent question is which LAYER of the golden thread a given drift score sends you back to — realization, allocation, or intent. The scalar is portable; the destinations are not. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "status": "proposed"
       }
     },
     {
@@ -32372,6 +32496,16 @@
         "state": "{\"components\":\"dynograph-core,dynograph-storage,dynograph-graph,dynograph-resolution,dynograph-vector\",\"declared_in\":\"Cargo.toml\",\"description\":\"Derived from reflow2's own Cargo.toml, not hand-written. Bumped v0.11.0 -> v0.12.0 on 2026-07-28 for a stated reason rather than as housekeeping (AGENTS.md forbids the latter): v0.12.0 closes a type leak reflow2 was structurally exposed to — `search_fulltext` returned `dynograph_text::TextHit`, from a crate reflow2 never names and reaches only through an optional feature — and it makes the `rocksdb` and `fulltext` feature NAMES a committed contract upstream, which is exactly the reliance this declaration records. Verified before the tag existed by building this consumer against the provider's unreleased tree. MIGRATION CHECKED, not assumed: `keys.rs` and `backend.rs` are untouched between the tags, so a graph written by v0.11.0 reads identically.\",\"features\":\"rocksdb,fulltext\",\"name\":\"dynograph-foundation\",\"provider\":\"https://github.com/sligara7/dynograph-foundation.git\",\"resource_type\":\"design-dependency\",\"version\":\"v0.12.0\"}",
         "target_id": "dep:dynograph-foundation",
         "target_type": "Resource"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reflow-workflow-review:dec:anchor-retire-or-implement",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:intent-is-reinjected\",\"properties\":{\"note\":\"Which node type carries the re-injected payload depends on this decision: Snapshot has 14 live instances and already generalizes the P2-to-P3 Anchor, while Anchor has zero and is still advertised by describe_schema.\"}}]",
+        "state": "{\"decision\":\"UNDECIDED, recorded 2026-07-28. schema/structure.yaml:108 declares an Anchor node type with design_intent, key_decisions, checksum and created_at. Nothing in the core creates it, nothing reads it, there is no node::ANCHOR constant, and reflow2's own 886-node design contains ZERO instances. It was superseded: temporal.rs:62 describes Snapshot as \\\"a checksummed baseline (generalizes the P2 to P3 Anchor)\\\", and Snapshot has 14 live instances while DriftEvent has 37. THE PART THAT MAKES THIS MORE THAN TIDYING: describe_schema still returns Anchor to any agent asking what the vocabulary contains, and serves this hint with it — \\\"A checksummed baseline of the design taken when leaving P2 for a build round (P3). Not extracted from prose — created by the workflow at the structure to build transition. DriftEvents reference the Anchor they diverged from.\\\" No DriftEvent references an Anchor, because none exists. An agent that follows the discovery surface creates a node nothing will ever read, and believes it has anchored a build round. Three options. (a) RETIRE the type from the schema, which is the honest reading if Snapshot fully covers it — but removing a node type strands any graph that already carries one, the same objection that kept `review` and `simulation` in Verification.method when the taxonomy grew. (b) IMPLEMENT it, if the P2-to-P3 anchoring semantics are meant to survive as something distinct from a general Snapshot. (c) REDIRECT — keep the name as an alias or documented synonym of Snapshot so old graphs still load, while the discovery surface stops advertising it as a separate thing to create. Whichever is chosen, the question underneath is the same one dec:one-retire-edge asks about edges: what should CONSULT the retirement, and does a retired vocabulary item stop being offered or get offered with a warning?\",\"name\":\"OPEN — the Anchor node type is superseded by Snapshot but still advertised: retire it or implement it?\",\"rationale\":\"Found 2026-07-28 reviewing the original reflow's workflow_master.json, whose architecture_anchor is the mechanism this type was modelled on. Recorded rather than fixed because all three options are defensible and the choice is Anthony's — it is a vocabulary call, and those have been his every time. Note the shape it shares with the other findings from this review: a schema declaring something no computation reaches (req:functional-vocabulary-computes), a default asserting a choice nobody made (req:defaults-do-not-assert, req:edge-defaults-do-not-assert), and now a whole TYPE advertised on the discovery surface after being superseded. This is the same defect at node-type granularity, which is the level the earlier sweeps did not examine — they measured properties, not types.\",\"status\":\"proposed\"}",
+        "target_id": "dec:anchor-retire-or-implement",
+        "target_type": "Decision"
       }
     },
     {
@@ -33285,7 +33419,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2f972ef3b2530755881239032e8f51a35356aa0cdc9bb75da53e1b14980d4c57",
+  "prev_content_hash": "sha256:927eed752c959bebf7d15637eff773f23948bc58c9818b72b9337e64c654b6a3",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
