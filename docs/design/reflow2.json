@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:143413a5f600aac2d0b2a5ba45d3d5feeb85da2ea54bc7fb8f67c4376c695e61",
+  "content_hash": "sha256:b0f8837e425db844c0d26e44fada430f66d1fb9e4afa10a5b8d6d4c6352a848b",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1665,6 +1665,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:reinjection-trigger-answered",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:remote-sessions",
       "properties": {},
       "to_id": "epoch:v0130"
@@ -2188,6 +2194,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:reflow-workflow-review:dec:anchor-retire-or-implement",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reflow-workflow-review:req:intent-is-reinjected",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
     },
@@ -5904,6 +5916,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:reinjection-trigger-answered",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:intent-is-reinjected"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:remote-sessions",
       "properties": {
         "accepted_baseline": true,
@@ -8595,6 +8616,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:edge-defaults-do-not-assert"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:decomposition-covers-its-parent",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:requirement-lineage"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -12713,6 +12743,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:decomposition-covers-its-parent",
+      "properties": {},
+      "to_id": "decision:ack:1947285897ace4dc"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:defaults-do-not-assert",
       "properties": {},
       "to_id": "decision:ack:b0ef8ce1e452f881"
@@ -13024,6 +13060,12 @@
       "from_id": "dep:dynograph-foundation",
       "properties": {},
       "to_id": "snap:epoch:linking-repos:dep:dynograph-foundation"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:intent-is-reinjected",
+      "properties": {},
+      "to_id": "snap:epoch:reflow-workflow-review:req:intent-is-reinjected"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -26654,6 +26696,14 @@
       }
     },
     {
+      "node_id": "chg:reinjection-trigger-answered",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Amend req:intent-is-reinjected: the trigger question is answered by degradation signals plus an operations counter"
+      }
+    },
+    {
       "node_id": "chg:remote-sessions",
       "node_type": "ChangeEvent",
       "properties": {
@@ -28240,6 +28290,16 @@
         "decision": "Accepted the gap gap:127934176c8341bd.",
         "name": "Reviewed: gap:127934176c8341bd",
         "rationale": "Deferred on Anthony's word, 2026-07-28. The capability is captured intent at status=planned with nothing built against it, so there is nothing yet to verify; adding a Verification now would leave a check at 'planned' that confirms nothing. Revisit when the increment is scheduled, together with the unallocated and unrealized gaps on the same node.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:1947285897ace4dc",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:1947285897ace4dc.",
+        "name": "Reviewed: gap:1947285897ace4dc",
+        "rationale": "Deferred on Anthony's word, 2026-07-28, closing the reflow workflow review. Accepted and not dropped, and better evidenced than most parked items: the risk was identified analytically the same day (report.rs:566 rolls delivery up a decomposition without ever asking whether the children cover the parent) and then observed in the field (reflow's own 01 monolith split into 01a-01f, losing context_management and self_improvement from every child, unnoticed for months). Deferred because the honest form is a QUESTION AT DECOMPOSITION TIME with the answer recorded, not a computed refusal — nothing can mechanically decide whether two children amount to a parent, and a detector that guessed would either block correct narrowing or bless real loss. That makes it a handshake to design (which question, asked when, recorded where) rather than a check to write. Must apply to decomposition alone: req:requirement-lineage distinguishes decomposed from derived, and a derived requirement adds new technical necessity nobody asked for, so it is not expected to cover anything.",
         "status": "accepted"
       }
     },
@@ -31586,6 +31646,21 @@
       }
     },
     {
+      "node_id": "req:decomposition-covers-its-parent",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A decomposition is checkable against what the parent held, because delivery rolls up whether or not the children cover it",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 rolls delivery UP a decomposition and never checks that the children COVER the parent. report.rs:566 is explicit: if a requirement has decomposed children, it is delivered if and only if every child is delivered — \"let children = self.decomposed_children(requirement_id)?; if children.is_empty() { return Ok(false); } for child in &children { if !self.requirement_is_delivered_within(child, depth - 1)? { return Ok(false); } } Ok(true)\". Nothing anywhere asks whether the children, taken together, amount to the parent. So a parent split into two children that address a tenth of it reports DELIVERED the moment both close, in the coverage number this project treats as ground truth (req:completion-computed: delivery is computed from the golden thread, never asserted). THE CONCRETE INSTANCE, and it is not hypothetical. This was first noticed on 2026-07-28 as a modelling risk, when DECOMPOSES was rejected as the edge type for two new requirements precisely because decomposing req:defaults-do-not-assert (ten measured instances) into two children would have reported it delivered with eight outstanding. Reviewing 01-systems_engineering.json the same day turned that risk into a field observation: reflow's own monolithic workflow was decomposed into 01a through 01f, and TWO CROSS-CUTTING TOP-LEVEL BLOCKS DID NOT SURVIVE. context_management (operations counter, degradation signals, refresh sequence, pre-operation checklist) and self_improvement (retrospective questions, metrics, improvement backlog) are present in all six monolithic workflows — 00-setup, 01-systems_engineering, 02-artifacts_visualization, 03-development, 04-testing_operations, feature_update — and absent from every one of 00a, 01a, 01b, 01c, 01d, 01e and 01f. Cross-referenced against workflow_master's phase assignments, context_management survives in roughly two of about sixteen live workflows. The discipline lived in every original file and largely did not make it into the decomposition, and nothing noticed for months. THE MECHANISM OF THE LOSS IS THE GENERAL CASE: a decomposition by SUBJECT drops what belongs to no single subject. Cross-cutting content has no natural child to land in, so it lands in none. That is exactly the failure a coverage check would catch and a roll-up will never notice, because the roll-up only ever asks whether each child is done. WHAT IS NOT BEING ASKED FOR: automatic refusal, or an LLM judging sufficiency. The honest form is a question put to the user at decomposition time — \"does this set of children cover the parent, and what did the parent hold that none of them do?\" — with the answer recorded, so a later reader can tell a deliberate narrowing from an accident. That fits the pattern the project already uses for gaps: report and ask, per dec:report-dont-judge, never decide. Note also the interaction with req:requirement-lineage, which distinguishes decomposed from derived: a DERIVED requirement adds new technical necessity and is not expected to cover anything, so any check must apply to decomposition alone. Found 2026-07-28 reviewing 01-systems_engineering.json. Anthony's word: capture it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:defaults-do-not-assert",
       "node_type": "Requirement",
       "properties": {
@@ -31941,7 +32016,7 @@
         "name": "Design intent is read back into a long build, not only the debt the loop is owed",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "A long build session forgets what it was trying to build. reflow's countermeasure was explicit: workflow_master.json takes an architecture_anchor at the P2-to-P3 transition — checksums over the service/functional/interface/graph specs plus captured fields design_intent_summary, key_decisions, constraints, service_count, function_count — and then RE-INJECTS it at three moments: phase_transitions, resync_protocol, and every_N_iterations with N = 5. Its llm_instructions make the purpose plain, on_phase_entry: \"Read architecture_anchor from working_memory.json ... Remind yourself of design intent and constraints.\" reflow2 HAS a periodic re-injection mechanism and it carries different cargo. cap:read-loop-hint surfaces loop DEBT when it is real — what capture/detect/ask/decide steps are owed — and the Stop hook nudges when graph writes finish without a loop check. That is valuable and is not this. Debt says what you OWE; intent says what you were TRYING TO BUILD. A session can be perfectly clean on debt and still have quietly stopped building the thing the design describes. The vocabulary for the payload largely exists — Snapshot is the checksummed baseline (14 instances against Anchor's zero, see dec:anchor-retire-or-implement), Decision carries key decisions, Constraint carries constraints — so the gap is the RE-READING, not the recording. Open underneath it: what triggers a re-injection in a system with no phase counter to count iterations against. reflow could say \"every 5 loops\" because it had a loop counter; reflow2's equivalent trigger might be elapsed writes, a drift threshold, or the same budget req:build-loop-is-bounded would introduce, which is why these two were captured together. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "statement": "A long build session forgets what it was trying to build. reflow's countermeasure was explicit: workflow_master.json takes an architecture_anchor at the P2-to-P3 transition — checksums over the service/functional/interface/graph specs plus captured fields design_intent_summary, key_decisions, constraints, service_count, function_count — and then RE-INJECTS it at three moments: phase_transitions, resync_protocol, and every_N_iterations with N = 5. Its llm_instructions make the purpose plain, on_phase_entry: \"Read architecture_anchor from working_memory.json ... Remind yourself of design intent and constraints.\"\n\nreflow2 HAS a periodic re-injection mechanism and it carries different cargo. cap:read-loop-hint surfaces loop DEBT when it is real — what capture/detect/ask/decide steps are owed — and the Stop hook nudges when graph writes finish without a loop check. That is valuable and is not this. Debt says what you OWE; intent says what you were TRYING TO BUILD. A session can be perfectly clean on debt and still have quietly stopped building the thing the design describes. The vocabulary for the payload largely exists — Snapshot is the checksummed baseline (14 instances against Anchor's zero, see dec:anchor-retire-or-implement), Decision carries key decisions, Constraint carries constraints — so the gap is the RE-READING, not the recording.\n\nTHE TRIGGER QUESTION, AMENDED 2026-07-28. This requirement was captured with one thing open: what triggers a re-injection in a system with no phase counter to count iterations against. Reviewing 01-systems_engineering.json answers it, and the answer is two mechanisms rather than one.\n\n(1) A COUNTER. Its context_management block runs an operations counter with threshold 5, tracked in working_memory.json as operations_since_refresh, incremented \"after each real operation (file creation, tool execution, artifact generation)\" and forcing a refresh at 5. Note the same number as workflow_master's every_N_iterations, so the cadence is consistent across reflow rather than picked twice.\n\n(2) SIGNALS, which is the part with no reflow2 counterpart at all. reflow named the OBSERVABLE SYMPTOMS of context degradation so an agent could notice its own state rather than only counting: \"Asking about system name (it's in working_memory.json)\", \"Forgetting current step\", \"Working in wrong directory (pwd != system_root)\", \"Using wrong template format\", \"Creating artifacts in wrong locations\", and \"Implementing features not in service_architecture.json\" — that last being DRIFT caught behaviourally, from what the agent is about to do, rather than by diffing artifacts after the fact.\n\nThe response was a fixed 8-step refresh: PAUSE, VERIFY PWD, SAVE STATE, RELOAD (workflow file, definitions, templates), READ (current focus and progress), CONFIRM (state the system name, workflow, step and next action back), RESET the counter, RESUME. Plus a pre-operation checklist carrying one line worth keeping verbatim: \"Verify not about to generate report/summary (do real work)\" — an explicit guard against the agent drifting into producing summaries instead of doing the work.\n\nSo the trigger is not either/or: a counter bounds how long you can go WITHOUT re-grounding, and signals catch degradation that arrives faster than the counter. A counter alone re-injects on a healthy session and misses a fast collapse; signals alone never fire on the slow drift that has no symptom yet.\n\nSTILL OPEN after the amendment: which of reflow's signals survive translation. reflow2 has no pwd, no working_memory.json and no template format, so \"wrong directory\" and \"wrong template\" do not port — but \"implementing features not in the design\", \"forgetting what was decided\", and \"asking for something the graph already holds\" all do, and the last is directly observable at the tool boundary. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it, then amend it.",
         "status": "proposed"
       }
     },
@@ -32657,6 +32732,16 @@
         "state": "{\"decision\":\"UNDECIDED, recorded 2026-07-28. schema/structure.yaml:108 declares an Anchor node type with design_intent, key_decisions, checksum and created_at. Nothing in the core creates it, nothing reads it, there is no node::ANCHOR constant, and reflow2's own 886-node design contains ZERO instances. It was superseded: temporal.rs:62 describes Snapshot as \\\"a checksummed baseline (generalizes the P2 to P3 Anchor)\\\", and Snapshot has 14 live instances while DriftEvent has 37. THE PART THAT MAKES THIS MORE THAN TIDYING: describe_schema still returns Anchor to any agent asking what the vocabulary contains, and serves this hint with it — \\\"A checksummed baseline of the design taken when leaving P2 for a build round (P3). Not extracted from prose — created by the workflow at the structure to build transition. DriftEvents reference the Anchor they diverged from.\\\" No DriftEvent references an Anchor, because none exists. An agent that follows the discovery surface creates a node nothing will ever read, and believes it has anchored a build round. Three options. (a) RETIRE the type from the schema, which is the honest reading if Snapshot fully covers it — but removing a node type strands any graph that already carries one, the same objection that kept `review` and `simulation` in Verification.method when the taxonomy grew. (b) IMPLEMENT it, if the P2-to-P3 anchoring semantics are meant to survive as something distinct from a general Snapshot. (c) REDIRECT — keep the name as an alias or documented synonym of Snapshot so old graphs still load, while the discovery surface stops advertising it as a separate thing to create. Whichever is chosen, the question underneath is the same one dec:one-retire-edge asks about edges: what should CONSULT the retirement, and does a retired vocabulary item stop being offered or get offered with a warning?\",\"name\":\"OPEN — the Anchor node type is superseded by Snapshot but still advertised: retire it or implement it?\",\"rationale\":\"Found 2026-07-28 reviewing the original reflow's workflow_master.json, whose architecture_anchor is the mechanism this type was modelled on. Recorded rather than fixed because all three options are defensible and the choice is Anthony's — it is a vocabulary call, and those have been his every time. Note the shape it shares with the other findings from this review: a schema declaring something no computation reaches (req:functional-vocabulary-computes), a default asserting a choice nobody made (req:defaults-do-not-assert, req:edge-defaults-do-not-assert), and now a whole TYPE advertised on the discovery surface after being superseded. This is the same defect at node-type granularity, which is the level the earlier sweeps did not examine — they measured properties, not types.\",\"status\":\"proposed\"}",
         "target_id": "dec:anchor-retire-or-implement",
         "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reflow-workflow-review:req:intent-is-reinjected",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:build-loop-is-bounded\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:anchor-retire-or-implement\",\"properties\":{\"note\":\"Which node type carries the re-injected payload depends on this decision: Snapshot has 14 live instances and already generalizes the P2-to-P3 Anchor, while Anchor has zero and is still advertised by describe_schema.\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:946dd6b0bb464229\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Design intent is read back into a long build, not only the debt the loop is owed\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"A long build session forgets what it was trying to build. reflow's countermeasure was explicit: workflow_master.json takes an architecture_anchor at the P2-to-P3 transition — checksums over the service/functional/interface/graph specs plus captured fields design_intent_summary, key_decisions, constraints, service_count, function_count — and then RE-INJECTS it at three moments: phase_transitions, resync_protocol, and every_N_iterations with N = 5. Its llm_instructions make the purpose plain, on_phase_entry: \\\"Read architecture_anchor from working_memory.json ... Remind yourself of design intent and constraints.\\\" reflow2 HAS a periodic re-injection mechanism and it carries different cargo. cap:read-loop-hint surfaces loop DEBT when it is real — what capture/detect/ask/decide steps are owed — and the Stop hook nudges when graph writes finish without a loop check. That is valuable and is not this. Debt says what you OWE; intent says what you were TRYING TO BUILD. A session can be perfectly clean on debt and still have quietly stopped building the thing the design describes. The vocabulary for the payload largely exists — Snapshot is the checksummed baseline (14 instances against Anchor's zero, see dec:anchor-retire-or-implement), Decision carries key decisions, Constraint carries constraints — so the gap is the RE-READING, not the recording. Open underneath it: what triggers a re-injection in a system with no phase counter to count iterations against. reflow could say \\\"every 5 loops\\\" because it had a loop counter; reflow2's equivalent trigger might be elapsed writes, a drift threshold, or the same budget req:build-loop-is-bounded would introduce, which is why these two were captured together. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.\",\"status\":\"proposed\"}",
+        "target_id": "req:intent-is-reinjected",
+        "target_type": "Requirement"
       }
     },
     {
@@ -33570,7 +33655,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b22d4d0ba3a07aff8387474baf38be939e2b41cc6518485e6b6eda781c8d7e4e",
+  "prev_content_hash": "sha256:143413a5f600aac2d0b2a5ba45d3d5feeb85da2ea54bc7fb8f67c4376c695e61",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
