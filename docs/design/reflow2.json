@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:be5de974cafa76d3611d80ae994e7306219d4899e00a148fdfa32a020584bc42",
+  "content_hash": "sha256:eaecd6d5da0652dc0c0df8041830b8528552984fd9edd81ab0004389db3600e6",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1593,6 +1593,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:iteration-budget-was-elicited",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:key-interfaces-built",
       "properties": {},
       "to_id": "epoch:kpp-capture"
@@ -1626,6 +1632,12 @@
       "from_id": "chg:merge-integrity-bl47-bl46",
       "properties": {},
       "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:mode-prior-art-corrected",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2199,7 +2211,19 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reflow-workflow-review:req:build-loop-is-bounded",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:reflow-workflow-review:req:intent-is-reinjected",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reflow-workflow-review:req:mode-is-chosen-and-changeable",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
     },
@@ -5529,6 +5553,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:iteration-budget-was-elicited",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:build-loop-is-bounded"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:key-interfaces-built",
       "properties": {
         "accepted_baseline": true,
@@ -5769,6 +5802,15 @@
         "action": "modified"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:mode-prior-art-corrected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:mode-is-chosen-and-changeable"
     },
     {
       "edge_type": "CHANGED",
@@ -13108,6 +13150,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:build-loop-is-bounded",
+      "properties": {},
+      "to_id": "snap:epoch:reflow-workflow-review:req:build-loop-is-bounded"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "req:intent-is-reinjected",
       "properties": {},
       "to_id": "snap:epoch:reflow-workflow-review:req:intent-is-reinjected"
@@ -13117,6 +13165,12 @@
       "from_id": "req:key-interfaces",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:req:key-interfaces"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:mode-is-chosen-and-changeable",
+      "properties": {},
+      "to_id": "snap:epoch:reflow-workflow-review:req:mode-is-chosen-and-changeable"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -26637,6 +26691,14 @@
       }
     },
     {
+      "node_id": "chg:iteration-budget-was-elicited",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Correct req:build-loop-is-bounded: the iteration budget was ASKED, not hardcoded — 3 is a default over range 1-10"
+      }
+    },
+    {
       "node_id": "chg:key-interfaces-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -26690,6 +26752,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "BL-47 + BL-46: merge survivor ranks unset provenance below explicit authored; a colliding edge keeps the survivor's properties; create_node on an existing id merges instead of replacing (the revise-design contract, now real)"
+      }
+    },
+    {
+      "node_id": "chg:mode-prior-art-corrected",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Correct req:mode-is-chosen-and-changeable: reflow DID elicit the mode — in the phase definition, which the earlier grep missed"
       }
     },
     {
@@ -31566,7 +31636,7 @@
         "name": "The build loop is bounded, and exhausting the budget forces a return to the design",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "reflow2 MEASURES design erosion under repeated build rounds and never BOUNDS it. tools/ carries the erosion trial whose stated question is \"not 'did a file change?' but: after N rounds of test-fails/fix-code/accept, does the design still describe what it should\" — so the decay is known, quantified, and regression-gated. Nothing, however, ever says STOP. A session can iterate test-fix indefinitely and reflow2 will report the drift afterwards rather than interrupt it. THE PRIOR ART, from reflow's workflow_master.json: iteration_budgets sets P3_P4_loops = 3 and P4_P3_loops = 3, and on_budget_exceeded triggers the resync protocol with target_phase P2 and escalate_to_P1_if \"drift_score > 0.5\". So after three build-test rounds work HALTS, and the agent is sent back up to architecture — or further, to functional analysis, if the drift is bad enough. The resync protocol itself is six ordered steps: halt_current_work, detect_drift, present_comparison, mode_specific_resolution, reset_iteration_counter, continue_or_escalate. DISTINCT FROM cap:budget, which rolls up a RESOURCE budget against a Constraint (mass, cost, power). This is an ITERATION budget on the design process itself, and reflow2 has no vocabulary for it. NOT MERELY A PHASE-MODEL ARTEFACT, which is the objection to expect: the mechanism is about work that does NOT terminate. A bounded loop with a forced return upward is precisely the discipline a continual evolution effort needs — Anthony's framing of design as (1) define the current state, (2) evolve it incrementally, with no clean start or exit criteria. The budget is what stops \"evolve incrementally\" from becoming \"drift indefinitely while the graph records it faithfully.\" Whether the trigger should be a loop COUNT (reflow's answer) or a measured drift threshold, or both, is open — reflow used both, counting loops and escalating on drift_score. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "statement": "reflow2 MEASURES design erosion under repeated build rounds and never BOUNDS it. tools/ carries the erosion trial whose stated question is \"not 'did a file change?' but: after N rounds of test-fails/fix-code/accept, does the design still describe what it should\" — so the decay is known, quantified, and regression-gated. Nothing, however, ever says STOP. A session can iterate test-fix indefinitely and reflow2 will report the drift afterwards rather than interrupt it.\n\nTHE PRIOR ART, from reflow's workflow_master.json: iteration_budgets carries P3_P4_loops = 3 and P4_P3_loops = 3, and on_budget_exceeded triggers the resync protocol with target_phase P2 and escalate_to_P1_if \"drift_score > 0.5\". So after three build-test rounds work HALTS and the agent is sent back up to architecture — or further, to functional analysis, if the drift is bad enough. The resync protocol itself is six ordered steps: halt_current_work, detect_drift, present_comparison, mode_specific_resolution, reset_iteration_counter, continue_or_escalate.\n\nTHE BUDGET WAS ASKED FOR, NOT ASSUMED — AMENDED 2026-07-28, same day, after reviewing workflows/phases/. The 3 above is a DEFAULT, not a constant: workflows/phases/P0_setup/phase_definition.json puts the question to the user during setup — \"How many development/test iterations before forced architecture review?\", default 3, range 1 to 10 — alongside the mode choice and, for rigid projects, the acceptable drift level. That matters for two reasons. It removes the obvious objection that 3 is arbitrary: it is this project's answer to a question every project was asked. And it sets the shape reflow2 should copy — the bound is a per-project value elicited once, not a constant compiled in, which is the same distinction ver:interface-spec draws between a default that records absence and one that names a choice.\n\nDISTINCT FROM cap:budget, which rolls up a RESOURCE budget against a Constraint (mass, cost, power). This is an ITERATION budget on the design process itself, and reflow2 has no vocabulary for it.\n\nNOT MERELY A PHASE-MODEL ARTEFACT, which is the objection to expect: the mechanism is about work that does NOT terminate. A bounded loop with a forced return upward is precisely the discipline a continual evolution effort needs — Anthony's framing of design as (1) define the current state, (2) evolve it incrementally, with no clean start or exit criteria. The budget is what stops \"evolve incrementally\" from becoming \"drift indefinitely while the graph records it faithfully.\" Supporting evidence from the same review: reflow's own P5_operations phase_definition states that \"P5 is typically ongoing\" and routes production issues back_to_P3_P4 as \"a new development cycle\", so even the phase model this came from did not assume termination.\n\nWhether the trigger should be a loop COUNT (reflow's answer) or a measured drift threshold, or both, is open — reflow used both, counting loops and escalating on drift_score, with both thresholds elicited per project. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
         "status": "proposed"
       }
     },
@@ -32211,7 +32281,7 @@
         "name": "The governance mode is chosen, visible and changeable — it is the one asserted default that is actually acted upon",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "Project.mode decides whether the design or the implementation is the source of truth, and reflow2 applies it by default, never asks for it, and provides no way to change it. THE MEASURED STATE, 2026-07-28. genesis.rs takes mode OPTIONALLY — \"if let Some(mode) = opts.mode\" — and its own comment states the consequence: \"Scaffold the Project (schema applies mode=flexible, status=active when unset)\". project_mode_of falls back to \"flexible\" again on read. The string \"mode\" does not appear anywhere in crates/reflow2-mcp/src/service.rs, so there is no set_project_mode and no setter of any kind on the served surface; after genesis it is reachable only through the create_node escape hatch — the same shape as the KPP objective finding and Requirement.concern. And reflow2's OWN Project carries mode = flexible, which nobody chose. WHY THIS IS WORSE THAN THE TEN PROPERTIES IN THE ORIGINAL SWEEP, and the difference is the whole point. Those defaults are asserted AND UNREAD — Requirement.concern sitting at core on 67 of 67 is inert, carrying no information and driving nothing. This one is asserted AND ACTED UPON: heal.rs:431 reads it, and in rigid mode HEAL only proposes and never auto-applies. So req:defaults-do-not-assert has, in this property, its first instance where the invented value changes what the system DOES. flexible is not a neutral setting either. In the vocabulary reflow2 inherited it means the architecture is NOT the source of truth, the implementation drives the architecture, and the response to drift is to update the design to match the build. That is a governance decision. reflow2 — a project whose thesis is that the design is the memory — is currently running in the mode that says the implementation drives the design, not because anyone decided so but because opts.mode was None. THE PRIOR ART IS A FAILURE, NOT A MODEL, and it corroborates rather than instructs. reflow defined development_mode in workflow_master.json with seven behavioural commitments per mode (architecture_source_of_truth, implementation_drives_architecture, drift_response, new_functionality_policy, change_request_required, auto_update_architecture_on_resync, plus the discovered-items routing), REQUIRED it as the P0-to-P1 transition prerequisite (\"fields_must_be_set: development_mode.mode\"), READ it in resync_protocol.json to choose between updating the architecture and realigning the implementation, and TESTED for it in 97-GAN-inspired-test.json — and NO WORKFLOW STEP ANYWHERE SETS IT. Not 00a, not 00b, not the 01 through 04 series. Its own META-04H check HA-005, \"Transition Prerequisites Satisfiability\", exists to catch exactly that and did not. So both systems arrive at the same place by different routes: a governance mode that everything consults and nothing establishes. THREE THINGS THIS REQUIRES, and they are separable. (1) The value is CHOSEN — genesis asks, or the mode reads as unspecified until someone says, per the rule ver:interface-spec already sets for Interface.medium: a default may record absence, never a choice. (2) The value is CHANGEABLE — a project's governance legitimately moves as it matures, exploratory to controlled, and today it cannot; brainmaker reported this from the field, half-right, since the sharper fact is that genesis does not set it at all, it defaults it. (3) The value is VISIBLE — a mode that silently changes HEAL's behaviour should be readable in the reports that say where the design stands. What rigid should MEAN beyond heal.rs:431 stays open and parked separately; this requirement is the prior question, because rigid cannot mean anything useful while the mode is unchoosable and unchangeable. Found 2026-07-28 reviewing 00a-basic_setup.json. Anthony's word: capture it.",
+        "statement": "Project.mode decides whether the design or the implementation is the source of truth, and reflow2 applies it by default, never asks for it, and provides no way to change it.\n\nTHE MEASURED STATE, 2026-07-28. genesis.rs takes mode OPTIONALLY — \"if let Some(mode) = opts.mode\" — and its own comment states the consequence: \"Scaffold the Project (schema applies mode=flexible, status=active when unset)\". project_mode_of falls back to \"flexible\" again on read. The string \"mode\" does not appear anywhere in crates/reflow2-mcp/src/service.rs, so there is no set_project_mode and no setter of any kind on the served surface; after genesis it is reachable only through the create_node escape hatch — the same shape as the KPP objective finding and Requirement.concern. And reflow2's OWN Project carries mode = flexible, which nobody chose.\n\nWHY THIS IS WORSE THAN THE TEN PROPERTIES IN THE ORIGINAL SWEEP, and the difference is the whole point. Those defaults are asserted AND UNREAD — Requirement.concern sitting at core on 67 of 67 is inert, carrying no information and driving nothing. This one is asserted AND ACTED UPON: heal.rs:431 reads it, and in rigid mode HEAL only proposes and never auto-applies. So req:defaults-do-not-assert has, in this property, its first instance where the invented value changes what the system DOES. flexible is not a neutral setting either: in the vocabulary reflow2 inherited it means the architecture is NOT the source of truth, the implementation drives the architecture, and the response to drift is to update the design to match the build. That is a governance decision. reflow2 — a project whose thesis is that the design is the memory — is currently running in the mode that says the implementation drives the design, not because anyone decided so but because opts.mode was None.\n\nTHE PRIOR ART IS A MODEL, NOT A FAILURE — CORRECTED 2026-07-28, same day. This requirement was first written claiming that reflow defined development_mode, required it as the P0-to-P1 prerequisite, read it in resync_protocol and tested for it in 97, but that NO WORKFLOW STEP ANYWHERE SET IT. That claim was wrong, and the error was method rather than reasoning: the search covered workflows/*.json and did not recurse into workflows/phases/. reflow DOES elicit it, and does so better than reflow2. workflows/phases/P0_setup/phase_definition.json carries a development_mode_configuration block whose own description reads \"This is where the critical development mode choice is made\", and it puts a labelled question to the user — \"What type of project is this?\" — with two options carrying real descriptions: flexible, \"Personal / Exploratory / Agile — architecture can evolve with implementation, design is a living document\"; and rigid, \"Enterprise / Approved / Regulated — architecture is locked after approval, implementation must conform, changes require formal approval\". It then asks TWO follow-ups: if rigid, what level of drift is acceptable (none 0%, minimal 10%, or threshold-only, \"threshold requirements locked, objectives flexible\"); and always, \"How many development/test iterations before forced architecture review?\", default 3 over a range of 1 to 10. So all three governing values — mode, drift tolerance and iteration budget — were ELICITED per project rather than assumed, and the numbers that appear hardcoded elsewhere in reflow are the defaults of questions actually asked.\n\nThe correction strengthens this requirement rather than weakening it. The comparison is no longer \"both systems have the same hole\" but the sharper one: reflow asked the user three questions before letting the project proceed, and reflow2 asks none of them and cannot be told the answers afterwards.\n\nTHREE THINGS THIS REQUIRES, and they are separable. (1) The value is CHOSEN — genesis asks, or the mode reads as unspecified until someone says, per the rule ver:interface-spec already sets for Interface.medium: a default may record absence, never a choice. reflow's phrasing is worth reusing; it asks about the PROJECT (\"what type of project is this?\") rather than about a setting, which is what makes it answerable by someone who has never heard of the field. (2) The value is CHANGEABLE — a project's governance legitimately moves as it matures, exploratory to controlled, and today it cannot; brainmaker reported this from the field, half-right, since the sharper fact is that genesis does not set it at all, it defaults it. (3) The value is VISIBLE — a mode that silently changes HEAL's behaviour should be readable in the reports that say where the design stands.\n\nWhat rigid should MEAN beyond heal.rs:431 stays open and parked separately on Anthony's word; this requirement is the prior question, because rigid cannot mean anything useful while the mode is unchoosable and unchangeable. Found 2026-07-28 reviewing 00a-basic_setup.json; prior-art claim corrected the same day after reviewing workflows/phases/.",
         "status": "proposed"
       }
     },
@@ -32855,12 +32925,32 @@
       }
     },
     {
+      "node_id": "snap:epoch:reflow-workflow-review:req:build-loop-is-bounded",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:intent-is-reinjected\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:drift-has-direction\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:c0ad59f11915ba50\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"The build loop is bounded, and exhausting the budget forces a return to the design\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"reflow2 MEASURES design erosion under repeated build rounds and never BOUNDS it. tools/ carries the erosion trial whose stated question is \\\"not 'did a file change?' but: after N rounds of test-fails/fix-code/accept, does the design still describe what it should\\\" — so the decay is known, quantified, and regression-gated. Nothing, however, ever says STOP. A session can iterate test-fix indefinitely and reflow2 will report the drift afterwards rather than interrupt it. THE PRIOR ART, from reflow's workflow_master.json: iteration_budgets sets P3_P4_loops = 3 and P4_P3_loops = 3, and on_budget_exceeded triggers the resync protocol with target_phase P2 and escalate_to_P1_if \\\"drift_score > 0.5\\\". So after three build-test rounds work HALTS, and the agent is sent back up to architecture — or further, to functional analysis, if the drift is bad enough. The resync protocol itself is six ordered steps: halt_current_work, detect_drift, present_comparison, mode_specific_resolution, reset_iteration_counter, continue_or_escalate. DISTINCT FROM cap:budget, which rolls up a RESOURCE budget against a Constraint (mass, cost, power). This is an ITERATION budget on the design process itself, and reflow2 has no vocabulary for it. NOT MERELY A PHASE-MODEL ARTEFACT, which is the objection to expect: the mechanism is about work that does NOT terminate. A bounded loop with a forced return upward is precisely the discipline a continual evolution effort needs — Anthony's framing of design as (1) define the current state, (2) evolve it incrementally, with no clean start or exit criteria. The budget is what stops \\\"evolve incrementally\\\" from becoming \\\"drift indefinitely while the graph records it faithfully.\\\" Whether the trigger should be a loop COUNT (reflow's answer) or a measured drift threshold, or both, is open — reflow used both, counting loops and escalating on drift_score. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.\",\"status\":\"proposed\"}",
+        "target_id": "req:build-loop-is-bounded",
+        "target_type": "Requirement"
+      }
+    },
+    {
       "node_id": "snap:epoch:reflow-workflow-review:req:intent-is-reinjected",
       "node_type": "Snapshot",
       "properties": {
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:build-loop-is-bounded\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:anchor-retire-or-implement\",\"properties\":{\"note\":\"Which node type carries the re-injected payload depends on this decision: Snapshot has 14 live instances and already generalizes the P2-to-P3 Anchor, while Anchor has zero and is still advertised by describe_schema.\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:946dd6b0bb464229\",\"properties\":{}}]",
         "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Design intent is read back into a long build, not only the debt the loop is owed\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"A long build session forgets what it was trying to build. reflow's countermeasure was explicit: workflow_master.json takes an architecture_anchor at the P2-to-P3 transition — checksums over the service/functional/interface/graph specs plus captured fields design_intent_summary, key_decisions, constraints, service_count, function_count — and then RE-INJECTS it at three moments: phase_transitions, resync_protocol, and every_N_iterations with N = 5. Its llm_instructions make the purpose plain, on_phase_entry: \\\"Read architecture_anchor from working_memory.json ... Remind yourself of design intent and constraints.\\\" reflow2 HAS a periodic re-injection mechanism and it carries different cargo. cap:read-loop-hint surfaces loop DEBT when it is real — what capture/detect/ask/decide steps are owed — and the Stop hook nudges when graph writes finish without a loop check. That is valuable and is not this. Debt says what you OWE; intent says what you were TRYING TO BUILD. A session can be perfectly clean on debt and still have quietly stopped building the thing the design describes. The vocabulary for the payload largely exists — Snapshot is the checksummed baseline (14 instances against Anchor's zero, see dec:anchor-retire-or-implement), Decision carries key decisions, Constraint carries constraints — so the gap is the RE-READING, not the recording. Open underneath it: what triggers a re-injection in a system with no phase counter to count iterations against. reflow could say \\\"every 5 loops\\\" because it had a loop counter; reflow2's equivalent trigger might be elapsed writes, a drift threshold, or the same budget req:build-loop-is-bounded would introduce, which is why these two were captured together. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.\",\"status\":\"proposed\"}",
         "target_id": "req:intent-is-reinjected",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reflow-workflow-review:req:mode-is-chosen-and-changeable",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:defaults-do-not-assert\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:3f600ff329ecb31a\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"The governance mode is chosen, visible and changeable — it is the one asserted default that is actually acted upon\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"Project.mode decides whether the design or the implementation is the source of truth, and reflow2 applies it by default, never asks for it, and provides no way to change it. THE MEASURED STATE, 2026-07-28. genesis.rs takes mode OPTIONALLY — \\\"if let Some(mode) = opts.mode\\\" — and its own comment states the consequence: \\\"Scaffold the Project (schema applies mode=flexible, status=active when unset)\\\". project_mode_of falls back to \\\"flexible\\\" again on read. The string \\\"mode\\\" does not appear anywhere in crates/reflow2-mcp/src/service.rs, so there is no set_project_mode and no setter of any kind on the served surface; after genesis it is reachable only through the create_node escape hatch — the same shape as the KPP objective finding and Requirement.concern. And reflow2's OWN Project carries mode = flexible, which nobody chose. WHY THIS IS WORSE THAN THE TEN PROPERTIES IN THE ORIGINAL SWEEP, and the difference is the whole point. Those defaults are asserted AND UNREAD — Requirement.concern sitting at core on 67 of 67 is inert, carrying no information and driving nothing. This one is asserted AND ACTED UPON: heal.rs:431 reads it, and in rigid mode HEAL only proposes and never auto-applies. So req:defaults-do-not-assert has, in this property, its first instance where the invented value changes what the system DOES. flexible is not a neutral setting either. In the vocabulary reflow2 inherited it means the architecture is NOT the source of truth, the implementation drives the architecture, and the response to drift is to update the design to match the build. That is a governance decision. reflow2 — a project whose thesis is that the design is the memory — is currently running in the mode that says the implementation drives the design, not because anyone decided so but because opts.mode was None. THE PRIOR ART IS A FAILURE, NOT A MODEL, and it corroborates rather than instructs. reflow defined development_mode in workflow_master.json with seven behavioural commitments per mode (architecture_source_of_truth, implementation_drives_architecture, drift_response, new_functionality_policy, change_request_required, auto_update_architecture_on_resync, plus the discovered-items routing), REQUIRED it as the P0-to-P1 transition prerequisite (\\\"fields_must_be_set: development_mode.mode\\\"), READ it in resync_protocol.json to choose between updating the architecture and realigning the implementation, and TESTED for it in 97-GAN-inspired-test.json — and NO WORKFLOW STEP ANYWHERE SETS IT. Not 00a, not 00b, not the 01 through 04 series. Its own META-04H check HA-005, \\\"Transition Prerequisites Satisfiability\\\", exists to catch exactly that and did not. So both systems arrive at the same place by different routes: a governance mode that everything consults and nothing establishes. THREE THINGS THIS REQUIRES, and they are separable. (1) The value is CHOSEN — genesis asks, or the mode reads as unspecified until someone says, per the rule ver:interface-spec already sets for Interface.medium: a default may record absence, never a choice. (2) The value is CHANGEABLE — a project's governance legitimately moves as it matures, exploratory to controlled, and today it cannot; brainmaker reported this from the field, half-right, since the sharper fact is that genesis does not set it at all, it defaults it. (3) The value is VISIBLE — a mode that silently changes HEAL's behaviour should be readable in the reports that say where the design stands. What rigid should MEAN beyond heal.rs:431 stays open and parked separately; this requirement is the prior question, because rigid cannot mean anything useful while the mode is unchoosable and unchangeable. Found 2026-07-28 reviewing 00a-basic_setup.json. Anthony's word: capture it.\",\"status\":\"proposed\"}",
+        "target_id": "req:mode-is-chosen-and-changeable",
         "target_type": "Requirement"
       }
     },
@@ -33775,7 +33865,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b0f8837e425db844c0d26e44fada430f66d1fb9e4afa10a5b8d6d4c6352a848b",
+  "prev_content_hash": "sha256:be5de974cafa76d3611d80ae994e7306219d4899e00a148fdfa32a020584bc42",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
