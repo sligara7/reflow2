@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:64285aebe25474c0c4aa57646a9992dc095cc429292d4d73a4a4d157b0cd22a5",
+  "content_hash": "sha256:0e7cf36f68c2ca2855c316855b5b07575c08e606b86bf0e8793f87cd5e1f196e",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -8607,6 +8607,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:friction-has-a-baseline",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:friction-has-a-severity-bar"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:intent-is-reinjected",
       "properties": {
         "optional": false,
@@ -12737,6 +12746,18 @@
       "from_id": "req:framework-is-chosen-not-defaulted",
       "properties": {},
       "to_id": "decision:ack:967cb35c16df7571"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:friction-has-a-baseline",
+      "properties": {},
+      "to_id": "decision:ack:c510544d78bf4fef"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:friction-has-a-severity-bar",
+      "properties": {},
+      "to_id": "decision:ack:2ef80cfd8036988f"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -28293,6 +28314,16 @@
       }
     },
     {
+      "node_id": "decision:ack:2ef80cfd8036988f",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:2ef80cfd8036988f.",
+        "name": "Reviewed: gap:2ef80cfd8036988f",
+        "rationale": "Deferred on Anthony's word, 2026-07-28, with the rest of the reflow workflow review. Accepted and not dropped, and the need is already demonstrated rather than argued: eight brainmaker friction items sit in feedback.md unconverted, and two Verification nodes carry friction findings inside their NAMES with the word \"unwritten\" in them, because there is nowhere else to put them. Deferred because the taxonomy is the design work and copying reflow's twelve categories wholesale would be wrong — several are phase-shaped (hierarchical_phase_transition_issues and friends) and reflow2 has no phases, while reflow2 needs at least one category reflow never had, for friction that cannot be reported without quoting someone's design. The severity criteria transfer better than the categories do. Any scheme adopted must carry report-friction's redaction discipline with it, since reflow2 installs into other people's projects and reflow's loop ran only on its own repo.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:30182d6495cdfe54",
       "node_type": "Decision",
       "properties": {
@@ -28859,6 +28890,16 @@
         "decision": "Accepted the gap gap:c0ad59f11915ba50.",
         "name": "Reviewed: gap:c0ad59f11915ba50",
         "rationale": "Deferred on Anthony's word, 2026-07-28, with the other captures from the reflow workflow review. Accepted and not dropped: reflow2 measures erosion under repeated build rounds (the erosion trial is a regression gate) and never bounds it, where reflow halted after three P3/P4 loops and forced a resync up to architecture, escalating to functional analysis above a drift score of 0.5. Deferred because the trigger is genuinely undecided — a loop COUNT needs a loop counter reflow2 does not have, so the honest trigger may be measured drift, elapsed writes, or both, and choosing wrong would produce a detector that fires on correct work (the BL-23 lesson: when a detector punishes correct work the answer is a different question, not a tuned threshold). Deliberately NOT treated as phase-model legacy: the mechanism is for work that does not terminate, which is the continual-evolution case.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:c510544d78bf4fef",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:c510544d78bf4fef.",
+        "name": "Reviewed: gap:c510544d78bf4fef",
+        "rationale": "Deferred on Anthony's word, 2026-07-28. Accepted and not dropped: reflow2 regression-gates its DETECTORS (phase_trial 13/13, the erosion trial) and has nothing measuring whether a person or agent can still get through the process, so it could become materially harder to use across a release with every gate green — a consequence report-friction's own text concedes (\"ordinary use produces better evidence and currently loses all of it\"). Deferred behind req:friction-has-a-severity-bar, which is a genuine precondition rather than sequencing: a baseline needs classified countable findings to be a baseline of something. Also open and not decided: whether the blind-execution structure that makes this work (one agent drives without seeing expected outputs, another evaluates the transcript) is something reflow2 runs against ITSELF, or a harness offered to any project reflow2 is installed in — those are different products, and the second inherits the redaction problem in full.",
         "status": "accepted"
       }
     },
@@ -31705,6 +31746,36 @@
       }
     },
     {
+      "node_id": "req:friction-has-a-baseline",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Usability is measured against a baseline, so getting harder to use is detectable",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 regression-gates whether its DETECTORS still work and has no equivalent for whether a person or agent can still get THROUGH the process. tools/phase_trial.py seeds a realistic graph, injects the divergences P3/P4/P5 are each meant to catch, scores whether the graph noticed, sits at 13/13, exits 0 and works as a regression gate; the erosion trial asks the sharper version, whether the design still describes the system after N rounds of test-fails/fix-code/accept. Both measure the machinery. Neither measures the EXPERIENCE of driving it, so reflow2 could become materially harder to use across a release and every gate would stay green. report-friction's own text concedes the consequence: \"Everything reflow2 knows about its own weak points came from someone writing down what fought them. Those were staged trials; ordinary use produces better evidence and CURRENTLY LOSES ALL OF IT.\" THE PRIOR ART, from reflow's 97-GAN-inspired-test.json, and its structure is the transferable part rather than its specifics. Execution was separated from evaluation: one agent drove the workflows BLIND — \"Agent B should NOT see expected outputs\" — while a second read the transcript afterwards, categorised what went wrong and found root causes rather than symptoms, asking of each \"why did this occur, how did it manifest, how frequently, what is the fix effort\". Results aggregated to metrics, compared against a stored baseline, and regression was called out explicitly: \"if new version performs worse than baseline, that's a P0 issue.\" The cadence was stated — periodically, or before a major release. THE BLINDNESS IS THE LOAD-BEARING PART and the easiest to lose: an evaluator who knows the expected output cannot see the friction, because it reads the intended path into whatever happened. reflow2's real trials (brownfield ophyd-service, greenfield aidrone, brainmaker) already produce this evidence and it is what taught reflow2 most of what it knows — but they are occasional, hand-run, and not comparable to each other, so nothing can say whether the last release made anything worse. Depends on req:friction-has-a-severity-bar: a baseline needs countable, classified findings to be a baseline OF something. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:friction-has-a-severity-bar",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Friction is classified and has a bar at which it becomes work",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 collects friction with no vocabulary for it and no threshold at which accumulated friction becomes scheduled work, so reports pile up and nothing converts them. THE EVIDENCE IS IN THIS REPO, twice over. (1) The eight brainmaker friction items in feedback.md — from a real genesis pass over a 47-component decomposition — are still not in docs/backlog.md. Observed, written down, and never converted. (2) Friction findings with nowhere to live are being crammed into node NAMES: ver:kit-manifest-agrees is literally named \"... (friction 2026-07-25: reflow2's own manifest is four releases stale and nothing noticed; unwritten)\" and ver:tools-reject-unknown-args carries \"(friction 2026-07-25, unwritten)\". When a finding has no home it ends up in a name string, and \"unwritten\" in a Verification name is a backlog entry in hiding. THE PRIOR ART, from reflow's 97-GAN-inspired-test.json: friction was classified into a fixed taxonomy of twelve categories — tool_workflow_misalignment (tool output does not match the documentation), missing_documentation, automation_incompatibility (requires human interaction, fails unattended), missing_tools (workflow references something that does not exist), ambiguous_instructions, template_issues, path_resolution_issues, plus five for the hierarchical machinery. Each finding was prioritised against stated criteria rather than judgement: P0 BLOCKING, \"workflow cannot proceed without manual intervention or workaround\"; P1 HIGH VALUE, \"causes significant friction (5+ minutes wasted) or happens frequently\"; P2 POLISH. And there was a bar: p0_issues_count > 0 OR (p1_issues_count > 3 AND friction_overhead > 15%) converted the pile into a fix cycle. The specific numbers are reflow's and are not the point; the point is that a stated bar exists, so friction stops depending on someone feeling that there is enough of it. NOTE WHAT reflow2 ALREADY DOES BETTER and must keep: report-friction's redaction discipline (tool names and argument SHAPES, node TYPES not ids, counts not contents, errors with ids masked) has no counterpart in reflow's loop, because reflow's ran on its own repo where there was no third party's design to protect. reflow2 installs once per machine into other people's projects, so any classification scheme must carry that discipline with it. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:frictionless-update",
       "node_type": "Requirement",
       "properties": {
@@ -33419,7 +33490,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:927eed752c959bebf7d15637eff773f23948bc58c9818b72b9337e64c654b6a3",
+  "prev_content_hash": "sha256:64285aebe25474c0c4aa57646a9992dc095cc429292d4d73a4a4d157b0cd22a5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
