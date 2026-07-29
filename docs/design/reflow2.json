@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:eaecd6d5da0652dc0c0df8041830b8528552984fd9edd81ab0004389db3600e6",
+  "content_hash": "sha256:0fb84b3107216f2df2e519d77c65a087232113ca7da98a9998b225658e413318",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1473,6 +1473,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:build-loop-shape-reassessed",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:claim-liveness",
       "properties": {},
       "to_id": "epoch:v0120"
@@ -1494,6 +1500,12 @@
       "from_id": "chg:composed-analysis",
       "properties": {},
       "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:context-estimation-reassessed",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1545,6 +1557,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:drift-scalar-reassessed",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:federation-decided",
       "properties": {},
       "to_id": "epoch:surface-export"
@@ -1554,6 +1572,12 @@
       "from_id": "chg:foundation-v0120",
       "properties": {},
       "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:framework-registry-reassessed",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2212,6 +2236,24 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:reflow-workflow-review:req:build-loop-is-bounded",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reflow-workflow-review:req:context-is-a-modelled-quantity",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reflow-workflow-review:req:drift-rolls-up-to-a-score",
+      "properties": {},
+      "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reflow-workflow-review:req:framework-is-chosen-not-defaulted",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
     },
@@ -4518,6 +4560,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:build-loop-shape-reassessed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:build-loop-is-bounded"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:claim-liveness",
       "properties": {
         "accepted_baseline": true,
@@ -4677,6 +4728,15 @@
         "action": "added"
       },
       "to_id": "cap:composed-analysis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:context-estimation-reassessed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:context-is-a-modelled-quantity"
     },
     {
       "edge_type": "CHANGED",
@@ -5094,6 +5154,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:drift-scalar-reassessed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:drift-rolls-up-to-a-score"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:evidence-fidelity",
       "properties": {
         "accepted_baseline": true,
@@ -5208,6 +5277,15 @@
         "action": "modified"
       },
       "to_id": "dep:dynograph-foundation"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:framework-registry-reassessed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:framework-is-chosen-not-defaulted"
     },
     {
       "edge_type": "CHANGED",
@@ -8625,6 +8703,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:assumptions-are-first-class",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:as-built-honest"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:blocking-is-partial",
       "properties": {
         "optional": false,
@@ -8658,6 +8745,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:edge-defaults-do-not-assert"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:correspondence-rules-are-stateable",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:key-interfaces"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -12752,6 +12848,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:assumptions-are-first-class",
+      "properties": {},
+      "to_id": "decision:ack:9ff80e5afcd024e9"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:blocking-is-partial",
       "properties": {},
       "to_id": "decision:ack:1e7c0975c76f27fe"
@@ -12809,6 +12911,12 @@
       "from_id": "req:context-is-a-modelled-quantity",
       "properties": {},
       "to_id": "decision:ack:755a5d5272eb702d"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:correspondence-rules-are-stateable",
+      "properties": {},
+      "to_id": "decision:ack:1740e2ac1ab8c993"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -13153,6 +13261,24 @@
       "from_id": "req:build-loop-is-bounded",
       "properties": {},
       "to_id": "snap:epoch:reflow-workflow-review:req:build-loop-is-bounded"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:context-is-a-modelled-quantity",
+      "properties": {},
+      "to_id": "snap:epoch:reflow-workflow-review:req:context-is-a-modelled-quantity"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:drift-rolls-up-to-a-score",
+      "properties": {},
+      "to_id": "snap:epoch:reflow-workflow-review:req:drift-rolls-up-to-a-score"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:framework-is-chosen-not-defaulted",
+      "properties": {},
+      "to_id": "snap:epoch:reflow-workflow-review:req:framework-is-chosen-not-defaulted"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -26483,6 +26609,14 @@
       }
     },
     {
+      "node_id": "chg:build-loop-shape-reassessed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Reassess req:build-loop-is-bounded: a hard stop is phase-shaped and may be wrong for continual evolution"
+      }
+    },
+    {
       "node_id": "chg:claim-liveness",
       "node_type": "ChangeEvent",
       "properties": {
@@ -26512,6 +26646,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Two designs analysed together without either being written to: the dependency's ids are namespaced into an in-memory graph and reflow2's ordinary detectors run over the whole, every finding attributed ours/theirs/seam"
+      }
+    },
+    {
+      "node_id": "chg:context-estimation-reassessed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Reassess req:context-is-a-modelled-quantity: static token estimation is the weak half; measurement is the answer"
       }
     },
     {
@@ -26603,6 +26745,14 @@
       }
     },
     {
+      "node_id": "chg:drift-scalar-reassessed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Reassess req:drift-rolls-up-to-a-score: the scalar is the WEAK part; reflow2's per-event disposition is already better"
+      }
+    },
+    {
       "node_id": "chg:evidence-fidelity",
       "node_type": "ChangeEvent",
       "properties": {
@@ -26624,6 +26774,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The dynograph-foundation pin moves v0.11.0 to v0.12.0, closing a type leak reflow2 was structurally exposed to and making the forwarded feature names a committed contract upstream"
+      }
+    },
+    {
+      "node_id": "chg:framework-registry-reassessed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Reassess req:framework-is-chosen-not-defaulted: terminology mapping is cosmetic and label-gated analyses are a smell"
       }
     },
     {
@@ -28409,6 +28567,16 @@
       }
     },
     {
+      "node_id": "decision:ack:1740e2ac1ab8c993",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:1740e2ac1ab8c993.",
+        "name": "Reviewed: gap:1740e2ac1ab8c993",
+        "rationale": "Deferred on the established disposition for this review, 2026-07-28. Accepted and not dropped, and distinct from the rest of the batch in provenance: it comes from ISO/IEC/IEEE 42010 rather than from reflow, which had no equivalent. Deferred because the shape is a genuine fork, not a schedule: either correspondence rules become AUTHORABLE DATA (a predicate over node types, properties and edges, evaluated by the existing detector machinery) — powerful, and the thing that would let a team state a rule the maintainer never imagined — or they stay code and only the VOCABULARY becomes explicit, which is cheaper and safer. The first raises a question dec:report-dont-judge would have to answer: a user-authored rule must not become a way to make the tool assert something nobody checked. Also entangled with req:scenarios-are-modelled, since both want Actor to grow up from a line in report.rs's SNAPSHOT_TYPES into something read, and with Requirement.concern, which is dead precisely because no stakeholder-concern-viewpoint chain consumes it.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:1947285897ace4dc",
       "node_type": "Decision",
       "properties": {
@@ -29015,6 +29183,16 @@
         "decision": "Accepted the gap gap:9b2071dba7dfe759.",
         "name": "Reviewed: gap:9b2071dba7dfe759",
         "rationale": "User (who:ajs, standing policy from 2026-07-23, re-affirmed 2026-07-24): validation happens through the trials programme — docs/trials/ (self-host, adopt dogfood, erosion, phase-coverage, fleet feedback) is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. The gap re-fired only because its affected set grew by one: cap:derived-completion (BL-104) joins the same disposition. Worth noting that it is a better-than-average fit for the policy rather than an awkward one — whether \"20 of 30 delivered\" is the RIGHT number to compute is not a question a unit test can answer, and it will be settled by whether the figure proves useful when someone actually asks what to work on next, which is precisely a trial rather than a check.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:9ff80e5afcd024e9",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:9ff80e5afcd024e9.",
+        "name": "Reviewed: gap:9ff80e5afcd024e9",
+        "rationale": "Deferred on the established disposition for this review, 2026-07-28. Accepted and not dropped; like the correspondence requirement it comes from general architecture and risk practice rather than from reflow, which had no equivalent either. Deferred because the modelling choice is unsettled and cheap-versus-honest pull in opposite directions: a new node type keeps the distinction sharp (an assumption is not enforced like a Constraint, not chosen like a Decision, and not reducible like a Risk), while adding a kind to Constraint is cheaper and risks blurring the very difference that makes it useful. Also undecided: what edge carries \"rests on\", and whether an assumption carries a confirmation cadence — cap:freshness already models when a claim was last confirmed, so \"nobody has checked this in six months\" could be computed rather than remembered. The computation matters more than the node: once assumptions have things hanging off them, \"X no longer holds\" becomes a propagate query with a real answer instead of prose inside a Decision rationale that nothing can walk.",
         "status": "accepted"
       }
     },
@@ -31611,6 +31789,21 @@
       }
     },
     {
+      "node_id": "req:assumptions-are-first-class",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "An assumption is recorded as something that can stop being true, and what rests on it is computed",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "NOT FROM reflow. Raised 2026-07-28 from ordinary architecture and risk practice, after Anthony's instruction to bring judgement rather than treat reflow's workflows as canon. reflow had no equivalent either; this is a gap in both.\\n\\nDesigns rest on things believed true about the world that nobody controls, and those beliefs are what actually break architectures. reflow2 has no way to say so. Constraint BINDS (a limit the design must respect, and it is enforced). Decision records a choice with rationale (why WE chose, not what we BELIEVED). RISKS and MITIGATES describe something that might go wrong and what reduces it. None of them expresses \\\"this design is sound ONLY WHILE X remains true, and X is not ours to decide\\\" — which is a different object with a different lifecycle: an assumption is not enforced, not chosen, and not a risk to be reduced. It is a proposition that is checked, and that can be INVALIDATED, at which point everything resting on it needs revisiting.\\n\\nTHE MISSING COMPUTATION IS THE POINT, not the node type. Once an assumption is a node with things hanging off it, \\\"assumption X no longer holds\\\" becomes a propagate query with a real answer: these four capabilities and this interface were justified by it. Today that reasoning exists only in prose inside Decision rationale, where nothing can walk it. reflow2 already has every mechanism this needs — propagate_change computes blast radius, cap:freshness says when a claim was last confirmed, DriftEvent records a divergence against reality, and the Verification machinery already distinguishes proof against a model from proof against reality (cap:evidence-fidelity). An assumption is the node those mechanisms are missing.\\n\\nWHY IT MATTERS PARTICULARLY IN THIS OPERATING CONTEXT. Several organisations, competing partially-built designs, coupled repositories each with its own graph, work delivered as increments. Almost everything load-bearing about the OTHER organisation's system is an assumption: that their interface will not change before your increment lands, that their component means what its name says, that the version they run is the version they declared. req:version-combination-is-an-object pins the versions; nothing records WHY a pinned combination was believed safe or what breaks when it stops being. Evolving a ten-year-old production stack on the fly is the same shape: most of what a change rests on is a belief about code nobody has read recently.\\n\\nDISTINGUISH FROM WHAT EXISTS, because the boundary is what makes it useful: a Constraint that is violated is a defect in OUR design; an assumption that fails is a change in the WORLD, and the honest response is different — not fix the build, but revisit what was justified by it. Also distinct from a KPP (req:inviolable-intent), which is intent we refuse to weaken; an assumption is a fact we do not control.\\n\\nOPEN and not decided: whether this is a new node type or Constraint gaining a kind that separates binds-us from believed-of-the-world (the second is cheaper and risks blurring the very distinction that makes it worth having); what edge carries \\\"rests on\\\" (DEPENDS_ON is lateral and already crowded; a dedicated relation may be clearer); and whether an assumption can carry an expiry or a confirmation cadence, which cap:freshness already models for claims and would make \\\"nobody has checked this in six months\\\" computable rather than remembered.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:blocking-is-partial",
       "node_type": "Requirement",
       "properties": {
@@ -31633,10 +31826,10 @@
         "designation": "internal",
         "kind": "functional",
         "lineage": "original",
-        "name": "The build loop is bounded, and exhausting the budget forces a return to the design",
+        "name": "Unbounded build iteration is noticed and surfaced — a HARD STOP is one option, not the requirement",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "reflow2 MEASURES design erosion under repeated build rounds and never BOUNDS it. tools/ carries the erosion trial whose stated question is \"not 'did a file change?' but: after N rounds of test-fails/fix-code/accept, does the design still describe what it should\" — so the decay is known, quantified, and regression-gated. Nothing, however, ever says STOP. A session can iterate test-fix indefinitely and reflow2 will report the drift afterwards rather than interrupt it.\n\nTHE PRIOR ART, from reflow's workflow_master.json: iteration_budgets carries P3_P4_loops = 3 and P4_P3_loops = 3, and on_budget_exceeded triggers the resync protocol with target_phase P2 and escalate_to_P1_if \"drift_score > 0.5\". So after three build-test rounds work HALTS and the agent is sent back up to architecture — or further, to functional analysis, if the drift is bad enough. The resync protocol itself is six ordered steps: halt_current_work, detect_drift, present_comparison, mode_specific_resolution, reset_iteration_counter, continue_or_escalate.\n\nTHE BUDGET WAS ASKED FOR, NOT ASSUMED — AMENDED 2026-07-28, same day, after reviewing workflows/phases/. The 3 above is a DEFAULT, not a constant: workflows/phases/P0_setup/phase_definition.json puts the question to the user during setup — \"How many development/test iterations before forced architecture review?\", default 3, range 1 to 10 — alongside the mode choice and, for rigid projects, the acceptable drift level. That matters for two reasons. It removes the obvious objection that 3 is arbitrary: it is this project's answer to a question every project was asked. And it sets the shape reflow2 should copy — the bound is a per-project value elicited once, not a constant compiled in, which is the same distinction ver:interface-spec draws between a default that records absence and one that names a choice.\n\nDISTINCT FROM cap:budget, which rolls up a RESOURCE budget against a Constraint (mass, cost, power). This is an ITERATION budget on the design process itself, and reflow2 has no vocabulary for it.\n\nNOT MERELY A PHASE-MODEL ARTEFACT, which is the objection to expect: the mechanism is about work that does NOT terminate. A bounded loop with a forced return upward is precisely the discipline a continual evolution effort needs — Anthony's framing of design as (1) define the current state, (2) evolve it incrementally, with no clean start or exit criteria. The budget is what stops \"evolve incrementally\" from becoming \"drift indefinitely while the graph records it faithfully.\" Supporting evidence from the same review: reflow's own P5_operations phase_definition states that \"P5 is typically ongoing\" and routes production issues back_to_P3_P4 as \"a new development cycle\", so even the phase model this came from did not assume termination.\n\nWhether the trigger should be a loop COUNT (reflow's answer) or a measured drift threshold, or both, is open — reflow used both, counting loops and escalating on drift_score, with both thresholds elicited per project. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "statement": "REASSESSED 2026-07-28, same day, on Anthony's instruction not to treat reflow's workflows as canon. First written as \"the build loop is bounded, and exhausting the budget forces a return to the design\", which took reflow's halt-and-resync as the requirement rather than as one candidate mechanism. The name now separates the two.\n\nTHE REAL GAP, which stands on its own: reflow2 MEASURES design erosion under repeated build rounds and never ACTS on it. The erosion trial asks the sharp question — after N rounds of test-fails/fix-code/accept, does the design still describe what it should — and is a regression gate, so the decay is known and quantified. Nothing ever interrupts. A session can iterate indefinitely and reflow2 will faithfully record the drift afterwards. That is a real hole, whatever the response turns out to be.\n\nWHY THE HARD STOP IS DOUBTFUL AS THE ANSWER. reflow halted after three P3/P4 loops and forced a resync to architecture. Three objections. (1) It is PHASE-SHAPED: \"go back to P2\" presumes there is a P2 to go back to, and reflow2 has layers of a golden thread, not phases. (2) A hard stop is a poor fit for the operating context this project exists for — continual evolution against functional production code, where halting the work is rarely the right answer and is exactly the move that gets a discipline abandoned by the people it is meant to help. (3) Any fixed count is arbitrary. reflow at least ASKED for it (phases/P0_setup elicits the budget, default 3, range 1-10, alongside the mode and drift tolerance) which is better than compiling it in — but eliciting an arbitrary number does not make it meaningful, only chosen.\n\nWHAT IS MORE LIKELY RIGHT, and it fits the discipline reflow2 already committed to. dec:report-dont-judge says report and ask rather than decide; the loop nudge and cap:read-loop-hint already surface debt when it is real without blocking anything. The natural shape here is the same: NOTICE that the build has been iterating without the design moving, and SAY SO with evidence — which is a computed observation, not a threshold. The evidence is already available: unresolved DriftEvents accumulating, a design_holds/design_updated history that confirm.rs can already read as dishonest (five holds with zero design edits), coverage moving the wrong way. Escalation, if any, belongs to req:drift-rolls-up-to-a-score, which was reassessed the same day for the same reason.\n\nDISTINCT FROM cap:budget, which rolls a RESOURCE budget against a Constraint (mass, cost, power). Whatever is built here is about the design PROCESS, and reflow2 has no vocabulary for that.\n\nWorth keeping from the review, because it answers the obvious objection that any of this is waterfall legacy: reflow's own P5_operations phase_definition states \"P5 is typically ongoing\" and routes production issues back_to_P3_P4 as \"a new development cycle\". Even the phase model reflow2 inherited did not assume termination. Found 2026-07-28 reviewing the original reflow workflows; reassessed the same day.",
         "status": "proposed"
       }
     },
@@ -31738,10 +31931,10 @@
         "designation": "internal",
         "kind": "functional",
         "lineage": "original",
-        "name": "Context consumption is modelled, so a path that will not fit is knowable before it is walked",
+        "name": "Context cost is MEASURED and budgeted, not estimated at design time",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "reflow2 handles agent context only at RUNTIME and reactively. cap:bounded-reads answers an oversized read with a bounded page that says what it left out; cap:tool-search finds the right tool on a surface too large to hold in context. Both are good and both are mitigations applied per call, after the cost has already been incurred. Nothing predicts, before a path is walked, whether walking it will fit. THE PRIOR ART, from reflow's 99-meta_analysis.json and the --context-flow mode of system_of_systems_graph_v2.py: context consumption was a first-class modelled quantity. It was a FUNCTION ATTRIBUTE (context_consumption, listed alongside inputs/outputs and marked \"CRITICAL for AI agent analysis\"), it was THE PRIMARY EDGE WEIGHT — \"Context consumption as edge weight enables bottleneck analysis\" — and it carried estimation guidelines so the numbers were comparable rather than invented per author (read_small_config 1000-2000 tokens, read_workflow_file 5000-15000, read_large_architecture 15000-30000, generate_architecture 5000-15000, run_analysis 5000-10000). From that, analyze_functional_architecture.py computed CONTEXT PATH ANALYSIS — cumulative context along all paths — against hard thresholds: CRITICAL above 160k tokens, WARNING above 140k. So \"an agent cannot get through this path\" was answerable at design time, from the graph, before anyone ran it. THE SLOT ALREADY EXISTS IN reflow2 AND IS EMPTY, which is what makes this a smaller change than it sounds. DEPENDS_ON declares the whole coupling-weight facet and the schema comment states its intended use: \"Coupling-weight facet (graph-analysis.md). weight is a STRENGTH (higher = tighter); invert to a cost for shortest-path/closeness.\" Measured against reflow2's own 3,250-edge design: 232 edges carry weight_basis, and ZERO carry weight, frequency or data_volume. The facet is declared and wholly unpopulated. THIS EXPLAINS req:edge-defaults-do-not-assert RATHER THAN REPEATING IT: weight_basis asserts \"estimated\" over an absent weight because the weights were MEANT to be there, and reflow shows what for — invert the weight to a cost, sum along the path, flag what will not fit. Fixing the default and populating the facet are two answers to the same question and should be decided together. OPEN, and not decided here: whether reflow2 should estimate context per capability, per tool call, or per skill; whether the estimate is authored, measured from real sessions, or both (weight_basis already has the vocabulary for that distinction — estimated / evidence / measured — which is further evidence the facet was designed for exactly this); and what a threshold means for a system with no fixed window, since models differ and the number reflow hardcoded was its own. Found 2026-07-28 reviewing 99-meta_analysis.json. Anthony's word: capture it.",
+        "statement": "REASSESSED 2026-07-28, same day, on Anthony's instruction not to treat reflow's workflows as canon. First written as \"context consumption is modelled so a path that will not fit is knowable before it is walked\", arguing from reflow's design-time estimation. The FINDING is mine and stands; reflow's MECHANISM is the weak half, and the name now says which.\n\nTHE FINDING, measured against reflow2's own design and independent of any prior art: DEPENDS_ON declares a coupling-weight facet whose schema comment states its purpose — \"weight is a STRENGTH (higher = tighter); invert to a cost for shortest-path/closeness\" — and over 3,250 edges, 232 carry weight_basis while ZERO carry weight, frequency or data_volume. The facet is declared and wholly unpopulated, which also explains req:edge-defaults-do-not-assert rather than merely repeating it: weight_basis asserts \"estimated\" over an absent weight because weights were meant to be there.\n\nWHY DESIGN-TIME ESTIMATION IS THE WEAK PART. reflow made context_consumption a function attribute and the primary edge weight, published estimation guidelines (read_workflow_file 5000-15000 tokens, generate_architecture 5000-15000, and so on), summed along paths, and flagged CRITICAL above 160k. Three problems. (1) The estimates go stale the moment anything changes and nothing ever re-derives them, so the graph accumulates confident numbers nobody has checked — the shape this project keeps rediscovering. (2) They are model-specific: 160k was reflow's environment, tokenisers and context windows differ, and hardcoding one number as a law is the asserting default req:defaults-do-not-assert forbids. (3) Real consumption is dominated by what static structure cannot see — how much a tool actually returns, how many rounds a negotiation takes, what the user pastes in. A statically-summed path cost would be precise and wrong.\n\nWHAT IS ACTUALLY WANTED, and reflow2 already has most of the vocabulary. MEASURE rather than estimate: real sessions produce real costs per tool call and per skill, and weight_basis already distinguishes estimated / evidence / measured — further evidence the facet was designed for observed values, not guesses. Then BUDGET at runtime against what is left, which composes with cap:bounded-reads (a read that would not fit answers with a bounded page and says what it left out) and cap:tool-search (finding a tool on a surface too large to hold) rather than replacing them. A measured cost also feeds req:friction-has-a-baseline honestly, since \"this got more expensive across a release\" is a regression the baseline should catch.\n\nAn estimate is defensible only as a SEED for something never measured, and must read as estimated — which is exactly what weight_basis is for. Fixing the edge default and populating the facet remain two answers to one question and should be decided together. Found 2026-07-28 reviewing 99-meta_analysis.json; reassessed the same day.",
         "status": "proposed"
       }
     },
@@ -31758,6 +31951,21 @@
         "provenance": "authored",
         "statement": "Where a system's intent already exists as a large body of written specifications, reflow2 must be able to take the whole corpus — a folder, not a file — and produce one coherent design from it, with every claim still pointing back at the document it came from. The load-bearing requirement is identity ACROSS documents: the same component named in forty specifications must converge on one node rather than forty near-duplicates, and where convergence is uncertain the user is asked rather than the nodes being silently merged. Ordering must not decide meaning — which file happened to be read first must not determine the canonical name of anything.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:correspondence-rules-are-stateable",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The design can state that two parts must agree, and check it — correspondence as a first-class rule",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "NOT FROM reflow. Raised 2026-07-28 from the architecture-description standard ISO/IEC/IEEE 42010, after Anthony's instruction to bring judgement rather than treat reflow's workflows as canon. reflow had nothing resembling this; the gap is visible only against the standard practice reflow2 exists to serve.\\n\\n42010 models an architecture description as Stakeholders holding Concerns, Viewpoints that frame those concerns, and Views governed by viewpoints — and then the piece that does the work: CORRESPONDENCES between elements of different views, governed by CORRESPONDENCE RULES that state what must hold between them, so consistency is a checkable claim rather than a hope. reflow2 has the projection half and not the correspondence half. dec:views-are-projections is right and is stronger than anything in reflow (a view is a pure projection of the graph; renderer fill-ins are defects), but a projection guarantees only that a view does not invent — it says nothing about whether two projections of the same design agree where they overlap.\\n\\nWHAT reflow2 HAS TODAY IS A HANDFUL OF HARDCODED CORRESPONDENCES. cap:seam-incompatibility says when two linked designs disagree at a boundary. reconcile_artifacts, reconcile_deployment and reconcile_verification each compare the design against one facet of reality. The unvalidated_capability, status_contradiction and unprovided_interface gaps are each a fixed rule about what must agree with what. Every one is a correspondence rule expressed in Rust, invisible to the user, and unextendable: a team cannot say \\\"in OUR design, every Component with concern=safety must have a Verification of kind=validation performed in a non-simulation Environment\\\" and have it checked. The rules that exist are the ones the maintainer thought of.\\n\\nWHY IT MATTERS HERE SPECIFICALLY. The operating context is several organisations with competing, partially-built designs that were never meant to interoperate, delivered as increments. That is the situation 42010's correspondence machinery was written for: A's view and B's view describe overlapping reality with different vocabulary and different concerns, and what makes integration tractable is being able to STATE the correspondence and then compute whether it still holds as both sides move. Hand-wiring each such rule into the tool does not scale past the maintainer's imagination.\\n\\nAND IT WOULD GIVE Requirement.concern A READER. concern is the sharpest item in the 2026-07-28 sweep — an enum carrying the ILS/SME vocabulary (logistics, sustainment, safety, security…), single-valued at `core` on 67 of 67, with no writer on the MCP surface and no reader anywhere, so \\\"which are the safety requirements?\\\" answers `none` rather than `unknown`. It is dead because nothing consumes concerns, and nothing consumes concerns because there is no stakeholder-concern-viewpoint chain for them to feed. Building the chain is what would make that property mean something, rather than deleting it.\\n\\nOPEN and not decided: whether a correspondence rule is authored as data (a small predicate over node types, properties and edges, evaluated by the detector machinery) or remains code with only the VOCABULARY made explicit; whether Stakeholder is a new node type or Actor grown up (Actor already carries actor_type including `stakeholder`, and is currently counted in report.rs and read nowhere — see req:scenarios-are-modelled); and how a user-authored rule avoids becoming a way to make the tool assert things nobody checked, which dec:report-dont-judge would forbid.",
+        "status": "proposed"
       }
     },
     {
@@ -31948,10 +32156,10 @@
         "designation": "internal",
         "kind": "functional",
         "lineage": "original",
-        "name": "Drift rolls up to one number, and how far the work retreats is computed from it",
+        "name": "Escalation from drift is computed — but probably NOT from a single scalar",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "reflow2 records drift per event and never rolls it up, so there is no answer to \"how bad is it overall, and how far back do we have to go?\" DriftEvent carries severity (low/medium/high/critical) and drift_type (missing_artifact, spec_mismatch, undocumented_addition, status_mismatch, checksum_change, and the three deployment_* kinds), and 37 of them exist in reflow2's own design — but nothing aggregates them into a single figure and nothing acts on the aggregate. THE PRIOR ART, from reflow's resync_protocol.json and phase_transitions.json: drift detection emitted a scalar drift_score in 0.0..1.0, and that one number decided HOW FAR THE WORK RETREATED — below 0.3 return to P3 and keep building, 0.3 to 0.5 return to P2 and revise the allocation, at or above 0.5 return to P1 and revise the functional analysis. The same number gated the forward transition too: P4 to P5 required \"architecture drift score < threshold\" among its quality gates, and major_drift (> 0.5) was classified severity critical with escalates_to P1. So one measure served three purposes — trigger, escalation target, and release gate. A PRECONDITION THAT MUST BE FIXED FIRST, and it is why this is not a small feature: the per-event input is currently untrustworthy. The 2026-07-28 sweep behind req:defaults-do-not-assert recorded DriftEvent.severity among the properties WRITTEN and never consulted — \"written from kind.severity() at three call sites while ranking independently re-derives it via severity_rank(kind), so the stored copy can silently diverge from the mapping that actually governs.\" A rollup over a stored value that the ranking already disagrees with would compute a confident number from an inconsistent base. Either the stored severity becomes the single source or the rollup reads the derivation, but not both. OPEN, and deliberately not decided here: whether the retreat target should be phase-shaped at all. reflow's answer was P3/P2/P1 because it had phases; reflow2's equivalent question is which LAYER of the golden thread a given drift score sends you back to — realization, allocation, or intent. The scalar is portable; the destinations are not. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "statement": "REASSESSED 2026-07-28, same day, on Anthony's instruction not to treat reflow's workflows as canon. This requirement was first written as \"drift rolls up to one number, and how far the work retreats is computed from it\", arguing from reflow's scalar drift_score. That argument was too credulous and the name has been changed with it. What follows keeps the real question and demotes reflow's answer to one option among several.\n\nTHE REAL QUESTION, which stands on its own: when the design and the build have diverged, nothing in reflow2 says HOW FAR BACK the work should go. Per-event dispositions answer \"what do we do about this divergence\"; nothing answers \"is the accumulated divergence bad enough that we should stop adding to it and revisit the allocation, or the intent?\" That question is real and unanswered.\n\nWHY THE SCALAR IS THE WEAK PART. Collapsing heterogeneous drift into one 0.0-1.0 number destroys precisely the information that decides what to do: a missing artifact, a spec mismatch and an undocumented addition are different problems with different responses, and their average is not a thing. reflow's thresholds (below 0.3 keep building, 0.3 to 0.5 revise allocation, at or above 0.5 revise intent) are invented numbers with no derivation given, and its retreat targets are phase-shaped because reflow had phases. Adopting the scalar would also collide with dec:certainty-derived: a confident aggregate computed from a base the code already disagrees with is an assertion dressed as a measurement.\n\nreflow2 IS ALREADY AHEAD HERE AND SHOULD NOT REGRESS. Drift is disposed of PER EVENT — design_holds or design_updated — so a session can hold the design on one divergence and update it on another, which reflow's single global mode could not do. And confirm.rs audits whether the dispositions are honest: \"five design_holds claims with zero design edits is a very different confirmation history from one design_updated\". That history is a better signal than any scalar, because it is evidence rather than an estimate. If escalation is built, it should read the disposition history, not an average.\n\nTHE PRECONDITION STILL HOLDS whatever shape is chosen: DriftEvent.severity is one of the WRITTEN-and-never-consulted properties the 2026-07-28 sweep found — written from kind.severity() at three call sites while ranking re-derives it via severity_rank(kind) — so any computation over stored severity reads a value the code already contradicts. Settle the single-source question first.\n\nWHAT IS ACTUALLY WANTED, stated without borrowing reflow's mechanism: a computed, evidence-backed answer to \"should we keep building or go back, and back to WHAT\" — where the destinations are layers of the golden thread (realization, allocation, intent) rather than phases, and the trigger is drawn from what the graph can already prove (unresolved DriftEvents by kind, the design_holds/design_updated history, coverage moving the wrong way) rather than from a number nobody can derive. Found 2026-07-28 reviewing the original reflow workflows; reassessed the same day.",
         "status": "proposed"
       }
     },
@@ -32023,10 +32231,10 @@
         "designation": "internal",
         "kind": "functional",
         "lineage": "original",
-        "name": "Which modelling framework is in use must be a recorded choice, not a silent default",
+        "name": "Project.domain is written and never read — but a framework registry is probably the wrong fix",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "The original reflow made framework selection an explicit, user-confirmed architectural decision; reflow2 has no equivalent, and its only vestige is Project.domain — free text, written by genesis, read by nothing. reflow carried definitions/framework_registry.json with seven frameworks (uaf, decision_flow, systems_biology, social_network, ecological, complex_adaptive, custom), each supplying a terminology mapping onto ONE universal graph (node = service / workflow_step / component / agent / species / adaptive_agent; edge = interface / transition / interaction / relationship). Workflow 00b-framework_selection.json spent nine actions on the choice: analyse system semantics first, evaluate EVERY framework rather than picking one, map which analyses each framework enables or blocks, score against objective criteria, present the recommendation, and require the user to EXPLICITLY CONFIRM before proceeding. Its rationale: 'Framework selection is an ARCHITECTURAL DECISION, not a configuration choice. Wrong framework = wrong insights.' Its stated lesson, LESSON-01: 'Do NOT default to UAF! Analyze system semantics against ALL frameworks. Framework choice determines which NetworkX analyses are available.' That last clause is the load-bearing part — the framework was not cosmetic relabelling, it GATED which analyses were available, so defaulting it silently chose the analyses too. Anthony's word 2026-07-28: add it. Recorded after the originating session was killed by an OOM before it could write. Note the shape: reflow already knew, and wrote down, the rule that reflow2 states as req:defaults-do-not-assert — and framework choice is the largest instance of it, because Project.domain currently defaults to nothing and asserts nothing while every detector behaves as if one framework were in force.",
+        "statement": "REASSESSED 2026-07-28, same day, on Anthony's instruction not to treat reflow's workflows as canon. This was first written as \"which modelling framework is in use must be a recorded choice\", arguing from reflow's framework_registry.json. On re-reading, the DEFECT is real and the PRIOR ART's solution is doubtful; the name has been changed to say so.\n\nTHE DEFECT, which stands on its own: Project.domain is free text, written by genesis, and read by nothing — it is on the write-only list from the 2026-07-28 sweep. reflow2's own Project carries domain = 'software'. Either something should read it or it should not be collected, and that is true regardless of what reflow did.\n\nWHY reflow's ANSWER IS PROBABLY WRONG, stated plainly because the first version of this node treated it as the model to copy. (1) The terminology mapping is largely COSMETIC. framework_registry.json maps node to 'service' / 'gene' / 'agent' / 'species' and edge to 'interface' / 'interaction' / 'relationship' over one universal graph. Renaming the same structure does not change what can be computed about it, and it introduces a translation layer between what the user says and what the graph holds — a layer that can drift, and that every reader must now traverse. (2) The load-bearing claim is a SMELL, not a feature. reflow's LESSON-01 says \"framework choice determines which NetworkX analyses are available\". Analyses should be available based on WHAT THE GRAPH CONTAINS, not on a declared label: a cycle detector should run wherever there are dependency edges, whoever calls them interfaces or interactions. Gating capability on a self-declared category is how a user gets the wrong answer for a reason they cannot see. reflow2's one universal vocabulary with computations keyed to STRUCTURE is very likely the better design, and adopting a registry would be a regression dressed as a feature.\n\nWHAT SURVIVES FROM reflow: only the rule, and reflow2 already has it. LESSON-01's real content — \"Do NOT default to UAF\" — is req:defaults-do-not-assert, independently arrived at. The supporting CONTRADICTS edge to that requirement stays correct; the framework registry is not the mechanism it implies.\n\nWHAT SHOULD ACTUALLY BE DECIDED, and it is smaller than a registry: does anything read Project.domain, and if not, does it become unspecified-until-stated (per ver:interface-spec's rule for Interface.medium) or leave the schema entirely? A plausible middle path worth weighing separately: domain as a hint to EXTRACTION and phrasing — what vocabulary the agent uses when talking to the user and reading their documents — without ever gating which computations run. That keeps the honest part of reflow's insight (a biologist should not be told about 'services') and discards the part that would make analyses conditional on a label. Found 2026-07-28 reviewing 00b-framework_selection.json; reassessed the same day.",
         "status": "proposed"
       }
     },
@@ -32929,8 +33137,38 @@
       "node_type": "Snapshot",
       "properties": {
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:intent-is-reinjected\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:drift-has-direction\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:c0ad59f11915ba50\",\"properties\":{}}]",
-        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"The build loop is bounded, and exhausting the budget forces a return to the design\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"reflow2 MEASURES design erosion under repeated build rounds and never BOUNDS it. tools/ carries the erosion trial whose stated question is \\\"not 'did a file change?' but: after N rounds of test-fails/fix-code/accept, does the design still describe what it should\\\" — so the decay is known, quantified, and regression-gated. Nothing, however, ever says STOP. A session can iterate test-fix indefinitely and reflow2 will report the drift afterwards rather than interrupt it. THE PRIOR ART, from reflow's workflow_master.json: iteration_budgets sets P3_P4_loops = 3 and P4_P3_loops = 3, and on_budget_exceeded triggers the resync protocol with target_phase P2 and escalate_to_P1_if \\\"drift_score > 0.5\\\". So after three build-test rounds work HALTS, and the agent is sent back up to architecture — or further, to functional analysis, if the drift is bad enough. The resync protocol itself is six ordered steps: halt_current_work, detect_drift, present_comparison, mode_specific_resolution, reset_iteration_counter, continue_or_escalate. DISTINCT FROM cap:budget, which rolls up a RESOURCE budget against a Constraint (mass, cost, power). This is an ITERATION budget on the design process itself, and reflow2 has no vocabulary for it. NOT MERELY A PHASE-MODEL ARTEFACT, which is the objection to expect: the mechanism is about work that does NOT terminate. A bounded loop with a forced return upward is precisely the discipline a continual evolution effort needs — Anthony's framing of design as (1) define the current state, (2) evolve it incrementally, with no clean start or exit criteria. The budget is what stops \\\"evolve incrementally\\\" from becoming \\\"drift indefinitely while the graph records it faithfully.\\\" Whether the trigger should be a loop COUNT (reflow's answer) or a measured drift threshold, or both, is open — reflow used both, counting loops and escalating on drift_score. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.\",\"status\":\"proposed\"}",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"The build loop is bounded, and exhausting the budget forces a return to the design\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"reflow2 MEASURES design erosion under repeated build rounds and never BOUNDS it. tools/ carries the erosion trial whose stated question is \\\"not 'did a file change?' but: after N rounds of test-fails/fix-code/accept, does the design still describe what it should\\\" — so the decay is known, quantified, and regression-gated. Nothing, however, ever says STOP. A session can iterate test-fix indefinitely and reflow2 will report the drift afterwards rather than interrupt it.\\n\\nTHE PRIOR ART, from reflow's workflow_master.json: iteration_budgets carries P3_P4_loops = 3 and P4_P3_loops = 3, and on_budget_exceeded triggers the resync protocol with target_phase P2 and escalate_to_P1_if \\\"drift_score > 0.5\\\". So after three build-test rounds work HALTS and the agent is sent back up to architecture — or further, to functional analysis, if the drift is bad enough. The resync protocol itself is six ordered steps: halt_current_work, detect_drift, present_comparison, mode_specific_resolution, reset_iteration_counter, continue_or_escalate.\\n\\nTHE BUDGET WAS ASKED FOR, NOT ASSUMED — AMENDED 2026-07-28, same day, after reviewing workflows/phases/. The 3 above is a DEFAULT, not a constant: workflows/phases/P0_setup/phase_definition.json puts the question to the user during setup — \\\"How many development/test iterations before forced architecture review?\\\", default 3, range 1 to 10 — alongside the mode choice and, for rigid projects, the acceptable drift level. That matters for two reasons. It removes the obvious objection that 3 is arbitrary: it is this project's answer to a question every project was asked. And it sets the shape reflow2 should copy — the bound is a per-project value elicited once, not a constant compiled in, which is the same distinction ver:interface-spec draws between a default that records absence and one that names a choice.\\n\\nDISTINCT FROM cap:budget, which rolls up a RESOURCE budget against a Constraint (mass, cost, power). This is an ITERATION budget on the design process itself, and reflow2 has no vocabulary for it.\\n\\nNOT MERELY A PHASE-MODEL ARTEFACT, which is the objection to expect: the mechanism is about work that does NOT terminate. A bounded loop with a forced return upward is precisely the discipline a continual evolution effort needs — Anthony's framing of design as (1) define the current state, (2) evolve it incrementally, with no clean start or exit criteria. The budget is what stops \\\"evolve incrementally\\\" from becoming \\\"drift indefinitely while the graph records it faithfully.\\\" Supporting evidence from the same review: reflow's own P5_operations phase_definition states that \\\"P5 is typically ongoing\\\" and routes production issues back_to_P3_P4 as \\\"a new development cycle\\\", so even the phase model this came from did not assume termination.\\n\\nWhether the trigger should be a loop COUNT (reflow's answer) or a measured drift threshold, or both, is open — reflow used both, counting loops and escalating on drift_score, with both thresholds elicited per project. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.\",\"status\":\"proposed\"}",
         "target_id": "req:build-loop-is-bounded",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reflow-workflow-review:req:context-is-a-modelled-quantity",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:edge-defaults-do-not-assert\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:755a5d5272eb702d\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Context consumption is modelled, so a path that will not fit is knowable before it is walked\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"reflow2 handles agent context only at RUNTIME and reactively. cap:bounded-reads answers an oversized read with a bounded page that says what it left out; cap:tool-search finds the right tool on a surface too large to hold in context. Both are good and both are mitigations applied per call, after the cost has already been incurred. Nothing predicts, before a path is walked, whether walking it will fit. THE PRIOR ART, from reflow's 99-meta_analysis.json and the --context-flow mode of system_of_systems_graph_v2.py: context consumption was a first-class modelled quantity. It was a FUNCTION ATTRIBUTE (context_consumption, listed alongside inputs/outputs and marked \\\"CRITICAL for AI agent analysis\\\"), it was THE PRIMARY EDGE WEIGHT — \\\"Context consumption as edge weight enables bottleneck analysis\\\" — and it carried estimation guidelines so the numbers were comparable rather than invented per author (read_small_config 1000-2000 tokens, read_workflow_file 5000-15000, read_large_architecture 15000-30000, generate_architecture 5000-15000, run_analysis 5000-10000). From that, analyze_functional_architecture.py computed CONTEXT PATH ANALYSIS — cumulative context along all paths — against hard thresholds: CRITICAL above 160k tokens, WARNING above 140k. So \\\"an agent cannot get through this path\\\" was answerable at design time, from the graph, before anyone ran it. THE SLOT ALREADY EXISTS IN reflow2 AND IS EMPTY, which is what makes this a smaller change than it sounds. DEPENDS_ON declares the whole coupling-weight facet and the schema comment states its intended use: \\\"Coupling-weight facet (graph-analysis.md). weight is a STRENGTH (higher = tighter); invert to a cost for shortest-path/closeness.\\\" Measured against reflow2's own 3,250-edge design: 232 edges carry weight_basis, and ZERO carry weight, frequency or data_volume. The facet is declared and wholly unpopulated. THIS EXPLAINS req:edge-defaults-do-not-assert RATHER THAN REPEATING IT: weight_basis asserts \\\"estimated\\\" over an absent weight because the weights were MEANT to be there, and reflow shows what for — invert the weight to a cost, sum along the path, flag what will not fit. Fixing the default and populating the facet are two answers to the same question and should be decided together. OPEN, and not decided here: whether reflow2 should estimate context per capability, per tool call, or per skill; whether the estimate is authored, measured from real sessions, or both (weight_basis already has the vocabulary for that distinction — estimated / evidence / measured — which is further evidence the facet was designed for exactly this); and what a threshold means for a system with no fixed window, since models differ and the number reflow hardcoded was its own. Found 2026-07-28 reviewing 99-meta_analysis.json. Anthony's word: capture it.\",\"status\":\"proposed\"}",
+        "target_id": "req:context-is-a-modelled-quantity",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reflow-workflow-review:req:drift-rolls-up-to-a-score",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:drift-has-direction\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:378cbdafd1fa41fb\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Drift rolls up to one number, and how far the work retreats is computed from it\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"reflow2 records drift per event and never rolls it up, so there is no answer to \\\"how bad is it overall, and how far back do we have to go?\\\" DriftEvent carries severity (low/medium/high/critical) and drift_type (missing_artifact, spec_mismatch, undocumented_addition, status_mismatch, checksum_change, and the three deployment_* kinds), and 37 of them exist in reflow2's own design — but nothing aggregates them into a single figure and nothing acts on the aggregate. THE PRIOR ART, from reflow's resync_protocol.json and phase_transitions.json: drift detection emitted a scalar drift_score in 0.0..1.0, and that one number decided HOW FAR THE WORK RETREATED — below 0.3 return to P3 and keep building, 0.3 to 0.5 return to P2 and revise the allocation, at or above 0.5 return to P1 and revise the functional analysis. The same number gated the forward transition too: P4 to P5 required \\\"architecture drift score < threshold\\\" among its quality gates, and major_drift (> 0.5) was classified severity critical with escalates_to P1. So one measure served three purposes — trigger, escalation target, and release gate. A PRECONDITION THAT MUST BE FIXED FIRST, and it is why this is not a small feature: the per-event input is currently untrustworthy. The 2026-07-28 sweep behind req:defaults-do-not-assert recorded DriftEvent.severity among the properties WRITTEN and never consulted — \\\"written from kind.severity() at three call sites while ranking independently re-derives it via severity_rank(kind), so the stored copy can silently diverge from the mapping that actually governs.\\\" A rollup over a stored value that the ranking already disagrees with would compute a confident number from an inconsistent base. Either the stored severity becomes the single source or the rollup reads the derivation, but not both. OPEN, and deliberately not decided here: whether the retreat target should be phase-shaped at all. reflow's answer was P3/P2/P1 because it had phases; reflow2's equivalent question is which LAYER of the golden thread a given drift score sends you back to — realization, allocation, or intent. The scalar is portable; the destinations are not. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.\",\"status\":\"proposed\"}",
+        "target_id": "req:drift-rolls-up-to-a-score",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reflow-workflow-review:req:framework-is-chosen-not-defaulted",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"CONTRADICTS\",\"other_type\":\"Requirement\",\"other_id\":\"req:defaults-do-not-assert\",\"properties\":{\"alignment\":\"supporting\",\"confidence\":0.9,\"evidence\":\"Corroboration, not conflict. The original reflow independently reached the same rule and wrote it as LESSON-01 of 00b-framework_selection.json — 'Do NOT default to UAF!' — with the reason that framework choice GATES which analyses are available, so a silent default chooses the analyses too. reflow2's Project.domain is that decision reduced to unread free text.\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:967cb35c16df7571\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Which modelling framework is in use must be a recorded choice, not a silent default\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"The original reflow made framework selection an explicit, user-confirmed architectural decision; reflow2 has no equivalent, and its only vestige is Project.domain — free text, written by genesis, read by nothing. reflow carried definitions/framework_registry.json with seven frameworks (uaf, decision_flow, systems_biology, social_network, ecological, complex_adaptive, custom), each supplying a terminology mapping onto ONE universal graph (node = service / workflow_step / component / agent / species / adaptive_agent; edge = interface / transition / interaction / relationship). Workflow 00b-framework_selection.json spent nine actions on the choice: analyse system semantics first, evaluate EVERY framework rather than picking one, map which analyses each framework enables or blocks, score against objective criteria, present the recommendation, and require the user to EXPLICITLY CONFIRM before proceeding. Its rationale: 'Framework selection is an ARCHITECTURAL DECISION, not a configuration choice. Wrong framework = wrong insights.' Its stated lesson, LESSON-01: 'Do NOT default to UAF! Analyze system semantics against ALL frameworks. Framework choice determines which NetworkX analyses are available.' That last clause is the load-bearing part — the framework was not cosmetic relabelling, it GATED which analyses were available, so defaulting it silently chose the analyses too. Anthony's word 2026-07-28: add it. Recorded after the originating session was killed by an OOM before it could write. Note the shape: reflow already knew, and wrote down, the rule that reflow2 states as req:defaults-do-not-assert — and framework choice is the largest instance of it, because Project.domain currently defaults to nothing and asserts nothing while every detector behaves as if one framework were in force.\",\"status\":\"proposed\"}",
+        "target_id": "req:framework-is-chosen-not-defaulted",
         "target_type": "Requirement"
       }
     },
@@ -33865,7 +34103,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:be5de974cafa76d3611d80ae994e7306219d4899e00a148fdfa32a020584bc42",
+  "prev_content_hash": "sha256:eaecd6d5da0652dc0c0df8041830b8528552984fd9edd81ab0004389db3600e6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
