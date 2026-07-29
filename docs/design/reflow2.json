@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0fb84b3107216f2df2e519d77c65a087232113ca7da98a9998b225658e413318",
+  "content_hash": "sha256:7b01e55e2a456605b2092a439780be975d9635ed8ddc6c1659bfb0d2b3bfb7ec",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -8865,6 +8865,24 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:seat-identity-survives-stateless-mcp",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:seat-per-client"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:snapshot-per-revision-not-per-epoch",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:intent-preserved"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:version-combination-is-an-object",
       "properties": {
         "optional": false,
@@ -13102,9 +13120,21 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:seat-identity-survives-stateless-mcp",
+      "properties": {},
+      "to_id": "decision:ack:b419dc7ce8da8c12"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:session-memory-in-graph",
       "properties": {},
       "to_id": "dec:multi-writer-architecture"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:snapshot-per-revision-not-per-epoch",
+      "properties": {},
+      "to_id": "decision:ack:84538db885bb5946"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -29087,6 +29117,16 @@
       }
     },
     {
+      "node_id": "decision:ack:84538db885bb5946",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:84538db885bb5946.",
+        "name": "Reviewed: gap:84538db885bb5946",
+        "rationale": "Deferred on Anthony's word, 2026-07-28 — but flagged as the item most deserving to be UNparked first, because it contradicts a founding requirement (req:intent-preserved, the past is never overwritten) and does so SILENTLY: record_change reported success both times and the design's own history lost a version with no warning. Deferred rather than patched because the fix is a genuine three-way choice, not an oversight: snapshot identity per REVISION (include the ChangeEvent id — truest to the founding rule, but HAS_SNAPSHOT becomes one-to-many and \"the snapshot for this epoch\" stops being a single thing readers can assume); REFUSE a second record_change in one epoch (cheap and loud, but epochs bound a round of WORK not a single edit, so it pushes an unrelated concern onto the caller); or keep one snapshot per epoch DELIBERATELY as the state at epoch start, making the second call a no-op (preserves the original, loses the intermediate, and needs semantics written down that are currently only implied). Each changes what a reader may assume, so it is a vocabulary-shaped call. What is NOT open: the silence. If a revision cannot be snapshotted without discarding an earlier one, the call must say so — that part needs no decision.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:85a8e6f0446bbbfd",
       "node_type": "Decision",
       "properties": {
@@ -29263,6 +29303,16 @@
         "decision": "Accepted the gap gap:b25bb8d8db80dfd3.",
         "name": "Reviewed: gap:b25bb8d8db80dfd3",
         "rationale": "User (who:ajs, standing policy from 2026-07-23, re-applied 2026-07-27): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:coverage joined the set (56 → 57). Worth naming for this one specifically, because it is the capability whose validation is most concretely pending and most knowable: the tests prove the algorithm — an opaque directory claims its subtree, regions roll up and rank, exclusions come back named. What they cannot prove is the operational intent, which is whether a real adopt pass over a real system (the NSLS-II bluesky stack is the obvious candidate) reports unclaimed regions a person recognises as the parts nobody modelled, at a granularity they can act on. That is a trial, not an assertion, and it is the same trial that will say whether the whole corpus-ingest direction earns its keep.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:b419dc7ce8da8c12",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:b419dc7ce8da8c12.",
+        "name": "Reviewed: gap:b419dc7ce8da8c12",
+        "rationale": "Deferred on Anthony's word, 2026-07-28 — and unlike everything else parked today, this one has an EXTERNAL CLOCK. The MCP 2026-07-28 specification removes protocol-level sessions and the Mcp-Session-Id header; reflow2's seat-per-client rests on rmcp building a service per session, which is a consequence of those sessions existing. The feature lifecycle policy guarantees a minimum twelve-month window between deprecation and removal, so there is time, but the deadline is somebody else's to set. Deferred rather than started for two reasons. The dependency is pinned at rmcp = \"2\" and the migration realistically lands with rmcp v3, so the work is gated on an SDK that is still in beta — starting now would be building against a moving target. And the design question underneath is not mechanical: the spec's prescribed replacement is a server-minted handle passed as an ordinary tool argument, which is arguably BETTER than inheriting identity from a transport detail (it works identically across stdio, HTTP and whatever comes next), but deciding how a client obtains and carries that handle without putting a parameter in front of every human is the actual work. Revisit when rmcp v3 stabilises; do not let it sit until the window closes.",
         "status": "accepted"
       }
     },
@@ -32839,6 +32889,21 @@
       }
     },
     {
+      "node_id": "req:seat-identity-survives-stateless-mcp",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Seat identity must not rest on protocol-level MCP sessions, which the 2026-07-28 spec removes",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2's per-client seat identity is inherited from a transport detail that the MCP specification published on 2026-07-28 deletes. This is a dated external change with a known deadline, not a preference.\\n\\nWHAT THE SPEC DOES. The 2026-07-28 revision removes protocol-level sessions and the Mcp-Session-Id header from the Streamable HTTP transport, and states the replacement: \\\"Servers that need cross-call state use explicit, server-minted handles passed as ordinary tool arguments\\\" (SEP-2567). It also removes the initialize / notifications/initialized handshake entirely, moving protocol version and client capabilities into per-request _meta (SEP-2575). A feature lifecycle policy guarantees at least twelve months between deprecation and removal, so nothing breaks immediately.\\n\\nWHAT reflow2 RESTS ON, in its own words. crates/reflow2-mcp/src/service.rs, on req:seat-per-client: \\\"One server holds many client sessions — RMCP BUILDS A SERVICE PER SESSION — so a process-wide seat would report every client as the same owner and make claim_report say six sessions are each other.\\\" That per-session service construction is a consequence of protocol-level sessions. Remove them and the foundation of seat-per-client goes with it, taking a substantial cluster: cap:shared-sessions, cap:remote-sessions, cap:claim-liveness, cap:stale-seat-refusal, claim_report and the claim board they serve. The dependency is currently on rmcp = \\\"2\\\"; the workspace manifest already notes a local checkout tracking rmcp v3 betas, which is the likely landing point.\\n\\nTHE FIX IS PROBABLY AN IMPROVEMENT, WHICH IS WHY THIS IS NOT ALARM. A server-minted seat handle passed as an ordinary tool argument makes identity EXPLICIT and inspectable rather than inherited from whatever the transport happened to do — and it works identically over stdio, Streamable HTTP and any future transport, where the present arrangement quietly differs between them. It also composes with what already exists: identity.rs already mints and reads seats (mint_seat, seat_id, seat_liveness), and dec:identity-out-of-band already holds that names are assigned with zero coordination rather than derived from shared state, which is the same principle one layer up. The work is deciding how a client obtains and carries the handle without making every tool call carry a parameter no human should have to think about.\\n\\nOTHER EXPOSURES FROM THE SAME REVISION, smaller and listed so they are not rediscovered: server/discover becomes MUST-implement; ping, logging/setLevel and notifications/roots/list_changed are removed; SSE resumability (Last-Event-ID) is gone, so a broken response stream loses the in-flight request; ttlMs and cacheScope become REQUIRED on tools/list, prompts/list, resources/list, resources/read and resources/templates/list; Roots, Sampling and Logging are deprecated; and tools/list SHOULD return a deterministic order.\\n\\nTHREE PLACES reflow2 IS ALREADY ALIGNED, worth knowing before anyone plans work. (1) The Logging deprecation prescribes logging to stderr on stdio — which tools/reflow2-mcp-launch.sh already does deliberately, because stdout is the JSON-RPC channel and a stray byte corrupts the protocol. (2) The deterministic-order SHOULD is already satisfied in practice by the toolsnap goldens, which pin the surface. (3) Most interestingly, the new Multi Round-Trip Requests pattern (SEP-2322) — a server returns InputRequiredResult and the client retries the original request carrying inputResponses — is the shape gap_to_prompt and ingest_step already implement by hand, with NO server-side session state and an abandoned handshake stranding nothing. reflow2 solved stateless elicitation before the specification standardised it; the migration there is likely renaming rather than redesign.\\n\\nFound 2026-07-28, the day the specification published. Anthony's word: capture it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:seat-per-client",
       "node_type": "Requirement",
       "properties": {
@@ -32896,6 +32961,21 @@
         "provenance": "authored",
         "statement": "Anthony, 2026-07-26: \"I want to have multiple sessions running and being able to use the same reflow2 graph.\" Six concurrent sessions must read and write ONE design concurrently, without a worktree each and without an export-and-merge round trip between them. The store is single-writer per process, so this is served by one server process holding the graph with many client sessions connected — there is still exactly one writer. Reads must not queue behind each other (the graph sits behind a lock that today serialises everything), each client must be its own seat, and a client must never be able to see a partial write.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:snapshot-per-revision-not-per-epoch",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A second revision of a node in one epoch must not overwrite the first snapshot",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "req:intent-preserved says the past is never overwritten. Snapshot identity currently breaks that rule whenever a node is revised TWICE within a single epoch, and the loss is silent.\\n\\nOBSERVED 2026-07-28, by doing it rather than by reading the code. req:build-loop-is-bounded was amended once (chg:iteration-budget-was-elicited, correcting the iteration budget to an elicited value) and later the same day amended again (chg:build-loop-shape-reassessed, demoting the hard stop). Both used record_change against the same epoch:reflow-workflow-review. The snapshot id is deterministic per (epoch, node) — snap:epoch:reflow-workflow-review:req:build-loop-is-bounded — so the SECOND record_change wrote over the first. compare_designs reported it under supporting.changed with base = the original statement and other = the first-amended statement: the snapshot now holds the INTERMEDIATE state, and the state the node held before any amendment survives only in git, in an export committed earlier.\\n\\nWHY THIS IS WORSE THAN AN ORDINARY BUG. Nothing failed and nothing warned. record_change returned a prior_snapshot both times and looked identical from the caller's side. The design's own history simply lost a version while reporting success, which is precisely the silent-overwrite failure the revise-design discipline exists to prevent — and the discipline was followed exactly. A user doing careful work by the documented procedure loses history and is never told.\\n\\nIT ALSO BREAKS THE STATED TEST OF A GOOD REVISION. The revise-design skill ends with it: \\\"afterwards, someone reading the graph can answer what did this say before, when did it change, and why — without git archaeology.\\\" After two amendments in one epoch that is false: answering it for the first amendment requires git archaeology, which is the exact fallback the skill promises to remove.\\n\\nTHE SHAPE OF THE FIX IS A CHOICE, and none of the options is obviously right, which is why this is recorded rather than patched. (a) Make snapshot identity per REVISION rather than per (epoch, node) — e.g. include the ChangeEvent id, which is already unique per revision — so every record_change mints a distinct snapshot and HAS_SNAPSHOT becomes one-to-many. Truest to req:intent-preserved; grows the graph faster and makes \\\"the snapshot for this epoch\\\" ambiguous where readers currently assume one. (b) REFUSE a second record_change against the same node in the same epoch, directing the caller to open a new epoch. Cheap and loud, and it forces epoch hygiene, but epochs are meant to bound a round of WORK, not a single edit, so this pushes an unrelated concern onto the caller. (c) Keep one snapshot per epoch deliberately, meaning it holds the state at the START of the epoch, and make the second call a no-op rather than an overwrite. Preserves the original, loses the intermediate, and needs the semantics stated somewhere they are currently only implied.\\n\\nWhichever is chosen, the silence is not defensible: if a revision cannot be snapshotted without discarding an earlier one, the call must say so. Found 2026-07-28 while amending requirements from the reflow workflow review; the amendments themselves are the evidence.",
+        "status": "proposed"
       }
     },
     {
@@ -34103,7 +34183,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:eaecd6d5da0652dc0c0df8041830b8528552984fd9edd81ab0004389db3600e6",
+  "prev_content_hash": "sha256:0fb84b3107216f2df2e519d77c65a087232113ca7da98a9998b225658e413318",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
