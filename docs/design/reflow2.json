@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d97210cda415cda0a2a2127e2d1158b08a9291a6f31dcba2922c67aac01f75ed",
+  "content_hash": "sha256:adfbed6e6ae3d94032fe16a709219bc871c08cf0d9083fb38b6f8c2e6d0a1f54",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2866,6 +2866,24 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:satisfaction-schedule-shape",
+      "properties": {
+        "acted_at": "2026-07-30",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:where-plans-live",
+      "properties": {
+        "acted_at": "2026-07-30",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -29641,6 +29659,16 @@
       }
     },
     {
+      "node_id": "dec:satisfaction-schedule-shape",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\n\nAnthony's distillation (2026-07-28) is that the roadmap is a SATISFACTION SCHEDULE — requirements mapped to the epoch or increment where they are satisfied — and his own verbs carry three modalities: requirements \"ARE satisfied\" in epoch 1, \"are EXPECTED to be satisfied\" in increment 3, KPP 1 \"is REQUIRED to be satisfied\" by epoch 27.\n\nTHE OBSERVATION THAT MATTERS MOST: the three do not want the same treatment, and one of them must not be stored at all.\n\nARE SATISFIED — must be COMPUTED, never recorded. `req:completion-computed` is accepted and says whether intent has been delivered is computed from the golden thread and never asserted. A stored \"requirement A was satisfied at epoch 1\" would be exactly the assertion that requirement forbids, and it would rot the moment the thread moved. The backward direction already works; it needs a way to ask \"as of epoch N\", not a place to write the answer.\n\nEXPECTED TO BE SATISFIED — the vocabulary already exists. `ANTICIPATES` is declared from `*` to `*` with a `confidence` float 0.0–1.0 and the hint \"Source plans for or foreshadows a future target need.\" `req:plans-move-honestly` already named it as the hook. So `req:X --ANTICIPATES(confidence)--> epoch:3` may be the whole mechanism, with confidence decaying by horizon per the Black-Scholes framing.\n\nREQUIRED TO BE SATISFIED BY — different in kind, not degree. Missing an EXPECTED date is a surprise to record; missing a REQUIRED date is a VIOLATION to compute. This is the scheduling face of a KPP: `req:inviolable-intent` already computes content violations, and this would give it a deadline dimension. Open whether that is a distinct edge type, or `ANTICIPATES` with a binding flag — and the honest test is the one this project keeps applying: which one lets a computation read it without inventing a value nobody set.\n\nWHAT IS ACTUALLY MISSING, having looked: less than the requirement's ambition suggests. The capability view's forward half is expressible today (`Release.status: planned`). The schedule edge exists (`ANTICIPATES` with confidence). What does not exist is (1) a `DesignEpoch.epoch_type` value meaning \"has not happened yet\", (2) any reader of `ANTICIPATES` — it is declared and nothing computes over it, which is `req:defaults-do-not-assert`'s sibling defect of declared-but-unread vocabulary, and (3) an ARRIVAL operation: someone must be able to say an epoch arrived, at which point the planned-versus-delivered delta is computed and the pin recorded.\n\nArrival is where the three requirements meet: it is when a planned epoch stops being a claim (`req:epochs-can-be-planned`), acquires a git pin (`req:graph-indexes-snapshots`), and produces the delta between what was planned and what landed (`req:plans-move-honestly`). It is also the natural moment for `cap:changelog-view` to render, since the changelog between two arrivals is the same delta in prose.",
+        "name": "OPEN — how the satisfaction schedule records ARE / EXPECTED / REQUIRED-BY",
+        "rationale": "Anthony's atom, recorded in his own verbs because the three modalities are carried by the verbs and would be lost in a paraphrase.\n\nThe \"ARE satisfied must not be stored\" point is the one worth not losing: it is the difference between a roadmap that reports and a roadmap that claims, and this design already has an accepted requirement forbidding the second. Everything else here is options; that one is a constraint the existing design imposes on any shape chosen.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:service-spof-accepted",
       "node_type": "Decision",
       "properties": {
@@ -29728,6 +29756,26 @@
         "name": "A view is a projection of the graph; renderer fill-ins are defects",
         "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 — almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:what-pins-a-snapshot",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\n\nFor an epoch or increment that has ARRIVED there IS a past to point at, so the question is only which handle the graph stores. Three candidates, and they answer different questions rather than competing.\n\n(a) GIT TAG (`epoch/2026-Q4`, `v0.18.0`). Human-readable, already the in-repo precedent — `rel:v0180` lives in the graph, tag `v0.18.0` lives in git, and nobody greps tags to learn what shipped. Cost: a tag is mutable and deletable, so a pin can quietly stop meaning what it meant.\n\n(b) COMMIT SHA. Immutable and exact. Cost: opaque to a person, and says nothing about which repo it is in — useless on its own in a multi-repo ecosystem.\n\n(c) THE EXPORT'S OWN `content_hash`. Every export already carries one, and `prev_content_hash` already chains them, so reflow2 HAS a version history of the design that owes git nothing. The same design exported on any machine hashes the same, which git cannot say of a commit. Cost: a hash identifies but does not LOCATE — you cannot fetch a document from its hash.\n\nTHE SHAPE THIS SUGGESTS: `content_hash` is the IDENTITY and the git ref is the ADDRESS. They answer \"is this the same design?\" and \"where do I get it?\", which are different questions, and storing both makes a third thing computable for free — if the tag later points at a commit whose export hashes differently, the pin has drifted, and that is exactly the kind of finding reflow2 exists to make rather than to suffer.\n\nA SEPARATE QUESTION, and the one that decides how much is even needed: DOES REFLOW2 CREATE GIT REFS, OR ONLY RECORD THEM? Measured while thinking this through — reflow2 shells out to git NOWHERE. The merge driver is invoked BY git, never the reverse. So recording-only would preserve a property the tool currently has completely: it takes no clock, and it would take no VCS either. It could print the command it would have run. Creating tags would also mean write access to repos reflow2 does not own, which in an ecosystem of coupled repos is a different tool.\n\nMULTI-REPO: one epoch does not pin one ref, it pins a SET — one per design — which is `req:version-combination-is-an-object`, already the recorded dependency of `req:epochs-can-be-planned`. So the pin is a version combination, not a string.",
+        "name": "OPEN — what identifies an arrived epoch's snapshot: a tag, a commit, or the export's own content hash?",
+        "rationale": "Anthony's question (2026-07-30): how the mechanics of using git to capture snapshots would actually work. Recorded as options because he asked to think it through, not to be handed an answer.\n\nThe `content_hash` option is worth flagging because it was not in the original framing and it is already built: exports have carried `content_hash` and `prev_content_hash` since the lineage chain landed, and the gate already fails when the chain is broken. If identity is what is wanted, most of it exists.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:where-plans-live",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony asked to think through the mechanics of using git to capture epoch and increment snapshots; these are the options and their costs, not a settlement.\n\nTHE TENSION THAT ORGANISES EVERYTHING: git can only store the past. A commit is something that happened. A planned epoch is a claim about a future that has not happened, so there is nothing for git to hold unless someone AUTHORS a speculative design and commits it.\n\n(a) EPOCH BRANCHES — Anthony's original idea, 2026-07-28: \"epoch branches: project_x:epoch_1 captures what we expect the graph to look like at epoch_1.\" A branch is a real place to work: you can draft a future design there, run the detectors on it, and diff it against main with machinery that already exists.\n    Costs, recorded beside it rather than against it: a branch is a MOVING POINTER and a plan is a DATED CLAIM — when the plan changes the branch moves, and nothing records that it moved, which is exactly what `req:plans-move-honestly` needs. A speculative full export also restates the entire design to express a delta about a handful of requirements, so it is expensive to author and stale on the next merge to main. And N repos times M epochs is N times M branches, each drifting independently.\n\n(b) PLANS LIVE ONLY IN THE GRAPH. A planned epoch is a node plus scheduled edges — no git object at all, because there is no past to point at. \"What does the design look like at epoch 3\" becomes a COMPUTED view (today's design plus what is scheduled to be satisfied by then) rather than a stored artifact.\n    Cost: you cannot open a future design in an editor or run a detector over it as a whole; you get a projection, not a document.\n\n(c) BOTH, SCOPED DIFFERENTLY — the shape the costs seem to point at. Branches are a fine WORKSPACE for exploring a future architecture and a poor RECORD of a plan. The record lives in the graph as a dated, versioned claim; a branch is somewhere to prototype one when a person wants to see it whole.\n\nWORTH KNOWING BEFORE DECIDING: the forward half of the CAPABILITY view already exists in the vocabulary. `Release.status` is `planned | built | deployed | retired`, so a planned increment is expressible today. The forward half of the TIME view does not: `DesignEpoch.epoch_type` is `baseline | revision | milestone | incident_response | release_cut` with no value meaning \"this has not happened yet\". That asymmetry is real and is the smallest concrete gap found while thinking this through.",
+        "name": "OPEN — does a planned epoch live in git, or only in the graph?",
+        "rationale": "Anthony's idea and Anthony's question; recorded so the reasoning survives whichever way it goes. The framing \"two paired views of the same architecture\" and the epoch-branch mechanism are both his (2026-07-28), as is the request to work out the git mechanics (2026-07-30).\n\nNot argued down: option (a) is recorded with its virtue stated first, because a branch genuinely is the only place you can look at a future design as a whole, and that is not nothing.",
+        "status": "proposed"
       }
     },
     {
@@ -35754,7 +35802,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4f9d6fa161d547b7ab1ae88aa5a9994afffe62f3bb639be0b785b35f5471f2cb",
+  "prev_content_hash": "sha256:d97210cda415cda0a2a2127e2d1158b08a9291a6f31dcba2922c67aac01f75ed",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
