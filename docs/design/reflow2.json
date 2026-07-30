@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:adfbed6e6ae3d94032fe16a709219bc871c08cf0d9083fb38b6f8c2e6d0a1f54",
+  "content_hash": "sha256:65136227b16b6ce10d52c37447d25328daa9a2b473476f3fe01ab65b6d20707e",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1919,6 +1919,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:wire-planning-cluster",
+      "properties": {},
+      "to_id": "epoch:wire-planning-cluster"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "dec:alternatives-unranked-forkable",
       "properties": {},
       "to_id": "epoch:v0100"
@@ -2474,6 +2480,12 @@
       "from_id": "snap:epoch:v0130:cap:design-identity",
       "properties": {},
       "to_id": "epoch:v0130"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:wire-planning-cluster:dec:where-plans-live",
+      "properties": {},
+      "to_id": "epoch:wire-planning-cluster"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -7361,6 +7373,15 @@
         "action": "modified"
       },
       "to_id": "cap:changelog-view"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:wire-planning-cluster",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:where-plans-live"
     },
     {
       "edge_type": "CHANGED",
@@ -14073,6 +14094,12 @@
       "from_id": "dec:stateless-seat-handle",
       "properties": {},
       "to_id": "snap:epoch:rmcp-v3:dec:stateless-seat-handle"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:where-plans-live",
+      "properties": {},
+      "to_id": "snap:epoch:wire-planning-cluster:dec:where-plans-live"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -28364,8 +28391,8 @@
       "node_id": "chg:wire-planning-cluster",
       "node_type": "ChangeEvent",
       "properties": {
-        "change_type": "refactor",
-        "name": "Four planning requirements wired to what they actually depend on; one mis-drawn edge retracted"
+        "change_type": "scope_change",
+        "name": "Anthony clarified: the thing committed is a SLICE OF THE GRAPH, not a future product"
       }
     },
     {
@@ -29772,9 +29799,9 @@
       "node_id": "dec:where-plans-live",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony asked to think through the mechanics of using git to capture epoch and increment snapshots; these are the options and their costs, not a settlement.\n\nTHE TENSION THAT ORGANISES EVERYTHING: git can only store the past. A commit is something that happened. A planned epoch is a claim about a future that has not happened, so there is nothing for git to hold unless someone AUTHORS a speculative design and commits it.\n\n(a) EPOCH BRANCHES — Anthony's original idea, 2026-07-28: \"epoch branches: project_x:epoch_1 captures what we expect the graph to look like at epoch_1.\" A branch is a real place to work: you can draft a future design there, run the detectors on it, and diff it against main with machinery that already exists.\n    Costs, recorded beside it rather than against it: a branch is a MOVING POINTER and a plan is a DATED CLAIM — when the plan changes the branch moves, and nothing records that it moved, which is exactly what `req:plans-move-honestly` needs. A speculative full export also restates the entire design to express a delta about a handful of requirements, so it is expensive to author and stale on the next merge to main. And N repos times M epochs is N times M branches, each drifting independently.\n\n(b) PLANS LIVE ONLY IN THE GRAPH. A planned epoch is a node plus scheduled edges — no git object at all, because there is no past to point at. \"What does the design look like at epoch 3\" becomes a COMPUTED view (today's design plus what is scheduled to be satisfied by then) rather than a stored artifact.\n    Cost: you cannot open a future design in an editor or run a detector over it as a whole; you get a projection, not a document.\n\n(c) BOTH, SCOPED DIFFERENTLY — the shape the costs seem to point at. Branches are a fine WORKSPACE for exploring a future architecture and a poor RECORD of a plan. The record lives in the graph as a dated, versioned claim; a branch is somewhere to prototype one when a person wants to see it whole.\n\nWORTH KNOWING BEFORE DECIDING: the forward half of the CAPABILITY view already exists in the vocabulary. `Release.status` is `planned | built | deployed | retired`, so a planned increment is expressible today. The forward half of the TIME view does not: `DesignEpoch.epoch_type` is `baseline | revision | milestone | incident_response | release_cut` with no value meaning \"this has not happened yet\". That asymmetry is real and is the smallest concrete gap found while thinking this through.",
-        "name": "OPEN — does a planned epoch live in git, or only in the graph?",
-        "rationale": "Anthony's idea and Anthony's question; recorded so the reasoning survives whichever way it goes. The framing \"two paired views of the same architecture\" and the epoch-branch mechanism are both his (2026-07-28), as is the request to work out the git mechanics (2026-07-30).\n\nNot argued down: option (a) is recorded with its virtue stated first, because a branch genuinely is the only place you can look at a future design as a whole, and that is not nothing.",
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\n\nANTHONY'S CLARIFICATION, 2026-07-30, and it corrects the framing this node was first written with: what he wants committed is NOT the realized product or a future codebase. It is a SLICE OF THE REFLOW2 GRAPH ITSELF — \"this is the planned capabilities of epoch_1, epoch_2 … epoch_n\" — so that he can open the repo and see \"that is when I get capability X\", or \"capability Y is not expected until increment_13\". His words: \"it isn't the realized product/artifact of the project, but snapshot of the project at epoch or increment that I'm looking to capture in git.\" He is explicitly open to something other than git.\n\nTHE FIRST FRAMING HERE WAS WRONG AND IS CORRECTED. This node originally organised everything around \"git can only store the past, and a plan is not a past\". That is too glib. A plan document is a PRESENT artifact describing a future, and committing one is ordinary — git stores plans perfectly well. The real objection was never to committing plans; it was only ever to using BRANCHES as the record, and that narrower objection stands.\n\n(a) BRANCH PER EPOCH — `epoch_1`, `epoch_2`, each holding a projected design. Matches the mental model directly: check out `epoch_n`, look.\n    Costs: checking out a branch normally makes the whole REPO reflect that state, and here there is no future code to reflect, so the branch buys nothing the file would not. A full export is 1.6 MB today, so N epochs is N × 1.6 MB of near-identical JSON, rewritten on every replan. Branches also invite merge semantics that do not apply — nobody merges epoch_2 into main. And the plan's MOVEMENT stays invisible: a branch pointer moves silently, which is exactly what `req:plans-move-honestly` needs to see.\n\n(b) A FILE PER EPOCH ON MAIN — `docs/design/epochs/epoch_3.{md,json}`. Browsing is easier than a checkout, there is one history rather than N, and every replan is an ordinary commit to that file.\n    THE PROPERTY THIS BUYS FOR FREE: `git log -p docs/design/epochs/epoch_3.md` IS the plan's revision history. A large part of `req:plans-move-honestly` — \"when a planned epoch's content moves, the plan's own change is a dated event on the record\" — would be satisfied by git doing what git is good at, rather than by new machinery in reflow2.\n\n(c) RENDER IT, DO NOT AUTHOR IT — and this is what (b) should probably be generated BY. An epoch slice is a VIEWPOINT. `tools/render_views.py` already renders viewpoints as pure projections of the graph, already confesses anything a view needs that the graph cannot supply, and ALREADY RENDERS THE EPOCH CHAIN BACKWARD (\"Axis Z as a viewpoint: the epoch chain, and what happened at each\"). The forward direction is the same renderer reading scheduled edges instead of recorded ones. Under this option the graph holds the schedule as single source of truth, the renderer emits one small file per epoch, and git holds their history.\n    Cost: a generated file can go stale against the graph — which is a drift check reflow2 already knows how to do, and the same one `dataflow.html` staleness already gets in another repo.\n\nWHAT A SLICE ACTUALLY CONTAINS, since \"slice\" is the word he used and it is much smaller than an export: the epoch and its date, capabilities expected by then, requirements expected satisfied, KPPs required by then, the version combination pinned once it arrives, and the delta against the previous epoch. Kilobytes, not megabytes.\n\nTHE OPEN QUESTION IS NARROWER THAN IT WAS: not \"git or not git\", but WHICH JOB GIT DOES. Git looks right for the HISTORY of the plan document and for pinning arrived epochs; the graph looks right for the schedule itself. The failure mode to avoid is making git the source of truth for the schedule, because then two places disagree about when capability X arrives and neither is wrong.",
+        "name": "OPEN — how per-epoch slices of the design become browsable: branches, files, or a rendered viewpoint",
+        "rationale": "Anthony's idea, his clarification, and his invitation to suggest something better; recorded so the reasoning survives whichever way it goes.\n\nKept rather than tidied away: the original framing of this node (\"git can only store the past\") was mine and was misleading, and the correction is recorded rather than silently overwritten because the prior text is what a reader would otherwise have found and believed. The snapshot at `epoch:wire-planning-cluster` holds the earlier wording.\n\nNot argued down: option (a) is his own original mechanism and is recorded with the mental model it serves stated first. Its costs are listed beside it, not in place of it.",
         "status": "proposed"
       }
     },
@@ -34882,6 +34909,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:wire-planning-cluster:dec:where-plans-live",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-30\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony asked to think through the mechanics of using git to capture epoch and increment snapshots; these are the options and their costs, not a settlement.\\n\\nTHE TENSION THAT ORGANISES EVERYTHING: git can only store the past. A commit is something that happened. A planned epoch is a claim about a future that has not happened, so there is nothing for git to hold unless someone AUTHORS a speculative design and commits it.\\n\\n(a) EPOCH BRANCHES — Anthony's original idea, 2026-07-28: \\\"epoch branches: project_x:epoch_1 captures what we expect the graph to look like at epoch_1.\\\" A branch is a real place to work: you can draft a future design there, run the detectors on it, and diff it against main with machinery that already exists.\\n    Costs, recorded beside it rather than against it: a branch is a MOVING POINTER and a plan is a DATED CLAIM — when the plan changes the branch moves, and nothing records that it moved, which is exactly what `req:plans-move-honestly` needs. A speculative full export also restates the entire design to express a delta about a handful of requirements, so it is expensive to author and stale on the next merge to main. And N repos times M epochs is N times M branches, each drifting independently.\\n\\n(b) PLANS LIVE ONLY IN THE GRAPH. A planned epoch is a node plus scheduled edges — no git object at all, because there is no past to point at. \\\"What does the design look like at epoch 3\\\" becomes a COMPUTED view (today's design plus what is scheduled to be satisfied by then) rather than a stored artifact.\\n    Cost: you cannot open a future design in an editor or run a detector over it as a whole; you get a projection, not a document.\\n\\n(c) BOTH, SCOPED DIFFERENTLY — the shape the costs seem to point at. Branches are a fine WORKSPACE for exploring a future architecture and a poor RECORD of a plan. The record lives in the graph as a dated, versioned claim; a branch is somewhere to prototype one when a person wants to see it whole.\\n\\nWORTH KNOWING BEFORE DECIDING: the forward half of the CAPABILITY view already exists in the vocabulary. `Release.status` is `planned | built | deployed | retired`, so a planned increment is expressible today. The forward half of the TIME view does not: `DesignEpoch.epoch_type` is `baseline | revision | milestone | incident_response | release_cut` with no value meaning \\\"this has not happened yet\\\". That asymmetry is real and is the smallest concrete gap found while thinking this through.\",\"name\":\"OPEN — does a planned epoch live in git, or only in the graph?\",\"rationale\":\"Anthony's idea and Anthony's question; recorded so the reasoning survives whichever way it goes. The framing \\\"two paired views of the same architecture\\\" and the epoch-branch mechanism are both his (2026-07-28), as is the request to work out the git mechanics (2026-07-30).\\n\\nNot argued down: option (a) is recorded with its virtue stated first, because a branch genuinely is the only place you can look at a future design as a whole, and that is not nothing.\",\"status\":\"proposed\"}",
+        "target_id": "dec:where-plans-live",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "ver:adopt-storyflow",
       "node_type": "Verification",
       "properties": {
@@ -35802,7 +35839,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d97210cda415cda0a2a2127e2d1158b08a9291a6f31dcba2922c67aac01f75ed",
+  "prev_content_hash": "sha256:adfbed6e6ae3d94032fe16a709219bc871c08cf0d9083fb38b6f8c2e6d0a1f54",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
