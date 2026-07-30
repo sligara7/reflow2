@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:65136227b16b6ce10d52c37447d25328daa9a2b473476f3fe01ab65b6d20707e",
+  "content_hash": "sha256:f32673576c40ff5814f45ad4fb1eeac204c317ff24354f09fd0037f45cb88493",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2630,6 +2630,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:arrival-delta",
+      "properties": {
+        "acted_at": "2026-07-30",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -29195,6 +29204,16 @@
       }
     },
     {
+      "node_id": "dec:arrival-delta",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\n\nAnthony, 2026-07-30: \"as we march forward in time, we can measure the delta of what was actually achieved/realized versus what was planned for that epoch. For instance, in epoch 3 we had planned for capability A, B, C. However, when we actually got to epoch 3 in time, we only achieved A & C, and B was discontinued or deferred to epoch 4.\"\n\nFOUR OUTCOMES PER SCHEDULED ITEM, three of them his and one the complement he did not name:\n  - DELIVERED — the plan held (A and C).\n  - DEFERRED — still intended, the date moved (B to epoch 4).\n  - DISCONTINUED — no longer intended at all. Distinct from deferred in the way `retire-from-design` already distinguishes them: one is a date change, the other is a withdrawal, and conflating them either loses a commitment or embalms one.\n  - DELIVERED BUT NEVER PLANNED — the complement. Work that arrived which nobody scheduled. Usually the most informative quarter of the delta, because unplanned work is where the estimate actually went, and a report that omits it makes a schedule look better than it was.\n\nTHE TRAP, and it is the same shape as the snapshot bug fixed on 2026-07-28. If deferring B simply RE-POINTS its schedule edge from epoch 3 to epoch 4, then when epoch 3 arrives the graph says epoch 3 was only ever about A and C — the slip is invisible and the plan has silently rewritten its own history. That is precisely what `req:intent-preserved` forbids, and precisely what the second-revision-overwrites-the-first defect did to snapshots. So REPLANNING MUST BE A RECORDED CHANGE, NOT AN EDIT.\n\nA MECHANISM THAT NEEDS NOTHING NEW, given what was verified while thinking this through: a Snapshot captures a node's INCOMING edges as well as its outgoing ones. So snapshotting the EPOCH captures every schedule edge pointing at it — the whole plan for that epoch, in one snapshot, in one call. Replanning becomes `record_change` on the epoch, which is exactly the operation the 2026-07-28 fix made safe to do twice in one epoch.\n\nWHAT IS COMPUTED VERSUS STORED. The delta is COMPUTED, never written down, for the same reason \"ARE satisfied\" is: `req:completion-computed` says delivery is computed from the golden thread and never asserted. At arrival, compare the last snapshot of the epoch's schedule (what was planned, as of before it moved) against what the thread says is delivered. Nothing about the outcome is stored; the two inputs already exist.\n\nWHAT FALLS OUT ONCE IT IS COMPUTABLE — a schedule-performance profile per epoch: hit rate (planned and delivered over planned), slip (how many deferred, and by how many epochs), attrition (how many discontinued), and unplanned (delivered but never scheduled).\n\nAND THE PAYOFF WORTH NAMING, because it closes a loop this project opened the same day. `req:plans-move-honestly` wants a planned claim to carry confidence that decays with horizon — Anthony's Black-Scholes analogy. Once several epochs have arrived, that confidence can be MEASURED rather than asserted: \"historically, items scheduled three epochs out land 40% of the time.\" That is the same argument that retired `req:context-is-a-modelled-quantity` on 2026-07-30 — an estimate is defensible only as a seed for something never measured — applied in the direction where the measurement is actually available, because unlike context cost, schedule performance is observed every time an epoch arrives.",
+        "name": "OPEN — what happens when an epoch arrives, and what the planned-vs-delivered delta is computed from",
+        "rationale": "Anthony's idea, in his own example, recorded while the thinking is still open.\n\nTwo things added beside it rather than in place of it: the fourth outcome (delivered but never planned), because a delta that only reports against the plan cannot see the work that was not in it; and the re-pointing trap, because the obvious implementation of \"defer B to epoch 4\" is an edge edit, and an edge edit is exactly how the plan would come to lie about what it once said.\n\nThe mechanism note is a measurement, not a preference: snapshots were confirmed to capture incoming edges, so the epoch-snapshot approach needs no new machinery.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:ask-not-repair",
       "node_type": "Decision",
       "properties": {
@@ -35839,7 +35858,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:adfbed6e6ae3d94032fe16a709219bc871c08cf0d9083fb38b6f8c2e6d0a1f54",
+  "prev_content_hash": "sha256:65136227b16b6ce10d52c37447d25328daa9a2b473476f3fe01ab65b6d20707e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
