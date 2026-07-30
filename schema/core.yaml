@@ -17,7 +17,7 @@ schema:
         domain: { type: string, indexed: true, description: "software / hardware / document / process / other — free text; scopes vocabulary examples, not validation." }
         description: { type: string, fulltext: true }
         objective: { type: string, description: "One-line statement of what success looks like." }
-        mode: { type: enum, values: [flexible, rigid], default: flexible, description: "flexible = design evolves with the build; rigid = design is the source of truth." }
+        mode: { type: enum, values: [flexible, rigid], default: flexible, description: "Governance: how much a machine may change the design on its own. flexible = apply_heal applies structural repairs; rigid = it proposes them and stops, so a human decides. That one gate is ALL this currently changes — deliberately narrower prose than the older 'design is the source of truth', which promised a breadth the code does not implement. Set it with set_project_mode; the default records that nobody has chosen yet, not that flexible was chosen." }
         status: { type: enum, values: [active, paused, archived], default: active, indexed: true }
         created_at: { type: string }
         # ---- Federation (dec:nested-graphs option (c), 2026-07-25) ----------

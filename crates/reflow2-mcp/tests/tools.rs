@@ -2389,3 +2389,94 @@ async fn minting_a_seat_writes_nothing() {
         "each mint is a distinct name — that is why one must be KEPT, not re-minted"
     );
 }
+
+// ---------------------------------------------------------------------------
+// Governance mode (req:mode-is-chosen-and-changeable).
+//
+// The mode decides whether apply_heal APPLIES structural repairs or only
+// proposes them. Until 2026-07-30 it could be set only at genesis, so every
+// design carried the `flexible` default and could never move off it.
+// ---------------------------------------------------------------------------
+
+#[tokio::test]
+async fn a_project_mode_can_be_chosen_after_genesis() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    j!(s.add_project(Parameters(IdName {
+        id: "proj:m".into(),
+        name: "Modey".into()
+    })));
+
+    let set = j!(s.set_project_mode(Parameters(ProjectModeReq {
+        project_id: "proj:m".into(),
+        mode: "rigid".into(),
+    })));
+    assert_eq!(
+        set["properties"]["mode"].as_str(),
+        Some("rigid"),
+        "the mode a project is governed by must be changeable, not frozen at genesis"
+    );
+}
+
+#[tokio::test]
+async fn choosing_a_mode_preserves_everything_else_about_the_project() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    j!(s.add_project(Parameters(IdName {
+        id: "proj:m".into(),
+        name: "Modey".into()
+    })));
+    j!(s.set_project_mode(Parameters(ProjectModeReq {
+        project_id: "proj:m".into(),
+        mode: "rigid".into(),
+    })));
+    let after = j!(s.get_node(Parameters(TypedIdReq {
+        node_type: "Project".into(),
+        id: "proj:m".into()
+    })));
+    assert_eq!(
+        after["node"]["properties"]["name"].as_str(),
+        Some("Modey"),
+        "a setter writes one property; create_node REPLACES props, so a naive \
+         implementation would silently wipe the rest of the node"
+    );
+}
+
+#[tokio::test]
+async fn an_unknown_mode_fails_loud_rather_than_leaving_the_old_one() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    j!(s.add_project(Parameters(IdName {
+        id: "proj:m".into(),
+        name: "Modey".into()
+    })));
+    j!(s.set_project_mode(Parameters(ProjectModeReq {
+        project_id: "proj:m".into(),
+        mode: "rigid".into(),
+    })));
+
+    s.set_project_mode(Parameters(ProjectModeReq {
+        project_id: "proj:m".into(),
+        mode: "advisory".into(),
+    }))
+    .await
+    .expect_err("a mode outside the enum must be refused, not accepted quietly");
+
+    let after = j!(s.get_node(Parameters(TypedIdReq {
+        node_type: "Project".into(),
+        id: "proj:m".into()
+    })));
+    assert_eq!(
+        after["node"]["properties"]["mode"].as_str(),
+        Some("rigid"),
+        "a refused write must leave the previous choice intact"
+    );
+}
+
+#[tokio::test]
+async fn setting_the_mode_of_a_project_that_is_not_there_fails_loud() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    s.set_project_mode(Parameters(ProjectModeReq {
+        project_id: "proj:ghost".into(),
+        mode: "rigid".into(),
+    }))
+    .await
+    .expect_err("no silent creation of a project as a side effect of governing it");
+}

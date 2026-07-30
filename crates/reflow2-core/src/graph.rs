@@ -568,6 +568,41 @@ impl DesignGraph {
         self.create_node(node::REQUIREMENT, requirement_id, props)
     }
 
+    /// Choose a project's governance `mode`, preserving everything else about it.
+    ///
+    /// `flexible` (the schema default) lets `apply_heal` apply structural repairs;
+    /// `rigid` makes it propose them and stop, so a human decides
+    /// (`heal.rs::apply_heal`). That is the ONLY behaviour the mode currently
+    /// changes, and the schema description says so rather than promising more.
+    ///
+    /// This exists because the mode was previously settable only at `genesis`,
+    /// so every design ever made carried `flexible` by default and could never
+    /// move off it — a governance choice asserted by a default that nobody made
+    /// and nobody could revisit (`req:mode-is-chosen-and-changeable`). A default
+    /// may record an absence; it must not decide how a project is governed.
+    ///
+    /// The value is validated by the schema on write, so an unknown mode fails
+    /// loud rather than silently leaving the old one in place.
+    pub fn set_project_mode(
+        &mut self,
+        project_id: &str,
+        mode: &str,
+    ) -> Result<StoredNode, DynoError> {
+        let Some(existing) = self.get_node(node::PROJECT, project_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::PROJECT.to_string(),
+                node_id: project_id.to_string(),
+            });
+        };
+        let mut props = Props::new().set("mode", mode);
+        for (k, v) in &existing.properties {
+            if k != "mode" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::PROJECT, project_id, props)
+    }
+
     /// Record how a node entered the graph, preserving its other properties.
     /// `provenance` ∈ `authored` (the default) / `planned` / `inferred` /
     /// `healed` / `reconciled` / `imported` — the same vocabulary as

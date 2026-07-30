@@ -557,6 +557,15 @@ pub struct RequirementStatusReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ProjectModeReq {
+    pub project_id: String,
+    /// `flexible` (the schema default) / `rigid`. In `rigid`, `apply_heal`
+    /// proposes structural repairs and stops instead of applying them.
+    pub mode: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ClaimReq {
     /// The `Contributor` taking the region in hand.
     pub contributor_id: String,
@@ -2312,6 +2321,30 @@ impl ReflowService {
         let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.set_requirement_status(&req.requirement_id, &req.status)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Choose how much this project lets a machine change its design on its own: \
+                       `flexible` (apply_heal applies structural repairs) or `rigid` (apply_heal \
+                       proposes them and stops, so a human decides). That one gate is ALL the \
+                       mode currently changes — said plainly because the older schema wording, \
+                       \"design is the source of truth\", promised a breadth the code does not \
+                       implement. ASK THE USER; do not pick for them. Until 2026-07-30 the mode \
+                       could only be set at genesis, so every design ever made carried the \
+                       `flexible` DEFAULT and could never move off it — a governance choice \
+                       nobody made and nobody could revisit. The default records that nobody \
+                       has chosen, not that flexible was chosen (req:mode-is-chosen-and-changeable).",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn set_project_mode(
+        &self,
+        Parameters(req): Parameters<ProjectModeReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(NodeDto::from(
+            g.set_project_mode(&req.project_id, &req.mode)
                 .map_err(dyno_err)?,
         ))
     }

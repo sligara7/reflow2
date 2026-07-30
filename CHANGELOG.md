@@ -31,6 +31,35 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`set_project_mode`, and reflow2's own project is now `rigid`**
+  (`req:mode-is-chosen-and-changeable`, `cap:governance-mode`). A project's
+  governance mode decides whether `apply_heal` **applies** structural repairs
+  (`flexible`) or **proposes them and stops** so a human decides (`rigid`).
+  Until now it could be set only at `genesis`, so every design ever made
+  carried the `flexible` default and could never move off it — a governance
+  choice nobody made and nobody could revisit. There is now a setter; an
+  unknown mode is refused by schema validation and leaves the previous choice
+  intact, and the project's other properties survive the write.
+
+  **reflow2's own design has been moved to `rigid`.** `apply_heal` merges and
+  deletes nodes, and this repo has already been bitten once by an auto-apply
+  corrupting a graph — the chained-duplicate guard exists because two
+  individually-sanctioned merges wrote to a node the first had deleted while
+  the report still said `verified`. Structural edits to the design brain get a
+  human in front of them. The cost: every HEAL repair here is now two steps.
+
+### Changed
+
+- **`Project.mode`'s schema description now says what the mode actually does.**
+  It read *"flexible = design evolves with the build; rigid = design is the
+  source of truth"* — which promises a breadth the code does not implement.
+  `mode` gates exactly one thing, `apply_heal`, and the description says so.
+  The prose is the discovery surface agents read, so prose that over-promises
+  is the defect `req:schema-prose-is-checked` is about; this is one instance
+  fixed at the source rather than left as an example.
+
 ### Fixed
 
 - **A standing judgement about the whole design stops expiring every time the
