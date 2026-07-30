@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- Planned epochs (`req:epochs-can-be-planned`, first increment) — @ajs — since 2026-07-30 — schema/temporal.yaml (`DesignEpoch.status`), crates/reflow2-core/src/temporal.rs, crates/reflow2-mcp/src/service.rs, tests/temporal.rs; branch `feat/planned-epochs`
+
 
 
 
