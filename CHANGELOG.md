@@ -31,6 +31,45 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **A node revised twice in one epoch no longer loses its first snapshot**
+  (`req:snapshot-per-revision-not-per-epoch`, `dec:snapshot-id-per-revision`).
+  The snapshot id was `snap:{epoch}:{node}` and nothing else, while
+  `create_node` merges on an existing id — so the second `record_change`
+  against the same node in the same epoch silently overwrote the first
+  snapshot **and reported success both times**. That contradicted
+  `req:intent-preserved` ("the past is never overwritten") and falsified the
+  revise-design skill's closing promise that a reader can answer *"what did
+  this say before"* without git archaeology. Found 2026-07-28 by following the
+  documented procedure exactly — amending one requirement twice in a single
+  epoch — and the pre-amendment text survived only in a previously committed
+  export.
+
+  The **first** capture in an epoch keeps the unsuffixed id, because existing
+  graphs and committed exports carry those ids; only a genuine second revision
+  appends `:r2`, `:r3`, so `HAS_SNAPSHOT` becomes one-to-many exactly when
+  history requires it. An **identical** re-capture returns the existing
+  snapshot rather than minting a duplicate — snapshotting a node that has not
+  moved is a no-op, not a new version, and treating it as one would make the
+  history claim edits that never happened. That comparison is against the
+  **tail** of the chain and nothing earlier: a node edited A → B → A inside one
+  epoch has three genuine revisions, and matching any earlier snapshot would
+  hand back the A-capture for the third and record two — hiding an edit that
+  did happen, the same loss as the overwrite, just quieter. A ceiling of 64 distinct snapshots
+  per (epoch, node) errors rather than growing history quietly: an epoch is
+  meant to bound a round of *work*, and a node revised that many times inside
+  one means the epoch has stopped meaning anything.
+
+  A patch, not a minor: no id that exists today moves, and nothing in the tool
+  surface changes shape.
+
+- **`art:graph`'s drift baseline caught up with `da50ae8`** — the
+  dangling-edge refusal changed `graph.rs` without the two-sided accept, so the
+  design gate had failed on main for three commits. Accepted `design_holds`:
+  `req:no-silent-fallback` already said this and the code was brought to meet
+  it, so there is no design meaning to record.
+
 ## [0.18.0] — 2026-07-28
 
 ### Added

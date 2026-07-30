@@ -321,3 +321,184 @@ fn a_pre_bl63_snapshot_reads_as_no_edges_not_an_error() {
         "absent edges must read as empty: {edges:?}"
     );
 }
+
+/// TWO REVISIONS IN ONE EPOCH KEEP TWO SNAPSHOTS.
+///
+/// The regression this file's own header promises against: "the past is never
+/// overwritten". The snapshot id was `snap:{epoch}:{node}` and nothing else,
+/// while `create_node` MERGES on an existing id — so a node revised twice
+/// inside one epoch had its FIRST snapshot silently replaced by its second, and
+/// `record_change` returned success both times. Found 2026-07-28 by amending
+/// one requirement twice in a single epoch; the original text survived only in
+/// a previously committed export, which is the git archaeology the
+/// revise-design skill promises to make unnecessary.
+#[test]
+fn a_second_revision_in_one_epoch_does_not_overwrite_the_first_snapshot() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:r", "R", "the ORIGINAL statement")
+        .unwrap();
+    g.add_epoch("epoch:e", "e", EpochType::Revision, 10)
+        .unwrap();
+
+    // First revision: snapshot the original, then edit.
+    g.snapshot_node("epoch:e", node::REQUIREMENT, "req:r")
+        .unwrap();
+    g.add_requirement("req:r", "R", "the FIRST amendment")
+        .unwrap();
+
+    // Second revision, same epoch: snapshot the first amendment, then edit.
+    g.snapshot_node("epoch:e", node::REQUIREMENT, "req:r")
+        .unwrap();
+    g.add_requirement("req:r", "R", "the SECOND amendment")
+        .unwrap();
+
+    assert_eq!(
+        g.count_nodes(node::SNAPSHOT).unwrap(),
+        2,
+        "two distinct revisions must leave two snapshots, not one"
+    );
+
+    // The ORIGINAL must still be reachable — that is the whole point.
+    let first = g
+        .get_node(node::SNAPSHOT, "snap:epoch:e:req:r")
+        .unwrap()
+        .expect("the first snapshot keeps the base id");
+    let first_state = parse_snapshot_state(&first).unwrap();
+    assert_eq!(
+        first_state["statement"].as_str(),
+        Some("the ORIGINAL statement"),
+        "the first snapshot must still hold the pre-amendment state"
+    );
+
+    let second = g
+        .get_node(node::SNAPSHOT, "snap:epoch:e:req:r:r2")
+        .unwrap()
+        .expect("a genuine second revision appends :r2");
+    let second_state = parse_snapshot_state(&second).unwrap();
+    assert_eq!(
+        second_state["statement"].as_str(),
+        Some("the FIRST amendment"),
+        "the second snapshot holds the state as of the second revision"
+    );
+}
+
+/// The first capture KEEPS the historical id, so existing graphs and exports do
+/// not need migrating — only a real second revision appends a suffix.
+#[test]
+fn the_first_snapshot_in_an_epoch_keeps_the_unsuffixed_id() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:r", "R", "only ever stated once")
+        .unwrap();
+    g.add_epoch("epoch:e", "e", EpochType::Revision, 10)
+        .unwrap();
+
+    let snap = g
+        .snapshot_node("epoch:e", node::REQUIREMENT, "req:r")
+        .unwrap();
+    assert_eq!(snap.node_id, "snap:epoch:e:req:r");
+}
+
+/// Re-snapshotting a node that has NOT moved returns the existing snapshot
+/// rather than minting `:r2`. Without this, the fix for the overwrite bug would
+/// invent the mirror-image lie — a history claiming revisions that never
+/// happened — and `record_change` would stop being safe to retry.
+#[test]
+fn an_identical_re_snapshot_is_idempotent() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:r", "R", "unchanged between captures")
+        .unwrap();
+    g.add_epoch("epoch:e", "e", EpochType::Revision, 10)
+        .unwrap();
+
+    let a = g
+        .snapshot_node("epoch:e", node::REQUIREMENT, "req:r")
+        .unwrap();
+    let b = g
+        .snapshot_node("epoch:e", node::REQUIREMENT, "req:r")
+        .unwrap();
+
+    assert_eq!(
+        a.node_id, b.node_id,
+        "an unchanged node re-snapshots to the same node"
+    );
+    assert_eq!(
+        g.count_nodes(node::SNAPSHOT).unwrap(),
+        1,
+        "no second snapshot may be minted when nothing changed"
+    );
+}
+
+/// An EDGE move alone is a revision. BL-63 made snapshots capture design edges
+/// precisely because re-allocation is a change with no property edit; if only
+/// `state` were compared, that class of change would silently overwrite again.
+#[test]
+fn an_edge_only_change_counts_as_a_distinct_revision() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability("cap:c", "C", "a capability", None)
+        .unwrap();
+    g.add_component("cmp:a", "A", "first home", None).unwrap();
+    g.add_component("cmp:b", "B", "second home", None).unwrap();
+    g.add_epoch("epoch:e", "e", EpochType::Revision, 10)
+        .unwrap();
+
+    g.allocate("cap:c", "cmp:a").unwrap();
+    g.snapshot_node("epoch:e", node::CAPABILITY, "cap:c")
+        .unwrap();
+
+    // Re-allocate: no property changes at all, only edges.
+    g.delete_edge(edge::ALLOCATED_TO, "cap:c", "cmp:a").unwrap();
+    g.allocate("cap:c", "cmp:b").unwrap();
+    g.snapshot_node("epoch:e", node::CAPABILITY, "cap:c")
+        .unwrap();
+
+    assert_eq!(
+        g.count_nodes(node::SNAPSHOT).unwrap(),
+        2,
+        "an allocation move is a revision even though no property changed"
+    );
+    let first = g
+        .get_node(node::SNAPSHOT, "snap:epoch:e:cap:c")
+        .unwrap()
+        .unwrap();
+    let edges = parse_snapshot_edges(&first).unwrap();
+    assert!(
+        edges.iter().any(|e| e.other_id == "cmp:a"),
+        "the first snapshot must still record the ORIGINAL owner: {edges:?}"
+    );
+}
+
+/// Returning to an EARLIER state is still a revision. Idempotence compares
+/// against the tail of the chain and nothing before it, so A → B → A records
+/// three captures. Matching any earlier snapshot instead would hand back the
+/// first A-capture for the third revision and record only two — hiding an edit
+/// that did happen, which is the quiet half of the bug this whole section
+/// exists to close.
+#[test]
+fn returning_to_an_earlier_state_still_mints_a_revision() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:r", "R", "state A").unwrap();
+    g.add_epoch("epoch:e", "e", EpochType::Revision, 10)
+        .unwrap();
+
+    g.snapshot_node("epoch:e", node::REQUIREMENT, "req:r")
+        .unwrap();
+    g.add_requirement("req:r", "R", "state B").unwrap();
+
+    g.snapshot_node("epoch:e", node::REQUIREMENT, "req:r")
+        .unwrap();
+    g.add_requirement("req:r", "R", "state A").unwrap();
+
+    let third = g
+        .snapshot_node("epoch:e", node::REQUIREMENT, "req:r")
+        .unwrap();
+
+    assert_eq!(
+        third.node_id, "snap:epoch:e:req:r:r3",
+        "the third revision takes the next id, not the first snapshot holding the same state"
+    );
+    assert_eq!(
+        g.count_nodes(node::SNAPSHOT).unwrap(),
+        3,
+        "A -> B -> A is three revisions, and the chain order is what makes them readable"
+    );
+}

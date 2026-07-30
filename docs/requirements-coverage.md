@@ -199,7 +199,7 @@ schema in `schema/*.yaml`.
 |----|-------------|--------|-----------------|
 | 3AX-1 | Model X / Y / Z + depth | ✅ | X (edges, propagate/structure/allocate), Y (`hierarchy` — matryoshka over `Component.level`), Z (temporal), depth (`dimensions` — drift/rollup) all have code |
 | 3AX-2 | Add Axis Z | ✅ | `schema/temporal.yaml` + `temporal.rs` |
-| 3AX-3 | Epochs/facts/snapshots — never overwrite the past | ✅ | `record_change_preserves_pre_change_state` |
+| 3AX-3 | Epochs/facts/snapshots — never overwrite the past | ✅ | `record_change_preserves_pre_change_state` · **and the SECOND revision, which this row read ✅ while it was broken**: the cited test only ever revised a node once per epoch, so the id collision on a second `record_change` — first snapshot silently replaced, success reported both times — was outside every case here. Fixed 2026-07-29 (`req:snapshot-per-revision-not-per-epoch`, `dec:snapshot-id-per-revision`) and now pinned by `a_second_revision_in_one_epoch_does_not_overwrite_the_first_snapshot`, `the_first_snapshot_in_an_epoch_keeps_the_unsuffixed_id`, `an_identical_re_snapshot_is_idempotent`, `an_edge_only_change_counts_as_a_distinct_revision`, `returning_to_an_earlier_state_still_mints_a_revision`. The lesson for this table: a ✅ is only as wide as the case its evidence actually exercises |
 | 3AX-4 | `DesignEpoch` (generalizes Anchor) | ✅ | `add_epoch` / `EpochType` |
 | 3AX-5 | `TemporalFact` valid_from/valid_to | 🟡 | schema ✅ + edge constants; **typed helpers/usage deferred** |
 | 3AX-6 | `Snapshot` cross-revision diff | ✅ | `snapshot_node` + `parse_snapshot_state` |

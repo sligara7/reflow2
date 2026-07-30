@@ -179,12 +179,20 @@ pub struct ChangeRecord<'a> {
     pub action: ChangeAction,
 }
 
-/// Deterministic id for the snapshot of `node_id` taken at `epoch_id`.
-/// Stable so re-snapshotting the same node at the same epoch is idempotent
-/// (create-or-replace) rather than accumulating duplicates.
+/// Deterministic id for the FIRST snapshot of `node_id` taken at `epoch_id`.
+/// Later revisions within the same epoch append `:r2`, `:r3` — see
+/// `snapshot_node`, which owns that rule. This used to be the whole id, and
+/// "idempotent (create-or-replace)" used to be its documented virtue; replace
+/// is what silently destroyed the earlier revision.
 fn snapshot_id(epoch_id: &str, node_id: &str) -> String {
     format!("snap:{epoch_id}:{node_id}")
 }
+
+/// Ceiling on distinct snapshots of one node within one epoch. Not a storage
+/// limit — a signal. An epoch is meant to bound a round of *work*; a node
+/// revised this many times inside one is a sign the epoch has stopped meaning
+/// anything, and the error says so rather than growing history quietly.
+const MAX_SNAPSHOT_REVISIONS: usize = 64;
 
 /// Axis-Z (temporal) operations. See the module docs.
 impl DesignGraph {
@@ -333,7 +341,75 @@ impl DesignGraph {
         let edges_json = serde_json::to_string(&edges)
             .map_err(|e| DynoError::Serialization(format!("snapshot edges for {node_id}: {e}")))?;
 
-        let snap_id = snapshot_id(epoch_id, node_id);
+        // NEVER OVERWRITE AN EARLIER SNAPSHOT. The id was `snap:{epoch}:{node}`
+        // and nothing else, while `create_node` MERGES on an existing id — so a
+        // node revised TWICE in one epoch had its first snapshot silently
+        // replaced by its second, and `record_change` reported success both
+        // times. That contradicts req:intent-preserved ("the past is never
+        // overwritten"), which this very section is named after, and it
+        // falsified the revise-design skill's closing promise that a reader can
+        // answer "what did this say before" without git archaeology. Found
+        // 2026-07-28 by amending one requirement twice in a single epoch; the
+        // pre-amendment text survived only in a previously committed export.
+        //
+        // The id stays `snap:{epoch}:{node}` for the FIRST capture, because
+        // existing graphs and exports carry those ids and a test pins one. Only
+        // a genuine second revision within the same epoch appends `:r2`, `:r3`,
+        // so HAS_SNAPSHOT becomes one-to-many exactly when history requires it
+        // and not before.
+        //
+        // An IDENTICAL re-capture returns the existing snapshot rather than
+        // minting a duplicate: snapshotting a node that has not moved is a
+        // no-op, not a new version, and treating it as one would make the
+        // history claim edits that never happened — the mirror of the bug being
+        // fixed. Idempotence here also keeps `record_change` safe to retry.
+        //
+        // That comparison is against the TAIL of the chain and nothing earlier,
+        // which is the whole reason this walks to the end instead of returning
+        // on the first match. A node edited A → B → A inside one epoch has
+        // three genuine revisions; matching any earlier snapshot would hand
+        // back the A-capture for the third and record two, hiding an edit that
+        // DID happen — the same class of loss as the overwrite above, just
+        // quieter. Matching only the tail keeps `:rN` order readable as the
+        // order the revisions occurred in, which is the only ordering a reader
+        // has: every snapshot in an epoch is pinned to that one epoch.
+        let base_id = snapshot_id(epoch_id, node_id);
+        let id_at = |revision: usize| {
+            if revision == 1 {
+                base_id.clone()
+            } else {
+                format!("{base_id}:r{revision}")
+            }
+        };
+
+        let mut revision = 1usize;
+        let mut tail = None;
+        while let Some(existing) = self.get_node(node::SNAPSHOT, &id_at(revision))? {
+            tail = Some(existing);
+            revision += 1;
+        }
+        if let Some(existing) = tail {
+            let same = |key: &str, want: &str| {
+                existing
+                    .properties
+                    .get(key)
+                    .and_then(Value::as_str)
+                    .is_some_and(|had| had == want)
+            };
+            if same("state", &state) && same("edges", &edges_json) {
+                return Ok(existing);
+            }
+        }
+        // Checked only when a new capture is actually needed, so an idempotent
+        // retry against a full chain still succeeds rather than erroring.
+        if revision > MAX_SNAPSHOT_REVISIONS {
+            return Err(DynoError::Query(format!(
+                "node '{node_id}' already has {MAX_SNAPSHOT_REVISIONS} distinct snapshots in \
+                 epoch '{epoch_id}'; open a new epoch rather than revising further in this one"
+            )));
+        }
+        let snap_id = id_at(revision);
+
         let snapshot = self.create_node(
             node::SNAPSHOT,
             &snap_id,

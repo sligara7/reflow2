@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:7b01e55e2a456605b2092a439780be975d9635ed8ddc6c1659bfb0d2b3bfb7ec",
+  "content_hash": "sha256:7a1e430e10cbc2d0f69ad15dd9477aad79dee08237c041e4f11dd71ebdabf634",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1797,6 +1797,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:snapshot-per-revision-built",
+      "properties": {},
+      "to_id": "epoch:snapshot-per-revision"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:stale-seat",
       "properties": {},
       "to_id": "epoch:surface-export"
@@ -2268,6 +2274,12 @@
       "from_id": "snap:epoch:reflow-workflow-review:req:mode-is-chosen-and-changeable",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:snapshot-per-revision:req:snapshot-per-revision-not-per-epoch",
+      "properties": {},
+      "to_id": "epoch:snapshot-per-revision"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3297,6 +3309,15 @@
         "action": "modified"
       },
       "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-e52b527aba651ac4",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
     },
     {
       "edge_type": "CHANGED",
@@ -6522,6 +6543,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:snapshot-per-revision-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:snapshot-per-revision-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:snapshot-per-revision-not-per-epoch"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:stale-seat",
       "properties": {
         "accepted_baseline": true,
@@ -9293,6 +9332,12 @@
       "from_id": "cap:budget",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:change",
+      "properties": {},
+      "to_id": "dec:snapshot-id-per-revision"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -13134,6 +13179,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "req:snapshot-per-revision-not-per-epoch",
       "properties": {},
+      "to_id": "dec:snapshot-id-per-revision"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:snapshot-per-revision-not-per-epoch",
+      "properties": {},
       "to_id": "decision:ack:84538db885bb5946"
     },
     {
@@ -13333,6 +13384,12 @@
       "from_id": "req:reviewed-defects",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:req:reviewed-defects"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:snapshot-per-revision-not-per-epoch",
+      "properties": {},
+      "to_id": "snap:epoch:snapshot-per-revision:req:snapshot-per-revision-not-per-epoch"
     },
     {
       "edge_type": "INCLUDES",
@@ -22148,6 +22205,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:change",
+      "properties": {},
+      "to_id": "req:snapshot-per-revision-not-per-epoch"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:change-an-existing-feature",
       "properties": {},
       "to_id": "req:onboard-newcomer"
@@ -23180,6 +23243,12 @@
       "from_id": "ver:skill-lint",
       "properties": {},
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:snapshot-per-revision",
+      "properties": {},
+      "to_id": "cap:change"
     },
     {
       "edge_type": "VERIFIES",
@@ -24227,7 +24296,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:740243e814239672205d9528f99c658e943b09dfcd7681c7a3707529e235784b",
+        "checksum": "sha256:c20d3fa522f67d37",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -24733,7 +24802,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3a6dd54d084e1e41",
+        "checksum": "sha256:5a44a5c2e3b3c03c",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
         "status": "realized"
@@ -26322,6 +26391,15 @@
       }
     },
     {
+      "node_id": "chg:accept-e52b527aba651ac4",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-07-29",
+        "name": "Catch-up for da50ae8 (\"A dangling edge was accepted, stored, and reported by nothing\"), which changed graph.rs to REFUSE an edge naming an id nobody created — matching what snapshot_node and add_change_event already did. The design held: req:no-silent-fallback already said this and the code was brought to meet it, so there is no design meaning to record. Same class as chg:accept-a2a035876eefa13a.\n\nFOUND BY THE GATE BEING RED, not by anyone noticing: da50ae8 landed without the reconcile, so main's CI has failed on this one finding for three commits (runs of 2026-07-29 03:33, 03:47, 03:54, all \"workspace + real-binary instruments\"). The registered checksum was also the full 64-char digest where every sibling registers 16 — harmless, since reconcile truncates the observation to the registered dialect, but it is why the mismatch reads oddly."
+      }
+    },
+    {
       "node_id": "chg:accept-e8649fb89e9ed28a",
       "node_type": "ChangeEvent",
       "properties": {
@@ -27124,6 +27202,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The skills stop being copied into projects and start being served from the binary"
+      }
+    },
+    {
+      "node_id": "chg:snapshot-per-revision-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Snapshot identity becomes per-revision; the requirement is accepted and delivered"
       }
     },
     {
@@ -28477,6 +28563,16 @@
       }
     },
     {
+      "node_id": "dec:snapshot-id-per-revision",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Option (a) from req:snapshot-per-revision-not-per-epoch, in a form that keeps existing ids stable. The FIRST capture of a node in an epoch keeps the id `snap:{epoch}:{node}` exactly as before. A genuine SECOND revision in the same epoch appends `:r2`, `:r3`, so HAS_SNAPSHOT becomes one-to-many precisely when history requires it and not before. An IDENTICAL re-capture returns the existing snapshot instead of minting a duplicate — compared against the TAIL of the chain and nothing earlier. A ceiling of 64 distinct snapshots per (epoch, node) errors rather than growing history quietly, and is checked only when a new capture is actually needed, so an idempotent retry against a full chain still succeeds.\n\nNOT chosen: (b) refusing a second record_change in one epoch, and (c) keeping one snapshot per epoch and making the second call a no-op.",
+        "name": "Snapshot identity is per revision, but only when a revision actually happened",
+        "rationale": "Truest to req:intent-preserved, which is the requirement this bug violated — (c) preserves the original but still discards the intermediate, which is losing history on purpose rather than by accident, and (b) pushes epoch hygiene onto the caller when an epoch is meant to bound a round of WORK, not a single edit.\n\nThe first-capture id is left unsuffixed because existing graphs and committed exports carry those ids and a test pins one; suffixing everything would have rewritten history to fix a bug about not rewriting history.\n\nIdempotence on an unchanged re-capture is the mirror of the bug being fixed: snapshotting a node that has not moved is a no-op, not a new version, and minting one would make the history claim edits that never happened. It also keeps record_change safe to retry.\n\nTAIL-ONLY COMPARISON, and it is the load-bearing detail. A node edited A -> B -> A inside one epoch has three genuine revisions. Comparing against ANY earlier snapshot would match the first A-capture and hand it back for the third, recording two — hiding an edit that DID happen. That is the same class of loss as the overwrite this fixes, just quieter, and it would have shipped as a half-fix. Matching only the tail also keeps the `:rN` order readable as the order the revisions occurred in, which is the only ordering a reader has: every snapshot in an epoch is pinned to that one epoch and carries no sequence of its own.\n\nThe 64 ceiling is a signal, not a storage limit: a node revised that many times inside one epoch means the epoch has stopped bounding anything, and the error says so.\n\nRECORDED AT `proposed`: the requirement itself said the shape of the fix was a choice and none of the options was obviously right. Anthony directed the work be finished, not this particular shape — so the shape is on the record awaiting his word, and reopening it supersedes rather than un-accepts (dec:reopen-supersedes).",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:temporal-backfill-from-releases",
       "node_type": "Decision",
       "properties": {
@@ -29123,7 +29219,7 @@
         "decision": "Accepted the gap gap:84538db885bb5946.",
         "name": "Reviewed: gap:84538db885bb5946",
         "rationale": "Deferred on Anthony's word, 2026-07-28 — but flagged as the item most deserving to be UNparked first, because it contradicts a founding requirement (req:intent-preserved, the past is never overwritten) and does so SILENTLY: record_change reported success both times and the design's own history lost a version with no warning. Deferred rather than patched because the fix is a genuine three-way choice, not an oversight: snapshot identity per REVISION (include the ChangeEvent id — truest to the founding rule, but HAS_SNAPSHOT becomes one-to-many and \"the snapshot for this epoch\" stops being a single thing readers can assume); REFUSE a second record_change in one epoch (cheap and loud, but epochs bound a round of WORK not a single edit, so it pushes an unrelated concern onto the caller); or keep one snapshot per epoch DELIBERATELY as the state at epoch start, making the second call a no-op (preserves the original, loses the intermediate, and needs semantics written down that are currently only implied). Each changes what a reader may assume, so it is a vocabulary-shaped call. What is NOT open: the silence. If a revision cannot be snapshotted without discarding an earlier one, the call must say so — that part needs no decision.",
-        "status": "accepted"
+        "status": "superseded"
       }
     },
     {
@@ -29728,6 +29824,15 @@
         "epoch_type": "revision",
         "name": "Reading the original reflow's workflows back against reflow2 (2026-07-28)",
         "sequence": 220
+      }
+    },
+    {
+      "node_id": "epoch:snapshot-per-revision",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A second revision in one epoch stops overwriting the first snapshot (2026-07-29)",
+        "sequence": 230
       }
     },
     {
@@ -32975,7 +33080,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "req:intent-preserved says the past is never overwritten. Snapshot identity currently breaks that rule whenever a node is revised TWICE within a single epoch, and the loss is silent.\\n\\nOBSERVED 2026-07-28, by doing it rather than by reading the code. req:build-loop-is-bounded was amended once (chg:iteration-budget-was-elicited, correcting the iteration budget to an elicited value) and later the same day amended again (chg:build-loop-shape-reassessed, demoting the hard stop). Both used record_change against the same epoch:reflow-workflow-review. The snapshot id is deterministic per (epoch, node) — snap:epoch:reflow-workflow-review:req:build-loop-is-bounded — so the SECOND record_change wrote over the first. compare_designs reported it under supporting.changed with base = the original statement and other = the first-amended statement: the snapshot now holds the INTERMEDIATE state, and the state the node held before any amendment survives only in git, in an export committed earlier.\\n\\nWHY THIS IS WORSE THAN AN ORDINARY BUG. Nothing failed and nothing warned. record_change returned a prior_snapshot both times and looked identical from the caller's side. The design's own history simply lost a version while reporting success, which is precisely the silent-overwrite failure the revise-design discipline exists to prevent — and the discipline was followed exactly. A user doing careful work by the documented procedure loses history and is never told.\\n\\nIT ALSO BREAKS THE STATED TEST OF A GOOD REVISION. The revise-design skill ends with it: \\\"afterwards, someone reading the graph can answer what did this say before, when did it change, and why — without git archaeology.\\\" After two amendments in one epoch that is false: answering it for the first amendment requires git archaeology, which is the exact fallback the skill promises to remove.\\n\\nTHE SHAPE OF THE FIX IS A CHOICE, and none of the options is obviously right, which is why this is recorded rather than patched. (a) Make snapshot identity per REVISION rather than per (epoch, node) — e.g. include the ChangeEvent id, which is already unique per revision — so every record_change mints a distinct snapshot and HAS_SNAPSHOT becomes one-to-many. Truest to req:intent-preserved; grows the graph faster and makes \\\"the snapshot for this epoch\\\" ambiguous where readers currently assume one. (b) REFUSE a second record_change against the same node in the same epoch, directing the caller to open a new epoch. Cheap and loud, and it forces epoch hygiene, but epochs are meant to bound a round of WORK, not a single edit, so this pushes an unrelated concern onto the caller. (c) Keep one snapshot per epoch deliberately, meaning it holds the state at the START of the epoch, and make the second call a no-op rather than an overwrite. Preserves the original, loses the intermediate, and needs the semantics stated somewhere they are currently only implied.\\n\\nWhichever is chosen, the silence is not defensible: if a revision cannot be snapshotted without discarding an earlier one, the call must say so. Found 2026-07-28 while amending requirements from the reflow workflow review; the amendments themselves are the evidence.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -33269,6 +33374,16 @@
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:defaults-do-not-assert\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:3f600ff329ecb31a\",\"properties\":{}}]",
         "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"The governance mode is chosen, visible and changeable — it is the one asserted default that is actually acted upon\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"Project.mode decides whether the design or the implementation is the source of truth, and reflow2 applies it by default, never asks for it, and provides no way to change it. THE MEASURED STATE, 2026-07-28. genesis.rs takes mode OPTIONALLY — \\\"if let Some(mode) = opts.mode\\\" — and its own comment states the consequence: \\\"Scaffold the Project (schema applies mode=flexible, status=active when unset)\\\". project_mode_of falls back to \\\"flexible\\\" again on read. The string \\\"mode\\\" does not appear anywhere in crates/reflow2-mcp/src/service.rs, so there is no set_project_mode and no setter of any kind on the served surface; after genesis it is reachable only through the create_node escape hatch — the same shape as the KPP objective finding and Requirement.concern. And reflow2's OWN Project carries mode = flexible, which nobody chose. WHY THIS IS WORSE THAN THE TEN PROPERTIES IN THE ORIGINAL SWEEP, and the difference is the whole point. Those defaults are asserted AND UNREAD — Requirement.concern sitting at core on 67 of 67 is inert, carrying no information and driving nothing. This one is asserted AND ACTED UPON: heal.rs:431 reads it, and in rigid mode HEAL only proposes and never auto-applies. So req:defaults-do-not-assert has, in this property, its first instance where the invented value changes what the system DOES. flexible is not a neutral setting either. In the vocabulary reflow2 inherited it means the architecture is NOT the source of truth, the implementation drives the architecture, and the response to drift is to update the design to match the build. That is a governance decision. reflow2 — a project whose thesis is that the design is the memory — is currently running in the mode that says the implementation drives the design, not because anyone decided so but because opts.mode was None. THE PRIOR ART IS A FAILURE, NOT A MODEL, and it corroborates rather than instructs. reflow defined development_mode in workflow_master.json with seven behavioural commitments per mode (architecture_source_of_truth, implementation_drives_architecture, drift_response, new_functionality_policy, change_request_required, auto_update_architecture_on_resync, plus the discovered-items routing), REQUIRED it as the P0-to-P1 transition prerequisite (\\\"fields_must_be_set: development_mode.mode\\\"), READ it in resync_protocol.json to choose between updating the architecture and realigning the implementation, and TESTED for it in 97-GAN-inspired-test.json — and NO WORKFLOW STEP ANYWHERE SETS IT. Not 00a, not 00b, not the 01 through 04 series. Its own META-04H check HA-005, \\\"Transition Prerequisites Satisfiability\\\", exists to catch exactly that and did not. So both systems arrive at the same place by different routes: a governance mode that everything consults and nothing establishes. THREE THINGS THIS REQUIRES, and they are separable. (1) The value is CHOSEN — genesis asks, or the mode reads as unspecified until someone says, per the rule ver:interface-spec already sets for Interface.medium: a default may record absence, never a choice. (2) The value is CHANGEABLE — a project's governance legitimately moves as it matures, exploratory to controlled, and today it cannot; brainmaker reported this from the field, half-right, since the sharper fact is that genesis does not set it at all, it defaults it. (3) The value is VISIBLE — a mode that silently changes HEAL's behaviour should be readable in the reports that say where the design stands. What rigid should MEAN beyond heal.rs:431 stays open and parked separately; this requirement is the prior question, because rigid cannot mean anything useful while the mode is unchoosable and unchangeable. Found 2026-07-28 reviewing 00a-basic_setup.json. Anthony's word: capture it.\",\"status\":\"proposed\"}",
         "target_id": "req:mode-is-chosen-and-changeable",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:snapshot-per-revision:req:snapshot-per-revision-not-per-epoch",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:change\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:intent-preserved\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:84538db885bb5946\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"A second revision of a node in one epoch must not overwrite the first snapshot\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"req:intent-preserved says the past is never overwritten. Snapshot identity currently breaks that rule whenever a node is revised TWICE within a single epoch, and the loss is silent.\\\\n\\\\nOBSERVED 2026-07-28, by doing it rather than by reading the code. req:build-loop-is-bounded was amended once (chg:iteration-budget-was-elicited, correcting the iteration budget to an elicited value) and later the same day amended again (chg:build-loop-shape-reassessed, demoting the hard stop). Both used record_change against the same epoch:reflow-workflow-review. The snapshot id is deterministic per (epoch, node) — snap:epoch:reflow-workflow-review:req:build-loop-is-bounded — so the SECOND record_change wrote over the first. compare_designs reported it under supporting.changed with base = the original statement and other = the first-amended statement: the snapshot now holds the INTERMEDIATE state, and the state the node held before any amendment survives only in git, in an export committed earlier.\\\\n\\\\nWHY THIS IS WORSE THAN AN ORDINARY BUG. Nothing failed and nothing warned. record_change returned a prior_snapshot both times and looked identical from the caller's side. The design's own history simply lost a version while reporting success, which is precisely the silent-overwrite failure the revise-design discipline exists to prevent — and the discipline was followed exactly. A user doing careful work by the documented procedure loses history and is never told.\\\\n\\\\nIT ALSO BREAKS THE STATED TEST OF A GOOD REVISION. The revise-design skill ends with it: \\\\\\\"afterwards, someone reading the graph can answer what did this say before, when did it change, and why — without git archaeology.\\\\\\\" After two amendments in one epoch that is false: answering it for the first amendment requires git archaeology, which is the exact fallback the skill promises to remove.\\\\n\\\\nTHE SHAPE OF THE FIX IS A CHOICE, and none of the options is obviously right, which is why this is recorded rather than patched. (a) Make snapshot identity per REVISION rather than per (epoch, node) — e.g. include the ChangeEvent id, which is already unique per revision — so every record_change mints a distinct snapshot and HAS_SNAPSHOT becomes one-to-many. Truest to req:intent-preserved; grows the graph faster and makes \\\\\\\"the snapshot for this epoch\\\\\\\" ambiguous where readers currently assume one. (b) REFUSE a second record_change against the same node in the same epoch, directing the caller to open a new epoch. Cheap and loud, and it forces epoch hygiene, but epochs are meant to bound a round of WORK, not a single edit, so this pushes an unrelated concern onto the caller. (c) Keep one snapshot per epoch deliberately, meaning it holds the state at the START of the epoch, and make the second call a no-op rather than an overwrite. Preserves the original, loses the intermediate, and needs the semantics stated somewhere they are currently only implied.\\\\n\\\\nWhichever is chosen, the silence is not defensible: if a revision cannot be snapshotted without discarding an earlier one, the call must say so. Found 2026-07-28 while amending requirements from the reflow workflow review; the amendments themselves are the evidence.\",\"status\":\"proposed\"}",
+        "target_id": "req:snapshot-per-revision-not-per-epoch",
         "target_type": "Requirement"
       }
     },
@@ -34081,6 +34196,18 @@
       }
     },
     {
+      "node_id": "ver:snapshot-per-revision",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-29",
+        "level": "integration",
+        "method": "test",
+        "name": "A second revision in one epoch keeps both snapshots, and an unchanged re-capture mints none",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:stale-seat",
       "node_type": "Verification",
       "properties": {
@@ -34183,7 +34310,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0fb84b3107216f2df2e519d77c65a087232113ca7da98a9998b225658e413318",
+  "prev_content_hash": "sha256:7b01e55e2a456605b2092a439780be975d9635ed8ddc6c1659bfb0d2b3bfb7ec",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
