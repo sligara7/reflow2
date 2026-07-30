@@ -31,6 +31,41 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **A standing judgement about the whole design stops expiring every time the
+  design grows** (`req:set-scoped-acknowledgement-keys-on-its-rule`,
+  `dec:aggregate-gap-keyed-on-rule`). `gap_id` hashes a gap's affected nodes, so
+  a gap whose subject moved gets a fresh judgement — right for a gap about
+  specific nodes, and wrong for an AGGREGATE whose affected set *is* the whole
+  population the rule ranges over. There the set changes on every addition, so
+  the acknowledgement could never carry: `unvalidated_capability` had been
+  re-acknowledged about **twenty times**, at 33, 34, 35 … 65, 67 and 68
+  capabilities, always with the same disposition, and about twenty of those
+  reasons said in their own text that the churn was a finding.
+
+  An aggregate gap is now keyed on its rule alone. The discriminator is an
+  explicit `GapSource::is_aggregate()`, written as an exhaustive match so a
+  future aggregate detector must come and decide rather than silently inherit
+  per-node keying. **It is deliberately not keyed on `GapScope::Project`**,
+  which is the obvious-looking answer and is wrong: `unsatisfied_requirement`
+  and `status_contradiction` are project-scoped but carry one requirement each,
+  so keying on scope would collapse every unsatisfied requirement in a design
+  into one gap sharing one judgement — accept one and the rest go quiet. A test
+  pins that trap specifically, and both it and the fix are mutation-checked.
+
+  The trade-off is real and accepted: a capability added later is covered by the
+  earlier judgement without a fresh look, which is what a *standing* disposition
+  means. The growth stays visible without the churn, because a review names the
+  count it was made at while the live gap's title carries the count now.
+
+  **One-time migration**: the rollup's id moves from `gap:80f8bc457bfe9e16` to
+  the stable `gap:0a77650b58242054`, so it needs one fresh acknowledgement — the
+  last it should ever need. The twenty historical ones are left as they are
+  rather than withdrawn, because withdrawal marks a Decision `superseded` and
+  would claim the judgement was revoked; `reviewed_gaps` reports them as
+  `retired`, which is what actually happened.
+
 ### Added
 
 - **`mint_seat`, and `claim_region` now refuses rather than guessing an owner**

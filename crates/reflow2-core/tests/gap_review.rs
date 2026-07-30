@@ -429,3 +429,147 @@ fn an_answered_question_stays_visible_while_its_gap_is_open() {
         "and the question is still in the graph — dropped from the list, not deleted"
     );
 }
+
+// ---------------------------------------------------------------------------
+// AGGREGATE gaps: keyed on the rule, not the population
+// (req:set-scoped-acknowledgement-keys-on-its-rule).
+//
+// Expiring an acknowledgement when its subject changes is right for a gap about
+// specific nodes and wrong for one whose affected set IS the population the rule
+// ranges over: there the set changes every time the design grows, so the same
+// standing judgement has to be re-recorded forever. `unvalidated_capability` had
+// been re-acknowledged about twenty times before this was fixed.
+// ---------------------------------------------------------------------------
+
+/// A design where every capability is verified but none is validated, which is
+/// what raises the `unvalidated_capability` rollup.
+fn graph_with_n_verified_capabilities(n: usize) -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    g.add_project("proj:1", "Thing").expect("project");
+    for i in 0..n {
+        let cap = format!("cap:c{i}");
+        g.add_capability(&cap, &format!("Cap {i}"), "does a thing", None)
+            .expect("cap");
+        let ver = format!("ver:v{i}");
+        g.add_verification(&ver, &format!("Check {i}"), None, None)
+            .expect("ver");
+        g.set_verification_status(&ver, "passing", None)
+            .expect("passing");
+        g.verifies(&ver, node::CAPABILITY, &cap).expect("verifies");
+    }
+    g
+}
+
+fn rollup_gap(g: &DesignGraph) -> reflow2_core::detect::GapCandidate {
+    g.detect_gaps()
+        .expect("detect")
+        .into_iter()
+        .find(|c| c.gap_source == GapSource::UnvalidatedCapability)
+        .expect("the unvalidated-capability rollup")
+}
+
+#[test]
+fn an_aggregate_gaps_id_does_not_move_when_the_population_grows() {
+    let mut g = graph_with_n_verified_capabilities(3);
+    let before = rollup_gap(&g);
+
+    g.add_capability("cap:new", "A newcomer", "arrives later", None)
+        .expect("cap");
+    g.add_verification("ver:new", "Check new", None, None)
+        .expect("ver");
+    g.set_verification_status("ver:new", "passing", None)
+        .expect("passing");
+    g.verifies("ver:new", node::CAPABILITY, "cap:new")
+        .expect("verifies");
+
+    let after = rollup_gap(&g);
+    assert!(
+        after.affected_ids.len() > before.affected_ids.len(),
+        "the population must actually have grown for this test to mean anything"
+    );
+    assert_eq!(
+        before.id, after.id,
+        "an aggregate gap is keyed on its RULE: the id must not move when the \
+         population it ranges over grows, or its acknowledgement cannot carry"
+    );
+}
+
+#[test]
+fn acknowledging_an_aggregate_survives_a_new_member() {
+    let mut g = graph_with_n_verified_capabilities(3);
+    let gap = rollup_gap(&g);
+    g.acknowledge_gap(
+        &gap.id,
+        &gap.affected_ids,
+        "Validation is tracked in the trials programme, not as Verification nodes.",
+    )
+    .expect("acknowledge");
+    assert!(
+        !g.detect_gaps()
+            .expect("detect")
+            .iter()
+            .any(|c| c.gap_source == GapSource::UnvalidatedCapability),
+        "the acknowledged rollup leaves the open list"
+    );
+
+    g.add_capability("cap:new", "A newcomer", "arrives later", None)
+        .expect("cap");
+    g.add_verification("ver:new", "Check new", None, None)
+        .expect("ver");
+    g.set_verification_status("ver:new", "passing", None)
+        .expect("passing");
+    g.verifies("ver:new", node::CAPABILITY, "cap:new")
+        .expect("verifies");
+
+    assert!(
+        !g.detect_gaps()
+            .expect("detect")
+            .iter()
+            .any(|c| c.gap_source == GapSource::UnvalidatedCapability),
+        "a standing disposition must not be re-asked merely because the design grew — \
+         this is the churn req:set-scoped-acknowledgement-keys-on-its-rule was written about"
+    );
+}
+
+/// THE TRAP. `unsatisfied_requirement` is project-SCOPED too, so keying on scope
+/// instead of on aggregate-ness would collapse every unsatisfied requirement in
+/// the design into one gap sharing one judgement — accept one and the rest go
+/// silent. Per-node gaps must keep hashing their subject.
+#[test]
+fn a_project_scoped_but_per_node_gap_still_keys_on_its_subject() {
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    g.add_project("proj:1", "Thing").expect("project");
+    g.add_requirement("req:one", "One", "first").expect("req");
+    g.add_requirement("req:two", "Two", "second").expect("req");
+    // The detector is population-gated: it does not accuse a design of leaving
+    // requirements unsatisfied before it has any capabilities to satisfy them.
+    g.add_capability("cap:other", "Something else", "unrelated", None)
+        .expect("cap");
+
+    let unsatisfied: Vec<_> = g
+        .detect_gaps()
+        .expect("detect")
+        .into_iter()
+        .filter(|c| c.gap_source == GapSource::UnsatisfiedRequirement)
+        .collect();
+    assert_eq!(unsatisfied.len(), 2, "one gap per unsatisfied requirement");
+    assert_ne!(
+        unsatisfied[0].id, unsatisfied[1].id,
+        "two different requirements must not share a gap id, or accepting one \
+         would silence the other"
+    );
+
+    g.acknowledge_gap(&unsatisfied[0].id, &unsatisfied[0].affected_ids, "fine")
+        .expect("acknowledge");
+    let still_open: Vec<_> = g
+        .detect_gaps()
+        .expect("detect")
+        .into_iter()
+        .filter(|c| c.gap_source == GapSource::UnsatisfiedRequirement)
+        .collect();
+    assert_eq!(
+        still_open.len(),
+        1,
+        "accepting one requirement's gap must leave the other one open"
+    );
+}
