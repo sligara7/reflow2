@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:40ef0910b26815549c106e2a34edee8190b266c3a6157c1005c216c815652e82",
+  "content_hash": "sha256:1fc873b213905ababdbc5b1567109ab983fdaf07afef63e8428f1cad500197d9",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -8,6 +8,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:aggregate-gap-keying",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1397,6 +1405,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:aggregate-gap-ack",
+      "properties": {},
+      "to_id": "epoch:aggregate-gap-ack"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:anchor-decision-second-hint",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
@@ -2198,6 +2212,12 @@
       "from_id": "rel:v090",
       "properties": {},
       "to_id": "epoch:v090"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:aggregate-gap-ack:art:detect",
+      "properties": {},
+      "to_id": "epoch:aggregate-gap-ack"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3518,6 +3538,24 @@
         "action": "modified"
       },
       "to_id": "req:requirement-lineage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:aggregate-gap-ack",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:aggregate-gap-ack",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:set-scoped-acknowledgement-keys-on-its-rule"
     },
     {
       "edge_type": "CHANGED",
@@ -9319,6 +9357,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:aggregate-gap-keying",
+      "properties": {},
+      "to_id": "dec:aggregate-gap-keyed-on-rule"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:allocate",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -12459,6 +12503,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:seat-handle",
       "properties": {},
+      "to_id": "decision:ack:0a77650b58242054"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:seat-handle",
+      "properties": {},
       "to_id": "decision:ack:80f8bc457bfe9e16"
     },
     {
@@ -13377,6 +13427,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:set-scoped-acknowledgement-keys-on-its-rule",
+      "properties": {},
+      "to_id": "dec:aggregate-gap-keyed-on-rule"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:snapshot-per-revision-not-per-epoch",
       "properties": {},
       "to_id": "dec:snapshot-id-per-revision"
@@ -13464,6 +13520,12 @@
       "from_id": "ver:stateless-seat",
       "properties": {},
       "to_id": "decision:ack:350d55cf9c8c3247"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:detect",
+      "properties": {},
+      "to_id": "snap:epoch:aggregate-gap-ack:art:detect"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -21641,6 +21703,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:aggregate-gap-keying"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
         "completeness": "partial"
       },
       "to_id": "cap:kpp"
@@ -22405,6 +22475,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:aggregate-gap-keying",
+      "properties": {},
+      "to_id": "req:set-scoped-acknowledgement-keys-on-its-rule"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:allocate",
       "properties": {},
       "to_id": "req:golden-thread"
@@ -23095,6 +23171,12 @@
       "from_id": "ver:adopt-storyflow",
       "properties": {},
       "to_id": "cap:adopt"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:aggregate-gap-keying",
+      "properties": {},
+      "to_id": "cap:aggregate-gap-keying"
     },
     {
       "edge_type": "VERIFIES",
@@ -24455,7 +24537,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bba1328a493968c4",
+        "checksum": "sha256:da659127a61d6eff",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -25272,6 +25354,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Recover a design from an existing system",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:aggregate-gap-keying",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`gap_id` keys an AGGREGATE gap — one per project, whose affected set is the population its rule ranges over — on the rule alone, so its id is stable while the design grows and an acknowledgement of it carries instead of being re-asked on every addition. Every other gap keeps hashing its affected nodes, because there a changed subject genuinely deserves a fresh judgement. The discriminator is an explicit exhaustive `GapSource::is_aggregate()`, so a new aggregate detector must decide rather than inherit. Paired with the `retired` reporting `reviewed_gaps` already had: a stable id is only safe because a review whose rule stops firing is still shown, rather than silently kept.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A gap about the whole population is keyed on its rule, so a standing judgement carries",
         "provenance": "authored",
         "status": "realized",
         "tier": "operational"
@@ -26780,6 +26875,14 @@
       "properties": {
         "change_type": "requirement_creep",
         "name": "Anthony accepted the three requirements that were already delivered"
+      }
+    },
+    {
+      "node_id": "chg:aggregate-gap-ack",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "detect.rs: gap_id gained the aggregate branch"
       }
     },
     {
@@ -28390,6 +28493,16 @@
       }
     },
     {
+      "node_id": "dec:aggregate-gap-keyed-on-rule",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "`gap_id` keys a gap on its RULE alone when the gap is an AGGREGATE — one per project, whose `affected_ids` are the whole population the rule ranges over rather than the nodes the finding is about. Every other gap keeps hashing its affected set. Today exactly one source qualifies: `unvalidated_capability`.\n\nThe discriminator is an explicit `GapSource::is_aggregate()` written as an exhaustive match, not a wildcard, so a future aggregate detector has to come to this function and decide rather than silently inheriting per-node keying.\n\nNOT KEYED ON `GapScope::Project`, which is the obvious-looking answer and is wrong. `unsatisfied_requirement` and `status_contradiction` are project-SCOPED but carry a single requirement each, and `kpp_breached` is per-KPP. Keying on scope would collapse every unsatisfied requirement in the design into one gap sharing one judgement — accept one and the rest go silent. A test pins this specific trap (`a_project_scoped_but_per_node_gap_still_keys_on_its_subject`) and a mutation confirms it fails when the trap is taken.\n\nAlso NOT chosen: (b) expiring only when a member is removed, which keeps the id unstable and merely narrows when it moves; (c) letting each acknowledgement declare its own expiry condition, which is more machinery than the problem needs and puts the judgement about mechanism into every reason string; (d) modelling rollups as a different KIND of gap, which is a schema change for something the id function can express.",
+        "name": "An aggregate gap is keyed on its rule; every other gap still keys on its subject",
+        "rationale": "Anthony's word, 2026-07-30: he was told the finding had a close sibling in the defect-side mechanism and said that was a good approach.\n\nWORTH RECORDING PRECISELY, because the reading that prompted this was half wrong. The sibling was described as \"defect acknowledgements expire by shape, and this is the gap side catching up\". Reading the code showed `heal.rs`'s `issue_id(category, affected)` hashes its affected set exactly as `gap_id` does — the defect side has no cleverer keying. What it actually has is the `retired` REPORTING that `reviewed_gaps` already implements too. So mirroring the sibling alone would not have fixed anything: the churn comes from the id derivation, and the fix had to be there. The sibling still earns its place, because `retired` reporting is what makes a stable id safe — when the rule stops firing the standing review is shown as retired rather than silently kept.\n\nTHE TRADE-OFF IS REAL AND ACCEPTED. A stable id means a capability added later is covered by the earlier judgement without a fresh look. That is what a STANDING disposition means — \"validation is tracked in the trials programme\" is a claim about the practice, not about any one capability — and it is what the twenty re-acknowledgements were each re-asserting unchanged. The growth stays visible without the churn: a review records the count it was made at in its own reason, and the live gap's title carries the count now, so a reader comparing them sees the set grew.\n\nTHE MIGRATION IS DELIBERATE AND VISIBLE. The rollup's id moves once, from the member-hashed `gap:80f8bc457bfe9e16` to the stable `gap:0a77650b58242054`, so the twenty historical acknowledgements no longer match it and one fresh acknowledgement is needed — the last one this gap should ever need. Those twenty are left exactly as they are rather than withdrawn: withdrawal marks a Decision `superseded`, which would claim the judgement was revoked, and it was not. `reviewed_gaps` reports them as `retired` instead, which is the honest description — the judgement was real and the situation it named has moved on.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:alternatives-unranked-forkable",
       "node_type": "Decision",
       "properties": {
@@ -29027,6 +29140,16 @@
         "decision": "Accepted the gap gap:0a63dc6a6c47e039.",
         "name": "Reviewed: gap:0a63dc6a6c47e039",
         "rationale": "Deferred on Anthony's word, 2026-07-28. Accepted and not dropped. Measured, not asserted: 19 edge properties carry a schema default, four are single-valued wherever they appear, and 225 edges carry weight_basis while ZERO carry a weight — so those state the provenance of a coupling strength nobody recorded. Deferred because the fix is a schema change and the open question underneath it is not settled: should weight_basis default at all, or be absent until a weight exists (the answer ver:interface-spec already gave for Interface.medium)? That is a vocabulary call and Anthony's to make. Also non-retroactive by design — existing edges keep what they were given, so sweeping them is a separate deliberate act. Carries a method lesson worth keeping regardless of when it is built: the node sweep's test (\"a property that never varies is not carrying information\") is necessary but NOT sufficient on edges, because DEPENDS_ON.weight_basis genuinely varies and still refers to nothing.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:0a77650b58242054",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:0a77650b58242054.",
+        "name": "Reviewed: gap:0a77650b58242054",
+        "rationale": "Anthony's standing policy from 2026-07-23, unchanged: validation for this project is the trials programme — reflow2 used on real designs, logged in docs/trials/ and docs/trials-private/ (the brownfield ophyd-service pass, the greenfield aidrone pass) plus sustained real use of the StoryFlow fleet. Formal validation-kind Verification nodes are not this project's tracking mechanism, and recording 68 near-identical ones would turn the number green without anyone having checked anything — the dishonesty `dec:passing-is-verified` exists to prevent.\n\nACCEPTED AT 68 CAPABILITIES, and the count is recorded here on purpose: this gap's id is now keyed on its RULE rather than its member set (`dec:aggregate-gap-keyed-on-rule`), so this acknowledgement CARRIES as the design grows instead of expiring on every addition. That is the fix for the churn — the same disposition had been re-recorded about twenty times, at 33, 34, 35 … 65, 67 and 68 capabilities. The trade-off is deliberate: a capability added tomorrow is covered by this judgement without a fresh look, which is what a standing disposition means. The growth stays VISIBLE without the churn, by comparing the count named here against the count in the live gap's title — if that gap says 90 and this says 68, twenty-two capabilities joined under a judgement made when there were 68, and whether that still holds is a question a reader can now actually ask.\n\nThis should be the last acknowledgement this gap ever needs. If it re-fires because the id moved again, the keying regressed and `an_aggregate_gaps_id_does_not_move_when_the_population_grows` should have caught it.",
         "status": "accepted"
       }
     },
@@ -30138,6 +30261,15 @@
         "name": "Reviewed: heal:f737a5cdf35a906d",
         "rationale": "Carries dec:sanitize-spof-accepted (2026-07-25): true and expected — cmp:sanitize is reached only through cmp:ingest, because INGEST is the only path foreign text currently enters by, so every route to the trust boundary runs through one component. `add_redundancy` is the wrong shape (a second copy of a pure text filter is duplication, not resilience). What dissolves it is the SECOND CALLER: detect-and-report on graph import. Deliberately NOT wiring cmp:export to cmp:sanitize to quiet the detector, because that edge does not exist in the code.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "epoch:aggregate-gap-ack",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "An aggregate gap is keyed on its rule, so a standing judgement stops expiring",
+        "sequence": 233
       }
     },
     {
@@ -33486,7 +33618,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A reviewed gap expires when its affected nodes change, so a fresh judgement is asked for when the thing judged has moved. That is right for a gap about specific nodes and wrong for a project-level ROLLUP whose affected set is \"every capability of a certain kind\": there, the set changes every time the design grows, so the acknowledgement can never stay accepted and must be re-recorded forever.\n\nTHE EVIDENCE IS IN THE GRAPH, about twenty times over. `unvalidated_capability` has been acknowledged at 33, 34, 35, 36, 37, 38, 39, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 60, 61, 62, 63, 64, 65, 67 and 68 capabilities, each time with the SAME standing disposition (validation lives in the trials programme) and each time carrying a note that the churn is a finding rather than a decision. Several of those notes say so explicitly — \"whether a set-scoped gap should be identified by its RULE rather than its members is a real question about the ack mechanism\" — and none of them ever became intent, which is why it was written down twenty more times instead of fixed once.\n\nWHAT IT COSTS, and it is not just noise. The `reviewed_gaps` list is the record of what a human consciously accepted, and it now holds twenty near-identical Decisions for one judgement, which makes the genuine ones harder to find. Worse, the re-acknowledgement is a WRITE, so an agent that does the honest thing dirties the design on every capability it adds, and an agent that skips it leaves the gate reporting a finding the user settled in July. Both failure modes are worse than the mechanism being right.\n\nTHE SHAPE OF A FIX IS A CHOICE, not obvious, and this is recorded before it is designed. (a) Key a rollup's acknowledgement on its RULE (`gap_source` plus scope) rather than its member set, so it carries until the rule's disposition changes. (b) Expire only when a member is REMOVED or the disposition's premise changes, not when one is added — additions do not contradict \"validation is tracked elsewhere\". (c) Let an acknowledgement declare its own expiry condition, since `req:reviewed-defects` already established that an accepted item's shape decides whether the acceptance still applies, and a defect acknowledgement already reports `retired` when its shape goes. (d) Treat rollups as a different KIND of gap that is dispositioned once per project rather than acknowledged per occurrence.\n\nNote (c) is the closest sibling: acknowledgement-expiry-by-shape already exists for structural defects and works — four accepted defects correctly reported `retired` on 2026-07-28 when their shapes went away. So this is arguably a gap-side mechanism catching up with the defect-side one, which is a smaller change than it first appears.\n\nCaptured 2026-07-30 while acknowledging the rollup for the twentieth-odd time, during the seat-handle build. NOT built, NOT prioritised, and the choice of shape is Anthony's.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -33636,6 +33768,16 @@
         "provider": "https://github.com/sligara7/dynograph-foundation.git",
         "resource_type": "design-dependency",
         "version": "v0.12.0"
+      }
+    },
+    {
+      "node_id": "snap:epoch:aggregate-gap-ack:art:detect",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:223fdc794d10db78\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:223fdc794d10db78\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:32d0609430669c46\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:32d0609430669c46\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:32d0609430669c46\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:32d0609430669c46\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:32d0609430669c46\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:bba1328a493968c4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:a25ed6b6f633a3aa\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:a25ed6b6f633a3aa\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:a25ed6b6f633a3aa\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:e22fc5ee8aa08964\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:e22fc5ee8aa08964\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:e22fc5ee8aa08964\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:e22fc5ee8aa08964\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:kpp\",\"properties\":{\"completeness\":\"partial\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:detect\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:bba1328a493968c4\",\"location\":\"crates/reflow2-core/src/detect.rs\",\"name\":\"detect.rs\",\"status\":\"realized\"}",
+        "target_id": "art:detect",
+        "target_type": "Artifact"
       }
     },
     {
@@ -33897,6 +34039,18 @@
         "level": "acceptance",
         "method": "test",
         "name": "Brownfield adopt trial on storyflow (2643 files): full RE lifecycle through the adopt skill, 5 true findings about storyflow, 4 about reflow2",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:aggregate-gap-keying",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-30",
+        "level": "unit",
+        "method": "test",
+        "name": "An aggregate gap's id survives population growth, and a per-node gap still keys on its subject",
         "status": "passing"
       }
     },
@@ -34773,7 +34927,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:67b299859f99fc6c3bf960606e4f11890b759b3ef58995934e4ca232232c8f48",
+  "prev_content_hash": "sha256:40ef0910b26815549c106e2a34edee8190b266c3a6157c1005c216c815652e82",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

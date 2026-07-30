@@ -270,6 +270,69 @@ impl GapSource {
             GapSource::KppContradicted => "kpp_contradicted",
         }
     }
+
+    /// Is this an AGGREGATE gap — one per project, whose `affected_ids` are the
+    /// whole population the rule ranges over rather than the specific nodes the
+    /// finding is about?
+    ///
+    /// It matters because [`gap_id`] hashes the affected set, so that a gap
+    /// whose subject moved gets a fresh judgement. For a per-node gap that is
+    /// exactly right. For an aggregate it is a defect: the population changes
+    /// every time the design grows, so the id moves, the acknowledgement cannot
+    /// carry, and the same standing judgement must be re-recorded forever
+    /// (`req:set-scoped-acknowledgement-keys-on-its-rule`). `unvalidated_capability`
+    /// had been re-acknowledged about twenty times — at 33, 34, 35 … 65, 67, 68
+    /// capabilities — always with the same disposition.
+    ///
+    /// NOT keyed on [`GapScope::Project`], which is the trap: `unsatisfied_requirement`
+    /// and `status_contradiction` are project-SCOPED but per-requirement, and
+    /// `kpp_breached` is per-KPP. Treating scope as the test would collapse every
+    /// unsatisfied requirement in the design into one gap sharing one judgement.
+    ///
+    /// THE TRADE-OFF, stated because it is real: a stable id means a capability
+    /// added later is covered by the earlier judgement without a fresh look. That
+    /// is what a STANDING disposition means — "validation is tracked in the trials
+    /// programme" is a claim about the practice, not about any one capability — and
+    /// the growth stays visible without the churn, because a review records the
+    /// count it was made at in its reason while the live gap's title carries the
+    /// count now.
+    fn is_aggregate(self) -> bool {
+        match self {
+            GapSource::UnvalidatedCapability => true,
+            // Everything else names the nodes the finding is actually about, so a
+            // change to that set SHOULD expire the judgement. Listed exhaustively
+            // rather than with a wildcard: a new aggregate detector must come here
+            // and decide, instead of silently inheriting per-node keying.
+            GapSource::DesignWithoutIntent
+            | GapSource::ConceptWithoutDesign
+            | GapSource::DesignWithoutBuild
+            | GapSource::BuildWithoutVerification
+            | GapSource::NoDeployOperate
+            | GapSource::UnsatisfiedRequirement
+            | GapSource::UnmotivatedCapability
+            | GapSource::PossibleDuplicate
+            | GapSource::UnallocatedCapability
+            | GapSource::UnrealizedCapability
+            | GapSource::FailingVerification
+            | GapSource::UnresolvedDrift
+            | GapSource::UnreleasedComponent
+            | GapSource::StatusContradiction
+            | GapSource::UnverifiedCapability
+            | GapSource::ComponentGranularityVerification
+            | GapSource::UnverifiedArtifact
+            | GapSource::UnprovidedInterface
+            | GapSource::UnconsumedInterface
+            | GapSource::UnexpectedCoupling
+            | GapSource::DecliningDimension
+            | GapSource::MissingIntermediateLevel
+            | GapSource::LevelMismatch
+            | GapSource::OrphanLevel
+            | GapSource::UndecidedDecisionPoint
+            | GapSource::KppUnbound
+            | GapSource::KppBreached
+            | GapSource::KppContradicted => false,
+        }
+    }
 }
 
 /// The zoom level a gap is framed at (docs/gap-surfacing.md `scope`).
@@ -441,7 +504,22 @@ impl GapCandidate {
 }
 
 /// Deterministic gap id from source + affected ids (order-independent).
+///
+/// An AGGREGATE gap ([`GapSource::is_aggregate`]) is keyed on its RULE alone, so
+/// its id is stable while the population it ranges over grows and an
+/// acknowledgement of it carries instead of expiring on every addition. Every
+/// other gap keeps hashing its affected set, because there a changed subject
+/// genuinely deserves a fresh judgement.
 fn gap_id(source: GapSource, affected: &[String]) -> String {
+    if source.is_aggregate() {
+        // The literal `|aggregate` rather than an empty member list: an aggregate
+        // must not collide with a hypothetical per-node gap of the same source
+        // that happened to affect nothing.
+        return format!(
+            "gap:{:016x}",
+            fnv1a(&format!("{}|aggregate", source.as_str()))
+        );
+    }
     let mut ids = affected.to_vec();
     ids.sort();
     format!(
