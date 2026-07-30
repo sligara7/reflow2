@@ -31,6 +31,62 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **Upgraded to rmcp 3.0.1** (`dec:rmcp-v3-upgrade`), the release that implements
+  the MCP 2026-07-28 revision. The whole code change is one generic bound:
+  `StreamableHttpService::new` narrowed from `S: Service<RoleServer>` to
+  `S: ServerHandler`, because the sessionless transport builds a handler per
+  *request* and has to ask it for `get_info` and the tool list with no session
+  having cached them. Both surfaces that come through that door already
+  implement it via `#[tool_handler]`.
+
+  Of the eight breaking-change areas in the v3.0.0 notes, exactly one reached
+  this code. The `#[tool]`/`#[tool_router]`/`#[tool_handler]` macros absorbed
+  the MRTR response-enum change on `call_tool`/`get_prompt`/`read_resource`
+  entirely; MSRV 1.88 is under this workspace's 1.94; and the OAuth, tasks,
+  subscription and split-metadata surfaces are ones reflow2 never touched.
+  **All 118 toolsnaps match — the served tool surface did not move**, so no
+  consumer has anything to change.
+
+### Added
+
+- **`tools/stateless_seat_probe.py`** — one client, two claims, count the
+  distinct seats, per transport and per protocol version. It exists because
+  every gate stayed green through the upgrade and that green was misleading:
+  every one of reflow2's own test clients negotiates `2025-06-18`,
+  `2025-11-25` or `2024-11-05`, and `ProtocolVersion::LATEST` in rmcp 3.0.1 is
+  still `V_2025_11_25`, so **nothing in the suite speaks `2026-07-28`** and
+  nothing exercised the sessionless path the requirement is about. The same
+  shape as coverage row 3AX-3 the day before: a tick only as wide as the case
+  its evidence exercises.
+
+  What it measures — stdio: **one seat**. HTTP at 2025-06-18: **one seat**.
+  HTTP at 2026-07-28: **a different seat on every request**, because rmcp
+  builds a handler per request and `ReflowService::share` mints a seat per
+  service. That is `req:seat-per-client` gone on that transport:
+  `claim_report` would report one session as N owners, and a stale-seat
+  refusal would fire against your own previous write.
+
+  **Not an outage, and the probe is what says so**: Claude Code and grok build
+  both connect over stdio, which is unaffected, and no client reaches the
+  sessionless path by default. Nor does reflow2's own shared mode — `proxy.rs`
+  pins `2025-06-18` on both of its handshakes, so a session process proxying to
+  a daemon still gets a session and a seat of its own. The broken path is
+  reachable only by an external client dialling `--http` and choosing
+  2026-07-28 itself. It is a deadline — the 2026-07-28 revision's 12-month
+  lifecycle window — not a breakage. Exits non-zero today and is
+  deliberately **not** a CI gate; it is a baseline failing on purpose in the
+  sense of `docs/sharpening.md`, and worth promoting to a gate when the fix
+  lands.
+
+  No configuration avoids it: `legacy_session_mode` applies only below
+  2026-07-28, and requests negotiating that version are served statelessly
+  regardless. The client chooses, so reflow2 cannot decline on its behalf.
+  `dec:stateless-seat-handle` records the four options at `proposed` and
+  **awaits Anthony's word** — his direction covered the upgrade, not the shape
+  of the seat fix.
+
 ### Fixed
 
 - **A node revised twice in one epoch no longer loses its first snapshot**

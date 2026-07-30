@@ -982,7 +982,13 @@ async fn serve_http<S>(
     shared: Option<SharedServer>,
 ) -> anyhow::Result<()>
 where
-    S: rmcp::Service<rmcp::RoleServer> + Send + 'static,
+    // rmcp v3 narrowed this from `Service<RoleServer>` to `ServerHandler`: the
+    // sessionless transport builds a handler per REQUEST and has to ask it for
+    // `get_info` and the tool list without a session to have cached them, which
+    // the bare Service trait cannot answer. Both surfaces that come through this
+    // door already implement it via `#[tool_handler]`, so this is a bound that
+    // got honest, not a capability lost.
+    S: rmcp::ServerHandler + Send + 'static,
 {
     use rmcp::transport::streamable_http_server::{
         StreamableHttpServerConfig, StreamableHttpService, session::local::LocalSessionManager,
