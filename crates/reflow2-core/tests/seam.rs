@@ -184,3 +184,213 @@ fn the_report_says_what_it_did_not_examine() {
         r.not_examined
     );
 }
+
+// ===========================================================================
+// PAIRING — computing the seam instead of asserting it
+// (`req:complementary-pairing`, `dec:pairing-role-placement`)
+// ===========================================================================
+
+/// A design that NEEDS a boundary — the half that did not exist before 2026-07-30.
+fn needer(id: &str, name: &str, props: &[(&str, &str)]) -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("prj:us", "Us").unwrap();
+    iface(&mut g, id, name, props);
+    g.set_interface_designation(id, "required").unwrap();
+    g
+}
+
+/// A design that OFFERS one, as the document a counterparty publishes.
+fn offerer(id: &str, name: &str, props: &[(&str, &str)]) -> GraphExport {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("prj:them", "Them").unwrap();
+    iface(&mut g, id, name, props);
+    g.set_interface_designation(id, "published").unwrap();
+    g.export_graph().unwrap()
+}
+
+const REST_JWT_TLS: [(&str, &str); 3] = [
+    ("medium", "REST"),
+    ("auth", "jwt"),
+    ("transport_security", "tls"),
+];
+
+#[test]
+fn a_need_and_an_offer_pair_by_complementary_role() {
+    let us = needer("ifc:auth-api", "Auth API", &REST_JWT_TLS);
+    let them = offerer("ifc:auth-api", "Auth API", &REST_JWT_TLS);
+
+    let r = us.pair_designs(&them).unwrap();
+    assert_eq!(r.paired.len(), 1, "one need, one offer, one strand: {r:?}");
+    assert_eq!(r.paired[0].offered_by, "theirs");
+    assert!(r.unmet_needs.is_empty());
+    assert!(r.dead_surface.is_empty());
+}
+
+/// The complement rule, and the whole point of the RNA analogy: a base pairs
+/// with its complement, never with a copy of itself.
+#[test]
+fn two_publishers_never_pair_with_each_other() {
+    let mut us = DesignGraph::open_in_memory().unwrap();
+    us.add_project("prj:us", "Us").unwrap();
+    iface(&mut us, "ifc:auth-api", "Auth API", &REST_JWT_TLS);
+    us.set_interface_designation("ifc:auth-api", "published")
+        .unwrap();
+    let them = offerer("ifc:auth-api", "Auth API", &REST_JWT_TLS);
+
+    let r = us.pair_designs(&them).unwrap();
+    assert!(
+        r.paired.is_empty() && r.conflicts.is_empty(),
+        "publisher-to-publisher is like-with-like and must not pair: {r:?}"
+    );
+    assert_eq!(r.dead_surface.len(), 1, "their offer answers no need here");
+}
+
+/// THE CASE THAT REFUTED THE FIRST DRAFT OF THE KEY, from the real
+/// dynograph-foundation trial: an orchestrator's liveness probe is public and
+/// unauthenticated BY DESIGN. Under role-plus-medium alone, "I require REST"
+/// pairs against it — a wrong and security-relevant answer.
+#[test]
+fn a_consumer_requiring_auth_does_not_pair_with_a_public_probe() {
+    let us = needer("ifc:auth-api", "Auth API", &REST_JWT_TLS);
+    let them = offerer(
+        "ifc:auth-api",
+        "Auth API",
+        &[
+            ("medium", "REST"),
+            ("auth", "none"),
+            ("transport_security", "none"),
+        ],
+    );
+
+    let r = us.pair_designs(&them).unwrap();
+    assert!(
+        r.paired.is_empty(),
+        "matching on medium alone would have paired these: {r:?}"
+    );
+    assert_eq!(r.conflicts.len(), 1, "and it must be REPORTED, not dropped");
+    let axes: Vec<&str> = r.conflicts[0]
+        .refusals
+        .iter()
+        .map(|x| x.axis.as_str())
+        .collect();
+    assert!(
+        axes.contains(&"auth") && axes.contains(&"transport_security"),
+        "the probe refuses on BOTH axes and both must be named, or the caller \
+         fixes one and rediscovers the other: {axes:?}"
+    );
+    assert!(r.conflicts[0].detail.contains("cannot be connected"));
+}
+
+/// A mismatch is a finding, never silence.
+#[test]
+fn a_name_match_that_cannot_connect_is_a_conflict_not_a_non_match() {
+    let us = needer("ifc:events", "Events", &[("medium", "REST")]);
+    let them = offerer("ifc:events", "Events", &[("medium", "gRPC")]);
+
+    let r = us.pair_designs(&them).unwrap();
+    assert!(r.paired.is_empty());
+    assert_eq!(r.conflicts.len(), 1);
+    assert_eq!(r.conflicts[0].refusals[0].axis, "medium");
+    assert!(
+        r.unmet_needs.is_empty(),
+        "a reported conflict must not ALSO be counted as an unmet need — one \
+         situation, one finding"
+    );
+}
+
+#[test]
+fn a_need_nobody_publishes_is_the_loudest_finding() {
+    let us = needer("ifc:billing", "Billing", &REST_JWT_TLS);
+    let them = offerer("ifc:auth-api", "Auth API", &REST_JWT_TLS);
+
+    let r = us.pair_designs(&them).unwrap();
+    assert_eq!(r.unmet_needs.len(), 1);
+    assert_eq!(r.unmet_needs[0].id, "ifc:billing");
+    assert_eq!(r.dead_surface.len(), 1, "and their offer is dead surface");
+}
+
+/// The middle band is asked about, never acted on (`dec:ask-not-repair`).
+#[test]
+fn a_fuzzy_name_match_is_a_candidate_rather_than_a_pair() {
+    let us = needer("ifc:gateway", "Gateway", &REST_JWT_TLS);
+    let them = offerer("ifc:api-gateway", "API Gateway Service", &REST_JWT_TLS);
+
+    let r = us.pair_designs(&them).unwrap();
+    assert!(
+        r.paired.is_empty() && r.candidates.len() == 1,
+        "an uncertain name must be a candidate to ask about, not an action: {r:?}"
+    );
+}
+
+/// `internal` is the DEFAULT, so it cannot mean "deliberately internal" — an
+/// unlabelled design must not report a clean seam.
+#[test]
+fn unclassified_boundaries_are_counted_and_named() {
+    let mut us = DesignGraph::open_in_memory().unwrap();
+    us.add_project("prj:us", "Us").unwrap();
+    iface(&mut us, "ifc:quiet", "Quiet thing", &REST_JWT_TLS);
+    let them = offerer("ifc:auth-api", "Auth API", &REST_JWT_TLS);
+
+    let r = us.pair_designs(&them).unwrap();
+    assert_eq!(
+        r.unclassified_ours.len(),
+        1,
+        "a boundary nobody classified must be named, not silently skipped"
+    );
+    assert!(r.unclassified_ours[0].contains("ifc:quiet"));
+    assert!(
+        r.note.contains("DEFAULT"),
+        "and the report must say why that matters"
+    );
+}
+
+/// `both` is on the Interface precisely so it stays rare and meaningful.
+#[test]
+fn both_offers_and_needs() {
+    let mut us = DesignGraph::open_in_memory().unwrap();
+    us.add_project("prj:us", "Us").unwrap();
+    iface(&mut us, "ifc:relay", "Relay", &REST_JWT_TLS);
+    us.set_interface_designation("ifc:relay", "both").unwrap();
+
+    assert!(us.published_interfaces().unwrap().contains("ifc:relay"));
+    assert!(us.required_interfaces().unwrap().contains("ifc:relay"));
+
+    let them = offerer("ifc:relay", "Relay", &REST_JWT_TLS);
+    let r = us.pair_designs(&them).unwrap();
+    assert_eq!(r.paired.len(), 1, "both pairs against a publisher: {r:?}");
+}
+
+#[test]
+fn two_publishers_of_one_need_is_a_conflict_to_resolve() {
+    let us = needer("ifc:auth-api", "Auth API", &REST_JWT_TLS);
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("prj:them", "Them").unwrap();
+    for id in ["ifc:auth-a", "ifc:auth-b"] {
+        iface(&mut g, id, "Auth API", &REST_JWT_TLS);
+        g.set_interface_designation(id, "published").unwrap();
+    }
+    let them = g.export_graph().unwrap();
+
+    let r = us.pair_designs(&them).unwrap();
+    assert_eq!(
+        r.duplicate_providers.len(),
+        1,
+        "two publishers answering one need must be reported: {r:?}"
+    );
+    assert!(r.duplicate_providers[0].contains("conflict"));
+}
+
+#[test]
+fn an_unknown_designation_is_refused_by_name() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("prj:us", "Us").unwrap();
+    iface(&mut g, "ifc:x", "X", &[]);
+    let err = g
+        .set_interface_designation("ifc:x", "subscriber")
+        .expect_err("a role outside the enum must be refused");
+    let said = format!("{err:?}");
+    assert!(
+        said.contains("required") && said.contains("published"),
+        "and the refusal must say what would have worked, got: {said}"
+    );
+}

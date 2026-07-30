@@ -39,8 +39,11 @@
 //! So the report SAYS what it did not examine. A check that stays quiet about
 //! its own blind spot is how a clean result becomes a lie.
 
+use std::collections::{BTreeMap, BTreeSet};
+
 use dynograph_core::DynoError;
 use dynograph_core::Value;
+use dynograph_resolution::token_sort_ratio;
 
 use crate::export::GraphExport;
 use crate::graph::DesignGraph;
@@ -316,6 +319,317 @@ impl DesignGraph {
                  (con:pairing-stops-at-the-boundary)."
                     .to_string(),
             note,
+        })
+    }
+}
+
+// ===========================================================================
+// PAIRING — compute the seam instead of asserting it (`req:complementary-pairing`)
+// ===========================================================================
+
+/// One matched strand: our boundary and theirs, and how confident the name match
+/// was.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct PairedBoundary {
+    /// Our interface id.
+    pub ours: String,
+    /// Their interface id, as it appears in the other document.
+    pub theirs: String,
+    /// Which side offers. `ours` when we publish and they require.
+    pub offered_by: String,
+    /// 0–100 name similarity. 100 is an exact name match, never an assertion
+    /// that the contracts agree — that is what `seam_report` is for.
+    pub name_score: u32,
+    /// The base axes both sides stated identically, which is why they paired.
+    pub agreed_on: Vec<String>,
+}
+
+/// A pair whose names matched but whose base axes cannot connect.
+///
+/// REPORTED, NEVER DROPPED. "You publish this, I need this, and we cannot be
+/// connected the way either of us is built" is the most useful finding pairing
+/// produces, and treating it as a non-match would hide it.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct PairingConflict {
+    pub ours: String,
+    pub theirs: String,
+    /// EVERY axis that refused, not just the first. Reporting one at a time
+    /// would send someone to fix `transport_security`, redeploy, and only then
+    /// discover `auth` also refuses — the trial's public probe differs on both.
+    pub refusals: Vec<AxisRefusal>,
+    pub name_score: u32,
+    pub detail: String,
+}
+
+/// One axis on which two otherwise-matching boundaries cannot connect.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct AxisRefusal {
+    /// `medium`, `transport_security` or `auth`.
+    pub axis: String,
+    pub ours_says: String,
+    pub theirs_says: String,
+}
+
+/// A boundary with nothing on the other side.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct UnmatchedBoundary {
+    pub id: String,
+    pub name: String,
+    pub reason: String,
+}
+
+/// The result of pairing two designs by complementary role.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct PairingReport {
+    /// Matched strands, ready to hand to [`DesignGraph::seam_report`].
+    pub paired: Vec<PairedBoundary>,
+    /// Name-matched but structurally unconnectable — the loudest finding.
+    pub conflicts: Vec<PairingConflict>,
+    /// We need it; nobody publishes it. The unmet needs.
+    pub unmet_needs: Vec<UnmatchedBoundary>,
+    /// They publish it; nobody here needs it. Dead surface.
+    pub dead_surface: Vec<UnmatchedBoundary>,
+    /// Two publishers answering one need — a conflict, not a match.
+    pub duplicate_providers: Vec<String>,
+    /// Cleared the fuzzy bar but not the certainty bar. ASK, never auto-pair
+    /// (`dec:ask-not-repair`).
+    pub candidates: Vec<PairedBoundary>,
+    /// Boundaries on either side carrying no external role. Counted and NAMED,
+    /// because `internal` is the default and cannot distinguish "deliberately
+    /// internal" from "never classified" — without this a design that did no
+    /// labelling pairs with nothing and reports a clean seam.
+    pub unclassified_ours: Vec<String>,
+    pub unclassified_theirs: Vec<String>,
+    pub note: String,
+}
+
+/// The axes that decide whether two boundaries CAN be connected at all.
+///
+/// Amended 2026-07-28 after the dynograph-foundation trial refuted role-plus-medium
+/// from the provider's side: their design carries three `medium: REST` boundaries,
+/// one of which is public and unauthenticated by design because an orchestrator's
+/// liveness probe cannot hold a credential. Under medium alone a consumer
+/// declaring "I require REST" pairs against all three, including that one. That
+/// is not a near miss; it is the rule confidently producing a wrong and
+/// security-relevant answer.
+const BASE_AXES: [&str; 3] = ["medium", "transport_security", "auth"];
+
+/// Names cleared this bar to be considered the same contract at all.
+const PAIR_FUZZY_THRESHOLD: u32 = 60;
+/// At or above this, the name match is certain enough to pair without asking.
+const PAIR_CERTAIN_THRESHOLD: u32 = 85;
+
+fn iface_name(props: &[(String, Value)], id: &str) -> String {
+    prop(props, "name").unwrap_or_else(|| id.to_string())
+}
+
+impl DesignGraph {
+    /// Compute the seam between this design and another by COMPLEMENTARY ROLE,
+    /// instead of a person asserting which boundaries correspond
+    /// (`req:complementary-pairing`).
+    ///
+    /// Each boundary declares a role on `Interface.designation`, and pairing
+    /// matches complements — `published`/`both` against `required`/`both` — never
+    /// like with like. A publisher paired to a publisher is the same mistake as
+    /// pairing adenine with adenine.
+    ///
+    /// Two boundaries pair when their NAMES match (fuzzily, reusing ingest's
+    /// two-band resolution rather than inventing a second matcher) AND their base
+    /// axes agree. A name match whose base axes disagree is reported as a
+    /// CONFLICT rather than dropped, because "we cannot be connected the way
+    /// either of us is built" is exactly the finding worth having.
+    ///
+    /// This produces the pairs `seam_report` used to be handed by hand. It does
+    /// not replace it: pairing says WHICH boundaries correspond, and
+    /// `seam_report` says whether the full contracts agree once they do.
+    pub fn pair_designs(&self, other: &GraphExport) -> Result<PairingReport, DynoError> {
+        let ours_doc = self.export_graph()?;
+
+        let interfaces = |doc: &GraphExport| -> Vec<(String, Vec<(String, Value)>)> {
+            doc.nodes
+                .iter()
+                .filter(|n| n.node_type == node::INTERFACE)
+                .map(|n| {
+                    (
+                        n.node_id.clone(),
+                        n.properties.clone().into_iter().collect(),
+                    )
+                })
+                .collect()
+        };
+        let role = |props: &[(String, Value)]| -> String {
+            prop(props, "designation").unwrap_or_else(|| "internal".to_string())
+        };
+        let offers =
+            |props: &[(String, Value)]| matches!(role(props).as_str(), "published" | "both");
+        let needs = |props: &[(String, Value)]| matches!(role(props).as_str(), "required" | "both");
+
+        let ours = interfaces(&ours_doc);
+        let theirs = interfaces(other);
+
+        let mut paired = Vec::new();
+        let mut candidates = Vec::new();
+        let mut conflicts = Vec::new();
+        let mut matched_ours: BTreeSet<String> = BTreeSet::new();
+        let mut matched_theirs: BTreeSet<String> = BTreeSet::new();
+        let mut provider_counts: BTreeMap<String, Vec<String>> = BTreeMap::new();
+
+        // Both directions: what we need against what they offer, and what we
+        // offer against what they need. A seam is not one-way.
+        for (our_id, our_props) in &ours {
+            for (their_id, their_props) in &theirs {
+                let our_offers_their_needs = offers(our_props) && needs(their_props);
+                let our_needs_their_offers = needs(our_props) && offers(their_props);
+                if !(our_offers_their_needs || our_needs_their_offers) {
+                    continue;
+                }
+                let score = token_sort_ratio(
+                    &iface_name(our_props, our_id),
+                    &iface_name(their_props, their_id),
+                );
+                if score < PAIR_FUZZY_THRESHOLD {
+                    continue;
+                }
+
+                // Names say "same contract". The base axes say whether it can be
+                // connected. Disagreement here is a finding, not a non-match.
+                let mut agreed = Vec::new();
+                let mut refusals = Vec::new();
+                for axis in BASE_AXES {
+                    match (prop(our_props, axis), prop(their_props, axis)) {
+                        (Some(a), Some(b)) if a == b => agreed.push(axis.to_string()),
+                        (Some(a), Some(b)) => refusals.push(AxisRefusal {
+                            axis: axis.to_string(),
+                            ours_says: a,
+                            theirs_says: b,
+                        }),
+                        // Unstated is NOT agreement — the rule this module was
+                        // built on. It simply does not count toward pairing.
+                        _ => {}
+                    }
+                }
+
+                if !refusals.is_empty() {
+                    let why = refusals
+                        .iter()
+                        .map(|r| {
+                            format!(
+                                "`{}` is `{}` here and `{}` there",
+                                r.axis, r.ours_says, r.theirs_says
+                            )
+                        })
+                        .collect::<Vec<_>>()
+                        .join("; ");
+                    conflicts.push(PairingConflict {
+                        ours: our_id.clone(),
+                        theirs: their_id.clone(),
+                        refusals,
+                        name_score: score,
+                        detail: format!(
+                            "names match at {score}/100, so these are very likely the same \
+                             contract — but {why}, so they cannot be connected as either is \
+                             currently built"
+                        ),
+                    });
+                    matched_ours.insert(our_id.clone());
+                    matched_theirs.insert(their_id.clone());
+                    continue;
+                }
+
+                let offered_by = if our_offers_their_needs {
+                    "ours"
+                } else {
+                    "theirs"
+                };
+                let pair = PairedBoundary {
+                    ours: our_id.clone(),
+                    theirs: their_id.clone(),
+                    offered_by: offered_by.to_string(),
+                    name_score: score,
+                    agreed_on: agreed,
+                };
+                if score >= PAIR_CERTAIN_THRESHOLD {
+                    if our_needs_their_offers {
+                        provider_counts
+                            .entry(our_id.clone())
+                            .or_default()
+                            .push(their_id.clone());
+                    }
+                    paired.push(pair);
+                } else {
+                    // The middle band: worth a human's attention, never acted on.
+                    candidates.push(pair);
+                }
+                matched_ours.insert(our_id.clone());
+                matched_theirs.insert(their_id.clone());
+            }
+        }
+
+        let duplicate_providers = provider_counts
+            .into_iter()
+            .filter(|(_, v)| v.len() > 1)
+            .map(|(need, providers)| {
+                format!(
+                    "`{need}` is answered by {} boundaries ({}) — two publishers of one need is a \
+                     conflict to resolve, not a match to celebrate",
+                    providers.len(),
+                    providers.join(", ")
+                )
+            })
+            .collect();
+
+        let unmet_needs = ours
+            .iter()
+            .filter(|(id, p)| needs(p) && !matched_ours.contains(id))
+            .map(|(id, p)| UnmatchedBoundary {
+                id: id.clone(),
+                name: iface_name(p, id),
+                reason: "we require this and nothing in the other design publishes it — the \
+                         loudest signal pairing produces"
+                    .to_string(),
+            })
+            .collect();
+
+        let dead_surface = theirs
+            .iter()
+            .filter(|(id, p)| offers(p) && !matched_theirs.contains(id))
+            .map(|(id, p)| UnmatchedBoundary {
+                id: id.clone(),
+                name: iface_name(p, id),
+                reason: "they publish this and nothing here requires it — dead surface from this \
+                         design's point of view, not necessarily from theirs"
+                    .to_string(),
+            })
+            .collect();
+
+        let unclassified = |set: &[(String, Vec<(String, Value)>)]| -> Vec<String> {
+            set.iter()
+                .filter(|(_, p)| role(p) == "internal")
+                .map(|(id, p)| format!("{id} ({})", iface_name(p, id)))
+                .collect()
+        };
+
+        Ok(PairingReport {
+            paired,
+            conflicts,
+            unmet_needs,
+            dead_surface,
+            duplicate_providers,
+            candidates,
+            unclassified_ours: unclassified(&ours),
+            unclassified_theirs: unclassified(&theirs),
+            note: format!(
+                "Paired by complementary role on `Interface.designation` — published/both against \
+                 required/both, never like with like. A pair needs a name match at or above \
+                 {PAIR_CERTAIN_THRESHOLD}/100 AND agreement on {}; between \
+                 {PAIR_FUZZY_THRESHOLD} and {PAIR_CERTAIN_THRESHOLD} it is a CANDIDATE to ask \
+                 about, never an action. An axis nobody stated is not agreement and does not pair. \
+                 `unclassified_*` is counted because `internal` is the DEFAULT, so it cannot tell \
+                 'deliberately internal' from 'never classified' — a design that did no labelling \
+                 would otherwise report a clean seam. Pairing says WHICH boundaries correspond; \
+                 run seam_report on `paired` to find out whether the full contracts agree.",
+                BASE_AXES.join(", ")
+            ),
         })
     }
 }

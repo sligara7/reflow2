@@ -31,6 +31,54 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`pair_designs` — the seam between two designs is now COMPUTED, not hand-wired**
+  (`req:complementary-pairing`, `cap:complementary-pairing`). This was the last
+  open gap in the design.
+
+  **The missing half was the subscribe side.** `Interface.designation` could say
+  `published` or `internal` — a design could state what it OFFERED but not what
+  it NEEDED in any form another design could be matched against. It now carries
+  `published` / `required` / `both` / `internal`, and the role lives on the
+  Interface rather than the node, because a component both publishes and
+  subscribes so a per-node role collapses to `both` and pairs with everything
+  (`dec:pairing-role-placement`).
+
+  Pairing matches **complements** — `published`/`both` against `required`/`both`
+  — never like with like, the way a base pairs with its complement and not a
+  copy of itself. Two boundaries pair when their names match fuzzily (reusing
+  ingest's two-band resolution rather than a second matcher) **and** they agree
+  on `medium`, `transport_security` and `auth`.
+
+  **All three axes, because two of them were learned the hard way.** The first
+  draft keyed on role plus medium, and the dynograph-foundation trial refuted it
+  from the provider's side within an hour: their design carries three
+  `medium: REST` boundaries, one of which is public and unauthenticated *by
+  design* because an orchestrator's liveness probe cannot hold a credential.
+  Under medium alone, "I require REST" pairs against it — not a near miss but
+  the rule confidently producing a wrong, security-relevant answer. There is a
+  test for exactly that case, and a mutation confirms it fails if the key is
+  narrowed back.
+
+  Five outcomes, all useful: **paired**; **conflicts** — names match, axes refuse
+  — reported with *every* refusing axis rather than the first, so nobody fixes
+  `transport_security`, redeploys, and only then discovers `auth` also refuses;
+  **unmet needs** (we require it, nobody publishes it — the loudest signal);
+  **dead surface**; and **duplicate providers**, since two publishers of one need
+  is a conflict rather than a match. Uncertain name matches are **candidates to
+  ask about**, never actions (`dec:ask-not-repair`).
+
+  Boundaries carrying no role are **counted and named**. `internal` is the
+  default, so it cannot distinguish "deliberately internal" from "nobody
+  classified this", and without saying so a design that never did the labelling
+  would pair with nothing and report a clean seam.
+
+  `seam_report` is unchanged and complementary: pairing says *which* boundaries
+  correspond, `seam_report` says whether the full contracts agree once they do.
+  Its doc comment has said since July that pairing would one day supply those
+  pairs instead of a person; it now does.
+
 ### Removed
 
 - **Nine proposed requirements retired as "considered, but not accepted"**

@@ -1,0 +1,22 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Compute the seam between this design and another by COMPLEMENTARY ROLE, instead of hand-asserting which boundaries correspond. Each boundary declares a role on `Interface.designation` and pairing matches COMPLEMENTS — `published`/`both` against `required`/`both` — never like with like, the way a base pairs with its complement and not a copy of itself. Two boundaries pair when their NAMES match fuzzily AND they agree on medium, transport_security and auth. FIVE OUTCOMES, all useful: paired (the seam, computed); CONFLICTS, where the names match but the axes refuse — reported with EVERY refusing axis, never dropped as a non-match, because \"you publish this, I need this, and we cannot connect as either is built\" is the finding worth having; unmet needs (we require it, nobody publishes it — the loudest signal); dead surface (they publish it, nobody here needs it); and duplicate providers (two publishers of one need is a conflict, not a match). Uncertain name matches are CANDIDATES to ask about, never actions. Boundaries carrying no role are counted and NAMED, because `internal` is the DEFAULT and cannot tell \"deliberately internal\" from \"never classified\" — otherwise a design that did no labelling reports a clean seam. Feed `paired` to seam_report to learn whether the full contracts agree (req:complementary-pairing).",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "design": {
+        "additionalProperties": true,
+        "description": "The other design, as a published-surface or full export document.",
+        "type": "object"
+      }
+    },
+    "required": [
+      "design"
+    ],
+    "type": "object"
+  },
+  "name": "pair_designs"
+}
