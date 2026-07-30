@@ -26,6 +26,19 @@ AGENTS.md.
 design, so it follows the design as it changes rather than going stale like a hand-typed list.
 `claim_report` first, to see what someone else already holds.
 
+**Call `mint_seat` once at the start and pass the handle it returns as `seat` on every
+`claim_region`.** A seat is who is working, as a *session* rather than a person, and it is what lets
+`claim_report` tell two of your colleagues apart. Mint one, keep it for the whole session, reuse it
+— minting a fresh one per call is precisely what it exists to prevent, because then one session
+reports as several owners and liveness stops meaning anything.
+
+You can omit `seat` when the transport gives the server a session of its own to hang identity on
+(stdio, and Streamable HTTP below MCP 2026-07-28), and that is why older instructions never
+mentioned it. On the **sessionless** transport (2026-07-28 and later) the server builds a handler
+per *request* and cannot tell your second call from another client's first, so `claim_region`
+**refuses** rather than inventing an owner that would change under you. Minting and carrying is
+correct on every transport, so an agent that always does it is never wrong.
+
 **A claim is not a lock and cannot be.** Nothing refuses a write, and without a server your claim
 is invisible to the other person until they pull. Overlaps are *reported*, not prevented. That is a
 real limit, not an oversight — say it plainly rather than letting someone believe they are

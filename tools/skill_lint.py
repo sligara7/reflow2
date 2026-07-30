@@ -149,6 +149,9 @@ NON_TOOL_TERMS = {
     "rigid",
     "risk_crossings",
     "scope_change",
+    # The seat handle a claim carries (dec:stateless-seat-handle). A FIELD on
+    # claim_region, not a tool — the tool that produces one is `mint_seat`.
+    "seat",
     "severity",
     "single_point_of_failure",
     "skipped_operations",

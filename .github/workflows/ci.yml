@@ -120,6 +120,8 @@ jobs:
         run: python3 tools/smoke_mcp.py
       - name: Toolsnaps — served surface matches the committed goldens (BL-76)
         run: python3 tools/toolsnap.py
+      - name: Seat identity survives every transport (one client, one seat)
+        run: python3 tools/stateless_seat_probe.py
       - name: Phase-coverage trial (13/13 regression gate)
         run: python3 tools/phase_trial.py
       - name: Process-model probe
