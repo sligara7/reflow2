@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e3a07d1d26af4018d9de5366adefc4f8ee7f7b6bfc6454f620602537fb915d1c",
+  "content_hash": "sha256:37d5c4d913ffdc5d675607a97a6336026bf588777ae774c39d34876fc4dde57a",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1721,6 +1721,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:planning-axis-intent",
+      "properties": {},
+      "to_id": "epoch:planning-axis-intent"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:promote-brainstorms",
       "properties": {},
       "to_id": "epoch:kpp-capture"
@@ -2312,6 +2318,18 @@
       "from_id": "snap:epoch:mode-chosen:proj:reflow2",
       "properties": {},
       "to_id": "epoch:mode-chosen"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:planning-axis-intent:dec:where-plans-live",
+      "properties": {},
+      "to_id": "epoch:planning-axis-intent"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:planning-axis-intent:req:graph-indexes-snapshots",
+      "properties": {},
+      "to_id": "epoch:planning-axis-intent"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6293,6 +6311,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:planning-axis-intent",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:where-plans-live"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:planning-axis-intent",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:epochs-can-be-planned"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:planning-axis-intent",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:graph-indexes-snapshots"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:planning-axis-intent",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:plans-move-honestly"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:promote-brainstorms",
       "properties": {
         "accepted_baseline": false,
@@ -9497,6 +9551,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:read-while-held-mechanism"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:review-expires-when-what-it-judged-changes",
+      "properties": {
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:set-scoped-acknowledgement-keys-on-its-rule"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -13794,6 +13857,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "req:graph-indexes-snapshots",
       "properties": {},
+      "to_id": "dec:where-plans-live"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:graph-indexes-snapshots",
+      "properties": {},
       "to_id": "decision:ack:6bce37248bacaa09"
     },
     {
@@ -14114,6 +14183,12 @@
       "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:where-plans-live",
       "properties": {},
+      "to_id": "snap:epoch:planning-axis-intent:dec:where-plans-live"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:where-plans-live",
+      "properties": {},
       "to_id": "snap:epoch:wire-planning-cluster:dec:where-plans-live"
     },
     {
@@ -14217,6 +14292,12 @@
       "from_id": "req:functional-vocabulary-computes",
       "properties": {},
       "to_id": "snap:epoch:prune-proposed:req:functional-vocabulary-computes"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:graph-indexes-snapshots",
+      "properties": {},
+      "to_id": "snap:epoch:planning-axis-intent:req:graph-indexes-snapshots"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -28137,6 +28218,14 @@
       }
     },
     {
+      "node_id": "chg:planning-axis-intent",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "dec:where-plans-live: the lean became the road taken"
+      }
+    },
+    {
       "node_id": "chg:promote-brainstorms",
       "node_type": "ChangeEvent",
       "properties": {
@@ -29830,10 +29919,10 @@
       "node_id": "dec:where-plans-live",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony is LEANING toward option (d) below as of 2026-07-30 — \"I think I'm warming to this approach versus using git repos to capture the snapshot\" — but has not said to promote it, so this stays a lean and not intent.\n\n(d) GRAPH-ONLY, QUERIED RATHER THAN RENDERED. His words: \"we could do this completely in the graph without git. We are just using git as a means to render a snapshot in time… it is reachable by 'what capabilities are due to be released in epoch 5' or 'what didn't we achieve that we were supposed to in increment 10?' and let the agent/user figure out how to render the snapshot.\"\n\nWHY THIS IS STRONGER THAN THE FILE-PER-EPOCH RECOMMENDATION IT DISPLACES, and the displacement is a correction rather than a preference. Both things he named are QUESTIONS, not documents. A query answers them directly; a rendered file answers them only if someone rendered the right file at the right moment. And every materialised artifact needs a staleness check — `docs/design/reflow2.json` has one, `dataflow.html` has one, and `docs/loop-model.json` demonstrated the failure the same day by becoming permanently unreproducible. Not materialising is the only way to have no drift at all.\n\nTHE OBJECTION I RAISED AGAINST IT IS WEAKER THAN I THOUGHT, and this is the part worth correcting on the record. I argued that graph-only loses readability for someone not running reflow2 — a teammate, a reviewer, his brother — citing `req:design-reachable-without-the-repo`. But if the schedule lives in the graph, IT IS ALREADY IN THE COMMITTED EXPORT, which is in git on every commit. So the information is not unreachable; it is merely not pretty. Likewise \"what did the plan say in March\" is answerable today by `git log -p docs/design/reflow2.json` plus the export's own `prev_content_hash` chain. The file-per-epoch idea was therefore solving a problem the committed export already solves — adding an artifact to obtain a property that exists.\n\nWHAT SURVIVES OF THE GIT IDEA, and it is narrower and better targeted. Git remains right where the thing being pinned actually LIVES in git: an ARRIVED epoch corresponds to real commits in real repos, and \"what was actually deployed at epoch 3\" is a question about the product. So the version-combination pin (`req:version-combination-is-an-object`) keeps its place on arrival. Forward-looking plans, which describe graph content, stay in the graph; backward-looking arrivals, which describe code, pin code.\n\nA CONSEQUENCE WORTH NOTING FOR `req:graph-indexes-snapshots`. That requirement's stated intent is that \"a user shouldn't have to remember which git branch a particular epoch or increment is in.\" Under (d) that is satisfied in the strongest possible way: there are no branches to remember, because nothing was put in one. The requirement's letter (index the snapshots) and its spirit (never make the user chase git) come apart here, and the spirit is the part he wrote it for.\n\nRENDERING BECOMES AN OUTPUT, NOT A RECORD. \"Let the agent/user figure out how to render the snapshot\" is the right disposal: different consumers want different renderings — a markdown roadmap, a chart, a slide, a JSON feed — and choosing one file format now would be guessing on their behalf. `render_views.py` can emit an epoch view whenever asked, as a disposable projection.",
-        "name": "OPEN, but leaning — the schedule lives in the graph and is queried; nothing is snapshotted into git",
-        "rationale": "Anthony's idea and Anthony's lean, recorded as a lean. Nothing promoted: the brainstorm discipline is that an idea is not intent until he says so, and \"warming to\" is not \"do it\".\n\nThe correction to my own earlier recommendation is kept rather than tidied away. I had recommended file-per-epoch on main, and the reason it was wrong is instructive: the property I was reaching for — a git-visible history of the plan — already exists, because the schedule would live in the committed export and that file already has git history and its own lineage chain. Adding artifacts to obtain properties the design already has is the shape this project keeps finding, and it found it in my own advice this time.\n\nThe earlier wording of this node survives at `snap:epoch:wire-planning-cluster:dec:where-plans-live` and `:r2` — which are themselves the first production use of the second-revision-in-one-epoch fix landed on 2026-07-28.",
-        "status": "proposed"
+        "decision": "CHOSEN BY ANTHONY, 2026-07-30: \"yes, promote this intent.\" Option (d) of the brainstorm; the roads not taken are kept below.\n\nTHE DECISION. A design's forward-looking schedule — which capabilities and requirements are expected at which epoch or increment — lives in the graph and is reached by QUESTION, not by document. His acceptance test, in his words: \"what capabilities are due to be released in epoch 5\" and \"what didn't we achieve that we were supposed to in increment 10?\" Nothing is written into git as an epoch snapshot: no epoch branch, no per-epoch file, no rendered roadmap held as a record. \"Let the agent/user figure out how to render the snapshot\" — rendering is an OUTPUT, produced on demand and thrown away, never the record.\n\nWHERE GIT KEEPS A REAL JOB, and it is narrower than the original idea: an ARRIVED epoch corresponds to real commits in real repos, so \"what was actually deployed at epoch 3\" pins a version combination (`req:version-combination-is-an-object`). Forward-looking plans describe GRAPH content and stay in the graph; backward-looking arrivals describe CODE and pin code. The information is in git either way, because the schedule lives in the graph and the graph is exported to `docs/design/reflow2.json` on every commit.\n\nROADS NOT TAKEN, kept because they were genuinely considered.\n(a) EPOCH BRANCHES — his own original mechanism, 2026-07-28: \"epoch branches: project_x:epoch_1 captures what we expect the graph to look like at epoch_1.\" A branch is the only place you can look at a future design whole, which is a real virtue. Not taken: checking out a branch normally makes the whole REPO reflect that state and there is no future code to reflect; a full export is 1.6 MB, so N epochs is N × 1.6 MB of near-identical JSON rewritten on every replan; branches invite merge semantics that do not apply; and a branch pointer moves silently, which is exactly what `req:plans-move-honestly` must be able to see.\n(b) A FILE PER EPOCH ON MAIN — my recommendation, and NOT TAKEN BECAUSE IT WAS WRONG rather than merely less good. Its selling point was that `git log -p` on the file would give the plan's revision history for free. But the schedule lives in the committed export, which already has git history and its own `prev_content_hash` chain — so the property existed and the file was an artifact added to obtain something the design already had. That is the shape this project keeps finding in other designs, found here in my own advice.\n(c) RENDER TO FILES — the generated form of (b), carrying the same redundancy plus a staleness obligation.\n\nTHE ARGUMENT THAT DECIDED IT. Both of his questions are QUESTIONS, not documents: a query answers them directly, while a file answers them only if someone rendered the right one at the right moment. And every materialised artifact acquires a staleness problem the moment the graph moves — `docs/design/reflow2.json` has a gate for it, `dataflow.html` has a check for it, and `docs/loop-model.json` demonstrated the failure the same day by becoming permanently unreproducible. Not materialising is the only way to have no drift at all.\n\nMY EARLIER OBJECTION DID NOT HOLD, recorded because it was argued at length before being withdrawn: I claimed graph-only breaks readability for someone not running reflow2 (`req:design-reachable-without-the-repo`). It does not — the schedule is in the committed export, so it is reachable, merely not pretty, and prettiness is what on-demand rendering is for.",
+        "name": "The schedule lives in the graph and is queried; nothing is snapshotted into git",
+        "rationale": "Anthony's idea, Anthony's lean, and Anthony's word to promote it. `req:graph-indexes-snapshots` was reworded on the same word, because it described indexing git refs and that is no longer what it means; its original text is preserved at `snap:epoch:planning-axis-intent:req:graph-indexes-snapshots`.\n\nWorth keeping: the option that won is the one that ADDS NOTHING. No new file, no new branch, no new format, and — per the requirement it satisfies — largely no new storage, since epochs, Snapshots capturing incoming edges, and `compare_designs` already exist. The two rejected options both proposed materialising something, and both were arguing for a property the committed export already provides.\n\nAlso worth keeping, because it is a pattern rather than an incident: the file-per-epoch recommendation was mine, argued confidently, and wrong for the reason this project most often finds things wrong — it added a mechanism to obtain a property that already existed. Anthony's instinct to strip it back was better than my proposal to build it.",
+        "status": "accepted"
       }
     },
     {
@@ -30243,7 +30332,7 @@
         "decision": "Accepted the gap gap:52b1ed1377382961.",
         "name": "Reviewed: gap:52b1ed1377382961",
         "rationale": "Deferred on Anthony's word, 2026-07-28. Captured the same day as part of the roadmap/epoch intent and accepted as a requirement; scheduled for a later increment rather than built now. Not dropped — the plan-volatility discipline (dated confidence, recorded replanning, KPPs inviolable in content but able to slip in time) stands as intent. Revisit when the epoch/increment axis is actually built.",
-        "status": "accepted"
+        "status": "superseded"
       }
     },
     {
@@ -30333,7 +30422,7 @@
         "decision": "Accepted the gap gap:6bce37248bacaa09.",
         "name": "Reviewed: gap:6bce37248bacaa09",
         "rationale": "Deferred on Anthony's word, 2026-07-28. Captured the same day and accepted: the graph owns the MAP from epoch/increment to the git ref that holds it, rather than duplicating what git already stores. Scheduled for a later increment. The backward-direction precedent already exists in-repo (rel:v0180 in the graph, tag v0.18.0 in git), so this extends a working division of labour rather than opening a new one.",
-        "status": "accepted"
+        "status": "superseded"
       }
     },
     {
@@ -31086,6 +31175,15 @@
         "epoch_type": "revision",
         "name": "The governance mode becomes a choice, and reflow2 makes one",
         "sequence": 234
+      }
+    },
+    {
+      "node_id": "epoch:planning-axis-intent",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The planning axis becomes intent, and snapshots stop being a git concern",
+        "sequence": 238
       }
     },
     {
@@ -33677,7 +33775,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "The temporal axis must run forward as well as back, in TWO PAIRED VIEWS of the same architecture (Anthony, 2026-07-28: 'in systems engineering, I think this would be 2 views of the same system'): increments in TIME — epochs, what the architecture is expected to be at epoch_1..n — and increments in CAPABILITY — what each small, frequent release adds, the release-fast-in-small-increments practice now common in industry (his brother's project ships ~2 minor releases a week). Both views must exist, each comparable as a delta: any two epochs, any two increments, or either against the present. With many moving parts — an ecosystem of coupled repos, each with its own graph — an epoch or increment must pin the set of per-repo design versions it means, or the question 'which epoch are we talking about?' has no answer, which is the failure this exists to prevent. Original idea 2026-07-28 ('epoch branches: project_x:epoch_1 captures what we expect the graph to look like at epoch_1'), amended the same day with the two-views framing. THE ATOM, Anthony's distillation 2026-07-28: the roadmap is a SATISFACTION SCHEDULE — a mapping of requirements to the epoch or increment where they are satisfied: 'in epoch 1, requirements A and B are satisfied; in increment 3, requirements C, D and E are expected to be satisfied; in epoch 27, KPP 1 is required to be satisfied.' His own verbs carry the three modalities the mapping must distinguish: ARE satisfied (recorded history — the backward direction the graph already does), EXPECTED to be satisfied (a plan, carrying confidence that decays with horizon per req:plans-move-honestly), and REQUIRED to be satisfied by (an obligation whose miss at arrival is a computed violation, the scheduling face of a KPP — content inviolability from req:inviolable-intent gains a deadline dimension).",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -33808,11 +33906,11 @@
         "designation": "internal",
         "kind": "functional",
         "lineage": "original",
-        "name": "The graph is the index of its own snapshots",
+        "name": "The graph answers \"as of epoch n\" itself — a design's own time axis is not a git lookup",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "Git already stores versions, tags, branches and releases well, and reflow2 must not duplicate that. What reflow2 must own is the MAP: the graph tracks its own snapshots — which epoch_n or increment_n a thing belongs to, and where that snapshot lives (the git ref) — so a user asks the graph and never has to remember which branch holds which epoch. Anthony, 2026-07-28: 'what does this mean for reflow2 when most of what I discussed is what git already does? I think the answer is that the graph should track the snapshots (it is one graph in time) and therefore which epoch_n or increment_n something is. A user shouldn't have to remember which git branch a particular epoch or increment is in.' The in-repo precedent already exists for the backward direction: rel:v0180 lives in the graph, tag v0.18.0 lives in git, and the graph node names the version — nobody greps tags to learn what shipped. This requirement extends that same division of labor forward.",
-        "status": "proposed"
+        "statement": "A user must be able to ask the design a temporal question and get an answer, without going to git, without knowing a ref, and without anyone having rendered a document first. \"What capabilities are due to be released in epoch 5?\" and \"what didn't we achieve that we were supposed to in increment 10?\" — Anthony's own two questions, 2026-07-30 — are the acceptance test.\n\nREWORDED 2026-07-30 ON ANTHONY'S WORD, and the change is substantive rather than editorial, so the original is preserved at `snap:epoch:planning-axis-intent:req:graph-indexes-snapshots`. This requirement was first written as an INDEX: \"the graph tracks its own snapshots — which epoch_n or increment_n a thing belongs to, and WHERE THAT SNAPSHOT LIVES (the git ref)\". That framing assumed the snapshot was a thing sitting in git that the graph pointed at. It is not, and the intent behind the original sentence is better served without it.\n\nWHY THE INDEX FRAMING WENT. His stated intent never changed: \"a user shouldn't have to remember which git branch a particular epoch or increment is in.\" Storing plan slices in git and indexing them satisfies the letter of that. Storing nothing in git satisfies it absolutely — there are no branches to remember because nothing was put in one. His words on 2026-07-30: \"we could do this completely in the graph without git. We are just using git as a means to render a snapshot in time… let the agent/user figure out how to render the snapshot.\"\n\nWHAT THIS REQUIRES, and it is a query surface rather than a file format. The graph must be able to answer, for any epoch or increment: what is scheduled to be satisfied by it; what was actually satisfied when it arrived; and the delta between those. The temporal machinery to do this already exists in part — epochs, Snapshots that capture a node's incoming and outgoing edges, and `compare_designs` — so this is largely a matter of reading what is already recorded rather than recording something new.\n\nWHAT IS DELIBERATELY NOT MATERIALISED. No per-epoch branch, no per-epoch file, no rendered roadmap held as a record. Every materialised artifact acquires a staleness problem the moment the graph moves, and reflow2 has three live examples of paying that cost (`docs/design/reflow2.json`'s gate, `dataflow.html`'s check, and `docs/loop-model.json`, which became permanently unreproducible on 2026-07-30). Not materialising is the only way to have no drift. Rendering stays an OUTPUT — `render_views.py` may emit an epoch view whenever a person wants one, as a disposable projection, never as the record.\n\nTHE INFORMATION IS STILL IN GIT, WHICH IS WHY NOTHING IS LOST. The schedule lives in the graph, the graph is exported to `docs/design/reflow2.json`, and that file is committed. So a teammate without reflow2 can read it, and \"what did the plan say in March\" is answerable by `git log -p` on that one file plus the export's own `prev_content_hash` chain. The earlier objection — that graph-only breaks `req:design-reachable-without-the-repo` — does not hold: the information is reachable, it is merely not pretty, and prettiness is what on-demand rendering is for.\n\nWHERE GIT KEEPS A REAL JOB, narrowed to where the thing being pinned actually lives in git: an ARRIVED epoch corresponds to real commits in real repos, and \"what was actually deployed at epoch 3\" is a question about the product, not the plan. That pin is a version combination (`req:version-combination-is-an-object`), and it is the backward direction only. Forward-looking plans describe graph content and stay in the graph; backward-looking arrivals describe code and pin code.\n\nThe in-repo precedent still holds and still shows the division: `rel:v0180` lives in the graph, tag `v0.18.0` lives in git, and nobody greps tags to learn what shipped.",
+        "status": "accepted"
       }
     },
     {
@@ -34127,7 +34225,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A planned epoch or increment is a claim about the future, and its reliability decays with horizon — Anthony, 2026-07-28: 'the further out you plan your epochs, the more volatile they are, almost like what the Black-Scholes model was created for. There will always be a delta between what was planned for a particular epoch and what was actually delivered when we arrive at it.' Three obligations follow. (1) A planned claim carries its confidence, and far claims carry less — the ANTICIPATES edge's existing confidence property (0.0-1.0) is the vocabulary hook. (2) Arriving at an epoch produces the planned-vs-delivered delta as a matter of course, and REPLANNING IS RECORDED: when a planned epoch's content moves, the plan's own change is a dated event on the record, so 'what did we believe at the time?' stays answerable — the same axis-Z discipline the as-built record already gets. (3) Firmness is two-dimensional and the dimensions move independently: a KPP (req:inviolable-intent, cap:kpp) is inviolable in CONTENT — it cannot be weakened to make a plan work — but may SLIP IN TIME to a later increment or epoch, and the slip is a recorded dated event, never a silent re-pin; ordinary requirements may flex in both content and time as factors affect the project. Evidence for the open dec:plan-time-axis question of whether scheduled time becomes a first-class axis. PARTIAL SATISFACTION AT ARRIVAL (Anthony, 2026-07-28, raised as a nuance, not decided): 'what happens if a requirement is only partially satisfied? Does the part that was not satisfied get transferred to the following epoch/increment, or is it discontinued?' The candidate mechanism is already in the design: a partially-met requirement is DECOMPOSED (req:requirement-lineage — the split is on the record, both children knowing their parent), the satisfied child closes at this epoch, and the remainder's fate is the one question that must be ASKED, never defaulted: transferred (re-pinned to a later epoch, a recorded slip) or discontinued (retire-from-design's discipline — dropped on the user's word, with the reason). The status vocabulary already carries both answers (deferred / dropped). He expects further nuances of arrival semantics; the modalities and rules here are an open list, not a closed one.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -34233,6 +34331,21 @@
         "provenance": "authored",
         "statement": "Requirements multiply in two different ways and reflow2 must tell them apart, because they behave differently. An ORIGINAL requirement is the stakeholder's own word. A DECOMPOSED requirement is a 1:1 split of a parent into smaller testable pieces, adding no new information — so satisfying every child satisfies the parent, and a parent's delivery is therefore derivable from its children rather than needing its own capability. A DERIVED requirement is new technical necessity that nobody asked for, created because of a design decision — so it traces to that DECISION, not to a parent goal, and if the decision is ever re-opened the derived requirement may cease to have any reason to exist. Three consequences follow. Delivery must roll up a decomposition tree instead of treating every requirement as an independent leaf. Re-opening a decision must be able to say which requirements existed only because of the road taken. And the distinction must survive the loss of the person who made it: an original requirement is the only kind whose loss loses intent, because decomposed and derived ones can be regenerated from what they came from, and that is precisely why the link back must be recorded rather than remembered.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:review-expires-when-what-it-judged-changes",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A gap acknowledgement must expire when the thing it judged changes, not only when the SET of affected nodes changes",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "`acknowledge_gap`'s own tool description promises: \"If the gap's affected nodes later change, the review expires and the gap returns for a fresh judgement.\" That promise is only half kept. A gap id hashes its `gap_source` and its affected node IDS, so the review expires when the affected SET changes membership — and never when the affected NODES change content.\n\nFOUND BY TRIPPING OVER IT, 2026-07-30, minutes after the requirements involved were accepted. `req:graph-indexes-snapshots` and `req:plans-move-honestly` were both parked on 2026-07-28 with their `unsatisfied_requirement` gaps acknowledged, each reason reading \"Deferred on Anthony's word … scheduled for a later increment rather than built now.\" Anthony then accepted both as intent on 2026-07-30 and neither raised a gap, because a review written about a DEFERRED requirement silently went on suppressing the gap for an ACCEPTED one. Two requirements he had just committed to were invisible as open work.\n\nTHE SHARPER INSTANCE IS THE SAME NODE. `req:graph-indexes-snapshots` was reworded in the same session, off git-ref indexing and onto answering temporal questions in the graph. Its acknowledgement's rationale still reads \"the graph owns the MAP from epoch/increment to the git ref that holds it\" — so an accepted review was left justifying a requirement that no longer says that, and nothing noticed. A review that outlives the wording it reviewed is worse than no review, because it reads as a human having agreed to something they never saw.\n\nWHAT CHANGES SHOULD EXPIRE A REVIEW, and this is the part to decide rather than assume: a status move (proposed → accepted is the case that bit), a statement rewrite, or any property the review's reasoning depended on. The honest difficulty is that reflow2 cannot know which properties a free-text rationale depended on, so the candidate rules are (a) expire on any property change to an affected node, which is safe and noisy; (b) expire on status change plus statement change only, which is targeted and guesses; (c) record what the review was made AGAINST — a content hash of the affected nodes at review time — and expire when that hash moves, which is the same mechanism `set_artifact_checksum` already uses for as-built drift and needs no guessing about which properties mattered.\n\n(c) LOOKS RIGHT AND IS ALREADY A PATTERN HERE: an artifact's registered checksum is exactly \"what I accepted, as it was when I accepted it\", and a mismatch is reported rather than assumed harmless. A review is the same shape one level up.\n\nNOT THE SAME DEFECT AS `req:set-scoped-acknowledgement-keys-on-its-rule`, and worth stating because they are mirror images and a fix for one could easily break the other. That requirement was about acknowledgements expiring TOO EAGERLY — a project-level rollup whose member set grows on every capability, so a standing judgement could never carry. This is the opposite failure: a per-node review that does not expire when it should. One is a false alarm, the other a false silence, and the pair suggests the underlying model — expiry keyed on an id hash — is too blunt for both.\n\nCaptured 2026-07-30 while promoting the planning axis to intent. The two stale acknowledgements found were withdrawn immediately so the accepted requirements show as open work; this requirement is about the mechanism, not those two instances.",
+        "status": "proposed"
       }
     },
     {
@@ -34657,6 +34770,26 @@
         "state": "{\"domain\":\"software\",\"mode\":\"flexible\",\"name\":\"Reflow 2.0\",\"objective\":\"Keep a design coherent from concept through operations\",\"status\":\"active\"}",
         "target_id": "proj:reflow2",
         "target_type": "Project"
+      }
+    },
+    {
+      "node_id": "snap:epoch:planning-axis-intent:dec:where-plans-live",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-30\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony is LEANING toward option (d) below as of 2026-07-30 — \\\"I think I'm warming to this approach versus using git repos to capture the snapshot\\\" — but has not said to promote it, so this stays a lean and not intent.\\n\\n(d) GRAPH-ONLY, QUERIED RATHER THAN RENDERED. His words: \\\"we could do this completely in the graph without git. We are just using git as a means to render a snapshot in time… it is reachable by 'what capabilities are due to be released in epoch 5' or 'what didn't we achieve that we were supposed to in increment 10?' and let the agent/user figure out how to render the snapshot.\\\"\\n\\nWHY THIS IS STRONGER THAN THE FILE-PER-EPOCH RECOMMENDATION IT DISPLACES, and the displacement is a correction rather than a preference. Both things he named are QUESTIONS, not documents. A query answers them directly; a rendered file answers them only if someone rendered the right file at the right moment. And every materialised artifact needs a staleness check — `docs/design/reflow2.json` has one, `dataflow.html` has one, and `docs/loop-model.json` demonstrated the failure the same day by becoming permanently unreproducible. Not materialising is the only way to have no drift at all.\\n\\nTHE OBJECTION I RAISED AGAINST IT IS WEAKER THAN I THOUGHT, and this is the part worth correcting on the record. I argued that graph-only loses readability for someone not running reflow2 — a teammate, a reviewer, his brother — citing `req:design-reachable-without-the-repo`. But if the schedule lives in the graph, IT IS ALREADY IN THE COMMITTED EXPORT, which is in git on every commit. So the information is not unreachable; it is merely not pretty. Likewise \\\"what did the plan say in March\\\" is answerable today by `git log -p docs/design/reflow2.json` plus the export's own `prev_content_hash` chain. The file-per-epoch idea was therefore solving a problem the committed export already solves — adding an artifact to obtain a property that exists.\\n\\nWHAT SURVIVES OF THE GIT IDEA, and it is narrower and better targeted. Git remains right where the thing being pinned actually LIVES in git: an ARRIVED epoch corresponds to real commits in real repos, and \\\"what was actually deployed at epoch 3\\\" is a question about the product. So the version-combination pin (`req:version-combination-is-an-object`) keeps its place on arrival. Forward-looking plans, which describe graph content, stay in the graph; backward-looking arrivals, which describe code, pin code.\\n\\nA CONSEQUENCE WORTH NOTING FOR `req:graph-indexes-snapshots`. That requirement's stated intent is that \\\"a user shouldn't have to remember which git branch a particular epoch or increment is in.\\\" Under (d) that is satisfied in the strongest possible way: there are no branches to remember, because nothing was put in one. The requirement's letter (index the snapshots) and its spirit (never make the user chase git) come apart here, and the spirit is the part he wrote it for.\\n\\nRENDERING BECOMES AN OUTPUT, NOT A RECORD. \\\"Let the agent/user figure out how to render the snapshot\\\" is the right disposal: different consumers want different renderings — a markdown roadmap, a chart, a slide, a JSON feed — and choosing one file format now would be guessing on their behalf. `render_views.py` can emit an epoch view whenever asked, as a disposable projection.\",\"name\":\"OPEN, but leaning — the schedule lives in the graph and is queried; nothing is snapshotted into git\",\"rationale\":\"Anthony's idea and Anthony's lean, recorded as a lean. Nothing promoted: the brainstorm discipline is that an idea is not intent until he says so, and \\\"warming to\\\" is not \\\"do it\\\".\\n\\nThe correction to my own earlier recommendation is kept rather than tidied away. I had recommended file-per-epoch on main, and the reason it was wrong is instructive: the property I was reaching for — a git-visible history of the plan — already exists, because the schedule would live in the committed export and that file already has git history and its own lineage chain. Adding artifacts to obtain properties the design already has is the shape this project keeps finding, and it found it in my own advice this time.\\n\\nThe earlier wording of this node survives at `snap:epoch:wire-planning-cluster:dec:where-plans-live` and `:r2` — which are themselves the first production use of the second-revision-in-one-epoch fix landed on 2026-07-28.\",\"status\":\"accepted\"}",
+        "target_id": "dec:where-plans-live",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:planning-axis-intent:req:graph-indexes-snapshots",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"ctr:anthony\",\"properties\":{\"acted_at\":\"2026-07-28\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:intent-preserved\",\"properties\":{\"optional\":false,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:6bce37248bacaa09\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"The graph is the index of its own snapshots\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"Git already stores versions, tags, branches and releases well, and reflow2 must not duplicate that. What reflow2 must own is the MAP: the graph tracks its own snapshots — which epoch_n or increment_n a thing belongs to, and where that snapshot lives (the git ref) — so a user asks the graph and never has to remember which branch holds which epoch. Anthony, 2026-07-28: 'what does this mean for reflow2 when most of what I discussed is what git already does? I think the answer is that the graph should track the snapshots (it is one graph in time) and therefore which epoch_n or increment_n something is. A user shouldn't have to remember which git branch a particular epoch or increment is in.' The in-repo precedent already exists for the backward direction: rel:v0180 lives in the graph, tag v0.18.0 lives in git, and the graph node names the version — nobody greps tags to learn what shipped. This requirement extends that same division of labor forward.\",\"status\":\"proposed\"}",
+        "target_id": "req:graph-indexes-snapshots",
+        "target_type": "Requirement"
       }
     },
     {
@@ -35880,7 +36013,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f32673576c40ff5814f45ad4fb1eeac204c317ff24354f09fd0037f45cb88493",
+  "prev_content_hash": "sha256:e3a07d1d26af4018d9de5366adefc4f8ee7f7b6bfc6454f620602537fb915d1c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
