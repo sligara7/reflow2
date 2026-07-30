@@ -21,7 +21,7 @@ reflow2-core = { path = "../reflow2-core", features = ["rocksdb", "fulltext"] }
 # Official Rust MCP SDK. `server`+`macros` give the #[tool]/#[tool_router]
 # surface; `transport-io` gives the stdio transport grok build / claude code
 # connect over; `schemars` generates the tool-input JSON schemas.
-rmcp = { version = "2", features = ["server", "macros", "transport-io", "schemars", "transport-streamable-http-server"] }
+rmcp = { version = "3", features = ["server", "macros", "transport-io", "schemars", "transport-streamable-http-server"] }
 # One server, many client sessions (req:sessions-share-a-graph). rmcp hands us a
 # tower Service; hyper-util runs it. Deliberately NOT axum: routing, extractors
 # and middleware are all things we would not use, and every consumer pays the

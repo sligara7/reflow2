@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:7a1e430e10cbc2d0f69ad15dd9477aad79dee08237c041e4f11dd71ebdabf634",
+  "content_hash": "sha256:d987fcbb0bac015a4e36321f2322cc6ccaf450d390c370b6ed89c5f04a99303c",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1743,6 +1743,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:rmcp-v3",
+      "properties": {},
+      "to_id": "epoch:rmcp-v3"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:scoped-analysis-built",
       "properties": {},
       "to_id": "epoch:kpp-capture"
@@ -2274,6 +2280,12 @@
       "from_id": "snap:epoch:reflow-workflow-review:req:mode-is-chosen-and-changeable",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:rmcp-v3:art:main",
+      "properties": {},
+      "to_id": "epoch:rmcp-v3"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6309,6 +6321,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:rmcp-v3",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:rmcp-v3",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:remote-sessions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:rmcp-v3",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:rmcp-v3",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:seat-identity-survives-stateless-mcp"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:scoped-analysis-built",
       "properties": {
         "accepted_baseline": true,
@@ -9080,6 +9128,12 @@
         "doc_kind": "runbook"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "art:main",
+      "properties": {},
+      "to_id": "dec:rmcp-v3-upgrade"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -11953,6 +12007,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:remote-sessions",
       "properties": {},
+      "to_id": "dec:rmcp-v3-upgrade"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:remote-sessions",
+      "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
     },
     {
@@ -13167,7 +13227,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "req:seat-identity-survives-stateless-mcp",
       "properties": {},
+      "to_id": "dec:stateless-seat-handle"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:seat-identity-survives-stateless-mcp",
+      "properties": {},
       "to_id": "decision:ack:b419dc7ce8da8c12"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:seat-per-client",
+      "properties": {},
+      "to_id": "decision:ack:350d55cf9c8c3247"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -13258,6 +13330,18 @@
       "from_id": "sys:vocabulary",
       "properties": {},
       "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "ver:stateless-seat",
+      "properties": {},
+      "to_id": "decision:ack:350d55cf9c8c3247"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:main",
+      "properties": {},
+      "to_id": "snap:epoch:rmcp-v3:art:main"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -21967,6 +22051,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:stateless-seat-probe",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:claim-liveness"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:storyflow-resolution-study",
       "properties": {
         "completeness": "complete"
@@ -23264,6 +23356,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:stateless-seat",
+      "properties": {},
+      "to_id": "req:seat-per-client"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:store",
       "properties": {},
       "to_id": "cap:store"
@@ -23783,6 +23881,14 @@
         "action": "created"
       },
       "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:stateless-seat-probe",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:stateless-seat-probe"
     },
     {
       "edge_type": "YIELDED",
@@ -24450,7 +24556,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1227be44eed10bc6089eadca9117340df372164f487070910129a987a8fd849b",
+        "checksum": "sha256:135bd303bf1006cf6e0f4d7646f2acef07dedc1dd5e355758532501d8d5916db",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -24750,6 +24856,17 @@
         "checksum": "sha256:c09cc6f310635d1b2fb9a888f38c323fbd2ae2fb9e816586a32f2c00c87a46fb",
         "location": "SKILLS.md",
         "name": "SKILLS.md",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:stateless-seat-probe",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:9202cb90ed2e20d58ec26057394357215b85f40c3ddf98e0c5adfdff59716e18",
+        "location": "tools/stateless_seat_probe.py",
+        "name": "stateless_seat_probe.py",
         "status": "realized"
       }
     },
@@ -27133,6 +27250,14 @@
       }
     },
     {
+      "node_id": "chg:rmcp-v3",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "environment_change",
+        "name": "art:main moved: the HTTP bound narrowed to ServerHandler for rmcp v3"
+      }
+    },
+    {
       "node_id": "chg:scoped-analysis-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -28533,6 +28658,16 @@
       }
     },
     {
+      "node_id": "dec:rmcp-v3-upgrade",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Take rmcp 3.0.1 on Anthony's direct word (\"I want to upgrade to rmcp v3.0.1\"), replacing the `rmcp = \"2\"` pin. The entire code change is one generic bound in `serve_http`: rmcp v3 narrowed `StreamableHttpService::new` from `S: Service<RoleServer>` to `S: ServerHandler`, because the sessionless transport builds a handler per REQUEST and must ask it for `get_info` and the tool list with no session having cached them. Both surfaces that come through that door — the real service and the degraded one — already implement `ServerHandler` via `#[tool_handler]`, so nothing was lost.\n\nNOT chosen: staying on rmcp 2 until the seat question is answered. The upgrade and the seat fix are separable, and holding a working dependency bump hostage to an open design decision would have left reflow2 on a pinned major with no evidence about what actually breaks.",
+        "name": "Upgrade to rmcp 3.0.1 now, as a one-line bound change, and measure what it costs rather than reasoning about it",
+        "rationale": "The v3.0.0 notes list eight breaking-change areas — sessionless Streamable HTTP, stateless lifecycle, subscriptions, MRTR response enums on `call_tool`/`get_prompt`/`read_resource`, the tasks API, split metadata types, OAuth, MSRV 1.88 — and exactly one of them reached reflow2's code. The `#[tool]`/`#[tool_router]`/`#[tool_handler]` macros absorbed the MRTR enum change entirely, MSRV 1.88 is under this workspace's 1.94, and the OAuth, tasks and subscription surfaces are ones reflow2 never touched. All 118 toolsnaps match, so the served tool surface did not move.\n\nTHE PART THAT MATTERED WAS NOT IN THE DIFF. Every gate stayed green, and that green was misleading: every one of reflow2's own test clients negotiates `2025-06-18`, `2025-11-25` or `2024-11-05`, and `ProtocolVersion::LATEST` in rmcp 3.0.1 is still `V_2025_11_25`. Nothing in the suite speaks `2026-07-28`, so nothing exercised the sessionless path that the whole requirement is about. This is the same failure shape as row 3AX-3 in the coverage matrix the day before: a green tick only as wide as the case its evidence exercises.\n\nMeasured instead, with `tools/stateless_seat_probe.py` — one client, two `claim_region` calls, count the distinct seats. stdio: one seat. HTTP at 2025-06-18: one seat. HTTP at 2026-07-28: TWO seats, one per request. So `req:seat-per-client` is intact on every transport in use today and broken on exactly one that nothing uses yet, which is why this is a deadline and not an outage — Claude Code and grok build both connect over stdio.\n\nThere is no configuration that avoids it: `StreamableHttpServerConfig::legacy_session_mode` is documented to apply only to protocol versions below 2026-07-28, and requests negotiating that version \"are always served statelessly regardless of this setting\". The CLIENT chooses the version, so reflow2 cannot decline on its behalf; it can only decide what identity means once the choice is made.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:sanitize-spof-accepted",
       "node_type": "Decision",
       "properties": {
@@ -28569,6 +28704,16 @@
         "decision": "Option (a) from req:snapshot-per-revision-not-per-epoch, in a form that keeps existing ids stable. The FIRST capture of a node in an epoch keeps the id `snap:{epoch}:{node}` exactly as before. A genuine SECOND revision in the same epoch appends `:r2`, `:r3`, so HAS_SNAPSHOT becomes one-to-many precisely when history requires it and not before. An IDENTICAL re-capture returns the existing snapshot instead of minting a duplicate — compared against the TAIL of the chain and nothing earlier. A ceiling of 64 distinct snapshots per (epoch, node) errors rather than growing history quietly, and is checked only when a new capture is actually needed, so an idempotent retry against a full chain still succeeds.\n\nNOT chosen: (b) refusing a second record_change in one epoch, and (c) keeping one snapshot per epoch and making the second call a no-op.",
         "name": "Snapshot identity is per revision, but only when a revision actually happened",
         "rationale": "Truest to req:intent-preserved, which is the requirement this bug violated — (c) preserves the original but still discards the intermediate, which is losing history on purpose rather than by accident, and (b) pushes epoch hygiene onto the caller when an epoch is meant to bound a round of WORK, not a single edit.\n\nThe first-capture id is left unsuffixed because existing graphs and committed exports carry those ids and a test pins one; suffixing everything would have rewritten history to fix a bug about not rewriting history.\n\nIdempotence on an unchanged re-capture is the mirror of the bug being fixed: snapshotting a node that has not moved is a no-op, not a new version, and minting one would make the history claim edits that never happened. It also keeps record_change safe to retry.\n\nTAIL-ONLY COMPARISON, and it is the load-bearing detail. A node edited A -> B -> A inside one epoch has three genuine revisions. Comparing against ANY earlier snapshot would match the first A-capture and hand it back for the third, recording two — hiding an edit that DID happen. That is the same class of loss as the overwrite this fixes, just quieter, and it would have shipped as a half-fix. Matching only the tail also keeps the `:rN` order readable as the order the revisions occurred in, which is the only ordering a reader has: every snapshot in an epoch is pinned to that one epoch and carries no sequence of its own.\n\nThe 64 ceiling is a signal, not a storage limit: a node revised that many times inside one epoch means the epoch has stopped bounding anything, and the error says so.\n\nRECORDED AT `proposed`: the requirement itself said the shape of the fix was a choice and none of the options was obviously right. Anthony directed the work be finished, not this particular shape — so the shape is on the record awaiting his word, and reopening it supersedes rather than un-accepts (dec:reopen-supersedes).",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:stateless-seat-handle",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "NOT DECIDED. Recorded so the options and their costs survive the session that found them.\n\nThe spec's prescription is a server-minted handle passed as an ordinary tool argument, and half of that already exists: `ClaimReq.seat` accepts a caller-supplied seat today, documented as \"pass your own only if you have a durable handle for the session (a fleet worker name); it is a name, never a lock\". What is undecided is how a client OBTAINS one and CARRIES it without every tool call growing a parameter no human should have to think about.\n\n(a) A `hello`-style tool that mints and returns a seat, which the client then passes on the calls that care (claim_region, release_claim, the stale-seat check). Explicit, transport-independent, and inspectable. Cost: the agent has to remember it, and an agent that forgets silently gets fresh-seat behaviour again — the failure is quiet, which is the property this design most wants to avoid.\n\n(b) Derive the seat from what a stateless request already carries. rmcp reconstructs a `ClientInfo` per request via `peer_info_for_stateless_request`, from headers. Cost: nothing in it is guaranteed stable or unique per client, so this trades a loud missing parameter for a quiet wrong answer.\n\n(c) Accept one seat per server PROCESS on the sessionless transport. Cost: it is exactly the regression `req:seat-per-client` was written against — `claim_report` telling six sessions they are each other.\n\n(d) Serve sessionless HTTP but refuse the claim family on it, directing those callers to stdio or a legacy version. Cost: honest and loud, and it makes `cap:remote-sessions` conditional on a protocol version — a real narrowing of what reflow2 offers.\n\nAnthony's word is wanted on which. My recommendation is (a), with the refusal from (d) as its backstop: mint on request, and when a claim-family call arrives on a sessionless transport WITHOUT a seat argument, refuse it by name and say what would have worked, rather than silently minting a per-request seat and reporting success. That converts the quiet failure in (a) into a loud one, which is `req:no-silent-fallback` applied to identity.",
+        "name": "How a client obtains and carries its seat once the transport has no sessions — OPEN, awaiting Anthony",
+        "rationale": "Recorded at `proposed` deliberately. Anthony's word covered the UPGRADE (\"I want to upgrade to rmcp v3.0.1\"), not the shape of the seat fix, and `req:seat-identity-survives-stateless-mcp` itself says the open part is \"deciding how a client obtains and carries the handle\". Promoting this myself would forge his signature on a choice with four live options and real trade-offs (dec:certainty-derived).\n\nNot urgent, and the measurement says why: `tools/stateless_seat_probe.py` shows one seat per client on stdio and on HTTP at 2025-06-18, and the transports actually in use — Claude Code and grok build over stdio — are unaffected. The 12-month feature-lifecycle window in the 2026-07-28 revision applies, and rmcp's own `ProtocolVersion::LATEST` is still `V_2025_11_25`, so no client reaches the broken path by default. It becomes urgent the moment a client negotiates 2026-07-28 against a shared `--http` server.\n\nComposes with `dec:identity-out-of-band`, which already holds that names are assigned with zero coordination rather than derived from shared state — a server-minted handle is that same principle one layer up.",
         "status": "proposed"
       }
     },
@@ -28859,6 +29004,16 @@
         "decision": "Accepted the gap gap:33be77a4e91bc8ae.",
         "name": "Reviewed: gap:33be77a4e91bc8ae",
         "rationale": "User (who:ajs, 2026-07-25): accepted intent, BLOCKED rather than shelved — the same disposition req:concurrent-planning carries, and for the same reason. Deliberately left `accepted` rather than moved to `deferred`, because deferred reads as \"parked, nobody act\", whereas this is real intent with exactly one thing standing in front of it: dec:central-host, recorded as GOVERNED_BY so the link is queryable rather than only written here. Nothing should be built toward it until that decision collapses, because the cheapest hosted shape — one server process per project, with project selection becoming which URL the agent points at — satisfies most of this requirement with NO graph_id plumbing at all, while a multi-tenant single process needs graph_id threaded through every read and write. Building the second before the choice is made is building for the road not taken. What is owed meanwhile is only the non-foreclosure half (rule:no-foreclosure item 5): code must not ASSUME the graph_id constant where it could read the field. This acknowledgement expires if the affected node changes, which is correct — when the decision is made this should come back for a fresh look rather than stay quietly accepted.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:350d55cf9c8c3247",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:350d55cf9c8c3247.",
+        "name": "Reviewed: gap:350d55cf9c8c3247",
+        "rationale": "Failing ON PURPOSE, and accepted for exactly as long as the fix is unbuilt. `ver:stateless-seat` is the measurement that made the rmcp v3 exposure visible instead of arguable: one client, two claims, count the distinct seats — stdio one, HTTP at 2025-06-18 one, HTTP at 2026-07-28 two. Recording it as `passing` would be the lie; deleting it would restore the blind spot that let every gate stay green through the upgrade.\n\nWhy it is acceptable rather than urgent: no path reflow2 controls reaches the broken one. Claude Code and grok build connect over stdio; `proxy.rs` pins `2025-06-18` on both handshakes, so shared and remote mode still get a session and a seat each; and rmcp's own `ProtocolVersion::LATEST` is still `V_2025_11_25`. Only an external client dialling `--http` and choosing 2026-07-28 itself lands on it, and the 2026-07-28 revision's 12-month feature-lifecycle window applies.\n\nNot open-ended. Anthony chose the fix on 2026-07-30 — mint-and-carry with a loud refusal, option (a) of `dec:stateless-seat-handle`: a tool mints a seat and returns it, the client passes it on the calls that care (`ClaimReq.seat` already accepts one), and a claim-family call arriving on a sessionless transport WITHOUT a seat is refused by name saying what would have worked, rather than silently minting a per-request seat and reporting success — `req:no-silent-fallback` applied to identity. When that lands, this verification flips to passing on its own evidence and this acknowledgement should be withdrawn rather than left standing.",
         "status": "accepted"
       }
     },
@@ -29824,6 +29979,15 @@
         "epoch_type": "revision",
         "name": "Reading the original reflow's workflows back against reflow2 (2026-07-28)",
         "sequence": 220
+      }
+    },
+    {
+      "node_id": "epoch:rmcp-v3",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "rmcp v2 → v3.0.1: protocol sessions removed",
+        "sequence": 231
       }
     },
     {
@@ -31066,6 +31230,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered SKILLS.md"
+      }
+    },
+    {
+      "node_id": "frag:art:stateless-seat-probe",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered stateless_seat_probe.py"
       }
     },
     {
@@ -33378,6 +33552,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:rmcp-v3:art:main",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:66a3be8cafc15b2e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:66a3be8cafc15b2e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:7cd58c187b327a97\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:efde27a92468d6354f0591c658c91aae26422abe44577312aef52adfb59c912f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:7545dd803eddfb6f8cd21122a46307f60827ceda8801d3098ac9a9617b21e02f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:6f0cee725be374c0235839fee689cfe225e361f947488e52a87dc2d8e7f5a6e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:17f8bc6928a55569011f07403264ba5ef3239fd868cc91403d73b89361112940\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:17f8bc6928a55569011f07403264ba5ef3239fd868cc91403d73b89361112940\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:54a1679022bb86b4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:54a1679022bb86b4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:f19fd2fdf9e7885a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:f19fd2fdf9e7885a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:f19fd2fdf9e7885a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:4d619bc69acb1dd5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:ef7ba16d1727d0ee\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:snapshot-read\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:main\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:1227be44eed10bc6089eadca9117340df372164f487070910129a987a8fd849b\",\"location\":\"crates/reflow2-mcp/src/main.rs\",\"name\":\"main.rs\",\"status\":\"realized\"}",
+        "target_id": "art:main",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:snapshot-per-revision:req:snapshot-per-revision-not-per-epoch",
       "node_type": "Snapshot",
       "properties": {
@@ -34230,6 +34414,18 @@
       }
     },
     {
+      "node_id": "ver:stateless-seat",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-30",
+        "level": "system",
+        "method": "measurement",
+        "name": "One client, one seat — measured per transport and per protocol version",
+        "status": "failing"
+      }
+    },
+    {
       "node_id": "ver:store",
       "node_type": "Verification",
       "properties": {
@@ -34310,7 +34506,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:7b01e55e2a456605b2092a439780be975d9635ed8ddc6c1659bfb0d2b3bfb7ec",
+  "prev_content_hash": "sha256:7a1e430e10cbc2d0f69ad15dd9477aad79dee08237c041e4f11dd71ebdabf634",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

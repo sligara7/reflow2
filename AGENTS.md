@@ -96,6 +96,16 @@ python3 tools/build_design_graph.py --analyse-only
 # proceeding as if they hadn't.
 python3 tools/phase_trial.py
 
+# Seat-identity probe — does ONE client keep ONE seat? Per transport, per
+# protocol version. test_shared_sessions proves the other half (two clients get
+# two DIFFERENT seats) and nothing proved the complement, which is why the whole
+# suite stayed green through the rmcp v3 upgrade while this was already broken:
+# every test client here negotiates a pre-2026-07-28 version. stdio and legacy
+# HTTP hold one seat; sessionless HTTP mints one per REQUEST. Exits NON-ZERO on
+# purpose (req:seat-identity-survives-stateless-mcp, dec:stateless-seat-handle)
+# — a baseline, not a gate, so it is deliberately not in ci.yml.
+python3 tools/stateless_seat_probe.py
+
 # Erosion trial — the sharper question. Not "did a file change?" but: after N
 # rounds of test-fails/fix-code/accept, does the design still describe what
 # shipped? 7/8 (was 2/7): the one remaining miss is the semantic
