@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4f9d6fa161d547b7ab1ae88aa5a9994afffe62f3bb639be0b785b35f5471f2cb",
+  "content_hash": "sha256:d97210cda415cda0a2a2127e2d1158b08a9291a6f31dcba2922c67aac01f75ed",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -7336,6 +7336,51 @@
       "to_id": "req:what-next"
     },
     {
+      "edge_type": "CHANGED",
+      "from_id": "chg:wire-planning-cluster",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:changelog-view"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:wire-planning-cluster",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:epochs-can-be-planned"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:wire-planning-cluster",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:graph-indexes-snapshots"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:wire-planning-cluster",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:plans-move-honestly"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:wire-planning-cluster",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:version-combination-is-an-object"
+    },
+    {
       "edge_type": "CONSTRAINS",
       "from_id": "con:pairing-stops-at-the-boundary",
       "properties": {
@@ -9311,12 +9356,30 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:epochs-can-be-planned",
+      "properties": {
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:version-combination-is-an-object"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:friction-has-a-baseline",
       "properties": {
         "optional": false,
         "weight_basis": "estimated"
       },
       "to_id": "req:friction-has-a-severity-bar"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:graph-indexes-snapshots",
+      "properties": {
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:intent-preserved"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -9353,6 +9416,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:design-identity"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:plans-move-honestly",
+      "properties": {
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:epochs-can-be-planned"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -9422,9 +9494,9 @@
       "from_id": "req:version-combination-is-an-object",
       "properties": {
         "optional": false,
-        "weight_basis": "estimated"
+        "weight_basis": "evidence"
       },
-      "to_id": "req:epochs-can-be-planned"
+      "to_id": "req:design-dependencies-declared"
     },
     {
       "edge_type": "DEPLOYED_TO",
@@ -13609,6 +13681,12 @@
       "from_id": "req:edge-defaults-do-not-assert",
       "properties": {},
       "to_id": "decision:ack:0a63dc6a6c47e039"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:epochs-can-be-planned",
+      "properties": {},
+      "to_id": "dec:epoch-pins-a-version-combination"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -28265,6 +28343,14 @@
       }
     },
     {
+      "node_id": "chg:wire-planning-cluster",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Four planning requirements wired to what they actually depend on; one mis-drawn edge retracted"
+      }
+    },
+    {
       "node_id": "cmp:agent",
       "node_type": "Component",
       "properties": {
@@ -29200,6 +29286,16 @@
         "decision": "Standing rule for the edge vocabulary: two edge types must be orthogonal, because an LLM asked to choose between near-synonyms picks inconsistently (storyflow's lesson). The test for keeping any distinction is not 'is it true?' but 'does a computation — a detector, a report, a propagation rule — read the two sides differently?' If nothing reads it, the distinction is descriptive decoration that costs extraction consistency for no gain (the 'read side was blind' lesson turned on the vocabulary itself). Applied 2026-07-22: (1) RETIRE the VALIDATES edge — it was orthogonal-in-name-only with VERIFIES (both land Verification->Capability, the canonical V&V confusion) AND orphan (no core code ever referenced it). The verify-vs-validate distinction is real and worth keeping, so it moves to a Verification.kind property (verification | validation) — a property of the check, not a rival relationship, which removes the edge-choice ambiguity entirely — and it earns its keep via a new unvalidated_capability DETECT gap that reads it (a capability verified against spec but with no validation check confirming it meets intent). (2) FOLD ENABLES into CAUSES — same causal axis, differ only by degree (brings-about vs makes-possible), both wildcard-typed, and neither read by any computation; CAUSES's hint now covers the enabling case. (3) KEEP TRIGGERS — it is not a causal-degree variant: it carries a role property and drives the Flow/process-feedback model (flow_report, BL-37), so a computation reads it. Net: 55 -> 53 edge types; the 'does a computation read it?' test is the standing rule for any future edge.",
         "name": "A vocabulary distinction earns its keep only if a computation reads it; retire VALIDATES + ENABLES edges",
         "rationale": "User raised it from the storyflow lesson that edge types an agent chooses between must be completely orthogonal, and reasoned each case by cost/benefit: keeping a distinction buys nothing over collapsing unless a computation reads it, and sharpening extraction hints only lowers the error rate on a distinction that still has no reader — it cannot make a same-axis distinction orthogonal. VALIDATES was the clearest case: confusable AND orphan (the engine runs entirely on VERIFIES). Moving it to Verification.kind is strictly better than a rival edge because verify-vs-validate is an attribute of one check, not two relationships — as an edge it forces the confusable choice every time; as a kind there is always exactly one edge (VERIFIES). But a kind with no reader is the same orphan relocated, so it is kept only because the unvalidated_capability gap reads it — the mission-assurance question 'built to spec, but is it the right thing?', which the user's domain cares about. ENABLES vs CAUSES had no reader (0 core files each), so sharpening hints bought only cleaner extraction of a distinction nothing uses; collapsing removes the error class. TRIGGERS was rescued from the trio because it genuinely has a reader (its process role). The gap follows the BL-73 anti-flood lesson: one project-level rollup ('N verified capabilities have no validation check'), acknowledgeable once, not N per-capability alarms.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:epoch-pins-a-version-combination",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "`req:epochs-can-be-planned` DEPENDS_ON `req:version-combination-is-an-object`. The reverse edge, which had been in the graph, is RETRACTED as mis-drawn.\n\nThe direction is settled by the requirements' own words. `req:epochs-can-be-planned`: \"an epoch or increment must PIN THE SET of per-repo design versions it means, or the question 'which epoch are we talking about?' has no answer\" — a planned epoch needs a named version set to be about anything. `req:version-combination-is-an-object` needs nothing from planning: \"does THIS SET of versions hold together?\" is answerable about what is deployed today, with no epochs, no plan and no forward axis. One is built on the other, and only one way round.\n\nRETRACTED, NOT RECORDED AS HISTORY. The old edge asserted a dependency that was never true, which is a modelling error rather than something that stopped being so — retire-from-design's Path B. It also carried `weight_basis: estimated` with no `evidence` property, i.e. it was drawn without a stated reason, which is what `req:defaults-do-not-assert` describes one layer down. Both replacement edges carry `weight_basis: evidence`.",
+        "name": "A planned epoch depends on a version combination, not the other way round",
+        "rationale": "FOUND BY WIRING, and it is the point worth keeping. These four requirements sat in `disconnected_community` islands for two days. Adding the true dependency closed a cycle with the existing edge, and `detect_defects` reported it as `circular_dependency` at severity critical — so the wrong edge became visible only when a right one was drawn next to it.\n\nThat is a blind spot worth naming: a SINGLE edge pointing the wrong way creates no cycle, trips no detector, and reads exactly like a correct one. Nothing in the design could have caught it in isolation. It took a second, contradicting edge to make the first one's error computable — which means an island is not merely unanalysed, it is a place where wrong edges are structurally undetectable. Disconnection hides more than it looks like it hides.\n\nOne process note, stated rather than glossed: the prior edge state was not snapshotted before the deletion, so the retraction is recoverable from the committed export at `8eb70c8` rather than from the graph's own history. A `record_change` on `req:version-combination-is-an-object` before the delete would have captured it in-graph, per BL-63. Cheap to have done and worth doing next time an edge is retracted.",
         "status": "accepted"
       }
     },
@@ -31100,6 +31196,15 @@
         "epoch_type": "release_cut",
         "name": "v0.9.0 release cut (2026-07-22)",
         "sequence": 70
+      }
+    },
+    {
+      "node_id": "epoch:wire-planning-cluster",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The planning cluster joins the thread, and a wrong-direction dependency surfaces",
+        "sequence": 237
       }
     },
     {
@@ -35649,7 +35754,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:de6e8691eeff9c7e16335eb43a24c51806f11a3989ee300000d9b0fb4f19cac7",
+  "prev_content_hash": "sha256:4f9d6fa161d547b7ab1ae88aa5a9994afffe62f3bb639be0b785b35f5471f2cb",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
