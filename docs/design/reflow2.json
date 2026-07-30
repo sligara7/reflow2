@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d987fcbb0bac015a4e36321f2322cc6ccaf450d390c370b6ed89c5f04a99303c",
+  "content_hash": "sha256:67b299859f99fc6c3bf960606e4f11890b759b3ef58995934e4ca232232c8f48",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2284,6 +2284,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:rmcp-v3:art:main",
+      "properties": {},
+      "to_id": "epoch:rmcp-v3"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:rmcp-v3:dec:stateless-seat-handle",
       "properties": {},
       "to_id": "epoch:rmcp-v3"
     },
@@ -6345,6 +6351,15 @@
         "action": "modified"
       },
       "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:rmcp-v3",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:stateless-seat-handle"
     },
     {
       "edge_type": "CHANGED",
@@ -13414,6 +13429,12 @@
       "from_id": "dec:nested-graphs",
       "properties": {},
       "to_id": "snap:epoch:surface-export:dec:nested-graphs"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:stateless-seat-handle",
+      "properties": {},
+      "to_id": "snap:epoch:rmcp-v3:dec:stateless-seat-handle"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -27253,8 +27274,8 @@
       "node_id": "chg:rmcp-v3",
       "node_type": "ChangeEvent",
       "properties": {
-        "change_type": "environment_change",
-        "name": "art:main moved: the HTTP bound narrowed to ServerHandler for rmcp v3"
+        "change_type": "scope_change",
+        "name": "Anthony chose option (a) for the stateless seat handle — the open fork closes"
       }
     },
     {
@@ -28711,10 +28732,10 @@
       "node_id": "dec:stateless-seat-handle",
       "node_type": "Decision",
       "properties": {
-        "decision": "NOT DECIDED. Recorded so the options and their costs survive the session that found them.\n\nThe spec's prescription is a server-minted handle passed as an ordinary tool argument, and half of that already exists: `ClaimReq.seat` accepts a caller-supplied seat today, documented as \"pass your own only if you have a durable handle for the session (a fleet worker name); it is a name, never a lock\". What is undecided is how a client OBTAINS one and CARRIES it without every tool call growing a parameter no human should have to think about.\n\n(a) A `hello`-style tool that mints and returns a seat, which the client then passes on the calls that care (claim_region, release_claim, the stale-seat check). Explicit, transport-independent, and inspectable. Cost: the agent has to remember it, and an agent that forgets silently gets fresh-seat behaviour again — the failure is quiet, which is the property this design most wants to avoid.\n\n(b) Derive the seat from what a stateless request already carries. rmcp reconstructs a `ClientInfo` per request via `peer_info_for_stateless_request`, from headers. Cost: nothing in it is guaranteed stable or unique per client, so this trades a loud missing parameter for a quiet wrong answer.\n\n(c) Accept one seat per server PROCESS on the sessionless transport. Cost: it is exactly the regression `req:seat-per-client` was written against — `claim_report` telling six sessions they are each other.\n\n(d) Serve sessionless HTTP but refuse the claim family on it, directing those callers to stdio or a legacy version. Cost: honest and loud, and it makes `cap:remote-sessions` conditional on a protocol version — a real narrowing of what reflow2 offers.\n\nAnthony's word is wanted on which. My recommendation is (a), with the refusal from (d) as its backstop: mint on request, and when a claim-family call arrives on a sessionless transport WITHOUT a seat argument, refuse it by name and say what would have worked, rather than silently minting a per-request seat and reporting success. That converts the quiet failure in (a) into a loud one, which is `req:no-silent-fallback` applied to identity.",
-        "name": "How a client obtains and carries its seat once the transport has no sessions — OPEN, awaiting Anthony",
-        "rationale": "Recorded at `proposed` deliberately. Anthony's word covered the UPGRADE (\"I want to upgrade to rmcp v3.0.1\"), not the shape of the seat fix, and `req:seat-identity-survives-stateless-mcp` itself says the open part is \"deciding how a client obtains and carries the handle\". Promoting this myself would forge his signature on a choice with four live options and real trade-offs (dec:certainty-derived).\n\nNot urgent, and the measurement says why: `tools/stateless_seat_probe.py` shows one seat per client on stdio and on HTTP at 2025-06-18, and the transports actually in use — Claude Code and grok build over stdio — are unaffected. The 12-month feature-lifecycle window in the 2026-07-28 revision applies, and rmcp's own `ProtocolVersion::LATEST` is still `V_2025_11_25`, so no client reaches the broken path by default. It becomes urgent the moment a client negotiates 2026-07-28 against a shared `--http` server.\n\nComposes with `dec:identity-out-of-band`, which already holds that names are assigned with zero coordination rather than derived from shared state — a server-minted handle is that same principle one layer up.",
-        "status": "proposed"
+        "decision": "CHOSEN BY ANTHONY, 2026-07-30: option (a), mint-and-carry, with the refusal from (d) as its backstop. Decided but NOT YET BUILT.\n\nThe shape. A tool mints a seat and returns it; the client passes it on the calls that care (`claim_region`, `release_claim`, the stale-seat check). `ClaimReq.seat` already accepts one, documented today as \"pass your own only if you have a durable handle for the session (a fleet worker name); it is a name, never a lock\" — so the argument exists and what is missing is the minting and the discipline around it. This is transport-independent by construction: it works identically on stdio, on legacy Streamable HTTP and on the sessionless transport, where today identity is inherited from whatever the transport happened to do and quietly differs between them.\n\nTHE BACKSTOP IS THE LOAD-BEARING HALF. Option (a) alone has a quiet failure mode: an agent that forgets the handle silently gets fresh-seat-per-request behaviour again, which is the exact bug being fixed, reintroduced by omission. So when a claim-family call arrives on a sessionless transport WITHOUT a seat argument, it is REFUSED by name, saying what would have worked — never served by minting a per-request seat and reporting success. That is `req:no-silent-fallback` applied to identity, and it is what makes the option safe rather than merely correct when used correctly.\n\nNOT CHOSEN, on the record. (b) Derive the seat from what a stateless request already carries — rmcp reconstructs a `ClientInfo` per request via `peer_info_for_stateless_request` — rejected because nothing in those headers is guaranteed stable or unique per client, so it trades a loud missing parameter for a quiet wrong answer. (c) One seat per server PROCESS on the sessionless transport — rejected because it is precisely the regression `req:seat-per-client` was written against, `claim_report` telling six sessions they are each other. (d) Refusing the claim family on sessionless HTTP outright — kept as (a)'s backstop rather than as the whole answer, because as the whole answer it makes `cap:remote-sessions` conditional on a protocol version and narrows what reflow2 offers.",
+        "name": "A seat is minted on request and carried as a tool argument, and a claim without one is refused rather than guessed",
+        "rationale": "Anthony's word, given 2026-07-30 when the four options and their costs were put to him. The requirement itself (`req:seat-identity-survives-stateless-mcp`) named this as the open part — \"deciding how a client obtains and carries the handle without making every tool call carry a parameter no human should have to think about\" — so this closes the fork the requirement opened rather than inventing a new one.\n\nWhy the backstop decided it. The three rejected options each fail quietly: (b) returns a wrong seat, (c) returns a shared one, and bare (a) returns a fresh one — and in all three cases the call SUCCEEDS. This design's standing objection to that shape is recorded in `req:no-silent-fallback` and was the reason `ver:stateless-seat` exists at all: the original bug was not that seats were wrong but that nothing said so. A refusal is the only branch that cannot rot silently.\n\nComposes with `dec:identity-out-of-band`, which already holds that names are assigned with zero coordination rather than derived from shared state — a server-minted handle is that principle one layer up. It also matches where the MCP 2026-07-28 revision itself points: \"servers that need cross-call state use explicit, server-minted handles passed as ordinary tool arguments.\"\n\nNot urgent, and the measurement says why: `tools/stateless_seat_probe.py` reports one seat per client on stdio and on HTTP at 2025-06-18, `proxy.rs` pins 2025-06-18 on both handshakes so shared and remote mode are unaffected, and rmcp's `ProtocolVersion::LATEST` is still `V_2025_11_25`. It becomes urgent the moment an external client negotiates 2026-07-28 against a shared `--http` server.\n\nWHEN IT LANDS: `ver:stateless-seat` flips to passing on its own evidence, `tools/stateless_seat_probe.py` exits zero and is worth promoting from a baseline to a CI gate, and `decision:ack:350d55cf9c8c3247` — the acknowledgement holding the failing check acceptable — should be WITHDRAWN rather than left standing.",
+        "status": "accepted"
       }
     },
     {
@@ -33562,6 +33583,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:rmcp-v3:dec:stateless-seat-handle",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:seat-identity-survives-stateless-mcp\",\"properties\":{}}]",
+        "state": "{\"decision\":\"NOT DECIDED. Recorded so the options and their costs survive the session that found them.\\n\\nThe spec's prescription is a server-minted handle passed as an ordinary tool argument, and half of that already exists: `ClaimReq.seat` accepts a caller-supplied seat today, documented as \\\"pass your own only if you have a durable handle for the session (a fleet worker name); it is a name, never a lock\\\". What is undecided is how a client OBTAINS one and CARRIES it without every tool call growing a parameter no human should have to think about.\\n\\n(a) A `hello`-style tool that mints and returns a seat, which the client then passes on the calls that care (claim_region, release_claim, the stale-seat check). Explicit, transport-independent, and inspectable. Cost: the agent has to remember it, and an agent that forgets silently gets fresh-seat behaviour again — the failure is quiet, which is the property this design most wants to avoid.\\n\\n(b) Derive the seat from what a stateless request already carries. rmcp reconstructs a `ClientInfo` per request via `peer_info_for_stateless_request`, from headers. Cost: nothing in it is guaranteed stable or unique per client, so this trades a loud missing parameter for a quiet wrong answer.\\n\\n(c) Accept one seat per server PROCESS on the sessionless transport. Cost: it is exactly the regression `req:seat-per-client` was written against — `claim_report` telling six sessions they are each other.\\n\\n(d) Serve sessionless HTTP but refuse the claim family on it, directing those callers to stdio or a legacy version. Cost: honest and loud, and it makes `cap:remote-sessions` conditional on a protocol version — a real narrowing of what reflow2 offers.\\n\\nAnthony's word is wanted on which. My recommendation is (a), with the refusal from (d) as its backstop: mint on request, and when a claim-family call arrives on a sessionless transport WITHOUT a seat argument, refuse it by name and say what would have worked, rather than silently minting a per-request seat and reporting success. That converts the quiet failure in (a) into a loud one, which is `req:no-silent-fallback` applied to identity.\",\"name\":\"How a client obtains and carries its seat once the transport has no sessions — OPEN, awaiting Anthony\",\"rationale\":\"Recorded at `proposed` deliberately. Anthony's word covered the UPGRADE (\\\"I want to upgrade to rmcp v3.0.1\\\"), not the shape of the seat fix, and `req:seat-identity-survives-stateless-mcp` itself says the open part is \\\"deciding how a client obtains and carries the handle\\\". Promoting this myself would forge his signature on a choice with four live options and real trade-offs (dec:certainty-derived).\\n\\nNot urgent, and the measurement says why: `tools/stateless_seat_probe.py` shows one seat per client on stdio and on HTTP at 2025-06-18, and the transports actually in use — Claude Code and grok build over stdio — are unaffected. The 12-month feature-lifecycle window in the 2026-07-28 revision applies, and rmcp's own `ProtocolVersion::LATEST` is still `V_2025_11_25`, so no client reaches the broken path by default. It becomes urgent the moment a client negotiates 2026-07-28 against a shared `--http` server.\\n\\nComposes with `dec:identity-out-of-band`, which already holds that names are assigned with zero coordination rather than derived from shared state — a server-minted handle is that same principle one layer up.\",\"status\":\"proposed\"}",
+        "target_id": "dec:stateless-seat-handle",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:snapshot-per-revision:req:snapshot-per-revision-not-per-epoch",
       "node_type": "Snapshot",
       "properties": {
@@ -34506,7 +34537,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:7a1e430e10cbc2d0f69ad15dd9477aad79dee08237c041e4f11dd71ebdabf634",
+  "prev_content_hash": "sha256:d987fcbb0bac015a4e36321f2322cc6ccaf450d390c370b6ed89c5f04a99303c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
