@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- Aggregate-gap acknowledgements stop expiring when the design grows (`req:set-scoped-acknowledgement-keys-on-its-rule`) — @ajs — since 2026-07-30 — crates/reflow2-core/src/detect.rs (`gap_id` + `GapSource::is_aggregate`), tests/detect*.rs; branch `feat/aggregate-gap-ack`
+
 
 
 
