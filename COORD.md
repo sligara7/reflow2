@@ -56,6 +56,7 @@ Add yourself if you're new here.
 
 
 
+- rmcp v2 → v3.0.1 upgrade (`req:seat-identity-survives-stateless-mcp`) — @ajs — since 2026-07-30 — crates/reflow2-mcp/Cargo.toml, src/{main,service,proxy,shared}.rs, tools/smoke_mcp.py; branch `feat/rmcp-v3`
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
