@@ -11,33 +11,39 @@ different clients get two DIFFERENT seats — and nothing proved the complement,
 which is why the whole suite stayed green through the rmcp v3 upgrade while this
 was already broken. A tick is only as wide as the case its evidence exercises.
 
-WHAT IT MEASURES. One client, two `claim_region` calls under two contributors,
-then `claim_report`: how many DISTINCT seats did one client's requests produce?
-One is correct. More than one means seat identity is gone, and with it
-`cap:claim-liveness` (a claim's owner is whoever last called), the stale-seat
-refusal (`req:stale-seat-knows` fires against your own previous write) and
-`claim_report` itself (one session reported as N owners).
+IT MEASURES TWO THINGS, which are the two halves of `dec:stateless-seat-handle`.
 
-WHAT IT FINDS TODAY, and it is a baseline failing on purpose in the sense of
-docs/sharpening.md — NOT wired into CI as a pass/fail gate:
+1. MINT-AND-CARRY HOLDS. `mint_seat` once, then two `claim_region` calls under two
+   contributors carrying that handle, then `claim_report`: how many DISTINCT seats
+   did one client produce? One is correct. More than one means seat identity is
+   gone, and with it `cap:claim-liveness` (a claim's owner becomes whoever called
+   last), the stale-seat refusal (`req:stale-seat-knows` firing against your own
+   previous write) and `claim_report` itself (one session reported as N owners).
 
-  stdio                      1 seat   — one process, one service, unaffected
-  http 2025-06-18 (legacy)   1 seat   — Mcp-Session-Id, service per session
-  http 2026-07-28            N seats  — sessionless: rmcp builds a handler per
-                                        REQUEST, so ReflowService::share mints a
-                                        fresh seat on every call
+2. THE BACKSTOP IS LOUD. A claim with NO seat must be REFUSED on a sessionless
+   transport and SERVED on one with a session — and the refusal must name
+   `mint_seat`, or it is a no without a remedy (rule 4). Silently minting a
+   per-request seat is the failure this exists to prevent: it reports success
+   while recording an owner that changes under the caller.
 
-The 2026-07-28 row is not a bug in rmcp and not something a config flag fixes:
+WHAT IT FINDS (green as of 2026-07-30, when the fix landed):
+
+  stdio                      1 seat · no-seat claim SERVED    (session supplies it)
+  http 2025-06-18 (legacy)   1 seat · no-seat claim SERVED    (Mcp-Session-Id)
+  http 2026-07-28            1 seat · no-seat claim REFUSED   (handler per REQUEST)
+
+Note what the third row means: the sessionless transport WORKS, it just requires
+the handle. No config flag could have avoided that —
 `StreamableHttpServerConfig::legacy_session_mode` is documented to apply only to
 protocol versions < 2026-07-28, and "requests negotiating that version are always
-served statelessly regardless of this setting". The CLIENT chooses, so reflow2
-cannot decline. The prescribed replacement is a server-minted handle passed as an
-ordinary tool argument -- which `ClaimReq.seat` already accepts. What is undecided
-is how a client OBTAINS and CARRIES that handle without every tool call growing a
-parameter no human should have to think about; that is the open decision.
+served statelessly regardless of this setting". The CLIENT chooses the version, so
+reflow2 could only decide what identity means once the choice was made.
 
-Exits non-zero while any supported transport gives one client more than one seat.
-When the fix lands this goes green, and it is then worth promoting to a gate.
+Exits non-zero if any transport gives one client more than one seat, if a no-seat
+claim is answered where it should be refused, if one is refused where the session
+could have supplied a seat, or if the refusal fails to say what would have worked.
+It began as a docs/sharpening.md baseline failing on purpose and is now a CI gate
+in the `full` job — an invariant nobody enforces is one that rots.
 
 stdlib only; skips cleanly when the binary is absent.
 """
@@ -234,21 +240,69 @@ def structured(message):
 
 
 def seats_of(client) -> tuple[dict, str | None]:
-    """Two claims from ONE client. Returns {contributor: seat} and any failure."""
+    """Two claims from ONE client, minting a seat first and carrying it.
+
+    Mint-and-carry is what an agent is supposed to do (`dec:stateless-seat-handle`):
+    call `mint_seat` once, keep the handle, pass it on every claim. It is correct on
+    EVERY transport -- in a session the supplied seat simply wins over the one the
+    session would have provided -- which is why the probe does the same thing on all
+    three cases instead of special-casing the sessionless one. If this ever reports
+    more than one distinct seat, mint-and-carry has stopped working.
+
+    Returns {contributor: seat} and any failure.
+    """
     seeded = structured(client.call("add_project", id="proj:seat-probe", name="Seat probe"))
     if "__raw__" in seeded:
         return {}, f"could not seed the graph: {json.dumps(seeded)[:300]}"
+
+    minted = structured(client.call("mint_seat"))
+    seat = minted.get("seat") if isinstance(minted, dict) else None
+    if not seat:
+        return {}, f"mint_seat did not return a seat: {json.dumps(minted)[:300]}"
+
     for contributor in ("probe-one", "probe-two"):
         client.call("add_contributor", id=contributor, name=contributor)
         claimed = structured(client.call(
             "claim_region", contributor_id=contributor, seed_id="proj:seat-probe",
-            depth=1, at="2026-07-30",
+            depth=1, at="2026-07-30", seat=seat,
         ))
         if "__raw__" in claimed:
             return {}, f"claim_region failed: {json.dumps(claimed)[:300]}"
     report = structured(client.call("claim_report"))
     claims = report.get("claims", []) if isinstance(report, dict) else []
     return {c.get("contributor_id"): c.get("seat") for c in claims}, None
+
+
+def refusal_of(client) -> tuple[bool, str]:
+    """Claim with NO seat, and report whether it was refused and how usefully.
+
+    The backstop half of the decision. On a sessionless transport, omitting the
+    seat must FAIL and say what would have worked -- because the alternative,
+    minting one per request, succeeds while recording an owner that changes under
+    the caller. On a session it must SUCCEED, because there the service's own seat
+    genuinely identifies the client and always has.
+
+    Returns (refused, what it said).
+    """
+    client.call("add_contributor", id="probe-bare", name="probe-bare")
+    result = client.call(
+        "claim_region", contributor_id="probe-bare", seed_id="proj:seat-probe",
+        depth=1, at="2026-07-30",
+    )
+    # Kept WHOLE, not truncated: the assertion on this string is that it names the
+    # remedy, and the remedy is at the end of a deliberately explanatory message.
+    # Truncating here reported a real refusal as a rule-4 violation.
+    if isinstance(result, dict) and "error" in result:
+        return True, str(result["error"].get("message", ""))
+    if isinstance(result, dict) and "http_error" in result:
+        return True, f"HTTP {result['http_error']}: {result.get('body', '')}"
+    payload = structured(result)
+    # A tool-level refusal comes back as isError with the reason in `content`.
+    if isinstance(payload, dict) and payload.get("isError"):
+        blocks = payload.get("content") or []
+        said = " ".join(b.get("text", "") for b in blocks if isinstance(b, dict))
+        return True, said
+    return False, json.dumps(payload)[:200]
 
 
 def main() -> int:
@@ -271,6 +325,10 @@ def main() -> int:
                 server = start_http(graph, port)
                 client = HttpClient(f"http://127.0.0.1:{port}/", version)
             seats, problem = seats_of(client)
+            # Both halves of the decision are measured on the SAME live client,
+            # so the refusal check cannot accidentally be answered by a fresh
+            # session that would have had a valid seat anyway.
+            refused, said = (None, "") if problem else refusal_of(client)
             client.close()
         finally:
             if server is not None:
@@ -296,19 +354,50 @@ def main() -> int:
                 f"{client.label}: one client produced {len(distinct)} seats {distinct}"
             )
 
+        # The backstop: omitting the seat must be refused exactly where a
+        # per-request seat would otherwise be minted silently, and allowed
+        # exactly where the session's own seat is genuinely the client's.
+        should_refuse = version is not None and version >= STATELESS
+        if refused == should_refuse:
+            if refused:
+                names_the_fix = "mint_seat" in said
+                print(f"                  ok  {client.label}: a claim with NO seat is refused"
+                      f"{'' if names_the_fix else ' — BUT DOES NOT NAME mint_seat'}")
+                if not names_the_fix:
+                    failures.append(
+                        f"{client.label}: the refusal does not say what would have worked "
+                        f"(rule 4): {said}"
+                    )
+            else:
+                print(f"                  ok  {client.label}: a claim with no seat is served "
+                      f"from the session's own seat, as it always was")
+        elif should_refuse:
+            print(f"     SILENT FALLBACK  {client.label}: a claim with NO seat SUCCEEDED on a "
+                  f"sessionless transport -> {said}")
+            failures.append(
+                f"{client.label}: omitting the seat was answered rather than refused, so the "
+                f"claim's owner changes per request while the call reports success"
+            )
+        else:
+            print(f"        OVER-REFUSAL  {client.label}: a claim with no seat was REFUSED on a "
+                  f"transport that has a session -> {said}")
+            failures.append(
+                f"{client.label}: refused a claim on a transport where the session's own seat "
+                f"is valid — this breaks callers that never needed a seat"
+            )
+
     print("\n" + "=" * 62)
     if failures:
         print("SEAT IDENTITY DOES NOT SURVIVE EVERY SUPPORTED TRANSPORT:")
         for f in failures:
             print(f"  - {f}")
-        print("\nreq:seat-identity-survives-stateless-mcp is the open requirement. The")
-        print("prescribed fix is a server-minted handle passed as an ordinary tool")
-        print("argument; ClaimReq.seat already accepts one. What is undecided is how a")
-        print("client obtains and carries it. Baseline failing on purpose (sharpening.md);")
-        print("NOT a CI gate until the fix lands.")
+        print("\nreq:seat-identity-survives-stateless-mcp and dec:stateless-seat-handle are")
+        print("what this measures: mint_seat once, carry the handle, and a claim with no")
+        print("seat is refused where a per-request one would otherwise be minted silently.")
         print("=" * 62)
         return 1
-    print("ONE CLIENT, ONE SEAT on every supported transport.")
+    print("ONE CLIENT, ONE SEAT on every supported transport — and a claim with no")
+    print("seat is refused exactly where the session cannot supply one.")
     print("=" * 62)
     return 0
 

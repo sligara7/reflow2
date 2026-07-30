@@ -39,7 +39,7 @@
       },
       "seat": {
         "default": null,
-        "description": "Who is claiming, as a SESSION rather than a person — defaults to this\nserver process, which is what makes liveness computable. Pass your own\nonly if you have a durable handle for the session (a fleet worker name);\nit is a name, never a lock.",
+        "description": "Who is claiming, as a SESSION rather than a person. Pass the handle\n`mint_seat` returned; it is a name, never a lock, and it grants no\nrights. Omitting it asks the server to use this session's own seat,\nwhich it can only do when the session outlives the request: on the\nSESSIONLESS transport (MCP 2026-07-28 and later) a handler is built per\nrequest, so omitting it is REFUSED rather than answered with a seat that\nwould change on your next call (`dec:stateless-seat-handle`).",
         "type": [
           "string",
           "null"

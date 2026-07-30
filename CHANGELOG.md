@@ -31,6 +31,40 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`mint_seat`, and `claim_region` now refuses rather than guessing an owner**
+  (`req:seat-identity-survives-stateless-mcp`, `cap:seat-handle`,
+  `dec:stateless-seat-handle` — Anthony chose option (a), mint-and-carry with a
+  loud refusal). `mint_seat` returns a durable name for a session; pass it as
+  `seat` on `claim_region` and reuse it for the whole session.
+
+  **Nothing changes for existing callers.** On stdio and on Streamable HTTP
+  below MCP 2026-07-28 the session already gives the server an identity to hang
+  a claim on, so `seat` stays optional and omitting it behaves exactly as
+  before. `claim_region`'s schema shape is unchanged.
+
+  **On the sessionless transport (2026-07-28 and later) omitting it is
+  refused**, by name, saying to call `mint_seat` — because there rmcp builds a
+  handler per *request*, so a seat minted on your behalf would be a different
+  string on your next call and the claim's owner would change under you. The
+  refusal is the load-bearing half, not a convenience: minting silently
+  *succeeds* while recording an owner that drifts, and `claim_report` would
+  report one session as several owners while liveness stopped meaning anything.
+  Serving a wrong answer quietly is what `req:no-silent-fallback` exists to
+  forbid.
+
+  Verified on the thing itself: `tools/stateless_seat_probe.py` now drives all
+  three transports and checks **both** halves — one client keeps one seat
+  everywhere, and a claim with no seat is refused exactly where the session
+  cannot supply one, with the refusal required to name the remedy. It exits
+  **zero** for the first time, so `ver:stateless-seat` moves to `passing` on its
+  own evidence and the acknowledgement that held it acceptable while failing has
+  been **withdrawn** rather than left standing. Seven Rust cases pin both
+  answers of the transport question, plus the version threshold itself — one of
+  them fails deliberately if a future rmcp moves `ProtocolVersion::LATEST` past
+  2026-07-28, which is the day the sessionless path becomes the default.
+
 ### Changed
 
 - **Upgraded to rmcp 3.0.1** (`dec:rmcp-v3-upgrade`), the release that implements

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:67b299859f99fc6c3bf960606e4f11890b759b3ef58995934e4ca232232c8f48",
+  "content_hash": "sha256:40ef0910b26815549c106e2a34edee8190b266c3a6157c1005c216c815652e82",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -624,6 +624,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:seat-handle",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:claims"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1773,6 +1781,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:seat-handle",
+      "properties": {},
+      "to_id": "epoch:stateless-seat"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:session-context-is-documentation",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -2298,6 +2312,12 @@
       "from_id": "snap:epoch:snapshot-per-revision:req:snapshot-per-revision-not-per-epoch",
       "properties": {},
       "to_id": "epoch:snapshot-per-revision"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:stateless-seat:art:service",
+      "properties": {},
+      "to_id": "epoch:stateless-seat"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3132,6 +3152,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-580ca8a73dc7a322",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-580d509cd2ed1306",
       "properties": {
         "accepted_baseline": true,
@@ -3318,6 +3347,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d7721953336bff19",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -6462,6 +6500,60 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:seat-handle",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seat-handle",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seat-handle",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seat-handle",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:stateless-seat-probe"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seat-handle",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:seat-handle"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seat-handle",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:session-context-is-documentation",
       "properties": {
         "accepted_baseline": false,
@@ -8973,6 +9065,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:seat-per-client"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:set-scoped-acknowledgement-keys-on-its-rule",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:reviewed-defects"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -12350,6 +12451,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:seat-handle",
+      "properties": {},
+      "to_id": "dec:stateless-seat-handle"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:seat-handle",
+      "properties": {},
+      "to_id": "decision:ack:80f8bc457bfe9e16"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:session-memory",
       "properties": {},
       "to_id": "decision:ack:be224976b1f4f6e1"
@@ -13357,6 +13470,12 @@
       "from_id": "art:main",
       "properties": {},
       "to_id": "snap:epoch:rmcp-v3:art:main"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:service",
+      "properties": {},
+      "to_id": "snap:epoch:stateless-seat:art:service"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -22010,6 +22129,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:service",
       "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:seat-handle"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
         "completeness": "partial"
       },
       "to_id": "cap:stale-seat-refusal"
@@ -22077,6 +22204,14 @@
         "completeness": "complete"
       },
       "to_id": "cap:claim-liveness"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:stateless-seat-probe",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:seat-handle"
     },
     {
       "edge_type": "REALIZES",
@@ -22837,6 +22972,18 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:seat-handle",
+      "properties": {},
+      "to_id": "req:seat-identity-survives-stateless-mcp"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:seat-handle",
+      "properties": {},
+      "to_id": "req:seat-per-client"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:session-memory",
       "properties": {},
       "to_id": "req:explains-itself"
@@ -23374,6 +23521,12 @@
       "from_id": "ver:stamp",
       "properties": {},
       "to_id": "cap:stamp"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:stateless-seat",
+      "properties": {},
+      "to_id": "cap:seat-handle"
     },
     {
       "edge_type": "VERIFIES",
@@ -24643,7 +24796,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c5b7664a5df44b99",
+        "checksum": "sha256:9cbea33b6a561a9e",
         "location": "getting-started/skills/parallel-work/SKILL.md",
         "name": "parallel-work/SKILL.md",
         "status": "realized"
@@ -24819,7 +24972,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c32d352e45b82d1227df7b8ed6532a8173981dfe63945b28c3c0b7695c8ab0c0",
+        "checksum": "sha256:42708a4e030e9e6b3f6f022f553d932cdb692f594adadce7bac13854166dd71f",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -24841,7 +24994,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0c26424b1fea0cec87c4e3f53f287c09d946ce8bff8c5ec164873c89603f8afb",
+        "checksum": "sha256:6be9968ad96945043b818352a49e6e2df1b2c9ec55eedd0964db78ffe2db7844",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
         "status": "realized"
@@ -24885,7 +25038,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9202cb90ed2e20d58ec26057394357215b85f40c3ddf98e0c5adfdff59716e18",
+        "checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783",
         "location": "tools/stateless_seat_probe.py",
         "name": "stateless_seat_probe.py",
         "status": "realized"
@@ -26035,6 +26188,19 @@
       }
     },
     {
+      "node_id": "cap:seat-handle",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`mint_seat` returns a durable name for a session; `claim_region` takes it as `seat` and records it as the claim's owner. Where the transport gives the server a session of its own (stdio, Streamable HTTP below MCP 2026-07-28) the seat may be omitted and this session's own seat is used, exactly as before. Where it does not — from 2026-07-28 on, where rmcp builds a handler per REQUEST — omitting it is REFUSED with a message naming `mint_seat`, rather than answered by minting a seat that would differ on the caller's next call. Identity therefore stops being inherited from whatever the transport happened to do and becomes something the caller holds, which works the same on every transport.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A seat is minted on request and carried by the caller, and a claim that cannot name one is refused",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:session-memory",
       "node_type": "Capability",
       "properties": {
@@ -26343,6 +26509,15 @@
       }
     },
     {
+      "node_id": "chg:accept-580ca8a73dc7a322",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-30",
+        "name": "One term added to NON_TOOL_TERMS: `seat` is a FIELD on claim_region, not a tool, and the lint's own failure message prescribed adding it in the same diff. No design meaning — the lint's contract is unchanged. (Corrects an immediately preceding registration that carried a fabricated digest: only the 16-char prefix had been read and the remainder was invented. Registered here from the real sha256sum of the file.)"
+      }
+    },
+    {
       "node_id": "chg:accept-580d509cd2ed1306",
       "node_type": "ChangeEvent",
       "properties": {
@@ -26518,6 +26693,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-28T18:30:00-04:00",
         "name": "v0.18.0 cut: the [reflow2] version field rolled 0.17.0 -> 0.18.0; the dependency pin itself did not move."
+      }
+    },
+    {
+      "node_id": "chg:accept-d7721953336bff19",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-07-30",
+        "name": "One term added to NON_TOOL_TERMS: `seat` is a FIELD on claim_region, not a tool, and the lint's own failure message prescribed adding it in the same diff. No design meaning — the lint's contract is unchanged."
       }
     },
     {
@@ -27308,6 +27492,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Natural-language search proven fixed by a regression-verified test; ver:search-natural-language passing"
+      }
+    },
+    {
+      "node_id": "chg:seat-handle",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "art:service gained mint_seat and the claim_region seat guard"
       }
     },
     {
@@ -29035,7 +29227,7 @@
         "decision": "Accepted the gap gap:350d55cf9c8c3247.",
         "name": "Reviewed: gap:350d55cf9c8c3247",
         "rationale": "Failing ON PURPOSE, and accepted for exactly as long as the fix is unbuilt. `ver:stateless-seat` is the measurement that made the rmcp v3 exposure visible instead of arguable: one client, two claims, count the distinct seats — stdio one, HTTP at 2025-06-18 one, HTTP at 2026-07-28 two. Recording it as `passing` would be the lie; deleting it would restore the blind spot that let every gate stay green through the upgrade.\n\nWhy it is acceptable rather than urgent: no path reflow2 controls reaches the broken one. Claude Code and grok build connect over stdio; `proxy.rs` pins `2025-06-18` on both handshakes, so shared and remote mode still get a session and a seat each; and rmcp's own `ProtocolVersion::LATEST` is still `V_2025_11_25`. Only an external client dialling `--http` and choosing 2026-07-28 itself lands on it, and the 2026-07-28 revision's 12-month feature-lifecycle window applies.\n\nNot open-ended. Anthony chose the fix on 2026-07-30 — mint-and-carry with a loud refusal, option (a) of `dec:stateless-seat-handle`: a tool mints a seat and returns it, the client passes it on the calls that care (`ClaimReq.seat` already accepts one), and a claim-family call arriving on a sessionless transport WITHOUT a seat is refused by name saying what would have worked, rather than silently minting a per-request seat and reporting success — `req:no-silent-fallback` applied to identity. When that lands, this verification flips to passing on its own evidence and this acknowledgement should be withdrawn rather than left standing.",
-        "status": "accepted"
+        "status": "superseded"
       }
     },
     {
@@ -29385,6 +29577,16 @@
         "decision": "Accepted the gap gap:7dfea41c0d708eab.",
         "name": "Reviewed: gap:7dfea41c0d708eab",
         "rationale": "Standing acknowledgement, unchanged in substance and re-stated because the rollup's id moves whenever the capability set does: validation for this project is the trials programme — reflow2 being used on real designs (this repo, storyflow, the fleet) — not a validation-kind Verification per capability. Recording 60 near-identical validation nodes would be ceremony that makes the number go green without anyone having checked anything, which is exactly the dishonesty `dec:passing-is-verified` exists to prevent.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:80f8bc457bfe9e16",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:80f8bc457bfe9e16.",
+        "name": "Reviewed: gap:80f8bc457bfe9e16",
+        "rationale": "Standing policy, not a fresh judgement: Anthony's word from 2026-07-23, re-applied at 33, 34, 35, 36, 37, 38, 39, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 60, 61, 62, 63, 64, 65, 67 capabilities and now 68. Validation for this project is the trials programme — reflow2 used on real designs, logged in docs/trials/ and docs/trials-private/ (the brownfield ophyd-service pass, the greenfield aidrone pass) plus sustained real use of the StoryFlow fleet. Formal validation-kind Verification nodes are not this project's tracking mechanism, and recording 68 near-identical ones would turn the number green without anyone having checked anything — the dishonesty `dec:passing-is-verified` exists to prevent.\n\nApt for the newcomer, `cap:seat-handle`, in a way worth naming. Its verification is unusually strong for a spec-level check: `tools/stateless_seat_probe.py` drives three real transports against the real binary and measures the thing the requirement is about, and seven Rust cases pin both answers of the transport question including the refusal's wording. What none of that establishes is the operational intent — whether an AGENT, mid-session, actually calls `mint_seat` and keeps the handle rather than re-minting per call or omitting it and hitting the refusal. The refusal exists precisely because that failure is expected, and whether the message it prints is enough to change an agent's behaviour is answered by watching a session go wrong, not by a fixture. First real use over a sessionless transport is the trial.\n\nTHE CHURN IS STILL A FINDING, and it now has about twenty instances: this rollup's acknowledgement expires whenever the capability set changes, so it can never stay accepted and is re-recorded every time the design grows. Captured as `req:set-scoped-acknowledgement-keys-on-its-rule` rather than noted in prose for a twenty-first time.",
         "status": "accepted"
       }
     },
@@ -30018,6 +30220,15 @@
         "epoch_type": "revision",
         "name": "A second revision in one epoch stops overwriting the first snapshot (2026-07-29)",
         "sequence": 230
+      }
+    },
+    {
+      "node_id": "epoch:stateless-seat",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The seat becomes a handle the caller carries",
+        "sequence": 232
       }
     },
     {
@@ -33264,6 +33475,21 @@
       }
     },
     {
+      "node_id": "req:set-scoped-acknowledgement-keys-on-its-rule",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "An acknowledgement of a set-scoped gap must not expire merely because the design grew",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A reviewed gap expires when its affected nodes change, so a fresh judgement is asked for when the thing judged has moved. That is right for a gap about specific nodes and wrong for a project-level ROLLUP whose affected set is \"every capability of a certain kind\": there, the set changes every time the design grows, so the acknowledgement can never stay accepted and must be re-recorded forever.\n\nTHE EVIDENCE IS IN THE GRAPH, about twenty times over. `unvalidated_capability` has been acknowledged at 33, 34, 35, 36, 37, 38, 39, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 60, 61, 62, 63, 64, 65, 67 and 68 capabilities, each time with the SAME standing disposition (validation lives in the trials programme) and each time carrying a note that the churn is a finding rather than a decision. Several of those notes say so explicitly — \"whether a set-scoped gap should be identified by its RULE rather than its members is a real question about the ack mechanism\" — and none of them ever became intent, which is why it was written down twenty more times instead of fixed once.\n\nWHAT IT COSTS, and it is not just noise. The `reviewed_gaps` list is the record of what a human consciously accepted, and it now holds twenty near-identical Decisions for one judgement, which makes the genuine ones harder to find. Worse, the re-acknowledgement is a WRITE, so an agent that does the honest thing dirties the design on every capability it adds, and an agent that skips it leaves the gate reporting a finding the user settled in July. Both failure modes are worse than the mechanism being right.\n\nTHE SHAPE OF A FIX IS A CHOICE, not obvious, and this is recorded before it is designed. (a) Key a rollup's acknowledgement on its RULE (`gap_source` plus scope) rather than its member set, so it carries until the rule's disposition changes. (b) Expire only when a member is REMOVED or the disposition's premise changes, not when one is added — additions do not contradict \"validation is tracked elsewhere\". (c) Let an acknowledgement declare its own expiry condition, since `req:reviewed-defects` already established that an accepted item's shape decides whether the acceptance still applies, and a defect acknowledgement already reports `retired` when its shape goes. (d) Treat rollups as a different KIND of gap that is dispositioned once per project rather than acknowledged per occurrence.\n\nNote (c) is the closest sibling: acknowledgement-expiry-by-shape already exists for structural defects and works — four accepted defects correctly reported `retired` on 2026-07-28 when their shapes went away. So this is arguably a gap-side mechanism catching up with the defect-side one, which is a smaller change than it first appears.\n\nCaptured 2026-07-30 while acknowledging the rollup for the twentieth-odd time, during the seat-handle build. NOT built, NOT prioritised, and the choice of shape is Anthony's.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:snapshot-per-revision-not-per-epoch",
       "node_type": "Requirement",
       "properties": {
@@ -33600,6 +33826,16 @@
         "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"A second revision of a node in one epoch must not overwrite the first snapshot\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"req:intent-preserved says the past is never overwritten. Snapshot identity currently breaks that rule whenever a node is revised TWICE within a single epoch, and the loss is silent.\\\\n\\\\nOBSERVED 2026-07-28, by doing it rather than by reading the code. req:build-loop-is-bounded was amended once (chg:iteration-budget-was-elicited, correcting the iteration budget to an elicited value) and later the same day amended again (chg:build-loop-shape-reassessed, demoting the hard stop). Both used record_change against the same epoch:reflow-workflow-review. The snapshot id is deterministic per (epoch, node) — snap:epoch:reflow-workflow-review:req:build-loop-is-bounded — so the SECOND record_change wrote over the first. compare_designs reported it under supporting.changed with base = the original statement and other = the first-amended statement: the snapshot now holds the INTERMEDIATE state, and the state the node held before any amendment survives only in git, in an export committed earlier.\\\\n\\\\nWHY THIS IS WORSE THAN AN ORDINARY BUG. Nothing failed and nothing warned. record_change returned a prior_snapshot both times and looked identical from the caller's side. The design's own history simply lost a version while reporting success, which is precisely the silent-overwrite failure the revise-design discipline exists to prevent — and the discipline was followed exactly. A user doing careful work by the documented procedure loses history and is never told.\\\\n\\\\nIT ALSO BREAKS THE STATED TEST OF A GOOD REVISION. The revise-design skill ends with it: \\\\\\\"afterwards, someone reading the graph can answer what did this say before, when did it change, and why — without git archaeology.\\\\\\\" After two amendments in one epoch that is false: answering it for the first amendment requires git archaeology, which is the exact fallback the skill promises to remove.\\\\n\\\\nTHE SHAPE OF THE FIX IS A CHOICE, and none of the options is obviously right, which is why this is recorded rather than patched. (a) Make snapshot identity per REVISION rather than per (epoch, node) — e.g. include the ChangeEvent id, which is already unique per revision — so every record_change mints a distinct snapshot and HAS_SNAPSHOT becomes one-to-many. Truest to req:intent-preserved; grows the graph faster and makes \\\\\\\"the snapshot for this epoch\\\\\\\" ambiguous where readers currently assume one. (b) REFUSE a second record_change against the same node in the same epoch, directing the caller to open a new epoch. Cheap and loud, and it forces epoch hygiene, but epochs are meant to bound a round of WORK, not a single edit, so this pushes an unrelated concern onto the caller. (c) Keep one snapshot per epoch deliberately, meaning it holds the state at the START of the epoch, and make the second call a no-op rather than an overwrite. Preserves the original, loses the intermediate, and needs the semantics stated somewhere they are currently only implied.\\\\n\\\\nWhichever is chosen, the silence is not defensible: if a revision cannot be snapshotted without discarding an earlier one, the call must say so. Found 2026-07-28 while amending requirements from the reflow workflow review; the amendments themselves are the evidence.\",\"status\":\"proposed\"}",
         "target_id": "req:snapshot-per-revision-not-per-epoch",
         "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:stateless-seat:art:service",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:f5adfb4ad655e5f8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:f5adfb4ad655e5f8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:d10660c4fce94f91\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:b4d9cfc07a00a23eb177af08456bf4cfa7a4225e68cb5a70427d24f26a239129\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:2d3f53e0adc81c65e712be4489e1b889a92c2a75bfdb99566df166c4aa9a2c36\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:ebef7c8a6a4789265fdaafdd1154cd0b22b33a25f73e4944a12e191d29c70384\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:ea68b64a0ace91de3882a84df2579b43831ac14d153bdee3b3d29dd37df30b50\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:b5c6a0fda0f4f7e83c8b522b61e477ca0bee926d906c09582f53e0e90a1ab54e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:06a920acb1904585\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:dd075fc2b016c95c\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:f691ee260346fbeb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:f691ee260346fbeb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:f691ee260346fbeb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:8cf6bd3694ffafe2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:7b4c8bada025ba92\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:read-loop-hint\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:stale-seat-refusal\",\"properties\":{\"completeness\":\"partial\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:c32d352e45b82d1227df7b8ed6532a8173981dfe63945b28c3c0b7695c8ab0c0\",\"location\":\"crates/reflow2-mcp/src/service.rs\",\"name\":\"service.rs\",\"status\":\"realized\"}",
+        "target_id": "art:service",
+        "target_type": "Artifact"
       }
     },
     {
@@ -34453,7 +34689,7 @@
         "level": "system",
         "method": "measurement",
         "name": "One client, one seat — measured per transport and per protocol version",
-        "status": "failing"
+        "status": "passing"
       }
     },
     {
@@ -34537,7 +34773,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d987fcbb0bac015a4e36321f2322cc6ccaf450d390c370b6ed89c5f04a99303c",
+  "prev_content_hash": "sha256:67b299859f99fc6c3bf960606e4f11890b759b3ef58995934e4ca232232c8f48",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

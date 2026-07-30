@@ -2240,3 +2240,152 @@ async fn the_tool_catalogue_finds_a_tool_by_the_job_it_does() {
     assert_eq!(empty["matched"], 0);
     assert!(empty["searched"].as_u64().unwrap() > 50, "it still looked");
 }
+
+// ---------------------------------------------------------------------------
+// The stateless seat handle (dec:stateless-seat-handle, option (a) + backstop).
+//
+// These drive `claim_region_inner`, which is `claim_region` with the transport
+// question already answered, so BOTH answers are exercised without constructing
+// an rmcp `Peer`. The complement assertion below —- one client, one seat -— is
+// the one whose absence let the rmcp v3 upgrade pass every gate while seat
+// identity was already broken.
+// ---------------------------------------------------------------------------
+
+/// A seat to claim with, and something to claim.
+async fn claimable() -> ReflowService {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    j!(s.add_project(Parameters(IdName {
+        id: "proj:seat".into(),
+        name: "Seat".into()
+    })));
+    j!(s.add_contributor(Parameters(ContributorReq {
+        id: "who:ann".into(),
+        name: "Ann".into(),
+        kind: None,
+        handle: None,
+        description: None,
+    })));
+    s
+}
+
+fn claim_of(seat: Option<&str>) -> ClaimReq {
+    ClaimReq {
+        contributor_id: "who:ann".into(),
+        seed_id: "proj:seat".into(),
+        depth: Some(1),
+        note: None,
+        at: Some("2026-07-30".into()),
+        seat: seat.map(str::to_owned),
+    }
+}
+
+#[tokio::test]
+async fn a_claim_with_no_seat_is_refused_when_identity_is_per_request() {
+    let s = claimable().await;
+    let err = s
+        .claim_region_inner(claim_of(None), true)
+        .await
+        .expect_err("a claim whose owner would change per request must be refused");
+    let said = format!("{err:?}");
+    // Rule 4: the refusal has to say what WOULD have worked, or it is just a no.
+    assert!(
+        said.contains("mint_seat"),
+        "the refusal must name the tool that fixes it, got: {said}"
+    );
+    assert!(
+        said.contains("2026-07-28"),
+        "the refusal must say which protocol revision it is about, got: {said}"
+    );
+}
+
+#[tokio::test]
+async fn a_minted_seat_carries_a_claim_on_a_sessionless_transport() {
+    let s = claimable().await;
+    let minted = j!(s.mint_seat());
+    let seat = minted["seat"].as_str().expect("mint_seat returns a seat");
+    assert!(!seat.is_empty());
+
+    let claimed = j!(s.claim_region_inner(claim_of(Some(seat)), true));
+    assert_eq!(
+        claimed["seat"].as_str(),
+        Some(seat),
+        "the claim must be owned by the seat the caller carried, verbatim"
+    );
+}
+
+#[tokio::test]
+async fn in_a_session_a_claim_still_needs_no_seat() {
+    let s = claimable().await;
+    let claimed = j!(s.claim_region_inner(claim_of(None), false));
+    assert!(
+        claimed["seat"].as_str().is_some_and(|v| !v.is_empty()),
+        "in a session the service's own seat identifies the client, as it always did"
+    );
+}
+
+/// THE COMPLEMENT of test_shared_sessions' "two clients get two seats", and the
+/// assertion nothing made until 2026-07-30.
+#[tokio::test]
+async fn two_claims_from_one_session_report_one_seat() {
+    let s = claimable().await;
+    j!(s.add_contributor(Parameters(ContributorReq {
+        id: "who:bob".into(),
+        name: "Bob".into(),
+        kind: None,
+        handle: None,
+        description: None,
+    })));
+    let first = j!(s.claim_region_inner(claim_of(None), false));
+    let mut second = claim_of(None);
+    second.contributor_id = "who:bob".into();
+    let second = j!(s.claim_region_inner(second, false));
+    assert_eq!(
+        first["seat"], second["seat"],
+        "one session is one seat: a seat per claim is what makes claim_report \
+         report one client as several owners"
+    );
+}
+
+#[tokio::test]
+async fn a_supplied_seat_wins_even_inside_a_session() {
+    let s = claimable().await;
+    let claimed = j!(s.claim_region_inner(claim_of(Some("fleet-worker-7")), false));
+    assert_eq!(
+        claimed["seat"].as_str(),
+        Some("fleet-worker-7"),
+        "a durable handle the caller owns is the mechanism, on every transport"
+    );
+}
+
+#[tokio::test]
+async fn an_empty_seat_is_refused_rather_than_quietly_defaulted() {
+    let s = claimable().await;
+    for blank in ["", "   "] {
+        let err = s
+            .claim_region_inner(claim_of(Some(blank)), false)
+            .await
+            .expect_err("an empty owner is not a seat");
+        assert!(
+            format!("{err:?}").contains("empty"),
+            "say that the seat was empty, not something generic"
+        );
+    }
+}
+
+/// `mint_seat` is a name, not a claim: it must leave the design untouched.
+#[tokio::test]
+async fn minting_a_seat_writes_nothing() {
+    let s = claimable().await;
+    let before = j!(s.graph_report());
+    let a = j!(s.mint_seat());
+    let b = j!(s.mint_seat());
+    let after = j!(s.graph_report());
+    assert_eq!(
+        before["node_count"], after["node_count"],
+        "minting a seat must not touch the graph"
+    );
+    assert_ne!(
+        a["seat"], b["seat"],
+        "each mint is a distinct name — that is why one must be KEPT, not re-minted"
+    );
+}

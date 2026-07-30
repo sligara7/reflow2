@@ -15,12 +15,13 @@ use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering};
 
 use rmcp::{
-    ErrorData as McpError, ServerHandler,
+    ErrorData as McpError, RoleServer, ServerHandler,
     handler::server::{router::tool::ToolRouter, wrapper::Parameters},
     model::{
         CallToolResult, ContentBlock, Implementation, ProtocolVersion, ServerCapabilities,
         ServerInfo,
     },
+    service::RequestContext,
     tool, tool_handler, tool_router,
 };
 use schemars::JsonSchema;
@@ -254,6 +255,40 @@ fn node_error(g: &DesignGraph, node_type: &str, e: DynoError) -> McpError {
 /// schema (the wire format is the payload directly).
 fn ok_json<T: serde::Serialize>(value: T) -> Result<CallToolResult, McpError> {
     json_result(envelope(serde_json::to_value(value).map_err(ser_err)?))
+}
+
+/// Does this service instance outlive the request that reached it?
+///
+/// `false` in a session — the ordinary case on stdio and on Streamable HTTP
+/// below `2026-07-28`, where rmcp builds one service per session and
+/// `ReflowService.seat` therefore identifies a client.
+///
+/// `true` from `2026-07-28` on, because that revision removes protocol-level
+/// sessions (SEP-2567) and rmcp consequently builds a handler per REQUEST. The
+/// version is the right discriminator rather than a proxy for one: rmcp's own
+/// `StreamableHttpServerConfig::legacy_session_mode` documents that requests
+/// negotiating `2026-07-28` "are always served statelessly regardless of this
+/// setting", so the CLIENT's negotiated version decides, and no server
+/// configuration can override it.
+///
+/// An ABSENT version reads as a session (`false`). That is the conservative
+/// answer and it is deliberate: absent means the legacy handshake path, where
+/// `protocol_version()` falls back to the peer info recorded at `initialize`.
+/// Reading it as stateless instead would refuse claims on transports that have
+/// worked since the beginning.
+fn identity_is_per_request(ctx: &RequestContext<RoleServer>) -> bool {
+    version_is_per_request(ctx.protocol_version())
+}
+
+/// The threshold itself, split out so it can be pinned by tests without
+/// constructing an rmcp `Peer`. See [`identity_is_per_request`].
+fn version_is_per_request(version: Option<ProtocolVersion>) -> bool {
+    // Compared as strings, the way rmcp's own transport compares them: these are
+    // ISO dates, so lexical order IS version order, and `ProtocolVersion` carries
+    // no numeric ordering to borrow. `>=` rather than `==` so a revision AFTER
+    // 2026-07-28 — which will not restore sessions — is treated as stateless
+    // too, instead of silently falling back to the session assumption.
+    version.is_some_and(|v| v.as_str() >= ProtocolVersion::STANDARD_HEADERS.as_str())
 }
 
 /// How much rendered node JSON one `scan_nodes` reply will carry before it stops
@@ -536,10 +571,13 @@ pub struct ClaimReq {
     /// Timestamp; the core takes no clock, so the caller supplies it.
     #[serde(default)]
     pub at: Option<String>,
-    /// Who is claiming, as a SESSION rather than a person — defaults to this
-    /// server process, which is what makes liveness computable. Pass your own
-    /// only if you have a durable handle for the session (a fleet worker name);
-    /// it is a name, never a lock.
+    /// Who is claiming, as a SESSION rather than a person. Pass the handle
+    /// `mint_seat` returned; it is a name, never a lock, and it grants no
+    /// rights. Omitting it asks the server to use this session's own seat,
+    /// which it can only do when the session outlives the request: on the
+    /// SESSIONLESS transport (MCP 2026-07-28 and later) a handler is built per
+    /// request, so omitting it is REFUSED rather than answered with a seat that
+    /// would change on your next call (`dec:stateless-seat-handle`).
     #[serde(default)]
     pub seat: Option<String>,
 }
@@ -2388,7 +2426,23 @@ impl ReflowService {
     pub async fn claim_region(
         &self,
         Parameters(req): Parameters<ClaimReq>,
+        ctx: RequestContext<RoleServer>,
     ) -> Result<CallToolResult, McpError> {
+        // The transport decides, per request, whether this service instance is a
+        // session or a one-shot — so the check belongs here and the logic below
+        // stays a plain fn the tests can drive both ways.
+        self.claim_region_inner(req, identity_is_per_request(&ctx))
+            .await
+    }
+
+    /// `claim_region` with the transport question already answered, so both
+    /// answers are unit-testable without constructing an rmcp `Peer`.
+    pub async fn claim_region_inner(
+        &self,
+        req: ClaimReq,
+        identity_is_per_request: bool,
+    ) -> Result<CallToolResult, McpError> {
+        let seat = self.seat_for_claim(req.seat.as_deref(), identity_is_per_request)?;
         let mut g = self.write_lock().await;
         ok_json(
             g.claim_region(
@@ -2397,12 +2451,98 @@ impl ReflowService {
                 req.depth.unwrap_or(2),
                 req.note.as_deref(),
                 req.at.as_deref(),
-                // This session's seat unless the caller names its own — a fleet
-                // worker with a durable handle, say. Never the process's.
-                Some(req.seat.as_deref().unwrap_or(&self.seat)),
+                Some(&seat),
             )
             .map_err(dyno_err)?,
         )
+    }
+
+    /// Which seat owns a claim — and the one place that refuses rather than
+    /// guesses (`dec:stateless-seat-handle`, option (a) with (d)'s backstop).
+    ///
+    /// A caller-supplied seat always wins: it is a durable handle the caller
+    /// owns, which is the whole mechanism, and it works identically on every
+    /// transport.
+    ///
+    /// Without one, the answer depends on whether this service instance
+    /// outlives the request. In a session it does, so `self.seat` IS this
+    /// client's identity and is used exactly as before. Under the sessionless
+    /// transport it does not: rmcp builds a handler per REQUEST, so `self.seat`
+    /// was minted moments ago and will be a different string on the caller's
+    /// very next call. Recording that would produce a claim whose owner changes
+    /// per request — `claim_report` showing one session as several owners, a
+    /// stale-seat refusal firing against your own previous write, and liveness
+    /// meaning nothing — all while every call returned success.
+    ///
+    /// So it refuses. That is the load-bearing half of the decision, not a
+    /// convenience: minting silently is the failure this design objects to most
+    /// (`req:no-silent-fallback`), because a claim that looks held and is not is
+    /// worse than a claim the caller was told to make properly.
+    fn seat_for_claim(
+        &self,
+        supplied: Option<&str>,
+        identity_is_per_request: bool,
+    ) -> Result<String, McpError> {
+        match supplied {
+            Some(seat) if !seat.trim().is_empty() => Ok(seat.to_owned()),
+            // An explicitly empty seat is the caller trying to say something and
+            // failing, not the caller omitting it. Say so rather than falling
+            // back to a default they did not ask for.
+            Some(_) => Err(McpError::invalid_params(
+                "`seat` was given but is empty. Omit it to use this session's seat, or pass the \
+                 handle `mint_seat` returned. An empty owner is not a seat."
+                    .to_string(),
+                None,
+            )),
+            None if identity_is_per_request => Err(McpError::invalid_params(
+                format!(
+                    "this request negotiated MCP {stateless}, where the transport has no sessions: \
+                     rmcp builds a handler per REQUEST, so a seat minted here would be a different \
+                     string on your very next call and this claim's owner would change under you. \
+                     WHAT WORKS: call `mint_seat` once, keep the `seat` it returns for the life of \
+                     your session, and pass it as `seat` to `claim_region` (and to any tool that \
+                     takes one). reflow2 will not mint one for you here — a claim that looks held \
+                     and is not is worse than being told to claim it properly \
+                     (req:seat-per-client, dec:stateless-seat-handle).",
+                    stateless = ProtocolVersion::STANDARD_HEADERS.as_str(),
+                ),
+                None,
+            )),
+            None => Ok(self.seat.clone()),
+        }
+    }
+
+    #[tool(
+        description = "Mint a seat: a durable name for THIS session, to pass as `seat` on the \
+                       tools that record who is working (claim_region). Call it once, keep the \
+                       value, reuse it — a new seat per call is what it exists to avoid. \
+                       WHEN YOU NEED IT: on the sessionless transport (MCP 2026-07-28 and later) \
+                       the server builds a handler per REQUEST, so it cannot tell your second \
+                       call from another client's first, and claim_region REFUSES rather than \
+                       guess. On stdio and on legacy Streamable HTTP the session already supplies \
+                       one and you can omit `seat` entirely — calling this anyway is harmless and \
+                       works the same, which is why an agent that always mints is never wrong. \
+                       Writes NOTHING: a seat is a name assigned with no coordination \
+                       (dec:identity-out-of-band), never a lock, and it grants no rights.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn mint_seat(&self) -> Result<CallToolResult, McpError> {
+        let seat = reflow2_core::identity::mint_seat();
+        ok_json(json!({
+            "seat": seat,
+            // Said in-band because the reason to keep it is not obvious from the
+            // value, and an agent that re-mints per call reintroduces the bug.
+            "carry_it": "Pass this as `seat` on claim_region for the rest of this session. \
+                         Minting a fresh one per call is the failure mode this prevents.",
+            // Liveness reads the host and pid encoded in the seat, and that pid
+            // is the SERVER's — so a seat stays live while the server lives,
+            // whichever transport carried it. Stated so nobody reads
+            // claim_report's `liveness` as a claim about the CLIENT still being
+            // there; it never was, on any transport.
+            "liveness_is_the_server": "claim_report computes liveness from the host and pid in \
+                                       this seat, which are the serving process's. It says the \
+                                       server that minted the seat is alive, not that you are.",
+        }))
     }
 
     #[tool(
@@ -4773,5 +4913,71 @@ impl ServerHandler for ReflowService {
                     .unwrap_or_default(),
                 crate::skills::catalogue()
             ))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// The threshold that decides whether reflow2 can trust `self.seat`.
+    ///
+    /// Pinned as a test because it is a claim about someone else's protocol, and
+    /// the cost of getting it wrong is asymmetric in both directions: too low
+    /// refuses claims on transports that have always worked, too high records
+    /// claims whose owner changes per request while reporting success.
+    #[test]
+    fn only_2026_07_28_and_later_make_identity_per_request() {
+        for legacy in [
+            ProtocolVersion::V_2024_11_05,
+            ProtocolVersion::V_2025_03_26,
+            ProtocolVersion::V_2025_06_18,
+            ProtocolVersion::V_2025_11_25,
+        ] {
+            assert!(
+                !version_is_per_request(Some(legacy.clone())),
+                "{} still has protocol sessions, so this session's seat identifies a client",
+                legacy.as_str()
+            );
+        }
+        assert!(
+            version_is_per_request(Some(ProtocolVersion::V_2026_07_28)),
+            "2026-07-28 removes sessions (SEP-2567), so a handler is built per request"
+        );
+    }
+
+    /// A revision after 2026-07-28 will not bring sessions back, so the check
+    /// must not read a newer version as "unknown, assume a session".
+    #[test]
+    fn a_version_after_the_threshold_is_also_per_request() {
+        // Built by deserializing, because `ProtocolVersion`'s field is private and
+        // a version reaching this code always arrived off the wire anyway.
+        let future: ProtocolVersion =
+            serde_json::from_value(json!("2027-01-01")).expect("a protocol version deserializes");
+        assert!(version_is_per_request(Some(future)));
+    }
+
+    /// Absent means the legacy handshake path, where `protocol_version()` falls
+    /// back to peer info recorded at `initialize`. Reading it as stateless would
+    /// refuse claims on every transport that predates the question.
+    #[test]
+    fn an_absent_version_reads_as_a_session_not_as_stateless() {
+        assert!(!version_is_per_request(None));
+    }
+
+    /// LATEST is what rmcp reports when a client names nothing, and today it is
+    /// still 2025-11-25. If a future rmcp bump moves LATEST past the threshold,
+    /// this fails — which is the warning worth having, because that is the day
+    /// the default client stops being able to claim without a seat.
+    #[test]
+    fn rmcps_latest_does_not_yet_cross_the_threshold() {
+        assert!(
+            !version_is_per_request(Some(ProtocolVersion::LATEST)),
+            "rmcp's LATEST ({}) has reached {}: the sessionless path is now the DEFAULT, so \
+             mint_seat stops being advisory and every claiming client needs one. Re-read \
+             dec:stateless-seat-handle before changing this expectation.",
+            ProtocolVersion::LATEST.as_str(),
+            ProtocolVersion::STANDARD_HEADERS.as_str()
+        );
     }
 }

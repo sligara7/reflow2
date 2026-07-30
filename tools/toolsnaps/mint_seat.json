@@ -1,0 +1,11 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Mint a seat: a durable name for THIS session, to pass as `seat` on the tools that record who is working (claim_region). Call it once, keep the value, reuse it — a new seat per call is what it exists to avoid. WHEN YOU NEED IT: on the sessionless transport (MCP 2026-07-28 and later) the server builds a handler per REQUEST, so it cannot tell your second call from another client's first, and claim_region REFUSES rather than guess. On stdio and on legacy Streamable HTTP the session already supplies one and you can omit `seat` entirely — calling this anyway is harmless and works the same, which is why an agent that always mints is never wrong. Writes NOTHING: a seat is a name assigned with no coordination (dec:identity-out-of-band), never a lock, and it grants no rights.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "name": "mint_seat"
+}
