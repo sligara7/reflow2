@@ -1212,8 +1212,10 @@ pub struct DefectIdReq {
 #[serde(deny_unknown_fields)]
 pub struct InterfaceDesignationReq {
     pub interface_id: String,
-    /// `internal` (the default state) or `published` — a boundary others are
-    /// entitled to rely on.
+    /// `internal` (the default state), `published` (a boundary others are
+    /// entitled to rely on), `required` (one this design needs FROM OUTSIDE), or
+    /// `both`. Pairing matches complements: published/both against
+    /// required/both (`req:complementary-pairing`).
     pub designation: String,
 }
 
@@ -1222,9 +1224,17 @@ pub struct InterfaceDesignationReq {
 pub struct SeamReportReq {
     /// The other design, as a published-surface or full export document.
     pub design: serde_json::Map<String, JsonValue>,
-    /// Which boundary of ours answers which of theirs. Supplied rather than
-    /// computed, because the subscribe side is not declarable yet.
+    /// Which boundary of ours answers which of theirs. `pair_designs` computes
+    /// these from complementary roles since 2026-07-30; supply them by hand only
+    /// when a design has not declared its roles yet.
     pub pairs: Vec<SeamPairDto>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct PairDesignsReq {
+    /// The other design, as a published-surface or full export document.
+    pub design: serde_json::Map<String, JsonValue>,
 }
 
 #[derive(Debug, Default, Deserialize, JsonSchema)]
@@ -3157,14 +3167,21 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Designate an Interface as a PUBLISHED boundary others may rely on, or back \
-                       to INTERNAL plumbing its owner may change freely. An Interface is internal \
-                       until someone says otherwise, because publishing is a commitment. This is \
-                       the distinction a systems-engineering ICD publishes and that MOSA calls a \
-                       modular system interface — and it is READ, not just stored: propagate \
-                       reports which published boundaries a change crosses, so \"is this part \
-                       severable\" is computed instead of asserted. It is NOT a claim that the \
-                       boundary has held; whether it stayed stable is its drift history.",
+        description = "Give an Interface its external ROLE, which is what makes composition \
+                       computable: `published` (this design OFFERS the contract and others may \
+                       rely on it), `required` (this design NEEDS one of these FROM OUTSIDE), \
+                       `both` (rare, and therefore meaningful), or `internal` (plumbing its owner \
+                       may change freely). An Interface is internal until someone says otherwise, \
+                       because publishing is a commitment. `published` is the distinction a \
+                       systems-engineering ICD publishes and that MOSA calls a modular system \
+                       interface. THE ROLE IS ON THE INTERFACE, NOT THE COMPONENT: a component \
+                       both publishes and subscribes, so a per-node role collapses to `both` and \
+                       pairs with everything (dec:pairing-role-placement). It is READ, not just \
+                       stored: propagate reports which published boundaries a change crosses so \
+                       \"is this part severable\" is computed instead of asserted, and pair_designs \
+                       matches `published`/`both` against `required`/`both` to compute a seam. \
+                       NOT a claim the boundary has held; whether it stayed stable is its drift \
+                       history.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_interface_designation(
@@ -3176,6 +3193,40 @@ impl ReflowService {
             g.set_interface_designation(&req.interface_id, &req.designation)
                 .map_err(dyno_err)?,
         ))
+    }
+
+    #[tool(
+        description = "Compute the seam between this design and another by COMPLEMENTARY ROLE, \
+                       instead of hand-asserting which boundaries correspond. Each boundary \
+                       declares a role on `Interface.designation` and pairing matches \
+                       COMPLEMENTS — `published`/`both` against `required`/`both` — never like \
+                       with like, the way a base pairs with its complement and not a copy of \
+                       itself. Two boundaries pair when their NAMES match fuzzily AND they agree \
+                       on medium, transport_security and auth. FIVE OUTCOMES, all useful: paired \
+                       (the seam, computed); CONFLICTS, where the names match but the axes refuse \
+                       — reported with EVERY refusing axis, never dropped as a non-match, because \
+                       \"you publish this, I need this, and we cannot connect as either is built\" \
+                       is the finding worth having; unmet needs (we require it, nobody publishes \
+                       it — the loudest signal); dead surface (they publish it, nobody here needs \
+                       it); and duplicate providers (two publishers of one need is a conflict, \
+                       not a match). Uncertain name matches are CANDIDATES to ask about, never \
+                       actions. Boundaries carrying no role are counted and NAMED, because \
+                       `internal` is the DEFAULT and cannot tell \"deliberately internal\" from \
+                       \"never classified\" — otherwise a design that did no labelling reports a \
+                       clean seam. Feed `paired` to seam_report to learn whether the full \
+                       contracts agree (req:complementary-pairing).",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn pair_designs(
+        &self,
+        Parameters(req): Parameters<PairDesignsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let other: reflow2_core::GraphExport =
+            serde_json::from_value(JsonValue::Object(req.design)).map_err(|e| {
+                McpError::invalid_params(format!("not an export document: {e}"), None)
+            })?;
+        let g = self.graph.read().await;
+        ok_json(g.pair_designs(&other).map_err(dyno_err)?)
     }
 
     #[tool(

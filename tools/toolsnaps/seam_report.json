@@ -33,7 +33,7 @@
         "type": "object"
       },
       "pairs": {
-        "description": "Which boundary of ours answers which of theirs. Supplied rather than\ncomputed, because the subscribe side is not declarable yet.",
+        "description": "Which boundary of ours answers which of theirs. `pair_designs` computes\nthese from complementary roles since 2026-07-30; supply them by hand only\nwhen a design has not declared its roles yet.",
         "items": {
           "$ref": "#/$defs/SeamPairDto"
         },

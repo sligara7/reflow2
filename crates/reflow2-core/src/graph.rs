@@ -780,12 +780,14 @@ impl DesignGraph {
         interface_id: &str,
         designation: &str,
     ) -> Result<StoredNode, DynoError> {
-        if !matches!(designation, "internal" | "published") {
+        if !matches!(designation, "internal" | "published" | "required" | "both") {
             return Err(DynoError::Validation {
                 node_type: node::INTERFACE.into(),
                 property: "designation".into(),
                 message: format!(
-                    "'{designation}' is not an Interface designation (one of internal, published)"
+                    "'{designation}' is not an Interface designation (one of internal, published, \
+                     required, both). `published` offers the contract, `required` needs one from \
+                     outside, `both` does each, `internal` is plumbing nobody outside sees."
                 ),
             });
         }
@@ -864,16 +866,52 @@ impl DesignGraph {
     }
 
     /// The published boundaries in this design, by id — the set impact analysis
-    /// checks a blast radius against.
+    /// checks a blast radius against, and the OFFER side of pairing.
+    ///
+    /// `both` counts: a boundary that offers and needs is still offered, and
+    /// omitting it here would hide a real published surface from impact analysis
+    /// the moment anyone used the value.
     pub fn published_interfaces(&self) -> Result<std::collections::BTreeSet<String>, DynoError> {
+        self.interfaces_designated(&["published", "both"])
+    }
+
+    /// The boundaries this design NEEDS from outside, by id — the SUBSCRIBE side
+    /// of pairing (`req:complementary-pairing`), and the half that did not exist
+    /// until 2026-07-30.
+    ///
+    /// `both` counts here too, for the mirror of the reason above.
+    pub fn required_interfaces(&self) -> Result<std::collections::BTreeSet<String>, DynoError> {
+        self.interfaces_designated(&["required", "both"])
+    }
+
+    /// Boundaries carrying no external role, by id.
+    ///
+    /// Reported rather than silently skipped: `internal` is the DEFAULT, so it
+    /// cannot distinguish "deliberately internal" from "nobody classified this",
+    /// and a design that never did the labelling would otherwise pair with
+    /// nothing and report a clean seam — the blindness `cap:coverage` exists to
+    /// end.
+    pub fn unclassified_interfaces(&self) -> Result<std::collections::BTreeSet<String>, DynoError> {
+        self.interfaces_designated(&["internal"])
+    }
+
+    fn interfaces_designated(
+        &self,
+        roles: &[&str],
+    ) -> Result<std::collections::BTreeSet<String>, DynoError> {
         Ok(self
             .scan_nodes(node::INTERFACE)?
             .into_iter()
             .filter(|n| {
-                n.properties
+                // Absent reads as the schema default rather than as "no role",
+                // so a graph written before this property existed behaves as it
+                // always did instead of vanishing from every set at once.
+                let d = n
+                    .properties
                     .get("designation")
                     .and_then(Value::as_str)
-                    .is_some_and(|d| d == "published")
+                    .unwrap_or("internal");
+                roles.contains(&d)
             })
             .map(|n| n.node_id)
             .collect())
