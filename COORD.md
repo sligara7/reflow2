@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- Complementary pairing (`req:complementary-pairing`) — @ajs — since 2026-07-30 — schema/structure.yaml (`designation` gains `required`/`both`), crates/reflow2-core/src/{graph,seam}.rs, crates/reflow2-mcp/src/service.rs, tests; branch `feat/complementary-pairing`
+
 
 
 
