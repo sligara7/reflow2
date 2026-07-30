@@ -31,6 +31,42 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Removed
+
+- **Nine proposed requirements retired as "considered, but not accepted"**
+  (`dec:proposed-requirements-pruned`). Twenty-six sat at `proposed`; nine are
+  now `dropped` — kept on the record with their full statements and a snapshot
+  of their final state, not deleted, because the captures were real and several
+  were found by measurement. `dropped` also stops them raising
+  `unsatisfied_requirement`, so the open list means what it says again.
+
+  Seven went as not value-adding: two that record a *doubt* rather than a need
+  and say so in their own names (`drift-rolls-up-to-a-score`,
+  `framework-is-chosen-not-defaulted`); two that are backlog hygiene dressed as
+  product requirements (`friction-has-a-baseline`, `friction-has-a-severity-bar`);
+  one whose acute half `cap:bounded-reads` already answers
+  (`context-is-a-modelled-quantity`); one purely speculative
+  (`blocking-is-partial`); and one redundant with the already-delivered
+  `req:coverage-visible` (`adopt-says-how-much-it-got`).
+
+  Two were folded into `req:defaults-do-not-assert`, which states the rule they
+  restate — *the schema must not declare what nothing reads or checks*:
+  `edge-defaults-do-not-assert` and `functional-vocabulary-computes`.
+
+  **A correction worth reading, made mid-execution.**
+  `req:supporting-is-not-conflict` was proposed as a third fold on the grounds
+  that it had exactly one edge and was "an orphan in all but name". That edge
+  was an incoming `SATISFIES` from `cap:supporting-is-not-conflict`, which is
+  **realized** — the requirement was *delivered*, and its status had simply never
+  moved off `proposed`. It is now `accepted`. Low edge count was read as low
+  value; for a requirement that has been built, edge count is exactly backwards.
+
+  Structural isolation turned out to be evidence about **wiring**, never about
+  worth, in both directions: it over-accused four parked captures that are good
+  ideas, and under-accused one that was already shipped. Disconnected islands
+  fell from 6 to 3 as a side effect; the three that remain are one coherent
+  planning cluster that wants wiring, not retiring.
+
 ### Added
 
 - **`set_project_mode`, and reflow2's own project is now `rigid`**

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b382a73dc5e49577d6dc1938b65210df3738e2d5c0eeeb6326fd773ea8458c8d",
+  "content_hash": "sha256:de6e8691eeff9c7e16335eb43a24c51806f11a3989ee300000d9b0fb4f19cac7",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1725,6 +1725,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:prune-proposed",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:publishable-promise",
       "properties": {},
       "to_id": "epoch:linking-repos"
@@ -2292,6 +2298,78 @@
       "from_id": "snap:epoch:mode-chosen:proj:reflow2",
       "properties": {},
       "to_id": "epoch:mode-chosen"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:prune-proposed:dec:proposed-requirements-pruned",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:prune-proposed:req:adopt-says-how-much-it-got",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:prune-proposed:req:blocking-is-partial",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:prune-proposed:req:context-is-a-modelled-quantity",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:prune-proposed:req:defaults-do-not-assert",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:prune-proposed:req:drift-rolls-up-to-a-score",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:prune-proposed:req:edge-defaults-do-not-assert",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:prune-proposed:req:framework-is-chosen-not-defaulted",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:prune-proposed:req:friction-has-a-baseline",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:prune-proposed:req:friction-has-a-severity-bar",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:prune-proposed:req:functional-vocabulary-computes",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:prune-proposed:req:supporting-is-not-conflict",
+      "properties": {},
+      "to_id": "epoch:prune-proposed"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6141,6 +6219,114 @@
         "action": "modified"
       },
       "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:prune-proposed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:proposed-requirements-pruned"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:prune-proposed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "req:adopt-says-how-much-it-got"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:prune-proposed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "req:blocking-is-partial"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:prune-proposed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "req:context-is-a-modelled-quantity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:prune-proposed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:defaults-do-not-assert"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:prune-proposed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "req:drift-rolls-up-to-a-score"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:prune-proposed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "req:edge-defaults-do-not-assert"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:prune-proposed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "req:framework-is-chosen-not-defaulted"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:prune-proposed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "req:friction-has-a-baseline"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:prune-proposed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "req:friction-has-a-severity-bar"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:prune-proposed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "req:functional-vocabulary-computes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:prune-proposed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "req:supporting-is-not-conflict"
     },
     {
       "edge_type": "CHANGED",
@@ -13201,6 +13387,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "req:adopt-says-how-much-it-got",
       "properties": {},
+      "to_id": "dec:proposed-requirements-pruned"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:adopt-says-how-much-it-got",
+      "properties": {},
       "to_id": "decision:ack:3a667fe34b66bffd"
     },
     {
@@ -13208,6 +13400,12 @@
       "from_id": "req:assumptions-are-first-class",
       "properties": {},
       "to_id": "decision:ack:9ff80e5afcd024e9"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:blocking-is-partial",
+      "properties": {},
+      "to_id": "dec:proposed-requirements-pruned"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -13267,6 +13465,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "req:context-is-a-modelled-quantity",
       "properties": {},
+      "to_id": "dec:proposed-requirements-pruned"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:context-is-a-modelled-quantity",
+      "properties": {},
       "to_id": "decision:ack:755a5d5272eb702d"
     },
     {
@@ -13280,6 +13484,12 @@
       "from_id": "req:decomposition-covers-its-parent",
       "properties": {},
       "to_id": "decision:ack:1947285897ace4dc"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:defaults-do-not-assert",
+      "properties": {},
+      "to_id": "dec:proposed-requirements-pruned"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -13327,7 +13537,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "req:drift-rolls-up-to-a-score",
       "properties": {},
+      "to_id": "dec:proposed-requirements-pruned"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:drift-rolls-up-to-a-score",
+      "properties": {},
       "to_id": "decision:ack:378cbdafd1fa41fb"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:edge-defaults-do-not-assert",
+      "properties": {},
+      "to_id": "dec:proposed-requirements-pruned"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -13339,7 +13561,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "req:framework-is-chosen-not-defaulted",
       "properties": {},
+      "to_id": "dec:proposed-requirements-pruned"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:framework-is-chosen-not-defaulted",
+      "properties": {},
       "to_id": "decision:ack:967cb35c16df7571"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:friction-has-a-baseline",
+      "properties": {},
+      "to_id": "dec:proposed-requirements-pruned"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -13351,7 +13585,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "req:friction-has-a-severity-bar",
       "properties": {},
+      "to_id": "dec:proposed-requirements-pruned"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:friction-has-a-severity-bar",
+      "properties": {},
       "to_id": "decision:ack:2ef80cfd8036988f"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:functional-vocabulary-computes",
+      "properties": {},
+      "to_id": "dec:proposed-requirements-pruned"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -13669,6 +13915,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:proposed-requirements-pruned",
+      "properties": {},
+      "to_id": "snap:epoch:prune-proposed:dec:proposed-requirements-pruned"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:stateless-seat-handle",
       "properties": {},
       "to_id": "snap:epoch:rmcp-v3:dec:stateless-seat-handle"
@@ -13687,9 +13939,27 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:adopt-says-how-much-it-got",
+      "properties": {},
+      "to_id": "snap:epoch:prune-proposed:req:adopt-says-how-much-it-got"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:blocking-is-partial",
+      "properties": {},
+      "to_id": "snap:epoch:prune-proposed:req:blocking-is-partial"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "req:build-loop-is-bounded",
       "properties": {},
       "to_id": "snap:epoch:reflow-workflow-review:req:build-loop-is-bounded"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:context-is-a-modelled-quantity",
+      "properties": {},
+      "to_id": "snap:epoch:prune-proposed:req:context-is-a-modelled-quantity"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -13699,15 +13969,57 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:defaults-do-not-assert",
+      "properties": {},
+      "to_id": "snap:epoch:prune-proposed:req:defaults-do-not-assert"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:drift-rolls-up-to-a-score",
+      "properties": {},
+      "to_id": "snap:epoch:prune-proposed:req:drift-rolls-up-to-a-score"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "req:drift-rolls-up-to-a-score",
       "properties": {},
       "to_id": "snap:epoch:reflow-workflow-review:req:drift-rolls-up-to-a-score"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:edge-defaults-do-not-assert",
+      "properties": {},
+      "to_id": "snap:epoch:prune-proposed:req:edge-defaults-do-not-assert"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:framework-is-chosen-not-defaulted",
+      "properties": {},
+      "to_id": "snap:epoch:prune-proposed:req:framework-is-chosen-not-defaulted"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "req:framework-is-chosen-not-defaulted",
       "properties": {},
       "to_id": "snap:epoch:reflow-workflow-review:req:framework-is-chosen-not-defaulted"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:friction-has-a-baseline",
+      "properties": {},
+      "to_id": "snap:epoch:prune-proposed:req:friction-has-a-baseline"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:friction-has-a-severity-bar",
+      "properties": {},
+      "to_id": "snap:epoch:prune-proposed:req:friction-has-a-severity-bar"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:functional-vocabulary-computes",
+      "properties": {},
+      "to_id": "snap:epoch:prune-proposed:req:functional-vocabulary-computes"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -13738,6 +14050,12 @@
       "from_id": "req:snapshot-per-revision-not-per-epoch",
       "properties": {},
       "to_id": "snap:epoch:snapshot-per-revision:req:snapshot-per-revision-not-per-epoch"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:supporting-is-not-conflict",
+      "properties": {},
+      "to_id": "snap:epoch:prune-proposed:req:supporting-is-not-conflict"
     },
     {
       "edge_type": "INCLUDES",
@@ -27589,6 +27907,14 @@
       }
     },
     {
+      "node_id": "chg:prune-proposed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "req:defaults-do-not-assert absorbs the edge and vocabulary cases"
+      }
+    },
+    {
       "node_id": "chg:publishable-promise",
       "node_type": "ChangeEvent",
       "properties": {
@@ -29037,6 +29363,16 @@
       }
     },
     {
+      "node_id": "dec:proposed-requirements-pruned",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony's word, 2026-07-30, after asking for the open requirements to be strongly scrutinised: an unaccepted requirement that is not value-adding and only causes confusion should be retired as \"considered, but not accepted\" rather than carried. NINE of twenty-six went. All are `dropped`, not deleted: the capture was real and the reasoning is worth keeping, so each keeps its full statement and a snapshot of its final state on the timeline (`epoch:prune-proposed`).\n\nDROPPED AS NOT VALUE-ADDING (7).\n\n`req:drift-rolls-up-to-a-score` and `req:framework-is-chosen-not-defaulted` — both record a DOUBT rather than a need, and say so in their own names: \"probably NOT from a single scalar\" and \"a framework registry is probably the wrong fix\". A requirement that argues against its own mechanism is a Decision wearing the wrong hat. The live fact inside the second (`Project.domain` is written and never read) survives inside `req:defaults-do-not-assert`.\n\n`req:friction-has-a-baseline` and `req:friction-has-a-severity-bar` — measuring reflow2's own usability against a baseline, and a threshold at which friction becomes scheduled work. Both are backlog hygiene dressed as product requirements: the answer to unconverted friction reports is to act on them, not to model them.\n\n`req:context-is-a-modelled-quantity` — `cap:bounded-reads` already answers the acute version, where a read that would not fit says so and names what it withheld. What remained was design-time estimation, which the requirement's own text calls the weak half.\n\n`req:blocking-is-partial` — freezing drifted work while the rest proceeds. Nobody has been hurt by the all-or-nothing gate; speculative.\n\n`req:adopt-says-how-much-it-got` — REDUNDANT with `req:coverage-visible`, which is accepted and delivered by `cap:coverage`.\n\nFOLDED INTO `req:defaults-do-not-assert` (2). `req:edge-defaults-do-not-assert` and `req:functional-vocabulary-computes` restate one rule — node defaults, edge defaults and declared-but-unread vocabulary are the same defect: THE SCHEMA MUST NOT DECLARE WHAT NOTHING READS OR CHECKS. Their measured evidence is preserved inside the surviving requirement rather than lost with them.\n\nA CORRECTION MADE DURING EXECUTION, kept on the record because the reasoning that produced it was wrong in an instructive way. `req:supporting-is-not-conflict` was proposed for folding as the third member, on the grounds that it had exactly ONE edge and was \"an orphan in all but name\". That single edge was an incoming SATISFIES from `cap:supporting-is-not-conflict`, which is `realized` — the contradiction detector already reads `alignment`. So the requirement was not an orphan; it was DELIVERED, and its status had simply never moved off `proposed`. It is now `accepted`. Low edge count was read as low value, and for a requirement that has been built, edge count is exactly backwards: a delivered requirement needs only one edge, the one from the thing that delivered it.\n\nNOT TOUCHED, and worth recording why. The 2026-07-28 planning cluster — `req:epochs-can-be-planned`, `req:plans-move-honestly`, `req:version-combination-is-an-object`, `req:graph-indexes-snapshots` — are Anthony's own ideas, quoting him directly (the Black-Scholes analogy for plan volatility, \"in systems engineering, I think this would be 2 views of the same system\"). They are structurally disconnected, but that means CAPTURED AND NEVER WIRED, not low value. The fix for those is to wire them, not to retire them. `req:assumptions-are-first-class` (ordinary risk practice) and `req:correspondence-rules-are-stateable` (ISO/IEC/IEEE 42010) likewise stand.",
+        "name": "Nine proposed requirements considered and not accepted — seven dropped, two folded into one rule",
+        "rationale": "The prompt was his: \"if some of them are not value added and just cause confusion, then we don't have to do them — we can retire them as considered, but not accepted.\"\n\nThe test applied to each was whether the requirement would change what anyone BUILDS. A requirement that records a doubt does not; it records that a mechanism looked wrong, which is a Decision. A requirement that restates one already accepted does not; it splits one thread in two. A requirement that describes how the project should manage itself does not; it is process. What survived is everything with a code citation, a real incident, or a standing external practice behind it.\n\nTWO SIGNALS AGREED ON FOUR, and the fifth disagreement is the useful one. `req:framework-is-chosen-not-defaulted`, `req:functional-vocabulary-computes`, `req:friction-has-a-baseline` and `req:friction-has-a-severity-bar` each sat in a `disconnected_community` island AND on the retire list on their merits. But the same check listed four of Anthony's own ideas as islands, and `req:supporting-is-not-conflict` — nearly edgeless — turned out to be delivered. So structural isolation is evidence about WIRING and never about worth, in either direction: it over-accuses parked captures and it under-accuses delivered work whose thread is short. Checking the one edge before dropping it is what caught that, and the check cost one call.\n\nDROPPED, NOT DELETED, which is the retire-from-design skill's central distinction. These were genuinely considered — several were found by measurement. Deleting them would erase why the surviving rules are shaped as they are, and would let the same captures be re-made next quarter by someone who could not see they had been weighed. `dropped` also stops them raising `unsatisfied_requirement`, so the open list means what it says again.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:read-hint-shape",
       "node_type": "Decision",
       "properties": {
@@ -30437,6 +30773,15 @@
         "epoch_type": "revision",
         "name": "The governance mode becomes a choice, and reflow2 makes one",
         "sequence": 234
+      }
+    },
+    {
+      "node_id": "epoch:prune-proposed",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Ten proposed requirements considered and not accepted",
+        "sequence": 235
       }
     },
     {
@@ -32545,7 +32890,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "reflow2's adopt skill produces a graph of an existing system but has no measure of COMPLETENESS — nothing says what fraction of the codebase reached the design, so \"we adopted it\" cannot be distinguished from \"we adopted the parts we happened to read.\" The original reflow gated on exactly this: workflow 01e-reverse_engineering.json step RE-06 (Validation and Gap Analysis) computed an extraction coverage percentage by validating the extracted architecture back against the code — identifying unmapped functions (code not in the architecture), undocumented interfaces, and inconsistencies between architecture and code behaviour — and its agent guidance made it a stop condition: \"Extraction coverage < 80% requires manual review before proceeding.\" Its completion criteria repeat it as a required gate. DISTINCT FROM WHAT reflow2 ALREADY HAS. coverage_report measures whether INTENT has been delivered (requirements against the golden thread, per req:completion-computed); this measures whether the AS-BUILT LAYER IS COMPLETE — a different axis and the one adopt needs, because an honest brownfield model must be able to say what it did not see. reconcile_artifacts compares recorded artifacts against disk, which is nearer, but it checks the artifacts the design already names rather than finding the code the design never mentioned. The adopt skill's own doctrine already makes the case: \"You only get what you see is not a limitation to paper over: the graph marks what was inferred, confesses what it cannot know\" — a coverage figure is that confession made quantitative. Note the granularity caveat adopt is right about: node count tracks distinct contracts and capabilities, NOT lines of code (a 110k-LOC system landed at ~78 nodes while reflow2's own ~34k LOC lands near ~100), so this measure must be expressed in terms adopt actually models — unmapped entry points, unmodelled contracts, untouched modules — never as a nodes-per-LOC ratio, which would punish a coarse-but-honest model. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
-        "status": "proposed"
+        "status": "dropped"
       }
     },
     {
@@ -32620,7 +32965,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "reflow2's response to unacceptable drift is all-or-nothing. tools/reflow2_check.py thresholds WHICH findings count — anchored gaps at or above --gap-threshold (default 0.8) fail the build — but the response is a single sys.exit(1) and the whole build goes red. There is no state in which some capabilities are frozen pending a decision while the rest of the work proceeds. reflow could do this. Its rigid-mode resync offered the user two options, and option B was: \"Document each drift item as change request, add to context/change_requests.json, BLOCK implementation of drifted features, continue with non-drifted work.\" The RESYNC_to_P1 path for major drift in rigid mode likewise says \"BLOCK until change request approved\" — a targeted freeze, not a stopped project. WHY THIS MATTERS MORE THAN IT SOUNDS. On a system being evolved incrementally against functional production code — Anthony's actual case at NSLS-II, a ten-year-old bluesky stack evolving on the fly — \"stop everything until this is resolved\" is almost never the right answer, and \"carry on regardless\" is never the right answer either. Partial blocking is the only response that matches how the work actually proceeds: quarantine what is contested, keep delivering what is not. It is also what makes a gate survivable in a shared repo, where one contested capability currently reddens the build for everyone. WHAT reflow2 ALREADY HAS, so this is a smaller change than it appears: the graph can already say which capabilities are affected (propagate_change gives the blast radius; scope + claim_region give \"the part I hold\"), and status/proposed already expresses \"not agreed yet\". What is missing is that nothing READS those to scope a refusal — the gate asks one global question and gives one global answer. OPEN: whether a partial block is advisory (reported, not enforced, per dec:report-dont-judge) or actually refuses writes against the frozen region, and whether the frozen set is computed from the drift's blast radius or named by the user. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
-        "status": "proposed"
+        "status": "dropped"
       }
     },
     {
@@ -32740,7 +33085,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "REASSESSED 2026-07-28, same day, on Anthony's instruction not to treat reflow's workflows as canon. First written as \"context consumption is modelled so a path that will not fit is knowable before it is walked\", arguing from reflow's design-time estimation. The FINDING is mine and stands; reflow's MECHANISM is the weak half, and the name now says which.\n\nTHE FINDING, measured against reflow2's own design and independent of any prior art: DEPENDS_ON declares a coupling-weight facet whose schema comment states its purpose — \"weight is a STRENGTH (higher = tighter); invert to a cost for shortest-path/closeness\" — and over 3,250 edges, 232 carry weight_basis while ZERO carry weight, frequency or data_volume. The facet is declared and wholly unpopulated, which also explains req:edge-defaults-do-not-assert rather than merely repeating it: weight_basis asserts \"estimated\" over an absent weight because weights were meant to be there.\n\nWHY DESIGN-TIME ESTIMATION IS THE WEAK PART. reflow made context_consumption a function attribute and the primary edge weight, published estimation guidelines (read_workflow_file 5000-15000 tokens, generate_architecture 5000-15000, and so on), summed along paths, and flagged CRITICAL above 160k. Three problems. (1) The estimates go stale the moment anything changes and nothing ever re-derives them, so the graph accumulates confident numbers nobody has checked — the shape this project keeps rediscovering. (2) They are model-specific: 160k was reflow's environment, tokenisers and context windows differ, and hardcoding one number as a law is the asserting default req:defaults-do-not-assert forbids. (3) Real consumption is dominated by what static structure cannot see — how much a tool actually returns, how many rounds a negotiation takes, what the user pastes in. A statically-summed path cost would be precise and wrong.\n\nWHAT IS ACTUALLY WANTED, and reflow2 already has most of the vocabulary. MEASURE rather than estimate: real sessions produce real costs per tool call and per skill, and weight_basis already distinguishes estimated / evidence / measured — further evidence the facet was designed for observed values, not guesses. Then BUDGET at runtime against what is left, which composes with cap:bounded-reads (a read that would not fit answers with a bounded page and says what it left out) and cap:tool-search (finding a tool on a surface too large to hold) rather than replacing them. A measured cost also feeds req:friction-has-a-baseline honestly, since \"this got more expensive across a release\" is a regression the baseline should catch.\n\nAn estimate is defensible only as a SEED for something never measured, and must read as estimated — which is exactly what weight_basis is for. Fixing the edge default and populating the facet remain two answers to one question and should be decided together. Found 2026-07-28 reviewing 99-meta_analysis.json; reassessed the same day.",
-        "status": "proposed"
+        "status": "dropped"
       }
     },
     {
@@ -32965,7 +33310,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "REASSESSED 2026-07-28, same day, on Anthony's instruction not to treat reflow's workflows as canon. This requirement was first written as \"drift rolls up to one number, and how far the work retreats is computed from it\", arguing from reflow's scalar drift_score. That argument was too credulous and the name has been changed with it. What follows keeps the real question and demotes reflow's answer to one option among several.\n\nTHE REAL QUESTION, which stands on its own: when the design and the build have diverged, nothing in reflow2 says HOW FAR BACK the work should go. Per-event dispositions answer \"what do we do about this divergence\"; nothing answers \"is the accumulated divergence bad enough that we should stop adding to it and revisit the allocation, or the intent?\" That question is real and unanswered.\n\nWHY THE SCALAR IS THE WEAK PART. Collapsing heterogeneous drift into one 0.0-1.0 number destroys precisely the information that decides what to do: a missing artifact, a spec mismatch and an undocumented addition are different problems with different responses, and their average is not a thing. reflow's thresholds (below 0.3 keep building, 0.3 to 0.5 revise allocation, at or above 0.5 revise intent) are invented numbers with no derivation given, and its retreat targets are phase-shaped because reflow had phases. Adopting the scalar would also collide with dec:certainty-derived: a confident aggregate computed from a base the code already disagrees with is an assertion dressed as a measurement.\n\nreflow2 IS ALREADY AHEAD HERE AND SHOULD NOT REGRESS. Drift is disposed of PER EVENT — design_holds or design_updated — so a session can hold the design on one divergence and update it on another, which reflow's single global mode could not do. And confirm.rs audits whether the dispositions are honest: \"five design_holds claims with zero design edits is a very different confirmation history from one design_updated\". That history is a better signal than any scalar, because it is evidence rather than an estimate. If escalation is built, it should read the disposition history, not an average.\n\nTHE PRECONDITION STILL HOLDS whatever shape is chosen: DriftEvent.severity is one of the WRITTEN-and-never-consulted properties the 2026-07-28 sweep found — written from kind.severity() at three call sites while ranking re-derives it via severity_rank(kind) — so any computation over stored severity reads a value the code already contradicts. Settle the single-source question first.\n\nWHAT IS ACTUALLY WANTED, stated without borrowing reflow's mechanism: a computed, evidence-backed answer to \"should we keep building or go back, and back to WHAT\" — where the destinations are layers of the golden thread (realization, allocation, intent) rather than phases, and the trigger is drawn from what the graph can already prove (unresolved DriftEvents by kind, the design_holds/design_updated history, coverage moving the wrong way) rather than from a number nobody can derive. Found 2026-07-28 reviewing the original reflow workflows; reassessed the same day.",
-        "status": "proposed"
+        "status": "dropped"
       }
     },
     {
@@ -32995,7 +33340,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "The 2026-07-28 schema sweep behind req:defaults-do-not-assert measured NODE properties — ten of them across Requirement, Capability, Component, Constraint, DesignRule, Actor, EnvironmentRule and Flow. It never looked at EDGE properties, and the same defect is there. FOUND BY TRIPPING OVER IT: creating a DEPENDS_ON with no properties at all returned {\"optional\": false, \"weight_basis\": \"estimated\"} — materialised while capturing a requirement about exactly this.\\n\\nMEASURED, not inspected, over the 3,226 edges of reflow2's own design. Nineteen edge properties carry a schema default. Four are single-valued wherever they appear, matching the default and never varying: ALLOCATED_TO.weight_basis = estimated on 96 of 96, DEPENDS_ON.optional = false on 123 of 123, PROVIDES.weight_basis and CONSUMES.weight_basis = estimated on 3 of 3 each.\\n\\nTHE SHARPEST FINDING IS WORSE THAN A DEFAULT THAT NEVER VARIES: it is a default that describes a value which does not exist. `weight_basis` is documented as \"How the weight was set: an LLM estimate, grounded in evidence, or measured from telemetry.\" 225 edges carry weight_basis — ALLOCATED_TO 96, DEPENDS_ON 123, PROVIDES 3, CONSUMES 3 — and ZERO of them carry a `weight`. Every one of those edges states the provenance of a coupling strength that was never recorded. Note that variation does not rescue it: DEPENDS_ON.weight_basis genuinely varies (evidence on 70, estimated on 53), so it passes the single-valued test the node sweep used, and it is still describing nothing. The node sweep's own test — \"a property that never varies is not carrying information\" — is necessary but NOT sufficient on edges, because a property can vary and still refer to an absent value.\\n\\nDEPENDS_ON.optional = false on 123 of 123 is a plain instance of the original rule: it asserts that every dependency in the design is MANDATORY, which is a real architectural claim and nobody made it.\\n\\nLATENT, and it will assert on first use: ten defaulted edge properties sit on edge types with zero instances in this design — ANNOTATES.resolved, CAUSES.basis (`correlational`), CAUSES.validation_status, CLAIMS.depth, COMPLIES_WITH.verified, PART_OF_FLOW.weight_basis, SUPPLEMENTS.grounding (`extrapolated`), and VIOLATES_RULE.proposer / severity / status. VIOLATES_RULE.severity defaults to `high`, so the first rule violation anyone records will claim high severity unprompted. CAUSES.basis defaulting to `correlational` is the same shape one level up, and the edge's own hint says \"Do not assert `causal` without a mechanism\" — the schema warns against asserting the strong value while defaulting the weaker one.\\n\\nTHE COUNTERWEIGHT FROM THE PARENT APPLIES UNCHANGED: a default recording genuine ABSENCE is correct and must stay; only a default naming a CHOICE among alternatives lies. AUTHORED_BY.role (author 63 / approver 7 / reviewer 2) and CHANGED.accepted_baseline (true 232 / false 188) both vary and both carry information — they are not in scope. Also unchanged: altering a default is not retroactive, so edges already written keep what they were given and a sweep of existing designs is a separate deliberate act.\\n\\nFound 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it. Not yet decided is whether `weight_basis` should default at all, or be absent until a weight exists — which is the same question ver:interface-spec answered for Interface.medium.",
-        "status": "proposed"
+        "status": "dropped"
       }
     },
     {
@@ -33040,7 +33385,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "REASSESSED 2026-07-28, same day, on Anthony's instruction not to treat reflow's workflows as canon. This was first written as \"which modelling framework is in use must be a recorded choice\", arguing from reflow's framework_registry.json. On re-reading, the DEFECT is real and the PRIOR ART's solution is doubtful; the name has been changed to say so.\n\nTHE DEFECT, which stands on its own: Project.domain is free text, written by genesis, and read by nothing — it is on the write-only list from the 2026-07-28 sweep. reflow2's own Project carries domain = 'software'. Either something should read it or it should not be collected, and that is true regardless of what reflow did.\n\nWHY reflow's ANSWER IS PROBABLY WRONG, stated plainly because the first version of this node treated it as the model to copy. (1) The terminology mapping is largely COSMETIC. framework_registry.json maps node to 'service' / 'gene' / 'agent' / 'species' and edge to 'interface' / 'interaction' / 'relationship' over one universal graph. Renaming the same structure does not change what can be computed about it, and it introduces a translation layer between what the user says and what the graph holds — a layer that can drift, and that every reader must now traverse. (2) The load-bearing claim is a SMELL, not a feature. reflow's LESSON-01 says \"framework choice determines which NetworkX analyses are available\". Analyses should be available based on WHAT THE GRAPH CONTAINS, not on a declared label: a cycle detector should run wherever there are dependency edges, whoever calls them interfaces or interactions. Gating capability on a self-declared category is how a user gets the wrong answer for a reason they cannot see. reflow2's one universal vocabulary with computations keyed to STRUCTURE is very likely the better design, and adopting a registry would be a regression dressed as a feature.\n\nWHAT SURVIVES FROM reflow: only the rule, and reflow2 already has it. LESSON-01's real content — \"Do NOT default to UAF\" — is req:defaults-do-not-assert, independently arrived at. The supporting CONTRADICTS edge to that requirement stays correct; the framework registry is not the mechanism it implies.\n\nWHAT SHOULD ACTUALLY BE DECIDED, and it is smaller than a registry: does anything read Project.domain, and if not, does it become unspecified-until-stated (per ver:interface-spec's rule for Interface.medium) or leave the schema entirely? A plausible middle path worth weighing separately: domain as a hint to EXTRACTION and phrasing — what vocabulary the agent uses when talking to the user and reading their documents — without ever gating which computations run. That keeps the honest part of reflow's insight (a biologist should not be told about 'services') and discards the part that would make analyses conditional on a label. Found 2026-07-28 reviewing 00b-framework_selection.json; reassessed the same day.",
-        "status": "proposed"
+        "status": "dropped"
       }
     },
     {
@@ -33055,7 +33400,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "reflow2 regression-gates whether its DETECTORS still work and has no equivalent for whether a person or agent can still get THROUGH the process. tools/phase_trial.py seeds a realistic graph, injects the divergences P3/P4/P5 are each meant to catch, scores whether the graph noticed, sits at 13/13, exits 0 and works as a regression gate; the erosion trial asks the sharper version, whether the design still describes the system after N rounds of test-fails/fix-code/accept. Both measure the machinery. Neither measures the EXPERIENCE of driving it, so reflow2 could become materially harder to use across a release and every gate would stay green. report-friction's own text concedes the consequence: \"Everything reflow2 knows about its own weak points came from someone writing down what fought them. Those were staged trials; ordinary use produces better evidence and CURRENTLY LOSES ALL OF IT.\" THE PRIOR ART, from reflow's 97-GAN-inspired-test.json, and its structure is the transferable part rather than its specifics. Execution was separated from evaluation: one agent drove the workflows BLIND — \"Agent B should NOT see expected outputs\" — while a second read the transcript afterwards, categorised what went wrong and found root causes rather than symptoms, asking of each \"why did this occur, how did it manifest, how frequently, what is the fix effort\". Results aggregated to metrics, compared against a stored baseline, and regression was called out explicitly: \"if new version performs worse than baseline, that's a P0 issue.\" The cadence was stated — periodically, or before a major release. THE BLINDNESS IS THE LOAD-BEARING PART and the easiest to lose: an evaluator who knows the expected output cannot see the friction, because it reads the intended path into whatever happened. reflow2's real trials (brownfield ophyd-service, greenfield aidrone, brainmaker) already produce this evidence and it is what taught reflow2 most of what it knows — but they are occasional, hand-run, and not comparable to each other, so nothing can say whether the last release made anything worse. Depends on req:friction-has-a-severity-bar: a baseline needs countable, classified findings to be a baseline OF something. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
-        "status": "proposed"
+        "status": "dropped"
       }
     },
     {
@@ -33070,7 +33415,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "reflow2 collects friction with no vocabulary for it and no threshold at which accumulated friction becomes scheduled work, so reports pile up and nothing converts them. THE EVIDENCE IS IN THIS REPO, twice over. (1) The eight brainmaker friction items in feedback.md — from a real genesis pass over a 47-component decomposition — are still not in docs/backlog.md. Observed, written down, and never converted. (2) Friction findings with nowhere to live are being crammed into node NAMES: ver:kit-manifest-agrees is literally named \"... (friction 2026-07-25: reflow2's own manifest is four releases stale and nothing noticed; unwritten)\" and ver:tools-reject-unknown-args carries \"(friction 2026-07-25, unwritten)\". When a finding has no home it ends up in a name string, and \"unwritten\" in a Verification name is a backlog entry in hiding. THE PRIOR ART, from reflow's 97-GAN-inspired-test.json: friction was classified into a fixed taxonomy of twelve categories — tool_workflow_misalignment (tool output does not match the documentation), missing_documentation, automation_incompatibility (requires human interaction, fails unattended), missing_tools (workflow references something that does not exist), ambiguous_instructions, template_issues, path_resolution_issues, plus five for the hierarchical machinery. Each finding was prioritised against stated criteria rather than judgement: P0 BLOCKING, \"workflow cannot proceed without manual intervention or workaround\"; P1 HIGH VALUE, \"causes significant friction (5+ minutes wasted) or happens frequently\"; P2 POLISH. And there was a bar: p0_issues_count > 0 OR (p1_issues_count > 3 AND friction_overhead > 15%) converted the pile into a fix cycle. The specific numbers are reflow's and are not the point; the point is that a stated bar exists, so friction stops depending on someone feeling that there is enough of it. NOTE WHAT reflow2 ALREADY DOES BETTER and must keep: report-friction's redaction discipline (tool names and argument SHAPES, node TYPES not ids, counts not contents, errors with ids masked) has no counterpart in reflow's loop, because reflow's ran on its own repo where there was no third party's design to protect. reflow2 installs once per machine into other people's projects, so any classification scheme must carry that discipline with it. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
-        "status": "proposed"
+        "status": "dropped"
       }
     },
     {
@@ -33100,7 +33445,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "reflow2's schema declares a functional-analysis vocabulary that nothing in the core reads: Capability.is_entry_point and Capability.is_exit_point (schema/functional.yaml:20, both defaulting to false), plus inputs, outputs and capability_type. Only Flow.entry_point is actually read. add_capability cannot write any of them, so they are reachable only through the create_node escape hatch, and no detector consults them. Found 2026-07-28 by comparing reflow2 against the original reflow's system_of_systems_graph_v2.py (2,146 lines, NetworkX): three of that tool's five FUNCTIONAL-mode gap detectors are unimplementable in reflow2 purely because of this — unreachable_functions needs is_entry_point, dead_end_functions needs is_exit_point, unexplained_outputs needs outputs. The service-mode analysis DID come over and in better form (cycles, communities, centrality, orphans, unimplemented services, orphaned interfaces all have reflow2 detectors); the functional mode did not. The schema was ported and the computations were not, which is req:defaults-do-not-assert at the scale of a whole workflow: a property defaulting to false asserts 'this capability is not an entry point' on every node in the design, and nobody chose that. Anthony's word 2026-07-28: add it. Recorded after the originating session was killed by an OOM before it could write. The honest resolutions are to compute against the vocabulary or to remove it — storing it while nothing reads it is the shape this project keeps rediscovering (BL-96 inviolable-intent, BL-106 last_run_at, the temporal axis before BL-70). Sibling of req:defaults-do-not-assert, which is parked as deferred.",
-        "status": "proposed"
+        "status": "dropped"
       }
     },
     {
@@ -33775,7 +34120,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "FOUND BY USING THE GRAPH, 2026-07-28, and the third defect this week that inspection had not found and one real use did.\n\nWHAT HAPPENED. Anthony decided the slash commands should ship with the kit, which QUALIFIES `dec:skills-served` rather than overturning it — same reasoning, narrower scope. The schema has carried the vocabulary for that relationship from the beginning: CONTRADICTS is documented as \"two decisions/requirements/claims that conflict (OR, WITH alignment=supporting, REINFORCE)\". So the corroboration was recorded exactly as prescribed, with `alignment: supporting` — and `detect_defects` reported a structural defect, because the contradiction loop read the edge TYPE and never looked at the property.\n\nWHY THE NOISE WAS NOT THE DAMAGE. The damage was that both ways out were wrong. Acknowledge it, and a defect that is not one enters `reviewed_defects` as if a judgement had been made. Stop drawing the edge, and the design silently loses the fact that one decision qualifies another — which is precisely the kind of reasoning a design graph exists to keep. And an open list that can never reach zero gets SKIMMED, which is the failure the whole detect-and-ask discipline is built to prevent.\n\nTHE GENERAL RULE, worth stating beyond this instance: A SCHEMA PROPERTY THAT NO COMPUTATION READS IS A PROPERTY THAT LIES. It invites people to record something true, and then behaves as though they had not. reflow2 has now been bitten by this shape three times in two days — `orphan_node` ignoring DOCUMENTS so a well-documented artifact reads as loose; `export_surface` withholding every Requirement so a published promise could not travel; and this. Each was a value the schema offered and no detector consulted.\n\nWHAT THE FIX MUST NOT DO, and this is the load-bearing half: it must not silence the detector. An `opposing` edge is still a contradiction, and an edge that says NOTHING is still a contradiction — silence is not a claim of support, and every design written before today keeps its meaning exactly. A fix that made real conflicts vanish would be far worse than the noise it removed, so both counterweights are pinned by tests rather than asserted in a comment.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -33990,6 +34335,126 @@
         "state": "{\"domain\":\"software\",\"mode\":\"flexible\",\"name\":\"Reflow 2.0\",\"objective\":\"Keep a design coherent from concept through operations\",\"status\":\"active\"}",
         "target_id": "proj:reflow2",
         "target_type": "Project"
+      }
+    },
+    {
+      "node_id": "snap:epoch:prune-proposed:dec:proposed-requirements-pruned",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"decision\":\"Anthony's word, 2026-07-30, after asking for the open requirements to be strongly scrutinised: an unaccepted requirement that is not value-adding and only causes confusion should be retired as \\\"considered, but not accepted\\\" rather than carried. Ten of twenty-six went. All are `dropped`, not deleted: the capture was real and the reasoning is worth keeping, so each keeps its full statement and a snapshot of its final state on the timeline (`epoch:prune-proposed`).\\n\\nDROPPED AS NOT VALUE-ADDING (7).\\n\\n`req:drift-rolls-up-to-a-score` and `req:framework-is-chosen-not-defaulted` — both record a DOUBT rather than a need, and say so in their own names: \\\"probably NOT from a single scalar\\\" and \\\"a framework registry is probably the wrong fix\\\". A requirement that argues against its own mechanism is a Decision wearing the wrong hat. The live fact inside the second (`Project.domain` is written and never read) survives inside `req:defaults-do-not-assert`.\\n\\n`req:friction-has-a-baseline` and `req:friction-has-a-severity-bar` — measuring reflow2's own usability against a baseline, and a threshold at which friction becomes scheduled work. Both are backlog hygiene dressed as product requirements: the answer to unconverted friction reports is to act on them, not to model them. The severity-bar one carries real evidence (eight brainmaker items unconverted) and that evidence belongs in the backlog, which is where it now lives.\\n\\n`req:context-is-a-modelled-quantity` — `cap:bounded-reads` already answers the acute version, where a read that would not fit says so and names what it withheld. What remained was design-time estimation, which the requirement's own text calls the weak half.\\n\\n`req:blocking-is-partial` — freezing drifted work while the rest proceeds. Nobody has been hurt by the all-or-nothing gate; speculative.\\n\\n`req:adopt-says-how-much-it-got` — REDUNDANT. \\\"Adopt reports how much was recovered\\\" restates `req:coverage-visible`, which is accepted and delivered by `cap:coverage` (\\\"say what the design has never heard of\\\"). Two requirements for one need is the confusion this pass was called to remove.\\n\\nFOLDED INTO `req:defaults-do-not-assert` (3). `req:edge-defaults-do-not-assert`, `req:functional-vocabulary-computes` and `req:supporting-is-not-conflict` are one rule stated four times — node defaults, edge defaults, declared-but-unread vocabulary, and detector-ignored properties are the same defect: THE SCHEMA MUST NOT DECLARE WHAT NOTHING READS OR CHECKS. Their specific evidence is preserved inside the surviving requirement rather than lost with them. `req:supporting-is-not-conflict` had exactly ONE edge, so it was already an orphan in all but name.\\n\\nNOT TOUCHED, and worth recording why. The 2026-07-28 planning cluster — `req:epochs-can-be-planned`, `req:plans-move-honestly`, `req:version-combination-is-an-object`, `req:graph-indexes-snapshots` — are Anthony's own ideas, quoting him directly (the Black-Scholes analogy for plan volatility, \\\"in systems engineering, I think this would be 2 views of the same system\\\"). They are structurally disconnected, but that means CAPTURED AND NEVER WIRED, not low value: disconnection is a fact about edges, not about worth, and treating it as a proxy would have pruned exactly the wrong four. The fix for those is to wire them, not to retire them. `req:assumptions-are-first-class` (ordinary risk practice) and `req:correspondence-rules-are-stateable` (ISO/IEC/IEEE 42010) likewise stand: standard architecture-description ground for a user who works in UAF/DoDAF.\",\"name\":\"Ten proposed requirements considered and not accepted — seven dropped, three folded into one rule\",\"rationale\":\"The prompt for this was his: \\\"if some of them are not value added and just cause confusion, then we don't have to do them — we can retire them as considered, but not accepted.\\\"\\n\\nThe test applied to each was whether the requirement would change what anyone BUILDS. A requirement that records a doubt does not; it records that a mechanism looked wrong, which is a Decision. A requirement that restates one already accepted does not; it splits one thread in two. A requirement that describes how the project should manage itself does not; it is process. What survived is everything with a code citation, a real incident, or a standing external practice behind it.\\n\\nTwo independent signals agreed on four of the ten, which is why the structural check was worth running before deciding rather than after: `req:framework-is-chosen-not-defaulted`, `req:functional-vocabulary-computes`, `req:friction-has-a-baseline` and `req:friction-has-a-severity-bar` were each sitting in a `disconnected_community` island AND on the retire list on their merits. But the same check listed four of Anthony's own ideas as islands too, so agreement between the signals was evidence and never the criterion.\\n\\nDROPPED, NOT DELETED, and the distinction is the retire-from-design skill's central one. These were genuinely considered — several were found by measurement, and one (`req:supporting-is-not-conflict`) was found by using the graph in anger. Deleting them would erase why the surviving rules are shaped as they are, and would let the same captures be re-made next quarter by someone who could not see they had been weighed. `dropped` also stops them raising `unsatisfied_requirement`, so the open list means what it says again.\",\"status\":\"accepted\"}",
+        "target_id": "dec:proposed-requirements-pruned",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:prune-proposed:req:adopt-says-how-much-it-got",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:adopt-existing\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:3a667fe34b66bffd\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Adopting an existing system reports how much of it was actually recovered\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"reflow2's adopt skill produces a graph of an existing system but has no measure of COMPLETENESS — nothing says what fraction of the codebase reached the design, so \\\"we adopted it\\\" cannot be distinguished from \\\"we adopted the parts we happened to read.\\\" The original reflow gated on exactly this: workflow 01e-reverse_engineering.json step RE-06 (Validation and Gap Analysis) computed an extraction coverage percentage by validating the extracted architecture back against the code — identifying unmapped functions (code not in the architecture), undocumented interfaces, and inconsistencies between architecture and code behaviour — and its agent guidance made it a stop condition: \\\"Extraction coverage < 80% requires manual review before proceeding.\\\" Its completion criteria repeat it as a required gate. DISTINCT FROM WHAT reflow2 ALREADY HAS. coverage_report measures whether INTENT has been delivered (requirements against the golden thread, per req:completion-computed); this measures whether the AS-BUILT LAYER IS COMPLETE — a different axis and the one adopt needs, because an honest brownfield model must be able to say what it did not see. reconcile_artifacts compares recorded artifacts against disk, which is nearer, but it checks the artifacts the design already names rather than finding the code the design never mentioned. The adopt skill's own doctrine already makes the case: \\\"You only get what you see is not a limitation to paper over: the graph marks what was inferred, confesses what it cannot know\\\" — a coverage figure is that confession made quantitative. Note the granularity caveat adopt is right about: node count tracks distinct contracts and capabilities, NOT lines of code (a 110k-LOC system landed at ~78 nodes while reflow2's own ~34k LOC lands near ~100), so this measure must be expressed in terms adopt actually models — unmapped entry points, unmodelled contracts, untouched modules — never as a nodes-per-LOC ratio, which would punish a coarse-but-honest model. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.\",\"status\":\"proposed\"}",
+        "target_id": "req:adopt-says-how-much-it-got",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:prune-proposed:req:blocking-is-partial",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:pr-is-a-delta\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:1e7c0975c76f27fe\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Work that drifted can be frozen without freezing the work that did not\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"reflow2's response to unacceptable drift is all-or-nothing. tools/reflow2_check.py thresholds WHICH findings count — anchored gaps at or above --gap-threshold (default 0.8) fail the build — but the response is a single sys.exit(1) and the whole build goes red. There is no state in which some capabilities are frozen pending a decision while the rest of the work proceeds. reflow could do this. Its rigid-mode resync offered the user two options, and option B was: \\\"Document each drift item as change request, add to context/change_requests.json, BLOCK implementation of drifted features, continue with non-drifted work.\\\" The RESYNC_to_P1 path for major drift in rigid mode likewise says \\\"BLOCK until change request approved\\\" — a targeted freeze, not a stopped project. WHY THIS MATTERS MORE THAN IT SOUNDS. On a system being evolved incrementally against functional production code — Anthony's actual case at NSLS-II, a ten-year-old bluesky stack evolving on the fly — \\\"stop everything until this is resolved\\\" is almost never the right answer, and \\\"carry on regardless\\\" is never the right answer either. Partial blocking is the only response that matches how the work actually proceeds: quarantine what is contested, keep delivering what is not. It is also what makes a gate survivable in a shared repo, where one contested capability currently reddens the build for everyone. WHAT reflow2 ALREADY HAS, so this is a smaller change than it appears: the graph can already say which capabilities are affected (propagate_change gives the blast radius; scope + claim_region give \\\"the part I hold\\\"), and status/proposed already expresses \\\"not agreed yet\\\". What is missing is that nothing READS those to scope a refusal — the gate asks one global question and gives one global answer. OPEN: whether a partial block is advisory (reported, not enforced, per dec:report-dont-judge) or actually refuses writes against the frozen region, and whether the frozen set is computed from the drift's blast radius or named by the user. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.\",\"status\":\"proposed\"}",
+        "target_id": "req:blocking-is-partial",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:prune-proposed:req:context-is-a-modelled-quantity",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:edge-defaults-do-not-assert\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:755a5d5272eb702d\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Context cost is MEASURED and budgeted, not estimated at design time\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"REASSESSED 2026-07-28, same day, on Anthony's instruction not to treat reflow's workflows as canon. First written as \\\"context consumption is modelled so a path that will not fit is knowable before it is walked\\\", arguing from reflow's design-time estimation. The FINDING is mine and stands; reflow's MECHANISM is the weak half, and the name now says which.\\n\\nTHE FINDING, measured against reflow2's own design and independent of any prior art: DEPENDS_ON declares a coupling-weight facet whose schema comment states its purpose — \\\"weight is a STRENGTH (higher = tighter); invert to a cost for shortest-path/closeness\\\" — and over 3,250 edges, 232 carry weight_basis while ZERO carry weight, frequency or data_volume. The facet is declared and wholly unpopulated, which also explains req:edge-defaults-do-not-assert rather than merely repeating it: weight_basis asserts \\\"estimated\\\" over an absent weight because weights were meant to be there.\\n\\nWHY DESIGN-TIME ESTIMATION IS THE WEAK PART. reflow made context_consumption a function attribute and the primary edge weight, published estimation guidelines (read_workflow_file 5000-15000 tokens, generate_architecture 5000-15000, and so on), summed along paths, and flagged CRITICAL above 160k. Three problems. (1) The estimates go stale the moment anything changes and nothing ever re-derives them, so the graph accumulates confident numbers nobody has checked — the shape this project keeps rediscovering. (2) They are model-specific: 160k was reflow's environment, tokenisers and context windows differ, and hardcoding one number as a law is the asserting default req:defaults-do-not-assert forbids. (3) Real consumption is dominated by what static structure cannot see — how much a tool actually returns, how many rounds a negotiation takes, what the user pastes in. A statically-summed path cost would be precise and wrong.\\n\\nWHAT IS ACTUALLY WANTED, and reflow2 already has most of the vocabulary. MEASURE rather than estimate: real sessions produce real costs per tool call and per skill, and weight_basis already distinguishes estimated / evidence / measured — further evidence the facet was designed for observed values, not guesses. Then BUDGET at runtime against what is left, which composes with cap:bounded-reads (a read that would not fit answers with a bounded page and says what it left out) and cap:tool-search (finding a tool on a surface too large to hold) rather than replacing them. A measured cost also feeds req:friction-has-a-baseline honestly, since \\\"this got more expensive across a release\\\" is a regression the baseline should catch.\\n\\nAn estimate is defensible only as a SEED for something never measured, and must read as estimated — which is exactly what weight_basis is for. Fixing the edge default and populating the facet remain two answers to one question and should be decided together. Found 2026-07-28 reviewing 99-meta_analysis.json; reassessed the same day.\",\"status\":\"proposed\"}",
+        "target_id": "req:context-is-a-modelled-quantity",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:prune-proposed:req:defaults-do-not-assert",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"CONTRADICTS\",\"other_type\":\"Requirement\",\"other_id\":\"req:framework-is-chosen-not-defaulted\",\"properties\":{\"alignment\":\"supporting\",\"confidence\":0.9,\"evidence\":\"Corroboration, not conflict. The original reflow independently reached the same rule and wrote it as LESSON-01 of 00b-framework_selection.json — 'Do NOT default to UAF!' — with the reason that framework choice GATES which analyses are available, so a silent default chooses the analyses too. reflow2's Project.domain is that decision reduced to unread free text.\"}},{\"direction\":\"in\",\"edge_type\":\"CONTRADICTS\",\"other_type\":\"Requirement\",\"other_id\":\"req:functional-vocabulary-computes\",\"properties\":{\"alignment\":\"supporting\",\"confidence\":0.9,\"evidence\":\"Corroboration, not conflict. is_entry_point and is_exit_point default to false on every Capability, which asserts 'not an entry point' across the whole design without anyone choosing it — a concrete field instance of the general rule. Found 2026-07-28 via the system_of_systems_graph_v2.py comparison, where three ported functional-mode detectors turned out to be unimplementable because of it.\"}},{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:edge-defaults-do-not-assert\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:mode-is-chosen-and-changeable\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:b0ef8ce1e452f881\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"A default must not assert what nobody chose\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"FOUND BY A DELIBERATE SWEEP, 2026-07-28, asking the question `req:supporting-is-not-conflict` implies but does not answer: what ELSE does the schema claim that no computation checks? The sweep was Anthony's call after the same defect shape appeared six times in three days.\\n\\nTHE MEASURED FINDING. Ten properties are materialised onto every node by the store's schema defaults and appear ZERO times in the entire Rust source — not in a detector, not in a report, not in a test. Measured against reflow2's own 860-node design:\\n\\n- `Requirement.concern` — `core` on 67 of 67\\n- `Capability.tier` — `operational` on 84 of 84\\n- `Component.tier` — `operational` on 53 of 53\\n- `Capability.is_entry_point` / `is_exit_point` — `false` on 84 of 84\\n- `Constraint.concern`, `DesignRule.enforced`, `Actor.actor_type`, `EnvironmentRule.mandatory`, `EnvironmentRule.rule_type`, `Flow.tier` — likewise defaulted, likewise unread\\n\\nSingle-valued across the whole design, every one. A property that never varies is not carrying information; it is asserting one.\\n\\nTHE WORST INSTANCE, and the reason this is intent rather than tidiness. `Requirement.concern`'s enum is core / logistics / sustainment / safety / security / cost / schedule / manufacturability / usability / environmental — and the schema's own description says logistics and sustainment are there to carry \\\"the ILS considerations an SME surfaces\\\". That is the systems-engineering angle this project exists to serve, encoded in the schema and then asserted away: every requirement claims `core`, there is NO WRITER for it on the MCP surface (only the `create_node` escape hatch — the same shape as the KPP `objective` finding), and nothing reads it. So \\\"which of these are the safety requirements?\\\" cannot be answered, and the graph does not answer \\\"unknown\\\" — it answers \\\"none\\\".\\n\\nTHE RULE, AND IT IS ALREADY PROVEN HERE. `Interface.medium` defaulting to `REST` was fixed on 2026-07-28 for exactly this reason, and `ver:interface-spec` states the principle in the form it should now generalise: \\\"UNRECORDED FIELDS READ AS `unspecified` NOT `none` — the flattering default would tell a consumer an unspecified contract is open.\\\" So: A DEFAULT MAY RECORD ABSENCE; IT MAY NOT RECORD A CHOICE. Where a property has a substantive default nobody selected, the default becomes `unspecified` and silence reads as silence.\\n\\nWHY IT IS NOT MERELY COSMETIC. `export_surface` publishes a design's boundary to another design; a mirrored surface carrying `tier: operational` and `concern: core` ships assertions nobody made across a seam, which is the same failure `req:publishable-promise` was raised for one layer down. And the moment any future computation DOES read one of these — the SME view `concern` was designed for — it reads a value the schema invented.\\n\\nTHE COUNTERWEIGHT, and it is what stops this being a blanket rewrite: a default that records a genuine absence is CORRECT and must stay. `provenance: authored` and `status: proposed` are real defaults meaning a real thing. The test is whether the default names a CHOICE among alternatives (tier, concern, rule_type) or the ABSENCE of one — only the first kind lies. Changing a default is also not retroactive: nodes written before the change keep the value they were given, so a sweep of existing designs is a separate, deliberate act.\\n\\nSIBLING FINDINGS FROM THE SAME SWEEP, recorded here rather than lost. (1) Fifteen properties are WRITTEN and never consulted — the sharpest is `DriftEvent.severity`, written from `kind.severity()` at three call sites while ranking independently re-derives it via `severity_rank(kind)`, so the stored copy can silently diverge from the mapping that actually governs; also `DesignEpoch.sequence`, which COORD entries quote as meaningful (\\\"epoch:v0180 at sequence 210\\\") and nothing orders by. (2) `req:supporting-is-not-conflict` is an instance of ITSELF: it carries `concern: core`, one of the properties nothing reads.\",\"status\":\"proposed\"}",
+        "target_id": "req:defaults-do-not-assert",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:prune-proposed:req:drift-rolls-up-to-a-score",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:drift-has-direction\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:378cbdafd1fa41fb\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Escalation from drift is computed — but probably NOT from a single scalar\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"REASSESSED 2026-07-28, same day, on Anthony's instruction not to treat reflow's workflows as canon. This requirement was first written as \\\"drift rolls up to one number, and how far the work retreats is computed from it\\\", arguing from reflow's scalar drift_score. That argument was too credulous and the name has been changed with it. What follows keeps the real question and demotes reflow's answer to one option among several.\\n\\nTHE REAL QUESTION, which stands on its own: when the design and the build have diverged, nothing in reflow2 says HOW FAR BACK the work should go. Per-event dispositions answer \\\"what do we do about this divergence\\\"; nothing answers \\\"is the accumulated divergence bad enough that we should stop adding to it and revisit the allocation, or the intent?\\\" That question is real and unanswered.\\n\\nWHY THE SCALAR IS THE WEAK PART. Collapsing heterogeneous drift into one 0.0-1.0 number destroys precisely the information that decides what to do: a missing artifact, a spec mismatch and an undocumented addition are different problems with different responses, and their average is not a thing. reflow's thresholds (below 0.3 keep building, 0.3 to 0.5 revise allocation, at or above 0.5 revise intent) are invented numbers with no derivation given, and its retreat targets are phase-shaped because reflow had phases. Adopting the scalar would also collide with dec:certainty-derived: a confident aggregate computed from a base the code already disagrees with is an assertion dressed as a measurement.\\n\\nreflow2 IS ALREADY AHEAD HERE AND SHOULD NOT REGRESS. Drift is disposed of PER EVENT — design_holds or design_updated — so a session can hold the design on one divergence and update it on another, which reflow's single global mode could not do. And confirm.rs audits whether the dispositions are honest: \\\"five design_holds claims with zero design edits is a very different confirmation history from one design_updated\\\". That history is a better signal than any scalar, because it is evidence rather than an estimate. If escalation is built, it should read the disposition history, not an average.\\n\\nTHE PRECONDITION STILL HOLDS whatever shape is chosen: DriftEvent.severity is one of the WRITTEN-and-never-consulted properties the 2026-07-28 sweep found — written from kind.severity() at three call sites while ranking re-derives it via severity_rank(kind) — so any computation over stored severity reads a value the code already contradicts. Settle the single-source question first.\\n\\nWHAT IS ACTUALLY WANTED, stated without borrowing reflow's mechanism: a computed, evidence-backed answer to \\\"should we keep building or go back, and back to WHAT\\\" — where the destinations are layers of the golden thread (realization, allocation, intent) rather than phases, and the trigger is drawn from what the graph can already prove (unresolved DriftEvents by kind, the design_holds/design_updated history, coverage moving the wrong way) rather than from a number nobody can derive. Found 2026-07-28 reviewing the original reflow workflows; reassessed the same day.\",\"status\":\"proposed\"}",
+        "target_id": "req:drift-rolls-up-to-a-score",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:prune-proposed:req:edge-defaults-do-not-assert",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:context-is-a-modelled-quantity\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:defaults-do-not-assert\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:0a63dc6a6c47e039\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Edge properties default like node properties do, and the sweep never looked at them\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"The 2026-07-28 schema sweep behind req:defaults-do-not-assert measured NODE properties — ten of them across Requirement, Capability, Component, Constraint, DesignRule, Actor, EnvironmentRule and Flow. It never looked at EDGE properties, and the same defect is there. FOUND BY TRIPPING OVER IT: creating a DEPENDS_ON with no properties at all returned {\\\"optional\\\": false, \\\"weight_basis\\\": \\\"estimated\\\"} — materialised while capturing a requirement about exactly this.\\\\n\\\\nMEASURED, not inspected, over the 3,226 edges of reflow2's own design. Nineteen edge properties carry a schema default. Four are single-valued wherever they appear, matching the default and never varying: ALLOCATED_TO.weight_basis = estimated on 96 of 96, DEPENDS_ON.optional = false on 123 of 123, PROVIDES.weight_basis and CONSUMES.weight_basis = estimated on 3 of 3 each.\\\\n\\\\nTHE SHARPEST FINDING IS WORSE THAN A DEFAULT THAT NEVER VARIES: it is a default that describes a value which does not exist. `weight_basis` is documented as \\\"How the weight was set: an LLM estimate, grounded in evidence, or measured from telemetry.\\\" 225 edges carry weight_basis — ALLOCATED_TO 96, DEPENDS_ON 123, PROVIDES 3, CONSUMES 3 — and ZERO of them carry a `weight`. Every one of those edges states the provenance of a coupling strength that was never recorded. Note that variation does not rescue it: DEPENDS_ON.weight_basis genuinely varies (evidence on 70, estimated on 53), so it passes the single-valued test the node sweep used, and it is still describing nothing. The node sweep's own test — \\\"a property that never varies is not carrying information\\\" — is necessary but NOT sufficient on edges, because a property can vary and still refer to an absent value.\\\\n\\\\nDEPENDS_ON.optional = false on 123 of 123 is a plain instance of the original rule: it asserts that every dependency in the design is MANDATORY, which is a real architectural claim and nobody made it.\\\\n\\\\nLATENT, and it will assert on first use: ten defaulted edge properties sit on edge types with zero instances in this design — ANNOTATES.resolved, CAUSES.basis (`correlational`), CAUSES.validation_status, CLAIMS.depth, COMPLIES_WITH.verified, PART_OF_FLOW.weight_basis, SUPPLEMENTS.grounding (`extrapolated`), and VIOLATES_RULE.proposer / severity / status. VIOLATES_RULE.severity defaults to `high`, so the first rule violation anyone records will claim high severity unprompted. CAUSES.basis defaulting to `correlational` is the same shape one level up, and the edge's own hint says \\\"Do not assert `causal` without a mechanism\\\" — the schema warns against asserting the strong value while defaulting the weaker one.\\\\n\\\\nTHE COUNTERWEIGHT FROM THE PARENT APPLIES UNCHANGED: a default recording genuine ABSENCE is correct and must stay; only a default naming a CHOICE among alternatives lies. AUTHORED_BY.role (author 63 / approver 7 / reviewer 2) and CHANGED.accepted_baseline (true 232 / false 188) both vary and both carry information — they are not in scope. Also unchanged: altering a default is not retroactive, so edges already written keep what they were given and a sweep of existing designs is a separate deliberate act.\\\\n\\\\nFound 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it. Not yet decided is whether `weight_basis` should default at all, or be absent until a weight exists — which is the same question ver:interface-spec answered for Interface.medium.\",\"status\":\"proposed\"}",
+        "target_id": "req:edge-defaults-do-not-assert",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:prune-proposed:req:framework-is-chosen-not-defaulted",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"CONTRADICTS\",\"other_type\":\"Requirement\",\"other_id\":\"req:defaults-do-not-assert\",\"properties\":{\"alignment\":\"supporting\",\"confidence\":0.9,\"evidence\":\"Corroboration, not conflict. The original reflow independently reached the same rule and wrote it as LESSON-01 of 00b-framework_selection.json — 'Do NOT default to UAF!' — with the reason that framework choice GATES which analyses are available, so a silent default chooses the analyses too. reflow2's Project.domain is that decision reduced to unread free text.\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:967cb35c16df7571\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Project.domain is written and never read — but a framework registry is probably the wrong fix\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"REASSESSED 2026-07-28, same day, on Anthony's instruction not to treat reflow's workflows as canon. This was first written as \\\"which modelling framework is in use must be a recorded choice\\\", arguing from reflow's framework_registry.json. On re-reading, the DEFECT is real and the PRIOR ART's solution is doubtful; the name has been changed to say so.\\n\\nTHE DEFECT, which stands on its own: Project.domain is free text, written by genesis, and read by nothing — it is on the write-only list from the 2026-07-28 sweep. reflow2's own Project carries domain = 'software'. Either something should read it or it should not be collected, and that is true regardless of what reflow did.\\n\\nWHY reflow's ANSWER IS PROBABLY WRONG, stated plainly because the first version of this node treated it as the model to copy. (1) The terminology mapping is largely COSMETIC. framework_registry.json maps node to 'service' / 'gene' / 'agent' / 'species' and edge to 'interface' / 'interaction' / 'relationship' over one universal graph. Renaming the same structure does not change what can be computed about it, and it introduces a translation layer between what the user says and what the graph holds — a layer that can drift, and that every reader must now traverse. (2) The load-bearing claim is a SMELL, not a feature. reflow's LESSON-01 says \\\"framework choice determines which NetworkX analyses are available\\\". Analyses should be available based on WHAT THE GRAPH CONTAINS, not on a declared label: a cycle detector should run wherever there are dependency edges, whoever calls them interfaces or interactions. Gating capability on a self-declared category is how a user gets the wrong answer for a reason they cannot see. reflow2's one universal vocabulary with computations keyed to STRUCTURE is very likely the better design, and adopting a registry would be a regression dressed as a feature.\\n\\nWHAT SURVIVES FROM reflow: only the rule, and reflow2 already has it. LESSON-01's real content — \\\"Do NOT default to UAF\\\" — is req:defaults-do-not-assert, independently arrived at. The supporting CONTRADICTS edge to that requirement stays correct; the framework registry is not the mechanism it implies.\\n\\nWHAT SHOULD ACTUALLY BE DECIDED, and it is smaller than a registry: does anything read Project.domain, and if not, does it become unspecified-until-stated (per ver:interface-spec's rule for Interface.medium) or leave the schema entirely? A plausible middle path worth weighing separately: domain as a hint to EXTRACTION and phrasing — what vocabulary the agent uses when talking to the user and reading their documents — without ever gating which computations run. That keeps the honest part of reflow's insight (a biologist should not be told about 'services') and discards the part that would make analyses conditional on a label. Found 2026-07-28 reviewing 00b-framework_selection.json; reassessed the same day.\",\"status\":\"proposed\"}",
+        "target_id": "req:framework-is-chosen-not-defaulted",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:prune-proposed:req:friction-has-a-baseline",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:friction-has-a-severity-bar\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:c510544d78bf4fef\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Usability is measured against a baseline, so getting harder to use is detectable\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"reflow2 regression-gates whether its DETECTORS still work and has no equivalent for whether a person or agent can still get THROUGH the process. tools/phase_trial.py seeds a realistic graph, injects the divergences P3/P4/P5 are each meant to catch, scores whether the graph noticed, sits at 13/13, exits 0 and works as a regression gate; the erosion trial asks the sharper version, whether the design still describes the system after N rounds of test-fails/fix-code/accept. Both measure the machinery. Neither measures the EXPERIENCE of driving it, so reflow2 could become materially harder to use across a release and every gate would stay green. report-friction's own text concedes the consequence: \\\"Everything reflow2 knows about its own weak points came from someone writing down what fought them. Those were staged trials; ordinary use produces better evidence and CURRENTLY LOSES ALL OF IT.\\\" THE PRIOR ART, from reflow's 97-GAN-inspired-test.json, and its structure is the transferable part rather than its specifics. Execution was separated from evaluation: one agent drove the workflows BLIND — \\\"Agent B should NOT see expected outputs\\\" — while a second read the transcript afterwards, categorised what went wrong and found root causes rather than symptoms, asking of each \\\"why did this occur, how did it manifest, how frequently, what is the fix effort\\\". Results aggregated to metrics, compared against a stored baseline, and regression was called out explicitly: \\\"if new version performs worse than baseline, that's a P0 issue.\\\" The cadence was stated — periodically, or before a major release. THE BLINDNESS IS THE LOAD-BEARING PART and the easiest to lose: an evaluator who knows the expected output cannot see the friction, because it reads the intended path into whatever happened. reflow2's real trials (brownfield ophyd-service, greenfield aidrone, brainmaker) already produce this evidence and it is what taught reflow2 most of what it knows — but they are occasional, hand-run, and not comparable to each other, so nothing can say whether the last release made anything worse. Depends on req:friction-has-a-severity-bar: a baseline needs countable, classified findings to be a baseline OF something. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.\",\"status\":\"proposed\"}",
+        "target_id": "req:friction-has-a-baseline",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:prune-proposed:req:friction-has-a-severity-bar",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:friction-has-a-baseline\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:2ef80cfd8036988f\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Friction is classified and has a bar at which it becomes work\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"reflow2 collects friction with no vocabulary for it and no threshold at which accumulated friction becomes scheduled work, so reports pile up and nothing converts them. THE EVIDENCE IS IN THIS REPO, twice over. (1) The eight brainmaker friction items in feedback.md — from a real genesis pass over a 47-component decomposition — are still not in docs/backlog.md. Observed, written down, and never converted. (2) Friction findings with nowhere to live are being crammed into node NAMES: ver:kit-manifest-agrees is literally named \\\"... (friction 2026-07-25: reflow2's own manifest is four releases stale and nothing noticed; unwritten)\\\" and ver:tools-reject-unknown-args carries \\\"(friction 2026-07-25, unwritten)\\\". When a finding has no home it ends up in a name string, and \\\"unwritten\\\" in a Verification name is a backlog entry in hiding. THE PRIOR ART, from reflow's 97-GAN-inspired-test.json: friction was classified into a fixed taxonomy of twelve categories — tool_workflow_misalignment (tool output does not match the documentation), missing_documentation, automation_incompatibility (requires human interaction, fails unattended), missing_tools (workflow references something that does not exist), ambiguous_instructions, template_issues, path_resolution_issues, plus five for the hierarchical machinery. Each finding was prioritised against stated criteria rather than judgement: P0 BLOCKING, \\\"workflow cannot proceed without manual intervention or workaround\\\"; P1 HIGH VALUE, \\\"causes significant friction (5+ minutes wasted) or happens frequently\\\"; P2 POLISH. And there was a bar: p0_issues_count > 0 OR (p1_issues_count > 3 AND friction_overhead > 15%) converted the pile into a fix cycle. The specific numbers are reflow's and are not the point; the point is that a stated bar exists, so friction stops depending on someone feeling that there is enough of it. NOTE WHAT reflow2 ALREADY DOES BETTER and must keep: report-friction's redaction discipline (tool names and argument SHAPES, node TYPES not ids, counts not contents, errors with ids masked) has no counterpart in reflow's loop, because reflow's ran on its own repo where there was no third party's design to protect. reflow2 installs once per machine into other people's projects, so any classification scheme must carry that discipline with it. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.\",\"status\":\"proposed\"}",
+        "target_id": "req:friction-has-a-severity-bar",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:prune-proposed:req:functional-vocabulary-computes",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"CONTRADICTS\",\"other_type\":\"Requirement\",\"other_id\":\"req:defaults-do-not-assert\",\"properties\":{\"alignment\":\"supporting\",\"confidence\":0.9,\"evidence\":\"Corroboration, not conflict. is_entry_point and is_exit_point default to false on every Capability, which asserts 'not an entry point' across the whole design without anyone choosing it — a concrete field instance of the general rule. Found 2026-07-28 via the system_of_systems_graph_v2.py comparison, where three ported functional-mode detectors turned out to be unimplementable because of it.\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:dd3c69b16fec5439\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"The functional vocabulary must compute something or not be declared\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"reflow2's schema declares a functional-analysis vocabulary that nothing in the core reads: Capability.is_entry_point and Capability.is_exit_point (schema/functional.yaml:20, both defaulting to false), plus inputs, outputs and capability_type. Only Flow.entry_point is actually read. add_capability cannot write any of them, so they are reachable only through the create_node escape hatch, and no detector consults them. Found 2026-07-28 by comparing reflow2 against the original reflow's system_of_systems_graph_v2.py (2,146 lines, NetworkX): three of that tool's five FUNCTIONAL-mode gap detectors are unimplementable in reflow2 purely because of this — unreachable_functions needs is_entry_point, dead_end_functions needs is_exit_point, unexplained_outputs needs outputs. The service-mode analysis DID come over and in better form (cycles, communities, centrality, orphans, unimplemented services, orphaned interfaces all have reflow2 detectors); the functional mode did not. The schema was ported and the computations were not, which is req:defaults-do-not-assert at the scale of a whole workflow: a property defaulting to false asserts 'this capability is not an entry point' on every node in the design, and nobody chose that. Anthony's word 2026-07-28: add it. Recorded after the originating session was killed by an OOM before it could write. The honest resolutions are to compute against the vocabulary or to remove it — storing it while nothing reads it is the shape this project keeps rediscovering (BL-96 inviolable-intent, BL-106 last_run_at, the temporal axis before BL-70). Sibling of req:defaults-do-not-assert, which is parked as deferred.\",\"status\":\"proposed\"}",
+        "target_id": "req:functional-vocabulary-computes",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:prune-proposed:req:supporting-is-not-conflict",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:supporting-is-not-conflict\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"A property the detector ignores is a property that lies\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"FOUND BY USING THE GRAPH, 2026-07-28, and the third defect this week that inspection had not found and one real use did.\\n\\nWHAT HAPPENED. Anthony decided the slash commands should ship with the kit, which QUALIFIES `dec:skills-served` rather than overturning it — same reasoning, narrower scope. The schema has carried the vocabulary for that relationship from the beginning: CONTRADICTS is documented as \\\"two decisions/requirements/claims that conflict (OR, WITH alignment=supporting, REINFORCE)\\\". So the corroboration was recorded exactly as prescribed, with `alignment: supporting` — and `detect_defects` reported a structural defect, because the contradiction loop read the edge TYPE and never looked at the property.\\n\\nWHY THE NOISE WAS NOT THE DAMAGE. The damage was that both ways out were wrong. Acknowledge it, and a defect that is not one enters `reviewed_defects` as if a judgement had been made. Stop drawing the edge, and the design silently loses the fact that one decision qualifies another — which is precisely the kind of reasoning a design graph exists to keep. And an open list that can never reach zero gets SKIMMED, which is the failure the whole detect-and-ask discipline is built to prevent.\\n\\nTHE GENERAL RULE, worth stating beyond this instance: A SCHEMA PROPERTY THAT NO COMPUTATION READS IS A PROPERTY THAT LIES. It invites people to record something true, and then behaves as though they had not. reflow2 has now been bitten by this shape three times in two days — `orphan_node` ignoring DOCUMENTS so a well-documented artifact reads as loose; `export_surface` withholding every Requirement so a published promise could not travel; and this. Each was a value the schema offered and no detector consulted.\\n\\nWHAT THE FIX MUST NOT DO, and this is the load-bearing half: it must not silence the detector. An `opposing` edge is still a contradiction, and an edge that says NOTHING is still a contradiction — silence is not a claim of support, and every design written before today keeps its meaning exactly. A fix that made real conflicts vanish would be far worse than the noise it removed, so both counterweights are pinned by tests rather than asserted in a comment.\",\"status\":\"proposed\"}",
+        "target_id": "req:supporting-is-not-conflict",
+        "target_type": "Requirement"
       }
     },
     {
@@ -35061,7 +35526,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1fc873b213905ababdbc5b1567109ab983fdaf07afef63e8428f1cad500197d9",
+  "prev_content_hash": "sha256:b382a73dc5e49577d6dc1938b65210df3738e2d5c0eeeb6326fd773ea8458c8d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
