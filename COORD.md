@@ -52,6 +52,8 @@ Add yourself if you're new here.
 
 - The satisfaction schedule (`SCHEDULED_FOR`, second increment of `req:epochs-can-be-planned`) — @ajs — since 2026-07-30 — schema/temporal.yaml (new edge), crates/reflow2-core/src/temporal.rs, tests/temporal.rs, crates/reflow2-mcp/src/service.rs, tools/toolsnaps/; branch `feat/planned-epochs`. Anthony chose the edge-with-modality shape over overloading `AT_EPOCH` or a Commitment node. Prerequisite for everything in `dec:arrival-delta`, which refers to "its schedule edge" — a thing that does not yet exist.
 
+- The arrival delta (`dec:arrival-delta`, third increment of `req:epochs-can-be-planned`, delivering `req:plans-move-honestly` obligation 2) — @ajs — since 2026-07-31 — crates/reflow2-core/src/{temporal,graph}.rs, tests/temporal.rs, crates/reflow2-mcp/src/service.rs, tools/toolsnaps/; branch `feat/planned-epochs`. Anthony's three calls 2026-07-31: baseline is the epoch's FIRST snapshot with the intermediates reported as the movement trail; `snapshot_node` excludes by edge ROLE not endpoint type, so a `SCHEDULED_FOR` survives a snapshot of the ITEM and not only of the epoch; and a lossy schedule edit with no recorded change is REFUSED, mirroring `record_change` refusing a planned epoch.
+
 
 
 
