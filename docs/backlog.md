@@ -1371,6 +1371,20 @@ feature: a scheduled GitHub Action doing `cargo outdated` (crates.io deps) + `gi
 deps today (checked 2026-07-22: dynograph pinned v0.10.0 == latest tag; rmcp pinned "2" →
 2.2.0). That script is the S down-payment; the in-graph generalisation is this item.
 
+**Note 2026-07-31 — the RATE is the finding, not the version.** rmcp released **3.1.0** while the
+repo sat on 3.0.1 (pin is `"3"`, so `cargo update -p rmcp` takes it today; nothing is blocking
+it). The user's point is the durable half: **v3 was still beta days earlier**, so by the time this
+item is revisited the number here will be wrong — which is precisely the failure BL-78 describes,
+demonstrated on BL-78's own note. Do not read "3.1.0" as current; read it as *this dependency moves
+faster than the backlog does*, which is the argument for a computed check rather than a written one.
+Two specifics worth carrying anyway: 3.1.0 touches **protocol version negotiation** (`honor
+supported_protocol_versions`) and **stateless protocol metadata validation** — the exact area where
+the v3 upgrade broke seat identity *silently while every gate stayed green*, because no test client
+spoke the newer protocol version. `tools/stateless_seat_probe.py` is now a CI gate in the `full`
+job, so that class of breakage would be caught this time; it exists because of that incident. When
+the bump is taken, `dec:rmcp-v3-upgrade`'s own method applies — upgrade and **measure**, and treat
+the probe as the evidence rather than the suite.
+
 **BL-79 · The identity keystone: who authors the design — RUNG 1 (authorship seed) DONE
 2026-07-22** — *user-chosen as the next most important, from the recurring "the schema has no
 notion of who" thread the backlog kept naming.* The missing keystone under four threads: BL-44
