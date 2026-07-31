@@ -31,7 +31,90 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.19.0] — 2026-07-31
+
 ### Added
+
+- **The design can hold what it points at: a content-addressed store, committed to the
+  repo** (`dec:where-content-lives`, `dec:content-store-implementation`,
+  `dec:what-lives-where`; `cap:content-store`, `cap:content-manifest`,
+  `req:the-store-is-reachable-from-a-session`).
+
+  **`content_put`, `content_get`, `content_exists`, `content_manifest`** — the store is
+  reachable from a session, which is the half that was missing: `cap:content-store` was
+  `realized` and passing its check while *nothing could call it*. The repo holds what the
+  design PRODUCED; the store holds what INFORMED it — the documents, diagrams and captures
+  a Decision points at and would otherwise lose at session end.
+
+  Hand-rolled and synchronous in `reflow2-core`, **zero new crates compile** (`base64` was
+  already in the lock and is now a declared dependency rather than an implied one, per
+  `dec:design-dependencies-declared`). `object_store` is the documented upgrade path, not the
+  implementation.
+
+  **`--content-path` is its own flag, deliberately not derived from `--graph-path`.** The
+  graph lives under `.reflow2/`, which is gitignored, and blobs are COMMITTED — deriving
+  would have put a consumer's diagrams somewhere git ignores, quietly contradicting the
+  decision that they travel with the design. A server with no store configured **refuses by
+  name** rather than inventing a directory; a default chosen at call time is
+  `req:no-silent-fallback`'s failure wearing a friendly face. `text` or `base64`, exactly
+  one: passing both is refused rather than resolved by silently dropping a payload.
+
+  **The manifest is DERIVED from the graph, never stored** (`dec:content-manifest`). A
+  manifest kept as its own record would be a second source of truth about what the design
+  references, and would drift the first time someone updated one and not the other;
+  rendering it to a committed file is a projection, the same as every other view. The
+  readable name is the Fragment's own `title` — the graph already requires one, so there is
+  no second place for names to live. `missing` names content the graph references and this
+  checkout lacks (the case someone handed the export alone hits, where a diagram that will
+  not open becomes a named finding rather than a silent absence); `orphaned` is the reverse,
+  bytes referenced by nothing, which is how a store grows without anyone deciding to.
+
+  **`.gitattributes` marks the blob directory `binary`** — the point is not the diff, it is
+  that line-ending conversion would otherwise silently corrupt a PNG on a CRLF checkout:
+  data loss on someone else's machine that nothing in the history would explain.
+
+  Toolsnaps 124 → 129.
+
+- **What bounds the store is WHAT gets stored, not how big it is**
+  (`dec:content-growth-is-bounded-by-what-not-by-size`).
+
+  Measured on reflow2's own material before deciding: the entire design prose is 3.5 MB
+  across 64 markdown files, the export 1.7 MB, the whole `.git` history 81 MB — and **29
+  session transcripts come to 115.8 MB, mean 4.0 MB each.** Transcripts alone are 1.4× the
+  entire repository history, accumulated in a couple of weeks. That inverts what
+  `dec:content-manifest` assumed ("raster images are the real risk"), and the correction is
+  recorded rather than edited into accepted text.
+
+  **So a size cap is the wrong lever, which is the whole point.** A 4 MB file passes any
+  sane threshold; what ends a repository is 4 MB × every session, permanently, unprunable.
+  The control is *what* gets stored — transcripts by exception, not by default.
+  `content_put` refuses past **100 MB** with `accept_large` as a recorded override, and the
+  threshold is anchored to GitHub's hard block rather than invented to feel safe
+  (`req:defaults-do-not-assert`). The refusal says in its own text that it is *not* what
+  keeps the store small, so it cannot be mistaken for the answer; one test asserts exactly
+  that, and another asserts a transcript-sized file passes — the case that makes the cap
+  insufficient.
+
+  **The manifest reports total bytes and largest entries** — report, never judge: no
+  threshold, no warning. This is the piece that would have surfaced the finding without
+  anyone running `du` on a hunch.
+
+- **The cut trigger stops being vacuously true**
+  (`dec:release-trigger-needs-a-required-item`). `missed_obligations.is_empty()` is
+  vacuously true when nothing is required, so an increment promising *nothing* read as ready
+  — the empty-release failure `dec:release-trigger` was chosen to prevent, arriving through
+  its own back door. `ready_to_cut` now requires an empty miss list **and** at least one
+  obligation, and `required_count` is reported beside it because an empty miss list is
+  otherwise ambiguous: everything landed and nothing was promised look identical. An
+  increment with nothing required gets a note saying it has not been scoped, rather than a
+  bare no. Mutation-checked — drop the second clause and the empty-increment test fails.
+
+  Found by asking the machinery rather than by reasoning about it: `rel:v0200` reported
+  READY while holding one unbuilt capability. The same query surfaced that **75 of 79 built
+  capabilities are scheduled against nothing**, so `arrival_delta` today answers "did the
+  plan hold?" accurately and cannot answer "what actually shipped?" at all — the
+  `added_after_baseline` blind spot `dec:arrival-delta` already names under "deliberately
+  not built".
 
 - **The time axis runs forward: epochs can be PLANNED, and work can be SCHEDULED against
   them** (`req:epochs-can-be-planned`; `cap:planned-epochs`, `cap:satisfaction-schedule`).

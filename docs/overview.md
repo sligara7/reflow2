@@ -97,6 +97,10 @@ Three records, three questions — kept separate on purpose:
   to a collaborator as-is.
 
 ### 3½ · Upgrade notes — *read before updating a consumer project*
+- [upgrading-to-v0.19.0.md](upgrading-to-v0.19.0.md) — **upgrade everywhere, together**: a new edge
+  type (`SCHEDULED_FOR`) moves the version stamp, so an older reflow2 is locked out of a design
+  written by this one. No pin moved, so no slow first build. Also: the content store's one new flag,
+  and the `.gitattributes` line to add before storing a binary.
 - [upgrading-to-v0.18.0.md](upgrading-to-v0.18.0.md) — **nobody is locked out and nothing rebuilds**;
   no type was added and no pin moved. The release that makes install once-per-machine — re-run the
   installer and delete any workaround for v0.17.0's missing registration step.
