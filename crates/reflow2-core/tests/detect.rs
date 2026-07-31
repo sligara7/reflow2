@@ -880,6 +880,65 @@ fn a_failing_verification_is_surfaced_and_outranks_everything_absent() {
 }
 
 #[test]
+fn a_failing_gap_says_when_the_check_last_ran() {
+    // A `status` is a measurement taken at an instant. Reporting it without its
+    // timestamp presents it as a standing property of the system — and that cost
+    // a real fleet twice in one shift, in both directions: a verification read
+    // `passing` while the service was 100% dead, and these gaps read `failing`
+    // for 26 capabilities on a run three days older than the fixes.
+    let mut g = checked_thread("failing");
+    g.set_verification_status("ver:a", "failing", Some("2026-07-25T18:49:11Z"))
+        .unwrap();
+    let gaps = g.detect_gaps().unwrap();
+    let failing = gaps
+        .iter()
+        .find(|x| x.gap_source == GapSource::FailingVerification)
+        .expect("a red check must still be a gap");
+
+    // The timestamp must reach the reader through the surfaces they actually
+    // read — the title and the evidence — not merely exist on the node.
+    assert!(
+        failing.title.contains("2026-07-25T18:49:11Z"),
+        "the title must carry when it last ran: {}",
+        failing.title
+    );
+    assert!(
+        failing.evidence.contains("2026-07-25T18:49:11Z"),
+        "the evidence must carry the run time: {}",
+        failing.evidence
+    );
+    // And it must stop claiming the present tense on the strength of a past run.
+    assert!(
+        failing.description.contains("Re-run"),
+        "the description must tell the reader to re-run before treating it as current: {}",
+        failing.description
+    );
+}
+
+#[test]
+fn a_failing_check_that_never_ran_says_so_rather_than_implying_a_measurement() {
+    // `failing` with no recorded run is an ASSERTION, not a measurement, and the
+    // wording must not launder one into the other. This is the same shape as the
+    // paper-green that started the whole class: a status set from a transcript.
+    let g = checked_thread("failing"); // fixture sets status with last_run_at = None
+    let gaps = g.detect_gaps().unwrap();
+    let failing = gaps
+        .iter()
+        .find(|x| x.gap_source == GapSource::FailingVerification)
+        .expect("a red check must still be a gap");
+    assert!(
+        failing.title.contains("never run"),
+        "an unrun check must say so in the title: {}",
+        failing.title
+    );
+    assert!(
+        failing.evidence.contains("no last_run_at"),
+        "the evidence must name the absence: {}",
+        failing.evidence
+    );
+}
+
+#[test]
 fn a_passing_verification_raises_nothing_and_a_failing_one_is_the_only_difference() {
     let pass = checked_thread("passing");
     let fail = checked_thread("failing");

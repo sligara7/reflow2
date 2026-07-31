@@ -1631,19 +1631,68 @@ impl DesignGraph {
                 target_names.sort();
                 format!("“{}”", target_names.join("”, “"))
             };
+
+            // WHEN the check last ran, said next to WHAT it said.
+            //
+            // `status` is a measurement taken at an instant; a gap that reports
+            // it alone presents it as a standing property of the system. That
+            // difference is not cosmetic — it cost a real fleet twice in one
+            // shift, in both directions (2026-07-27):
+            //
+            //   * a verification read `passing` while the service behind it was
+            //     100% dead — recorded from a transcript, never re-run;
+            //   * these very gaps read `failing` for 26 capabilities on a run
+            //     that predated the fixes by three days, asserting at MAXIMUM
+            //     SEVERITY that GENESIS, extraction, self-healing and 23 others
+            //     were *proven broken* when their suites were green.
+            //
+            // The false-red is the more corrosive of the two: it is the
+            // permanently-red-check failure, and it trains every future reader
+            // to skim the top of the gap list — which is exactly where a real
+            // 0.8 would appear.
+            //
+            // No clock is consulted: the recorded timestamp is surfaced verbatim
+            // and the reader judges. Introducing "now" into a detector would make
+            // gap detection non-deterministic, which is a worse trade than making
+            // a human compare two dates.
+            let last_run = ver
+                .properties
+                .get("last_run_at")
+                .and_then(dynograph_core::Value::as_str)
+                .filter(|s| !s.is_empty());
+            let when = match last_run {
+                Some(t) => format!(" when it last ran, at {t}"),
+                // A `failing` that has never run is an assertion, not a
+                // measurement, and the wording has to stop short of claiming
+                // otherwise.
+                None => {
+                    String::from(", though it records no run — the status was set, not measured")
+                }
+            };
+            let recency = match last_run {
+                Some(t) => format!("last_run_at={t}"),
+                None => String::from("no last_run_at recorded"),
+            };
             gaps.push(GapCandidate {
                 id: gap_id(GapSource::FailingVerification, &affected),
                 gap_source: GapSource::FailingVerification,
                 scope: GapScope::Capability,
                 severity: 0.8,
-                title: format!("“{name}” is failing"),
+                title: match last_run {
+                    Some(t) => format!("“{name}” is failing (last run {t})"),
+                    None => format!("“{name}” is failing (never run)"),
+                },
                 description: format!(
-                    "The check “{name}” is failing, so {what} is proven not to work as designed — fix the build, or the design no longer describes reality."
+                    "The check “{name}” was failing{when}, so {what} did not work as designed then. \
+                     Re-run it before treating that as current — a status is a measurement at an \
+                     instant, not a standing property — then fix the build or fix the design."
                 ),
                 affected_ids: affected,
                 suggested_depth: 2,
                 evidence: format!(
-                    "Verification '{}' has status=failing; a failing check is reality contradicting the design, not absence of a check.",
+                    "Verification '{}' has status=failing, {recency}. A failing check is reality \
+                     contradicting the design rather than absence of a check — but only as of that \
+                     run; if code has landed since, the gap may be stale rather than real.",
                     ver.node_id
                 ),
             });
