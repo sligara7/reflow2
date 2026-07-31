@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:fa898b81e7d11bbd694aaf0be54fbfbfcafc9b927e4668d5fa1c84129300f817",
+  "content_hash": "sha256:7642a6bfcdc11315d980512503e3eee80cb41b092a0c4580b18355b67fb66d80",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2902,6 +2902,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:content-store-implementation",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:coord-board-in-graph",
       "properties": {
         "acted_at": "2026-07-25",
@@ -3317,6 +3326,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:export-says-what-it-cannot-carry",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "ctr:claude-fable"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -9512,6 +9530,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:content-store-implementation",
+      "properties": {
+        "evidence": "It refines that accepted decision on the measurement that decision named as still-to-check, and cannot be read without it.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "dec:where-content-lives"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:github-mcp-tandem",
       "properties": {
         "optional": false,
@@ -10084,6 +10112,16 @@
         "weight_basis": "evidence"
       },
       "to_id": "req:version-combination-is-an-object"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:export-says-what-it-cannot-carry",
+      "properties": {
+        "evidence": "It is that requirement applied to the export door: a pointer that cannot resolve must be nameable by the person holding the document.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:content-reaches-every-seat"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -30578,6 +30616,16 @@
       }
     },
     {
+      "node_id": "dec:content-store-implementation",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "PROPOSED, refining `dec:where-content-lives` (accepted). Per `dec:reopen-supersedes` a settled choice is re-opened by minting a new Decision, never by editing the accepted one. Raised because that decision explicitly conditioned adoption on a measurement — \"its transitive tree with cloud features off MEASURED rather than assumed\" — and the measurement came back material.\n\nTHE MEASUREMENT, 2026-07-31. `object_store` at 0.14.1 with `default-features = false, features = [\"fs\"]` resolves 68 crates, of which **36 ARE NEW TO REFLOW2** (the workspace already carries 198). MSRV is fine — workspace is `rust-version = 1.94`, toolchain 1.94.0.\n\nWHERE THE COST ACTUALLY COMES FROM, and it is not what the accepted decision assumed. That decision noted, correctly, that cloud features off avoids `reqwest` and the crypto providers — but that is not the same as a small tree. **Roughly 24 of the 36 arrive through `url` and its internationalised-domain-name machinery**: the ICU4X stack (`icu_normalizer`, `icu_normalizer_data`, `icu_properties`, `icu_properties_data`, `icu_collections`, `icu_provider`, `icu_locale_core`), plus `zerovec`, `zerofrom`, `yoke`, `tinystr`, `litemap`, `writeable`, `zerotrie`, `potential_utf`, `utf8_iter`, `synstructure`, `displaydoc`, `idna`, `idna_adapter`, `form_urlencoded`, `percent-encoding`. The remainder is `parking_lot`/`lock_api`/`scopeguard`, `nix`, `walkdir`/`same-file`, `humantime`, `iana-time-zone`. **A local content-addressed store needs none of the URL parsing this pays for.**\n\nTHE ALTERNATIVE, and why it is smaller than it sounds. What `cap:content-store` requires is three operations — `put(bytes) -> hash`, `get(hash) -> bytes`, `exists(hash)`. Content-addressed and immutable means NO paths, NO prefixes, NO listing, NO multipart, NO conditional writes: the features `object_store` exists to provide are the features this use does not have. `sha2` is ALREADY a `reflow2-core` dependency; `std::fs` with write-to-temp-then-rename gives atomicity. Order of a hundred lines, zero new crates.\n\nAND IT UN-DOES A COMPLICATION RATHER THAN ADDING ONE. `dec:where-content-lives` placed the store in `reflow2-mcp` and left only the hash in the core BECAUSE `object_store` is async and `fs` pulls tokio. A synchronous `std::fs` store can live in `reflow2-core` itself — deterministic, in-memory-testable, no runtime, no split between where the hash lives and where the bytes do. THE PLACEMENT PROBLEM WAS CREATED BY THE LIBRARY CHOICE, NOT BY THE REQUIREMENT.\n\nWHAT IS GIVEN UP: the multi-backend path — S3, GCS, Azure behind one trait. But local-only was already chosen and cloud is speculative. Content addressing is precisely what keeps this reversible: `object_store` slots in behind the same three-function interface whenever a cloud backend is actually wanted, which the accepted decision itself noted when it said the addressing scheme makes distribution mechanisms interchangeable.\n\nNOT PROPOSED, and worth saying: this is not an argument against `object_store`. It is the right crate for multi-cloud object storage. It is being weighed for a job that is one hash and one directory.\n\nTHE QUESTION FOR ANTHONY: hand-rolled synchronous store in `reflow2-core` with zero new dependencies, or `object_store` as accepted with 36 new crates and the store in `reflow2-mcp`?",
+        "name": "OPEN — object_store costs 36 new crates for a local store; a hand-rolled sync store needs none and un-does the placement problem",
+        "rationale": "Recorded rather than acted on, because `dec:where-content-lives` carries Anthony's signature and reversing part of it silently would be the forgery `dec:certainty-derived` forbids one node type over.\n\nThe measurement is the whole argument, and it is the third time today that checking beat reasoning: the accepted decision's claim about the dependency tree was defensible, widely repeated, and wrong in the way that mattered — \"avoids reqwest\" is true and says nothing about 24 crates of Unicode normalisation arriving through a URL parser a local file store never calls.\n\nWorth keeping about METHOD as much as content: the accepted decision was written with an explicit \"STILL TO CHECK BEFORE ADOPTING\" clause naming this exact measurement. That clause is why the finding surfaced before code rather than after — a decision that names what it has NOT verified is doing work that a confident decision would not.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:coord-board-in-graph",
       "node_type": "Decision",
       "properties": {
@@ -35344,6 +35392,21 @@
       }
     },
     {
+      "node_id": "req:export-says-what-it-cannot-carry",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Once the design points at content, the export must say what it does NOT carry — a pointer with no bytes fails loud, not quietly",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "FOUND BY IMPACT-CHECK, 2026-07-31, before any content-store code was written. `propagate_from cap:content-store` reported three boundary crossings — `ifc:core-api`, `ifc:graph-export`, `ifc:mcp-tools` — and the export one changes what an existing contract MEANS.\n\nTHE CONSEQUENCE. Blobs travel in git (`dec:where-content-lives`); the export document carries only pointers. So the moment content exists, `export_graph` stops being a complete design transfer: hand someone the JSON on its own — email it, drop it in a ticket, move it between machines — and every diagram, transcript and source document silently fails to resolve. Today the export IS the whole design, which is why `dec:export-door-spof-accepted` calls it \"an accepted single door\"; after content, it is the whole design MINUS whatever the graph points at.\n\nTHE REQUIREMENT: an export that references content must say so, and a consumer holding an export without the bytes must be able to TELL. The shape most consistent with what already exists is a manifest of referenced content hashes carried in the export beside the stamp — the stamp already records the vocabulary a document was written with, and this records the content it depends on. Then \"do I have everything?\" is a set comparison rather than a discovery made when a diagram fails to open.\n\nWHY IT CANNOT BE LEFT TO CONVENTION: `req:content-reaches-every-seat` requires an unresolvable pointer to fail LOUD and be nameable, and `req:no-silent-fallback` says the same one layer down. A design that renders quietly without its pictures satisfies neither — and the person who cannot see the diagrams is exactly the person who cannot tell they are missing.\n\nDELIBERATELY NOT SPECIFIED HERE: whether the export should also be able to EMBED content for transfer (self-contained at the cost of size), or only ever declare it. That is a separate question and should not be answered by implication.\n\nNOTE ON PROVENANCE: raised by the agent from an impact-check, not by Anthony. It is `proposed` and wants his word.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:framework-is-chosen-not-defaulted",
       "node_type": "Requirement",
       "properties": {
@@ -37684,7 +37747,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:10dee01f7a37578d70e0eade4766767cd36b1b9c213048c799f9cb22832aaccb",
+  "prev_content_hash": "sha256:fa898b81e7d11bbd694aaf0be54fbfbfcafc9b927e4668d5fa1c84129300f817",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
