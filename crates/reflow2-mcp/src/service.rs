@@ -1065,6 +1065,13 @@ pub struct ScheduleForReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ArrivalDeltaReq {
+    /// The DesignEpoch or Release to read the schedule of.
+    pub target_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct DeployToReq {
     pub release_id: String,
     pub environment_id: String,
@@ -3488,6 +3495,35 @@ impl ReflowService {
             "for": req.target_id,
             "modality": modality
         }))
+    }
+
+    #[tool(
+        description = "What was PLANNED for an epoch or release against what was actually \
+                       DELIVERED — the planned-versus-delivered delta (dec:arrival-delta). Ask it \
+                       when a moment arrives: 'what didn't we achieve that we were supposed to in \
+                       increment 10?'. Every item comes back with one of five outcomes — \
+                       `delivered` (the plan held), `deferred` (still intended, the date moved, \
+                       and where to), `discontinued` (no longer intended at all), or `outstanding` \
+                       (still pointed here, not delivered, and NOBODY HAS SAID which of the \
+                       previous two it is — that is the question to put to the user, never to \
+                       default). Work scheduled after the baseline is reported separately, because \
+                       a delta measured only against the plan cannot see the work that was not in \
+                       it. `missed_obligations` are `required` claims that did not land: computed \
+                       violations rather than slips. NOTHING HERE IS STORED — the plan lives in \
+                       the epoch's snapshots and delivery is computed from the golden thread, so \
+                       recording the outcome would create a second source of truth able to \
+                       disagree with the first. The baseline is the target's FIRST snapshot, with \
+                       every later one returned as the movement trail; where none exists the plan \
+                       never moved and the live edges are the baseline. Read `notes` — it says \
+                       what this computation cannot see.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn arrival_delta(
+        &self,
+        Parameters(req): Parameters<ArrivalDeltaReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.arrival_delta(&req.target_id).map_err(dyno_err)?)
     }
 
     #[tool(

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2417a73bccf71f1c56f2eeeb590d85f41185cf8d60119f5e5056c953550762b5",
+  "content_hash": "sha256:92ee5bb7b913cf9c10e5a7c158fb5bf36289a1eaae1f374b5af4203ea74d7ad1",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -24,6 +24,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:arrival-delta",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1485,6 +1493,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:arrival-delta-built",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:arrival-delta-decided",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:atomic-requirement",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -1770,6 +1790,12 @@
       "from_id": "chg:nudge-path",
       "properties": {},
       "to_id": "epoch:v0120"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:plan-movement-question-answered",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2313,6 +2339,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:cap:plan-movement-recorded",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:dec:arrival-delta",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:kpp-capture:cap:kpp-proposal",
       "properties": {},
       "to_id": "epoch:kpp-capture"
@@ -2721,6 +2759,15 @@
       "from_id": "dec:central-host",
       "properties": {
         "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:commitment-edges-survive-snapshots",
+      "properties": {
+        "acted_at": "2026-07-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -3786,6 +3833,51 @@
         "action": "modified"
       },
       "to_id": "dec:anchor-retire-or-implement"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:arrival-delta-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:arrival-delta-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:arrival-delta-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:arrival-delta-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:arrival-delta"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:arrival-delta-decided",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:arrival-delta"
     },
     {
       "edge_type": "CHANGED",
@@ -6360,6 +6452,15 @@
         "action": "added"
       },
       "to_id": "cap:nudge-path-proven"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:plan-movement-question-answered",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:plan-movement-recorded"
     },
     {
       "edge_type": "CHANGED",
@@ -10052,6 +10153,12 @@
       "from_id": "cap:allocate",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:arrival-delta",
+      "properties": {},
+      "to_id": "dec:arrival-delta"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -14293,6 +14400,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:plan-movement-recorded",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:cap:plan-movement-recorded"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:portability",
       "properties": {},
       "to_id": "snap:epoch:surface-export:cap:portability"
@@ -14320,6 +14433,12 @@
       "from_id": "dec:anchor-retire-or-implement",
       "properties": {},
       "to_id": "snap:epoch:reflow-workflow-review:dec:anchor-retire-or-implement"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:arrival-delta",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:dec:arrival-delta"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -22661,6 +22780,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:graph",
       "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:plan-movement-recorded"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:graph",
+      "properties": {
         "completeness": "partial"
       },
       "to_id": "cap:requirement-lineage"
@@ -23199,6 +23326,22 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:arrival-delta"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:temporal",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:plan-movement-recorded"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:temporal",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cap:planned-epochs"
     },
     {
@@ -23370,6 +23513,12 @@
       "from_id": "cap:allocate",
       "properties": {},
       "to_id": "req:golden-thread"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:arrival-delta",
+      "properties": {},
+      "to_id": "req:plans-move-honestly"
     },
     {
       "edge_type": "SATISFIES",
@@ -24123,6 +24272,18 @@
       "from_id": "ver:alternatives",
       "properties": {},
       "to_id": "cap:decision-point"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:arrival-delta",
+      "properties": {},
+      "to_id": "cap:arrival-delta"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:arrival-delta",
+      "properties": {},
+      "to_id": "cap:plan-movement-recorded"
     },
     {
       "edge_type": "VERIFIES",
@@ -25610,7 +25771,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3025d25a005e2881",
+        "checksum": "sha256:3e3a74509590ce61",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -26006,7 +26167,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e161b08dbf66f85a",
+        "checksum": "sha256:6e0871fae3717107",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -26127,7 +26288,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cde4771c91afcce9",
+        "checksum": "sha256:c752bf93202e8f9b",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
         "status": "realized"
@@ -26334,6 +26495,19 @@
         "name": "Analyse and propose allocation",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:arrival-delta",
+      "node_type": "Capability",
+      "properties": {
+        "description": "At an epoch or release, answers \"what didn't we achieve that we were supposed to?\" — every scheduled item returned as delivered, deferred (and where to), discontinued, or OUTSTANDING (still due here, not delivered, and nobody has said which of the previous two it is — the question to put to the user rather than default). Work scheduled after the baseline comes back separately, because a delta measured only against the plan cannot see the work that was not in it. `required` claims that did not land are reported as computed violations rather than slips — the scheduling face of a KPP. The baseline is the target's FIRST snapshot with every later one as the movement trail, so a total slip stays visible across repeated replans; where no snapshot exists the plan never moved and the live edges are the baseline. NOTHING IS STORED: the plan lives in the snapshots and delivery is computed from the golden thread, so writing the outcome down would create a second source of truth able to disagree with the first (`dec:arrival-delta`, `req:completion-computed`).",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "What was planned against what arrived, computed and never stored",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -27030,12 +27204,12 @@
       "node_id": "cap:plan-movement-recorded",
       "node_type": "Capability",
       "properties": {
-        "description": "When a planned epoch's content changes — a requirement moves out of epoch 5, a date slips, confidence drops — the movement itself is recorded and dated, rather than the plan being silently rewritten to look as though it always said the new thing. This is the forward-looking sibling of the snapshot machinery the backward axis already has, and the requirement it serves (req:plans-move-honestly) DEPENDS_ON req:epochs-can-be-planned, which cap:planned-epochs now delivers. THE OPEN DESIGN QUESTION, recorded rather than guessed: record_change now REFUSES a planned epoch, so a plan's movement cannot be filed INTO the planned epoch it concerns — it must be recorded in the arrived epoch that is current, taking the planned epoch as its subject. Whether that is sufficient, or whether planned epochs need a revision chain of their own, is undecided. Approved for build by Anthony 2026-07-30, superseding the 2026-07-28 park.",
+        "description": "When a planned epoch's content changes — a requirement moves out of epoch 5, a date slips — the movement itself is recorded and dated, rather than the plan being silently rewritten to look as though it always said the new thing. The forward-looking sibling of the snapshot machinery the backward axis already has.\n\nTHE OPEN DESIGN QUESTION IS ANSWERED (2026-07-31, by measurement rather than choice): filing in the arrived epoch IS sufficient, and planned epochs need no revision chain of their own. `record_change`'s planned-epoch refusal keys on the epoch you FILE INTO, not the node you snapshot, so a replan is recorded in the current arrived epoch with the planned epoch as its SUBJECT — and because a snapshot captures incoming edges, snapshotting that epoch captures the entire plan pointed at it in one call.\n\nBUILT as the `SCHEDULED_FOR` guard: removing, re-pointing or rewriting the modality of a schedule edge is REFUSED while the plan is unrecorded, so the movement cannot fail to be dated. Adding to a plan stays free — it destroys nothing. `cap:arrival-delta` is what then reads the trail (`dec:arrival-delta`).",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "A plan's movement is dated, so what we believed back then stays answerable",
         "provenance": "authored",
-        "status": "planned",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -27937,6 +28111,22 @@
       }
     },
     {
+      "node_id": "chg:arrival-delta-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The arrival delta built: arrival_delta on the core and the MCP surface, the SCHEDULED_FOR loss guard, and snapshots excluding by edge role"
+      }
+    },
+    {
+      "node_id": "chg:arrival-delta-decided",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The arrival delta moves from brainstorming to a decision, on Anthony's three calls (change_type scope_change used as least-wrong: nothing in the enum means 'an open question was settled')"
+      }
+    },
+    {
       "node_id": "chg:atomic-requirement",
       "node_type": "ChangeEvent",
       "properties": {
@@ -28526,6 +28716,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The loop's safety net is run as registered, and its absence is announced to every session"
+      }
+    },
+    {
+      "node_id": "chg:plan-movement-question-answered",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "cap:plan-movement-recorded's open design question is answered: filing in the arrived epoch is sufficient, no revision chain needed"
       }
     },
     {
@@ -29635,10 +29833,10 @@
       "node_id": "dec:arrival-delta",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\n\nAnthony, 2026-07-30: \"as we march forward in time, we can measure the delta of what was actually achieved/realized versus what was planned for that epoch. For instance, in epoch 3 we had planned for capability A, B, C. However, when we actually got to epoch 3 in time, we only achieved A & C, and B was discontinued or deferred to epoch 4.\"\n\nFOUR OUTCOMES PER SCHEDULED ITEM, three of them his and one the complement he did not name:\n  - DELIVERED — the plan held (A and C).\n  - DEFERRED — still intended, the date moved (B to epoch 4).\n  - DISCONTINUED — no longer intended at all. Distinct from deferred in the way `retire-from-design` already distinguishes them: one is a date change, the other is a withdrawal, and conflating them either loses a commitment or embalms one.\n  - DELIVERED BUT NEVER PLANNED — the complement. Work that arrived which nobody scheduled. Usually the most informative quarter of the delta, because unplanned work is where the estimate actually went, and a report that omits it makes a schedule look better than it was.\n\nTHE TRAP, and it is the same shape as the snapshot bug fixed on 2026-07-28. If deferring B simply RE-POINTS its schedule edge from epoch 3 to epoch 4, then when epoch 3 arrives the graph says epoch 3 was only ever about A and C — the slip is invisible and the plan has silently rewritten its own history. That is precisely what `req:intent-preserved` forbids, and precisely what the second-revision-overwrites-the-first defect did to snapshots. So REPLANNING MUST BE A RECORDED CHANGE, NOT AN EDIT.\n\nA MECHANISM THAT NEEDS NOTHING NEW, given what was verified while thinking this through: a Snapshot captures a node's INCOMING edges as well as its outgoing ones. So snapshotting the EPOCH captures every schedule edge pointing at it — the whole plan for that epoch, in one snapshot, in one call. Replanning becomes `record_change` on the epoch, which is exactly the operation the 2026-07-28 fix made safe to do twice in one epoch.\n\nWHAT IS COMPUTED VERSUS STORED. The delta is COMPUTED, never written down, for the same reason \"ARE satisfied\" is: `req:completion-computed` says delivery is computed from the golden thread and never asserted. At arrival, compare the last snapshot of the epoch's schedule (what was planned, as of before it moved) against what the thread says is delivered. Nothing about the outcome is stored; the two inputs already exist.\n\nWHAT FALLS OUT ONCE IT IS COMPUTABLE — a schedule-performance profile per epoch: hit rate (planned and delivered over planned), slip (how many deferred, and by how many epochs), attrition (how many discontinued), and unplanned (delivered but never scheduled).\n\nAND THE PAYOFF WORTH NAMING, because it closes a loop this project opened the same day. `req:plans-move-honestly` wants a planned claim to carry confidence that decays with horizon — Anthony's Black-Scholes analogy. Once several epochs have arrived, that confidence can be MEASURED rather than asserted: \"historically, items scheduled three epochs out land 40% of the time.\" That is the same argument that retired `req:context-is-a-modelled-quantity` on 2026-07-30 — an estimate is defensible only as a seed for something never measured — applied in the direction where the measurement is actually available, because unlike context cost, schedule performance is observed every time an epoch arrives.",
-        "name": "OPEN — what happens when an epoch arrives, and what the planned-vs-delivered delta is computed from",
-        "rationale": "Anthony's idea, in his own example, recorded while the thinking is still open.\n\nTwo things added beside it rather than in place of it: the fourth outcome (delivered but never planned), because a delta that only reports against the plan cannot see the work that was not in it; and the re-pointing trap, because the obvious implementation of \"defer B to epoch 4\" is an edge edit, and an edge edit is exactly how the plan would come to lie about what it once said.\n\nThe mechanism note is a measurement, not a preference: snapshots were confirmed to capture incoming edges, so the epoch-snapshot approach needs no new machinery.",
-        "status": "proposed"
+        "decision": "DECIDED by Anthony 2026-07-31, on three calls put to him after the mechanism was measured rather than assumed. His original framing is preserved in the snapshot at `snap:epoch:arrival-delta:dec:arrival-delta`.\n\nWHAT ARRIVES, PER SCHEDULED ITEM — his three outcomes, the complement he did not name, and a FIFTH his four assume away:\n  - DELIVERED — the plan held. Computed from the golden thread (`req:completion-computed`), never asserted.\n  - DEFERRED — still intended, the date moved; the report names where it now points.\n  - DISCONTINUED — no longer intended at all. Distinct from deferred the way `retire-from-design` distinguishes them: one is a date change, the other a withdrawal.\n  - DELIVERED BUT NEVER PLANNED — reported as `added_after_baseline`, work scheduled here after the commitment was taken. A delta measured only against the plan cannot see the work that was not in it, and that is usually where the estimate went.\n  - OUTSTANDING — still pointed at a moment that has arrived, and not delivered. THE FOUR ASSUME EVERY UNDELIVERED ITEM WAS CONSCIOUSLY MOVED OR DROPPED, and the commonest case is that nobody touched it and it did not happen. Calling that `discontinued` would put a withdrawal on the record nobody made; calling it `deferred` would invent a date nobody chose. It is exactly the question `req:plans-move-honestly` says must be ASKED and never defaulted — transferred or discontinued — so it is reported as its own outcome and put to the user.\n\nCALL 1 — THE BASELINE IS THE TARGET'S FIRST SNAPSHOT, with every later one returned as the movement trail. The brainstorm said the LAST snapshot, and that does not compute what he asked for: two replans leave epoch 3 holding {A,B,C} then {A,C}, so reading the last says the plan was always {A,C} and B's slip vanishes from the very report meant to show it. Where no snapshot exists the plan has never been recorded as moving, so the live edges ARE the original plan and are the baseline — stated as `BaselineSource`, not implied. ACCEPTED WRINKLE, named rather than hidden: the baseline is whenever a snapshot first happened to be taken, which may predate the plan being complete; where the baseline captured an empty plan the report says so in `notes` and the trail shows the growth.\n\nCALL 2 — `snapshot_node` EXCLUDES BY EDGE ROLE, NOT ENDPOINT TYPE. See `dec:commitment-edges-survive-snapshots`, minted for it.\n\nCALL 3 — A LOSSY SCHEDULE EDIT WITH NO RECORDED CHANGE IS REFUSED, mirroring `record_change` refusing a planned epoch. Removing a `SCHEDULED_FOR`, re-pointing it, or rewriting its modality all destroy a claim; each is refused while the plan is unrecorded, with the refusal naming the `record_change` that unblocks it. ADDING to a plan is deliberately NOT guarded — it destroys no earlier claim, and taxing it would punish correct work, which is the mistake this project keeps finding in detectors. `delete_node` is guarded from both directions too, because retiring a scheduled requirement is precisely how discontinuation happens and would otherwise walk straight past the refusal.\n\nWHAT IS COMPUTED VERSUS STORED, unchanged and load-bearing: NOTHING about the outcome is written down. The plan lives in the epoch's snapshots, delivery is computed from the thread, and storing the result would create a second source of truth able to disagree with the first — the same argument that keeps `achieved` out of the `modality` enum.\n\nWHAT FALLS OUT: `missed_obligations`, the `required` claims that did not land — computed violations rather than slips, and the scheduling face of a KPP. And once several epochs have arrived, the confidence `req:plans-move-honestly` wants a planned claim to carry can be MEASURED from arrival history rather than authored — Anthony's Black-Scholes analogy, answered with observation.\n\nDELIBERATELY NOT BUILT: delivery is not dated to an epoch, so \"delivered during this window but never scheduled anywhere\" is not computable and is not claimed. `added_after_baseline` answers the narrower, answerable question, and `notes` says which one was answered.",
+        "name": "What happens when an epoch arrives: the delta is computed against the FIRST snapshot, and a lossy schedule edit is refused",
+        "rationale": "MEASURED BEFORE DECIDED, and two of the three calls exist because the measuring found something the brainstorm had not.\n\nThe mechanism claim held: `snapshot_node` really does chain incoming edges, so snapshotting the epoch captures every schedule edge pointing at it — the whole plan in one call. And `record_change`'s planned-epoch refusal keys on the epoch you FILE INTO, not the node you snapshot, so a replan files into the current arrived epoch with the planned epoch as its subject. That also answers the open question inside `cap:plan-movement-recorded`: filing in the arrived epoch is sufficient, and planned epochs need no revision chain of their own.\n\nBut the trap was WORSE than the brainstorm stated, which is call 2. And \"the last snapshot\" would have under-reported exactly the slip the report exists to show, which is call 1. Both were found by reading the code rather than reasoning about it — the same method that found the wrong-direction edge in `dec:epoch-pins-a-version-combination`.\n\nThe fifth outcome came from asking what happens to an item nobody touches, which is the ordinary case and the one the four-outcome framing has no room for. Forcing it into `discontinued` or `deferred` would have made the report assert a decision that was never taken — the failure `dec:report-dont-judge` exists to prevent, arriving through a vocabulary that was simply too small.\n\nMutation-checked, all three calls: empty the commitment-edge list and the snapshot test fails; take the baseline from the last snapshot instead of the first and the two-replan test fails; make the guard always allow and all three refusal tests fail.",
+        "status": "accepted"
       }
     },
     {
@@ -29688,6 +29886,16 @@
         "decision": "The eight slash commands (`/gaps`, `/health`, `/where`, `/req`, `/decisions`, `/debt`, `/brainstorm`, `/kpp`) are INSTALLED into a consumer project's `.claude/commands/`. Skills, working instructions and everything else remain SERVED. Anthony's call, 2026-07-28.",
         "name": "Slash commands ship with the kit — the one narrow exception to serving everything",
         "rationale": "QUALIFIES `dec:skills-served` rather than overturning it, and the distinction is what makes the exception safe.\n\nWHY THAT DECISION EXISTS: a copied skill goes stale, and the agent then loads last release's content in preference to what the server would serve. That happened here for four releases running without anything noticing, which is why nothing is copied.\n\nWHY A COMMAND IS DIFFERENT: each is four lines that name a skill and say how to report the answer. There is no version-coupled content in it. When the skill behind it changes, the command is still correct, because the skill is fetched fresh at use time — the command is a pointer, and the thing it points at is the thing that moves.\n\nTHE ONE WAY IT CAN ROT, and it is now closed: a command could name a skill that no longer exists. `skill_lint` fails on exactly that, so the failure is caught in this repo rather than discovered in a consumer's, where the symptom would be an agent reporting it cannot find a skill the user was told to use. The mirror is byte-checked too, so `.claude/commands` cannot drift from the kit source.\n\nWHAT IT COSTS IF WE ARE WRONG: eight small files in a consumer repo, each independently deletable, none of which changes behaviour when stale. Compare the cost of a stale skill, which silently answers with last release's method.\n\nWHY IT WAS WORTH DOING AT ALL: without them a consumer install is experienced as BROKEN rather than thin — the skills are reachable and nothing tells you they are. That is the same invisibility `req:kit-reaches-the-agent` was raised for, one layer up: the pointer now reaches the agent, and the commands are what make the reachable thing usable.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:commitment-edges-survive-snapshots",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "`snapshot_node` skips edges whose other endpoint is a bookkeeping node type, and `DesignEpoch` is on that list. Anthony's call 2026-07-31, of three offered: FIX IT by excluding on the edge's own role — a named `COMMITMENT_EDGES` list holding `SCHEDULED_FOR` — rather than leaving the epoch as the only route or deferring it to separate work.\n\nTHE PROXY WAS EXACT WHEN IT WAS WRITTEN AND STOPPED BEING SO. Every edge to a `DesignEpoch` used to be audit trail (`AT_EPOCH`, `OCCURS_DURING`), so excluding the endpoint type excluded the role, and the rule read as correct because it WAS correct. `SCHEDULED_FOR` broke it: an edge to an epoch is now a COMMITMENT — when this was due — which is design content by any reading, and `req:intent-preserved` says the past is never overwritten.\n\nWHAT IT COST WHILE IT HELD, and why this is a defect rather than a preference: `record_change` on a scheduled requirement — the obvious, natural way to record \"this slipped\" — captured a snapshot with the schedule edge silently dropped. The old due date was destroyed by the very call whose entire job is preserving it, and the call REPORTED SUCCESS. Only the epoch-side snapshot preserved it, and nothing said so. The trap `dec:arrival-delta` named was therefore worse than stated: it is not merely that re-pointing an edge loses the slip, it is that the correct-looking remedy lost it too.\n\nThe audit trail it travels with is still excluded, and a test pins that: `AT_EPOCH` on the same node stays out. Role, not endpoint.\n\nREJECTED: leaving it, with the epoch-side snapshot documented as the only route — the obvious wrong route would stay silently lossy, and a convention that has to be known is not a property. REJECTED: taking it as separate work — it is the substrate the arrival delta reads, so building the delta on a lossy capture would have shipped a report whose inputs quietly disagreed with each other.",
+        "name": "A snapshot excludes by edge ROLE, not by endpoint type — a commitment to an epoch is design content",
+        "rationale": "FOUND BY READING THE CODE THE DECISION DEPENDED ON, not by a detector — and nothing could have flagged it. A snapshot that drops an edge is indistinguishable from a snapshot of a node that never had one: there is no second, contradicting fact to make the loss computable. That is the same blind spot recorded in `dec:epoch-pins-a-version-combination` (\"a single edge pointing the wrong way creates no cycle and trips no detector\"), one layer down — here it is an edge's ABSENCE from a record, which is even quieter than a wrong edge's presence.\n\nThe general shape is worth keeping, because this project keeps meeting it: a rule that was exactly right for the vocabulary existing when it was written, and became wrong when the vocabulary grew, WITHOUT anything changing at the site of the rule. `BOOKKEEPING_TYPES` was never edited; `SCHEDULED_FOR` was added somewhere else entirely. Proxies decay silently when the thing they proxy for moves.\n\nMutation-checked: empty `COMMITMENT_EDGES` and `a_schedule_edge_survives_a_snapshot_of_the_item` fails, while the epoch-side test keeps passing — which is also the evidence that the two routes were genuinely asymmetric before this.",
         "status": "accepted"
       }
     },
@@ -31469,6 +31677,16 @@
         "epoch_type": "revision",
         "name": "An aggregate gap is keyed on its rule, so a standing judgement stops expiring",
         "sequence": 233
+      }
+    },
+    {
+      "node_id": "epoch:arrival-delta",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "The arrival delta: planned-versus-delivered becomes computable, and a snapshot stops dropping commitments",
+        "sequence": 239,
+        "status": "arrived"
       }
     },
     {
@@ -35064,6 +35282,26 @@
       }
     },
     {
+      "node_id": "snap:epoch:arrival-delta:cap:plan-movement-recorded",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:temporal\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:ec1f9f94c89d2f67\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:plans-move-honestly\",\"properties\":{}}]",
+        "state": "{\"description\":\"When a planned epoch's content changes — a requirement moves out of epoch 5, a date slips, confidence drops — the movement itself is recorded and dated, rather than the plan being silently rewritten to look as though it always said the new thing. This is the forward-looking sibling of the snapshot machinery the backward axis already has, and the requirement it serves (req:plans-move-honestly) DEPENDS_ON req:epochs-can-be-planned, which cap:planned-epochs now delivers. THE OPEN DESIGN QUESTION, recorded rather than guessed: record_change now REFUSES a planned epoch, so a plan's movement cannot be filed INTO the planned epoch it concerns — it must be recorded in the arrived epoch that is current, taking the planned epoch as its subject. Whether that is sufficient, or whether planned epochs need a revision chain of their own, is undecided. Approved for build by Anthony 2026-07-30, superseding the 2026-07-28 park.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"A plan's movement is dated, so what we believed back then stays answerable\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:plan-movement-recorded",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:arrival-delta:dec:arrival-delta",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-30\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\\n\\nAnthony, 2026-07-30: \\\"as we march forward in time, we can measure the delta of what was actually achieved/realized versus what was planned for that epoch. For instance, in epoch 3 we had planned for capability A, B, C. However, when we actually got to epoch 3 in time, we only achieved A & C, and B was discontinued or deferred to epoch 4.\\\"\\n\\nFOUR OUTCOMES PER SCHEDULED ITEM, three of them his and one the complement he did not name:\\n  - DELIVERED — the plan held (A and C).\\n  - DEFERRED — still intended, the date moved (B to epoch 4).\\n  - DISCONTINUED — no longer intended at all. Distinct from deferred in the way `retire-from-design` already distinguishes them: one is a date change, the other is a withdrawal, and conflating them either loses a commitment or embalms one.\\n  - DELIVERED BUT NEVER PLANNED — the complement. Work that arrived which nobody scheduled. Usually the most informative quarter of the delta, because unplanned work is where the estimate actually went, and a report that omits it makes a schedule look better than it was.\\n\\nTHE TRAP, and it is the same shape as the snapshot bug fixed on 2026-07-28. If deferring B simply RE-POINTS its schedule edge from epoch 3 to epoch 4, then when epoch 3 arrives the graph says epoch 3 was only ever about A and C — the slip is invisible and the plan has silently rewritten its own history. That is precisely what `req:intent-preserved` forbids, and precisely what the second-revision-overwrites-the-first defect did to snapshots. So REPLANNING MUST BE A RECORDED CHANGE, NOT AN EDIT.\\n\\nA MECHANISM THAT NEEDS NOTHING NEW, given what was verified while thinking this through: a Snapshot captures a node's INCOMING edges as well as its outgoing ones. So snapshotting the EPOCH captures every schedule edge pointing at it — the whole plan for that epoch, in one snapshot, in one call. Replanning becomes `record_change` on the epoch, which is exactly the operation the 2026-07-28 fix made safe to do twice in one epoch.\\n\\nWHAT IS COMPUTED VERSUS STORED. The delta is COMPUTED, never written down, for the same reason \\\"ARE satisfied\\\" is: `req:completion-computed` says delivery is computed from the golden thread and never asserted. At arrival, compare the last snapshot of the epoch's schedule (what was planned, as of before it moved) against what the thread says is delivered. Nothing about the outcome is stored; the two inputs already exist.\\n\\nWHAT FALLS OUT ONCE IT IS COMPUTABLE — a schedule-performance profile per epoch: hit rate (planned and delivered over planned), slip (how many deferred, and by how many epochs), attrition (how many discontinued), and unplanned (delivered but never scheduled).\\n\\nAND THE PAYOFF WORTH NAMING, because it closes a loop this project opened the same day. `req:plans-move-honestly` wants a planned claim to carry confidence that decays with horizon — Anthony's Black-Scholes analogy. Once several epochs have arrived, that confidence can be MEASURED rather than asserted: \\\"historically, items scheduled three epochs out land 40% of the time.\\\" That is the same argument that retired `req:context-is-a-modelled-quantity` on 2026-07-30 — an estimate is defensible only as a seed for something never measured — applied in the direction where the measurement is actually available, because unlike context cost, schedule performance is observed every time an epoch arrives.\",\"name\":\"OPEN — what happens when an epoch arrives, and what the planned-vs-delivered delta is computed from\",\"rationale\":\"Anthony's idea, in his own example, recorded while the thinking is still open.\\n\\nTwo things added beside it rather than in place of it: the fourth outcome (delivered but never planned), because a delta that only reports against the plan cannot see the work that was not in it; and the re-pointing trap, because the obvious implementation of \\\"defer B to epoch 4\\\" is an edge edit, and an edge edit is exactly how the plan would come to lie about what it once said.\\n\\nThe mechanism note is a measurement, not a preference: snapshots were confirmed to capture incoming edges, so the epoch-snapshot approach needs no new machinery.\",\"status\":\"proposed\"}",
+        "target_id": "dec:arrival-delta",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:kpp-capture:cap:kpp-proposal",
       "node_type": "Snapshot",
       "properties": {
@@ -35526,6 +35764,18 @@
         "level": "integration",
         "method": "test",
         "name": "AoA + decision-point suite (tests/alternatives.rs) — 8 cases",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:arrival-delta",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-31",
+        "level": "unit",
+        "method": "test",
+        "name": "Arrival-delta and schedule-movement tests (crates/reflow2-core/tests/temporal.rs) — 13 cases: the commitment survives a snapshot of the item while AT_EPOCH stays excluded; un-scheduling, a modality rewrite and deleting a scheduled item are all refused while the plan is unrecorded, and recording the change first unblocks them; adding to a plan is free; the baseline is the FIRST snapshot across two replans; an untouched item is outstanding, not discontinued; a required miss is a violation and a required delivery is not; late work is reported apart from the baseline; a planned epoch says it is a forecast; a non-moment is refused. MUTATION-CHECKED on all three of Anthony's calls.",
         "status": "passing"
       }
     },
@@ -36428,7 +36678,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:00f5fc3b7e7d1ee8827421b674bdba2128279533fa11e6bf0ff06711bb520057",
+  "prev_content_hash": "sha256:2417a73bccf71f1c56f2eeeb590d85f41185cf8d60119f5e5056c953550762b5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

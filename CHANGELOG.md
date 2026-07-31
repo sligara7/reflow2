@@ -69,6 +69,50 @@ This file is the third view: *what changed, and when*.
   Three new tools (`plan_epoch`, `set_epoch_status`, `schedule_for`); `add_epoch`'s description
   now says it records a point that HAS happened. Toolsnaps 122 → 124.
 
+- **`arrival_delta` — what was PLANNED against what actually arrived** (`dec:arrival-delta`,
+  delivering obligation 2 of `req:plans-move-honestly`; `cap:arrival-delta`,
+  `cap:plan-movement-recorded`). Anthony's question, in his words: *"what didn't we achieve
+  that we were supposed to in increment 10?"*
+
+  Every scheduled item comes back as **delivered**, **deferred** (and where to),
+  **discontinued**, or **outstanding** — a fifth outcome beside the four originally sketched.
+  The four assume every undelivered item was consciously moved or dropped; the commonest case
+  is that nobody touched it and it did not happen. Calling that *discontinued* would put a
+  withdrawal on the record nobody made, and *deferred* would invent a date nobody chose, so it
+  is reported as itself and put to the user — the one question `req:plans-move-honestly` says
+  must be asked and never defaulted. Work scheduled after the baseline is reported separately,
+  because a delta measured only against the plan cannot see the work that was not in it.
+  `required` claims that did not land come back as **computed violations** rather than slips.
+
+  **The baseline is the target's FIRST snapshot**, with every later one returned as the
+  movement trail. The last would have measured only the most recent revision: two replans leave
+  epoch 3 holding `{A,B,C}` then `{A,C}`, so reading the last says the plan was always `{A,C}`
+  and the slip vanishes from the very report meant to show it.
+
+  **Nothing about the outcome is stored.** The plan lives in the epoch's snapshots and delivery
+  is computed from the golden thread, so writing the result down would create a second source
+  of truth able to disagree with the first — the same argument that keeps `achieved` out of
+  `modality`.
+
+- **A lossy schedule edit is now REFUSED while the plan is unrecorded** — removing a
+  `SCHEDULED_FOR`, re-pointing it, or rewriting its modality, through either `delete_edge` or
+  `delete_node`. Re-pointing B's edge from epoch 3 to epoch 4 without a recorded change leaves
+  the graph saying epoch 3 was only ever about A and C: the plan silently rewriting its own
+  history, which `req:intent-preserved` forbids. The refusal names the `record_change` that
+  unblocks it. **Adding** to a plan destroys no earlier claim and is deliberately free.
+
+### Fixed
+
+- **A snapshot no longer drops a commitment on the floor** (`dec:commitment-edges-survive-snapshots`).
+  `snapshot_node` excluded every edge whose other endpoint was a bookkeeping node type, and
+  `DesignEpoch` is one — a proxy that was exact when written, because every edge to an epoch was
+  then audit trail. `SCHEDULED_FOR` broke it: an edge to an epoch is now a *commitment*. So
+  `record_change` on a scheduled requirement — the obvious way to record a slip — captured a
+  snapshot with the schedule edge silently dropped, destroying the due date it was called to
+  preserve **and reporting success**. The exclusion is now by the edge's ROLE; `AT_EPOCH` on the
+  same node stays out, and a test pins that. Nothing could have detected this: a snapshot that
+  drops an edge is indistinguishable from one whose node never had it.
+
 - **`pair_designs` — the seam between two designs is now COMPUTED, not hand-wired**
   (`req:complementary-pairing`, `cap:complementary-pairing`). This was the last
   open gap in the design.

@@ -6,8 +6,8 @@
 
 use reflow2_core::nodes::{edge, node};
 use reflow2_core::{
-    ChangeAction, ChangeRecord, ChangeType, DesignGraph, EpochType, SnapshotEdge,
-    parse_snapshot_edges, parse_snapshot_state,
+    BaselineSource, ChangeAction, ChangeRecord, ChangeType, DesignGraph, EpochType,
+    ScheduleOutcome, SnapshotEdge, parse_snapshot_edges, parse_snapshot_state,
 };
 
 #[test]
@@ -766,4 +766,381 @@ fn scheduling_defaults_to_a_plan_rather_than_an_obligation() {
         sched.properties.get("modality").and_then(|v| v.as_str()),
         Some("expected")
     );
+}
+
+// ---- The arrival delta (dec:arrival-delta) --------------------------------
+//
+// `req:epochs-can-be-planned`, third increment, delivering obligation 2 of
+// `req:plans-move-honestly`. Anthony's example is the fixture: epoch 3 planned
+// A, B and C; when epoch 3 actually arrived only A and C landed, and B slipped
+// to epoch 4. The property under test is that the graph can still SAY that
+// afterwards — the plan must not have quietly rewritten itself to look as
+// though epoch 3 was only ever about A and C.
+
+/// Epoch 3 planned with A, B and C, and an arrived epoch to file history into.
+/// Nothing is delivered yet; each test threads what it needs.
+fn planned_epoch_3() -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_epoch("epoch:now", "Now", EpochType::Revision, 1)
+        .unwrap();
+    g.plan_epoch("epoch:3", "Epoch 3", EpochType::Milestone, 3)
+        .unwrap();
+    g.plan_epoch("epoch:4", "Epoch 4", EpochType::Milestone, 4)
+        .unwrap();
+    for (id, name) in [("req:a", "A"), ("req:b", "B"), ("req:c", "C")] {
+        g.add_requirement(id, name, "needed").unwrap();
+        g.schedule_for(
+            "Requirement",
+            id,
+            "DesignEpoch",
+            "epoch:3",
+            "expected",
+            None,
+        )
+        .unwrap();
+    }
+    g
+}
+
+/// Record the plan for `epoch` — the call that must precede any move.
+fn record_the_plan(g: &mut DesignGraph, change_id: &str, epoch: &str) {
+    g.record_change(ChangeRecord {
+        epoch_id: "epoch:now",
+        change_event_id: change_id,
+        name: "replan",
+        change_type: ChangeType::Refactor,
+        target_type: node::DESIGN_EPOCH,
+        target_id: epoch,
+        action: ChangeAction::Modified,
+    })
+    .unwrap();
+}
+
+/// Thread `req` all the way to delivered: satisfied by a realized capability
+/// with a passing check. Delivery is COMPUTED from this, never asserted.
+fn deliver(g: &mut DesignGraph, req: &str, suffix: &str) {
+    let cap = format!("cap:{suffix}");
+    let art = format!("art:{suffix}");
+    let ver = format!("ver:{suffix}");
+    g.add_capability(&cap, suffix, "does it", Some("realized"))
+        .unwrap();
+    g.satisfies(&cap, req).unwrap();
+    g.add_artifact(&art, suffix, Some("code"), Some("src/x.rs"))
+        .unwrap();
+    g.realizes(&art, node::CAPABILITY, &cap, None).unwrap();
+    g.add_verification(&ver, suffix, Some("test"), None)
+        .unwrap();
+    g.verifies(&ver, node::CAPABILITY, &cap).unwrap();
+    g.set_verification_status(&ver, "passing", None).unwrap();
+}
+
+/// THE FIX AT THE BOTTOM OF ALL OF THIS. `snapshot_node` excluded every edge
+/// whose other endpoint was a bookkeeping type, and `DesignEpoch` is one — a
+/// proxy that was exact until `SCHEDULED_FOR` made an edge to an epoch a
+/// COMMITMENT. So `record_change` on a scheduled requirement, the obvious way
+/// to record a slip, destroyed the due date it was called to preserve, and
+/// reported success. Excluding by the edge's ROLE keeps it.
+#[test]
+fn a_schedule_edge_survives_a_snapshot_of_the_item() {
+    let mut g = planned_epoch_3();
+    let snap = g
+        .snapshot_node("epoch:now", node::REQUIREMENT, "req:b")
+        .unwrap();
+
+    let edges = parse_snapshot_edges(&snap).unwrap();
+    assert!(
+        edges.iter().any(|e| e.edge_type == edge::SCHEDULED_FOR
+            && e.other_id == "epoch:3"
+            && e.direction == "out"),
+        "the commitment must survive the snapshot, got: {edges:?}"
+    );
+    // The audit trail it travels with must still be excluded, or every
+    // snapshot grows with its own history.
+    assert!(
+        !edges.iter().any(|e| e.edge_type == edge::AT_EPOCH),
+        "role, not endpoint type — AT_EPOCH is still bookkeeping"
+    );
+}
+
+/// THE LOAD-BEARING HALF, and the same shape as `record_change` refusing a
+/// planned epoch. Re-pointing B's edge without recording the plan first is
+/// exactly how epoch 3 comes to say it was only ever about A and C.
+#[test]
+fn un_scheduling_is_refused_while_the_plan_is_unrecorded() {
+    let mut g = planned_epoch_3();
+    let err = g
+        .delete_edge(edge::SCHEDULED_FOR, "req:b", "epoch:3")
+        .expect_err("a plan nobody recorded cannot be quietly moved");
+    let said = format!("{err:?}");
+    assert!(
+        said.contains("record_change") && said.contains("epoch:3"),
+        "the refusal must say what to do instead, got: {said}"
+    );
+}
+
+/// And the refusal is actionable rather than a wall: record the plan, then the
+/// plan may move.
+#[test]
+fn recording_the_change_first_lets_the_plan_move() {
+    let mut g = planned_epoch_3();
+    record_the_plan(&mut g, "chg:replan", "epoch:3");
+    g.delete_edge(edge::SCHEDULED_FOR, "req:b", "epoch:3")
+        .expect("the plan is on the record now");
+    g.schedule_for(
+        "Requirement",
+        "req:b",
+        "DesignEpoch",
+        "epoch:4",
+        "expected",
+        None,
+    )
+    .unwrap();
+}
+
+/// ADDING to a plan destroys no earlier claim, so it is deliberately free. A
+/// guard that fired here would tax correct work — the mistake this project
+/// keeps finding in detectors that punish good practice.
+#[test]
+fn adding_to_a_plan_needs_no_snapshot() {
+    let mut g = planned_epoch_3();
+    g.add_requirement("req:d", "D", "needed").unwrap();
+    g.schedule_for(
+        "Requirement",
+        "req:d",
+        "DesignEpoch",
+        "epoch:3",
+        "expected",
+        None,
+    )
+    .expect("growing a plan is not rewriting it");
+}
+
+/// An `expected` quietly becoming `required` rewrites what was promised, which
+/// is the same loss as deleting the edge.
+#[test]
+fn changing_a_modality_is_a_rewrite_and_is_refused() {
+    let mut g = planned_epoch_3();
+    let err = g
+        .schedule_for(
+            "Requirement",
+            "req:b",
+            "DesignEpoch",
+            "epoch:3",
+            "required",
+            None,
+        )
+        .expect_err("promoting a claim is rewriting it");
+    assert!(format!("{err:?}").contains("record_change"));
+}
+
+/// Deleting the requirement takes its commitments with it — a second door onto
+/// the same loss, and the one discontinuation actually walks through.
+#[test]
+fn deleting_a_scheduled_item_is_refused_too() {
+    let mut g = planned_epoch_3();
+    g.delete_node(node::REQUIREMENT, "req:b")
+        .expect_err("retiring a scheduled item is a plan change");
+    g.delete_node(node::DESIGN_EPOCH, "epoch:3")
+        .expect_err("deleting the moment destroys the whole plan");
+}
+
+/// THE ONE ANTHONY'S OWN EXAMPLE TURNS ON, and the reason the baseline is the
+/// FIRST snapshot rather than the last. Two replans leave epoch 3 holding
+/// {A,B,C} then {A,C}; reading the LAST says the plan was always {A,C}, so B's
+/// slip vanishes from the very report meant to show it.
+#[test]
+fn the_baseline_is_the_first_snapshot_not_the_last() {
+    let mut g = planned_epoch_3();
+
+    // B slips to epoch 4, recorded.
+    record_the_plan(&mut g, "chg:replan1", "epoch:3");
+    g.delete_edge(edge::SCHEDULED_FOR, "req:b", "epoch:3")
+        .unwrap();
+    g.schedule_for(
+        "Requirement",
+        "req:b",
+        "DesignEpoch",
+        "epoch:4",
+        "expected",
+        None,
+    )
+    .unwrap();
+    // Then C is dropped outright, also recorded.
+    record_the_plan(&mut g, "chg:replan2", "epoch:3");
+    g.delete_edge(edge::SCHEDULED_FOR, "req:c", "epoch:3")
+        .unwrap();
+
+    deliver(&mut g, "req:a", "a");
+    g.set_epoch_status("epoch:3", "arrived").unwrap();
+
+    let d = g.arrival_delta("epoch:3").unwrap();
+    assert_eq!(
+        d.baseline,
+        BaselineSource::FirstSnapshot {
+            snapshot_id: "snap:epoch:now:epoch:3".into()
+        }
+    );
+    assert_eq!(d.items.len(), 3, "the ORIGINAL commitment was three items");
+
+    let outcome = |id: &str| {
+        d.items
+            .iter()
+            .find(|i| i.item_id == id)
+            .unwrap_or_else(|| panic!("{id} must still be in the baseline"))
+            .outcome
+            .clone()
+    };
+    assert_eq!(outcome("req:a"), ScheduleOutcome::Delivered);
+    assert_eq!(
+        outcome("req:b"),
+        ScheduleOutcome::Deferred {
+            now_due_at: vec!["epoch:4".into()]
+        },
+        "the slip must still be visible after two replans"
+    );
+    assert_eq!(outcome("req:c"), ScheduleOutcome::Discontinued);
+
+    // And the trail says how it got from there to here.
+    assert_eq!(d.movement.len(), 2);
+    assert_eq!(d.movement[0].items.len(), 3);
+    assert_eq!(d.movement[1].items.len(), 2);
+}
+
+/// THE FIFTH OUTCOME. The four assume every undelivered item was consciously
+/// moved or dropped; the commonest case is that nobody touched it. Calling
+/// that `discontinued` would put a withdrawal on the record nobody made, and
+/// `deferred` would invent a date nobody chose.
+#[test]
+fn an_item_nobody_touched_is_outstanding_not_discontinued() {
+    let mut g = planned_epoch_3();
+    deliver(&mut g, "req:a", "a");
+    g.set_epoch_status("epoch:3", "arrived").unwrap();
+
+    let d = g.arrival_delta("epoch:3").unwrap();
+    assert_eq!(
+        d.baseline,
+        BaselineSource::LiveEdges,
+        "the plan never moved"
+    );
+    let b = d.items.iter().find(|i| i.item_id == "req:b").unwrap();
+    assert_eq!(b.outcome, ScheduleOutcome::Outstanding);
+}
+
+/// `required` is the scheduling face of a KPP: a miss at arrival is a computed
+/// violation, not a slip. `expected` misses in the same run must NOT be.
+#[test]
+fn a_required_miss_is_a_computed_violation() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.plan_epoch("epoch:3", "Epoch 3", EpochType::Milestone, 3)
+        .unwrap();
+    g.add_requirement("req:kpp", "KPP", "must hold").unwrap();
+    g.add_requirement("req:nice", "Nice", "would be nice")
+        .unwrap();
+    g.schedule_for(
+        "Requirement",
+        "req:kpp",
+        "DesignEpoch",
+        "epoch:3",
+        "required",
+        None,
+    )
+    .unwrap();
+    g.schedule_for(
+        "Requirement",
+        "req:nice",
+        "DesignEpoch",
+        "epoch:3",
+        "expected",
+        None,
+    )
+    .unwrap();
+    g.set_epoch_status("epoch:3", "arrived").unwrap();
+
+    let d = g.arrival_delta("epoch:3").unwrap();
+    assert_eq!(d.missed_obligations, vec!["req:kpp".to_string()]);
+}
+
+/// A delivered obligation is not a violation — the negative that keeps the
+/// count from being "every required item".
+#[test]
+fn a_required_claim_that_landed_is_not_a_violation() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.plan_epoch("epoch:3", "Epoch 3", EpochType::Milestone, 3)
+        .unwrap();
+    g.add_requirement("req:kpp", "KPP", "must hold").unwrap();
+    g.schedule_for(
+        "Requirement",
+        "req:kpp",
+        "DesignEpoch",
+        "epoch:3",
+        "required",
+        None,
+    )
+    .unwrap();
+    deliver(&mut g, "req:kpp", "kpp");
+    g.set_epoch_status("epoch:3", "arrived").unwrap();
+
+    assert!(
+        g.arrival_delta("epoch:3")
+            .unwrap()
+            .missed_obligations
+            .is_empty()
+    );
+}
+
+/// Work scheduled after the baseline is reported apart from it, because a
+/// delta that only measures against the plan cannot see the work that was not
+/// in it — and that is usually where the estimate actually went.
+#[test]
+fn work_added_after_the_baseline_is_reported_separately() {
+    let mut g = planned_epoch_3();
+    record_the_plan(&mut g, "chg:replan", "epoch:3");
+    g.add_requirement("req:surprise", "Surprise", "nobody planned this")
+        .unwrap();
+    g.schedule_for(
+        "Requirement",
+        "req:surprise",
+        "DesignEpoch",
+        "epoch:3",
+        "expected",
+        None,
+    )
+    .unwrap();
+    g.set_epoch_status("epoch:3", "arrived").unwrap();
+
+    let d = g.arrival_delta("epoch:3").unwrap();
+    assert_eq!(d.items.len(), 3, "the baseline is untouched by later work");
+    assert_eq!(
+        d.added_after_baseline
+            .iter()
+            .map(|i| i.item_id.as_str())
+            .collect::<Vec<_>>(),
+        vec!["req:surprise"]
+    );
+}
+
+/// A forecast is not a delta, and the difference is said out loud rather than
+/// left to be inferred from a confident-looking list of misses.
+#[test]
+fn a_delta_against_an_epoch_that_has_not_arrived_says_so() {
+    let g = planned_epoch_3();
+    let d = g.arrival_delta("epoch:3").unwrap();
+    assert_eq!(d.status.as_deref(), Some("planned"));
+    assert!(
+        d.notes.iter().any(|n| n.contains("has not arrived")),
+        "got: {:?}",
+        d.notes
+    );
+}
+
+/// A schedule arrives at a moment, so asking this of anything else is refused
+/// by name rather than answered with an empty delta.
+#[test]
+fn an_arrival_delta_refuses_a_target_that_is_not_a_moment() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:x", "X", "x").unwrap();
+    let err = g
+        .arrival_delta("req:x")
+        .expect_err("a requirement is not a moment");
+    assert!(format!("{err:?}").contains("Requirement"));
 }
