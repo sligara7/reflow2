@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create an Epoch that HAS HAPPENED — a point on the time axis you are recording, which is what an epoch has always meant here. For a point that has NOT happened yet, use plan_epoch instead; planning is a deliberate act and reads better as its own verb than as a flag.",
+  "description": "Create an Epoch that has NOT happened yet — a claim about the future rather than a record of the past, and the forward half of the time axis (req:epochs-can-be-planned). `epoch_type` still applies: KIND and TENSE are orthogonal, so a planned MILESTONE and a planned RELEASE CUT are both sayable — which is why `planned` is its own property rather than a value folded into the type enum. A planned epoch REFUSES record_change: a snapshot captures the present, so it cannot belong to a point that has not happened. Call set_epoch_status when it arrives.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -30,5 +30,5 @@
     ],
     "type": "object"
   },
-  "name": "add_epoch"
+  "name": "plan_epoch"
 }

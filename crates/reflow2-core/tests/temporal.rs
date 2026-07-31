@@ -502,3 +502,109 @@ fn returning_to_an_earlier_state_still_mints_a_revision() {
         "A -> B -> A is three revisions, and the chain order is what makes them readable"
     );
 }
+
+// ---------------------------------------------------------------------------
+// PLANNED EPOCHS — the forward half of the time axis
+// (`req:epochs-can-be-planned`, first increment).
+// ---------------------------------------------------------------------------
+
+#[test]
+fn an_epoch_is_arrived_unless_someone_plans_it() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_epoch("epoch:now", "Now", EpochType::Revision, 1)
+        .unwrap();
+    assert!(
+        !g.epoch_is_planned("epoch:now").unwrap(),
+        "add_epoch has always meant 'record the point I am at', and all 27 of its \
+         existing call sites mean exactly that"
+    );
+
+    g.plan_epoch("epoch:later", "Later", EpochType::Milestone, 2)
+        .unwrap();
+    assert!(g.epoch_is_planned("epoch:later").unwrap());
+}
+
+/// Kind and tense are orthogonal. Folding `planned` into `epoch_type` would
+/// have made this unsayable.
+#[test]
+fn a_planned_epoch_keeps_its_kind() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.plan_epoch("epoch:m", "A milestone we expect", EpochType::Milestone, 5)
+        .unwrap();
+    let e = g.get_node("DesignEpoch", "epoch:m").unwrap().unwrap();
+    assert_eq!(e.properties["epoch_type"].as_str(), Some("milestone"));
+    assert_eq!(e.properties["status"].as_str(), Some("planned"));
+}
+
+/// THE READER. Without this the status would be one more declared-and-unread
+/// property — the defect this project keeps finding.
+#[test]
+fn history_cannot_be_recorded_into_an_epoch_that_has_not_happened() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "a thing").unwrap();
+    g.plan_epoch("epoch:future", "Future", EpochType::Revision, 9)
+        .unwrap();
+
+    let err = g
+        .record_change(ChangeRecord {
+            epoch_id: "epoch:future",
+            change_event_id: "chg:x",
+            name: "something",
+            target_type: "Requirement",
+            target_id: "req:a",
+            change_type: ChangeType::ScopeChange,
+            action: ChangeAction::Modified,
+        })
+        .expect_err("a snapshot of the present cannot belong to a point that has not happened");
+    let said = format!("{err:?}");
+    assert!(
+        said.contains("PLANNED") && said.contains("set_epoch_status"),
+        "the refusal must say what would have worked (rule 4), got: {said}"
+    );
+}
+
+#[test]
+fn an_arrived_epoch_accepts_history_again() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "a thing").unwrap();
+    g.plan_epoch("epoch:soon", "Soon", EpochType::Revision, 3)
+        .unwrap();
+    g.set_epoch_status("epoch:soon", "arrived").unwrap();
+
+    g.record_change(ChangeRecord {
+        epoch_id: "epoch:soon",
+        change_event_id: "chg:x",
+        name: "it arrived",
+        target_type: "Requirement",
+        target_id: "req:a",
+        change_type: ChangeType::ScopeChange,
+        action: ChangeAction::Modified,
+    })
+    .expect("once an epoch has arrived, history belongs in it");
+}
+
+#[test]
+fn arrival_preserves_everything_else_about_the_epoch() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.plan_epoch("epoch:s", "Named plan", EpochType::ReleaseCut, 7)
+        .unwrap();
+    g.set_epoch_status("epoch:s", "arrived").unwrap();
+    let e = g.get_node("DesignEpoch", "epoch:s").unwrap().unwrap();
+    assert_eq!(e.properties["name"].as_str(), Some("Named plan"));
+    assert_eq!(e.properties["epoch_type"].as_str(), Some("release_cut"));
+    assert_eq!(e.properties["sequence"].as_i64(), Some(7));
+}
+
+#[test]
+fn an_unknown_epoch_status_is_refused_by_name() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_epoch("epoch:x", "X", EpochType::Revision, 1).unwrap();
+    let err = g
+        .set_epoch_status("epoch:x", "someday")
+        .expect_err("a status outside the enum must be refused");
+    let said = format!("{err:?}");
+    assert!(
+        said.contains("planned") && said.contains("arrived"),
+        "got: {said}"
+    );
+}

@@ -1,0 +1,25 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Move an Epoch between `planned` and `arrived`. `planned` → `arrived` is ARRIVAL: the moment a claim about the future becomes a point in the past, after which history can be recorded into it and the planned-versus- delivered delta becomes answerable. The reverse exists so a premature arrival can be corrected; it is not a way to un-happen an epoch. Everything else about the epoch is preserved.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "epoch_id": {
+        "type": "string"
+      },
+      "status": {
+        "description": "`arrived` (it has happened) or `planned` (a claim about one that has\nnot). `planned` → `arrived` is ARRIVAL.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "epoch_id",
+      "status"
+    ],
+    "type": "object"
+  },
+  "name": "set_epoch_status"
+}
