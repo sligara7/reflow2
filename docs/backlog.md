@@ -1385,6 +1385,25 @@ job, so that class of breakage would be caught this time; it exists because of t
 the bump is taken, `dec:rmcp-v3-upgrade`'s own method applies — upgrade and **measure**, and treat
 the probe as the evidence rather than the suite.
 
+**BL-108 · `loop_status` calls a PLANNED capability "a built capability never checked against
+reality"** — *found 2026-07-31 by following the nudge it produced.* `confirmation_ledger` attributes
+a capability's artifacts through its **component**, not only through its own `REALIZES` edges. So
+`cap:skill-triggers` — `status: planned`, zero artifacts realizing it, allocated to `cmp:nudge` —
+inherits `art:nudge-detect` and lands in `unexamined`, and `loop_status` reports *"1 built
+capability(ies) never checked against reality"* about something nobody has built. Size **S**.
+**Why it matters beyond the one node:** this is a detector punishing correct work — capturing a
+planned capability and allocating it properly is exactly what capture-intent asks for, and doing it
+raises loop debt. That is [BL-23]'s lesson ("when a detector punishes correct work, the answer is a
+different question, not a tuned threshold") and the same shape as [BL-42]'s noise floor. **Fix
+shape:** the ledger's own description says "for every capability **with built artifacts**" — so
+either exclude capabilities whose status is `planned`, or attribute only artifacts that `REALIZES`
+the capability directly rather than reaching through `ALLOCATED_TO`. The second is probably right,
+because a component's artifact is evidence about the component, not about every capability allocated
+to it — but it is a behaviour change to a shipped reading and wants deciding rather than assuming.
+**Watch for the counterweight:** a capability legitimately realized only through its component's
+artifact would then read as unexamined-because-invisible instead of unexamined-because-unchecked, so
+whichever way it goes needs a test pinning both directions.
+
 **BL-79 · The identity keystone: who authors the design — RUNG 1 (authorship seed) DONE
 2026-07-22** — *user-chosen as the next most important, from the recurring "the schema has no
 notion of who" thread the backlog kept naming.* The missing keystone under four threads: BL-44

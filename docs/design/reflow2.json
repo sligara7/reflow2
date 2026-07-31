@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:7642a6bfcdc11315d980512503e3eee80cb41b092a0c4580b18355b67fb66d80",
+  "content_hash": "sha256:862b4456d4d0121e5a3d487c4d502251c3afd7149bc2b1064f2b8dfef170f790",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -910,6 +910,12 @@
       "from_id": "question:276837cbe7db075f",
       "properties": {},
       "to_id": "req:platform"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:31748fe70566dfa2",
+      "properties": {},
+      "to_id": "req:export-says-what-it-cannot-carry"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -34156,6 +34162,18 @@
       }
     },
     {
+      "node_id": "question:31748fe70566dfa2",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-31",
+        "context_setter": "Nothing satisfies requirement “Once the design points at content, the export must say what it does NOT carry — a pointer with no bytes fails loud, not quietly”",
+        "gap_id": "gap:31748fe70566dfa2",
+        "question": "Once diagrams and documents are stored alongside the design, sending someone just the design file no longer gives them everything — their diagrams would quietly fail to open. Should the design file list what it depends on, so a person can tell at a glance whether they have it all?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:33be77a4e91bc8ae",
       "node_type": "Question",
       "properties": {
@@ -37747,7 +37765,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:fa898b81e7d11bbd694aaf0be54fbfbfcafc9b927e4668d5fa1c84129300f817",
+  "prev_content_hash": "sha256:7642a6bfcdc11315d980512503e3eee80cb41b092a0c4580b18355b67fb66d80",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
