@@ -63,6 +63,10 @@ cargo fmt                                               # and fmt-clean (cargo f
 # The full workspace, including the MCP surface. Pays the RocksDB compile once,
 # then it is cached. Run before pushing — the core-only gate cannot see
 # reflow2-mcp, where the tool surface and its tests live.
+#
+# This is the heaviest command in the file. On a machine with ~8-12 GB of RAM it
+# is the one that gets your terminal killed — see "Building with limited RAM"
+# below, and prefer the memory-capped form there.
 cargo test --workspace
 
 # Schema validation (Python, no Rust toolchain needed). Must print "OK" after any
@@ -147,6 +151,52 @@ python3 tools/reflow2_init.py /path/to/project --check   # what would change
 
 Tests live beside the code as `crates/reflow2-core/tests/*.rs` (one file per module/concern) plus
 unit tests in `src/schema.rs` and doctests in `src/lib.rs`/`src/nodes.rs`.
+
+### Building with limited RAM
+
+**If your terminal window vanishes mid-build — shell, agent and MCP server all dying at once —
+that is not a crash, and nothing will be in `dmesg`.** It is `systemd-oomd`, which watches
+*memory pressure* rather than the kernel OOM killer watching allocation failure. Your terminal,
+the agent driving it and the MCP server all live in one VTE cgroup scope, so oomd takes the
+whole scope and the symptom presents as "the terminal crashed". Find it with:
+
+```bash
+journalctl --user --since "-3 days" | grep -iE 'oomd|vte-spawn'
+```
+
+`cargo test --workspace` is what usually triggers it: RocksDB's C++ build plus parallel rustc
+jobs is the peak, and a full workspace run has been measured at **9.3 GB** on a 4-core/11 GiB
+box. Two mitigations that help but do **not** prevent a kill on their own — `[build] jobs = 2`
+and `[profile.dev] debug = "line-tables-only"` — belong in your own `~/.cargo/config.toml`,
+**not in this repo**: they are properties of one machine, and committing them would slow builds
+and degrade debug info for every other developer and for CI.
+
+**The reliable fix is to give cargo its own cgroup, so a runaway build dies instead of your
+session:**
+
+```bash
+systemd-run --user --scope -p MemoryMax=6G -p MemorySwapMax=2G \
+    cargo test --workspace -- --test-threads=2
+```
+
+**Disabling `systemd-oomd` outright is a legitimate option, and is what this repo's maintainer
+runs.** It does not remove OOM handling — the kernel OOM killer is built in and unremovable, and
+that is the point: oomd kills by *cgroup* and takes your whole session, whereas the kernel kills
+the single worst process, which under a build is `rustc` and not your terminal. The cost is that
+the kernel only acts at true exhaustion rather than early on pressure, so a runaway build can
+thrash the machine first — which is exactly what the capped scope above prevents. Use both, or
+neither; the capped scope alone is the more targeted of the two.
+
+Two habits worth keeping regardless. Write test output to a file and grep it, rather than
+running the suite twice to get failures and then a pass count — that doubling is pure peak for
+no information. And for dev iteration use the core-only command at the top of this section,
+which skips the RocksDB compile entirely; the workspace run is a pre-push gate, not an
+edit-loop command.
+
+None of this affects people who merely *use* reflow2: `tools/install.sh` fetches a prebuilt,
+checksum-verified binary and never compiles. It matters for contributors, and for anyone on a
+platform with no prebuilt asset, whom the installer deliberately refuses and redirects to a
+source build.
 
 **The MCP server this repo runs on its own design graph is launched via
 [`tools/reflow2-mcp-launch.sh`](tools/reflow2-mcp-launch.sh)** (wired in `.mcp.json`), not the raw
