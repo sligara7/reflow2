@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bf806d7f6b8b70b2011aca01ddee21a04b39f6cb490fc335642b832f95a70c3c",
+  "content_hash": "sha256:e70a8cdb75c68725a11d4736d453f403d11ce064e89bdc54b438b87a410727b3",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -132,6 +132,14 @@
     {
       "edge_type": "ALLOCATED_TO",
       "from_id": "cap:composed-analysis",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:content-manifest",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -2914,6 +2922,15 @@
       "from_id": "dec:concurrent-work-isolation",
       "properties": {
         "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:content-manifest",
+      "properties": {
+        "acted_at": "2026-07-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -11178,6 +11195,12 @@
       "from_id": "cap:composed-analysis",
       "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:content-manifest",
+      "properties": {},
+      "to_id": "dec:content-manifest"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -24177,6 +24200,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:content-manifest",
+      "properties": {},
+      "to_id": "req:export-says-what-it-cannot-carry"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:content-store",
       "properties": {},
       "to_id": "req:content-reaches-every-seat"
@@ -27330,6 +27359,19 @@
         "name": "Analyse two designs together without merging them",
         "provenance": "authored",
         "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:content-manifest",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A committed plain-text manifest mapping content hash → original filename → what references it, so a design that points at stored content can say what it does NOT itself carry. Makes \"do I have everything?\" a set comparison for someone holding only the export, and makes a blob change legible in `git log` as a readable name rather than a hex path. Paired with `.gitattributes` marking the blob directory `binary`, which stops git attempting diffs it cannot produce and — the part that matters — stops line-ending conversion silently corrupting a PNG on a CRLF checkout. Governed by `dec:content-manifest`; delivers `req:export-says-what-it-cannot-carry` and makes `req:content-reaches-every-seat`'s fail-loud promise checkable by a person rather than only by the tool. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say what content the design depends on, in names a person can read",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -30669,6 +30711,16 @@
         "name": "OPEN — how are two people's simultaneous edits kept apart: worktrees, temporary repos, or a live channel?",
         "rationale": "Held as brainstorming on purpose. Anthony called it thinking out loud, and the first honest thing to do with four ideas is to write them down as four ideas rather than pick one and start building — which is precisely the practice dec:exploratory-staging is about. Two notes for whoever takes it up. The ranking above is a finding, not a decision: it says which ideas are cheap and which are large, and the cheap one is testable this week by two people on one design without a line of new Rust. And the doubt that started it should survive into whatever gets built — a claim on a cluster of nodes is not a claim on a repository, so any answer here has to say what happens to the CODE two people are writing beside the design, not only what happens to the graph.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:content-manifest",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED by Anthony 2026-07-31, delivering `req:export-says-what-it-cannot-carry` and closing the last open question under `cap:content-store`.\n\nA COMMITTED MANIFEST, plain text, mapping CONTENT HASH → ORIGINAL FILENAME → WHAT REFERENCES IT. One artefact, two jobs, which is why it was chosen over either job's narrower answer:\n\n1. COMPLETENESS. Once content exists, the export document holds only pointers, so handing someone `reflow2.json` alone gives them a design whose diagrams silently fail to resolve. The manifest makes \"do I have everything?\" a set comparison — hashes listed against hashes present — rather than a discovery made when a picture does not open. That is `req:content-reaches-every-seat`'s fail-loud requirement made checkable by a person, not only by the tool.\n\n2. LEGIBILITY IN GIT. A content-addressed blob lands as `blobs/ab/cdef…` and git reports it as an added file with a hex name that tells a reviewer nothing. The manifest is text, so the same change also appears in a diff as a readable line — `architecture-sketch.png` added, referencing `dec:x` — which is what a human actually reads in `git log -p`.\n\n`.gitattributes` MARKS THE BLOB DIRECTORY `binary`. Two concrete effects, and the second is the one that matters: git stops attempting diffs it cannot produce, and — critically — stops applying line-ending conversion, which would CORRUPT a PNG on a checkout configured for CRLF. That is silent data loss on someone else's machine, and one line prevents it.\n\nWHY THE BINARY WORRY WAS SMALLER THAN IT LOOKED, recorded because the reasoning nearly went the other way. Git's weaknesses with binaries are poor diffs, poor delta compression, and unresolvable merge conflicts. IMMUTABLE CONTENT ADDRESSING removes two of the three outright: a blob is never updated, so an \"edit\" is a NEW FILE with a new name — git sees an addition, which is the clearest possible signal — and two people adding different blobs add different files, so a binary merge conflict cannot arise. The only conflict is on the pointer inside the export, which the `merge.reflow2` driver already handles. WHAT REMAINS IS GROWTH: every version is a new file that stays forever, and that is the size-cap question `dec:where-content-lives` deliberately left open.\n\nDELIBERATELY NOT DECIDED HERE: whether the manifest lives inside the export document or beside it as its own committed file. Both satisfy the requirement; the second keeps the export byte-stable diff properties simpler and is the likelier answer, but it is an implementation choice for build time rather than a design commitment.",
+        "name": "A committed manifest — hash to filename to referenced-by — plus .gitattributes marking blobs binary",
+        "rationale": "Taken because one artefact answered two questions that arrived independently — the export-completeness gap found by an impact-check, and Anthony's worry about git legibility for binaries. When a single small thing satisfies two unrelated needs, that is usually the right shape rather than a coincidence.\n\nThe `.gitattributes` line is the part with a real failure behind it rather than an inconvenience: line-ending conversion silently corrupting a binary on a differently-configured checkout is the kind of fault that appears as \"the diagram is broken on my machine\" weeks later, with nothing in the history to point at.\n\nThe binary-churn analysis is recorded because the initial framing — mine — overstated the problem, and correcting it is what made the manifest a legibility feature rather than a workaround. Content addressing had already solved most of what was being worried about; naming which part it did NOT solve (growth) is what keeps the remaining risk visible instead of assumed handled.",
+        "status": "accepted"
       }
     },
     {
@@ -34215,12 +34267,13 @@
       "node_id": "question:31748fe70566dfa2",
       "node_type": "Question",
       "properties": {
+        "answer": "Yes — a committed manifest mapping content hash to original filename to what references it. It answers both questions at once: whether someone holding only the JSON can tell what is missing, and making blob changes legible in `git log` as readable names rather than hex. Plus mark the blob directory `binary` in `.gitattributes` so git never attempts to diff a PNG or mangle it with line-ending conversion. (Anthony, 2026-07-31.)",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “Once the design points at content, the export must say what it does NOT carry — a pointer with no bytes fails loud, not quietly”",
         "gap_id": "gap:31748fe70566dfa2",
         "question": "Once diagrams and documents are stored alongside the design, sending someone just the design file no longer gives them everything — their diagrams would quietly fail to open. Should the design file list what it depends on, so a person can tell at a glance whether they have it all?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -35471,7 +35524,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "FOUND BY IMPACT-CHECK, 2026-07-31, before any content-store code was written. `propagate_from cap:content-store` reported three boundary crossings — `ifc:core-api`, `ifc:graph-export`, `ifc:mcp-tools` — and the export one changes what an existing contract MEANS.\n\nTHE CONSEQUENCE. Blobs travel in git (`dec:where-content-lives`); the export document carries only pointers. So the moment content exists, `export_graph` stops being a complete design transfer: hand someone the JSON on its own — email it, drop it in a ticket, move it between machines — and every diagram, transcript and source document silently fails to resolve. Today the export IS the whole design, which is why `dec:export-door-spof-accepted` calls it \"an accepted single door\"; after content, it is the whole design MINUS whatever the graph points at.\n\nTHE REQUIREMENT: an export that references content must say so, and a consumer holding an export without the bytes must be able to TELL. The shape most consistent with what already exists is a manifest of referenced content hashes carried in the export beside the stamp — the stamp already records the vocabulary a document was written with, and this records the content it depends on. Then \"do I have everything?\" is a set comparison rather than a discovery made when a diagram fails to open.\n\nWHY IT CANNOT BE LEFT TO CONVENTION: `req:content-reaches-every-seat` requires an unresolvable pointer to fail LOUD and be nameable, and `req:no-silent-fallback` says the same one layer down. A design that renders quietly without its pictures satisfies neither — and the person who cannot see the diagrams is exactly the person who cannot tell they are missing.\n\nDELIBERATELY NOT SPECIFIED HERE: whether the export should also be able to EMBED content for transfer (self-contained at the cost of size), or only ever declare it. That is a separate question and should not be answered by implication.\n\nNOTE ON PROVENANCE: raised by the agent from an impact-check, not by Anthony. It is `proposed` and wants his word.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -37825,7 +37878,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:862b4456d4d0121e5a3d487c4d502251c3afd7149bc2b1064f2b8dfef170f790",
+  "prev_content_hash": "sha256:bf806d7f6b8b70b2011aca01ddee21a04b39f6cb490fc335642b832f95a70c3c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
