@@ -41,6 +41,7 @@ use serde::Serialize;
 
 use crate::export::GraphExport;
 use crate::graph::DesignGraph;
+use crate::nodes::{edge, node};
 use crate::report::is_design_type;
 
 /// The label `compare_with_base` reports for the live side.
@@ -443,5 +444,531 @@ impl DesignGraph {
     ) -> Result<DesignDiff, DynoError> {
         let live = self.export_graph()?;
         Ok(compare_designs(base, &live, base_label, LIVE_GRAPH_LABEL))
+    }
+}
+
+// ---------------------------------------------------------------------------
+// The changelog view — one design's delta between two of its own moments.
+// ---------------------------------------------------------------------------
+//
+// `compare_designs` above compares two as-designed RECORDS. This compares two
+// MOMENTS of one design and renders the difference in the shape the industry
+// already reads (keepachangelog.com). Same family, different question.
+//
+// DIRECTIONALITY IS THE LOAD-BEARING CLAIM (`cap:changelog-view`, Anthony's
+// formulation): "graph delta --via_agent--> human changelog". The graph delta
+// is the primary, machine-readable record; the changelog is a derived
+// rendering, never the other way round. When the two disagree, the graph is
+// what gets interrogated and the changelog is what gets regenerated.
+//
+// SO THIS EMITS A DRAFT, AND SAYS SO IN THE PAYLOAD. Keep a Changelog names a
+// raw commit-log dump an antipattern, and insists every entry says what a
+// CONSUMER does about the change. The graph cannot know that — it holds what
+// moved, not what it costs someone downstream. Rather than invent it or drop
+// it silently, `needs_a_human` names the obligation and `is_draft` is
+// permanently true.
+//
+// AND NOTHING IS GUESSED INTO A BUCKET. Every entry carries the RULE that put
+// it there, mapped from vocabulary the graph already records. Anything the
+// rules do not cover lands in `unmapped` with its observed values, because a
+// bucket assigned by vibes and a bucket assigned by `action=removed` are
+// different kinds of claim, and a changelog that cannot tell them apart is the
+// commit-log dump wearing a nicer hat.
+
+/// The five Keep a Changelog buckets, in the order that spec presents them.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize)]
+#[serde(rename_all = "PascalCase")]
+pub enum ChangelogBucket {
+    Added,
+    Changed,
+    Deprecated,
+    Removed,
+    Fixed,
+}
+
+impl ChangelogBucket {
+    /// The heading exactly as Keep a Changelog spells it.
+    pub fn as_str(self) -> &'static str {
+        match self {
+            ChangelogBucket::Added => "Added",
+            ChangelogBucket::Changed => "Changed",
+            ChangelogBucket::Deprecated => "Deprecated",
+            ChangelogBucket::Removed => "Removed",
+            ChangelogBucket::Fixed => "Fixed",
+        }
+    }
+}
+
+/// The named mapping rules. These are constants rather than inline strings so
+/// a test can assert the full set and fail when someone adds a sixth bucket
+/// path without deciding what it means — the same discipline
+/// `GapSource::is_aggregate`'s exhaustive match enforces on the detect side.
+pub mod changelog_rule {
+    /// The target appeared in the later release's `INCLUDES` manifest.
+    pub const MANIFEST_APPEARED: &str = "manifest.includes.appeared";
+    /// The target left the later release's `INCLUDES` manifest.
+    pub const MANIFEST_LEFT: &str = "manifest.includes.left";
+    /// A `ChangeEvent CHANGED` edge with `action=added`.
+    pub const ACTION_ADDED: &str = "change_event.action=added";
+    /// A `ChangeEvent CHANGED` edge with `action=modified`.
+    pub const ACTION_MODIFIED: &str = "change_event.action=modified";
+    /// `action=removed` on an event whose `change_type` is `deprecation` —
+    /// retirement WITH the intent recorded, which is Deprecated, not Removed.
+    pub const ACTION_REMOVED_DEPRECATION: &str =
+        "change_event.action=removed+change_type=deprecation";
+    /// `action=removed` with any other `change_type`.
+    pub const ACTION_REMOVED: &str = "change_event.action=removed";
+    /// A drift accept (`accepted_baseline=true`) whose event is a
+    /// `test_failure_fix` — the design held and the code was repaired.
+    pub const ACCEPT_TEST_FAILURE_FIX: &str =
+        "changed.accepted_baseline=true+change_type=test_failure_fix";
+
+    /// Every rule, for the exhaustiveness test.
+    pub const ALL: &[&str] = &[
+        MANIFEST_APPEARED,
+        MANIFEST_LEFT,
+        ACTION_ADDED,
+        ACTION_MODIFIED,
+        ACTION_REMOVED_DEPRECATION,
+        ACTION_REMOVED,
+        ACCEPT_TEST_FAILURE_FIX,
+    ];
+}
+
+/// One drafted entry. It names WHAT moved and WHY it is in this bucket, and
+/// deliberately says nothing about what a consumer should do — that is the
+/// half a person writes, and claiming it here would be the graph asserting
+/// something it cannot know.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct ChangelogEntry {
+    pub bucket: ChangelogBucket,
+    pub subject_id: String,
+    pub subject_type: String,
+    pub subject_name: String,
+    /// The named rule from [`changelog_rule`] that placed this entry.
+    pub rule: String,
+    /// The concrete values observed, so the mapping is auditable without
+    /// re-deriving it.
+    pub evidence: String,
+}
+
+/// A change inside the window that matched no rule. Reported rather than
+/// dropped: silent truncation reads as "covered everything" when it did not
+/// (AGENTS.md engineering principle 6).
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct UnmappedChange {
+    pub change_event_id: String,
+    pub subject_id: String,
+    pub action: Option<String>,
+    pub change_type: Option<String>,
+    pub why: String,
+}
+
+/// What the later release's manifest gained and lost. Empty when either side
+/// is not a Release — an epoch has no manifest, and inventing one would be a
+/// fabricated fact.
+#[derive(Debug, Clone, Default, PartialEq, Serialize)]
+pub struct ManifestDelta {
+    pub appeared: Vec<String>,
+    pub left: Vec<String>,
+}
+
+/// A derived changelog draft. Never stored: storing it would create a second
+/// source of truth about what changed, able to disagree with the graph.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct ChangelogDraft {
+    /// `[Unreleased]` or the target's version in Keep a Changelog form.
+    pub heading: String,
+    /// The base point, if one was resolved.
+    pub from: Option<String>,
+    /// The target point. `None` is the `[Unreleased]` case.
+    pub to: Option<String>,
+    /// The epoch sequence window actually used, exclusive of `from`.
+    pub from_sequence: Option<i64>,
+    pub to_sequence: Option<i64>,
+    pub entries: Vec<ChangelogEntry>,
+    pub manifest: ManifestDelta,
+    pub unmapped: Vec<UnmappedChange>,
+    /// Always true. A draft is what this produces; a changelog is what a
+    /// person edits it into.
+    pub is_draft: bool,
+    /// The obligations the graph cannot discharge, named so they are not
+    /// mistaken for absent.
+    pub needs_a_human: Vec<String>,
+    /// Anything that limited the answer — a release with no epoch, an
+    /// unresolvable point. Loud, never silent.
+    pub notes: Vec<String>,
+}
+
+/// One end of the window, resolved to the epoch ordering that drives it.
+struct ChangelogPoint {
+    id: String,
+    release_id: Option<String>,
+    sequence: Option<i64>,
+}
+
+impl DesignGraph {
+    /// Resolve a Release or DesignEpoch id to its position on the time axis.
+    /// A Release finds its epoch through `AT_EPOCH`; if it has none, the point
+    /// still resolves but carries no sequence, and the caller reports that
+    /// rather than quietly computing an empty window.
+    fn changelog_point(&self, id: &str) -> Result<Option<ChangelogPoint>, DynoError> {
+        if self.get_node(node::DESIGN_EPOCH, id)?.is_some() {
+            let sequence = self
+                .get_node(node::DESIGN_EPOCH, id)?
+                .and_then(|e| e.properties.get("sequence").and_then(Value::as_i64));
+            return Ok(Some(ChangelogPoint {
+                id: id.to_string(),
+                release_id: None,
+                sequence,
+            }));
+        }
+        if self.get_node(node::RELEASE, id)?.is_some() {
+            let mut sequence = None;
+            for e in self.outgoing(id, Some(edge::AT_EPOCH))? {
+                if let Some(ep) = self.get_node(node::DESIGN_EPOCH, &e.to_id)? {
+                    sequence = ep.properties.get("sequence").and_then(Value::as_i64);
+                    break;
+                }
+            }
+            return Ok(Some(ChangelogPoint {
+                id: id.to_string(),
+                release_id: Some(id.to_string()),
+                sequence,
+            }));
+        }
+        Ok(None)
+    }
+
+    /// The most recently deployed Release, by epoch sequence. This is what
+    /// bounds `[Unreleased]` — deliberately `deployed` and not merely the
+    /// highest version, because a release that was cut but never reached
+    /// anyone has not yet drawn a line under anything.
+    fn last_deployed_release(&self) -> Result<Option<ChangelogPoint>, DynoError> {
+        let mut best: Option<ChangelogPoint> = None;
+        for rel in self.scan_nodes(node::RELEASE)? {
+            let deployed = rel
+                .properties
+                .get("status")
+                .and_then(Value::as_str)
+                .is_some_and(|s| s == "deployed");
+            if !deployed {
+                continue;
+            }
+            let Some(point) = self.changelog_point(&rel.node_id)? else {
+                continue;
+            };
+            let better = match (&best, point.sequence) {
+                (None, _) => true,
+                (Some(b), Some(s)) => b.sequence.is_none_or(|bs| s > bs),
+                (Some(_), None) => false,
+            };
+            if better {
+                best = Some(point);
+            }
+        }
+        Ok(best)
+    }
+
+    /// The `INCLUDES` manifest of a Release, as a sorted set of target ids.
+    fn manifest_of(
+        &self,
+        release_id: &str,
+    ) -> Result<std::collections::BTreeSet<String>, DynoError> {
+        Ok(self
+            .outgoing(release_id, Some(edge::INCLUDES))?
+            .into_iter()
+            .map(|e| e.to_id)
+            .collect())
+    }
+
+    /// Derive a Keep a Changelog draft between two moments of this design.
+    ///
+    /// `to = None` is the standing `[Unreleased]` case: everything after the
+    /// last DEPLOYED release, which makes "what would this increment's
+    /// changelog say?" answerable BEFORE cutting it.
+    ///
+    /// An empty window produces an EMPTY draft — no entries, `is_draft` still
+    /// true. Inventing a "no changes" entry would be the graph asserting
+    /// something nobody recorded.
+    pub fn changelog_view(
+        &self,
+        from: Option<&str>,
+        to: Option<&str>,
+    ) -> Result<ChangelogDraft, DynoError> {
+        let mut notes = Vec::new();
+
+        let to_point = match to {
+            Some(id) => {
+                let p = self.changelog_point(id)?;
+                if p.is_none() {
+                    notes.push(format!(
+                        "target '{id}' is neither a Release nor a DesignEpoch — no window computed"
+                    ));
+                }
+                p
+            }
+            None => None,
+        };
+
+        // The base: explicit, or the last deployed release for [Unreleased].
+        let from_point = match from {
+            Some(id) => {
+                let p = self.changelog_point(id)?;
+                if p.is_none() {
+                    notes.push(format!(
+                        "base '{id}' is neither a Release nor a DesignEpoch — no window computed"
+                    ));
+                }
+                p
+            }
+            None => {
+                let p = self.last_deployed_release()?;
+                match &p {
+                    Some(b) => notes.push(format!(
+                        "base not given; using the last DEPLOYED release '{}'",
+                        b.id
+                    )),
+                    None => notes.push(
+                        "base not given and no DEPLOYED release exists — the window is open from \
+                         the beginning of the design"
+                            .to_string(),
+                    ),
+                }
+                p
+            }
+        };
+
+        for p in [from_point.as_ref(), to_point.as_ref()]
+            .into_iter()
+            .flatten()
+        {
+            if p.sequence.is_none() {
+                notes.push(format!(
+                    "'{}' has no epoch (no AT_EPOCH edge), so it contributes no ordering — the \
+                     change window is wider than it should be",
+                    p.id
+                ));
+            }
+        }
+
+        let from_seq = from_point.as_ref().and_then(|p| p.sequence);
+        let to_seq = to_point.as_ref().and_then(|p| p.sequence);
+
+        // ---- the change window ------------------------------------------
+        let mut entries: Vec<ChangelogEntry> = Vec::new();
+        let mut unmapped: Vec<UnmappedChange> = Vec::new();
+
+        let mut epochs_in_window: Vec<String> = Vec::new();
+        for ep in self.scan_nodes(node::DESIGN_EPOCH)? {
+            let Some(seq) = ep.properties.get("sequence").and_then(Value::as_i64) else {
+                continue;
+            };
+            let after_base = from_seq.is_none_or(|f| seq > f);
+            let up_to_target = to_seq.is_none_or(|t| seq <= t);
+            if after_base && up_to_target {
+                epochs_in_window.push(ep.node_id);
+            }
+        }
+        epochs_in_window.sort();
+
+        for epoch_id in &epochs_in_window {
+            for pin in self.incoming(epoch_id, Some(edge::AT_EPOCH))? {
+                let Some(ev) = self.get_node(node::CHANGE_EVENT, &pin.from_id)? else {
+                    continue; // Snapshots and Releases pin here too
+                };
+                let change_type = ev
+                    .properties
+                    .get("change_type")
+                    .and_then(Value::as_str)
+                    .map(str::to_string);
+                for ch in self.outgoing(&ev.node_id, Some(edge::CHANGED))? {
+                    let action = ch
+                        .properties
+                        .get("action")
+                        .and_then(Value::as_str)
+                        .map(str::to_string);
+                    let accepted = ch
+                        .properties
+                        .get("accepted_baseline")
+                        .and_then(Value::as_bool)
+                        .unwrap_or(false);
+
+                    let mapped =
+                        classify_change(action.as_deref(), change_type.as_deref(), accepted);
+                    match mapped {
+                        Some((bucket, rule)) => {
+                            let (subject_type, subject_name) = self.describe_subject(&ch.to_id)?;
+                            entries.push(ChangelogEntry {
+                                bucket,
+                                subject_id: ch.to_id.clone(),
+                                subject_type,
+                                subject_name,
+                                rule: rule.to_string(),
+                                evidence: format!(
+                                    "{} action={} change_type={} accepted_baseline={}",
+                                    ev.node_id,
+                                    action.as_deref().unwrap_or("<none>"),
+                                    change_type.as_deref().unwrap_or("<none>"),
+                                    accepted
+                                ),
+                            });
+                        }
+                        None => unmapped.push(UnmappedChange {
+                            change_event_id: ev.node_id.clone(),
+                            subject_id: ch.to_id.clone(),
+                            action: action.clone(),
+                            change_type: change_type.clone(),
+                            why: "no bucket rule covers this action/change_type combination"
+                                .to_string(),
+                        }),
+                    }
+                }
+            }
+        }
+
+        // ---- the manifest delta -----------------------------------------
+        let mut manifest = ManifestDelta::default();
+        let from_rel = from_point.as_ref().and_then(|p| p.release_id.clone());
+        let to_rel = to_point.as_ref().and_then(|p| p.release_id.clone());
+        if let (Some(a), Some(b)) = (&from_rel, &to_rel) {
+            let before = self.manifest_of(a)?;
+            let after = self.manifest_of(b)?;
+            manifest.appeared = after.difference(&before).cloned().collect();
+            manifest.left = before.difference(&after).cloned().collect();
+            for id in &manifest.appeared {
+                let (subject_type, subject_name) = self.describe_subject(id)?;
+                entries.push(ChangelogEntry {
+                    bucket: ChangelogBucket::Added,
+                    subject_id: id.clone(),
+                    subject_type,
+                    subject_name,
+                    rule: changelog_rule::MANIFEST_APPEARED.to_string(),
+                    evidence: format!("in {b}'s INCLUDES, not in {a}'s"),
+                });
+            }
+            for id in &manifest.left {
+                let (subject_type, subject_name) = self.describe_subject(id)?;
+                entries.push(ChangelogEntry {
+                    bucket: ChangelogBucket::Removed,
+                    subject_id: id.clone(),
+                    subject_type,
+                    subject_name,
+                    rule: changelog_rule::MANIFEST_LEFT.to_string(),
+                    evidence: format!("in {a}'s INCLUDES, not in {b}'s"),
+                });
+            }
+        } else if from_rel.is_some() || to_rel.is_some() {
+            notes.push(
+                "only one end of the window is a Release, so no manifest delta was computed — an \
+                 epoch has no INCLUDES manifest"
+                    .to_string(),
+            );
+        }
+
+        // Deterministic: same design, same window, byte-identical draft.
+        entries.sort_by(|a, b| {
+            (a.bucket, &a.subject_id, &a.rule).cmp(&(b.bucket, &b.subject_id, &b.rule))
+        });
+        entries.dedup();
+        unmapped.sort_by(|a, b| {
+            (&a.change_event_id, &a.subject_id).cmp(&(&b.change_event_id, &b.subject_id))
+        });
+
+        let heading = match &to_point {
+            Some(p) => self
+                .get_node(node::RELEASE, &p.id)?
+                .and_then(|r| {
+                    r.properties
+                        .get("version")
+                        .and_then(Value::as_str)
+                        .map(|v| format!("[{v}]"))
+                })
+                .unwrap_or_else(|| format!("[{}]", p.id)),
+            None => "[Unreleased]".to_string(),
+        };
+
+        let mut needs_a_human = vec![
+            "Every entry needs what a CONSUMER does about it — upgrade steps, whether anything \
+             locks out, what to change. The graph holds what moved, never what it costs \
+             downstream, so that half is written by a person."
+                .to_string(),
+        ];
+        if !entries.is_empty() {
+            needs_a_human.push(format!(
+                "{} drafted entr{} to curate: Keep a Changelog is FOR HUMANS, so merge, reword \
+                 and drop what does not earn its line.",
+                entries.len(),
+                if entries.len() == 1 { "y" } else { "ies" }
+            ));
+        }
+        if !unmapped.is_empty() {
+            needs_a_human.push(format!(
+                "{} change(s) matched no bucket rule and are reported unfiled rather than \
+                 dropped — decide where they belong, or whether they belong at all.",
+                unmapped.len()
+            ));
+        }
+
+        Ok(ChangelogDraft {
+            heading,
+            from: from_point.as_ref().map(|p| p.id.clone()),
+            to: to_point.as_ref().map(|p| p.id.clone()),
+            from_sequence: from_seq,
+            to_sequence: to_seq,
+            entries,
+            manifest,
+            unmapped,
+            is_draft: true,
+            needs_a_human,
+            notes,
+        })
+    }
+
+    /// A subject's type and readable name, so the draft reads without a second
+    /// lookup. Unknown ids come back as `<unknown>` rather than being skipped —
+    /// a dangling CHANGED target is a fact worth seeing.
+    fn describe_subject(&self, id: &str) -> Result<(String, String), DynoError> {
+        for t in self.schema().node_types.keys() {
+            if let Some(n) = self.get_node(t, id)? {
+                let name = n
+                    .properties
+                    .get("name")
+                    .and_then(Value::as_str)
+                    .unwrap_or(id)
+                    .to_string();
+                return Ok((n.node_type, name));
+            }
+        }
+        Ok(("<unknown>".to_string(), id.to_string()))
+    }
+}
+
+/// The whole bucket mapping, in one place and in rule order. `None` means no
+/// rule covers it — the caller reports that rather than picking a bucket.
+///
+/// ORDER MATTERS AND IS NOT INCIDENTAL: a drift accept writes
+/// `action=modified`, so the accept rule has to be tried before the modified
+/// rule or every `test_failure_fix` would be filed as Changed.
+fn classify_change(
+    action: Option<&str>,
+    change_type: Option<&str>,
+    accepted_baseline: bool,
+) -> Option<(ChangelogBucket, &'static str)> {
+    if accepted_baseline && change_type == Some("test_failure_fix") {
+        return Some((
+            ChangelogBucket::Fixed,
+            changelog_rule::ACCEPT_TEST_FAILURE_FIX,
+        ));
+    }
+    match action {
+        Some("added") => Some((ChangelogBucket::Added, changelog_rule::ACTION_ADDED)),
+        Some("modified") => Some((ChangelogBucket::Changed, changelog_rule::ACTION_MODIFIED)),
+        Some("removed") if change_type == Some("deprecation") => Some((
+            ChangelogBucket::Deprecated,
+            changelog_rule::ACTION_REMOVED_DEPRECATION,
+        )),
+        Some("removed") => Some((ChangelogBucket::Removed, changelog_rule::ACTION_REMOVED)),
+        _ => None,
     }
 }
