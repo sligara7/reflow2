@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e70a8cdb75c68725a11d4736d453f403d11ce064e89bdc54b438b87a410727b3",
+  "content_hash": "sha256:bff718696cd409c26d9d55cb5ab8c75e6365f1fda4c4810bdb0671bafa63ef98",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1086,6 +1086,12 @@
       "from_id": "question:acaf4106e0b94ec0",
       "properties": {},
       "to_id": "req:stale-seat-knows"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:af1c8f6df524e2dd",
+      "properties": {},
+      "to_id": "req:a-question-arrives-with-a-reading"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -3253,6 +3259,15 @@
         "role": "author"
       },
       "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-question-arrives-with-a-reading",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -10016,6 +10031,26 @@
         "weight_basis": "evidence"
       },
       "to_id": "req:read-surfaces-debt"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:a-question-arrives-with-a-reading",
+      "properties": {
+        "evidence": "It is that decision's 'the LLM speaks' half made explicit at the gap boundary; the human still decides and the graph still counts.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "dec:three-party-checks"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:a-question-arrives-with-a-reading",
+      "properties": {
+        "evidence": "A bare gap question hands the user back the systems-engineering analysis that requirement exists to spare them; the recommendation is what makes it answerable without it.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:no-se-knowledge"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -34557,6 +34592,18 @@
       }
     },
     {
+      "node_id": "question:af1c8f6df524e2dd",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-31",
+        "context_setter": "Nothing satisfies requirement “A gap put to the user arrives with the agent's recommendation — recommending is not deciding”",
+        "gap_id": "gap:af1c8f6df524e2dd",
+        "question": "When reflow2 asks you a question about your design, should the assistant also tell you what it would do and why — while still leaving the decision to you — rather than just asking and waiting?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:b0ef8ce1e452f881",
       "node_type": "Question",
       "properties": {
@@ -34940,6 +34987,21 @@
         "provenance": "authored",
         "statement": "Where reflow2 tells an agent which skill to use, it must phrase it as the call to make next rather than as a trailing reference. MEASURED, and this is the whole evidence: `add_capability` returned `loop_hint: \"loop: wire satisfies to the requirement this serves, then run detect_gaps when the capture batch lands (detect-and-ask)\"`. The agent that received it DID wire `satisfies` and DID run `detect_gaps` — and did NOT load `detect-and-ask`. The imperative clauses were obeyed; the skill name in parentheses was read as an attribution for where the advice came from, not as a step to take.\n\nSo the pointer already exists and already names the right skill — `cap:read-loop-hint` and the write-side `loop_hint` are both `verified` — and it still failed. That makes this cheaper than anything else in this family: the mechanism is built, delivered and correct, and only the wording is losing the effect. `run get_skill(\"detect-and-ask\") first` is a step; `(detect-and-ask)` is a footnote.\n\nSCOPE: every place reflow2 names a skill to an agent — the write tools' `loop_hint`, the read-side hint, `loop_nudge.py`'s Stop message, the SessionStart orientation, and the MCP server instructions. The rule is one line: if a skill is worth naming, name the call.\n\nNOT PROPOSED: making the hints longer or more numerous. The finding is about grammar, not volume, and a hint that grows is a hint that gets skimmed — the failure `dec:read-hint-shape` already guarded against by firing only when the debt is real.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-question-arrives-with-a-reading",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A gap put to the user arrives with the agent's recommendation — recommending is not deciding",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When reflow2 puts a gap to the user, the agent's READING of it travels with the question: what it would do and why, and what would change that answer. The user still decides; the agent stops pretending it has no view.\n\nWHAT IS MISSING TODAY, and it is an omission rather than a prohibition. `detect-and-ask` is explicit that the agent must \"never invent an answer on their behalf\", which is right and must not be weakened. But the skill says nothing about offering a reading, so the default behaviour is a bare question — `gap_to_prompt` returns \"is it covered, deferred, or dropped?\" and the agent relays it. `cap:surface` (\"turn a gap into a question in the user's words\", `verified`) delivers the translation and nothing more.\n\nWHY THAT IS A DEFECT AND NOT NEUTRALITY. `req:no-se-knowledge` says the user never needs systems engineering. A bare gap question hands them back the analysis the agent has already done and asks them to redo it in their own head — which is precisely the SE work that requirement exists to spare them. The agent has read the graph, seen the precedents, and formed a view; withholding it is not impartiality, it is making the user pay for the agent's caution.\n\nIT IS ALSO WHAT `dec:three-party-checks` ALREADY DESCRIBES: \"The LLM speaks, the graph remembers and counts, the human decides.\" Offering a reading IS the LLM speaking. The decision stays with the human, untouched — and `dec:certainty-derived` still governs the write, because a recommendation changes no status until the user answers.\n\nTHE LINE THAT MUST NOT BE CROSSED, stated so this cannot be read as licence. Recommending is not deciding: no requirement moves off `proposed`, no decision reaches `accepted`, no gap is acknowledged on a reading the user has not confirmed. And a recommendation must carry WHAT WOULD CHANGE IT — the condition under which the other option wins — or it is steering rather than advising. An option presented without its counterweight is a decision taken quietly.\n\nTHE PART WORTH RECORDING, and the reason this is design rather than style: WHEN THE USER OVERRULES A RECOMMENDATION, THAT IS INFORMATION. A design where the agent advised one way and the human chose another has learned something neither party knew alone, and today it is invisible because the recommendation was never on the record. Whether the recommendation itself should be stored beside the question is left open here rather than assumed.\n\nMEASURED, not theorised: every gap put to Anthony on 2026-07-31 needed the recommendation added by hand, and he asked for it explicitly twice — \"provide your recommendation\", \"present them in simple english and your recommendations for how to proceed\". A shape a user has to request each time is a default in the wrong place.\n\nTENSION NAMED SO IT IS NOT CONFLATED: `dec:report-dont-judge` says the confirmation ledger reports claim history and never judges a claim. That governs what a COMPUTATION may assert about evidence. It does not govern whether an agent may advise a human who asked — different actor, different act. Conflating the two would silence exactly the party `dec:three-party-checks` puts there to speak.",
+        "status": "proposed"
       }
     },
     {
@@ -37878,7 +37940,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:bf806d7f6b8b70b2011aca01ddee21a04b39f6cb490fc335642b832f95a70c3c",
+  "prev_content_hash": "sha256:e70a8cdb75c68725a11d4736d453f403d11ce064e89bdc54b438b87a410727b3",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
