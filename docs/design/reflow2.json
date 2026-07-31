@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:7887dcd503746e9d36f23c2535112f23194b2c756b209f8294d99fe385b1a8ff",
+  "content_hash": "sha256:6f817dcb9960ad4033bb678b3627f623741b0bd8f25e71831695a8711a93542c",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -863,6 +863,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:159ab608b850e46d",
+      "properties": {},
+      "to_id": "req:agent-artifacts-are-captured"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:230d69056201ed59",
       "properties": {},
       "to_id": "req:skill-adherence-is-measured"
@@ -971,6 +977,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:7cc0431d2698f1a1",
+      "properties": {},
+      "to_id": "req:sources-are-kept-not-just-parsed"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:7d8edafb0bd7aea3",
       "properties": {},
       "to_id": "req:design-identity"
@@ -1040,6 +1052,12 @@
       "from_id": "question:b53c7315f39f3640",
       "properties": {},
       "to_id": "req:read-while-held"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:b8af9d16871259e9",
+      "properties": {},
+      "to_id": "req:content-reaches-every-seat"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -3123,6 +3141,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:agent-artifacts-are-captured",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:analyse-at-any-level",
       "properties": {
         "acted_at": "2026-07-25",
@@ -3144,6 +3171,15 @@
       "from_id": "req:concurrent-planning",
       "properties": {
         "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:content-reaches-every-seat",
+      "properties": {
+        "acted_at": "2026-07-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -3353,6 +3389,15 @@
         "role": "author"
       },
       "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:sources-are-kept-not-just-parsed",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -9821,6 +9866,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:agent-artifacts-are-captured",
+      "properties": {
+        "evidence": "Diagrams and mockups are binary or rendered content; the store is what makes them storable at all.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:content-store-for-what-the-graph-points-at"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:assumptions-are-first-class",
       "properties": {
         "optional": false,
@@ -9854,6 +9909,26 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:composed-analysis"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:content-reaches-every-seat",
+      "properties": {
+        "evidence": "The graph already solved distribution by being a repo file plus merge-on-pull; blobs do not inherit that, which is why this requirement exists.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "dec:multi-writer-architecture"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:content-reaches-every-seat",
+      "properties": {
+        "evidence": "It is the distribution half of that requirement: a store nobody else can read delivers none of what it promised.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:content-store-for-what-the-graph-points-at"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -10083,6 +10158,26 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:intent-preserved"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:sources-are-kept-not-just-parsed",
+      "properties": {
+        "evidence": "Without a content store there is nowhere for the source documents to go.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:content-store-for-what-the-graph-points-at"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:sources-are-kept-not-just-parsed",
+      "properties": {
+        "evidence": "It is that requirement's corpus whose sources are being kept; it extends corpus ingest rather than standing alone.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:corpus-ingest"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -33748,6 +33843,18 @@
       }
     },
     {
+      "node_id": "question:159ab608b850e46d",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-31",
+        "context_setter": "Nothing satisfies requirement “What a session PRODUCES is captured too — diagrams, mockups and rendered explanations, not just the decisions distilled from them”",
+        "gap_id": "gap:159ab608b850e46d",
+        "question": "Diagrams and mock-ups an assistant makes during a session are usually thrown away, even though they are often the clearest picture of what was agreed. Should reflow2 keep them automatically — and if so, all of them, or only the ones a decision actually points at?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:230d69056201ed59",
       "node_type": "Question",
       "properties": {
@@ -33907,6 +34014,18 @@
       }
     },
     {
+      "node_id": "question:7cc0431d2698f1a1",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-31",
+        "context_setter": "Nothing satisfies requirement “Ingest keeps the source documents, not only what it extracted from them”",
+        "gap_id": "gap:7cc0431d2698f1a1",
+        "question": "When reflow2 reads a folder of someone's notes and pulls the design out of them, should it also keep copies of the original documents — so you can still check what it understood, and re-read them better later — or is pointing at wherever they happen to live good enough?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:7d8edafb0bd7aea3",
       "node_type": "Question",
       "properties": {
@@ -34058,6 +34177,18 @@
         "question": "Should a session that cannot get the write lock still be able to READ the design — orientation, reports, gap checks — instead of having no design brain at all? This is the fleet's real blocker: five of your six sessions get nothing today. The catch is that it cannot be fixed here; it needs a change to the storage library reflow2 depends on, which you own but which is pinned by version. Do you want that upstream change taken on?",
         "rephrase_degraded": false,
         "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:b8af9d16871259e9",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-31",
+        "context_setter": "Nothing satisfies requirement “A pointer resolves for everyone holding the design, not only for the machine that wrote it”",
+        "gap_id": "gap:b8af9d16871259e9",
+        "question": "If you and your brother are both working on the same design from different machines, the diagrams and notes need to open for both of you — or clearly say they are missing. Should they travel in the git repository alongside the design, or be kept somewhere separate that each person sets up?",
+        "rephrase_degraded": false,
+        "status": "asked"
       }
     },
     {
@@ -34438,6 +34569,21 @@
       }
     },
     {
+      "node_id": "req:agent-artifacts-are-captured",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "What a session PRODUCES is captured too — diagrams, mockups and rendered explanations, not just the decisions distilled from them",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-07-31: \"in many sessions, the agent will create artifacts — things like mermaid diagrams or simple html files showing how a specific feature will work or an html file showing the aesthetic layout of a webpage — having all these artifacts automatically stored in the reflow2 blob storage would be great.\"\n\nTHE GAP THIS NAMES. `Artifact` already exists and can point at a file with a checksum, but it models CODE the design produced — something that lives in the repo and gets built. The things a session generates to explain itself are different: a mermaid diagram of a flow, an HTML mock of a layout, a rendered comparison. They are produced to be LOOKED AT, they are usually thrown away when the session ends, and they are frequently the clearest statement of intent anyone ever made about that feature. A paragraph describing a layout is a poor substitute for the mock that was actually agreed to.\n\nWHY IT BELONGS BESIDE THE DECISION IT SERVED: these artifacts are the visual half of `Decision.rationale`. The reasoning is recorded in text and the picture that made the reasoning obvious is not, so a later reader gets the conclusion without the thing that made it persuasive. This is the same argument `cap:session-memory` makes for the conversation — the connective tissue is what is lost — applied to output rather than dialogue.\n\nAUTOMATICALLY is the load-bearing word, and it is the hard part. A capture that depends on the agent remembering to store its own diagram is subject to exactly the decay `req:skill-use-survives-a-long-session` measures. So this wants a trigger, not a convention — the same family, and it should be designed with it rather than beside it.\n\nWHAT MUST NOT HAPPEN: a store full of every intermediate render nobody will ever open. What is worth keeping is what a Decision or a Capability actually points at; the rest is session litter. Where that line falls is an open question this requirement deliberately does not answer.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:agent-native",
       "node_type": "Requirement",
       "properties": {
@@ -34615,6 +34761,21 @@
         "provenance": "authored",
         "statement": "A team, not a single author, must be able to work on one design at the same time: each person able to see what the others hold, to work in a scope that does not collide with theirs, and to have genuinely overlapping work surfaced as decidable conflicts rather than silent last-writer-wins. Whether this extends to simultaneous editing with live presence, or stops at non-colliding parallel work with good merges, is deliberately not asserted here — it depends on an architecture question that is still open, and the weaker form may be what teams actually need.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:content-reaches-every-seat",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A pointer resolves for everyone holding the design, not only for the machine that wrote it",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-07-31: \"as one of the features we've worked on previously was that multiple people could use reflow2, may have to think about how the blob contents can be made available to multiple users of reflow2 on multiple machines? Maybe the git repo also backs-up the blob contents?\"\n\nTHE REQUIREMENT: any seat holding the design must be able to resolve a pointer to its bytes, or be told plainly that it cannot. A design where half the diagrams open for one person and not the other is worse than one with no diagrams, because the first person cannot tell that the second is missing something.\n\nWHY IT IS THE HARDEST PART OF THE CONTENT STORE, and why it belongs as its own requirement rather than a footnote to `req:content-store-for-what-the-graph-points-at`: the graph already solved distribution by being a FILE — `dec:multi-writer-architecture` chose a repo file plus merge-on-pull precisely so that cloning gets you the design and no service is needed. Blobs do not inherit that for free. A content store that lives only where it was written recreates the exact failure `cap:session-memory` already names about machine-local paths, one layer up: it resolves for one person and silently misses for everyone else.\n\nTHIS IS ALSO WHERE THE COMMITTED-OR-GITIGNORED QUESTION IS ACTUALLY DECIDED. `dec:where-content-lives` asks it as a repo-weight trade-off; read through this requirement it is not really about weight at all, it is about whether the bytes are DISTRIBUTED BY THE SAME MECHANISM AS THE DESIGN. Anthony's own suggestion — let the git repo carry the blobs — is the option that makes distribution automatic and identical to how the design already travels, at the cost of repo size and git's poor handling of binary churn. The alternative is a second distribution channel, which means a second thing to configure, be down, or be out of step.\n\nWHAT MUST HOLD EITHER WAY: an unresolvable pointer FAILS LOUD and is nameable (`req:no-silent-fallback`), and content is addressed BY HASH so a blob fetched from anywhere can be verified as the right one — which also makes several distribution mechanisms interchangeable rather than requiring one to be chosen forever.\n\nNOT SETTLED HERE: the mechanism. That stays with `dec:where-content-lives`, which this requirement reframes rather than answers.",
+        "status": "proposed"
       }
     },
     {
@@ -35710,6 +35871,21 @@
         "provenance": "authored",
         "statement": "req:intent-preserved says the past is never overwritten. Snapshot identity currently breaks that rule whenever a node is revised TWICE within a single epoch, and the loss is silent.\\n\\nOBSERVED 2026-07-28, by doing it rather than by reading the code. req:build-loop-is-bounded was amended once (chg:iteration-budget-was-elicited, correcting the iteration budget to an elicited value) and later the same day amended again (chg:build-loop-shape-reassessed, demoting the hard stop). Both used record_change against the same epoch:reflow-workflow-review. The snapshot id is deterministic per (epoch, node) — snap:epoch:reflow-workflow-review:req:build-loop-is-bounded — so the SECOND record_change wrote over the first. compare_designs reported it under supporting.changed with base = the original statement and other = the first-amended statement: the snapshot now holds the INTERMEDIATE state, and the state the node held before any amendment survives only in git, in an export committed earlier.\\n\\nWHY THIS IS WORSE THAN AN ORDINARY BUG. Nothing failed and nothing warned. record_change returned a prior_snapshot both times and looked identical from the caller's side. The design's own history simply lost a version while reporting success, which is precisely the silent-overwrite failure the revise-design discipline exists to prevent — and the discipline was followed exactly. A user doing careful work by the documented procedure loses history and is never told.\\n\\nIT ALSO BREAKS THE STATED TEST OF A GOOD REVISION. The revise-design skill ends with it: \\\"afterwards, someone reading the graph can answer what did this say before, when did it change, and why — without git archaeology.\\\" After two amendments in one epoch that is false: answering it for the first amendment requires git archaeology, which is the exact fallback the skill promises to remove.\\n\\nTHE SHAPE OF THE FIX IS A CHOICE, and none of the options is obviously right, which is why this is recorded rather than patched. (a) Make snapshot identity per REVISION rather than per (epoch, node) — e.g. include the ChangeEvent id, which is already unique per revision — so every record_change mints a distinct snapshot and HAS_SNAPSHOT becomes one-to-many. Truest to req:intent-preserved; grows the graph faster and makes \\\"the snapshot for this epoch\\\" ambiguous where readers currently assume one. (b) REFUSE a second record_change against the same node in the same epoch, directing the caller to open a new epoch. Cheap and loud, and it forces epoch hygiene, but epochs are meant to bound a round of WORK, not a single edit, so this pushes an unrelated concern onto the caller. (c) Keep one snapshot per epoch deliberately, meaning it holds the state at the START of the epoch, and make the second call a no-op rather than an overwrite. Preserves the original, loses the intermediate, and needs the semantics stated somewhere they are currently only implied.\\n\\nWhichever is chosen, the silence is not defensible: if a revision cannot be snapshotted without discarding an earlier one, the call must say so. Found 2026-07-28 while amending requirements from the reflow workflow review; the amendments themselves are the evidence.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:sources-are-kept-not-just-parsed",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Ingest keeps the source documents, not only what it extracted from them",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-07-31, from his brother's colleague who keeps a markdown file on everything: when reflow2 reads a corpus and extracts nodes and edges from it, the ORIGINAL DOCUMENTS are stored in the content store with a pointer from the graph, so the corpus itself becomes part of the design rather than an input that is consumed and discarded.\n\nWHY THIS IS MORE THAN A CONVENIENCE. Extraction is lossy and it is a JUDGEMENT — an LLM decided what in a document was a Requirement and what was context. Today `ingest` keeps a provenance `Fragment` pointing back at its source text, which is right and is already built, but the source itself lives wherever the user happened to have it. So the extraction can be audited only for as long as that folder survives on that machine, and \"why did reflow2 think this was a requirement?\" becomes unanswerable the moment someone reorganises a drive. Keeping the bytes makes the extraction RE-CHECKABLE and RE-RUNNABLE against a better pass later, which matters because `dec:corpus-ingest-mechanism` already records that two of the three passes the original ask needed — Decision and Verification — do not exist yet. A corpus ingested today will be worth re-reading when they do.\n\nIT ALSO PROTECTS THE THING THE CORPUS IS FOR. The reason to ingest a colleague's years of markdown is that the knowledge leaves when the person does. Extracting a graph and leaving the documents on their laptop preserves the parts reflow2 understood and loses everything it did not — which is precisely the fraction nobody can predict in advance.\n\nSCOPE: applies to whatever `cap:corpus-ingest` reads. It does not require reflow2 to scan a filesystem — the agent supplies the documents, the same contract `coverage_report` and `reconcile_artifacts` already use.\n\nDEPENDS ON `req:content-store-for-what-the-graph-points-at`; without a content store there is nowhere for the bytes to go.",
+        "status": "proposed"
       }
     },
     {
@@ -37263,7 +37439,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:66711c8e457554685b7482aa21ce1e960841e5cab741e9c1497730f083846abf",
+  "prev_content_hash": "sha256:7887dcd503746e9d36f23c2535112f23194b2c756b209f8294d99fe385b1a8ff",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
