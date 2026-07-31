@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e43c54124d0e70c4565dd6a2e8037ce8314bc2fdd10ce8795a2a421edfa993b0",
+  "content_hash": "sha256:d452de503d0532f3f0342512b0b250cce4bca2a08f86b2d4926d34aa8a5330bc",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2005,6 +2005,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:reading-carries-options",
+      "properties": {},
+      "to_id": "epoch:reading-carries-options"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:reading-carries-options-cap",
+      "properties": {},
+      "to_id": "epoch:reading-carries-options"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:recover-from-tests",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -2044,6 +2056,12 @@
       "from_id": "chg:resolution-bands",
       "properties": {},
       "to_id": "epoch:v0150"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:review-expiry-reproduced",
+      "properties": {},
+      "to_id": "epoch:reading-carries-options"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2746,6 +2764,24 @@
       "from_id": "snap:epoch:prune-proposed:req:supporting-is-not-conflict",
       "properties": {},
       "to_id": "epoch:prune-proposed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reading-carries-options:cap:gap-carries-a-reading",
+      "properties": {},
+      "to_id": "epoch:reading-carries-options"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reading-carries-options:cap:review-expires-on-content",
+      "properties": {},
+      "to_id": "epoch:reading-carries-options"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reading-carries-options:req:a-question-arrives-with-a-reading",
+      "properties": {},
+      "to_id": "epoch:reading-carries-options"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -7354,6 +7390,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:reading-carries-options",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:a-question-arrives-with-a-reading"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reading-carries-options-cap",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:gap-carries-a-reading"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:recover-from-tests",
       "properties": {
         "accepted_baseline": false,
@@ -7585,6 +7639,15 @@
         "action": "modified"
       },
       "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:review-expiry-reproduced",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:review-expires-on-content"
     },
     {
       "edge_type": "CHANGED",
@@ -15460,6 +15523,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {},
+      "to_id": "snap:epoch:reading-carries-options:cap:gap-carries-a-reading"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:install-reaches-the-agent",
       "properties": {},
       "to_id": "snap:epoch:linking-repos:cap:install-reaches-the-agent"
@@ -15487,6 +15556,12 @@
       "from_id": "cap:portability",
       "properties": {},
       "to_id": "snap:epoch:surface-export:cap:portability"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:review-expires-on-content",
+      "properties": {},
+      "to_id": "snap:epoch:reading-carries-options:cap:review-expires-on-content"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -15601,6 +15676,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "snap:epoch:mode-chosen:proj:reflow2"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:a-question-arrives-with-a-reading",
+      "properties": {},
+      "to_id": "snap:epoch:reading-carries-options:req:a-question-arrives-with-a-reading"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -24596,6 +24677,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:v0200-scoped",
+      "properties": {},
+      "to_id": "epoch:reading-carries-options"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v040",
       "properties": {},
       "to_id": "epoch:v050-cut"
@@ -29454,10 +29541,10 @@
       "node_id": "cap:gap-carries-a-reading",
       "node_type": "Capability",
       "properties": {
-        "description": "When a gap is put to the user, the agent's reading travels with it: the recommended answer, why, and the condition under which the other option wins. The decision stays with the user — no status moves on a recommendation alone.\n\nDELIBERATELY A NEW CAPABILITY RATHER THAN AN EXTENSION OF `cap:surface`. That capability is `verified` for what it does — turning a gap into a question in the user's words — and widening it would repeat the BL-106 defect exactly: a capability is not one behaviour, so adding a second one behind an existing passing check makes the check cover less than it appears to. New behaviour, new capability, its own check.\n\nWHAT IS TESTABLE AND WHAT IS NOT, stated so the check does not overclaim: whether a recommendation is GOOD is a semantic judgement and stays evidenced by trials (docs/sharpening.md — deliberately no LLM evals in CI). What IS mechanically checkable is the contract: that the skill states the obligation and its counterweight rule, and that no requirement status, decision status or gap acknowledgement is ever written in the same act as a recommendation. Governed by `req:a-question-arrives-with-a-reading`. PLANNED.",
+        "description": "When a choice is put to the user, the agent's reading travels with it: the recommended answer, why, and the condition under which the other option wins. The decision stays with the user — no status moves on a recommendation alone.\n\nTHE SHAPE IS PART OF THE CAPABILITY, added 2026-07-31 on Anthony's word after the pattern was used on him for the five standing gaps and he asked for it to be CEMENTED rather than repeated. Three separable obligations: the options are SELECTABLE rather than buried in prose, so the user picks instead of composing a reply; the RECOMMENDATION IS FIRST and marked as such, because an unordered menu makes the user infer which one the agent favours — the very analysis req:no-se-knowledge exists to spare them; and EVERY option carries its consequence, including the ones not recommended, because a list of bare labels looks complete while withholding what each choice costs.\n\nTHE LANGUAGE IS THE USER'S, NOT ENGLISH. Anthony's words: \"with agents able to understand multiple languages, the 'simple english' should be 'simple whatever_language_user_is_writing_in'.\" The plainness obligation is about REGISTER — no jargon, no node ids, short sentences — and register is language-independent. cap:surface already says \"in the user's WORDS\"; this makes the wider reading explicit so nobody implements it as an English-only rule. Every English phrasing in the design notes is an example of the register, never a specification of the language.\n\nDELIBERATELY A NEW CAPABILITY RATHER THAN AN EXTENSION OF `cap:surface`. That capability is `verified` for what it does — turning a gap into a question in the user's words — and widening it would repeat the BL-106 defect exactly: a capability is not one behaviour, so adding a second one behind an existing passing check makes the check cover less than it appears to. New behaviour, new capability, its own check. The same argument is why the shape and language obligations land HERE and not back inside cap:surface.\n\nWHAT IS TESTABLE AND WHAT IS NOT, stated so the check does not overclaim: whether a recommendation is GOOD, and whether the language was correctly matched, are semantic judgements and stay evidenced by trials (docs/sharpening.md — deliberately no LLM evals in CI). What IS mechanically checkable is the contract: that the skill states all three shape obligations and the counterweight rule; that it states the language rule in language-independent terms; that no served text hardcodes English as the answer language; and that no requirement status, decision status or gap acknowledgement is ever written in the same act as a recommendation.\n\nSCOPE WIDENED BY THE SAME REQUEST: this began as a rule about GAPS, and Anthony's framing — \"the decisions I need to make\" — is broader. Read as covering any point where the agent puts a CHOICE to the user, not only where detect_gaps produced it. Whether that widening deserves its own capability is left open in req:a-question-arrives-with-a-reading rather than assumed here.\n\nGoverned by `req:a-question-arrives-with-a-reading`. PLANNED, scheduled `expected` for rel:v0210.",
         "is_entry_point": false,
         "is_exit_point": false,
-        "name": "A question comes with what the agent would do, and what would change it",
+        "name": "A question arrives as options the user can pick, recommendation first, in their own language",
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
@@ -29987,7 +30074,7 @@
       "node_id": "cap:review-expires-on-content",
       "node_type": "Capability",
       "properties": {
-        "description": "A gap acknowledgement records a human judgement about specific text. Today its expiry is keyed on the gap id, which hashes the affected node IDS — so a review expires when the affected SET changes membership, and NEVER when the affected nodes change CONTENT. Found live on 2026-07-30 while promoting the planning axis: acknowledgements written on 2026-07-28 reading roughly deferred, scheduled for a later increment went on suppressing gaps for requirements that had since been accepted and were being worked, so two things Anthony had just committed to were invisible as open work. Sharper still, req:graph-indexes-snapshots' acknowledgement was still justifying a framing that had been removed an hour earlier — an accepted review left defending a requirement that no longer said that. THE REASON IT MATTERS, and why this is not cosmetic: a review outliving the wording it reviewed is worse than no review, because it reads as a human having agreed to something they never saw. The nearest working sibling is defect-side expiry-by-shape, which already does content-sensitive invalidation. Approved for build by Anthony 2026-07-30.",
+        "description": "A gap acknowledgement records a human judgement about specific text. Today its expiry is keyed on the gap id, which hashes the affected node IDS — so a review expires when the affected SET changes membership, and NEVER when the affected nodes change CONTENT. Found live on 2026-07-30 while promoting the planning axis: acknowledgements written on 2026-07-28 reading roughly deferred, scheduled for a later increment went on suppressing gaps for requirements that had since been accepted and were being worked, so two things Anthony had just committed to were invisible as open work. Sharper still, req:graph-indexes-snapshots' acknowledgement was still justifying a framing that had been removed an hour earlier — an accepted review left defending a requirement that no longer said that. THE REASON IT MATTERS, and why this is not cosmetic: a review outliving the wording it reviewed is worse than no review, because it reads as a human having agreed to something they never saw. The nearest working sibling is defect-side expiry-by-shape, which already does content-sensitive invalidation. Approved for build by Anthony 2026-07-30.\n\nREPRODUCED AGAIN 2026-07-31, AND THE SECOND OCCURRENCE IS THE STRONGER EVIDENCE BECAUSE OF HOW IT AROSE. Anthony accepted four `unverified_capability` gaps that morning. The recorded rationale for all four asserted — wrongly — that THIS capability would expire the review if the capability were reworded; it is `planned`, not built, so nothing of the kind happens. Within the hour he asked for the recommendation-with-options behaviour to be cemented, and cap:gap-carries-a-reading was substantially rewritten: RENAMED, given three new shape obligations and a language rule, and its check rewritten with two new negative assertions. The acknowledgement carried across untouched and went on suppressing the gap, and `reviewed_gaps` now renders the OLD judgement against the NEW title — the failure visible in a single tool result.\n\nWHAT THE SECOND OCCURRENCE ADDS BEYOND THE FIRST: the 2026-07-30 case was drift over DAYS, which is easy to dismiss as staleness nobody could reasonably catch. This one took UNDER AN HOUR, inside one session, with the same agent doing both the acknowledging and the rewriting — and it still went unnoticed until `detect_gaps` was run and the expected gap did not reappear. An agent that had just written the sentence \"rewording expires this review\" then reworded the capability and did not notice. That is not a memory failure that better discipline fixes; it is the case for computing the expiry.\n\nAND IT NAMES THE DIAGNOSTIC WORTH BUILDING ALONGSIDE: the failure was detected only because someone predicted the gap would return and checked. A silent non-return is indistinguishable from a correct suppression, which is why this cannot be left to review discipline.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "A sign-off expires when the thing it judged is reworded, not only when the affected set changes",
@@ -31488,6 +31575,22 @@
       }
     },
     {
+      "node_id": "chg:reading-carries-options",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "requirement_creep",
+        "name": "The reading gains a SHAPE (selectable options, recommendation first) and a LANGUAGE rule — Anthony 2026-07-31"
+      }
+    },
+    {
+      "node_id": "chg:reading-carries-options-cap",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The capability and its check take the shape and language obligations"
+      }
+    },
+    {
       "node_id": "chg:recover-from-tests",
       "node_type": "ChangeEvent",
       "properties": {
@@ -31541,6 +31644,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Ingest reads the schema's two thresholds, and the ask-band stops being invisible"
+      }
+    },
+    {
+      "node_id": "chg:review-expiry-reproduced",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Reproduced live: a standing review survived a substantial rewrite of the thing it judged"
       }
     },
     {
@@ -33743,7 +33854,7 @@
       "properties": {
         "decision": "Accepted the gap gap:4f9dcb95353889c2.",
         "name": "Reviewed: gap:4f9dcb95353889c2",
-        "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:gap-carries-a-reading is written and sits at `planned`, and it pins the CONTRACT rather than the judgement (skill_lint asserts detect-and-ask states both halves, and no status is written in the same act as a recommendation). What the gap actually reports is that the check has never RUN, which is simply true of anything unbuilt. That is a fact about sequencing, not a hole in the design.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every release cut printed \"5 notes\" with no way to tell signal from permanent background — which is how a gate stops being read. Acceptance hides nothing: when the capability is built and its check passes the gap disappears on its own, and cap:review-expires-on-content means rewording the capability expires this review and brings it back for a fresh look.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: acceptance alone was the trap. All four were scheduled against NOTHING, so quieting them would have relied on someone remembering. cap:gap-carries-a-reading is now SCHEDULED_FOR rel:v0210 as `expected`, so the silence is bounded — arrival_delta will ask about it at v0.21.0 whether or not anyone remembers. Deliberately `expected` rather than `required`: this is a plan, not an obligation Anthony has committed to, and a `required` miss is a computed violation.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
+        "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:gap-carries-a-reading is written and sits at `planned`, and it pins the CONTRACT rather than the judgement. What the gap actually reports is that the check has never RUN, which is simply true of anything unbuilt. That is a fact about sequencing, not a hole in the design.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every release cut printed \"5 notes\" with no way to tell signal from permanent background — which is how a gate stops being read. When the capability is built and its check passes, the gap disappears on its own.\n\n*** CORRECTION, MADE THE SAME DAY, LEFT ON THE RECORD RATHER THAN EDITED AWAY. *** This rationale originally claimed that `cap:review-expires-on-content` \"means rewording the capability expires this review and brings it back for a fresh look\". THAT IS FALSE. That capability is PLANNED, NOT BUILT. Expiry is keyed on the gap id, which hashes the affected node IDS — so a review expires when the affected SET changes membership and NEVER when the affected nodes change CONTENT. This review therefore does NOT self-expire. If the capability is reworded, someone must revisit this judgement BY HAND.\n\n*** AND IT WAS PROVEN LIVE, WITHIN THE HOUR, ON THIS VERY ACKNOWLEDGEMENT. *** Later in the same session Anthony asked for the recommendation-with-options behaviour to be cemented, and cap:gap-carries-a-reading was substantially rewritten: renamed, given three shape obligations and a language rule, and its check rewritten with two new negative assertions. THIS ACKNOWLEDGEMENT CARRIED ACROSS UNCHANGED and went on suppressing the gap, with reviewed_gaps now rendering the OLD judgement against the NEW text. That is precisely the failure cap:review-expires-on-content exists to fix — in its own words, \"a review outliving the wording it reviewed is worse than no review, because it reads as a human having agreed to something they never saw\" — reproduced by the very sentence asserting it could not happen.\n\nSO THIS ONE NEEDS A FRESH LOOK AND IS FLAGGED AS SUCH: Anthony judged a capability that said \"a question comes with what the agent would do\". It now also demands selectable options, a marked recommendation, a consequence on every option, and answering in the user's own language. The judgement (accept while planned, scheduled v0.21.0) plausibly still holds, but it is HIS to re-affirm, not mine to assume.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: acceptance alone was the trap. All four were scheduled against NOTHING, so quieting them would have relied on someone remembering. Now SCHEDULED_FOR rel:v0210 as `expected`, so arrival_delta asks at v0.21.0 regardless. Deliberately `expected` rather than `required`: a plan, not an obligation whose miss is a computed violation.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
         "status": "accepted"
       }
     },
@@ -34023,7 +34134,7 @@
       "properties": {
         "decision": "Accepted the gap gap:8f3bacedc618f3d4.",
         "name": "Reviewed: gap:8f3bacedc618f3d4",
-        "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:skill-triggers is written and sits at `planned`, pinning that shape-matching fires on the situation AND stays silent otherwise (the counterweight is the half that matters, since a trigger that always fires teaches the agent to ignore it). What the gap actually reports is that the check has never RUN, which is simply true of anything unbuilt.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every release cut printed \"5 notes\" with no way to tell signal from permanent background. Acceptance hides nothing — the gap disappears on its own once the check passes, and cap:review-expires-on-content brings it back if the capability is reworded.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: all four were scheduled against NOTHING, so quieting them would have relied on memory. Now SCHEDULED_FOR rel:v0210 as `expected`, so arrival_delta asks at v0.21.0 regardless.\n\nA SEPARATE THING NOT TO CONFUSE WITH THIS: cap:skill-triggers is also the single `unexamined` entry in confirmation_ledger, and that is BL-108, not this gap. The ledger attributes artifacts through a capability's COMPONENT, so cmp:nudge owning art:nudge-detect makes a PLANNED capability read as an unexamined BUILT claim. An exhaustive reconcile_artifacts (98/98 unchanged, 0 findings, 2026-07-31) does not clear it and must not — confirming it would assert that something unbuilt has been checked against reality.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
+        "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:skill-triggers is written and sits at `planned`, pinning that shape-matching fires on the situation AND stays silent otherwise (the counterweight is the half that matters, since a trigger that always fires teaches the agent to ignore it). What the gap reports is that the check has never RUN, which is true of anything unbuilt.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every cut printed \"5 notes\" with no way to tell signal from permanent background. When the capability is built and its check passes, the gap disappears on its own.\n\n*** CORRECTION, MADE THE SAME DAY, LEFT ON THE RECORD RATHER THAN EDITED AWAY. *** This rationale originally claimed `cap:review-expires-on-content` would bring the gap back if the capability were reworded. THAT IS FALSE — that capability is PLANNED, NOT BUILT. Expiry keys on the gap id, which hashes affected node IDS, so a review expires when the affected SET changes membership and NEVER on CONTENT change. This review does NOT self-expire; reword the capability and someone must revisit it BY HAND. Demonstrated live the same hour on the sibling acknowledgement decision:ack:4f9dcb95353889c2, where a substantial rewrite left the old judgement suppressing the gap against new text.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: all four were scheduled against NOTHING, so quieting them would have relied on memory. Now SCHEDULED_FOR rel:v0210 as `expected`, so arrival_delta asks at v0.21.0 regardless.\n\nA SEPARATE THING NOT TO CONFUSE WITH THIS: cap:skill-triggers is also the single `unexamined` entry in confirmation_ledger, and that is BL-108, not this gap. The ledger attributes artifacts through a capability's COMPONENT, so cmp:nudge owning art:nudge-detect makes a PLANNED capability read as an unexamined BUILT claim. An exhaustive reconcile_artifacts (98/98 unchanged, 0 findings, 2026-07-31) does not clear it and must not — confirming it would assert that something unbuilt has been checked against reality.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
         "status": "accepted"
       }
     },
@@ -34093,7 +34204,7 @@
       "properties": {
         "decision": "Accepted the gap gap:9eb6b2b4c5513865.",
         "name": "Reviewed: gap:9eb6b2b4c5513865",
-        "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:session-artifacts is written and sits at `planned`, pinning that THE LINK IS THE FILTER (a rendering a Decision or Capability points at is captured; one nothing points at is not, so the store does not fill with session litter) and that capture happens WITHOUT the agent choosing to invoke it, which is the load-bearing half — a rule depending on the agent remembering decays exactly as req:skill-use-survives-a-long-session measures. What the gap actually reports is that the check has never RUN, which is simply true of anything unbuilt.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every release cut printed \"5 notes\" with no way to tell signal from permanent background. Acceptance hides nothing — the gap disappears on its own once the check passes, and cap:review-expires-on-content brings it back if the capability is reworded.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: all four were scheduled against NOTHING, so quieting them would have relied on memory. Now SCHEDULED_FOR rel:v0210 as `expected`, so arrival_delta asks at v0.21.0 regardless. `expected` and not `required`: a plan, not an obligation whose miss is a computed violation.\n\nNOTE THE DEPENDENCY WHEN IT IS BUILT: its own description says the capture must be TRIGGERED rather than remembered, which places it with cap:skill-triggers rather than beside it — the two are scheduled into the same increment for that reason, not by coincidence.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
+        "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:session-artifacts is written and sits at `planned`, pinning that THE LINK IS THE FILTER (a rendering a Decision or Capability points at is captured; one nothing points at is not, so the store does not fill with session litter) and that capture happens WITHOUT the agent choosing to invoke it, which is the load-bearing half — a rule depending on the agent remembering decays exactly as req:skill-use-survives-a-long-session measures. What the gap reports is that the check has never RUN, which is true of anything unbuilt.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every cut printed \"5 notes\" with no way to tell signal from permanent background. When the capability is built and its check passes, the gap disappears on its own.\n\n*** CORRECTION, MADE THE SAME DAY, LEFT ON THE RECORD RATHER THAN EDITED AWAY. *** This rationale originally claimed `cap:review-expires-on-content` would bring the gap back if the capability were reworded. THAT IS FALSE — that capability is PLANNED, NOT BUILT. Expiry keys on the gap id, which hashes affected node IDS, so a review expires when the affected SET changes membership and NEVER on CONTENT change. This review does NOT self-expire; reword the capability and someone must revisit it BY HAND. Demonstrated live the same hour on the sibling acknowledgement decision:ack:4f9dcb95353889c2, where a substantial rewrite left the old judgement suppressing the gap against new text.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: all four were scheduled against NOTHING, so quieting them would have relied on memory. Now SCHEDULED_FOR rel:v0210 as `expected`, so arrival_delta asks at v0.21.0 regardless. `expected` and not `required`: a plan, not an obligation whose miss is a computed violation.\n\nNOTE THE DEPENDENCY WHEN IT IS BUILT: its own description says the capture must be TRIGGERED rather than remembered, which places it with cap:skill-triggers rather than beside it — the two are scheduled into the same increment for that reason, not by coincidence.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
         "status": "accepted"
       }
     },
@@ -34113,7 +34224,7 @@
       "properties": {
         "decision": "Accepted the gap gap:a3a499e09447e1e3.",
         "name": "Reviewed: gap:a3a499e09447e1e3",
-        "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:tool-carries-convention is written and sits at `planned`, pinning that the convention rides the tool AND stays bounded (checked against a named list, so adding a tool without considering it is caught, and no description exceeds its budget). What the gap actually reports is that the check has never RUN, which is simply true of anything unbuilt.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every release cut printed \"5 notes\" with no way to tell signal from permanent background — which is how a gate stops being read. Acceptance hides nothing: the gap disappears on its own once the check passes, and cap:review-expires-on-content brings it back if the capability is reworded.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: all four were scheduled against NOTHING, so quieting them would have relied on someone remembering. Now SCHEDULED_FOR rel:v0210 as `expected`, so arrival_delta asks at v0.21.0 regardless.\n\nWORTH CARRYING TO THE BUILD: this one is bounded at a sentence per tool ON PURPOSE, because descriptions are context paid for on EVERY session and cap:tool-search exists precisely because the surface is already large. It does not reverse dec:skills-served — the served skill keeps the depth and the worked examples; the tool carries only the irreducible minimum an agent would reconstruct wrongly or not at all.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
+        "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:tool-carries-convention is written and sits at `planned`, pinning that the convention rides the tool AND stays bounded (checked against a named list, so adding a tool without considering it is caught, and no description exceeds its budget). What the gap reports is that the check has never RUN, which is true of anything unbuilt.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every cut printed \"5 notes\" with no way to tell signal from permanent background — which is how a gate stops being read. When the capability is built and its check passes, the gap disappears on its own.\n\n*** CORRECTION, MADE THE SAME DAY, LEFT ON THE RECORD RATHER THAN EDITED AWAY. *** This rationale originally claimed `cap:review-expires-on-content` would bring the gap back if the capability were reworded. THAT IS FALSE — that capability is PLANNED, NOT BUILT. Expiry keys on the gap id, which hashes affected node IDS, so a review expires when the affected SET changes membership and NEVER on CONTENT change. This review does NOT self-expire; reword the capability and someone must revisit it BY HAND. Demonstrated live the same hour on the sibling acknowledgement decision:ack:4f9dcb95353889c2, where a substantial rewrite left the old judgement suppressing the gap against new text.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: all four were scheduled against NOTHING, so quieting them would have relied on someone remembering. Now SCHEDULED_FOR rel:v0210 as `expected`, so arrival_delta asks at v0.21.0 regardless.\n\nWORTH CARRYING TO THE BUILD: this one is bounded at a sentence per tool ON PURPOSE, because descriptions are context paid for on EVERY session and cap:tool-search exists precisely because the surface is already large. It does not reverse dec:skills-served — the served skill keeps the depth and the worked examples; the tool carries only the irreducible minimum an agent would reconstruct wrongly or not at all.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
         "status": "accepted"
       }
     },
@@ -34695,6 +34806,16 @@
         "epoch_type": "revision",
         "name": "Ten proposed requirements considered and not accepted",
         "sequence": 235,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:reading-carries-options",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A reading arrives as selectable options, recommendation first, in the user's own language",
+        "sequence": 242,
         "status": "arrived"
       }
     },
@@ -37098,7 +37219,7 @@
         "name": "A gap put to the user arrives with the agent's recommendation — recommending is not deciding",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "When reflow2 puts a gap to the user, the agent's READING of it travels with the question: what it would do and why, and what would change that answer. The user still decides; the agent stops pretending it has no view.\n\nWHAT IS MISSING TODAY, and it is an omission rather than a prohibition. `detect-and-ask` is explicit that the agent must \"never invent an answer on their behalf\", which is right and must not be weakened. But the skill says nothing about offering a reading, so the default behaviour is a bare question — `gap_to_prompt` returns \"is it covered, deferred, or dropped?\" and the agent relays it. `cap:surface` (\"turn a gap into a question in the user's words\", `verified`) delivers the translation and nothing more.\n\nWHY THAT IS A DEFECT AND NOT NEUTRALITY. `req:no-se-knowledge` says the user never needs systems engineering. A bare gap question hands them back the analysis the agent has already done and asks them to redo it in their own head — which is precisely the SE work that requirement exists to spare them. The agent has read the graph, seen the precedents, and formed a view; withholding it is not impartiality, it is making the user pay for the agent's caution.\n\nIT IS ALSO WHAT `dec:three-party-checks` ALREADY DESCRIBES: \"The LLM speaks, the graph remembers and counts, the human decides.\" Offering a reading IS the LLM speaking. The decision stays with the human, untouched — and `dec:certainty-derived` still governs the write, because a recommendation changes no status until the user answers.\n\nTHE LINE THAT MUST NOT BE CROSSED, stated so this cannot be read as licence. Recommending is not deciding: no requirement moves off `proposed`, no decision reaches `accepted`, no gap is acknowledged on a reading the user has not confirmed. And a recommendation must carry WHAT WOULD CHANGE IT — the condition under which the other option wins — or it is steering rather than advising. An option presented without its counterweight is a decision taken quietly.\n\nTHE PART WORTH RECORDING, and the reason this is design rather than style: WHEN THE USER OVERRULES A RECOMMENDATION, THAT IS INFORMATION. A design where the agent advised one way and the human chose another has learned something neither party knew alone, and today it is invisible because the recommendation was never on the record. Whether the recommendation itself should be stored beside the question is left open here rather than assumed.\n\nMEASURED, not theorised: every gap put to Anthony on 2026-07-31 needed the recommendation added by hand, and he asked for it explicitly twice — \"provide your recommendation\", \"present them in simple english and your recommendations for how to proceed\". A shape a user has to request each time is a default in the wrong place.\n\nTENSION NAMED SO IT IS NOT CONFLATED: `dec:report-dont-judge` says the confirmation ledger reports claim history and never judges a claim. That governs what a COMPUTATION may assert about evidence. It does not govern whether an agent may advise a human who asked — different actor, different act. Conflating the two would silence exactly the party `dec:three-party-checks` puts there to speak.",
+        "statement": "When reflow2 puts a gap to the user, the agent's READING of it travels with the question: what it would do and why, and what would change that answer. The user still decides; the agent stops pretending it has no view.\n\nTHE READING HAS A SHAPE, AND THE SHAPE IS PART OF THE REQUIREMENT — added 2026-07-31 on Anthony's word after the pattern was used on him for the five standing gaps: \"I really like when I say something like 'go through the decisions I need to make... put them in plain and simple english and offer a recommendation' and then you give me the options to select with your recommended choice on top. I believe there is already a proposed idea... but I really like this process (I think other users will really like this process also), so I'd either like to update the proposed req or cap or backlog item to CEMENT THIS BEHAVIOR.\"\n\nThree obligations, and they are separable:\n\n(1) THE OPTIONS ARE SELECTABLE, not buried in prose. The user picks rather than composing a reply. Prose that describes three courses of action still leaves them to name one; a list they can choose from does not.\n\n(2) THE RECOMMENDATION COMES FIRST and is marked as such. Position carries meaning: an unordered menu makes the user infer which the agent favours, which is the analysis req:no-se-knowledge exists to spare them. Marking it also makes an overrule VISIBLE — the user knows they are departing from the agent's view, which is the precondition for the finding below.\n\n(3) EVERY OPTION STILL CARRIES ITS CONSEQUENCE, including the ones not recommended. A list of bare labels is worse than prose, because it looks complete while withholding what each choice costs. The counterweight rule below is not relaxed by the format; it is what makes the format honest.\n\nAND THE LANGUAGE IS THE USER'S, NOT ENGLISH — Anthony, same exchange: \"with agents able to understand multiple languages, the 'simple english' should be 'simple whatever_language_user_is_writing_in'.\" The plainness obligation is about REGISTER, not about English: no jargon, no ids, short sentences, in whatever language the user is writing in. cap:surface already says \"in the user's WORDS\", and this makes the wider reading explicit so nobody implements it as an English-only rule. Every English-language phrasing in these design notes is an example of the register, never a specification of the language.\n\nWHAT IS MISSING TODAY, and it is an omission rather than a prohibition. `detect-and-ask` is explicit that the agent must \"never invent an answer on their behalf\", which is right and must not be weakened. But the skill says nothing about offering a reading, so the default behaviour is a bare question — `gap_to_prompt` returns \"is it covered, deferred, or dropped?\" and the agent relays it. `cap:surface` (\"turn a gap into a question in the user's words\", `verified`) delivers the translation and nothing more.\n\nWHY THAT IS A DEFECT AND NOT NEUTRALITY. `req:no-se-knowledge` says the user never needs systems engineering. A bare gap question hands them back the analysis the agent has already done and asks them to redo it in their own head — which is precisely the SE work that requirement exists to spare them. The agent has read the graph, seen the precedents, and formed a view; withholding it is not impartiality, it is making the user pay for the agent's caution.\n\nIT IS ALSO WHAT `dec:three-party-checks` ALREADY DESCRIBES: \"The LLM speaks, the graph remembers and counts, the human decides.\" Offering a reading IS the LLM speaking. The decision stays with the human, untouched — and `dec:certainty-derived` still governs the write, because a recommendation changes no status until the user answers.\n\nTHE LINE THAT MUST NOT BE CROSSED, stated so this cannot be read as licence. Recommending is not deciding: no requirement moves off `proposed`, no decision reaches `accepted`, no gap is acknowledged on a reading the user has not confirmed. And a recommendation must carry WHAT WOULD CHANGE IT — the condition under which the other option wins — or it is steering rather than advising. An option presented without its counterweight is a decision taken quietly.\n\nTHE PART WORTH RECORDING, and the reason this is design rather than style: WHEN THE USER OVERRULES A RECOMMENDATION, THAT IS INFORMATION. A design where the agent advised one way and the human chose another has learned something neither party knew alone, and today it is invisible because the recommendation was never on the record. Whether the recommendation itself should be stored beside the question is left open here rather than assumed. NOTE that obligation (2) sharpens this: marking the recommendation is what makes an overrule an identifiable EVENT rather than an unremarkable choice among equals.\n\nMEASURED, not theorised: every gap put to Anthony on 2026-07-31 needed the recommendation added by hand, and he asked for it explicitly TWICE that day — \"provide your recommendation\", \"present them in simple english and your recommendations for how to proceed\" — and a THIRD time in the same session, at which point he asked for the behaviour to be cemented rather than repeated. A shape a user has to request each time is a default in the wrong place. This requirement's own evidence therefore accumulated by the exact mechanism it describes.\n\nSCOPE, stated because the third request widened it: this began as a rule about GAPS, and Anthony's framing — \"the decisions I need to make\" — is broader. The obligation is read as covering any point where the agent puts a CHOICE to the user, not only where detect_gaps produced it. Whether that widening needs its own capability rather than riding this one is left open rather than assumed.\n\nTENSION NAMED SO IT IS NOT CONFLATED: `dec:report-dont-judge` says the confirmation ledger reports claim history and never judges a claim. That governs what a COMPUTATION may assert about evidence. It does not govern whether an agent may advise a human who asked — different actor, different act. Conflating the two would silence exactly the party `dec:three-party-checks` puts there to speak.",
         "status": "accepted"
       }
     },
@@ -38987,6 +39108,36 @@
       }
     },
     {
+      "node_id": "snap:epoch:reading-carries-options:cap:gap-carries-a-reading",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:gap-carries-a-reading\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:agent\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-31\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:4f9dcb95353889c2\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-question-arrives-with-a-reading\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-07-31\"}}]",
+        "state": "{\"description\":\"When a gap is put to the user, the agent's reading travels with it: the recommended answer, why, and the condition under which the other option wins. The decision stays with the user — no status moves on a recommendation alone.\\n\\nDELIBERATELY A NEW CAPABILITY RATHER THAN AN EXTENSION OF `cap:surface`. That capability is `verified` for what it does — turning a gap into a question in the user's words — and widening it would repeat the BL-106 defect exactly: a capability is not one behaviour, so adding a second one behind an existing passing check makes the check cover less than it appears to. New behaviour, new capability, its own check.\\n\\nWHAT IS TESTABLE AND WHAT IS NOT, stated so the check does not overclaim: whether a recommendation is GOOD is a semantic judgement and stays evidenced by trials (docs/sharpening.md — deliberately no LLM evals in CI). What IS mechanically checkable is the contract: that the skill states the obligation and its counterweight rule, and that no requirement status, decision status or gap acknowledgement is ever written in the same act as a recommendation. Governed by `req:a-question-arrives-with-a-reading`. PLANNED.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"A question comes with what the agent would do, and what would change it\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:gap-carries-a-reading",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reading-carries-options:cap:review-expires-on-content",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:detect\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:1d9ec21937d2d172\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:review-expires-when-what-it-judged-changes\",\"properties\":{}}]",
+        "state": "{\"description\":\"A gap acknowledgement records a human judgement about specific text. Today its expiry is keyed on the gap id, which hashes the affected node IDS — so a review expires when the affected SET changes membership, and NEVER when the affected nodes change CONTENT. Found live on 2026-07-30 while promoting the planning axis: acknowledgements written on 2026-07-28 reading roughly deferred, scheduled for a later increment went on suppressing gaps for requirements that had since been accepted and were being worked, so two things Anthony had just committed to were invisible as open work. Sharper still, req:graph-indexes-snapshots' acknowledgement was still justifying a framing that had been removed an hour earlier — an accepted review left defending a requirement that no longer said that. THE REASON IT MATTERS, and why this is not cosmetic: a review outliving the wording it reviewed is worse than no review, because it reads as a human having agreed to something they never saw. The nearest working sibling is defect-side expiry-by-shape, which already does content-sensitive invalidation. Approved for build by Anthony 2026-07-30.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"A sign-off expires when the thing it judged is reworded, not only when the affected set changes\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:review-expires-on-content",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reading-carries-options:req:a-question-arrives-with-a-reading",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:gap-carries-a-reading\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-31\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:three-party-checks\",\"properties\":{\"evidence\":\"It is that decision's 'the LLM speaks' half made explicit at the gap boundary; the human still decides and the graph still counts.\",\"optional\":false,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:no-se-knowledge\",\"properties\":{\"evidence\":\"A bare gap question hands the user back the systems-engineering analysis that requirement exists to spare them; the recommendation is what makes it answerable without it.\",\"optional\":false,\"weight_basis\":\"evidence\"}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"A gap put to the user arrives with the agent's recommendation — recommending is not deciding\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"When reflow2 puts a gap to the user, the agent's READING of it travels with the question: what it would do and why, and what would change that answer. The user still decides; the agent stops pretending it has no view.\\n\\nWHAT IS MISSING TODAY, and it is an omission rather than a prohibition. `detect-and-ask` is explicit that the agent must \\\"never invent an answer on their behalf\\\", which is right and must not be weakened. But the skill says nothing about offering a reading, so the default behaviour is a bare question — `gap_to_prompt` returns \\\"is it covered, deferred, or dropped?\\\" and the agent relays it. `cap:surface` (\\\"turn a gap into a question in the user's words\\\", `verified`) delivers the translation and nothing more.\\n\\nWHY THAT IS A DEFECT AND NOT NEUTRALITY. `req:no-se-knowledge` says the user never needs systems engineering. A bare gap question hands them back the analysis the agent has already done and asks them to redo it in their own head — which is precisely the SE work that requirement exists to spare them. The agent has read the graph, seen the precedents, and formed a view; withholding it is not impartiality, it is making the user pay for the agent's caution.\\n\\nIT IS ALSO WHAT `dec:three-party-checks` ALREADY DESCRIBES: \\\"The LLM speaks, the graph remembers and counts, the human decides.\\\" Offering a reading IS the LLM speaking. The decision stays with the human, untouched — and `dec:certainty-derived` still governs the write, because a recommendation changes no status until the user answers.\\n\\nTHE LINE THAT MUST NOT BE CROSSED, stated so this cannot be read as licence. Recommending is not deciding: no requirement moves off `proposed`, no decision reaches `accepted`, no gap is acknowledged on a reading the user has not confirmed. And a recommendation must carry WHAT WOULD CHANGE IT — the condition under which the other option wins — or it is steering rather than advising. An option presented without its counterweight is a decision taken quietly.\\n\\nTHE PART WORTH RECORDING, and the reason this is design rather than style: WHEN THE USER OVERRULES A RECOMMENDATION, THAT IS INFORMATION. A design where the agent advised one way and the human chose another has learned something neither party knew alone, and today it is invisible because the recommendation was never on the record. Whether the recommendation itself should be stored beside the question is left open here rather than assumed.\\n\\nMEASURED, not theorised: every gap put to Anthony on 2026-07-31 needed the recommendation added by hand, and he asked for it explicitly twice — \\\"provide your recommendation\\\", \\\"present them in simple english and your recommendations for how to proceed\\\". A shape a user has to request each time is a default in the wrong place.\\n\\nTENSION NAMED SO IT IS NOT CONFLATED: `dec:report-dont-judge` says the confirmation ledger reports claim history and never judges a claim. That governs what a COMPUTATION may assert about evidence. It does not govern whether an agent may advise a human who asked — different actor, different act. Conflating the two would silence exactly the party `dec:three-party-checks` puts there to speak.\",\"status\":\"accepted\"}",
+        "target_id": "req:a-question-arrives-with-a-reading",
+        "target_type": "Requirement"
+      }
+    },
+    {
       "node_id": "snap:epoch:reflow-workflow-review:dec:anchor-retire-or-implement",
       "node_type": "Snapshot",
       "properties": {
@@ -39518,7 +39669,7 @@
         "kind": "verification",
         "level": "unit",
         "method": "test",
-        "name": "The CONTRACT is checked, not the judgement: skill_lint asserts detect-and-ask states both halves — offer a reading, and carry what would change it — so the obligation cannot be quietly dropped from the skill; and no requirement status, decision status or gap acknowledgement is written in the same act as a recommendation, which is the line between advising and deciding. DELIBERATELY NOT CHECKED: whether a given recommendation is GOOD. That is a semantic judgement and stays evidenced by trials per docs/sharpening.md — asserting it in CI would be the LLM-eval this project has refused on purpose. PLANNED.",
+        "name": "The CONTRACT is checked, not the judgement. skill_lint asserts detect-and-ask states all of it: offer a reading; carry what would change it; present the options as a SELECTABLE list; put the RECOMMENDATION FIRST and mark it; give every option its consequence including the ones not recommended; and answer in the USER'S language, stated language-independently. Plus two negative checks that are the load-bearing half: NO served text hardcodes English as the answer language (so the rule cannot be implemented as English-only — the trap Anthony named), and NO requirement status, decision status or gap acknowledgement is written in the same act as a recommendation. Whether a recommendation is GOOD, and whether the language was correctly matched, are semantic and stay evidenced by trials — deliberately no LLM evals in CI. PLANNED.",
         "status": "planned"
       }
     },
@@ -40224,7 +40375,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c3a34d0124eba47f787eb5d5115ceb07da4b756572fd9ff5af5d0adfae08dc0c",
+  "prev_content_hash": "sha256:e43c54124d0e70c4565dd6a2e8037ce8314bc2fdd10ce8795a2a421edfa993b0",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
