@@ -50,7 +50,7 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- The satisfaction schedule (`SCHEDULED_FOR`, second increment of `req:epochs-can-be-planned`) — @ajs — since 2026-07-30 — schema/temporal.yaml (new edge), crates/reflow2-core/src/temporal.rs, tests/temporal.rs, crates/reflow2-mcp/src/service.rs, tools/toolsnaps/; branch `feat/planned-epochs`. Anthony chose the edge-with-modality shape over overloading `AT_EPOCH` or a Commitment node. Prerequisite for everything in `dec:arrival-delta`, which refers to "its schedule edge" — a thing that does not yet exist.
+- Cutting v0.19.0 — @ajs — since 2026-07-31 — Cargo.toml/Cargo.lock/reflow2.toml (version), CHANGELOG.md, docs/upgrading-to-v0.19.0.md, docs/overview.md, AGENTS.md, docs/design/reflow2.json (release manifest + epoch); branch `release/v0190`. PR #7 (the content store) merged first.
 
 
 
