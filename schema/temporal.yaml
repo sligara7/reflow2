@@ -112,6 +112,21 @@ schema:
       to: DesignEpoch
       extraction_hint: A Snapshot or ChangeEvent is pinned to the epoch it belongs to.
 
+    SCHEDULED_FOR:
+      from: [Requirement, Capability]
+      to: [DesignEpoch, Release]
+      extraction_hint: >
+        The satisfaction schedule — this requirement or capability is DUE at
+        that epoch or release. Deliberately NOT AT_EPOCH, which means "belongs
+        to" and is declared over a wildcard source: one edge type carrying both
+        belongs-to and due-at would make them indistinguishable to every
+        detector (dec:schedule-is-an-edge-with-modality). Points at either of
+        the two paired views — a DesignEpoch for the time axis, a Release for
+        the capability-increment axis.
+      properties:
+        modality: { type: enum, values: [expected, required], default: expected, indexed: true, description: "WHICH KIND OF CLAIM this is. `expected` is a plan — the schedule's ordinary case. `required` is an obligation: missing it at arrival is a computed violation rather than a slip, and it is the scheduling face of a KPP, giving content inviolability (req:inviolable-intent) a deadline dimension. THERE IS DELIBERATELY NO `achieved` VALUE, and its absence is load-bearing: delivery is COMPUTED from the golden thread and never asserted (req:completion-computed, dec:arrival-delta), so storing it here would create a second source of truth that can disagree with the first — a plan recording its own success is the plan lying about itself." }
+        recorded_at: { type: string, description: "When this scheduling claim was made. The plan's movement is read from snapshots of the epoch rather than from this field (dec:arrival-delta); this only dates the claim itself." }
+
     CHANGED:
       from: ChangeEvent
       to: "*"

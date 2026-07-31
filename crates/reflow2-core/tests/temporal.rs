@@ -608,3 +608,162 @@ fn an_unknown_epoch_status_is_refused_by_name() {
         "got: {said}"
     );
 }
+
+// ---- The satisfaction schedule (SCHEDULED_FOR) ---------------------------
+//
+// `req:epochs-can-be-planned`, second increment. The roadmap is a mapping of
+// requirements and capabilities to the moment they are due — and WHICH KIND
+// of claim that is, which is what makes a miss computable rather than merely
+// disappointing.
+
+/// The schedule reaches both of the paired views: a DesignEpoch for the time
+/// axis, a Release for the capability-increment axis. One edge type, because
+/// they are two views of one architecture rather than two mechanisms.
+#[test]
+fn a_schedule_points_at_either_paired_view() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability("cap:x", "X", "does x", None).unwrap();
+    g.plan_epoch("epoch:5", "Epoch 5", EpochType::Milestone, 5)
+        .unwrap();
+    g.add_release("rel:inc13", "Increment 13", Some("13"), None)
+        .unwrap();
+
+    g.schedule_for(
+        "Capability",
+        "cap:x",
+        "DesignEpoch",
+        "epoch:5",
+        "expected",
+        None,
+    )
+    .expect("an epoch is a moment on the time axis");
+    g.schedule_for(
+        "Capability",
+        "cap:x",
+        "Release",
+        "rel:inc13",
+        "expected",
+        None,
+    )
+    .expect("a release is a moment on the capability-increment axis");
+}
+
+/// Modality is what separates a plan from an obligation. Without it the
+/// schedule cannot say which misses are violations, and `required` is the
+/// scheduling face of a KPP.
+#[test]
+fn a_schedule_records_whether_it_is_a_plan_or_an_obligation() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:kpp", "A KPP", "must hold").unwrap();
+    g.plan_epoch("epoch:27", "Epoch 27", EpochType::Milestone, 27)
+        .unwrap();
+
+    g.schedule_for(
+        "Requirement",
+        "req:kpp",
+        "DesignEpoch",
+        "epoch:27",
+        "required",
+        Some("2026-07-30"),
+    )
+    .unwrap();
+
+    let sched = g
+        .outgoing("req:kpp", Some(edge::SCHEDULED_FOR))
+        .unwrap()
+        .into_iter()
+        .next()
+        .expect("the schedule edge exists");
+    assert_eq!(
+        sched.properties.get("modality").and_then(|v| v.as_str()),
+        Some("required"),
+        "an obligation must be distinguishable from a plan"
+    );
+}
+
+/// THE ABSENT MODALITY IS THE POINT. Delivery is computed from the golden
+/// thread and never asserted, so a schedule that could record its own success
+/// would be a second source of truth able to disagree with the first.
+#[test]
+fn a_schedule_cannot_claim_its_own_delivery() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability("cap:x", "X", "does x", None).unwrap();
+    g.add_epoch("epoch:3", "Epoch 3", EpochType::Milestone, 3)
+        .unwrap();
+
+    let err = g
+        .schedule_for(
+            "Capability",
+            "cap:x",
+            "DesignEpoch",
+            "epoch:3",
+            "achieved",
+            None,
+        )
+        .expect_err("`achieved` is not a schedule modality — delivery is computed");
+    let said = format!("{err}");
+    // Assert on the EXPLANATION, not merely on a refusal. The schema enum also
+    // rejects `achieved`, with "invalid enum value" — so an assertion that only
+    // checked for a refusal would pass with this guard deleted and prove
+    // nothing. What this guard adds is the reason, and the reason is the point.
+    assert!(
+        said.contains("computed from the golden thread"),
+        "the refusal must say WHY there is no `achieved`, not just that it is invalid: {said}"
+    );
+}
+
+/// A schedule points at a MOMENT. Pointing it at an ordinary design node would
+/// make "due at" meaningless, and the wildcard-source mistake is exactly what
+/// keeping this separate from AT_EPOCH was meant to avoid.
+#[test]
+fn a_schedule_refuses_a_target_that_is_not_a_moment() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability("cap:x", "X", "does x", None).unwrap();
+    g.add_requirement("req:y", "Y", "must hold").unwrap();
+
+    let err = g
+        .schedule_for(
+            "Capability",
+            "cap:x",
+            "Requirement",
+            "req:y",
+            "expected",
+            None,
+        )
+        .expect_err("a requirement is not a moment");
+    let said = format!("{err}");
+    assert!(
+        said.contains("DesignEpoch") && said.contains("Release"),
+        "the refusal must name both paired views: {said}"
+    );
+}
+
+/// The default is `expected`, because the ordinary act of scheduling is
+/// planning; an obligation is the deliberate one.
+#[test]
+fn scheduling_defaults_to_a_plan_rather_than_an_obligation() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability("cap:x", "X", "does x", None).unwrap();
+    g.plan_epoch("epoch:5", "Epoch 5", EpochType::Milestone, 5)
+        .unwrap();
+    g.schedule_for(
+        "Capability",
+        "cap:x",
+        "DesignEpoch",
+        "epoch:5",
+        "expected",
+        None,
+    )
+    .unwrap();
+
+    let sched = g
+        .outgoing("cap:x", Some(edge::SCHEDULED_FOR))
+        .unwrap()
+        .into_iter()
+        .next()
+        .unwrap();
+    assert_eq!(
+        sched.properties.get("modality").and_then(|v| v.as_str()),
+        Some("expected")
+    );
+}

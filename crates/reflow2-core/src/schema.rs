@@ -64,8 +64,13 @@ mod tests {
         // Verification.kind, ENABLES folded into CAUSES). Every bump moves
         // GraphStamp, so a graph written by this schema is refused by older
         // binaries — deliberate, loud, and worth a CHANGELOG entry each time (BL-19).
+        // 56→57 is SCHEDULED_FOR (2026-07-30, req:epochs-can-be-planned second
+        // increment) — the satisfaction schedule, kept separate from AT_EPOCH
+        // because that one means *belongs to* over a wildcard source, and one
+        // type carrying both meanings would be indistinguishable to every
+        // detector (dec:schedule-is-an-edge-with-modality). Moves the stamp.
         assert_eq!(schema.node_types.len(), 28, "expected 28 node types");
-        assert_eq!(schema.edge_types.len(), 56, "expected 56 edge types");
+        assert_eq!(schema.edge_types.len(), 57, "expected 57 edge types");
     }
 
     #[test]

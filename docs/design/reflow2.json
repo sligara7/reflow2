@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:edbe37a376fc4ab12c76096895569382ebee84fdbda5f46970e64450d8a8c76c",
+  "content_hash": "sha256:00f5fc3b7e7d1ee8827421b674bdba2128279533fa11e6bf0ff06711bb520057",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -656,6 +656,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:satisfaction-schedule",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -6913,6 +6921,60 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:as-of-epoch"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:scoped-analysis-built",
       "properties": {
         "accepted_baseline": true,
@@ -9986,6 +10048,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:as-of-epoch",
       "properties": {},
+      "to_id": "dec:schedule-is-an-edge-with-modality"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:as-of-epoch",
+      "properties": {},
       "to_id": "decision:ack:b13f13bfabebbd39"
     },
     {
@@ -12957,6 +13025,12 @@
       "from_id": "cap:sanitize-ingress",
       "properties": {},
       "to_id": "rule:no-foreclosure"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:satisfaction-schedule",
+      "properties": {},
+      "to_id": "dec:schedule-is-an-edge-with-modality"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -22980,6 +23054,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:satisfaction-schedule"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cap:seat-handle"
     },
     {
@@ -23109,6 +23191,14 @@
         "completeness": "complete"
       },
       "to_id": "cap:planned-epochs"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:temporal",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:satisfaction-schedule"
     },
     {
       "edge_type": "REALIZES",
@@ -23841,6 +23931,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:satisfaction-schedule",
+      "properties": {},
+      "to_id": "req:epochs-can-be-planned"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:scoped-analysis",
       "properties": {},
       "to_id": "req:analyse-at-any-level"
@@ -24384,6 +24480,12 @@
       "from_id": "ver:sanitize-ingress",
       "properties": {},
       "to_id": "cap:sanitize-ingress"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:satisfaction-schedule",
+      "properties": {},
+      "to_id": "cap:satisfaction-schedule"
     },
     {
       "edge_type": "VERIFIES",
@@ -25686,7 +25788,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3b6fc9d03065fa2f",
+        "checksum": "sha256:07383878711dbf93",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
         "status": "realized"
@@ -25818,7 +25920,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b17aa6b0d727eed3",
+        "checksum": "sha256:109cd1e9c3dd7d83",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
         "status": "realized"
@@ -25895,7 +25997,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:04ec28422c042f16",
+        "checksum": "sha256:e161b08dbf66f85a",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -26016,7 +26118,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c318a4b3ae8e686c",
+        "checksum": "sha256:cde4771c91afcce9",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
         "status": "realized"
@@ -26181,7 +26283,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6a9bc6a55e09e47e",
+        "checksum": "sha256:2599c9a2772349b1",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
         "status": "realized"
@@ -27159,6 +27261,19 @@
         "name": "Neutralise hidden instructions in text arriving from outside, and say what was stripped",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:satisfaction-schedule",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The SCHEDULED_FOR edge: from a Requirement or Capability to a DesignEpoch (time axis) or a Release (capability-increment axis), carrying a `modality` of `expected` (a plan) or `required` (an obligation whose miss at arrival is a computed violation — the scheduling face of a KPP). One edge type serves both paired views because they are two views of one architecture, not two mechanisms. This is THE ATOM the roadmap is made of: a mapping of requirements and capabilities to the moment they are satisfied, which is what makes \"which capabilities are due in epoch 5\" answerable at all. KEPT SEPARATE FROM AT_EPOCH DELIBERATELY (dec:schedule-is-an-edge-with-modality): that edge means `belongs to` and is declared over a wildcard source, so one type carrying both meanings would be indistinguishable to every detector — the same shape as the wrong-direction edge found on 2026-07-30, which read correctly and was still undetectably wrong. THERE IS NO `achieved` MODALITY AND THE ABSENCE IS LOAD-BEARING: delivery is computed from the golden thread and never asserted (req:completion-computed, dec:arrival-delta), so recording it here would create a second source of truth able to disagree with the first. Prerequisite for dec:arrival-delta, which refers throughout to \"its schedule edge\" — a thing that did not exist until now. Delivered 2026-07-30; both guards mutation-tested.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A requirement or capability can be scheduled against the moment it is due",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -28522,6 +28637,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Anthony chose option (a) for the stateless seat handle — the open fork closes"
+      }
+    },
+    {
+      "node_id": "chg:scheduled-for",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "SCHEDULED_FOR: the satisfaction schedule gets an edge that carries modality"
       }
     },
     {
@@ -30008,6 +30131,16 @@
         "name": "OPEN — how the satisfaction schedule records ARE / EXPECTED / REQUIRED-BY",
         "rationale": "Anthony's atom, recorded in his own verbs because the three modalities are carried by the verbs and would be lost in a paraphrase.\n\nThe \"ARE satisfied must not be stored\" point is the one worth not losing: it is the difference between a roadmap that reports and a roadmap that claims, and this design already has an accepted requirement forbidding the second. Everything else here is options; that one is a constraint the existing design imposes on any shape chosen.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:schedule-is-an-edge-with-modality",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "A new edge type SCHEDULED_FOR runs from Requirement or Capability to a DesignEpoch or a Release, carrying a `modality` property with values `expected` (a plan) and `required` (an obligation whose miss at arrival is a computed violation — the scheduling face of a KPP). One edge type serves both of the paired views: epochs for the time axis, releases for the capability-increment axis. Chosen by Anthony 2026-07-30 over two rejected alternatives.",
+        "name": "The satisfaction schedule is an edge carrying modality, not an overloaded pin and not a node",
+        "rationale": "REJECTED: overloading AT_EPOCH. It is declared `from: \"*\"` to DesignEpoch and its extraction hint says a Snapshot or ChangeEvent is pinned to the epoch it BELONGS TO. Adding schedule semantics would give one edge type two unrelated meanings — belongs-to and due-at — over a wildcard source, so nothing could tell them apart. That is the exact shape of the wrong-direction edge found on 2026-07-30: an edge that reads correctly and is still undetectably wrong, because no second contradicting fact exists to make its error computable. REJECTED: a Commitment/Schedule node. Heavier, and justified only if a scheduled claim must carry rationale, owner or confidence as first-class fields. It does not today, and confidence in particular should be MEASURED from arrival history rather than authored (dec:arrival-delta). CHOSEN, and why the edge: modality is a property of the RELATIONSHIP between an item and a moment, not of either endpoint — the same capability can be `expected` at one epoch and `required` by another, so putting it on either node would collapse that. It also leaves 3470 existing edges untouched. THE ABSENT THIRD MODALITY IS THE LOAD-BEARING PART: Anthony's three verbs are ARE satisfied, EXPECTED to be satisfied, and REQUIRED to be satisfied by — but `achieved` is deliberately NOT a value here. dec:arrival-delta and req:completion-computed already settle that delivery is computed from the golden thread and never asserted; storing it as a schedule modality would create a second source of truth that can disagree with the first, and a plan that records its own success is the plan lying about itself.",
+        "status": "accepted"
       }
     },
     {
@@ -36066,6 +36199,18 @@
       }
     },
     {
+      "node_id": "ver:satisfaction-schedule",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-31T01:30:00Z",
+        "level": "integration",
+        "method": "test",
+        "name": "SCHEDULED_FOR: both paired views, modality, and the two refusals — crates/reflow2-core/tests/temporal.rs",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:scoped-analysis",
       "node_type": "Verification",
       "properties": {
@@ -36274,7 +36419,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:37d5c4d913ffdc5d675607a97a6336026bf588777ae774c39d34876fc4dde57a",
+  "prev_content_hash": "sha256:edbe37a376fc4ab12c76096895569382ebee84fdbda5f46970e64450d8a8c76c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

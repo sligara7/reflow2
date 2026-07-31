@@ -333,6 +333,70 @@ impl DesignGraph {
         Ok(())
     }
 
+    /// Schedule a Requirement or Capability against the moment it is due —
+    /// `SCHEDULED_FOR`, the satisfaction schedule (`req:epochs-can-be-planned`).
+    ///
+    /// The target is a `DesignEpoch` or a `Release`: the two paired views of
+    /// one architecture, time and capability-increment. `modality` says which
+    /// kind of claim this is — `expected` (a plan) or `required` (an
+    /// obligation whose miss at arrival is a computed violation).
+    ///
+    /// There is no `achieved` modality, and the absence is the point:
+    /// delivery is computed from the golden thread, never asserted
+    /// (`req:completion-computed`). A schedule that records its own success
+    /// is a second source of truth that can disagree with the first.
+    ///
+    /// Rescheduling is a RECORDED CHANGE on the target epoch, not an edit to
+    /// this edge — re-pointing it would make the slip invisible and let the
+    /// plan silently rewrite its own history (`dec:arrival-delta`).
+    pub fn schedule_for(
+        &mut self,
+        item_type: &str,
+        item_id: &str,
+        target_type: &str,
+        target_id: &str,
+        modality: &str,
+        recorded_at: Option<&str>,
+    ) -> Result<(), DynoError> {
+        if !matches!(modality, "expected" | "required") {
+            return Err(DynoError::Validation {
+                node_type: edge::SCHEDULED_FOR.into(),
+                property: "modality".into(),
+                message: format!(
+                    "'{modality}' is not a schedule modality (one of expected, required). \
+                     `expected` is a plan; `required` is an obligation whose miss at arrival is a \
+                     violation. There is no `achieved` — delivery is computed from the golden \
+                     thread, never recorded here."
+                ),
+            });
+        }
+        if !matches!(target_type, node::DESIGN_EPOCH | node::RELEASE) {
+            return Err(DynoError::Validation {
+                node_type: target_type.into(),
+                property: "SCHEDULED_FOR.to".into(),
+                message: format!(
+                    "a schedule points at a moment, so '{target_type}' cannot be one: use a \
+                     {} for the time axis or a {} for the capability-increment axis.",
+                    node::DESIGN_EPOCH,
+                    node::RELEASE
+                ),
+            });
+        }
+        let mut props = Props::new().set("modality", modality);
+        if let Some(at) = recorded_at {
+            props = props.set("recorded_at", at);
+        }
+        self.create_edge(
+            edge::SCHEDULED_FOR,
+            item_type,
+            item_id,
+            target_type,
+            target_id,
+            props,
+        )?;
+        Ok(())
+    }
+
     // ---- Snapshots (never overwrite the past) -----------------------------
 
     /// Capture the **current** state of an existing node as an immutable

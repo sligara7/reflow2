@@ -1047,6 +1047,24 @@ pub struct PinAtEpochReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ScheduleForReq {
+    /// `Requirement` or `Capability` — the thing that is due.
+    pub item_type: String,
+    pub item_id: String,
+    /// `DesignEpoch` (time axis) or `Release` (capability-increment axis).
+    pub target_type: String,
+    pub target_id: String,
+    /// `expected` (a plan, the default) or `required` (an obligation whose
+    /// miss at arrival is a violation). There is no `achieved`.
+    #[serde(default)]
+    pub modality: Option<String>,
+    /// When this scheduling claim was made.
+    #[serde(default)]
+    pub recorded_at: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct DeployToReq {
     pub release_id: String,
     pub environment_id: String,
@@ -3430,6 +3448,45 @@ impl ReflowService {
             .map_err(dyno_err)?;
         ok_json(serde_json::json!({
             "pinned": req.node_id, "at_epoch": req.epoch_id
+        }))
+    }
+
+    #[tool(
+        description = "Schedule a Requirement or Capability against the moment it is DUE — the \
+                       satisfaction schedule, which is what makes a roadmap answerable \
+                       (req:epochs-can-be-planned). The target is a DesignEpoch for the time axis \
+                       or a Release for the capability-increment axis: two paired views of one \
+                       architecture, so one edge serves both. `modality` says which kind of claim \
+                       this is — `expected` is a plan, `required` is an obligation whose miss at \
+                       arrival is a computed violation rather than a slip (the scheduling face of \
+                       a KPP). THERE IS NO `achieved` MODALITY: delivery is computed from the \
+                       golden thread and never asserted, so a schedule that recorded its own \
+                       success would be a second source of truth able to disagree with the first. \
+                       DELIBERATELY NOT add_epoch's AT_EPOCH, which means `belongs to` rather \
+                       than `due at`. To reschedule, record the change against the epoch rather \
+                       than re-pointing this edge — moving it silently would erase the slip and \
+                       let the plan rewrite its own history.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn schedule_for(
+        &self,
+        Parameters(req): Parameters<ScheduleForReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let modality = req.modality.as_deref().unwrap_or("expected");
+        let mut g = self.write_lock().await;
+        g.schedule_for(
+            &req.item_type,
+            &req.item_id,
+            &req.target_type,
+            &req.target_id,
+            modality,
+            req.recorded_at.as_deref(),
+        )
+        .map_err(dyno_err)?;
+        ok_json(serde_json::json!({
+            "scheduled": req.item_id,
+            "for": req.target_id,
+            "modality": modality
         }))
     }
 

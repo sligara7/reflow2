@@ -115,6 +115,10 @@ pub mod edge {
     // Axis Z · change over time (temporal.yaml)
     /// `* → DesignEpoch` — a Snapshot or ChangeEvent is pinned to its epoch.
     pub const AT_EPOCH: &str = "AT_EPOCH";
+    /// `Requirement|Capability → DesignEpoch|Release` — the satisfaction
+    /// schedule: this item is DUE there. Distinct from [`AT_EPOCH`], which
+    /// means *belongs to*.
+    pub const SCHEDULED_FOR: &str = "SCHEDULED_FOR";
     /// `ChangeEvent → *` — the node a ChangeEvent added/modified/removed.
     pub const CHANGED: &str = "CHANGED";
     /// `* → Snapshot` — an entity has a captured state snapshot.

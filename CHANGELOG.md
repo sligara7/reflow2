@@ -33,6 +33,42 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The time axis runs forward: epochs can be PLANNED, and work can be SCHEDULED against
+  them** (`req:epochs-can-be-planned`; `cap:planned-epochs`, `cap:satisfaction-schedule`).
+
+  **`DesignEpoch.status`** is `planned` or `arrived`, with **`plan_epoch`** to create a point
+  that has not happened and **`set_epoch_status`** to move between them. Arrival is the
+  interesting direction: the moment a claim about the future becomes a point in the past, and
+  the moment a planned-versus-delivered delta becomes computable.
+
+  Status is its own property rather than a value in `epoch_type`, because **kind and tense are
+  orthogonal** — folding `planned` into the type enum would make a planned MILESTONE and a
+  planned RELEASE CUT unsayable, and those are the two a roadmap is made of. The default is
+  `arrived`, which is a *record* rather than a choice: `add_epoch` has only ever meant "record
+  the point I am at", so every epoch written before this property existed did arrive.
+
+  **`record_change` now REFUSES a planned epoch.** A snapshot captures the present, so it
+  cannot belong to a point that has not happened. This is the half that makes `status` a
+  property the system *reads* rather than one more declared-and-unconsulted field.
+
+  **`schedule_for`** adds the satisfaction schedule — the `SCHEDULED_FOR` edge from a
+  Requirement or Capability to a DesignEpoch (time axis) or a Release (capability-increment
+  axis), carrying `modality`: `expected` (a plan) or `required` (an obligation whose miss at
+  arrival is a computed violation — the scheduling face of a KPP). One edge serves both views
+  because they are two views of one architecture. There is deliberately **no `achieved`
+  modality**: delivery is computed from the golden thread and never asserted, so a schedule
+  that recorded its own success would be a second source of truth able to disagree with the
+  first.
+
+  **SCHEMA CHANGE — the stamp moves, 56 → 57 edge types.** A graph written by this version is
+  refused by an older reflow2, which is deliberate and loud (BL-19/BL-94). `SCHEDULED_FOR` is
+  additive; nothing was retired. It is kept separate from `AT_EPOCH` on purpose — that edge
+  means *belongs to* and is declared over a wildcard source, so one type carrying both meanings
+  would be indistinguishable to every detector.
+
+  Three new tools (`plan_epoch`, `set_epoch_status`, `schedule_for`); `add_epoch`'s description
+  now says it records a point that HAS happened. Toolsnaps 122 → 124.
+
 - **`pair_designs` — the seam between two designs is now COMPUTED, not hand-wired**
   (`req:complementary-pairing`, `cap:complementary-pairing`). This was the last
   open gap in the design.
