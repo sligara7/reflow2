@@ -390,17 +390,40 @@ impl DesignGraph {
     }
 
     /// Delete a node and every edge attached to it. Returns whether it existed.
+    ///
+    /// This takes every attached edge with it, which is a second door onto the
+    /// same loss `delete_edge` guards — retiring a scheduled requirement is
+    /// precisely how something gets discontinued, and it would otherwise walk
+    /// straight past the refusal. Both directions are checked: the item being
+    /// deleted carries commitments away with it, and deleting the moment itself
+    /// destroys the whole plan pointed at it.
     pub fn delete_node(&mut self, node_type: &str, id: &str) -> Result<bool, DynoError> {
+        for e in self.outgoing(id, Some(edge::SCHEDULED_FOR))? {
+            self.guard_schedule_loss(
+                &e.to_id,
+                &format!("deleting '{id}', which is scheduled for it"),
+            )?;
+        }
+        if !self.incoming(id, Some(edge::SCHEDULED_FOR))?.is_empty() {
+            self.guard_schedule_loss(id, &format!("deleting '{id}' itself"))?;
+        }
         self.engine.delete_node(&self.graph_id, node_type, id)
     }
 
     /// Delete a single edge. Returns whether it existed.
+    ///
+    /// Removing a `SCHEDULED_FOR` is how a plan slips or is dropped, so it is
+    /// refused while the plan it belongs to is unrecorded — see
+    /// [`guard_schedule_loss`](Self::guard_schedule_loss).
     pub fn delete_edge(
         &mut self,
         edge_type: &str,
         from_id: &str,
         to_id: &str,
     ) -> Result<bool, DynoError> {
+        if edge_type == edge::SCHEDULED_FOR {
+            self.guard_schedule_loss(to_id, &format!("un-scheduling '{from_id}' from it"))?;
+        }
         self.engine
             .delete_edge(&self.graph_id, edge_type, from_id, to_id)
     }

@@ -37,6 +37,25 @@ const BOOKKEEPING_TYPES: &[&str] = &[
     node::QUESTION,
 ];
 
+/// Edge types that are design content **even though** they point at a
+/// bookkeeping node, so [`BOOKKEEPING_TYPES`] must not swallow them: the
+/// exclusion above is about an edge's ROLE, and the endpoint's type is only a
+/// proxy for it (Anthony, 2026-07-31).
+///
+/// The proxy was exact when it was written — every edge to a `DesignEpoch` was
+/// audit trail (`AT_EPOCH`, `OCCURS_DURING`), so excluding the type excluded
+/// the role. `SCHEDULED_FOR` broke that: an edge to an epoch is now a
+/// COMMITMENT — when this was due — which is design content by any reading,
+/// and `req:intent-preserved` says the past is never overwritten.
+///
+/// What the proxy cost while it held: a `record_change` on a scheduled
+/// requirement — the obvious way to record "this slipped" — captured a
+/// snapshot with the schedule edge silently dropped, so the old due date was
+/// destroyed by the very call whose job is preserving it, and the call
+/// reported success. Only the epoch-side snapshot preserved it, and nothing
+/// said so.
+const COMMITMENT_EDGES: &[&str] = &[edge::SCHEDULED_FOR];
+
 /// One edge of a snapshotted node, as captured into the Snapshot's `edges`
 /// property (BL-63). `direction` is from the snapshotted node's point of view:
 /// `"out"` means the node was the edge's source, `"in"` its target.
@@ -52,6 +71,129 @@ pub struct SnapshotEdge {
     pub other_id: String,
     /// The edge's properties, key-sorted for byte-stable serialization.
     pub properties: std::collections::BTreeMap<String, Value>,
+}
+
+/// A plan as a comparable set: `(item_type, item_id, modality)` per scheduled
+/// item. Sorted, so "has this plan moved?" is one equality test.
+type ScheduleSet = std::collections::BTreeSet<(String, String, String)>;
+
+/// A schedule edge's modality, defaulting to `expected` when absent — the
+/// ordinary case, and the weaker of the two, so an unlabelled claim is never
+/// promoted to an obligation nobody made (`req:defaults-do-not-assert`).
+fn modality_of(modality: Option<&Value>) -> String {
+    modality
+        .and_then(Value::as_str)
+        .unwrap_or("expected")
+        .to_string()
+}
+
+/// Which revision a snapshot id names — `…:r3` is 3, an unsuffixed id is the
+/// first. Mirrors the id rule `snapshot_node` owns.
+fn revision_of(snapshot_id: &str) -> usize {
+    snapshot_id
+        .rsplit_once(":r")
+        .and_then(|(_, n)| n.parse::<usize>().ok())
+        .unwrap_or(1)
+}
+
+/// What became of one scheduled item when its moment arrived.
+///
+/// Anthony's three outcomes, the complement he did not name (an item delivered
+/// that nobody planned arrives as `added_after_baseline` rather than a variant
+/// here), and a FIFTH the four assume away: `Outstanding`. The four presume
+/// every undelivered item was consciously moved or dropped, when the commonest
+/// case is that nobody touched it and it did not happen.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case", tag = "outcome")]
+pub enum ScheduleOutcome {
+    /// The plan held — computed from the golden thread, never asserted.
+    Delivered,
+    /// Still intended; the date moved. Where it now points.
+    Deferred {
+        /// The moments it is now due at, sorted.
+        now_due_at: Vec<String>,
+    },
+    /// No longer intended at all — the claim is gone from the schedule
+    /// entirely. Distinct from `Deferred` the way `retire-from-design`
+    /// distinguishes them: one is a date change, the other a withdrawal, and
+    /// conflating them either loses a commitment or embalms one.
+    Discontinued,
+    /// Still pointed at a moment that has arrived, and not delivered. Nobody
+    /// has said whether it slips or drops — the one question
+    /// `req:plans-move-honestly` says must be ASKED, never defaulted.
+    Outstanding,
+}
+
+/// One item on a schedule, with what became of it.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub struct ScheduledItem {
+    /// Node type of the scheduled item (`Requirement` or `Capability`).
+    pub item_type: String,
+    /// Node id of the scheduled item.
+    pub item_id: String,
+    /// `expected` (a plan) or `required` (an obligation).
+    pub modality: String,
+    /// What became of it.
+    #[serde(flatten)]
+    pub outcome: ScheduleOutcome,
+}
+
+/// One recorded state of a plan — a snapshot of the target, read for its
+/// schedule. The trail these form is how a total slip is read: the baseline
+/// says what was promised, the trail says how it got from there to here.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub struct PlanRevision {
+    /// The Snapshot this was read from.
+    pub snapshot_id: String,
+    /// The epoch the snapshot was FILED in — when the plan was recorded, which
+    /// is never the planned epoch itself (history cannot be filed into a moment
+    /// that has not happened).
+    pub recorded_in_epoch: Option<String>,
+    /// The items scheduled at that moment, sorted.
+    pub items: Vec<(String, String)>,
+}
+
+/// Where the baseline came from — stated rather than implied, because the two
+/// cases mean different things about how much the plan is known to have moved.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case", tag = "baseline")]
+pub enum BaselineSource {
+    /// The target's earliest snapshot — the original commitment.
+    FirstSnapshot {
+        /// Which snapshot.
+        snapshot_id: String,
+    },
+    /// No snapshot exists, so the plan has never been recorded as moving, so
+    /// the live edges ARE the original plan.
+    LiveEdges,
+}
+
+/// The planned-versus-delivered delta. See
+/// [`arrival_delta`](DesignGraph::arrival_delta).
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub struct ArrivalDelta {
+    /// `DesignEpoch` or `Release`.
+    pub target_type: String,
+    /// The moment being asked about.
+    pub target_id: String,
+    /// Its status, so a forecast is never mistaken for a delta.
+    pub status: Option<String>,
+    /// Where the baseline came from.
+    #[serde(flatten)]
+    pub baseline: BaselineSource,
+    /// The baseline's items, with outcomes.
+    pub items: Vec<ScheduledItem>,
+    /// Scheduled here after the baseline was taken — the complement Anthony
+    /// named, and usually the most informative part, because unplanned work is
+    /// where the estimate actually went.
+    pub added_after_baseline: Vec<ScheduledItem>,
+    /// Every recorded state of the plan, oldest first.
+    pub movement: Vec<PlanRevision>,
+    /// `required` claims not delivered — computed violations, not slips.
+    pub missed_obligations: Vec<String>,
+    /// What this computation cannot see, said out loud rather than left to be
+    /// inferred from a confident-looking number.
+    pub notes: Vec<String>,
 }
 
 /// Kind of [`DesignEpoch`](crate::nodes::node::DESIGN_EPOCH) —
@@ -386,6 +528,27 @@ impl DesignGraph {
         if let Some(at) = recorded_at {
             props = props.set("recorded_at", at);
         }
+        // Changing an existing claim's modality REWRITES what was promised —
+        // an `expected` quietly becoming `required`, or the reverse — which is
+        // the same loss as deleting the edge and is guarded the same way.
+        // Creating the edge for the first time is not a rewrite and is free.
+        if let Some(existing) = self
+            .outgoing(item_id, Some(edge::SCHEDULED_FOR))?
+            .into_iter()
+            .find(|e| e.to_id == target_id)
+        {
+            let had = existing
+                .properties
+                .get("modality")
+                .and_then(Value::as_str)
+                .unwrap_or("expected");
+            if had != modality {
+                self.guard_schedule_loss(
+                    target_id,
+                    &format!("changing '{item_id}' from `{had}` to `{modality}`"),
+                )?;
+            }
+        }
         self.create_edge(
             edge::SCHEDULED_FOR,
             item_type,
@@ -395,6 +558,301 @@ impl DesignGraph {
             props,
         )?;
         Ok(())
+    }
+
+    // ---- The schedule's movement, and the delta at arrival ----------------
+
+    /// Every `SCHEDULED_FOR` currently pointing at `target_id`, as
+    /// `(item_type, item_id, modality)`. Sorted, so two reads of an unchanged
+    /// plan compare equal.
+    fn live_schedule(&self, target_id: &str) -> Result<ScheduleSet, DynoError> {
+        let index = self.node_type_index()?;
+        let mut out = ScheduleSet::new();
+        for e in self.incoming(target_id, Some(edge::SCHEDULED_FOR))? {
+            let Some(item_type) = index.get(&e.from_id) else {
+                continue; // dangling — the same skip snapshot_node makes
+            };
+            out.insert((
+                item_type.clone(),
+                e.from_id.clone(),
+                modality_of(e.properties.get("modality")),
+            ));
+        }
+        Ok(out)
+    }
+
+    /// The schedule a Snapshot captured — the plan as it stood when that
+    /// snapshot was taken. Reads the `in`-direction `SCHEDULED_FOR` edges,
+    /// which is why [`COMMITMENT_EDGES`] has to keep them.
+    fn snapshot_schedule(snapshot: &StoredNode) -> Result<ScheduleSet, DynoError> {
+        let mut out = ScheduleSet::new();
+        for e in parse_snapshot_edges(snapshot)? {
+            if e.direction != "in" || e.edge_type != edge::SCHEDULED_FOR {
+                continue;
+            }
+            out.insert((
+                e.other_type,
+                e.other_id,
+                modality_of(e.properties.get("modality")),
+            ));
+        }
+        Ok(out)
+    }
+
+    /// Every Snapshot of `node_id`, **oldest first**.
+    ///
+    /// A Snapshot carries no clock of its own, so the order is (sequence of the
+    /// epoch it was filed in, revision within that epoch, then id to break
+    /// ties). That is the only total order the graph actually holds, and it is
+    /// the one `snapshot_node`'s `:rN` suffix was designed to be read by.
+    pub fn snapshots_of(&self, node_id: &str) -> Result<Vec<StoredNode>, DynoError> {
+        let mut rows: Vec<(i64, usize, String, StoredNode)> = Vec::new();
+        for e in self.outgoing(node_id, Some(edge::HAS_SNAPSHOT))? {
+            let Some(snap) = self.get_node(node::SNAPSHOT, &e.to_id)? else {
+                continue;
+            };
+            let sequence = self
+                .outgoing(&e.to_id, Some(edge::AT_EPOCH))?
+                .first()
+                .and_then(|at| self.get_node(node::DESIGN_EPOCH, &at.to_id).ok().flatten())
+                .and_then(|ep| ep.properties.get("sequence").and_then(Value::as_i64))
+                .unwrap_or(0);
+            rows.push((sequence, revision_of(&e.to_id), e.to_id.clone(), snap));
+        }
+        rows.sort_by(|a, b| (a.0, a.1, &a.2).cmp(&(b.0, b.1, &b.2)));
+        Ok(rows.into_iter().map(|(_, _, _, s)| s).collect())
+    }
+
+    /// Whether `target_id`'s CURRENT schedule is already preserved in its
+    /// latest snapshot — the precondition for any edit that would destroy part
+    /// of it. An empty schedule has nothing to lose and is always recorded.
+    pub fn schedule_is_recorded(&self, target_id: &str) -> Result<bool, DynoError> {
+        let live = self.live_schedule(target_id)?;
+        if live.is_empty() {
+            return Ok(true);
+        }
+        let snapshots = self.snapshots_of(target_id)?;
+        let Some(latest) = snapshots.last() else {
+            return Ok(false);
+        };
+        Ok(Self::snapshot_schedule(latest)? == live)
+    }
+
+    /// Refuse an edit that would destroy part of a plan nobody has recorded.
+    ///
+    /// This is the load-bearing half, and it is the same shape as
+    /// `record_change` refusing a planned epoch: without it, `status` and
+    /// `SCHEDULED_FOR` alike would be declared-and-unconsulted fields. Deferring
+    /// B from epoch 3 by simply re-pointing its edge leaves the graph saying
+    /// epoch 3 was only ever about A and C — the slip is invisible, and the
+    /// plan has silently rewritten its own history, which is exactly what
+    /// `req:intent-preserved` forbids (`dec:arrival-delta`, Anthony 2026-07-31).
+    ///
+    /// ADDING to a plan is deliberately NOT guarded: it destroys no earlier
+    /// claim, so requiring a snapshot first would tax correct work — the
+    /// mistake this project keeps finding in detectors that punish good
+    /// practice. Only removal, re-pointing and a modality rewrite are losses.
+    pub(crate) fn guard_schedule_loss(&self, target_id: &str, what: &str) -> Result<(), DynoError> {
+        if self.schedule_is_recorded(target_id)? {
+            return Ok(());
+        }
+        Err(DynoError::Validation {
+            node_type: edge::SCHEDULED_FOR.into(),
+            property: "modality".into(),
+            message: format!(
+                "the plan for '{target_id}' is not on the record, so {what} would destroy it \
+                 silently. Call record_change against '{target_id}' first (filed in an epoch that \
+                 has ARRIVED, taking '{target_id}' as its target) — that snapshots every schedule \
+                 edge pointing at it, and then the plan may move."
+            ),
+        })
+    }
+
+    /// The planned-versus-delivered delta for an epoch or release
+    /// (`dec:arrival-delta`, delivering obligation 2 of
+    /// `req:plans-move-honestly`).
+    ///
+    /// **Nothing here is stored.** Both inputs already exist — the plan lives in
+    /// the snapshots, delivery is computed from the golden thread — and writing
+    /// the outcome down would create a second source of truth that can disagree
+    /// with the first (`req:completion-computed`). It is the same argument that
+    /// keeps `achieved` out of the `modality` enum.
+    ///
+    /// The baseline is the **first** snapshot of the target, with every later
+    /// one reported as the movement trail (Anthony 2026-07-31). The last
+    /// snapshot would have measured only the most recent revision: with two
+    /// replans, epoch 3 holds `{A,B,C}` then `{A,C}`, and reading the last says
+    /// the plan was always `{A,C}` — B's slip vanishing from the very report
+    /// meant to show it. Where no snapshot exists the plan never moved, so the
+    /// live edges ARE the original plan and are used as the baseline.
+    pub fn arrival_delta(&self, target_id: &str) -> Result<ArrivalDelta, DynoError> {
+        let index = self.node_type_index()?;
+        let target_type = index
+            .get(target_id)
+            .cloned()
+            .ok_or_else(|| DynoError::NodeNotFound {
+                node_type: "*".into(),
+                node_id: target_id.to_string(),
+            })?;
+        if !matches!(target_type.as_str(), node::DESIGN_EPOCH | node::RELEASE) {
+            return Err(DynoError::Validation {
+                node_type: target_type.clone(),
+                property: "arrival_delta".into(),
+                message: format!(
+                    "'{target_id}' is a {target_type}; a schedule arrives at a moment, so ask \
+                     this of a {} or a {}.",
+                    node::DESIGN_EPOCH,
+                    node::RELEASE
+                ),
+            });
+        }
+
+        let mut notes: Vec<String> = Vec::new();
+        let status = self.get_node(&target_type, target_id)?.and_then(|n| {
+            n.properties
+                .get("status")
+                .and_then(Value::as_str)
+                .map(str::to_string)
+        });
+        if status.as_deref() == Some("planned") {
+            notes.push(format!(
+                "'{target_id}' has not arrived yet — this is a forecast against the plan as it \
+                 stands, not a delta. Nothing has been missed until the moment passes."
+            ));
+        }
+
+        let snapshots = self.snapshots_of(target_id)?;
+        let mut movement = Vec::new();
+        for snap in &snapshots {
+            let mut items: Vec<(String, String)> = Self::snapshot_schedule(snap)?
+                .into_iter()
+                .map(|(t, i, _)| (t, i))
+                .collect();
+            items.sort();
+            movement.push(PlanRevision {
+                snapshot_id: snap.node_id.clone(),
+                recorded_in_epoch: self
+                    .outgoing(&snap.node_id, Some(edge::AT_EPOCH))?
+                    .first()
+                    .map(|e| e.to_id.clone()),
+                items,
+            });
+        }
+
+        let live = self.live_schedule(target_id)?;
+        let (baseline, baseline_source) = match snapshots.first() {
+            Some(first) => (
+                Self::snapshot_schedule(first)?,
+                BaselineSource::FirstSnapshot {
+                    snapshot_id: first.node_id.clone(),
+                },
+            ),
+            None => (live.clone(), BaselineSource::LiveEdges),
+        };
+        if baseline.is_empty() && movement.iter().any(|r| !r.items.is_empty()) {
+            notes.push(
+                "the baseline snapshot captured an EMPTY plan, so everything scheduled since \
+                 reads as added after it. The first snapshot was taken before this plan was \
+                 written, not after — read the movement trail rather than the headline."
+                    .to_string(),
+            );
+        }
+
+        let baselined: std::collections::BTreeSet<&String> =
+            baseline.iter().map(|(_, id, _)| id).collect();
+        let mut items = Vec::new();
+        for (item_type, item_id, modality) in &baseline {
+            items.push(self.scheduled_item(target_id, item_type, item_id, modality)?);
+        }
+        let mut added_after_baseline = Vec::new();
+        for (item_type, item_id, modality) in &live {
+            if !baselined.contains(item_id) {
+                added_after_baseline
+                    .push(self.scheduled_item(target_id, item_type, item_id, modality)?);
+            }
+        }
+
+        // A `required` claim missed at arrival is a computed violation, not a
+        // slip — the scheduling face of a KPP, which is what gives inviolable
+        // intent a deadline dimension (`dec:schedule-is-an-edge-with-modality`).
+        // Computed across BOTH sets: an obligation added late is still an
+        // obligation.
+        let missed_obligations: Vec<String> = items
+            .iter()
+            .chain(added_after_baseline.iter())
+            .filter(|i| i.modality == "required" && i.outcome != ScheduleOutcome::Delivered)
+            .map(|i| i.item_id.clone())
+            .collect();
+
+        Ok(ArrivalDelta {
+            target_type,
+            target_id: target_id.to_string(),
+            status,
+            baseline: baseline_source,
+            items,
+            added_after_baseline,
+            movement,
+            missed_obligations,
+            notes,
+        })
+    }
+
+    /// One scheduled item's outcome. Delivery wins over everything: an item
+    /// that shipped is delivered even if a copy of its claim points somewhere
+    /// later.
+    fn scheduled_item(
+        &self,
+        target_id: &str,
+        item_type: &str,
+        item_id: &str,
+        modality: &str,
+    ) -> Result<ScheduledItem, DynoError> {
+        let outcome = if self.item_is_delivered(item_type, item_id)? {
+            ScheduleOutcome::Delivered
+        } else {
+            let mut elsewhere: Vec<String> = self
+                .outgoing(item_id, Some(edge::SCHEDULED_FOR))?
+                .into_iter()
+                .map(|e| e.to_id)
+                .collect();
+            elsewhere.sort();
+            if elsewhere.iter().any(|t| t == target_id) {
+                // STILL POINTED HERE, and here has arrived. Neither deferred
+                // nor discontinued — nobody has said which, and this is the
+                // one question `req:plans-move-honestly` says must be ASKED
+                // and never defaulted. Reporting it as a fifth outcome rather
+                // than forcing it into one of Anthony's four is the whole
+                // difference between a report and a guess.
+                ScheduleOutcome::Outstanding
+            } else if elsewhere.is_empty() {
+                ScheduleOutcome::Discontinued
+            } else {
+                ScheduleOutcome::Deferred {
+                    now_due_at: elsewhere,
+                }
+            }
+        };
+        Ok(ScheduledItem {
+            item_type: item_type.to_string(),
+            item_id: item_id.to_string(),
+            modality: modality.to_string(),
+            outcome,
+        })
+    }
+
+    /// Delivered, by the same computation the delivery rollup uses — satisfied
+    /// by a realized, passing capability. Never read from a status field
+    /// (`req:completion-computed`).
+    fn item_is_delivered(&self, item_type: &str, item_id: &str) -> Result<bool, DynoError> {
+        match item_type {
+            node::REQUIREMENT => self.requirement_is_delivered(item_id),
+            node::CAPABILITY => Ok(self.capability_is_realized(item_id)?
+                && !matches!(
+                    self.capability_verification(item_id)?,
+                    crate::verify::CapabilityVerification::Unchecked
+                )),
+            _ => Ok(false),
+        }
     }
 
     // ---- Snapshots (never overwrite the past) -----------------------------
@@ -409,7 +867,12 @@ impl DesignGraph {
     /// component and draws it to another — and before BL-63 the only durable
     /// record of the old owner was a hand-authored Decision. Edges touching
     /// bookkeeping nodes (history, provenance, observations, questions) are
-    /// excluded: a snapshot captures design structure, not the audit trail.
+    /// excluded: a snapshot captures design structure, not the audit trail —
+    /// **except** where the edge's own role is design content, which is what
+    /// [`COMMITMENT_EDGES`] names. A `SCHEDULED_FOR` points at a `DesignEpoch`
+    /// and is a commitment, so it survives the exclusion; that is the
+    /// difference between recording that a plan moved and destroying the
+    /// evidence that it did.
     ///
     /// Call this *before* overwriting the node, so the snapshot preserves the
     /// pre-change state. Fails loud if the target node does not exist — you
@@ -461,7 +924,9 @@ impl DesignGraph {
             let Some(other_type) = index.get(other_id) else {
                 continue; // dangling edge — nothing to capture on that side
             };
-            if BOOKKEEPING_TYPES.contains(&other_type.as_str()) {
+            if BOOKKEEPING_TYPES.contains(&other_type.as_str())
+                && !COMMITMENT_EDGES.contains(&edge_type.as_str())
+            {
                 continue;
             }
             edges.push(SnapshotEdge {
