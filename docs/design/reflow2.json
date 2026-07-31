@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:944cb7dfad4ab5cb3dfde115a2cea83d9a3c99c87999a74b225553f7896a777c",
+  "content_hash": "sha256:1dd74be1d4768aac66efad2dee38134f2e1096b6e308fc44f86224b1e14853b1",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1574,6 +1574,12 @@
       "from_id": "question:e68c76afcb57424c",
       "properties": {},
       "to_id": "cap:explains-itself"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:ff976610480dab90",
+      "properties": {},
+      "to_id": "req:the-store-is-reachable-from-a-session"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -34963,6 +34969,18 @@
       }
     },
     {
+      "node_id": "question:ff976610480dab90",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-07-31",
+        "context_setter": "Nothing satisfies requirement “A capability nothing can call is not delivered — the content store needs a surface”",
+        "gap_id": "gap:ff976610480dab90",
+        "question": "The storage for diagrams and documents is written and working, but nothing an assistant can actually call reaches it — so today nobody can put a file in or get one out. Should adding those calls be the next thing built?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "rel:v0100",
       "node_type": "Release",
       "properties": {
@@ -38227,7 +38245,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:14c7f2e2675cfeed4c49590eba007036dfb3ca7faae107ff1d19a95a707e2b1c",
+  "prev_content_hash": "sha256:944cb7dfad4ab5cb3dfde115a2cea83d9a3c99c87999a74b225553f7896a777c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
