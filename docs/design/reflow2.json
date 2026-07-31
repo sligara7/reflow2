@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:862b4456d4d0121e5a3d487c4d502251c3afd7149bc2b1064f2b8dfef170f790",
+  "content_hash": "sha256:bf806d7f6b8b70b2011aca01ddee21a04b39f6cb490fc335642b832f95a70c3c",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1705,6 +1705,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-store-hand-rolled",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:context-estimation-reassessed",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
@@ -2443,6 +2449,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:cap:content-store",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:arrival-delta:cap:plan-movement-recorded",
       "properties": {},
       "to_id": "epoch:arrival-delta"
@@ -2914,6 +2926,15 @@
         "role": "author"
       },
       "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:content-store-implementation",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -5479,6 +5500,15 @@
         "action": "modified"
       },
       "to_id": "dec:where-content-lives"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-store-hand-rolled",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:content-store"
     },
     {
       "edge_type": "CHANGED",
@@ -11159,6 +11189,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:content-store",
       "properties": {},
+      "to_id": "dec:content-store-implementation"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:content-store",
+      "properties": {},
       "to_id": "dec:where-content-lives"
     },
     {
@@ -14864,6 +14900,12 @@
       "from_id": "art:service",
       "properties": {},
       "to_id": "snap:epoch:stateless-seat:art:service"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:cap:content-store"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -27295,7 +27337,7 @@
       "node_id": "cap:content-store",
       "node_type": "Capability",
       "properties": {
-        "description": "A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures. Built on `object_store` (Apache Arrow) with the local filesystem backend and cloud features OFF, so there is no service to run and cloud backends stay one configuration change away. Blobs are COMMITTED to the repo, which makes them travel exactly as the design does — clone and you have everything (`dec:where-content-lives`). The store itself lives in `reflow2-mcp` because `object_store` is async and `reflow2-core` is deliberately synchronous; the core holds only the hash, which is sync, deterministic and testable in memory. PLANNED.",
+        "description": "A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures.\n\nHAND-ROLLED AND SYNCHRONOUS, IN `reflow2-core` (`dec:content-store-implementation`, Anthony 2026-07-31). Three operations — `put(bytes) -> hash`, `get(hash) -> bytes`, `exists(hash)` — over `sha2` (already a core dependency) and `std::fs`, with write-to-temp-then-rename for atomicity. Zero new crates, no async runtime, deterministic and testable in memory like the rest of the core. `object_store` was measured and recorded as the documented UPGRADE PATH rather than adopted: 36 crates new to reflow2, ~24 of them URL/ICU machinery a local store never calls, and its value — paths, prefixes, listing, multipart, conditional writes — is exactly the feature set immutable content addressing does not have.\n\nBlobs are COMMITTED to the repo, so they travel exactly as the design does: clone and you have everything, with no second channel to configure or be down (`dec:where-content-lives`). Reading INTO stored content is not this capability's job and never becomes one — the agent navigates, the graph records an opaque locator it never parses (`dec:agent-navigates-content`). PLANNED.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Store bytes beside the design and point at them by content hash",
@@ -29099,6 +29141,14 @@
       }
     },
     {
+      "node_id": "chg:content-store-hand-rolled",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "cap:content-store rewritten: hand-rolled sync store in reflow2-core, not object_store in reflow2-mcp"
+      }
+    },
+    {
       "node_id": "chg:context-estimation-reassessed",
       "node_type": "ChangeEvent",
       "properties": {
@@ -30625,10 +30675,10 @@
       "node_id": "dec:content-store-implementation",
       "node_type": "Decision",
       "properties": {
-        "decision": "PROPOSED, refining `dec:where-content-lives` (accepted). Per `dec:reopen-supersedes` a settled choice is re-opened by minting a new Decision, never by editing the accepted one. Raised because that decision explicitly conditioned adoption on a measurement — \"its transitive tree with cloud features off MEASURED rather than assumed\" — and the measurement came back material.\n\nTHE MEASUREMENT, 2026-07-31. `object_store` at 0.14.1 with `default-features = false, features = [\"fs\"]` resolves 68 crates, of which **36 ARE NEW TO REFLOW2** (the workspace already carries 198). MSRV is fine — workspace is `rust-version = 1.94`, toolchain 1.94.0.\n\nWHERE THE COST ACTUALLY COMES FROM, and it is not what the accepted decision assumed. That decision noted, correctly, that cloud features off avoids `reqwest` and the crypto providers — but that is not the same as a small tree. **Roughly 24 of the 36 arrive through `url` and its internationalised-domain-name machinery**: the ICU4X stack (`icu_normalizer`, `icu_normalizer_data`, `icu_properties`, `icu_properties_data`, `icu_collections`, `icu_provider`, `icu_locale_core`), plus `zerovec`, `zerofrom`, `yoke`, `tinystr`, `litemap`, `writeable`, `zerotrie`, `potential_utf`, `utf8_iter`, `synstructure`, `displaydoc`, `idna`, `idna_adapter`, `form_urlencoded`, `percent-encoding`. The remainder is `parking_lot`/`lock_api`/`scopeguard`, `nix`, `walkdir`/`same-file`, `humantime`, `iana-time-zone`. **A local content-addressed store needs none of the URL parsing this pays for.**\n\nTHE ALTERNATIVE, and why it is smaller than it sounds. What `cap:content-store` requires is three operations — `put(bytes) -> hash`, `get(hash) -> bytes`, `exists(hash)`. Content-addressed and immutable means NO paths, NO prefixes, NO listing, NO multipart, NO conditional writes: the features `object_store` exists to provide are the features this use does not have. `sha2` is ALREADY a `reflow2-core` dependency; `std::fs` with write-to-temp-then-rename gives atomicity. Order of a hundred lines, zero new crates.\n\nAND IT UN-DOES A COMPLICATION RATHER THAN ADDING ONE. `dec:where-content-lives` placed the store in `reflow2-mcp` and left only the hash in the core BECAUSE `object_store` is async and `fs` pulls tokio. A synchronous `std::fs` store can live in `reflow2-core` itself — deterministic, in-memory-testable, no runtime, no split between where the hash lives and where the bytes do. THE PLACEMENT PROBLEM WAS CREATED BY THE LIBRARY CHOICE, NOT BY THE REQUIREMENT.\n\nWHAT IS GIVEN UP: the multi-backend path — S3, GCS, Azure behind one trait. But local-only was already chosen and cloud is speculative. Content addressing is precisely what keeps this reversible: `object_store` slots in behind the same three-function interface whenever a cloud backend is actually wanted, which the accepted decision itself noted when it said the addressing scheme makes distribution mechanisms interchangeable.\n\nNOT PROPOSED, and worth saying: this is not an argument against `object_store`. It is the right crate for multi-cloud object storage. It is being weighed for a job that is one hash and one directory.\n\nTHE QUESTION FOR ANTHONY: hand-rolled synchronous store in `reflow2-core` with zero new dependencies, or `object_store` as accepted with 36 new crates and the store in `reflow2-mcp`?",
-        "name": "OPEN — object_store costs 36 new crates for a local store; a hand-rolled sync store needs none and un-does the placement problem",
-        "rationale": "Recorded rather than acted on, because `dec:where-content-lives` carries Anthony's signature and reversing part of it silently would be the forgery `dec:certainty-derived` forbids one node type over.\n\nThe measurement is the whole argument, and it is the third time today that checking beat reasoning: the accepted decision's claim about the dependency tree was defensible, widely repeated, and wrong in the way that mattered — \"avoids reqwest\" is true and says nothing about 24 crates of Unicode normalisation arriving through a URL parser a local file store never calls.\n\nWorth keeping about METHOD as much as content: the accepted decision was written with an explicit \"STILL TO CHECK BEFORE ADOPTING\" clause naming this exact measurement. That clause is why the finding surfaced before code rather than after — a decision that names what it has NOT verified is doing work that a confident decision would not.",
-        "status": "proposed"
+        "decision": "DECIDED by Anthony 2026-07-31, refining `dec:where-content-lives` (accepted) per `dec:reopen-supersedes`. The proposal and its measurement are preserved in the snapshot taken before this edit.\n\nTHE STORE IS HAND-ROLLED, SYNCHRONOUS, AND LIVES IN `reflow2-core`. Three operations — `put(bytes) -> hash`, `get(hash) -> bytes`, `exists(hash)` — over `sha2` (already a core dependency) and `std::fs`, with write-to-temp-then-rename for atomicity. Zero new crates.\n\nWHY, MEASURED RATHER THAN REASONED. `object_store` 0.14.1 with `default-features = false, features = [\"fs\"]` resolves 68 crates, **36 of them new to reflow2**. About 24 arrive through `url`'s internationalised-domain-name machinery — the whole ICU4X stack, `zerovec`/`yoke`/`tinystr`, `idna`, `percent-encoding` — which a local content-addressed store never calls. The accepted decision's note that cloud features off \"avoids reqwest and the crypto providers\" was true and did not describe the tree.\n\nAND IT UN-DOES A COMPLICATION RATHER THAN ADDING ONE. `dec:where-content-lives` split hash-in-core from store-in-mcp ONLY because `object_store` is async and `fs` pulls tokio. A synchronous `std::fs` store keeps `reflow2-core` free of a runtime — measured, its entire dependency list is dynograph-{core,storage,graph,resolution,vector}, serde, serde_json, sha2 — and keeps the store deterministic and in-memory-testable alongside everything else in the core. THAT PART OF `dec:where-content-lives` IS SUPERSEDED; its other two parts (blobs committed to the repo; content-addressed, immutable, fail-loud pointers) STAND UNCHANGED.\n\n`object_store` IS THE DOCUMENTED UPGRADE PATH, recorded rather than discarded. It is the right crate for multi-cloud object storage and remains the answer if a cloud backend is ever wanted: it presents one trait over local filesystem, in-memory, S3, GCS, Azure and HTTP/WebDAV, so the backend becomes runtime configuration. The three-function interface above is deliberately the shape it slots behind — content addressing is what makes the swap safe, because a blob fetched from anywhere verifies against its own hash. Adopting it later changes how bytes are fetched and nothing about what the graph says. WHEN THAT DAY COMES, the costs already measured apply: 36 new crates, an async runtime reaching the core (or the hash/store split reinstated), and a declaration per `dec:design-dependencies-declared`.\n\nWHAT WE GIVE UP TODAY, stated so nobody rediscovers it: multipart uploads, conditional writes, listing and prefix semantics, and cloud backends. Immutable content-addressed blobs need none of them — there are no paths to list, no partial writes to resume, and no update-in-place to make conditional.",
+        "name": "Hand-rolled synchronous content store in reflow2-core, zero new dependencies; object_store is the documented upgrade path",
+        "rationale": "Anthony's call on a measurement the accepted decision had itself demanded before adoption. That clause — \"STILL TO CHECK BEFORE ADOPTING: its transitive tree with cloud features off MEASURED rather than assumed\" — is the only reason this surfaced before code rather than after, and it is worth noting as a habit: a decision that names what it has NOT verified does work a confident decision would not.\n\nThe deciding argument was not dependency count for its own sake. It was that `object_store`'s value is uniformity across backends, and the feature set it exists to provide — paths, prefixes, listing, multipart, conditional writes — is precisely the set an immutable content-addressed store does not have. Paying 36 crates and an async runtime for capabilities the use case forecloses is the wrong trade at this size, and the trade reverses the moment a cloud backend is real.\n\nRecorded as an upgrade path rather than a rejection, because the alternative to a hand-rolled store is not \"no library forever\" — it is \"no library until there is something a library does better\". Writing that down is what stops the next session re-running the same evaluation from scratch.",
+        "status": "accepted"
       }
     },
     {
@@ -36349,6 +36399,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:arrival-delta:cap:content-store",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:artifact\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:agent-navigates-content\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:where-content-lives\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-reaches-every-seat\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-store-for-what-the-graph-points-at\",\"properties\":{}}]",
+        "state": "{\"description\":\"A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures. Built on `object_store` (Apache Arrow) with the local filesystem backend and cloud features OFF, so there is no service to run and cloud backends stay one configuration change away. Blobs are COMMITTED to the repo, which makes them travel exactly as the design does — clone and you have everything (`dec:where-content-lives`). The store itself lives in `reflow2-mcp` because `object_store` is async and `reflow2-core` is deliberately synchronous; the core holds only the hash, which is sync, deterministic and testable in memory. PLANNED.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Store bytes beside the design and point at them by content hash\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:content-store",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:arrival-delta:cap:plan-movement-recorded",
       "node_type": "Snapshot",
       "properties": {
@@ -37765,7 +37825,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:7642a6bfcdc11315d980512503e3eee80cb41b092a0c4580b18355b67fb66d80",
+  "prev_content_hash": "sha256:862b4456d4d0121e5a3d487c4d502251c3afd7149bc2b1064f2b8dfef170f790",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
