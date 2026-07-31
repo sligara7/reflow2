@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5a10c8bfa3997c7538432e0f6a46833689da269d9feea885c06ec72bef605c79",
+  "content_hash": "sha256:c3a34d0124eba47f787eb5d5115ceb07da4b756572fd9ff5af5d0adfae08dc0c",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -88,6 +88,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:changelog-view",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:compare"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1703,6 +1711,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:changelog-view-required",
+      "properties": {},
+      "to_id": "epoch:v0200-scoped"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:claim-liveness",
       "properties": {},
       "to_id": "epoch:v0120"
@@ -2828,6 +2842,12 @@
       "from_id": "snap:epoch:v0130:cap:design-identity",
       "properties": {},
       "to_id": "epoch:v0130"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:v0200-scoped:cap:changelog-view",
+      "properties": {},
+      "to_id": "epoch:v0200-scoped"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5477,6 +5497,15 @@
         "action": "modified"
       },
       "to_id": "req:build-loop-is-bounded"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:changelog-view-required",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:changelog-view"
     },
     {
       "edge_type": "CHANGED",
@@ -15328,6 +15357,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:changelog-view",
+      "properties": {},
+      "to_id": "snap:epoch:v0200-scoped:cap:changelog-view"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:content-manifest",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:cap:content-manifest"
@@ -24494,6 +24529,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:v0190",
+      "properties": {},
+      "to_id": "epoch:v0200-scoped"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v040",
       "properties": {},
       "to_id": "epoch:v050-cut"
@@ -26486,7 +26527,7 @@
       "edge_type": "SCHEDULED_FOR",
       "from_id": "cap:changelog-view",
       "properties": {
-        "modality": "expected",
+        "modality": "required",
         "recorded_at": "2026-07-31"
       },
       "to_id": "rel:v0200"
@@ -26595,6 +26636,12 @@
       "from_id": "ver:change",
       "properties": {},
       "to_id": "cap:change"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:changelog-view",
+      "properties": {},
+      "to_id": "cap:changelog-view"
     },
     {
       "edge_type": "VERIFIES",
@@ -30880,6 +30927,14 @@
       }
     },
     {
+      "node_id": "chg:changelog-view-required",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The changelog view is raised from expected to required for v0.20.0 — Anthony's call 2026-07-31"
+      }
+    },
+    {
       "node_id": "chg:claim-liveness",
       "node_type": "ChangeEvent",
       "properties": {
@@ -34649,6 +34704,16 @@
         "epoch_type": "release_cut",
         "name": "v0.19.0 cut",
         "sequence": 240,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:v0200-scoped",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "v0.20.0 scoped: the changelog view becomes the increment's one obligation",
+        "sequence": 241,
         "status": "arrived"
       }
     },
@@ -38925,6 +38990,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:v0200-scoped:cap:changelog-view",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"ctr:anthony\",\"properties\":{\"acted_at\":\"2026-07-28\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:127934176c8341bd\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:896e6b1107e0b6b4\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:ebf17b5d2c53cf03\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:epochs-can-be-planned\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-07-31\"}}]",
+        "state": "{\"description\":\"Derive a Keep a Changelog-shaped draft (keepachangelog.com, Anthony's pointer 2026-07-28) between any two Releases or Epochs, from what the graph already records: the INCLUDES delta between two Release manifests (what appeared, what left) plus the dated ChangeEvents and drift accepts between their epochs, classified into the KaC buckets — Added / Changed / Deprecated / Removed / Fixed — mapped from the vocabulary the graph already carries (new nodes and link_artifact baselines -> Added; design_updated accepts and amended statements -> Changed; retire-from-design with history -> Deprecated/Removed; design_holds accepts with change_type test_failure_fix -> Fixed). The [Unreleased] section is the standing case: everything dated after the last deployed Release — which makes 'what would this increment's changelog say?' answerable BEFORE cutting it, the capability-increment sibling of what-next. Two KaC principles carried over as constraints: changelogs are FOR HUMANS, curated — this emits a DRAFT a person edits, never a commit-log dump (KaC names raw logs an antipattern; dec:report-dont-judge is the same rule here) — and every entry says what a CONSUMER does about it, which the graph cannot know alone. Kin to cap:compare-designs (two as-designed records); this compares two moments of ONE design and renders the difference in the format industry already reads. DIRECTIONALITY, Anthony's formulation 2026-07-28, which is the load-bearing claim: 'our delta is a graph/machine version of a human changelog; the agent could derive the human changelog from the graph delta. Basically: graph delta --via_agent--> human changelog.' The graph delta is the primary, machine-readable record; the human changelog is a derived rendering, and never the other way around -- when the two disagree, the graph is what is interrogated and the changelog is what gets regenerated.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"A changelog is a derivable view of the graph's own delta\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:changelog-view",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:wire-planning-cluster:dec:where-plans-live",
       "node_type": "Snapshot",
       "properties": {
@@ -39034,6 +39109,17 @@
         "method": "test",
         "name": "temporal.rs",
         "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:changelog-view",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "integration",
+        "method": "test",
+        "name": "The changelog draft is DERIVED and says so: buckets are mapped from graph vocabulary rather than guessed, the [Unreleased] window is everything after the last DEPLOYED release, an empty delta renders as an empty draft rather than an invented entry, and the output is a DRAFT — no entry claims what a consumer should do, because the graph cannot know it. PLANNED, written before the build so the shape of the proof is settled first.",
+        "status": "planned"
       }
     },
     {
@@ -39981,7 +40067,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ccdcac3acf07736d43cf68a16f5ef2ba5881412a9ec17c54c36ad8ec88195cab",
+  "prev_content_hash": "sha256:5a10c8bfa3997c7538432e0f6a46833689da269d9feea885c06ec72bef605c79",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
