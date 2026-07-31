@@ -115,7 +115,7 @@ reflow2/
   crates/
     reflow2-core/    # the deterministic, LLM-free coherence engine (40 modules)
     reflow2-mcp/     # the agent-native MCP server, stdio or HTTP (114 tools) — the binary you run
-  schema/            # 10 composable dynograph schema domains (28 node / 56 edge types)
+  schema/            # 10 composable dynograph schema domains (28 node / 57 edge types)
     core / functional / structure / build / verify / operate
     environment / temporal / inference / dimensions
   getting-started/   # the consumer kit installed into a project being designed

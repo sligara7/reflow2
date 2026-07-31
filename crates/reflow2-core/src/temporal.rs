@@ -219,6 +219,88 @@ impl DesignGraph {
         )
     }
 
+    /// Create an epoch that has NOT happened yet — a claim about the future
+    /// rather than a record of the past (`req:epochs-can-be-planned`).
+    ///
+    /// Separate from [`add_epoch`](Self::add_epoch) rather than a flag on it,
+    /// for two reasons. `add_epoch` has 27 call sites that all mean "record the
+    /// point I am at", and every one of them is still correct; and planning is a
+    /// deliberate act, so it reads better as its own verb than as an argument
+    /// someone might pass by accident — the same reasoning that keeps
+    /// `Interface.designation` internal until someone publishes on purpose.
+    ///
+    /// `epoch_type` still applies: kind and tense are orthogonal, so a planned
+    /// MILESTONE and a planned RELEASE CUT are both sayable.
+    pub fn plan_epoch(
+        &mut self,
+        id: &str,
+        name: &str,
+        epoch_type: EpochType,
+        sequence: i64,
+    ) -> Result<StoredNode, DynoError> {
+        self.create_node(
+            node::DESIGN_EPOCH,
+            id,
+            Props::new()
+                .set("name", name)
+                .set("epoch_type", epoch_type.as_str())
+                .set("sequence", sequence)
+                .set("status", "planned"),
+        )
+    }
+
+    /// Move an epoch between `planned` and `arrived`, preserving everything else.
+    ///
+    /// `planned` to `arrived` is ARRIVAL — the moment a claim about the future
+    /// becomes a point in the past, and the moment the planned-versus-delivered
+    /// delta becomes computable. The reverse direction exists so a premature
+    /// arrival can be corrected; it is not a way to un-happen an epoch.
+    pub fn set_epoch_status(
+        &mut self,
+        epoch_id: &str,
+        status: &str,
+    ) -> Result<StoredNode, DynoError> {
+        if !matches!(status, "planned" | "arrived") {
+            return Err(DynoError::Validation {
+                node_type: node::DESIGN_EPOCH.into(),
+                property: "status".into(),
+                message: format!(
+                    "'{status}' is not an epoch status (one of planned, arrived). `planned` is a \
+                     claim about a point that has not happened; `arrived` is a record of one that \
+                     has."
+                ),
+            });
+        }
+        let Some(existing) = self.get_node(node::DESIGN_EPOCH, epoch_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::DESIGN_EPOCH.into(),
+                node_id: epoch_id.into(),
+            });
+        };
+        let mut props = Props::new().set("status", status);
+        for (k, v) in &existing.properties {
+            if k != "status" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::DESIGN_EPOCH, epoch_id, props)
+    }
+
+    /// Has this epoch happened? Absent reads as `arrived`, matching the schema
+    /// default and the meaning every epoch written before the property existed
+    /// already had.
+    pub fn epoch_is_planned(&self, epoch_id: &str) -> Result<bool, DynoError> {
+        Ok(self
+            .get_node(node::DESIGN_EPOCH, epoch_id)?
+            .and_then(|e| {
+                e.properties
+                    .get("status")
+                    .and_then(dynograph_core::Value::as_str)
+                    .map(|s| s == "planned")
+            })
+            .unwrap_or(false))
+    }
+
     /// `earlier PRECEDES later` — an explicit ordering edge between epochs.
     pub fn precedes(&mut self, earlier_epoch: &str, later_epoch: &str) -> Result<(), DynoError> {
         self.create_edge(
@@ -247,6 +329,70 @@ impl DesignGraph {
             node::DESIGN_EPOCH,
             epoch_id,
             Props::new(),
+        )?;
+        Ok(())
+    }
+
+    /// Schedule a Requirement or Capability against the moment it is due —
+    /// `SCHEDULED_FOR`, the satisfaction schedule (`req:epochs-can-be-planned`).
+    ///
+    /// The target is a `DesignEpoch` or a `Release`: the two paired views of
+    /// one architecture, time and capability-increment. `modality` says which
+    /// kind of claim this is — `expected` (a plan) or `required` (an
+    /// obligation whose miss at arrival is a computed violation).
+    ///
+    /// There is no `achieved` modality, and the absence is the point:
+    /// delivery is computed from the golden thread, never asserted
+    /// (`req:completion-computed`). A schedule that records its own success
+    /// is a second source of truth that can disagree with the first.
+    ///
+    /// Rescheduling is a RECORDED CHANGE on the target epoch, not an edit to
+    /// this edge — re-pointing it would make the slip invisible and let the
+    /// plan silently rewrite its own history (`dec:arrival-delta`).
+    pub fn schedule_for(
+        &mut self,
+        item_type: &str,
+        item_id: &str,
+        target_type: &str,
+        target_id: &str,
+        modality: &str,
+        recorded_at: Option<&str>,
+    ) -> Result<(), DynoError> {
+        if !matches!(modality, "expected" | "required") {
+            return Err(DynoError::Validation {
+                node_type: edge::SCHEDULED_FOR.into(),
+                property: "modality".into(),
+                message: format!(
+                    "'{modality}' is not a schedule modality (one of expected, required). \
+                     `expected` is a plan; `required` is an obligation whose miss at arrival is a \
+                     violation. There is no `achieved` — delivery is computed from the golden \
+                     thread, never recorded here."
+                ),
+            });
+        }
+        if !matches!(target_type, node::DESIGN_EPOCH | node::RELEASE) {
+            return Err(DynoError::Validation {
+                node_type: target_type.into(),
+                property: "SCHEDULED_FOR.to".into(),
+                message: format!(
+                    "a schedule points at a moment, so '{target_type}' cannot be one: use a \
+                     {} for the time axis or a {} for the capability-increment axis.",
+                    node::DESIGN_EPOCH,
+                    node::RELEASE
+                ),
+            });
+        }
+        let mut props = Props::new().set("modality", modality);
+        if let Some(at) = recorded_at {
+            props = props.set("recorded_at", at);
+        }
+        self.create_edge(
+            edge::SCHEDULED_FOR,
+            item_type,
+            item_id,
+            target_type,
+            target_id,
+            props,
         )?;
         Ok(())
     }
@@ -495,6 +641,24 @@ impl DesignGraph {
         &mut self,
         rec: ChangeRecord<'_>,
     ) -> Result<(Option<StoredNode>, StoredNode), DynoError> {
+        // A snapshot captures the state of things NOW, so it cannot belong to a
+        // point that has not happened. Refusing here is what makes
+        // `DesignEpoch.status` a property something READS rather than one more
+        // declared-and-unconsulted field (`req:defaults-do-not-assert`'s sibling
+        // defect), and it fails loud rather than quietly filing history under a
+        // future date (`req:no-silent-fallback`).
+        if self.epoch_is_planned(rec.epoch_id)? {
+            return Err(DynoError::Validation {
+                node_type: node::DESIGN_EPOCH.into(),
+                property: "status".into(),
+                message: format!(
+                    "epoch '{}' is PLANNED — it has not happened, so history cannot be recorded \
+                     into it. Record this change in an epoch that has arrived, or call \
+                     set_epoch_status to mark this one `arrived` first if it now has.",
+                    rec.epoch_id
+                ),
+            });
+        }
         let snapshot = if rec.action.has_prior_state() {
             Some(self.snapshot_node(rec.epoch_id, rec.target_type, rec.target_id)?)
         } else {

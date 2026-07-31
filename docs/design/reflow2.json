@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:37d5c4d913ffdc5d675607a97a6336026bf588777ae774c39d34876fc4dde57a",
+  "content_hash": "sha256:2417a73bccf71f1c56f2eeeb590d85f41185cf8d60119f5e5056c953550762b5",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -24,6 +24,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:as-of-epoch",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -475,6 +483,22 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:plan-movement-recorded",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:planned-epochs",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:portability",
       "properties": {
         "weight_basis": "estimated"
@@ -611,6 +635,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:review-expires-on-content",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:revise-trigger",
       "properties": {
         "weight_basis": "estimated"
@@ -624,6 +656,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:satisfaction-schedule",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -884,6 +924,12 @@
       "from_id": "question:65b894fcc73c3961",
       "properties": {},
       "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:6bce37248bacaa09",
+      "properties": {},
+      "to_id": "req:graph-indexes-snapshots"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -1394,6 +1440,12 @@
       "from_id": "question:d6f1644ca908ae5d",
       "properties": {},
       "to_id": "req:design-dependencies-declared"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:dc85407c38653039",
+      "properties": {},
+      "to_id": "req:review-expires-when-what-it-judged-changes"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -6311,6 +6363,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:planned-epochs",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:planned-epochs",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:planned-epochs",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:planned-epochs"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:planning-axis-intent",
       "properties": {
         "accepted_baseline": false,
@@ -6839,6 +6918,69 @@
         "action": "modified"
       },
       "to_id": "req:seat-identity-survives-stateless-mcp"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:as-of-epoch"
     },
     {
       "edge_type": "CHANGED",
@@ -9913,6 +10055,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:as-of-epoch",
+      "properties": {},
+      "to_id": "dec:schedule-is-an-edge-with-modality"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:as-of-epoch",
+      "properties": {},
+      "to_id": "decision:ack:b13f13bfabebbd39"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:atomic-requirement",
       "properties": {},
       "to_id": "decision:ack:bab6219e3365123a"
@@ -12109,6 +12263,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:plan-movement-recorded",
+      "properties": {},
+      "to_id": "decision:ack:ec1f9f94c89d2f67"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:portability",
       "properties": {},
       "to_id": "dec:export-hash-chain"
@@ -12823,6 +12983,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:review-expires-on-content",
+      "properties": {},
+      "to_id": "decision:ack:1d9ec21937d2d172"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:revise-trigger",
       "properties": {},
       "to_id": "dec:reopen-supersedes"
@@ -12868,6 +13034,12 @@
       "from_id": "cap:sanitize-ingress",
       "properties": {},
       "to_id": "rule:no-foreclosure"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:satisfaction-schedule",
+      "properties": {},
+      "to_id": "dec:schedule-is-an-edge-with-modality"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -22875,7 +23047,23 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:planned-epochs"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cap:read-loop-hint"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:satisfaction-schedule"
     },
     {
       "edge_type": "REALIZES",
@@ -23004,6 +23192,22 @@
         "completeness": "complete"
       },
       "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:temporal",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:planned-epochs"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:temporal",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:satisfaction-schedule"
     },
     {
       "edge_type": "REALIZES",
@@ -23166,6 +23370,12 @@
       "from_id": "cap:allocate",
       "properties": {},
       "to_id": "req:golden-thread"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:as-of-epoch",
+      "properties": {},
+      "to_id": "req:graph-indexes-snapshots"
     },
     {
       "edge_type": "SATISFIES",
@@ -23586,6 +23796,18 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:plan-movement-recorded",
+      "properties": {},
+      "to_id": "req:plans-move-honestly"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:planned-epochs",
+      "properties": {},
+      "to_id": "req:epochs-can-be-planned"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:portability",
       "properties": {},
       "to_id": "req:survives-upgrade"
@@ -23700,6 +23922,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:review-expires-on-content",
+      "properties": {},
+      "to_id": "req:review-expires-when-what-it-judged-changes"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:revise-trigger",
       "properties": {},
       "to_id": "req:roads-not-taken"
@@ -23709,6 +23937,12 @@
       "from_id": "cap:sanitize-ingress",
       "properties": {},
       "to_id": "req:trust-boundary-at-ingress"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:satisfaction-schedule",
+      "properties": {},
+      "to_id": "req:epochs-can-be-planned"
     },
     {
       "edge_type": "SATISFIES",
@@ -24168,6 +24402,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:planned-epochs",
+      "properties": {},
+      "to_id": "cap:planned-epochs"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:portability",
       "properties": {},
       "to_id": "cap:portability"
@@ -24249,6 +24489,12 @@
       "from_id": "ver:sanitize-ingress",
       "properties": {},
       "to_id": "cap:sanitize-ingress"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:satisfaction-schedule",
+      "properties": {},
+      "to_id": "cap:satisfaction-schedule"
     },
     {
       "edge_type": "VERIFIES",
@@ -25551,7 +25797,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3b6fc9d03065fa2f",
+        "checksum": "sha256:07383878711dbf93",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
         "status": "realized"
@@ -25639,7 +25885,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:89b5dd2ab01635c57260235fa8afd6e757991e1bfdf576153a54bdf944dba071",
+        "checksum": "sha256:91b73f060c83a6718e22a9428cba4f8d3d713f59329986110f0fc113ef3ef783",
         "location": "README.md",
         "name": "README.md",
         "status": "realized"
@@ -25683,7 +25929,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b17aa6b0d727eed3",
+        "checksum": "sha256:109cd1e9c3dd7d83",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
         "status": "realized"
@@ -25760,7 +26006,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:caf4a67e0bb91c8a35445be7edb537f3289cb63a911ff2c824725ca147554c34",
+        "checksum": "sha256:e161b08dbf66f85a",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -25881,7 +26127,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5a44a5c2e3b3c03c",
+        "checksum": "sha256:cde4771c91afcce9",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
         "status": "realized"
@@ -26046,7 +26292,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6a9bc6a55e09e47e",
+        "checksum": "sha256:2599c9a2772349b1",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
         "status": "realized"
@@ -26088,6 +26334,19 @@
         "name": "Analyse and propose allocation",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:as-of-epoch",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A query surface on the graph's own time axis: what the design said at a given epoch, answered by the graph rather than by checking out an old export and reading it by hand. Anthony's acceptance tests, in his words (2026-07-30), are the target and the measure: which capabilities are due to be released in epoch 5, and what did we not achieve that we were supposed to in increment 10. The second is the harder half — it is a PLANNED-VERSUS-DELIVERED DELTA, computable only once an epoch has arrived, which is why this sits downstream of cap:planned-epochs. Reworded on Anthony's word 2026-07-30: the requirement previously described indexing git refs (the graph tracking where each snapshot lives), and that framing was retired when dec:where-plans-live settled that forward-looking plans describe graph content and stay in the graph — git keeps only the narrower job of pinning a version combination at an ARRIVED epoch. The original text is preserved at snap:epoch:planning-axis-intent:req:graph-indexes-snapshots. Approved for build by Anthony 2026-07-30.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "The graph answers as-of-epoch-n itself, without a git lookup",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -26768,6 +27027,32 @@
       }
     },
     {
+      "node_id": "cap:plan-movement-recorded",
+      "node_type": "Capability",
+      "properties": {
+        "description": "When a planned epoch's content changes — a requirement moves out of epoch 5, a date slips, confidence drops — the movement itself is recorded and dated, rather than the plan being silently rewritten to look as though it always said the new thing. This is the forward-looking sibling of the snapshot machinery the backward axis already has, and the requirement it serves (req:plans-move-honestly) DEPENDS_ON req:epochs-can-be-planned, which cap:planned-epochs now delivers. THE OPEN DESIGN QUESTION, recorded rather than guessed: record_change now REFUSES a planned epoch, so a plan's movement cannot be filed INTO the planned epoch it concerns — it must be recorded in the arrived epoch that is current, taking the planned epoch as its subject. Whether that is sufficient, or whether planned epochs need a revision chain of their own, is undecided. Approved for build by Anthony 2026-07-30, superseding the 2026-07-28 park.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A plan's movement is dated, so what we believed back then stays answerable",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:planned-epochs",
+      "node_type": "Capability",
+      "properties": {
+        "description": "DesignEpoch.status carries `planned` (a claim about a point that has not happened) or `arrived` (a record of one that has), with plan_epoch to create the forward kind and set_epoch_status to move between them. Status is a property in its own right rather than a value in epoch_type, because kind and tense are orthogonal — a planned MILESTONE and a planned RELEASE CUT are both sayable, and those are the two a roadmap is made of. It mirrors Release.status, which already carries `planned` for the capability view. The default is `arrived`, which is a record rather than a choice (req:defaults-do-not-assert): add_epoch's 27 call sites have only ever meant recording the point you are at, so every epoch written before the property existed did arrive. THE LOAD-BEARING HALF IS THE REFUSAL — record_change rejects a planned epoch, because a snapshot captures the present and cannot belong to a point that has not happened. Without it, status would be a declared-and-unconsulted field: stored, never read, true only by politeness. Delivered 2026-07-30 in 56a8388; both guards mutation-tested rather than merely covered, since a test that still passes with the check deleted is not evidence the check works.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "An epoch can be planned, and arrival is the event that makes it history",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:portability",
       "node_type": "Capability",
       "properties": {
@@ -26950,6 +27235,19 @@
       }
     },
     {
+      "node_id": "cap:review-expires-on-content",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A gap acknowledgement records a human judgement about specific text. Today its expiry is keyed on the gap id, which hashes the affected node IDS — so a review expires when the affected SET changes membership, and NEVER when the affected nodes change CONTENT. Found live on 2026-07-30 while promoting the planning axis: acknowledgements written on 2026-07-28 reading roughly deferred, scheduled for a later increment went on suppressing gaps for requirements that had since been accepted and were being worked, so two things Anthony had just committed to were invisible as open work. Sharper still, req:graph-indexes-snapshots' acknowledgement was still justifying a framing that had been removed an hour earlier — an accepted review left defending a requirement that no longer said that. THE REASON IT MATTERS, and why this is not cosmetic: a review outliving the wording it reviewed is worse than no review, because it reads as a human having agreed to something they never saw. The nearest working sibling is defect-side expiry-by-shape, which already does content-sensitive invalidation. Approved for build by Anthony 2026-07-30.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A sign-off expires when the thing it judged is reworded, not only when the affected set changes",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:revise-trigger",
       "node_type": "Capability",
       "properties": {
@@ -26972,6 +27270,19 @@
         "name": "Neutralise hidden instructions in text arriving from outside, and say what was stripped",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:satisfaction-schedule",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The SCHEDULED_FOR edge: from a Requirement or Capability to a DesignEpoch (time axis) or a Release (capability-increment axis), carrying a `modality` of `expected` (a plan) or `required` (an obligation whose miss at arrival is a computed violation — the scheduling face of a KPP). One edge type serves both paired views because they are two views of one architecture, not two mechanisms. This is THE ATOM the roadmap is made of: a mapping of requirements and capabilities to the moment they are satisfied, which is what makes \"which capabilities are due in epoch 5\" answerable at all. KEPT SEPARATE FROM AT_EPOCH DELIBERATELY (dec:schedule-is-an-edge-with-modality): that edge means `belongs to` and is declared over a wildcard source, so one type carrying both meanings would be indistinguishable to every detector — the same shape as the wrong-direction edge found on 2026-07-30, which read correctly and was still undetectably wrong. THERE IS NO `achieved` MODALITY AND THE ABSENCE IS LOAD-BEARING: delivery is computed from the golden thread and never asserted (req:completion-computed, dec:arrival-delta), so recording it here would create a second source of truth able to disagree with the first. Prerequisite for dec:arrival-delta, which refers throughout to \"its schedule edge\" — a thing that did not exist until now. Delivered 2026-07-30; both guards mutation-tested.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A requirement or capability can be scheduled against the moment it is due",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -28218,6 +28529,14 @@
       }
     },
     {
+      "node_id": "chg:planned-epochs",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Planned epochs built: DesignEpoch.status, plan_epoch, set_epoch_status, and record_change refusing a point that has not happened"
+      }
+    },
+    {
       "node_id": "chg:planning-axis-intent",
       "node_type": "ChangeEvent",
       "properties": {
@@ -28327,6 +28646,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Anthony chose option (a) for the stateless seat handle — the open fork closes"
+      }
+    },
+    {
+      "node_id": "chg:scheduled-for",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "SCHEDULED_FOR: the satisfaction schedule gets an edge that carries modality"
       }
     },
     {
@@ -29816,6 +30143,16 @@
       }
     },
     {
+      "node_id": "dec:schedule-is-an-edge-with-modality",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "A new edge type SCHEDULED_FOR runs from Requirement or Capability to a DesignEpoch or a Release, carrying a `modality` property with values `expected` (a plan) and `required` (an obligation whose miss at arrival is a computed violation — the scheduling face of a KPP). One edge type serves both of the paired views: epochs for the time axis, releases for the capability-increment axis. Chosen by Anthony 2026-07-30 over two rejected alternatives.",
+        "name": "The satisfaction schedule is an edge carrying modality, not an overloaded pin and not a node",
+        "rationale": "REJECTED: overloading AT_EPOCH. It is declared `from: \"*\"` to DesignEpoch and its extraction hint says a Snapshot or ChangeEvent is pinned to the epoch it BELONGS TO. Adding schedule semantics would give one edge type two unrelated meanings — belongs-to and due-at — over a wildcard source, so nothing could tell them apart. That is the exact shape of the wrong-direction edge found on 2026-07-30: an edge that reads correctly and is still undetectably wrong, because no second contradicting fact exists to make its error computable. REJECTED: a Commitment/Schedule node. Heavier, and justified only if a scheduled claim must carry rationale, owner or confidence as first-class fields. It does not today, and confidence in particular should be MEASURED from arrival history rather than authored (dec:arrival-delta). CHOSEN, and why the edge: modality is a property of the RELATIONSHIP between an item and a moment, not of either endpoint — the same capability can be `expected` at one epoch and `required` by another, so putting it on either node would collapse that. It also leaves 3470 existing edges untouched. THE ABSENT THIRD MODALITY IS THE LOAD-BEARING PART: Anthony's three verbs are ARE satisfied, EXPECTED to be satisfied, and REQUIRED to be satisfied by — but `achieved` is deliberately NOT a value here. dec:arrival-delta and req:completion-computed already settle that delivery is computed from the golden thread and never asserted; storing it as a schedule modality would create a second source of truth that can disagree with the first, and a plan that records its own success is the plan lying about itself.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:service-spof-accepted",
       "node_type": "Decision",
       "properties": {
@@ -30042,6 +30379,16 @@
         "decision": "Accepted the gap gap:1c044be82819a511.",
         "name": "Reviewed: gap:1c044be82819a511",
         "rationale": "Standing acknowledgement, re-stated because the rollup's id hashes the affected set and moves whenever the capability set does — 61, 62, 63, 64, now 65. Validation for this project is the trials programme: reflow2 used on real designs. In two days that meant an adopt pass over dynograph-foundation, a live two-session seam exercise, a consumer-side compatibility build against an unreleased provider tree, and a release cut — which between them found seven defects nobody reviewed their way to, five of them in reflow2 itself. Recording 65 near-identical validation nodes would turn the number green without anyone having checked anything, which is the dishonesty `dec:passing-is-verified` exists to prevent.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:1d9ec21937d2d172",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:1d9ec21937d2d172.",
+        "name": "Reviewed: gap:1d9ec21937d2d172",
+        "rationale": "Approved for build by Anthony on 2026-07-30 but not yet built, so there is nothing to verify. The capability is `planned` and its verification will be written with it. There is an irony worth recording rather than smoothing over: this is the acknowledgement most likely to go stale in exactly the way the capability it defers exists to prevent, because its expiry is keyed on the affected node SET and not on content. Until this one is built, every acknowledgement in the design — including this one — can outlive the wording it judged. That is the argument for building it, not a reason to leave it unrecorded.",
         "status": "accepted"
       }
     },
@@ -30726,6 +31073,16 @@
       }
     },
     {
+      "node_id": "decision:ack:b13f13bfabebbd39",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:b13f13bfabebbd39.",
+        "name": "Reviewed: gap:b13f13bfabebbd39",
+        "rationale": "Approved for build by Anthony on 2026-07-30 but not yet built, so there is nothing to verify. The capability is `planned` and its verification will be written with it — and in this case the acceptance test is already stated in his own words, so the check is not undefined, merely unwritten: which capabilities are due to be released in epoch 5, and what did we not achieve that we were supposed to in increment 10. Recorded so the open list keeps meaning `needs a decision`; the decision has been made and it is `build it`. Same expiry caveat as its siblings: this should stop holding once the capability moves off `planned`.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:b25bb8d8db80dfd3",
       "node_type": "Decision",
       "properties": {
@@ -30972,6 +31329,16 @@
         "decision": "Accepted the gap gap:ebf17b5d2c53cf03.",
         "name": "Reviewed: gap:ebf17b5d2c53cf03",
         "rationale": "Deferred on Anthony's word, 2026-07-28. Nothing is built for it because the capability was captured the same day and is scheduled for a later increment — as-designed and as-built agree that this is unbuilt, which is the honest state rather than a defect. Revisit with the unallocated and unverified gaps on the same node.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:ec1f9f94c89d2f67",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:ec1f9f94c89d2f67.",
+        "name": "Reviewed: gap:ec1f9f94c89d2f67",
+        "rationale": "Approved for build by Anthony on 2026-07-30 but not yet built, so there is nothing to verify. The capability is `planned` and its verification will be written with it. This is deliberately NOT a judgement that the capability needs no check — it needs one, and the check is owed at build time. Recorded so the open list keeps meaning `needs a decision` rather than `needs typing`; the decision here has been made and it is `build it`. NOTE THE EXPIRY THIS DEPENDS ON: this acknowledgement should stop holding the moment the capability moves off `planned`, and the sibling requirement req:review-expires-when-what-it-judged-changes exists precisely because that expiry is currently keyed on the affected node SET rather than its CONTENT — so this note may outlive its own truth until cap:review-expires-on-content is built.",
         "status": "accepted"
       }
     },
@@ -32783,7 +33150,7 @@
       "node_id": "question:52b1ed1377382961",
       "node_type": "Question",
       "properties": {
-        "answer": "Anthony, 2026-07-28: park as deferred. The requirement is accepted; it was captured today and is scheduled for a later increment, not dropped and not being built now.",
+        "answer": "Anthony, 2026-07-30: BUILD IT NOW. This supersedes the 2026-07-28 answer on this same gap (\"park as deferred... not being built now\"), which went stale when the planning axis was promoted to intent on 2026-07-30 and this requirement was accepted. Its sibling req:epochs-can-be-planned has now been built and committed (56a8388), so the movement-on-the-record half is to be built next rather than parked.",
         "context_setter": "Nothing satisfies requirement “A plan is a dated claim whose movement is on the record”",
         "gap_id": "gap:52b1ed1377382961",
         "question": "You wrote down that when a plan changes, the change itself should be dated and kept on the record — so you can always answer \"what did we believe back then?\" But nothing has been built to do that yet. Build it now, park it, or drop it?",
@@ -32825,6 +33192,18 @@
         "context_setter": "Nothing satisfies requirement “Several people can plan against one design without colliding”",
         "gap_id": "gap:65b894fcc73c3961",
         "question": "You've said a team should be able to work on one design at the same time without stepping on each other. Right now nothing in reflow2 actually does that, and it can't be built until you settle whether the design stays a file in the repo or becomes something people connect to. Do you want to leave this waiting on that decision, or drop it for now?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:6bce37248bacaa09",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Anthony, 2026-07-30: BUILD IT NOW. The graph is to answer \"as of epoch n\" itself as a query surface, per the 2026-07-30 rewording. His own acceptance tests stand as the target: \"what capabilities are due to be released in epoch 5\" and \"what didn't we achieve that we were supposed to in increment 10?\"",
+        "context_setter": "Nothing satisfies requirement “The graph answers \"as of epoch n\" itself — a design's own time axis is not a git lookup”",
+        "gap_id": "gap:6bce37248bacaa09",
+        "question": "You want to be able to ask this project \"what did the design look like at increment 5?\" and have it answer you directly, instead of digging through old saved versions by hand. Nothing has been built to answer that yet. Should we build it now, put it off for later, or let the idea go?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -33066,6 +33445,18 @@
         "context_setter": "Nothing satisfies requirement “Declare which version of another design you depend on, not just record what you took”",
         "gap_id": "gap:d6f1644ca908ae5d",
         "question": "reflow2 already notes which version of another project's design you actually copied, and when. What it has no place for is you SAYING which version you mean to depend on — a checked-in file like Cargo.toml. With both, it could tell you whether you are using the version you intended, and whether the other project has moved on since. Do you want that file, and should it come before or after the interface work?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:dc85407c38653039",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Anthony, 2026-07-30: BUILD IT NOW. A gap acknowledgement must expire when the CONTENT it judged changes, not only when the set of affected nodes changes. Found live on 2026-07-30 while promoting the planning axis: an accepted review was left defending a requirement that no longer said what the review quoted, which reads as a human having agreed to something they never saw.",
+        "context_setter": "Nothing satisfies requirement “A gap acknowledgement must expire when the thing it judged changes, not only when the SET of affected nodes changes”",
+        "gap_id": "gap:dc85407c38653039",
+        "question": "When you say \"this issue is fine, I've looked at it\", that sign-off currently keeps holding even after the thing you looked at has been reworded underneath you — so it can end up defending something you never actually read. Should we build it so your sign-off expires when the wording changes, put that off, or leave it as it is?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -35645,6 +36036,18 @@
       }
     },
     {
+      "node_id": "ver:planned-epochs",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-30T20:30:00Z",
+        "level": "integration",
+        "method": "test",
+        "name": "Planned epochs, arrival, and the two refusals — crates/reflow2-core/tests/temporal.rs",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:portability",
       "node_type": "Verification",
       "properties": {
@@ -35801,6 +36204,18 @@
         "level": "integration",
         "method": "test",
         "name": "Hidden payloads stripped and reported, honest text untouched, ZWJ survives, and the ingest wiring proved end to end (tests/sanitize.rs, 7 cases)",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:satisfaction-schedule",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-31T01:30:00Z",
+        "level": "integration",
+        "method": "test",
+        "name": "SCHEDULED_FOR: both paired views, modality, and the two refusals — crates/reflow2-core/tests/temporal.rs",
         "status": "passing"
       }
     },
@@ -36013,7 +36428,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e3a07d1d26af4018d9de5366adefc4f8ee7f7b6bfc6454f620602537fb915d1c",
+  "prev_content_hash": "sha256:00f5fc3b7e7d1ee8827421b674bdba2128279533fa11e6bf0ff06711bb520057",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -1047,6 +1047,24 @@ pub struct PinAtEpochReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ScheduleForReq {
+    /// `Requirement` or `Capability` — the thing that is due.
+    pub item_type: String,
+    pub item_id: String,
+    /// `DesignEpoch` (time axis) or `Release` (capability-increment axis).
+    pub target_type: String,
+    pub target_id: String,
+    /// `expected` (a plan, the default) or `required` (an obligation whose
+    /// miss at arrival is a violation). There is no `achieved`.
+    #[serde(default)]
+    pub modality: Option<String>,
+    /// When this scheduling claim was made.
+    #[serde(default)]
+    pub recorded_at: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct DeployToReq {
     pub release_id: String,
     pub environment_id: String,
@@ -1576,6 +1594,15 @@ pub struct AddEpochReq {
     /// `baseline` | `revision` | `milestone` | `incident_response` | `release_cut`.
     pub epoch_type: String,
     pub sequence: i64,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct EpochStatusReq {
+    pub epoch_id: String,
+    /// `arrived` (it has happened) or `planned` (a claim about one that has
+    /// not). `planned` → `arrived` is ARRIVAL.
+    pub status: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -3425,6 +3452,45 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Schedule a Requirement or Capability against the moment it is DUE — the \
+                       satisfaction schedule, which is what makes a roadmap answerable \
+                       (req:epochs-can-be-planned). The target is a DesignEpoch for the time axis \
+                       or a Release for the capability-increment axis: two paired views of one \
+                       architecture, so one edge serves both. `modality` says which kind of claim \
+                       this is — `expected` is a plan, `required` is an obligation whose miss at \
+                       arrival is a computed violation rather than a slip (the scheduling face of \
+                       a KPP). THERE IS NO `achieved` MODALITY: delivery is computed from the \
+                       golden thread and never asserted, so a schedule that recorded its own \
+                       success would be a second source of truth able to disagree with the first. \
+                       DELIBERATELY NOT add_epoch's AT_EPOCH, which means `belongs to` rather \
+                       than `due at`. To reschedule, record the change against the epoch rather \
+                       than re-pointing this edge — moving it silently would erase the slip and \
+                       let the plan rewrite its own history.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn schedule_for(
+        &self,
+        Parameters(req): Parameters<ScheduleForReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let modality = req.modality.as_deref().unwrap_or("expected");
+        let mut g = self.write_lock().await;
+        g.schedule_for(
+            &req.item_type,
+            &req.item_id,
+            &req.target_type,
+            &req.target_id,
+            modality,
+            req.recorded_at.as_deref(),
+        )
+        .map_err(dyno_err)?;
+        ok_json(serde_json::json!({
+            "scheduled": req.item_id,
+            "for": req.target_id,
+            "modality": modality
+        }))
+    }
+
+    #[tool(
         description = "Record that a Component or Release needs a Resource, with how critical it \
                        is (optional/recommended/required).",
         annotations(read_only_hint = false)
@@ -4713,7 +4779,10 @@ impl ReflowService {
     // ---- Temporal / CHANGE (deterministic, mutating) ----
 
     #[tool(
-        description = "Create an Epoch (a point on the time axis).",
+        description = "Create an Epoch that HAS HAPPENED — a point on the time axis you are \
+                       recording, which is what an epoch has always meant here. For a point that \
+                       has NOT happened yet, use plan_epoch instead; planning is a deliberate act \
+                       and reads better as its own verb than as a flag.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_epoch(
@@ -4724,6 +4793,49 @@ impl ReflowService {
         let mut g = self.write_lock().await;
         ok_json(NodeDto::from(
             g.add_epoch(&req.id, &req.name, epoch_type, req.sequence)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Create an Epoch that has NOT happened yet — a claim about the future \
+                       rather than a record of the past, and the forward half of the time axis \
+                       (req:epochs-can-be-planned). `epoch_type` still applies: KIND and TENSE are \
+                       orthogonal, so a planned MILESTONE and a planned RELEASE CUT are both \
+                       sayable — which is why `planned` is its own property rather than a value \
+                       folded into the type enum. A planned epoch REFUSES record_change: a \
+                       snapshot captures the present, so it cannot belong to a point that has not \
+                       happened. Call set_epoch_status when it arrives.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn plan_epoch(
+        &self,
+        Parameters(req): Parameters<AddEpochReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let epoch_type: EpochType = parse_enum(&req.epoch_type, "epoch type")?;
+        let mut g = self.write_lock().await;
+        ok_json(NodeDto::from(
+            g.plan_epoch(&req.id, &req.name, epoch_type, req.sequence)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Move an Epoch between `planned` and `arrived`. `planned` → `arrived` is \
+                       ARRIVAL: the moment a claim about the future becomes a point in the past, \
+                       after which history can be recorded into it and the planned-versus- \
+                       delivered delta becomes answerable. The reverse exists so a premature \
+                       arrival can be corrected; it is not a way to un-happen an epoch. \
+                       Everything else about the epoch is preserved.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn set_epoch_status(
+        &self,
+        Parameters(req): Parameters<EpochStatusReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(NodeDto::from(
+            g.set_epoch_status(&req.epoch_id, &req.status)
                 .map_err(dyno_err)?,
         ))
     }
