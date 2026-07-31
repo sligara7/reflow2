@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2417a73bccf71f1c56f2eeeb590d85f41185cf8d60119f5e5056c953550762b5",
+  "content_hash": "sha256:71d5dd96fab2affeebe2104250e7dde72d7a1559dd59744be1ce3bb43ba6633b",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -3267,6 +3267,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-0c6cd76f71527326",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-11773dab9729328c",
       "properties": {
         "accepted_baseline": true,
@@ -3471,6 +3480,15 @@
         "action": "modified"
       },
       "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-84e72e0a877c9770",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
     },
     {
       "edge_type": "CHANGED",
@@ -25489,7 +25507,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:da659127a61d6eff",
+        "checksum": "sha256:95413535822be8f6",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -25907,7 +25925,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c57347034efdfa68",
+        "checksum": "sha256:df2273281fb9522d",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
         "status": "realized"
@@ -27526,6 +27544,15 @@
       }
     },
     {
+      "node_id": "chg:accept-0c6cd76f71527326",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-07-31",
+        "name": "PR #2 (fix/surface-last-run-at): detect.rs and report.rs now carry Verification.last_run_at — a failing gap says WHEN the check last ran, and a `failing` that never ran says 'never run' rather than implying a measurement was taken; loop_status and graph_report list each check with its status, last_run_at and how many nodes it speaks for. Deliberately not wired into loop_status's `clean`/`next`: visibility, not a new nag. NO DESIGN NODE MOVED, which is why this is design_holds. Whether this earns a capability of its own is OPEN and is the user's call — note that it is NOT cap:verification-freshness (BL-106, still `planned`), which is the confirmation-ledger freshness fact and a different surface. Until then last_run_at stays what it has been since it was added: written by verify.rs and read by nothing in the core."
+      }
+    },
+    {
       "node_id": "chg:accept-11773dab9729328c",
       "node_type": "ChangeEvent",
       "properties": {
@@ -27722,6 +27749,15 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "canonical_checksum: a bare hex digest is stored as sha256:&lt;hex&gt;, the dialect drift compares in. Restores intended behaviour — the design already said drift is a checksum comparison; it was reading identical bytes as total drift. Found by reflow2's own gate, 2026-07-25; pinned by two cases in tests/drift.rs."
+      }
+    },
+    {
+      "node_id": "chg:accept-84e72e0a877c9770",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-07-31",
+        "name": "PR #2 (fix/surface-last-run-at): detect.rs and report.rs now carry Verification.last_run_at — a failing gap says WHEN the check last ran, and a `failing` that never ran says 'never run' rather than implying a measurement was taken; loop_status and graph_report list each check with its status, last_run_at and how many nodes it speaks for. Deliberately not wired into loop_status's `clean`/`next`: visibility, not a new nag. NO DESIGN NODE MOVED, which is why this is design_holds. Whether this earns a capability of its own is OPEN and is the user's call — note that it is NOT cap:verification-freshness (BL-106, still `planned`), which is the confirmation-ledger freshness fact and a different surface. Until then last_run_at stays what it has been since it was added: written by verify.rs and read by nothing in the core."
       }
     },
     {
@@ -31468,7 +31504,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "An aggregate gap is keyed on its rule, so a standing judgement stops expiring",
-        "sequence": 233
+        "sequence": 233,
+        "status": "arrived"
       }
     },
     {
@@ -31478,7 +31515,8 @@
         "description": "The epoch the fork layer was designed in (BL-70). Cut so that today's decisions have an anchor from the moment they are made, rather than being backfilled later — the practice dec:fork-point-address depends on.",
         "epoch_type": "revision",
         "name": "BL-70 fork layer designed (2026-07-24)",
-        "sequence": 100
+        "sequence": 100,
+        "status": "arrived"
       }
     },
     {
@@ -31487,7 +31525,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "BL-95 coverage detector captured (2026-07-24)",
-        "sequence": 110
+        "sequence": 110,
+        "status": "arrived"
       }
     },
     {
@@ -31496,7 +31535,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "The subscribe side becomes declarable and the seam is computed",
-        "sequence": 236
+        "sequence": 236,
+        "status": "arrived"
       }
     },
     {
@@ -31505,7 +31545,8 @@
       "properties": {
         "epoch_type": "baseline",
         "name": "Genesis",
-        "sequence": 0
+        "sequence": 0,
+        "status": "arrived"
       }
     },
     {
@@ -31514,7 +31555,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "Install once per machine: no project needs setting up, and a directory with no design costs nothing (2026-07-28, post-v0.17.0)",
-        "sequence": 23
+        "sequence": 23,
+        "status": "arrived"
       }
     },
     {
@@ -31523,7 +31565,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "KPP capture half built (2026-07-25)",
-        "sequence": 120
+        "sequence": 120,
+        "status": "arrived"
       }
     },
     {
@@ -31532,7 +31575,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "Linking repos: a design analysed against its dependency's design, and an interface that publishes a complete contract (2026-07-27, post-v0.16.0)",
-        "sequence": 200
+        "sequence": 200,
+        "status": "arrived"
       }
     },
     {
@@ -31541,7 +31585,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "The governance mode becomes a choice, and reflow2 makes one",
-        "sequence": 234
+        "sequence": 234,
+        "status": "arrived"
       }
     },
     {
@@ -31550,7 +31595,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "The planning axis becomes intent, and snapshots stop being a git concern",
-        "sequence": 238
+        "sequence": 238,
+        "status": "arrived"
       }
     },
     {
@@ -31559,7 +31605,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "Ten proposed requirements considered and not accepted",
-        "sequence": 235
+        "sequence": 235,
+        "status": "arrived"
       }
     },
     {
@@ -31568,7 +31615,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "Reading the original reflow's workflows back against reflow2 (2026-07-28)",
-        "sequence": 220
+        "sequence": 220,
+        "status": "arrived"
       }
     },
     {
@@ -31577,7 +31625,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "rmcp v2 → v3.0.1: protocol sessions removed",
-        "sequence": 231
+        "sequence": 231,
+        "status": "arrived"
       }
     },
     {
@@ -31586,7 +31635,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "A second revision in one epoch stops overwriting the first snapshot (2026-07-29)",
-        "sequence": 230
+        "sequence": 230,
+        "status": "arrived"
       }
     },
     {
@@ -31595,7 +31645,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "The seat becomes a handle the caller carries",
-        "sequence": 232
+        "sequence": 232,
+        "status": "arrived"
       }
     },
     {
@@ -31604,7 +31655,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "Published-surface export (2026-07-25, post-v0.11.0)",
-        "sequence": 140
+        "sequence": 140,
+        "status": "arrived"
       }
     },
     {
@@ -31615,7 +31667,8 @@
         "description": "Cut at git tag v0.10.0. The alternatives/merge/rerere release — 18 of the graph's decisions first appear in this export.",
         "epoch_type": "release_cut",
         "name": "v0.10.0 release cut (2026-07-24)",
-        "sequence": 80
+        "sequence": 80,
+        "status": "arrived"
       }
     },
     {
@@ -31626,7 +31679,8 @@
         "description": "Cut at git tag v0.10.1, the current deployed release.",
         "epoch_type": "release_cut",
         "name": "v0.10.1 release cut (2026-07-24)",
-        "sequence": 90
+        "sequence": 90,
+        "status": "arrived"
       }
     },
     {
@@ -31637,7 +31691,8 @@
         "description": "Cut at git tag v0.11.0, the current deployed release. The checksum anchors the export taken at cut time, immediately before this anchor was written — the same practice as epoch:v0101, and the reason dec:fork-point-address treats a fork point as a coordinate resolved against git rather than a self-referential hash.",
         "epoch_type": "release_cut",
         "name": "v0.11.0 release cut (2026-07-25)",
-        "sequence": 130
+        "sequence": 130,
+        "status": "arrived"
       }
     },
     {
@@ -31646,7 +31701,8 @@
       "properties": {
         "epoch_type": "release_cut",
         "name": "v0.12.0 cut",
-        "sequence": 150
+        "sequence": 150,
+        "status": "arrived"
       }
     },
     {
@@ -31655,7 +31711,8 @@
       "properties": {
         "epoch_type": "release_cut",
         "name": "v0.13.0 cut",
-        "sequence": 160
+        "sequence": 160,
+        "status": "arrived"
       }
     },
     {
@@ -31664,7 +31721,8 @@
       "properties": {
         "epoch_type": "release_cut",
         "name": "v0.14.0 cut",
-        "sequence": 170
+        "sequence": 170,
+        "status": "arrived"
       }
     },
     {
@@ -31673,7 +31731,8 @@
       "properties": {
         "epoch_type": "release_cut",
         "name": "v0.15.0 cut",
-        "sequence": 180
+        "sequence": 180,
+        "status": "arrived"
       }
     },
     {
@@ -31682,7 +31741,8 @@
       "properties": {
         "epoch_type": "release_cut",
         "name": "v0.16.0 cut",
-        "sequence": 190
+        "sequence": 190,
+        "status": "arrived"
       }
     },
     {
@@ -31691,7 +31751,8 @@
       "properties": {
         "epoch_type": "release_cut",
         "name": "v0.18.0 cut",
-        "sequence": 210
+        "sequence": 210,
+        "status": "arrived"
       }
     },
     {
@@ -31701,7 +31762,8 @@
         "description": "Cut at git tag v0.4.0. The earliest tag carrying docs/design/reflow2.json, so it is the first epoch with a retrievable design document — decisions that predate it appear here as their earliest evidence, not their origin. The export predates the hash chain (dec:export-hash-chain, v0.9.0), so no checksum is claimed.",
         "epoch_type": "release_cut",
         "name": "v0.4.0 release cut (2026-07-20)",
-        "sequence": 10
+        "sequence": 10,
+        "status": "arrived"
       }
     },
     {
@@ -31710,7 +31772,8 @@
       "properties": {
         "epoch_type": "release_cut",
         "name": "v0.5.0 release cut (2026-07-20)",
-        "sequence": 20
+        "sequence": 20,
+        "status": "arrived"
       }
     },
     {
@@ -31719,7 +31782,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "Post-v0.5.0 hardening: self-adopt reconciliation, BL-46..50, the as-released model (2026-07-20)",
-        "sequence": 25
+        "sequence": 25,
+        "status": "arrived"
       }
     },
     {
@@ -31728,7 +31792,8 @@
       "properties": {
         "epoch_type": "release_cut",
         "name": "v0.6.0 release cut (2026-07-21)",
-        "sequence": 30
+        "sequence": 30,
+        "status": "arrived"
       }
     },
     {
@@ -31737,7 +31802,8 @@
       "properties": {
         "epoch_type": "release_cut",
         "name": "v0.6.1 release cut (2026-07-21)",
-        "sequence": 40
+        "sequence": 40,
+        "status": "arrived"
       }
     },
     {
@@ -31746,7 +31812,8 @@
       "properties": {
         "epoch_type": "release_cut",
         "name": "v0.7.0 release cut (2026-07-21)",
-        "sequence": 50
+        "sequence": 50,
+        "status": "arrived"
       }
     },
     {
@@ -31755,7 +31822,8 @@
       "properties": {
         "epoch_type": "release_cut",
         "name": "v0.8.0 release cut (2026-07-21)",
-        "sequence": 60
+        "sequence": 60,
+        "status": "arrived"
       }
     },
     {
@@ -31766,7 +31834,8 @@
         "description": "Cut at git tag v0.9.0. First epoch whose export carries an embedded content_hash (dec:export-hash-chain shipped in this release), so this is the first fork point addressable by checksum rather than by tag alone.",
         "epoch_type": "release_cut",
         "name": "v0.9.0 release cut (2026-07-22)",
-        "sequence": 70
+        "sequence": 70,
+        "status": "arrived"
       }
     },
     {
@@ -31775,7 +31844,8 @@
       "properties": {
         "epoch_type": "revision",
         "name": "The planning cluster joins the thread, and a wrong-direction dependency surfaces",
-        "sequence": 237
+        "sequence": 237,
+        "status": "arrived"
       }
     },
     {
@@ -36428,7 +36498,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:00f5fc3b7e7d1ee8827421b674bdba2128279533fa11e6bf0ff06711bb520057",
+  "prev_content_hash": "sha256:2417a73bccf71f1c56f2eeeb590d85f41185cf8d60119f5e5056c953550762b5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -36477,6 +36547,7 @@
       "REQUIRES_RESOURCE",
       "RISKS",
       "SATISFIES",
+      "SCHEDULED_FOR",
       "SPECIFIES",
       "SUPERSEDES",
       "SUPPLEMENTS",
@@ -36488,7 +36559,7 @@
       "VIOLATES_RULE",
       "YIELDED"
     ],
-    "edge_types": 56,
+    "edge_types": 57,
     "node_type_names": [
       "Actor",
       "Anchor",
