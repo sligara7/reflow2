@@ -23,3 +23,9 @@ CHANGELOG.md merge=union
 # Without that config git falls back to its normal text merge, which is safe —
 # it just means you resolve the JSON by hand.
 docs/design/reflow2.json merge=reflow2
+
+# Content-store blobs are immutable and content-addressed: an "edit" is a NEW file
+# with a new name, so git never needs to diff one. Marking them binary stops it
+# trying — and, the part that matters, stops line-ending conversion silently
+# CORRUPTING a PNG on a CRLF checkout (dec:content-manifest).
+reflow2-content/** binary

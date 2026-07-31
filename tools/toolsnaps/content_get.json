@@ -1,0 +1,21 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Read content back by its hash, VERIFIED against it (cap:content-store). Returns `text` when the bytes are valid UTF-8 and `base64` when they are not, so a diagram and a transcript both come back usable. Bytes that no longer match the hash they are stored under are REFUSED rather than returned — a content hash nobody checks is only a filename. A missing blob fails loud naming the hash, which is the case someone who has the design but not the bytes will hit (req:content-reaches-every-seat). Finding the relevant PART of a large document is your job, not reflow2's (dec:agent-navigates-content) — read it as you would any file.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "hash": {
+        "description": "The content hash, as `content_put` returned it.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "hash"
+    ],
+    "type": "object"
+  },
+  "name": "content_get"
+}

@@ -191,6 +191,25 @@ pub struct ArrivalDelta {
     pub movement: Vec<PlanRevision>,
     /// `required` claims not delivered — computed violations, not slips.
     pub missed_obligations: Vec<String>,
+    /// How many items were scheduled `required` at all.
+    ///
+    /// Reported because `missed_obligations` being empty is AMBIGUOUS without
+    /// it: an increment where every obligation landed and one that promised
+    /// nothing both report an empty list. `ready_to_cut` resolves it; this is
+    /// the number that lets a reader see why (`dec:release-trigger-needs-a-required-item`).
+    pub required_count: usize,
+    /// Whether the cut trigger fires: every `required` item delivered, AND at
+    /// least one was required.
+    ///
+    /// THE SECOND CLAUSE IS THE FIX. `dec:release-trigger` said a cut fires when
+    /// every required item is delivered, which is VACUOUSLY TRUE of an increment
+    /// that requires nothing — so an empty release read as ready. That is the
+    /// empty-release failure the same decision used to REJECT a fixed cadence,
+    /// arriving through the chosen option's own back door. Requiring one
+    /// obligation also makes "this increment has been scoped" a precondition of
+    /// cutting it: an increment with nothing required has never had the question
+    /// "what must ship for this to mean anything?" put to it.
+    pub ready_to_cut: bool,
     /// What this computation cannot see, said out loud rather than left to be
     /// inferred from a confident-looking number.
     pub notes: Vec<String>,
@@ -784,6 +803,20 @@ impl DesignGraph {
             .map(|i| i.item_id.clone())
             .collect();
 
+        let required_count = items
+            .iter()
+            .chain(added_after_baseline.iter())
+            .filter(|i| i.modality == "required")
+            .count();
+        let ready_to_cut = missed_obligations.is_empty() && required_count > 0;
+        if required_count == 0 {
+            notes.push(format!(
+                "nothing is scheduled `required` for '{target_id}', so there is no obligation to \
+                 miss and it is NOT ready to cut. An increment that promises nothing has not been \
+                 scoped; say what must ship for it to mean anything."
+            ));
+        }
+
         Ok(ArrivalDelta {
             target_type,
             target_id: target_id.to_string(),
@@ -793,6 +826,8 @@ impl DesignGraph {
             added_after_baseline,
             movement,
             missed_obligations,
+            required_count,
+            ready_to_cut,
             notes,
         })
     }

@@ -1309,6 +1309,7 @@ name = "reflow2-mcp"
 version = "0.18.0"
 dependencies = [
  "anyhow",
+ "base64 0.22.1",
  "bytes",
  "clap",
  "http-body-util",

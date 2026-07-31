@@ -1144,3 +1144,68 @@ fn an_arrival_delta_refuses_a_target_that_is_not_a_moment() {
         .expect_err("a requirement is not a moment");
     assert!(format!("{err:?}").contains("Requirement"));
 }
+
+/// THE VACUOUS-TRUTH FIX (`dec:release-trigger-needs-a-required-item`). "Every
+/// required item delivered" is trivially true of an increment that requires
+/// nothing, so an empty release read as ready — the empty-release failure the
+/// trigger decision used to REJECT a fixed cadence, arriving through the chosen
+/// option's own back door.
+#[test]
+fn an_increment_that_promises_nothing_is_not_ready_to_cut() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_release("rel:empty", "Empty", Some("0.0.1"), None)
+        .unwrap();
+    g.add_capability("cap:someday", "Someday", "unbuilt", None)
+        .unwrap();
+    g.schedule_for(
+        "Capability",
+        "cap:someday",
+        "Release",
+        "rel:empty",
+        "expected",
+        None,
+    )
+    .unwrap();
+
+    let d = g.arrival_delta("rel:empty").unwrap();
+    assert!(
+        d.missed_obligations.is_empty(),
+        "nothing required, so nothing missed"
+    );
+    assert_eq!(d.required_count, 0);
+    assert!(
+        !d.ready_to_cut,
+        "an increment with no obligations must NOT read as ready — that is the whole fix"
+    );
+    assert!(
+        d.notes.iter().any(|n| n.contains("has not been scoped")),
+        "and it must say WHY rather than just answering no: {:?}",
+        d.notes
+    );
+}
+
+/// The counterweight: one obligation, delivered, and the trigger fires.
+#[test]
+fn an_increment_with_its_obligations_met_is_ready() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_release("rel:real", "Real", Some("0.1.0"), None)
+        .unwrap();
+    g.add_requirement("req:ship", "Ship", "must ship").unwrap();
+    g.schedule_for(
+        "Requirement",
+        "req:ship",
+        "Release",
+        "rel:real",
+        "required",
+        None,
+    )
+    .unwrap();
+    deliver(&mut g, "req:ship", "ship");
+
+    let d = g.arrival_delta("rel:real").unwrap();
+    assert_eq!(d.required_count, 1);
+    assert!(
+        d.ready_to_cut,
+        "one obligation, delivered — the trigger must fire"
+    );
+}

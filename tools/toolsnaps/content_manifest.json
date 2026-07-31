@@ -1,0 +1,22 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "What content this design points at, whether the bytes are here, and what is here that nothing points at (cap:content-manifest). Answers the question someone hits after being handed the design ON ITS OWN: `missing` names content the graph references and this checkout does not have, so a diagram that will not open is a named finding rather than a silent absence. `orphaned` is the reverse — bytes stored and referenced by nothing, which is how a store grows without anyone deciding to. Each entry carries a readable name (the referencing Fragment's title) and WHAT IT IS FOR, so the manifest is legible without opening anything. DERIVED, never stored: it is computed from the graph plus the store, because a manifest kept as its own record would be a second source of truth and would drift the first time someone updated one and not the other. Pass `path` to also write the rendered markdown for committing, which is what makes a blob change readable in `git log` instead of a hex filename.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "path": {
+        "default": null,
+        "description": "Write the rendered markdown manifest here as well as returning it —\nthe committed form that makes a blob change legible in a diff.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "name": "content_manifest"
+}

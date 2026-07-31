@@ -35,6 +35,7 @@ pub mod claims;
 pub mod compare;
 pub mod compose;
 pub mod confirm;
+pub mod content;
 pub mod coverage;
 pub mod depends;
 pub mod detect;
@@ -83,6 +84,9 @@ pub use compare::{
 };
 pub use compose::{ComposedFinding, ComposedReport, Side};
 pub use confirm::{ClaimConfirmation, ConfirmationLedger, ConfirmationState};
+pub use content::{
+    ContentManifest, ContentStore, LARGE_CONTENT_BYTES, ManifestEntry, content_hash,
+};
 pub use coverage::{CoverageReport, ObservedPath, UnclaimedRegion};
 pub use depends::{DependencyDeclaration, DependencyFinding, DependencyReport, ObservedDependency};
 pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, GapSource};

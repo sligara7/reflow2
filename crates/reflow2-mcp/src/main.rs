@@ -20,6 +20,16 @@ struct Cli {
     #[arg(long, default_value = "./.reflow2/graph")]
     graph_path: String,
 
+    /// Directory for the content store — the bytes the design points at but
+    /// cannot hold: transcripts, diagrams, drawings, ingested source documents
+    /// (`cap:content-store`). Created on first write, not at startup.
+    ///
+    /// Deliberately NOT under `--graph-path`: that lives in `.reflow2/`, which
+    /// is gitignored, and blobs are COMMITTED so they travel with the design
+    /// (`dec:where-content-lives`). Point this at a directory inside the repo.
+    #[arg(long, default_value = "./reflow2-content")]
+    content_path: String,
+
     /// Serve over HTTP on this address instead of stdio, so SEVERAL sessions
     /// share one design (`req:sessions-share-a-graph`). One process holds the
     /// graph — the store is single-writer, and with one server there is still
@@ -798,6 +808,7 @@ async fn main() -> anyhow::Result<()> {
         if let Some(note) = provenance {
             eprintln!("reflow2: {note}");
         }
+        let service = service.with_content_path(Some(cli.content_path.clone()));
         serve_http(
             move || Ok(service.share()),
             cli.http.as_deref().unwrap_or("127.0.0.1:0"),
@@ -869,6 +880,7 @@ async fn main() -> anyhow::Result<()> {
     // and explains itself beats one that dies before it can be asked.
     match ReflowService::new_reporting(&cli.graph_path) {
         Ok((service, provenance)) => {
+            let service = service.with_content_path(Some(cli.content_path.clone()));
             // Say it on stderr as well as the log: an operator running this by
             // hand sees stderr, and "which reflow2 wrote this graph" is exactly
             // the question that used to have no answer at all.

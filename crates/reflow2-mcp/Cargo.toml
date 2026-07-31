@@ -31,6 +31,11 @@ rmcp = { version = "3", features = ["server", "macros", "transport-io", "schemar
 # no second HTTP stack, and no new crate in the tree — `http-body-util`, `http`
 # and `bytes` were already here transitively and are now named because we use
 # them directly.
+# Content arrives over MCP as JSON, which cannot carry raw bytes, so binary
+# content (a photograph, a PNG) travels base64-encoded. Already in the tree
+# transitively, so naming it here adds no crate — and per
+# dec:design-dependencies-declared a reliance is recorded rather than implied.
+base64 = "0.22"
 hyper = { version = "1", features = ["server", "client", "http1"] }
 hyper-util = { version = "0.1", features = ["server", "tokio", "service"] }
 http-body-util = "0.1"

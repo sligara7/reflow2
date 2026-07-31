@@ -1,0 +1,21 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Whether the bytes for a content hash are present in this project's store (cap:content-store). Cheap: it does NOT read or verify the content, which is content_get's job — conflating them would make a presence check secretly expensive on a large blob. Use it to answer \"do I have everything this design points at?\" without pulling every diagram into context.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "hash": {
+        "description": "The content hash, as `content_put` returned it.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "hash"
+    ],
+    "type": "object"
+  },
+  "name": "content_exists"
+}

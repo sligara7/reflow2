@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bf806d7f6b8b70b2011aca01ddee21a04b39f6cb490fc335642b832f95a70c3c",
+  "content_hash": "sha256:ccdcac3acf07736d43cf68a16f5ef2ba5881412a9ec17c54c36ad8ec88195cab",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -139,6 +139,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:content-manifest",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:content-store",
       "properties": {
         "weight_basis": "estimated"
@@ -264,6 +272,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:agent"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1081,6 +1097,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:af1c8f6df524e2dd",
+      "properties": {},
+      "to_id": "req:a-question-arrives-with-a-reading"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:b0ef8ce1e452f881",
       "properties": {},
       "to_id": "req:defaults-do-not-assert"
@@ -1554,6 +1576,12 @@
       "to_id": "cap:explains-itself"
     },
     {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:ff976610480dab90",
+      "properties": {},
+      "to_id": "req:the-store-is-reachable-from-a-session"
+    },
+    {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-eight-requirements",
       "properties": {},
@@ -1699,13 +1727,37 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-growth-guard",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:content-location-settled",
       "properties": {},
       "to_id": "epoch:arrival-delta"
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-manifest-built",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-store-built",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:content-store-hand-rolled",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-surface",
       "properties": {},
       "to_id": "epoch:arrival-delta"
     },
@@ -1768,6 +1820,12 @@
       "from_id": "chg:drift-scalar-reassessed",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:external-store-argument-sharpened",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2095,6 +2153,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:vacuous-trigger-fixed",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:verification-methods",
       "properties": {},
       "to_id": "epoch:v0140"
@@ -2110,6 +2174,12 @@
       "from_id": "chg:what-next-capture",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:what-next-unblocked",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2449,7 +2519,37 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:cap:arrival-delta",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:cap:content-manifest",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:cap:content-manifest:r2",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:arrival-delta:cap:content-store",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:cap:content-store:r2",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:cap:content-store:r3",
       "properties": {},
       "to_id": "epoch:arrival-delta"
     },
@@ -2461,7 +2561,19 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:cap:what-next",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:arrival-delta:dec:arrival-delta",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:dec:external-blob-store-pressure",
       "properties": {},
       "to_id": "epoch:arrival-delta"
     },
@@ -2812,6 +2924,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cap:kpp-proposal",
       "properties": {
         "acted_at": "2026-07-25",
@@ -2920,6 +3041,24 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:content-growth-is-bounded-by-what-not-by-size",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:content-manifest",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:content-store-implementation",
       "properties": {
         "acted_at": "2026-07-31",
@@ -3013,6 +3152,15 @@
       "from_id": "dec:exploratory-staging",
       "properties": {
         "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:external-blob-store-pressure",
+      "properties": {
+        "acted_at": "2026-07-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -3125,6 +3273,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:orientation-is-computed-not-written",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:parallel-alternatives",
       "properties": {
         "acted_at": "2026-07-22",
@@ -3195,6 +3352,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:what-lives-where",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:where-content-lives",
       "properties": {
         "acted_at": "2026-07-31",
@@ -3236,6 +3402,15 @@
         "role": "author"
       },
       "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-question-arrives-with-a-reading",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -3505,6 +3680,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-store-is-reachable-from-a-session",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "ctr:claude-fable"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -5494,6 +5678,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:content-growth-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:content"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-growth-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-growth-guard",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:content-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:content-location-settled",
       "properties": {
         "accepted_baseline": false,
@@ -5503,7 +5714,70 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:content-manifest-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:content"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-manifest-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-manifest-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:content-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-store-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:content-store-hand-rolled",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-surface",
       "properties": {
         "accepted_baseline": false,
         "action": "modified"
@@ -6004,6 +6278,15 @@
         "action": "modified"
       },
       "to_id": "req:design-the-simulator"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:external-store-argument-sharpened",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:external-blob-store-pressure"
     },
     {
       "edge_type": "CHANGED",
@@ -7924,6 +8207,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:vacuous-trigger-fixed",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:vacuous-trigger-fixed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:arrival-delta"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:verification-methods",
       "properties": {
         "accepted_baseline": false,
@@ -8011,6 +8312,15 @@
         "action": "added"
       },
       "to_id": "req:what-next"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:what-next-unblocked",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:what-next"
     },
     {
       "edge_type": "CHANGED",
@@ -8823,6 +9133,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "cap:what-next",
+      "properties": {
+        "evidence": "The prerequisite cap:what-next names in its own text: without derived completion it is blind to what is merely unfinished. Now verified, so the dependency is satisfied rather than blocking — and drawing it makes the condition computable instead of a sentence nothing reads.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cap:derived-completion"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "cmp:agent",
       "properties": {
         "dependency_type": "function_call",
@@ -9576,6 +9896,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:external-blob-store-pressure",
+      "properties": {
+        "evidence": "It is a recorded pressure ON that decision, and the condition under which it would be reopened; meaningless read apart from it.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "dec:where-content-lives"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:github-mcp-tandem",
       "properties": {
         "optional": false,
@@ -10002,6 +10332,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:a-question-arrives-with-a-reading",
+      "properties": {
+        "evidence": "It is that decision's 'the LLM speaks' half made explicit at the gap boundary; the human still decides and the graph still counts.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "dec:three-party-checks"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:a-question-arrives-with-a-reading",
+      "properties": {
+        "evidence": "A bare gap question hands the user back the systems-engineering analysis that requirement exists to spare them; the recommendation is what makes it answerable without it.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:adopt-says-how-much-it-got",
       "properties": {
         "optional": false,
@@ -10336,6 +10686,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:the-store-is-reachable-from-a-session",
+      "properties": {
+        "evidence": "The store exists and is tested; this is the half that makes it usable by the agent and user that requirement is written for.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:content-store-for-what-the-graph-points-at"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:version-combination-is-an-object",
       "properties": {
         "optional": false,
@@ -10644,6 +11004,12 @@
       "from_id": "cap:arrival-delta",
       "properties": {},
       "to_id": "dec:arrival-delta"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:arrival-delta",
+      "properties": {},
+      "to_id": "dec:release-trigger-needs-a-required-item"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -11181,6 +11547,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:content-manifest",
+      "properties": {},
+      "to_id": "dec:content-growth-is-bounded-by-what-not-by-size"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:content-manifest",
+      "properties": {},
+      "to_id": "dec:content-manifest"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:content-store",
       "properties": {},
       "to_id": "dec:agent-navigates-content"
@@ -11189,7 +11567,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:content-store",
       "properties": {},
+      "to_id": "dec:content-growth-is-bounded-by-what-not-by-size"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:content-store",
+      "properties": {},
       "to_id": "dec:content-store-implementation"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "dec:what-lives-where"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -14255,6 +14645,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:what-next",
       "properties": {},
+      "to_id": "dec:orientation-is-computed-not-written"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:what-next",
+      "properties": {},
       "to_id": "decision:ack:7957f52a429a38a3"
     },
     {
@@ -14807,6 +15203,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:sources-are-kept-not-just-parsed",
+      "properties": {},
+      "to_id": "dec:what-lives-where"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:stale-seat-knows",
       "properties": {},
       "to_id": "dec:advisory-concurrency"
@@ -14903,9 +15305,39 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:arrival-delta",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:cap:arrival-delta"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:content-manifest",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:cap:content-manifest"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:content-manifest",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:cap:content-manifest:r2"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:content-store",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:cap:content-store"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:cap:content-store:r2"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:cap:content-store:r3"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -14963,6 +15395,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:what-next",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:cap:what-next"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:anchor-retire-or-implement",
       "properties": {},
       "to_id": "snap:epoch:reflow-workflow-review:dec:anchor-retire-or-implement"
@@ -14978,6 +15416,12 @@
       "from_id": "dec:exploratory-staging",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:dec:exploratory-staging"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:external-blob-store-pressure",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:dec:external-blob-store-pressure"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -23131,6 +23575,22 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:content",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:content-manifest"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:content",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:contradiction-alignment-test",
       "properties": {
         "completeness": "complete"
@@ -23719,6 +24179,22 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:content-manifest"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cap:governance-mode"
     },
     {
@@ -24177,6 +24653,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:content-manifest",
+      "properties": {},
+      "to_id": "req:export-says-what-it-cannot-carry"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:content-store",
       "properties": {},
       "to_id": "req:content-reaches-every-seat"
@@ -24186,6 +24668,12 @@
       "from_id": "cap:content-store",
       "properties": {},
       "to_id": "req:content-store-for-what-the-graph-points-at"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "req:the-store-is-reachable-from-a-session"
     },
     {
       "edge_type": "SATISFIES",
@@ -24312,6 +24800,12 @@
       "from_id": "cap:freshness",
       "properties": {},
       "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {},
+      "to_id": "req:a-question-arrives-with-a-reading"
     },
     {
       "edge_type": "SATISFIES",
@@ -24858,6 +25352,24 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:content-manifest",
+      "properties": {
+        "modality": "required",
+        "recorded_at": "2026-07-31"
+      },
+      "to_id": "rel:v0190"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:content-store",
+      "properties": {
+        "modality": "required",
+        "recorded_at": "2026-07-31"
+      },
+      "to_id": "rel:v0190"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "cap:plan-movement-recorded",
       "properties": {
         "modality": "required",
@@ -24975,6 +25487,24 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:content-manifest",
+      "properties": {},
+      "to_id": "cap:content-manifest"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:content-store",
+      "properties": {},
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:content-surface",
+      "properties": {},
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:coverage",
       "properties": {},
       "to_id": "cap:coverage"
@@ -25050,6 +25580,12 @@
       "from_id": "ver:freshness",
       "properties": {},
       "to_id": "cap:freshness"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:gap-carries-a-reading",
+      "properties": {},
+      "to_id": "cap:gap-carries-a-reading"
     },
     {
       "edge_type": "VERIFIES",
@@ -25329,6 +25865,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:session-artifacts",
+      "properties": {},
+      "to_id": "cap:session-artifacts"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:shared-sessions",
       "properties": {},
       "to_id": "cap:shared-sessions"
@@ -25338,6 +25880,12 @@
       "from_id": "ver:skill-lint",
       "properties": {},
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:skill-triggers",
+      "properties": {},
+      "to_id": "cap:skill-triggers"
     },
     {
       "edge_type": "VERIFIES",
@@ -25386,6 +25934,12 @@
       "from_id": "ver:surface",
       "properties": {},
       "to_id": "cap:surface"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:tool-carries-convention",
+      "properties": {},
+      "to_id": "cap:tool-carries-convention"
     },
     {
       "edge_type": "VERIFIES",
@@ -25522,6 +26076,14 @@
         "action": "created"
       },
       "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:content",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:content"
     },
     {
       "edge_type": "YIELDED",
@@ -26209,6 +26771,17 @@
       }
     },
     {
+      "node_id": "art:content",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:c7b979d360e1e062",
+        "location": "crates/reflow2-core/src/content.rs",
+        "name": "content.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:contradiction-alignment-test",
       "node_type": "Artifact",
       "properties": {
@@ -26565,7 +27138,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:135bd303bf1006cf6e0f4d7646f2acef07dedc1dd5e355758532501d8d5916db",
+        "checksum": "sha256:1702df92e14a3d7abac61e3e13387fd464bacc18bc31d5f9a858cde846dafe32",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -26807,7 +27380,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6e0871fae3717107",
+        "checksum": "sha256:8539f6864f883aad",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -26928,7 +27501,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c752bf93202e8f9b",
+        "checksum": "sha256:595c17e32440dba8",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
         "status": "realized"
@@ -27334,15 +27907,28 @@
       }
     },
     {
+      "node_id": "cap:content-manifest",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Content hash → readable name → what references it, so a design that points at stored content can say what it does NOT itself carry. `missing` names content the graph references and this checkout lacks — the case someone handed the export alone hits, where a diagram that will not open becomes a named finding instead of a silent absence. `orphaned` is the reverse: bytes stored and referenced by nothing, which is how a store grows without anyone deciding to (and the reason `dec:where-content-lives` left repo growth deliberately open).\n\nDERIVED, NEVER STORED, and that is the design rather than an optimisation. The manifest is computed from the graph plus a directory listing; a manifest kept as its own record would be a second source of truth about what the design references and would drift the first time someone updated one and not the other. Rendering it to a committed markdown file is a PROJECTION — the same relationship `dec:views-are-projections` already sets for every other view.\n\nTHE READABLE NAME IS THE FRAGMENT'S `title`, not a filename stored beside the hash. The graph already requires a title, so there is no second place for names to live and nothing to disagree with the design about what a thing is called. `referenced_by` carries the Fragment AND what it annotates or yielded, so \"what is this picture for?\" is answerable from the manifest without opening anything.\n\nA LOCATOR AFTER THE HASH TRAVELS VERBATIM and is never parsed (`dec:agent-navigates-content`) — `sha256:…#L412-L440` resolves to the same blob and reports `L412-L440` untouched. A `content_ref` holding a plain PATH from before the store existed is not treated as content at all, so legacy references do not read as missing blobs.\n\nNeeded a FOURTH store function, `list` — named rather than slipped in, because `dec:content-store-implementation` argued for three. That argument was about `object_store`'s path/prefix/pagination semantics, which immutable content addressing does not need; enumerating a flat set of addresses is a different thing, and orphan detection is impossible without it. `list` skips anything whose name is not a hash, so a stranded temp file or the committed manifest is never mistaken for content.\n\nPaired with `.gitattributes` marking the blob directory `binary` — which stops git attempting diffs it cannot produce and, the part that matters, stops line-ending conversion silently corrupting a PNG on a CRLF checkout. REALIZED; `ver:content-manifest` passing, served as `content_manifest`.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say what content the design depends on, in names a person can read",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:content-store",
       "node_type": "Capability",
       "properties": {
-        "description": "A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures.\n\nHAND-ROLLED AND SYNCHRONOUS, IN `reflow2-core` (`dec:content-store-implementation`, Anthony 2026-07-31). Three operations — `put(bytes) -> hash`, `get(hash) -> bytes`, `exists(hash)` — over `sha2` (already a core dependency) and `std::fs`, with write-to-temp-then-rename for atomicity. Zero new crates, no async runtime, deterministic and testable in memory like the rest of the core. `object_store` was measured and recorded as the documented UPGRADE PATH rather than adopted: 36 crates new to reflow2, ~24 of them URL/ICU machinery a local store never calls, and its value — paths, prefixes, listing, multipart, conditional writes — is exactly the feature set immutable content addressing does not have.\n\nBlobs are COMMITTED to the repo, so they travel exactly as the design does: clone and you have everything, with no second channel to configure or be down (`dec:where-content-lives`). Reading INTO stored content is not this capability's job and never becomes one — the agent navigates, the graph records an opaque locator it never parses (`dec:agent-navigates-content`). PLANNED.",
+        "description": "A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures.\n\nHAND-ROLLED AND SYNCHRONOUS, IN `reflow2-core` (`dec:content-store-implementation`). `put` / `get` / `exists` over `sha2` and `std::fs`. Zero new crates in the core, no async runtime. `object_store` was measured and recorded as the documented UPGRADE PATH rather than adopted: 36 crates new to reflow2, ~24 of them URL/ICU machinery a local store never calls, buying a feature set — paths, prefixes, listing, multipart, conditional writes — that immutable content addressing does not have.\n\nREACHABLE FROM A SESSION as `content_put` / `content_get` / `content_exists` (`req:the-store-is-reachable-from-a-session`). That requirement exists because this capability was first marked `realized` while NOTHING COULD CALL IT — complete in the core, tested, carrying a passing check, and unreachable by every agent and person who would use it. Content arrives as `text` or `base64` (JSON carries no raw bytes), exactly one, and the store's root comes from `--content-path` rather than being derived from `--graph-path`, because the graph lives under a gitignored directory and blobs are COMMITTED so they travel with the design.\n\nFOUR REFUSALS, which is where this earns its keep — each pinned by a test, two mutation-checked. `get` VERIFIES bytes against the hash they are stored under and refuses a mismatch: a content hash nobody checks is only a filename. A malformed hash is refused BEFORE it reaches the filesystem, since a hash is interpolated into a path. Passing both `text` and `base64` is refused rather than resolved by picking one. And a server with no store configured says so instead of inventing a directory — where blobs live is a decision about the consumer's repo.\n\nWrites are temp-then-rename, so a process that dies mid-write leaves nothing or a whole blob, and a stranded temp file is unreachable as content because its name is not a hash. Reading INTO stored content is not this capability's job and never becomes one — the agent navigates, the graph records an opaque locator reflow2 never parses (`dec:agent-navigates-content`). What belongs here versus natively in the repo is `dec:what-lives-where`. REALIZED; `ver:content-store` and `ver:content-surface` passing.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Store bytes beside the design and point at them by content hash",
         "provenance": "authored",
-        "status": "planned",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -27538,6 +28124,19 @@
         "name": "Say when a claim was last confirmed",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:gap-carries-a-reading",
+      "node_type": "Capability",
+      "properties": {
+        "description": "When a gap is put to the user, the agent's reading travels with it: the recommended answer, why, and the condition under which the other option wins. The decision stays with the user — no status moves on a recommendation alone.\n\nDELIBERATELY A NEW CAPABILITY RATHER THAN AN EXTENSION OF `cap:surface`. That capability is `verified` for what it does — turning a gap into a question in the user's words — and widening it would repeat the BL-106 defect exactly: a capability is not one behaviour, so adding a second one behind an existing passing check makes the check cover less than it appears to. New behaviour, new capability, its own check.\n\nWHAT IS TESTABLE AND WHAT IS NOT, stated so the check does not overclaim: whether a recommendation is GOOD is a semantic judgement and stays evidenced by trials (docs/sharpening.md — deliberately no LLM evals in CI). What IS mechanically checkable is the contract: that the skill states the obligation and its counterweight rule, and that no requirement status, decision status or gap acknowledgement is ever written in the same act as a recommendation. Governed by `req:a-question-arrives-with-a-reading`. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A question comes with what the agent would do, and what would change it",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -28364,7 +28963,7 @@
       "node_id": "cap:what-next",
       "node_type": "Capability",
       "properties": {
-        "description": "The answer to \"what is the most pressing item?\" once the backlog lives in the graph. It is NOT detect_gaps and NOT check-health, and the distinction is the design: detect_gaps asks what the design has not yet decided, check-health asks what shape is wrong, and this asks which of the agreed things to do now. Three different questions needing three different actions, often from three different people. Composed rather than invented — BL-85 already specifies the form (\"a backlog_report / roadmap projection, a view, never a second source of truth\"), BL-68 supplies readiness and risk-to-completion (\"the roadmap is a risk-burndown schedule\"), BL-40 is the projection layer, and the long narratives stay as documents-linked artifacts rather than being crushed into properties. THE RANKING RULE THAT MATTERS MOST: an unmade decision outranks the work waiting on it. A proposed Decision with things GOVERNED_BY it is a blocker, and pointing someone at blocked work is worse than saying nothing, because it looks like progress. Measured 2026-07-24, this is not hypothetical: dec:multi-writer-architecture blocks two nodes, so the honest answer to \"what is next\" right now is a decision only the human can make, not a build task. PREREQUISITE, and the reason this cannot usefully ship first: today ZERO accepted requirements lack a satisfying capability, so \"what is unbuilt\" is unanswerable from the graph — everything accepted is allocated to something. Distinguishing allocated from delivered needs cap:derived-completion (BL-104). Until that lands, this view can rank what is undecided and what is misshapen but is blind to what is merely unfinished. PLANNED.",
+        "description": "The answer to \"what is the most pressing item?\" once the backlog lives in the graph. NOT detect_gaps and NOT check-health, and the distinction is the design: detect_gaps asks what the design has not yet decided, check-health asks what shape is wrong, and this asks which of the agreed things to do now. Three questions needing three actions, often from three people. A view, never a second source of truth.\n\nTHE RANKING RULE THAT MATTERS MOST: an unmade decision outranks the work waiting on it. A proposed Decision with things GOVERNED_BY it is a blocker, and pointing someone at blocked work is worse than saying nothing, because it looks like progress.\n\nPREREQUISITE MET — 2026-07-31, and the finding is that NOBODY NOTICED. This capability recorded its own blocker: \"this cannot usefully ship first… distinguishing allocated from delivered needs cap:derived-completion (BL-104). Until that lands, this view can rank what is undecided and what is misshapen but is blind to what is merely unfinished.\" `cap:derived-completion` is now `verified`. It has been for some time, and the parked capability sat unchanged: nothing watches for a park whose CONDITION has expired, which is precisely what `cap:revise-trigger` exists to surface and did not. A prerequisite written into prose is a trigger nothing fires.\n\nALSO WANTED HERE, from Anthony's start-here question 2026-07-31: a WHICH-DECISIONS-SHAPE-EVERYTHING section, for the reader who has just cloned the repo and needs the few choices that explain the rest. Measured as computable — ranking Decisions by `GOVERNED_BY` in-degree surfaces the right sort of thing (functional decomposition, the three-party division, identity out of band) — with the caveat that RAW IN-DEGREE IS THE WRONG SIGNAL ON ITS OWN: the top hit was a pruning decision governing ten DROPPED requirements, high-degree and not something a newcomer must understand. It needs weighting by what the governed nodes are, not merely how many. PLANNED.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Say what to work on next, as a projection with its reasoning shown",
@@ -29133,6 +29732,14 @@
       }
     },
     {
+      "node_id": "chg:content-growth-guard",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The size guard with a recorded override, and the manifest reporting total bytes"
+      }
+    },
+    {
       "node_id": "chg:content-location-settled",
       "node_type": "ChangeEvent",
       "properties": {
@@ -29141,11 +29748,35 @@
       }
     },
     {
+      "node_id": "chg:content-manifest-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "cap:content-manifest built — derived from the graph and the store, never stored twice"
+      }
+    },
+    {
+      "node_id": "chg:content-store-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "cap:content-store built — realized, checked, and its description no longer says PLANNED"
+      }
+    },
+    {
       "node_id": "chg:content-store-hand-rolled",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "scope_change",
         "name": "cap:content-store rewritten: hand-rolled sync store in reflow2-core, not object_store in reflow2-mcp"
+      }
+    },
+    {
+      "node_id": "chg:content-surface",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "content_put / content_get / content_exists — the store becomes reachable from a session"
       }
     },
     {
@@ -29258,6 +29889,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "A check records where it ran, so simulation stops looking like reality"
+      }
+    },
+    {
+      "node_id": "chg:external-store-argument-sharpened",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The case for an external store is not only size relief — it removes the need to ration at all"
       }
     },
     {
@@ -29741,6 +30380,14 @@
       }
     },
     {
+      "node_id": "chg:vacuous-trigger-fixed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "The cut trigger stops being vacuously true, and v0.19.0 takes the content work"
+      }
+    },
+    {
       "node_id": "chg:verification-methods",
       "node_type": "ChangeEvent",
       "properties": {
@@ -29762,6 +30409,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "\"What should I work on next\" captured as a projection, distinct from detect and heal"
+      }
+    },
+    {
+      "node_id": "chg:what-next-unblocked",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "cap:what-next's recorded prerequisite has been met since it was written, and nothing noticed"
       }
     },
     {
@@ -30672,6 +31327,26 @@
       }
     },
     {
+      "node_id": "dec:content-growth-is-bounded-by-what-not-by-size",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony's call 2026-07-31, on a measurement that inverted the assumption the earlier decisions were written under.\n\nMEASURED FIRST, on reflow2's own material: its entire design prose is 3.5 MB across 64 markdown files; the design export is 1.7 MB; the whole `.git` history is 81 MB. AND 29 SESSION TRANSCRIPTS COME TO 115.8 MB, A MEAN OF 4.0 MB EACH — already 1.4× the entire repository history, accumulated in a couple of weeks.\n\nTHE CORRECTION THIS FORCES. `dec:content-manifest` states that \"raster images are the real risk and are the thing to watch first\". THAT IS WRONG, and it is recorded here rather than edited into his accepted text. Documents are noise and images are occasional; TRANSCRIPTS ARE THE GROWTH, by an order of magnitude, and they recur every session forever.\n\nWHY A SIZE CAP IS THE WRONG LEVER, which is the whole point. A 4 MB file passes any sane per-file threshold. What ends a repository is not one large object but 4 MB × EVERY SESSION, PERMANENTLY, UNPRUNABLE — git history cannot be trimmed without rewriting it and breaking every clone. Even assuming JSONL compresses to roughly a third, 500 sessions is a repository of several hundred megabytes, and \"clone and you have everything\" stops being a feature.\n\nSO THE CONTROL IS WHAT GETS STORED. Session transcripts go in BY EXCEPTION, not by default — kept when a specific claim needs its receipt, not routinely. This is not a new position, only a newly-connected one: `cap:session-memory` already says \"a pointer to a 3 MB transcript is a RECEIPT, not documentation: leaning on it recreates the markdown problem one level down.\" It named the size and named the danger; nobody had joined that to repository growth.\n\nA SIZE GUARD STILL, AND HONESTLY SCOPED. `put` refuses above a threshold with an EXPLICIT, RECORDED OVERRIDE — the idiom this project already uses everywhere: `export_graph`'s `accept_divergence`, `set_artifact_checksum`'s required disposition, `record_change` refusing a planned epoch, the schedule-loss guard. Refuse loudly, allow deliberately, record the choice. It catches the catastrophic accident — a video, a dataset — and NOT the real risk, which is stated so nobody mistakes it for the answer. The threshold is anchored to GitHub's 100 MB hard block rather than a number invented to feel safe (`req:defaults-do-not-assert`): past that the problem stops being local and becomes a failed push someone else has to understand.\n\nAND THE MANIFEST REPORTS TOTAL BYTES AND THE LARGEST ENTRIES. Report, never judge (`dec:report-dont-judge`): no threshold, just visibility on every check. This is the piece that would have surfaced the finding without anyone measuring by hand, which is the argument for it.\n\nNOT GIT LFS. It reintroduces the second distribution channel `dec:where-content-lives` chose committed blobs to avoid, and breaks the clone-and-you-have-everything property that decision was made for.\n\nWHAT WOULD CHANGE THIS, stated so it is a condition rather than a hedge: if distillation keeps proving insufficient — if people genuinely reach for raw transcripts often — then storing them routinely is correct, and the answer becomes LFS or an external store. That REOPENS `dec:where-content-lives` rather than patching around it.",
+        "name": "What bounds the store is WHAT gets stored, not how big it is — transcripts by exception, a cap only for the catastrophic case",
+        "rationale": "The recommendation changed shape when it was measured, which is the part worth keeping. The obvious answer to \"nothing bounds repo growth\" is a size cap, and a size cap would not have caught the thing that is actually growing — it would have shipped, looked prudent, and left the repository on the same trajectory.\n\nAnthony asked for the recommendation rather than taking his own earlier \"committed, no cap\" as settled, which is what created room for the measurement. Worth noting because the useful move was cheap: four `du` and `ls` calls against real material, rather than reasoning about what a content store might contain.\n\nThe correction to `dec:content-manifest` is recorded here rather than edited into it, per `dec:reopen-supersedes` — the earlier claim was reasonable when written and is simply wrong, and overwriting it would erase the fact that the project believed something else on the evidence it had.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:content-manifest",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED by Anthony 2026-07-31, delivering `req:export-says-what-it-cannot-carry` and closing the last open question under `cap:content-store`.\n\nA COMMITTED MANIFEST, plain text, mapping CONTENT HASH → ORIGINAL FILENAME → WHAT REFERENCES IT. One artefact, two jobs, which is why it was chosen over either job's narrower answer:\n\n1. COMPLETENESS. Once content exists, the export document holds only pointers, so handing someone `reflow2.json` alone gives them a design whose diagrams silently fail to resolve. The manifest makes \"do I have everything?\" a set comparison — hashes listed against hashes present — rather than a discovery made when a picture does not open. That is `req:content-reaches-every-seat`'s fail-loud requirement made checkable by a person, not only by the tool.\n\n2. LEGIBILITY IN GIT. A content-addressed blob lands as `blobs/ab/cdef…` and git reports it as an added file with a hex name that tells a reviewer nothing. The manifest is text, so the same change also appears in a diff as a readable line — `architecture-sketch.png` added, referencing `dec:x` — which is what a human actually reads in `git log -p`.\n\n`.gitattributes` MARKS THE BLOB DIRECTORY `binary`. Two concrete effects, and the second is the one that matters: git stops attempting diffs it cannot produce, and — critically — stops applying line-ending conversion, which would CORRUPT a PNG on a checkout configured for CRLF. That is silent data loss on someone else's machine, and one line prevents it.\n\nWHY THE BINARY WORRY WAS SMALLER THAN IT LOOKED, recorded because the reasoning nearly went the other way. Git's weaknesses with binaries are poor diffs, poor delta compression, and unresolvable merge conflicts. IMMUTABLE CONTENT ADDRESSING removes two of the three outright: a blob is never updated, so an \"edit\" is a NEW FILE with a new name — git sees an addition, which is the clearest possible signal — and two people adding different blobs add different files, so a binary merge conflict cannot arise. The only conflict is on the pointer inside the export, which the `merge.reflow2` driver already handles. WHAT REMAINS IS GROWTH: every version is a new file that stays forever, and that is the size-cap question `dec:where-content-lives` deliberately left open.\n\nDELIBERATELY NOT DECIDED HERE: whether the manifest lives inside the export document or beside it as its own committed file. Both satisfy the requirement; the second keeps the export byte-stable diff properties simpler and is the likelier answer, but it is an implementation choice for build time rather than a design commitment.",
+        "name": "A committed manifest — hash to filename to referenced-by — plus .gitattributes marking blobs binary",
+        "rationale": "Taken because one artefact answered two questions that arrived independently — the export-completeness gap found by an impact-check, and Anthony's worry about git legibility for binaries. When a single small thing satisfies two unrelated needs, that is usually the right shape rather than a coincidence.\n\nThe `.gitattributes` line is the part with a real failure behind it rather than an inconvenience: line-ending conversion silently corrupting a binary on a differently-configured checkout is the kind of fault that appears as \"the diagram is broken on my machine\" weeks later, with nothing in the history to point at.\n\nThe binary-churn analysis is recorded because the initial framing — mine — overstated the problem, and correcting it is what made the manifest a legibility feature rather than a workaround. Content addressing had already solved most of what was being worried about; naming which part it did NOT solve (growth) is what keeps the remaining risk visible instead of assumed handled.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:content-store-implementation",
       "node_type": "Decision",
       "properties": {
@@ -30799,6 +31474,16 @@
         "name": "The export proves itself: content hash + file-lineage chain, from AT proto's self-authenticating repos",
         "rationale": "User directed 2026-07-21 after the AT Protocol comparison: atproto repos are self-authenticating (signed commits over a content-addressed root), and reflow2's export was already deterministic — the hash was well-defined and simply never computed. Content-only hashing (stamp excluded) was proven necessary the same day: the committed export and the live export had identical content but different writers (0.8.0 script vs 0.7.0-era session server), and they must fingerprint the same. The chain lives at the file-write seam because the committed export file IS the durable record whose lineage matters; the graph itself must not be mutated by a read-only export. Ancestry is what turns compare_designs from 'what diverged' into 'was the divergence made in ignorance of the base or in defiance of it' — BL-12 sketch idea 1's question, computable for the one-step case. Signing (identity) is deliberately deferred until a second writer is real; a hash chain without keys is already tamper-evident against accident and hand-editing, which is today's actual threat model.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:external-blob-store-pressure",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "OPEN, and deliberately NOT a reopening of `dec:where-content-lives`. Anthony confirmed 2026-07-31 to proceed with the committed-blob recommendation \"for now and we can reconsider when or if we do the full object_store implementation\" — so this records a live pressure and the condition under which it becomes a fork again.\n\nTHE ARGUMENT, IN HIS SHARPER FORM. The first version of this note said the appeal of an external store was size relief. That undersells it. His framing: \"going with an external storage allows for ALL documentation to be stored and referenced.\" The point is not that the repository gets smaller — it is that THE NEED TO BE SELECTIVE DISAPPEARS. `dec:content-growth-is-bounded-by-what-not-by-size` solves the measured problem by rationing: transcripts by exception, judgement exercised every time. That works, and it is a STANDING TAX ON JUDGEMENT rather than a one-off cost. An external store removes the question instead of answering it.\n\nWHICH CHANGES WHAT WOULD REOPEN THIS. The original condition was \"total grows past what a clone should reasonably carry, with the by-exception rule followed\". Keep it, and add the one his framing implies: IF THE RATIONING ITSELF PROVES COSTLY — if sessions routinely spend judgement deciding what is worth keeping, or if things that should have been kept were not — then the tax is real and the fork is back, whatever the byte count says. A discipline that works only because someone is paying attention every time is a discipline with a running cost, and that cost is the thing to watch, not only the total.\n\nWHY NOT NOW, unchanged: the policy addresses the measured problem directly, and reflow2's entire design prose is 3.5 MB. Reopening an architectural choice to solve something a policy already solves is the wrong order, and the no-service property — clone and you have everything, nothing to configure, nothing to be down — is worth more than the convenience.\n\nWHAT IS ALREADY UNDERSTOOD, so the reopening starts from evidence rather than from scratch. `object_store` (Apache Arrow) is recorded as the documented upgrade path in `dec:content-store-implementation`, WITH ITS COST MEASURED: 36 crates new to this workspace, ~24 of them URL/ICU machinery, and an async runtime reaching a core deliberately kept synchronous. Its unified API over S3, Azure, GCS, local files and memory is exactly what makes the backend a runtime detail — and content addressing is what makes the swap safe, because a blob verifies wherever it came from. The migration is understood; only its warrant is open.\n\nTHE PROPERTY THAT WOULD BE SPENT: a second thing to configure, be down, and fall out of step — and a consumer who skips it sees a design with holes and cannot tell. `req:content-reaches-every-seat` is the requirement under pressure, not merely a preference. An answer must say what happens to the person who has the repo and not the credentials.",
+        "name": "OPEN — a recorded pressure on committed blobs: the real argument is not size relief, it is not having to ration",
+        "rationale": "Amended rather than left, because the first version had the argument slightly wrong and a wrong argument on the record is worse than none — it would have set up the reopening as a size question when the better case is about recurring judgement cost.\n\nRecorded at all for the reason the same day already demonstrated twice: `cap:what-next` carried its blocker in prose and nothing noticed when the condition cleared. A lean stated in passing has that shape exactly. Writing the condition down is what makes it a trigger rather than a mood.\n\nThis is the THIRD pressure on the no-service family, after `dec:central-host` and the content store itself. Three from unrelated directions is a fact about the decision worth having on the record — not an argument to change it, and not something to keep rediscovering from first principles.",
+        "status": "proposed"
       }
     },
     {
@@ -30983,6 +31668,16 @@
       }
     },
     {
+      "node_id": "dec:orientation-is-computed-not-written",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony asked 2026-07-31 whether a \"start here\" file or node should tell a newly-cloned agent what it needs to pick up where the last person left off — offered explicitly as an idea to explore, with the observation that reflow2 often already has something. It does, and the answer is: BUILD THE VIEW, NOT THE DOCUMENT.\n\nNO START-HERE FILE. Two recorded positions already forbid it, and neither is a stretch. `req:session-memory-in-graph`: \"a summary written at the end is the one a busy session never gets to, and an end-of-session digest is a retelling rather than a record.\" And `dec:what-lives-where`'s whole storyflow lesson is prose-you-navigate losing to graph-you-query. A START-HERE.md is `dev_storyflow` in miniature — it would go stale, and STALENESS IN AN ORIENTATION DOCUMENT IS THE WORST PLACE FOR IT, because it is the first thing read and the reader has nothing yet to check it against.\n\nTHE NEED IS REAL AND MOSTLY ALREADY DESIGNED. Three planned capabilities cover it between them: `cap:what-next` (which of the agreed things to do now, ranked so an unmade decision outranks the work waiting on it), `cap:onboarding` (where does a new piece of work belong, for someone who did not build the system), and `cap:session-memory` (what the last session learned, queryable rather than narrated). None needs a document; all three are projections, which is what `dec:views-are-projections` already says every view is.\n\nWHAT IS GENUINELY MISSING, and it belongs in `cap:what-next` rather than in a new thing: WHICH FEW DECISIONS SHAPE EVERYTHING ELSE. Neither what-next nor where-am-i answers it today, and it is what a newcomer actually needs — not the task list, but the handful of choices that explain why the rest looks as it does.\n\nEVIDENCE AGAINST URGENCY, recorded because it is the kind of thing that otherwise gets built on a feeling. `where-am-i` DID orient a fresh agent on this design earlier the same day: 627 nodes, roughly six calls, using `scan_nodes` with `brief: true` and reading six Decisions in full. It scales today because reads are bounded (`cap:bounded-reads`). The concern that it stops working is a FORECAST, not yet an observation — worth watching rather than pre-solving, and worth re-measuring when the answer changes rather than assuming it has.\n\nSO THE ORDER IS: build `cap:what-next`, whose blocker has already cleared, and add the shaping-decisions section to it. Do not add a fourth thing beside three planned ones that already answer the question.",
+        "name": "No START-HERE document — orientation is a projection, and writing it down would be dev_storyflow in miniature",
+        "rationale": "Taken on the recommendation rather than the request, which is the point worth noting: the question was \"should we write a start-here document\", and the honest answer was that the artefact would work against the reason the project exists. Anthony's own framing left room for that — \"maybe this isn't needed because an agent using reflow2 can already quickly know what a project is about\" — and the measurement supports it.\n\nThe more useful outcome was not the answer but what looking produced: `cap:what-next` states a prerequisite that has since been met, and nothing surfaced it. A capability that records its own blocking condition in prose has written a trigger that nothing fires. That is the same shape as every other declared-but-unread property this project keeps finding, and it is the argument for the shaping-decisions section being a COMPUTATION rather than another paragraph.\n\nThe in-degree caveat is kept deliberately. The first version of the idea looked convincing because the top three results were genuinely load-bearing; the top result was not, and reporting the idea without that would have been reporting a demo rather than a measurement.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:pairing-role-placement",
       "node_type": "Decision",
       "properties": {
@@ -31069,7 +31764,7 @@
         "decision": "PROPOSED, not accepted — this refines `dec:release-trigger`, which is Anthony's word, and per `dec:reopen-supersedes` a settled choice is re-opened by minting a new Decision rather than by editing the accepted one.\n\nTHE HOLE, found by pointing the machinery at itself within minutes of recording the trigger. `dec:release-trigger` says a cut fires when every item scheduled `required` is delivered, computed as `arrival_delta(release).missed_obligations == []`. That predicate is VACUOUSLY TRUE when the increment has no `required` items at all — so an increment promising nothing reads as ready, and so does a completely empty one.\n\nMEASURED, not reasoned: `rel:v0200` was created carrying exactly one `expected` capability (`cap:changelog-view`, unbuilt, reporting `outstanding`) and zero required ones. `arrival_delta` returned `missed_obligations: []`, which under the trigger as written means READY TO CUT — a release whose entire content is one thing nobody has built.\n\nWHY IT MATTERS MORE THAN IT LOOKS: this is the EMPTY-RELEASE failure that `dec:release-trigger` used to REJECT the fixed-cadence option (\"it cuts whether or not anything landed\"), arriving through the chosen option's own back door. The argument against the alternative applies to the choice, which is the shape worth naming — a rejection reason that was never checked against the thing it was arguing for.\n\nPROPOSED FIX, one clause: readiness requires AT LEAST ONE item scheduled `required`, AND all of them delivered. `missed_obligations == [] AND required_count > 0`. `expected` items still do not gate the cut — that half of the trigger is untouched and correct.\n\nWHAT THE FIX ALSO BUYS: it makes \"this increment has been scoped\" a precondition of cutting it. An increment with no required items has not had the question \"what must ship for this to mean anything?\" asked of it, and the trigger should not answer a question nobody put.\n\nNOT PROPOSED, deliberately: requiring that every scheduled item be delivered. That would collapse the modality distinction the schedule exists to carry, and make an increment hostage to its most speculative entry.\n\nNOTE ON PROVENANCE: `rel:v0200` and the `cap:changelog-view` schedule against it were created BY THE AGENT as a forward-roadmap placeholder to exercise the increment axis, not on Anthony's instruction — he asked only for this increment to be modelled as v0.19.0. It should be confirmed or dropped on his word. It has already earned its keep by surfacing this hole.",
         "name": "OPEN — the cut trigger is vacuously true when an increment requires nothing, so readiness must also demand at least one required item",
         "rationale": "Recorded rather than fixed, because `dec:release-trigger` carries Anthony's signature and amending it silently would be the forgery `dec:certainty-derived` forbids for requirement status — the same rule one node type over.\n\nWorth keeping for the method as much as the content: the hole was not found by reading the decision back, it was found by MODELLING A SECOND INCREMENT and asking the tool. The first increment (`rel:v0190`) is fully required and fully delivered, so it exercises only the case where the predicate is meaningfully true; nothing about it could have exposed a vacuous one. A single well-formed example proves a rule works and cannot show where it does not apply.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -31239,6 +31934,16 @@
         "decision": "Renderers may only emit what the graph states; everything else is confessed as a finding.",
         "name": "A view is a projection of the graph; renderer fill-ins are defects",
         "rationale": "UAF/DoDAF doctrine from the author: the graph stores all design detail, the agent only renders viewpoints. If rendering requires extrapolation, something is missing inside reflow2 — almost always. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); render_views.py, BL-40.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:what-lives-where",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony's rule, 2026-07-31, drawing the line the content store needs and nothing had yet stated.\n\nTHE TEST, in his words: \"the actual implemented design of something or its artifacts\" stays NATIVE IN THE REPO. Everything that INFLUENCED the design without being its output goes in the CONTENT STORE.\n\n  NATIVE IN THE REPO — the codebase reflow2 helps build, and anything that gets compiled, tested, shipped or read by a consumer. It is versioned, diffed and reviewed as code always has been; reflow2 changes nothing about it. A README or an ADR that ships WITH the product also stays native, because it is a product-facing artefact rather than an input — the rule is about role, not about whether something is prose.\n\n  IN THE CONTENT STORE — a markdown file a user wrote describing a design aspect, a corpus of decision notes, a whiteboard photograph, a session transcript, a diagram an agent drew to explain a choice. These informed what got built and are not themselves the thing built.\n\nTHE EVIDENCE, AND IT IS WHY REFLOW2 EXISTS. storyflow began as one repo holding the codebase AND every markdown file recording Anthony's design decisions — now 900+ documents. Two costs, and the second is the one that matters:\n\n  (1) NAVIGATION. The repo was a mess: design notes and source interleaved, and neither easy to move through.\n\n  (2) RETRIEVAL, which is the deeper failure. In his words: \"whenever I started implementing design, I had to remember where in those 900+ design documents something actually was\" — they were not all in one folder, not consistently labelled, not structured so you could work out where anything lived. And worse: \"some of my design choices were spread across multiple documents\", so even finding the right document was not finding the answer.\n\n  THE WORKAROUND TAKEN: a two-repo split — `storyflow` for the codebase, `dev_storyflow` for the design corpus (979 notes as of the 2026-07-20 adopt trial). It works, and it fixes exactly ONE of the two problems.\n\nWHY THAT MAKES IT THE MOTIVATING CASE RATHER THAN THE SOLUTION. Separating the documents cures the mess and does NOTHING for retrieval. You still have to remember where a decision lives; a choice spread across five documents is still spread across five documents, now in a tidier folder. reflow2's claim is that the design record should stop being PROSE YOU NAVIGATE and become A GRAPH YOU QUERY, with the prose kept as provenance hanging off the nodes it produced. The content store is therefore NOT a neater `dev_storyflow`: the document goes to the store, what it SAID becomes nodes, and asking \"where was this decided\" becomes a query rather than an act of memory.\n\nAND IT IS WHY CROSS-DOCUMENT IDENTITY IS LOAD-BEARING RATHER THAN A NICETY. \"Spread across multiple documents\" is precisely the case `req:corpus-ingest` was written for — the same thing named in forty specifications converging on ONE node with several provenance Fragments rather than forty near-duplicates. Anthony's 900 documents are the corpus that requirement describes, and this is the experience that motivates it.\n\nTHE FALSIFIABLE FORM, worth stating because it is checkable rather than rhetorical: IF REFLOW2 WORKS, STORYFLOW WOULD NOT HAVE NEEDED `dev_storyflow`. One repo, code native, the design in the graph, the sources in the store. If a user still ends up splitting their repo to stay sane, reflow2 has not delivered what this decision claims.",
+        "name": "The repo holds what the design PRODUCED; the content store holds what INFORMED it — and storyflow is the case that proves why",
+        "rationale": "Recorded because the content store shipped without anyone stating what belongs in it, and a store with no placement rule fills up with whatever the first person guessed — after which the rule is set by accident.\n\nThe storyflow history is the valuable half rather than the rule. The rule alone reads as tidiness; the history says what tidiness is worth and where it stops helping. A user who had already tried the obvious fix, at real scale, and found it solved half the problem is much better evidence than an argument, and it is evidence from the author's own working life rather than a hypothetical.\n\nThe falsifiable form is deliberate. This project keeps finding declared properties nothing checks (`dec:edge-orthogonality`'s rule that a distinction earns its keep only if a computation reads it), and a doctrine about what goes where is exactly the kind of claim that can sit unexamined for a year. \"Would storyflow have needed a second repo?\" is a question someone can actually answer later.",
         "status": "accepted"
       }
     },
@@ -33445,6 +34150,16 @@
       }
     },
     {
+      "node_id": "frag:art:content",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered content.rs"
+      }
+    },
+    {
       "node_id": "frag:art:coverage",
       "node_type": "Fragment",
       "properties": {
@@ -34215,12 +34930,13 @@
       "node_id": "question:31748fe70566dfa2",
       "node_type": "Question",
       "properties": {
+        "answer": "Yes — a committed manifest mapping content hash to original filename to what references it. It answers both questions at once: whether someone holding only the JSON can tell what is missing, and making blob changes legible in `git log` as readable names rather than hex. Plus mark the blob directory `binary` in `.gitattributes` so git never attempts to diff a PNG or mangle it with line-ending conversion. (Anthony, 2026-07-31.)",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “Once the design points at content, the export must say what it does NOT carry — a pointer with no bytes fails loud, not quietly”",
         "gap_id": "gap:31748fe70566dfa2",
         "question": "Once diagrams and documents are stored alongside the design, sending someone just the design file no longer gives them everything — their diagrams would quietly fail to open. Should the design file list what it depends on, so a person can tell at a glance whether they have it all?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -34504,6 +35220,19 @@
       }
     },
     {
+      "node_id": "question:af1c8f6df524e2dd",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Yes — when reflow2 puts a question to the user, the assistant should say what it would do and why, while leaving the decision to the user. (Anthony, 2026-07-31.)",
+        "asked_at": "2026-07-31",
+        "context_setter": "Nothing satisfies requirement “A gap put to the user arrives with the agent's recommendation — recommending is not deciding”",
+        "gap_id": "gap:af1c8f6df524e2dd",
+        "question": "When reflow2 asks you a question about your design, should the assistant also tell you what it would do and why — while still leaving the decision to you — rather than just asking and waiting?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
       "node_id": "question:b0ef8ce1e452f881",
       "node_type": "Question",
       "properties": {
@@ -34663,6 +35392,19 @@
         "context_setter": "Capability “Explain itself to someone who has not been convinced yet” isn't assigned to any part",
         "gap_id": "gap:e68c76afcb57424c",
         "question": "You want reflow2 to explain plainly what it is and how to run it, before it explains what it believes. Nothing currently owns that job — the README, the getting-started guide and the diagrams are written by hand and belong to no part of the system. Should one part be responsible for explaining reflow2 to a newcomer, or is that simply documentation that lives outside the design?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:ff976610480dab90",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Yes — build it next. \"Put the store on the MCP surface — content_put / content_get / content_exists. It's the smallest thing that turns working code into a usable capability, and three accepted requirements sit behind it.\" (Anthony, 2026-07-31.)",
+        "asked_at": "2026-07-31",
+        "context_setter": "Nothing satisfies requirement “A capability nothing can call is not delivered — the content store needs a surface”",
+        "gap_id": "gap:ff976610480dab90",
+        "question": "The storage for diagrams and documents is written and working, but nothing an assistant can actually call reaches it — so today nobody can put a file in or get one out. Should adding those calls be the next thing built?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -34886,6 +35628,21 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Where reflow2 tells an agent which skill to use, it must phrase it as the call to make next rather than as a trailing reference. MEASURED, and this is the whole evidence: `add_capability` returned `loop_hint: \"loop: wire satisfies to the requirement this serves, then run detect_gaps when the capture batch lands (detect-and-ask)\"`. The agent that received it DID wire `satisfies` and DID run `detect_gaps` — and did NOT load `detect-and-ask`. The imperative clauses were obeyed; the skill name in parentheses was read as an attribution for where the advice came from, not as a step to take.\n\nSo the pointer already exists and already names the right skill — `cap:read-loop-hint` and the write-side `loop_hint` are both `verified` — and it still failed. That makes this cheaper than anything else in this family: the mechanism is built, delivered and correct, and only the wording is losing the effect. `run get_skill(\"detect-and-ask\") first` is a step; `(detect-and-ask)` is a footnote.\n\nSCOPE: every place reflow2 names a skill to an agent — the write tools' `loop_hint`, the read-side hint, `loop_nudge.py`'s Stop message, the SessionStart orientation, and the MCP server instructions. The rule is one line: if a skill is worth naming, name the call.\n\nNOT PROPOSED: making the hints longer or more numerous. The finding is about grammar, not volume, and a hint that grows is a hint that gets skimmed — the failure `dec:read-hint-shape` already guarded against by firing only when the debt is real.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-question-arrives-with-a-reading",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A gap put to the user arrives with the agent's recommendation — recommending is not deciding",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When reflow2 puts a gap to the user, the agent's READING of it travels with the question: what it would do and why, and what would change that answer. The user still decides; the agent stops pretending it has no view.\n\nWHAT IS MISSING TODAY, and it is an omission rather than a prohibition. `detect-and-ask` is explicit that the agent must \"never invent an answer on their behalf\", which is right and must not be weakened. But the skill says nothing about offering a reading, so the default behaviour is a bare question — `gap_to_prompt` returns \"is it covered, deferred, or dropped?\" and the agent relays it. `cap:surface` (\"turn a gap into a question in the user's words\", `verified`) delivers the translation and nothing more.\n\nWHY THAT IS A DEFECT AND NOT NEUTRALITY. `req:no-se-knowledge` says the user never needs systems engineering. A bare gap question hands them back the analysis the agent has already done and asks them to redo it in their own head — which is precisely the SE work that requirement exists to spare them. The agent has read the graph, seen the precedents, and formed a view; withholding it is not impartiality, it is making the user pay for the agent's caution.\n\nIT IS ALSO WHAT `dec:three-party-checks` ALREADY DESCRIBES: \"The LLM speaks, the graph remembers and counts, the human decides.\" Offering a reading IS the LLM speaking. The decision stays with the human, untouched — and `dec:certainty-derived` still governs the write, because a recommendation changes no status until the user answers.\n\nTHE LINE THAT MUST NOT BE CROSSED, stated so this cannot be read as licence. Recommending is not deciding: no requirement moves off `proposed`, no decision reaches `accepted`, no gap is acknowledged on a reading the user has not confirmed. And a recommendation must carry WHAT WOULD CHANGE IT — the condition under which the other option wins — or it is steering rather than advising. An option presented without its counterweight is a decision taken quietly.\n\nTHE PART WORTH RECORDING, and the reason this is design rather than style: WHEN THE USER OVERRULES A RECOMMENDATION, THAT IS INFORMATION. A design where the agent advised one way and the human chose another has learned something neither party knew alone, and today it is invisible because the recommendation was never on the record. Whether the recommendation itself should be stored beside the question is left open here rather than assumed.\n\nMEASURED, not theorised: every gap put to Anthony on 2026-07-31 needed the recommendation added by hand, and he asked for it explicitly twice — \"provide your recommendation\", \"present them in simple english and your recommendations for how to proceed\". A shape a user has to request each time is a default in the wrong place.\n\nTENSION NAMED SO IT IS NOT CONFLATED: `dec:report-dont-judge` says the confirmation ledger reports claim history and never judges a claim. That governs what a COMPUTATION may assert about evidence. It does not govern whether an agent may advise a human who asked — different actor, different act. Conflating the two would silence exactly the party `dec:three-party-checks` puts there to speak.",
         "status": "accepted"
       }
     },
@@ -35471,7 +36228,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "FOUND BY IMPACT-CHECK, 2026-07-31, before any content-store code was written. `propagate_from cap:content-store` reported three boundary crossings — `ifc:core-api`, `ifc:graph-export`, `ifc:mcp-tools` — and the export one changes what an existing contract MEANS.\n\nTHE CONSEQUENCE. Blobs travel in git (`dec:where-content-lives`); the export document carries only pointers. So the moment content exists, `export_graph` stops being a complete design transfer: hand someone the JSON on its own — email it, drop it in a ticket, move it between machines — and every diagram, transcript and source document silently fails to resolve. Today the export IS the whole design, which is why `dec:export-door-spof-accepted` calls it \"an accepted single door\"; after content, it is the whole design MINUS whatever the graph points at.\n\nTHE REQUIREMENT: an export that references content must say so, and a consumer holding an export without the bytes must be able to TELL. The shape most consistent with what already exists is a manifest of referenced content hashes carried in the export beside the stamp — the stamp already records the vocabulary a document was written with, and this records the content it depends on. Then \"do I have everything?\" is a set comparison rather than a discovery made when a diagram fails to open.\n\nWHY IT CANNOT BE LEFT TO CONVENTION: `req:content-reaches-every-seat` requires an unresolvable pointer to fail LOUD and be nameable, and `req:no-silent-fallback` says the same one layer down. A design that renders quietly without its pictures satisfies neither — and the person who cannot see the diagrams is exactly the person who cannot tell they are missing.\n\nDELIBERATELY NOT SPECIFIED HERE: whether the export should also be able to EMBED content for transfer (self-contained at the cost of size), or only ever declare it. That is a separate question and should not be answered by implication.\n\nNOTE ON PROVENANCE: raised by the agent from an impact-check, not by Anthony. It is `proposed` and wants his word.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -36300,6 +37057,21 @@
       }
     },
     {
+      "node_id": "req:the-store-is-reachable-from-a-session",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A capability nothing can call is not delivered — the content store needs a surface",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "FOUND 2026-07-31, immediately after `cap:content-store` was marked `realized`. The code exists, is tested and is correct — and NOTHING CAN CALL IT. Every occurrence of `content_hash` in `reflow2-mcp/src/service.rs` belongs to the export's own hash; no served tool touches `ContentStore`. So an agent in a session cannot store a diagram, and a user cannot get one back.\n\nTHIS IS BL-97's FINDING, RECURRED. That entry recorded the same shape for extraction: \"`ingest` takes an `LlmBackend`, reflow2 ships no provider, and NO INGEST TOOL EXISTS among the 108 served — so core ingest cannot be called from a session at all, and the only working path today is the `adopt` skill.\" A capability can be complete in `reflow2-core`, pass its own tests, carry a passing Verification, and still be unreachable by everything that would use it.\n\nWHAT MAKES IT WORTH A REQUIREMENT RATHER THAN A TASK: NO DETECTOR ASKS THIS. `unrealized_capability` asks whether an artifact realizes it — one does. `unverified_capability` asks whether a check passes — one does. `detect_gaps` returned nothing about it, correctly, because reachability from the interaction surface is not something the design currently computes. The confirmation ledger will happily report it `confirmed`. So a capability can read as fully delivered across every reading reflow2 offers while being usable by nobody, which is the same class of blind spot as a declared property nothing reads.\n\nTHE REQUIREMENT: a capability whose whole purpose is to be used by an agent or a person is not delivered until something they can call reaches it. For the content store that means put / get / exists on the MCP surface. More generally it means the question \"can anyone actually invoke this?\" belongs somewhere the design can answer, rather than being noticed by whoever happens to look.\n\nSCOPE NOTE, so this does not overreach: plenty of core capabilities are legitimately internal — `cap:store`, `cap:propagate` and their kin are called BY other reflow2 code and need no tool of their own. The claim is narrower: where a capability's stated purpose names an agent or a user as the caller, an unreachable implementation has not delivered it.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:thin-install",
       "node_type": "Requirement",
       "properties": {
@@ -36399,11 +37171,61 @@
       }
     },
     {
+      "node_id": "snap:epoch:arrival-delta:cap:arrival-delta",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:temporal\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:arrival-delta\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:temporal\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:arrival-delta\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:plans-move-honestly\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"modality\":\"required\",\"recorded_at\":\"2026-07-31\"}}]",
+        "state": "{\"description\":\"At an epoch or release, answers \\\"what didn't we achieve that we were supposed to?\\\" — every scheduled item returned as delivered, deferred (and where to), discontinued, or OUTSTANDING (still due here, not delivered, and nobody has said which of the previous two it is — the question to put to the user rather than default). Work scheduled after the baseline comes back separately, because a delta measured only against the plan cannot see the work that was not in it. `required` claims that did not land are reported as computed violations rather than slips — the scheduling face of a KPP. The baseline is the target's FIRST snapshot with every later one as the movement trail, so a total slip stays visible across repeated replans; where no snapshot exists the plan never moved and the live edges are the baseline. NOTHING IS STORED: the plan lives in the snapshots and delivery is computed from the golden thread, so writing the outcome down would create a second source of truth able to disagree with the first (`dec:arrival-delta`, `req:completion-computed`).\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"What was planned against what arrived, computed and never stored\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
+        "target_id": "cap:arrival-delta",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:arrival-delta:cap:content-manifest",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-manifest\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:content-manifest\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:export-says-what-it-cannot-carry\",\"properties\":{}}]",
+        "state": "{\"description\":\"A committed plain-text manifest mapping content hash → original filename → what references it, so a design that points at stored content can say what it does NOT itself carry. Makes \\\"do I have everything?\\\" a set comparison for someone holding only the export, and makes a blob change legible in `git log` as a readable name rather than a hex path. Paired with `.gitattributes` marking the blob directory `binary`, which stops git attempting diffs it cannot produce and — the part that matters — stops line-ending conversion silently corrupting a PNG on a CRLF checkout. Governed by `dec:content-manifest`; delivers `req:export-says-what-it-cannot-carry` and makes `req:content-reaches-every-seat`'s fail-loud promise checkable by a person rather than only by the tool. PLANNED.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Say what content the design depends on, in names a person can read\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:content-manifest",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:arrival-delta:cap:content-manifest:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:content\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:service\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-manifest\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:content-manifest\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:export-says-what-it-cannot-carry\",\"properties\":{}}]",
+        "state": "{\"description\":\"Content hash → readable name → what references it, so a design that points at stored content can say what it does NOT itself carry. `missing` names content the graph references and this checkout lacks — the case someone handed the export alone hits, where a diagram that will not open becomes a named finding instead of a silent absence. `orphaned` is the reverse: bytes stored and referenced by nothing, which is how a store grows without anyone deciding to (and the reason `dec:where-content-lives` left repo growth deliberately open).\\n\\nDERIVED, NEVER STORED, and that is the design rather than an optimisation. The manifest is computed from the graph plus a directory listing; a manifest kept as its own record would be a second source of truth about what the design references and would drift the first time someone updated one and not the other. Rendering it to a committed markdown file is a PROJECTION — the same relationship `dec:views-are-projections` already sets for every other view.\\n\\nTHE READABLE NAME IS THE FRAGMENT'S `title`, not a filename stored beside the hash. The graph already requires a title, so there is no second place for names to live and nothing to disagree with the design about what a thing is called. `referenced_by` carries the Fragment AND what it annotates or yielded, so \\\"what is this picture for?\\\" is answerable from the manifest without opening anything.\\n\\nA LOCATOR AFTER THE HASH TRAVELS VERBATIM and is never parsed (`dec:agent-navigates-content`) — `sha256:…#L412-L440` resolves to the same blob and reports `L412-L440` untouched. A `content_ref` holding a plain PATH from before the store existed is not treated as content at all, so legacy references do not read as missing blobs.\\n\\nNeeded a FOURTH store function, `list` — named rather than slipped in, because `dec:content-store-implementation` argued for three. That argument was about `object_store`'s path/prefix/pagination semantics, which immutable content addressing does not need; enumerating a flat set of addresses is a different thing, and orphan detection is impossible without it. `list` skips anything whose name is not a hash, so a stranded temp file or the committed manifest is never mistaken for content.\\n\\nPaired with `.gitattributes` marking the blob directory `binary` — which stops git attempting diffs it cannot produce and, the part that matters, stops line-ending conversion silently corrupting a PNG on a CRLF checkout. REALIZED; `ver:content-manifest` passing, served as `content_manifest`.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Say what content the design depends on, in names a person can read\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
+        "target_id": "cap:content-manifest",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:arrival-delta:cap:content-store",
       "node_type": "Snapshot",
       "properties": {
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:artifact\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:agent-navigates-content\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:where-content-lives\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-reaches-every-seat\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-store-for-what-the-graph-points-at\",\"properties\":{}}]",
         "state": "{\"description\":\"A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures. Built on `object_store` (Apache Arrow) with the local filesystem backend and cloud features OFF, so there is no service to run and cloud backends stay one configuration change away. Blobs are COMMITTED to the repo, which makes them travel exactly as the design does — clone and you have everything (`dec:where-content-lives`). The store itself lives in `reflow2-mcp` because `object_store` is async and `reflow2-core` is deliberately synchronous; the core holds only the hash, which is sync, deterministic and testable in memory. PLANNED.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Store bytes beside the design and point at them by content hash\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:content-store",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:arrival-delta:cap:content-store:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:content\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-store\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:artifact\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:agent-navigates-content\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:content-store-implementation\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:where-content-lives\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-reaches-every-seat\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-store-for-what-the-graph-points-at\",\"properties\":{}}]",
+        "state": "{\"description\":\"A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures.\\n\\nHAND-ROLLED AND SYNCHRONOUS, IN `reflow2-core` (`dec:content-store-implementation`, Anthony 2026-07-31). Three operations — `put(bytes) -> hash`, `get(hash) -> bytes`, `exists(hash)` — over `sha2` (already a core dependency) and `std::fs`, with write-to-temp-then-rename for atomicity. Zero new crates, no async runtime, deterministic and testable in memory like the rest of the core. `object_store` was measured and recorded as the documented UPGRADE PATH rather than adopted: 36 crates new to reflow2, ~24 of them URL/ICU machinery a local store never calls, and its value — paths, prefixes, listing, multipart, conditional writes — is exactly the feature set immutable content addressing does not have.\\n\\nBlobs are COMMITTED to the repo, so they travel exactly as the design does: clone and you have everything, with no second channel to configure or be down (`dec:where-content-lives`). Reading INTO stored content is not this capability's job and never becomes one — the agent navigates, the graph records an opaque locator it never parses (`dec:agent-navigates-content`). PLANNED.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Store bytes beside the design and point at them by content hash\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
+        "target_id": "cap:content-store",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:arrival-delta:cap:content-store:r3",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:content\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-store\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:artifact\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:agent-navigates-content\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:content-store-implementation\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:what-lives-where\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:where-content-lives\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-reaches-every-seat\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-store-for-what-the-graph-points-at\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-store-is-reachable-from-a-session\",\"properties\":{}}]",
+        "state": "{\"description\":\"A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures.\\n\\nHAND-ROLLED AND SYNCHRONOUS, IN `reflow2-core` (`dec:content-store-implementation`). `put(bytes) -> hash`, `get(hash) -> bytes`, `exists(hash)` over `sha2` (already a core dependency) and `std::fs`. Zero new crates, no async runtime, deterministic and testable without one. `object_store` was measured and recorded as the documented UPGRADE PATH rather than adopted: 36 crates new to reflow2, ~24 of them URL/ICU machinery a local store never calls, buying a feature set — paths, prefixes, listing, multipart, conditional writes — that immutable content addressing does not have.\\n\\nTHREE PROPERTIES THE BUILD MADE REAL, each pinned by a test and two of them mutation-checked. (1) `get` VERIFIES the bytes against the hash they are stored under and REFUSES a mismatch rather than returning it — a content hash nobody checks is only a filename, and the claim that a blob fetched from anywhere can be trusted once it verifies rests entirely on this. (2) A hash is interpolated into a path, so anything that is not exactly `sha256:` plus 64 lowercase hex is refused BEFORE it reaches the filesystem; `../../etc/passwd` is a malformed hash, not a missing file. (3) Writes are temp-then-rename within the shard directory, so a process that dies mid-write leaves nothing or a whole blob — and a stranded temp file is unreachable as content because its name is not a hash.\\n\\nBlobs are COMMITTED to the repo, so they travel exactly as the design does (`dec:where-content-lives`). Reading INTO stored content is not this capability's job and never becomes one — the agent navigates, the graph records an opaque locator reflow2 never parses (`dec:agent-navigates-content`). REALIZED, `ver:content-store` passing.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Store bytes beside the design and point at them by content hash\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
         "target_id": "cap:content-store",
         "target_type": "Capability"
       }
@@ -36419,12 +37241,32 @@
       }
     },
     {
+      "node_id": "snap:epoch:arrival-delta:cap:what-next",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:report\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:7957f52a429a38a3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:what-next\",\"properties\":{}}]",
+        "state": "{\"description\":\"The answer to \\\"what is the most pressing item?\\\" once the backlog lives in the graph. It is NOT detect_gaps and NOT check-health, and the distinction is the design: detect_gaps asks what the design has not yet decided, check-health asks what shape is wrong, and this asks which of the agreed things to do now. Three different questions needing three different actions, often from three different people. Composed rather than invented — BL-85 already specifies the form (\\\"a backlog_report / roadmap projection, a view, never a second source of truth\\\"), BL-68 supplies readiness and risk-to-completion (\\\"the roadmap is a risk-burndown schedule\\\"), BL-40 is the projection layer, and the long narratives stay as documents-linked artifacts rather than being crushed into properties. THE RANKING RULE THAT MATTERS MOST: an unmade decision outranks the work waiting on it. A proposed Decision with things GOVERNED_BY it is a blocker, and pointing someone at blocked work is worse than saying nothing, because it looks like progress. Measured 2026-07-24, this is not hypothetical: dec:multi-writer-architecture blocks two nodes, so the honest answer to \\\"what is next\\\" right now is a decision only the human can make, not a build task. PREREQUISITE, and the reason this cannot usefully ship first: today ZERO accepted requirements lack a satisfying capability, so \\\"what is unbuilt\\\" is unanswerable from the graph — everything accepted is allocated to something. Distinguishing allocated from delivered needs cap:derived-completion (BL-104). Until that lands, this view can rank what is undecided and what is misshapen but is blind to what is merely unfinished. PLANNED.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Say what to work on next, as a projection with its reasoning shown\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:what-next",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:arrival-delta:dec:arrival-delta",
       "node_type": "Snapshot",
       "properties": {
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-30\",\"role\":\"author\"}}]",
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\\n\\nAnthony, 2026-07-30: \\\"as we march forward in time, we can measure the delta of what was actually achieved/realized versus what was planned for that epoch. For instance, in epoch 3 we had planned for capability A, B, C. However, when we actually got to epoch 3 in time, we only achieved A & C, and B was discontinued or deferred to epoch 4.\\\"\\n\\nFOUR OUTCOMES PER SCHEDULED ITEM, three of them his and one the complement he did not name:\\n  - DELIVERED — the plan held (A and C).\\n  - DEFERRED — still intended, the date moved (B to epoch 4).\\n  - DISCONTINUED — no longer intended at all. Distinct from deferred in the way `retire-from-design` already distinguishes them: one is a date change, the other is a withdrawal, and conflating them either loses a commitment or embalms one.\\n  - DELIVERED BUT NEVER PLANNED — the complement. Work that arrived which nobody scheduled. Usually the most informative quarter of the delta, because unplanned work is where the estimate actually went, and a report that omits it makes a schedule look better than it was.\\n\\nTHE TRAP, and it is the same shape as the snapshot bug fixed on 2026-07-28. If deferring B simply RE-POINTS its schedule edge from epoch 3 to epoch 4, then when epoch 3 arrives the graph says epoch 3 was only ever about A and C — the slip is invisible and the plan has silently rewritten its own history. That is precisely what `req:intent-preserved` forbids, and precisely what the second-revision-overwrites-the-first defect did to snapshots. So REPLANNING MUST BE A RECORDED CHANGE, NOT AN EDIT.\\n\\nA MECHANISM THAT NEEDS NOTHING NEW, given what was verified while thinking this through: a Snapshot captures a node's INCOMING edges as well as its outgoing ones. So snapshotting the EPOCH captures every schedule edge pointing at it — the whole plan for that epoch, in one snapshot, in one call. Replanning becomes `record_change` on the epoch, which is exactly the operation the 2026-07-28 fix made safe to do twice in one epoch.\\n\\nWHAT IS COMPUTED VERSUS STORED. The delta is COMPUTED, never written down, for the same reason \\\"ARE satisfied\\\" is: `req:completion-computed` says delivery is computed from the golden thread and never asserted. At arrival, compare the last snapshot of the epoch's schedule (what was planned, as of before it moved) against what the thread says is delivered. Nothing about the outcome is stored; the two inputs already exist.\\n\\nWHAT FALLS OUT ONCE IT IS COMPUTABLE — a schedule-performance profile per epoch: hit rate (planned and delivered over planned), slip (how many deferred, and by how many epochs), attrition (how many discontinued), and unplanned (delivered but never scheduled).\\n\\nAND THE PAYOFF WORTH NAMING, because it closes a loop this project opened the same day. `req:plans-move-honestly` wants a planned claim to carry confidence that decays with horizon — Anthony's Black-Scholes analogy. Once several epochs have arrived, that confidence can be MEASURED rather than asserted: \\\"historically, items scheduled three epochs out land 40% of the time.\\\" That is the same argument that retired `req:context-is-a-modelled-quantity` on 2026-07-30 — an estimate is defensible only as a seed for something never measured — applied in the direction where the measurement is actually available, because unlike context cost, schedule performance is observed every time an epoch arrives.\",\"name\":\"OPEN — what happens when an epoch arrives, and what the planned-vs-delivered delta is computed from\",\"rationale\":\"Anthony's idea, in his own example, recorded while the thinking is still open.\\n\\nTwo things added beside it rather than in place of it: the fourth outcome (delivered but never planned), because a delta that only reports against the plan cannot see the work that was not in it; and the re-pointing trap, because the obvious implementation of \\\"defer B to epoch 4\\\" is an edge edit, and an edge edit is exactly how the plan would come to lie about what it once said.\\n\\nThe mechanism note is a measurement, not a preference: snapshots were confirmed to capture incoming edges, so the epoch-snapshot approach needs no new machinery.\",\"status\":\"proposed\"}",
         "target_id": "dec:arrival-delta",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:arrival-delta:dec:external-blob-store-pressure",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-31\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:where-content-lives\",\"properties\":{\"evidence\":\"It is a recorded pressure ON that decision, and the condition under which it would be reopened; meaningless read apart from it.\",\"optional\":false,\"weight_basis\":\"evidence\"}}]",
+        "state": "{\"decision\":\"OPEN, and deliberately NOT a reopening of `dec:where-content-lives`. Recorded because Anthony said it plainly on 2026-07-31 and then parked it — \\\"this also makes me lean towards storing the blob on something like AWS or other locations, but we can come back to this\\\" — and an unrecorded lean is how a settled decision gets eroded by drift instead of revisited on purpose.\\n\\nWHAT CHANGED. `dec:where-content-lives` chose committed blobs so the bytes travel exactly as the design does: clone and you have everything, no second channel to configure, be down, or fall out of step. That reasoning is untouched. What moved is the COST side: transcripts measure at 4.0 MB mean and 115.8 MB across 29 sessions, already 1.4× the whole repository history, and GitHub blocks a single file at 100 MB. The decision was taken when the expected content was documents and diagrams; the measurement says otherwise.\\n\\nWHY IT IS NOT REOPENED TODAY. `dec:content-growth-is-bounded-by-what-not-by-size` addresses the measured problem directly — transcripts by exception rather than by default — and if that holds, committed blobs stay comfortably viable: reflow2's entire design prose is 3.5 MB. Reopening an architectural decision to solve a problem a policy already solves would be the wrong order, and the no-service property is worth more than the convenience it would buy.\\n\\nTHE CONDITION THAT WOULD REOPEN IT, stated so this is checkable rather than a mood: if the store's total grows past what a clone should reasonably carry — WITH the by-exception rule actually being followed — then the constraint is real rather than a discipline failure, and the fork is genuinely back. `cap:content-manifest` reporting total bytes is what makes that observable rather than felt, which is why that reporting is part of the accepted growth decision rather than a nicety.\\n\\nWHAT AN ANSWER WOULD HAVE TO PRESERVE, so a future reader does not re-derive it: content is addressed BY HASH, so a blob verifies wherever it came from — that is precisely what makes the backend swappable without touching what the graph says. And `object_store` is already recorded as the documented upgrade path in `dec:content-store-implementation`, with its cost measured (36 crates, an async runtime reaching the core). So the migration is understood; what is not settled is whether it is warranted.\\n\\nTHE PROPERTY THAT WOULD BE SPENT: an external store is a second thing to configure, be down, and be out of step — and a consumer who skips it sees a design with holes and cannot tell. `req:content-reaches-every-seat` is the requirement that would come under pressure, not merely a preference.\",\"name\":\"OPEN — a recorded pressure on committed blobs, not a reopening: the growth measurement makes an external store look better than it did\",\"rationale\":\"Recorded as a decision point rather than left in conversation, because this is the exact failure the project found hours earlier: `cap:what-next` carried a prerequisite in prose, the condition cleared, and nothing noticed. A lean stated in passing has the same shape — it is real information about a settled choice, and if it lives only in a transcript it either evaporates or resurfaces as unexplained drift.\\n\\nThis is now the THIRD pressure on `dec:repo-file-embedded`'s no-service family, after `dec:central-host` (two-coast collaboration) and the content store itself. Three from unrelated directions is a fact about the decision worth having on the record — not an argument to change it, and not something to keep rediscovering.\\n\\nThe condition is written to be observable rather than persuasive: \\\"total store bytes past what a clone should carry, with the by-exception rule followed\\\". The second clause matters — without it, a discipline failure would read as an architectural constraint and reopen the wrong question.\",\"status\":\"proposed\"}",
+        "target_id": "dec:external-blob-store-pressure",
         "target_type": "Decision"
       }
     },
@@ -37019,6 +37861,42 @@
       }
     },
     {
+      "node_id": "ver:content-manifest",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-31",
+        "level": "integration",
+        "method": "test",
+        "name": "Manifest completeness, both directions: every content hash the graph references appears in the manifest with its original filename and what points at it; a referenced hash whose bytes are ABSENT is reported by name (the case someone holding only the export hits); a blob present but referenced by nothing is ALSO reported, because orphaned bytes are how a store silently grows; and `.gitattributes` marks the blob directory `binary`, pinned by a case that would otherwise let line-ending conversion corrupt a PNG. PLANNED.",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:content-store",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-31",
+        "level": "unit",
+        "method": "test",
+        "name": "Content store round-trip and failure modes: the same bytes yield the same hash and are stored once; get(hash) returns exactly what put() took; a blob whose bytes no longer match its hash is REFUSED on read rather than returned (content addressing is only worth having if it is checked); a missing blob fails loud naming the hash and what referenced it; an interrupted write leaves no partial file, proven by writing to a temp path and renaming. PLANNED — written before the build so the shape of the proof is settled first.",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:content-surface",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-31",
+        "level": "integration",
+        "method": "test",
+        "name": "The store on the MCP surface (crates/reflow2-mcp/tests/tools.rs, 5 cases): text round-trips and a re-put reports `already_present` rather than looking like new work; NON-UTF-8 BYTES survive the JSON boundary as base64 and come back base64 unchanged, which is the whole reason that field exists; passing both `text` and `base64` is REFUSED rather than resolved by picking one, and passing neither is refused as a mistake rather than stored as an empty blob; `exists` answers false for an unstored hash without erroring, because that is the call someone makes to ask \"do I have everything?\"; and A SERVER WITH NO --content-path CONFIGURED REFUSES BY NAME instead of inventing a directory — blobs are committed, so where they live is a decision about the consumer's repo.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:coverage",
       "node_type": "Verification",
       "properties": {
@@ -37154,6 +38032,17 @@
         "method": "test",
         "name": "confirm.rs",
         "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:gap-carries-a-reading",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "The CONTRACT is checked, not the judgement: skill_lint asserts detect-and-ask states both halves — offer a reading, and carry what would change it — so the obligation cannot be quietly dropped from the skill; and no requirement status, decision status or gap acknowledgement is written in the same act as a recommendation, which is the line between advising and deciding. DELIBERATELY NOT CHECKED: whether a given recommendation is GOOD. That is a semantic judgement and stays evidenced by trials per docs/sharpening.md — asserting it in CI would be the LLM-eval this project has refused on purpose. PLANNED.",
+        "status": "planned"
       }
     },
     {
@@ -37676,6 +38565,17 @@
       }
     },
     {
+      "node_id": "ver:session-artifacts",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "integration",
+        "method": "test",
+        "name": "The link is the filter: a rendering a Decision or Capability points at is captured into the store; one nothing points at is NOT, so the store does not fill with session litter; and the capture happens without the agent choosing to invoke it, which is the load-bearing half — a capture that depends on remembering decays exactly as req:skill-use-survives-a-long-session measures. PLANNED.",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "ver:shared-sessions",
       "node_type": "Verification",
       "properties": {
@@ -37696,6 +38596,17 @@
         "method": "analysis",
         "name": "skill_lint.py — the skills' contract with the served surface (tool refs resolve, mirrors byte-identical, frontmatter, standing rule), enforced in CI on every push",
         "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:skill-triggers",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "integration",
+        "method": "test",
+        "name": "Shape-matching fires on the situation and stays silent otherwise: a file edit with no ChangeEvent in the window names impact-check; an artifact checksum drift names link-artifacts; a capture batch with no gap pass names detect-and-ask. AND THE COUNTERWEIGHT, which is the case that matters most: a session that did the right thing gets NOTHING — a trigger that fires on correct work is the failure BL-23 and BL-42 both name, and this capability exists to reduce nagging rather than add it. PLANNED.",
+        "status": "planned"
       }
     },
     {
@@ -37780,6 +38691,17 @@
       }
     },
     {
+      "node_id": "ver:tool-carries-convention",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "The convention rides the tool and stays bounded: the tools whose skills carry a non-inferable rule have that one sentence in their served description (checked against a named list, so adding a tool without considering it is caught); no description exceeds the sentence budget, because the cost of this is context paid on every session; and the toolsnap goldens still match, so the addition is a deliberate surface change rather than drift. Enforced in skill_lint alongside the existing served-tool-name checks. PLANNED.",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "ver:tool-search",
       "node_type": "Verification",
       "properties": {
@@ -37825,7 +38747,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:862b4456d4d0121e5a3d487c4d502251c3afd7149bc2b1064f2b8dfef170f790",
+  "prev_content_hash": "sha256:635bc7d2f40090abaacdcbcbe3f60fa533f3606385310a09def549f05fd04758",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
