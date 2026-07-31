@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:14c7f2e2675cfeed4c49590eba007036dfb3ca7faae107ff1d19a95a707e2b1c",
+  "content_hash": "sha256:944cb7dfad4ab5cb3dfde115a2cea83d9a3c99c87999a74b225553f7896a777c",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -3575,6 +3575,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-store-is-reachable-from-a-session",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "ctr:claude-fable"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -10432,6 +10441,16 @@
         "weight_basis": "evidence"
       },
       "to_id": "req:corpus-ingest"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:the-store-is-reachable-from-a-session",
+      "properties": {
+        "evidence": "The store exists and is tested; this is the half that makes it usable by the agent and user that requirement is written for.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "req:content-store-for-what-the-graph-points-at"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -36591,6 +36610,21 @@
       }
     },
     {
+      "node_id": "req:the-store-is-reachable-from-a-session",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A capability nothing can call is not delivered — the content store needs a surface",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "FOUND 2026-07-31, immediately after `cap:content-store` was marked `realized`. The code exists, is tested and is correct — and NOTHING CAN CALL IT. Every occurrence of `content_hash` in `reflow2-mcp/src/service.rs` belongs to the export's own hash; no served tool touches `ContentStore`. So an agent in a session cannot store a diagram, and a user cannot get one back.\n\nTHIS IS BL-97's FINDING, RECURRED. That entry recorded the same shape for extraction: \"`ingest` takes an `LlmBackend`, reflow2 ships no provider, and NO INGEST TOOL EXISTS among the 108 served — so core ingest cannot be called from a session at all, and the only working path today is the `adopt` skill.\" A capability can be complete in `reflow2-core`, pass its own tests, carry a passing Verification, and still be unreachable by everything that would use it.\n\nWHAT MAKES IT WORTH A REQUIREMENT RATHER THAN A TASK: NO DETECTOR ASKS THIS. `unrealized_capability` asks whether an artifact realizes it — one does. `unverified_capability` asks whether a check passes — one does. `detect_gaps` returned nothing about it, correctly, because reachability from the interaction surface is not something the design currently computes. The confirmation ledger will happily report it `confirmed`. So a capability can read as fully delivered across every reading reflow2 offers while being usable by nobody, which is the same class of blind spot as a declared property nothing reads.\n\nTHE REQUIREMENT: a capability whose whole purpose is to be used by an agent or a person is not delivered until something they can call reaches it. For the content store that means put / get / exists on the MCP surface. More generally it means the question \"can anyone actually invoke this?\" belongs somewhere the design can answer, rather than being noticed by whoever happens to look.\n\nSCOPE NOTE, so this does not overreach: plenty of core capabilities are legitimately internal — `cap:store`, `cap:propagate` and their kin are called BY other reflow2 code and need no tool of their own. The claim is narrower: where a capability's stated purpose names an agent or a user as the caller, an unreachable implementation has not delivered it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:thin-install",
       "node_type": "Requirement",
       "properties": {
@@ -38193,7 +38227,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5ed930e20bcd6fccdca3f35d41c99130e58ae662e5f6164b363712b9e7ff5162",
+  "prev_content_hash": "sha256:14c7f2e2675cfeed4c49590eba007036dfb3ca7faae107ff1d19a95a707e2b1c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
