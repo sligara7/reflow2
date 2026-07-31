@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bff718696cd409c26d9d55cb5ab8c75e6365f1fda4c4810bdb0671bafa63ef98",
+  "content_hash": "sha256:1dbe873817e5a189afeb425316aad585527dd3ff74d37f61fd9f0d6d666b35ec",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -272,6 +272,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:agent"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2823,6 +2831,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -24379,6 +24396,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {},
+      "to_id": "req:a-question-arrives-with-a-reading"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:genesis",
       "properties": {},
       "to_id": "req:no-se-knowledge"
@@ -25039,6 +25062,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:content-manifest",
+      "properties": {},
+      "to_id": "cap:content-manifest"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:content-store",
+      "properties": {},
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:coverage",
       "properties": {},
       "to_id": "cap:coverage"
@@ -25114,6 +25149,12 @@
       "from_id": "ver:freshness",
       "properties": {},
       "to_id": "cap:freshness"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:gap-carries-a-reading",
+      "properties": {},
+      "to_id": "cap:gap-carries-a-reading"
     },
     {
       "edge_type": "VERIFIES",
@@ -25393,6 +25434,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:session-artifacts",
+      "properties": {},
+      "to_id": "cap:session-artifacts"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:shared-sessions",
       "properties": {},
       "to_id": "cap:shared-sessions"
@@ -25402,6 +25449,12 @@
       "from_id": "ver:skill-lint",
       "properties": {},
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:skill-triggers",
+      "properties": {},
+      "to_id": "cap:skill-triggers"
     },
     {
       "edge_type": "VERIFIES",
@@ -25450,6 +25503,12 @@
       "from_id": "ver:surface",
       "properties": {},
       "to_id": "cap:surface"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:tool-carries-convention",
+      "properties": {},
+      "to_id": "cap:tool-carries-convention"
     },
     {
       "edge_type": "VERIFIES",
@@ -27615,6 +27674,19 @@
         "name": "Say when a claim was last confirmed",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:gap-carries-a-reading",
+      "node_type": "Capability",
+      "properties": {
+        "description": "When a gap is put to the user, the agent's reading travels with it: the recommended answer, why, and the condition under which the other option wins. The decision stays with the user — no status moves on a recommendation alone.\n\nDELIBERATELY A NEW CAPABILITY RATHER THAN AN EXTENSION OF `cap:surface`. That capability is `verified` for what it does — turning a gap into a question in the user's words — and widening it would repeat the BL-106 defect exactly: a capability is not one behaviour, so adding a second one behind an existing passing check makes the check cover less than it appears to. New behaviour, new capability, its own check.\n\nWHAT IS TESTABLE AND WHAT IS NOT, stated so the check does not overclaim: whether a recommendation is GOOD is a semantic judgement and stays evidenced by trials (docs/sharpening.md — deliberately no LLM evals in CI). What IS mechanically checkable is the contract: that the skill states the obligation and its counterweight rule, and that no requirement status, decision status or gap acknowledgement is ever written in the same act as a recommendation. Governed by `req:a-question-arrives-with-a-reading`. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A question comes with what the agent would do, and what would change it",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -34595,12 +34667,13 @@
       "node_id": "question:af1c8f6df524e2dd",
       "node_type": "Question",
       "properties": {
+        "answer": "Yes — when reflow2 puts a question to the user, the assistant should say what it would do and why, while leaving the decision to the user. (Anthony, 2026-07-31.)",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “A gap put to the user arrives with the agent's recommendation — recommending is not deciding”",
         "gap_id": "gap:af1c8f6df524e2dd",
         "question": "When reflow2 asks you a question about your design, should the assistant also tell you what it would do and why — while still leaving the decision to you — rather than just asking and waiting?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -35001,7 +35074,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "When reflow2 puts a gap to the user, the agent's READING of it travels with the question: what it would do and why, and what would change that answer. The user still decides; the agent stops pretending it has no view.\n\nWHAT IS MISSING TODAY, and it is an omission rather than a prohibition. `detect-and-ask` is explicit that the agent must \"never invent an answer on their behalf\", which is right and must not be weakened. But the skill says nothing about offering a reading, so the default behaviour is a bare question — `gap_to_prompt` returns \"is it covered, deferred, or dropped?\" and the agent relays it. `cap:surface` (\"turn a gap into a question in the user's words\", `verified`) delivers the translation and nothing more.\n\nWHY THAT IS A DEFECT AND NOT NEUTRALITY. `req:no-se-knowledge` says the user never needs systems engineering. A bare gap question hands them back the analysis the agent has already done and asks them to redo it in their own head — which is precisely the SE work that requirement exists to spare them. The agent has read the graph, seen the precedents, and formed a view; withholding it is not impartiality, it is making the user pay for the agent's caution.\n\nIT IS ALSO WHAT `dec:three-party-checks` ALREADY DESCRIBES: \"The LLM speaks, the graph remembers and counts, the human decides.\" Offering a reading IS the LLM speaking. The decision stays with the human, untouched — and `dec:certainty-derived` still governs the write, because a recommendation changes no status until the user answers.\n\nTHE LINE THAT MUST NOT BE CROSSED, stated so this cannot be read as licence. Recommending is not deciding: no requirement moves off `proposed`, no decision reaches `accepted`, no gap is acknowledged on a reading the user has not confirmed. And a recommendation must carry WHAT WOULD CHANGE IT — the condition under which the other option wins — or it is steering rather than advising. An option presented without its counterweight is a decision taken quietly.\n\nTHE PART WORTH RECORDING, and the reason this is design rather than style: WHEN THE USER OVERRULES A RECOMMENDATION, THAT IS INFORMATION. A design where the agent advised one way and the human chose another has learned something neither party knew alone, and today it is invisible because the recommendation was never on the record. Whether the recommendation itself should be stored beside the question is left open here rather than assumed.\n\nMEASURED, not theorised: every gap put to Anthony on 2026-07-31 needed the recommendation added by hand, and he asked for it explicitly twice — \"provide your recommendation\", \"present them in simple english and your recommendations for how to proceed\". A shape a user has to request each time is a default in the wrong place.\n\nTENSION NAMED SO IT IS NOT CONFLATED: `dec:report-dont-judge` says the confirmation ledger reports claim history and never judges a claim. That governs what a COMPUTATION may assert about evidence. It does not govern whether an agent may advise a human who asked — different actor, different act. Conflating the two would silence exactly the party `dec:three-party-checks` puts there to speak.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -37134,6 +37207,28 @@
       }
     },
     {
+      "node_id": "ver:content-manifest",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "integration",
+        "method": "test",
+        "name": "Manifest completeness, both directions: every content hash the graph references appears in the manifest with its original filename and what points at it; a referenced hash whose bytes are ABSENT is reported by name (the case someone holding only the export hits); a blob present but referenced by nothing is ALSO reported, because orphaned bytes are how a store silently grows; and `.gitattributes` marks the blob directory `binary`, pinned by a case that would otherwise let line-ending conversion corrupt a PNG. PLANNED.",
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "ver:content-store",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "Content store round-trip and failure modes: the same bytes yield the same hash and are stored once; get(hash) returns exactly what put() took; a blob whose bytes no longer match its hash is REFUSED on read rather than returned (content addressing is only worth having if it is checked); a missing blob fails loud naming the hash and what referenced it; an interrupted write leaves no partial file, proven by writing to a temp path and renaming. PLANNED — written before the build so the shape of the proof is settled first.",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "ver:coverage",
       "node_type": "Verification",
       "properties": {
@@ -37269,6 +37364,17 @@
         "method": "test",
         "name": "confirm.rs",
         "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:gap-carries-a-reading",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "The CONTRACT is checked, not the judgement: skill_lint asserts detect-and-ask states both halves — offer a reading, and carry what would change it — so the obligation cannot be quietly dropped from the skill; and no requirement status, decision status or gap acknowledgement is written in the same act as a recommendation, which is the line between advising and deciding. DELIBERATELY NOT CHECKED: whether a given recommendation is GOOD. That is a semantic judgement and stays evidenced by trials per docs/sharpening.md — asserting it in CI would be the LLM-eval this project has refused on purpose. PLANNED.",
+        "status": "planned"
       }
     },
     {
@@ -37791,6 +37897,17 @@
       }
     },
     {
+      "node_id": "ver:session-artifacts",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "integration",
+        "method": "test",
+        "name": "The link is the filter: a rendering a Decision or Capability points at is captured into the store; one nothing points at is NOT, so the store does not fill with session litter; and the capture happens without the agent choosing to invoke it, which is the load-bearing half — a capture that depends on remembering decays exactly as req:skill-use-survives-a-long-session measures. PLANNED.",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "ver:shared-sessions",
       "node_type": "Verification",
       "properties": {
@@ -37811,6 +37928,17 @@
         "method": "analysis",
         "name": "skill_lint.py — the skills' contract with the served surface (tool refs resolve, mirrors byte-identical, frontmatter, standing rule), enforced in CI on every push",
         "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:skill-triggers",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "integration",
+        "method": "test",
+        "name": "Shape-matching fires on the situation and stays silent otherwise: a file edit with no ChangeEvent in the window names impact-check; an artifact checksum drift names link-artifacts; a capture batch with no gap pass names detect-and-ask. AND THE COUNTERWEIGHT, which is the case that matters most: a session that did the right thing gets NOTHING — a trigger that fires on correct work is the failure BL-23 and BL-42 both name, and this capability exists to reduce nagging rather than add it. PLANNED.",
+        "status": "planned"
       }
     },
     {
@@ -37895,6 +38023,17 @@
       }
     },
     {
+      "node_id": "ver:tool-carries-convention",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "The convention rides the tool and stays bounded: the tools whose skills carry a non-inferable rule have that one sentence in their served description (checked against a named list, so adding a tool without considering it is caught); no description exceeds the sentence budget, because the cost of this is context paid on every session; and the toolsnap goldens still match, so the addition is a deliberate surface change rather than drift. Enforced in skill_lint alongside the existing served-tool-name checks. PLANNED.",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "ver:tool-search",
       "node_type": "Verification",
       "properties": {
@@ -37940,7 +38079,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e70a8cdb75c68725a11d4736d453f403d11ce064e89bdc54b438b87a410727b3",
+  "prev_content_hash": "sha256:bff718696cd409c26d9d55cb5ab8c75e6365f1fda4c4810bdb0671bafa63ef98",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
