@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:137d060eb1d96f8dbc94314d0d25e40403ab5274190a66516a6312d73485a062",
+  "content_hash": "sha256:635bc7d2f40090abaacdcbcbe3f60fa533f3606385310a09def549f05fd04758",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1727,6 +1727,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-growth-guard",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:content-location-settled",
       "properties": {},
       "to_id": "epoch:arrival-delta"
@@ -2507,6 +2513,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:cap:content-manifest:r2",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:arrival-delta:cap:content-store",
       "properties": {},
       "to_id": "epoch:arrival-delta"
@@ -3005,6 +3017,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:content-growth-is-bounded-by-what-not-by-size",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:content-manifest",
       "properties": {
         "acted_at": "2026-07-31",
@@ -3107,6 +3128,15 @@
       "from_id": "dec:exploratory-staging",
       "properties": {
         "acted_at": "2026-07-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:external-blob-store-pressure",
+      "properties": {
+        "acted_at": "2026-07-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -5621,6 +5651,33 @@
         "action": "added"
       },
       "to_id": "cap:composed-analysis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-growth-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:content"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-growth-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-growth-guard",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:content-manifest"
     },
     {
       "edge_type": "CHANGED",
@@ -9788,6 +9845,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:external-blob-store-pressure",
+      "properties": {
+        "evidence": "It is a recorded pressure ON that decision, and the condition under which it would be reopened; meaningless read apart from it.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "dec:where-content-lives"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:github-mcp-tandem",
       "properties": {
         "optional": false,
@@ -11425,6 +11492,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:content-manifest",
       "properties": {},
+      "to_id": "dec:content-growth-is-bounded-by-what-not-by-size"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:content-manifest",
+      "properties": {},
       "to_id": "dec:content-manifest"
     },
     {
@@ -11432,6 +11505,12 @@
       "from_id": "cap:content-store",
       "properties": {},
       "to_id": "dec:agent-navigates-content"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "dec:content-growth-is-bounded-by-what-not-by-size"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -15172,6 +15251,12 @@
       "from_id": "cap:content-manifest",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:cap:content-manifest"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:content-manifest",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:cap:content-manifest:r2"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -26603,7 +26688,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8e6ad38dcc672d16",
+        "checksum": "sha256:c7b979d360e1e062",
         "location": "crates/reflow2-core/src/content.rs",
         "name": "content.rs",
         "status": "realized"
@@ -27208,7 +27293,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5a907008be6b2de8",
+        "checksum": "sha256:8539f6864f883aad",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -29560,6 +29645,14 @@
       }
     },
     {
+      "node_id": "chg:content-growth-guard",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The size guard with a recorded override, and the manifest reporting total bytes"
+      }
+    },
+    {
       "node_id": "chg:content-location-settled",
       "node_type": "ChangeEvent",
       "properties": {
@@ -31131,6 +31224,16 @@
       }
     },
     {
+      "node_id": "dec:content-growth-is-bounded-by-what-not-by-size",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony's call 2026-07-31, on a measurement that inverted the assumption the earlier decisions were written under.\n\nMEASURED FIRST, on reflow2's own material: its entire design prose is 3.5 MB across 64 markdown files; the design export is 1.7 MB; the whole `.git` history is 81 MB. AND 29 SESSION TRANSCRIPTS COME TO 115.8 MB, A MEAN OF 4.0 MB EACH — already 1.4× the entire repository history, accumulated in a couple of weeks.\n\nTHE CORRECTION THIS FORCES. `dec:content-manifest` states that \"raster images are the real risk and are the thing to watch first\". THAT IS WRONG, and it is recorded here rather than edited into his accepted text. Documents are noise and images are occasional; TRANSCRIPTS ARE THE GROWTH, by an order of magnitude, and they recur every session forever.\n\nWHY A SIZE CAP IS THE WRONG LEVER, which is the whole point. A 4 MB file passes any sane per-file threshold. What ends a repository is not one large object but 4 MB × EVERY SESSION, PERMANENTLY, UNPRUNABLE — git history cannot be trimmed without rewriting it and breaking every clone. Even assuming JSONL compresses to roughly a third, 500 sessions is a repository of several hundred megabytes, and \"clone and you have everything\" stops being a feature.\n\nSO THE CONTROL IS WHAT GETS STORED. Session transcripts go in BY EXCEPTION, not by default — kept when a specific claim needs its receipt, not routinely. This is not a new position, only a newly-connected one: `cap:session-memory` already says \"a pointer to a 3 MB transcript is a RECEIPT, not documentation: leaning on it recreates the markdown problem one level down.\" It named the size and named the danger; nobody had joined that to repository growth.\n\nA SIZE GUARD STILL, AND HONESTLY SCOPED. `put` refuses above a threshold with an EXPLICIT, RECORDED OVERRIDE — the idiom this project already uses everywhere: `export_graph`'s `accept_divergence`, `set_artifact_checksum`'s required disposition, `record_change` refusing a planned epoch, the schedule-loss guard. Refuse loudly, allow deliberately, record the choice. It catches the catastrophic accident — a video, a dataset — and NOT the real risk, which is stated so nobody mistakes it for the answer. The threshold is anchored to GitHub's 100 MB hard block rather than a number invented to feel safe (`req:defaults-do-not-assert`): past that the problem stops being local and becomes a failed push someone else has to understand.\n\nAND THE MANIFEST REPORTS TOTAL BYTES AND THE LARGEST ENTRIES. Report, never judge (`dec:report-dont-judge`): no threshold, just visibility on every check. This is the piece that would have surfaced the finding without anyone measuring by hand, which is the argument for it.\n\nNOT GIT LFS. It reintroduces the second distribution channel `dec:where-content-lives` chose committed blobs to avoid, and breaks the clone-and-you-have-everything property that decision was made for.\n\nWHAT WOULD CHANGE THIS, stated so it is a condition rather than a hedge: if distillation keeps proving insufficient — if people genuinely reach for raw transcripts often — then storing them routinely is correct, and the answer becomes LFS or an external store. That REOPENS `dec:where-content-lives` rather than patching around it.",
+        "name": "What bounds the store is WHAT gets stored, not how big it is — transcripts by exception, a cap only for the catastrophic case",
+        "rationale": "The recommendation changed shape when it was measured, which is the part worth keeping. The obvious answer to \"nothing bounds repo growth\" is a size cap, and a size cap would not have caught the thing that is actually growing — it would have shipped, looked prudent, and left the repository on the same trajectory.\n\nAnthony asked for the recommendation rather than taking his own earlier \"committed, no cap\" as settled, which is what created room for the measurement. Worth noting because the useful move was cheap: four `du` and `ls` calls against real material, rather than reasoning about what a content store might contain.\n\nThe correction to `dec:content-manifest` is recorded here rather than edited into it, per `dec:reopen-supersedes` — the earlier claim was reasonable when written and is simply wrong, and overwriting it would erase the fact that the project believed something else on the evidence it had.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:content-manifest",
       "node_type": "Decision",
       "properties": {
@@ -31268,6 +31371,16 @@
         "name": "The export proves itself: content hash + file-lineage chain, from AT proto's self-authenticating repos",
         "rationale": "User directed 2026-07-21 after the AT Protocol comparison: atproto repos are self-authenticating (signed commits over a content-addressed root), and reflow2's export was already deterministic — the hash was well-defined and simply never computed. Content-only hashing (stamp excluded) was proven necessary the same day: the committed export and the live export had identical content but different writers (0.8.0 script vs 0.7.0-era session server), and they must fingerprint the same. The chain lives at the file-write seam because the committed export file IS the durable record whose lineage matters; the graph itself must not be mutated by a read-only export. Ancestry is what turns compare_designs from 'what diverged' into 'was the divergence made in ignorance of the base or in defiance of it' — BL-12 sketch idea 1's question, computable for the one-step case. Signing (identity) is deliberately deferred until a second writer is real; a hash chain without keys is already tamper-evident against accident and hand-editing, which is today's actual threat model.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:external-blob-store-pressure",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "OPEN, and deliberately NOT a reopening of `dec:where-content-lives`. Recorded because Anthony said it plainly on 2026-07-31 and then parked it — \"this also makes me lean towards storing the blob on something like AWS or other locations, but we can come back to this\" — and an unrecorded lean is how a settled decision gets eroded by drift instead of revisited on purpose.\n\nWHAT CHANGED. `dec:where-content-lives` chose committed blobs so the bytes travel exactly as the design does: clone and you have everything, no second channel to configure, be down, or fall out of step. That reasoning is untouched. What moved is the COST side: transcripts measure at 4.0 MB mean and 115.8 MB across 29 sessions, already 1.4× the whole repository history, and GitHub blocks a single file at 100 MB. The decision was taken when the expected content was documents and diagrams; the measurement says otherwise.\n\nWHY IT IS NOT REOPENED TODAY. `dec:content-growth-is-bounded-by-what-not-by-size` addresses the measured problem directly — transcripts by exception rather than by default — and if that holds, committed blobs stay comfortably viable: reflow2's entire design prose is 3.5 MB. Reopening an architectural decision to solve a problem a policy already solves would be the wrong order, and the no-service property is worth more than the convenience it would buy.\n\nTHE CONDITION THAT WOULD REOPEN IT, stated so this is checkable rather than a mood: if the store's total grows past what a clone should reasonably carry — WITH the by-exception rule actually being followed — then the constraint is real rather than a discipline failure, and the fork is genuinely back. `cap:content-manifest` reporting total bytes is what makes that observable rather than felt, which is why that reporting is part of the accepted growth decision rather than a nicety.\n\nWHAT AN ANSWER WOULD HAVE TO PRESERVE, so a future reader does not re-derive it: content is addressed BY HASH, so a blob verifies wherever it came from — that is precisely what makes the backend swappable without touching what the graph says. And `object_store` is already recorded as the documented upgrade path in `dec:content-store-implementation`, with its cost measured (36 crates, an async runtime reaching the core). So the migration is understood; what is not settled is whether it is warranted.\n\nTHE PROPERTY THAT WOULD BE SPENT: an external store is a second thing to configure, be down, and be out of step — and a consumer who skips it sees a design with holes and cannot tell. `req:content-reaches-every-seat` is the requirement that would come under pressure, not merely a preference.",
+        "name": "OPEN — a recorded pressure on committed blobs, not a reopening: the growth measurement makes an external store look better than it did",
+        "rationale": "Recorded as a decision point rather than left in conversation, because this is the exact failure the project found hours earlier: `cap:what-next` carried a prerequisite in prose, the condition cleared, and nothing noticed. A lean stated in passing has the same shape — it is real information about a settled choice, and if it lives only in a transcript it either evaporates or resurfaces as unexplained drift.\n\nThis is now the THIRD pressure on `dec:repo-file-embedded`'s no-service family, after `dec:central-host` (two-coast collaboration) and the content store itself. Three from unrelated directions is a fact about the decision worth having on the record — not an argument to change it, and not something to keep rediscovering.\n\nThe condition is written to be observable rather than persuasive: \"total store bytes past what a clone should carry, with the by-exception rule followed\". The second clause matters — without it, a discipline failure would read as an architectural constraint and reopen the wrong question.",
+        "status": "proposed"
       }
     },
     {
@@ -36965,6 +37078,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:arrival-delta:cap:content-manifest:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:content\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:service\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-manifest\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:content-manifest\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:export-says-what-it-cannot-carry\",\"properties\":{}}]",
+        "state": "{\"description\":\"Content hash → readable name → what references it, so a design that points at stored content can say what it does NOT itself carry. `missing` names content the graph references and this checkout lacks — the case someone handed the export alone hits, where a diagram that will not open becomes a named finding instead of a silent absence. `orphaned` is the reverse: bytes stored and referenced by nothing, which is how a store grows without anyone deciding to (and the reason `dec:where-content-lives` left repo growth deliberately open).\\n\\nDERIVED, NEVER STORED, and that is the design rather than an optimisation. The manifest is computed from the graph plus a directory listing; a manifest kept as its own record would be a second source of truth about what the design references and would drift the first time someone updated one and not the other. Rendering it to a committed markdown file is a PROJECTION — the same relationship `dec:views-are-projections` already sets for every other view.\\n\\nTHE READABLE NAME IS THE FRAGMENT'S `title`, not a filename stored beside the hash. The graph already requires a title, so there is no second place for names to live and nothing to disagree with the design about what a thing is called. `referenced_by` carries the Fragment AND what it annotates or yielded, so \\\"what is this picture for?\\\" is answerable from the manifest without opening anything.\\n\\nA LOCATOR AFTER THE HASH TRAVELS VERBATIM and is never parsed (`dec:agent-navigates-content`) — `sha256:…#L412-L440` resolves to the same blob and reports `L412-L440` untouched. A `content_ref` holding a plain PATH from before the store existed is not treated as content at all, so legacy references do not read as missing blobs.\\n\\nNeeded a FOURTH store function, `list` — named rather than slipped in, because `dec:content-store-implementation` argued for three. That argument was about `object_store`'s path/prefix/pagination semantics, which immutable content addressing does not need; enumerating a flat set of addresses is a different thing, and orphan detection is impossible without it. `list` skips anything whose name is not a hash, so a stranded temp file or the committed manifest is never mistaken for content.\\n\\nPaired with `.gitattributes` marking the blob directory `binary` — which stops git attempting diffs it cannot produce and, the part that matters, stops line-ending conversion silently corrupting a PNG on a CRLF checkout. REALIZED; `ver:content-manifest` passing, served as `content_manifest`.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Say what content the design depends on, in names a person can read\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
+        "target_id": "cap:content-manifest",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:arrival-delta:cap:content-store",
       "node_type": "Snapshot",
       "properties": {
@@ -38501,7 +38624,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:acd5cb3775af2465c031caa732008fff7f2d2b97b7e5971f1e4a89c13efe1b0f",
+  "prev_content_hash": "sha256:137d060eb1d96f8dbc94314d0d25e40403ab5274190a66516a6312d73485a062",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

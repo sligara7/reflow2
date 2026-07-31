@@ -67,6 +67,22 @@ const HASH_PREFIX: &str = "sha256:";
 /// Hex characters in a sha-256 digest.
 const HASH_HEX_LEN: usize = 64;
 
+/// Above this, `put` refuses unless the caller says yes on the record.
+///
+/// ANCHORED, NOT INVENTED (`req:defaults-do-not-assert`): GitHub hard-blocks a
+/// single file at 100 MB, so past this the problem stops being local and becomes
+/// a failed push somebody else has to understand. A number chosen to feel safe
+/// would have been a guess; this one is the wall that already exists.
+///
+/// AND IT IS NOT THE REAL RISK, which is stated here so nobody mistakes the
+/// guard for the answer. Measured on reflow2 2026-07-31: session transcripts run
+/// 4.0 MB each and 115.8 MB across 29 sessions — already more than the whole
+/// repository history, and every one of them passes this cap comfortably. What
+/// bounds the store is WHAT gets stored (`dec:content-growth-is-bounded-by-what-not-by-size`);
+/// this only catches the catastrophic accident — a video, a dataset — that git
+/// cannot take back once it is in history.
+pub const LARGE_CONTENT_BYTES: usize = 100 * 1024 * 1024;
+
 /// A content-addressed store rooted at a directory.
 ///
 /// The root is supplied by the caller and never guessed. `reflow2-core` is
@@ -172,6 +188,39 @@ impl ContentStore {
     /// file sitting under a hash that promises its content. Same-directory
     /// rename keeps it on one filesystem, where rename is atomic.
     pub fn put(&self, bytes: &[u8]) -> Result<String, DynoError> {
+        self.put_allowing_large(bytes, false)
+    }
+
+    /// `put`, with the size refusal overridable on the record.
+    ///
+    /// `accept_large` is the same two-sided shape as `export_graph`'s
+    /// `accept_divergence` and `set_artifact_checksum`'s required disposition:
+    /// refuse loudly, allow deliberately, and make the caller say so rather than
+    /// discovering later that something enormous went in by accident. Committed
+    /// blobs are permanent — git history cannot be trimmed without rewriting it
+    /// and breaking every clone — so the accident this prevents is the one with
+    /// no undo.
+    pub fn put_allowing_large(
+        &self,
+        bytes: &[u8],
+        accept_large: bool,
+    ) -> Result<String, DynoError> {
+        if bytes.len() > LARGE_CONTENT_BYTES && !accept_large {
+            return Err(DynoError::Validation {
+                node_type: "ContentStore".into(),
+                property: "bytes".into(),
+                message: format!(
+                    "this content is {} MB, over the {} MB bar, and blobs are COMMITTED — git \
+                     history cannot be trimmed without rewriting it and breaking every clone, and \
+                     GitHub refuses a single file this size outright. Pass accept_large to store it \
+                     on purpose. Note this cap is not what keeps the store small: what does is what \
+                     you choose to store, and session transcripts (~4 MB each, every session) are \
+                     the growth rather than any single large file.",
+                    bytes.len() / (1024 * 1024),
+                    LARGE_CONTENT_BYTES / (1024 * 1024),
+                ),
+            });
+        }
         let hash = content_hash(bytes);
         let hex = parse_hash(&hash)?;
         let target = self.path_for(hex);
@@ -259,6 +308,26 @@ impl ContentStore {
         Ok(out)
     }
 
+    /// Total bytes held, and the largest entries largest-first.
+    ///
+    /// Reads directory metadata rather than content, so asking "how big is this
+    /// getting?" never pulls a single blob into memory — the question is asked
+    /// routinely and the answer must stay cheap.
+    pub fn sizes(&self) -> Result<(u64, Vec<(String, u64)>), DynoError> {
+        let mut sized: Vec<(String, u64)> = Vec::new();
+        for hash in self.list()? {
+            let hex = parse_hash(&hash)?;
+            let len = std::fs::metadata(self.path_for(hex))
+                .map(|m| m.len())
+                .unwrap_or(0);
+            sized.push((hash, len));
+        }
+        let total: u64 = sized.iter().map(|(_, n)| n).sum();
+        sized.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
+        sized.truncate(5);
+        Ok((total, sized))
+    }
+
     /// Read the bytes for `hash`, **verifying them against it**.
     ///
     /// The verification is the point, not a belt-and-braces extra. A content
@@ -333,6 +402,18 @@ pub struct ContentManifest {
     /// unreferenced bytes are how a store silently grows, and because
     /// `dec:where-content-lives` left repo growth deliberately unbounded.
     pub orphaned: Vec<String>,
+    /// Total bytes on disk, and the largest few, so growth is VISIBLE on every
+    /// check rather than discovered by someone running `du` on a hunch.
+    ///
+    /// Reported, never judged (`dec:report-dont-judge`) — there is no threshold
+    /// here and no warning. The number is the point: the measurement that
+    /// reframed this whole question (transcripts at 4 MB each outweighing the
+    /// entire repository) was invisible until somebody looked, and this is what
+    /// stops the next such finding needing a hunch
+    /// (`dec:content-growth-is-bounded-by-what-not-by-size`).
+    pub total_bytes: u64,
+    /// The biggest entries, largest first — hash and size.
+    pub largest: Vec<(String, u64)>,
 }
 
 /// Split a `content_ref` into its hash and whatever the agent appended.
@@ -419,11 +500,14 @@ impl DesignGraph {
             .filter(|h| !referenced.contains(h))
             .collect();
 
+        let (total_bytes, largest) = store.sizes()?;
         Ok(ContentManifest {
             store_root: store.root().display().to_string(),
             entries,
             missing,
             orphaned,
+            total_bytes,
+            largest,
         })
     }
 }
@@ -458,6 +542,18 @@ impl ContentManifest {
                     .unwrap_or_default(),
                 e.referenced_by.join(", "),
                 if e.present { "yes" } else { "**NO**" },
+            ));
+        }
+        out.push_str(&format!(
+            "\n## Size\n\n{} entries, {:.2} MB total. Reported, not judged — what keeps this \
+             small is what you choose to store, not a cap.\n\n",
+            self.entries.len() + self.orphaned.len(),
+            self.total_bytes as f64 / (1024.0 * 1024.0),
+        ));
+        for (h, n) in &self.largest {
+            out.push_str(&format!(
+                "- `{h}` — {:.2} MB\n",
+                *n as f64 / (1024.0 * 1024.0)
             ));
         }
         if !self.missing.is_empty() {

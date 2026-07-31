@@ -298,3 +298,61 @@ fn the_locator_travels_verbatim_and_is_never_parsed() {
         "the locator must not confuse the lookup"
     );
 }
+
+// ---- Growth: the guard, and the reporting that matters more ----------------
+
+/// The guard catches the catastrophic accident and says so — including that it
+/// is NOT what keeps the store small
+/// (`dec:content-growth-is-bounded-by-what-not-by-size`).
+#[test]
+fn oversized_content_is_refused_until_the_caller_says_yes_on_the_record() {
+    let s = store("oversize");
+    let big = vec![0u8; reflow2_core::LARGE_CONTENT_BYTES + 1];
+
+    let err = s
+        .put(&big)
+        .expect_err("committed blobs are permanent; this needs a decision");
+    let said = format!("{err:?}");
+    assert!(
+        said.contains("accept_large"),
+        "the refusal must name the override: {said}"
+    );
+    assert!(
+        said.contains("transcripts"),
+        "the refusal must say the cap is not the real control, or it will be mistaken for one: {said}"
+    );
+
+    // Overridable — deliberately, on the record.
+    let hash = s
+        .put_allowing_large(&big, true)
+        .expect("an explicit yes stores it");
+    assert!(s.exists(&hash).unwrap());
+}
+
+/// Ordinary content is untouched by the guard: a transcript-sized file passes,
+/// which is exactly why the cap is not the answer to growth.
+#[test]
+fn a_transcript_sized_file_passes_the_cap_which_is_the_whole_point() {
+    let s = store("transcript-sized");
+    let four_mb = vec![b'x'; 4 * 1024 * 1024];
+    s.put(&four_mb).expect("4 MB is nowhere near the bar");
+}
+
+#[test]
+fn the_manifest_reports_total_size_and_the_largest_entries() {
+    let (g, s) = design_with_content("sizes");
+    s.put(&vec![b'a'; 2048]).unwrap();
+    s.put(&vec![b'b'; 512]).unwrap();
+
+    let m = g.content_manifest(&s).unwrap();
+    assert!(
+        m.total_bytes >= 2048 + 512,
+        "total must count every blob, got {}",
+        m.total_bytes
+    );
+    assert_eq!(m.largest[0].1, 2048, "largest first");
+    assert!(
+        m.render().contains("## Size"),
+        "growth must be visible in the committed form, not only in the JSON"
+    );
+}

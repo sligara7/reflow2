@@ -1081,6 +1081,11 @@ pub struct ContentPutReq {
     /// a whiteboard, a PNG, a PDF. Exactly one of `text` or `base64`.
     #[serde(default)]
     pub base64: Option<String>,
+    /// Store content over the size bar anyway, on the record. Blobs are
+    /// COMMITTED and git history cannot be trimmed without breaking every
+    /// clone, so this is a deliberate act rather than a retry flag.
+    #[serde(default)]
+    pub accept_large: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -3585,7 +3590,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ContentPutReq>,
     ) -> Result<CallToolResult, McpError> {
-        let bytes: Vec<u8> = match (req.text, req.base64) {
+        let bytes: Vec<u8> = match (req.text.clone(), req.base64.clone()) {
             (Some(t), None) => t.into_bytes(),
             (None, Some(b)) => {
                 use base64::Engine as _;
@@ -3614,7 +3619,9 @@ impl ReflowService {
             let hash = reflow2_core::content_hash(&bytes);
             store.exists(&hash).map_err(dyno_err)?
         };
-        let hash = store.put(&bytes).map_err(dyno_err)?;
+        let hash = store
+            .put_allowing_large(&bytes, req.accept_large.unwrap_or(false))
+            .map_err(dyno_err)?;
         ok_json(serde_json::json!({
             "hash": hash,
             "bytes": bytes.len(),

@@ -7,6 +7,14 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "accept_large": {
+        "default": null,
+        "description": "Store content over the size bar anyway, on the record. Blobs are\nCOMMITTED and git history cannot be trimmed without breaking every\nclone, so this is a deliberate act rather than a retry flag.",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
       "base64": {
         "default": null,
         "description": "The content base64-encoded, for bytes that are not text: a photograph of\na whiteboard, a PNG, a PDF. Exactly one of `text` or `base64`.",

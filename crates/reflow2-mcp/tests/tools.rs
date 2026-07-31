@@ -2504,6 +2504,7 @@ async fn text_round_trips_through_the_surface_and_re_storing_is_a_no_op() {
     let put = j!(s.content_put(Parameters(ContentPutReq {
         text: Some("# A design note\n\nsomething that informed the build".into()),
         base64: None,
+        accept_large: None,
     })));
     let hash = put["hash"].as_str().expect("a hash").to_string();
     assert_eq!(put["already_present"], serde_json::json!(false));
@@ -2518,6 +2519,7 @@ async fn text_round_trips_through_the_surface_and_re_storing_is_a_no_op() {
     let again = j!(s.content_put(Parameters(ContentPutReq {
         text: Some("# A design note\n\nsomething that informed the build".into()),
         base64: None,
+        accept_large: None,
     })));
     assert_eq!(again["hash"], serde_json::json!(hash));
     assert_eq!(
@@ -2539,6 +2541,7 @@ async fn binary_survives_the_json_boundary_as_base64() {
     let put = j!(s.content_put(Parameters(ContentPutReq {
         text: None,
         base64: Some(encoded.clone()),
+        accept_large: None,
     })));
     let hash = put["hash"].as_str().unwrap().to_string();
     assert_eq!(put["bytes"], serde_json::json!(raw.len()));
@@ -2562,6 +2565,7 @@ async fn two_encodings_at_once_is_refused_rather_than_one_silently_dropped() {
         .content_put(Parameters(ContentPutReq {
             text: Some("one thing".into()),
             base64: Some("dHdvIHRoaW5ncw==".into()),
+            accept_large: None,
         }))
         .await
         .expect_err("two different payloads must not be resolved by picking one");
@@ -2571,6 +2575,7 @@ async fn two_encodings_at_once_is_refused_rather_than_one_silently_dropped() {
         .content_put(Parameters(ContentPutReq {
             text: None,
             base64: None,
+            accept_large: None,
         }))
         .await
         .expect_err("storing nothing is a mistake, not an empty blob");
@@ -2583,6 +2588,7 @@ async fn exists_answers_without_reading_and_a_miss_is_not_an_error() {
     let hash = j!(s.content_put(Parameters(ContentPutReq {
         text: Some("stored".into()),
         base64: None,
+        accept_large: None,
     })))["hash"]
         .as_str()
         .unwrap()
@@ -2608,6 +2614,7 @@ async fn a_server_with_no_content_store_says_so_instead_of_choosing_one() {
         .content_put(Parameters(ContentPutReq {
             text: Some("nowhere to go".into()),
             base64: None,
+            accept_large: None,
         }))
         .await
         .expect_err("no store configured");
