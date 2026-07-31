@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5ed930e20bcd6fccdca3f35d41c99130e58ae662e5f6164b363712b9e7ff5162",
+  "content_hash": "sha256:14c7f2e2675cfeed4c49590eba007036dfb3ca7faae107ff1d19a95a707e2b1c",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -3241,6 +3241,15 @@
       "from_id": "dec:satisfaction-schedule-shape",
       "properties": {
         "acted_at": "2026-07-30",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:what-lives-where",
+      "properties": {
+        "acted_at": "2026-07-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -11291,6 +11300,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:content-store",
       "properties": {},
+      "to_id": "dec:what-lives-where"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:content-store",
+      "properties": {},
       "to_id": "dec:where-content-lives"
     },
     {
@@ -14900,6 +14915,12 @@
       "from_id": "req:snapshot-per-revision-not-per-epoch",
       "properties": {},
       "to_id": "decision:ack:84538db885bb5946"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:sources-are-kept-not-just-parsed",
+      "properties": {},
+      "to_id": "dec:what-lives-where"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -31464,6 +31485,16 @@
       }
     },
     {
+      "node_id": "dec:what-lives-where",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony's rule, 2026-07-31, drawing the line the content store needs and nothing had yet stated.\n\nTHE TEST, in his words: \"the actual implemented design of something or its artifacts\" stays NATIVE IN THE REPO. Everything that INFLUENCED the design without being its output goes in the CONTENT STORE.\n\n  NATIVE IN THE REPO — the codebase reflow2 helps build, and anything that gets compiled, tested, shipped or read by a consumer. It is versioned, diffed and reviewed as code always has been; reflow2 changes nothing about it. A README or an ADR that ships WITH the product also stays native, because it is a product-facing artefact rather than an input — the rule is about role, not about whether something is prose.\n\n  IN THE CONTENT STORE — a markdown file a user wrote describing a design aspect, a corpus of decision notes, a whiteboard photograph, a session transcript, a diagram an agent drew to explain a choice. These informed what got built and are not themselves the thing built.\n\nTHE EVIDENCE, AND IT IS WHY REFLOW2 EXISTS. storyflow began as one repo holding the codebase AND every markdown file recording Anthony's design decisions — now 900+ documents. Two costs, and the second is the one that matters:\n\n  (1) NAVIGATION. The repo was a mess: design notes and source interleaved, and neither easy to move through.\n\n  (2) RETRIEVAL, which is the deeper failure. In his words: \"whenever I started implementing design, I had to remember where in those 900+ design documents something actually was\" — they were not all in one folder, not consistently labelled, not structured so you could work out where anything lived. And worse: \"some of my design choices were spread across multiple documents\", so even finding the right document was not finding the answer.\n\n  THE WORKAROUND TAKEN: a two-repo split — `storyflow` for the codebase, `dev_storyflow` for the design corpus (979 notes as of the 2026-07-20 adopt trial). It works, and it fixes exactly ONE of the two problems.\n\nWHY THAT MAKES IT THE MOTIVATING CASE RATHER THAN THE SOLUTION. Separating the documents cures the mess and does NOTHING for retrieval. You still have to remember where a decision lives; a choice spread across five documents is still spread across five documents, now in a tidier folder. reflow2's claim is that the design record should stop being PROSE YOU NAVIGATE and become A GRAPH YOU QUERY, with the prose kept as provenance hanging off the nodes it produced. The content store is therefore NOT a neater `dev_storyflow`: the document goes to the store, what it SAID becomes nodes, and asking \"where was this decided\" becomes a query rather than an act of memory.\n\nAND IT IS WHY CROSS-DOCUMENT IDENTITY IS LOAD-BEARING RATHER THAN A NICETY. \"Spread across multiple documents\" is precisely the case `req:corpus-ingest` was written for — the same thing named in forty specifications converging on ONE node with several provenance Fragments rather than forty near-duplicates. Anthony's 900 documents are the corpus that requirement describes, and this is the experience that motivates it.\n\nTHE FALSIFIABLE FORM, worth stating because it is checkable rather than rhetorical: IF REFLOW2 WORKS, STORYFLOW WOULD NOT HAVE NEEDED `dev_storyflow`. One repo, code native, the design in the graph, the sources in the store. If a user still ends up splitting their repo to stay sane, reflow2 has not delivered what this decision claims.",
+        "name": "The repo holds what the design PRODUCED; the content store holds what INFORMED it — and storyflow is the case that proves why",
+        "rationale": "Recorded because the content store shipped without anyone stating what belongs in it, and a store with no placement rule fills up with whatever the first person guessed — after which the rule is set by accident.\n\nThe storyflow history is the valuable half rather than the rule. The rule alone reads as tidiness; the history says what tidiness is worth and where it stops helping. A user who had already tried the obvious fix, at real scale, and found it solved half the problem is much better evidence than an argument, and it is evidence from the author's own working life rather than a hypothetical.\n\nThe falsifiable form is deliberate. This project keeps finding declared properties nothing checks (`dec:edge-orthogonality`'s rule that a distinction earns its keep only if a computation reads it), and a doctrine about what goes where is exactly the kind of claim that can sit unexamined for a year. \"Would storyflow have needed a second repo?\" is a question someone can actually answer later.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:what-pins-a-snapshot",
       "node_type": "Decision",
       "properties": {
@@ -38162,7 +38193,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1dbe873817e5a189afeb425316aad585527dd3ff74d37f61fd9f0d6d666b35ec",
+  "prev_content_hash": "sha256:5ed930e20bcd6fccdca3f35d41c99130e58ae662e5f6164b363712b9e7ff5162",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
