@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:acd5cb3775af2465c031caa732008fff7f2d2b97b7e5971f1e4a89c13efe1b0f",
+  "content_hash": "sha256:137d060eb1d96f8dbc94314d0d25e40403ab5274190a66516a6312d73485a062",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2159,6 +2159,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:what-next-unblocked",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:wire-planning-cluster",
       "properties": {},
       "to_id": "epoch:wire-planning-cluster"
@@ -2520,6 +2526,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:arrival-delta:cap:plan-movement-recorded",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:cap:what-next",
       "properties": {},
       "to_id": "epoch:arrival-delta"
     },
@@ -3201,6 +3213,15 @@
       "from_id": "dec:nested-graphs",
       "properties": {
         "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:orientation-is-computed-not-written",
+      "properties": {
+        "acted_at": "2026-07-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -8186,6 +8207,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:what-next-unblocked",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:what-next"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:wire-planning-cluster",
       "properties": {
         "accepted_baseline": false,
@@ -8992,6 +9022,16 @@
         "evidence": "Corroboration, not conflict. is_entry_point and is_exit_point default to false on every Capability, which asserts 'not an entry point' across the whole design without anyone choosing it — a concrete field instance of the general rule. Found 2026-07-28 via the system_of_systems_graph_v2.py comparison, where three ported functional-mode detectors turned out to be unimplementable because of it."
       },
       "to_id": "req:defaults-do-not-assert"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cap:what-next",
+      "properties": {
+        "evidence": "The prerequisite cap:what-next names in its own text: without derived completion it is blind to what is merely unfinished. Now verified, so the dependency is satisfied rather than blocking — and drawing it makes the condition computable instead of a sentence nothing reads.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "cap:derived-completion"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -14469,6 +14509,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:what-next",
       "properties": {},
+      "to_id": "dec:orientation-is-computed-not-written"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:what-next",
+      "properties": {},
       "to_id": "decision:ack:7957f52a429a38a3"
     },
     {
@@ -15198,6 +15244,12 @@
       "from_id": "cap:skills-served",
       "properties": {},
       "to_id": "snap:epoch:surface-export:cap:skills-served"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:what-next",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:cap:what-next"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -28739,7 +28791,7 @@
       "node_id": "cap:what-next",
       "node_type": "Capability",
       "properties": {
-        "description": "The answer to \"what is the most pressing item?\" once the backlog lives in the graph. It is NOT detect_gaps and NOT check-health, and the distinction is the design: detect_gaps asks what the design has not yet decided, check-health asks what shape is wrong, and this asks which of the agreed things to do now. Three different questions needing three different actions, often from three different people. Composed rather than invented — BL-85 already specifies the form (\"a backlog_report / roadmap projection, a view, never a second source of truth\"), BL-68 supplies readiness and risk-to-completion (\"the roadmap is a risk-burndown schedule\"), BL-40 is the projection layer, and the long narratives stay as documents-linked artifacts rather than being crushed into properties. THE RANKING RULE THAT MATTERS MOST: an unmade decision outranks the work waiting on it. A proposed Decision with things GOVERNED_BY it is a blocker, and pointing someone at blocked work is worse than saying nothing, because it looks like progress. Measured 2026-07-24, this is not hypothetical: dec:multi-writer-architecture blocks two nodes, so the honest answer to \"what is next\" right now is a decision only the human can make, not a build task. PREREQUISITE, and the reason this cannot usefully ship first: today ZERO accepted requirements lack a satisfying capability, so \"what is unbuilt\" is unanswerable from the graph — everything accepted is allocated to something. Distinguishing allocated from delivered needs cap:derived-completion (BL-104). Until that lands, this view can rank what is undecided and what is misshapen but is blind to what is merely unfinished. PLANNED.",
+        "description": "The answer to \"what is the most pressing item?\" once the backlog lives in the graph. NOT detect_gaps and NOT check-health, and the distinction is the design: detect_gaps asks what the design has not yet decided, check-health asks what shape is wrong, and this asks which of the agreed things to do now. Three questions needing three actions, often from three people. A view, never a second source of truth.\n\nTHE RANKING RULE THAT MATTERS MOST: an unmade decision outranks the work waiting on it. A proposed Decision with things GOVERNED_BY it is a blocker, and pointing someone at blocked work is worse than saying nothing, because it looks like progress.\n\nPREREQUISITE MET — 2026-07-31, and the finding is that NOBODY NOTICED. This capability recorded its own blocker: \"this cannot usefully ship first… distinguishing allocated from delivered needs cap:derived-completion (BL-104). Until that lands, this view can rank what is undecided and what is misshapen but is blind to what is merely unfinished.\" `cap:derived-completion` is now `verified`. It has been for some time, and the parked capability sat unchanged: nothing watches for a park whose CONDITION has expired, which is precisely what `cap:revise-trigger` exists to surface and did not. A prerequisite written into prose is a trigger nothing fires.\n\nALSO WANTED HERE, from Anthony's start-here question 2026-07-31: a WHICH-DECISIONS-SHAPE-EVERYTHING section, for the reader who has just cloned the repo and needs the few choices that explain the rest. Measured as computable — ranking Decisions by `GOVERNED_BY` in-degree surfaces the right sort of thing (functional decomposition, the three-party division, identity out of band) — with the caveat that RAW IN-DEGREE IS THE WRONG SIGNAL ON ITS OWN: the top hit was a pruning decision governing ten DROPPED requirements, high-degree and not something a newcomer must understand. It needs weighting by what the governed nodes are, not merely how many. PLANNED.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Say what to work on next, as a projection with its reasoning shown",
@@ -30164,6 +30216,14 @@
       }
     },
     {
+      "node_id": "chg:what-next-unblocked",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "cap:what-next's recorded prerequisite has been met since it was written, and nothing noticed"
+      }
+    },
+    {
       "node_id": "chg:wire-planning-cluster",
       "node_type": "ChangeEvent",
       "properties": {
@@ -31388,6 +31448,16 @@
         "decision": "single_point_of_failure candidates are Components, Interfaces, Resources, Environments.",
         "name": "Only things that operate can be single points of failure",
         "rationale": "The suggested fix is add_redundancy, and redundancy is only coherent for running parts; a golden thread converges on intent by design, so intent hubs are the thread working. 22 of 22 false positives cleared, 4 true survivors. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); BL-5.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:orientation-is-computed-not-written",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony asked 2026-07-31 whether a \"start here\" file or node should tell a newly-cloned agent what it needs to pick up where the last person left off — offered explicitly as an idea to explore, with the observation that reflow2 often already has something. It does, and the answer is: BUILD THE VIEW, NOT THE DOCUMENT.\n\nNO START-HERE FILE. Two recorded positions already forbid it, and neither is a stretch. `req:session-memory-in-graph`: \"a summary written at the end is the one a busy session never gets to, and an end-of-session digest is a retelling rather than a record.\" And `dec:what-lives-where`'s whole storyflow lesson is prose-you-navigate losing to graph-you-query. A START-HERE.md is `dev_storyflow` in miniature — it would go stale, and STALENESS IN AN ORIENTATION DOCUMENT IS THE WORST PLACE FOR IT, because it is the first thing read and the reader has nothing yet to check it against.\n\nTHE NEED IS REAL AND MOSTLY ALREADY DESIGNED. Three planned capabilities cover it between them: `cap:what-next` (which of the agreed things to do now, ranked so an unmade decision outranks the work waiting on it), `cap:onboarding` (where does a new piece of work belong, for someone who did not build the system), and `cap:session-memory` (what the last session learned, queryable rather than narrated). None needs a document; all three are projections, which is what `dec:views-are-projections` already says every view is.\n\nWHAT IS GENUINELY MISSING, and it belongs in `cap:what-next` rather than in a new thing: WHICH FEW DECISIONS SHAPE EVERYTHING ELSE. Neither what-next nor where-am-i answers it today, and it is what a newcomer actually needs — not the task list, but the handful of choices that explain why the rest looks as it does.\n\nEVIDENCE AGAINST URGENCY, recorded because it is the kind of thing that otherwise gets built on a feeling. `where-am-i` DID orient a fresh agent on this design earlier the same day: 627 nodes, roughly six calls, using `scan_nodes` with `brief: true` and reading six Decisions in full. It scales today because reads are bounded (`cap:bounded-reads`). The concern that it stops working is a FORECAST, not yet an observation — worth watching rather than pre-solving, and worth re-measuring when the answer changes rather than assuming it has.\n\nSO THE ORDER IS: build `cap:what-next`, whose blocker has already cleared, and add the shaping-decisions section to it. Do not add a fourth thing beside three planned ones that already answer the question.",
+        "name": "No START-HERE document — orientation is a projection, and writing it down would be dev_storyflow in miniature",
+        "rationale": "Taken on the recommendation rather than the request, which is the point worth noting: the question was \"should we write a start-here document\", and the honest answer was that the artefact would work against the reason the project exists. Anthony's own framing left room for that — \"maybe this isn't needed because an agent using reflow2 can already quickly know what a project is about\" — and the measurement supports it.\n\nThe more useful outcome was not the answer but what looking produced: `cap:what-next` states a prerequisite that has since been met, and nothing surfaced it. A capability that records its own blocking condition in prose has written a trigger that nothing fires. That is the same shape as every other declared-but-unread property this project keeps finding, and it is the argument for the shaping-decisions section being a COMPUTATION rather than another paragraph.\n\nThe in-degree caveat is kept deliberately. The first version of the idea looked convincing because the top three results were genuinely load-bearing; the top result was not, and reporting the idea without that would have been reporting a demo rather than a measurement.",
         "status": "accepted"
       }
     },
@@ -36935,6 +37005,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:arrival-delta:cap:what-next",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:report\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:7957f52a429a38a3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:what-next\",\"properties\":{}}]",
+        "state": "{\"description\":\"The answer to \\\"what is the most pressing item?\\\" once the backlog lives in the graph. It is NOT detect_gaps and NOT check-health, and the distinction is the design: detect_gaps asks what the design has not yet decided, check-health asks what shape is wrong, and this asks which of the agreed things to do now. Three different questions needing three different actions, often from three different people. Composed rather than invented — BL-85 already specifies the form (\\\"a backlog_report / roadmap projection, a view, never a second source of truth\\\"), BL-68 supplies readiness and risk-to-completion (\\\"the roadmap is a risk-burndown schedule\\\"), BL-40 is the projection layer, and the long narratives stay as documents-linked artifacts rather than being crushed into properties. THE RANKING RULE THAT MATTERS MOST: an unmade decision outranks the work waiting on it. A proposed Decision with things GOVERNED_BY it is a blocker, and pointing someone at blocked work is worse than saying nothing, because it looks like progress. Measured 2026-07-24, this is not hypothetical: dec:multi-writer-architecture blocks two nodes, so the honest answer to \\\"what is next\\\" right now is a decision only the human can make, not a build task. PREREQUISITE, and the reason this cannot usefully ship first: today ZERO accepted requirements lack a satisfying capability, so \\\"what is unbuilt\\\" is unanswerable from the graph — everything accepted is allocated to something. Distinguishing allocated from delivered needs cap:derived-completion (BL-104). Until that lands, this view can rank what is undecided and what is misshapen but is blind to what is merely unfinished. PLANNED.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Say what to work on next, as a projection with its reasoning shown\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:what-next",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:arrival-delta:dec:arrival-delta",
       "node_type": "Snapshot",
       "properties": {
@@ -38421,7 +38501,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d1437ad41760354cd72b67ea6d749020c408764ae04fe11f4fe9cb4ce954c2e5",
+  "prev_content_hash": "sha256:acd5cb3775af2465c031caa732008fff7f2d2b97b7e5971f1e4a89c13efe1b0f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
