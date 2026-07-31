@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d1437ad41760354cd72b67ea6d749020c408764ae04fe11f4fe9cb4ce954c2e5",
+  "content_hash": "sha256:acd5cb3775af2465c031caa732008fff7f2d2b97b7e5971f1e4a89c13efe1b0f",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1733,6 +1733,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-manifest-built",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:content-store-built",
       "properties": {},
       "to_id": "epoch:arrival-delta"
@@ -2486,6 +2492,12 @@
       "from_id": "snap:epoch:aggregate-gap-ack:art:detect",
       "properties": {},
       "to_id": "epoch:aggregate-gap-ack"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:cap:content-manifest",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5597,6 +5609,33 @@
         "action": "modified"
       },
       "to_id": "dec:where-content-lives"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-manifest-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:content"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-manifest-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-manifest-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:content-manifest"
     },
     {
       "edge_type": "CHANGED",
@@ -15084,6 +15123,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:content-manifest",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:cap:content-manifest"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:content-store",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:cap:content-store"
@@ -23328,6 +23373,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:content-manifest"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:content",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cap:content-store"
     },
     {
@@ -23913,6 +23966,14 @@
         "completeness": "complete"
       },
       "to_id": "cap:complementary-pairing"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:content-manifest"
     },
     {
       "edge_type": "REALIZES",
@@ -26490,7 +26551,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3cc7707c76e62b51",
+        "checksum": "sha256:8e6ad38dcc672d16",
         "location": "crates/reflow2-core/src/content.rs",
         "name": "content.rs",
         "status": "realized"
@@ -27095,7 +27156,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:934845b35ee74839",
+        "checksum": "sha256:5a907008be6b2de8",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -27625,12 +27686,12 @@
       "node_id": "cap:content-manifest",
       "node_type": "Capability",
       "properties": {
-        "description": "A committed plain-text manifest mapping content hash → original filename → what references it, so a design that points at stored content can say what it does NOT itself carry. Makes \"do I have everything?\" a set comparison for someone holding only the export, and makes a blob change legible in `git log` as a readable name rather than a hex path. Paired with `.gitattributes` marking the blob directory `binary`, which stops git attempting diffs it cannot produce and — the part that matters — stops line-ending conversion silently corrupting a PNG on a CRLF checkout. Governed by `dec:content-manifest`; delivers `req:export-says-what-it-cannot-carry` and makes `req:content-reaches-every-seat`'s fail-loud promise checkable by a person rather than only by the tool. PLANNED.",
+        "description": "Content hash → readable name → what references it, so a design that points at stored content can say what it does NOT itself carry. `missing` names content the graph references and this checkout lacks — the case someone handed the export alone hits, where a diagram that will not open becomes a named finding instead of a silent absence. `orphaned` is the reverse: bytes stored and referenced by nothing, which is how a store grows without anyone deciding to (and the reason `dec:where-content-lives` left repo growth deliberately open).\n\nDERIVED, NEVER STORED, and that is the design rather than an optimisation. The manifest is computed from the graph plus a directory listing; a manifest kept as its own record would be a second source of truth about what the design references and would drift the first time someone updated one and not the other. Rendering it to a committed markdown file is a PROJECTION — the same relationship `dec:views-are-projections` already sets for every other view.\n\nTHE READABLE NAME IS THE FRAGMENT'S `title`, not a filename stored beside the hash. The graph already requires a title, so there is no second place for names to live and nothing to disagree with the design about what a thing is called. `referenced_by` carries the Fragment AND what it annotates or yielded, so \"what is this picture for?\" is answerable from the manifest without opening anything.\n\nA LOCATOR AFTER THE HASH TRAVELS VERBATIM and is never parsed (`dec:agent-navigates-content`) — `sha256:…#L412-L440` resolves to the same blob and reports `L412-L440` untouched. A `content_ref` holding a plain PATH from before the store existed is not treated as content at all, so legacy references do not read as missing blobs.\n\nNeeded a FOURTH store function, `list` — named rather than slipped in, because `dec:content-store-implementation` argued for three. That argument was about `object_store`'s path/prefix/pagination semantics, which immutable content addressing does not need; enumerating a flat set of addresses is a different thing, and orphan detection is impossible without it. `list` skips anything whose name is not a hash, so a stranded temp file or the committed manifest is never mistaken for content.\n\nPaired with `.gitattributes` marking the blob directory `binary` — which stops git attempting diffs it cannot produce and, the part that matters, stops line-ending conversion silently corrupting a PNG on a CRLF checkout. REALIZED; `ver:content-manifest` passing, served as `content_manifest`.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Say what content the design depends on, in names a person can read",
         "provenance": "authored",
-        "status": "planned",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -29452,6 +29513,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Where content lives, settled on Anthony's word: object_store with a local backend, blobs committed to the repo"
+      }
+    },
+    {
+      "node_id": "chg:content-manifest-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "cap:content-manifest built — derived from the graph and the store, never stored twice"
       }
     },
     {
@@ -36816,6 +36885,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:arrival-delta:cap:content-manifest",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-manifest\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:content-manifest\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:export-says-what-it-cannot-carry\",\"properties\":{}}]",
+        "state": "{\"description\":\"A committed plain-text manifest mapping content hash → original filename → what references it, so a design that points at stored content can say what it does NOT itself carry. Makes \\\"do I have everything?\\\" a set comparison for someone holding only the export, and makes a blob change legible in `git log` as a readable name rather than a hex path. Paired with `.gitattributes` marking the blob directory `binary`, which stops git attempting diffs it cannot produce and — the part that matters — stops line-ending conversion silently corrupting a PNG on a CRLF checkout. Governed by `dec:content-manifest`; delivers `req:export-says-what-it-cannot-carry` and makes `req:content-reaches-every-seat`'s fail-loud promise checkable by a person rather than only by the tool. PLANNED.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Say what content the design depends on, in names a person can read\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:content-manifest",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:arrival-delta:cap:content-store",
       "node_type": "Snapshot",
       "properties": {
@@ -37460,10 +37539,11 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
+        "last_run_at": "2026-07-31",
         "level": "integration",
         "method": "test",
         "name": "Manifest completeness, both directions: every content hash the graph references appears in the manifest with its original filename and what points at it; a referenced hash whose bytes are ABSENT is reported by name (the case someone holding only the export hits); a blob present but referenced by nothing is ALSO reported, because orphaned bytes are how a store silently grows; and `.gitattributes` marks the blob directory `binary`, pinned by a case that would otherwise let line-ending conversion corrupt a PNG. PLANNED.",
-        "status": "planned"
+        "status": "passing"
       }
     },
     {
@@ -38341,7 +38421,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1dd74be1d4768aac66efad2dee38134f2e1096b6e308fc44f86224b1e14853b1",
+  "prev_content_hash": "sha256:d1437ad41760354cd72b67ea6d749020c408764ae04fe11f4fe9cb4ce954c2e5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

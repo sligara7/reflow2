@@ -12,7 +12,7 @@
 //! somebody's laptop. The graph records a **content hash**; the bytes live
 //! here; and the two travel together because both are committed to the repo.
 //!
-//! ## Three functions, and why there are only three
+//! ## Three functions for the store, and a fourth for the manifest
 //!
 //! `put`, `get`, `exists`. Content addressing is what shrinks the problem:
 //! blobs are **immutable**, so there is no update-in-place to make conditional,
@@ -45,7 +45,9 @@
 
 use std::path::{Path, PathBuf};
 
-use dynograph_core::DynoError;
+use dynograph_core::{DynoError, Value};
+
+use crate::graph::DesignGraph;
 
 /// How many leading hex characters of the hash become the shard directory.
 ///
@@ -213,6 +215,50 @@ impl ContentStore {
         Ok(self.path_for(parse_hash(hash)?).exists())
     }
 
+    /// Every hash present in the store, sorted.
+    ///
+    /// A FOURTH function, where `dec:content-store-implementation` said three —
+    /// worth naming rather than slipping in. That decision argued content
+    /// addressing needs no LISTING, and it was right about the kind
+    /// `object_store` provides: paths, prefixes, delimiters, pagination. This is
+    /// a different thing — enumerating a flat set of addresses — and orphan
+    /// detection is impossible without it. A manifest that can only report
+    /// content the graph ALREADY names could never find the bytes nobody
+    /// references, which is precisely how a store silently grows
+    /// (`ver:content-manifest`).
+    ///
+    /// Anything whose name is not a hash is skipped: a stranded `.tmp-` file, a
+    /// committed `MANIFEST.md`, an editor backup. The store owns this directory
+    /// but must not claim every file in it is content.
+    pub fn list(&self) -> Result<Vec<String>, DynoError> {
+        let mut out = Vec::new();
+        let Ok(shards) = std::fs::read_dir(&self.root) else {
+            return Ok(out); // no store yet is an empty store, not an error
+        };
+        for shard in shards.flatten() {
+            if !shard.path().is_dir() {
+                continue;
+            }
+            let Some(prefix) = shard.file_name().to_str().map(str::to_owned) else {
+                continue;
+            };
+            let Ok(blobs) = std::fs::read_dir(shard.path()) else {
+                continue;
+            };
+            for blob in blobs.flatten() {
+                let Some(rest) = blob.file_name().to_str().map(str::to_owned) else {
+                    continue;
+                };
+                let candidate = format!("{HASH_PREFIX}{prefix}{rest}");
+                if parse_hash(&candidate).is_ok() {
+                    out.push(candidate);
+                }
+            }
+        }
+        out.sort();
+        Ok(out)
+    }
+
     /// Read the bytes for `hash`, **verifying them against it**.
     ///
     /// The verification is the point, not a belt-and-braces extra. A content
@@ -248,5 +294,191 @@ impl ContentStore {
             )));
         }
         Ok(bytes)
+    }
+}
+
+// ---- The manifest: what the design points at, in names a person can read ----
+
+/// One piece of content the design references.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub struct ManifestEntry {
+    /// The content hash, as the graph records it.
+    pub hash: String,
+    /// A readable name — the referencing Fragment's `title`. The graph already
+    /// requires one, so the manifest needs no second place to keep filenames
+    /// and cannot disagree with the design about what something is called.
+    pub name: String,
+    /// The locator the agent wrote after the hash, if any — a line range, a
+    /// page, a timestamp. Carried VERBATIM and never parsed
+    /// (`dec:agent-navigates-content`).
+    pub locator: Option<String>,
+    /// What in the design points at this content: the Fragment holding the
+    /// reference, and whatever it annotates or yielded.
+    pub referenced_by: Vec<String>,
+    /// Whether the bytes are actually in the store.
+    pub present: bool,
+}
+
+/// What the design depends on, and whether this checkout has it.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub struct ContentManifest {
+    /// Where the store was looked for.
+    pub store_root: String,
+    /// Every referenced piece of content, sorted by hash.
+    pub entries: Vec<ManifestEntry>,
+    /// Referenced by the design and NOT present — the case someone holding
+    /// only the export hits, and the reason this exists at all.
+    pub missing: Vec<String>,
+    /// Present in the store and referenced by NOTHING. Reported because
+    /// unreferenced bytes are how a store silently grows, and because
+    /// `dec:where-content-lives` left repo growth deliberately unbounded.
+    pub orphaned: Vec<String>,
+}
+
+/// Split a `content_ref` into its hash and whatever the agent appended.
+///
+/// The convention is `sha256:<64 hex>` optionally followed by `#<locator>`.
+/// Anything that does not begin with a well-formed hash is not a content
+/// reference at all — a `content_ref` may still hold a plain path from before
+/// the store existed, and treating that as content would invent a missing blob.
+fn split_content_ref(reference: &str) -> Option<(String, Option<String>)> {
+    let (hash, locator) = match reference.split_once('#') {
+        Some((h, l)) => (h, Some(l.to_string())),
+        None => (reference, None),
+    };
+    parse_hash(hash).ok()?;
+    Some((hash.to_string(), locator))
+}
+
+impl DesignGraph {
+    /// What content this design points at, whether the bytes are here, and what
+    /// is here that nothing points at (`cap:content-manifest`).
+    ///
+    /// Derived entirely from the graph plus a directory listing — nothing is
+    /// stored twice. That is deliberate: a manifest kept as its own record
+    /// would be a second source of truth about what the design references, and
+    /// would drift from the graph the first time someone edited one and not the
+    /// other. Rendering it to a committed file (see [`ContentManifest::render`])
+    /// is a projection, the same relationship `dec:views-are-projections`
+    /// already sets for every other view.
+    pub fn content_manifest(&self, store: &ContentStore) -> Result<ContentManifest, DynoError> {
+        use crate::nodes::{edge, node};
+
+        let mut entries: Vec<ManifestEntry> = Vec::new();
+        let mut referenced: std::collections::BTreeSet<String> = std::collections::BTreeSet::new();
+
+        for fragment in self.scan_nodes(node::FRAGMENT)? {
+            let Some(reference) = fragment
+                .properties
+                .get("content_ref")
+                .and_then(Value::as_str)
+            else {
+                continue;
+            };
+            let Some((hash, locator)) = split_content_ref(reference) else {
+                continue; // a path, not a content hash — not this manifest's business
+            };
+            referenced.insert(hash.clone());
+
+            // The Fragment holds the reference; what it annotates or yielded is
+            // why anyone cares. Both go in, so "what is this picture for?" is
+            // answerable from the manifest alone.
+            let mut referenced_by = vec![fragment.node_id.clone()];
+            for e in self.outgoing(&fragment.node_id, Some(edge::ANNOTATES))? {
+                referenced_by.push(e.to_id);
+            }
+            for e in self.outgoing(&fragment.node_id, Some(edge::YIELDED))? {
+                referenced_by.push(e.to_id);
+            }
+            referenced_by.sort();
+            referenced_by.dedup();
+
+            entries.push(ManifestEntry {
+                present: store.exists(&hash)?,
+                hash,
+                name: fragment
+                    .properties
+                    .get("title")
+                    .and_then(Value::as_str)
+                    .unwrap_or("(untitled)")
+                    .to_string(),
+                locator,
+                referenced_by,
+            });
+        }
+        entries.sort_by(|a, b| (&a.hash, &a.name).cmp(&(&b.hash, &b.name)));
+
+        let missing: Vec<String> = entries
+            .iter()
+            .filter(|e| !e.present)
+            .map(|e| e.hash.clone())
+            .collect();
+        let orphaned: Vec<String> = store
+            .list()?
+            .into_iter()
+            .filter(|h| !referenced.contains(h))
+            .collect();
+
+        Ok(ContentManifest {
+            store_root: store.root().display().to_string(),
+            entries,
+            missing,
+            orphaned,
+        })
+    }
+}
+
+impl ContentManifest {
+    /// The committed, human-readable form.
+    ///
+    /// Markdown rather than JSON because its whole second job is being legible
+    /// in a diff: a blob lands as `blobs/ab/cdef…`, and what a reviewer wants to
+    /// see in `git log -p` is a line saying which picture that is and what it
+    /// explains (`dec:content-manifest`).
+    pub fn render(&self) -> String {
+        let mut out = String::new();
+        out.push_str("# Content manifest\n\n");
+        out.push_str(
+            "What this design points at but does not itself contain. GENERATED — derived from the \
+             graph and the store, never edited by hand: it is a projection, and a manifest kept as \
+             its own record would drift from the design the first time someone updated one and not \
+             the other.\n\n",
+        );
+        if self.entries.is_empty() {
+            out.push_str("_Nothing in this design references stored content yet._\n");
+        }
+        for e in &self.entries {
+            out.push_str(&format!(
+                "- **{}** — `{}`{}\n  - referenced by: {}\n  - bytes present: {}\n",
+                e.name,
+                e.hash,
+                e.locator
+                    .as_ref()
+                    .map(|l| format!(" (at `{l}`)"))
+                    .unwrap_or_default(),
+                e.referenced_by.join(", "),
+                if e.present { "yes" } else { "**NO**" },
+            ));
+        }
+        if !self.missing.is_empty() {
+            out.push_str(
+                "\n## Missing\n\nReferenced by this design and not in the store. If you were sent \
+                 the design on its own, this is what did not come with it.\n\n",
+            );
+            for h in &self.missing {
+                out.push_str(&format!("- `{h}`\n"));
+            }
+        }
+        if !self.orphaned.is_empty() {
+            out.push_str(
+                "\n## Orphaned\n\nIn the store and referenced by nothing. Not an error — content \
+                 can be stored before it is wired up — but this is how a store grows without \
+                 anyone deciding to.\n\n",
+            );
+            for h in &self.orphaned {
+                out.push_str(&format!("- `{h}`\n"));
+            }
+        }
+        out
     }
 }

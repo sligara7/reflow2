@@ -175,3 +175,126 @@ fn walk(root: &std::path::Path) -> Vec<std::path::PathBuf> {
     out.sort();
     out
 }
+
+// ---- The manifest (cap:content-manifest, ver:content-manifest) --------------
+
+use reflow2_core::DesignGraph;
+use reflow2_core::nodes::{Props, edge, node};
+
+/// A design that references one stored diagram, plus the store holding it.
+fn design_with_content(name: &str) -> (DesignGraph, ContentStore) {
+    let s = store(name);
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_decision("dec:x", "A choice", "we chose the left one", None)
+        .unwrap();
+    let hash = s.put(b"graph TD; A-->B").unwrap();
+    g.create_node(
+        node::FRAGMENT,
+        "frag:sketch",
+        Props::new()
+            .set("title", "layout-sketch.mermaid")
+            .set("content_ref", hash.as_str()),
+    )
+    .unwrap();
+    g.create_edge(
+        edge::ANNOTATES,
+        node::FRAGMENT,
+        "frag:sketch",
+        node::DECISION,
+        "dec:x",
+        Props::new(),
+    )
+    .unwrap();
+    (g, s)
+}
+
+#[test]
+fn the_manifest_names_the_content_and_what_it_explains() {
+    let (g, s) = design_with_content("manifest");
+    let m = g.content_manifest(&s).unwrap();
+
+    assert_eq!(m.entries.len(), 1);
+    let e = &m.entries[0];
+    assert_eq!(
+        e.name, "layout-sketch.mermaid",
+        "the readable name is the Fragment's title"
+    );
+    assert!(e.present, "the bytes are in the store");
+    assert!(
+        e.referenced_by.contains(&"dec:x".to_string()),
+        "the manifest must say what the picture is FOR, not only which fragment holds it: {:?}",
+        e.referenced_by
+    );
+    assert!(m.missing.is_empty() && m.orphaned.is_empty());
+}
+
+/// THE CASE THE MANIFEST EXISTS FOR: someone was handed the design and not the
+/// bytes. Their diagrams must be nameable, not silently absent.
+#[test]
+fn content_the_design_references_but_this_checkout_lacks_is_reported_by_name() {
+    let (g, _s) = design_with_content("missing-bytes");
+    // A different store — the design travelled, the blobs did not.
+    let empty = store("missing-bytes-elsewhere");
+    let m = g.content_manifest(&empty).unwrap();
+
+    assert_eq!(m.missing.len(), 1, "the absent blob must be named");
+    assert!(!m.entries[0].present);
+    assert!(
+        m.render().contains("**NO**"),
+        "the rendered form must not hide it"
+    );
+}
+
+/// The reverse, and the reason `list` exists: bytes nobody points at are how a
+/// store grows without anyone deciding to.
+#[test]
+fn bytes_nothing_references_are_reported_as_orphaned() {
+    let (g, s) = design_with_content("orphan");
+    let stray = s.put(b"a render nobody wired up").unwrap();
+
+    let m = g.content_manifest(&s).unwrap();
+    assert_eq!(m.orphaned, vec![stray], "an unreferenced blob must surface");
+    assert!(m.missing.is_empty(), "the referenced one is still present");
+}
+
+/// A `content_ref` predating the store holds a PATH. Treating it as content
+/// would invent a missing blob that was never stored and never referenced.
+#[test]
+fn a_content_ref_that_is_not_a_hash_is_not_treated_as_content() {
+    let s = store("legacy-ref");
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.create_node(
+        node::FRAGMENT,
+        "frag:old",
+        Props::new()
+            .set("title", "an old note")
+            .set("content_ref", "docs/notes/old.md"),
+    )
+    .unwrap();
+    let m = g.content_manifest(&s).unwrap();
+    assert!(
+        m.entries.is_empty() && m.missing.is_empty(),
+        "a path is not a content hash and must not be reported as missing content: {m:?}"
+    );
+}
+
+#[test]
+fn the_locator_travels_verbatim_and_is_never_parsed() {
+    let s = store("locator");
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let hash = s.put(b"a thousand pages, pretend").unwrap();
+    g.create_node(
+        node::FRAGMENT,
+        "frag:spec",
+        Props::new()
+            .set("title", "vendor-spec.md")
+            .set("content_ref", format!("{hash}#L412-L440").as_str()),
+    )
+    .unwrap();
+    let m = g.content_manifest(&s).unwrap();
+    assert_eq!(m.entries[0].locator.as_deref(), Some("L412-L440"));
+    assert!(
+        m.entries[0].present,
+        "the locator must not confuse the lookup"
+    );
+}

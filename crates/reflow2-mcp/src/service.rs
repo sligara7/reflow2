@@ -1092,6 +1092,15 @@ pub struct ContentRefReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ContentManifestReq {
+    /// Write the rendered markdown manifest here as well as returning it —
+    /// the committed form that makes a blob change legible in a diff.
+    #[serde(default)]
+    pub path: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ArrivalDeltaReq {
     /// The DesignEpoch or Release to read the schedule of.
     pub target_id: String,
@@ -3663,6 +3672,42 @@ impl ReflowService {
             "present": present,
             "store": store.root().display().to_string(),
         }))
+    }
+
+    #[tool(
+        description = "What content this design points at, whether the bytes are here, and what is \
+                       here that nothing points at (cap:content-manifest). Answers the question \
+                       someone hits after being handed the design ON ITS OWN: `missing` names \
+                       content the graph references and this checkout does not have, so a diagram \
+                       that will not open is a named finding rather than a silent absence. \
+                       `orphaned` is the reverse — bytes stored and referenced by nothing, which is \
+                       how a store grows without anyone deciding to. Each entry carries a readable \
+                       name (the referencing Fragment's title) and WHAT IT IS FOR, so the manifest \
+                       is legible without opening anything. DERIVED, never stored: it is computed \
+                       from the graph plus the store, because a manifest kept as its own record \
+                       would be a second source of truth and would drift the first time someone \
+                       updated one and not the other. Pass `path` to also write the rendered \
+                       markdown for committing, which is what makes a blob change readable in `git \
+                       log` instead of a hex filename.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn content_manifest(
+        &self,
+        Parameters(req): Parameters<ContentManifestReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let store = self.content_store()?;
+        let g = self.graph.read().await;
+        let manifest = g.content_manifest(&store).map_err(dyno_err)?;
+        let mut out = serde_json::to_value(&manifest).map_err(|e| {
+            McpError::internal_error(format!("cannot serialize the manifest: {e}"), None)
+        })?;
+        if let Some(path) = req.path.as_deref() {
+            std::fs::write(path, manifest.render()).map_err(|e| {
+                McpError::internal_error(format!("cannot write the manifest to {path}: {e}"), None)
+            })?;
+            out["written_to"] = serde_json::Value::String(path.to_string());
+        }
+        ok_json(out)
     }
 
     #[tool(
