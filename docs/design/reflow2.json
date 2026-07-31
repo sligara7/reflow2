@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:10dee01f7a37578d70e0eade4766767cd36b1b9c213048c799f9cb22832aaccb",
+  "content_hash": "sha256:fa898b81e7d11bbd694aaf0be54fbfbfcafc9b927e4668d5fa1c84129300f817",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2833,6 +2833,15 @@
       "from_id": "cap:scoped-analysis",
       "properties": {
         "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:agent-navigates-content",
+      "properties": {
+        "acted_at": "2026-07-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -9493,6 +9502,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:agent-navigates-content",
+      "properties": {
+        "evidence": "It applies that decision's division of labour to the blob: navigating content is 'the LLM speaks', recording where it landed is 'the graph remembers'.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "dec:three-party-checks"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:github-mcp-tandem",
       "properties": {
         "optional": false,
@@ -11085,6 +11104,12 @@
       "from_id": "cap:composed-analysis",
       "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "dec:agent-navigates-content"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -30413,6 +30438,16 @@
       }
     },
     {
+      "node_id": "dec:agent-navigates-content",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED by Anthony 2026-07-31, closing the pointer-granularity question under `cap:content-store` before anything is built.\n\nreflow2 BUILDS NO RETRIEVAL LAYER. No span vocabulary, no chunk-addressing scheme, no offsets in the schema, no search into blobs. Reading a 1000-page document and finding the relevant passage is the AGENT's job, and an agent already does it well.\n\nWHY THIS IS DOCTRINE RATHER THAN A SHORTCUT. It is the division of labour reflow2 already has, applied to a new component. `dec:three-party-checks`: \"The LLM speaks, the graph remembers and counts, the human decides.\" Navigating content is squarely the first of those. The precedent is consistent across the system — reflow2 performs NO FILE I/O, and `coverage_report` and `reconcile_artifacts` take what the agent observed rather than scanning; `dec:corpus-ingest-mechanism` makes extraction itself the agent's job through the SP-3b handshake. Adding a blob changes where bytes live, not who reads them.\n\nTHE ONE PART THAT IS NOT THE AGENT'S JOB, and it is the whole reason this decision is not simply \"do nothing\": NAVIGATING is the agent's, RECORDING WHERE IT LANDED is the graph's. If an agent reads a corpus, extracts a requirement, and the graph stores only \"this came from that document\", then auditing that requirement later means RE-RUNNING A NON-DETERMINISTIC SEARCH — and a different agent may land elsewhere and reach a different conclusion. The design would hold a provenance link that does not reproduce, which is a link that cannot do the one job provenance has.\n\nTHE MECHANISM IS A CONVENTION, NOT A FEATURE. `Fragment.content_ref` already exists and is already declared as \"pointer to the source content (path/hash)\" — an opaque string. The agent writes whatever locator suits the medium alongside the content hash: a line range for markdown, a page for a PDF, a timestamp for a transcript, a cell for a spreadsheet. reflow2 STORES IT, RETURNS IT, AND NEVER INTERPRETS IT — no parsing, no validation of the locator's shape, no computation over it. The next agent knows what to do with it because it is the same kind of agent that wrote it. Zero new vocabulary, zero new code, and the audit trail reproduces.\n\nA CORRECTION ON THE RECORD, because the argument that nearly went the other way was wrong. It was argued that spans go stale when a document is edited, and that content-addressed chunks were therefore safer. That objection assumed MUTABLE FILES, which `dec:where-content-lives` had already ruled out: blobs are content-addressed and immutable, so an edited document is a DIFFERENT HASH rather than the same one with shifted lines. A locator into a content-addressed blob cannot rot. The staleness case was smuggling in an assumption the storage decision had already removed.\n\nPRIOR ART CHECKED, so nobody reviews it again. The official MCP memory server (`modelcontextprotocol/servers/src/memory`) was read on Anthony's prompt. Its model is entities / relations / observations in a JSONL file, eight tools, substring search. IT OFFERS NOTHING ON THIS QUESTION because it never meets it — no chunking, no external pointers, no spans, no large content; everything is short atomic strings held inline. What it DOES corroborate is the deeper answer: its stated rule is \"observations should be atomic — one fact per observation\", i.e. decompose at WRITE time so there is never a large thing to search at READ time. That is the same conclusion `cap:session-memory` reached independently (\"a pointer to a 3 MB transcript is a RECEIPT, not documentation\"). EXPLICITLY NOT IMPORTED: `read_graph` returning the entire graph (at 1000+ nodes it would swamp a context window; `cap:bounded-reads` is better and exists for this reason); untyped free-string entity types (the typed schema is what makes detectors computable at all); and delete-without-history, which is what `req:intent-preserved` forbids and `retire-from-design` exists to prevent.",
+        "name": "The agent navigates content; the graph records where it landed — an opaque locator reflow2 never parses",
+        "rationale": "Anthony's framing, and it is sharper than \"do not reinvent the wheel\": the capability already exists in the system, it just does not live in reflow2. An agent that can be told to review a thousand pages does not need reflow2 to teach it how.\n\nTHE METHOD FINDING, which is the second instance today and therefore a pattern rather than a coincidence. Two design forks were recorded, both with genuine options and real trade-offs, and BOTH DISSOLVED WHEN SOMETHING OUTSIDE THE DESIGN WAS CHECKED rather than chosen between. `dec:where-content-lives` collapsed once `object_store` turned the storage backend into runtime configuration; this one collapsed once the agent's own capabilities were counted as part of the system. In both cases the recorded options were honest and the deliberation was not wasted — it is what made the dissolution recognisable. The habit worth keeping: before choosing between branches of a fork, ask what already exists that would make the fork unnecessary. Design inward only after looking outward.\n\nLeft as a convention deliberately rather than a validated field, because validating a locator's shape would mean reflow2 deciding what media exist — and the moment someone stores something nobody anticipated, a validator becomes a refusal of correct work. An opaque string costs nothing and forecloses nothing.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:aggregate-gap-keyed-on-rule",
       "node_type": "Decision",
       "properties": {
@@ -37649,7 +37684,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6f817dcb9960ad4033bb678b3627f623741b0bd8f25e71831695a8711a93542c",
+  "prev_content_hash": "sha256:10dee01f7a37578d70e0eade4766767cd36b1b9c213048c799f9cb22832aaccb",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
