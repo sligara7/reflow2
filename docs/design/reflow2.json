@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c3a34d0124eba47f787eb5d5115ceb07da4b756572fd9ff5af5d0adfae08dc0c",
+  "content_hash": "sha256:e43c54124d0e70c4565dd6a2e8037ce8314bc2fdd10ce8795a2a421edfa993b0",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -3422,6 +3422,15 @@
         "role": "author"
       },
       "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-project-records-how-it-ships",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "ctr:anthony"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -8628,6 +8637,18 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "rel:v0210"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:a-project-records-how-it-ships"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:adopt-existing"
     },
     {
@@ -10367,6 +10388,16 @@
         "weight_basis": "evidence"
       },
       "to_id": "req:read-surfaces-debt"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:a-project-records-how-it-ships",
+      "properties": {
+        "note": "THE BLOCKER, DRAWN AS AN EDGE RATHER THAN LEFT IN PROSE. This requirement wants the release procedure held as an ordered process, and cap:model-process is the Flow machinery that would hold it. It CANNOT yet: PART_OF_FLOW is declared Capability -> Flow and accepts nothing else, so a Flow's steps must be Capabilities, and a release chore is not a capability. Until that widens (a schema change, which moves the stamp), this requirement is unsatisfiable by the vocabulary it needs. Recorded as an edge deliberately — this session's own finding was that a prerequisite written into a description is a trigger nothing fires (cap:what-next sat parked after its condition cleared, because nothing watched the prose).",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:model-process"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -12256,6 +12287,12 @@
       "from_id": "cap:freshness",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {},
+      "to_id": "decision:ack:4f9dcb95353889c2"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -14221,6 +14258,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:session-artifacts",
+      "properties": {},
+      "to_id": "decision:ack:9eb6b2b4c5513865"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:session-memory",
       "properties": {},
       "to_id": "decision:ack:be224976b1f4f6e1"
@@ -14260,6 +14303,12 @@
       "from_id": "cap:shared-sessions",
       "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:skill-triggers",
+      "properties": {},
+      "to_id": "decision:ack:8f3bacedc618f3d4"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -14575,6 +14624,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:tool-carries-convention",
+      "properties": {},
+      "to_id": "decision:ack:a3a499e09447e1e3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:tool-search",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -14860,6 +14915,12 @@
       "from_id": "rel:v0190",
       "properties": {},
       "to_id": "dec:release-trigger"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-project-records-how-it-ships",
+      "properties": {},
+      "to_id": "decision:ack:c628f709c27ad035"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -26552,6 +26613,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-07-31"
+      },
+      "to_id": "rel:v0210"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "cap:plan-movement-recorded",
       "properties": {
         "modality": "required",
@@ -26576,6 +26646,33 @@
         "recorded_at": "2026-07-31"
       },
       "to_id": "rel:v0190"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:session-artifacts",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-07-31"
+      },
+      "to_id": "rel:v0210"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:skill-triggers",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-07-31"
+      },
+      "to_id": "rel:v0210"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:tool-carries-convention",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-07-31"
+      },
+      "to_id": "rel:v0210"
     },
     {
       "edge_type": "VERIFIES",
@@ -33641,6 +33738,16 @@
       }
     },
     {
+      "node_id": "decision:ack:4f9dcb95353889c2",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:4f9dcb95353889c2.",
+        "name": "Reviewed: gap:4f9dcb95353889c2",
+        "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:gap-carries-a-reading is written and sits at `planned`, and it pins the CONTRACT rather than the judgement (skill_lint asserts detect-and-ask states both halves, and no status is written in the same act as a recommendation). What the gap actually reports is that the check has never RUN, which is simply true of anything unbuilt. That is a fact about sequencing, not a hole in the design.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every release cut printed \"5 notes\" with no way to tell signal from permanent background — which is how a gate stops being read. Acceptance hides nothing: when the capability is built and its check passes the gap disappears on its own, and cap:review-expires-on-content means rewording the capability expires this review and brings it back for a fresh look.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: acceptance alone was the trap. All four were scheduled against NOTHING, so quieting them would have relied on someone remembering. cap:gap-carries-a-reading is now SCHEDULED_FOR rel:v0210 as `expected`, so the silence is bounded — arrival_delta will ask about it at v0.21.0 whether or not anyone remembers. Deliberately `expected` rather than `required`: this is a plan, not an obligation Anthony has committed to, and a `required` miss is a computed violation.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:52b1ed1377382961",
       "node_type": "Decision",
       "properties": {
@@ -33911,6 +34018,16 @@
       }
     },
     {
+      "node_id": "decision:ack:8f3bacedc618f3d4",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:8f3bacedc618f3d4.",
+        "name": "Reviewed: gap:8f3bacedc618f3d4",
+        "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:skill-triggers is written and sits at `planned`, pinning that shape-matching fires on the situation AND stays silent otherwise (the counterweight is the half that matters, since a trigger that always fires teaches the agent to ignore it). What the gap actually reports is that the check has never RUN, which is simply true of anything unbuilt.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every release cut printed \"5 notes\" with no way to tell signal from permanent background. Acceptance hides nothing — the gap disappears on its own once the check passes, and cap:review-expires-on-content brings it back if the capability is reworded.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: all four were scheduled against NOTHING, so quieting them would have relied on memory. Now SCHEDULED_FOR rel:v0210 as `expected`, so arrival_delta asks at v0.21.0 regardless.\n\nA SEPARATE THING NOT TO CONFUSE WITH THIS: cap:skill-triggers is also the single `unexamined` entry in confirmation_ledger, and that is BL-108, not this gap. The ledger attributes artifacts through a capability's COMPONENT, so cmp:nudge owning art:nudge-detect makes a PLANNED capability read as an unexamined BUILT claim. An exhaustive reconcile_artifacts (98/98 unchanged, 0 findings, 2026-07-31) does not clear it and must not — confirming it would assert that something unbuilt has been checked against reality.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:90a90e90df05c31a",
       "node_type": "Decision",
       "properties": {
@@ -33971,12 +34088,32 @@
       }
     },
     {
+      "node_id": "decision:ack:9eb6b2b4c5513865",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:9eb6b2b4c5513865.",
+        "name": "Reviewed: gap:9eb6b2b4c5513865",
+        "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:session-artifacts is written and sits at `planned`, pinning that THE LINK IS THE FILTER (a rendering a Decision or Capability points at is captured; one nothing points at is not, so the store does not fill with session litter) and that capture happens WITHOUT the agent choosing to invoke it, which is the load-bearing half — a rule depending on the agent remembering decays exactly as req:skill-use-survives-a-long-session measures. What the gap actually reports is that the check has never RUN, which is simply true of anything unbuilt.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every release cut printed \"5 notes\" with no way to tell signal from permanent background. Acceptance hides nothing — the gap disappears on its own once the check passes, and cap:review-expires-on-content brings it back if the capability is reworded.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: all four were scheduled against NOTHING, so quieting them would have relied on memory. Now SCHEDULED_FOR rel:v0210 as `expected`, so arrival_delta asks at v0.21.0 regardless. `expected` and not `required`: a plan, not an obligation whose miss is a computed violation.\n\nNOTE THE DEPENDENCY WHEN IT IS BUILT: its own description says the capture must be TRIGGERED rather than remembered, which places it with cap:skill-triggers rather than beside it — the two are scheduled into the same increment for that reason, not by coincidence.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:9ff80e5afcd024e9",
       "node_type": "Decision",
       "properties": {
         "decision": "Accepted the gap gap:9ff80e5afcd024e9.",
         "name": "Reviewed: gap:9ff80e5afcd024e9",
         "rationale": "Deferred on the established disposition for this review, 2026-07-28. Accepted and not dropped; like the correspondence requirement it comes from general architecture and risk practice rather than from reflow, which had no equivalent either. Deferred because the modelling choice is unsettled and cheap-versus-honest pull in opposite directions: a new node type keeps the distinction sharp (an assumption is not enforced like a Constraint, not chosen like a Decision, and not reducible like a Risk), while adding a kind to Constraint is cheaper and risks blurring the very difference that makes it useful. Also undecided: what edge carries \"rests on\", and whether an assumption carries a confirmation cadence — cap:freshness already models when a claim was last confirmed, so \"nobody has checked this in six months\" could be computed rather than remembered. The computation matters more than the node: once assumptions have things hanging off them, \"X no longer holds\" becomes a propagate query with a real answer instead of prose inside a Decision rationale that nothing can walk.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:a3a499e09447e1e3",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:a3a499e09447e1e3.",
+        "name": "Reviewed: gap:a3a499e09447e1e3",
+        "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:tool-carries-convention is written and sits at `planned`, pinning that the convention rides the tool AND stays bounded (checked against a named list, so adding a tool without considering it is caught, and no description exceeds its budget). What the gap actually reports is that the check has never RUN, which is simply true of anything unbuilt.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every release cut printed \"5 notes\" with no way to tell signal from permanent background — which is how a gate stops being read. Acceptance hides nothing: the gap disappears on its own once the check passes, and cap:review-expires-on-content brings it back if the capability is reworded.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: all four were scheduled against NOTHING, so quieting them would have relied on someone remembering. Now SCHEDULED_FOR rel:v0210 as `expected`, so arrival_delta asks at v0.21.0 regardless.\n\nWORTH CARRYING TO THE BUILD: this one is bounded at a sentence per tool ON PURPOSE, because descriptions are context paid for on EVERY session and cap:tool-search exists precisely because the surface is already large. It does not reverse dec:skills-served — the served skill keeps the depth and the worked examples; the tool carries only the irreducible minimum an agent would reconstruct wrongly or not at all.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
         "status": "accepted"
       }
     },
@@ -34137,6 +34274,16 @@
         "decision": "Accepted the gap gap:c510544d78bf4fef.",
         "name": "Reviewed: gap:c510544d78bf4fef",
         "rationale": "Deferred on Anthony's word, 2026-07-28. Accepted and not dropped: reflow2 regression-gates its DETECTORS (phase_trial 13/13, the erosion trial) and has nothing measuring whether a person or agent can still get through the process, so it could become materially harder to use across a release with every gate green — a consequence report-friction's own text concedes (\"ordinary use produces better evidence and currently loses all of it\"). Deferred behind req:friction-has-a-severity-bar, which is a genuine precondition rather than sequencing: a baseline needs classified countable findings to be a baseline of something. Also open and not decided: whether the blind-execution structure that makes this work (one agent drives without seeing expected outputs, another evaluates the transcript) is something reflow2 runs against ITSELF, or a harness offered to any project reflow2 is installed in — those are different products, and the second inherits the redaction problem in full.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:c628f709c27ad035",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:c628f709c27ad035.",
+        "name": "Reviewed: gap:c628f709c27ad035",
+        "rationale": "LEFT OPEN ON PURPOSE — Anthony's call 2026-07-31. The requirement is HIS OWN idea, captured the same day; accepting this gap parks the MODELLING question, not the intent.\n\nWHAT BLOCKS IT IS A REAL VOCABULARY PROBLEM, FOUND BY CHECKING AND RECORDED SO NOBODY RE-DERIVES IT. The first answer given was \"reflow2 already has the vocabulary — model the release procedure as a Flow\". THAT IS WRONG AS THE SCHEMA STANDS: PART_OF_FLOW is declared Capability -> Flow and accepts nothing else, so a Flow's steps must be Capabilities. \"Bump the version in three files\" is a chore, not a capability. Modelling seven release chores as seven Capabilities would put fake entries into the very set that coverage_report and the verification counts range over — 100 real capabilities plus seven chores makes every one of those reports quietly wrong, permanently. The correction is recorded here rather than edited over the earlier claim.\n\nSO THE OPEN QUESTION IS ONE LEVEL DOWN, AND IT IS GENUINE: is a procedure step a first-class design object, or is it documentation the design POINTS AT? Making it first-class means widening PART_OF_FLOW to accept a step type — which MOVES THE STAMP and locks every older reflow2 out of the design, so it is a release-shaped decision, not a side edit. Pointing at it instead means writing the procedure as a document in the content store (which now exists) and referencing it from the Project — cheap, no schema change, but an agent reads prose rather than querying steps, which is most of what was asked for.\n\nWHY NOT NOW: v0.20.0 was deliberately scoped to cap:changelog-view ALONE, and a schema change is not a side quest to slip in beside it. Nothing is lost by waiting — the requirement holds the reasoning and the derivability argument, and the seven recovered steps are written down outside the graph in the meantime.\n\nTHE ONE THING NOT TO DO is build it as a Flow of invented Capabilities to make this note go away. That would trade a visible open question for a silently wrong metric, which is the exact trade req:no-silent-fallback exists to forbid.\n\nTHE EVIDENCE STANDS AND IS NOT WEAKENED BY THE PARK: cutting v0.19.0 required reconstructing seven steps from `git show v0.18.0` plus a grep, and at least two of them — that an upgrade doc is owed ONLY when the schema stamp moves, and that the release manifest must be exhaustive with nothing computing it — were discoverable only from a past commit message.",
         "status": "accepted"
       }
     },
@@ -36821,6 +36968,16 @@
         "status": "planned",
         "unit_type": "package",
         "version": "0.20.0"
+      }
+    },
+    {
+      "node_id": "rel:v0210",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.21.0 — the four planned agent-facing capabilities: a question that carries a reading, situation-shaped skill triggers, session renderings kept when the design points at them, and convention on the tool",
+        "status": "planned",
+        "unit_type": "binary",
+        "version": "0.21.0"
       }
     },
     {
@@ -40067,7 +40224,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5a10c8bfa3997c7538432e0f6a46833689da269d9feea885c06ec72bef605c79",
+  "prev_content_hash": "sha256:c3a34d0124eba47f787eb5d5115ceb07da4b756572fd9ff5af5d0adfae08dc0c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
