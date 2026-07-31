@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:00f5fc3b7e7d1ee8827421b674bdba2128279533fa11e6bf0ff06711bb520057",
+  "content_hash": "sha256:2417a73bccf71f1c56f2eeeb590d85f41185cf8d60119f5e5056c953550762b5",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -6927,6 +6927,15 @@
         "action": "modified"
       },
       "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scheduled-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:readme"
     },
     {
       "edge_type": "CHANGED",
@@ -25876,7 +25885,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:89b5dd2ab01635c57260235fa8afd6e757991e1bfdf576153a54bdf944dba071",
+        "checksum": "sha256:91b73f060c83a6718e22a9428cba4f8d3d713f59329986110f0fc113ef3ef783",
         "location": "README.md",
         "name": "README.md",
         "status": "realized"
@@ -36419,7 +36428,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:edbe37a376fc4ab12c76096895569382ebee84fdbda5f46970e64450d8a8c76c",
+  "prev_content_hash": "sha256:00f5fc3b7e7d1ee8827421b674bdba2128279533fa11e6bf0ff06711bb520057",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
