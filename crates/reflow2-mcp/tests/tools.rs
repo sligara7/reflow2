@@ -2480,3 +2480,140 @@ async fn setting_the_mode_of_a_project_that_is_not_there_fails_loud() {
     .await
     .expect_err("no silent creation of a project as a side effect of governing it");
 }
+
+// ---- The content store on the surface (cap:content-store) -------------------
+//
+// The store itself is proven in reflow2-core's tests/content.rs. These are the
+// SURFACE cases — the ones that only exist because the store is reachable from
+// a session, which is what `req:the-store-is-reachable-from-a-session` says was
+// missing when the store was first marked realized.
+
+/// An in-memory service pointed at a throwaway content directory.
+fn with_content(name: &str) -> ReflowService {
+    let dir =
+        std::env::temp_dir().join(format!("reflow2-mcp-content-{name}-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    ReflowService::in_memory()
+        .expect("in-memory service")
+        .with_content_path(Some(dir.to_string_lossy().into_owned()))
+}
+
+#[tokio::test]
+async fn text_round_trips_through_the_surface_and_re_storing_is_a_no_op() {
+    let s = with_content("text");
+    let put = j!(s.content_put(Parameters(ContentPutReq {
+        text: Some("# A design note\n\nsomething that informed the build".into()),
+        base64: None,
+    })));
+    let hash = put["hash"].as_str().expect("a hash").to_string();
+    assert_eq!(put["already_present"], serde_json::json!(false));
+
+    let got = j!(s.content_get(Parameters(ContentRefReq { hash: hash.clone() })));
+    assert!(
+        got["text"].as_str().unwrap().contains("informed the build"),
+        "text content must come back as text, got {got}"
+    );
+
+    // Idempotent: the same bytes are the same address, so this stores nothing.
+    let again = j!(s.content_put(Parameters(ContentPutReq {
+        text: Some("# A design note\n\nsomething that informed the build".into()),
+        base64: None,
+    })));
+    assert_eq!(again["hash"], serde_json::json!(hash));
+    assert_eq!(
+        again["already_present"],
+        serde_json::json!(true),
+        "a re-put must report that it stored nothing rather than looking like new work"
+    );
+}
+
+#[tokio::test]
+async fn binary_survives_the_json_boundary_as_base64() {
+    let s = with_content("binary");
+    // A PNG header — bytes that are NOT valid UTF-8, which is the whole reason
+    // base64 is on this tool at all.
+    let raw: Vec<u8> = vec![0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0xff, 0xfe];
+    use base64::Engine as _;
+    let encoded = base64::engine::general_purpose::STANDARD.encode(&raw);
+
+    let put = j!(s.content_put(Parameters(ContentPutReq {
+        text: None,
+        base64: Some(encoded.clone()),
+    })));
+    let hash = put["hash"].as_str().unwrap().to_string();
+    assert_eq!(put["bytes"], serde_json::json!(raw.len()));
+
+    let got = j!(s.content_get(Parameters(ContentRefReq { hash })));
+    assert!(
+        got["text"].is_null(),
+        "non-UTF-8 must not come back as text"
+    );
+    assert_eq!(
+        got["base64"],
+        serde_json::json!(encoded),
+        "bytes that are not text come back base64, unchanged"
+    );
+}
+
+#[tokio::test]
+async fn two_encodings_at_once_is_refused_rather_than_one_silently_dropped() {
+    let s = with_content("both");
+    let err = s
+        .content_put(Parameters(ContentPutReq {
+            text: Some("one thing".into()),
+            base64: Some("dHdvIHRoaW5ncw==".into()),
+        }))
+        .await
+        .expect_err("two different payloads must not be resolved by picking one");
+    assert!(format!("{err:?}").contains("not both"));
+
+    let err = s
+        .content_put(Parameters(ContentPutReq {
+            text: None,
+            base64: None,
+        }))
+        .await
+        .expect_err("storing nothing is a mistake, not an empty blob");
+    assert!(format!("{err:?}").contains("nothing to store"));
+}
+
+#[tokio::test]
+async fn exists_answers_without_reading_and_a_miss_is_not_an_error() {
+    let s = with_content("exists");
+    let hash = j!(s.content_put(Parameters(ContentPutReq {
+        text: Some("stored".into()),
+        base64: None,
+    })))["hash"]
+        .as_str()
+        .unwrap()
+        .to_string();
+
+    let there = j!(s.content_exists(Parameters(ContentRefReq { hash })));
+    assert_eq!(there["present"], serde_json::json!(true));
+
+    // A hash nobody stored is a legitimate answer, not a failure — this is the
+    // call someone makes to ask "do I have everything?".
+    let absent = reflow2_core::content_hash(b"never stored");
+    let missing = j!(s.content_exists(Parameters(ContentRefReq { hash: absent })));
+    assert_eq!(missing["present"], serde_json::json!(false));
+}
+
+/// THE REFUSAL THAT MAKES THE OTHERS SAFE. A server with no store configured
+/// must say so, not invent a directory — blobs are committed, so where they
+/// live is a decision about the consumer's repo.
+#[tokio::test]
+async fn a_server_with_no_content_store_says_so_instead_of_choosing_one() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    let err = s
+        .content_put(Parameters(ContentPutReq {
+            text: Some("nowhere to go".into()),
+            base64: None,
+        }))
+        .await
+        .expect_err("no store configured");
+    let said = format!("{err:?}");
+    assert!(
+        said.contains("--content-path"),
+        "the refusal must name the remedy, got: {said}"
+    );
+}

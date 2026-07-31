@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1dd74be1d4768aac66efad2dee38134f2e1096b6e308fc44f86224b1e14853b1",
+  "content_hash": "sha256:d1437ad41760354cd72b67ea6d749020c408764ae04fe11f4fe9cb4ce954c2e5",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1745,6 +1745,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-surface",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:context-estimation-reassessed",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
@@ -2490,6 +2496,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:arrival-delta:cap:content-store:r2",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:cap:content-store:r3",
       "properties": {},
       "to_id": "epoch:arrival-delta"
     },
@@ -5598,6 +5610,33 @@
     {
       "edge_type": "CHANGED",
       "from_id": "chg:content-store-hand-rolled",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-surface",
       "properties": {
         "accepted_baseline": false,
         "action": "modified"
@@ -15057,6 +15096,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:cap:content-store:r3"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:design-identity",
       "properties": {},
       "to_id": "snap:epoch:v0130:cap:design-identity"
@@ -23875,6 +23920,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cap:governance-mode"
     },
     {
@@ -24348,6 +24401,12 @@
       "from_id": "cap:content-store",
       "properties": {},
       "to_id": "req:content-store-for-what-the-graph-points-at"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "req:the-store-is-reachable-from-a-session"
     },
     {
       "edge_type": "SATISFIES",
@@ -25150,6 +25209,12 @@
     {
       "edge_type": "VERIFIES",
       "from_id": "ver:content-store",
+      "properties": {},
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:content-surface",
       "properties": {},
       "to_id": "cap:content-store"
     },
@@ -26788,7 +26853,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:135bd303bf1006cf6e0f4d7646f2acef07dedc1dd5e355758532501d8d5916db",
+        "checksum": "sha256:1702df92e14a3d7abac61e3e13387fd464bacc18bc31d5f9a858cde846dafe32",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -27030,7 +27095,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6e0871fae3717107",
+        "checksum": "sha256:934845b35ee74839",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -27573,7 +27638,7 @@
       "node_id": "cap:content-store",
       "node_type": "Capability",
       "properties": {
-        "description": "A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures.\n\nHAND-ROLLED AND SYNCHRONOUS, IN `reflow2-core` (`dec:content-store-implementation`). `put(bytes) -> hash`, `get(hash) -> bytes`, `exists(hash)` over `sha2` (already a core dependency) and `std::fs`. Zero new crates, no async runtime, deterministic and testable without one. `object_store` was measured and recorded as the documented UPGRADE PATH rather than adopted: 36 crates new to reflow2, ~24 of them URL/ICU machinery a local store never calls, buying a feature set — paths, prefixes, listing, multipart, conditional writes — that immutable content addressing does not have.\n\nTHREE PROPERTIES THE BUILD MADE REAL, each pinned by a test and two of them mutation-checked. (1) `get` VERIFIES the bytes against the hash they are stored under and REFUSES a mismatch rather than returning it — a content hash nobody checks is only a filename, and the claim that a blob fetched from anywhere can be trusted once it verifies rests entirely on this. (2) A hash is interpolated into a path, so anything that is not exactly `sha256:` plus 64 lowercase hex is refused BEFORE it reaches the filesystem; `../../etc/passwd` is a malformed hash, not a missing file. (3) Writes are temp-then-rename within the shard directory, so a process that dies mid-write leaves nothing or a whole blob — and a stranded temp file is unreachable as content because its name is not a hash.\n\nBlobs are COMMITTED to the repo, so they travel exactly as the design does (`dec:where-content-lives`). Reading INTO stored content is not this capability's job and never becomes one — the agent navigates, the graph records an opaque locator reflow2 never parses (`dec:agent-navigates-content`). REALIZED, `ver:content-store` passing.",
+        "description": "A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures.\n\nHAND-ROLLED AND SYNCHRONOUS, IN `reflow2-core` (`dec:content-store-implementation`). `put` / `get` / `exists` over `sha2` and `std::fs`. Zero new crates in the core, no async runtime. `object_store` was measured and recorded as the documented UPGRADE PATH rather than adopted: 36 crates new to reflow2, ~24 of them URL/ICU machinery a local store never calls, buying a feature set — paths, prefixes, listing, multipart, conditional writes — that immutable content addressing does not have.\n\nREACHABLE FROM A SESSION as `content_put` / `content_get` / `content_exists` (`req:the-store-is-reachable-from-a-session`). That requirement exists because this capability was first marked `realized` while NOTHING COULD CALL IT — complete in the core, tested, carrying a passing check, and unreachable by every agent and person who would use it. Content arrives as `text` or `base64` (JSON carries no raw bytes), exactly one, and the store's root comes from `--content-path` rather than being derived from `--graph-path`, because the graph lives under a gitignored directory and blobs are COMMITTED so they travel with the design.\n\nFOUR REFUSALS, which is where this earns its keep — each pinned by a test, two mutation-checked. `get` VERIFIES bytes against the hash they are stored under and refuses a mismatch: a content hash nobody checks is only a filename. A malformed hash is refused BEFORE it reaches the filesystem, since a hash is interpolated into a path. Passing both `text` and `base64` is refused rather than resolved by picking one. And a server with no store configured says so instead of inventing a directory — where blobs live is a decision about the consumer's repo.\n\nWrites are temp-then-rename, so a process that dies mid-write leaves nothing or a whole blob, and a stranded temp file is unreachable as content because its name is not a hash. Reading INTO stored content is not this capability's job and never becomes one — the agent navigates, the graph records an opaque locator reflow2 never parses (`dec:agent-navigates-content`). What belongs here versus natively in the repo is `dec:what-lives-where`. REALIZED; `ver:content-store` and `ver:content-surface` passing.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Store bytes beside the design and point at them by content hash",
@@ -29403,6 +29468,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "cap:content-store rewritten: hand-rolled sync store in reflow2-core, not object_store in reflow2-mcp"
+      }
+    },
+    {
+      "node_id": "chg:content-surface",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "content_put / content_get / content_exists — the store becomes reachable from a session"
       }
     },
     {
@@ -34972,12 +35045,13 @@
       "node_id": "question:ff976610480dab90",
       "node_type": "Question",
       "properties": {
+        "answer": "Yes — build it next. \"Put the store on the MCP surface — content_put / content_get / content_exists. It's the smallest thing that turns working code into a usable capability, and three accepted requirements sit behind it.\" (Anthony, 2026-07-31.)",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “A capability nothing can call is not delivered — the content store needs a surface”",
         "gap_id": "gap:ff976610480dab90",
         "question": "The storage for diagrams and documents is written and working, but nothing an assistant can actually call reaches it — so today nobody can put a file in or get one out. Should adding those calls be the next thing built?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -36639,7 +36713,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "FOUND 2026-07-31, immediately after `cap:content-store` was marked `realized`. The code exists, is tested and is correct — and NOTHING CAN CALL IT. Every occurrence of `content_hash` in `reflow2-mcp/src/service.rs` belongs to the export's own hash; no served tool touches `ContentStore`. So an agent in a session cannot store a diagram, and a user cannot get one back.\n\nTHIS IS BL-97's FINDING, RECURRED. That entry recorded the same shape for extraction: \"`ingest` takes an `LlmBackend`, reflow2 ships no provider, and NO INGEST TOOL EXISTS among the 108 served — so core ingest cannot be called from a session at all, and the only working path today is the `adopt` skill.\" A capability can be complete in `reflow2-core`, pass its own tests, carry a passing Verification, and still be unreachable by everything that would use it.\n\nWHAT MAKES IT WORTH A REQUIREMENT RATHER THAN A TASK: NO DETECTOR ASKS THIS. `unrealized_capability` asks whether an artifact realizes it — one does. `unverified_capability` asks whether a check passes — one does. `detect_gaps` returned nothing about it, correctly, because reachability from the interaction surface is not something the design currently computes. The confirmation ledger will happily report it `confirmed`. So a capability can read as fully delivered across every reading reflow2 offers while being usable by nobody, which is the same class of blind spot as a declared property nothing reads.\n\nTHE REQUIREMENT: a capability whose whole purpose is to be used by an agent or a person is not delivered until something they can call reaches it. For the content store that means put / get / exists on the MCP surface. More generally it means the question \"can anyone actually invoke this?\" belongs somewhere the design can answer, rather than being noticed by whoever happens to look.\n\nSCOPE NOTE, so this does not overreach: plenty of core capabilities are legitimately internal — `cap:store`, `cap:propagate` and their kin are called BY other reflow2 code and need no tool of their own. The claim is narrower: where a capability's stated purpose names an agent or a user as the caller, an unreachable implementation has not delivered it.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -36757,6 +36831,16 @@
       "properties": {
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:content\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-store\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:artifact\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:agent-navigates-content\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:content-store-implementation\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:where-content-lives\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-reaches-every-seat\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-store-for-what-the-graph-points-at\",\"properties\":{}}]",
         "state": "{\"description\":\"A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures.\\n\\nHAND-ROLLED AND SYNCHRONOUS, IN `reflow2-core` (`dec:content-store-implementation`, Anthony 2026-07-31). Three operations — `put(bytes) -> hash`, `get(hash) -> bytes`, `exists(hash)` — over `sha2` (already a core dependency) and `std::fs`, with write-to-temp-then-rename for atomicity. Zero new crates, no async runtime, deterministic and testable in memory like the rest of the core. `object_store` was measured and recorded as the documented UPGRADE PATH rather than adopted: 36 crates new to reflow2, ~24 of them URL/ICU machinery a local store never calls, and its value — paths, prefixes, listing, multipart, conditional writes — is exactly the feature set immutable content addressing does not have.\\n\\nBlobs are COMMITTED to the repo, so they travel exactly as the design does: clone and you have everything, with no second channel to configure or be down (`dec:where-content-lives`). Reading INTO stored content is not this capability's job and never becomes one — the agent navigates, the graph records an opaque locator it never parses (`dec:agent-navigates-content`). PLANNED.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Store bytes beside the design and point at them by content hash\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
+        "target_id": "cap:content-store",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:arrival-delta:cap:content-store:r3",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:content\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-store\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:artifact\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:agent-navigates-content\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:content-store-implementation\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:what-lives-where\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:where-content-lives\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-reaches-every-seat\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-store-for-what-the-graph-points-at\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-store-is-reachable-from-a-session\",\"properties\":{}}]",
+        "state": "{\"description\":\"A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures.\\n\\nHAND-ROLLED AND SYNCHRONOUS, IN `reflow2-core` (`dec:content-store-implementation`). `put(bytes) -> hash`, `get(hash) -> bytes`, `exists(hash)` over `sha2` (already a core dependency) and `std::fs`. Zero new crates, no async runtime, deterministic and testable without one. `object_store` was measured and recorded as the documented UPGRADE PATH rather than adopted: 36 crates new to reflow2, ~24 of them URL/ICU machinery a local store never calls, buying a feature set — paths, prefixes, listing, multipart, conditional writes — that immutable content addressing does not have.\\n\\nTHREE PROPERTIES THE BUILD MADE REAL, each pinned by a test and two of them mutation-checked. (1) `get` VERIFIES the bytes against the hash they are stored under and REFUSES a mismatch rather than returning it — a content hash nobody checks is only a filename, and the claim that a blob fetched from anywhere can be trusted once it verifies rests entirely on this. (2) A hash is interpolated into a path, so anything that is not exactly `sha256:` plus 64 lowercase hex is refused BEFORE it reaches the filesystem; `../../etc/passwd` is a malformed hash, not a missing file. (3) Writes are temp-then-rename within the shard directory, so a process that dies mid-write leaves nothing or a whole blob — and a stranded temp file is unreachable as content because its name is not a hash.\\n\\nBlobs are COMMITTED to the repo, so they travel exactly as the design does (`dec:where-content-lives`). Reading INTO stored content is not this capability's job and never becomes one — the agent navigates, the graph records an opaque locator reflow2 never parses (`dec:agent-navigates-content`). REALIZED, `ver:content-store` passing.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Store bytes beside the design and point at them by content hash\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
         "target_id": "cap:content-store",
         "target_type": "Capability"
       }
@@ -37391,6 +37475,18 @@
         "level": "unit",
         "method": "test",
         "name": "Content store round-trip and failure modes: the same bytes yield the same hash and are stored once; get(hash) returns exactly what put() took; a blob whose bytes no longer match its hash is REFUSED on read rather than returned (content addressing is only worth having if it is checked); a missing blob fails loud naming the hash and what referenced it; an interrupted write leaves no partial file, proven by writing to a temp path and renaming. PLANNED — written before the build so the shape of the proof is settled first.",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:content-surface",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-31",
+        "level": "integration",
+        "method": "test",
+        "name": "The store on the MCP surface (crates/reflow2-mcp/tests/tools.rs, 5 cases): text round-trips and a re-put reports `already_present` rather than looking like new work; NON-UTF-8 BYTES survive the JSON boundary as base64 and come back base64 unchanged, which is the whole reason that field exists; passing both `text` and `base64` is REFUSED rather than resolved by picking one, and passing neither is refused as a mistake rather than stored as an empty blob; `exists` answers false for an unstored hash without erroring, because that is the call someone makes to ask \"do I have everything?\"; and A SERVER WITH NO --content-path CONFIGURED REFUSES BY NAME instead of inventing a directory — blobs are committed, so where they live is a decision about the consumer's repo.",
         "status": "passing"
       }
     },
@@ -38245,7 +38341,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:944cb7dfad4ab5cb3dfde115a2cea83d9a3c99c87999a74b225553f7896a777c",
+  "prev_content_hash": "sha256:1dd74be1d4768aac66efad2dee38134f2e1096b6e308fc44f86224b1e14853b1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -83,6 +83,13 @@ pub struct ReflowService {
     /// is (`req:design-identity` — both live in sidecars beside the store).
     /// `None` for an in-memory graph, which has no sidecar to remember in.
     pub(crate) graph_path: Option<String>,
+    /// Where this project's content store lives — the committed directory
+    /// holding the bytes the graph points at (`dec:where-content-lives`).
+    /// Deliberately NOT derived from `graph_path`: the graph lives under
+    /// `.reflow2/`, which is gitignored, and blobs must travel with the repo.
+    /// `None` means no store was configured, and the content tools say so
+    /// rather than inventing a location.
+    pub(crate) content_path: Option<String>,
     /// THIS SESSION's seat, minted per service instance rather than per process
     /// (`req:seat-per-client`). One server holds many client sessions — rmcp
     /// builds a service per session — so a process-wide seat would report every
@@ -1065,6 +1072,26 @@ pub struct ScheduleForReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ContentPutReq {
+    /// The content as text — markdown, mermaid, HTML, a transcript. Most of
+    /// what a design points at is text, so this is the ordinary case.
+    #[serde(default)]
+    pub text: Option<String>,
+    /// The content base64-encoded, for bytes that are not text: a photograph of
+    /// a whiteboard, a PNG, a PDF. Exactly one of `text` or `base64`.
+    #[serde(default)]
+    pub base64: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ContentRefReq {
+    /// The content hash, as `content_put` returned it.
+    pub hash: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ArrivalDeltaReq {
     /// The DesignEpoch or Release to read the schedule of.
     pub target_id: String,
@@ -1862,6 +1889,9 @@ impl ReflowService {
             graph: Arc::new(RwLock::new(graph)),
             seat: reflow2_core::identity::mint_seat(),
             graph_path,
+            // Set by the caller after construction (`with_content_path`), so
+            // adding a store did not have to change every constructor.
+            content_path: None,
             // The skills are served, not installed (dec:skills-served), and
             // their tools live in their own module — combined here so
             // find_tools and tools/list see one surface.
@@ -1869,6 +1899,34 @@ impl ReflowService {
             write_gen: Arc::new(AtomicU64::new(0)),
             read_hint: Arc::new(std::sync::Mutex::new(ReadHintCache::default())),
         }
+    }
+
+    /// Point this service at a content store.
+    ///
+    /// A setter rather than a constructor parameter so adding the store did not
+    /// change the signature every caller and test already uses — the same
+    /// reason `graph_path` is carried rather than rediscovered.
+    pub fn with_content_path(mut self, path: Option<String>) -> Self {
+        self.content_path = path;
+        self
+    }
+
+    /// The content store, or a refusal that names why there is none.
+    ///
+    /// Fails loud rather than defaulting to a directory nobody chose
+    /// (`req:no-silent-fallback`): a store invented at call time would put a
+    /// consumer's diagrams somewhere they never agreed to, and blobs are meant
+    /// to be COMMITTED, so the location is a decision about their repo.
+    fn content_store(&self) -> Result<reflow2_core::ContentStore, McpError> {
+        let path = self.content_path.as_deref().ok_or_else(|| {
+            McpError::invalid_params(
+                "this server has no content store configured, so there is nowhere to put bytes. \
+                 Start it with --content-path <dir> (a directory inside the repo, since blobs are \
+                 committed and travel with the design).",
+                None,
+            )
+        })?;
+        Ok(reflow2_core::ContentStore::new(path))
     }
 
     /// Another session on the SAME design.
@@ -1887,6 +1945,7 @@ impl ReflowService {
             graph: Arc::clone(&self.graph),
             tool_router: self.tool_router.clone(),
             graph_path: self.graph_path.clone(),
+            content_path: self.content_path.clone(),
             write_gen: Arc::clone(&self.write_gen),
             // Fresh per session: a shared seat would report every client as the
             // same owner, and a shared hint memory would land one session's
@@ -3494,6 +3553,115 @@ impl ReflowService {
             "scheduled": req.item_id,
             "for": req.target_id,
             "modality": modality
+        }))
+    }
+
+    #[tool(
+        description = "Store bytes in this project's content store and get back the CONTENT HASH \
+                       the design will point at (cap:content-store). For what the graph cannot hold \
+                       inline: a user's design document, a session transcript, a mermaid diagram, \
+                       an HTML mockup, a photograph of a whiteboard. Pass `text` for text or \
+                       `base64` for binary — exactly one. STORING IS IDEMPOTENT: the same bytes \
+                       hash the same and are kept once, so re-storing is a no-op rather than a \
+                       duplicate. WHAT BELONGS HERE, and what does not (dec:what-lives-where): the \
+                       content store holds what INFORMED the design; the codebase and anything \
+                       shipped with the product stay natively in the repo where they are versioned \
+                       as code always has been. Wire the hash into the graph yourself — a Fragment \
+                       carrying it in `content_ref`, ANNOTATES-ing what it explains or YIELDED-ing \
+                       what was extracted from it — because a stored blob nothing references is \
+                       just an orphan.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn content_put(
+        &self,
+        Parameters(req): Parameters<ContentPutReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let bytes: Vec<u8> = match (req.text, req.base64) {
+            (Some(t), None) => t.into_bytes(),
+            (None, Some(b)) => {
+                use base64::Engine as _;
+                base64::engine::general_purpose::STANDARD
+                    .decode(b.as_bytes())
+                    .map_err(|e| {
+                        McpError::invalid_params(format!("`base64` is not valid base64: {e}"), None)
+                    })?
+            }
+            (Some(_), Some(_)) => {
+                return Err(McpError::invalid_params(
+                    "pass `text` OR `base64`, not both — two encodings of different bytes would \
+                     store one of them and silently drop the other.",
+                    None,
+                ));
+            }
+            (None, None) => {
+                return Err(McpError::invalid_params(
+                    "nothing to store: pass `text` for text content or `base64` for binary.",
+                    None,
+                ));
+            }
+        };
+        let store = self.content_store()?;
+        let already = {
+            let hash = reflow2_core::content_hash(&bytes);
+            store.exists(&hash).map_err(dyno_err)?
+        };
+        let hash = store.put(&bytes).map_err(dyno_err)?;
+        ok_json(serde_json::json!({
+            "hash": hash,
+            "bytes": bytes.len(),
+            "already_present": already,
+            "store": store.root().display().to_string(),
+        }))
+    }
+
+    #[tool(
+        description = "Read content back by its hash, VERIFIED against it (cap:content-store). \
+                       Returns `text` when the bytes are valid UTF-8 and `base64` when they are \
+                       not, so a diagram and a transcript both come back usable. Bytes that no \
+                       longer match the hash they are stored under are REFUSED rather than \
+                       returned — a content hash nobody checks is only a filename. A missing blob \
+                       fails loud naming the hash, which is the case someone who has the design \
+                       but not the bytes will hit (req:content-reaches-every-seat). Finding the \
+                       relevant PART of a large document is your job, not reflow2's \
+                       (dec:agent-navigates-content) — read it as you would any file.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn content_get(
+        &self,
+        Parameters(req): Parameters<ContentRefReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let bytes = self.content_store()?.get(&req.hash).map_err(dyno_err)?;
+        let mut out = serde_json::json!({ "hash": req.hash, "bytes": bytes.len() });
+        match String::from_utf8(bytes) {
+            Ok(text) => out["text"] = serde_json::Value::String(text),
+            Err(e) => {
+                use base64::Engine as _;
+                out["base64"] = serde_json::Value::String(
+                    base64::engine::general_purpose::STANDARD.encode(e.as_bytes()),
+                );
+            }
+        }
+        ok_json(out)
+    }
+
+    #[tool(
+        description = "Whether the bytes for a content hash are present in this project's store \
+                       (cap:content-store). Cheap: it does NOT read or verify the content, which \
+                       is content_get's job — conflating them would make a presence check secretly \
+                       expensive on a large blob. Use it to answer \"do I have everything this \
+                       design points at?\" without pulling every diagram into context.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn content_exists(
+        &self,
+        Parameters(req): Parameters<ContentRefReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let store = self.content_store()?;
+        let present = store.exists(&req.hash).map_err(dyno_err)?;
+        ok_json(serde_json::json!({
+            "hash": req.hash,
+            "present": present,
+            "store": store.root().display().to_string(),
         }))
     }
 
