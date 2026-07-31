@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6f817dcb9960ad4033bb678b3627f623741b0bd8f25e71831695a8711a93542c",
+  "content_hash": "sha256:10dee01f7a37578d70e0eade4766767cd36b1b9c213048c799f9cb22832aaccb",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -136,6 +136,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:content-store",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:artifact"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -707,6 +715,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:session-artifacts",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:session-memory",
       "properties": {
         "weight_basis": "estimated"
@@ -728,6 +744,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:skill-triggers",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:nudge"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -808,6 +832,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:tool-carries-convention",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1661,6 +1693,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-location-settled",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:context-estimation-reassessed",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
@@ -2417,6 +2455,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:arrival-delta:dec:where-content-lives:r2",
+      "properties": {},
+      "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:kpp-capture:cap:kpp-proposal",
       "properties": {},
       "to_id": "epoch:kpp-capture"
@@ -3112,6 +3156,15 @@
         "role": "author"
       },
       "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:where-content-lives",
+      "properties": {
+        "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -5384,6 +5437,15 @@
         "action": "added"
       },
       "to_id": "cap:composed-analysis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-location-settled",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:where-content-lives"
     },
     {
       "edge_type": "CHANGED",
@@ -11026,6 +11088,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "dec:where-content-lives"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:corpus-ingest",
       "properties": {},
       "to_id": "dec:ask-not-repair"
@@ -14616,6 +14684,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:skill-adherence-is-measured",
+      "properties": {},
+      "to_id": "decision:ack:230d69056201ed59"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:snapshot-per-revision-not-per-epoch",
       "properties": {},
       "to_id": "dec:snapshot-id-per-revision"
@@ -14823,6 +14897,12 @@
       "from_id": "dec:where-content-lives",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:dec:where-content-lives"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:where-content-lives",
+      "properties": {},
+      "to_id": "snap:epoch:arrival-delta:dec:where-content-lives:r2"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -23986,9 +24066,27 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "req:content-reaches-every-seat"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "req:content-store-for-what-the-graph-points-at"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:corpus-ingest",
       "properties": {},
       "to_id": "req:corpus-ingest"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:corpus-ingest",
+      "properties": {},
+      "to_id": "req:sources-are-kept-not-just-parsed"
     },
     {
       "edge_type": "SATISFIES",
@@ -24363,6 +24461,12 @@
       "edge_type": "SATISFIES",
       "from_id": "cap:read-loop-hint",
       "properties": {},
+      "to_id": "req:a-hint-names-its-next-call"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:read-loop-hint",
+      "properties": {},
       "to_id": "req:read-surfaces-debt"
     },
     {
@@ -24499,6 +24603,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:session-artifacts",
+      "properties": {},
+      "to_id": "req:agent-artifacts-are-captured"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:session-memory",
       "properties": {},
       "to_id": "req:explains-itself"
@@ -24520,6 +24630,12 @@
       "from_id": "cap:shared-sessions",
       "properties": {},
       "to_id": "req:sessions-share-a-graph"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:skill-triggers",
+      "properties": {},
+      "to_id": "req:skill-use-survives-a-long-session"
     },
     {
       "edge_type": "SATISFIES",
@@ -24574,6 +24690,12 @@
       "from_id": "cap:surface",
       "properties": {},
       "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:tool-carries-convention",
+      "properties": {},
+      "to_id": "req:conventions-ride-the-tool-not-only-the-skill"
     },
     {
       "edge_type": "SATISFIES",
@@ -27101,6 +27223,19 @@
       }
     },
     {
+      "node_id": "cap:content-store",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures. Built on `object_store` (Apache Arrow) with the local filesystem backend and cloud features OFF, so there is no service to run and cloud backends stay one configuration change away. Blobs are COMMITTED to the repo, which makes them travel exactly as the design does — clone and you have everything (`dec:where-content-lives`). The store itself lives in `reflow2-mcp` because `object_store` is async and `reflow2-core` is deliberately synchronous; the core holds only the hash, which is sync, deterministic and testable in memory. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Store bytes beside the design and point at them by content hash",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:corpus-ingest",
       "node_type": "Capability",
       "properties": {
@@ -27920,6 +28055,19 @@
       }
     },
     {
+      "node_id": "cap:session-artifacts",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Diagrams, mockups and rendered explanations produced during a session are captured into the content store and linked from the design node they explain — the visual half of a Decision's rationale, which is otherwise thrown away at session end. THE FILTER IS THE LINK, on Anthony's word 2026-07-31: a rendering is kept when a Decision or Capability actually points at it, so the store holds what someone will look at again rather than every intermediate. Capture must be TRIGGERED rather than remembered — a rule depending on the agent choosing to store its own diagram decays exactly as `req:skill-use-survives-a-long-session` measures — so this belongs with the trigger work rather than beside it. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Keep what a session drew, when the design points at it",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:session-memory",
       "node_type": "Capability",
       "properties": {
@@ -27942,6 +28090,19 @@
         "name": "Several sessions work one design at once, through one server",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:skill-triggers",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The loop hook stops merely COUNTING writes and starts recognising SHAPES, so a skill is named when the situation calling for it arrives rather than when the agent happens to remember: a file edit with no ChangeEvent in the window means impact-check; an artifact checksum drift means link-artifacts; a capture batch with no gap pass means detect-and-ask. Extends `req:nudge-covers-bypass`, which already arms on file-edit events and already names those skills and is `verified` — what is missing is the pattern, not the trigger. This is the half of BL-74 the existing rungs structurally cannot reach: they compute loop debt from graph state, and these situations are invisible to the graph. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "The moment tells the agent which skill it needs",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -28033,6 +28194,19 @@
         "name": "Ask the user a plain question",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:tool-carries-convention",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Each served tool's description carries at most one sentence of reflow2 CONVENTION — the fraction a capable agent reconstructs incorrectly or not at all, such as the distinction between answering a gap and acknowledging one, or that a check left at `planned` is not confirmation. It arrives with the call, so it cannot be skipped by an agent that never loads the skill. Deliberately bounded at a sentence per tool: descriptions are context paid for on every session, and `cap:tool-search` exists because the surface is already large. Does not reverse `dec:skills-served` — the served skill keeps the depth, the worked examples and the reasoning; the tool carries only the irreducible minimum. PLANNED.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "The tool carries what an agent would never guess",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -28845,6 +29019,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Two designs analysed together without either being written to: the dependency's ids are namespaced into an in-memory graph and reflow2's ordinary detectors run over the whole, every finding attributed ours/theirs/seam"
+      }
+    },
+    {
+      "node_id": "chg:content-location-settled",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Where content lives, settled on Anthony's word: object_store with a local backend, blobs committed to the repo"
       }
     },
     {
@@ -30935,10 +31117,10 @@
       "node_id": "dec:where-content-lives",
       "node_type": "Decision",
       "properties": {
-        "decision": "OPEN, raised by `req:content-store-for-what-the-graph-points-at`. AMENDED 2026-07-31 after Anthony researched the Rust ecosystem and proposed `object_store` (Apache Arrow, originally InfluxData). The original four-way fork is preserved in the snapshot at `snap:epoch:arrival-delta:dec:where-content-lives`.\n\nWHAT THE RESEARCH CHANGES, and it is more than picking a library. The fork assumed the choice was WHERE — repo, beside the repo, or an external service — and that choosing the service re-opened `dec:repo-file-embedded`. `object_store` presents ONE trait over local filesystem, in-memory, S3, GCS, Azure and HTTP/WebDAV, so the backend becomes RUNTIME CONFIGURATION rather than an architectural commitment. Written once against the trait, reflow2 defaults to local and the no-service property is kept intact, while anyone who wants durability configures a cloud backend without reflow2 knowing or caring. That is exactly the resolution option (c) hypothesised — \"possibly only for the OPTIONAL half\" — arriving as a property of the library rather than as a compromise.\n\nVERIFIED, not taken from the summary: `fs` (LocalFileSystem) is a DEFAULT feature and `InMemory` needs no feature at all; the cloud backends are behind `aws`/`azure`/`gcp` and are NOT default, and with them off the crate avoids pulling `reqwest` and the crypto providers. The in-memory backend also mirrors reflow2's own `open_in_memory` testing idiom, so tests need no filesystem.\n\nWHAT IT DOES NOT SETTLE, and this is the residue that still needs Anthony's word: whether the local blobs are COMMITTED TO THE REPO or GITIGNORED. That is a git question, entirely orthogonal to which crate does the I/O, and it is the one that decides whether a diagram travels with a clone. `object_store` is indifferent to it. Options (a) and (b) from the original fork therefore survive unchanged; (c) and (d) are largely absorbed.\n\nTHE REAL COST, which the ecosystem summary does not mention and which bites here specifically: `object_store` IS ASYNC, and `fs` pulls tokio — so even the local-only case requires a runtime. `reflow2-core` is deliberately SYNCHRONOUS: measured 2026-07-31, its entire dependency list is dynograph-{core,storage,graph,resolution,vector}, serde, serde_json and sha2, with no tokio, no async and no futures anywhere. Putting the store in the core would drag a runtime into the one crate that has kept itself deterministic and surface-agnostic.\n\nTHE PLACEMENT THAT KEEPS THAT PROPERTY, and it follows the architecture already in place rather than inventing a rule: the CONTENT HASH lives in the core — sync, deterministic, in-memory-testable, exactly what a pointer is — and the STORE lives in `reflow2-mcp`, which already carries tokio through rmcp and hyper. This is the same split as `coverage_report`, where the core computes and the agent supplies what it observed, and the same reason the core is described as neutral to the interaction surface.\n\nSTILL TO CHECK BEFORE ADOPTING: `object_store`'s MSRV against the workspace's 1.94, and its transitive tree with cloud features off measured rather than assumed. And per `dec:design-dependencies-declared`, a new dependency is DECLARED with its version and the features taken by name, not just added to a Cargo.toml.\n\nWHAT ANY ANSWER MUST HOLD, unchanged: the pointer is a CONTENT HASH and not a path, because `cap:session-memory` already recorded what a path costs — \"a path stored as identity resolves for one person on one machine and silently misses for everyone on a shared graph\". And a missing blob must fail LOUD and be nameable (`req:no-silent-fallback`).\n\nTHE QUESTION NOW, narrowed from the original: adopt `object_store` with a local default — and do the local blobs get COMMITTED, so a clone carries the diagrams, or GITIGNORED, so the repo stays light?",
-        "name": "OPEN — where the bytes behind a pointer live; object_store dissolves most of the fork and leaves one git question",
-        "rationale": "Amended rather than answered, and the amendment is worth more than the original because it narrows the question instead of adding to it: a four-way architectural fork became one crate choice plus one git question.\n\nThe general shape is worth keeping. The original fork treated \"external blob store\" and \"no service\" as opposed, and they are only opposed if the storage backend is baked into the design. A library whose whole purpose is to make the backend a runtime detail removes the opposition rather than resolving it — which is a reminder that some design forks are artifacts of assuming an implementation, and dissolve when the implementation space is actually surveyed.\n\nThe async finding runs the other way and is the reason this is still not a trivial adoption: it was found by measuring `reflow2-core`'s dependency list rather than by reading about the crate, and it constrains WHERE the code can go regardless of which backend is chosen. Anthony's research answered the storage question; the constraint it collides with was already in the repo.",
-        "status": "proposed"
+        "decision": "DECIDED by Anthony 2026-07-31. Both earlier states are preserved: the original four-way fork at `snap:epoch:arrival-delta:dec:where-content-lives`, the object_store amendment at `…:r2`.\n\nTHREE PARTS, all his word:\n\n1. ADOPT `object_store` (Apache Arrow, originally InfluxData), LOCAL FILESYSTEM ONLY. The `fs` backend is a default feature and `InMemory` needs no feature at all; `aws`/`azure`/`gcp` stay OFF, which keeps `reqwest` and the crypto providers out of the tree. Cloud backends remain one configuration change away with no rework, because the whole point of the crate is that the backend is a runtime detail — so this is the smallest useful slice rather than a narrowing.\n\n2. BLOBS ARE COMMITTED TO THE REPO. Chosen because it is the only option where the bytes are DISTRIBUTED BY THE SAME MECHANISM AS THE DESIGN: clone and you have everything, nothing to configure, nothing to be down, nothing to fall out of step. Every alternative is a second distribution channel, and a second channel is a second thing someone can skip — after which they see a design with holes in it and cannot tell. That is the failure `req:content-reaches-every-seat` exists to prevent. ACCEPTED COSTS, named rather than glossed: repo weight, and git handles binary churn poorly. Text — markdown, mermaid, HTML — diffs and compresses well and is most of what this will hold; raster images are the real risk and are the thing to watch first.\n\n3. THE STORE LIVES IN `reflow2-mcp`, THE POINTER IN `reflow2-core`. Forced by a property worth keeping rather than chosen for taste: `object_store` is async and `fs` pulls tokio, while `reflow2-core` is deliberately synchronous — measured 2026-07-31, its entire dependency list is dynograph-{core,storage,graph,resolution,vector}, serde, serde_json, sha2, with no tokio, no async, no futures. So the core holds the CONTENT HASH, which is sync, deterministic and in-memory-testable, and `reflow2-mcp` does the I/O with the tokio it already carries through rmcp and hyper. Same split as `coverage_report`: the core computes, the surface touches the world.\n\nWHAT MUST HOLD, unchanged by the answers: the pointer is a CONTENT HASH and never a path (`cap:session-memory` already recorded what a path costs — it \"resolves for one person on one machine and silently misses for everyone on a shared graph\"), and an unresolvable pointer FAILS LOUD and names itself (`req:no-silent-fallback`). Content addressing also keeps this reversible: because a blob can be verified wherever it came from, moving to a different distribution mechanism later changes how bytes are fetched and nothing about what the graph says.\n\nSTILL TO CHECK AT BUILD TIME, not decided away: `object_store`'s MSRV against the workspace's 1.94, and its transitive tree with cloud features off MEASURED rather than assumed. Per `dec:design-dependencies-declared` the dependency is DECLARED with its version and the features taken by name — a new crate in this tree is a recorded reliance, not a line in a Cargo.toml.\n\nAND ONE THING DELIBERATELY LEFT OPEN: what bounds repo growth. A size cap that refuses oversized blobs loudly was offered and not taken, so nothing currently stops a large binary landing in the history where it cannot be removed without rewriting it. That is the first thing to revisit if the repo starts to hurt, and it is cheaper to add before there is history than after.",
+        "name": "Content lives in a content-addressed store behind object_store, local backend, COMMITTED to the repo",
+        "rationale": "Settled in one pass because Anthony's research had already dissolved the hard part: once `object_store` makes the backend runtime configuration, \"which storage\" stops being an architectural commitment and only the git question remains — and that one turned out not to be about repo weight at all, but about whether the bytes travel the way the design already travels.\n\nThe placement was not a preference. It came from measuring `reflow2-core`'s dependency list and finding it genuinely free of async, which makes \"put the store in the core\" a decision to spend a property the crate has kept deliberately for a convenience it does not need. Reading the manifest answered in a minute what an argument about layering would not have settled at all.\n\nThe open item on repo growth is recorded rather than decided because the honest answer depends on evidence nobody has yet: what actually gets stored. A cap chosen now would be a number invented to feel safe — the asserting default `req:defaults-do-not-assert` exists to prevent — while a cap chosen after a month of real blobs would be measured. The cost of waiting is that git history is unforgiving, and that is exactly why it is named here rather than left to be discovered.",
+        "status": "accepted"
       }
     },
     {
@@ -31138,6 +31320,16 @@
         "decision": "Accepted the gap gap:22386cd2f1a1fa96.",
         "name": "Reviewed: gap:22386cd2f1a1fa96",
         "rationale": "User (who:ajs, standing policy from 2026-07-23): validation happens through the trials programme — docs/trials/ is where \"built the right thing\" is exercised against operational intent; formal validation-kind Verification nodes are not this project's tracking mechanism. Re-fired because cap:drift-direction joined the set (34 → 35). Notably apt this time: whether directional drift reports the delta a PERSON would have named is not answerable by a unit test, and its intended validation is explicitly a field one — run it against storyflow, where the understatement was observed, and see whether it agrees.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:230d69056201ed59",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:230d69056201ed59.",
+        "name": "Reviewed: gap:230d69056201ed59",
+        "rationale": "Anthony, 2026-07-31: park until the other fixes ship. Two reasons, and the first is a genuine blocker rather than a preference. It sits against `dec:loop-status-state-not-history` — loop debt is computed from graph state and NEVER from run history — and whether the KIT may report on its own adoption is a different question from what the LOOP may reason from when it computes debt. That distinction has to be settled before anything is built, or it gets discovered afterwards. Second, the three fixes accepted alongside it (situation-triggered nudging, imperative hint wording, conventions on the tool) are cheaper and more directly aimed at the problem; measurement is how you learn whether they worked, so it is worth more AFTER they ship than before. Revisit when they land. Recorded as deferred, not dropped: the need is real and this is a sequencing call.",
         "status": "accepted"
       }
     },
@@ -33846,24 +34038,26 @@
       "node_id": "question:159ab608b850e46d",
       "node_type": "Question",
       "properties": {
+        "answer": "Keep only the diagrams and mockups that something in the design actually points at. The link is the filter — the store holds what someone will look at again, not every intermediate render. (Anthony, 2026-07-31.)",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “What a session PRODUCES is captured too — diagrams, mockups and rendered explanations, not just the decisions distilled from them”",
         "gap_id": "gap:159ab608b850e46d",
         "question": "Diagrams and mock-ups an assistant makes during a session are usually thrown away, even though they are often the clearest picture of what was agreed. Should reflow2 keep them automatically — and if so, all of them, or only the ones a decision actually points at?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
       "node_id": "question:230d69056201ed59",
       "node_type": "Question",
       "properties": {
+        "answer": "Park it until the other fixes ship. It is blocked on a real decision — whether the kit may report on its own adoption without breaking the rule that the loop never reasons from run history — and there is more value in landing the nudge and hint changes first, when there will be something worth measuring. (Anthony, 2026-07-31.)",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “Whether the kit is actually used is measured, not inferred from whether the design looks tidy”",
         "gap_id": "gap:230d69056201ed59",
         "question": "Right now there is no way to tell whether anyone's agent is actually using reflow2's skills — a project can look perfectly healthy while the kit is barely being touched. Do you want reflow2 to measure that, knowing it sits close to a rule you set about not reasoning from what an agent did in past runs?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -33895,36 +34089,39 @@
       "node_id": "question:3f38ed37a3d0f834",
       "node_type": "Question",
       "properties": {
+        "answer": "Change it everywhere — a hint names the call to make next rather than trailing the skill name in brackets. (Anthony, 2026-07-31.)",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “A hint that names a skill must name it as the next CALL, not as a parenthetical — a citation is read as attribution, not instruction”",
         "gap_id": "gap:3f38ed37a3d0f834",
         "question": "When reflow2 tells an agent which skill to use, it currently mentions the name in brackets at the end — and agents read that as a footnote rather than an instruction. Do you want the wording changed everywhere to say plainly \"do this next\", or leave it as it is?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
       "node_id": "question:48648a70e7adca25",
       "node_type": "Question",
       "properties": {
+        "answer": "Build it on the existing hook — extend it from counting writes to recognising shapes (a file edit with no recorded change means impact-check; a checksum drift means link-artifacts). No new mechanism; the hook already watches file edits and is the one reminder that demonstrably held. (Anthony, 2026-07-31.)",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “Skill use is triggered by the situation, not remembered — the rungs cover loop debt, and skills fire on things the graph cannot see”",
         "gap_id": "gap:48648a70e7adca25",
         "question": "You've said reflow2 should nudge an agent to use the right skill at the moment it's needed, rather than relying on the agent to remember. Nothing is currently being built to do that — do you want it built now, parked for later, or dropped?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
       "node_id": "question:4c33841a4e6fef45",
       "node_type": "Question",
       "properties": {
+        "answer": "Build it, local files only — adopt object_store with the local filesystem backend and no cloud features. Smallest useful slice; cloud backends stay one config change away with no rework. (Anthony, 2026-07-31.)",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “The graph holds pointers; a content store holds the bytes — narrative, transcripts, diagrams and drawings travel WITH the design”",
         "gap_id": "gap:4c33841a4e6fef45",
         "question": "You want conversations, transcripts and hand-drawn diagrams kept as part of the design itself, with the design file just pointing at them. Nothing is being built for that yet — do you want it built now, and should those files live inside the project's repository or somewhere alongside it?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -34017,12 +34214,13 @@
       "node_id": "question:7cc0431d2698f1a1",
       "node_type": "Question",
       "properties": {
+        "answer": "Keep the originals. The decision and test-evidence extraction passes do not exist yet, so a corpus ingested today is worth re-reading when they land; not keeping the sources loses that permanently. (Anthony, 2026-07-31.)",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “Ingest keeps the source documents, not only what it extracted from them”",
         "gap_id": "gap:7cc0431d2698f1a1",
         "question": "When reflow2 reads a folder of someone's notes and pulls the design out of them, should it also keep copies of the original documents — so you can still check what it understood, and re-read them better later — or is pointing at wherever they happen to live good enough?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -34183,24 +34381,26 @@
       "node_id": "question:b8af9d16871259e9",
       "node_type": "Question",
       "properties": {
+        "answer": "Committed in the git repo. The bytes travel exactly as the design does — clone and you have everything, nothing to configure, nothing to be down. Accepting repo weight, and that git handles binary churn poorly, as the cost. (Anthony, 2026-07-31.)",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “A pointer resolves for everyone holding the design, not only for the machine that wrote it”",
         "gap_id": "gap:b8af9d16871259e9",
         "question": "If you and your brother are both working on the same design from different machines, the diagrams and notes need to open for both of you — or clearly say they are missing. Should they travel in the git repository alongside the design, or be kept somewhere separate that each person sets up?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
       "node_id": "question:bfdfccb48e0919d3",
       "node_type": "Question",
       "properties": {
+        "answer": "Yes, capped at roughly one sentence per tool — only what a capable agent would never infer. The served skill keeps the depth; the tool carries the irreducible minimum so it cannot be skipped. (Anthony, 2026-07-31.)",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “What an agent cannot infer must travel on the tool, not only in the skill it may never load”",
         "gap_id": "gap:bfdfccb48e0919d3",
         "question": "An agent can usually work out most of a skill's advice on its own, but not the parts specific to how reflow2 does things — and it loses those silently if it never opens the skill. Do you want those few must-know sentences moved onto the tools themselves, where they can't be missed?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -34535,7 +34735,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Where reflow2 tells an agent which skill to use, it must phrase it as the call to make next rather than as a trailing reference. MEASURED, and this is the whole evidence: `add_capability` returned `loop_hint: \"loop: wire satisfies to the requirement this serves, then run detect_gaps when the capture batch lands (detect-and-ask)\"`. The agent that received it DID wire `satisfies` and DID run `detect_gaps` — and did NOT load `detect-and-ask`. The imperative clauses were obeyed; the skill name in parentheses was read as an attribution for where the advice came from, not as a step to take.\n\nSo the pointer already exists and already names the right skill — `cap:read-loop-hint` and the write-side `loop_hint` are both `verified` — and it still failed. That makes this cheaper than anything else in this family: the mechanism is built, delivered and correct, and only the wording is losing the effect. `run get_skill(\"detect-and-ask\") first` is a step; `(detect-and-ask)` is a footnote.\n\nSCOPE: every place reflow2 names a skill to an agent — the write tools' `loop_hint`, the read-side hint, `loop_nudge.py`'s Stop message, the SessionStart orientation, and the MCP server instructions. The rule is one line: if a skill is worth naming, name the call.\n\nNOT PROPOSED: making the hints longer or more numerous. The finding is about grammar, not volume, and a hint that grows is a hint that gets skimmed — the failure `dec:read-hint-shape` already guarded against by firing only when the debt is real.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -34580,7 +34780,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony, 2026-07-31: \"in many sessions, the agent will create artifacts — things like mermaid diagrams or simple html files showing how a specific feature will work or an html file showing the aesthetic layout of a webpage — having all these artifacts automatically stored in the reflow2 blob storage would be great.\"\n\nTHE GAP THIS NAMES. `Artifact` already exists and can point at a file with a checksum, but it models CODE the design produced — something that lives in the repo and gets built. The things a session generates to explain itself are different: a mermaid diagram of a flow, an HTML mock of a layout, a rendered comparison. They are produced to be LOOKED AT, they are usually thrown away when the session ends, and they are frequently the clearest statement of intent anyone ever made about that feature. A paragraph describing a layout is a poor substitute for the mock that was actually agreed to.\n\nWHY IT BELONGS BESIDE THE DECISION IT SERVED: these artifacts are the visual half of `Decision.rationale`. The reasoning is recorded in text and the picture that made the reasoning obvious is not, so a later reader gets the conclusion without the thing that made it persuasive. This is the same argument `cap:session-memory` makes for the conversation — the connective tissue is what is lost — applied to output rather than dialogue.\n\nAUTOMATICALLY is the load-bearing word, and it is the hard part. A capture that depends on the agent remembering to store its own diagram is subject to exactly the decay `req:skill-use-survives-a-long-session` measures. So this wants a trigger, not a convention — the same family, and it should be designed with it rather than beside it.\n\nWHAT MUST NOT HAPPEN: a store full of every intermediate render nobody will ever open. What is worth keeping is what a Decision or a Capability actually points at; the rest is session litter. Where that line falls is an open question this requirement deliberately does not answer.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -34775,7 +34975,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony, 2026-07-31: \"as one of the features we've worked on previously was that multiple people could use reflow2, may have to think about how the blob contents can be made available to multiple users of reflow2 on multiple machines? Maybe the git repo also backs-up the blob contents?\"\n\nTHE REQUIREMENT: any seat holding the design must be able to resolve a pointer to its bytes, or be told plainly that it cannot. A design where half the diagrams open for one person and not the other is worse than one with no diagrams, because the first person cannot tell that the second is missing something.\n\nWHY IT IS THE HARDEST PART OF THE CONTENT STORE, and why it belongs as its own requirement rather than a footnote to `req:content-store-for-what-the-graph-points-at`: the graph already solved distribution by being a FILE — `dec:multi-writer-architecture` chose a repo file plus merge-on-pull precisely so that cloning gets you the design and no service is needed. Blobs do not inherit that for free. A content store that lives only where it was written recreates the exact failure `cap:session-memory` already names about machine-local paths, one layer up: it resolves for one person and silently misses for everyone else.\n\nTHIS IS ALSO WHERE THE COMMITTED-OR-GITIGNORED QUESTION IS ACTUALLY DECIDED. `dec:where-content-lives` asks it as a repo-weight trade-off; read through this requirement it is not really about weight at all, it is about whether the bytes are DISTRIBUTED BY THE SAME MECHANISM AS THE DESIGN. Anthony's own suggestion — let the git repo carry the blobs — is the option that makes distribution automatic and identical to how the design already travels, at the cost of repo size and git's poor handling of binary churn. The alternative is a second distribution channel, which means a second thing to configure, be down, or be out of step.\n\nWHAT MUST HOLD EITHER WAY: an unresolvable pointer FAILS LOUD and is nameable (`req:no-silent-fallback`), and content is addressed BY HASH so a blob fetched from anywhere can be verified as the right one — which also makes several distribution mechanisms interchangeable rather than requiring one to be chosen forever.\n\nNOT SETTLED HERE: the mechanism. That stays with `dec:where-content-lives`, which this requirement reframes rather than answers.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -34790,7 +34990,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony, 2026-07-31: reflow2 should capture session context — the conversation itself — as a narrative snapshot recorded in the graph, the way storyflow already does it. \"storyflow has a blob storage setup to actually store all narrative context and pictures, etc, and then the dynograph-foundation just records the pointer to that storage. The benefits is that any session context and generated artifacts or user provided diagrams/drawings can be stored as part of the reflow2 and are persistent.\"\n\nTHE SPLIT IS THE REQUIREMENT: the graph stores a POINTER and the bytes live in a content store beside it. The graph stays small, diffable and queryable — the properties `dec:repo-file-embedded` chose it for — while the things that are large, binary or verbatim stop being second-class.\n\nWHAT THIS UNLOCKS THAT NOTHING ELSE DOES: user-provided DIAGRAMS AND DRAWINGS. The design vocabulary is entirely textual today, and a hand-drawn architecture sketch or a whiteboard photo is exactly the kind of intent that never survives a project — it lives in someone's phone and is gone when they leave. `Artifact` can name a file on disk but nothing carries its content, so a diagram is a path that rots.\n\nIT ALSO FIXES A FLAW THE DESIGN ALREADY NAMED. `cap:session-memory` models the session transcript as a Fragment pointing at `~/.claude/projects/<slug>/<uuid>.jsonl`, and states the problem in its own words: \"a path stored as identity resolves for one person on one machine and silently misses for everyone on a shared graph.\" A content store IS the answer to that — content-addressed bytes travel with the design instead of referring to one person's filesystem. The requirement should be read as completing `cap:session-memory`, not competing with it.\n\nTHE CONSTRAINT THAT MUST SURVIVE, from that same capability: a pointer to a 3 MB transcript is a RECEIPT, not documentation. Storing the raw conversation must not become the excuse that stops takeaways being distilled into Decisions and findings — \"it is all in the transcript\" is the same failure as \"it is all in the backlog file\", one level down. The store makes the receipt durable; it does not discharge the obligation.\n\nPRIOR ART, and it is a sibling rather than a stranger: storyflow already runs this and shares the dynograph-foundation substrate underneath, so the question is what to import, not what to invent. AGENTS.md rule 6 permits exactly this direction — mine the sibling repos for ideas, land the work here.\n\nDELIBERATELY NOT SETTLED HERE: where the bytes actually live. That is a genuine architecture fork against `dec:repo-file-embedded`, and it is recorded separately as `dec:where-content-lives`.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -34820,7 +35020,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "The parts of a skill that are reflow2 CONVENTION — not general good sense — must be reachable from the tool surface itself, because a capable agent reconstructs most of a skill and silently loses the rest.\n\nTHE ASYMMETRY THIS RESTS ON, observed 2026-07-31: reading `detect-and-ask` after having worked without it, roughly its first and last steps had already been done unprompted (call `detect_gaps`; re-run it to confirm). What had NOT been done was every reflow2-specific step in between — the `gap_to_prompt` handshake, `answer_question`, and the distinction between answering a gap and acknowledging one. A competent model infers the general shape and drops the local convention, and the loss is INVISIBLE: you cannot know which part of a skill you failed to load.\n\nSo the fraction worth relocating is precisely the fraction a model would never guess. A tool description that says \"answering a gap and acknowledging it are different acts, and an answered-but-unacknowledged gap stays open\" costs one sentence and cannot be skipped, because the schema arrives with the call.\n\nTHE TENSION, named rather than glossed: `dec:skills-served` chose to serve skills from the server so they always match the running version and nothing in a consumer's repo goes stale. That is right, and this does not reverse it. It says the IRREDUCIBLE MINIMUM also rides the tool, where it is unskippable, and the served skill keeps the depth, the worked examples and the reasoning. Two homes for two jobs, not a copy.\n\nTHE COST TO WATCH: tool descriptions are context an agent pays for on every session, and `cap:tool-search` exists because the surface is already too large to hold. So this must be a sentence per tool at most, chosen for what cannot be inferred — not a second copy of the skill wearing a different hat.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -35840,7 +36040,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Nothing in reflow2 records whether its skills were used, so the only reason this whole family of findings exists is that a user asked an agent directly and the agent answered honestly. That is not a mechanism.\n\nWHAT MAKES IT ACUTE: a design can look healthy while the kit is barely being used. This session ended with 0 gaps, 0 defects, a clean loop and a green gate — and two skills loaded out of eight. `detect_gaps` measures whether the DESIGN is coherent; nothing measures whether the PRACTICE is. The report-friction skill already concedes the wider version of this in its own words — ordinary use produces better evidence and currently loses all of it — and `req:friction-has-a-baseline` was dropped, so there is no standing measurement at all.\n\nTHE HARD CONSTRAINT, which is why this is a requirement and not a fix: `dec:loop-status-state-not-history` says loop debt is computed from graph state and NEVER from run history, straight out of the BL-74 fleet trial. Any naive answer here — log which skills were called — is exactly the run-history reasoning that decision rejects, and a study that comes back recommending it has not read the decision.\n\nTHE DISTINCTION THAT MAY RESOLVE IT, offered as the open question rather than the answer: that decision governs what the LOOP may reason from when it computes debt. It does not obviously govern what the KIT may report about ITSELF as a product — the difference between \"this design owes you three gaps\" (must be state-derived, must be true of the graph as it stands) and \"reflow2 was installed here and its skills were loaded twice in nine hours\" (a fact about the tool's adoption, not about the user's design). Whether that distinction is real, or a rationalisation for the thing the decision forbids, is the question — and it must be settled before anything is built, not discovered afterwards.\n\nBOUNDARIES THAT HOLD EITHER WAY: whatever is measured must respect report-friction's redaction discipline, which has no counterpart in the prior art — tool names and argument SHAPES, node TYPES not ids, counts not contents — because reflow2 installs into other people's projects, and the thing being measured is the user, not the design.",
-        "status": "proposed"
+        "status": "deferred"
       }
     },
     {
@@ -35855,7 +36055,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "An agent's use of reflow2's SKILLS must not decay over a session while its use of the TOOLS holds. Measured on reflow2's own repo, 2026-07-31, in a long session: `loop_status` was called unprompted throughout and every write went through `record_change`, two-sided checksum accepts and one-export-per-commit — but exactly two skills were loaded all session, and both only because the user typed a slash command. `impact-check`, `link-artifacts`, `capture-intent`, `revise-design`, `check-health` and `report-friction` were never loaded. THE THREE BL-74 RUNGS ARE ALL `verified` AND THIS STILL HAPPENED, which is the finding: they are working as designed and do not reach this.\n\nTHE STRUCTURAL REASON. The rungs compute LOOP DEBT — a property of graph state, which is what `dec:loop-status-state-not-history` correctly insists on. Skills fire on SITUATIONS: about to change code, just wrote a file, the user just shared an idea. The graph cannot see any of those, so the trigger mechanism covers one half of the problem and structurally cannot reach the other. That is why `impact-check` was dropped hardest — nothing in the system knows an edit is coming, and by the time the graph could tell, the edit has happened and the blast radius is a post-mortem rather than a check.\n\nWHAT COST SOMETHING, honestly: `impact-check` was never run before changing `snapshot_node`, `delete_edge` and `delete_node`; the blast radius was reasoned about by hand instead of computed. `link-artifacts` was never loaded and a stale `art:nodes` checksum was nearly shipped — caught only by grepping after the export, which then required restoring the export and redoing it. `check-health` cost nothing, because `detect_defects` was run bare and did catch the island.\n\nCANDIDATE MECHANISMS, in the order the evidence supports, NOT a decided design. (1) Extend the PostToolUse hook from COUNTING writes to matching SHAPES — a file edit with no ChangeEvent in the window means impact-check, an artifact checksum drift means link-artifacts. `req:nudge-covers-bypass` already arms the nudge on file-edit events and already names impact-check and link-artifacts, and is `verified`; what is missing is the shape-matching, not the trigger. (2) A refusal, where refusing is honest — reflow2's strongest mechanism, proven three times in this session alone — but only where skipping is genuinely wrong, because a guard that punishes correct work is the failure this project keeps naming.\n\nWHY IT MATTERS BEYOND THIS SESSION: BL-74 called this adoption-critical and found it in the author's own fleet, self-reported by the driving agent. This is the same failure observed from inside, on a session with MORE context about reflow2 than a consumer's agent will have — so it is likely a best case rather than a typical one.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -35885,7 +36085,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony, 2026-07-31, from his brother's colleague who keeps a markdown file on everything: when reflow2 reads a corpus and extracts nodes and edges from it, the ORIGINAL DOCUMENTS are stored in the content store with a pointer from the graph, so the corpus itself becomes part of the design rather than an input that is consumed and discarded.\n\nWHY THIS IS MORE THAN A CONVENIENCE. Extraction is lossy and it is a JUDGEMENT — an LLM decided what in a document was a Requirement and what was context. Today `ingest` keeps a provenance `Fragment` pointing back at its source text, which is right and is already built, but the source itself lives wherever the user happened to have it. So the extraction can be audited only for as long as that folder survives on that machine, and \"why did reflow2 think this was a requirement?\" becomes unanswerable the moment someone reorganises a drive. Keeping the bytes makes the extraction RE-CHECKABLE and RE-RUNNABLE against a better pass later, which matters because `dec:corpus-ingest-mechanism` already records that two of the three passes the original ask needed — Decision and Verification — do not exist yet. A corpus ingested today will be worth re-reading when they do.\n\nIT ALSO PROTECTS THE THING THE CORPUS IS FOR. The reason to ingest a colleague's years of markdown is that the knowledge leaves when the person does. Extracting a graph and leaving the documents on their laptop preserves the parts reflow2 understood and loses everything it did not — which is precisely the fraction nobody can predict in advance.\n\nSCOPE: applies to whatever `cap:corpus-ingest` reads. It does not require reflow2 to scan a filesystem — the agent supplies the documents, the same contract `coverage_report` and `reconcile_artifacts` already use.\n\nDEPENDS ON `req:content-store-for-what-the-graph-points-at`; without a content store there is nowhere for the bytes to go.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -36058,6 +36258,16 @@
       "properties": {
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-store-for-what-the-graph-points-at\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"ctr:claude-fable\",\"properties\":{\"acted_at\":\"2026-07-31\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:repo-file-embedded\",\"properties\":{\"evidence\":\"It is the second pressure on that decision's no-service choice, after dec:central-host, and cannot be settled without reference to it.\",\"optional\":false,\"weight_basis\":\"evidence\"}}]",
         "state": "{\"decision\":\"OPEN, raised by `req:content-store-for-what-the-graph-points-at`. The requirement settles that the graph holds a pointer and something else holds the bytes; it does not settle WHERE, and that is a real fork rather than an implementation detail.\\n\\nWHY IT IS A FORK AND NOT A CHOICE OF LIBRARY: `dec:repo-file-embedded` and `dec:multi-writer-architecture` both chose a repo file over a hosted service, and their strongest argument was that no service means nothing to run, nothing to authenticate against, and nothing to be down. A content store is the first thing reflow2 would hold that a git-diffable JSON file is genuinely bad at — megabyte transcripts and binary images — so this is where that decision gets its first real test.\\n\\nTHE OPTIONS, none preferred yet:\\n  (a) A CONTENT-ADDRESSED DIRECTORY BESIDE THE EXPORT, committed to the repo. Keeps the no-service property exactly, and content-addressing is already this project's idiom (`dec:export-hash-chain` takes self-authenticating repos from AT proto; `set_artifact_checksum` already hashes). Cost: repo weight, and git is poor at binary churn — the objection is real and measurable rather than aesthetic.\\n  (b) A CONTENT-ADDRESSED DIRECTORY OUTSIDE THE REPO, gitignored, with the pointer carrying the hash. The design stays light and the bytes are verifiable, but they no longer travel with a clone — which is most of what the requirement asked for, so this weakens the very property it exists to deliver.\\n  (c) AN EXTERNAL BLOB STORE. What storyflow does, and the one with real prior art on the shared substrate. Reintroduces exactly the service `dec:repo-file-embedded` rejected — but possibly only for the OPTIONAL half, which may be the resolution: the design remains complete and usable without it, and the store adds durability for those who configure one.\\n  (d) INLINE SMALL, POINT AT LARGE. A size threshold decides; small notes live in the graph as they do now, anything over the bar goes to the store. Avoids the question for the common case and defers rather than answers it.\\n\\nWHAT ANY ANSWER MUST HOLD, whichever is taken: the pointer is a CONTENT HASH and not a path, because `cap:session-memory` already recorded what a path costs — \\\"a path stored as identity resolves for one person on one machine and silently misses for everyone on a shared graph\\\". And a missing blob must fail LOUD and be nameable (`req:no-silent-fallback`): a design that quietly renders without its diagrams is worse than one that says a diagram is missing.\\n\\nTHE QUESTION TO PUT TO ANTHONY, plainly: should the bytes travel inside the repo, or beside it?\",\"name\":\"OPEN — where the bytes behind a pointer actually live, given the design deliberately has no service\",\"rationale\":\"Recorded as a decision point rather than answered, because the honest options genuinely trade against each other and the strongest of them re-opens a settled architectural choice — the shape `dec:reopen-supersedes` exists to handle, and the same shape `dec:central-host` took when two-coast collaboration pressed on the no-service decision from a different side.\\n\\nWorth noting that this arrives as the SECOND pressure on `dec:repo-file-embedded` (after `dec:central-host`), from an unrelated direction. One challenge to a decision is an exception; two from unrelated directions is evidence about the decision itself, and that is a fact about the record rather than an argument for changing it.\",\"status\":\"proposed\"}",
+        "target_id": "dec:where-content-lives",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:arrival-delta:dec:where-content-lives:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-store-for-what-the-graph-points-at\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"ctr:claude-fable\",\"properties\":{\"acted_at\":\"2026-07-31\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:repo-file-embedded\",\"properties\":{\"evidence\":\"It is the second pressure on that decision's no-service choice, after dec:central-host, and cannot be settled without reference to it.\",\"optional\":false,\"weight_basis\":\"evidence\"}}]",
+        "state": "{\"decision\":\"OPEN, raised by `req:content-store-for-what-the-graph-points-at`. AMENDED 2026-07-31 after Anthony researched the Rust ecosystem and proposed `object_store` (Apache Arrow, originally InfluxData). The original four-way fork is preserved in the snapshot at `snap:epoch:arrival-delta:dec:where-content-lives`.\\n\\nWHAT THE RESEARCH CHANGES, and it is more than picking a library. The fork assumed the choice was WHERE — repo, beside the repo, or an external service — and that choosing the service re-opened `dec:repo-file-embedded`. `object_store` presents ONE trait over local filesystem, in-memory, S3, GCS, Azure and HTTP/WebDAV, so the backend becomes RUNTIME CONFIGURATION rather than an architectural commitment. Written once against the trait, reflow2 defaults to local and the no-service property is kept intact, while anyone who wants durability configures a cloud backend without reflow2 knowing or caring. That is exactly the resolution option (c) hypothesised — \\\"possibly only for the OPTIONAL half\\\" — arriving as a property of the library rather than as a compromise.\\n\\nVERIFIED, not taken from the summary: `fs` (LocalFileSystem) is a DEFAULT feature and `InMemory` needs no feature at all; the cloud backends are behind `aws`/`azure`/`gcp` and are NOT default, and with them off the crate avoids pulling `reqwest` and the crypto providers. The in-memory backend also mirrors reflow2's own `open_in_memory` testing idiom, so tests need no filesystem.\\n\\nWHAT IT DOES NOT SETTLE, and this is the residue that still needs Anthony's word: whether the local blobs are COMMITTED TO THE REPO or GITIGNORED. That is a git question, entirely orthogonal to which crate does the I/O, and it is the one that decides whether a diagram travels with a clone. `object_store` is indifferent to it. Options (a) and (b) from the original fork therefore survive unchanged; (c) and (d) are largely absorbed.\\n\\nTHE REAL COST, which the ecosystem summary does not mention and which bites here specifically: `object_store` IS ASYNC, and `fs` pulls tokio — so even the local-only case requires a runtime. `reflow2-core` is deliberately SYNCHRONOUS: measured 2026-07-31, its entire dependency list is dynograph-{core,storage,graph,resolution,vector}, serde, serde_json and sha2, with no tokio, no async and no futures anywhere. Putting the store in the core would drag a runtime into the one crate that has kept itself deterministic and surface-agnostic.\\n\\nTHE PLACEMENT THAT KEEPS THAT PROPERTY, and it follows the architecture already in place rather than inventing a rule: the CONTENT HASH lives in the core — sync, deterministic, in-memory-testable, exactly what a pointer is — and the STORE lives in `reflow2-mcp`, which already carries tokio through rmcp and hyper. This is the same split as `coverage_report`, where the core computes and the agent supplies what it observed, and the same reason the core is described as neutral to the interaction surface.\\n\\nSTILL TO CHECK BEFORE ADOPTING: `object_store`'s MSRV against the workspace's 1.94, and its transitive tree with cloud features off measured rather than assumed. And per `dec:design-dependencies-declared`, a new dependency is DECLARED with its version and the features taken by name, not just added to a Cargo.toml.\\n\\nWHAT ANY ANSWER MUST HOLD, unchanged: the pointer is a CONTENT HASH and not a path, because `cap:session-memory` already recorded what a path costs — \\\"a path stored as identity resolves for one person on one machine and silently misses for everyone on a shared graph\\\". And a missing blob must fail LOUD and be nameable (`req:no-silent-fallback`).\\n\\nTHE QUESTION NOW, narrowed from the original: adopt `object_store` with a local default — and do the local blobs get COMMITTED, so a clone carries the diagrams, or GITIGNORED, so the repo stays light?\",\"name\":\"OPEN — where the bytes behind a pointer live; object_store dissolves most of the fork and leaves one git question\",\"rationale\":\"Amended rather than answered, and the amendment is worth more than the original because it narrows the question instead of adding to it: a four-way architectural fork became one crate choice plus one git question.\\n\\nThe general shape is worth keeping. The original fork treated \\\"external blob store\\\" and \\\"no service\\\" as opposed, and they are only opposed if the storage backend is baked into the design. A library whose whole purpose is to make the backend a runtime detail removes the opposition rather than resolving it — which is a reminder that some design forks are artifacts of assuming an implementation, and dissolve when the implementation space is actually surveyed.\\n\\nThe async finding runs the other way and is the reason this is still not a trivial adoption: it was found by measuring `reflow2-core`'s dependency list rather than by reading about the crate, and it constrains WHERE the code can go regardless of which backend is chosen. Anthony's research answered the storage question; the constraint it collides with was already in the repo.\",\"status\":\"proposed\"}",
         "target_id": "dec:where-content-lives",
         "target_type": "Decision"
       }
@@ -37439,7 +37649,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:7887dcd503746e9d36f23c2535112f23194b2c756b209f8294d99fe385b1a8ff",
+  "prev_content_hash": "sha256:6f817dcb9960ad4033bb678b3627f623741b0bd8f25e71831695a8711a93542c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
