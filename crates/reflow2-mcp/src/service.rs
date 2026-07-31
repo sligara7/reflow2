@@ -1735,6 +1735,19 @@ pub struct CompareDesignsReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ChangelogViewReq {
+    /// The base moment — a Release id or a DesignEpoch id. Omit for the
+    /// `[Unreleased]` case, which starts from the last DEPLOYED release.
+    #[serde(default)]
+    pub from: Option<String>,
+    /// The target moment — a Release id or a DesignEpoch id. Omit for
+    /// `[Unreleased]`: everything since the base, not yet cut.
+    #[serde(default)]
+    pub to: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct MergeDesignsReq {
     /// Path to the common-ancestor export — the state `ours` and `theirs`
     /// diverged from. Typically `git merge-base` + the committed export at
@@ -4188,6 +4201,34 @@ impl ReflowService {
                 )
             }
         }
+    }
+
+    #[tool(
+        description = "Derive a Keep a Changelog-shaped DRAFT between two moments of THIS design \
+                       — compare_designs' sibling: that one compares two as-designed records, \
+                       this one compares two moments of one design and renders the difference in \
+                       the format the industry already reads. Buckets (Added/Changed/Deprecated/\
+                       Removed/Fixed) are MAPPED from vocabulary the graph already records, and \
+                       every entry names the rule that placed it; anything no rule covers comes \
+                       back in `unmapped` rather than being guessed or dropped. Omit both ends \
+                       for `[Unreleased]` — everything after the last DEPLOYED release, which \
+                       makes 'what would this increment's changelog say?' answerable BEFORE \
+                       cutting it. THE OUTPUT IS A DRAFT: no entry says what a CONSUMER should \
+                       do, because the graph holds what moved and never what it costs \
+                       downstream — `needs_a_human` names that obligation instead of inventing \
+                       it. Nothing is stored; a stored changelog would be a second source of \
+                       truth able to disagree with the graph.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn changelog_view(
+        &self,
+        Parameters(req): Parameters<ChangelogViewReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(
+            g.changelog_view(req.from.as_deref(), req.to.as_deref())
+                .map_err(dyno_err)?,
+        )
     }
 
     #[tool(

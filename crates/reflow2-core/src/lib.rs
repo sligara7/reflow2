@@ -79,8 +79,9 @@ pub use alternatives::{
 pub use artifact::{ArtifactLink, DriftDisposition, LinkArtifactOptions};
 pub use budget::{BudgetContributor, BudgetReport, BudgetVerdict};
 pub use compare::{
-    ChangedEdge, ChangedNode, DesignDiff, DiffAncestry, DiffBand, DiffSummary, EdgeRef,
-    LIVE_GRAPH_LABEL, NodeRef, PropertyDivergence, compare_designs,
+    ChangedEdge, ChangedNode, ChangelogBucket, ChangelogDraft, ChangelogEntry, DesignDiff,
+    DiffAncestry, DiffBand, DiffSummary, EdgeRef, LIVE_GRAPH_LABEL, ManifestDelta, NodeRef,
+    PropertyDivergence, UnmappedChange, changelog_rule, compare_designs,
 };
 pub use compose::{ComposedFinding, ComposedReport, Side};
 pub use confirm::{ClaimConfirmation, ConfirmationLedger, ConfirmationState};

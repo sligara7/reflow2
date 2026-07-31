@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d452de503d0532f3f0342512b0b250cce4bca2a08f86b2d4926d34aa8a5330bc",
+  "content_hash": "sha256:82f3361746c6e023838610c50ae59307ff106a11e7f058064f344d5e2e6f3e47",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2500,6 +2500,12 @@
       "from_id": "rel:v0180",
       "properties": {},
       "to_id": "epoch:v0180"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0190",
+      "properties": {},
+      "to_id": "epoch:v0190"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5542,6 +5548,24 @@
         "action": "modified"
       },
       "to_id": "req:build-loop-is-bounded"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:changelog-view-required",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:changelog-view-required",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -24827,6 +24851,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:changelog-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:changelog-view"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:check",
       "properties": {},
       "to_id": "cap:reconcile-built"
@@ -27427,6 +27459,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:changelog-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:collaborating",
       "properties": {
         "action": "created"
@@ -28082,6 +28122,17 @@
       }
     },
     {
+      "node_id": "art:changelog-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:c4a0bf3c3a4a2164",
+        "location": "crates/reflow2-core/tests/changelog.rs",
+        "name": "tests/changelog.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:check",
       "node_type": "Artifact",
       "properties": {
@@ -28119,7 +28170,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e26b3cba78fe4a67",
+        "checksum": "sha256:b73161a0fd04efee",
         "location": "crates/reflow2-core/src/compare.rs",
         "name": "compare.rs",
         "status": "realized"
@@ -28779,7 +28830,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8539f6864f883aad",
+        "checksum": "sha256:841b76122de1248d",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -29234,7 +29285,7 @@
         "is_exit_point": false,
         "name": "A changelog is a derivable view of the graph's own delta",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -35651,6 +35702,16 @@
       }
     },
     {
+      "node_id": "frag:art:changelog-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tests/changelog.rs"
+      }
+    },
+    {
       "node_id": "frag:art:collaborating",
       "node_type": "Fragment",
       "properties": {
@@ -39424,10 +39485,11 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
+        "last_run_at": "2026-07-31",
         "level": "integration",
         "method": "test",
         "name": "The changelog draft is DERIVED and says so: buckets are mapped from graph vocabulary rather than guessed, the [Unreleased] window is everything after the last DEPLOYED release, an empty delta renders as an empty draft rather than an invented entry, and the output is a DRAFT — no entry claims what a consumer should do, because the graph cannot know it. PLANNED, written before the build so the shape of the proof is settled first.",
-        "status": "planned"
+        "status": "passing"
       }
     },
     {
@@ -40375,7 +40437,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e43c54124d0e70c4565dd6a2e8037ce8314bc2fdd10ce8795a2a421edfa993b0",
+  "prev_content_hash": "sha256:d452de503d0532f3f0342512b0b250cce4bca2a08f86b2d4926d34aa8a5330bc",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
