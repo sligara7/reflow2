@@ -268,6 +268,30 @@ the skills' *contract* (served tool names, mirrors byte-identical, frontmatter, 
 rule); their semantic quality stays evidenced by trials, per docs/sharpening.md — deliberately
 no LLM evals in CI.
 
+### Branch, then PR — nothing lands on `main` directly
+
+**Standing practice from 2026-07-31 (Anthony), starting after PR #3.** Work goes to a branch and
+reaches `main` only through a pull request that CI has passed. No direct commits to `main`, and
+no merge on a red or unrun build.
+
+**The wrinkle, because the trigger config decides the workflow.** `ci.yml` runs `on: push` for
+**`main` only**, plus `on: pull_request` for anything. So *a feature branch gets no CI at all
+until a PR exists* — "wait for CI, then open the PR" cannot happen in that order here. The
+sequence that gets the intent is:
+
+1. Commit to the branch and push. (No CI yet. This is expected, not a problem.)
+2. **Open the PR as a draft** — that is what starts CI.
+3. Run the local gates meanwhile; a red CI on a branch you gated locally is a finding about the
+   gates, not just about the branch (*"believe CI"*, above).
+4. Mark it ready and merge **only when both jobs are green**.
+
+A draft PR is the trigger, not a claim that the work is finished — which is exactly why the
+draft state exists. Opening one early costs nothing and is the only way to learn what CI thinks.
+
+**When a PR merges, its branch is deleted.** Pushing more commits to that branch afterwards
+recreates it *with no PR and therefore no CI*, and they will sit there looking merged when they
+are not. Follow-up work after a merge starts a new branch and a new PR.
+
 **If you changed a detector, a phase capability, or anything in the coherence loop**, run the
 instruments in [docs/sharpening.md](docs/sharpening.md) before and after, and add a probe for what
 you built. A number that moves is your claim; a number that moves the wrong way is a finding. They
