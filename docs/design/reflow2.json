@@ -36477,6 +36477,7 @@
       "REQUIRES_RESOURCE",
       "RISKS",
       "SATISFIES",
+      "SCHEDULED_FOR",
       "SPECIFIES",
       "SUPERSEDES",
       "SUPPLEMENTS",
@@ -36488,7 +36489,7 @@
       "VIOLATES_RULE",
       "YIELDED"
     ],
-    "edge_types": 56,
+    "edge_types": 57,
     "node_type_names": [
       "Actor",
       "Anchor",
