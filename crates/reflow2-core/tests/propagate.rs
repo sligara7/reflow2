@@ -369,3 +369,40 @@ fn propagate_change_on_a_missing_event_errors_not_empty() {
         "a missing ChangeEvent must be a NodeNotFound error, got {err:?}"
     );
 }
+
+#[test]
+fn a_changed_capability_reaches_the_increment_it_was_promised_to() {
+    // THE INCLUDES BUG ABOVE, RECURRED. `SCHEDULED_FOR` reached a Release
+    // without anyone asking whether the impact table should know about it, so
+    // a release wired only by its schedule — rather than by a manifest of what
+    // it already ships — was invisible to impact and read as a disconnected
+    // island. Found 2026-07-31 by `disconnected_community` firing the first
+    // time a release was modelled forward, from the plan, instead of backward
+    // from a cut.
+    //
+    // WHAT→WHEN, the same shape as ALLOCATED_TO's WHAT→WHERE: promising a
+    // capability into an increment means a change to it moves the increment.
+    let mut g = thread();
+    g.create_node(node::RELEASE, "rel:v1", Props::new().set("name", "v1"))
+        .unwrap();
+    g.schedule_for(
+        node::CAPABILITY,
+        "cap:fast-path",
+        node::RELEASE,
+        "rel:v1",
+        "required",
+        None,
+    )
+    .unwrap();
+
+    let radius = g
+        .propagate_from(&["cap:fast-path"], PropagateOptions::default())
+        .unwrap();
+    let rel = find(&radius, "rel:v1");
+    assert_eq!(rel.distance, 1);
+    assert_eq!(
+        rel.direction,
+        ImpactDirection::Downstream,
+        "the increment is a commitment downstream of what was promised into it"
+    );
+}

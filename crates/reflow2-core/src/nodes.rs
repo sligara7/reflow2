@@ -297,6 +297,23 @@ pub(crate) fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
         // network — DEPLOYED_TO joined them to each other and INCLUDES joined
         // them to nothing (found modelling v0.4.0, fixed for v0.5.0).
         "INCLUDES" => (Some(Upstream), Some(Downstream)),
+        // The satisfaction schedule: Capability/Requirement SCHEDULED_FOR a
+        // DesignEpoch or Release. WHAT→WHEN, the same shape as ALLOCATED_TO's
+        // WHAT→WHERE — the item is the source of truth and the moment is a
+        // commitment downstream of it, so a changed capability ripples to the
+        // increment it was promised to, and from an increment you reach what
+        // it was promised.
+        //
+        // THIS IS THE INCLUDES BUG ABOVE, RECURRED. Absent from this table, a
+        // Release wired only by its schedule is a disconnected island again —
+        // found 2026-07-31 the first time a release was modelled from the
+        // schedule rather than from a manifest, by `disconnected_community`
+        // firing on `rel:v0190` and the decision governing it. Twice now a new
+        // edge type has reached a Release without anyone asking whether the
+        // impact table should know about it, and nothing checks that question
+        // is asked: the edge validates, stores and queries perfectly while
+        // every traversal steps over it (`dec:schedule-is-structural`).
+        "SCHEDULED_FOR" => (Some(Downstream), Some(Upstream)),
         _ => return None,
     };
     Some(EdgeRule {
