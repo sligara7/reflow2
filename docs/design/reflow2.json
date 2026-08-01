@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:19cfc6f5b096ccea543c1001f91425f90d3bde2ee25030b8804691ab7ef965fa",
+  "content_hash": "sha256:d6ad78d0f865d05f94449ca09f833003f54bce0664192901611592f5e47614c7",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -6858,6 +6858,42 @@
         "action": "modified"
       },
       "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:interface-medium-reachable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:interface-medium-reachable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:interface-spec-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:interface-medium-reachable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:interface-medium-reachable",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:interface-spec"
     },
     {
       "edge_type": "CHANGED",
@@ -28617,7 +28653,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3e3a74509590ce61",
+        "checksum": "sha256:1db59b3f290549cb",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -28694,7 +28730,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b640aed1b08ef002936d2957cedc2594bb94ca5189905b531023fb212ec8a433",
+        "checksum": "sha256:07c82cd7671c1241",
         "location": "crates/reflow2-core/tests/interface_spec.rs",
         "name": "tests/interface_spec.rs",
         "status": "realized"
@@ -29013,7 +29049,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:841b76122de1248d",
+        "checksum": "sha256:e8efc39625da0407",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -31667,6 +31703,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The working instructions follow the skills into the server; a project keeps only a pointer"
+      }
+    },
+    {
+      "node_id": "chg:interface-medium-reachable",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-129: `medium` is settable through `set_interface_spec`. The property and its honest `unspecified` default already existed and the foundation exemption already worked — only the door was missing, so a user following add_interface then set_interface_spec left every boundary unspecified and collected false single-point-of-failure warnings for shared libraries, having done exactly what the tools invited. Put on set_interface_spec rather than add_interface because it is part of what a consumer must AGREE with, which is that tool's subject, and the seam checker already compares it."
       }
     },
     {
@@ -40715,7 +40759,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2872df28cce3dfc7544e898fddcaaf74ede59955107e0d63f6dcd77ad48f1b32",
+  "prev_content_hash": "sha256:19cfc6f5b096ccea543c1001f91425f90d3bde2ee25030b8804691ab7ef965fa",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -707,3 +707,94 @@ fn a_foundation_interface_is_not_a_runtime_single_point_of_failure() {
         );
     }
 }
+
+/// BL-129: the foundation-medium exemption is reachable from the TOOLS, not
+/// only from `create_node`.
+///
+/// `a_foundation_interface_is_not_a_runtime_single_point_of_failure` above
+/// proves the behaviour, and builds its fixture with `create_node` — which was
+/// the only way to set `medium` at all. That made the exemption real and
+/// unreachable at the same time: a user who followed `add_interface` then
+/// `set_interface_spec` left every boundary at `unspecified` and collected a
+/// false single-point-of-failure warning for a shared library, having done
+/// exactly what the tools invited.
+fn bridged_by_interface_via_tools(medium: Option<&str>) -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_component("cmp:a", "A", "part a", None).unwrap();
+    g.add_component("cmp:b", "B", "part b", None).unwrap();
+    g.create_node(node::ARTIFACT, "art:a", Props::new().set("name", "a.rs"))
+        .unwrap();
+    g.create_node(node::ARTIFACT, "art:b", Props::new().set("name", "b.rs"))
+        .unwrap();
+
+    // The path a user actually takes.
+    g.add_interface("ifc:hub", "Shared foundation").unwrap();
+    if let Some(m) = medium {
+        g.set_interface_spec(
+            "ifc:hub",
+            Some(m),
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+        )
+        .unwrap();
+    }
+
+    g.provides("cmp:a", "ifc:hub").unwrap();
+    g.consumes("cmp:b", "ifc:hub").unwrap();
+    for (art, cmp) in [("art:a", "cmp:a"), ("art:b", "cmp:b")] {
+        g.create_edge(
+            edge::DEPENDS_ON,
+            node::ARTIFACT,
+            art,
+            node::COMPONENT,
+            cmp,
+            Props::new(),
+        )
+        .unwrap();
+    }
+    g
+}
+
+#[test]
+fn the_foundation_exemption_is_reachable_through_add_interface_and_set_spec() {
+    let flagged = |g: &DesignGraph| -> Vec<String> {
+        g.detect_defects()
+            .unwrap()
+            .into_iter()
+            .filter(|d| d.category == HealCategory::SinglePointOfFailure)
+            .flat_map(|d| d.affected_ids)
+            .collect()
+    };
+
+    // The obvious path, medium never stated: `unspecified` is honest, and a
+    // boundary that might be carried at run time is correctly fragile.
+    assert!(
+        flagged(&bridged_by_interface_via_tools(None)).contains(&"ifc:hub".to_string()),
+        "an unspecified boundary is not assumed to be a foundation"
+    );
+
+    // The same path with the medium stated through the spec tool. Before
+    // BL-129 this was unsayable without dropping to create_node.
+    assert!(
+        !flagged(&bridged_by_interface_via_tools(Some("library"))).contains(&"ifc:hub".to_string()),
+        "a library stated through set_interface_spec must earn the same \
+         exemption as one written by create_node"
+    );
+    assert!(
+        !flagged(&bridged_by_interface_via_tools(Some("data"))).contains(&"ifc:hub".to_string()),
+        "and so must a data foundation"
+    );
+
+    // The counterweight: stating a run-time medium must not buy an exemption.
+    assert!(
+        flagged(&bridged_by_interface_via_tools(Some("REST"))).contains(&"ifc:hub".to_string()),
+        "a REST boundary bridging two subsystems is still a single point of failure"
+    );
+}
