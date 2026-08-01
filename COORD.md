@@ -65,7 +65,7 @@ Add yourself if you're new here.
 
 
 
-- BL-157 + BL-158 — @ajs — since 2026-08-01 — crates/reflow2-core/src/{artifact,drift,confirm}.rs, crates/reflow2-mcp/src/service.rs, schema/temporal.yaml
+- BL-161 — @ajs — since 2026-08-01 — tools/loop_nudge.py, tools/test_loop_nudge.py, docs/backlog.md
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
