@@ -31,6 +31,27 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`set_interface_spec` accepts `medium`, so the foundation exemption is reachable from the
+  tools** (BL-129; `ver:interface-spec`). `Interface.medium` and its honest `unspecified` default
+  already existed, the seam checker already compared it, and the structural detectors already
+  exempted a `library`/`data` foundation from `single_point_of_failure` — *"a library linked into
+  its callers cannot fail on its own"*, as AGENTS.md warns. **Only the door was missing.**
+  `add_interface` takes id and name; `set_interface_spec` filled in eight properties and not this
+  one, so the sole route was `create_node`. A user following the obvious path left every boundary
+  at `unspecified` and collected false single-point-of-failure warnings for shared libraries,
+  having done exactly what the tools invited — the punishing-correct-work shape of BL-23.
+
+  Put on `set_interface_spec` rather than `add_interface` deliberately: `medium` is part of what
+  a consumer must **agree with**, which is that tool's subject, and every other contract property
+  already lives there. `add_interface` stays minimal, so there is one way to do this rather than
+  two. Omitting it still leaves the stored value alone, like every other field on that tool.
+
+  A **minor** by the versioning table — the tool surface gained a parameter — and no schema change
+  (the property was always there), so no stamp move and no upgrade doc. Toolsnap regenerated
+  deliberately: one tool, one field.
+
 ### Fixed
 
 - **An acknowledgement no longer counts as design structure, and `disconnected_community` can

@@ -741,6 +741,7 @@ impl DesignGraph {
     pub fn set_interface_spec(
         &mut self,
         interface_id: &str,
+        medium: Option<&str>,
         paradigm: Option<&str>,
         payload_format: Option<&str>,
         payload_schema: Option<&str>,
@@ -757,6 +758,14 @@ impl DesignGraph {
             });
         };
         let incoming = [
+            // `medium` lives here rather than on `add_interface` (BL-129): it is
+            // part of what a consumer must AGREE with, which is this tool's
+            // subject, and the seam checker already compares it — two boundaries
+            // can only be wired together if their media match. Until this it was
+            // settable only through `create_node`, so anyone following the
+            // obvious path left every interface at `unspecified` and collected
+            // false single-point-of-failure warnings, having done nothing wrong.
+            ("medium", medium),
             ("paradigm", paradigm),
             ("payload_format", payload_format),
             ("payload_schema", payload_schema),

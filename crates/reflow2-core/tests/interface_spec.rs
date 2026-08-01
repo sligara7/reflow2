@@ -29,6 +29,7 @@ fn a_contract_records_what_two_sides_must_agree_on() {
     let mut g = design();
     g.set_interface_spec(
         "ifc:reads",
+        None,
         Some("asynchronous"),
         Some("protobuf"),
         Some("schemas/read.proto"),
@@ -92,6 +93,7 @@ fn filling_one_field_leaves_the_others_alone() {
         None,
         None,
         None,
+        None,
         Some("oauth2"),
         None,
         None,
@@ -99,6 +101,7 @@ fn filling_one_field_leaves_the_others_alone() {
     .unwrap();
     g.set_interface_spec(
         "ifc:reads",
+        None,
         Some("synchronous"),
         None,
         None,
@@ -134,6 +137,7 @@ fn an_invented_enum_value_is_refused() {
     let mut g = design();
     let bad = g.set_interface_spec(
         "ifc:reads",
+        None,
         None,
         Some("yaml-ish"),
         None,
@@ -176,4 +180,105 @@ fn performance_limits_bind_the_interface_as_constraints() {
     let bound = g.outgoing("con:rate", Some(edge::CONSTRAINS)).unwrap();
     assert_eq!(bound.len(), 1);
     assert_eq!(bound[0].to_id, "ifc:reads");
+}
+
+// --- BL-129: `medium` is reachable from the tool that specifies contracts ---
+//
+// `medium` has always existed on `Interface`, with an honest `unspecified`
+// default that `ver:seam-incompatibility` depends on. What did not exist was a
+// way to SET it: `add_interface` takes only id and name, and `set_interface_spec`
+// filled in eight properties and not this one — so the only route was
+// `create_node`. AGENTS.md explicitly warns that a shared package must be marked
+// `library`, "because a library linked into its callers cannot fail on its own,
+// and the structural detectors need to know that to avoid calling it a single
+// point of failure". A user following the obvious path could not comply, and
+// collected false warnings having done nothing wrong.
+
+#[test]
+fn the_medium_is_settable_through_the_spec_tool() {
+    let mut g = design();
+    assert_eq!(
+        prop(&g, "ifc:reads", "medium").as_deref(),
+        Some("unspecified"),
+        "the honest default: silence is not a claim that a boundary is REST"
+    );
+
+    g.set_interface_spec(
+        "ifc:reads",
+        Some("library"),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
+    .unwrap();
+
+    assert_eq!(prop(&g, "ifc:reads", "medium").as_deref(), Some("library"));
+}
+
+#[test]
+fn setting_the_medium_leaves_the_rest_of_the_spec_alone() {
+    let mut g = design();
+    g.set_interface_spec(
+        "ifc:reads",
+        None,
+        Some("synchronous"),
+        Some("json"),
+        None,
+        None,
+        None,
+        Some("oauth2"),
+        None,
+        None,
+    )
+    .unwrap();
+
+    g.set_interface_spec(
+        "ifc:reads",
+        Some("data"),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
+    .unwrap();
+
+    assert_eq!(prop(&g, "ifc:reads", "medium").as_deref(), Some("data"));
+    assert_eq!(
+        prop(&g, "ifc:reads", "paradigm").as_deref(),
+        Some("synchronous"),
+        "filling one field must not erase the others"
+    );
+    assert_eq!(prop(&g, "ifc:reads", "auth").as_deref(), Some("oauth2"));
+}
+
+#[test]
+fn an_invented_medium_is_refused_rather_than_stored() {
+    let mut g = design();
+    let bad = g.set_interface_spec(
+        "ifc:reads",
+        Some("carrier_pigeon"),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    );
+    assert!(bad.is_err(), "an invented enum value is not a medium");
+    assert_eq!(
+        prop(&g, "ifc:reads", "medium").as_deref(),
+        Some("unspecified"),
+        "and the refusal must leave the stored value untouched"
+    );
 }

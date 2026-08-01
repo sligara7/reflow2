@@ -1467,6 +1467,17 @@ pub struct ProposeHealReq {
 #[serde(deny_unknown_fields)]
 pub struct InterfaceSpecReq {
     pub interface_id: String,
+    /// How the contract is CARRIED: `REST` / `gRPC` / `event` / `graphql` /
+    /// `cli` / `library` / `data` / `mechanical` / `electrical` / `human`.
+    /// Unset reads as `unspecified`, which is deliberately not a claim that a
+    /// boundary is REST. Worth setting even when the rest of the spec is
+    /// unknown: two boundaries can only be wired together if their media match,
+    /// and a `library` or `data` foundation is linked into its callers rather
+    /// than called across, so it cannot fail on its own and the structural
+    /// detectors need to know that to avoid reporting it as a single point of
+    /// failure.
+    #[serde(default)]
+    pub medium: Option<String>,
     /// `synchronous` / `asynchronous` / `streaming` / `batch`.
     #[serde(default)]
     pub paradigm: Option<String>,
@@ -4789,6 +4800,7 @@ impl ReflowService {
         ok_json(NodeDto::from(
             g.set_interface_spec(
                 &req.interface_id,
+                req.medium.as_deref(),
                 req.paradigm.as_deref(),
                 req.payload_format.as_deref(),
                 req.payload_schema.as_deref(),
