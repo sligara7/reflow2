@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record a change to a node in an epoch (snapshots the prior state).",
+  "description": "Record a change to a node in an epoch (snapshots the prior state). CONVENTION: record the change BEFORE you make it — the snapshot captures the state as it is now, so calling this afterwards preserves what you already replaced.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

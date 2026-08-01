@@ -37,9 +37,12 @@ def post_tool(tool: str, session: str = "s1") -> dict:
             "tool_name": tool}
 
 
-def edit_tool(tool: str = "Edit", session: str = "s1") -> dict:
-    return {"hook_event_name": "PostToolUse", "session_id": session,
-            "tool_name": tool}
+def edit_tool(tool: str = "Edit", session: str = "s1", path: str = "") -> dict:
+    ev = {"hook_event_name": "PostToolUse", "session_id": session,
+          "tool_name": tool}
+    if path:
+        ev["tool_input"] = {"file_path": path}
+    return ev
 
 
 def stop(session: str = "s1", active: bool = False) -> dict:
@@ -232,6 +235,137 @@ class LoopNudge(unittest.TestCase):
         r = run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
         self.assertEqual(r.returncode, 0)
         self.assertEqual(self.writes(), 1, "count restarts from the readable truth")
+
+
+
+class SkillTriggers(unittest.TestCase):
+    """cap:skill-triggers — the nudge names the skill the SITUATION calls for.
+
+    The load-bearing property is not that the shapes fire; it is that they add
+    NO new interruptions. Each shape only refines a nudge the hook had already
+    decided to send, so the count of nudges is unchanged and only the sentence
+    improves. `ver:skill-triggers`'s own counterweight says a trigger firing on
+    correct work is the BL-23/BL-42 failure, and this exists to reduce nagging.
+    """
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.project = pathlib.Path(self.tmp.name)
+        (self.project / ".reflow2").mkdir()
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def _stop_reason(self, session="s1"):
+        r = run_hook(self.project, stop(session))
+        if not r.stdout.strip():
+            return None
+        return json.loads(r.stdout).get("reason", "")
+
+    def test_an_edit_with_no_change_event_names_impact_check(self):
+        run_hook(self.project, edit_tool())
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+        reason = self._stop_reason()
+        self.assertIn("impact-check", reason)
+        # The cheap entry point survives the refinement — see the existing
+        # test_stop_blocks_once_when_writes_went_unchecked, which caught its loss.
+        self.assertIn("loop_status", reason)
+
+    def test_a_recorded_change_with_no_artifact_link_names_link_artifacts(self):
+        run_hook(self.project, edit_tool())
+        run_hook(self.project, post_tool("mcp__reflow2__record_change"))
+        reason = self._stop_reason()
+        self.assertIn("link-artifacts", reason)
+        self.assertNotIn("impact-check", reason)
+
+    def test_captured_intent_with_no_gap_pass_names_detect_and_ask(self):
+        run_hook(self.project, post_tool("mcp__reflow2__add_requirement"))
+        reason = self._stop_reason()
+        self.assertIn("The shape says", reason)
+        self.assertIn("detect-and-ask —", reason)
+
+    def test_loop_status_alone_is_not_a_gap_pass(self):
+        """loop_status reports debt; it puts no question to anyone.
+
+        Driven through the HOOK rather than through match_shape, because the
+        distinction lives in which op increments the tally — a direct call to
+        the matcher cannot see it, and an earlier version of this test missed a
+        mutation for exactly that reason.
+        """
+        run_hook(self.project, post_tool("mcp__reflow2__loop_status"))
+        run_hook(self.project, post_tool("mcp__reflow2__add_requirement"))
+        # The capture is unchecked, and loop_status did not ask anything.
+        # NOTE: assert the shape MARKER — the generic message also contains the
+        # string "detect-and-ask" ("run detect-and-ask / check-health"), so a
+        # bare substring check cannot tell the two apart and silently passed a
+        # mutation that made loop_status count as a gap pass.
+        reason = self._stop_reason()
+        self.assertIn("The shape says", reason)
+        self.assertIn("detect-and-ask —", reason)
+
+    def test_a_real_gap_pass_clears_the_shape(self):
+        run_hook(self.project, post_tool("mcp__reflow2__add_requirement"))
+        run_hook(self.project, post_tool("mcp__reflow2__detect_gaps"))
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+        reason = self._stop_reason()
+        self.assertNotIn("The shape says", reason)
+
+    def test_THE_COUNTERWEIGHT_a_session_that_did_it_right_gets_nothing(self):
+        """The case that matters most. A session that edited, recorded the
+        change, linked the artifact, captured intent AND ran the gap pass has
+        no shape — and, having run detect_gaps, no nudge at all."""
+        run_hook(self.project, edit_tool())
+        for op in ("record_change", "link_artifact", "add_requirement", "detect_gaps"):
+            run_hook(self.project, post_tool(f"mcp__reflow2__{op}"))
+        self.assertIsNone(self._stop_reason(), "correct work must be met with silence")
+
+    def test_shapes_never_arm_the_hook_by_themselves(self):
+        """A shape with NO unchecked writes stays silent. The matcher refines an
+        existing nudge; it can never create one."""
+        run_hook(self.project, edit_tool())
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+        run_hook(self.project, post_tool("mcp__reflow2__detect_gaps"))  # clears writes
+        self.assertIsNone(self._stop_reason())
+
+    def test_a_rendering_written_with_nothing_stored_names_session_artifacts(self):
+        run_hook(self.project, edit_tool(path="docs/design/flow.svg"))
+        # Record the change and link the artifact so the earlier shapes clear
+        # and this one is what remains.
+        for op in ("record_change", "link_artifact", "add_capability"):
+            run_hook(self.project, post_tool(f"mcp__reflow2__{op}"))
+        run_hook(self.project, post_tool("mcp__reflow2__detect_gaps"))
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+        reason = self._stop_reason()
+        self.assertIn("session-artifacts", reason)
+        # THE FILTER TRAVELS WITH THE TRIGGER: the hook cannot tell an orphan
+        # from an explanation, so it must not imply it can.
+        self.assertIn("if nothing points at it, do not", reason)
+
+    def test_an_ordinary_code_edit_is_not_a_rendering(self):
+        run_hook(self.project, edit_tool(path="crates/reflow2-core/src/heal.rs"))
+        for op in ("record_change", "link_artifact", "add_capability"):
+            run_hook(self.project, post_tool(f"mcp__reflow2__{op}"))
+        run_hook(self.project, post_tool("mcp__reflow2__detect_gaps"))
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+        reason = self._stop_reason()
+        self.assertNotIn("session-artifacts", reason or "")
+
+    def test_a_stored_rendering_gets_no_nudge(self):
+        run_hook(self.project, edit_tool(path="docs/x.svg"))
+        for op in ("record_change", "link_artifact", "content_put", "add_capability"):
+            run_hook(self.project, post_tool(f"mcp__reflow2__{op}"))
+        run_hook(self.project, post_tool("mcp__reflow2__detect_gaps"))
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+        reason = self._stop_reason()
+        self.assertNotIn("session-artifacts", reason or "")
+
+    def test_an_unrecognised_shape_still_gets_the_generic_nudge(self):
+        # Bookkeeping only: a write with no edits and no captures matches no
+        # shape, and must still be nudged with the original wording.
+        run_hook(self.project, post_tool("mcp__reflow2__release_includes"))
+        reason = self._stop_reason()
+        self.assertIn("loop_status", reason)
+        self.assertNotIn("The shape says", reason)
 
 
 if __name__ == "__main__":

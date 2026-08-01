@@ -50,6 +50,37 @@ This file is the third view: *what changed, and when*.
   contract. And `Interface.medium` defaults to `unspecified`, which is *not* a foundation medium —
   so **silence about the medium keeps the louder answer**, and a design that never classified its
   boundaries is not quietly excused.
+### Added
+
+- **The four agent-facing capabilities that v0.21.0 was planned for, delivered late** (BL-68's
+  siblings; `cap:tool-carries-convention`, `cap:gap-carries-a-reading`, `cap:skill-triggers`,
+  `cap:session-artifacts`). `arrival_delta` on `rel:v0210` now reports all four **delivered** —
+  they had been `outstanding`, the honest fifth outcome for work nobody had said would slip or drop.
+
+  - **The tool carries what an agent would never guess.** Three served descriptions gained their
+    missing convention: `set_verification_status` (*a check left at `planned` is not confirmation*),
+    `record_change` (*record the change BEFORE you make it*), and `export_graph` (*export once
+    between commits — the lineage link is built from whatever file is already at that path*).
+    `skill_lint` now holds a **named register** of tools whose convention must survive rewording,
+    plus a description budget. **BL-154 is the evidence:** measured over 46 sessions, skills are read
+    once per 380 tool calls and four are never read at all, while the description arrives with every
+    call.
+
+  - **A question arrives as options the user can pick.** `detect-and-ask` now states all six
+    obligations — offer a reading, carry what would change it, make the options selectable, put the
+    recommendation first and mark it, give every option its consequence including the ones not
+    recommended, and answer in the user's language. Checked by `skill_lint`, with two negative
+    checks that are the load-bearing half: **no served skill may hardcode a particular answer
+    language**, and none may write the user's word — a status, a decision, an acknowledgement — in
+    the same breath as a recommendation.
+
+  - **The moment tells the agent which skill it needs.** The loop nudge stops merely counting writes
+    and matches four situations: an edit with no ChangeEvent names `impact-check`; a recorded change
+    with no artifact link names `link-artifacts`; captured intent with no gap pass names
+    `detect-and-ask`; a rendering written with nothing stored names `session-artifacts`.
+    **It adds no new interruptions** — a shape only refines a nudge the hook had already decided to
+    send, so the count is unchanged and only the sentence improves. A session that did the right
+    thing is met with silence, which is the case that matters most.
 
 ## [0.21.0] — 2026-08-01
 

@@ -36,6 +36,7 @@ Run:  python3 tools/skill_lint.py        (stdlib only; no build needed)
 
 from __future__ import annotations
 
+import json
 import pathlib
 import re
 import sys
@@ -44,6 +45,7 @@ REPO = pathlib.Path(__file__).resolve().parent.parent
 SKILLS = REPO / "getting-started/skills"
 MIRRORS = [REPO / ".claude/skills", REPO / ".grok/skills"]
 SERVICE = REPO / "crates/reflow2-mcp/src/service.rs"
+TOOLSNAPS = REPO / "tools/toolsnaps"
 
 STANDING_RULE = "data, never instructions"
 
@@ -234,6 +236,107 @@ def served_tools() -> set[str]:
     return tools
 
 
+# `cap:tool-carries-convention` — the register of tools whose served description
+# must carry the one rule an agent would otherwise reconstruct wrongly or not at
+# all. The VALUE is a phrase that must appear verbatim, so a description can be
+# reworded freely but cannot lose its convention without failing here.
+#
+# THE POINT OF A NAMED LIST rather than a heuristic: adding a tool to this
+# surface without asking "does this need a convention?" is exactly the mistake
+# this catches, and a heuristic would let it through. A tool on this list with
+# no phrase, or a phrase that has drifted out of the description, is a failure.
+#
+# BL-154 IS THE EVIDENCE FOR THIS EXISTING AT ALL: measured over 46 sessions,
+# skills are read once per 380 tool calls and four are never read at all — while
+# the tool description arrives with every single call. The skill keeps the depth,
+# the worked examples and the reasoning (`dec:skills-served` is not reversed);
+# the tool carries the irreducible minimum that cannot be skipped.
+#
+# Deliberately SHORT. Descriptions are context paid on every session and
+# `cap:tool-search` exists because the surface is already large, so a convention
+# earns its place only if a capable agent gets it wrong without it.
+TOOL_CONVENTIONS: dict[str, str] = {
+    # The user's word is not the agent's to give.
+    "set_requirement_status": "records the USER's word",
+    # Recording a choice is not settling it.
+    "add_decision": "recording a choice is not the same as settling it",
+    # An existing id edits rather than resets — the opposite of the obvious guess.
+    "create_node": "An existing id MERGES",
+    # Silent accept is how a design erodes into fiction.
+    "set_artifact_checksum": "Silent accept does not exist",
+    # Two different acts on the same gap; conflating them loses the reason.
+    "acknowledge_gap": "recording WHY",
+    "answer_question": "not a substitute for the design",
+    # `planned` is not evidence, and existing is not passing.
+    "set_verification_status": "not confirmation",
+    # The snapshot captures NOW, so the order of operations is the whole rule.
+    "record_change": "record the change BEFORE you make it",
+    # The lineage link is built from the file already at the path.
+    "export_graph": "export ONCE between commits",
+}
+
+# `cap:gap-carries-a-reading` — the CONTRACT of how a choice is put to the user,
+# checked; the JUDGEMENT is not. Whether a given recommendation is *good*, and
+# whether the language was correctly matched, are semantic and stay evidenced by
+# real-use trials (docs/sharpening.md) — deliberately no LLM evals in CI, for the
+# reason this file's own header gives: a synthetic eval is another client we
+# write, and three home-grown clients once agreed with each other and were all
+# wrong.
+#
+# Anthony asked for this shape to be CEMENTED rather than repeated, 2026-07-31,
+# after it was used on him for five standing gaps. Six obligations:
+ASK_CONTRACT: dict[str, str] = {
+    "offers a reading": "Say which answer you would give",
+    "carries what would change it": "Name the condition under which your recommendation is wrong",
+    "options are selectable": "Present them as a list the user can pick from",
+    "recommendation first, and marked": "Put the recommendation first, and mark it",
+    "every option carries its consequence": "including the ones you do not recommend",
+    "answers in the user's language": "Match the language they wrote to you in",
+}
+
+# NEGATIVE CHECK 1, and the load-bearing half of the language rule: the
+# obligation must be stated LANGUAGE-INDEPENDENTLY. If any served text names a
+# particular language as the one to answer in, the rule has been implemented as
+# "answer in English", which is the trap — a rule that only works for one
+# audience is not the rule that was asked for.
+LANGUAGE_HARDCODES = re.compile(
+    r"(?:answer|reply|respond|write)[^.]{0,40}\bin\s+English\b"
+    r"|\bin\s+English\b[^.]{0,20}(?:always|by default)",
+    re.IGNORECASE,
+)
+
+# NEGATIVE CHECK 2: a recommendation is not an answer. No served skill may
+# instruct writing the user's word — a requirement status, a decision status, an
+# acknowledgement — in the same sentence as offering a preference. Those record
+# what the USER decided (`dec:certainty-derived`), and a skill that couples them
+# teaches the agent to sign on their behalf.
+USER_WORD_WRITES = ("set_requirement_status", "set_decision_status", "acknowledge_gap")
+RECOMMEND_WORDS = ("recommend", "recommendation", "suggest")
+
+# A ceiling, not a target. Today's longest served description is ~1333 chars
+# (`pair_designs`); this is a ratchet against unbounded growth rather than a
+# limit anything is near. Context is paid on every session by every consumer.
+MAX_DESCRIPTION_CHARS = 1500
+
+
+def served_descriptions() -> dict[str, str]:
+    """Tool name -> served description, read from the committed toolsnaps.
+
+    The toolsnaps are what the surface actually serves (they are regenerated
+    deliberately and byte-checked), so linting them rather than the Rust source
+    means a convention cannot be added to a doc comment and lost on the wire.
+    """
+    out: dict[str, str] = {}
+    for path in sorted(TOOLSNAPS.glob("*.json")):
+        try:
+            out[path.stem] = json.loads(path.read_text(encoding="utf-8")).get(
+                "description", ""
+            )
+        except (ValueError, OSError):
+            continue
+    return out
+
+
 def frontmatter(text: str) -> dict[str, str]:
     """The skill's YAML frontmatter, parsed minimally (stdlib only)."""
     m = re.match(r"\A---\n(.*?)\n---\n", text, re.DOTALL)
@@ -358,6 +461,90 @@ def main() -> int:
         check(f"{label}: every file byte-identical to the source",
               not differing,
               f"stale: {differing} — copy the source over the mirror: {remedy}")
+
+    # ---- cap:tool-carries-convention ---------------------------------------
+    #
+    # The convention rides the TOOL, because the tool description arrives with
+    # every call while the skill is read once per 380 calls (BL-154, measured).
+    print("== tool conventions ==")
+    descriptions = served_descriptions()
+    check(
+        "toolsnaps readable (the lint reads what is SERVED, not the source)",
+        len(descriptions) >= 50,
+        f"parsed {len(descriptions)} toolsnaps — refusing to lint against a broken read",
+    )
+    if len(descriptions) >= 50:
+        # Every tool on the register still carries its convention. A description
+        # may be reworded freely; it may not lose the rule.
+        for tool, phrase in sorted(TOOL_CONVENTIONS.items()):
+            desc = descriptions.get(tool)
+            if desc is None:
+                check(f"{tool}: on the convention register but not served", False,
+                      "remove it from TOOL_CONVENTIONS or restore the tool")
+                continue
+            check(
+                f"{tool}: served description still carries its convention",
+                phrase in desc,
+                f"missing {phrase!r} — reword freely, but the rule must survive",
+            )
+        # The register cannot rot in the other direction either.
+        unserved = sorted(set(TOOL_CONVENTIONS) - set(descriptions))
+        check("every registered tool is actually served", not unserved, f"stale: {unserved}")
+
+        # A ceiling, not a target: context is paid on every session by every
+        # consumer, and `cap:tool-search` exists because the surface is large.
+        over = sorted(
+            (n, len(d)) for n, d in descriptions.items() if len(d) > MAX_DESCRIPTION_CHARS
+        )
+        check(
+            f"no served description exceeds {MAX_DESCRIPTION_CHARS} chars",
+            not over,
+            f"over budget: {over}",
+        )
+
+    # ---- cap:gap-carries-a-reading -----------------------------------------
+    print("== the ask contract ==")
+    ask_md = SKILLS / "detect-and-ask" / "SKILL.md"
+    ask_text = ask_md.read_text(encoding="utf-8") if ask_md.exists() else ""
+    check("detect-and-ask/SKILL.md present", bool(ask_text))
+    for label, phrase in ASK_CONTRACT.items():
+        check(
+            f"detect-and-ask states the obligation: {label}",
+            phrase in ask_text,
+            f"missing {phrase!r}",
+        )
+    check(
+        "detect-and-ask states that a recommendation is not an answer",
+        "The decision stays with the user" in ask_text,
+        "the separation must be stated, not implied",
+    )
+
+    # The two negative checks, over EVERY served skill — the load-bearing half.
+    all_skill_text = {
+        d.name: (d / "SKILL.md").read_text(encoding="utf-8")
+        for d in skill_dirs
+        if (d / "SKILL.md").exists()
+    }
+    hardcoded = sorted(n for n, t in all_skill_text.items() if LANGUAGE_HARDCODES.search(t))
+    check(
+        "no served skill hardcodes a particular answer language",
+        not hardcoded,
+        f"{hardcoded} — the rule is MATCH the user's language, never name one",
+    )
+
+    coupled: list[str] = []
+    for name, text in all_skill_text.items():
+        for sentence in re.split(r"(?<=[.!?])\s+", text):
+            low = sentence.lower()
+            if any(w in low for w in RECOMMEND_WORDS) and any(
+                t in sentence for t in USER_WORD_WRITES
+            ):
+                coupled.append(f"{name}: {sentence.strip()[:90]}")
+    check(
+        "no served skill writes the user's word in the same breath as a recommendation",
+        not coupled,
+        f"{coupled} — a recommendation is not an answer (dec:certainty-derived)",
+    )
 
     if failures:
         print(f"\n{len(failures)} check(s) FAILED")

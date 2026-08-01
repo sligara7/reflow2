@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "The whole design as one portable document — every node and edge, sorted so two exports of an unchanged graph are byte-identical. Use it to back the design up, move it between machines, or migrate it across a reflow2 upgrade (export with the old build, import with the new). It carries a stamp saying which reflow2 wrote it. Pass `path` to write the document to a file instead of returning it — on a large design the payload overflows what a session can read, and a backup wants to be a file anyway.",
+  "description": "The whole design as one portable document — every node and edge, sorted so two exports of an unchanged graph are byte-identical. Use it to back the design up, move it between machines, or migrate it across a reflow2 upgrade (export with the old build, import with the new). It carries a stamp saying which reflow2 wrote it. Pass `path` to write the document to a file instead of returning it — on a large design the payload overflows what a session can read, and a backup wants to be a file anyway. CONVENTION: export ONCE between commits, straight onto the committed file — the lineage link is built from whatever file is already at that path, so exporting elsewhere and copying it in, or exporting twice, both break the chain silently.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
