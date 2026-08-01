@@ -433,7 +433,8 @@ mod tests {
     fn vocabulary_covers_the_whole_schema() {
         let v = graph().describe_vocabulary();
         assert_eq!(v.node_types.len(), 28, "all node types are listed");
-        assert_eq!(v.edge_types.len(), 57, "all edge types are listed");
+        // 58 since CALIBRATED_AGAINST (2026-08-01, req:a-fit-is-not-a-test).
+        assert_eq!(v.edge_types.len(), 58, "all edge types are listed");
     }
 
     #[test]

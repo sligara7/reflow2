@@ -31,6 +31,52 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **The evidence-quality family — a check's TIME, INPUT and INDEPENDENCE become facts the graph
+  holds** (`cap:verification-freshness`, `cap:evidence-scope`, `cap:independent-evidence`;
+  `ver:evidence-quality`, 18 cases, mutation-checked on all three axes). BL-106, BL-126 and
+  BL-136 are one hole seen three ways: reflow2 has always recorded that a check **exists** and
+  that it **passes**, and never what its evidence **covers**.
+
+  - **TIME** (BL-106) — the confirmation ledger gains `last_verified_at` and
+    `verification_freshness` per claim: is the newest passing check older than the newest
+    accepted change to what it covers? `Verification.last_run_at` has been written on every
+    status set since the beginning and read by nothing, the same shape as the temporal axis
+    before BL-70. A **fact, never a gap** (`dec:verification-freshness-not-a-gap`) — it would
+    fire on every legitimate refactor, and a list that can never reach zero gets skimmed.
+    **On reflow2's own design this reports 9 genuinely stale claims**, `cap:store` worst at nine
+    days between its last check and the last accepted change beneath it.
+  - **INPUT** (BL-126) — `set_evidence_scope` records what a check **pinned** and what it
+    **swept**, on the `VERIFIES` edge rather than the `Verification`, because scope is a fact
+    about the *claim*: one suite can cover one capability across the whole space and touch
+    another at a single point (`dec:evidence-scope-on-the-verifies-edge`). `evidence_report` then
+    names the parameters every passing check pinned and none swept. A check stating no scope is
+    counted **unscoped**, never read as broad — and on reflow2's own design that is **87 of 87
+    passing checks**, which is the silence the axis exists to make visible.
+  - **INDEPENDENCE** (BL-136) — `calibrated_against` records what a value was **fitted** to, and
+    any passing check that *is*, or *produced*, that evidence is reported **consumed — a fit, not
+    a test** and excluded from independent evidence. Structural by construction, not analytic:
+    the project this came from built four independent internal diagnostics and *none* could have
+    found its circular fit, because no check inside a design can establish its own independence.
+
+  **Found by dogfooding before it shipped**, and it is the family's own failure mode one level
+  up: comparing dates as whole strings called a check dated `2026-07-28` stale against an accept
+  at `2026-07-28T14:52:00-04:00` — an ordering nobody recorded, asserted by the very report that
+  exists to stop exactly that. Same calendar day is now `Unknown`, with the counterweight that an
+  earlier *day* is still stale.
+
+### Changed
+
+- **Schema: a new `CALIBRATED_AGAINST` edge type (57 → 58), which MOVES THE GRAPH STAMP.** A
+  graph written by this build is refused by v0.20.0 and earlier; see
+  [docs/upgrading-to-v0.21.0.md](docs/upgrading-to-v0.21.0.md). It is a **traceability** edge by
+  deliberate decision (`dec:calibration-propagates`), so correcting an anchor puts every value
+  fitted to it in the blast radius. That question was asked *before* the code was written rather
+  than after a detector complained — `INCLUDES` and `SCHEDULED_FOR` each reached the impact table
+  only once `disconnected_community` fired on an island they had failed to join, and the table's
+  own comment says nothing checks the question is asked.
+
 ## [0.20.0] — 2026-08-01
 
 ### Added

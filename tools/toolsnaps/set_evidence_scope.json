@@ -1,0 +1,46 @@
+{
+  "annotations": {
+    "destructiveHint": false,
+    "readOnlyHint": false
+  },
+  "description": "Record what a check HELD FIXED and what it VARIED for one claim — the input scope of its evidence. A passing check proves the points it actually drove, so a suite that pins the same seed, ordering or locale every time reads as full coverage while resting on one point of the space. Set on the VERIFIES edge, not the Verification, because scope is a fact about the CLAIM: one suite can cover one capability broadly and touch another at a single point. `evidence_report` then names the parameters every passing check pinned and none swept. Reported as a fact, never a gap — pinning a seed is normal, and a detector that fired on it would punish correct work. The check must already verify the target.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "pinned": {
+        "default": [],
+        "description": "Parameter names the check HELD FIXED for this claim. Passing an empty\nlist clears them, which is how a scope recorded in error is withdrawn.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "swept": {
+        "default": [],
+        "description": "Parameter names the check actually VARIED.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "target_id": {
+        "type": "string"
+      },
+      "target_type": {
+        "description": "Node type this check verifies (e.g. `Capability`).",
+        "type": "string"
+      },
+      "verification_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "verification_id",
+      "target_type",
+      "target_id"
+    ],
+    "type": "object"
+  },
+  "name": "set_evidence_scope"
+}

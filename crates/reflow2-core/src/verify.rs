@@ -195,6 +195,111 @@ impl DesignGraph {
             Props::new(),
         )
     }
+
+    /// Record what a check held FIXED and what it VARIED for one claim
+    /// (BL-126). Scope lives on the `VERIFIES` edge, not on the `Verification`,
+    /// because it is a fact about the relationship: the same suite can cover one
+    /// capability across the whole input space and touch another at a single
+    /// point (`dec:evidence-scope-on-the-verifies-edge`).
+    ///
+    /// A separate setter, like [`set_verification_status`](Self::set_verification_status)
+    /// and `set_interface_spec` — one way to do it, and a re-run should not have
+    /// to restate what the check *is*. Other edge properties (`coverage`) are
+    /// preserved, and the edge must already exist: silently creating one would
+    /// let a typo invent a verification relationship that nobody asserted.
+    ///
+    /// Passing an empty list for either side CLEARS that side, which is how a
+    /// scope recorded in error is withdrawn. Names are stored comma-separated,
+    /// so a name containing a comma is refused rather than silently split into
+    /// two parameters that were never checked.
+    pub fn set_evidence_scope(
+        &mut self,
+        verification_id: &str,
+        target_type: &str,
+        target_id: &str,
+        pinned: &[String],
+        swept: &[String],
+    ) -> Result<StoredEdge, DynoError> {
+        for (side, names) in [("pinned", pinned), ("swept", swept)] {
+            for n in names {
+                if n.contains(',') {
+                    return Err(DynoError::Validation {
+                        node_type: edge::VERIFIES.to_string(),
+                        property: side.to_string(),
+                        message: format!(
+                            "parameter name '{n}' contains a comma; names are stored \
+                             comma-separated, so this would be read back as two parameters \
+                             that were never checked"
+                        ),
+                    });
+                }
+            }
+        }
+
+        let existing = self
+            .outgoing(verification_id, Some(edge::VERIFIES))?
+            .into_iter()
+            .find(|e| e.to_id == target_id)
+            .ok_or_else(|| DynoError::Validation {
+                node_type: edge::VERIFIES.to_string(),
+                property: "target".to_string(),
+                message: format!(
+                    "'{verification_id}' does not verify '{target_id}' — record the check \
+                     against its target with `verifies` first, so a mistyped id cannot \
+                     invent a verification relationship nobody asserted"
+                ),
+            })?;
+
+        let mut props = Props::new()
+            .set("pinned", pinned.join(","))
+            .set("swept", swept.join(","));
+        for (k, v) in &existing.properties {
+            if k != "pinned" && k != "swept" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_edge(
+            edge::VERIFIES,
+            node::VERIFICATION,
+            verification_id,
+            target_type,
+            target_id,
+            props,
+        )
+    }
+
+    /// Record that a value was FITTED to a piece of evidence (BL-136) — the
+    /// relation that stops that same evidence counting as its validation.
+    ///
+    /// `evidence_type` is `Artifact` (a published anchor, a dataset, a
+    /// measurement record) or `Verification` (the check whose output the value
+    /// was fitted to). Both endpoints must already exist, as for every edge.
+    ///
+    /// This is deliberately a recorded relation and not a computed one. The
+    /// project BL-136 came from built four independent internal diagnostics and
+    /// none of them could have found its circular fit; only the outside source
+    /// could. No check inside a design can establish its own independence, so
+    /// the fact has to be written down by whoever made the fit.
+    pub fn calibrated_against(
+        &mut self,
+        from_type: &str,
+        from_id: &str,
+        evidence_type: &str,
+        evidence_id: &str,
+        note: Option<&str>,
+        calibrated_at: Option<&str>,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::CALIBRATED_AGAINST,
+            from_type,
+            from_id,
+            evidence_type,
+            evidence_id,
+            Props::new()
+                .set_opt("note", note)
+                .set_opt("calibrated_at", calibrated_at),
+        )
+    }
 }
 
 // ---- The P4 reconcile (BL-30's M half) -------------------------------------
@@ -489,6 +594,44 @@ pub struct CapabilityEvidence {
     /// Every passing check was performed in a simulated environment, and at
     /// least one said where. The claim worth surfacing.
     pub simulation_only: bool,
+
+    // ---- BL-126 · OVER WHAT the evidence ranges -----------------------------
+    /// Parameters some passing check PINNED and no passing check ever swept.
+    /// The state BL-126 names: "31 checks, all at one value". Sorted.
+    pub pinned_everywhere: Vec<String>,
+    /// Parameters some passing check actually VARIED. A parameter here is never
+    /// in `pinned_everywhere`, however many other checks pinned it — something
+    /// moved it, so the claim is not resting on a single point.
+    pub swept: Vec<String>,
+    /// Passing checks that state neither what they pinned nor what they swept.
+    /// Reported rather than assumed broad: silence about coverage is not
+    /// coverage, the same rule `unplaced_checks` applies to place.
+    pub unscoped_checks: usize,
+
+    // ---- BL-136 · INDEPENDENT of what --------------------------------------
+    /// Passing checks that cannot count as evidence because the capability (or
+    /// an artifact realizing it) was calibrated against them. `[CONSUMED — a
+    /// fit, not a test]`.
+    pub consumed_checks: Vec<ConsumedCheck>,
+    /// Passing checks left after the consumed ones are removed.
+    pub independent_checks: usize,
+    /// At least one passing check survives as independent evidence. False when
+    /// every check is a fit — the state where a design agrees with its own
+    /// anchor and every status reads green.
+    pub independently_verified: bool,
+}
+
+/// One passing check that cannot count as independent evidence, because the
+/// thing it verifies was calibrated against it (BL-136).
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct ConsumedCheck {
+    pub verification_id: String,
+    /// The evidence node on both sides of the circle — what the target was
+    /// fitted to, and what this check rests on.
+    pub evidence_id: String,
+    /// Why it is consumed, in the words a reader needs: either the check *is*
+    /// the evidence, or the check produced it.
+    pub reason: String,
 }
 
 /// The evidence picture across the design.
@@ -499,6 +642,14 @@ pub struct EvidenceReport {
     pub simulation_only: usize,
     /// Capabilities with passing checks that say nowhere they were run.
     pub with_unplaced_checks: usize,
+    /// Capabilities proven only at fixed values of some parameter (BL-126).
+    pub narrowly_proven: usize,
+    /// Capabilities where no passing check states its input scope at all.
+    /// Counted so "0 narrowly proven" can never be read as "everything is
+    /// broadly proven" — silence about coverage is not coverage.
+    pub with_unscoped_checks: usize,
+    /// Capabilities whose every passing check is consumed (BL-136).
+    pub not_independently_verified: usize,
 }
 
 impl DesignGraph {
@@ -521,6 +672,29 @@ impl DesignGraph {
             let mut simulated: Vec<String> = Vec::new();
             let mut unplaced = 0usize;
             let mut any_passing = false;
+            let mut pinned: Vec<String> = Vec::new();
+            let mut swept: Vec<String> = Vec::new();
+            let mut unscoped_checks = 0usize;
+            let mut consumed_checks: Vec<ConsumedCheck> = Vec::new();
+            let mut passing_checks = 0usize;
+
+            // BL-136 · what this claim's value was fitted to. The capability's
+            // own calibrations plus those of the artifacts realizing it — a
+            // fitted constant lives in a file while the check names the
+            // capability, so looking only at the capability would miss the
+            // commonest shape.
+            let mut calibration_sources: Vec<String> = self
+                .outgoing(&cap.node_id, Some(edge::CALIBRATED_AGAINST))?
+                .into_iter()
+                .map(|e| e.to_id)
+                .collect();
+            for r in self.incoming(&cap.node_id, Some(edge::REALIZES))? {
+                for c in self.outgoing(&r.from_id, Some(edge::CALIBRATED_AGAINST))? {
+                    calibration_sources.push(c.to_id);
+                }
+            }
+            calibration_sources.sort();
+            calibration_sources.dedup();
 
             for e in self.incoming(&cap.node_id, Some(edge::VERIFIES))? {
                 let Some(v) = self.get_node(node::VERIFICATION, &e.from_id)? else {
@@ -535,6 +709,47 @@ impl DesignGraph {
                     continue;
                 }
                 any_passing = true;
+                passing_checks += 1;
+
+                // BL-126 · what this check held fixed and what it varied, read
+                // off the EDGE (dec:evidence-scope-on-the-verifies-edge): the
+                // same suite can be broad about one claim and narrow about
+                // another, and only the edge can say which.
+                let edge_pinned = scope_list(&e.properties, "pinned");
+                let edge_swept = scope_list(&e.properties, "swept");
+                if edge_pinned.is_empty() && edge_swept.is_empty() {
+                    unscoped_checks += 1;
+                }
+                pinned.extend(edge_pinned);
+                swept.extend(edge_swept);
+
+                // BL-136 · is this check's evidence the very thing the target
+                // was fitted to? Two forms: the check IS the evidence, or the
+                // check produced it.
+                if calibration_sources.contains(&v.node_id) {
+                    consumed_checks.push(ConsumedCheck {
+                        verification_id: v.node_id.clone(),
+                        evidence_id: v.node_id.clone(),
+                        reason: format!(
+                            "'{}' was calibrated against this check, so its agreement is a fit, not a test",
+                            cap.node_id
+                        ),
+                    });
+                } else if let Some(produced) = self
+                    .outgoing(&v.node_id, Some(edge::PRODUCES))?
+                    .into_iter()
+                    .find(|p| calibration_sources.contains(&p.to_id))
+                {
+                    consumed_checks.push(ConsumedCheck {
+                        verification_id: v.node_id.clone(),
+                        evidence_id: produced.to_id.clone(),
+                        reason: format!(
+                            "'{}' was calibrated against '{}', which this check produced",
+                            cap.node_id, produced.to_id
+                        ),
+                    });
+                }
+
                 let places = self.outgoing(&v.node_id, Some(edge::PERFORMED_IN))?;
                 if places.is_empty() {
                     unplaced += 1;
@@ -565,6 +780,21 @@ impl DesignGraph {
             // Only claimable when something said where: all-unplaced is unknown,
             // not simulated.
             let simulation_only = !proven_in.is_empty() && proven_in.len() == simulated.len();
+
+            // A parameter SOMETHING swept is not pinned-everywhere, however
+            // many other checks pinned it — the claim no longer rests on one
+            // point of that axis, which is the only question BL-126 asks.
+            swept.sort();
+            swept.dedup();
+            let mut pinned_everywhere: Vec<String> =
+                pinned.into_iter().filter(|p| !swept.contains(p)).collect();
+            pinned_everywhere.sort();
+            pinned_everywhere.dedup();
+
+            consumed_checks.sort_by(|a, b| a.verification_id.cmp(&b.verification_id));
+            let independent_checks = passing_checks.saturating_sub(consumed_checks.len());
+            let independently_verified = independent_checks > 0;
+
             capabilities.push(CapabilityEvidence {
                 capability_id: cap.node_id.clone(),
                 capability_name: cap
@@ -577,6 +807,12 @@ impl DesignGraph {
                 simulated_environments: simulated,
                 unplaced_checks: unplaced,
                 simulation_only,
+                pinned_everywhere,
+                swept,
+                unscoped_checks,
+                consumed_checks,
+                independent_checks,
+                independently_verified,
             });
         }
         capabilities.sort_by(|a, b| a.capability_id.cmp(&b.capability_id));
@@ -585,10 +821,48 @@ impl DesignGraph {
             .iter()
             .filter(|c| c.unplaced_checks > 0)
             .count();
+        let narrowly_proven = capabilities
+            .iter()
+            .filter(|c| !c.pinned_everywhere.is_empty())
+            .count();
+        let with_unscoped_checks = capabilities
+            .iter()
+            .filter(|c| c.unscoped_checks > 0)
+            .count();
+        let not_independently_verified = capabilities
+            .iter()
+            .filter(|c| !c.independently_verified)
+            .count();
         Ok(EvidenceReport {
             capabilities,
             simulation_only,
             with_unplaced_checks,
+            narrowly_proven,
+            with_unscoped_checks,
+            not_independently_verified,
         })
     }
+}
+
+/// Read one of the two comma-separated scope lists off a `VERIFIES` edge.
+///
+/// Flat storage because the schema has no list type
+/// (`dec:evidence-scope-on-the-verifies-edge`); empty entries are dropped and
+/// each name is trimmed, so `"seed, , order"` is two parameters rather than
+/// three. An absent property and an empty string are the same thing — unstated.
+fn scope_list(
+    props: &std::collections::HashMap<String, dynograph_core::Value>,
+    key: &str,
+) -> Vec<String> {
+    props
+        .get(key)
+        .and_then(dynograph_core::Value::as_str)
+        .map(|s| {
+            s.split(',')
+                .map(str::trim)
+                .filter(|p| !p.is_empty())
+                .map(str::to_string)
+                .collect()
+        })
+        .unwrap_or_default()
 }

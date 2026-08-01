@@ -83,3 +83,45 @@ schema:
       extraction_hint: A Verification checks a Capability, Artifact, or Component.
       properties:
         coverage: { type: enum, values: [full, partial, smoke] }
+        # BL-126, dec:evidence-scope-on-the-verifies-edge. WHAT PART of the
+        # input space the check actually covered, recorded on the EDGE and not
+        # on the Verification: scope is a fact about the claim, so one suite can
+        # cover capability A across the whole space and touch capability B at a
+        # single point. A per-node property would have to average that away.
+        #
+        # These are deliberately not the `coverage` enum above. That is a
+        # self-assessed adjective set by whoever wrote the check, and BL-126's
+        # founding case was a guard written by an author to protect a belief
+        # formed an hour earlier — they would have said `full`. A named
+        # parameter is checkable against what the design claims the capability
+        # is independent of; an adjective is not.
+        #
+        # Comma-separated because the schema has no list type (the
+        # QualityGate.criteria precedent). The MCP surface takes and returns
+        # proper lists; only the storage is flat, so parameter names must not
+        # themselves contain commas.
+        pinned: { type: string, description: "Comma-separated parameter names this check HELD FIXED — the seeds, orderings, locales and hostnames every check pins by the same instinct that made them nuisance parameters, which is why defects live there. Unset means the scope was never stated, which is reported as unscoped and never read as full coverage." }
+        swept: { type: string, description: "Comma-separated parameter names this check VARIED. A parameter swept by any passing check is no longer reported as pinned-everywhere for that claim, because something did move it." }
+
+    # BL-136, dec:calibration-is-an-edge. What a value was FITTED to, so that
+    # the same evidence cannot silently count as its validation.
+    #
+    # Structural on purpose, and this is the whole point: the project that hit
+    # this built four independent internal diagnostics — a back-solve, a
+    # coefficient locus, a space-time frontier and a physical-floor proof — and
+    # every one narrowed the question correctly while none could have found the
+    # defect. Only the outside source could. No check internal to a design can
+    # establish its own independence, so reflow2 records the relation rather
+    # than trying to detect circularity analytically.
+    CALIBRATED_AGAINST:
+      from: "*"
+      to: [Artifact, Verification]
+      extraction_hint: >
+        The evidence a value in the design was DERIVED from — a published
+        anchor, a dataset, a measurement, or the check whose output it was fitted
+        to. Agreement with that evidence afterwards is a fit, not a test. A
+        traceability edge (dec:calibration-propagates): when the anchor is
+        corrected or superseded, every value fitted to it is in the blast radius.
+      properties:
+        note: { type: string, description: "What was fitted, and how — the part a later reader needs to judge whether the fit still stands." }
+        calibrated_at: { type: string, description: "When the fit was made, if recorded. The core takes no clock and never asks the system the time." }

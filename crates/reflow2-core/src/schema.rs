@@ -69,8 +69,14 @@ mod tests {
         // because that one means *belongs to* over a wildcard source, and one
         // type carrying both meanings would be indistinguishable to every
         // detector (dec:schedule-is-an-edge-with-modality). Moves the stamp.
+        // 57→58 is CALIBRATED_AGAINST (2026-08-01, req:a-fit-is-not-a-test) —
+        // what a value was FITTED to, so the same evidence cannot count as its
+        // validation. A new type rather than a property because the detector is
+        // then a graph query, and because the relation carries WHAT was
+        // consumed, which a provenance enum cannot (dec:calibration-is-an-edge).
+        // Moves the stamp: v0.21.0 owes an upgrade note.
         assert_eq!(schema.node_types.len(), 28, "expected 28 node types");
-        assert_eq!(schema.edge_types.len(), 57, "expected 57 edge types");
+        assert_eq!(schema.edge_types.len(), 58, "expected 58 edge types");
     }
 
     #[test]
