@@ -454,6 +454,23 @@ of ideas from the author's earlier projects (all under
 [github.com/sligara7](https://github.com/sligara7)): `reflow`, `storyflow`,
 `chain_reflow`, and the graph engine `dynograph-foundation`.
 
+### What it is for, and what it is not — **reflow2 for *why*, tests for *whether*.**
+
+The sharpest statement of this came from outside, and it is worth keeping in the owner's words.
+A project designed end to end through reflow2 (2026-07-31) ran sixteen sessions of physics that
+kept overturning itself, and ended with a six-deep chain of superseded Decisions — five
+abandoned positions, each carrying why it failed — which they judged the payoff: *"no code
+review, git history or comment thread would give a reader that. This is what the graph is for."*
+
+And the counterpart, stated just as plainly: *"the one thing the graph could not do at any point
+was tell me a number was wrong. That needed sources and executable checks."* Their division held
+across the whole arc — **reflow2 is where reasoning persists; tests are what stop you being
+wrong. They are complementary, and it would be a mistake for either to try to be the other.**
+
+Carry it as a design constraint, not a slogan. It is the reason reflow2 reasons from graph state
+and never from run history (`dec:loop-status-state-not-history`), and the reason a detector
+should say what it *cannot* see rather than grow toward becoming a test runner.
+
 ## The one mental model to hold: the coherence loop
 
 ```
