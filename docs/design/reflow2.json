@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9d747383103bd102814506e329cba75d0b7a8818f0a3d7d0beb8a5660db0c52f",
+  "content_hash": "sha256:8cde46859dde2b75fc8b91f458e26d627836577d47b2103d9912a9840b75a393",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -7900,6 +7900,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:nudge-fires-once",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:nudge-path",
       "properties": {
         "accepted_baseline": true,
@@ -7924,6 +7933,24 @@
         "action": "added"
       },
       "to_id": "cap:nudge-path-proven"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:nudge-state-integrity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:nudge-state-integrity",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:skill-triggers"
     },
     {
       "edge_type": "CHANGED",
@@ -32161,7 +32188,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d946d7ad7640dc3f73717522c1253b4d2b6855b25c46667feadcfb9cd1ff48b8",
+        "checksum": "sha256:26ce96adeee1d5da4a33e7a849549f94125e1c2fe1b534cbbcd0f7cd7cb5c8d3",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
         "status": "realized"
@@ -35508,11 +35535,27 @@
       }
     },
     {
+      "node_id": "chg:nudge-fires-once",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "BL-111: the nudge's \"fires once\" promise is computed rather than merely stated — an atomic claim, so a duplicate hook registration is harmless instead of doubling the message"
+      }
+    },
+    {
       "node_id": "chg:nudge-path",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
         "name": "The loop's safety net is run as registered, and its absence is announced to every session"
+      }
+    },
+    {
+      "node_id": "chg:nudge-state-integrity",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "BL-161: the loop nudge was corrupting the tally it judges from — a non-atomic write plus an error-swallowing read let one concurrent hook wipe the session's record, so a session that consulted the graph constantly was told at Stop that it never had"
       }
     },
     {
@@ -44341,10 +44384,10 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
-        "last_run_at": "2026-07-22",
+        "last_run_at": "2026-08-01",
         "level": "integration",
         "method": "test",
-        "name": "test_loop_nudge.py",
+        "name": "The nudge's counting AND its own promise are both trustworthy (tools/test_loop_nudge.py) — 36 cases, 8 new across BL-161 and BL-111. BL-161 · STATE INTEGRITY: a 60-hook CONCURRENT burst against a seeded tally lands every increment and wipes no sticky field; against the pre-fix script the same burst returned touched=false, artifacts=0 and 6 of 60 edits, because a non-atomic write plus an error-swallowing read let one hook store zeros over the session's record. COUNTERWEIGHT: a tally rebuilt after an unreadable one keeps counting — an existing case required that and was right — but can no longer support the hook's ONE negative claim, \"the graph was never consulted\", because the calls that would refute it are exactly what was lost; and the POSITIVE claim, \"N writes went unchecked\", still fires after a restart, so the flag is not an off switch. BULK FORMS: set_artifact_checksums, create_nodes and gaps_to_prompts tally as the singular forms they replace. BL-111 · FIRES ONCE: a second stop CYCLE does not nudge again (the promise is per SESSION, and it rested on the harness's stop_hook_active, which is per cycle and never persisted), both blocking branches keep it, and TWO CONCURRENT HOOK PROCESSES on the same Stop produce exactly ONE message — which is the case it was filed from and is not exotic, since reflow2 installs machine-wide AND a project may carry its own registration and the two command spellings do not dedupe. COUNTERWEIGHT: the claim is spent by NUDGING, not by STOPPING, so a session with nothing owed stops silently and keeps its one nudge. MUTATION-CHECKED SEVEN WAYS, each failing exactly the tests that name it: drop the lock; swallow an unreadable tally into zeros; let a rebuilt tally make the negative claim; drop the bulk names; remove BOTH the lock and the atomic replace (the script as it shipped); make the nudge claim never persist (the exact BL-111 defect, failing precisely the three once-only cases); and claim on every stop earned or not, which fails the counterweight and ten more. Removing the atomic write ALONE passes, and that is reported rather than hidden: the lock subsumes it under these conditions, and os.replace stays for the unlocked Stop-path reader and the fcntl-less fallback. THE MUTATION CHECK CAUGHT MY OWN TEST PASSING FOR FREE: the first concurrency helper looped communicate(), which blocks until each child exits, so the children ran serially and the test stayed green against the UNFIXED script.",
         "status": "passing"
       }
     },
@@ -44880,7 +44923,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9dba62d40234a2820614ea24107dd241e3c11b740282b79ecb3a3fd117bc58f6",
+  "prev_content_hash": "sha256:9d747383103bd102814506e329cba75d0b7a8818f0a3d7d0beb8a5660db0c52f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
