@@ -854,18 +854,70 @@ impl DesignGraph {
         // interface, invert the dependency, go event-driven), so this is
         // reported for a human to resolve rather than repaired.
         for cycle in self.circular_dependencies()? {
-            let mut affected = cycle.clone();
+            let mut affected = cycle.path.clone();
             affected.sort();
-            let path = if cycle.len() == 1 {
-                format!("'{}' depends on itself", cycle[0])
+            let path = if cycle.path.len() == 1 {
+                format!("'{}' depends on itself", cycle.path[0])
             } else {
-                format!("{} → {}", cycle.join(" → "), cycle[0])
+                format!("{} → {}", cycle.path.join(" → "), cycle.path[0])
+            };
+            // BL-141 · say what the detector actually walked. A dependency is
+            // either a DEPENDS_ON edge or a shared contract collapsed into one,
+            // and until now both printed the same sentence — so a coarse
+            // interface model and a tangled call graph were indistinguishable
+            // at `critical`. Four false cycles in one adopt pass, zero real.
+            let via = if cycle.via_interfaces.is_empty() {
+                String::new()
+            } else {
+                format!(" via {}", cycle.via_interfaces.join(", "))
+            };
+            // THE DISCRIMINATOR IS THE INTERFACE COUNT, not merely whether
+            // contracts were involved. A genuine service-boundary cycle also
+            // runs entirely through contracts — but through TWO of them, one
+            // per direction (A provides i1 that B consumes, B provides i2 that
+            // A consumes). Every one of BL-141's four false cycles ran through
+            // exactly ONE Interface that both parts provided *and* consumed,
+            // because that node was standing for two contracts at once —
+            // `ifc:midi-file` meaning both "MIDI we read" and "MIDI we emit".
+            // So the single-interface loop is the case worth naming.
+            let basis = match (
+                cycle.contracts_only,
+                cycle.via_interfaces.len(),
+                cycle.via_interfaces.first(),
+            ) {
+                (true, 1, Some(iface)) => format!(
+                    " — every hop runs through the SAME contract, '{iface}', and no DEPENDS_ON \
+                     edge is involved. One Interface standing for two contracts (what is read vs \
+                     what is written) produces this shape without any code depending on anything \
+                     — check the model before changing code"
+                ),
+                // Two contracts, one per direction, is the shape of a genuine
+                // service cycle — AND of BL-141's real case, which is why the
+                // medium has to be said out loud. Their loop ran through
+                // `ifc:midi-file` and `ifc:wav-audio`, both `data`: a renderer
+                // reading MIDI and writing WAV against a transcriber doing the
+                // reverse. Two programs sharing two file formats depend on each
+                // other at no point in time. Structurally indistinguishable
+                // from a REST cycle; only `medium` separates them.
+                (true, _, _) if cycle.foundation_media_only => format!(
+                    " — every hop is a contract{via}, and EVERY ONE is a library/data medium — \
+                     something read or linked against, not called across at run time. Two parts \
+                     that read and write the same formats form this loop without depending on \
+                     each other at run time. No DEPENDS_ON edge is involved"
+                ),
+                (true, _, _) => {
+                    format!(" — every hop is a contract{via}; no DEPENDS_ON edge is involved")
+                }
+                (false, 0, _) => " — every hop is a direct DEPENDS_ON edge".to_string(),
+                (false, _, _) => {
+                    format!(" — mixed: direct DEPENDS_ON edges and contracts{via}")
+                }
             };
             issues.push(HealIssue {
                 id: issue_id(HealCategory::CircularDependency, &affected),
                 category: HealCategory::CircularDependency,
                 severity: HealSeverity::Critical,
-                message: format!("circular dependency: {path}"),
+                message: format!("circular dependency: {path}{basis}"),
                 suggested_fix_type: "break_cycle",
                 affected_ids: affected,
             });

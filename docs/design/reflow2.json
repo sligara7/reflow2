@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:db849e3caaf151d970450d091af2912d7b3a578d067df1546f8c380fd1eb0df1",
+  "content_hash": "sha256:c5b27fdd52f34bc16be17f8e8a4e5de79d70b001c6d7e2b2fded3ddaf68f7dc4",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -176,6 +176,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:cycle-names-its-basis",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:heal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4003,6 +4011,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-43ae772560f9ccca",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-45cbb7f75b11086a",
       "properties": {
         "accepted_baseline": true,
@@ -4243,6 +4260,15 @@
         "action": "modified"
       },
       "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-b6c2d52afc751a6e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:structure"
     },
     {
       "edge_type": "CHANGED",
@@ -12085,6 +12111,12 @@
       "from_id": "cap:coverage",
       "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cycle-names-its-basis",
+      "properties": {},
+      "to_id": "dec:report-dont-judge"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -26454,6 +26486,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:cycles-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:cycle-names-its-basis"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:degraded",
       "properties": {
         "completeness": "complete"
@@ -27566,6 +27606,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:cycle-names-its-basis",
+      "properties": {},
+      "to_id": "req:schema-prose-is-checked"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:decision-point",
       "properties": {},
       "to_id": "req:decision-status-not-asserted"
@@ -28454,6 +28500,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:cycle-basis",
+      "properties": {},
+      "to_id": "cap:cycle-names-its-basis"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:degraded-follows-transport",
       "properties": {},
       "to_id": "cap:degraded-surface"
@@ -29107,6 +29159,14 @@
         "action": "created"
       },
       "to_id": "art:coverage-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:cycles-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:cycles-test"
     },
     {
       "edge_type": "YIELDED",
@@ -29901,6 +29961,17 @@
       }
     },
     {
+      "node_id": "art:cycles-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:42b78d15c72ce613",
+        "location": "crates/reflow2-core/tests/cycles.rs",
+        "name": "Circular-dependency suite — detection, selectivity, and what the finding says it walked",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:degraded",
       "node_type": "Artifact",
       "properties": {
@@ -30102,7 +30173,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:30d3e7a27a3b198c46498bf1befd6511166bf8649c8837e6d78ac36cbb5d0852",
+        "checksum": "sha256:a72ee9d0af723c8c9d345849969bc4af4d7d62e8210df0c336e89d6b20192ba2",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -30575,7 +30646,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b607fd9ed9f69810",
+        "checksum": "sha256:76f2dec276b09685",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
         "status": "realized"
@@ -31073,6 +31144,19 @@
         "name": "Say what the design has never heard of",
         "provenance": "authored",
         "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:cycle-names-its-basis",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BL-141(a). Every circular_dependency finding now states its basis: the Interfaces any hop was collapsed out of, whether ANY hop is backed by a real DEPENDS_ON edge, and whether every Interface involved is a library/data medium — something read or linked against rather than called across at run time. dependency_pairs collapses `c CONSUMES i` + `p PROVIDES i` into a direct pair, which is correct for detection and discards the one datum a reader needs to tell a coarse interface model from a tangled call graph; the medium is now kept beside the pair instead of thrown away. A REPORT, never a verdict (dec:report-dont-judge): reflow2 cannot know whether one Interface node is standing for two contracts, so it names what it walked and leaves the judgement to the reader — the BL-114 fix shape applied to this detector. Detection semantics are UNCHANGED: the same cycles are found, with the same severity. Whether a foundation-medium contract loop should count as a dependency cycle at all is BL-141(b), still open.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A dependency cycle says which edge kinds it walked, and through which contracts",
+        "provenance": "authored",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -32255,6 +32339,15 @@
       }
     },
     {
+      "node_id": "chg:accept-43ae772560f9ccca",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "BL-141(a): the circular_dependency message now names the contracts it walked, whether any hop is a real DEPENDS_ON, and whether every contract is a foundation medium. Detection semantics unchanged — same cycles, same severity."
+      }
+    },
+    {
       "node_id": "chg:accept-45cbb7f75b11086a",
       "node_type": "ChangeEvent",
       "properties": {
@@ -32486,6 +32579,15 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-23",
         "name": "Live-store catch-up: same as art:graph — committed export already carried this checksum (a28d0a4); live store was behind because that session's server was down. Refusal-message fix (dc9bf96, BL-86) restores intended behaviour — no design meaning."
+      }
+    },
+    {
+      "node_id": "chg:accept-b6c2d52afc751a6e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "BL-141(a): dependency_pairs keeps the Interface beside each collapsed pair instead of discarding it, and circular_dependencies returns DependencyCycle carrying that attribution. The pairs and the cycles found are identical."
       }
     },
     {
@@ -37682,6 +37784,16 @@
       }
     },
     {
+      "node_id": "frag:art:cycles-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered Circular-dependency suite — detection, selectivity, and what the finding says it walked"
+      }
+    },
+    {
       "node_id": "frag:art:degraded",
       "node_type": "Fragment",
       "properties": {
@@ -41574,6 +41686,18 @@
       }
     },
     {
+      "node_id": "ver:cycle-basis",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-01",
+        "level": "integration",
+        "method": "test",
+        "name": "A cycle finding names what it walked (crates/reflow2-core/tests/cycles.rs) — 6 new cases of 15. A loop through ONE shared contract names that contract and says no DEPENDS_ON is involved; a genuine TWO-contract service cycle is NOT blamed on the model but still names both; a plain DEPENDS_ON tangle says it is direct and names no contract; a MIXED cycle claims neither pure case, because saying 'no DEPENDS_ON' there would send a reader to check their interface model while real code coupling sits in the loop. PLUS the medium pair, which is the case that matters: a round trip through two library/data contracts reports the medium, and THE SAME SHAPE over REST makes no foundation claim — without that counterweight the medium sentence would print on every contract cycle and mean nothing. MUTATION-CHECKED THREE WAYS: collapse the interface-count discriminator and exactly the two-contract counterweight fails; drop interface attribution entirely (the pre-BL-141 behaviour) and exactly the three tests naming the new behaviour fail while the direct-DEPENDS_ON case stays green; force the foundation-medium claim always-true and exactly the REST counterweight fails. THE DESIGN WAS CORRECTED BY MEASUREMENT, not reasoning: the first discriminator keyed on the INTERFACE COUNT (one shared contract = coarse model), and reproducing the reporter's own cycle on their real design showed it misses their actual case — their loop runs through TWO interfaces and is structurally identical to a genuine service cycle. Only the `medium` separates them. Verified end to end by reconstructing their pre-workaround model from a read-only snapshot of their live graph: the exact loop they reported, `cmp:fundamental-detection → cmp:midi-renderer → cmp:fundamental-detection`, now names both contracts and the medium.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:degraded-follows-transport",
       "node_type": "Verification",
       "properties": {
@@ -42436,7 +42560,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6c42d044195ba08d459a6dc77a47d1812dfb027f2317c7a06acf32072418539e",
+  "prev_content_hash": "sha256:db849e3caaf151d970450d091af2912d7b3a578d067df1546f8c380fd1eb0df1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
