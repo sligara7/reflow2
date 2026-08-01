@@ -48,6 +48,7 @@ Add yourself if you're new here.
 
 ## In progress
 
+- BL-138..BL-148 (music_graph adopt feedback triage) + BL-141/F5 phantom cycles — @ajs — since 2026-08-01 — docs/backlog.md, crates/reflow2-core/src/{structure,heal}.rs
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
 
