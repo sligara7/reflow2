@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:eaa2fad44dbb98b195cc52ea6ed621c65ce5ce10ab6a43b3951fabd8eabda4fd",
+  "content_hash": "sha256:2872df28cce3dfc7544e898fddcaaf74ede59955107e0d63f6dcd77ad48f1b32",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5589,6 +5589,42 @@
         "action": "modified"
       },
       "to_id": "cap:changelog-view"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:checksum-canonical-both-sides",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:checksum-canonical-both-sides",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:checksum-dialect-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:checksum-canonical-both-sides",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:checksum-canonical-both-sides",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ver:checksum-dialect"
     },
     {
       "edge_type": "CHANGED",
@@ -24891,6 +24927,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:checksum-dialect-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:checksum-dialect"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:claims",
       "properties": {
         "completeness": "complete"
@@ -26901,6 +26945,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:checksum-dialect",
+      "properties": {},
+      "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:claim-liveness",
       "properties": {},
       "to_id": "cap:claim-liveness"
@@ -27510,6 +27560,14 @@
         "action": "created"
       },
       "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:checksum-dialect-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:checksum-dialect-test"
     },
     {
       "edge_type": "YIELDED",
@@ -28139,7 +28197,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9cace9045ec19152",
+        "checksum": "sha256:87a82a5077fcb14d",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
         "status": "realized"
@@ -28186,6 +28244,17 @@
         "checksum": "sha256:99d7a0d0af8db7a3",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:checksum-dialect-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:cc41bd84103db7e9",
+        "location": "crates/reflow2-core/tests/checksum_dialect.rs",
+        "name": "checksum_dialect.rs",
         "status": "realized"
       }
     },
@@ -28380,7 +28449,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:930d0dd59af1bb7b",
+        "checksum": "sha256:86f8fd9fca8883fe",
         "location": "crates/reflow2-core/src/drift.rs",
         "name": "drift.rs",
         "status": "realized"
@@ -31225,6 +31294,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "The changelog view is raised from expected to required for v0.20.0 — Anthony's call 2026-07-31"
+      }
+    },
+    {
+      "node_id": "chg:checksum-canonical-both-sides",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "BL-125: canonicalise the checksum on BOTH sides of the drift comparison, not only on the way in. The 2026-07-25 write-side fix left drift.rs comparing literally, so the identical false red came back through the read door and a bare hash registered and observed reported drift on every artifact of an untouched tree. Measured at the real MCP surface before and after: unchanged 0 with a checksum_change and propagation_seeds seeded from a file nobody touched, then unchanged 1 with no findings and no seeds."
       }
     },
     {
@@ -35780,6 +35857,16 @@
       }
     },
     {
+      "node_id": "frag:art:checksum-dialect-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered checksum_dialect.rs"
+      }
+    },
+    {
       "node_id": "frag:art:collaborating",
       "node_type": "Fragment",
       "properties": {
@@ -39561,6 +39648,18 @@
       }
     },
     {
+      "node_id": "ver:checksum-dialect",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-01",
+        "level": "integration",
+        "method": "test",
+        "name": "A digest is a digest whichever dialect it arrives in (crates/reflow2-core/tests/checksum_dialect.rs) — 5 cases. A bare hex digest matches its own `sha256:`-prefixed baseline and vice versa, so a caller who computes hashes one way and registers them another is not told an untouched tree has drifted; the drift event id is identical whichever dialect was observed, so one divergence is one event; and BOTH counterweights are pinned — a genuinely different digest still reports `checksum_change` with its `realizes` edges intact, and a non-hex fingerprint is left verbatim rather than normalised into agreement. WRITTEN BEFORE THE FIX: the three bug cases failed and the two counterweights passed, which is the mutation check — a fix that made every comparison equal would have passed the first three and destroyed the detector.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:claim-liveness",
       "node_type": "Verification",
       "properties": {
@@ -40517,7 +40616,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:82f3361746c6e023838610c50ae59307ff106a11e7f058064f344d5e2e6f3e47",
+  "prev_content_hash": "sha256:eaa2fad44dbb98b195cc52ea6ed621c65ce5ce10ab6a43b3951fabd8eabda4fd",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -40610,7 +40709,7 @@
       "Verification"
     ],
     "node_types": 28,
-    "reflow2_version": "0.18.0",
+    "reflow2_version": "0.19.0",
     "schema_version": 1
   }
 }
