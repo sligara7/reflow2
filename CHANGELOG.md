@@ -31,6 +31,26 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **A dependency cycle that runs only through file and library contracts is now a `Warning`, not a
+  `Critical`** (BL-141(b), `dec:foundation-cycle-is-a-warning`). `Critical` means *must fix*, and a
+  loop that exists only because two parts read and write the same file formats has nothing to fix:
+  a renderer that reads MIDI and writes WAV, against a transcriber doing the reverse, has no runtime
+  dependency in either direction. Four such loops were reported `critical` in one adopt pass and
+  none was real.
+
+  **Downgraded, not silenced** — the finding keeps its place, its affected set, its suggested fix
+  and its explanation, and loses only the claim that it is an emergency. Suppressing the case
+  outright was considered and rejected: shared-data coupling is sometimes genuine, since two
+  services over one table are truly entangled when a schema change in one breaks the other.
+
+  Two guards keep it honest. **One real `DEPENDS_ON` edge anywhere in the loop keeps the whole cycle
+  `Critical`**, because a genuine dependency does not stop being one by sharing a loop with a data
+  contract. And `Interface.medium` defaults to `unspecified`, which is *not* a foundation medium —
+  so **silence about the medium keeps the louder answer**, and a design that never classified its
+  boundaries is not quietly excused.
+
 ## [0.21.0] — 2026-08-01
 
 **The release that made the QUALITY of evidence a fact the graph holds.** Until now reflow2

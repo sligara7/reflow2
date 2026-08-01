@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e1e3ee813aa46c0134b0f40d72cdc3ef2dbb84a616e77cac266da7833c812dc7",
+  "content_hash": "sha256:cbe3768cf4c38591f107b6a511de93e5383d8db85fea417f3a43c99323bd0e91",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -3405,6 +3405,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:foundation-cycle-is-a-warning",
+      "properties": {
+        "acted_at": "2026-08-01",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:github-mcp-tandem",
       "properties": {
         "role": "author"
@@ -4341,6 +4350,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-7602b38b560e21a5",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-7627dd26fa9a16c3",
       "properties": {
         "accepted_baseline": true,
@@ -4581,6 +4599,15 @@
         "action": "modified"
       },
       "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d98d4bdc9939d8fb",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:cycles-test"
     },
     {
       "edge_type": "CHANGED",
@@ -12350,6 +12377,12 @@
       "from_id": "cap:coverage",
       "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cycle-names-its-basis",
+      "properties": {},
+      "to_id": "dec:foundation-cycle-is-a-warning"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -31412,7 +31445,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:42b78d15c72ce613",
+        "checksum": "sha256:adfea07b2891743b",
         "location": "crates/reflow2-core/tests/cycles.rs",
         "name": "Circular-dependency suite — detection, selectivity, and what the finding says it walked",
         "status": "realized"
@@ -31620,7 +31653,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a72ee9d0af723c8c9d345849969bc4af4d7d62e8210df0c336e89d6b20192ba2",
+        "checksum": "sha256:c242c1f229cf396710e496f6cae8cfc8b153788d3fc0cda363d15bac166585a8",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -33930,6 +33963,15 @@
       }
     },
     {
+      "node_id": "chg:accept-7602b38b560e21a5",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "BL-141(b): a cycle running only through library/data contracts, with no real DEPENDS_ON hop, drops from Critical to Warning. Downgraded, never silenced — the finding keeps its place, affected set, suggested fix and explanation."
+      }
+    },
+    {
       "node_id": "chg:accept-7627dd26fa9a16c3",
       "node_type": "ChangeEvent",
       "properties": {
@@ -34159,6 +34201,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-30",
         "name": "One term added to NON_TOOL_TERMS: `seat` is a FIELD on claim_region, not a tool, and the lint's own failure message prescribed adding it in the same diff. No design meaning — the lint's contract is unchanged."
+      }
+    },
+    {
+      "node_id": "chg:accept-d98d4bdc9939d8fb",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "BL-141(b): four new cases of 19 — the file-format round trip is a Warning, the same shape over REST stays Critical, one real DEPENDS_ON edge keeps it Critical, and an unspecified medium never earns the downgrade."
       }
     },
     {
@@ -36452,6 +36503,16 @@
         "decision": "\"The design as it stood at decision D\" resolves by a three-step address: the Decision is pinned AT_EPOCH to a DesignEpoch, that epoch's existing `checksum` property carries the content_hash of the export cut there, and the document itself lives where it already lives — a git-committed reflow2.json. reflow2 supplies the coordinate; git supplies the bytes. No new node type, no mutable pointers, no reflow2-native DAG. Re-taking a road home is then the three-way merge already built (dec:merge-three-way), with the fork point as the base — which is precisely the merge-base reflow2 currently borrows from git, now derivable from its own epoch chain.",
         "name": "A fork point is a coordinate (decision → epoch → export hash), not a stored copy or a native ref layer",
         "rationale": "User decided 2026-07-24, choosing the coordinate over a native ref/branch layer. THE REJECTED ALTERNATIVE: branch names as graph nodes — mutable pointers to epochs, a real DAG, so reflow2 finds its own merge-base without git. Rejected on two grounds. (1) It duplicates machinery git already provides, and dec:repo-file-embedded already put the design in the repo as a file precisely so the repo's tooling carries the file-shaped concerns; dec:merge-three-way already chose explicit inputs over git's DAG for the same reason. (2) A mutable pointer is a foreign object in this graph: the whole doctrine of axis Z is that history is never overwritten (req:intent-preserved, req:roads-not-taken), and a ref that moves is by construction a thing whose past value is lost unless separately recorded — reintroducing the erosion the epoch chain exists to prevent. The coordinate has the further virtue of costing nothing: DesignEpoch.checksum already existed in the schema, described as \"a hash over the anchored spec set at this epoch\", which is exactly this use. Honest limit: only exports from v0.9.0 on carry an embedded content_hash (dec:export-hash-chain shipped then), so epochs before it are addressed by git tag alone and claim no checksum rather than inventing one.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:foundation-cycle-is-a-warning",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "circular_dependency drops from Critical to Warning when BOTH hold: no hop of the loop is a real DEPENDS_ON edge, and every Interface it runs through carries a foundation medium (`library` or `data`). Any real DEPENDS_ON edge anywhere in the loop keeps the whole cycle Critical, and an `unspecified` medium never earns the downgrade.",
+        "name": "A dependency cycle running only through file and library contracts is a Warning, not a Critical",
+        "rationale": "Anthony's call, 2026-08-01, from three options. `Critical` means MUST FIX, and a loop that exists only because two parts read and write the same file formats has nothing to fix — a renderer that reads MIDI and writes WAV against a transcriber doing the reverse has no runtime dependency in either direction, and either runs on a machine where the other does not exist. Four such loops were reported `critical` in a single adopt pass over an ~11k-LOC repo and NONE was real, on the detector the adopt skill sells as the payoff of a brownfield pass.\n\nDOWNGRADED, NOT SILENCED, and that distinction was the decision. Option (c), suppressing the case entirely, was rejected because shared-data coupling is sometimes genuine — two services over one table can be truly entangled, since a schema change in one breaks the other — so the finding keeps its place, its affected set, its suggested fix and its explanation, and loses only the claim that it is an emergency. Option (a), leaving Critical and relying on the improved message from BL-141(a), was rejected because a severity is a claim about what the reader should DO: prose cannot repair a wrong word, and a severity cannot be filtered on if it is wrong four times out of four.\n\nTWO GUARDS MAKE THIS SAFE RATHER THAN QUIET. `contracts_only` is the load-bearing one — a single genuine DEPENDS_ON edge in the loop is a real dependency and does not stop being one by sharing a loop with a data contract. And `Interface.medium` defaults to `unspecified`, which is NOT a foundation medium, so silence about the medium keeps the louder answer; a design that never classified its boundaries is not quietly excused. Both are pinned by their own cases and both mutations are caught: dropping the contracts_only guard fails exactly the mixed-cycle test, and downgrading every cycle fails FOUR tests including the pre-existing one that has asserted Critical since the detector was written.\n\nTHE PRECEDENT WAS NOT LEANED ON. `is_foundation_medium` already exempts library/data from single_point_of_failure, but on grounds that do not transfer — 'you cannot run a second copy of it, so add_redundancy is incoherent' is an argument about whether a FIX is possible, not about whether a DEPENDENCY exists. This decision stands on its own reasoning.\n\nVERIFIED ON THE ORIGINATING PROJECT'S REAL DATA: their reported loop, cmp:fundamental-detection → cmp:midi-renderer → cmp:fundamental-detection through ifc:midi-file and ifc:wav-audio (both `data`), now reports WARNING with its explanation intact.",
         "status": "accepted"
       }
     },
@@ -44215,7 +44276,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a4999d9722a5bdbd185df9631f73ee92629167a70978a3c3223ea3729cb45fec",
+  "prev_content_hash": "sha256:e1e3ee813aa46c0134b0f40d72cdc3ef2dbb84a616e77cac266da7833c812dc7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
