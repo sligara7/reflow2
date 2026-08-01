@@ -259,3 +259,201 @@ impl DesignGraph {
         })
     }
 }
+
+/// What happened to one candidate in a derived release manifest.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ManifestDisposition {
+    /// Not in the release's `INCLUDES` yet — this call adds it when applying,
+    /// and reports it as what *would* be added when not.
+    Added,
+    /// Already in the manifest. Left exactly as it was: a frozen `as_checksum`
+    /// records what shipped, and re-deriving must never rewrite it.
+    AlreadyPresent,
+    /// Named in `exclude` by the caller.
+    Excluded,
+}
+
+/// One line of a derived manifest.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct ManifestEntry {
+    pub target_type: String,
+    pub target_id: String,
+    /// For an artifact being added: the checksum frozen at this moment. For an
+    /// entry already present: what the existing edge froze, untouched.
+    pub as_checksum: Option<String>,
+    pub disposition: ManifestDisposition,
+}
+
+/// The manifest a release ships, derived from the design instead of typed out.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct DerivedManifest {
+    pub release_id: String,
+    pub entries: Vec<ManifestEntry>,
+    pub added: usize,
+    pub already_present: usize,
+    pub excluded: usize,
+    /// Artifacts entering the manifest with no recorded checksum. Their entry
+    /// cannot say *what* shipped, so it is reported rather than left to be
+    /// discovered when someone asks what a past release contained.
+    pub without_checksum: Vec<String>,
+    /// False when nothing was written — the derivation was only looked at.
+    pub applied: bool,
+}
+
+impl DesignGraph {
+    /// Derive a release's `INCLUDES` manifest from the design: every Artifact
+    /// and every Component, with each artifact's current checksum frozen.
+    ///
+    /// The manifest was always derivable and was always typed out by hand. The
+    /// cost of that is measured (BL-153): `release_includes` is 1008 calls
+    /// across 7 sessions of recorded reflow2 usage, 988 of them consecutive —
+    /// the single largest line item on the whole surface, and about 144 calls
+    /// per release cut. The rule it implements is the one AGENTS.md already
+    /// states: a release "must list every component that goes out, not a
+    /// hand-maintained roll-call".
+    ///
+    /// **Nothing is written unless `apply`** — the same bar `reconcile_artifacts`
+    /// holds, because a call that packages a release is exactly the one you want
+    /// to read before you run it.
+    ///
+    /// This is a derivation, not an accept. `dec:two-sided-accept` and
+    /// `dec:ask-not-repair` bound bulk *dispositions* — a batch of acceptances
+    /// under one reason is how a design erodes — and no disposition is being
+    /// taken here: the graph is asked what the project contains and answers.
+    /// The judgement a human still owns is which release ships it, and that is
+    /// the argument the caller supplies.
+    ///
+    /// An `exclude` id that names nothing in the design is **refused**, not
+    /// quietly ignored: a caller who believes they excluded something they did
+    /// not would ship it and never be told.
+    pub fn release_includes_all(
+        &mut self,
+        release_id: &str,
+        exclude: &[String],
+        apply: bool,
+    ) -> Result<DerivedManifest, DynoError> {
+        if self.get_node(node::RELEASE, release_id)?.is_none() {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::RELEASE.to_string(),
+                node_id: release_id.to_string(),
+            });
+        }
+
+        let candidates: Vec<StoredNode> = self
+            .scan_nodes(node::ARTIFACT)?
+            .into_iter()
+            .chain(self.scan_nodes(node::COMPONENT)?)
+            .collect();
+
+        // Refuse an exclusion that matches nothing before writing anything.
+        let known: std::collections::BTreeSet<&str> =
+            candidates.iter().map(|n| n.node_id.as_str()).collect();
+        for id in exclude {
+            if !known.contains(id.as_str()) {
+                return Err(DynoError::NodeNotFound {
+                    node_type: format!("{} or {}", node::ARTIFACT, node::COMPONENT),
+                    node_id: id.clone(),
+                });
+            }
+        }
+        let excluded: std::collections::BTreeSet<&str> =
+            exclude.iter().map(String::as_str).collect();
+
+        // What the release already ships, and what each entry froze.
+        let existing: std::collections::BTreeMap<String, Option<String>> = self
+            .outgoing(release_id, Some(edge::INCLUDES))?
+            .into_iter()
+            .map(|e| {
+                let frozen = e
+                    .properties
+                    .get("as_checksum")
+                    .and_then(dynograph_core::Value::as_str)
+                    .map(str::to_string);
+                (e.to_id, frozen)
+            })
+            .collect();
+
+        let mut entries = Vec::new();
+        let mut without_checksum = Vec::new();
+        let mut to_write = Vec::new();
+
+        for n in &candidates {
+            let is_artifact = n.node_type == node::ARTIFACT;
+            let target_type = if is_artifact {
+                node::ARTIFACT
+            } else {
+                node::COMPONENT
+            };
+
+            if excluded.contains(n.node_id.as_str()) {
+                entries.push(ManifestEntry {
+                    target_type: target_type.to_string(),
+                    target_id: n.node_id.clone(),
+                    as_checksum: None,
+                    disposition: ManifestDisposition::Excluded,
+                });
+                continue;
+            }
+
+            if let Some(frozen) = existing.get(&n.node_id) {
+                entries.push(ManifestEntry {
+                    target_type: target_type.to_string(),
+                    target_id: n.node_id.clone(),
+                    as_checksum: frozen.clone(),
+                    disposition: ManifestDisposition::AlreadyPresent,
+                });
+                continue;
+            }
+
+            let checksum = if is_artifact {
+                n.properties
+                    .get("checksum")
+                    .and_then(dynograph_core::Value::as_str)
+                    .map(str::to_string)
+            } else {
+                None
+            };
+            if is_artifact && checksum.is_none() {
+                without_checksum.push(n.node_id.clone());
+            }
+
+            entries.push(ManifestEntry {
+                target_type: target_type.to_string(),
+                target_id: n.node_id.clone(),
+                as_checksum: checksum.clone(),
+                disposition: ManifestDisposition::Added,
+            });
+            to_write.push((target_type, n.node_id.clone(), checksum));
+        }
+
+        entries.sort_by(|a, b| a.target_id.cmp(&b.target_id));
+        without_checksum.sort();
+
+        if apply {
+            for (target_type, target_id, checksum) in &to_write {
+                self.release_includes(release_id, target_type, target_id, checksum.as_deref())?;
+            }
+        }
+
+        let added = to_write.len();
+        let already_present = entries
+            .iter()
+            .filter(|e| e.disposition == ManifestDisposition::AlreadyPresent)
+            .count();
+        let excluded_count = entries
+            .iter()
+            .filter(|e| e.disposition == ManifestDisposition::Excluded)
+            .count();
+
+        Ok(DerivedManifest {
+            release_id: release_id.to_string(),
+            entries,
+            added,
+            already_present,
+            excluded: excluded_count,
+            without_checksum,
+            applied: apply,
+        })
+    }
+}

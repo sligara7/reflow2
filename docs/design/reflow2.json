@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:193085ad37b22ffb73b7f26e32e6cd40ad1a12d3abf72d7daa4614dd3cd286f1",
+  "content_hash": "sha256:6c5c7b74686b5e09a6c916651d2e04a71ad96fa0ecc731da9365fd4587d6e961",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -216,6 +216,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:derived-release-manifest",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:operate"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4359,6 +4367,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-6269ffe550e65842",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-635435417e73d6d7",
       "properties": {
         "accepted_baseline": true,
@@ -6723,6 +6740,33 @@
         "action": "added"
       },
       "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:derived-release-manifest",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:derived-release-manifest",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:derived-release-manifest",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:derived-release-manifest"
     },
     {
       "edge_type": "CHANGED",
@@ -12608,6 +12652,12 @@
       "from_id": "cap:derived-completion",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:derived-release-manifest",
+      "properties": {},
+      "to_id": "dec:manifest-derived-is-not-manifest-accepted"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -28415,6 +28465,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:derived-release-manifest"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:operate",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cmp:operate"
     },
     {
@@ -29154,6 +29212,12 @@
       "from_id": "cap:derived-completion",
       "properties": {},
       "to_id": "req:completion-computed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:derived-release-manifest",
+      "properties": {},
+      "to_id": "req:a-project-records-how-it-ships"
     },
     {
       "edge_type": "SATISFIES",
@@ -30036,6 +30100,12 @@
       "from_id": "ver:derived-completion",
       "properties": {},
       "to_id": "cap:derived-completion"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:derived-release-manifest",
+      "properties": {},
+      "to_id": "cap:derived-release-manifest"
     },
     {
       "edge_type": "VERIFIES",
@@ -31545,6 +31615,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
+        "checksum": "sha256:6d274cf0f687fd7b3031761e30c174abfd473599c0fd64299fdb88cb71517c0f",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -31896,7 +31967,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:feca736d9d86d965",
+        "checksum": "sha256:b03333680dc6e660",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
         "status": "realized"
@@ -32083,7 +32154,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:494070581c6d28db",
+        "checksum": "sha256:8680e320e1f8f672",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -32754,6 +32825,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Compute what is delivered, and expose the requirement lifecycle that is currently unused",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:derived-release-manifest",
+      "node_type": "Capability",
+      "properties": {
+        "description": "One call packages a release: every Artifact and every Component the design holds becomes an INCLUDES edge, with each artifact's current checksum frozen as shipped. It is the bulk form of release_includes, which was the single largest line item in reflow2's entire recorded usage (BL-153: 1008 calls across 7 sessions, 988 of them consecutive, ~144 per release cut) — all of it typing out something the graph already knew, and the rule AGENTS.md already states: a release \"must list every component that goes out, not a hand-maintained roll-call\". Nothing is written unless applied, re-running never rewrites a frozen checksum, an exclusion that names nothing is refused, and the artifacts whose entry cannot say WHAT shipped are reported by name. Measured on reflow2's own design: 160 edges in one call.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A release's manifest is derived from the design, not typed out",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -33999,6 +34083,15 @@
       }
     },
     {
+      "node_id": "chg:accept-6269ffe550e65842",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-01",
+        "name": "FIRST baseline, not an accepted change. art:detect was registered with no checksum, so the most central file in the design — realizing cap:detect, cap:kpp, cap:aggregate-gap-keying, cap:release-pinned-to-time and cmp:detect — could never report drift, and reconcile_artifacts reported it as `no_baseline` rather than clean. Found twice on 2026-08-01 by two independent routes the same hour: an exhaustive reconcile sweep (106 of 107 unchanged, this one uncheckable) and the new derived release manifest, which named it as the sole entry in without_checksum. The file content is unchanged by this session; only the baseline is being established. `design_holds` is the honest available answer and it is an imperfect fit — the disposition vocabulary assumes there WAS a baseline, and establishing a first one is a different act from accepting a move. Filed as friction rather than worked around silently."
+      }
+    },
+    {
       "node_id": "chg:accept-635435417e73d6d7",
       "node_type": "ChangeEvent",
       "properties": {
@@ -34833,6 +34926,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "A design can declare which version of another design it depends on, and reflow2 checks that claim against what the build actually resolves"
+      }
+    },
+    {
+      "node_id": "chg:derived-release-manifest",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-153: the release manifest becomes derivable, and the two files that carry it move with it"
       }
     },
     {
@@ -36776,6 +36877,16 @@
         "name": "Loop debt is computed from graph state, never from run history",
         "rationale": "From the StoryFlow fleet trial (BL-74): under operational load the agent kept bookkeeping via raw tools while the loop skills silently stopped — 'a design-discipline tool that depends on being remembered will lose to operational urgency every time; fire on a trigger, not on virtue.' Run-history ('no detect_gaps since Tuesday') is not honestly computable here: the core takes no clock, and looking-is-not-writing is doctrine — recording reads so observation could be tracked would make looking mutate the record. Outstanding debt is the state-based equivalent and the actionable truth regardless of who ran what when. The hint rides the tool result the agent already reads (zero extra round-trip to see it), and loop_status is the cheap computation a client hook can fire on its own events — rung a of the BL-74 ladder builds on exactly this call. Decided 2026-07-21.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:manifest-derived-is-not-manifest-accepted",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "release_includes_all derives a release's whole manifest from the design and writes it in one call, with `apply` defaulting to false so the derivation is reported before anything is written. Entries already in the manifest are reported as already_present and their frozen as_checksum is never recomputed.",
+        "name": "A bulk derivation is not a bulk accept, and it writes nothing until asked",
+        "rationale": "BL-153 flagged the counterweight to state before building: dec:two-sided-accept and dec:ask-not-repair mean a bulk form must not become a silent one, and \"a batch of 144 acknowledgements with one reason is exactly the erosion those decisions exist to prevent\". Those decisions bound bulk DISPOSITIONS — a judgement taken about each item. No disposition is taken here: the graph is asked what the project contains and answers, and the one judgement a human still owns (which release ships it) is the argument the caller supplies. So the family does not apply, and a per-item disposition would be ceremony over a derivation. What DOES apply is the no-silent-write bar: hence apply defaults to false, matching reconcile_artifacts' record_events, because a call that packages a release is the one you most want to read before you run it. The frozen-checksum guard is the harder half — a derivation that recomputed every entry would rewrite the manifest of a shipped release each time the live drift baseline moved, silently and in bulk, which is the axis-Z sin the frozen copy exists to prevent.",
+        "status": "proposed"
       }
     },
     {
@@ -43531,6 +43642,18 @@
       }
     },
     {
+      "node_id": "ver:derived-release-manifest",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-01",
+        "level": "integration",
+        "method": "test",
+        "name": "The manifest is derived and the derivation never rewrites history (crates/reflow2-core/tests/write_side.rs) — 8 cases. Every Artifact and Component enters the manifest with its checksum frozen; looking writes nothing (the release_report is still empty after a non-applying call); a re-run adds nothing and, after the live baseline has MOVED, still reports what shipped; an artifact with no checksum still ships and is named in without_checksum; an exclusion that names nothing is refused with the whole call written back out; an exclusion that names something comes back by name rather than by omission; an unknown release is refused; and the end-to-end payoff — one call clears the unreleased_component gap that a partial hand-typed manifest leaves open. MUTATION-CHECKED THREE WAYS, each failing exactly the one test that names it and nothing else: force apply always-true and only the looking-is-not-writing case fails; drop the exclude validation and only the typo'd-exclusion case fails; drop the already-present guard and only the frozen-checksum case fails — which is what proves the guard is doing work rather than the test passing for free. PROVEN ON THE REAL SURFACE: driven over stdio JSON-RPC against the built binary on a copy of reflow2's own 1200-node design, one call produced 160 INCLUDES edges covering all 104 capabilities, the re-run added 0, and the typo'd exclusion came back as \"Node not found: Artifact or Component art:nope\". It also independently surfaced art:detect as the one artifact with no baseline — the same hole a full reconcile_artifacts sweep found the same hour by a different route.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:design-dependencies-declared",
       "node_type": "Verification",
       "properties": {
@@ -44362,7 +44485,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ad0c4ad24dae4022327aa470ad98b91181fe7b11062e6bd3e1d30080d0b8ec1a",
+  "prev_content_hash": "sha256:193085ad37b22ffb73b7f26e32e6cd40ad1a12d3abf72d7daa4614dd3cd286f1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

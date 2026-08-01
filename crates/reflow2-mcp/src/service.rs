@@ -925,6 +925,23 @@ pub struct ReleaseIncludesReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ReleaseIncludesAllReq {
+    pub release_id: String,
+    /// Artifact or Component ids this release does NOT ship. An id that names
+    /// nothing in the design is refused rather than ignored — a caller who
+    /// believes they excluded something they did not would ship it and never
+    /// be told.
+    #[serde(default)]
+    pub exclude: Vec<String>,
+    /// Write the manifest. Default false: the derivation is reported and
+    /// nothing is written, so you can read what a release is about to package
+    /// before you package it.
+    #[serde(default)]
+    pub apply: bool,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ReleaseReportReq {
     pub release_id: String,
 }
@@ -3265,6 +3282,31 @@ impl ReflowService {
             )
             .map_err(dyno_err)?,
         ))
+    }
+
+    #[tool(
+        description = "Derive a Release's whole INCLUDES manifest from the design in one call: \
+                       every Artifact and every Component, with each artifact's current checksum \
+                       frozen as shipped. This is the bulk form of release_includes, which was \
+                       the single largest line item in reflow2's recorded usage — about 144 \
+                       consecutive calls per release cut, all typing out something the graph \
+                       already knew. Nothing is written unless apply is true, so read the \
+                       manifest before you package it. Re-running is safe: an entry already in \
+                       the manifest is reported as already_present and its frozen checksum is \
+                       never rewritten, because what a past release shipped must not move with \
+                       the live drift baseline. without_checksum names the artifacts whose entry \
+                       cannot say WHAT shipped.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn release_includes_all(
+        &self,
+        Parameters(req): Parameters<ReleaseIncludesAllReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(
+            g.release_includes_all(&req.release_id, &req.exclude, req.apply)
+                .map_err(dyno_err)?,
+        )
     }
 
     #[tool(

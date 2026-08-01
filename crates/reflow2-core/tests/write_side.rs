@@ -842,6 +842,191 @@ fn a_release_that_includes_a_subsystem_ships_its_contained_parts() {
     );
 }
 
+// ---- BL-153 · the manifest is derived, not typed out -----------------------
+
+/// `built_thread` plus a second artifact carrying NO checksum and a docs
+/// component — the two shapes a derived manifest has to be honest about.
+fn thread_with_a_docs_component_and_an_unhashed_artifact() -> DesignGraph {
+    let mut g = built_thread();
+    g.add_component("cmp:docs", "Documentation", "the manual", None)
+        .unwrap();
+    g.add_artifact("art:manual", "manual.md", Some("document"), None)
+        .unwrap();
+    g
+}
+
+#[test]
+fn the_manifest_is_derived_from_the_design_rather_than_typed_out() {
+    let mut g = thread_with_a_docs_component_and_an_unhashed_artifact();
+    g.add_release("rel:v1", "v1.0", Some("1.0.0"), None)
+        .unwrap();
+
+    let m = g.release_includes_all("rel:v1", &[], true).unwrap();
+
+    assert_eq!(m.added, 4, "two artifacts and two components");
+    assert_eq!(m.already_present, 0);
+    assert!(m.applied);
+
+    let rep = g.release_report("rel:v1").unwrap();
+    assert_eq!(
+        rep.artifacts,
+        [
+            ("art:manual".to_string(), None),
+            ("art:score".to_string(), Some("sha256:aaa".to_string())),
+        ],
+        "each artifact's current checksum is frozen as it enters the manifest"
+    );
+    assert_eq!(rep.components, ["cmp:docs", "cmp:engine"]);
+}
+
+#[test]
+fn deriving_the_manifest_writes_nothing_until_you_apply() {
+    // The bar `reconcile_artifacts` already holds: looking is not writing. A
+    // call that packages a release is the one you most want to read first.
+    let mut g = thread_with_a_docs_component_and_an_unhashed_artifact();
+    g.add_release("rel:v1", "v1.0", None, None).unwrap();
+
+    let m = g.release_includes_all("rel:v1", &[], false).unwrap();
+    assert_eq!(m.added, 4, "it reports what it WOULD add");
+    assert!(!m.applied);
+
+    let rep = g.release_report("rel:v1").unwrap();
+    assert!(
+        rep.artifacts.is_empty() && rep.components.is_empty(),
+        "nothing was written"
+    );
+}
+
+#[test]
+fn re_deriving_never_rewrites_what_a_release_already_froze() {
+    // THE COUNTERWEIGHT THAT MATTERS. A derivation that recomputed every entry
+    // would rewrite the manifest of a shipped release every time the live
+    // baseline moved — the axis-Z sin the frozen `as_checksum` exists to
+    // prevent, and it would arrive silently and in bulk.
+    let mut g = built_thread();
+    g.add_release("rel:v1", "v1.0", None, None).unwrap();
+    g.release_includes_all("rel:v1", &[], true).unwrap();
+
+    g.set_artifact_checksum(
+        "art:score",
+        "sha256:bbb",
+        reflow2_core::DriftDisposition::DesignHolds {
+            change_type: reflow2_core::temporal::ChangeType::Refactor,
+        },
+        None,
+        None,
+    )
+    .unwrap();
+
+    let m = g.release_includes_all("rel:v1", &[], true).unwrap();
+    assert_eq!(m.added, 0, "idempotent — a second run adds nothing");
+    assert_eq!(m.already_present, 2);
+
+    let rep = g.release_report("rel:v1").unwrap();
+    assert_eq!(
+        rep.artifacts[0].1.as_deref(),
+        Some("sha256:aaa"),
+        "what shipped stays what shipped"
+    );
+}
+
+#[test]
+fn an_artifact_with_no_checksum_still_ships_and_is_named() {
+    // It genuinely shipped, so leaving it out would understate the release.
+    // But its manifest entry cannot say WHAT shipped, and a hole discovered
+    // later — when someone asks what a past release contained — is worse than
+    // one reported at the cut.
+    let mut g = thread_with_a_docs_component_and_an_unhashed_artifact();
+    g.add_release("rel:v1", "v1.0", None, None).unwrap();
+
+    let m = g.release_includes_all("rel:v1", &[], true).unwrap();
+    assert_eq!(m.without_checksum, ["art:manual"]);
+    assert!(
+        g.release_report("rel:v1")
+            .unwrap()
+            .artifacts
+            .iter()
+            .any(|(id, sum)| id == "art:manual" && sum.is_none()),
+        "reported, and still shipped"
+    );
+}
+
+#[test]
+fn an_exclusion_that_names_nothing_is_refused_and_writes_nothing() {
+    // The silent-drop counterweight: a caller who believes they excluded
+    // something they did not would ship it and never be told.
+    let mut g = built_thread();
+    g.add_release("rel:v1", "v1.0", None, None).unwrap();
+
+    let err = g.release_includes_all("rel:v1", &["art:typo".to_string()], true);
+    assert!(err.is_err(), "a typo'd exclusion is refused");
+
+    let rep = g.release_report("rel:v1").unwrap();
+    assert!(
+        rep.artifacts.is_empty() && rep.components.is_empty(),
+        "the whole call is refused before anything is written"
+    );
+}
+
+#[test]
+fn an_exclusion_comes_back_named_rather_than_simply_absent() {
+    let mut g = thread_with_a_docs_component_and_an_unhashed_artifact();
+    g.add_release("rel:v1", "v1.0", None, None).unwrap();
+
+    let m = g
+        .release_includes_all("rel:v1", &["art:manual".to_string()], true)
+        .unwrap();
+    assert_eq!(m.excluded, 1);
+    assert_eq!(m.added, 3);
+    assert!(
+        m.entries.iter().any(|e| e.target_id == "art:manual"
+            && e.disposition == reflow2_core::operate::ManifestDisposition::Excluded),
+        "an exclusion is reported by name, not by omission"
+    );
+    assert!(
+        !g.release_report("rel:v1")
+            .unwrap()
+            .artifacts
+            .iter()
+            .any(|(id, _)| id == "art:manual")
+    );
+}
+
+#[test]
+fn deriving_a_manifest_for_a_release_that_does_not_exist_is_refused() {
+    let mut g = built_thread();
+    assert!(g.release_includes_all("rel:nope", &[], true).is_err());
+}
+
+#[test]
+fn the_derived_manifest_clears_the_unreleased_component_gap() {
+    // The end-to-end payoff: AGENTS.md's rule is that a release "must list
+    // every component that goes out, not a hand-maintained roll-call", and
+    // `unreleased_component` is the detector that enforces it. One call
+    // satisfies it.
+    let mut g = built_thread();
+    g.add_release("rel:v1", "v1.0", None, None).unwrap();
+    g.add_artifact("art:other", "other.bin", Some("binary"), None)
+        .unwrap();
+    g.release_includes("rel:v1", node::ARTIFACT, "art:other", None)
+        .unwrap();
+    assert!(
+        g.detect_gaps()
+            .unwrap()
+            .iter()
+            .any(|x| x.gap_source == GapSource::UnreleasedComponent),
+        "a partial hand-typed manifest leaves the gap open"
+    );
+
+    g.release_includes_all("rel:v1", &[], true).unwrap();
+    assert!(
+        !g.detect_gaps()
+            .unwrap()
+            .iter()
+            .any(|x| x.gap_source == GapSource::UnreleasedComponent)
+    );
+}
+
 #[test]
 fn a_release_cannot_include_a_requirement() {
     let mut g = built_thread();
