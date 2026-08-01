@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a4999d9722a5bdbd185df9631f73ee92629167a70978a3c3223ea3729cb45fec",
+  "content_hash": "sha256:e1e3ee813aa46c0134b0f40d72cdc3ef2dbb84a616e77cac266da7833c812dc7",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -3375,6 +3375,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:export-once-per-pr",
+      "properties": {
+        "acted_at": "2026-08-01",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -36407,6 +36416,16 @@
       }
     },
     {
+      "node_id": "dec:export-once-per-pr",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "A branch may hold as many commits as it likes; exactly ONE of them may write docs/design/reflow2.json, and it should be the last. The COORD claim commit goes first, since it carries no export.",
+        "name": "The design is exported once per PULL REQUEST, not once per commit — squash-merge collapses the chain",
+        "rationale": "Forced by the gate on 2026-08-01, immediately after merging PR #21 — the first PR in this project to carry two EXPORTING commits. AGENTS.md said \"export EXACTLY ONCE per commit\" and that rule was followed exactly; it is still insufficient, because this project merges by SQUASH. N commits become one on main, and only the last export's prev_content_hash survives, so the surviving link points at a branch intermediate main never saw. main's chain now reads cd6e6c8:799b06d9 then 56bc698:prev=da60a633 — a hole.\n\nTHE UNCOMFORTABLE PART: PRs #18 and #19 also carried two commits and were fine, because their first commit was the COORD claim, which touches no export. They complied BY ACCIDENT. The rule has been insufficient for every multi-commit PR this project has merged; it had simply never met one where two commits both exported.\n\nThis is the req:schema-prose-is-checked family in the PROCESS layer — an instruction correct as written and wrong in the workflow it is embedded in, the same shape as BL-114's finding prose and BL-152's skill prose. Four surfaces now: schema, findings, skills, process.\n\nREPAIRED FORWARD, NOT BACKWARD. Re-exporting makes every future link sound; the hole at 56bc698 stays on the record. main is pushed and shared, and rewriting history to hide a break in a history-integrity chain would be its own kind of lie. Also learned in the repair: an unchanged graph re-exports byte-identically and the chain deliberately does NOT advance, so a lineage break cannot be papered over by re-running the export — it takes a real design change to move the chain on, which is the property working as intended.\n\nNOT ENFORCED, and that is the open half (BL-156): the gate catches this AFTER the merge, on main, where it is expensive. `git log --name-only origin/main..HEAD` would catch it on the pull-request trigger while it is still free.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:external-blob-store-pressure",
       "node_type": "Decision",
       "properties": {
@@ -44196,7 +44215,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:da60a633ff586401b86d67ab8e25b11625564c1bcbb624a48b277cc3d3a6acfe",
+  "prev_content_hash": "sha256:a4999d9722a5bdbd185df9631f73ee92629167a70978a3c3223ea3729cb45fec",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
