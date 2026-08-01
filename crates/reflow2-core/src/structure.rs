@@ -16,7 +16,7 @@
 //! *selective* (see [`DesignGraph::is_single_point_of_failure`]) or it fires
 //! everywhere and means nothing.
 
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeSet, HashMap, HashSet};
 
 use dynograph_core::DynoError;
 use dynograph_graph::{
@@ -77,6 +77,57 @@ fn is_operational_member(node_type: &str) -> bool {
 /// fired). All other media (REST and friends) are carried at run time.
 pub(crate) fn is_foundation_medium(medium: &str) -> bool {
     medium == "library" || medium == "data"
+}
+
+/// Dependency pairs plus **how each one was derived** — a direct `DEPENDS_ON`
+/// edge, or collapsed out of a shared contract, or both.
+struct DependencyEdges {
+    /// Every `(u, v)` meaning "u depends on v", deduplicated and sorted.
+    pairs: Vec<(String, String)>,
+    /// Pairs backed by a real `DEPENDS_ON` edge.
+    direct: HashSet<(String, String)>,
+    /// Pairs produced by a shared Interface, and which Interface(s) produced
+    /// them. A pair can appear here *and* in `direct`.
+    contract: HashMap<(String, String), BTreeSet<String>>,
+}
+
+/// One circular dependency, with the evidence for how it was formed (BL-141).
+///
+/// The path alone cannot tell a tangled call graph from a coarse interface
+/// model, and both were reported `critical` in identical words until this
+/// carried the attribution.
+#[derive(Debug, Clone)]
+pub(crate) struct DependencyCycle {
+    /// The loop, rotated to start at its smallest id and closed by `last → first`.
+    pub(crate) path: Vec<String>,
+    /// Interfaces any hop of this loop was collapsed out of, sorted. Empty when
+    /// every hop is a direct `DEPENDS_ON`.
+    pub(crate) via_interfaces: Vec<String>,
+    /// **No hop of this loop is backed by a `DEPENDS_ON` edge** — every one was
+    /// derived from a shared contract. Reported, never judged
+    /// (`dec:report-dont-judge`): it is a fact about what the detector walked,
+    /// and it is the tell that separates the four phantom cycles BL-141 found
+    /// from a real tangle. A reader who sees it knows to check whether one
+    /// Interface node is standing for two contracts before touching any code.
+    pub(crate) contracts_only: bool,
+    /// Every Interface this loop runs through is a **foundation medium** —
+    /// `library` or `data`, something linked against or read rather than called
+    /// across at run time ([`is_foundation_medium`]). Non-empty and true is the
+    /// fact that separates BL-141's real case from a service cycle.
+    ///
+    /// **Measured on the reporting project's own design, not assumed:** their
+    /// `cmp:fundamental-detection ⇄ cmp:midi-renderer` loop runs through
+    /// `ifc:midi-file` and `ifc:wav-audio`, both `medium: data` — a renderer
+    /// that reads MIDI and writes WAV against a transcriber that reads WAV and
+    /// writes MIDI. Two programs sharing two file formats, with no runtime
+    /// dependency in either direction. Structurally that is IDENTICAL to a
+    /// genuine two-contract service cycle; only the medium tells them apart.
+    ///
+    /// Reported, never acted on: whether such a loop should still count as a
+    /// dependency cycle at all is an open design question (BL-141(b)), and
+    /// `is_foundation_medium`'s existing exemption is argued for
+    /// `single_point_of_failure` on grounds that do not transfer unexamined.
+    pub(crate) foundation_media_only: bool,
 }
 
 /// A `dynograph-graph` view of the design network plus the id/type of each dense
@@ -290,15 +341,29 @@ impl DesignGraph {
     /// - a contract: if `c CONSUMES i` and `p PROVIDES i` then `c` depends on
     ///   `p`. The `Interface` is the medium, so it collapses into a direct
     ///   dependency between the two parts rather than appearing as a hop.
-    fn dependency_pairs(&self) -> Result<Vec<(String, String)>, DynoError> {
+    ///
+    /// **The collapse is why a cycle needs attribution** (BL-141). Discarding
+    /// the Interface here is what made every contract-derived cycle read
+    /// identically to a real one: an adopt pass over a research repo produced
+    /// four `critical` cycles and *none* of them were real — each was one
+    /// Interface node standing for two contracts (`ifc:midi-file` meaning both
+    /// "MIDI we read" and "MIDI we emit"), so a reader and a writer of the same
+    /// file format looked like mutual dependency. So the medium is kept beside
+    /// the pair rather than thrown away, and the finding can say which edge
+    /// kinds it actually walked.
+    fn dependency_pairs(&self) -> Result<DependencyEdges, DynoError> {
         let index = self.node_type_index()?;
         let mut ids: Vec<&str> = index.keys().map(String::as_str).collect();
         ids.sort_unstable();
 
         let mut pairs: HashSet<(String, String)> = HashSet::new();
+        let mut direct: HashSet<(String, String)> = HashSet::new();
+        let mut contract: HashMap<(String, String), BTreeSet<String>> = HashMap::new();
+
         for id in &ids {
             for e in self.outgoing(id, Some(edge::DEPENDS_ON))? {
                 pairs.insert((e.from_id.clone(), e.to_id.clone()));
+                direct.insert((e.from_id.clone(), e.to_id.clone()));
             }
         }
         // Contracts: every consumer of an interface depends on its provider(s).
@@ -311,14 +376,20 @@ impl DesignGraph {
             for c in &consumers {
                 for p in &providers {
                     if c.from_id != p.from_id {
-                        pairs.insert((c.from_id.clone(), p.from_id.clone()));
+                        let pair = (c.from_id.clone(), p.from_id.clone());
+                        pairs.insert(pair.clone());
+                        contract.entry(pair).or_default().insert((*id).to_string());
                     }
                 }
             }
         }
         let mut pairs: Vec<(String, String)> = pairs.into_iter().collect();
         pairs.sort();
-        Ok(pairs)
+        Ok(DependencyEdges {
+            pairs,
+            direct,
+            contract,
+        })
     }
 
     /// Circular dependencies: one representative cycle per independent cluster.
@@ -329,18 +400,19 @@ impl DesignGraph {
     /// loop through it. Each returned path `[a, b, c]` is closed by `c → a`, and
     /// is rotated to start at its lexicographically smallest id so the output is
     /// stable run to run.
-    pub(crate) fn circular_dependencies(&self) -> Result<Vec<Vec<String>>, DynoError> {
-        let pairs = self.dependency_pairs()?;
+    pub(crate) fn circular_dependencies(&self) -> Result<Vec<DependencyCycle>, DynoError> {
+        let edges = self.dependency_pairs()?;
+        let pairs = &edges.pairs;
         if pairs.is_empty() {
             return Ok(Vec::new());
         }
 
         let mut builder = GraphBuilder::new();
-        for (from, to) in &pairs {
+        for (from, to) in pairs {
             builder.add_node(from);
             builder.add_node(to);
         }
-        for (from, to) in &pairs {
+        for (from, to) in pairs {
             builder
                 .add_edge(from, to, 1.0)
                 .map_err(|e| DynoError::Query(format!("dependency network edge: {e}")))?;
@@ -348,7 +420,7 @@ impl DesignGraph {
         let graph = builder.build(true); // directed: a dependency has a direction
 
         let mut meta = vec![String::new(); graph.node_count()];
-        for (from, to) in &pairs {
+        for (from, to) in pairs {
             for id in [from, to] {
                 if let Some(idx) = graph.idx_of(id) {
                     meta[idx] = id.clone();
@@ -360,7 +432,7 @@ impl DesignGraph {
 
         // A node that depends on itself is a degenerate cycle Tarjan reports as
         // a singleton SCC — catch it explicitly rather than losing it.
-        for (from, to) in &pairs {
+        for (from, to) in pairs {
             if from == to {
                 cycles.push(vec![from.clone()]);
             }
@@ -413,7 +485,46 @@ impl DesignGraph {
         }
 
         cycles.sort();
-        Ok(cycles)
+
+        // Attribute each loop: which Interfaces its hops were collapsed out of,
+        // and whether ANY hop is a real DEPENDS_ON edge. A loop closes, so the
+        // hops are every consecutive pair plus `last → first` (and a
+        // self-cycle's single hop is `a → a`).
+        Ok(cycles
+            .into_iter()
+            .map(|path| {
+                let mut via: BTreeSet<String> = BTreeSet::new();
+                let mut any_direct = false;
+                for i in 0..path.len() {
+                    let hop = (path[i].clone(), path[(i + 1) % path.len()].clone());
+                    if let Some(ifaces) = edges.contract.get(&hop) {
+                        via.extend(ifaces.iter().cloned());
+                    }
+                    if edges.direct.contains(&hop) {
+                        any_direct = true;
+                    }
+                }
+                let foundation_media_only = !via.is_empty()
+                    && via.iter().all(|id| {
+                        self.get_node(node::INTERFACE, id)
+                            .ok()
+                            .flatten()
+                            .and_then(|n| {
+                                n.properties
+                                    .get("medium")
+                                    .and_then(dynograph_core::Value::as_str)
+                                    .map(is_foundation_medium)
+                            })
+                            .unwrap_or(false)
+                    });
+                DependencyCycle {
+                    path,
+                    via_interfaces: via.into_iter().collect(),
+                    contracts_only: !any_direct,
+                    foundation_media_only,
+                }
+            })
+            .collect())
     }
 
     /// Whether removing `node_id` **creates** a split — leaving more non-trivial

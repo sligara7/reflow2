@@ -31,6 +31,29 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **A `circular_dependency` finding now says which edge kinds it actually walked** (BL-141(a),
+  `cap:cycle-names-its-basis`, `ver:cycle-basis`). Every cycle names the Interfaces its hops were
+  collapsed out of, says whether any hop is a real `DEPENDS_ON` edge, and says when every Interface
+  involved is a `library`/`data` medium — something read or linked against rather than called
+  across at run time. **Detection is unchanged**: the same cycles, the same `critical`. Only the
+  sentence grew.
+
+  Why it matters: `dependency_pairs` collapses `c CONSUMES i` + `p PROVIDES i` into a direct pair,
+  which is right for detection and threw away the one datum a reader needs. An adopt pass over an
+  ~11k-LOC research repo produced **four `critical` cycles and none were real** — the message
+  `A → B → A` reads identically whether the code is tangled or one Interface node is standing for
+  two contracts. The same class as BL-114: a finding claiming more than the detector checked.
+
+  **The medium is the load-bearing part, and that was found by measurement rather than reasoning.**
+  The first build discriminated on interface *count*, following the report's own diagnosis that
+  each phantom was "one Interface standing for two contracts". Reproducing their cycle on their
+  real design showed it runs through **two** interfaces and is structurally identical to a genuine
+  service cycle — a renderer reading MIDI and writing WAV against a transcriber doing the reverse.
+  Only `medium` tells them apart, so that is what gets reported, with a counterweight test pinning
+  that the same shape over `REST` makes no such claim.
+
 ### Added
 
 - **The evidence-quality family — a check's TIME, INPUT and INDEPENDENCE become facts the graph

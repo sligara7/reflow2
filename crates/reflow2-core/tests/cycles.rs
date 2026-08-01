@@ -222,3 +222,203 @@ fn cycle_detection_is_deterministic() {
         "same graph must yield the same issue id and the same cycle path"
     );
 }
+
+// ---- BL-141 · the finding says what the detector actually walked ------------
+//
+// An adopt pass over an ~11k-LOC research repo produced FOUR `critical`
+// circular dependencies and every one was false. Each was one Interface node
+// standing for two contracts — `ifc:midi-file` meaning both "MIDI we read" and
+// "MIDI we emit" — so a reader and a writer of the same file format looked like
+// mutual dependency. `dependency_pairs` collapses the Interface out at exactly
+// the point the cycle edge is created, and the message printed only `A → B → A`,
+// so a coarse model and a tangled call graph were indistinguishable.
+
+fn cycle_message(g: &DesignGraph) -> String {
+    g.detect_defects()
+        .expect("detect")
+        .into_iter()
+        .find(|i| i.category == HealCategory::CircularDependency)
+        .expect("cycle issue")
+        .message
+}
+
+/// The phantom shape, reproduced: ONE interface both parts provide and consume.
+/// The finding must name it, and must say no DEPENDS_ON edge was involved.
+#[test]
+fn a_loop_through_one_shared_contract_names_that_contract() {
+    let mut g = project_with(&[("cmp:renderer", "R"), ("cmp:transcriber", "T")]);
+    g.add_interface("ifc:midi-file", "MIDI").expect("iface");
+    // Each reads MIDI and writes MIDI, as a single modelled contract.
+    g.provides("cmp:renderer", "ifc:midi-file")
+        .expect("r provides");
+    g.consumes("cmp:renderer", "ifc:midi-file")
+        .expect("r consumes");
+    g.provides("cmp:transcriber", "ifc:midi-file")
+        .expect("t provides");
+    g.consumes("cmp:transcriber", "ifc:midi-file")
+        .expect("t consumes");
+
+    let msg = cycle_message(&g);
+    assert!(
+        msg.contains("ifc:midi-file"),
+        "the shared contract must be named — that alone makes it diagnosable: {msg}"
+    );
+    assert!(
+        msg.contains("SAME contract"),
+        "one interface for the whole loop is the case worth calling out: {msg}"
+    );
+    assert!(
+        msg.contains("no DEPENDS_ON"),
+        "it must say which edge kinds it did NOT walk: {msg}"
+    );
+}
+
+/// THE COUNTERWEIGHT, and the reason the discriminator is the interface COUNT
+/// rather than "contracts were involved". A real service-boundary cycle also
+/// runs entirely through contracts — but through TWO, one per direction. It
+/// must NOT be described as one Interface standing for two contracts.
+#[test]
+fn a_genuine_two_contract_service_cycle_is_not_blamed_on_the_model() {
+    let mut g = project_with(&[("cmp:a", "A"), ("cmp:b", "B")]);
+    g.add_interface("ifc:1", "A's API").expect("i1");
+    g.add_interface("ifc:2", "B's API").expect("i2");
+    g.provides("cmp:a", "ifc:1").expect("a provides");
+    g.consumes("cmp:b", "ifc:1").expect("b consumes");
+    g.provides("cmp:b", "ifc:2").expect("b provides");
+    g.consumes("cmp:a", "ifc:2").expect("a consumes");
+
+    let msg = cycle_message(&g);
+    assert!(
+        !msg.contains("SAME contract"),
+        "two contracts, one per direction, is a real cycle — not a modelling artefact: {msg}"
+    );
+    assert!(
+        msg.contains("ifc:1") && msg.contains("ifc:2"),
+        "both contracts are still named, because that is what it walked: {msg}"
+    );
+}
+
+/// A plain DEPENDS_ON tangle names no contract and says so positively, rather
+/// than leaving the reader to infer it from an absence.
+#[test]
+fn a_direct_dependency_cycle_says_it_is_direct() {
+    let mut g = project_with(&[("cmp:a", "A"), ("cmp:b", "B")]);
+    depends(&mut g, "cmp:a", "cmp:b");
+    depends(&mut g, "cmp:b", "cmp:a");
+
+    let msg = cycle_message(&g);
+    assert!(
+        msg.contains("direct DEPENDS_ON"),
+        "a real code tangle must read as one: {msg}"
+    );
+    assert!(
+        !msg.contains("ifc:"),
+        "no contract was walked, so none may be named: {msg}"
+    );
+}
+
+/// A cycle with BOTH a DEPENDS_ON hop and a contract hop is neither case, and
+/// must not claim `no DEPENDS_ON` — the claim that would send a reader to check
+/// their interface model when there is real code coupling in the loop.
+#[test]
+fn a_mixed_cycle_claims_neither_pure_case() {
+    let mut g = project_with(&[("cmp:a", "A"), ("cmp:b", "B")]);
+    g.add_interface("ifc:1", "A's API").expect("i1");
+    g.provides("cmp:a", "ifc:1").expect("a provides");
+    g.consumes("cmp:b", "ifc:1").expect("b consumes"); // b depends on a
+    depends(&mut g, "cmp:a", "cmp:b"); // and a depends on b, directly
+
+    let msg = cycle_message(&g);
+    assert!(msg.contains("mixed"), "{msg}");
+    assert!(
+        !msg.contains("no DEPENDS_ON"),
+        "there IS a DEPENDS_ON edge in this loop: {msg}"
+    );
+    assert!(
+        msg.contains("ifc:1"),
+        "the contract half is still named: {msg}"
+    );
+}
+
+/// THE REAL BL-141 CASE, taken from the reporting project's own design rather
+/// than invented: `cmp:fundamental-detection ⇄ cmp:midi-renderer` through
+/// `ifc:midi-file` and `ifc:wav-audio`, both `medium: data`. A renderer reads
+/// MIDI and writes WAV; a transcriber reads WAV and writes MIDI. Two programs
+/// sharing two file formats, depending on each other at no point in time.
+///
+/// **Structurally identical to the genuine two-contract service cycle above** —
+/// same node count, same edge shape, same interface count. ONLY the medium
+/// separates them, which is why it has to be reported.
+#[test]
+fn a_round_trip_through_file_formats_reports_the_medium() {
+    let mut g = project_with(&[("cmp:transcriber", "T"), ("cmp:renderer", "R")]);
+    for (id, name) in [("ifc:midi", "MIDI file"), ("ifc:wav", "WAV audio")] {
+        g.add_interface(id, name).expect("iface");
+        g.set_interface_spec(
+            id,
+            Some("data"),
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+        )
+        .expect("medium");
+    }
+    // Transcriber: reads WAV, writes MIDI.
+    g.consumes("cmp:transcriber", "ifc:wav").expect("t reads");
+    g.provides("cmp:transcriber", "ifc:midi").expect("t writes");
+    // Renderer: reads MIDI, writes WAV. The inverse.
+    g.consumes("cmp:renderer", "ifc:midi").expect("r reads");
+    g.provides("cmp:renderer", "ifc:wav").expect("r writes");
+
+    let msg = cycle_message(&g);
+    assert!(
+        msg.contains("ifc:midi") && msg.contains("ifc:wav"),
+        "both formats must be named: {msg}"
+    );
+    assert!(
+        msg.contains("library/data medium"),
+        "the medium is the ONLY thing separating this from a real service cycle, \
+         so it must be stated: {msg}"
+    );
+}
+
+/// THE COUNTERWEIGHT that keeps the medium claim honest: the same shape over a
+/// run-time medium is a real service cycle and must NOT be described as
+/// read-or-linked-against. Without this, the medium sentence would be printed
+/// on every contract cycle and mean nothing.
+#[test]
+fn the_same_shape_over_a_runtime_medium_makes_no_foundation_claim() {
+    let mut g = project_with(&[("cmp:a", "A"), ("cmp:b", "B")]);
+    for (id, name) in [("ifc:1", "A's API"), ("ifc:2", "B's API")] {
+        g.add_interface(id, name).expect("iface");
+        g.set_interface_spec(
+            id,
+            Some("REST"),
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+        )
+        .expect("medium");
+    }
+    g.provides("cmp:a", "ifc:1").expect("a provides");
+    g.consumes("cmp:b", "ifc:1").expect("b consumes");
+    g.provides("cmp:b", "ifc:2").expect("b provides");
+    g.consumes("cmp:a", "ifc:2").expect("a consumes");
+
+    let msg = cycle_message(&g);
+    assert!(
+        !msg.contains("library/data medium"),
+        "REST is carried at run time — this is a real cycle: {msg}"
+    );
+    assert!(msg.contains("every hop is a contract"), "{msg}");
+}
