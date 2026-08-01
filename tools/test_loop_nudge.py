@@ -368,5 +368,209 @@ class SkillTriggers(unittest.TestCase):
         self.assertNotIn("The shape says", reason)
 
 
+class StateIntegrity(unittest.TestCase):
+    """BL-161 — the tally survives concurrency, and a rebuilt one never lies.
+
+    The defect this class exists for survived three sessions because it looked
+    intermittent. `write_state` was `write_text` (truncate, then write) and
+    `read_state` swallowed a parse failure into an all-zero tally — so one
+    hook process reading while another wrote got zeros and stored them, wiping
+    `touched`/`artifacts`/`gap_pass` for the rest of the session. The session
+    that consulted the graph constantly was then told, at Stop, that it never
+    had. PostToolUse hooks run as separate processes and parallel tool batches
+    are ordinary, so this was the common case wearing a rare face.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory(prefix="nudge-state-test-")
+        self.project = pathlib.Path(self._tmp.name)
+        (self.project / ".reflow2").mkdir()
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def state(self, session: str = "s1") -> dict:
+        f = self.project / ".reflow2" / "loop-nudge" / f"{session}.json"
+        return json.loads(f.read_text()) if f.exists() else {}
+
+    def burst(self, payloads):
+        """Run every payload CONCURRENTLY — the condition the bug needs.
+
+        Feed every stdin and close it BEFORE waiting on any process. The first
+        version of this looped `communicate()`, which blocks until that child
+        exits — so the children ran one at a time and the test passed against
+        the unfixed script. The mutation check caught it: removing the atomic
+        write and removing the lock both left it green.
+        """
+        import os
+        procs = [
+            subprocess.Popen(
+                [sys.executable, str(SCRIPT)],
+                stdin=subprocess.PIPE, stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL, text=True,
+                cwd=self.project, env=dict(os.environ),
+            )
+            for _ in payloads
+        ]
+        for p, payload in zip(procs, payloads):
+            p.stdin.write(json.dumps(payload))
+            p.stdin.close()
+        for p in procs:
+            p.wait(timeout=60)
+        return [p.returncode for p in procs]
+
+    def test_a_concurrent_burst_neither_wipes_nor_undercounts_the_tally(self):
+        # THE REPRODUCTION. Against the pre-fix script this returned
+        # touched=false, artifacts=0 and edits=6 of 60 — every sticky field
+        # wiped and 90% of the increments lost.
+        for _ in range(4):
+            run_hook(self.project, post_tool("mcp__reflow2__link_artifact"))
+        seeded = self.state()
+        self.assertTrue(seeded["touched"])
+        self.assertEqual(seeded["artifacts"], 4)
+
+        codes = self.burst([edit_tool(path="/tmp/a.rs") for _ in range(60)])
+        self.assertTrue(all(c == 0 for c in codes), "a hook must never break")
+
+        after = self.state()
+        self.assertEqual(after["edits"], 60, "every concurrent increment lands")
+        self.assertTrue(after["touched"], "a sticky field is not wiped")
+        self.assertEqual(after["artifacts"], 4, "nor a cumulative one")
+        self.assertEqual(after["writes"], 4)
+
+    def test_a_rebuilt_tally_never_claims_the_graph_was_never_consulted(self):
+        # THE COUNTERWEIGHT THAT MATTERS. A tally rebuilt after an unreadable
+        # one keeps counting — an existing case requires that — but it can no
+        # longer support the hook's ONE negative claim, because the calls that
+        # would have refuted it are exactly what was lost.
+        d = self.project / ".reflow2" / "loop-nudge"
+        d.mkdir(parents=True)
+        (d / "s1.json").write_text("{corrupt")
+        for _ in range(5):
+            run_hook(self.project, edit_tool(path="/tmp/a.rs"))
+
+        self.assertTrue(self.state()["reset"], "the restart is on the record")
+        self.assertGreaterEqual(self.state()["edits"], 1, "and it kept counting")
+
+        r = run_hook(self.project, stop())
+        self.assertEqual(r.returncode, 0)
+        self.assertNotIn(
+            "never consulted", r.stdout,
+            "a tally rebuilt from nothing cannot prove nothing happened",
+        )
+
+    def test_a_rebuilt_tally_still_nudges_on_unchecked_writes(self):
+        # THE COUNTERWEIGHT TO THE COUNTERWEIGHT: `reset` must not become an
+        # off switch. The write nudge is a POSITIVE claim — these writes
+        # happened and went unchecked — and a restart does not undermine it.
+        d = self.project / ".reflow2" / "loop-nudge"
+        d.mkdir(parents=True)
+        (d / "s1.json").write_text("{corrupt")
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+
+        self.assertTrue(self.state()["reset"])
+        self.assertEqual(self.state()["writes"], 1, "counting restarts")
+
+        r = run_hook(self.project, stop())
+        self.assertIn("loop_status", r.stdout, "the positive claim survives")
+
+    def test_the_bulk_forms_count_as_the_singular_ones_do(self):
+        # BL-153 shipped bulk forms so the common path stops being N calls, and
+        # these sets kept only the singular names — so a session doing
+        # everything right THROUGH THE NEW TOOLS tallied as having done none of
+        # it. [BL-152]'s shape landing on the trigger that judges the loop.
+        for tool, field in (
+            ("mcp__reflow2__set_artifact_checksums", "artifacts"),
+            ("mcp__reflow2__create_nodes", "captures"),
+            ("mcp__reflow2__gaps_to_prompts", "gap_pass"),
+        ):
+            with self.subTest(tool=tool):
+                session = tool.rsplit("__", 1)[-1]
+                run_hook(self.project, post_tool(tool, session=session))
+                self.assertEqual(
+                    self.state(session).get(field), 1,
+                    f"{tool} must tally as {field}, like the form it replaces",
+                )
+
+
+class FiresOnce(unittest.TestCase):
+    """BL-111 — the nudge's own promise, computed instead of merely stated.
+
+    Every nudge ends *"this nudge fires once; stopping again proceeds"*, and
+    that rested entirely on the harness's `stop_hook_active` — a flag covering
+    ONE stop cycle that is never persisted. So the rule implemented was *once
+    per stop cycle* while the rule advertised was *once per session*, and the
+    gap bites hardest exactly where the nudge cannot be satisfied: a session
+    whose server is unreachable gets nudged at every stop with no action
+    available that would stop it, which is when someone disables the hook.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory(prefix="nudge-once-test-")
+        self.project = pathlib.Path(self._tmp.name)
+        (self.project / ".reflow2").mkdir()
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def test_a_second_stop_cycle_does_not_nudge_again(self):
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+        first = run_hook(self.project, stop())
+        self.assertIn("block", first.stdout)
+        # A NEW stop cycle: the harness sets stop_hook_active only within one
+        # cycle, so this is the case the old code could not see.
+        second = run_hook(self.project, stop())
+        self.assertEqual(second.stdout.strip(), "", "the promise is once per SESSION")
+        self.assertEqual(second.returncode, 0)
+
+    def test_the_bypass_branch_keeps_the_same_promise(self):
+        for _ in range(4):
+            run_hook(self.project, edit_tool(path="/tmp/a.rs"))
+        first = run_hook(self.project, stop())
+        self.assertIn("never consulted", first.stdout)
+        second = run_hook(self.project, stop())
+        self.assertEqual(second.stdout.strip(), "",
+                         "both blocking branches promise it, so both keep it")
+
+    def test_two_registrations_firing_at_once_still_nudge_once(self):
+        # THE CASE THIS WAS FILED FROM, and it is not exotic: reflow2 installs
+        # machine-wide AND a project can carry its own registration, and the two
+        # command spellings do not dedupe — so two hook processes run on the
+        # same Stop. Without an atomic claim both read nudged=false and both
+        # print, which is the doubled message the user saw.
+        import os
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+        procs = [
+            subprocess.Popen(
+                [sys.executable, str(SCRIPT)],
+                stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL, text=True,
+                cwd=self.project, env=dict(os.environ),
+            )
+            for _ in range(2)
+        ]
+        for p in procs:
+            p.stdin.write(json.dumps(stop()))
+            p.stdin.close()
+        outs = []
+        for p in procs:
+            outs.append(p.stdout.read())
+            p.wait(timeout=60)
+        spoke = [o for o in outs if o.strip()]
+        self.assertEqual(len(spoke), 1,
+                         f"exactly one of two concurrent hooks may speak, got {outs}")
+
+    def test_a_nudge_that_was_never_earned_leaves_the_claim_unspent(self):
+        # THE COUNTERWEIGHT: `nudged` must be set by NUDGING, not by stopping.
+        # A session with nothing owed stops silently and keeps its one nudge, or
+        # the flag would become a way to burn the trigger by stopping early.
+        quiet = run_hook(self.project, stop())
+        self.assertEqual(quiet.stdout.strip(), "")
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+        earned = run_hook(self.project, stop())
+        self.assertIn("block", earned.stdout,
+                      "an unspent claim must still be there when debt appears")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

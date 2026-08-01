@@ -93,11 +93,23 @@ EDIT_TOOLS = {"Edit", "Write", "MultiEdit", "NotebookEdit"}
 # progression — a change recorded but as-built never touched — which is the
 # same situation one step earlier, and is what the third shape keys on.
 
+# EVERY SET BELOW MUST NAME THE BULK FORM BESIDE THE SINGULAR ONE. BL-153
+# shipped `create_nodes`, `create_edges`, `set_artifact_checksums`,
+# `acknowledge_gaps` and `gaps_to_prompts` precisely so the common path stops
+# being N calls — and these sets kept only the singular names, so a session that
+# did everything right *through the new tools* tallied as having done none of
+# it. That is [BL-152]'s shape (two halves of the served surface disagreeing)
+# landing on the trigger that judges whether the loop ran, and it gets worse
+# exactly as the bulk forms succeed. When a tool gains a bulk form, add it here.
+
 # Recording that something moved, on the record, before it moves.
 CHANGE_OPS = {"record_change", "add_change_event"}
 
 # Telling the design what is now on disk.
-ARTIFACT_OPS = {"link_artifact", "set_artifact_checksum", "reconcile_artifacts"}
+ARTIFACT_OPS = {
+    "link_artifact", "set_artifact_checksum", "set_artifact_checksums",
+    "reconcile_artifacts",
+}
 
 # Capturing intent — the ops that add new design that nobody has yet asked the
 # gaps of. Deliberately NOT every write: bookkeeping (release_includes,
@@ -106,12 +118,18 @@ CAPTURE_OPS = {
     "add_requirement", "add_capability", "add_component", "add_interface",
     "add_constraint", "add_actor", "add_flow", "add_resource", "add_environment",
     "genesis", "import_graph", "ingest_step",
+    # The bulk forms. `create_nodes` carries whatever node types the caller
+    # passed, so it counts as a capture on the same argument as `import_graph`:
+    # new design arrived and nobody has asked the gaps of it yet.
+    "create_nodes",
 }
 
 # The op that IS a gap pass. `loop_status` is the cheap pulse-check and is
 # deliberately NOT enough here: it reports debt, it does not ask the user
 # anything, and this shape exists because captured intent needs questions put.
-GAP_PASS_OPS = {"detect_gaps"}
+# `gaps_to_prompts` is the bulk form of the handshake and counts for the same
+# reason `detect_gaps` does — it is the step that puts the questions.
+GAP_PASS_OPS = {"detect_gaps", "gaps_to_prompts"}
 
 # ---- cap:session-artifacts --------------------------------------------------
 #
@@ -164,11 +182,44 @@ def state_file(session_id: str) -> Path:
     return state_dir() / f"{safe or 'unknown'}.json"
 
 
-def read_state(session_id: str) -> dict:
-    """Session tally: graph writes, file edits, and whether reflow2 was touched
-    at all. Older state files carried only `writes`; the others default."""
+def warn(message: str) -> None:
+    """A hook must never break a session, so every failure in here is a stderr
+    line and an exit 0 — but it is never SILENT. The defect this file was
+    fixed for was a swallowed failure that reported success."""
+    print(f"loop_nudge: {message}", file=sys.stderr)
+
+
+def blank_state() -> dict:
+    """A session nobody has recorded anything for. Correct ONLY when the tally
+    is genuinely absent — see [`update_state`] for why that distinction is the
+    whole bug this file once had."""
+    return {"writes": 0, "edits": 0, "touched": False,
+            "changes": 0, "artifacts": 0, "captures": 0, "gap_pass": 0,
+            "renderings": 0, "content": 0,
+            # Whether this tally was rebuilt after an unreadable one. A restart
+            # keeps the mechanism working; this flag is what stops the restart
+            # being mistaken for evidence. See `update_state`.
+            "reset": False,
+            # Whether a Stop nudge has already been printed for this session
+            # (BL-111). The promise "this nudge fires once" used to rest
+            # entirely on the harness's `stop_hook_active`, which covers one
+            # stop CYCLE and is never persisted — so the rule implemented was
+            # *once per stop cycle* while the rule advertised was *once per
+            # session*. See `claim_nudge`.
+            "nudged": False}
+
+
+def parse_state(text: str) -> dict | None:
+    """The stored tally, or **None** if it cannot be read.
+
+    `None` is not the same as `blank_state()` and conflating the two is what
+    made a correct session read as one that never touched reflow2 at all: the
+    caller must be able to tell *nobody has recorded anything* from *something
+    is recorded and I could not read it*. Older state files carried only
+    `writes`; the rest default, which is a genuine absence and stays fine.
+    """
     try:
-        raw = json.loads(state_file(session_id).read_text())
+        raw = json.loads(text)
         return {
             "writes": int(raw.get("writes", 0)),
             "edits": int(raw.get("edits", 0)),
@@ -181,27 +232,133 @@ def read_state(session_id: str) -> dict:
             "gap_pass": int(raw.get("gap_pass", 0)),
             "renderings": int(raw.get("renderings", 0)),
             "content": int(raw.get("content", 0)),
+            "reset": bool(raw.get("reset", False)),
+            "nudged": bool(raw.get("nudged", False)),
         }
-    except (OSError, ValueError, KeyError, TypeError):
-        return {"writes": 0, "edits": 0, "touched": False,
-                "changes": 0, "artifacts": 0, "captures": 0, "gap_pass": 0,
-                "renderings": 0, "content": 0}
+    except (ValueError, KeyError, TypeError, AttributeError):
+        return None
 
 
-def write_state(session_id: str, state: dict) -> None:
+def read_state(session_id: str) -> dict:
+    """The tally, for READING only (the Stop backstop).
+
+    An unreadable tally reads as blank here, which is the quiet direction: the
+    thresholds are then unmet and no nudge fires. A nudge fired on a tally
+    nobody could read would be the false-positive this whole file is judged on.
+    Never write the result of this back — use [`update_state`].
+    """
+    try:
+        parsed = parse_state(state_file(session_id).read_text())
+    except OSError:
+        return blank_state()
+    return parsed if parsed is not None else blank_state()
+
+
+def _lock(path: Path):
+    """Exclusive advisory lock around a read-modify-write, or a no-op context
+    where the platform has no `flock`. Degrades rather than failing: a hook must
+    never break a session, and an unlocked update is what shipped before.
+    """
+    import contextlib
+
+    @contextlib.contextmanager
+    def _ctx():
+        try:
+            import fcntl
+        except ImportError:  # pragma: no cover — non-POSIX
+            yield
+            return
+        try:
+            fh = open(path, "w")
+        except OSError:
+            yield
+            return
+        try:
+            fcntl.flock(fh, fcntl.LOCK_EX)
+            yield
+        finally:
+            try:
+                fcntl.flock(fh, fcntl.LOCK_UN)
+            except OSError:
+                pass
+            fh.close()
+
+    return _ctx()
+
+
+def update_state(session_id: str, mutate) -> None:
+    """Read-modify-write the tally under a lock, and replace it ATOMICALLY.
+
+    Both halves are load-bearing, and this function is the fix for a defect that
+    survived three sessions because it looked intermittent:
+
+    - **The write was `write_text` — truncate, then write.** A concurrent hook
+      process reading mid-write saw a partial file, `json.loads` raised, the
+      old `read_state` swallowed it into an all-zero tally, and that process
+      wrote the zeros back. One badly-timed read wiped `touched`, `artifacts`
+      and `gap_pass` for the rest of the session, so a session that consulted
+      the graph constantly was told it never had. Reproduced: seeding
+      `touched=true, artifacts=4` and firing 150 concurrent edit hooks returned
+      `touched=false, artifacts=0, edits=6` — 144 increments lost with it.
+    - **The read-modify-write had no lock**, so even without corruption two
+      concurrent hooks lost updates. PostToolUse hooks run as separate
+      processes and parallel tool batches are normal, so this is the common
+      case rather than the exotic one.
+
+    A tally that exists but cannot be parsed still RESTARTS the count — the
+    mechanism has to keep working, and an existing test says so in as many
+    words. What changes is that the restart is **marked** (`reset`), because the
+    lie was never the restart: it was a rebuilt-from-nothing tally then being
+    read as proof that the graph was never consulted. A positive claim ("N
+    writes went unchecked") survives a restart honestly; the negative one does
+    not, and the Stop backstop drops it accordingly.
+    """
     d = state_dir()
-    d.mkdir(parents=True, exist_ok=True)
-    state_file(session_id).write_text(json.dumps({
-        "writes": int(state.get("writes", 0)),
-        "edits": int(state.get("edits", 0)),
-        "touched": bool(state.get("touched", False)),
-        "changes": int(state.get("changes", 0)),
-        "artifacts": int(state.get("artifacts", 0)),
-        "captures": int(state.get("captures", 0)),
-        "gap_pass": int(state.get("gap_pass", 0)),
-        "renderings": int(state.get("renderings", 0)),
-        "content": int(state.get("content", 0)),
-    }))
+    try:
+        d.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:
+        warn(f"could not create {d}: {exc}")
+        return
+    path = state_file(session_id)
+    with _lock(d / ".lock"):
+        state = blank_state()
+        if path.exists():
+            try:
+                parsed = parse_state(path.read_text())
+            except OSError as exc:
+                warn(f"could not read {path}: {exc}")
+                return
+            if parsed is None:
+                warn(f"{path} exists but could not be parsed — restarting the "
+                     f"tally and marking it `reset`, so nothing later reads it "
+                     f"as proof the graph was never consulted")
+                state["reset"] = True
+            else:
+                state = parsed
+        mutate(state)
+        tmp = path.with_name(path.name + ".tmp")
+        try:
+            tmp.write_text(json.dumps({
+                "writes": int(state.get("writes", 0)),
+                "edits": int(state.get("edits", 0)),
+                "touched": bool(state.get("touched", False)),
+                "changes": int(state.get("changes", 0)),
+                "artifacts": int(state.get("artifacts", 0)),
+                "captures": int(state.get("captures", 0)),
+                "gap_pass": int(state.get("gap_pass", 0)),
+                "renderings": int(state.get("renderings", 0)),
+                "content": int(state.get("content", 0)),
+                "reset": bool(state.get("reset", False)),
+                "nudged": bool(state.get("nudged", False)),
+            }))
+            os.replace(tmp, path)  # atomic: a reader sees old or new, never half
+        except OSError as exc:
+            warn(f"could not write {path}: {exc}")
+            try:
+                tmp.unlink()
+            except OSError:
+                pass
+            return
     # Opportunistic tidy-up: session files a week old are dead sessions.
     cutoff = time.time() - 7 * 24 * 3600
     for old in d.glob("*.json"):
@@ -210,6 +367,40 @@ def write_state(session_id: str, state: dict) -> None:
                 old.unlink()
         except OSError:
             pass
+
+
+def claim_nudge(session_id: str) -> bool:
+    """Claim the right to nudge this session, exactly once (BL-111).
+
+    Returns True for the FIRST caller and False for every one after it, as an
+    atomic test-and-set under the same lock `update_state` uses.
+
+    Two reasons it has to be a claim rather than a flag set after printing:
+
+    - **The promise was never computed.** The message ends *"this nudge fires
+      once"*, and that rested entirely on the harness's `stop_hook_active`,
+      which covers a single stop CYCLE and is never persisted. So the rule
+      implemented was *once per stop cycle* and the rule advertised was *once
+      per session* — and the case where the gap bites hardest is the one where
+      the nudge cannot be satisfied at all (a session whose server is
+      unreachable gets nudged at every stop with no action that would stop it,
+      which is exactly when someone disables the hook).
+    - **The hook can legitimately be registered more than once.** reflow2
+      installs machine-wide *and* a project can carry its own registration, and
+      the two command spellings do not dedupe — so two processes run this on the
+      same Stop. Without an atomic claim they both read `nudged: false` and both
+      print, which is the doubled message BL-111 was filed from.
+    """
+    claimed = False
+
+    def take(state: dict) -> None:
+        nonlocal claimed
+        if not state.get("nudged"):
+            claimed = True
+            state["nudged"] = True
+
+    update_state(session_id, take)
+    return claimed
 
 
 def is_write(op: str) -> bool:
@@ -316,30 +507,31 @@ def main() -> int:
         # call — even a read — counts as having engaged the design brain.
         if "reflow2" in tool and "__" in tool:
             op = tool.rsplit("__", 1)[-1]
-            state = read_state(session)
-            state["touched"] = True
-            if op in LOOP_OPS:
-                state["writes"] = 0
-            elif is_write(op):
-                state["writes"] += 1
-            # Shape tallies are cumulative and are NOT cleared by a loop check:
-            # calling detect_gaps does not un-edit a file or un-capture intent.
-            if op in CHANGE_OPS:
-                state["changes"] += 1
-            if op in ARTIFACT_OPS:
-                state["artifacts"] += 1
-            if op in CAPTURE_OPS:
-                state["captures"] += 1
-            if op in GAP_PASS_OPS:
-                state["gap_pass"] += 1
-            if op in CONTENT_OPS:
-                state["content"] += 1
-            write_state(session, state)
+
+            def touch(state: dict, op: str = op) -> None:
+                state["touched"] = True
+                if op in LOOP_OPS:
+                    state["writes"] = 0
+                elif is_write(op):
+                    state["writes"] += 1
+                # Shape tallies are cumulative and are NOT cleared by a loop
+                # check: detect_gaps does not un-edit a file or un-capture
+                # intent.
+                if op in CHANGE_OPS:
+                    state["changes"] += 1
+                if op in ARTIFACT_OPS:
+                    state["artifacts"] += 1
+                if op in CAPTURE_OPS:
+                    state["captures"] += 1
+                if op in GAP_PASS_OPS:
+                    state["gap_pass"] += 1
+                if op in CONTENT_OPS:
+                    state["content"] += 1
+
+            update_state(session, touch)
             return 0
         # A harness file-write, tallied only for the total-bypass backstop.
         if tool in EDIT_TOOLS:
-            state = read_state(session)
-            state["edits"] += 1
             # cap:session-artifacts — was it a rendering? The path is the only
             # signal available here, and a wrong guess costs at most one extra
             # sentence on a nudge that was firing anyway.
@@ -347,9 +539,14 @@ def main() -> int:
             ti = event.get("tool_input")
             if isinstance(ti, dict):
                 path = str(ti.get("file_path") or ti.get("notebook_path") or "")
-            if path.lower().endswith(RENDERING_SUFFIXES):
-                state["renderings"] += 1
-            write_state(session, state)
+            rendering = path.lower().endswith(RENDERING_SUFFIXES)
+
+            def edited(state: dict, rendering: bool = rendering) -> None:
+                state["edits"] += 1
+                if rendering:
+                    state["renderings"] += 1
+
+            update_state(session, edited)
         return 0
 
     if kind == "Stop":
@@ -376,6 +573,11 @@ def main() -> int:
                 else "Call loop_status — if its `next` list names debt, run "
                      "detect-and-ask / check-health before finishing."
             )
+            # BL-111 — the promise is now computed, not merely stated. First
+            # claimant prints; anyone else (a later stop, or a second hook
+            # process from a duplicate registration) stays silent.
+            if not claim_nudge(session):
+                return 0
             print(json.dumps({
                 "decision": "block",
                 "reason": (
@@ -389,9 +591,22 @@ def main() -> int:
         # The upstream bypass (BL-90): code edited, the graph never consulted at
         # all. Blunt by design — the hook cannot know which files are design-
         # relevant, so a count threshold and the once-only rule bound the noise.
+        #
+        # THIS ONE CLAIM IS DROPPED WHEN THE TALLY WAS REBUILT. It is the only
+        # NEGATIVE assertion the hook makes — "the graph was never consulted" —
+        # and a tally restarted from nothing cannot support it, because the
+        # calls it would have counted are exactly what was lost. The write
+        # nudge above is positive ("N writes went unchecked") and survives a
+        # restart honestly, which is why only this branch checks the flag.
+        if state.get("reset"):
+            return 0
         if not state["touched"]:
             e = state["edits"]
             if e >= env_threshold("REFLOW2_LOOP_NUDGE_EDIT_THRESHOLD", 3):
+                # Both blocking branches make the same promise on the same
+                # footing, so both have to keep it (BL-111).
+                if not claim_nudge(session):
+                    return 0
                 print(json.dumps({
                     "decision": "block",
                     "reason": (

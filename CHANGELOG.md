@@ -31,6 +31,55 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **The loop nudge corrupted the record it judges from** (BL-161). A session that consulted the
+  design graph constantly was told at Stop that it never had — three times in one session, and the
+  second independent reproduction. `write_state` used `Path.write_text` (truncate, then write —
+  **not atomic**) while `read_state` swallowed a parse failure into an **all-zero, `touched: False`**
+  tally. PostToolUse hooks run as separate concurrent processes and parallel tool batches are
+  ordinary, so one hook reading while another wrote got a truncated file, the failure was swallowed
+  into zeros, and that process **wrote the zeros back** — wiping `touched`, `artifacts`, `captures`
+  and `gap_pass` for the rest of the session.
+
+  This is AGENTS.md rule 4 and engineering principle 2 violated inside the tool that enforces them
+  (*"no catch-returns-default… a swallowed failure makes broken code report success"*), and the
+  right pattern already existed here — `ver:content-store` pins *"an interrupted write leaves no
+  partial file, proven by writing to a temp path and renaming"*. **Reproduced rather than inferred:**
+  seeding `{touched: true, artifacts: 4, writes: 4}` and firing 150 concurrent edit hooks returned
+  `{touched: false, artifacts: 0, writes: 0, edits: 6}` — 144 of 150 increments lost with every
+  sticky field. A gentler 40-pair run loses one update, which is why it read as intermittent.
+
+  Fixed three ways: the read-modify-write takes an exclusive `flock` (degrading to the previous
+  behaviour where `fcntl` is absent, because a hook must never break a session); the write goes to a
+  temp file and `os.replace`; and an unreadable tally still **restarts** the count — an existing
+  test required that and was right — but the restart is now **marked**, and the Stop backstop drops
+  its one *negative* claim (*"the graph was never consulted"*) when the flag is set. A tally rebuilt
+  from nothing cannot prove nothing happened. The *positive* claim (*"N writes went unchecked"*)
+  survives a restart honestly, which is what keeps the flag from being an off switch.
+
+- **The nudge now keeps its own "fires once" promise** (BL-111). Every nudge ends *"this nudge fires
+  once; stopping again proceeds"*, and that rested entirely on the harness's `stop_hook_active` — a
+  flag covering a single stop *cycle*, never persisted. So the rule implemented was *once per stop
+  cycle* while the rule advertised was *once per session*, and the gap bit hardest exactly where the
+  nudge could not be satisfied: a session whose server is unreachable was nudged at every stop with
+  no action available that would stop it, which is when someone disables the hook.
+
+  `claim_nudge()` is an atomic test-and-set — the first caller prints, everyone after stays silent —
+  and it had to be a *claim* rather than a flag set after printing, which is where BL-161's lock
+  earns its keep. **The hook can legitimately be registered more than once**: reflow2 installs
+  machine-wide *and* a project can carry its own registration, and the two command spellings do not
+  dedupe, so two processes run the Stop hook concurrently. A plain read-check-write would let both
+  read `nudged: false` and both print — the doubled message this was filed from. The counterweight
+  is that the claim is spent by *nudging*, not by *stopping*: a session with nothing owed stops
+  silently and keeps its one nudge.
+
+- **The nudge's op sets never learned the bulk forms** (BL-161, second half). `ARTIFACT_OPS` held
+  `set_artifact_checksum` but not `set_artifact_checksums`; `CAPTURE_OPS` had no `create_nodes`; the
+  gap-pass reckoning had no `gaps_to_prompts`. A session doing everything right *through the tools
+  BL-153 shipped* tallied as having done none of it — BL-152's shape landing on the trigger that
+  judges whether the loop ran, and it worsens exactly as the bulk forms succeed.
+
 ### Added
 
 - **A word for "nothing moved" — the artifact ledger's missing third answer** (BL-157, BL-158).
