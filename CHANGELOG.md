@@ -33,6 +33,60 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A word for "nothing moved" — the artifact ledger's missing third answer** (BL-157, BL-158).
+  Two findings, one hole, both found by hitting them rather than by reasoning about them.
+
+  **`baseline_established`, a third drift disposition** (BL-157). `set_artifact_checksum` required
+  a disposition and both available answers presupposed a movement: `design_holds` means *the code
+  moved and carried no design meaning*, `design_updated` means *behaviour moved and the design
+  moved with it*. An artifact registered with **no** checksum getting its first one is neither.
+  Closing `art:detect`'s missing baseline therefore recorded a `refactor` of a file that session
+  never touched — a change that never happened, written into the ledger that exists to keep the
+  design free of exactly that. The new disposition takes no `change_type` and records
+  `ChangeEvent.change_type = baseline_established`: the record moved, the code did not.
+
+  **Which disposition is available is now a fact, not a preference, and the wrong one is refused.**
+  An accept against an artifact with no checksum is refused naming `baseline_established`; a
+  `baseline_established` that would **move** an existing baseline is refused naming the other two.
+  That second guard is what keeps this a fix rather than an off switch — without it the new
+  disposition would be a way to accept real drift without answering what the change meant, which
+  is the silent accept `dec:two-sided-accept` exists to forbid. Re-establishing the *same*
+  baseline stays idempotent, so re-running a sweep is safe. `baseline_established` is also
+  **refused by `add_change_event` and `record_change`**, so the label cannot be applied by hand to
+  an ordinary change and the ledger's count of first baselines still measures something.
+
+- **A clean reconcile records what it confirmed** (BL-158). `record_events` only ever recorded a
+  *divergence*, so a pass that checked everything and found everything correct wrote nothing —
+  and `loop_status`, which computes `unexamined` from recorded claims, went on saying nobody had
+  ever looked. Reproduced first-hand on reflow2's own design: **107 artifacts, 106 unchanged, zero
+  drift, and the number moved by zero.** The operator who checks everything and the operator who
+  checks nothing produced identical graphs. A recording pass now stamps `Artifact.last_confirmed_at`
+  on every artifact observed to still match, `reconcile_artifacts` returns them in `confirmed`, and
+  `confirmation_ledger` reports `confirmations` / `last_confirmed_at` and counts them toward
+  *examined*. Supersedes BL-134, which had the same finding by inference.
+
+  **A property rather than an event, deliberately**: a confirmation is high-frequency and says
+  nothing changed, so a node per artifact per pass would bury axis Z — the log of what actually
+  *moved* — under non-events. It is the shape `Verification.last_run_at` already uses to answer the
+  same question about a check. **A confirmation records only what was observed**: a partial sweep
+  confirms exactly the artifacts it looked at, a drifted artifact is never confirmed, and an
+  undated pass writes none and returns them in `unconfirmed_undated` rather than dropping them
+  silently.
+
+  **Proven on the real design, which is BL-158's own measurement replayed.** The freshly-built
+  binary, driven over stdio JSON-RPC against a throwaway copy of reflow2's own 1218-node design,
+  swept all 109 registered artifacts off the actual working tree: 109 unchanged, zero drift, 109
+  confirmed, and `loop_status` went from *"1 built capability never checked against reality"* to
+  entirely clean. The capability that cleared was `cap:skill-triggers` via `art:nudge-detect` — the
+  exact claim the loop had been asking about, pass after clean pass. The row's original measurement
+  was 107 artifacts, 106 unchanged, zero drift, and the number moving by **zero**.
+
+  Both are schema changes that **do not move the version stamp** — the stamp counts node and edge
+  *types*, and this adds one `change_type` enum value and one `Artifact` property. No older reflow2
+  is locked out and no upgrade doc is owed. One caveat worth stating: the stamp cannot see an enum
+  widening, so an older binary will open a design containing a `baseline_established` ChangeEvent
+  and only refuse if it tries to re-write that node.
+
 - **Bulk forms for the five tools the surface measurement caught calling themselves** (BL-153 fix
   shapes (1) and (3), `cap:bulk-forms`, `dec:bulk-is-all-or-nothing-with-per-item-findings`,
   `dec:bulk-keeps-the-judgement-per-item`). `create_nodes`, `create_edges`,

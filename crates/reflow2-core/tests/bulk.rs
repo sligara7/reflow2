@@ -222,6 +222,19 @@ fn an_edge_into_a_missing_node_rejects_the_batch() {
 
 // ---- set_artifact_checksums ------------------------------------------------
 
+/// Give an artifact its first baseline, so a later accept has something to
+/// accept a change *against* (BL-157).
+fn baseline(g: &mut DesignGraph, artifact_id: &str) {
+    g.set_artifact_checksum(
+        artifact_id,
+        "sha256:000",
+        DriftDisposition::BaselineEstablished,
+        None,
+        Some("2026-07-31"),
+    )
+    .unwrap();
+}
+
 #[test]
 fn each_accepted_checksum_keeps_its_own_disposition() {
     // THE COUNTERWEIGHT THAT MATTERS. BL-153 named this exact trap: "a batch of
@@ -230,6 +243,11 @@ fn each_accepted_checksum_keeps_its_own_disposition() {
     // make this the bulk accept dec:two-sided-accept exists to forbid. Two
     // items, two DIFFERENT dispositions, both honoured.
     let mut g = seeded();
+    // Both artifacts start FROM a baseline: `design_holds`/`design_updated`
+    // claim something about a movement, and there is no movement without one
+    // (BL-157). Establishing it is a separate, earlier act.
+    baseline(&mut g, "art:a");
+    baseline(&mut g, "art:b");
     g.add_change_event("chg:real", "A real design change", ChangeType::NewFeature)
         .unwrap();
 
@@ -281,6 +299,7 @@ fn each_accepted_checksum_keeps_its_own_disposition() {
 #[test]
 fn one_unknown_artifact_rejects_every_accept_in_the_batch() {
     let mut g = seeded();
+    baseline(&mut g, "art:a");
     let items = [
         ChecksumAccept {
             artifact_id: "art:a".into(),
@@ -307,8 +326,9 @@ fn one_unknown_artifact_rejects_every_accept_in_the_batch() {
     assert_eq!(r.failures.len(), 1);
     assert_eq!(r.failures[0].id, "art:ghost");
     let a = g.get_node(node::ARTIFACT, "art:a").unwrap().unwrap();
-    assert!(
-        !a.properties.contains_key("checksum"),
+    assert_eq!(
+        a.properties["checksum"].as_str(),
+        Some("sha256:000"),
         "a baseline must not move because a LATER item in the list was wrong"
     );
 }

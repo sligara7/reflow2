@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9dba62d40234a2820614ea24107dd241e3c11b740282b79ecb3a3fd117bc58f6",
+  "content_hash": "sha256:9d747383103bd102814506e329cba75d0b7a8818f0a3d7d0beb8a5660db0c52f",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -536,6 +536,30 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:nothing-moved",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:nothing-moved",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:nothing-moved",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:drift"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4564,6 +4588,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-af14fd0d926de4db",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-b6c2d52afc751a6e",
       "properties": {
         "accepted_baseline": true,
@@ -6388,6 +6421,78 @@
         "action": "added"
       },
       "to_id": "cap:composed-analysis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:confirmation-vocabulary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:confirmation-vocabulary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:confirmation-vocabulary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:confirmation-vocabulary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:confirmation-vocabulary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:confirmation-vocabulary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:confirmation-vocabulary",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:freshness"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:confirmation-vocabulary",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:reconcile-built"
     },
     {
       "edge_type": "CHANGED",
@@ -27929,6 +28034,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:artifact",
       "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:nothing-moved"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:artifact",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:artifact"
@@ -28039,9 +28152,25 @@
       "edge_type": "REALIZES",
       "from_id": "art:confirm",
       "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:nothing-moved"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:confirm",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:confirmation-vocabulary-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:nothing-moved"
     },
     {
       "edge_type": "REALIZES",
@@ -28186,6 +28315,14 @@
         "completeness": "partial"
       },
       "to_id": "cap:drift-direction"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:drift",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:nothing-moved"
     },
     {
       "edge_type": "REALIZES",
@@ -29572,6 +29709,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:nothing-moved",
+      "properties": {},
+      "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:nudge-path-proven",
       "properties": {},
       "to_id": "req:nudge-path-proven"
@@ -30130,6 +30273,12 @@
       "from_id": "ver:composed-analysis",
       "properties": {},
       "to_id": "cap:composed-analysis"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:confirmation-vocabulary",
+      "properties": {},
+      "to_id": "cap:nothing-moved"
     },
     {
       "edge_type": "VERIFIES",
@@ -30801,6 +30950,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:confirmation-vocabulary-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:content",
       "properties": {
         "action": "created"
@@ -31454,7 +31611,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:87a82a5077fcb14d",
+        "checksum": "sha256:7004caf86c1a19dd85875ce75182c3932679d9159239ffea85fa828f7c269ab9",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
         "status": "realized"
@@ -31509,7 +31666,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c4a0bf3c3a4a2164",
+        "checksum": "sha256:c2bea913c620128c1e602aed078713c7598f92e7cada4024c67777584b23b8be",
         "location": "crates/reflow2-core/tests/changelog.rs",
         "name": "tests/changelog.rs",
         "status": "realized"
@@ -31597,9 +31754,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6570819382224b26",
+        "checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3",
         "location": "crates/reflow2-core/src/confirm.rs",
         "name": "confirm.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:confirmation-vocabulary-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344",
+        "location": "crates/reflow2-core/tests/confirmation_vocabulary.rs",
+        "name": "confirmation_vocabulary.rs",
         "status": "realized"
       }
     },
@@ -31740,7 +31908,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:86f8fd9fca8883fe",
+        "checksum": "sha256:1a73d079d4cd2087595445ab359a7ba6d2b171eb7a1fc3c9a1adb4c49f6d73df",
         "location": "crates/reflow2-core/src/drift.rs",
         "name": "drift.rs",
         "status": "realized"
@@ -32257,7 +32425,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:314c17f7c00d511d",
+        "checksum": "sha256:42ebd5b066ce27ceaa2a03c9408796fc34d74c5e2de9d1dc6775413cd13cd5ae",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -32389,7 +32557,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:595c17e32440dba8",
+        "checksum": "sha256:9fca335f5153966545aba1a64382f2a90c6388e6634ea023dd9441f9d320abbd",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
         "status": "realized"
@@ -33383,6 +33551,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Model a process, not only a product",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:nothing-moved",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A first baseline and a clean check are recorded as what they are, rather than as changes that never happened. `set_artifact_checksum` gains a third disposition, `baseline_established`, for an artifact registered with no checksum getting its first one — the record moves and the code does not — and which disposition is available is a fact about the artifact rather than a preference: an accept against no baseline is refused, and a baseline_established that would MOVE an existing one is refused, so the new word cannot launder real drift past the two-sided accept. A recording reconcile stamps `Artifact.last_confirmed_at` on every artifact observed to still match, so a pass that found everything correct is distinguishable from a pass nobody ran; the confirmation ledger counts those toward examined, and reports first baselines apart from accepts because a first baseline is not a judgement anyone made.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "The ledger can say that nothing moved",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -34383,6 +34564,15 @@
       }
     },
     {
+      "node_id": "chg:accept-af14fd0d926de4db",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "Five assertions had been inverted while satisfying a clippy lint — get(X).is_none() became contains_key(X) without the negation. The full suite caught it; the design is unchanged."
+      }
+    },
+    {
       "node_id": "chg:accept-b6c2d52afc751a6e",
       "node_type": "ChangeEvent",
       "properties": {
@@ -34947,6 +35137,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Two designs analysed together without either being written to: the dependency's ids are namespaced into an in-memory graph and reflow2's ordinary detectors run over the whole, every finding attributed ours/theirs/seam"
+      }
+    },
+    {
+      "node_id": "chg:confirmation-vocabulary",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-157 + BL-158: the ledger gains a word for \"nothing moved\" — a first baseline is recorded as a first baseline, and a clean reconcile records what it confirmed"
       }
     },
     {
@@ -39786,6 +39984,16 @@
       }
     },
     {
+      "node_id": "frag:art:confirmation-vocabulary-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered confirmation_vocabulary.rs"
+      }
+    },
+    {
       "node_id": "frag:art:content",
       "node_type": "Fragment",
       "properties": {
@@ -43722,6 +43930,18 @@
       }
     },
     {
+      "node_id": "ver:confirmation-vocabulary",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-01",
+        "level": "unit",
+        "method": "test",
+        "name": "The ledger's word for \"nothing moved\" (crates/reflow2-core/tests/confirmation_vocabulary.rs + crates/reflow2-mcp/tests/tools.rs) — 14 cases. BL-157: a first baseline records `baseline_established`, not a `refactor` of a file nobody touched; the same first baseline twice mints one claim; the ledger counts first baselines APART from accepts, because folding them into design_holds would report a judgement nobody made. BL-158: a clean reconcile stamps last_confirmed_at and returns what it confirmed, and one clean pass moves a never-examined capability out of `unexamined`. FIVE COUNTERWEIGHTS, which are what keep this from being a way to silence the two-sided accept: a baseline_established that would MOVE an existing baseline is refused; an accept against NO baseline is refused naming the disposition that is right; looking still writes nothing; a partial sweep confirms only what it saw and a drifted artifact is never confirmed; and a first baseline does not feed last_claim_at, so registering a long-missing checksum cannot age the passing check that covers it. MUTATION-CHECKED FIVE WAYS, each failing exactly the tests that name it: let baseline_established move a baseline → only the laundering counterweight fails; allow an accept with no baseline → only that refusal fails; blind the ledger to the new change_type → exactly the three tests naming it, including the freshness counterweight; write an undated confirmation anyway → only the skipped-out-loud case; confirm everything observed rather than only what matched → only the drifted-artifact case. PROVEN ON THE REAL SURFACE, and it is BL-158's own scenario replayed: the freshly-built binary driven over stdio JSON-RPC against a throwaway copy of reflow2's own 1218-node design, sweeping all 109 registered artifacts off the actual working tree — 109 unchanged, ZERO drift, 109 confirmed, and `loop_status` went from \"1 built capability never checked against reality\" to entirely CLEAN. The capability that cleared was cap:skill-triggers via art:nudge-detect, which is the exact claim the live loop had been asking about all session. The row's own measurement was 107 artifacts, 106 unchanged, zero drift and the number moving by ZERO. FOUND BY THE GUARD ITSELF: two changelog.rs fixtures had been passing a checksum as add_artifact's LOCATION argument for as long as they existed, so their accepts had been accepting nothing and nothing had ever checked. FOUND BY WRITING THE PROOF: the first sweep reported 51 phantom drifts on a clean tree because it hashed to the full 64 hex chars while the design registers checksums anywhere from a 16-char prefix up — reflow2_check.py compensates for that in Python, and the core's canonical_checksum does not, which is BL-125's dialect problem in a second form.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:content-manifest",
       "node_type": "Verification",
       "properties": {
@@ -44660,7 +44880,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b93fd919adbe1de0e1aae726e71db9a3bc0bf874436d158dabaf699384128a4c",
+  "prev_content_hash": "sha256:9dba62d40234a2820614ea24107dd241e3c11b740282b79ecb3a3fd117bc58f6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

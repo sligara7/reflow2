@@ -269,6 +269,19 @@ pub enum ChangeType {
     Deprecation,
     /// A re-sync back to coherence (a HEAL outcome).
     Resync,
+    /// An `Artifact` registered with no checksum got its **first** one: the
+    /// record moved and the code did not (BL-157).
+    ///
+    /// The odd one out, and deliberately so. Every other variant answers *why
+    /// the thing changed*; this one says the thing did not change and only the
+    /// design's knowledge of it did. It exists because the alternative — the
+    /// least-wrong `refactor` — puts a change that never happened on axis Z.
+    ///
+    /// **Reserved for [`set_artifact_checksum`](crate::graph::DesignGraph::set_artifact_checksum)'s
+    /// `BaselineEstablished` disposition.** The generic change-recording paths
+    /// refuse it, so the confirmation ledger's count of first baselines cannot
+    /// be inflated by hand.
+    BaselineEstablished,
 }
 
 impl ChangeType {
@@ -285,6 +298,7 @@ impl ChangeType {
             ChangeType::EnvironmentChange => "environment_change",
             ChangeType::Deprecation => "deprecation",
             ChangeType::Resync => "resync",
+            ChangeType::BaselineEstablished => "baseline_established",
         }
     }
 }
