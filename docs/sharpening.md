@@ -131,8 +131,36 @@ baseline to move, on purpose:
 | `tools/build_design_graph.py` | What does reflow2 say about reflow2's own design? | 180 nodes, **1 gap** (cap:adopt unverified — deliberate: a skill exercised once on storyflow, checked by no machine), **4 warnings, 0 critical**. 2026-07-20, two passes: the self-adopt run found 15 of the prior 16 gaps pointed at the *model* (five shipped capabilities still `planned`; 15 of 33 source files unmodelled; zero DEPENDS_ON edges — leaving `circular_dependencies` blind to the real propagate↔structure cycle), ruled per §2 and corrected; the builder now derives DEPENDS_ON from source and reconciles against the filesystem, so both staleness classes fire on their own. The surfaced **critical circular_dependency** was then fixed in code (shared vocabulary moved to nodes.rs/graph.rs) and the same probe reports it gone; confirm.rs and reflow2_init.py gained their first test suites, closing the other two true gaps. Gaps fell 16 → 3 → 1 because the model and then the system were fixed, **never because a probe was loosened**. (Was 96 nodes, 16 gaps, 9 defects; before that 33/36 with 13 false gaps and 24 false defects — BL-38/BL-5/BL-42 cleared the noise.) | — |
 | `tools/model_the_loop.py` | Can reflow2 hold its own *process* — a model with feedback loops as the subject? | **0 frictions** (was 4: no Flow write side, roles lost, cycles invisible, product-shaped nudge — BL-37); stays as a regression gate, exits non-zero on any friction | — |
 
+| `tools/surface_usage.py` | Which parts of the surface do real sessions actually **drive**? | 2026-08-01, 46 transcripts / 6,095 calls / 10 projects: **52.9% of tool transitions are self-loops** (BL-153), **skills read once per 380 calls** (BL-154), **40 of 132 tools uncalled** in the retained sample (BL-155). No baseline to "improve" — it is a diagnostic, not a gate | — |
+
 `tools/smoke_mcp.py` stays the gate for the shipped surface; these five are the gate for whether the
-*loop* works. The green ones (`phase_trial`, `coherent_erosion_trial`, `model_the_loop`) exit 0 and
+*loop* works.
+
+**The sixth instrument measures something the other five cannot see, and that is why it was added.**
+All five above ask whether the design *engine* works — does the thread hold, does the release
+describe what shipped, can the loop model itself. `surface_usage.py` asks whether anyone can
+**reach** it: it reads session transcripts and reports call counts, the **self-loop share** (what
+fraction of transitions are the same tool called again — a proxy for a missing bulk form, since
+nobody calls one tool 144 times in a session because they want to), and **PageRank over the
+transition graph with self-loops removed**.
+
+That last one earns its keep by *disagreeing* with raw counts, and the disagreement is the reading:
+raw volume puts `release_includes` (1,008 calls) first, which is bookkeeping in seven sessions;
+PageRank puts `detect_gaps`, `loop_status`, `export_graph` and `detect_defects` first — the
+coherence loop's read side, which is what real workflows route *through*. **High volume with low
+PageRank is a batching defect; high PageRank is load-bearing and had better be well surfaced.**
+Two rankings, two different questions, and the tool that tops one is not the tool that tops the other.
+
+**It is a diagnostic and not a gate, deliberately.** There is no target self-loop share, and a
+number moving here is a finding to explain rather than a pass to earn — §4's warning about a score
+improving two ways applies with particular force to a measurement of one's own users. It is also
+**read-only and offline**: it reads transcripts on disk, writes nothing to any graph, and nothing it
+computes becomes design state (`dec:loop-status-state-not-history` — looking is not writing).
+
+**Absence is weak evidence, and that caveat must travel with any number quoted from it.** It sees
+only retained transcripts, so "never called" means "not in the sample". Calibrated against a known
+case: `set_project_mode` appears as *text* in ten transcripts with zero recorded calls, though
+reflow2's own project was set to `rigid` with it — a tool can be discussed far more than it is used. The green ones (`phase_trial`, `coherent_erosion_trial`, `model_the_loop`) exit 0 and
 may be treated as pass/fail regression gates; `erosion_trial` and the design-graph baselines still
 exit non-zero by design and record numbers to move, not failures to fix silently.
 

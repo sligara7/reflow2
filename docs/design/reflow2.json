@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:da60a633ff586401b86d67ab8e25b11625564c1bcbb624a48b277cc3d3a6acfe",
+  "content_hash": "sha256:a4999d9722a5bdbd185df9631f73ee92629167a70978a3c3223ea3729cb45fec",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -3455,6 +3455,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-measure-the-surface",
+      "properties": {
+        "acted_at": "2026-08-01",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -28627,6 +28636,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:surface-usage-instrument",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:surprises",
       "properties": {
         "completeness": "complete"
@@ -30967,6 +30984,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:surface-usage-instrument",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:surface-usage-instrument"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:surprises",
       "properties": {
         "action": "created"
@@ -32062,6 +32087,17 @@
         "checksum": "sha256:76f2dec276b09685",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:surface-usage-instrument",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:b3b2bac1387c9c53",
+        "location": "tools/surface_usage.py",
+        "name": "Surface-usage instrument — which parts of reflow2 real sessions actually drive",
         "status": "realized"
       }
     },
@@ -36481,6 +36517,16 @@
       }
     },
     {
+      "node_id": "dec:idea-measure-the-surface",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony's idea, 2026-08-01, and the first run has already paid (BL-153/154/155). What is open is not whether the measurement is useful, but how far it should go and what it must never become.\n\nWHAT WAS DONE, and it is now `tools/surface_usage.py`: read the retained Claude Code transcripts, count tool calls, build the tool-to-tool transition graph, and run PageRank over it with self-loops removed. 46 sessions, 6,095 calls, 10 projects.\n\nWHY THE GRAPH OPERATION EARNS ITS KEEP: it disagrees with raw counts. Volume puts `release_includes` first (1,008 calls, bookkeeping in 7 sessions); PageRank puts `detect_gaps`, `loop_status`, `export_graph`, `detect_defects` first — the coherence loop's read side, which is what workflows route THROUGH. High-volume-low-PageRank is a batching defect; high-PageRank is load-bearing. One measurement, two questions, and the tool that tops one does not top the other.\n\nTHE OPEN QUESTIONS, none answered:\n(a) HOW FAR DOES IT GO? Today it is a manual, offline, read-only probe over transcripts a developer happens to have. The tempting next step is telemetry FROM the server — and that is a different product with different consent, privacy and trust properties. A design brain that watches its users is not obviously the same thing as one that keeps their design coherent.\n(b) MAY ANY OF IT REACH THE GRAPH? `dec:loop-status-state-not-history` says loop debt is computed from graph state and never from run history, and 'looking is not writing' is a standing rule. That decision is about DEBT specifically, not about whether usage telemetry may exist at all — but nobody has ever said so out loud, and this is the moment to decide rather than to assume. The instrument as written writes nothing, which keeps the question open rather than answering it by accident.\n(c) WHAT IS THE HONEST UNIT? Self-loop share proxies for a missing bulk form, and it worked. But a design brain optimised for fewer tool calls is not obviously optimised for better designs, and BL-23's lesson is that a number which punishes correct work needs a different question rather than a tuned threshold. There is no target self-loop share and there should not be one.\n(d) OTHER PROJECTS' TRANSCRIPTS ARE OTHER PEOPLE'S WORK. Reading Anthony's own machine is one thing. If this ever runs over a consumer's sessions it needs their word first, and probably needs to never leave their machine.\n\nTHE HONEST LIMIT ALREADY FOUND: absence is weak evidence. `set_project_mode` appears as text in ten transcripts with zero recorded calls, so a tool used before the retention window is indistinguishable from one never used. Any 'unused' verdict from this instrument is a question, not a finding.",
+        "name": "OPEN — should real usage telemetry be a standing instrument for shaping the surface, and how far may it go?",
+        "rationale": "Recorded as an idea rather than a capability because the measurement is already built and useful while the QUESTIONS it raises — server-side telemetry, whether any of it may become graph state, consent over other people's transcripts — are genuinely undecided and would each be a different product. Anthony's idea; the first run produced three backlog rows.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-missing-edge-prediction",
       "node_type": "Decision",
       "properties": {
@@ -39841,6 +39887,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered structure.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:surface-usage-instrument",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered Surface-usage instrument — which parts of reflow2 real sessions actually drive"
       }
     },
     {
@@ -44140,7 +44196,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:799b06d908ffc39ed1f58ad7ef40b5d13a4375484afacaa449b407d98ca3af9a",
+  "prev_content_hash": "sha256:da60a633ff586401b86d67ab8e25b11625564c1bcbb624a48b277cc3d3a6acfe",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
