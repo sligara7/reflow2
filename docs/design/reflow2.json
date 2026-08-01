@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:82f3361746c6e023838610c50ae59307ff106a11e7f058064f344d5e2e6f3e47",
+  "content_hash": "sha256:eaa2fad44dbb98b195cc52ea6ed621c65ce5ce10ab6a43b3951fabd8eabda4fd",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -632,6 +632,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:release-pinned-to-time",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2494,6 +2502,12 @@
       "from_id": "rel:v0160",
       "properties": {},
       "to_id": "epoch:v0160"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0170",
+      "properties": {},
+      "to_id": "epoch:v0170"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -24677,6 +24691,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:linking-repos",
+      "properties": {},
+      "to_id": "epoch:v0170"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v0100",
       "properties": {},
       "to_id": "epoch:v0101"
@@ -24692,6 +24712,12 @@
       "from_id": "epoch:v0160",
       "properties": {},
       "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0170",
+      "properties": {},
+      "to_id": "epoch:v0180"
     },
     {
       "edge_type": "PRECEDES",
@@ -25022,6 +25048,14 @@
         "completeness": "partial"
       },
       "to_id": "cap:kpp"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:release-pinned-to-time"
     },
     {
       "edge_type": "REALIZES",
@@ -26474,6 +26508,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:release-pinned-to-time",
+      "properties": {},
+      "to_id": "req:graph-indexes-snapshots"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:remote-sessions",
       "properties": {},
       "to_id": "req:sessions-across-machines"
@@ -27200,6 +27240,12 @@
       "from_id": "ver:reconcile-verified",
       "properties": {},
       "to_id": "cap:reconcile-verified"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:release-without-epoch",
+      "properties": {},
+      "to_id": "cap:release-pinned-to-time"
     },
     {
       "edge_type": "VERIFIES",
@@ -28313,7 +28359,6 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:95413535822be8f6",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
         "status": "realized"
@@ -30066,6 +30111,19 @@
         "name": "Recover intent from test evidence, without letting the tests prove themselves",
         "provenance": "authored",
         "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:release-pinned-to-time",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`release_without_epoch` raises a gap per Release that has no `AT_EPOCH` edge to a DesignEpoch, so a release that was CUT without being placed on the time axis is caught instead of discovered later by whatever tried to compute from it.\n\nWHY IT HAD TO BE A DETECTOR RATHER THAN A PROCEDURE STEP. The computation already existed: `changelog_point` resolves such a release to a position carrying no sequence, so any window bounded by it loses its lower bound and silently widens to the beginning of the design. What was missing was the rung that says so. The step lived in a memory-only procedure and failed twice — `rel:v0190` was cut without the edge four hours before `changelog_view` needed it, and `rel:v0170` still lacks one while v0.18.0's own commit message boasted of not repeating the fault.\n\nTHE INVISIBILITY IS THE DEFECT, not the absence. A matching name plus an existing epoch node make a missing edge look exactly like a present one to every reader, so nothing about the graph's appearance distinguishes correct from broken. The rule therefore counts only `AT_EPOCH`; a corresponding name, or any other edge between the two nodes, does not pin anything, and a test asserts precisely that with a non-`AT_EPOCH` edge in place.\n\nPLANNED RELEASES ARE DELIBERATELY EXEMPT. The epoch is minted when a release is cut, so demanding one beforehand would be an alarm on correct work — the shape BL-115 names — and would hold the gate red for every release on the roadmap. The rule fires the moment status leaves `planned`, which is when the omission becomes real. \"When is this planned release due?\" is a genuine but different question, wanting the schedule thread rather than this rule.\n\nA STATED LIMIT, recorded as a test rather than left to be discovered: `Release.status` defaults to `planned`, so a release that shipped but never had its status set inherits the exemption and reads exactly like one still to come. This rule cannot tell those apart and does not try — a status claiming less than the structure shows is `status_contradiction`'s territory.\n\nKeyed per release, not aggregated: accepting \"v0.17.0 predates the epoch spine\" must not also accept the next release cut without one.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A release that names no moment is reported, because an unplaced release makes every window computed from it silently wrong",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -35003,6 +35061,16 @@
         "epoch_type": "release_cut",
         "name": "v0.16.0 cut",
         "sequence": 190,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:v0170",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.17.0 cut",
+        "sequence": 205,
         "status": "arrived"
       }
     },
@@ -40125,6 +40193,18 @@
       }
     },
     {
+      "node_id": "ver:release-without-epoch",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-07-31",
+        "level": "unit",
+        "method": "test",
+        "name": "release_without_epoch suite (tests/detect.rs) — 8 cases, 4 mutation-checked",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:remote-sessions",
       "node_type": "Verification",
       "properties": {
@@ -40437,7 +40517,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d452de503d0532f3f0342512b0b250cce4bca2a08f86b2d4926d34aa8a5330bc",
+  "prev_content_hash": "sha256:82f3361746c6e023838610c50ae59307ff106a11e7f058064f344d5e2e6f3e47",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -228,6 +228,22 @@ pub enum GapSource {
     /// actually costs the KPP is semantic, and calling it broken automatically
     /// would be the judgement `dec:report-dont-judge` forbids.
     KppContradicted,
+    /// A `Release` with no `AT_EPOCH` edge, so it names no point on the time
+    /// axis (BL-122).
+    ///
+    /// THE INVISIBILITY IS THE POINT. `changelog_point` resolves such a release
+    /// to a position with no sequence, so the changelog window for it has no
+    /// lower bound and silently widens to the beginning of the design — and a
+    /// matching name plus an existing epoch node make the missing edge look
+    /// exactly like a present one to every reader, human or otherwise. That is
+    /// how `rel:v0190` was cut without its edge four hours before
+    /// `changelog_view` needed it, and how `v0.17.0` still lacks one while
+    /// `v0.18.0`'s commit message boasted of not repeating the fault.
+    ///
+    /// A gap rather than a defect because WHICH epoch is a judgement only a
+    /// human can make, and a release genuinely cut before the epoch spine
+    /// existed is a real state to accept rather than repair.
+    ReleaseWithoutEpoch,
 }
 
 impl GapSource {
@@ -268,6 +284,7 @@ impl GapSource {
             GapSource::KppUnbound => "kpp_unbound",
             GapSource::KppBreached => "kpp_breached",
             GapSource::KppContradicted => "kpp_contradicted",
+            GapSource::ReleaseWithoutEpoch => "release_without_epoch",
         }
     }
 
@@ -330,7 +347,11 @@ impl GapSource {
             | GapSource::UndecidedDecisionPoint
             | GapSource::KppUnbound
             | GapSource::KppBreached
-            | GapSource::KppContradicted => false,
+            | GapSource::KppContradicted
+            // Per-release: the finding names the one release missing its edge,
+            // so accepting "v0.17.0 predates the epoch spine" must not also
+            // accept the next release cut without one.
+            | GapSource::ReleaseWithoutEpoch => false,
         }
     }
 }
@@ -942,6 +963,7 @@ impl DesignGraph {
         self.detect_failing_verifications(&mut gaps)?;
         self.detect_unresolved_drift(&mut gaps)?;
         self.detect_unreleased_components(&mut gaps)?;
+        self.detect_releases_without_epoch(&mut gaps)?;
         self.detect_status_contradictions(&mut gaps)?;
         self.detect_interface_pairing(&pop, &mut gaps)?;
         // Deliberately absent: unexpected coupling. It is a *signal*, reported
@@ -1831,6 +1853,79 @@ impl DesignGraph {
                     "Component '{}' has realizing artifacts; {} release(s) exist and model their contents, and none includes it.",
                     cmp.node_id,
                     releases.len()
+                ),
+            });
+        }
+        Ok(())
+    }
+
+    /// A `Release` that names no point on the time axis (see
+    /// [`GapSource::ReleaseWithoutEpoch`]).
+    ///
+    /// The whole computation already exists in `changelog_point`; this is the
+    /// missing detector rung. Deliberately reports the edge kind it examined —
+    /// BL-114's lesson, applied at birth rather than retrofitted: a finding
+    /// that says "has no epoch" when it means "has no `AT_EPOCH` edge" is the
+    /// class of message a user learns to distrust.
+    fn detect_releases_without_epoch(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        // No epoch nodes at all means the temporal axis is simply not in use —
+        // a whole-graph situation, not one gap per release. Same guard shape as
+        // detect_unreleased_components' empty-`shipped` check.
+        if self.scan_nodes(node::DESIGN_EPOCH)?.is_empty() {
+            return Ok(());
+        }
+        for rel in self.scan_nodes(node::RELEASE)? {
+            // A PLANNED release legitimately has no epoch yet: the epoch is
+            // minted when the release is cut, so asking beforehand is an alarm
+            // on correct work — the `unverified_capability` disease (BL-115),
+            // which floods a gap list until people skim it. BL-122's defect is
+            // specifically a release that was CUT without its edge, and this
+            // still catches that the moment the status moves off `planned`.
+            //
+            // "When is this planned release due?" is a real and different
+            // question — a schedule question, wanting `SCHEDULED_FOR` and the
+            // roadmap thread, not this rule.
+            if rel
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                == Some("planned")
+            {
+                continue;
+            }
+            let pinned = self
+                .outgoing(&rel.node_id, Some(edge::AT_EPOCH))?
+                .into_iter()
+                .any(|e| matches!(self.get_node(node::DESIGN_EPOCH, &e.to_id), Ok(Some(_))));
+            if pinned {
+                continue;
+            }
+            let name = node_name(&rel);
+            gaps.push(GapCandidate {
+                id: gap_id(
+                    GapSource::ReleaseWithoutEpoch,
+                    std::slice::from_ref(&rel.node_id),
+                ),
+                gap_source: GapSource::ReleaseWithoutEpoch,
+                scope: GapScope::Project,
+                // Above unreleased_component's 0.5: this one makes a COMPUTED
+                // answer silently wrong rather than leaving a question open.
+                severity: 0.6,
+                title: format!("“{name}” is not pinned to any epoch"),
+                description: format!(
+                    "“{name}” has no AT_EPOCH edge, so it names no point on the time axis. \
+                     Anything computing a window from it — a changelog between two releases, \
+                     an as-of-epoch read — gets no lower bound and silently widens to the \
+                     beginning of the design. Which epoch does it belong to, or was it cut \
+                     before the epoch spine existed?"
+                ),
+                affected_ids: vec![rel.node_id.clone()],
+                suggested_depth: 1,
+                evidence: format!(
+                    "Release '{}' has no AT_EPOCH edge to a DesignEpoch. Only AT_EPOCH was \
+                     considered — a name that matches an epoch node, or any other edge \
+                     between them, does not pin it.",
+                    rel.node_id
                 ),
             });
         }
