@@ -408,8 +408,21 @@ fn the_same_window_twice_produces_the_identical_draft() {
 #[test]
 fn a_drift_accept_that_repaired_the_code_is_fixed_not_changed() {
     let mut g = two_releases();
-    g.add_artifact("art:thing", "thing.rs", None, Some("sha256:aaaa"))
+    g.add_artifact("art:thing", "thing.rs", None, Some("src/thing.rs"))
         .unwrap();
+    // The baseline the accept below moves. It has to be established as its own
+    // act (BL-157) — and note what this replaced: the fixture used to pass
+    // "sha256:aaaa" as `add_artifact`'s fourth argument, which is the LOCATION.
+    // The artifact had no checksum at all and the test passed anyway, because
+    // nothing had ever checked that an accept had something to accept.
+    g.set_artifact_checksum(
+        "art:thing",
+        "sha256:aaaa",
+        reflow2_core::DriftDisposition::BaselineEstablished,
+        None,
+        Some("2026-07-30"),
+    )
+    .unwrap();
 
     // `set_artifact_checksum` with DesignHolds writes its own ChangeEvent and
     // marks the CHANGED edge `accepted_baseline`. That edge carries
@@ -444,8 +457,16 @@ fn a_drift_accept_that_repaired_the_code_is_fixed_not_changed() {
 #[test]
 fn an_accept_that_is_not_a_fix_stays_out_of_the_fixed_bucket() {
     let mut g = two_releases();
-    g.add_artifact("art:refactored", "r.rs", None, Some("sha256:aaaa"))
+    g.add_artifact("art:refactored", "r.rs", None, Some("src/r.rs"))
         .unwrap();
+    g.set_artifact_checksum(
+        "art:refactored",
+        "sha256:aaaa",
+        reflow2_core::DriftDisposition::BaselineEstablished,
+        None,
+        Some("2026-07-30"),
+    )
+    .unwrap();
     // The counterweight: a `design_holds` accept for a REFACTOR carried no
     // design meaning and certainly fixed nothing. Without this case the rule
     // above could be "any accept is Fixed" and still pass.

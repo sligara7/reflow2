@@ -90,6 +90,22 @@ pub struct ClaimConfirmation {
     /// Baseline accepts tied to a design-side edit (the event also `CHANGED`
     /// a design node).
     pub design_updated_claims: usize,
+    /// First baselines recorded — an artifact that had no checksum getting one
+    /// (BL-157). Counted apart from the two accept claims because it is not an
+    /// accept: nothing moved, and nothing was compared. Folding it into
+    /// `design_holds_claims` would report a judgement nobody made.
+    pub baseline_claims: usize,
+    /// Artifacts under this capability carrying a `last_confirmed_at` — someone
+    /// ran a reconcile and they still matched their baseline (BL-158).
+    ///
+    /// **Weaker evidence than a disposition, and reported separately for that
+    /// reason.** An accept says a human considered what a change meant; a
+    /// confirmation only says the bytes had not moved when last observed. It is
+    /// enough to answer *has anyone ever looked* — which is all `Unexamined`
+    /// claims — and deliberately not enough to look like more.
+    pub confirmations: usize,
+    /// The newest `last_confirmed_at` across those artifacts.
+    pub last_confirmed_at: Option<String>,
     /// `ChangeEvent`s that `CHANGED` this capability itself — the design
     /// moving on the record.
     pub design_edits: usize,
@@ -197,9 +213,26 @@ impl DesignGraph {
             let mut unresolved = 0usize;
             let mut design_holds = 0usize;
             let mut design_updated = 0usize;
+            let mut baseline_claims = 0usize;
+            let mut confirmations = 0usize;
             let mut last_claim_at: Option<String> = None;
+            let mut last_confirmed_at: Option<String> = None;
 
             for art in &artifacts {
+                // BL-158 · someone ran a reconcile and this still matched. Read
+                // off the artifact rather than off an event, because a clean
+                // check is not a change (see `drift::stamp_confirmed`).
+                if let Some(node) = self.get_node(node::ARTIFACT, art)?
+                    && let Some(at) = node
+                        .properties
+                        .get("last_confirmed_at")
+                        .and_then(dynograph_core::Value::as_str)
+                {
+                    confirmations += 1;
+                    if last_confirmed_at.as_deref().is_none_or(|prev| at > prev) {
+                        last_confirmed_at = Some(at.to_string());
+                    }
+                }
                 for e in self.incoming(art, Some(edge::DEPENDS_ON))? {
                     let Some(ev) = self.get_node(node::DRIFT_EVENT, &e.from_id)? else {
                         continue;
@@ -228,19 +261,43 @@ impl DesignGraph {
                     let Some(ev) = self.get_node(node::CHANGE_EVENT, &e.from_id)? else {
                         continue;
                     };
-                    // Which kind of claim is this accept? A design-moving event
-                    // also CHANGED a non-Artifact design node.
-                    let mut moved_design = false;
-                    for t in self.outgoing(&ev.node_id, Some(edge::CHANGED))? {
-                        if t.to_id != *art && self.get_node(node::ARTIFACT, &t.to_id)?.is_none() {
-                            moved_design = true;
-                            break;
+                    // A first baseline is not an accept at all (BL-157), and it
+                    // has to be tested FIRST: it only ever CHANGED the artifact,
+                    // so the design-moved test below would silently count it as
+                    // a `design_holds` claim — the same fiction one layer over,
+                    // now in the ledger's own arithmetic.
+                    let is_first_baseline = ev
+                        .properties
+                        .get("change_type")
+                        .and_then(dynograph_core::Value::as_str)
+                        == Some(crate::temporal::ChangeType::BaselineEstablished.as_str());
+                    if is_first_baseline {
+                        baseline_claims += 1;
+                    } else {
+                        // Which kind of claim is this accept? A design-moving
+                        // event also CHANGED a non-Artifact design node.
+                        let mut moved_design = false;
+                        for t in self.outgoing(&ev.node_id, Some(edge::CHANGED))? {
+                            if t.to_id != *art && self.get_node(node::ARTIFACT, &t.to_id)?.is_none()
+                            {
+                                moved_design = true;
+                                break;
+                            }
+                        }
+                        if moved_design {
+                            design_updated += 1;
+                        } else {
+                            design_holds += 1;
                         }
                     }
-                    if moved_design {
-                        design_updated += 1;
-                    } else {
-                        design_holds += 1;
+                    // `last_claim_at` is read by the freshness comparison as
+                    // "the newest accepted change to the code this check
+                    // covers", so a first baseline must NOT feed it: nothing
+                    // moved, and letting it in would mark every passing check
+                    // on the capability stale the moment someone registered a
+                    // checksum that had been missing all along.
+                    if is_first_baseline {
+                        continue;
                     }
                     if let Some(at) = ev
                         .properties
@@ -293,9 +350,21 @@ impl DesignGraph {
                 _ => VerificationFreshness::Unknown,
             };
 
+            // `confirmations` and `baseline_claims` both count as looking
+            // (BL-157, BL-158). A clean reconcile IS an examination — that it
+            // recorded no divergence is its RESULT, not evidence that it never
+            // happened, and treating the two the same is what let a
+            // 107-artifact sweep leave this number untouched.
             let state = if unresolved > 0 {
                 ConfirmationState::Drifting
-            } else if drift_events + design_holds + design_updated + design_edits > 0 {
+            } else if drift_events
+                + design_holds
+                + design_updated
+                + design_edits
+                + baseline_claims
+                + confirmations
+                > 0
+            {
                 ConfirmationState::Confirmed
             } else {
                 ConfirmationState::Unexamined
@@ -315,6 +384,9 @@ impl DesignGraph {
                 unresolved_drift_events: unresolved,
                 design_holds_claims: design_holds,
                 design_updated_claims: design_updated,
+                baseline_claims,
+                confirmations,
+                last_confirmed_at,
                 design_edits,
                 last_claim_at,
                 last_verified_at,

@@ -19,6 +19,7 @@ schema:
         checksum: { type: string, description: "Content hash of the artifact as last reconciled with the design. The baseline drift detection compares against; a differing hash is a checksum_change DriftEvent. Opaque to reflow2 — the caller chooses the algorithm and supplies the value." }
         status: { type: enum, values: [planned, in_progress, realized, verified], default: realized, indexed: true }
         created_at: { type: string }
+        last_confirmed_at: { type: string, description: "When this artifact was last OBSERVED to still match its recorded checksum (BL-158). Written by a recording reconcile_artifacts pass on a clean match, and by nothing else. Deliberately a property rather than an event: a confirmation is high-frequency and says nothing changed, so recording each one as a node would flood axis Z with non-events — the same shape as Verification.last_run_at, which answers the same question about a check." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
       extraction_hint: >

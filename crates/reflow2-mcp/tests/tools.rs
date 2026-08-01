@@ -471,6 +471,108 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
     assert_eq!(after["unchanged"], 1);
 }
 
+/// BL-157 + BL-158 on the real surface: the third disposition, and a clean
+/// sweep that leaves a trace.
+#[tokio::test]
+async fn the_surface_can_say_that_nothing_moved() {
+    let s = seeded().await;
+    // Registered with NO checksum — the state `art:detect` was found in.
+    j!(s.link_artifact(Parameters(LinkArtifactReq {
+        artifact_id: "art:flight".into(),
+        name: "BallFlight.cs".into(),
+        location: Some("src/BallFlight.cs".into()),
+        artifact_type: Some("code".into()),
+        target_type: "Capability".into(),
+        target_id: "cap:flight".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: None,
+    })));
+
+    // An accept is refused, and the refusal names the disposition that is right.
+    let err = s
+        .set_artifact_checksum(Parameters(SetChecksumReq {
+            artifact_id: "art:flight".into(),
+            checksum: "sha256:v1".into(),
+            disposition: "design_holds".into(),
+            change_type: None,
+            design_change_event_id: None,
+            note: None,
+            at: Some("2026-08-01".into()),
+        }))
+        .await
+        .expect_err("there is no baseline to accept a change against");
+    assert!(
+        format!("{err}").contains("baseline_established"),
+        "the refusal must name what IS right, got: {err}"
+    );
+
+    // `change_type` alongside it is refused rather than ignored: a parameter
+    // silently dropped teaches the caller it was accepted.
+    assert!(
+        s.set_artifact_checksum(Parameters(SetChecksumReq {
+            artifact_id: "art:flight".into(),
+            checksum: "sha256:v1".into(),
+            disposition: "baseline_established".into(),
+            change_type: Some("refactor".into()),
+            design_change_event_id: None,
+            note: None,
+            at: Some("2026-08-01".into()),
+        }))
+        .await
+        .is_err(),
+        "baseline_established is not a change, so naming a change type is a mistake"
+    );
+
+    j!(s.set_artifact_checksum(Parameters(SetChecksumReq {
+        artifact_id: "art:flight".into(),
+        checksum: "sha256:v1".into(),
+        disposition: "baseline_established".into(),
+        change_type: None,
+        design_change_event_id: None,
+        note: None,
+        at: Some("2026-08-01".into()),
+    })));
+
+    // A clean sweep now says what it confirmed, instead of writing nothing.
+    let clean = j!(s.reconcile_artifacts(Parameters(ReconcileArtifactsReq {
+        observed: vec![obj(&serde_json::json!({
+            "artifact_id": "art:flight", "present": true, "checksum": "sha256:v1"
+        }))],
+        record_events: true,
+        exhaustive: false,
+        detected_at: Some("2026-08-02".into()),
+    })));
+    assert_eq!(clean["unchanged"], 1);
+    assert_eq!(
+        clean["confirmed"],
+        serde_json::json!(["art:flight"]),
+        "a pass that found everything correct must be distinguishable from one \
+         nobody ran"
+    );
+
+    let ledger = j!(s.confirmation_ledger());
+    assert_eq!(
+        ledger["unexamined"], 0,
+        "BL-158: the sweep has to be able to clear the debt it discharged"
+    );
+
+    // And the label cannot be applied by hand through the generic change path,
+    // or the ledger's count of first baselines would measure nothing.
+    assert!(
+        s.add_change_event(Parameters(AddChangeEventReq {
+            id: "chg:fake".into(),
+            name: "not really a baseline".into(),
+            change_type: "baseline_established".into(),
+            affected: None,
+        }))
+        .await
+        .is_err(),
+        "`baseline_established` is reserved for set_artifact_checksum"
+    );
+}
+
 /// The write side over the surface: DETECT asks for a Verification and a
 /// deployment, and the agent can now record both without generic create_node.
 #[tokio::test]

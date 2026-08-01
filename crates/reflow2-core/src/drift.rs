@@ -215,6 +215,35 @@ pub struct DriftReport {
     pub findings: Vec<DriftFinding>,
     /// Observations that matched their recorded checksum exactly.
     pub unchanged: usize,
+    /// Artifacts stamped with a fresh `last_confirmed_at` this run — the ones
+    /// that matched, when `record_events` was set (BL-158).
+    ///
+    /// **Why a clean pass has to write something.** Before this, `record_events`
+    /// only ever recorded a *divergence*, so a sweep that checked everything and
+    /// found everything correct left no trace — and the confirmation ledger,
+    /// which computes `unexamined` from recorded claims, went on saying nobody
+    /// had ever looked. Reproduced on reflow2's own design: 107 artifacts, 106
+    /// unchanged, zero drift, and `loop_status` moved by zero. The operator who
+    /// checks everything and the operator who checks nothing saw byte-identical
+    /// output.
+    ///
+    /// Listed by id rather than counted, because the honest version of this
+    /// records **what was actually observed** — a partial sweep confirms exactly
+    /// the artifacts it looked at and must never read as a full one.
+    pub confirmed: Vec<String>,
+    /// Artifacts that matched but could **not** be confirmed, because
+    /// `record_events` was set and no `detected_at` was supplied.
+    ///
+    /// A confirmation exists to answer *when* someone last looked, so writing an
+    /// undated one would enter the ledger as evidence while being unable to say
+    /// when — the flattering half of the ambiguity this whole record exists to
+    /// remove. The core takes no clock, so it cannot fill the date in. It
+    /// therefore skips the stamp and **says so here**: a dropped write the
+    /// caller has to infer from a count that did not move is the silent-drop
+    /// shape this project forbids, and it is the exact shape of the bug being
+    /// fixed.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub unconfirmed_undated: Vec<String>,
     /// Registered artifacts that were **not** observed at all. Only populated
     /// when `exhaustive` is set — otherwise absence from the observation list is
     /// not evidence of anything and is left alone.
@@ -256,6 +285,7 @@ impl DesignGraph {
     ) -> Result<DriftReport, DynoError> {
         let mut findings = Vec::new();
         let mut unchanged = 0usize;
+        let mut matched: Vec<String> = Vec::new();
 
         for obs in observed {
             let Some(artifact) = self.get_node(node::ARTIFACT, &obs.artifact_id)? else {
@@ -314,7 +344,10 @@ impl DesignGraph {
                 .as_deref()
                 .map(crate::artifact::canonical_checksum);
             match (recorded, observed_canonical.as_deref()) {
-                (Some(recorded), Some(current)) if recorded == current => unchanged += 1,
+                (Some(recorded), Some(current)) if recorded == current => {
+                    unchanged += 1;
+                    matched.push(obs.artifact_id.clone());
+                }
                 (Some(_), Some(_)) => findings.push(DriftFinding {
                     artifact_id: obs.artifact_id.clone(),
                     kind: DriftKind::ChecksumChange,
@@ -438,6 +471,8 @@ impl DesignGraph {
                 .then(a.artifact_id.cmp(&b.artifact_id))
         });
 
+        let mut confirmed = Vec::new();
+        let mut unconfirmed_undated = Vec::new();
         if options.record_events {
             for finding in &mut findings {
                 if let Some(drift_type) = finding.kind.drift_type() {
@@ -448,6 +483,26 @@ impl DesignGraph {
                     );
                     self.write_drift_event(&event_id, finding, drift_type, options)?;
                     finding.event_id = Some(event_id);
+                }
+            }
+            // A clean result is a result (BL-158). Recording only divergence is
+            // what made a full sweep and no sweep at all indistinguishable, so
+            // an artifact observed to still match its baseline is stamped with
+            // the date it was confirmed.
+            //
+            // A PROPERTY, not an event, and the distinction is deliberate: a
+            // confirmation is high-frequency and says nothing changed, so
+            // minting a node per artifact per pass would bury axis Z — the log
+            // of what actually *moved* — under non-events. This is the shape
+            // `Verification.last_run_at` already uses to answer the same
+            // question about a check.
+            matched.sort();
+            matched.dedup();
+            for artifact_id in matched {
+                if self.stamp_confirmed(&artifact_id, options.detected_at.as_deref())? {
+                    confirmed.push(artifact_id);
+                } else {
+                    unconfirmed_undated.push(artifact_id);
                 }
             }
         }
@@ -464,10 +519,39 @@ impl DesignGraph {
         Ok(DriftReport {
             findings,
             unchanged,
+            confirmed,
+            unconfirmed_undated,
             unobserved,
             propagation_seeds,
             recorded_events,
         })
+    }
+
+    /// Stamp an artifact with the date it was last observed to match its
+    /// baseline. Returns whether the stamp was written.
+    ///
+    /// Refuses to write an **undated** confirmation: `last_confirmed_at` exists
+    /// to answer *when*, and a confirmation carrying no date would enter the
+    /// ledger as evidence that someone looked while being unable to say when —
+    /// which is the flattering half of the very ambiguity BL-158 is about. The
+    /// caller is told by the artifact's absence from
+    /// [`DriftReport::confirmed`], so a skipped stamp is visible rather than
+    /// silent (the core takes no clock; the caller supplies `detected_at`).
+    fn stamp_confirmed(&mut self, artifact_id: &str, at: Option<&str>) -> Result<bool, DynoError> {
+        let Some(at) = at else {
+            return Ok(false);
+        };
+        let Some(existing) = self.get_node(node::ARTIFACT, artifact_id)? else {
+            return Ok(false);
+        };
+        let mut props = Props::new().set("last_confirmed_at", at);
+        for (k, v) in &existing.properties {
+            if k != "last_confirmed_at" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::ARTIFACT, artifact_id, props)?;
+        Ok(true)
     }
 
     /// Design node ids an artifact `REALIZES`, sorted.

@@ -56,7 +56,7 @@ schema:
     ChangeEvent:
       properties:
         name: { type: string, required: true, indexed: true, fulltext: true }
-        change_type: { type: enum, values: [requirement_creep, new_feature, test_failure_fix, performance_optimization, refactor, scope_change, constraint_change, environment_change, deprecation, resync], required: true, indexed: true }
+        change_type: { type: enum, values: [requirement_creep, new_feature, test_failure_fix, performance_optimization, refactor, scope_change, constraint_change, environment_change, deprecation, resync, baseline_established], required: true, indexed: true, description: "Why the design record moved. baseline_established is the odd one and is deliberate (BL-157): an Artifact registered with no checksum getting its FIRST one is a change to the RECORD and to nothing else — no code moved, so forcing it through refactor/test_failure_fix writes a fiction into the ledger that exists to prevent fiction." }
         summary: { type: string, fulltext: true }
         rationale: { type: string, description: "Why the change was made." }
         detected_at: { type: string }

@@ -9,7 +9,7 @@
     "properties": {
       "detected_at": {
         "default": null,
-        "description": "Timestamp for recorded events (reflow2 takes no clock).",
+        "description": "Timestamp for recorded events (reflow2 takes no clock). Also dates the\nconfirmations: without it, matched artifacts come back listed under\n`unconfirmed_undated` rather than being confirmed with no date.",
         "type": [
           "string",
           "null"
@@ -30,7 +30,7 @@
       },
       "record_events": {
         "default": false,
-        "description": "Record a `DriftEvent` per divergence (default false — looking is not writing).",
+        "description": "Record what this pass found (default false — looking is not writing): a\n`DriftEvent` per divergence, and a dated confirmation on every artifact\nobserved to still match its baseline, so a clean sweep is\ndistinguishable from no sweep at all.",
         "type": "boolean"
       }
     },

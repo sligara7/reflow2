@@ -93,6 +93,26 @@ pub enum DriftDisposition<'a> {
         /// exist; a dangling reference is refused rather than recorded.
         change_event_id: &'a str,
     },
+    /// **Nothing moved.** This artifact was registered with no checksum and is
+    /// getting its first one, so there is no divergence to take a position on
+    /// (BL-157).
+    ///
+    /// The other two both presuppose a baseline: `DesignHolds` claims *the code
+    /// moved and the change carried no design meaning*, `DesignUpdated` claims
+    /// *behaviour moved and the design moved with it*. Neither is true of a
+    /// first baseline, and forcing one anyway is not a harmless approximation —
+    /// it writes a `refactor` of a file nobody touched into the very ledger that
+    /// exists to stop the design accumulating fiction. Found the only way it
+    /// could be: by having to do it (`art:detect`, 2026-08-01).
+    ///
+    /// Carries no `change_type` because the `ChangeEvent` it writes names
+    /// `baseline_established` — the record moved and the code did not.
+    ///
+    /// **This is not a way around the two-sided accept.** Establishing a
+    /// baseline over an artifact that already has one is refused, because that
+    /// is exactly the shape a real drift would take if you wanted to launder it
+    /// past the disposition question.
+    BaselineEstablished,
 }
 
 /// Inputs for [`DesignGraph::link_artifact`] — register a real file against the
@@ -206,6 +226,58 @@ impl DesignGraph {
         // state stays idempotent whichever dialect the caller typed.
         let checksum = &canonical_checksum(checksum);
 
+        // Which of the three answers is even available is a FACT about the
+        // artifact, not a preference: a first baseline compares against nothing,
+        // and an accept has nothing to accept without one. Both directions are
+        // refused rather than reported, because each wrong way round writes a
+        // specific fiction into the ledger (BL-157) — and the guard is what stops
+        // `baseline_established` becoming a way to launder a real drift past the
+        // two-sided decision.
+        let recorded = existing
+            .properties
+            .get("checksum")
+            .and_then(|v| v.as_str())
+            .filter(|c| !c.is_empty())
+            .map(canonical_checksum);
+        let had_baseline = recorded.is_some();
+        // Re-establishing the SAME baseline is a no-op and stays idempotent, so
+        // re-running a sweep is safe. What is refused is a `baseline_established`
+        // that would MOVE one — which is the laundering case, and the only one
+        // the guard is for.
+        let would_move_baseline = recorded.is_some_and(|r| r != *checksum);
+        match (&disposition, had_baseline) {
+            (DriftDisposition::BaselineEstablished, true) if would_move_baseline => {
+                return Err(DynoError::Validation {
+                    node_type: node::ARTIFACT.into(),
+                    property: "checksum".into(),
+                    message: format!(
+                        "'{artifact_id}' already has a baseline and this would move it, so it \
+                         is not a first one. `baseline_established` says NOTHING MOVED; using \
+                         it here would accept a real change without answering what the change \
+                         meant, which is the silent accept `dec:two-sided-accept` exists to \
+                         prevent. Pass `design_holds` (the change carries no design meaning) or \
+                         `design_updated` (the design moved with it)"
+                    ),
+                });
+            }
+            (
+                DriftDisposition::DesignHolds { .. } | DriftDisposition::DesignUpdated { .. },
+                false,
+            ) => {
+                return Err(DynoError::Validation {
+                    node_type: node::ARTIFACT.into(),
+                    property: "checksum".into(),
+                    message: format!(
+                        "'{artifact_id}' has no recorded checksum, so there is no baseline to \
+                         accept a change against — both `design_holds` and `design_updated` \
+                         would be claiming something about a movement nobody observed. This is a \
+                         FIRST baseline: pass `baseline_established`"
+                    ),
+                });
+            }
+            _ => {}
+        }
+
         let event_id = match disposition {
             DriftDisposition::DesignHolds { change_type } => {
                 let event_id = format!(
@@ -250,6 +322,40 @@ impl DesignGraph {
                 }
                 self.accept_changed_edge(change_event_id, artifact_id)?;
                 change_event_id.to_string()
+            }
+            DriftDisposition::BaselineEstablished => {
+                // Keyed the same way as a `design_holds` accept — artifact plus
+                // checksum — so re-establishing the same first baseline is
+                // idempotent rather than piling up identical claims. The `chg:`
+                // prefix differs so the two can never collide on one artifact.
+                let event_id = format!(
+                    "chg:baseline-{:016x}",
+                    crate::nodes::fnv1a(&format!("{artifact_id}|{checksum}"))
+                );
+                if self.get_node(node::CHANGE_EVENT, &event_id)?.is_none() {
+                    self.add_change_event(
+                        &event_id,
+                        note.unwrap_or(
+                            "First baseline recorded: the artifact was registered without a \
+                             checksum and nothing was compared",
+                        ),
+                        ChangeType::BaselineEstablished,
+                    )?;
+                    if let Some(at) = at {
+                        let ev = self
+                            .get_node(node::CHANGE_EVENT, &event_id)?
+                            .expect("just created");
+                        let mut props = Props::new().set("detected_at", at);
+                        for (k, v) in &ev.properties {
+                            if k != "detected_at" {
+                                props = props.set(k, v.clone());
+                            }
+                        }
+                        self.create_node(node::CHANGE_EVENT, &event_id, props)?;
+                    }
+                    self.accept_changed_edge(&event_id, artifact_id)?;
+                }
+                event_id
             }
         };
 

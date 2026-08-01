@@ -480,6 +480,28 @@ fn bulk_result<T, D: serde::Serialize>(
     ok_json(json!({ "applied": true, "written": written.len(), "items": written }))
 }
 
+/// Refuse a `change_type` that belongs to one specific write path.
+///
+/// `baseline_established` means *this artifact had no checksum and now has one;
+/// nothing moved* (BL-157). Only `set_artifact_checksum`'s matching disposition
+/// can honestly write it, and the confirmation ledger counts those events as
+/// first baselines — so if any caller could stamp the label on an arbitrary
+/// change, the count would measure nothing. Refusing here is what keeps the
+/// vocabulary worth having: the fiction BL-157 removed from one door does not
+/// walk back in through another.
+fn reject_reserved_change_type(change_type: ChangeType) -> Result<(), McpError> {
+    if change_type == ChangeType::BaselineEstablished {
+        return Err(McpError::invalid_params(
+            "`baseline_established` is not a change and cannot be recorded as one. It is \
+             written only by set_artifact_checksum with disposition=baseline_established, \
+             where it means an artifact registered without a checksum is getting its first \
+             one. To record an ordinary change, name what actually moved",
+            None,
+        ));
+    }
+    Ok(())
+}
+
 /// The two-sided disposition, parsed from the surface's strings.
 ///
 /// Shared by `set_artifact_checksum` and its bulk form so the two cannot drift
@@ -514,10 +536,35 @@ fn parse_disposition<'a>(
             };
             Ok(DriftDisposition::DesignUpdated { change_event_id })
         }
+        "baseline_established" => {
+            // Both extras are refused rather than ignored, for the same reason
+            // `design_holds` refuses the event id: a parameter that is silently
+            // dropped teaches the caller it was accepted.
+            if design_change_event_id.is_some() {
+                return Err(McpError::invalid_params(
+                    "design_change_event_id belongs to disposition=design_updated; \
+                     baseline_established records that NOTHING moved, so there is no \
+                     design-side change for it to point at",
+                    None,
+                ));
+            }
+            if change_type.is_some() {
+                return Err(McpError::invalid_params(
+                    "change_type belongs to disposition=design_holds. baseline_established \
+                     is not a change — the artifact was registered without a checksum and is \
+                     getting its first one — so it records `baseline_established` and naming \
+                     any other type would put a change that never happened on the record",
+                    None,
+                ));
+            }
+            Ok(DriftDisposition::BaselineEstablished)
+        }
         other => Err(McpError::invalid_params(
             format!(
                 "unknown disposition '{other}': pass `design_holds` (the change carries \
-                 no design meaning) or `design_updated` (the design moved with it)"
+                 no design meaning), `design_updated` (the design moved with it), or \
+                 `baseline_established` (this artifact had no checksum and is getting its \
+                 first one — nothing moved)"
             ),
             None,
         )),
@@ -1049,8 +1096,11 @@ pub struct CreateEdgesReq {
 pub struct ChecksumAcceptReq {
     pub artifact_id: String,
     pub checksum: String,
-    /// `design_holds` (the change carries no design meaning) or
-    /// `design_updated` (behaviour moved and the design moved with it).
+    /// `design_holds` (the change carries no design meaning), `design_updated`
+    /// (behaviour moved and the design moved with it), or
+    /// `baseline_established` (no checksum yet — a FIRST baseline, so nothing
+    /// moved). Per item, never per call: the round trip collapses, the
+    /// judgement does not.
     pub disposition: String,
     /// For `design_holds`: why the code moved (`test_failure_fix` default).
     #[serde(default)]
@@ -1799,14 +1849,19 @@ pub struct ReconcileArtifactsReq {
     /// What you observed, one entry per artifact you checked:
     /// `{ "artifact_id", "present": bool, "checksum": "<hash>"? }`.
     pub observed: Vec<JsonObject>,
-    /// Record a `DriftEvent` per divergence (default false — looking is not writing).
+    /// Record what this pass found (default false — looking is not writing): a
+    /// `DriftEvent` per divergence, and a dated confirmation on every artifact
+    /// observed to still match its baseline, so a clean sweep is
+    /// distinguishable from no sweep at all.
     #[serde(default)]
     pub record_events: bool,
     /// Assert the observation list is a complete sweep, so registered artifacts
     /// missing from it are reported as unobserved (default false).
     #[serde(default)]
     pub exhaustive: bool,
-    /// Timestamp for recorded events (reflow2 takes no clock).
+    /// Timestamp for recorded events (reflow2 takes no clock). Also dates the
+    /// confirmations: without it, matched artifacts come back listed under
+    /// `unconfirmed_undated` rather than being confirmed with no date.
     #[serde(default)]
     pub detected_at: Option<String>,
 }
@@ -1823,16 +1878,26 @@ pub struct SetChecksumReq {
     /// refactor, a fix restoring intended behaviour) — recorded as a dated
     /// claim. `design_updated`: behaviour moved and the design moved with it —
     /// pass `design_change_event_id` from the `record_change` that updated it.
+    /// `baseline_established`: this artifact had no checksum and is getting its
+    /// FIRST one, so nothing moved and there is nothing to take a position on
+    /// (BL-157) — takes neither of the other two fields.
+    ///
+    /// Which are available is a fact, not a preference, and the wrong one is
+    /// refused: an accept needs an existing baseline to accept a change
+    /// *against*, and a first baseline cannot be established over one that
+    /// already exists (that would be a real change, laundered).
     pub disposition: String,
     /// For `design_holds`: why the code moved (`test_failure_fix` (default) /
-    /// `refactor` / `performance_optimization` / …).
+    /// `refactor` / `performance_optimization` / …). Refused with the other two
+    /// dispositions rather than ignored.
     #[serde(default)]
     pub change_type: Option<String>,
     /// For `design_updated`: the ChangeEvent recorded when the design was
     /// updated. Must exist — a dangling reference is refused.
     #[serde(default)]
     pub design_change_event_id: Option<String>,
-    /// Optional note stored on the recorded claim (`design_holds` only).
+    /// Optional note stored on the recorded claim (`design_holds` and
+    /// `baseline_established`).
     #[serde(default)]
     pub note: Option<String>,
     /// Timestamp for the claim (reflow2 takes no clock). A dated claim is what
@@ -2430,10 +2495,12 @@ impl ReflowService {
         description = "The confirmation ledger (BL-35): for every capability with built \
                        artifacts, when was its claim last checked against reality, and what was \
                        the answer — drift events and whether each was resolved, accept claims \
-                       split into design_holds vs design_updated, design edits on the record, \
-                       and a state per capability: drifting (an observed divergence is \
-                       unanswered), confirmed (examined, with the claim history visible), or \
-                       unexamined (nobody has ever looked — NOT the same as confirmed).",
+                       split into design_holds vs design_updated, first baselines counted \
+                       apart from both (they are not accepts), clean-reconcile confirmations \
+                       with when they last happened, design edits on the record, and a state \
+                       per capability: drifting (an observed divergence is unanswered), \
+                       confirmed (examined, with the claim history visible), or unexamined \
+                       (nobody has ever looked — NOT the same as confirmed).",
         annotations(read_only_hint = true)
     )]
     pub async fn confirmation_ledger(&self) -> Result<CallToolResult, McpError> {
@@ -5339,7 +5406,10 @@ impl ReflowService {
                        `design_change_event_id` from the record_change that updated it, so code \
                        and design are one change). Silent accept does not exist: it is how a \
                        design erodes into fiction over N fix cycles while reporting zero gaps. \
-                       Until you accept, the same checksum_change is reported on every reconcile.",
+                       Until you accept, the same checksum_change is reported on every reconcile. \
+                       An artifact with NO checksum yet takes neither: pass \
+                       `baseline_established`, which records a first baseline as what it is — \
+                       nothing moved — instead of a change that never happened.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_artifact_checksum(
@@ -5579,6 +5649,7 @@ impl ReflowService {
         Parameters(req): Parameters<AddChangeEventReq>,
     ) -> Result<CallToolResult, McpError> {
         let change_type: ChangeType = parse_enum(&req.change_type, "change type")?;
+        reject_reserved_change_type(change_type)?;
         let affected = req.affected.unwrap_or_default();
         let mut g = self.write_lock().await;
         // Validate the whole list before writing anything: storage accepts
@@ -5648,6 +5719,7 @@ impl ReflowService {
         Parameters(req): Parameters<RecordChangeReq>,
     ) -> Result<CallToolResult, McpError> {
         let change_type: ChangeType = parse_enum(&req.change_type, "change type")?;
+        reject_reserved_change_type(change_type)?;
         let action = parse_enum(&req.action, "change action")?;
         let rec = ChangeRecord {
             epoch_id: &req.epoch_id,
