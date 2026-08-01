@@ -31,6 +31,41 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`release_includes_all` — a release's manifest is derived from the design instead of typed
+  out** (BL-153, `cap:derived-release-manifest`, `dec:manifest-derived-is-not-manifest-accepted`).
+  One call turns every Artifact and Component the design holds into an `INCLUDES` edge, freezing
+  each artifact's current checksum as shipped. `release_includes` was the single largest line item
+  in reflow2's entire recorded usage — 1008 calls across 7 sessions, 988 of them consecutive, about
+  144 per release cut — all of it typing out something the graph already knew, and the rule
+  AGENTS.md already states: a release "must list every component that goes out, not a
+  hand-maintained roll-call". Measured on reflow2's own design: **160 edges in one call**.
+
+  Four guards, because a bulk write is where a design erodes quietly:
+  - **Nothing is written unless `apply: true`** (default false), matching `reconcile_artifacts`'
+    `record_events` — a call that packages a release is the one you most want to read first.
+  - **Re-running never rewrites a frozen `as_checksum`.** An entry already in the manifest comes
+    back `already_present` and is left alone. A derivation that recomputed every entry would
+    rewrite the manifest of a shipped release each time the live drift baseline moved.
+  - **An `exclude` id naming nothing is refused**, whole call, before anything is written — a
+    caller who believes they excluded something they did not would ship it and never be told.
+  - **`without_checksum` names the artifacts whose entry cannot say *what* shipped**, rather than
+    leaving a `null` to be discovered when someone asks what a past release contained.
+
+  This is a derivation, not an accept: `dec:two-sided-accept` and `dec:ask-not-repair` bound bulk
+  *dispositions*, and no disposition is taken here — the graph is asked what the project contains
+  and answers.
+
+### Fixed
+
+- **`art:detect` had no drift baseline**, so `crates/reflow2-core/src/detect.rs` — the file
+  realizing `cap:detect`, `cap:kpp`, `cap:aggregate-gap-keying`, `cap:release-pinned-to-time` and
+  `cmp:detect` — could never report drift, and `reconcile_artifacts` returned `no_baseline` rather
+  than clean. Found twice the same hour by two independent routes: an exhaustive reconcile sweep
+  (106 of 107 unchanged, this one uncheckable) and the new derived manifest, which named it as the
+  sole entry in `without_checksum`.
+
 ### Changed
 
 - **A dependency cycle that runs only through file and library contracts is now a `Warning`, not a

@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Derive a Release's whole INCLUDES manifest from the design in one call: every Artifact and every Component, with each artifact's current checksum frozen as shipped. This is the bulk form of release_includes, which was the single largest line item in reflow2's recorded usage — about 144 consecutive calls per release cut, all typing out something the graph already knew. Nothing is written unless apply is true, so read the manifest before you package it. Re-running is safe: an entry already in the manifest is reported as already_present and its frozen checksum is never rewritten, because what a past release shipped must not move with the live drift baseline. without_checksum names the artifacts whose entry cannot say WHAT shipped.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "apply": {
+        "default": false,
+        "description": "Write the manifest. Default false: the derivation is reported and\nnothing is written, so you can read what a release is about to package\nbefore you package it.",
+        "type": "boolean"
+      },
+      "exclude": {
+        "default": [],
+        "description": "Artifact or Component ids this release does NOT ship. An id that names\nnothing in the design is refused rather than ignored — a caller who\nbelieves they excluded something they did not would ship it and never\nbe told.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "release_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "release_id"
+    ],
+    "type": "object"
+  },
+  "name": "release_includes_all"
+}
