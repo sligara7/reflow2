@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ad0c4ad24dae4022327aa470ad98b91181fe7b11062e6bd3e1d30080d0b8ec1a",
+  "content_hash": "sha256:193085ad37b22ffb73b7f26e32e6cd40ad1a12d3abf72d7daa4614dd3cd286f1",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -3198,6 +3198,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-failing-check-says-against-what",
+      "properties": {
+        "acted_at": "2026-08-01",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:agent-navigates-content",
       "properties": {
         "acted_at": "2026-07-31",
@@ -3229,6 +3238,15 @@
       "properties": {
         "acted_at": "2026-07-30",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:calibration-propagates",
+      "properties": {
+        "acted_at": "2026-08-01",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -36191,6 +36209,16 @@
       }
     },
     {
+      "node_id": "dec:a-failing-check-says-against-what",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Verification gains an OPTIONAL criterion — what the check was measured against. A `failing` carrying one is reported as a MEASUREMENT; a `failing` without one is reported as a bar never stated, and is never presented as though a threshold existed. Nothing is refused and no existing check breaks.",
+        "name": "A failing check may state what it fell short of; where it does not, the report says the bar was never stated",
+        "rationale": "Anthony's call, 2026-08-01, from three options. THE PROBLEM, from the music_graph adopt pass (BL-143): that repo's central fact is that everything runs and almost nothing is correct. A smoke run was recorded `passing` (it truly does run) and an accuracy measurement `failing` — but nothing in the repo states an acceptance threshold, so `failing` was the reporter's judgement stored as if it were data. Their words, and the caveat went into a description where no detector reads it.\n\nWHY OPTIONAL RATHER THAN REQUIRED. Option (b), refusing `failing` without a criterion, is the strongest version and was rejected on two counts: it breaks every existing failing check until someone supplies a bar retroactively, and it blocks the honest case where something is plainly broken and no threshold was ever written down. More importantly it is OUT OF STEP WITH THE FAMILY. BL-106, BL-126 and BL-136 all REPORT the gap rather than refusing the work — an unscoped check is counted as unscoped, an undated one as unknown, a consumed one as consumed, and none of them is forbidden. This is the fourth axis and it should behave like the other three.\n\nWHY NOT A NEW STATUS. Option (c), adding `inconclusive`, is the cheapest and gives 'it runs but correctness is unknown' a home — but it treats the symptom. Someone can still write `failing` as a pure opinion and nothing notices, which is the exact defect. It is not foreclosed and could still be added later for its own reasons; it simply does not answer this question.\n\nTHE SHAPE THIS COMPLETES. The evidence-quality family now has four faces, all asking whether a green or red tick means what a reader will take it to mean: BL-106 a check stale in TIME, BL-126 narrow in INPUT SPACE, BL-136 not INDEPENDENT of what it validates, and this one — no CRITERION, so there is nothing for the evidence to be evidence of. The first three ask how good the evidence is; this asks what it was evidence FOR.\n\nNOT YET BUILT. The shape is settled; the build is BL-143.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:advisory-concurrency",
       "node_type": "Decision",
       "properties": {
@@ -36297,7 +36325,7 @@
         "decision": "CALIBRATED_AGAINST is entered in the structural direction table (nodes.rs structural_rule) as (forward: Upstream, backward: Downstream), the same shape as REALIZES and VERIFIES. From the fitted node you reach the evidence its authority rests on; from the evidence you reach every value that would be wrong if it were superseded.",
         "name": "CALIBRATED_AGAINST is a traceability edge — when the anchor moves, every value fitted to it is in the blast radius",
         "rationale": "Asked deliberately because the table's own comment says it is the question nobody asks: 'Twice now a new edge type has reached a Release without anyone asking whether the impact table should know about it, and nothing checks that question is asked' — INCLUDES and then SCHEDULED_FOR, each found only when disconnected_community fired on an island the new edge had failed to join. This is the third such edge and the question was put before the code was written rather than after a detector complained. The answer is yes on the merits: a calibration is a genuine dependency of a value on a piece of evidence, so when the anchor is corrected or superseded, every value fitted to it is exactly the blast radius propagate_change exists to compute — which is the payoff BL-136 asks for, since a wrong functional form absorbed into a fitted coefficient is only findable when the outside source arrives and someone can see what rested on the old one. Direction matches REALIZES because the evidence is the source of truth and the fitted value is downstream of it. Consequence accepted and stated rather than discovered: this puts CALIBRATED_AGAINST into design_network(), so it counts toward centrality, communities and single-point-of-failure — the surface BL-124 has just shown is sensitive to edge-set changes. On reflow2's own graph the effect is nil today because the design carries no fitted values, and that is a measurement, not an assumption.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -44334,7 +44362,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:cbe3768cf4c38591f107b6a511de93e5383d8db85fea417f3a43c99323bd0e91",
+  "prev_content_hash": "sha256:ad0c4ad24dae4022327aa470ad98b91181fe7b11062e6bd3e1d30080d0b8ec1a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
