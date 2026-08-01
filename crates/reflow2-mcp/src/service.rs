@@ -29,6 +29,10 @@ use serde::Deserialize;
 use serde_json::{Map as JsonMap, Value as JsonValue, json};
 use tokio::sync::RwLock;
 
+use reflow2_core::bulk::{
+    AskedRecord as BulkAskedRecord, ChecksumAccept as BulkChecksumAccept, EdgeSpec as BulkEdgeSpec,
+    GapAck as BulkGapAck, NodeSpec as BulkNodeSpec,
+};
 use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
     AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_SCOPE_DEPTH, DesignGraph,
@@ -444,6 +448,82 @@ fn parse_enum<T: serde::de::DeserializeOwned>(s: &str, what: &str) -> Result<T, 
 }
 
 /// Convert a JSON object of properties into the core's `HashMap<String, Value>`.
+/// Render a bulk report.
+///
+/// A rejected batch comes back as an **error**, not as a payload with
+/// `applied: false`. A tool result reads as success, and "we wrote nothing"
+/// dressed as a result is precisely the silent-failure shape this project
+/// forbids. Every failure rides along in the error's `data` so the caller still
+/// learns all of them in this one round trip — the error is the signal, the
+/// list is the content.
+fn bulk_result<T, D: serde::Serialize>(
+    report: reflow2_core::bulk::BulkReport<T>,
+    render: impl Fn(T) -> D,
+) -> Result<CallToolResult, McpError> {
+    if !report.applied {
+        let summary = report
+            .failures
+            .iter()
+            .map(|f| format!("[{}] {}: {}", f.index, f.id, f.error))
+            .collect::<Vec<_>>()
+            .join("; ");
+        return Err(McpError::invalid_params(
+            format!(
+                "nothing was written — {} of the items failed and a bulk write is all or \
+                 nothing. Every failure is listed so you can fix them together: {summary}",
+                report.failures.len()
+            ),
+            Some(json!({ "failures": report.failures })),
+        ));
+    }
+    let written: Vec<D> = report.written.into_iter().map(render).collect();
+    ok_json(json!({ "applied": true, "written": written.len(), "items": written }))
+}
+
+/// The two-sided disposition, parsed from the surface's strings.
+///
+/// Shared by `set_artifact_checksum` and its bulk form so the two cannot drift
+/// apart — the refusals below are the load-bearing half and duplicating them
+/// would be how one copy quietly loses a guard.
+fn parse_disposition<'a>(
+    disposition: &str,
+    change_type: Option<&str>,
+    design_change_event_id: Option<&'a str>,
+) -> Result<DriftDisposition<'a>, McpError> {
+    match disposition {
+        "design_holds" => {
+            if design_change_event_id.is_some() {
+                return Err(McpError::invalid_params(
+                    "design_change_event_id belongs to disposition=design_updated; \
+                     with design_holds it would be silently ignored, so it is refused",
+                    None,
+                ));
+            }
+            let change_type: ChangeType =
+                parse_enum(change_type.unwrap_or("test_failure_fix"), "change type")?;
+            Ok(DriftDisposition::DesignHolds { change_type })
+        }
+        "design_updated" => {
+            let Some(change_event_id) = design_change_event_id else {
+                return Err(McpError::invalid_params(
+                    "disposition=design_updated requires design_change_event_id — the \
+                     ChangeEvent recorded when the design was updated. Without it the claim \
+                     'the design was updated' would stand with nothing behind it",
+                    None,
+                ));
+            };
+            Ok(DriftDisposition::DesignUpdated { change_event_id })
+        }
+        other => Err(McpError::invalid_params(
+            format!(
+                "unknown disposition '{other}': pass `design_holds` (the change carries \
+                 no design meaning) or `design_updated` (the design moved with it)"
+            ),
+            None,
+        )),
+    }
+}
+
 fn parse_props(props: Option<JsonObject>) -> Result<HashMap<String, Value>, McpError> {
     match props {
         None => Ok(HashMap::new()),
@@ -921,6 +1001,93 @@ pub struct ReleaseIncludesReq {
     /// contained.
     #[serde(default)]
     pub as_checksum: Option<String>,
+}
+
+/// One node for `create_nodes`.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct NodeSpecReq {
+    pub node_type: String,
+    pub id: String,
+    /// Property object; validated against the schema exactly as `create_node`
+    /// validates it.
+    #[serde(default)]
+    pub props: Option<JsonObject>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct CreateNodesReq {
+    pub nodes: Vec<NodeSpecReq>,
+}
+
+/// One edge for `create_edges`.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct EdgeSpecReq {
+    pub edge_type: String,
+    pub from_type: String,
+    pub from_id: String,
+    pub to_type: String,
+    pub to_id: String,
+    #[serde(default)]
+    pub props: Option<JsonObject>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct CreateEdgesReq {
+    pub edges: Vec<EdgeSpecReq>,
+}
+
+/// One accepted baseline for `set_artifact_checksums`, carrying **its own**
+/// disposition. That is the point of the shape, not an inconvenience: a batch
+/// under one shared disposition would be the silent bulk accept
+/// `dec:two-sided-accept` exists to forbid.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ChecksumAcceptReq {
+    pub artifact_id: String,
+    pub checksum: String,
+    /// `design_holds` (the change carries no design meaning) or
+    /// `design_updated` (behaviour moved and the design moved with it).
+    pub disposition: String,
+    /// For `design_holds`: why the code moved (`test_failure_fix` default).
+    #[serde(default)]
+    pub change_type: Option<String>,
+    /// For `design_updated`: the ChangeEvent recorded when the design moved.
+    #[serde(default)]
+    pub design_change_event_id: Option<String>,
+    #[serde(default)]
+    pub note: Option<String>,
+    #[serde(default)]
+    pub at: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct SetChecksumsReq {
+    pub accepts: Vec<ChecksumAcceptReq>,
+}
+
+/// One acknowledgement for `acknowledge_gaps`, carrying **its own** reason.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct GapAckReq {
+    /// The gap's `id`, exactly as `detect_gaps` reported it.
+    pub gap_id: String,
+    /// The gap's `affected_ids`, so the review is reachable from the design.
+    #[serde(default)]
+    pub affected_ids: Vec<String>,
+    /// Why THIS gap is acceptable. One reason per gap — a shared one would be
+    /// the erosion `dec:ask-not-repair` and `dec:two-sided-accept` forbid.
+    pub reason: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct AcknowledgeGapsReq {
+    pub gaps: Vec<GapAckReq>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1922,6 +2089,29 @@ pub struct GapToPromptReq {
     #[serde(default)]
     pub answers: Vec<AgentAnswerReq>,
     /// Timestamp to record against the question, if you have one.
+    #[serde(default)]
+    pub asked_at: Option<String>,
+}
+
+/// One gap in a multi-gap ask. Answers are grouped **per gap**, which is what
+/// keeps prompt ids from colliding across gaps without inventing a namespacing
+/// scheme: each gap is replayed against a backend built from its own answers
+/// and never sees another gap's.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct GapPromptReq {
+    /// A `GapCandidate` previously returned by `detect_gaps`.
+    pub gap: JsonObject,
+    /// Answers to this gap's prior `needs_llm` round. Empty on the prepare pass.
+    #[serde(default)]
+    pub answers: Vec<AgentAnswerReq>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct GapsToPromptsReq {
+    pub gaps: Vec<GapPromptReq>,
+    /// Timestamp to record against the questions, if you have one.
     #[serde(default)]
     pub asked_at: Option<String>,
 }
@@ -3011,6 +3201,34 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Acknowledge MANY gaps in one call — the bulk form of acknowledge_gap. \
+                       EACH GAP CARRIES ITS OWN REASON, which is the point: a batch of \
+                       acknowledgements under one shared reason is exactly the erosion the \
+                       ask-don't-repair rule exists to prevent, and would make a bulk form worse \
+                       than the loop it replaces. The round trip collapses; the judgement stays \
+                       per gap. ALL OF IT OR NONE OF IT — every item is attempted so you learn \
+                       every failure at once, and if anything failed nothing is acknowledged.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn acknowledge_gaps(
+        &self,
+        Parameters(req): Parameters<AcknowledgeGapsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let items: Vec<BulkGapAck> = req
+            .gaps
+            .into_iter()
+            .map(|g| BulkGapAck {
+                gap_id: g.gap_id,
+                affected_ids: g.affected_ids,
+                reason: g.reason,
+            })
+            .collect();
+        let mut g = self.write_lock().await;
+        let report = g.acknowledge_gaps(&items).map_err(dyno_err)?;
+        bulk_result(report, |decision_id| json!({ "decision_id": decision_id }))
+    }
+
+    #[tool(
         description = "Gaps that were reviewed and accepted, each with the reason given. Worth \
                        re-reading when the design shifts.",
         annotations(read_only_hint = true)
@@ -4040,6 +4258,59 @@ impl ReflowService {
             Ok(n) => ok_json(NodeDto::from(n)),
             Err(e) => Err(node_error(&g, &req.node_type, e)),
         }
+    }
+
+    #[tool(
+        description = "Create or update MANY nodes in one call — the bulk form of create_node. \
+                       ALL OF IT OR NONE OF IT: every item is attempted so you learn every \
+                       failure in one round trip, and if anything failed nothing is written. \
+                       Upsert, like create_node, so re-running after a fix is safe.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn create_nodes(
+        &self,
+        Parameters(req): Parameters<CreateNodesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut specs = Vec::with_capacity(req.nodes.len());
+        for n in req.nodes {
+            specs.push(BulkNodeSpec {
+                node_type: n.node_type,
+                id: n.id,
+                props: parse_props(n.props)?,
+            });
+        }
+        let mut g = self.write_lock().await;
+        let report = g.create_nodes(&specs).map_err(dyno_err)?;
+        bulk_result(report, NodeDto::from)
+    }
+
+    #[tool(
+        description = "Create MANY edges in one call — the bulk form of create_edge, and so of \
+                       every typed helper built on it: contains, contain_component, satisfies, \
+                       allocate, realizes. Those helpers only fill in the endpoint types, so \
+                       naming both types per item is the whole difference. ALL OF IT OR NONE OF \
+                       IT: every item is attempted so you learn every failure at once, and if \
+                       anything failed nothing is written.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn create_edges(
+        &self,
+        Parameters(req): Parameters<CreateEdgesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut specs = Vec::with_capacity(req.edges.len());
+        for e in req.edges {
+            specs.push(BulkEdgeSpec {
+                edge_type: e.edge_type,
+                from_type: e.from_type,
+                from_id: e.from_id,
+                to_type: e.to_type,
+                to_id: e.to_id,
+                props: parse_props(e.props)?,
+            });
+        }
+        let mut g = self.write_lock().await;
+        let report = g.create_edges(&specs).map_err(dyno_err)?;
+        bulk_result(report, EdgeDto::from)
     }
 
     #[tool(
@@ -5075,44 +5346,11 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<SetChecksumReq>,
     ) -> Result<CallToolResult, McpError> {
-        let disposition = match req.disposition.as_str() {
-            "design_holds" => {
-                if req.design_change_event_id.is_some() {
-                    return Err(McpError::invalid_params(
-                        "design_change_event_id belongs to disposition=design_updated; \
-                         with design_holds it would be silently ignored, so it is refused",
-                        None,
-                    ));
-                }
-                let change_type: ChangeType = parse_enum(
-                    req.change_type.as_deref().unwrap_or("test_failure_fix"),
-                    "change type",
-                )?;
-                DriftDisposition::DesignHolds { change_type }
-            }
-            "design_updated" => {
-                let Some(event_id) = req.design_change_event_id.as_deref() else {
-                    return Err(McpError::invalid_params(
-                        "disposition=design_updated requires design_change_event_id — the \
-                         ChangeEvent recorded when the design was updated. Without it the claim \
-                         'the design was updated' would stand with nothing behind it",
-                        None,
-                    ));
-                };
-                DriftDisposition::DesignUpdated {
-                    change_event_id: event_id,
-                }
-            }
-            other => {
-                return Err(McpError::invalid_params(
-                    format!(
-                        "unknown disposition '{other}': pass `design_holds` (the change carries \
-                         no design meaning) or `design_updated` (the design moved with it)"
-                    ),
-                    None,
-                ));
-            }
-        };
+        let disposition = parse_disposition(
+            &req.disposition,
+            req.change_type.as_deref(),
+            req.design_change_event_id.as_deref(),
+        )?;
         let mut g = self.write_lock().await;
         let (artifact, change_event_id) = g
             .set_artifact_checksum(
@@ -5127,6 +5365,44 @@ impl ReflowService {
             "artifact": NodeDto::from(artifact),
             "change_event_id": change_event_id,
         }))
+    }
+
+    #[tool(
+        description = "Accept MANY drift baselines in one call — the bulk form of \
+                       set_artifact_checksum, which was 244 consecutive calls across 22 sessions \
+                       of recorded usage. EACH ITEM CARRIES ITS OWN DISPOSITION, and that is the \
+                       point rather than an inconvenience: a batch under one shared disposition \
+                       would be exactly the silent bulk accept that erodes a design into fiction. \
+                       The round trip collapses; the judgement stays per artifact. ALL OF IT OR \
+                       NONE OF IT — every item is attempted so you learn every failure at once, \
+                       and if anything failed no baseline moves.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn set_artifact_checksums(
+        &self,
+        Parameters(req): Parameters<SetChecksumsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut accepts = Vec::with_capacity(req.accepts.len());
+        for a in &req.accepts {
+            let disposition = parse_disposition(
+                &a.disposition,
+                a.change_type.as_deref(),
+                a.design_change_event_id.as_deref(),
+            )?;
+            accepts.push(BulkChecksumAccept {
+                artifact_id: a.artifact_id.clone(),
+                checksum: a.checksum.clone(),
+                disposition,
+                note: a.note.clone(),
+                at: a.at.clone(),
+            });
+        }
+        let mut g = self.write_lock().await;
+        let report = g.set_artifact_checksums(&accepts).map_err(dyno_err)?;
+        bulk_result(
+            report,
+            |(artifact, change_event_id)| json!({ "artifact": NodeDto::from(artifact), "change_event_id": change_event_id }),
+        )
     }
 
     // ---- Artifact linking (connect real files to the design) ----
@@ -5391,6 +5667,104 @@ impl ReflowService {
     }
 
     // ---- LLM handshake (SP-2 collect-then-serve) ----
+
+    #[tool(
+        description = "Phrase MANY gaps as plain questions in one handshake — the bulk form of \
+                       gap_to_prompt, and the read half of the detect→ask→acknowledge round \
+                       trip. Same two passes: call with every `answers` empty to get \
+                       {status:needs_llm, gaps:[{gap_id, prompts}]}, fill them in and call again \
+                       to get one prompt per gap. ANSWERS ARE GROUPED PER GAP, so prompt ids \
+                       cannot collide across gaps — each gap is replayed against its own answers \
+                       and never sees another's. A MIXED call (some gaps answered, some not) is \
+                       refused rather than half-served. The questions are recorded all or none.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn gaps_to_prompts(
+        &self,
+        Parameters(req): Parameters<GapsToPromptsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        if req.gaps.is_empty() {
+            return Err(McpError::invalid_params(
+                "no gaps were passed — an empty ask is a mistake, not a no-op",
+                None,
+            ));
+        }
+        let mut gaps = Vec::with_capacity(req.gaps.len());
+        for g in &req.gaps {
+            gaps.push(parse_struct_param::<GapCandidate>(
+                g.gap.clone(),
+                "GapCandidate",
+            )?);
+        }
+
+        let answered = req.gaps.iter().filter(|g| !g.answers.is_empty()).count();
+        if answered != 0 && answered != req.gaps.len() {
+            return Err(McpError::invalid_params(
+                format!(
+                    "{answered} of {} gaps carry answers. A batch is either the prepare pass \
+                     (every `answers` empty) or the serve pass (every gap answered) — serving \
+                     half of them would record some questions and silently drop the rest",
+                    req.gaps.len()
+                ),
+                None,
+            ));
+        }
+
+        // Prepare pass: harvest each gap's prompts, grouped by gap.
+        if answered == 0 {
+            let collected: Vec<JsonValue> = gaps
+                .iter()
+                .map(|gap| {
+                    let collector = PromptCollector::new();
+                    let _discarded = gap.to_prompt(&collector);
+                    json!({ "gap_id": gap.id, "prompts": collector.collected() })
+                })
+                .collect();
+            return ok_json(json!({ "status": "needs_llm", "gaps": collected }));
+        }
+
+        // Serve pass. Each gap gets a backend built from ITS OWN answers.
+        let mut prompts = Vec::with_capacity(gaps.len());
+        for (gap, supplied) in gaps.iter().zip(req.gaps.iter()) {
+            let answers = supplied.answers.iter().map(|a| AgentAnswer {
+                id: a.id.clone(),
+                text: a.text.clone(),
+            });
+            let backend = AgentBackend::from_answers(answers);
+            prompts.push(gap.to_prompt(&backend));
+        }
+
+        // Record all of them or none — the same bar the other bulk forms hold.
+        let records: Vec<BulkAskedRecord> = gaps
+            .iter()
+            .zip(prompts.iter())
+            .map(|(gap, prompt)| BulkAskedRecord {
+                gap_id: gap.id.clone(),
+                affected_ids: gap.affected_ids.clone(),
+                question: prompt.question.clone(),
+                context_setter: Some(prompt.context_setter.clone()),
+                rephrase_degraded: prompt.rephrase_degraded,
+            })
+            .collect();
+
+        let mut g = self.write_lock().await;
+        let recorded = g
+            .record_asked_questions(&records, req.asked_at.as_deref())
+            .map_err(dyno_err)?;
+        if !recorded.applied {
+            return bulk_result(recorded, |q| q);
+        }
+
+        let items: Vec<JsonValue> = gaps
+            .iter()
+            .zip(prompts.iter())
+            .zip(recorded.written.iter())
+            .map(|((gap, prompt), question_id)| {
+                json!({ "gap_id": gap.id, "prompt": prompt, "question_id": question_id })
+            })
+            .collect();
+        ok_json(json!({ "status": "ok", "gaps": items }))
+    }
 
     #[tool(
         description = "Phrase a gap as a plain question via the ambient agent. \

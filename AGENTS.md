@@ -233,17 +233,31 @@ the config git falls back to a text merge of a 600KB JSON file — safe, but you
 **Never resolve a design conflict with `--ours`/`--theirs`**: for code that drops a hunk, for a
 design it drops a node someone wrote and nothing will tell you it is gone.
 
-**A change is done when all of these are clean:**
+**A change is done when all of these are clean** — the everyday subset, with the flags CI
+actually uses. **Both `-D warnings`, because that is what turns a local warning into a red build:**
 
 ```bash
 cargo test --workspace                                   # both crates
-cargo clippy -p reflow2-core --no-default-features --all-targets
+cargo clippy -p reflow2-core --no-default-features --all-targets -- -D warnings
+cargo clippy -p reflow2-mcp --all-targets -- -D warnings
 cargo fmt --check
 python3 tools/validate_schema.py                         # after any schema/*.yaml edit
 python3 tools/smoke_mcp.py                               # after any tool-surface change
 python3 tools/toolsnap.py                                # tool schemas vs committed goldens; --update to bless
 python3 tools/skill_lint.py                              # after any skill or tool-surface edit
+python3 tools/reflow2_check.py --export docs/design/reflow2.json   # design vs build, and the export chain
 ```
+
+> **This list is a SUBSET and `ci.yml` is the authority.** The full job also runs the instruments
+> and the Python suites — `phase_trial`, `coherent_erosion_trial`, `model_the_loop`,
+> `stateless_seat_probe`, `test_init`, `test_shared_sessions`, `test_merge_driver`,
+> `test_degraded_server`, `test_nudge_path`, `test_loop_nudge`, `test_render_views`,
+> `test_stale_seat`, `test_reflow2_check`, `check_doc_versions` — so **green here is not green
+> there**, and *"believe CI"* below is not a figure of speech. Run the ones your change touches;
+> [docs/sharpening.md](docs/sharpening.md) says which instrument covers what. **Keeping these two
+> lists in agreement is manual and has already failed once (BL-159): the `-p reflow2-mcp` clippy
+> line was missing entirely and the `-p reflow2-core` one lacked `-D warnings`, so following this
+> block exactly still produced a red build.**
 
 **Export the design EXACTLY ONCE PER PULL REQUEST, straight onto the committed file** — not once
 per commit. The distinction is not pedantry and it cost a broken chain on `56bc698`: PRs merge by

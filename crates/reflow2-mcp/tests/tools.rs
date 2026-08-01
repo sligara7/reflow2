@@ -2625,3 +2625,161 @@ async fn a_server_with_no_content_store_says_so_instead_of_choosing_one() {
         "the refusal must name the remedy, got: {said}"
     );
 }
+
+// ---- BL-153 fix shapes (1) and (3) — the bulk forms over the surface -------
+
+/// A rejected bulk write comes back as an ERROR carrying every failure, not as
+/// a payload with `applied: false`. A tool result reads as success, and "we
+/// wrote nothing" dressed as a result is the silent-failure shape this project
+/// forbids — so the error is the signal and the list is the content.
+#[tokio::test]
+async fn a_rejected_bulk_write_errors_and_still_names_every_failure() {
+    let s = seeded().await;
+    let err = s
+        .create_nodes(Parameters(CreateNodesReq {
+            nodes: vec![
+                NodeSpecReq {
+                    node_type: "NotAType".into(),
+                    id: "x:bad".into(),
+                    props: None,
+                },
+                NodeSpecReq {
+                    node_type: "AlsoNotAType".into(),
+                    id: "x:worse".into(),
+                    props: None,
+                },
+            ],
+        }))
+        .await
+        .expect_err("a rejected batch must not read as success");
+
+    let data = err.data.expect("failures ride along in the error data");
+    let failures = data["failures"].as_array().expect("failure list");
+    assert_eq!(failures.len(), 2, "BOTH failures, not just the first");
+    assert_eq!(failures[0]["id"], "x:bad");
+    assert_eq!(failures[1]["id"], "x:worse");
+}
+
+/// THE COUNTERWEIGHT for the multi-gap ask. Two gaps whose prompts carry the
+/// same id must not cross-contaminate: answers are grouped per gap, so each is
+/// replayed against a backend built from its own answers and never sees the
+/// other's. Without the grouping this is where a batched handshake would put
+/// one gap's question on another gap's record.
+#[tokio::test]
+async fn each_gap_is_replayed_against_only_its_own_answers() {
+    let s = seeded().await;
+    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let all = gaps.as_array().unwrap().clone();
+    assert!(all.len() >= 2, "need two gaps to prove they stay separate");
+    let (a, b) = (all[0].clone(), all[1].clone());
+
+    let prep = j!(s.gaps_to_prompts(Parameters(GapsToPromptsReq {
+        gaps: vec![
+            GapPromptReq {
+                gap: obj(&a),
+                answers: vec![]
+            },
+            GapPromptReq {
+                gap: obj(&b),
+                answers: vec![]
+            },
+        ],
+        asked_at: None,
+    })));
+    assert_eq!(prep["status"], "needs_llm");
+    let per_gap = prep["gaps"].as_array().expect("grouped by gap");
+    assert_eq!(per_gap.len(), 2, "prompts come back grouped per gap");
+    let id_a = per_gap[0]["prompts"][0]["id"].as_str().unwrap().to_string();
+    let id_b = per_gap[1]["prompts"][0]["id"].as_str().unwrap().to_string();
+
+    let served = j!(s.gaps_to_prompts(Parameters(GapsToPromptsReq {
+        gaps: vec![
+            GapPromptReq {
+                gap: obj(&a),
+                answers: vec![AgentAnswerReq {
+                    id: id_a,
+                    text: "QUESTION FOR THE FIRST GAP".into()
+                }]
+            },
+            GapPromptReq {
+                gap: obj(&b),
+                answers: vec![AgentAnswerReq {
+                    id: id_b,
+                    text: "QUESTION FOR THE SECOND GAP".into()
+                }]
+            },
+        ],
+        asked_at: Some("2026-08-01".into()),
+    })));
+    assert_eq!(served["status"], "ok");
+    let out = served["gaps"].as_array().unwrap();
+    assert_eq!(out[0]["prompt"]["question"], "QUESTION FOR THE FIRST GAP");
+    assert_eq!(out[1]["prompt"]["question"], "QUESTION FOR THE SECOND GAP");
+    assert_ne!(
+        out[0]["question_id"], out[1]["question_id"],
+        "two gaps must not collapse onto one question record"
+    );
+
+    // Both are on the record, with the wording each was actually given.
+    let open = jl!(s.open_questions());
+    let asked: Vec<&str> = open
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter_map(|q| q["question"].as_str())
+        .collect();
+    assert!(asked.contains(&"QUESTION FOR THE FIRST GAP"));
+    assert!(asked.contains(&"QUESTION FOR THE SECOND GAP"));
+}
+
+/// A batch is the prepare pass or the serve pass. Serving half of it would
+/// record some questions and silently drop the rest, so it is refused.
+#[tokio::test]
+async fn a_half_answered_ask_batch_is_refused() {
+    let s = seeded().await;
+    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let all = gaps.as_array().unwrap().clone();
+    let (a, b) = (all[0].clone(), all[1].clone());
+
+    let err = s
+        .gaps_to_prompts(Parameters(GapsToPromptsReq {
+            gaps: vec![
+                GapPromptReq {
+                    gap: obj(&a),
+                    answers: vec![AgentAnswerReq {
+                        id: "whatever".into(),
+                        text: "answered".into(),
+                    }],
+                },
+                GapPromptReq {
+                    gap: obj(&b),
+                    answers: vec![],
+                },
+            ],
+            asked_at: None,
+        }))
+        .await
+        .expect_err("a mixed batch is refused");
+    assert!(
+        err.message.contains("1 of 2"),
+        "the refusal says which half, got: {}",
+        err.message
+    );
+
+    // And nothing was recorded — the refusal is before any write.
+    let open = jl!(s.open_questions());
+    assert!(open.as_array().unwrap().is_empty());
+}
+
+#[tokio::test]
+async fn an_empty_ask_batch_is_refused_rather_than_treated_as_a_no_op() {
+    let s = seeded().await;
+    assert!(
+        s.gaps_to_prompts(Parameters(GapsToPromptsReq {
+            gaps: vec![],
+            asked_at: None,
+        }))
+        .await
+        .is_err()
+    );
+}

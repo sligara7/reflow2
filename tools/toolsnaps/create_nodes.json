@@ -1,0 +1,51 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create or update MANY nodes in one call — the bulk form of create_node. ALL OF IT OR NONE OF IT: every item is attempted so you learn every failure in one round trip, and if anything failed nothing is written. Upsert, like create_node, so re-running after a fix is safe.",
+  "inputSchema": {
+    "$defs": {
+      "NodeSpecReq": {
+        "additionalProperties": false,
+        "description": "One node for `create_nodes`.",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "node_type": {
+            "type": "string"
+          },
+          "props": {
+            "additionalProperties": true,
+            "default": null,
+            "description": "Property object; validated against the schema exactly as `create_node`\nvalidates it.",
+            "type": [
+              "object",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "node_type",
+          "id"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "nodes": {
+        "items": {
+          "$ref": "#/$defs/NodeSpecReq"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "nodes"
+    ],
+    "type": "object"
+  },
+  "name": "create_nodes"
+}

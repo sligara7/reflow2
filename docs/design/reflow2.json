@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6c5c7b74686b5e09a6c916651d2e04a71ad96fa0ecc731da9365fd4587d6e961",
+  "content_hash": "sha256:b93fd919adbe1de0e1aae726e71db9a3bc0bf874436d158dabaf699384128a4c",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -72,6 +72,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:bulk-forms",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4790,6 +4798,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-f7492269b204a4d2",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-f74ab63586b98dee",
       "properties": {
         "accepted_baseline": true,
@@ -6074,6 +6091,33 @@
         "action": "modified"
       },
       "to_id": "req:build-loop-is-bounded"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bulk-forms",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:bulk"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bulk-forms",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bulk-forms",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:bulk-forms"
     },
     {
       "edge_type": "CHANGED",
@@ -11974,6 +12018,18 @@
       "from_id": "cap:budget",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:bulk-forms",
+      "properties": {},
+      "to_id": "dec:bulk-is-all-or-nothing-with-per-item-findings"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:bulk-forms",
+      "properties": {},
+      "to_id": "dec:bulk-keeps-the-judgement-per-item"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -27903,6 +27959,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:bulk",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:changelog-test",
       "properties": {
         "completeness": "complete"
@@ -28625,6 +28689,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cap:complementary-pairing"
     },
     {
@@ -29062,6 +29134,12 @@
       "from_id": "cap:budget",
       "properties": {},
       "to_id": "req:no-silent-fallback"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:bulk-forms",
+      "properties": {},
+      "to_id": "req:agent-native"
     },
     {
       "edge_type": "SATISFIES",
@@ -30001,6 +30079,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:bulk-forms",
+      "properties": {},
+      "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:change",
       "properties": {},
       "to_id": "cap:change"
@@ -30666,6 +30750,14 @@
         "action": "created"
       },
       "to_id": "art:budget"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:bulk",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:bulk"
     },
     {
       "edge_type": "YIELDED",
@@ -31398,6 +31490,17 @@
         "checksum": "sha256:9da41f6bdb9885f7",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:bulk",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:6e8e23fce35b21d6",
+        "location": "crates/reflow2-core/src/bulk.rs",
+        "name": "bulk.rs",
         "status": "realized"
       }
     },
@@ -32154,7 +32257,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8680e320e1f8f672",
+        "checksum": "sha256:314c17f7c00d511d",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -32591,6 +32694,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Roll up a budget against a constraint",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:bulk-forms",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Bulk forms for every tool BL-153's surface measurement caught calling itself: create_nodes, create_edges, set_artifact_checksums, acknowledge_gaps, gaps_to_prompts. 52.9% of all tool-to-tool transitions across 46 sessions and 6,095 calls were self-loops; these answer set_artifact_checksum 244, create_node 112, contains 109, acknowledge_gap 90, gap_to_prompt 83, contain_component 77 and satisfies 74. create_edges is ONE tool rather than six because contains/contain_component/satisfies/allocate/realizes are thin wrappers that only fill in the endpoint types, and BL-155's 40-never-called count makes near-identical tools a cost. Every form is all-or-nothing WITH per-item findings, and every form that records a judgement keeps that judgement per item.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "One call where the surface measured N",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -34430,6 +34546,15 @@
       }
     },
     {
+      "node_id": "chg:accept-f7492269b204a4d2",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-01",
+        "name": "Two redundant closures collapsed to the associated function itself (NodeDto::from / EdgeDto::from), after CI's `cargo clippy -p reflow2-mcp --all-targets -- -D warnings` rejected them. No design meaning: the bulk forms behave identically, and every test that names their behaviour is unchanged and still passing. The reason this reached CI at all is BL-159 — AGENTS.md's documented gate list omitted that clippy invocation, so the local run was green against the list as written."
+      }
+    },
+    {
       "node_id": "chg:accept-f74ab63586b98dee",
       "node_type": "ChangeEvent",
       "properties": {
@@ -34758,6 +34883,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Reassess req:build-loop-is-bounded: a hard stop is phase-shaped and may be wrong for continual evolution"
+      }
+    },
+    {
+      "node_id": "chg:bulk-forms",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-153 fix shapes (1) and (3): the bulk forms, and the tool surface that carries them"
       }
     },
     {
@@ -36407,6 +36540,26 @@
         "name": "reflow2's systems are functional, not its file tree",
         "rationale": "The self-model had been recovered backwards from the file tree, so its 38 Components were the Rust module list and the domain primitives a design-graph product fundamentally is — node and edge types — appeared nowhere (BL-83). A functional carving comes from the product's purpose (a genesis input), not the code, and cuts across crate boundaries, so adopt on the code can only re-derive the module view. Derived with the user, 2026-07-23. The retired crate view is recovered by adopt-on-a-copy (BL-83b) and the divergence measured by compare_designs (BL-83c).",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:bulk-is-all-or-nothing-with-per-item-findings",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Every bulk form attempts every item, collects each failure with its index, and if any item failed discards the whole batch and returns the complete failure list. A rejected batch is returned as an ERROR carrying the failures in its data, never as a payload with applied:false.",
+        "name": "A bulk write is all-or-nothing AND reports every failure — the refusal-semantics question was a false choice",
+        "rationale": "BL-153 posed this as a choice — \"one refusal semantics to define (all-or-nothing, or per-item findings?)\" — and the two were never exclusive. ALL-OR-NOTHING COSTS NOTHING HERE: the store already has an atomic batch (begin_batch/commit_batch/discard_batch) that HEAL's apply step and import_graph both use, and a partial bulk write leaves a design in a state nobody chose. PER-ITEM FINDINGS ARE SEPARATELY NECESSARY: BL-118 files exactly the opposite defect against import_graph — \"validation is fail-fast, one error per attempt\" — and BL-139 records what it costs, that the adopt loop's corrective re-import is where it breaks. A bulk form surfacing one error per round trip would replace N writes with N retries and save nobody anything. The failure carries its INDEX as well as its id because an id alone cannot tell two identical entries apart, and a list an agent generated is exactly where a duplicate turns up. The error-not-payload choice follows the same rule as everywhere else: a tool result reads as success, so \"nothing was written\" dressed as a result is the silent-failure shape this project forbids.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:bulk-keeps-the-judgement-per-item",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Any bulk form over a tool that records a JUDGEMENT carries that judgement per item, never hoisted to a call-level argument: set_artifact_checksums takes a disposition per artifact, acknowledge_gaps a reason per gap, and gaps_to_prompts groups answers per gap. A shared timestamp is allowed because it is a fact about the call; a shared disposition is not, because it would be a shared decision.",
+        "name": "A bulk form collapses the round trip, never the judgement",
+        "rationale": "BL-153 stated the trap before the build: \"a batch of 144 acknowledgements with one reason is exactly the erosion those decisions exist to prevent, so a bulk form needs per-item dispositions or it is worse than the loop.\" This is the line that keeps dec:two-sided-accept (\"silent drift-accept does not exist\") and dec:ask-not-repair true under a bulk surface — 244 accepts now cost one call and still 244 decisions. It is also the distinction that let dec:manifest-derived-is-not-manifest-accepted go the other way and take no per-item disposition at all: a DERIVATION records no judgement, so there is none to preserve. For gaps_to_prompts the per-item grouping is additionally mechanical, not only doctrinal: grouping answers by gap is what stops two gaps' prompt ids colliding, so no gap is ever replayed against another's answers — and a half-answered batch is refused rather than half-served, because serving half would record some questions and silently drop the rest.",
+        "status": "proposed"
       }
     },
     {
@@ -39570,6 +39723,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered budget.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:bulk",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered bulk.rs"
       }
     },
     {
@@ -43454,6 +43617,18 @@
       }
     },
     {
+      "node_id": "ver:bulk-forms",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-01",
+        "level": "integration",
+        "method": "test",
+        "name": "All of it or none of it, and every failure in one round trip (crates/reflow2-core/tests/bulk.rs + crates/reflow2-mcp/tests/tools.rs) — 14 cases. ATOMICITY: one bad item rejects the whole batch and the good items BEFORE and AFTER it are both absent; an edge into a missing node rolls back the good edge beside it; one unknown artifact leaves every other baseline unmoved. EVERY FAILURE: two bad items in a batch of four come back as two failures with their indices, and a failure carries its POSITION so two entries sharing an id are still distinguishable. PER-ITEM JUDGEMENT: two accepts with two DIFFERENT dispositions produce two different change-event records and design_holds never borrows design_updated's event; two acknowledged gaps keep two different rationales. COVERAGE: one bulk edge form produces byte-identical properties to the typed helper it replaces, defaults included, so nothing is silently dropped. SURFACE: a rejected batch is an ERROR carrying every failure in its data rather than a payload that reads as success; two gaps whose prompts share an id are each replayed against ONLY their own answers; a half-answered ask batch is refused naming which half and writes nothing; an empty ask batch is refused rather than treated as a no-op. MUTATION-CHECKED THREE WAYS, each failing exactly the tests that name it and nothing else: commit instead of discarding on failure and the three atomicity cases fail; break at the first failure and exactly the two collect-every-failure cases fail; hoist item 0's disposition onto every item and ONLY the per-disposition case fails while the other eight stay green, which is what proves that test is not passing for free. PROVEN ON THE REAL SURFACE: driven over stdio JSON-RPC against the built binary on a copy of reflow2's own 1205-node design — 138 tools served, 20 nodes and 20 edges each in one call, a rejected batch returning BOTH failures with the good item before them unwritten, and two accepts carrying two different change types.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:change",
       "node_type": "Verification",
       "properties": {
@@ -44485,7 +44660,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:193085ad37b22ffb73b7f26e32e6cd40ad1a12d3abf72d7daa4614dd3cd286f1",
+  "prev_content_hash": "sha256:6c5c7b74686b5e09a6c916651d2e04a71ad96fa0ecc731da9365fd4587d6e961",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

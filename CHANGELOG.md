@@ -33,6 +33,39 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Bulk forms for the five tools the surface measurement caught calling themselves** (BL-153 fix
+  shapes (1) and (3), `cap:bulk-forms`, `dec:bulk-is-all-or-nothing-with-per-item-findings`,
+  `dec:bulk-keeps-the-judgement-per-item`). `create_nodes`, `create_edges`,
+  `set_artifact_checksums`, `acknowledge_gaps` and `gaps_to_prompts`. Together with
+  `release_includes_all` these answer **every** self-loop BL-153 named: `set_artifact_checksum`
+  244, `create_node` 112, `contains` 109, `acknowledge_gap` 90, `gap_to_prompt` 83,
+  `contain_component` 77, `satisfies` 74.
+
+  **`create_edges` is one tool, not six.** `contains`, `contain_component`, `satisfies`,
+  `allocate` and `realizes` are thin wrappers that only fill in the endpoint types, so a bulk
+  `create_edge` is the bulk form of all of them — and BL-155 found 40 of 132 served tools never
+  called, which makes six near-identical tools a cost rather than a convenience.
+
+  **All of it or none of it, *with* per-item findings.** BL-153 posed the refusal semantics as a
+  choice — "all-or-nothing, or per-item findings?" — and it is neither/both: every item is
+  attempted so you learn every failure in one round trip, and if anything failed the batch is
+  discarded and nothing is written. The store already had the atomic batch HEAL's apply step and
+  `import_graph` use. Collecting all failures is also the defect BL-118 files against
+  `import_graph` ("validation is fail-fast, one error per attempt"), which a bulk form must not
+  inherit — surfacing one error per round trip would replace N writes with N retries.
+
+  **The judgement stays per item.** `set_artifact_checksums` carries a disposition *per artifact*
+  and `acknowledge_gaps` a reason *per gap*, never hoisted to a call-level argument. BL-153 named
+  this as the trap that would make a bulk form worse than the loop it replaces, and
+  `dec:two-sided-accept` is what it would break. 244 accepts now cost one call and still 244
+  decisions. `gaps_to_prompts` groups answers per gap for the same reason plus a mechanical one:
+  it is what stops two gaps' prompt ids colliding, so no gap is ever replayed against another's
+  answers. A half-answered ask batch is refused rather than half-served.
+
+  A rejected bulk write returns an **error** carrying every failure in its `data`, not a payload
+  with `applied: false` — a tool result reads as success, and "nothing was written" dressed as a
+  result is the silent-failure shape this project forbids.
+
 - **`release_includes_all` — a release's manifest is derived from the design instead of typed
   out** (BL-153, `cap:derived-release-manifest`, `dec:manifest-derived-is-not-manifest-accepted`).
   One call turns every Artifact and Component the design holds into an `INCLUDES` edge, freezing
@@ -58,6 +91,14 @@ This file is the third view: *what changed, and when*.
   and answers.
 
 ### Fixed
+
+- **AGENTS.md's documented gate list disagreed with the gates CI runs** (BL-159) — 8 commands
+  against ~24, and one of the 8 carried the wrong flags. The missing
+  `cargo clippy -p reflow2-mcp --all-targets -- -D warnings` is what turned two `redundant_closure`
+  warnings into a red build while every documented gate was green; measuring the rest of the
+  divergence then found the same bug latent one line above, where the `-p reflow2-core` clippy
+  lacked `-D warnings`. Both flags corrected, `reflow2_check` added, and the block now states
+  that it is a subset with `ci.yml` authoritative — green here is not green there.
 
 - **`art:detect` had no drift baseline**, so `crates/reflow2-core/src/detect.rs` — the file
   realizing `cap:detect`, `cap:kpp`, `cap:aggregate-gap-keying`, `cap:release-pinned-to-time` and
