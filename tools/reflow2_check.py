@@ -142,18 +142,22 @@ class Server:
         self.proc.wait(timeout=10)
 
 
-def hash_file(path: str, registered: str | None) -> str | None:
-    """sha256 of the file, truncated to match the registered checksum's length
-    (designs register anything from 16 hex chars to the full 64; reconcile
-    compares strings, so the observation must speak the same dialect)."""
+def hash_file(path: str) -> str:
+    """The whole sha256 of the file — what an honest observer computes.
+
+    This used to truncate the digest to the registered checksum's length,
+    because designs register anything from 16 hex chars to the full 64 and
+    `reconcile_artifacts` compared strings. That workaround is why the gate
+    reported OK on 2026-08-01 in the same minute a direct sweep of the same
+    clean tree called 51 artifacts drifted: **the compensation lived in the
+    wrong layer**, so every consumer that was not this file hit the bug. The
+    core now answers it for everyone (BL-160, `artifact::checksums_agree`), and
+    the gate reports what it actually measured."""
     h = hashlib.sha256()
     with open(path, "rb") as f:
         for chunk in iter(lambda: f.read(1 << 16), b""):
             h.update(chunk)
-    digest = h.hexdigest()
-    if registered and registered.startswith("sha256:"):
-        digest = digest[: len(registered) - len("sha256:")]
-    return f"sha256:{digest}"
+    return f"sha256:{h.hexdigest()}"
 
 
 def _git(args: list[str], cwd: str) -> str | None:
@@ -326,16 +330,17 @@ def main() -> int:
             for art in artifacts:
                 props = art.get("properties", {})
                 location = props.get("location") or props.get("name")
-                registered = props.get("checksum")
                 path = os.path.join(opts.root, location) if location else None
                 if not path or not os.path.exists(path):
                     observed.append({"artifact_id": art["node_id"], "present": False})
                     continue
-                entry = {"artifact_id": art["node_id"], "present": True}
-                checksum = hash_file(path, registered)
-                if checksum:
-                    entry["checksum"] = checksum
-                observed.append(entry)
+                observed.append(
+                    {
+                        "artifact_id": art["node_id"],
+                        "present": True,
+                        "checksum": hash_file(path),
+                    }
+                )
 
             drift = server.call(
                 "reconcile_artifacts", {"observed": observed, "exhaustive": True}

@@ -334,6 +334,11 @@ impl DesignGraph {
             // compared canonically, because it is part of a checksum_change
             // event's identity — leaving the raw form would file one divergence
             // twice under two ids depending on which dialect was supplied.
+            //
+            // The comparison itself is `checksums_agree` rather than `==`,
+            // because LENGTH is a dialect as well as the prefix (BL-160): a
+            // design registering 16 hex chars and a caller supplying all 64
+            // are describing the same bytes.
             let recorded = artifact
                 .properties
                 .get("checksum")
@@ -344,7 +349,9 @@ impl DesignGraph {
                 .as_deref()
                 .map(crate::artifact::canonical_checksum);
             match (recorded, observed_canonical.as_deref()) {
-                (Some(recorded), Some(current)) if recorded == current => {
+                (Some(recorded), Some(current))
+                    if crate::artifact::checksums_agree(&recorded, current) =>
+                {
                     unchanged += 1;
                     matched.push(obs.artifact_id.clone());
                 }
