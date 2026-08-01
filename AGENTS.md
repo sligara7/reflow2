@@ -245,7 +245,15 @@ python3 tools/toolsnap.py                                # tool schemas vs commi
 python3 tools/skill_lint.py                              # after any skill or tool-surface edit
 ```
 
-**Export the design EXACTLY ONCE per commit, straight onto the committed file.** The gate checks
+**Export the design EXACTLY ONCE PER PULL REQUEST, straight onto the committed file** — not once
+per commit. The distinction is not pedantry and it cost a broken chain on `56bc698`: PRs merge by
+**squash**, so N commits become one on `main`, and only the *last* export's `prev_content_hash`
+survives. If two commits on a branch each exported, the surviving one links to an intermediate that
+`main` never saw, and the history has a hole. A branch may hold as many commits as you like; only
+one of them may touch `docs/design/reflow2.json`, and it should be the last. (Corollary: put the
+COORD claim commit — which carries no export — first, which is what earlier PRs did by accident.)
+
+The gate checks
 this since BL-107 and will fail the build if you get it wrong:
 
 ```bash
