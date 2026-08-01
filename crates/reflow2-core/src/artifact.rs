@@ -43,7 +43,15 @@ use crate::temporal::{ChangeAction, ChangeType};
 /// sees what was written. Anything else (a different algorithm's prefix, a
 /// non-hex fingerprint) is stored verbatim: this normalises a known dialect, it
 /// does not police the field.
-fn canonical_checksum(checksum: &str) -> String {
+///
+/// **Applied on BOTH sides of the comparison, not only on the way in** (BL-125).
+/// It lived here as a write-side fix from 2026-07-25 until 2026-08-01, while
+/// `drift.rs` compared literally — so the identical false red came back through
+/// the read door, and a caller who passed a bare hash to `link_artifact` and the
+/// same bare hash to `reconcile_artifacts` was told every artifact of an
+/// untouched tree had drifted. A normalisation that only one end of a comparison
+/// performs is not a normalisation.
+pub(crate) fn canonical_checksum(checksum: &str) -> String {
     let is_bare_hex = !checksum.is_empty()
         && checksum.len() <= 64
         && checksum.chars().all(|c| c.is_ascii_hexdigit());

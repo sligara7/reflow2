@@ -297,11 +297,23 @@ impl DesignGraph {
                 continue;
             }
 
+            // Both sides through the canonicaliser before comparing: a bare hex
+            // digest and its `sha256:`-prefixed form are the same digest, and
+            // comparing them literally reports drift on a file nobody touched
+            // (BL-125). The observed value is canonicalised too, not just
+            // compared canonically, because it is part of a checksum_change
+            // event's identity — leaving the raw form would file one divergence
+            // twice under two ids depending on which dialect was supplied.
             let recorded = artifact
                 .properties
                 .get("checksum")
-                .and_then(|v| v.as_str().map(str::to_string));
-            match (recorded, obs.checksum.as_deref()) {
+                .and_then(|v| v.as_str())
+                .map(crate::artifact::canonical_checksum);
+            let observed_canonical = obs
+                .checksum
+                .as_deref()
+                .map(crate::artifact::canonical_checksum);
+            match (recorded, observed_canonical.as_deref()) {
                 (Some(recorded), Some(current)) if recorded == current => unchanged += 1,
                 (Some(_), Some(_)) => findings.push(DriftFinding {
                     artifact_id: obs.artifact_id.clone(),
@@ -311,7 +323,7 @@ impl DesignGraph {
                         obs.artifact_id
                     ),
                     realizes: realizes.clone(),
-                    observed_checksum: obs.checksum.clone(),
+                    observed_checksum: observed_canonical.clone(),
                     event_id: None,
                     direction: None,
                     unrecorded: Vec::new(),

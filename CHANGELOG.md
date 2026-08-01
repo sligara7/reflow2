@@ -31,6 +31,29 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **A bare content hash no longer reports drift on a file nobody touched** (BL-125;
+  `ver:checksum-dialect`). `canonical_checksum` turns a bare hex digest into `sha256:<hex>`,
+  and since 2026-07-25 it ran on the two **write** paths only — `drift.rs` compared literally.
+  So a caller who passed a bare hash to `link_artifact` and the same bare hash to
+  `reconcile_artifacts` was told **every artifact of an untouched tree had drifted**, which is
+  precisely the false red that function was written to stop: *"a false red on a gate whose whole
+  job is to be believed is worse than no gate."* Both sides now go through the canonicaliser.
+  The observed value is canonicalised too, not merely compared canonically, because it is part
+  of a `checksum_change` event's identity — leaving the raw form filed one divergence under two
+  ids depending on the dialect supplied.
+
+  It failed as a **false positive**, never an error: well-formed output, correct `realizes`
+  edges, correct `propagation_seeds`, entirely wrong conclusion — and the natural response
+  (re-register everything) overwrites the baselines and hides it for another cycle. Measured at
+  the real MCP surface both ways: before, `unchanged: 0` with a `checksum_change` and a blast
+  radius seeded from a file nobody edited; after, `unchanged: 1`, no findings, no seeds.
+  **Mutation-checked by construction** — the suite was written first, and the three bug cases
+  failed while both counterweights passed, so a "fix" that made every comparison equal would
+  have passed the bug cases and destroyed the detector. Found by an external review of a project
+  designed end to end through reflow2.
+
 ## [0.19.0] — 2026-07-31
 
 ### Added
