@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b93fd919adbe1de0e1aae726e71db9a3bc0bf874436d158dabaf699384128a4c",
+  "content_hash": "sha256:9dba62d40234a2820614ea24107dd241e3c11b740282b79ecb3a3fd117bc58f6",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -36549,7 +36549,7 @@
         "decision": "Every bulk form attempts every item, collects each failure with its index, and if any item failed discards the whole batch and returns the complete failure list. A rejected batch is returned as an ERROR carrying the failures in its data, never as a payload with applied:false.",
         "name": "A bulk write is all-or-nothing AND reports every failure — the refusal-semantics question was a false choice",
         "rationale": "BL-153 posed this as a choice — \"one refusal semantics to define (all-or-nothing, or per-item findings?)\" — and the two were never exclusive. ALL-OR-NOTHING COSTS NOTHING HERE: the store already has an atomic batch (begin_batch/commit_batch/discard_batch) that HEAL's apply step and import_graph both use, and a partial bulk write leaves a design in a state nobody chose. PER-ITEM FINDINGS ARE SEPARATELY NECESSARY: BL-118 files exactly the opposite defect against import_graph — \"validation is fail-fast, one error per attempt\" — and BL-139 records what it costs, that the adopt loop's corrective re-import is where it breaks. A bulk form surfacing one error per round trip would replace N writes with N retries and save nobody anything. The failure carries its INDEX as well as its id because an id alone cannot tell two identical entries apart, and a list an agent generated is exactly where a duplicate turns up. The error-not-payload choice follows the same rule as everywhere else: a tool result reads as success, so \"nothing was written\" dressed as a result is the silent-failure shape this project forbids.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -36559,7 +36559,7 @@
         "decision": "Any bulk form over a tool that records a JUDGEMENT carries that judgement per item, never hoisted to a call-level argument: set_artifact_checksums takes a disposition per artifact, acknowledge_gaps a reason per gap, and gaps_to_prompts groups answers per gap. A shared timestamp is allowed because it is a fact about the call; a shared disposition is not, because it would be a shared decision.",
         "name": "A bulk form collapses the round trip, never the judgement",
         "rationale": "BL-153 stated the trap before the build: \"a batch of 144 acknowledgements with one reason is exactly the erosion those decisions exist to prevent, so a bulk form needs per-item dispositions or it is worse than the loop.\" This is the line that keeps dec:two-sided-accept (\"silent drift-accept does not exist\") and dec:ask-not-repair true under a bulk surface — 244 accepts now cost one call and still 244 decisions. It is also the distinction that let dec:manifest-derived-is-not-manifest-accepted go the other way and take no per-item disposition at all: a DERIVATION records no judgement, so there is none to preserve. For gaps_to_prompts the per-item grouping is additionally mechanical, not only doctrinal: grouping answers by gap is what stops two gaps' prompt ids colliding, so no gap is ever replayed against another's answers — and a half-answered batch is refused rather than half-served, because serving half would record some questions and silently drop the rest.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -37039,7 +37039,7 @@
         "decision": "release_includes_all derives a release's whole manifest from the design and writes it in one call, with `apply` defaulting to false so the derivation is reported before anything is written. Entries already in the manifest are reported as already_present and their frozen as_checksum is never recomputed.",
         "name": "A bulk derivation is not a bulk accept, and it writes nothing until asked",
         "rationale": "BL-153 flagged the counterweight to state before building: dec:two-sided-accept and dec:ask-not-repair mean a bulk form must not become a silent one, and \"a batch of 144 acknowledgements with one reason is exactly the erosion those decisions exist to prevent\". Those decisions bound bulk DISPOSITIONS — a judgement taken about each item. No disposition is taken here: the graph is asked what the project contains and answers, and the one judgement a human still owns (which release ships it) is the argument the caller supplies. So the family does not apply, and a per-item disposition would be ceremony over a derivation. What DOES apply is the no-silent-write bar: hence apply defaults to false, matching reconcile_artifacts' record_events, because a call that packages a release is the one you most want to read before you run it. The frozen-checksum guard is the harder half — a derivation that recomputed every entry would rewrite the manifest of a shipped release each time the live drift baseline moved, silently and in bulk, which is the axis-Z sin the frozen copy exists to prevent.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -44660,7 +44660,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6c5c7b74686b5e09a6c916651d2e04a71ad96fa0ecc731da9365fd4587d6e961",
+  "prev_content_hash": "sha256:b93fd919adbe1de0e1aae726e71db9a3bc0bf874436d158dabaf699384128a4c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
