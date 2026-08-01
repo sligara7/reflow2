@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- **BL-122** (nothing detects a Release with no `AT_EPOCH`) — @ajs — since 2026-07-31 — crates/reflow2-core/src/detect.rs, crates/reflow2-core/tests/; branch `feat/release-without-epoch`. Built BEFORE the v0.20.0 cut deliberately: `rel:v0190` was cut without the edge and `v0.17.0` still lacks it, so cutting again on memory alone repeats a step that has already failed twice. The cut is the detector's first real test.
+
 
 
 
