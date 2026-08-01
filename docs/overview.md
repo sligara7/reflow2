@@ -97,6 +97,11 @@ Three records, three questions — kept separate on purpose:
   to a collaborator as-is.
 
 ### 3½ · Upgrade notes — *read before updating a consumer project*
+- [upgrading-to-v0.21.0.md](upgrading-to-v0.21.0.md) — **upgrade everywhere, together**: a new edge
+  type (`CALIBRATED_AGAINST`) moves the version stamp, so an older reflow2 is locked out of a design
+  written by this one. No pin moved, so no slow first build. What you gain: your evidence can say
+  what it covers — whether a check is older than the code it covers, what it held fixed versus
+  varied, and whether the thing it validates was *fitted to* the evidence it rests on.
 - [upgrading-to-v0.19.0.md](upgrading-to-v0.19.0.md) — **upgrade everywhere, together**: a new edge
   type (`SCHEDULED_FOR`) moves the version stamp, so an older reflow2 is locked out of a design
   written by this one. No pin moved, so no slow first build. Also: the content store's one new flag,
