@@ -388,6 +388,15 @@ joined by *traceability* edges) for HEAL's topology detectors.
   design did not model documentation as a deliverable until 2026-07-25, and back-filling would
   reconstruct history rather than record it (`dec:intent-preserved`). Starts from the next release,
   on the user's call.
+- **A release must be pinned to its epoch, and the design now says so itself.** `AT_EPOCH` is
+  what puts a Release on the time axis; without it `changelog_point` resolves the release to a
+  position with no sequence, so any window computed from it loses its lower bound and silently
+  widens to the beginning of the design. This was a memory-only step and it failed twice —
+  `rel:v0190` was cut without the edge four hours before `changelog_view` needed it, and
+  `v0.17.0` still lacks one while `v0.18.0`'s commit message boasted of not repeating the
+  fault. `release_without_epoch` now raises it per release (BL-122). **Do not "fix" a release
+  by renaming things to match**: a matching name plus an existing epoch node is exactly what
+  made the missing edge invisible, and only the edge counts.
 - **Structural topology detectors are selective.** A design's golden thread is tree-shaped,
   where every internal node is a naive articulation point — so `single_point_of_failure`
   only fires when a node separates ≥2 real subsystems (see `structure.rs`).

@@ -1209,3 +1209,231 @@ fn a_bad_verification_kind_is_refused() {
     g.add_verification("ver:x", "x", None, None).unwrap();
     assert!(g.set_verification_kind("ver:x", "vindication").is_err());
 }
+
+// ---- BL-122: a Release that names no point on the time axis ---------------
+//
+// The defect this closes was invisible by construction: `rel:v0190` was cut
+// without its `AT_EPOCH` edge four hours before `changelog_view` needed it, and
+// nothing anywhere reported the absence. A matching name plus an existing epoch
+// node make a missing edge look exactly like a present one.
+
+/// Build a graph with an epoch spine and `count` releases, pinning only those
+/// whose index appears in `pinned`.
+fn releases_and_epochs(count: usize, pinned: &[usize]) -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for i in 0..count {
+        g.create_node(
+            node::DESIGN_EPOCH,
+            &format!("epoch:v{i}"),
+            Props::new()
+                .set("name", format!("v0.{i}.0 cut"))
+                .set("sequence", i as i64),
+        )
+        .unwrap();
+        g.create_node(
+            node::RELEASE,
+            &format!("rel:v{i}"),
+            // Explicit `deployed`: Release.status DEFAULTS to `planned`, and a
+            // planned release is deliberately exempt, so a helper that omitted
+            // it would silently test nothing.
+            Props::new()
+                .set("name", format!("v0.{i}.0"))
+                .set("status", "deployed"),
+        )
+        .unwrap();
+        if pinned.contains(&i) {
+            g.create_edge(
+                edge::AT_EPOCH,
+                node::RELEASE,
+                &format!("rel:v{i}"),
+                node::DESIGN_EPOCH,
+                &format!("epoch:v{i}"),
+                Props::new(),
+            )
+            .unwrap();
+        }
+    }
+    g
+}
+
+fn epochless(gaps: &[reflow2_core::GapCandidate]) -> Vec<&reflow2_core::GapCandidate> {
+    gaps.iter()
+        .filter(|g| g.gap_source == GapSource::ReleaseWithoutEpoch)
+        .collect()
+}
+
+#[test]
+fn a_release_with_no_epoch_is_reported() {
+    // Two releases, only the first pinned — exactly the v0.17.0 shape.
+    let g = releases_and_epochs(2, &[0]);
+    let gaps = g.detect_gaps().unwrap();
+    let found = epochless(&gaps);
+
+    assert_eq!(found.len(), 1, "one unpinned release, one gap");
+    assert_eq!(found[0].affected_ids, vec!["rel:v1".to_string()]);
+}
+
+#[test]
+fn a_pinned_release_is_silent() {
+    let g = releases_and_epochs(3, &[0, 1, 2]);
+    assert!(
+        epochless(&g.detect_gaps().unwrap()).is_empty(),
+        "every release pinned — nothing to report"
+    );
+}
+
+/// THE INVISIBILITY, made explicit. `rel:v1` and `epoch:v1` both exist and their
+/// names correspond; only the EDGE is missing. This is precisely the state that
+/// reads as correct to every human reader, and the detector must not be fooled
+/// by the naming convention the way the rest of us were.
+#[test]
+fn a_matching_epoch_name_does_not_count_as_a_pin() {
+    let mut g = releases_and_epochs(2, &[0]);
+    // epoch:v1 exists and is named for the release. No AT_EPOCH edge joins them.
+    assert!(
+        g.get_node(node::DESIGN_EPOCH, "epoch:v1")
+            .unwrap()
+            .is_some(),
+        "the epoch node exists — that is the whole trap"
+    );
+    // And a DIFFERENT edge type joins them, so the evidence string's claim
+    // ("any other edge between them does not pin it") is actually exercised
+    // rather than merely asserted at the user.
+    g.create_edge(
+        edge::ANTICIPATES,
+        node::RELEASE,
+        "rel:v1",
+        node::DESIGN_EPOCH,
+        "epoch:v1",
+        Props::new(),
+    )
+    .unwrap();
+    let gaps = g.detect_gaps().unwrap();
+    let found = epochless(&gaps);
+    assert_eq!(found.len(), 1);
+    assert_eq!(found[0].affected_ids, vec!["rel:v1".to_string()]);
+}
+
+/// MUTATION CHECK on the guard: with no epochs anywhere the temporal axis is
+/// simply not in use, and one gap per release would be a flood about a
+/// modelling choice nobody made. Delete the guard and this test fails.
+#[test]
+fn releases_alone_with_no_epoch_spine_are_not_reported() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for i in 0..3 {
+        g.create_node(
+            node::RELEASE,
+            &format!("rel:v{i}"),
+            Props::new().set("name", format!("v0.{i}.0")),
+        )
+        .unwrap();
+    }
+    assert!(
+        epochless(&g.detect_gaps().unwrap()).is_empty(),
+        "no epochs exist at all — not one gap per release"
+    );
+}
+
+/// Build one epoch plus one unpinned release carrying `status`.
+fn unpinned_release_with_status(status: &str) -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.create_node(
+        node::DESIGN_EPOCH,
+        "epoch:v0",
+        Props::new().set("name", "v0 cut").set("sequence", 0i64),
+    )
+    .unwrap();
+    g.create_node(
+        node::RELEASE,
+        "rel:v1",
+        Props::new().set("name", "v0.1.0").set("status", status),
+    )
+    .unwrap();
+    g
+}
+
+/// A PLANNED release has not been cut, so it has no epoch yet and that is
+/// correct. Firing here would be an alarm on correct work — the shape BL-115
+/// names — and would have made the gate permanently red for every release
+/// sitting on the roadmap.
+#[test]
+fn a_planned_release_is_not_yet_expected_to_have_an_epoch() {
+    let g = unpinned_release_with_status("planned");
+    assert!(
+        epochless(&g.detect_gaps().unwrap()).is_empty(),
+        "a planned release is not late for an epoch it does not yet need"
+    );
+}
+
+/// ...but a release that HAS been cut, with the edge forgotten, must be caught.
+/// This is `rel:v0190`'s failure reproduced in miniature, and it is the whole
+/// reason the rule exists.
+#[test]
+fn cutting_a_release_without_its_edge_is_caught() {
+    for status in ["built", "deployed", "retired"] {
+        let g = unpinned_release_with_status(status);
+        let gaps = g.detect_gaps().unwrap();
+        let found = epochless(&gaps);
+        assert_eq!(found.len(), 1, "status {status} must be caught");
+        assert_eq!(found[0].affected_ids, vec!["rel:v1".to_string()]);
+    }
+}
+
+/// THE RESIDUAL TRAP, on the record rather than left implicit: `Release.status`
+/// defaults to `planned`, so a release that shipped but never had its status
+/// set is exempt and reads exactly like one that is genuinely still to come.
+/// This rule cannot tell them apart and does not try — a status that claims
+/// less than the structure shows is `status_contradiction`'s territory, not
+/// this one's. Recorded as a test so the limit is checkable instead of
+/// discovered later by someone it bites.
+#[test]
+fn a_release_with_no_status_at_all_inherits_the_planned_exemption() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.create_node(
+        node::DESIGN_EPOCH,
+        "epoch:v0",
+        Props::new().set("name", "v0 cut").set("sequence", 0i64),
+    )
+    .unwrap();
+    // No status set at all -> schema default `planned`.
+    g.create_node(node::RELEASE, "rel:v1", Props::new().set("name", "v0.1.0"))
+        .unwrap();
+    assert!(
+        epochless(&g.detect_gaps().unwrap()).is_empty(),
+        "documents the limit: the default makes this indistinguishable from planned"
+    );
+}
+
+/// Per-release keying: accepting "v0.17.0 predates the epoch spine" must not
+/// also accept the next release cut without one. Distinct ids are what make
+/// that true, and `is_aggregate` returning true would collapse them.
+#[test]
+fn each_unpinned_release_gets_its_own_gap_id() {
+    let g = releases_and_epochs(3, &[0]);
+    let gaps = g.detect_gaps().unwrap();
+    let found = epochless(&gaps);
+    assert_eq!(found.len(), 2);
+    assert_ne!(
+        found[0].id, found[1].id,
+        "one judgement per release, not one for the class"
+    );
+}
+
+/// BL-114 applied at birth: the finding must name the edge kind it examined,
+/// so nobody has to guess whether "no epoch" meant "no edge" or "no node".
+#[test]
+fn the_finding_names_the_edge_it_considered() {
+    let g = releases_and_epochs(2, &[0]);
+    let gaps = g.detect_gaps().unwrap();
+    let found = epochless(&gaps);
+    assert!(
+        found[0].description.contains("AT_EPOCH"),
+        "description must name the edge kind: {}",
+        found[0].description
+    );
+    assert!(
+        found[0].evidence.contains("AT_EPOCH"),
+        "evidence must name the edge kind: {}",
+        found[0].evidence
+    );
+}

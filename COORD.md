@@ -50,7 +50,6 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
-- **BL-122** (nothing detects a Release with no `AT_EPOCH`) — @ajs — since 2026-07-31 — crates/reflow2-core/src/detect.rs, crates/reflow2-core/tests/; branch `feat/release-without-epoch`. Built BEFORE the v0.20.0 cut deliberately: `rel:v0190` was cut without the edge and `v0.17.0` still lacks it, so cutting again on memory alone repeats a step that has already failed twice. The cut is the detector's first real test.
 
 
 
@@ -88,6 +87,8 @@ Add yourself if you're new here.
 ## Recently finished
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
+
+- **BL-122 BUILT — a Release with no epoch is now reported, and the v0.17.0 hole is filled** — @ajs — 2026-07-31 — `cap:release-pinned-to-time`, `ver:release-without-epoch` passing, 8 cases with 4 mutation-checked. Built deliberately BEFORE the v0.20.0 cut: the `AT_EPOCH` step lived only in a memory note and had already failed twice. **Two things the build found that the backlog item did not name.** (1) On the real graph it fired THREE times, and two were `planned` releases — an epoch is minted at cut time, so demanding one earlier is an alarm on correct work, the [BL-115] shape; the rule now exempts `planned` and fires the moment status leaves it, with a test on that transition. (2) **`Release.status` DEFAULTS to `planned`**, so a shipped release whose status was never set inherits the exemption and is indistinguishable from a future one — checked against the real graph (17 retired, 1 deployed, 2 genuinely future, nothing hidden) and recorded as a PASSING TEST rather than a comment, because a stated limit is checkable and a remembered one is not. `epoch:v0170` backfilled at sequence **205** on evidence, not a guess: the tag is real (2026-07-27 23:44), and v0.17.0's own changelog headline — *"the release that made two repos check each other"* — is the `epoch:linking-repos` work at 200, so the cut sits after it and before v0.18.0 at 210. Design gaps back to 0. — crates/reflow2-core/src/{detect.rs,tests/detect.rs}, AGENTS.md, docs/design/reflow2.json
 
 - **`cap:changelog-view` BUILT and MERGED** — @ajs — 2026-07-31 — [PR #9](https://github.com/sligara7/reflow2/pull/9), squashed to `75f6be2`, CI green both jobs. v0.20.0's one REQUIRED obligation, so **v0.20.0 is now cuttable**. `ver:changelog-view` was written first, before the build; Anthony scoped the increment to this alone and chose `cmp:compare` over `cmp:temporal`/`cmp:report`. Dogfooded on v0.18.0 → v0.19.0: 78 entries, 0 unmapped. Two properties are mutation-checked — `[Unreleased]` is bounded by the last **deployed** release rather than the newest release node (identical until releases are planned ahead, which this project now does), and a drift accept writes `action=modified`, so the accept rule must be tried before the modified rule or `Fixed` is unreachable. — crates/reflow2-core/src/compare.rs (allocated to `cmp:compare`), crates/reflow2-core/tests/changelog.rs, crates/reflow2-mcp/src/service.rs, tools/toolsnaps/changelog_view.json, docs/design/reflow2.json
 
