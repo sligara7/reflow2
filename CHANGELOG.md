@@ -31,7 +31,35 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.20.0] — 2026-08-01
+
 ### Added
+
+- **A changelog is a derivable view of the graph's own delta** (`cap:changelog-view`,
+  `ver:changelog-view`; PR #9). `changelog_view` renders the difference between two moments of
+  this design in the format the industry already reads. Buckets (Added/Changed/Deprecated/
+  Removed/Fixed) are **mapped** from vocabulary the graph already records and every entry names
+  the rule that placed it; anything no rule covers comes back in `unmapped` rather than being
+  guessed or dropped. Omit both ends for `[Unreleased]` — everything after the last **deployed**
+  release — which makes *"what would this increment's changelog say?"* answerable before cutting
+  it. **The output is a DRAFT and says so**: no entry claims what a consumer should do, because
+  the graph holds what moved and never what it costs downstream; `needs_a_human` names that
+  obligation instead of inventing it. Nothing is stored — a stored changelog would be a second
+  source of truth able to disagree with the graph.
+
+  *This entry was itself written by hand, three commits late, which is the argument for the
+  capability: see BL-137, found by running the tool on this very cut.*
+
+- **A Release that names no moment is reported** (BL-122; `cap:release-pinned-to-time`,
+  `ver:release-without-epoch`; PR #11). A release cut is a point in time, and a `Release` with no
+  `AT_EPOCH` edge cannot be placed on axis Z — so a changelog window cannot be computed from it
+  and the design cannot say what was true when it shipped. The detector found three on this
+  project's own graph, and **v0.17.0 is still missing its edge to this day** despite v0.18.0's
+  commit message boasting that it would not repeat the omission. Two things the backlog item did
+  not name and the build did: `planned` releases are exempt, because an epoch is minted at cut
+  time and demanding one earlier is an alarm on correct work; and `Release.status` **defaults to
+  `planned`**, so a shipped release whose status was never set inherits that exemption — checked
+  against the real graph and recorded as a passing test rather than a comment.
 
 - **`set_interface_spec` accepts `medium`, so the foundation exemption is reachable from the
   tools** (BL-129; `ver:interface-spec`). `Interface.medium` and its honest `unspecified` default
