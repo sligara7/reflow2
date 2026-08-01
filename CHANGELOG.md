@@ -33,6 +33,30 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **An acknowledgement no longer counts as design structure, and `disconnected_community` can
+  finally be closed** (BL-124; `ver:acknowledgement-not-structure`). `acknowledge_defect` wires
+  `GOVERNED_BY` from every affected node to the review Decision, deliberately, so the review
+  stays reachable from the design — and `disconnected_community` hashes its id from the affected
+  set. For that one category the two behaviours collide: the review **joined the island it
+  acknowledged**, enlarged it by one, minted an id nobody had accepted, and the defect returned
+  one node larger every time. An entire category was permanently unclosable, which is exactly
+  the *"a list that can never reach zero gets skimmed"* failure the acknowledge tools exist to
+  prevent. Reproduced in the field across four sessions of a real project, growing 8 → 9 → 10.
+
+  Fixed in `design_network()` rather than in the defect id, because that network has **three**
+  consumers and the other two were wrong silently. **Measured on reflow2's own graph** (125
+  review records, 610 edges): four of the eight most central nodes were acknowledgements and are
+  now none, with real nodes rising into their place (`rel:v0170` +75%, `cmp:detect` +41%); and
+  `surprising_connections` went **16 → 32** — the bookkeeping edges were *suppressing* half the
+  real surprises by tying communities together, which is the opposite of the pollution that was
+  predicted. Reproduce with `tools/bl124_instrument.py`.
+
+  A review is still recorded, still carries its reason, and is still reachable by `GOVERNED_BY`
+  from what it acknowledges — it is excluded from the *network*, not from the *graph*, and it
+  still appears in a blast radius, because a review genuinely is affected when what it reviewed
+  changes. Three counterweights are pinned: an **ordinary** Decision still counts as structure,
+  a genuinely isolated cluster still fires, and withdrawal still reopens the *same* defect.
+
 - **A bare content hash no longer reports drift on a file nobody touched** (BL-125;
   `ver:checksum-dialect`). `canonical_checksum` turns a bare hex digest into `sha256:<hex>`,
   and since 2026-07-25 it ran on the two **write** paths only — `drift.rs` compared literally.

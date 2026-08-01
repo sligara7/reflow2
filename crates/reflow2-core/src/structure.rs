@@ -161,6 +161,41 @@ impl DesignNetwork {
     }
 }
 
+/// A review record: the Decision that `acknowledge_gap` / `acknowledge_defect`
+/// writes when someone accepts a finding.
+///
+/// Excluded from every structural network for the same reason as
+/// `NON_DESIGN_TYPES` above — it describes a **judgement about** the design
+/// rather than how the design is structured — but it needs an id rule rather
+/// than a type rule, because `Decision` is otherwise a first-class design node
+/// and a real decision genuinely does couple what it governs.
+///
+/// Both acknowledgement paths mint this prefix (`heal.rs`, `detect.rs`), and
+/// both already strip it to recognise their own records, so this is the same
+/// marker the codebase uses elsewhere rather than a new convention.
+///
+/// **Why it matters that these were counted (BL-124).** The acknowledgement is
+/// wired `GOVERNED_BY` from every node it acknowledges, deliberately, so the
+/// review stays reachable from the design. `disconnected_community` hashes its
+/// id from the affected set — so the review joined the island it acknowledged,
+/// enlarged it by one, minted an id nobody had accepted, and the defect
+/// returned one node larger every time. An entire category was unclosable,
+/// which is exactly the *"a list that can never reach zero gets skimmed"*
+/// failure the acknowledge tools exist to prevent. Reproduced in the field
+/// across four sessions of a real project, growing 8 → 9 → 10 nodes.
+///
+/// The fix belongs here rather than in the defect-id hash because
+/// `design_network()` has **three** consumers — `disconnected_community`,
+/// betweenness centrality (`propagate`) and `surprising_connections` — and the
+/// other two were distorted silently. Measured on reflow2's own graph before
+/// this change: 125 review records carrying 610 edges, and **four of the eight
+/// most central nodes were acknowledgements**, outranking every Component and
+/// Capability. Keying the id differently would have fixed the visible symptom
+/// and left that untouched.
+fn is_review_record(id: &str) -> bool {
+    id.starts_with("decision:ack:")
+}
+
 impl DesignGraph {
     /// Build the design network, optionally excluding one node id (used to test
     /// what a node's removal would disconnect).
@@ -179,7 +214,11 @@ impl DesignGraph {
         let index = self.node_type_index()?;
         let included: HashSet<&str> = index
             .iter()
-            .filter(|(id, ty)| member(ty.as_str()) && exclude != Some(id.as_str()))
+            .filter(|(id, ty)| {
+                member(ty.as_str())
+                    && !is_review_record(id.as_str())
+                    && exclude != Some(id.as_str())
+            })
             .map(|(id, _)| id.as_str())
             .collect();
 
