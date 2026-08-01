@@ -1,0 +1,77 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Accept MANY drift baselines in one call — the bulk form of set_artifact_checksum, which was 244 consecutive calls across 22 sessions of recorded usage. EACH ITEM CARRIES ITS OWN DISPOSITION, and that is the point rather than an inconvenience: a batch under one shared disposition would be exactly the silent bulk accept that erodes a design into fiction. The round trip collapses; the judgement stays per artifact. ALL OF IT OR NONE OF IT — every item is attempted so you learn every failure at once, and if anything failed no baseline moves.",
+  "inputSchema": {
+    "$defs": {
+      "ChecksumAcceptReq": {
+        "additionalProperties": false,
+        "description": "One accepted baseline for `set_artifact_checksums`, carrying **its own**\ndisposition. That is the point of the shape, not an inconvenience: a batch\nunder one shared disposition would be the silent bulk accept\n`dec:two-sided-accept` exists to forbid.",
+        "properties": {
+          "artifact_id": {
+            "type": "string"
+          },
+          "at": {
+            "default": null,
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "change_type": {
+            "default": null,
+            "description": "For `design_holds`: why the code moved (`test_failure_fix` default).",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "checksum": {
+            "type": "string"
+          },
+          "design_change_event_id": {
+            "default": null,
+            "description": "For `design_updated`: the ChangeEvent recorded when the design moved.",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "disposition": {
+            "description": "`design_holds` (the change carries no design meaning) or\n`design_updated` (behaviour moved and the design moved with it).",
+            "type": "string"
+          },
+          "note": {
+            "default": null,
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "artifact_id",
+          "checksum",
+          "disposition"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "accepts": {
+        "items": {
+          "$ref": "#/$defs/ChecksumAcceptReq"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "accepts"
+    ],
+    "type": "object"
+  },
+  "name": "set_artifact_checksums"
+}

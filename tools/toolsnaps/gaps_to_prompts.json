@@ -1,0 +1,74 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Phrase MANY gaps as plain questions in one handshake — the bulk form of gap_to_prompt, and the read half of the detect→ask→acknowledge round trip. Same two passes: call with every `answers` empty to get {status:needs_llm, gaps:[{gap_id, prompts}]}, fill them in and call again to get one prompt per gap. ANSWERS ARE GROUPED PER GAP, so prompt ids cannot collide across gaps — each gap is replayed against its own answers and never sees another's. A MIXED call (some gaps answered, some not) is refused rather than half-served. The questions are recorded all or none.",
+  "inputSchema": {
+    "$defs": {
+      "AgentAnswerReq": {
+        "additionalProperties": false,
+        "description": "One filled answer from the ambient agent (mirrors core `AgentAnswer` with a\nJsonSchema for the tool boundary).",
+        "properties": {
+          "id": {
+            "description": "The `AgentPrompt.id` this answers.",
+            "type": "string"
+          },
+          "text": {
+            "description": "The answer text (JSON string when the prompt expected JSON).",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text"
+        ],
+        "type": "object"
+      },
+      "GapPromptReq": {
+        "additionalProperties": false,
+        "description": "One gap in a multi-gap ask. Answers are grouped **per gap**, which is what\nkeeps prompt ids from colliding across gaps without inventing a namespacing\nscheme: each gap is replayed against a backend built from its own answers\nand never sees another gap's.",
+        "properties": {
+          "answers": {
+            "description": "Answers to this gap's prior `needs_llm` round. Empty on the prepare pass.",
+            "items": {
+              "$ref": "#/$defs/AgentAnswerReq"
+            },
+            "type": "array"
+          },
+          "gap": {
+            "additionalProperties": true,
+            "description": "A `GapCandidate` previously returned by `detect_gaps`.",
+            "type": "object"
+          }
+        },
+        "required": [
+          "gap"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "asked_at": {
+        "default": null,
+        "description": "Timestamp to record against the questions, if you have one.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "gaps": {
+        "items": {
+          "$ref": "#/$defs/GapPromptReq"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "gaps"
+    ],
+    "type": "object"
+  },
+  "name": "gaps_to_prompts"
+}

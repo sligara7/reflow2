@@ -1,0 +1,62 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create MANY edges in one call — the bulk form of create_edge, and so of every typed helper built on it: contains, contain_component, satisfies, allocate, realizes. Those helpers only fill in the endpoint types, so naming both types per item is the whole difference. ALL OF IT OR NONE OF IT: every item is attempted so you learn every failure at once, and if anything failed nothing is written.",
+  "inputSchema": {
+    "$defs": {
+      "EdgeSpecReq": {
+        "additionalProperties": false,
+        "description": "One edge for `create_edges`.",
+        "properties": {
+          "edge_type": {
+            "type": "string"
+          },
+          "from_id": {
+            "type": "string"
+          },
+          "from_type": {
+            "type": "string"
+          },
+          "props": {
+            "additionalProperties": true,
+            "default": null,
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "to_id": {
+            "type": "string"
+          },
+          "to_type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "edge_type",
+          "from_type",
+          "from_id",
+          "to_type",
+          "to_id"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "edges": {
+        "items": {
+          "$ref": "#/$defs/EdgeSpecReq"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "edges"
+    ],
+    "type": "object"
+  },
+  "name": "create_edges"
+}
