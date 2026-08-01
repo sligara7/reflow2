@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- BL-141(b) foundation-medium cycle severity — @ajs — since 2026-08-01 — crates/reflow2-core/src/heal.rs, tests/cycles.rs
+
 
 
 
