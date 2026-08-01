@@ -296,7 +296,8 @@ def run(binary: str, graph_path: str) -> int:
     vocab = s.call("describe_schema", {})
     c.ok("every node type is discoverable", len(vocab.get("node_types", [])) == 28,
          len(vocab.get("node_types", [])))
-    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 57,
+    # 58 since CALIBRATED_AGAINST (2026-08-01, req:a-fit-is-not-a-test).
+    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 58,
          len(vocab.get("edge_types", [])))
 
     exact = s.call("describe_schema", {"from": "Capability", "to": "Component"})

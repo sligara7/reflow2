@@ -94,6 +94,11 @@ pub mod edge {
     /// `Verification → *` — a Verification checks a Capability/Artifact/Component.
     pub const PERFORMED_IN: &str = "PERFORMED_IN";
     pub const VERIFIES: &str = "VERIFIES";
+    /// `* → Artifact|Verification` — the evidence a value was FITTED to
+    /// (BL-136). Agreement with it afterwards is a fit, not a test. A
+    /// traceability edge by deliberate decision (`dec:calibration-propagates`):
+    /// correcting the anchor puts every value fitted to it in the blast radius.
+    pub const CALIBRATED_AGAINST: &str = "CALIBRATED_AGAINST";
     /// `* → *` — a node depends on another (a lateral structural coupling).
     pub const DEPENDS_ON: &str = "DEPENDS_ON";
     /// `Capability → Flow` — a capability is a step of an ordered process
@@ -314,6 +319,24 @@ pub(crate) fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
         // is asked: the edge validates, stores and queries perfectly while
         // every traversal steps over it (`dec:schedule-is-structural`).
         "SCHEDULED_FOR" => (Some(Downstream), Some(Upstream)),
+        // What a value was FITTED to: node CALIBRATED_AGAINST evidence. Same
+        // shape as REALIZES and VERIFIES, because the evidence is the source of
+        // truth and the fitted value is downstream of it — from the value
+        // (outgoing) you reach the evidence its authority rests on, and from the
+        // evidence (incoming) you reach every value that would be wrong if it
+        // were corrected or superseded.
+        //
+        // THE QUESTION THE TWO COMMENTS ABOVE SAY NOBODY ASKS, ASKED BEFORE THE
+        // CODE WAS WRITTEN rather than after a detector complained
+        // (`dec:calibration-propagates`). INCLUDES and SCHEDULED_FOR each
+        // reached this table only once `disconnected_community` fired on an
+        // island the new edge had failed to join; this is the third such edge.
+        // Being here is also the payoff BL-136 asks for: when the outside source
+        // finally arrives, propagate_change is what says which fitted values
+        // rested on the old one — and BL-136's closing finding is that a wrong
+        // functional form can hide inside a fitted coefficient until exactly
+        // that moment.
+        "CALIBRATED_AGAINST" => (Some(Upstream), Some(Downstream)),
         _ => return None,
     };
     Some(EdgeRule {

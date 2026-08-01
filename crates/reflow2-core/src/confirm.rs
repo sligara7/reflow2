@@ -46,6 +46,32 @@ pub enum ConfirmationState {
     Unexamined,
 }
 
+/// Whether a capability's newest check is older than the newest accepted change
+/// to the code it covers (BL-106, the TIME axis of the evidence-quality family).
+///
+/// A **fact, never a gap** (`dec:verification-freshness-not-a-gap`): a
+/// stale-looking check is a standing property of a claim rather than an event,
+/// it would fire on every legitimate refactor as readily as on a real hole, and
+/// an open list that can never reach zero gets skimmed — which is the failure
+/// the gap workflow exists to prevent (BL-23: when a detector punishes correct
+/// work, the answer is a different question, not a tuned threshold).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum VerificationFreshness {
+    /// The newest passing check ran no earlier than the newest accepted
+    /// baseline change. The evidence keeps up with the code.
+    Current,
+    /// An accept is dated AFTER the newest passing check: the code moved and
+    /// nothing re-checked it. The state BL-105 was in while every gate read
+    /// green — `cap:degraded-surface` was `verified` on a check that drove
+    /// stdio only, while `art:main` drifted twice underneath it.
+    Stale,
+    /// Either side is undated, so the question cannot be answered. Reported
+    /// explicitly and never as a pass: an unanswerable freshness question
+    /// presented as freshness is the same lie in a new place.
+    Unknown,
+}
+
 /// One capability's confirmation history, computed from axis Z.
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct ClaimConfirmation {
@@ -71,6 +97,16 @@ pub struct ClaimConfirmation {
     /// dated. Reported as-is; the core takes no clock and does not compare
     /// undated events.
     pub last_claim_at: Option<String>,
+    /// `last_run_at` of the newest dated PASSING check on this capability
+    /// (BL-106). The value `verify.rs` has written on every status set since
+    /// the beginning and nothing in the core has ever read — the same shape as
+    /// the temporal axis before BL-70 and the whole inviolable-intent
+    /// vocabulary before BL-96.
+    pub last_verified_at: Option<String>,
+    /// [`last_verified_at`](Self::last_verified_at) against
+    /// [`last_claim_at`](Self::last_claim_at) — is the check older than the
+    /// code it covers?
+    pub verification_freshness: VerificationFreshness,
 }
 
 /// The whole ledger plus its rollup counts.
@@ -80,6 +116,54 @@ pub struct ConfirmationLedger {
     pub drifting: usize,
     pub confirmed: usize,
     pub unexamined: usize,
+    /// Claims whose newest passing check predates the newest accepted change to
+    /// what it covers (BL-106). A count, beside the three states — not a
+    /// fourth state, because freshness is orthogonal to whether anyone looked.
+    pub stale_verification: usize,
+    /// Claims where one side or the other carries no date, so the question
+    /// cannot be answered. Counted so that "0 stale" can never be read as
+    /// "everything is current".
+    pub unknown_verification_freshness: usize,
+}
+
+/// Compare a check's run date against an accept's date, on the only ground the
+/// core can stand on: the **calendar-date prefix**.
+///
+/// FOUND BY DOGFOODING THIS ON REFLOW2'S OWN GRAPH, and it is the same class of
+/// error the family exists to catch. The first version compared the two strings
+/// whole, which is right while both are `YYYY-MM-DD` and wrong the moment they
+/// disagree in precision: `cap:latent-surface` was checked on `2026-07-28` and
+/// accepted at `2026-07-28T14:52:00-04:00`, and a lexical compare called that
+/// STALE because the shorter string sorts first. The check may well have run
+/// after the accept that same day — nothing in the graph says.
+///
+/// So: if the dates differ, they order and the answer is real. If they name the
+/// SAME DAY, the answer is `Unknown`, because deciding it would need the two
+/// timestamps parsed and normalised across UTC offsets, and the core takes no
+/// clock and parses no dates (`dec:verification-freshness-not-a-gap`'s three
+/// constraints). Reporting `Stale` there asserts an ordering nobody recorded;
+/// reporting `Current` is the flattering default this whole family is against.
+fn freshness_of(ran: &str, accepted: &str) -> VerificationFreshness {
+    // Byte slicing is safe on ASCII-digit dates and simply yields the whole
+    // string for anything shorter or oddly shaped — which then compares whole,
+    // the previous behaviour, rather than panicking on a malformed value.
+    fn day(s: &str) -> &str {
+        s.get(..10).unwrap_or(s)
+    }
+    match day(ran).cmp(day(accepted)) {
+        std::cmp::Ordering::Less => VerificationFreshness::Stale,
+        std::cmp::Ordering::Greater => VerificationFreshness::Current,
+        std::cmp::Ordering::Equal => {
+            // Same day. Only claimable when both sides carry the same shape of
+            // timestamp — and even then only when they share an offset, which
+            // is why anything past a plain date is left Unknown.
+            if ran == accepted {
+                VerificationFreshness::Current
+            } else {
+                VerificationFreshness::Unknown
+            }
+        }
+    }
 }
 
 impl DesignGraph {
@@ -174,6 +258,41 @@ impl DesignGraph {
 
             let design_edits = self.incoming(&cap.node_id, Some(edge::CHANGED))?.len();
 
+            // BL-106 · the TIME axis. The newest dated run across this
+            // capability's PASSING checks — passing only, because
+            // `dec:passing-is-verified` means a failing check is not evidence
+            // whose age is worth comparing.
+            let mut last_verified_at: Option<String> = None;
+            for e in self.incoming(&cap.node_id, Some(edge::VERIFIES))? {
+                let Some(v) = self.get_node(node::VERIFICATION, &e.from_id)? else {
+                    continue;
+                };
+                if v.properties
+                    .get("status")
+                    .and_then(dynograph_core::Value::as_str)
+                    != Some("passing")
+                {
+                    continue;
+                }
+                if let Some(at) = v
+                    .properties
+                    .get("last_run_at")
+                    .and_then(dynograph_core::Value::as_str)
+                {
+                    // ISO-8601 orders lexically; the caller supplies it (the
+                    // core takes no clock), exactly as last_claim_at above.
+                    if last_verified_at.as_deref().is_none_or(|prev| at > prev) {
+                        last_verified_at = Some(at.to_string());
+                    }
+                }
+            }
+
+            // Undated on either side is Unknown, never a pass.
+            let verification_freshness = match (&last_verified_at, &last_claim_at) {
+                (Some(ran), Some(accepted)) => freshness_of(ran, accepted),
+                _ => VerificationFreshness::Unknown,
+            };
+
             let state = if unresolved > 0 {
                 ConfirmationState::Drifting
             } else if drift_events + design_holds + design_updated + design_edits > 0 {
@@ -198,15 +317,25 @@ impl DesignGraph {
                 design_updated_claims: design_updated,
                 design_edits,
                 last_claim_at,
+                last_verified_at,
+                verification_freshness,
             });
         }
 
         claims.sort_by(|a, b| a.capability_id.cmp(&b.capability_id));
         let count = |s: ConfirmationState| claims.iter().filter(|c| c.state == s).count();
+        let fresh = |f: VerificationFreshness| {
+            claims
+                .iter()
+                .filter(|c| c.verification_freshness == f)
+                .count()
+        };
         Ok(ConfirmationLedger {
             drifting: count(ConfirmationState::Drifting),
             confirmed: count(ConfirmationState::Confirmed),
             unexamined: count(ConfirmationState::Unexamined),
+            stale_verification: fresh(VerificationFreshness::Stale),
+            unknown_verification_freshness: fresh(VerificationFreshness::Unknown),
             claims,
         })
     }

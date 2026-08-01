@@ -628,7 +628,8 @@ async fn describe_schema_returns_the_whole_vocabulary() {
     );
     assert_eq!(
         v["edge_types"].as_array().unwrap().len(),
-        57,
+        // 58 since CALIBRATED_AGAINST (2026-08-01, req:a-fit-is-not-a-test).
+        58,
         "every edge type is discoverable"
     );
 }

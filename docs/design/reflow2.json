@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6c42d044195ba08d459a6dc77a47d1812dfb027f2317c7a06acf32072418539e",
+  "content_hash": "sha256:db849e3caaf151d970450d091af2912d7b3a578d067df1546f8c380fd1eb0df1",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -259,6 +259,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:evidence-scope",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:explains-itself",
       "properties": {
         "weight_basis": "estimated"
@@ -336,6 +344,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:independent-evidence",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:verify"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3888,6 +3904,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-0c440cc2eb44f74c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-0c6cd76f71527326",
       "properties": {
         "accepted_baseline": true,
@@ -3939,6 +3964,15 @@
         "action": "modified"
       },
       "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-299470f8b4fae678",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
     },
     {
       "edge_type": "CHANGED",
@@ -4005,6 +4039,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-4f25d142636f9e4c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-5517aad06e685a27",
       "properties": {
         "accepted_baseline": true,
@@ -4068,12 +4111,30 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-750a49f308f8c44a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-7627dd26fa9a16c3",
       "properties": {
         "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-7bd49cad8e8337ba",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:confirm"
     },
     {
       "edge_type": "CHANGED",
@@ -4092,6 +4153,15 @@
         "action": "modified"
       },
       "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-80d1f87f330f26e8",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
     },
     {
       "edge_type": "CHANGED",
@@ -4221,6 +4291,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-c52c1a33c142cbcc",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-cd270db9c9c20396",
       "properties": {
         "accepted_baseline": true,
@@ -4236,6 +4315,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d470cc223bc3a3db",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:evidence-quality-test"
     },
     {
       "edge_type": "CHANGED",
@@ -4380,6 +4468,15 @@
         "action": "modified"
       },
       "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-fbe9dc0dd0a2257e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:evidence-quality-instrument"
     },
     {
       "edge_type": "CHANGED",
@@ -10632,6 +10729,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:a-fit-is-not-a-test",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:evidence-says-what-it-covered"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:a-hint-names-its-next-call",
       "properties": {
         "evidence": "It is that requirement's delivered hint whose wording is losing the effect — the pointer exists and is verified; only its grammar fails.",
@@ -10818,6 +10924,15 @@
         "weight_basis": "evidence"
       },
       "to_id": "req:version-combination-is-an-object"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:evidence-says-what-it-covered",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:verification-keeps-up"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -12429,6 +12544,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:evidence-scope",
+      "properties": {},
+      "to_id": "dec:evidence-scope-on-the-verifies-edge"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:evidence-scope",
+      "properties": {},
+      "to_id": "dec:report-dont-judge"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:explains-itself",
       "properties": {},
       "to_id": "decision:ack:7a65e7fed7172917"
@@ -12792,6 +12919,18 @@
       "from_id": "cap:hierarchy",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:independent-evidence",
+      "properties": {},
+      "to_id": "dec:calibration-is-an-edge"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:independent-evidence",
+      "properties": {},
+      "to_id": "dec:calibration-propagates"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -26419,6 +26558,22 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:evidence-quality-instrument",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:independent-evidence"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:evidence-quality-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:evidence-scope"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:evidence-test",
       "properties": {
         "completeness": "complete"
@@ -27495,6 +27650,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:evidence-scope",
+      "properties": {},
+      "to_id": "req:evidence-says-what-it-covered"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:explains-itself",
       "properties": {},
       "to_id": "req:explains-itself"
@@ -27564,6 +27725,12 @@
       "from_id": "cap:hierarchy",
       "properties": {},
       "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:independent-evidence",
+      "properties": {},
+      "to_id": "req:a-fit-is-not-a-test"
     },
     {
       "edge_type": "SATISFIES",
@@ -28353,6 +28520,24 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:evidence-quality",
+      "properties": {},
+      "to_id": "cap:evidence-scope"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:evidence-quality",
+      "properties": {},
+      "to_id": "cap:independent-evidence"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:evidence-quality",
+      "properties": {},
+      "to_id": "cap:verification-freshness"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:freshness",
       "properties": {},
       "to_id": "cap:freshness"
@@ -28962,6 +29147,22 @@
         "action": "created"
       },
       "to_id": "art:dto"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:evidence-quality-instrument",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:evidence-quality-instrument"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:evidence-quality-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:evidence-quality-test"
     },
     {
       "edge_type": "YIELDED",
@@ -29638,7 +29839,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5e77e752c0c60d06",
+        "checksum": "sha256:6570819382224b26",
         "location": "crates/reflow2-core/src/confirm.rs",
         "name": "confirm.rs",
         "status": "realized"
@@ -29783,6 +29984,28 @@
         "checksum": "sha256:74c0459e03ad38ce",
         "location": "crates/reflow2-mcp/src/dto.rs",
         "name": "dto.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:evidence-quality-instrument",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:8956d2d0d4f31fe1",
+        "location": "tools/evidence_quality_instrument.py",
+        "name": "Evidence-quality instrument — what the three axes report on a real design",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:evidence-quality-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:0f66b31cfaca4944",
+        "location": "crates/reflow2-core/tests/evidence_quality.rs",
+        "name": "The evidence-quality family suite — all three axes with their counterweights",
         "status": "realized"
       }
     },
@@ -30055,7 +30278,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:68f2513f998f7ce3",
+        "checksum": "sha256:1137e18d7251d7e7",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
         "status": "realized"
@@ -30187,7 +30410,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:109cd1e9c3dd7d83",
+        "checksum": "sha256:245e9dafa5f72a02",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
         "status": "realized"
@@ -30264,7 +30487,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e8efc39625da0407",
+        "checksum": "sha256:3f3cea7e7df234b5",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -30550,7 +30773,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d391003bb5042e18",
+        "checksum": "sha256:669e73b33ff4cbd1",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
         "status": "realized"
@@ -30561,7 +30784,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2599c9a2772349b1",
+        "checksum": "sha256:bc2af0dc3b8b455e",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
         "status": "realized"
@@ -30984,6 +31207,19 @@
       }
     },
     {
+      "node_id": "cap:evidence-scope",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The INPUT axis of the evidence-quality family (BL-126). Records on each VERIFIES edge the parameters a check SWEPT and the ones it PINNED, and reports per capability which parameters every passing check pinned and none swept — the state BL-126 names as '31 checks, all at one value'. Reported as a FACT on the evidence report beside WHERE the evidence came from, never as a gap: a pinned parameter is a standing property of the evidence, and a detector that fired on every check with a fixed seed would punish correct work, which is the BL-23 failure the gap workflow exists to prevent. Checks stating no scope at all are counted as unscoped and reported, never read as full coverage. Deliberately does NOT execute, fuzz or vary anything (dec:loop-status-state-not-history, 'looking is not writing'): it makes the narrowness of the evidence visible and leaves the varying to whoever runs the tests.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say what a check held fixed and what it varied, per claim",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:explains-itself",
       "node_type": "Capability",
       "properties": {
@@ -31095,6 +31331,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Check decomposition levels",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:independent-evidence",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The INDEPENDENCE axis of the evidence-quality family (BL-136). Reads the CALIBRATED_AGAINST edges recording what a value was derived from, and marks any VERIFIES edge whose Verification IS, or PRODUCES, evidence its own target was calibrated against as CONSUMED — a fit, not a test. Consumed checks are excluded from the count of independent evidence, so a capability whose only passing checks are consumed reports as not independently verified. Structural by construction and not analytic: BL-136's originating project built four independent internal diagnostics and none could have found the defect, because no check inside a design can establish its own independence — only the outside source could. So this records and reports the relation rather than attempting to detect circularity from the evidence itself.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Refuse to let evidence a value was fitted to count as its validation",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -31850,7 +32099,7 @@
         "is_exit_point": false,
         "name": "Say whether a check is older than what it checks",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -31908,6 +32157,15 @@
       }
     },
     {
+      "node_id": "chg:accept-0c440cc2eb44f74c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "set_evidence_scope and calibrated_against reach the MCP surface. A capability unreachable from the tools is BL-129's defect, so the surface is part of the delivery, not a follow-up."
+      }
+    },
+    {
       "node_id": "chg:accept-0c6cd76f71527326",
       "node_type": "ChangeEvent",
       "properties": {
@@ -31958,6 +32216,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-299470f8b4fae678",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "The same edge-type count assertion; the vocabulary itself derives from the schema and needed no other change."
       }
     },
     {
@@ -32018,6 +32285,15 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Correcting my own mistake: I had just written schema/core.yaml's hash onto this artifact, which points at crates/reflow2-core/src/schema.rs. That file is unchanged; this restores its real (16-char) baseline. schema/core.yaml is not a registered artifact, so the CLAIMS.seat addition needs no accept here."
+      }
+    },
+    {
+      "node_id": "chg:accept-4f25d142636f9e4c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-01",
+        "name": "rustfmt only — no case added, removed or changed; the 18 cases pass identically before and after."
       }
     },
     {
@@ -32083,12 +32359,30 @@
       }
     },
     {
+      "node_id": "chg:accept-750a49f308f8c44a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "CALIBRATED_AGAINST joins the edge constants and the structural direction table, per dec:calibration-propagates — the impact-table question asked before the code was written rather than after a detector complained."
+      }
+    },
+    {
       "node_id": "chg:accept-7627dd26fa9a16c3",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "refactor",
         "detected_at": "2026-08-01",
         "name": "Version string bumped 0.19.0 to 0.20.0 for the v0.20.0 cut. The design meaning of the cut lives in rel:v0200 and epoch:v0200, not in this file — the manifest's declared surface and its dynograph-foundation pin (v0.12.0) are both unchanged, so nothing a consumer agrees with has moved."
+      }
+    },
+    {
+      "node_id": "chg:accept-7bd49cad8e8337ba",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "BL-106: the ledger gains last_verified_at and verification_freshness, delivering cap:verification-freshness, which the design already specified as planned and allocated here."
       }
     },
     {
@@ -32106,6 +32400,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-80d1f87f330f26e8",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "Edge-type count 57 to 58 for CALIBRATED_AGAINST. Moves the GraphStamp, so v0.21.0 owes an upgrade note."
       }
     },
     {
@@ -32226,6 +32529,15 @@
       }
     },
     {
+      "node_id": "chg:accept-c52c1a33c142cbcc",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "BL-126 + BL-136: evidence_report gains the INPUT and INDEPENDENCE axes beside WHERE, plus set_evidence_scope and calibrated_against on the write side, delivering cap:evidence-scope and cap:independent-evidence."
+      }
+    },
+    {
       "node_id": "chg:accept-cd270db9c9c20396",
       "node_type": "ChangeEvent",
       "properties": {
@@ -32240,6 +32552,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-28T18:30:00-04:00",
         "name": "v0.18.0 cut: the [reflow2] version field rolled 0.17.0 -> 0.18.0; the dependency pin itself did not move."
+      }
+    },
+    {
+      "node_id": "chg:accept-d470cc223bc3a3db",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "First baseline — the suite as written for the evidence-quality family."
       }
     },
     {
@@ -32319,6 +32640,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-25",
         "name": "Examined on the day it was written, so the ledger says \"checked\" rather than \"nobody has ever looked\": the file on disk is the file the design registered, the three mirrors are byte-identical (skill_lint), and every tool it names is served (skill_lint's reference check). What that does NOT establish, and the confirmation ledger should not be read as claiming, is that the PROCEDURE works — worktree, claim, export-before-commit, driver merge, release across two people and two checkouts. That needs a field trial, which is where the standing validation disposition puts it."
+      }
+    },
+    {
+      "node_id": "chg:accept-fbe9dc0dd0a2257e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "First baseline — the instrument as run against reflow2's own export."
       }
     },
     {
@@ -34249,6 +34579,26 @@
       }
     },
     {
+      "node_id": "dec:calibration-is-an-edge",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "A new CALIBRATED_AGAINST edge runs from a fitted node to the evidence its value was derived from (an Artifact or a Verification). A VERIFIES edge whose Verification IS, or PRODUCES, evidence its own target was calibrated against is reported as CONSUMED — a fit, not a test — and is excluded from the count of independent evidence. A capability whose only passing checks are consumed is reported as not independently verified.",
+        "name": "Circular validation is made structurally visible by a CALIBRATED_AGAINST edge, never detected analytically",
+        "rationale": "Anthony's call, 2026-08-01. BL-136's closing evidence decides the shape and rules out the alternatives: the project that hit this built four independent internal diagnostics — a back-solve, a coefficient locus, a space-time frontier and a physical-floor proof — and every one narrowed the question correctly while none could have found the defect. Only the outside source could. So a circular check is not a weak check to be strengthened from inside; NO INTERNAL EVIDENCE CAN DETECT IT, BY CONSTRUCTION. That rules out any analytic detector and leaves exactly one move: record what a value was fitted to, and refuse to let that same evidence count as its validation. An edge rather than a provenance value because the detector is then a graph query rather than a scan, and because the relation carries WHAT was consumed, which a provenance enum cannot. The `calibrated` provenance value (BL-120(d), and what the originating project actually built) stays open and is not foreclosed — it answers HOW the value entered, a different question from WHAT it consumed. Stakes, from the same closing entry: a single-point fit does not merely get a number wrong, it can silently hold a wrong EQUATION in agreement with the data — the fitted coefficient absorbed a structural error in the functional form and agreed with the anchor anyway.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:calibration-propagates",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "CALIBRATED_AGAINST is entered in the structural direction table (nodes.rs structural_rule) as (forward: Upstream, backward: Downstream), the same shape as REALIZES and VERIFIES. From the fitted node you reach the evidence its authority rests on; from the evidence you reach every value that would be wrong if it were superseded.",
+        "name": "CALIBRATED_AGAINST is a traceability edge — when the anchor moves, every value fitted to it is in the blast radius",
+        "rationale": "Asked deliberately because the table's own comment says it is the question nobody asks: 'Twice now a new edge type has reached a Release without anyone asking whether the impact table should know about it, and nothing checks that question is asked' — INCLUDES and then SCHEDULED_FOR, each found only when disconnected_community fired on an island the new edge had failed to join. This is the third such edge and the question was put before the code was written rather than after a detector complained. The answer is yes on the merits: a calibration is a genuine dependency of a value on a piece of evidence, so when the anchor is corrected or superseded, every value fitted to it is exactly the blast radius propagate_change exists to compute — which is the payoff BL-136 asks for, since a wrong functional form absorbed into a fitted coefficient is only findable when the outside source arrives and someone can see what rested on the old one. Direction matches REALIZES because the evidence is the source of truth and the fitted value is downstream of it. Consequence accepted and stated rather than discovered: this puts CALIBRATED_AGAINST into design_network(), so it counts toward centrality, communities and single-point-of-failure — the surface BL-124 has just shown is sensitive to edge-set changes. On reflow2's own graph the effect is nil today because the design carries no fitted values, and that is a measurement, not an assumption.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:central-host",
       "node_type": "Decision",
       "properties": {
@@ -34426,6 +34776,16 @@
         "name": "Where does a planned epoch live — a git branch, the graph, or both?",
         "rationale": "(a) EPOCH BRANCHES, Anthony's first framing: a git branch per planned epoch holding the expected export — full-document snapshots, diffable with the delta machinery, zero schema change; cost: the roadmap lives outside the graph, invisible to detectors, and n branches of a mutable file invite the lineage problems BL-107 closed. (b) IN-GRAPH FUTURE EPOCHS: Epoch nodes with future sequences, planned nodes pinned AT_EPOCH, the unused ANTICIPATES edge (confidence property) finally reached; roadmap visible to detect_gaps and propagate; cost: no single handable document, and axis-Z was built pointing backward. (c) HYBRID: roadmap in-graph, planned epochs exported to refs on demand; cost: two representations that can drift. AMENDED 2026-07-28, same day, after Anthony's second pass: git already does versions/tags/releases well (industry ships small increments fast — his brother's project, ~2 minors/week), which strengthens git as the SNAPSHOT STORE — but his bottom line reframes the choice: the graph must be the INDEX (see req:graph-indexes-snapshots), so the real shape is likely (c-refined): git stores snapshots under refs it is already good at, the graph owns the map from epoch_n/increment_n to ref plus the planned content, and a user never remembers a branch name. The rel:v0180 <-> tag v0.18.0 pattern is this exact division of labor, already shipping, pointed backward. Still OPEN: whether (b)'s in-graph planned content is required for detectors to reason about the roadmap, or whether the index alone suffices. THIRD AMENDMENT, same day: Anthony's satisfaction-schedule distillation shrinks what a planned epoch has to BE. If the roadmap's atom is 'requirement X expected/required satisfied at epoch_n' — a dated pin with a modality and a confidence — then the plan's content is a set of edges the graph holds natively (AT_EPOCH / ANTICIPATES with confidence), NOT a full expected-graph snapshot per epoch; the full snapshot becomes a DERIVED view (render the graph as of the pins that hold at epoch_n), which further strengthens (c-refined): the graph owns pins and index, git stores any rendered snapshot a human wants to hold in their hands, and nothing stores the same truth twice.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:evidence-scope-on-the-verifies-edge",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "What a check SWEPT and what it PINNED is recorded on the VERIFIES edge, as two comma-separated lists of parameter names, not as properties of the Verification node. A capability is reported as narrowly proven when every passing check that verifies it pins a parameter and none sweeps it.",
+        "name": "A check's input scope is a fact about the CLAIM, so it lives on the VERIFIES edge",
+        "rationale": "Anthony's call, 2026-08-01, from three options. Scope is a property of the relationship between a check and a claim, not of the check: one suite can cover capability A across the whole input space and touch capability B at a single point, and a per-node property has to average that away — it would report the same narrowness for every target, so the detector could not say WHICH claim is thin. Placing it on the edge mirrors PERFORMED_IN's placement of WHERE, which is the same sentence rotated (BL-126's own framing). The existing VERIFIES.coverage enum (full/partial/smoke) was considered and rejected as the vehicle: it is a self-assessed adjective set by the person who wrote the check, and BL-126's founding case was a guard written by an author to protect a belief they had formed an hour earlier — they would have labelled it `full`. Named parameters are checkable against what the design says the capability is independent of; an adjective is not. Storage is a comma-separated string because the schema has no list type (the QualityGate.criteria precedent); the MCP surface takes and returns proper lists, so only the encoding is flat.",
+        "status": "accepted"
       }
     },
     {
@@ -36271,6 +36631,16 @@
       }
     },
     {
+      "node_id": "epoch:evidence-quality",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The evidence-quality family — a check's TIME, INPUT and INDEPENDENCE become facts the graph holds (BL-106/126/136)",
+        "sequence": 250,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:genesis",
       "node_type": "DesignEpoch",
       "properties": {
@@ -37359,6 +37729,26 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered dto.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:evidence-quality-instrument",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered Evidence-quality instrument — what the three axes report on a real design"
+      }
+    },
+    {
+      "node_id": "frag:art:evidence-quality-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered The evidence-quality family suite — all three axes with their counterweights"
       }
     },
     {
@@ -38771,6 +39161,21 @@
       }
     },
     {
+      "node_id": "req:a-fit-is-not-a-test",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Evidence a value was fitted to cannot also count as that value's validation",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When a value in the design was derived from a piece of evidence, the design must record what it was derived from, and must not let a check resting on that same evidence count as independent validation of it. Agreement with the anchor a value was fitted to is a fit, not a test, and must be reported as consumed. A capability whose only passing checks are consumed in this way must read as not independently verified. This cannot be computed from the strength of the evidence, only from its structure: no check internal to a design can establish its own independence, so the design must record the relation rather than attempt to detect the circularity.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-hint-names-its-next-call",
       "node_type": "Requirement",
       "properties": {
@@ -39367,6 +39772,21 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "The temporal axis must run forward as well as back, in TWO PAIRED VIEWS of the same architecture (Anthony, 2026-07-28: 'in systems engineering, I think this would be 2 views of the same system'): increments in TIME — epochs, what the architecture is expected to be at epoch_1..n — and increments in CAPABILITY — what each small, frequent release adds, the release-fast-in-small-increments practice now common in industry (his brother's project ships ~2 minor releases a week). Both views must exist, each comparable as a delta: any two epochs, any two increments, or either against the present. With many moving parts — an ecosystem of coupled repos, each with its own graph — an epoch or increment must pin the set of per-repo design versions it means, or the question 'which epoch are we talking about?' has no answer, which is the failure this exists to prevent. Original idea 2026-07-28 ('epoch branches: project_x:epoch_1 captures what we expect the graph to look like at epoch_1'), amended the same day with the two-views framing. THE ATOM, Anthony's distillation 2026-07-28: the roadmap is a SATISFACTION SCHEDULE — a mapping of requirements to the epoch or increment where they are satisfied: 'in epoch 1, requirements A and B are satisfied; in increment 3, requirements C, D and E are expected to be satisfied; in epoch 27, KPP 1 is required to be satisfied.' His own verbs carry the three modalities the mapping must distinguish: ARE satisfied (recorded history — the backward direction the graph already does), EXPECTED to be satisfied (a plan, carrying confidence that decays with horizon per req:plans-move-honestly), and REQUIRED to be satisfied by (an obligation whose miss at arrival is a computed violation, the scheduling face of a KPP — content inviolability from req:inviolable-intent gains a deadline dimension).",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:evidence-says-what-it-covered",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A passing check says what part of the space it actually covered",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When a check verifies a claim, the design must be able to say what the check held fixed and what it varied. A capability whose every passing check pins the same parameter, and whose design declares it independent of that parameter, must read as narrowly proven rather than as proven. Where no check states its scope the answer must be that the scope is unstated — reported and counted, never read as full coverage, because silence about coverage is how a check that only ever ran at one point of the space reads as if it ran everywhere.",
         "status": "accepted"
       }
     },
@@ -41269,6 +41689,18 @@
       }
     },
     {
+      "node_id": "ver:evidence-quality",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-01",
+        "level": "integration",
+        "method": "test",
+        "name": "The evidence-quality family, all three axes with their counterweights (crates/reflow2-core/tests/evidence_quality.rs) — 18 cases. TIME: an accept dated after the check reports stale, a re-run after the accept is current, an undated side is UNKNOWN and counted rather than silently passed, and a failing check cannot refresh a claim. INPUT: a parameter every passing check pins is reported narrow, ONE check that sweeps it ends the narrowness however many others pinned it, one suite is broad about one claim and narrow about another through the SAME node (the case a per-node property would have to average away), a check stating no scope is unscoped and never read as broad, a comma in a parameter name is refused, and scoping a pair with no VERIFIES edge is refused. INDEPENDENCE: a check the target was calibrated against is CONSUMED, a check that produced the anchor is consumed, a calibration on the realizing artifact counts, correcting the anchor reaches what was fitted to it through the impact table — and the two counterweights, that an independent check beside the fit restores the claim and that a calibration against evidence no check rests on is not circular. MUTATION-CHECKED ON ALL THREE AXES: force freshness never-stale and exactly the two stale tests fail while both counterweights stay green; drop the swept-beats-pinned filter and exactly one test fails; mark every check consumed and BOTH independence counterweights fail — which is what proves the rule does not simply condemn every calibrated design. FOUND BY DOGFOODING BEFORE IT SHIPPED: comparing dates as whole strings called 2026-07-28 stale against 2026-07-28T14:52:00-04:00, an ordering nobody recorded, asserted by the very report that exists to stop that — now same-day is Unknown, pinned by a test, with the counterweight that an earlier DAY is still stale.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:freshness",
       "node_type": "Verification",
       "properties": {
@@ -42004,7 +42436,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b838e7e2dbccacbf57b71ef79ffba63b8a98d1bafc7687a903e48efe74e71e08",
+  "prev_content_hash": "sha256:6c42d044195ba08d459a6dc77a47d1812dfb027f2317c7a06acf32072418539e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -42016,6 +42448,7 @@
       "AT_EPOCH",
       "AUTHORED_BY",
       "BLOCKS",
+      "CALIBRATED_AGAINST",
       "CAUSES",
       "CHANGED",
       "CLAIMS",
@@ -42065,7 +42498,7 @@
       "VIOLATES_RULE",
       "YIELDED"
     ],
-    "edge_types": 57,
+    "edge_types": 58,
     "node_type_names": [
       "Actor",
       "Anchor",
@@ -42097,7 +42530,7 @@
       "Verification"
     ],
     "node_types": 28,
-    "reflow2_version": "0.19.0",
+    "reflow2_version": "0.20.0",
     "schema_version": 1
   }
 }

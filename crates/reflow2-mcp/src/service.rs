@@ -842,6 +842,40 @@ pub struct VerifiesReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct EvidenceScopeReq {
+    pub verification_id: String,
+    /// Node type this check verifies (e.g. `Capability`).
+    pub target_type: String,
+    pub target_id: String,
+    /// Parameter names the check HELD FIXED for this claim. Passing an empty
+    /// list clears them, which is how a scope recorded in error is withdrawn.
+    #[serde(default)]
+    pub pinned: Vec<String>,
+    /// Parameter names the check actually VARIED.
+    #[serde(default)]
+    pub swept: Vec<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct CalibratedAgainstReq {
+    /// Node type of the value that was fitted (e.g. `Capability`, `Artifact`,
+    /// `Component`, `Constraint`).
+    pub from_type: String,
+    pub from_id: String,
+    /// `Artifact` (a published anchor, a dataset, a measurement record) or
+    /// `Verification` (the check whose output the value was fitted to).
+    pub evidence_type: String,
+    pub evidence_id: String,
+    /// What was fitted, and how — the part a later reader needs in order to
+    /// judge whether the fit still stands.
+    pub note: Option<String>,
+    /// When the fit was made, if recorded. The core takes no clock.
+    pub calibrated_at: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ReleaseReq {
     pub id: String,
     pub name: String,
@@ -3066,6 +3100,68 @@ impl ReflowService {
         ok_json(EdgeDto::from(
             g.verifies(&req.verification_id, &req.target_type, &req.target_id)
                 .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record what a check HELD FIXED and what it VARIED for one claim — the \
+                       input scope of its evidence. A passing check proves the points it \
+                       actually drove, so a suite that pins the same seed, ordering or locale \
+                       every time reads as full coverage while resting on one point of the \
+                       space. Set on the VERIFIES edge, not the Verification, because scope is a \
+                       fact about the CLAIM: one suite can cover one capability broadly and \
+                       touch another at a single point. `evidence_report` then names the \
+                       parameters every passing check pinned and none swept. Reported as a fact, \
+                       never a gap — pinning a seed is normal, and a detector that fired on it \
+                       would punish correct work. The check must already verify the target.",
+        annotations(read_only_hint = false, destructive_hint = false)
+    )]
+    pub async fn set_evidence_scope(
+        &self,
+        Parameters(req): Parameters<EvidenceScopeReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(EdgeDto::from(
+            g.set_evidence_scope(
+                &req.verification_id,
+                &req.target_type,
+                &req.target_id,
+                &req.pinned,
+                &req.swept,
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record that a value was FITTED to a piece of evidence, so that same \
+                       evidence can no longer count as its validation (CALIBRATED_AGAINST). Use \
+                       it for any empirically-calibrated value — a coefficient fitted to a \
+                       published anchor, a constant tuned to a dataset, a model matched to a \
+                       measurement. Agreement with that evidence afterwards is a FIT, NOT A \
+                       TEST, and `evidence_report` marks any check resting on it as consumed and \
+                       excludes it from independent evidence. This has to be recorded rather \
+                       than detected: no check inside a design can establish its own \
+                       independence, so nothing can find the circularity by analysis. Also a \
+                       traceability edge — correcting the anchor puts every value fitted to it \
+                       in the blast radius.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn calibrated_against(
+        &self,
+        Parameters(req): Parameters<CalibratedAgainstReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(EdgeDto::from(
+            g.calibrated_against(
+                &req.from_type,
+                &req.from_id,
+                &req.evidence_type,
+                &req.evidence_id,
+                req.note.as_deref(),
+                req.calibrated_at.as_deref(),
+            )
+            .map_err(dyno_err)?,
         ))
     }
 
