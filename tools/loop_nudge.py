@@ -77,6 +77,66 @@ EXTRA_WRITE_OPS = {
 # backstop (BL-90). A session that touches reflow2 at all never trips it.
 EDIT_TOOLS = {"Edit", "Write", "MultiEdit", "NotebookEdit"}
 
+# ---- cap:skill-triggers: the SHAPES, not just the count ---------------------
+#
+# The nudge already knew HOW MUCH happened. These let it know WHAT happened, so
+# it can name the skill the situation calls for instead of saying "call
+# loop_status" into every situation alike.
+#
+# THE HARD CONSTRAINT, and it shaped the design: this script runs on every tool
+# call and CANNOT READ THE GRAPH — the session's own server holds the
+# single-writer lock, and `design_present()` is deliberately a directory test
+# for that reason. So a shape is only implementable if it is visible in the
+# session's own op tally. That rules out the spec's "an artifact checksum drift
+# names link-artifacts" as literally written: drift is a fact about the graph
+# versus the disk, and nothing here can see either. What IS visible is the
+# progression — a change recorded but as-built never touched — which is the
+# same situation one step earlier, and is what the third shape keys on.
+
+# Recording that something moved, on the record, before it moves.
+CHANGE_OPS = {"record_change", "add_change_event"}
+
+# Telling the design what is now on disk.
+ARTIFACT_OPS = {"link_artifact", "set_artifact_checksum", "reconcile_artifacts"}
+
+# Capturing intent — the ops that add new design that nobody has yet asked the
+# gaps of. Deliberately NOT every write: bookkeeping (release_includes,
+# pin_at_epoch, set_*_status) is not a capture and must not trip this.
+CAPTURE_OPS = {
+    "add_requirement", "add_capability", "add_component", "add_interface",
+    "add_constraint", "add_actor", "add_flow", "add_resource", "add_environment",
+    "genesis", "import_graph", "ingest_step",
+}
+
+# The op that IS a gap pass. `loop_status` is the cheap pulse-check and is
+# deliberately NOT enough here: it reports debt, it does not ask the user
+# anything, and this shape exists because captured intent needs questions put.
+GAP_PASS_OPS = {"detect_gaps"}
+
+# ---- cap:session-artifacts --------------------------------------------------
+#
+# A diagram or mockup drawn during a session is the visual half of a Decision's
+# rationale, and today it is thrown away when the session ends. The capability's
+# own text says capture must be TRIGGERED rather than remembered — "a rule
+# depending on the agent choosing to store its own diagram decays exactly as
+# req:skill-use-survives-a-long-session measures" — and that it "belongs with
+# the trigger work rather than beside it". So it is a fourth shape here.
+#
+# WHAT THIS CAN AND CANNOT DO, stated because the difference matters. The hook
+# sees that a rendering was WRITTEN; it cannot see whether any Decision points
+# at it, because that is a fact about the graph. So the hook supplies the
+# TRIGGER and the agent supplies the FILTER — and the filter is the whole rule
+# (`dec:` the link is the filter, Anthony 2026-07-31): a rendering is kept when
+# a Decision or Capability actually points at it, so the store holds what
+# someone will look at again rather than every intermediate. The nudge therefore
+# names BOTH halves, including the instruction NOT to store an orphan.
+RENDERING_SUFFIXES = (
+    ".svg", ".png", ".jpg", ".jpeg", ".drawio", ".mmd", ".puml", ".dot", ".excalidraw",
+)
+
+# Putting bytes in the content store.
+CONTENT_OPS = {"content_put"}
+
 # Deliberately says reflow2 is INSTALLED here, never that a design EXISTS here.
 # The hook cannot know: it runs before the server is reachable, and the graph
 # meta file carries no node counts. The old text asserted a design graph and
@@ -113,9 +173,19 @@ def read_state(session_id: str) -> dict:
             "writes": int(raw.get("writes", 0)),
             "edits": int(raw.get("edits", 0)),
             "touched": bool(raw.get("touched", False)),
+            # cap:skill-triggers — the shape fields. Absent in older state
+            # files, which default to zero and simply yield the generic nudge.
+            "changes": int(raw.get("changes", 0)),
+            "artifacts": int(raw.get("artifacts", 0)),
+            "captures": int(raw.get("captures", 0)),
+            "gap_pass": int(raw.get("gap_pass", 0)),
+            "renderings": int(raw.get("renderings", 0)),
+            "content": int(raw.get("content", 0)),
         }
     except (OSError, ValueError, KeyError, TypeError):
-        return {"writes": 0, "edits": 0, "touched": False}
+        return {"writes": 0, "edits": 0, "touched": False,
+                "changes": 0, "artifacts": 0, "captures": 0, "gap_pass": 0,
+                "renderings": 0, "content": 0}
 
 
 def write_state(session_id: str, state: dict) -> None:
@@ -125,6 +195,12 @@ def write_state(session_id: str, state: dict) -> None:
         "writes": int(state.get("writes", 0)),
         "edits": int(state.get("edits", 0)),
         "touched": bool(state.get("touched", False)),
+        "changes": int(state.get("changes", 0)),
+        "artifacts": int(state.get("artifacts", 0)),
+        "captures": int(state.get("captures", 0)),
+        "gap_pass": int(state.get("gap_pass", 0)),
+        "renderings": int(state.get("renderings", 0)),
+        "content": int(state.get("content", 0)),
     }))
     # Opportunistic tidy-up: session files a week old are dead sessions.
     cutoff = time.time() - 7 * 24 * 3600
@@ -163,6 +239,58 @@ def design_present() -> bool:
     return Path(".reflow2").exists()
 
 
+def match_shape(state: dict) -> str | None:
+    """The skill this session's SHAPE calls for, or None (`cap:skill-triggers`).
+
+    **This never fires on its own.** It only refines a nudge the caller has
+    already decided to send, so the number of nudges is unchanged and only their
+    usefulness moves. That is the whole design constraint: `ver:skill-triggers`'s
+    own counterweight says a trigger that fires on correct work is the failure
+    BL-23 and BL-42 both name, and this capability exists to REDUCE nagging
+    rather than add to it. A matcher that could arm the hook by itself would be
+    adding a fourth way to be interrupted, which is the opposite.
+
+    The three shapes are mutually exclusive and ordered earliest-first, because a
+    session that never recorded the change has a different next step from one
+    that recorded it and stopped there.
+    """
+    edits = state.get("edits", 0)
+    # 1. Something on disk moved and nothing on the record says so.
+    if edits > 0 and state.get("changes", 0) == 0:
+        return (
+            "impact-check — file(s) changed this session with no ChangeEvent "
+            "recorded, so nothing computed what the change reaches"
+        )
+    # 2. The change IS recorded, and as-built was never told. The reachable
+    #    half of the spec's checksum-drift shape: the hook cannot see drift, but
+    #    it can see that nobody looked.
+    if edits > 0 and state.get("artifacts", 0) == 0:
+        return (
+            "link-artifacts — the change is on the record but no artifact was "
+            "linked or re-checksummed, so as-designed and as-built have not been "
+            "reconciled"
+        )
+    # 3. Intent captured, and nobody put the questions it raises.
+    if state.get("captures", 0) > 0 and state.get("gap_pass", 0) == 0:
+        return (
+            "detect-and-ask — intent was captured this session and detect_gaps "
+            "was never run, so the decisions it implies are still unasked"
+        )
+    # 4. Something was drawn and nothing was stored (cap:session-artifacts).
+    #    Named LAST: it is the least urgent of the four, and a rendering is the
+    #    visual half of a rationale rather than a break in the thread. The
+    #    sentence carries the FILTER as well as the trigger, because the hook
+    #    cannot tell an orphan from an explanation and must not imply it can.
+    if state.get("renderings", 0) > 0 and state.get("content", 0) == 0:
+        return (
+            "session-artifacts — a diagram or rendering was written this session "
+            "and nothing was stored; if a Decision or Capability points at it, "
+            "content_put it and link it, and if nothing points at it, do not "
+            "store it"
+        )
+    return None
+
+
 def main() -> int:
     try:
         event = json.load(sys.stdin)
@@ -194,12 +322,33 @@ def main() -> int:
                 state["writes"] = 0
             elif is_write(op):
                 state["writes"] += 1
+            # Shape tallies are cumulative and are NOT cleared by a loop check:
+            # calling detect_gaps does not un-edit a file or un-capture intent.
+            if op in CHANGE_OPS:
+                state["changes"] += 1
+            if op in ARTIFACT_OPS:
+                state["artifacts"] += 1
+            if op in CAPTURE_OPS:
+                state["captures"] += 1
+            if op in GAP_PASS_OPS:
+                state["gap_pass"] += 1
+            if op in CONTENT_OPS:
+                state["content"] += 1
             write_state(session, state)
             return 0
         # A harness file-write, tallied only for the total-bypass backstop.
         if tool in EDIT_TOOLS:
             state = read_state(session)
             state["edits"] += 1
+            # cap:session-artifacts — was it a rendering? The path is the only
+            # signal available here, and a wrong guess costs at most one extra
+            # sentence on a nudge that was firing anyway.
+            path = ""
+            ti = event.get("tool_input")
+            if isinstance(ti, dict):
+                path = str(ti.get("file_path") or ti.get("notebook_path") or "")
+            if path.lower().endswith(RENDERING_SUFFIXES):
+                state["renderings"] += 1
             write_state(session, state)
         return 0
 
@@ -211,14 +360,28 @@ def main() -> int:
         # Graph writes finished without a loop check (the original nudge).
         n = state["writes"]
         if n >= env_threshold("REFLOW2_LOOP_NUDGE_THRESHOLD", 1):
+            # cap:skill-triggers — same trigger, better sentence. If the shape
+            # is recognisable, name the skill the situation calls for instead of
+            # pointing at loop_status and leaving the agent to work it out.
+            shape = match_shape(state)
+            # The shape REPLACES the generic advice but never the cheap entry
+            # point: `loop_status` stays in every message because it is the one
+            # call that says what is actually owed, and naming a skill is a
+            # refinement of that answer rather than a substitute for it. An
+            # existing test asserted this and caught its removal — the contract
+            # was real and was nearly dropped silently.
+            detail = (
+                f"The shape says: {shape}. Confirm with loop_status."
+                if shape
+                else "Call loop_status — if its `next` list names debt, run "
+                     "detect-and-ask / check-health before finishing."
+            )
             print(json.dumps({
                 "decision": "block",
                 "reason": (
                     f"reflow2: {n} graph write(s) this session and no loop check. "
-                    f"Call loop_status — if its `next` list names debt, run "
-                    f"detect-and-ask / check-health before finishing. Bookkeeping "
-                    f"is not the loop. (This nudge fires once; stopping again "
-                    f"proceeds.)"
+                    f"{detail} Bookkeeping is not the loop. (This nudge fires "
+                    f"once; stopping again proceeds.)"
                 ),
             }))
             return 0

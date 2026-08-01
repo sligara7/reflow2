@@ -33,6 +33,29 @@ AGENTS.md.
       `{ "status": "ok", "prompt": { "question", "rephrase_degraded" } }`.
    d. Ask the **user** that `question`. (If `rephrase_degraded` is true, the raw wording is
       used — still ask it.)
+
+   **How to put it — the question carries your reading.** A bare question hands the user the
+   analysis `req:no-se-knowledge` exists to spare them. Six obligations, all of them:
+
+   - **Offer a reading.** Say which answer you would give. A question with no recommendation makes
+     the user reverse-engineer what you think, which is the work they came here to avoid.
+   - **Carry what would change it.** Name the condition under which your recommendation is wrong —
+     the fact you do not have, or the assumption it rests on. A recommendation with no stated
+     hinge cannot be argued with, only obeyed.
+   - **Make the options selectable.** Present them as a list the user can pick from, not as prose
+     they must compose a reply to. Picking is cheap; composing is not.
+   - **Put the recommendation first, and mark it.** An unordered menu makes the user infer which
+     one you favour — the same inference the reading was supposed to remove.
+   - **Give every option its consequence — including the ones you do not recommend.** A list of
+     bare labels looks complete while withholding what each choice costs. If you cannot say what
+     an option leads to, you are not ready to offer it.
+   - **Answer in the user's language.** Match the language they wrote to you in, whatever it is.
+     This rule is about matching, never about any particular language.
+
+   **The decision stays with the user.** A recommendation is not an answer: do not move a
+   requirement status, settle a decision, or acknowledge a gap in the same act as recommending
+   one. Those record the user's word (`dec:certainty-derived`), and offering a preference is not
+   receiving one. Ask, wait, then write what they actually said.
 3. Take the user's answer and write it back into the graph. There is a typed tool for every gap
    the detector raises — use it rather than generic `create_node`:
 

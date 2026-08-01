@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:cbe3768cf4c38591f107b6a511de93e5383d8db85fea417f3a43c99323bd0e91",
+  "content_hash": "sha256:ad0c4ad24dae4022327aa470ad98b91181fe7b11062e6bd3e1d30080d0b8ec1a",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -4224,6 +4224,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-3f1cd5f3658574b8",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-43ae772560f9ccca",
       "properties": {
         "accepted_baseline": true,
@@ -4257,6 +4266,15 @@
         "action": "modified"
       },
       "to_id": "art:depends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-4d18322621c6c59c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -4320,6 +4338,15 @@
         "action": "modified"
       },
       "to_id": "art:flow"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-635435417e73d6d7",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -31774,7 +31801,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fca6650697d55f63fc9dd71af518f9f9cfdebb82efd450cce36d7d991ca8dce7",
+        "checksum": "sha256:d946d7ad7640dc3f73717522c1253b4d2b6855b25c46667feadcfb9cd1ff48b8",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
         "status": "realized"
@@ -32038,7 +32065,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3f3cea7e7df234b5",
+        "checksum": "sha256:494070581c6d28db",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -32060,7 +32087,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6be9968ad96945043b818352a49e6e2df1b2c9ec55eedd0964db78ffe2db7844",
+        "checksum": "sha256:ffd69f4f7e883b947e581ea79a8881a97ad05bad0998f35dd5a8473c36a8aeb2",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
         "status": "realized"
@@ -32853,7 +32880,7 @@
         "is_exit_point": false,
         "name": "A question arrives as options the user can pick, recommendation first, in their own language",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -33516,7 +33543,7 @@
         "is_exit_point": false,
         "name": "Keep what a session drew, when the design points at it",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -33555,7 +33582,7 @@
         "is_exit_point": false,
         "name": "The moment tells the agent which skill it needs",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -33659,7 +33686,7 @@
         "is_exit_point": false,
         "name": "The tool carries what an agent would never guess",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -33841,6 +33868,15 @@
       }
     },
     {
+      "node_id": "chg:accept-3f1cd5f3658574b8",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "cap:skill-triggers + cap:session-artifacts: the nudge learns four SHAPES and names the skill each calls for. Refines the existing nudge only — never arms it, so the count of interruptions is unchanged and only the sentence improves."
+      }
+    },
+    {
       "node_id": "chg:accept-43ae772560f9ccca",
       "node_type": "ChangeEvent",
       "properties": {
@@ -33872,6 +33908,15 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Accepted a new baseline: the change carries no design meaning"
+      }
+    },
+    {
+      "node_id": "chg:accept-4d18322621c6c59c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "cap:tool-carries-convention + cap:gap-carries-a-reading: a named register of tools whose served description must carry its convention, a description budget, the six ask obligations, and the two negative checks (no hardcoded answer language; no user's-word write in the same breath as a recommendation)."
       }
     },
     {
@@ -33933,6 +33978,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-635435417e73d6d7",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-01",
+        "name": "cap:tool-carries-convention: three tools gained their missing convention sentence — set_verification_status (planned is not confirmation), record_change (record it BEFORE you make it), export_graph (export once between commits, the lineage link is built from the file already there)."
       }
     },
     {
@@ -43556,10 +43610,11 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
+        "last_run_at": "2026-08-01",
         "level": "unit",
         "method": "test",
         "name": "The CONTRACT is checked, not the judgement. skill_lint asserts detect-and-ask states all of it: offer a reading; carry what would change it; present the options as a SELECTABLE list; put the RECOMMENDATION FIRST and mark it; give every option its consequence including the ones not recommended; and answer in the USER'S language, stated language-independently. Plus two negative checks that are the load-bearing half: NO served text hardcodes English as the answer language (so the rule cannot be implemented as English-only — the trap Anthony named), and NO requirement status, decision status or gap acknowledgement is written in the same act as a recommendation. Whether a recommendation is GOOD, and whether the language was correctly matched, are semantic and stay evidenced by trials — deliberately no LLM evals in CI. PLANNED.",
-        "status": "planned"
+        "status": "passing"
       }
     },
     {
@@ -44098,10 +44153,11 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
+        "last_run_at": "2026-08-01",
         "level": "integration",
         "method": "test",
         "name": "The link is the filter: a rendering a Decision or Capability points at is captured into the store; one nothing points at is NOT, so the store does not fill with session litter; and the capture happens without the agent choosing to invoke it, which is the load-bearing half — a capture that depends on remembering decays exactly as req:skill-use-survives-a-long-session measures. PLANNED.",
-        "status": "planned"
+        "status": "passing"
       }
     },
     {
@@ -44132,10 +44188,11 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
+        "last_run_at": "2026-08-01",
         "level": "integration",
         "method": "test",
         "name": "Shape-matching fires on the situation and stays silent otherwise: a file edit with no ChangeEvent in the window names impact-check; an artifact checksum drift names link-artifacts; a capture batch with no gap pass names detect-and-ask. AND THE COUNTERWEIGHT, which is the case that matters most: a session that did the right thing gets NOTHING — a trigger that fires on correct work is the failure BL-23 and BL-42 both name, and this capability exists to reduce nagging rather than add it. PLANNED.",
-        "status": "planned"
+        "status": "passing"
       }
     },
     {
@@ -44224,10 +44281,11 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
+        "last_run_at": "2026-08-01",
         "level": "unit",
         "method": "test",
         "name": "The convention rides the tool and stays bounded: the tools whose skills carry a non-inferable rule have that one sentence in their served description (checked against a named list, so adding a tool without considering it is caught); no description exceeds the sentence budget, because the cost of this is context paid on every session; and the toolsnap goldens still match, so the addition is a deliberate surface change rather than drift. Enforced in skill_lint alongside the existing served-tool-name checks. PLANNED.",
-        "status": "planned"
+        "status": "passing"
       }
     },
     {
@@ -44276,7 +44334,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e1e3ee813aa46c0134b0f40d72cdc3ef2dbb84a616e77cac266da7833c812dc7",
+  "prev_content_hash": "sha256:cbe3768cf4c38591f107b6a511de93e5383d8db85fea417f3a43c99323bd0e91",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -3051,7 +3051,9 @@ impl ReflowService {
     #[tool(
         description = "Set a Verification's outcome (planned/passing/failing/skipped/blocked), \
                        preserving what the check is. A failing check is a live signal: \
-                       `propagate_from` it to see which capability and requirement it affects.",
+                       `propagate_from` it to see which capability and requirement it affects. \
+                       CONVENTION: a check left at `planned` is not confirmation — verified means \
+                       a check that PASSES, not one that exists.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_verification_status(
@@ -4030,7 +4032,10 @@ impl ReflowService {
                        (export with the old build, import with the new). It carries a stamp saying \
                        which reflow2 wrote it. Pass `path` to write the document to a file instead \
                        of returning it — on a large design the payload overflows what a session \
-                       can read, and a backup wants to be a file anyway.",
+                       can read, and a backup wants to be a file anyway. CONVENTION: export ONCE \
+                       between commits, straight onto the committed file — the lineage link is \
+                       built from whatever file is already at that path, so exporting elsewhere \
+                       and copying it in, or exporting twice, both break the chain silently.",
         annotations(read_only_hint = true)
     )]
     pub async fn export_graph(
@@ -5314,7 +5319,10 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Record a change to a node in an epoch (snapshots the prior state).",
+        description = "Record a change to a node in an epoch (snapshots the prior state). \
+                       CONVENTION: record the change BEFORE you make it — the snapshot captures \
+                       the state as it is now, so calling this afterwards preserves what you \
+                       already replaced.",
         annotations(read_only_hint = false)
     )]
     pub async fn record_change(
