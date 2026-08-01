@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2872df28cce3dfc7544e898fddcaaf74ede59955107e0d63f6dcd77ad48f1b32",
+  "content_hash": "sha256:19cfc6f5b096ccea543c1001f91425f90d3bde2ee25030b8804691ab7ef965fa",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -4374,6 +4374,42 @@
         "action": "modified"
       },
       "to_id": "req:requirement-lineage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:acknowledgement-not-structure",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:acknowledgement-not-structure",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:acknowledgement-not-structure",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:acknowledgement-not-structure",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ver:acknowledgement-not-structure"
     },
     {
       "edge_type": "CHANGED",
@@ -24841,6 +24877,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:acknowledgement-not-structure-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:acknowledgement-not-structure"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:adopt-skill",
       "properties": {
         "completeness": "complete"
@@ -26879,6 +26923,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:acknowledgement-not-structure",
+      "properties": {},
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:adopt-storyflow",
       "properties": {},
       "to_id": "cap:adopt"
@@ -27504,6 +27554,14 @@
         "action": "created"
       },
       "to_id": "art:setup"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:acknowledgement-not-structure-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:acknowledgement-not-structure-test"
     },
     {
       "edge_type": "YIELDED",
@@ -28148,6 +28206,17 @@
   ],
   "graph_id": "reflow2",
   "nodes": [
+    {
+      "node_id": "art:acknowledgement-not-structure-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:8f8a543ba59ec079",
+        "location": "crates/reflow2-core/tests/acknowledgement_not_structure.rs",
+        "name": "acknowledgement_not_structure.rs",
+        "status": "realized"
+      }
+    },
     {
       "node_id": "art:adopt-skill",
       "node_type": "Artifact",
@@ -29032,7 +29101,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e646e8dd7928adac",
+        "checksum": "sha256:b607fd9ed9f69810",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
         "status": "realized"
@@ -30998,6 +31067,14 @@
       "properties": {
         "change_type": "requirement_creep",
         "name": "Anthony accepted the three requirements that were already delivered"
+      }
+    },
+    {
+      "node_id": "chg:acknowledgement-not-structure",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "BL-124: exclude review records from the design network. An acknowledgement Decision is wired GOVERNED_BY into everything it acknowledges, so it joined the island it acknowledged and made disconnected_community permanently unclosable. Fixed at design_network() rather than at the defect-id hash because it has three consumers. MEASURED on reflow2's own graph: 125 review records carrying 610 edges; four of the eight most central nodes were acknowledgements and are now none, with real components rising (rel:v0170 +75%, cmp:detect +41%); and surprising_connections went 16 to 32 — the bookkeeping edges were SUPPRESSING half the real surprises by tying communities together, which is the opposite of the predicted pollution."
       }
     },
     {
@@ -35787,6 +35864,16 @@
       }
     },
     {
+      "node_id": "frag:art:acknowledgement-not-structure-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered acknowledgement_not_structure.rs"
+      }
+    },
+    {
       "node_id": "frag:art:adopt-skill",
       "node_type": "Fragment",
       "properties": {
@@ -39544,6 +39631,18 @@
       }
     },
     {
+      "node_id": "ver:acknowledgement-not-structure",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-01",
+        "level": "integration",
+        "method": "test",
+        "name": "An acknowledgement is a statement ABOUT the design, not a part of it (crates/reflow2-core/tests/acknowledgement_not_structure.rs) — 5 cases. Acknowledging a disconnected_community CLOSES it and it stays closed on re-detect, which is the livelock: the review Decision is wired GOVERNED_BY into the affected set and the defect id hashes that set, so the acknowledgement used to join the island it acknowledged and mint a new, larger, unaccepted id without limit. Withdrawal still reopens it, and reopens the SAME defect rather than a differently-shaped one. THREE COUNTERWEIGHTS, which are what keep the fix from being a way of silencing a detector: an ORDINARY Decision still counts as structure (excluding all Decisions would pass the livelock case and island everything a real decision governs), a genuinely isolated cluster still fires, and the review record is still stored with its reason and still reachable by GOVERNED_BY from what it acknowledges. WRITTEN BEFORE THE FIX: the two bug cases failed and all three counterweights passed.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:adopt-storyflow",
       "node_type": "Verification",
       "properties": {
@@ -40616,7 +40715,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:eaa2fad44dbb98b195cc52ea6ed621c65ce5ce10ab6a43b3951fabd8eabda4fd",
+  "prev_content_hash": "sha256:2872df28cce3dfc7544e898fddcaaf74ede59955107e0d63f6dcd77ad48f1b32",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
