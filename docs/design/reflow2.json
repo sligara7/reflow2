@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d6ad78d0f865d05f94449ca09f833003f54bce0664192901611592f5e47614c7",
+  "content_hash": "sha256:b838e7e2dbccacbf57b71ef79ffba63b8a98d1bafc7687a903e48efe74e71e08",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -40141,10 +40141,10 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
-        "last_run_at": "2026-07-27",
+        "last_run_at": "2026-08-01",
         "level": "unit",
         "method": "test",
-        "name": "A contract records paradigm, payload format, schema, endpoint, operations, auth, transport security and error model; UNRECORDED FIELDS READ AS `unspecified` NOT `none` (the flattering default would tell a consumer an unspecified contract is open); filling one field leaves the others and the name alone, so a spec completed by several people over time loses nothing; an invented enum value is refused rather than stored; and performance limits bind the interface as a Constraint via CONSTRAINS rather than as duplicate properties (crates/reflow2-core/tests/interface_spec.rs, 5 cases)",
+        "name": "A contract records paradigm, payload format, schema, endpoint, operations, auth, transport security and error model; UNRECORDED FIELDS READ AS `unspecified` NOT `none` (the flattering default would tell a consumer an unspecified contract is open); filling one field leaves the others and the name alone, so a spec completed by several people over time loses nothing; an invented enum value is refused rather than stored; and performance limits bind the interface as a Constraint via CONSTRAINS rather than as duplicate properties. PLUS `medium` (BL-129, 2026-08-01): settable through this tool at last — round-trips, leaves the rest of the spec alone, and an invented medium is refused with the stored value untouched. The reachability half lives in tests/structural.rs, where the same two-subsystem bridge built the way a user actually builds it now earns the library/data foundation exemption from single_point_of_failure, still fires when the medium is never stated, and still fires for REST. (crates/reflow2-core/tests/interface_spec.rs, 8 cases)",
         "status": "passing"
       }
     },
@@ -40759,7 +40759,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:19cfc6f5b096ccea543c1001f91425f90d3bde2ee25030b8804691ab7ef965fa",
+  "prev_content_hash": "sha256:d6ad78d0f865d05f94449ca09f833003f54bce0664192901611592f5e47614c7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
