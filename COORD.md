@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- BL-149..BL-151 (dynograph-foundation review: unused capability) — @ajs — since 2026-08-01 — docs/backlog.md
+
 
 
 
