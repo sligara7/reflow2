@@ -65,6 +65,7 @@ Add yourself if you're new here.
 
 
 
+- Accept the three BL-153 decisions on Anthony's word — @ajs — since 2026-08-01 — docs/design/reflow2.json only
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
