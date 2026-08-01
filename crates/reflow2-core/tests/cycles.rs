@@ -422,3 +422,105 @@ fn the_same_shape_over_a_runtime_medium_makes_no_foundation_claim() {
     );
     assert!(msg.contains("every hop is a contract"), "{msg}");
 }
+
+// ---- BL-141(b) · severity tells the reader what to DO -----------------------
+//
+// `Critical` means MUST FIX. A loop that exists only because two parts read and
+// write the same file formats has nothing to fix, and four of them were reported
+// `critical` in one adopt pass with none real. Downgraded, NOT silenced: the
+// finding keeps its place, its affected set and its explanation, and loses only
+// the claim that it is an emergency.
+
+fn cycle_issue(g: &DesignGraph) -> reflow2_core::heal::HealIssue {
+    g.detect_defects()
+        .expect("detect")
+        .into_iter()
+        .find(|i| i.category == HealCategory::CircularDependency)
+        .expect("cycle issue")
+}
+
+fn iface(g: &mut DesignGraph, id: &str, medium: &str) {
+    g.add_interface(id, id).expect("iface");
+    g.set_interface_spec(
+        id,
+        Some(medium),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
+    .expect("medium");
+}
+
+/// The round trip through two file formats: reported, explained, and NOT an
+/// emergency. This is the music_graph case.
+#[test]
+fn a_file_format_round_trip_is_a_warning_not_critical() {
+    let mut g = project_with(&[("cmp:transcriber", "T"), ("cmp:renderer", "R")]);
+    iface(&mut g, "ifc:midi", "data");
+    iface(&mut g, "ifc:wav", "data");
+    g.consumes("cmp:transcriber", "ifc:wav").expect("t reads");
+    g.provides("cmp:transcriber", "ifc:midi").expect("t writes");
+    g.consumes("cmp:renderer", "ifc:midi").expect("r reads");
+    g.provides("cmp:renderer", "ifc:wav").expect("r writes");
+
+    let i = cycle_issue(&g);
+    assert_eq!(i.severity, HealSeverity::Warning, "{}", i.message);
+    // Downgraded, not silenced — everything else about the finding survives.
+    assert_eq!(i.affected_ids, vec!["cmp:renderer", "cmp:transcriber"]);
+    assert_eq!(i.suggested_fix_type, "break_cycle");
+    assert!(i.message.contains("library/data medium"), "{}", i.message);
+}
+
+/// THE COUNTERWEIGHT. The identical shape over a run-time medium is a real
+/// cycle and stays Critical. Without this the downgrade would be a way of
+/// turning the detector off, which is what it must never be.
+#[test]
+fn the_same_shape_over_rest_is_still_critical() {
+    let mut g = project_with(&[("cmp:a", "A"), ("cmp:b", "B")]);
+    iface(&mut g, "ifc:1", "REST");
+    iface(&mut g, "ifc:2", "REST");
+    g.provides("cmp:a", "ifc:1").expect("a provides");
+    g.consumes("cmp:b", "ifc:1").expect("b consumes");
+    g.provides("cmp:b", "ifc:2").expect("b provides");
+    g.consumes("cmp:a", "ifc:2").expect("a consumes");
+
+    assert_eq!(cycle_issue(&g).severity, HealSeverity::Critical);
+}
+
+/// ONE real DEPENDS_ON edge anywhere in the loop keeps it Critical, however
+/// many of its other hops are file formats. A genuine dependency does not stop
+/// being one because it shares a loop with a data contract.
+#[test]
+fn a_real_depends_on_edge_in_the_loop_keeps_it_critical() {
+    let mut g = project_with(&[("cmp:a", "A"), ("cmp:b", "B")]);
+    iface(&mut g, "ifc:1", "data");
+    g.provides("cmp:a", "ifc:1").expect("a provides");
+    g.consumes("cmp:b", "ifc:1").expect("b consumes"); // b depends on a, via a file
+    depends(&mut g, "cmp:a", "cmp:b"); // and a depends on b for real
+
+    let i = cycle_issue(&g);
+    assert_eq!(i.severity, HealSeverity::Critical, "{}", i.message);
+    assert!(i.message.contains("mixed"), "{}", i.message);
+}
+
+/// SILENCE ABOUT THE MEDIUM CANNOT EARN THE DOWNGRADE. `Interface.medium`
+/// defaults to `unspecified`, and a design that never classified its boundaries
+/// keeps the louder answer — the same rule `seam_report` already applies, where
+/// two silent sides are "unstated" rather than agreed.
+#[test]
+fn an_unspecified_medium_does_not_earn_the_downgrade() {
+    let mut g = project_with(&[("cmp:a", "A"), ("cmp:b", "B")]);
+    g.add_interface("ifc:1", "one").expect("i1"); // medium never set
+    g.add_interface("ifc:2", "two").expect("i2");
+    g.provides("cmp:a", "ifc:1").expect("a provides");
+    g.consumes("cmp:b", "ifc:1").expect("b consumes");
+    g.provides("cmp:b", "ifc:2").expect("b provides");
+    g.consumes("cmp:a", "ifc:2").expect("a consumes");
+
+    assert_eq!(cycle_issue(&g).severity, HealSeverity::Critical);
+}

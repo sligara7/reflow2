@@ -913,10 +913,40 @@ impl DesignGraph {
                     format!(" — mixed: direct DEPENDS_ON edges and contracts{via}")
                 }
             };
+            // BL-141(b), Anthony's call 2026-08-01. `Critical` means MUST FIX,
+            // and a loop that exists only because two parts read and write the
+            // same file formats has nothing to fix — it is worth understanding,
+            // not worth stopping for. Four such loops were reported `critical`
+            // in a single adopt pass and none was real.
+            //
+            // BOTH conditions are required, and the second is the load-bearing
+            // one. `contracts_only` means no hop is a real DEPENDS_ON edge —
+            // one real edge anywhere in the loop is a genuine dependency and
+            // keeps the whole cycle Critical. `foundation_media_only` means
+            // every contract it runs through is `library` or `data`: something
+            // linked against or read, not called across at run time.
+            //
+            // NOT SILENCED, DOWNGRADED — the distinction is the point.
+            // Shared-data coupling is sometimes real (two services over one
+            // table can be genuinely entangled: a schema change in one breaks
+            // the other), so the finding keeps its place, its affected set and
+            // its explanation, and loses only the claim that it is an
+            // emergency. Deleting the case to fix a presentation problem is
+            // what `ver:cycle-basis`'s mutation checks exist to catch.
+            //
+            // `Interface.medium` defaults to `unspecified`, which is NOT a
+            // foundation medium — so silence about the medium can never earn
+            // the downgrade, and a design that never classified its boundaries
+            // keeps the louder answer. Pinned by its own case.
+            let severity = if cycle.contracts_only && cycle.foundation_media_only {
+                HealSeverity::Warning
+            } else {
+                HealSeverity::Critical
+            };
             issues.push(HealIssue {
                 id: issue_id(HealCategory::CircularDependency, &affected),
                 category: HealCategory::CircularDependency,
-                severity: HealSeverity::Critical,
+                severity,
                 message: format!("circular dependency: {path}{basis}"),
                 suggested_fix_type: "break_cycle",
                 affected_ids: affected,
