@@ -31,6 +31,17 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.21.0] — 2026-08-01
+
+**The release that made the QUALITY of evidence a fact the graph holds.** Until now reflow2
+recorded that a check *exists* and that it *passes*, and nothing else — so a green tick looked
+identical whether the check ran this morning across the whole input space against an independent
+source, or a year ago at one fixed seed against the very data the thing under test was fitted to.
+Three axes close that, and a fourth finding stops a detector claiming more than it checked.
+
+**This release moves the schema stamp (57 → 58 edge types), so it is not optional if you share a
+design** — see [docs/upgrading-to-v0.21.0.md](docs/upgrading-to-v0.21.0.md).
+
 ### Changed
 
 - **A `circular_dependency` finding now says which edge kinds it actually walked** (BL-141(a),
