@@ -33,6 +33,20 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The served instructions now say what to do when reflow2 does *not* get in your way** (BL-174).
+  `getting-started/AGENTS.md` — the text every consumer project receives through
+  `get_instructions` — told an agent to report what *obstructed* it, and said nothing about a tool
+  that answers cheerfully and is wrong. It now carries the counterweight: **a successful tool
+  response is a claim, not a result; `0 gaps` means nothing was detected, never nothing is wrong**
+  — plus four habits (read the result back; diff two things that ought to agree; ask why odd
+  output is odd before filtering it; ask what the check could not have seen). Framed as the other
+  half of using reflow2 well, not an argument for using it less. The consumer-facing twin of
+  `docs/sharpening.md` §2b.
+
+  The file itself was also, until now, **not a registered Artifact** — while `POINTER.md` and
+  `SETUP.md` beside it both were. It is the single highest-consequence text in the kit, compiled
+  into the binary, and the design could not see it. Registered as `art:kit-instructions`.
+
 - **Coverage scope is derived from version control, and the adopt skill now says so** (BL-172,
   `dec:coverage-scope-is-declared` — accepted on the maintainer's word). Take everything version
   control tracks and remove what you can name a rule for; never assemble a list of the places

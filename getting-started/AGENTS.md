@@ -221,6 +221,39 @@ note the friction, carry on, raise it at a natural break. This is about **reflow
 project being designed: a missing requirement is a gap, a detector that cannot express the
 requirement is friction.
 
+## And when it does *not* get in your way — check anyway
+
+The section above is about reflow2 fighting you. That is the easy case: a wall announces itself.
+The harder case is reflow2 answering cheerfully and being wrong, because that looks exactly like
+everything working.
+
+> **A successful tool response is a claim, not a result.** `0 gaps` means *nothing was detected* —
+> never *nothing is wrong*. A design covering a third of your system reports the same `0 open
+> gaps` as one covering all of it, and every detector here reasons about nodes that are already
+> in the graph.
+
+Four habits, none of which cost much:
+
+- **Read the result back.** After a write that matters, fetch the node and confirm it says what
+  you meant. A tool that reports success has told you it did *something*, not that it did the
+  thing you wanted.
+- **Diff two things that ought to agree.** The graph against the committed export
+  (`compare_designs`), the design against the files on disk (`reconcile_artifacts`), what you
+  recorded against what a real run reported (`reconcile_verification`). Agreement is worth
+  having; disagreement is a finding you would never have gone looking for.
+- **Ask why odd output is odd, before you filter it.** Output that looks like noise is a
+  hypothesis about the tool. Suppressing it — or reshaping the design until the complaint stops —
+  is how a graph quietly bends into fiction while reporting itself clean.
+- **Ask what the check could not have seen.** A green gate is evidence about what it covers and
+  silent about the rest. `coverage_report` exists for exactly this question, and it only ever
+  answers as wide as the sweep you hand it.
+
+None of this argues for using reflow2 less. It is the other half of using it well: running the
+tools is what produces the evidence, and reading their answers sceptically is what turns it into
+something worth telling the user. **reflow2 is still being built** — if you find it silent about
+something it should have caught, that is as worth reporting as anything that blocked you, and the
+same **report-friction** skill carries it.
+
 ## The gap → question handshake (`gap_to_prompt`)
 
 reflow2 phrases the question; **you** are the language model that fills it in:
