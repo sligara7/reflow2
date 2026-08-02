@@ -65,6 +65,7 @@ Add yourself if you're new here.
 
 
 
+- v0.22.0 release cut — @ajs — since 2026-08-02 — Cargo.toml, Cargo.lock, reflow2.toml, CHANGELOG.md, docs/design/reflow2.json (Anthony's word given 2026-08-02; the stamp moved BOTH ways so the upgrade doc is owed and already written)
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
