@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b1c27b1eb3405d119718e8c2b2cb3336ef6b9d66b8aae26b043882ef106dfecc",
+  "content_hash": "sha256:b481b3bb9bbe1a152d4e5f20547daed0b4412e28ff1ed1417f35183df63400c4",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5143,6 +5143,24 @@
         "action": "added"
       },
       "to_id": "req:completion-computed"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl159-gate-list-cross-check",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl159-gate-list-cross-check",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ver:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -29007,6 +29025,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:skill-lint-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:skill-lint"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:skills",
       "properties": {
         "completeness": "complete"
@@ -31423,6 +31449,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:skill-lint-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:skill-lint-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:skills",
       "properties": {
         "action": "created"
@@ -32528,9 +32562,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ffd69f4f7e883b947e581ea79a8881a97ad05bad0998f35dd5a8473c36a8aeb2",
+        "checksum": "sha256:1aaccabea7180ed00913dbdadd3c92dcdf6f2e0e18f5fd8fea4294e1ac07e052",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:skill-lint-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda",
+        "location": "tools/test_skill_lint.py",
+        "name": "test_skill_lint.py",
         "status": "realized"
       }
     },
@@ -34930,6 +34975,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-104 captured: derive delivery from the golden thread; the requirement lifecycle is 3/5 unused"
+      }
+    },
+    {
+      "node_id": "chg:bl159-gate-list-cross-check",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-159: the two records of the build-gate contract are now cross-checked by the build. AGENTS.md's \"A change is done when all of these are clean\" block and `.github/workflows/ci.yml` were two hand-kept records of one contract, and following the documented one exactly still produced a red build (PR #27). `skill_lint.py` now fails if a `cargo`/`python3` gate in ci.yml appears in NEITHER the block nor the blockquote that names deliberate omissions, if a listed command is spelled differently from the way CI runs it, or if either list names a gate CI has stopped running. FOUR CHECKS RATHER THAN THE ROW'S ONE, and the extra one is the load-bearing one: the row proposed COVERAGE only, but the defect that filed BL-159 was a FLAGS difference on a gate that WAS listed (`-p reflow2-core` clippy lacking `-D warnings`), which coverage alone cannot see — so identity and fidelity are checked separately. THE SPLIT THAT KEEPS IT HONEST is BL-160's threshold lesson again: the lint OBSERVES (is this ci.yml line a gate at all — mechanical, in code), the document JUDGES (does it belong in the everyday local subset — in AGENTS.md, where a human reads it). FOUND ON DAY ONE, which is the payoff: `cargo test -p reflow2-core --no-default-features` and `test_check_doc_versions` were in ci.yml and in neither list. The second is the trap the design anticipated — `check_doc_versions` is a substring of `test_check_doc_versions`, so a substring match would have reported the second as already covered; matching is exact on the script stem. THE CHECK CAUGHT A DEFECT IN ITSELF on its own commit: scanning the whole blockquote read the backticked words `cargo` and `python3` out of the new paragraph describing the lint and reported them as gates CI had stopped running. REPORTED RATHER THAN HIDDEN: reverting the first-paragraph scoping ALONE leaves every check green, because the runner-word exclusion covers today's prose — the two are not redundant in general, and the scoping is pinned on synthetic text where the redundancy cannot hide it."
       }
     },
     {
@@ -40579,6 +40632,16 @@
       }
     },
     {
+      "node_id": "frag:art:skill-lint-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_skill_lint.py"
+      }
+    },
+    {
       "node_id": "frag:art:skills",
       "node_type": "Fragment",
       "properties": {
@@ -44828,10 +44891,10 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
-        "last_run_at": "2026-07-20",
+        "last_run_at": "2026-08-01",
         "level": "integration",
         "method": "analysis",
-        "name": "skill_lint.py — the skills' contract with the served surface (tool refs resolve, mirrors byte-identical, frontmatter, standing rule), enforced in CI on every push",
+        "name": "skill_lint.py — the contracts the build refuses to let drift, enforced in CI on every push. (1) THE SKILLS' contract with the served surface: every tool a skill names is served, the three mirrors are byte-identical, frontmatter, the standing rule, the tool-convention register and its description budget, the detect-and-ask obligations. (2) THE BUILD'S OWN GATE LIST (BL-159, 2026-08-01), four checks over AGENTS.md's \"A change is done when all of these are clean\" block and `.github/workflows/ci.yml` — two hand-kept records of one contract, where following the documented one exactly still produced a red build (PR #27). COVERAGE: every cargo/python3 gate ci.yml runs is either in the block or named in the blockquote as deliberately omitted, because a gate in neither is one a developer cannot know to run. FIDELITY: a listed gate is spelled exactly as CI runs it, FLAGS INCLUDED — and this is the load-bearing one the row did not ask for, because the defect that filed BL-159 was a flags difference on a gate that WAS listed (`-p reflow2-core` clippy lacking `-D warnings`), which coverage alone cannot see. Both rot directions are closed too: a documented gate ci.yml does not run, and an omitted name ci.yml has stopped running. THE SPLIT THAT KEEPS IT HONEST: the lint OBSERVES (is this line a gate at all — mechanical) and the document JUDGES (does it belong in the everyday subset — in AGENTS.md, where a human reads it). FOUND ON DAY ONE: `cargo test -p reflow2-core --no-default-features` and `test_check_doc_versions` sat in ci.yml and in neither list — the second being the exact trap the design anticipated, since `check_doc_versions` is a SUBSTRING of it and a substring match would have called it covered. MUTATION-CHECKED SEVEN WAYS, each failing exactly the check that names it: an undeclared gate in ci.yml → coverage; stripping `-D warnings` from the block → fidelity, which is BL-159's own defect reproduced; ci.yml dropping a listed gate → the phantom check; ci.yml dropping an omitted one → the stale-omission check; dropping the comment stripper → fidelity plus its own hermetic case; dropping the paragraph scoping → its two hermetic cases; dropping scoping AND the runner-word exclusion → the stale-omission check. THE CHECK CAUGHT A DEFECT IN ITSELF ON ITS OWN COMMIT: scanning the whole blockquote read the backticked words `cargo` and `python3` out of the new paragraph describing the lint and reported them as gates CI had stopped running. AND ONE REDUNDANCY IS REPORTED RATHER THAN HIDDEN — reverting the paragraph scoping ALONE leaves every real-file check green, because the runner-word exclusion covers the only two words today's prose backticks; the two are not redundant in general, so the scoping is pinned on synthetic text in tools/test_skill_lint.py where the redundancy cannot hide it. 14 hermetic cases there covering the parsing the real files cannot exercise.",
         "status": "passing"
       }
     },
@@ -44986,7 +45049,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:8cde46859dde2b75fc8b91f458e26d627836577d47b2103d9912a9840b75a393",
+  "prev_content_hash": "sha256:b1c27b1eb3405d119718e8c2b2cb3336ef6b9d66b8aae26b043882ef106dfecc",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
