@@ -65,9 +65,6 @@ Add yourself if you're new here.
 
 
 
-- BL-160 — @ajs — since 2026-08-01 — crates/reflow2-core/src/{artifact,drift}.rs, tests/checksum_dialect.rs, tools/reflow2_check.py
-- BL-161 — @ajs — since 2026-08-01 — tools/loop_nudge.py, tools/test_loop_nudge.py, docs/backlog.md
-- BL-159 — @ajs — since 2026-08-01 — tools/skill_lint.py, tools/test_skill_lint.py, AGENTS.md, .github/workflows/ci.yml
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -94,6 +91,9 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- **BL-159** — @ajs — 2026-08-01 — the build refuses to let its own gate list drift: `skill_lint` cross-checks AGENTS.md's gate block against `ci.yml` four ways (coverage, fidelity-with-flags, and both rot directions). Found two real holes on its first run (`50fa157`, #33). — tools/skill_lint.py, tools/test_skill_lint.py, AGENTS.md, .github/workflows/ci.yml
+- **BL-68 re-scope** — @ajs — 2026-08-01 — L drops to M; two of three parts overtaken by the temporal machinery, Q1 dissolved, Q2 restated as *where does the threshold live* (`9a1eed2`, #32). Doc-only. — docs/backlog.md
+- **BL-160** — @ajs — 2026-08-01 — a checksum's LENGTH is a dialect too; `artifact::checksums_agree` answers it in the core for every consumer and `reflow2_check.py`'s Python workaround is deleted (`3ac67f7`, #31). — crates/reflow2-core/src/{artifact,drift}.rs, tests/checksum_dialect.rs, tools/reflow2_check.py
 - **BL-161 + BL-111** — @ajs — 2026-08-01 — the loop nudge stops corrupting its own tally under concurrent hooks (atomic write + lock + no error-swallowing read), learns the #27 bulk forms, and keeps its once-per-session promise (`1eff23c`, #30). — tools/loop_nudge.py, tools/test_loop_nudge.py
 - **The three BL-153 decisions accepted on Anthony's word** — @ajs — 2026-08-01 — `dec:manifest-derived-is-not-manifest-accepted`, `dec:bulk-is-all-or-nothing-with-per-item-findings` and `dec:bulk-keeps-the-judgement-per-item` moved `proposed` → `accepted` (#28). The writes are the user's signature, so they waited for it; the code they describe had already shipped in #27. — docs/design/reflow2.json
 
