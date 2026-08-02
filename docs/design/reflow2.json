@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b481b3bb9bbe1a152d4e5f20547daed0b4412e28ff1ed1417f35183df63400c4",
+  "content_hash": "sha256:ec0c68b305e229edfacb1cc4db556ef1625df51d3fdce064024f5ae1364f5ddd",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -8035,6 +8035,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:orphan-decision-degree-zero",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:orphan-decision-degree-zero",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:unreachable-decision-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:orphan-decision-degree-zero",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:sanitize-spof-accepted"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:plan-movement-question-answered",
       "properties": {
         "accepted_baseline": false,
@@ -15858,6 +15885,12 @@
       "from_id": "cmp:identity",
       "properties": {},
       "to_id": "decision:ack:35dde67d212688fb"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:ingest",
+      "properties": {},
+      "to_id": "dec:sanitize-spof-accepted"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -29233,6 +29266,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:unreachable-decision-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:heal"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:upgrade-v0110",
       "properties": {
         "completeness": "complete"
@@ -31585,6 +31626,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:unreachable-decision-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:unreachable-decision-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:upgrade-v0110",
       "properties": {
         "action": "created"
@@ -32155,7 +32204,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c242c1f229cf396710e496f6cae8cfc8b153788d3fc0cda363d15bac166585a8",
+        "checksum": "sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -32763,6 +32812,17 @@
         "checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d",
         "location": "crates/reflow2-core/tests/stale_seat.rs",
         "name": "stale_seat.rs + test_stale_seat.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:unreachable-decision-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f",
+        "location": "crates/reflow2-core/tests/unreachable_decision.rs",
+        "name": "unreachable_decision.rs",
         "status": "realized"
       }
     },
@@ -35679,6 +35739,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "object_store researched against dec:where-content-lives — the storage fork mostly dissolves, the sync/async one sharpens"
+      }
+    },
+    {
+      "node_id": "chg:orphan-decision-degree-zero",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A Decision reachable from NOTHING is now reported by orphan_node, graded by status. Found 2026-08-01 by running check-health and detect-and-ask on reflow2's own design, getting a clean bill from every detector — detect_defects 0, hierarchy_issues 0, dimension_drifts 0, propose_heal 0 operations — and then counting zero-degree nodes by hand: `dec:sanitize-spof-accepted`, an ACCEPTED single-point-of-failure disposition, had no edges at all and was the only one of five such dispositions not linked to what it disposes. `disconnected_community` structurally cannot see it, because it reports clusters of >=2 and a node joined to nothing is never a cluster. IT IS WORSE THAN UNTIDY: a Decision with no edges cannot be reached by propagation so it never enters an impact analysis, and a disposition specifically can never EXPIRE, because expiry is computed from the affected set (`ver:reviewed-defects`) — a conditional judgement silently becomes permanent. THE RULE IS DEGREE-ZERO AND THAT WAS SETTLED BY MEASUREMENT, NOT TASTE, against my own stated recommendation. The tempting narrow form — an accepted Decision with no incoming GOVERNED_BY — was measured on reflow2's own design and fires on SIX, five of which have degree 1-3: connected, merely not through that one edge type. That is BL-42's shape exactly, where this same detector reported a well-connected Capability missing one named link, became 20 of 31 defects, and had to be cut back to a single rule. Degree-zero fires on ONE and is self-limiting: any edge at all silences it. Review records (`decision:ack:`) are excluded because `structure.rs` already keeps them out of the design network as judgements ABOUT the design rather than structure (`ver:acknowledgement-not-structure`), and all twelve of reflow2's own are `accepted` by construction. Measured after the fix on the real design: 1 warning and 2 info across 1225 nodes, and the two info are proposed decision points, which is a legitimate state. Mutation-checked three ways."
       }
     },
     {
@@ -40802,6 +40870,16 @@
       }
     },
     {
+      "node_id": "frag:art:unreachable-decision-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered unreachable_decision.rs"
+      }
+    },
+    {
       "node_id": "frag:art:upgrade-v0110",
       "node_type": "Fragment",
       "properties": {
@@ -44371,9 +44449,10 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
+        "last_run_at": "2026-08-01",
         "level": "integration",
         "method": "test",
-        "name": "heal.rs",
+        "name": "heal.rs — the structural detectors, plus propose/apply atomicity. PLUS the degree-zero Decision rule (2026-08-01, crates/reflow2-core/tests/unreachable_decision.rs, 6 cases): a Decision with NO edges in either direction is reported by `orphan_node`, Warning when its status is `accepted` and Info otherwise. FOUND BY RUNNING THE HEALTH SKILLS ON OUR OWN DESIGN AND DISBELIEVING THEM: check-health and detect-and-ask both returned clean — detect_defects 0, hierarchy_issues 0, dimension_drifts 0, propose_heal 0 operations — and a hand count of zero-degree nodes then found `dec:sanitize-spof-accepted`, an ACCEPTED single-point-of-failure disposition with no edges at all, the only one of five such dispositions not linked to what it disposes. `disconnected_community` cannot see it: it reports clusters of ≥2, and a node joined to nothing is never a cluster. THE STAKE IS NOT TIDINESS — a zero-degree Decision is unreachable by propagation so it never enters an impact analysis, and a disposition specifically can never EXPIRE, because expiry is computed from the affected set (`ver:reviewed-defects`), so a conditional judgement silently becomes permanent. THE RULE IS DEGREE-ZERO, AND MEASUREMENT CHOSE IT AGAINST THE STATED RECOMMENDATION: the narrow-looking form, an accepted Decision with no incoming GOVERNED_BY, fires on SIX of reflow2's own, five with degree 1–3 — connected, merely not through that edge. That is [BL-42] exactly, where this same detector reported a well-connected Capability missing one named link, became 20 of 31 defects, and was cut back to a single rule. Degree-zero fires on ONE and is self-limiting: ANY edge silences it. THREE COUNTERWEIGHTS, and the first is the one measurement demanded: a Decision reached by any edge at all (a CONTRADICTS, not a GOVERNED_BY) is silent; a `decision:ack:` review record is silent, because structure.rs already excludes those from the design network as judgements ABOUT the design (`ver:acknowledgement-not-structure`) and all twelve of reflow2's own are accepted by construction; and a proposed decision point is Info, never a defect, because firing on a legitimate parking spot is firing on correct work. The pre-existing Artifact-realizing-nothing rule is pinned unchanged, so BL-42's cut-back is not reopened. MUTATION-CHECKED THREE WAYS, each failing exactly the one test that names it: key on missing GOVERNED_BY → only the any-edge counterweight fails, which is BL-42 reproduced; drop the review-record exclusion → only that case; grade everything Warning → only the proposed-is-Info case. MEASURED ON THE REAL DESIGN with a freshly built binary against a throwaway import of the committed export: 3 findings across 1225 nodes — one Warning (`dec:sanitize-spof-accepted`, now fixed by wiring `cmp:ingest GOVERNED_BY` it, matching the four sibling dispositions) and two Info, both proposed decision points.",
         "status": "passing"
       }
     },
@@ -45049,7 +45128,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b1c27b1eb3405d119718e8c2b2cb3336ef6b9d66b8aae26b043882ef106dfecc",
+  "prev_content_hash": "sha256:b481b3bb9bbe1a152d4e5f20547daed0b4412e28ff1ed1417f35183df63400c4",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
