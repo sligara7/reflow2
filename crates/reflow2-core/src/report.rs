@@ -308,6 +308,13 @@ pub struct GraphReport {
     pub verifications: Vec<VerificationRecency>,
     /// Allocation health, when components exist.
     pub allocation: Option<AllocationSummary>,
+    /// Artifacts whose build granularity is out of line with the design's own
+    /// (BL-182). An observation, never a defect: it says the build holds as one
+    /// thing what the design holds as several, and rules on neither side.
+    pub granularity: Vec<crate::granularity::GranularityObservation>,
+    /// The median capabilities-per-artifact the observations above are read
+    /// against, so "10" is never shown without "of a median 1".
+    pub granularity_median: f64,
     /// The most surprising couplings (capped).
     pub surprising: Vec<SurprisingConnection>,
     /// Surprising couplings beyond the shown top.
@@ -840,6 +847,11 @@ impl DesignGraph {
             None
         };
 
+        // Granularity: the build against the design's own decomposition. Read
+        // in full here rather than capped — the reading caps itself, by only
+        // ever naming distributional outliers.
+        let granularity_reading = self.granularity_report()?;
+
         let mut surprising = self.surprising_connections()?;
         let surprising_truncated = surprising.len().saturating_sub(TOP_N);
         surprising.truncate(TOP_N);
@@ -865,6 +877,8 @@ impl DesignGraph {
             gaps_truncated,
             verifications: self.verification_recency()?,
             allocation,
+            granularity: granularity_reading.observations,
+            granularity_median: granularity_reading.median_capabilities_per_artifact,
             surprising,
             surprising_truncated,
             requirement_certainty,
@@ -1033,6 +1047,32 @@ impl GraphReport {
                 component_clause,
                 v.artifacts_verified,
                 v.artifacts
+            );
+        }
+
+        // Granularity — the build against the design's own decomposition.
+        if !self.granularity.is_empty() {
+            let _ = writeln!(m, "## Granularity — what the build does not separate\n");
+            for o in &self.granularity {
+                let _ = writeln!(
+                    m,
+                    "- `{}`{}: realizes **{}** capabilities the design distinguishes; the median \
+                     artifact realizes {:.0}. _[unusual {:.2}]_",
+                    o.artifact_id,
+                    o.location
+                        .as_ref()
+                        .map(|l| format!(" ({l})"))
+                        .unwrap_or_default(),
+                    o.realizes_capabilities,
+                    self.granularity_median,
+                    o.unusual
+                );
+            }
+            let _ = writeln!(
+                m,
+                "\n_Not a defect and not a size judgement — the build holds as one thing what \
+                 the design holds as several. Which side is wrong is yours to say; \
+                 `granularity_report` carries the full reading._\n"
             );
         }
 

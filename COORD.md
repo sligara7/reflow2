@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- BL-182 granularity observation — @ajs — since 2026-08-02 — crates/reflow2-core/src/{granularity,report}.rs, reflow2-mcp tool surface
+
 
 
 
