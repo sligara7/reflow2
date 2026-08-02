@@ -34,6 +34,13 @@ schema:
         fact_type: { type: string, indexed: true, description: "status / allocation / dependency / satisfaction / property — what kind of assertion." }
         statement: { type: string, fulltext: true, description: "The time-bounded assertion in plain terms." }
         value: { type: string, description: "JSON of the asserted value (e.g. {status: realized})." }
+        # Added 2026-08-02 for BL-68 (dec:readiness-forecast-is-a-temporal-fact).
+        # ADDITIVE: every fact written before this defaults to `measured`, which
+        # is what they all were — the property states what the record has always
+        # meant rather than inventing a claim about it (req:defaults-do-not-assert,
+        # the same argument DesignEpoch.status made for `arrived`).
+        basis: { type: enum, values: [measured, forecast], default: measured, indexed: true, description: "Whether this assertion RECORDS something that happened or PROJECTS something expected to. The distinction is the whole value of a derived roadmap: a reader must be able to tell which epochs rest on evidence and which on projection, and a chart that cannot is worse than no chart. `forecast` is why this property exists — a readiness projection ('TRL 7 valid from 2035') is a TemporalFact and NOT a DimensionObservation, because `observed_at` says OBSERVED and nobody observed anything in 2035. Recording a projection as an observation is [BL-157]'s fiction sitting inside the machinery the roadmap is computed FROM, where it would propagate rather than sit still." }
+        confidence: { type: float, range: [0.0, 1.0], description: "How much weight the author puts behind this assertion — most meaningful on a `forecast`, where `req:plans-move-honestly` already commits to confidence that decays with horizon, and a ten-year TRL projection needs it more than any plan does. STATED BY THE AUTHOR, NEVER COMPUTED BY REFLOW2 (Anthony, 2026-08-02): a decay curve is a judgement about risk appetite, and deriving one from distance-in-epochs would assert a risk model nobody chose — the same defect as defaulting the gating threshold, one layer along. Absent means unstated, which reads as unstated and never as certain." }
       embedding_field: statement
       extraction_hint: >
         A time-bounded assertion true only between two epochs. Requirement creep

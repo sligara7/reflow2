@@ -1,0 +1,53 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "State that an increment cannot deliver until an enabling technology reaches a given readiness level — the JUDGEMENT half of BL-68, and the one reflow2 will never make for you. The threshold rides this edge rather than either endpoint so one increment can demand TRL 7 of one technology and TRL 4 of another, and so a demonstrator and a fielded increment can demand different levels of the SAME technology. CONVENTION: there is no default threshold. An increment with no gate reports 'ungated', never 'ready' — silence about a gate is not evidence there is none.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "kind": {
+        "description": "`TRL` or `MRL`.",
+        "type": "string"
+      },
+      "min_level": {
+        "description": "The rung the technology must reach before this increment is achievable.\nREQUIRED AND NEVER DEFAULTED: \"below level N is not buildable\" is a\njudgement about risk appetite and it is the user's to state.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "rationale": {
+        "default": null,
+        "description": "Why this increment demands this rung — the sentence a reader needs when\nthe derived roadmap returns a date they do not like.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "subject_id": {
+        "type": "string"
+      },
+      "subject_type": {
+        "description": "The increment that cannot deliver yet — a Release, Capability or\nRequirement.",
+        "type": "string"
+      },
+      "target_id": {
+        "type": "string"
+      },
+      "target_type": {
+        "description": "The enabling technology it waits on.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "subject_type",
+      "subject_id",
+      "target_type",
+      "target_id",
+      "kind",
+      "min_level"
+    ],
+    "type": "object"
+  },
+  "name": "gate_on"
+}

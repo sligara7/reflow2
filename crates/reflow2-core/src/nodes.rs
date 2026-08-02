@@ -43,6 +43,8 @@ pub mod node {
     pub const TEMPORAL_FACT: &str = "TemporalFact";
     pub const SNAPSHOT: &str = "Snapshot";
     pub const CHANGE_EVENT: &str = "ChangeEvent";
+    // Readiness · technology maturity as a GATING fact (readiness.yaml, BL-68)
+    pub const READINESS_ASSESSMENT: &str = "ReadinessAssessment";
 }
 
 /// Edge type names, matching `schema/*.yaml`.
@@ -160,6 +162,15 @@ pub mod edge {
     pub const HAS_OBSERVATION: &str = "HAS_OBSERVATION";
     /// `DimensionObservation → Fragment` — the fragment a reading came from.
     pub const OBSERVED_IN: &str = "OBSERVED_IN";
+
+    // Readiness (readiness.yaml, BL-68)
+    /// `* → ReadinessAssessment` — an enabling technology carries an observed
+    /// TRL/MRL level.
+    pub const HAS_READINESS: &str = "HAS_READINESS";
+    /// `* → *` — an increment cannot deliver until the far end reaches
+    /// `min_level` on the `kind` ladder. The threshold rides the EDGE so one
+    /// increment can demand TRL 7 of one technology and 4 of another.
+    pub const GATED_ON: &str = "GATED_ON";
 }
 
 use std::collections::HashMap;
@@ -337,6 +348,33 @@ pub(crate) fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
         // functional form can hide inside a fitted coefficient until exactly
         // that moment.
         "CALIBRATED_AGAINST" => (Some(Upstream), Some(Downstream)),
+        // What an increment is waiting on: Release/Capability GATED_ON the
+        // enabling technology, with the demanded level on the edge. Same shape
+        // as INCLUDES and CALIBRATED_AGAINST — the technology's readiness is the
+        // source of truth and the increment's DATE is derived from it, so from
+        // the increment (outgoing) you reach what its schedule rests on, and
+        // from the technology (incoming) you reach every increment that slips
+        // if its maturity slips.
+        //
+        // THE FOURTH EDGE TO REACH THIS TABLE, AND THE SECOND TO DO IT BEFORE A
+        // DETECTOR COMPLAINED. INCLUDES and SCHEDULED_FOR both arrived only
+        // after `disconnected_community` fired on an island the new edge had
+        // failed to join, and the SCHEDULED_FOR comment above says outright that
+        // nothing checks the question is ever asked. It is asked here because
+        // the failure would be worse than an island: BL-68's whole thesis is
+        // that a changed readiness must REACH the roadmap it decides, and an
+        // edge every traversal steps over would let a technology slip from TRL 7
+        // to 3 while `propagate_change` reported nothing downstream — the
+        // roadmap silently stale, which is the exact fiction the item exists to
+        // end. `dec:schedule-is-structural` is the standing argument.
+        "GATED_ON" => (Some(Upstream), Some(Downstream)),
+        // HAS_READINESS is deliberately NOT here, and the omission is the same
+        // call `HAS_OBSERVATION` and `ASSESSED_ON` already carry: an assessment
+        // is a reading ABOUT a node, not a coupling BETWEEN two design nodes.
+        // Admitting it would hang an observation node off every assessed
+        // technology in the design network and make each one a fresh leaf for
+        // the topology detectors to reason about. The reading still reaches the
+        // roadmap, because GATED_ON carries the technology to the increment.
         _ => return None,
     };
     Some(EdgeRule {

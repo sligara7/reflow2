@@ -725,13 +725,14 @@ async fn describe_schema_returns_the_whole_vocabulary() {
     })));
     assert_eq!(
         v["node_types"].as_array().unwrap().len(),
-        28,
+        29,
         "every node type is discoverable"
     );
     assert_eq!(
         v["edge_types"].as_array().unwrap().len(),
-        // 58 since CALIBRATED_AGAINST (2026-08-01, req:a-fit-is-not-a-test).
-        58,
+        // 60 since GATED_ON + HAS_READINESS (2026-08-02, BL-68); 58 before
+        // that, since CALIBRATED_AGAINST (2026-08-01, req:a-fit-is-not-a-test).
+        60,
         "every edge type is discoverable"
     );
 }

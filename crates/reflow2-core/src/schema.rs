@@ -1,7 +1,7 @@
 //! Load the reflow2 design vocabulary.
 //!
-//! The 10 composable schema domains in `schema/*.yaml` are the single source of
-//! truth for the node/edge vocabulary (28 node types, 53 edge types). They are
+//! The 11 composable schema domains in `schema/*.yaml` are the single source of
+//! truth for the node/edge vocabulary (29 node types, 60 edge types). They are
 //! embedded at compile time with `include_str!` so the core carries its own
 //! vocabulary — no runtime file IO, no working-directory dependence, and no
 //! second copy to drift out of sync. These are the exact files that
@@ -10,7 +10,7 @@
 
 use dynograph_core::{DynoError, Schema};
 
-/// The 10 schema domains, as `(name, yaml)`, embedded at compile time.
+/// The 11 schema domains, as `(name, yaml)`, embedded at compile time.
 ///
 /// Order is not load-bearing: `from_multiple_yamls` merges additively and
 /// validates once at the end, so cross-domain edge endpoints (e.g. an edge in
@@ -35,9 +35,10 @@ pub const SCHEMA_DOMAINS: &[(&str, &str)] = &[
         "dimensions",
         include_str!("../../../schema/dimensions.yaml"),
     ),
+    ("readiness", include_str!("../../../schema/readiness.yaml")),
 ];
 
-/// Merge all 10 domains into one validated [`Schema`].
+/// Merge all 11 domains into one validated [`Schema`].
 ///
 /// Fails loud (returns [`DynoError`]) if any domain fails to parse or the
 /// merged schema fails validation — never a silently partial vocabulary.
@@ -52,7 +53,7 @@ mod tests {
 
     #[test]
     fn all_domains_merge_and_validate() {
-        let schema = load_schema().expect("the 10 domains must merge and validate");
+        let schema = load_schema().expect("the 11 domains must merge and validate");
         // The vocabulary the docs and README commit to. History: 26→27 nodes
         // was BL-4 (Question), 53→54 edges is BL-34 (INCLUDES — the
         // 55→56 is PERFORMED_IN (2026-07-27, req:design-the-simulator), and
@@ -75,8 +76,17 @@ mod tests {
         // then a graph query, and because the relation carries WHAT was
         // consumed, which a provenance enum cannot (dec:calibration-is-an-edge).
         // Moves the stamp: v0.21.0 owes an upgrade note.
-        assert_eq!(schema.node_types.len(), 28, "expected 28 node types");
-        assert_eq!(schema.edge_types.len(), 58, "expected 58 edge types");
+        // 28→29 nodes and 58→60 edges is BL-68 (2026-08-02): ReadinessAssessment
+        // plus GATED_ON and HAS_READINESS — the eleventh domain, `readiness`.
+        // Readiness is deliberately NOT a `dimension` enum value: a 1-9 ladder
+        // only enters a 0.0-1.0 float lossily, the enum is a closed list of
+        // QUALITY axes, and `maturity` already sits there meaning code maturity
+        // (dec:readiness-is-an-observation-the-threshold-is-the-judgement).
+        // GATED_ON carries the threshold as an EDGE property so one increment
+        // can demand TRL 7 of one technology and 4 of another. Moves the stamp:
+        // the next release owes an upgrade note.
+        assert_eq!(schema.node_types.len(), 29, "expected 29 node types");
+        assert_eq!(schema.edge_types.len(), 60, "expected 60 edge types");
     }
 
     #[test]

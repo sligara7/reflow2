@@ -1,0 +1,56 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record an OBSERVED technology-readiness level (TRL or MRL, 1-9) for an enabling technology — the input fact a derived roadmap is computed from (BL-68). CONVENTION: this is an observation, not a plan. A level you EXPECT a technology to reach later is forecast_readiness, never this — recording a projection as an observation puts a fiction inside the machinery the roadmap is computed from, where it propagates. A rung outside 1-9 is refused rather than clamped.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "assessed_at": {
+        "default": null,
+        "description": "When it was observed (reflow2 takes no clock).",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "evidence": {
+        "default": null,
+        "description": "What was demonstrated, where, by whom.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "id": {
+        "type": "string"
+      },
+      "kind": {
+        "description": "`TRL` (technology) or `MRL` (manufacturing). Required: the two ladders\nare not interchangeable, and a technology can be demonstrable and\nunmanufacturable — which is exactly the case a roadmap must state.",
+        "type": "string"
+      },
+      "level": {
+        "description": "The rung, 1-9 inclusive. Refused outside that range rather than clamped:\na clamped 12 silently becomes 9 and reports a technology as mature.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "target_id": {
+        "type": "string"
+      },
+      "target_type": {
+        "description": "The enabling technology this level is about — usually a Component or an\nArtifact.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "target_type",
+      "target_id",
+      "kind",
+      "level"
+    ],
+    "type": "object"
+  },
+  "name": "add_readiness"
+}

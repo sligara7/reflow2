@@ -38,7 +38,8 @@ use reflow2_core::{
     AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_SCOPE_DEPTH, DesignGraph,
     Dimension, DriftDisposition, DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions,
     HealProposal, HealStrategy, IngestOptions, LinkArtifactOptions, LoopStatus, ObservedArtifact,
-    ObservedPath, PromptCollector, PropagateOptions, ReconcileOptions, StoredNode, Value,
+    ObservedPath, PromptCollector, PropagateOptions, ReadinessForecast, ReadinessGate,
+    ReadinessKind, ReadinessObservation, ReconcileOptions, StoredNode, Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -132,6 +133,20 @@ struct ReadHintCache {
 /// *caller's* typo, the inverse of the crate's error-taxonomy rule. Variants
 /// caused by the arguments become `invalid_params`; genuine faults stay
 /// `internal_error`.
+/// `TRL`/`MRL` → the typed ladder, refusing anything else by name.
+///
+/// A bare `invalid_params` naming the two valid values, rather than defaulting
+/// to TRL: the two ladders are not interchangeable, and quietly picking one
+/// would answer a roadmap question the caller did not ask.
+fn parse_readiness_kind(raw: &str) -> Result<ReadinessKind, McpError> {
+    ReadinessKind::parse(raw).ok_or_else(|| {
+        McpError::invalid_params(
+            format!("unknown readiness kind {raw:?} — expected \"TRL\" or \"MRL\""),
+            None,
+        )
+    })
+}
+
 fn dyno_err(e: DynoError) -> McpError {
     match e {
         // Caused by what the caller supplied — a bad id, type, edge, value, or
@@ -1161,6 +1176,80 @@ pub struct ReleaseIncludesAllReq {
 #[serde(deny_unknown_fields)]
 pub struct ReleaseReportReq {
     pub release_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct AddReadinessReq {
+    pub id: String,
+    /// The enabling technology this level is about — usually a Component or an
+    /// Artifact.
+    pub target_type: String,
+    pub target_id: String,
+    /// `TRL` (technology) or `MRL` (manufacturing). Required: the two ladders
+    /// are not interchangeable, and a technology can be demonstrable and
+    /// unmanufacturable — which is exactly the case a roadmap must state.
+    pub kind: String,
+    /// The rung, 1-9 inclusive. Refused outside that range rather than clamped:
+    /// a clamped 12 silently becomes 9 and reports a technology as mature.
+    pub level: i64,
+    /// What was demonstrated, where, by whom.
+    #[serde(default)]
+    pub evidence: Option<String>,
+    /// When it was observed (reflow2 takes no clock).
+    #[serde(default)]
+    pub assessed_at: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct GateOnReq {
+    /// The increment that cannot deliver yet — a Release, Capability or
+    /// Requirement.
+    pub subject_type: String,
+    pub subject_id: String,
+    /// The enabling technology it waits on.
+    pub target_type: String,
+    pub target_id: String,
+    /// `TRL` or `MRL`.
+    pub kind: String,
+    /// The rung the technology must reach before this increment is achievable.
+    /// REQUIRED AND NEVER DEFAULTED: "below level N is not buildable" is a
+    /// judgement about risk appetite and it is the user's to state.
+    pub min_level: i64,
+    /// Why this increment demands this rung — the sentence a reader needs when
+    /// the derived roadmap returns a date they do not like.
+    #[serde(default)]
+    pub rationale: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ForecastReadinessReq {
+    pub id: String,
+    pub target_type: String,
+    pub target_id: String,
+    /// `TRL` or `MRL`.
+    pub kind: String,
+    /// The rung expected by `epoch_id`, 1-9.
+    pub level: i64,
+    /// The epoch this projection becomes true at (`VALID_FROM`).
+    pub epoch_id: String,
+    /// YOUR confidence in the projection, 0.0-1.0. reflow2 never computes one
+    /// from the horizon: a decay curve is a judgement about risk appetite, and
+    /// deriving it would assert a risk model nobody chose. Absent reads as
+    /// unstated, never as certain.
+    #[serde(default)]
+    pub confidence: Option<f64>,
+    #[serde(default)]
+    pub statement: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ReadinessReportReq {
+    /// The increment to derive a delivery epoch for.
+    pub subject_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -3609,6 +3698,121 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
         ok_json(g.release_report(&req.release_id).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Record an OBSERVED technology-readiness level (TRL or MRL, 1-9) for an \
+                       enabling technology — the input fact a derived roadmap is computed from \
+                       (BL-68). CONVENTION: this is an observation, not a plan. A level you \
+                       EXPECT a technology to reach later is forecast_readiness, never this — \
+                       recording a projection as an observation puts a fiction inside the \
+                       machinery the roadmap is computed from, where it propagates. A rung \
+                       outside 1-9 is refused rather than clamped.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn add_readiness(
+        &self,
+        Parameters(req): Parameters<AddReadinessReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let kind = parse_readiness_kind(&req.kind)?;
+        let mut g = self.write_lock().await;
+        ok_json(NodeDto::from(
+            g.add_readiness(&ReadinessObservation {
+                id: &req.id,
+                target_type: &req.target_type,
+                target_id: &req.target_id,
+                kind,
+                level: req.level,
+                evidence: req.evidence.as_deref(),
+                assessed_at: req.assessed_at.as_deref(),
+            })
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "State that an increment cannot deliver until an enabling technology \
+                       reaches a given readiness level — the JUDGEMENT half of BL-68, and the \
+                       one reflow2 will never make for you. The threshold rides this edge \
+                       rather than either endpoint so one increment can demand TRL 7 of one \
+                       technology and TRL 4 of another, and so a demonstrator and a fielded \
+                       increment can demand different levels of the SAME technology. \
+                       CONVENTION: there is no default threshold. An increment with no gate \
+                       reports 'ungated', never 'ready' — silence about a gate is not evidence \
+                       there is none.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn gate_on(
+        &self,
+        Parameters(req): Parameters<GateOnReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let kind = parse_readiness_kind(&req.kind)?;
+        let mut g = self.write_lock().await;
+        ok_json(EdgeDto::from(
+            g.gate_on(&ReadinessGate {
+                subject_type: &req.subject_type,
+                subject_id: &req.subject_id,
+                target_type: &req.target_type,
+                target_id: &req.target_id,
+                kind,
+                min_level: req.min_level,
+                rationale: req.rationale.as_deref(),
+            })
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Record a PROJECTED readiness level valid from a future epoch — 'this \
+                       converter reaches TRL 7 in 2035' — as a TemporalFact marked \
+                       basis=forecast (BL-68). It is deliberately not a DimensionObservation: \
+                       `observed_at` says OBSERVED, and nobody observed anything in 2035. \
+                       CONVENTION: confidence is YOURS to state and reflow2 never derives one \
+                       from the horizon, because a decay curve is a judgement about risk \
+                       appetite. The epoch must already exist — plan_epoch it first.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn forecast_readiness(
+        &self,
+        Parameters(req): Parameters<ForecastReadinessReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let kind = parse_readiness_kind(&req.kind)?;
+        let mut g = self.write_lock().await;
+        ok_json(NodeDto::from(
+            g.forecast_readiness(&ReadinessForecast {
+                id: &req.id,
+                target_type: &req.target_type,
+                target_id: &req.target_id,
+                kind,
+                level: req.level,
+                epoch_id: &req.epoch_id,
+                confidence: req.confidence,
+                statement: req.statement.as_deref(),
+            })
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "The DERIVED roadmap for one increment (BL-68): the earliest epoch by \
+                       which every technology it is GATED_ON clears the level demanded of it, \
+                       with the reason named — 'cannot deliver before 2035, because the \
+                       converter is TRL 3 today, projected 7 at 2035, and this increment needs \
+                       7'. The answer is the max over per-gate clearing epochs, because an \
+                       increment waits for its slowest dependency. Four verdicts, and two of \
+                       them are refusals: `ungated` (no threshold stated — NOT ready), \
+                       `achievable_now`, `gated_until`, and `indeterminate` (a gate has no \
+                       level and no clearing forecast, so no date can be derived — reported \
+                       loudly rather than dropped from the max, which would return an \
+                       optimistic date built by ignoring the inconvenient evidence).",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn readiness_report(
+        &self,
+        Parameters(req): Parameters<ReadinessReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.readiness_report(&req.subject_id).map_err(dyno_err)?)
     }
 
     #[tool(

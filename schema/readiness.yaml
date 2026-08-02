@@ -1,0 +1,80 @@
+# readiness.yaml — technology readiness as a GATING fact (BL-68).
+#
+# Deliberately NOT a dimension, and the reason is the whole of BL-68 vocabulary
+# question 2 (`dec:readiness-is-an-observation-the-threshold-is-the-judgement`):
+#
+#   - `DimensionAssessment.score` is a float 0.0-1.0 documented "0 = worst,
+#     1 = best", so a 1-9 ladder only enters it lossily — TRL 7 as 0.78 asserts
+#     a precision the ladder does not have.
+#   - The `dimension` enum is a closed list of QUALITY AXES of the design.
+#     Readiness is not a quality of the design; it is a fact about the maturity
+#     of an enabling technology the design leans on.
+#   - `maturity` is ALREADY in that enum meaning CODE maturity, so putting TRL
+#     beside it would file two different things under one word — the [BL-115]
+#     shape, where two states render identically because the vocabulary has no
+#     separate word for one of them.
+#
+# THE SPLIT THIS DOMAIN EXISTS TO KEEP: a readiness level is an OBSERVATION and
+# the gating threshold is a JUDGEMENT. The level lives here, on the technology.
+# The threshold lives on the GATED_ON edge, stated per increment, and reflow2
+# REFUSES to default it — an increment with no stated threshold reports as
+# `ungated`, never as ready. That refusal is what keeps a computed roadmap
+# inside `dec:report-dont-judge`: computing over an observation is
+# detect_gaps-shaped, but inventing a threshold would let reflow2 silently
+# decide buildability. The measured precedent is `Interface.medium`, which
+# defaulted to REST and thereby made two silent boundaries "agree" on a value
+# neither had chosen (`ver:seam-incompatibility`, BL-129). A defaulted readiness
+# threshold is that defect with a bigger blast radius, because it gates a
+# roadmap rather than a seam.
+#
+# The FORECAST half is not here: a projected level rides a `TemporalFact` series
+# (`dec:readiness-forecast-is-a-temporal-fact`), because `observed_at` says
+# OBSERVED and nobody observed anything in 2035. See temporal.yaml, where
+# `basis` and `confidence` were added for exactly this.
+
+schema:
+  name: readiness
+  version: 1
+
+  node_types:
+
+    ReadinessAssessment:
+      properties:
+        target_id: { type: string, required: true, indexed: true, description: "Id of the enabling technology this level is about — typically a Component or an Artifact." }
+        target_type: { type: string, indexed: true, description: "Label of the assessed node (Component, Artifact, Resource...)." }
+        kind: { type: enum, values: [TRL, MRL], required: true, indexed: true, description: "Which ladder: Technology Readiness Level, or Manufacturing Readiness Level. Both run 1-9 and they are not interchangeable — a technology can be demonstrable and unmanufacturable, which is precisely the case a roadmap must be able to state." }
+        level: { type: int, required: true, indexed: true, description: "The rung, 1-9 inclusive. AN INTEGER ON PURPOSE (dec:readiness-is-an-observation): the ladder has nine rungs and no half-rungs, so a float would invite a precision the scale does not carry. THE BOUND IS ENFORCED IN THE CORE, NOT HERE — no other int property in this schema declares a range, so the enforcement is unproven at this layer and relying on it would be a silent fallback; `readiness.rs` refuses 0 and 10 loudly, and a test pins both ends." }
+        evidence: { type: string, fulltext: true, description: "Cited support for the level — what was demonstrated, where, by whom." }
+        assessed_at: { type: string, description: "When this level was observed. reflow2 takes no clock; the caller supplies it." }
+      embedding_field: evidence
+      extraction_hint: >
+        The CURRENT, observed readiness of one enabling technology on one ladder
+        (TRL or MRL), 1-9. Emit only where the source states or clearly evidences
+        a level; do not infer a rung from prose enthusiasm. A PROJECTED level is
+        not this node — a forecast is a TemporalFact carrying basis `forecast`,
+        because recording a projection as an observation is a fiction sitting
+        inside the machinery a roadmap is computed from.
+
+  edge_types:
+
+    HAS_READINESS:
+      from: "*"
+      to: ReadinessAssessment
+      extraction_hint: Links an enabling technology to a readiness level observed for it. Mirrors HAS_OBSERVATION.
+
+    GATED_ON:
+      from: "*"
+      to: "*"
+      extraction_hint: >
+        An increment (a Release, a Capability, a Requirement) cannot be
+        delivered until the technology at the far end reaches `min_level` on the
+        `kind` ladder. THE EDGE IS THE THRESHOLD, and that placement is
+        load-bearing: one increment can demand TRL 7 of one technology and TRL 4
+        of another, and the same technology can be demanded at different levels
+        by a demonstrator and by a fielded increment — which a single property on
+        either endpoint could not express. It is also the reason a derived
+        roadmap can NAME what decided it.
+      properties:
+        kind: { type: enum, values: [TRL, MRL], required: true, description: "Which ladder this threshold is stated on. Required: a bare number is meaningless across two ladders, and defaulting it would pick a risk posture for the user." }
+        min_level: { type: int, required: true, description: "The rung the far end must reach, 1-9 inclusive, before this increment is considered achievable. REQUIRED AND NEVER DEFAULTED (dec:readiness-is-an-observation-the-threshold-is-the-judgement): 'TRL below 5 is not buildable' is a policy about risk appetite and it is the user's to state. A GATED_ON edge without one is refused rather than filled in." }
+        rationale: { type: string, description: "Why this increment demands this rung — the sentence a reader needs when the roadmap says a date they do not like." }

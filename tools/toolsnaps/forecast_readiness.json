@@ -1,0 +1,60 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record a PROJECTED readiness level valid from a future epoch — 'this converter reaches TRL 7 in 2035' — as a TemporalFact marked basis=forecast (BL-68). It is deliberately not a DimensionObservation: `observed_at` says OBSERVED, and nobody observed anything in 2035. CONVENTION: confidence is YOURS to state and reflow2 never derives one from the horizon, because a decay curve is a judgement about risk appetite. The epoch must already exist — plan_epoch it first.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "confidence": {
+        "default": null,
+        "description": "YOUR confidence in the projection, 0.0-1.0. reflow2 never computes one\nfrom the horizon: a decay curve is a judgement about risk appetite, and\nderiving it would assert a risk model nobody chose. Absent reads as\nunstated, never as certain.",
+        "format": "double",
+        "type": [
+          "number",
+          "null"
+        ]
+      },
+      "epoch_id": {
+        "description": "The epoch this projection becomes true at (`VALID_FROM`).",
+        "type": "string"
+      },
+      "id": {
+        "type": "string"
+      },
+      "kind": {
+        "description": "`TRL` or `MRL`.",
+        "type": "string"
+      },
+      "level": {
+        "description": "The rung expected by `epoch_id`, 1-9.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "statement": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "target_id": {
+        "type": "string"
+      },
+      "target_type": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "target_type",
+      "target_id",
+      "kind",
+      "level",
+      "epoch_id"
+    ],
+    "type": "object"
+  },
+  "name": "forecast_readiness"
+}
