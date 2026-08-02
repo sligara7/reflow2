@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:fe31bc0cbcc0dbccc08ae78fcd2db8b0d1dffdaed99adc1fc12a55a55514b808",
+  "content_hash": "sha256:27f02c57ab600b579bbef68db8ffe25efcd4c345b8def222638afbb91b64af85",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1683,9 +1683,27 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-3f1cd5f3658574b8",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-41cb200c8b595eb3",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-43ae772560f9ccca",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-4d18322621c6c59c",
+      "properties": {},
+      "to_id": "epoch:v0220"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1695,9 +1713,27 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-6269ffe550e65842",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-635435417e73d6d7",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-750a49f308f8c44a",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-7602b38b560e21a5",
+      "properties": {},
+      "to_id": "epoch:v0220"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1719,6 +1755,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-af14fd0d926de4db",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-b15edaa1e77d695c",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-b6c2d52afc751a6e",
       "properties": {},
       "to_id": "epoch:v0210"
@@ -1728,6 +1776,12 @@
       "from_id": "chg:accept-c52c1a33c142cbcc",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-c5c292951bc3363e",
+      "properties": {},
+      "to_id": "epoch:v0220"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1743,9 +1797,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-d98d4bdc9939d8fb",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-eight-requirements",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-f7492269b204a4d2",
+      "properties": {},
+      "to_id": "epoch:v0220"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1809,6 +1875,24 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl159-gate-list-cross-check",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl160-checksum-length-dialect",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl163-propagate-discriminator",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:bl48-bl49-tool-surface",
       "properties": {},
       "to_id": "epoch:v050-hardening"
@@ -1830,6 +1914,12 @@
       "from_id": "chg:bl58-silent-failure-batch",
       "properties": {},
       "to_id": "epoch:v050-hardening"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl68-readiness-gating",
+      "properties": {},
+      "to_id": "epoch:v0220"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1875,6 +1965,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:bulk-forms",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:changelog-view-required",
       "properties": {},
       "to_id": "epoch:v0200-scoped"
@@ -1908,6 +2004,12 @@
       "from_id": "chg:composed-analysis",
       "properties": {},
       "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:confirmation-vocabulary",
+      "properties": {},
+      "to_id": "epoch:v0220"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1977,6 +2079,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:derived-release-manifest",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:design-identity",
       "properties": {},
       "to_id": "epoch:v0120"
@@ -2040,6 +2148,12 @@
       "from_id": "chg:import-adopts-identity",
       "properties": {},
       "to_id": "epoch:v0130"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:import-cluster",
+      "properties": {},
+      "to_id": "epoch:v0220"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2133,15 +2247,33 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:nudge-fires-once",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:nudge-path",
       "properties": {},
       "to_id": "epoch:v0120"
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:nudge-state-integrity",
+      "properties": {},
+      "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:object-store-researched",
       "properties": {},
       "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:orphan-decision-degree-zero",
+      "properties": {},
+      "to_id": "epoch:v0220"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2706,6 +2838,12 @@
       "from_id": "rel:v0210",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "epoch:v0220"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5475,15 +5613,6 @@
         "action": "modified"
       },
       "to_id": "art:service"
-    },
-    {
-      "edge_type": "CHANGED",
-      "from_id": "chg:bl68-readiness-gating",
-      "properties": {
-        "accepted_baseline": false,
-        "action": "modified"
-      },
-      "to_id": "art:temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -12011,6 +12140,14 @@
     {
       "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v0210",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0220",
       "properties": {
         "status": "active"
       },
@@ -26164,6 +26301,1234 @@
     },
     {
       "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:8f8a543ba59ec079"
+      },
+      "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:c59e170136c61deb"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:c33a33c15e2611b3"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:c87a79726aeb111b"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:a91200b3bc4542cbf1f6cec695e8906b109a476309a923fff24c9a6702a3bcf9"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:49f1f3095ea2707d"
+      },
+      "to_id": "art:bl124-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:fabb8097364ca9e2"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:9da41f6bdb9885f7"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:6e8e23fce35b21d6"
+      },
+      "to_id": "art:bulk"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:c2bea913c620128c1e602aed078713c7598f92e7cada4024c67777584b23b8be"
+      },
+      "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:a1f3fd49ba2b91fbb23aeec8de41d0a09f7c4d2b3c3bed97963eb3457867df4e"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:a84c2afa299b6793cb78ae9aad6fda8cf659780728e38da0906ffa629dd41919"
+      },
+      "to_id": "art:checksum-dialect-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:5b6cb19cd4efedd8a4940a54412d033f73a904b376953f4f0f58d3ffee989d57"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:b73161a0fd04efee"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558"
+      },
+      "to_id": "art:compose"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39"
+      },
+      "to_id": "art:compose-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:c7b979d360e1e062"
+      },
+      "to_id": "art:content"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:4f23c464539aed28"
+      },
+      "to_id": "art:content-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed"
+      },
+      "to_id": "art:contradiction-alignment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:9eba28b2278c1a71"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:c30ee52bd7c3ec95"
+      },
+      "to_id": "art:coverage-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:adfea07b2891743b"
+      },
+      "to_id": "art:cycles-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde"
+      },
+      "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:2f8887f1a71cd643b959e9e48e7d3c1bb98b9c793c86dcbffba1381b265f6b8d"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:3bf2ed7ba5a6bccd928828657c0cc7e6b051e6b96c569f5f73528e6baf184d03"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:4b1842af22cfbae2c7b112540fe0e98cc857d8369104e9112f66f1d7c650ad31"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:6d274cf0f687fd7b3031761e30c174abfd473599c0fd64299fdb88cb71517c0f"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:fbe714849869c1d8"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:f8b0a6288f20e82f78d0b6267e9698094228b2a255b0305f861fa53e56c45198"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:74c0459e03ad38ce"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:8956d2d0d4f31fe1"
+      },
+      "to_id": "art:evidence-quality-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:0f66b31cfaca4944"
+      },
+      "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896"
+      },
+      "to_id": "art:evidence-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:75b05ce1f91a84856c1b1d4ff2fdd9b99b3297879e3add9c939081e5b5ad2626"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:cfdf82f1a6497595"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2"
+      },
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:e2e94e52eb601d53"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:34701500af93dbcf"
+      },
+      "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:1db59b3f290549cb"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:30fc1a09862792a9"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:d4e51659a479603aa29befad2e00fa504d6b185bc35ee25961073a79bf04e4b8"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:72c167ebef5a7f98"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a"
+      },
+      "to_id": "art:ingest-handshake-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:49199cc1c858f4cf5b48e370f4b5203bd7989d341951399a28eebde91725c06e"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:07c82cd7671c1241"
+      },
+      "to_id": "art:interface-spec-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:feebbdb1438ff2c52e51cb0fbb004476378ffa97d3c9aa72890b7aa92f4b81b5"
+      },
+      "to_id": "art:kit-pointer"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:65a01535f32f023e"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:15b7f82fc8a05031a7c77c92d6a5624442c047df47104973f8dc9091362045be"
+      },
+      "to_id": "art:latent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:b41bc1c569e39c7ab7d8d72d667fe56870b53eb720be82e6e4b6d7b870023c82"
+      },
+      "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:1702df92e14a3d7abac61e3e13387fd464bacc18bc31d5f9a858cde846dafe32"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:075bab31f3c131b6"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:cddbea4165e0e3b0"
+      },
+      "to_id": "art:merge-driver-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:774ad95db84666b3"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:b03333680dc6e660"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:9cbea33b6a561a9e"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14"
+      },
+      "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:26dde99a1df42e6f"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420"
+      },
+      "to_id": "art:publishable-promise-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:b964690c35967c76a12a9da11c404699c9026d433721813a71882f425f044123"
+      },
+      "to_id": "art:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:da4302eb091e89ce69d2c97b66e947472fba881f7718e86f5a2f5824e057ff22"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:99fc5da421a04f5e"
+      },
+      "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:df2273281fb9522d"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:dc88dfbc4e1aacbc"
+      },
+      "to_id": "art:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:56201fe977dc874f"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a"
+      },
+      "to_id": "art:schema-readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:47fa2c2aa8b402bb"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:c1246d07a570d11ca8a76c3b7141fce085dfe1f760af41b671bbdf419cd3ef08"
+      },
+      "to_id": "art:scope-corpus-ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea"
+      },
+      "to_id": "art:scope-read-while-held"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:45aaec579dc701380a04d4f12b59a6b14ba5aeb619e823c021b0b21ed08e5caa"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d"
+      },
+      "to_id": "art:seam-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:c421c3496192d22d"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:e5434a1817ae559f0fcb14ca39ac37931d1c25a5b9394495624736de15ff92ae"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:f6e66fec577e59d755de63c38fc02c7227eb28a64a7e33dc6cd4ab60a2c6b293"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:1aaccabea7180ed00913dbdadd3c92dcdf6f2e0e18f5fd8fea4294e1ac07e052"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda"
+      },
+      "to_id": "art:skill-lint-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:d437174ef98701bd2fcfdd2f4fa97daafeac687c899df764f036536ccf3a29a4"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797"
+      },
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:c09cc6f310635d1b2fb9a888f38c323fbd2ae2fb9e816586a32f2c00c87a46fb"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783"
+      },
+      "to_id": "art:stateless-seat-probe"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83"
+      },
+      "to_id": "art:storyflow-resolution-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:76f2dec276b09685"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:b3b2bac1387c9c53"
+      },
+      "to_id": "art:surface-usage-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:e792e6bab2ad48527428df1c015f6ebe20fec9d79da22657f7ed088f8d605c56"
+      },
+      "to_id": "art:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:9fca335f5153966545aba1a64382f2a90c6388e6634ea023dd9441f9d320abbd"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:8f406602ed3bdb046af77130ca482951818dd4ccfeada8afd4cfc0a9c0ea5e10"
+      },
+      "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:5d3f5c3b7ee5b14757e11779e086d82853401f3e8ceac245cd1dabc86f25a31a"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:27f84b4a505d648f2b2b86033ed818a01f6adf50e59ab8a25e76d293daa57162"
+      },
+      "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f"
+      },
+      "to_id": "art:test-shared-sessions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d"
+      },
+      "to_id": "art:test-stale-seat"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f"
+      },
+      "to_id": "art:unreachable-decision-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:ef7dbb708e027df2"
+      },
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34"
+      },
+      "to_id": "art:upgrading-v0120"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995"
+      },
+      "to_id": "art:upgrading-v0130"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28"
+      },
+      "to_id": "art:upgrading-v0150"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24"
+      },
+      "to_id": "art:upgrading-v0160"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda"
+      },
+      "to_id": "art:upgrading-v0180"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:3a36b9b6b248af09"
+      },
+      "to_id": "art:upgrading-v0190"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:d16abc28ea59e3f9"
+      },
+      "to_id": "art:upgrading-v0210"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:669e73b33ff4cbd1"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {
+        "as_checksum": "sha256:0d250aa84d8ebe16"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "sys:agent-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "sys:documentation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "sys:human-channel"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "sys:intake"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "sys:store"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "sys:time-history"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0220",
+      "properties": {},
+      "to_id": "sys:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
       "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:1c729eee5b67e7dc"
@@ -28225,6 +29590,12 @@
       "from_id": "epoch:v0200-scoped",
       "properties": {},
       "to_id": "epoch:reading-carries-options"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0210",
+      "properties": {},
+      "to_id": "epoch:v0220"
     },
     {
       "edge_type": "PRECEDES",
@@ -32711,6 +34082,7 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b964690c35967c76a12a9da11c404699c9026d433721813a71882f425f044123",
+        "last_confirmed_at": "2026-08-02",
         "location": "crates/reflow2-core/src/readiness.rs",
         "name": "readiness.rs",
         "status": "realized"
@@ -32777,6 +34149,7 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a",
+        "last_confirmed_at": "2026-08-02",
         "location": "schema/readiness.yaml",
         "name": "readiness.yaml",
         "status": "realized"
@@ -39837,6 +41210,16 @@
       }
     },
     {
+      "node_id": "epoch:v0220",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.22.0 cut — the delivery epoch becomes computed rather than declared, and the bulk import door finally describes itself",
+        "sequence": 256,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:v040",
       "node_type": "DesignEpoch",
       "properties": {
@@ -42098,9 +43481,19 @@
       "node_type": "Release",
       "properties": {
         "name": "v0.21.0 — the quality of evidence becomes a fact the graph holds: a check's TIME, INPUT and INDEPENDENCE (BL-106/126/136), plus a cycle finding that says which edge kinds it walked (BL-141a). Re-scoped from the four agent-facing capabilities it was planned for; those remain scheduled here and report as outstanding.",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.21.0"
+      }
+    },
+    {
+      "node_id": "rel:v0220",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.22.0 — the delivery epoch becomes COMPUTED rather than declared (BL-68, the board's most ambitious item: TRL/MRL readiness as an observation, the gating threshold as the user's judgement, a forecast that marks itself a projection), the impact-check trigger stops measuring bookkeeping where it means precedence (BL-163), and the bulk import door finally describes itself (BL-117/118/138). SCHEMA CHANGE: both halves of the stamp move, 28->29 node types and 58->60 edge types, the first since v0.4.0 — an upgrade doc is owed and written.",
+        "status": "deployed",
+        "unit_type": "binary",
+        "version": "0.22.0"
       }
     },
     {
@@ -45559,7 +46952,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:3dc44ba27ad662e149b8e8beed33bade6ae7fe0dd8ecb950cb775fcb4bce50cd",
+  "prev_content_hash": "sha256:fe31bc0cbcc0dbccc08ae78fcd2db8b0d1dffdaed99adc1fc12a55a55514b808",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

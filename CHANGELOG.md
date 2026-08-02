@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.22.0] — 2026-08-02
+
 ### Fixed
 
 - **`import_graph` now describes itself, reports every fault at once, and stops asking you for its
