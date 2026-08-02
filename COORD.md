@@ -66,6 +66,8 @@ Add yourself if you're new here.
 
 
 - BL-160 — @ajs — since 2026-08-01 — crates/reflow2-core/src/{artifact,drift}.rs, tests/checksum_dialect.rs, tools/reflow2_check.py
+- BL-161 — @ajs — since 2026-08-01 — tools/loop_nudge.py, tools/test_loop_nudge.py, docs/backlog.md
+- BL-159 — @ajs — since 2026-08-01 — tools/skill_lint.py, tools/test_skill_lint.py, AGENTS.md, .github/workflows/ci.yml
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
