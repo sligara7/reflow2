@@ -65,6 +65,7 @@ Add yourself if you're new here.
 
 
 
+- BL-172 — @ajs — since 2026-08-02 — dec:coverage-scope-is-declared ACCEPTED on Anthony's word (option 3, derive from VCS); getting-started/skills/adopt + mirrors, docs/design/reflow2.json
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
