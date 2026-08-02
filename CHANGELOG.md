@@ -31,6 +31,36 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`certify_preservation` — a restructuring is now certified, not asserted** (BL-180,
+  `dec:maturity-restructuring-delta`, `req:restructuring-is-certified`). A *maturity
+  restructuring* holds the function set invariant and moves everything else: allocation,
+  packaging, which functions live in which component, which seams are declared. It is safe
+  exactly when function is provably preserved — and that is computable, so this returns a
+  **verdict** (`preserved` / `not_preserved` / `indeterminate`) where `compare_designs`
+  returns a listing. It is the move `dec:passing-is-verified` makes for tests, applied to
+  structure: the difference between a refactor someone hopes is safe and one the graph
+  checked.
+
+  **Edges are classified from their endpoints, not their type.** `DEPENDS_ON` is the
+  functional DAG between two Capabilities *and* ordinary coupling between two Components —
+  one edge type, two meanings. Reading the type alone would file all 51 of this design's own
+  cross-system dependencies as function changes and make the check worthless on the first
+  design anyone pointed it at.
+
+  **Nothing is waved through.** A node type, an edge endpoint or a property edit the rules
+  cannot place lands in `unclassified` and forces `indeterminate` — never a silent pass,
+  because a classifier that has not been taught part of the vocabulary must not certify a
+  design it never examined (BL-170's fourth quadrant). A reworded capability is undecidable
+  by construction — a rename and a scope change are the same bytes — so it comes back with
+  both values for a human, per `dec:three-party-checks`. A *known* function change outranks
+  an unknown: more information cannot un-move a capability.
+
+  Every certificate, including a clean one, carries `not_certified_about`: this reads two
+  design records and no code, says nothing about whether the new structure is *better*, and
+  is explicit that a changed Interface can break a consumer without touching a Capability.
+
 ## [0.22.1] — 2026-08-02
 
 ### Fixed

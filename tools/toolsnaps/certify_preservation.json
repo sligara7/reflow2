@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Decide whether a restructuring PRESERVED FUNCTION — compare_designs' verdict-bearing sibling. A maturity restructuring holds the function set invariant and moves everything else (allocation, packaging, which functions live in which component, which seams are declared), and it is safe exactly when function is provably unchanged. That is computable, so this CERTIFIES rather than asserts: every divergence is classified function / structure / supporting and the verdict is `preserved`, `not_preserved` or `indeterminate`. NOTHING IS WAVED THROUGH — a node type, an edge endpoint or a property edit the rules cannot place lands in `unclassified` and forces `indeterminate`, because a classifier that has not been taught part of the vocabulary must not certify a design it never examined. A reworded capability is undecidable by construction (a rename and a scope change are the same bytes) and comes back with both values for a human. `not_certified_about` is on every certificate INCLUDING a clean one: this reads two design records and has read no code, so it never claims the implementation preserved behaviour.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "base_path": {
+        "description": "Path to the base export document — the design BEFORE the\nrestructuring. Typically the committed export, or the export at the\ncommit the restructuring started from.",
+        "type": "string"
+      },
+      "other_path": {
+        "default": null,
+        "description": "Path to the restructured document. Omit to certify the live graph —\n\"did the work in this session move structure without moving function?\".",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "base_path"
+    ],
+    "type": "object"
+  },
+  "name": "certify_preservation"
+}

@@ -55,6 +55,7 @@ pub mod llm;
 pub mod merge;
 pub mod nodes;
 pub mod operate;
+pub mod preserve;
 pub mod propagate;
 pub mod provenance;
 pub mod readiness;
@@ -119,6 +120,10 @@ pub use llm::{
 pub use merge::{
     AutoResolution, ConflictKind, MergeAction, MergeApplyReport, MergeConflict, MergeError,
     MergeProposal, MergeSummary, MergeUnit, Resolution, Source, merge_designs, resolve_merge,
+};
+pub use preserve::{
+    ClassifiedFinding, DivergenceClass, FUNCTION_PRESERVATION_INVARIANT, PreservationCertificate,
+    PreservationCounts, PreservationVerdict, certify_preservation, classify_node_type,
 };
 pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOptions};
 pub use provenance::{GraphStamp, Provenance};

@@ -2118,6 +2118,19 @@ pub struct CompareDesignsReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct CertifyPreservationReq {
+    /// Path to the base export document — the design BEFORE the
+    /// restructuring. Typically the committed export, or the export at the
+    /// commit the restructuring started from.
+    pub base_path: String,
+    /// Path to the restructured document. Omit to certify the live graph —
+    /// "did the work in this session move structure without moving function?".
+    #[serde(default)]
+    pub other_path: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ChangelogViewReq {
     /// The base moment — a Release id or a DesignEpoch id. Omit for the
     /// `[Unreleased]` case, which starts from the last DEPLOYED release.
@@ -4912,6 +4925,46 @@ impl ReflowService {
                 let g = self.graph.read().await;
                 ok_json(
                     g.compare_with_base(&base, &req.base_path)
+                        .map_err(dyno_err)?,
+                )
+            }
+        }
+    }
+
+    #[tool(
+        description = "Decide whether a restructuring PRESERVED FUNCTION — compare_designs' \
+                       verdict-bearing sibling. A maturity restructuring holds the function set \
+                       invariant and moves everything else (allocation, packaging, which \
+                       functions live in which component, which seams are declared), and it is \
+                       safe exactly when function is provably unchanged. That is computable, so \
+                       this CERTIFIES rather than asserts: every divergence is classified \
+                       function / structure / supporting and the verdict is `preserved`, \
+                       `not_preserved` or `indeterminate`. NOTHING IS WAVED THROUGH — a node \
+                       type, an edge endpoint or a property edit the rules cannot place lands in \
+                       `unclassified` and forces `indeterminate`, because a classifier that has \
+                       not been taught part of the vocabulary must not certify a design it never \
+                       examined. A reworded capability is undecidable by construction (a rename \
+                       and a scope change are the same bytes) and comes back with both values \
+                       for a human. `not_certified_about` is on every certificate INCLUDING a \
+                       clean one: this reads two design records and has read no code, so it \
+                       never claims the implementation preserved behaviour.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn certify_preservation(
+        &self,
+        Parameters(req): Parameters<CertifyPreservationReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let base = read_export_document(&req.base_path)?;
+        match &req.other_path {
+            Some(other_path) => {
+                let other = read_export_document(other_path)?;
+                let diff = reflow2_core::compare_designs(&base, &other, &req.base_path, other_path);
+                ok_json(reflow2_core::certify_preservation(&diff, &base, &other))
+            }
+            None => {
+                let g = self.graph.read().await;
+                ok_json(
+                    g.certify_preservation_against(&base, &req.base_path)
                         .map_err(dyno_err)?,
                 )
             }
