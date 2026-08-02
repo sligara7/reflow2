@@ -65,6 +65,7 @@ Add yourself if you're new here.
 
 
 
+- BL-170 — @ajs — since 2026-08-02 — tools/build_design_graph.py (derive the sweep scope instead of hardcoding it) + a proposed Decision on declared coverage scope for Anthony to rule on
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
