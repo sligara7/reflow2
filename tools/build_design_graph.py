@@ -23,6 +23,7 @@ Run:  python3 tools/build_design_graph.py [--analyse-only]
 from __future__ import annotations
 
 import argparse
+import datetime
 import hashlib
 import json
 import pathlib
@@ -548,6 +549,13 @@ def sha(p: pathlib.Path) -> str:
     return "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest()[:16] if p.exists() else "sha256:absent"
 
 
+def today() -> str:
+    """The sweep's date. reflow2 holds no clock — the caller dates its own
+    observations, which is why `coverage_report` reports an undated sweep as
+    undated rather than assuming it is current."""
+    return datetime.date.today().isoformat()
+
+
 def sha_full(p: pathlib.Path) -> str:
     return "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else "sha256:absent"
 
@@ -975,6 +983,15 @@ def analyse(s: Server) -> None:
     # catch unregistered files. A schema edit is the highest-consequence edit in
     # this repo (it moves the stamp and locks out older binaries), so it is the
     # last thing the sweep should have been blind to.
+    #
+    # This list stays an INCLUSION list on purpose, and it is only half the
+    # answer. It is the artifact-level sweep: every path here is expected to
+    # carry an Artifact, so `reconcile_artifacts` can compare checksums and
+    # report the ones that moved. The other half — everything git tracks,
+    # excluded by NAMED rule — runs below through `coverage_report`, and that
+    # is the half that would have caught BL-165 without anyone editing this
+    # tuple, because a region nobody thought of is in scope by default there.
+    # See `dec:coverage-scope-is-declared` (proposed) for the general form.
     swept = sorted(
         p for pat in ("crates/reflow2-core/src/*.rs", "crates/reflow2-mcp/src/*.rs",
                       "schema/*.yaml")
@@ -1016,6 +1033,97 @@ def analyse(s: Server) -> None:
               f"cannot see these --")
         for loc in unregistered:
             print(f"  {loc}")
+
+    coverage_sweep(s)
+
+
+# ---- The derived sweep: what has the design never been told about? --------
+#
+# BL-165's real defect was not ten missing calls — it was that the scope above
+# is a HIDDEN INCLUSION LIST. Anything nobody thought to name was silently out
+# of scope, and `schema/` sat in that silence for eleven releases. The fix is to
+# invert the default: sweep everything version control tracks, and state what is
+# left out. A region nobody has thought about is then in scope automatically,
+# which is the only way the quadrant that hid BL-165 — neither claimed by the
+# design nor covered by the sweep — can ever be named.
+#
+# `coverage_report` is the right instrument and has been built since v0.11.0;
+# it simply had no caller here. It rolls unclaimed paths up to the shallowest
+# wholly-unclaimed directory and ranks by mass, which is what keeps a derived
+# scope from arriving as 300 findings nobody reads.
+#
+# EXCLUSIONS ARE NAMED, NEVER SILENT (rule 6, and coverage_report echoes each
+# one back with the rule that excluded it). These are the four classes that are
+# genuinely not design subjects — not "things we would rather not see":
+EXCLUDED_FROM_COVERAGE = {
+    ".claude": "agent harness config — not a design subject",
+    ".grok": "agent harness config — not a design subject",
+    ".github": "CI wiring — modelled as gates, not as artifacts",
+    "docs/design": "the design export itself; a design cannot be its own subject",
+}
+
+
+def coverage_sweep(s: Server) -> None:
+    """Sweep what git tracks and report the regions no node claims."""
+    try:
+        tracked = subprocess.run(
+            ["git", "ls-files", "-z"], cwd=REPO,
+            capture_output=True, text=True, check=True,
+        ).stdout.split("\0")
+    except (OSError, subprocess.CalledProcessError) as e:
+        # Loud, never a silent skip: a coverage pass that quietly did not run
+        # reads exactly like one that found nothing, which is the failure this
+        # whole probe exists to prevent.
+        print(f"\n-- coverage sweep SKIPPED: could not list tracked files ({e}) --")
+        return
+
+    observed, excluded = [], []
+    for rel in tracked:
+        if not rel:
+            continue
+        p = REPO / rel
+        if not p.is_file():  # submodule entries, or a file deleted but staged
+            continue
+        rule = next((r for prefix, r in EXCLUDED_FROM_COVERAGE.items()
+                     if rel == prefix or rel.startswith(prefix + "/")), None)
+        if rule:
+            excluded.append(rel)
+            continue
+        observed.append({"path": rel, "mass": p.stat().st_size})
+
+    report = s.call("coverage_report", {
+        "observed": observed,
+        "exclusions": sorted(EXCLUDED_FROM_COVERAGE),
+        "swept_at": today(),
+    })
+    regions = report.get("unclaimed_regions", [])
+    print(f"\n-- coverage: {report.get('claimed', 0)} of {len(observed)} tracked file(s) "
+          f"claimed, {len(regions)} unclaimed region(s), {len(excluded)} excluded --")
+    for name, rule in sorted(EXCLUDED_FROM_COVERAGE.items()):
+        print(f"  excluded  {name:24} {rule}")
+    # Ranked by mass, so the biggest silence sorts first. The cap is stated
+    # rather than applied quietly (rule 6) — a truncated list that looks
+    # complete is how "we covered everything" gets believed.
+    shown = regions[:15]
+    for r in shown:
+        print(f"  unclaimed {r['path']:40} {r.get('mass', 0):>9,} bytes "
+              f"({r.get('paths', 1)} path(s))")
+    if len(regions) > len(shown):
+        print(f"  ...and {len(regions) - len(shown)} more unclaimed region(s), "
+              f"ranked below these by mass")
+    if unseen := report.get("unobserved_locations", []):
+        print(f"  NOTE: {len(unseen)} registered location(s) the sweep never saw — "
+              f"either the sweep was narrower than the design, or the file is gone")
+    # Say what a reader would otherwise misread. Test files dominate the
+    # unclaimed list and the design DOES model them — one Verification per test
+    # file, per the BL-23 granularity doctrine. They read as unclaimed because
+    # `coverage_report` counts nodes carrying a `location`, and not one of the
+    # 101 Verifications carries one: the path is written into the node's `name`
+    # as prose. So this is not a false alarm, it is an accurate report of an
+    # unqueryable claim — and it is BL-165's own shape a third time, the fact
+    # existing somewhere the machinery does not look. Filed as BL-171.
+    print("  NOTE: test files read as unclaimed because Verification.location is "
+          "never set (the path lives in the node's name as prose) — see BL-171")
 
 
 def main() -> int:
