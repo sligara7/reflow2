@@ -655,6 +655,73 @@ impl DesignGraph {
             }
         }
 
+        // A Decision reachable from NOTHING — no edges at all, in either
+        // direction.
+        //
+        // Found 2026-08-01 by running check-health and detect-and-ask on
+        // reflow2's own design, getting a clean bill from every detector, and
+        // then counting zero-degree nodes by hand: `dec:sanitize-spof-accepted`
+        // was an ACCEPTED single-point-of-failure disposition with no edges,
+        // the only one of five such dispositions not linked to what it
+        // disposes. `disconnected_community` cannot see it — that reports
+        // clusters of >=2, and a node joined to nothing is never a cluster.
+        //
+        // It is worse than untidy. A Decision with no edges cannot be reached
+        // by propagation, so it never enters an impact analysis; and for a
+        // disposition specifically it can never EXPIRE, because expiry is
+        // computed from the affected set (`ver:reviewed-defects`). A
+        // conditional judgement silently becomes permanent.
+        //
+        // THE RULE IS DEGREE-ZERO, AND THAT WAS SETTLED BY MEASUREMENT, not by
+        // taste. The tempting "narrow" form — an accepted Decision with no
+        // incoming GOVERNED_BY — fires on SIX of reflow2's own, five of which
+        // have degree 1-3: connected, merely not through that one edge type.
+        // That is BL-42's shape exactly, where this same detector reported a
+        // well-connected Capability missing one named link, became 20 of 31
+        // defects, and had to be cut back to a single rule. Degree-zero fires
+        // on ONE, and is self-limiting in a way an edge-named rule is not:
+        // any edge at all silences it, so it cannot grow into a per-convention
+        // nag.
+        //
+        // Review records are excluded deliberately, not for convenience:
+        // `structure.rs` already keeps `decision:ack:` ids out of the design
+        // network because they describe a judgement ABOUT the design rather
+        // than how it is structured (`ver:acknowledgement-not-structure`).
+        // Every one of them is `accepted` by construction, so including them
+        // would fire on all twelve of reflow2's own and be pure noise.
+        for dec in self.scan_nodes(node::DECISION)? {
+            if dec.node_id.starts_with("decision:ack:") {
+                continue;
+            }
+            if !self.outgoing(&dec.node_id, None)?.is_empty()
+                || !self.incoming(&dec.node_id, None)?.is_empty()
+            {
+                continue;
+            }
+            let accepted = dec
+                .properties
+                .get("status")
+                .and_then(|v| v.as_str())
+                .is_some_and(|s| s == "accepted");
+            issues.push(orphan_at(
+                &dec.node_id,
+                "Decision",
+                if accepted {
+                    "is accepted but governs nothing — nothing links to it, so it shapes no part \
+                     of the design, cannot appear in any impact analysis, and if it is a \
+                     disposition it can never expire"
+                } else {
+                    "has no links yet — a parked decision point, recorded but governing nothing"
+                },
+                "generate_owner",
+                if accepted {
+                    HealSeverity::Warning
+                } else {
+                    HealSeverity::Info
+                },
+            ));
+        }
+
         // contradiction — a CONTRADICTS edge (unresolved in this increment).
         //
         // `alignment: supporting` is NOT a contradiction and must not be
@@ -1639,11 +1706,27 @@ impl DesignGraph {
 
 /// Build an `orphan_node` issue.
 fn orphan(id: &str, type_label: &str, what: &str, fix: &'static str) -> HealIssue {
+    orphan_at(id, type_label, what, fix, HealSeverity::Warning)
+}
+
+/// Build an `orphan_node` issue at a stated severity.
+///
+/// Severity is a parameter because the Decision rule grades by status: an
+/// `accepted` Decision reachable from nothing claims to shape the design and
+/// shapes nothing, while a `proposed` one is a parked decision point and is
+/// merely worth noting.
+fn orphan_at(
+    id: &str,
+    type_label: &str,
+    what: &str,
+    fix: &'static str,
+    severity: HealSeverity,
+) -> HealIssue {
     let affected = vec![id.to_string()];
     HealIssue {
         id: issue_id(HealCategory::OrphanNode, &affected),
         category: HealCategory::OrphanNode,
-        severity: HealSeverity::Warning,
+        severity,
         message: format!("{type_label} '{id}' {what}"),
         suggested_fix_type: fix,
         affected_ids: affected,

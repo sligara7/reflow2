@@ -33,6 +33,23 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **`orphan_node` now reports a Decision that nothing links to** (BL-162). Found by running the
+  `check-health` and `detect-and-ask` skills on reflow2's own design, getting a clean bill from
+  every detector, and then counting zero-degree nodes by hand: `dec:sanitize-spof-accepted`, an
+  **accepted** single-point-of-failure disposition, had no edges at all —
+  `disconnected_community` cannot see it, because it only fires on clusters of ≥2 and a node
+  joined to nothing is never a cluster. It matters beyond tidiness: such a Decision is unreachable
+  by propagation so it never enters an impact analysis, and a disposition specifically **can never
+  expire**, because expiry is computed from the affected set — a conditional judgement quietly
+  becomes permanent. Graded by status: **Warning** when `accepted`, **Info** otherwise, since a
+  parked decision point is a legitimate state. `decision:ack:` review records are excluded, matching
+  the design network's existing rule that they describe a judgement *about* the design rather than
+  its structure. **The rule keys on degree zero rather than on a missing `GOVERNED_BY`, and that was
+  settled by measurement**: the edge-named form fires on six of reflow2's own decisions, five of
+  them already connected — BL-42's shape, where this detector once became 20 of 31 defects and had
+  to be cut back. Degree-zero fires on one, and any edge at all silences it. 6 cases,
+  mutation-checked three ways.
+
 - **The build now refuses to let its own gate list drift** (BL-159). AGENTS.md's *"A change is
   done when all of these are clean"* block and `.github/workflows/ci.yml` were two hand-kept
   records of one contract, and following the documented one exactly still produced a red build.
