@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:15be74edd5d8ac28bbc155c5aaa9ce5e299d2ff324ac0a9564ca5be582214073",
+  "content_hash": "sha256:85a2fdaa6baf3bcff1a9497f4da5788c3cbcf638f5fcfacc7e4bc81a83cbbfe3",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5215,6 +5215,24 @@
         "action": "modified"
       },
       "to_id": "ver:gate-suite"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl163-propagate-discriminator",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl163-propagate-discriminator",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:skill-triggers"
     },
     {
       "edge_type": "CHANGED",
@@ -32353,7 +32371,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:26ce96adeee1d5da4a33e7a849549f94125e1c2fe1b534cbbcd0f7cd7cb5c8d3",
+        "checksum": "sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
         "status": "realized"
@@ -34190,7 +34208,7 @@
       "node_id": "cap:skill-triggers",
       "node_type": "Capability",
       "properties": {
-        "description": "The loop hook stops merely COUNTING writes and starts recognising SHAPES, so a skill is named when the situation calling for it arrives rather than when the agent happens to remember: a file edit with no ChangeEvent in the window means impact-check; an artifact checksum drift means link-artifacts; a capture batch with no gap pass means detect-and-ask. Extends `req:nudge-covers-bypass`, which already arms on file-edit events and already names those skills and is `verified` — what is missing is the pattern, not the trigger. This is the half of BL-74 the existing rungs structurally cannot reach: they compute loop debt from graph state, and these situations are invisible to the graph. PLANNED.",
+        "description": "The loop hook stops merely COUNTING writes and starts recognising SHAPES, so a skill is named when the situation calling for it arrives rather than when the agent happens to remember: a file edit with no ChangeEvent means impact-check; a change recorded but never PROPAGATED also means impact-check (BL-163); a recorded change with no artifact link means link-artifacts; a capture batch with no gap pass means detect-and-ask; a rendering written and nothing stored means session-artifacts. Extends `req:nudge-covers-bypass`, which already arms on file-edit events and already names those skills — what was missing was the pattern, not the trigger. This is the half of BL-74 the existing rungs structurally cannot reach: they compute loop debt from graph state, and these situations are invisible to the graph. BL-163 CORRECTED THE FIRST SHAPE AND ADDED THE ONE ARMING BRANCH THIS CAPABILITY HAS. As shipped, impact-check keyed on `changes == 0` — it fired only when a session recorded NOTHING — so a session that edited code and wrote its ChangeEvents up AFTERWARDS had `changes > 0` and was met with silence, while every one of those events was the bookkeeping-after the hook's own message says is not the loop. It measured a ChangeEvent's PRESENCE where it meant its PRECEDENCE, and the root cause was that `CHANGE_OPS` held only RECORDING ops while no set counted `propagate_change` or `propagate_from` at all: the hook could not separate recording from looking because it never counted looking. Every other shape refines a nudge already firing and adds no interruption; this one had to ARM, because the session it catches has no unchecked writes and has touched reflow2, so there was no nudge for a shape to refine.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "The moment tells the agent which skill it needs",
@@ -35079,6 +35097,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "BL-160: a registered checksum's LENGTH is a dialect too, and the compensation lived in the wrong layer. reflow2's own designs register `hexdigest()[:16]` (build_design_graph.py) while an honest caller running `sha256sum` supplies all 64, and `reconcile_artifacts` compared STRINGS — so a full sweep of a provably clean tree reported 51 phantom drifts in the same minute `reflow2_check.py` said \"OK — design and build agree\". The gate was right for the wrong reason: it carried a Python workaround truncating the observation to the registered length, which no other consumer had. This is BL-125 in a second form and takes the same verdict — a false red on a gate whose whole job is to be believed is worse than no gate. `artifact::checksums_agree` now answers it in the core for every consumer, on BOTH the drift comparison and `set_artifact_checksum`'s would-move-the-baseline guard (the half that would have failed a BL-157 bulk sweep on every short-registered artifact), and the Python workaround is DELETED rather than duplicated by the next consumer. Required is a real PREFIX relationship, never truncate-both-to-N, and it applies to the `sha256:` dialect only. MEASURED ON THE REAL DESIGN: 109 artifacts, 51 truncated baselines, all 51 now unchanged, and the only 4 drifts are the files this change edited. Corrects a belief the design itself had recorded — chg:accept-e52b527aba651ac4 says a full-length registration is \"harmless, since reconcile truncates the observation to the registered dialect\"; reconcile never did, the gate did."
+      }
+    },
+    {
+      "node_id": "chg:bl163-propagate-discriminator",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "BL-163: the impact-check trigger keys on a ChangeEvent's PRESENCE where it means its PRECEDENCE — no op set counts propagate_change at all, so recording the change AFTER the edit satisfies the trigger that exists to catch recording the change after the edit"
       }
     },
     {
@@ -44640,7 +44666,7 @@
         "last_run_at": "2026-08-01",
         "level": "integration",
         "method": "test",
-        "name": "The nudge's counting AND its own promise are both trustworthy (tools/test_loop_nudge.py) — 36 cases, 8 new across BL-161 and BL-111. BL-161 · STATE INTEGRITY: a 60-hook CONCURRENT burst against a seeded tally lands every increment and wipes no sticky field; against the pre-fix script the same burst returned touched=false, artifacts=0 and 6 of 60 edits, because a non-atomic write plus an error-swallowing read let one hook store zeros over the session's record. COUNTERWEIGHT: a tally rebuilt after an unreadable one keeps counting — an existing case required that and was right — but can no longer support the hook's ONE negative claim, \"the graph was never consulted\", because the calls that would refute it are exactly what was lost; and the POSITIVE claim, \"N writes went unchecked\", still fires after a restart, so the flag is not an off switch. BULK FORMS: set_artifact_checksums, create_nodes and gaps_to_prompts tally as the singular forms they replace. BL-111 · FIRES ONCE: a second stop CYCLE does not nudge again (the promise is per SESSION, and it rested on the harness's stop_hook_active, which is per cycle and never persisted), both blocking branches keep it, and TWO CONCURRENT HOOK PROCESSES on the same Stop produce exactly ONE message — which is the case it was filed from and is not exotic, since reflow2 installs machine-wide AND a project may carry its own registration and the two command spellings do not dedupe. COUNTERWEIGHT: the claim is spent by NUDGING, not by STOPPING, so a session with nothing owed stops silently and keeps its one nudge. MUTATION-CHECKED SEVEN WAYS, each failing exactly the tests that name it: drop the lock; swallow an unreadable tally into zeros; let a rebuilt tally make the negative claim; drop the bulk names; remove BOTH the lock and the atomic replace (the script as it shipped); make the nudge claim never persist (the exact BL-111 defect, failing precisely the three once-only cases); and claim on every stop earned or not, which fails the counterweight and ten more. Removing the atomic write ALONE passes, and that is reported rather than hidden: the lock subsumes it under these conditions, and os.replace stays for the unlocked Stop-path reader and the fcntl-less fallback. THE MUTATION CHECK CAUGHT MY OWN TEST PASSING FOR FREE: the first concurrency helper looped communicate(), which blocks until each child exits, so the children ran serially and the test stayed green against the UNFIXED script.",
+        "name": "The nudge's counting AND its own promise are both trustworthy (tools/test_loop_nudge.py) — 47 cases, 11 new in BL-163 on top of the 8 across BL-161 and BL-111. BL-163 · PRECEDENCE, NOT PRESENCE: a session that edits code, records a ChangeEvent and never calls propagate_change is nudged — the defect was that the impact-check shape keyed on `changes == 0`, firing only when a session recorded NOTHING, so writing the ChangeEvents up AFTER the edits satisfied the very trigger meant to catch writing them up after the edits. ROOT CAUSE IN ONE LINE: `CHANGE_OPS` held `record_change` and `add_change_event`, both RECORDING ops, and no set counted `propagate_change` or `propagate_from` at all — the hook could not separate recording from looking because it never counted looking. THE COUNTERWEIGHT THE ROW DEMANDED AND THE CASE PINNED FIRST: a session that propagated gets NOTHING, and `propagate_from` counts as looking too, because the impact-check skill sends a speculative \"what would this touch?\" straight to it. THE CONJUNCTION IS THE GUARD, all three clauses load-bearing and each with its own test: `edits > 0` (a pure design session has no blast radius to compute), `changes > 0` (what keeps this from becoming a second, thresholdless bypass nudge), `propagates == 0`. BL-161'S PRECEDENT HELD: \"you never propagated\" is a NEGATIVE claim, so a tally rebuilt after an unreadable one drops it, exactly as \"the graph was never consulted\" does. THE WRITE NUDGE STILL TAKES PRECEDENCE and that test is not vacuous — disabling the write branch fails it. MUTATION-CHECKED SEVEN WAYS, each failing exactly the tests that name it: never count propagation (6 failures, both counterweights); drop `changes > 0` (7 failures, including BL-90's ENTIRE bypass family — the measurement that proves that clause is what stops this swallowing the older branch); drop `edits > 0` (1); drop `propagate_from` (1); drop the once-only claim (1); remove the branch entirely, i.e. ship the defect (5); and disable the write branch (14, including the precedence case). A FOURTH DEFECT WAS FOUND BY THE TESTS FAILING, not by reading: `update_state` re-serialises from an explicit key whitelist — a THIRD hand-kept copy of the state's key set beside `blank_state` and `parse_state` — so the new counter incremented in memory and was silently dropped on every write. That is BL-159's shape a third time, inside one file. BL-161 · STATE INTEGRITY: a 60-hook CONCURRENT burst against a seeded tally lands every increment and wipes no sticky field; against the pre-fix script the same burst returned touched=false, artifacts=0 and 6 of 60 edits, because a non-atomic write plus an error-swallowing read let one hook store zeros over the session's record. COUNTERWEIGHT: a tally rebuilt after an unreadable one keeps counting — an existing case required that and was right — but can no longer support the hook's negative claims, because the calls that would refute them are exactly what was lost; and the POSITIVE claim, \"N writes went unchecked\", still fires after a restart, so the flag is not an off switch. BULK FORMS: set_artifact_checksums, create_nodes and gaps_to_prompts tally as the singular forms they replace. BL-111 · FIRES ONCE: a second stop CYCLE does not nudge again (the promise is per SESSION, and it rested on the harness's stop_hook_active, which is per cycle and never persisted), all THREE blocking branches keep it, and TWO CONCURRENT HOOK PROCESSES on the same Stop produce exactly ONE message — which is the case it was filed from and is not exotic, since reflow2 installs machine-wide AND a project may carry its own registration and the two command spellings do not dedupe. COUNTERWEIGHT: the claim is spent by NUDGING, not by STOPPING, so a session with nothing owed stops silently and keeps its one nudge. THE MUTATION CHECK ONCE CAUGHT MY OWN TEST PASSING FOR FREE: the first concurrency helper looped communicate(), which blocks until each child exits, so the children ran serially and the test stayed green against the UNFIXED script.",
         "status": "passing"
       }
     },
@@ -45033,7 +45059,7 @@
         "last_run_at": "2026-08-01",
         "level": "integration",
         "method": "test",
-        "name": "Shape-matching fires on the situation and stays silent otherwise: a file edit with no ChangeEvent in the window names impact-check; an artifact checksum drift names link-artifacts; a capture batch with no gap pass names detect-and-ask. AND THE COUNTERWEIGHT, which is the case that matters most: a session that did the right thing gets NOTHING — a trigger that fires on correct work is the failure BL-23 and BL-42 both name, and this capability exists to reduce nagging rather than add it. PLANNED.",
+        "name": "Shape-matching fires on the situation and stays silent otherwise: a file edit with no ChangeEvent names impact-check; a change recorded but never propagated ALSO names impact-check (BL-163); a recorded change with no artifact link names link-artifacts; a capture batch with no gap pass names detect-and-ask; a rendering with nothing stored names session-artifacts. AND THE COUNTERWEIGHT, which is the case that matters most: a session that did the right thing gets NOTHING — a trigger that fires on correct work is the failure BL-23 and BL-42 both name, and this capability exists to reduce nagging rather than add it. BL-163 CHANGED WHAT \"THE RIGHT THING\" MEANS, and the counterweight fixture with it: the sequence edit → record_change → link_artifact → add_requirement → detect_gaps used to pass this test, and now correctly fires, because it never once asked what the change reached. The assertion is untouched — correct work is still met with silence — and the old fixture is pinned by its own test as the defect. THE SHAPES STILL CANNOT ARM THE HOOK (`test_shapes_never_arm_the_hook_by_themselves` passes unchanged); the one branch that arms is BL-163's and lives outside the matcher, because the session it catches has no unchecked writes and has touched reflow2, so no nudge existed for a shape to refine.",
         "status": "passing"
       }
     },
@@ -45176,7 +45202,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ec0c68b305e229edfacb1cc4db556ef1625df51d3fdce064024f5ae1364f5ddd",
+  "prev_content_hash": "sha256:15be74edd5d8ac28bbc155c5aaa9ce5e299d2ff324ac0a9564ca5be582214073",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

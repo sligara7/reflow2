@@ -31,6 +31,35 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **The loop nudge's impact-check trigger measured bookkeeping where it meant order** (BL-163).
+  It fired on `edits > 0 and changes == 0` — **only when a session recorded zero ChangeEvents** —
+  so a session that edited code and then wrote its ChangeEvents up *afterwards* had `changes > 0`
+  and was met with silence, while every one of those events was bookkeeping-after. The hook's own
+  message says *"Bookkeeping is not the loop"*; the trigger shipped beside it could not tell the
+  two orders apart. **The root cause is one line:** `CHANGE_OPS` held `record_change` and
+  `add_change_event`, both *recording* ops, and no set counted `propagate_change` or
+  `propagate_from` at all — the hook could not separate recording from looking because it never
+  counted looking. Now `PROPAGATE_OPS` exists and a session that edited code, recorded a change
+  and never propagated is nudged to run impact-check.
+  **This adds the one interruption `cap:skill-triggers` deliberately never added**, and it had to:
+  the session it catches has no unchecked writes and *has* touched reflow2, so both older branches
+  read it as clean and there was no nudge for a shape to refine. The counterweight is the
+  conjunction — `edits > 0` (a pure design session has no blast radius to compute), `changes > 0`
+  (this session engaged the design brain, which is what stops it becoming a second thresholdless
+  bypass nudge), `propagates == 0` — and each clause is pinned by its own test. A session that
+  propagated gets nothing; `propagate_from` counts, since the impact-check skill sends speculative
+  questions straight to it. Tunable with `REFLOW2_LOOP_NUDGE_PROPAGATE_THRESHOLD`.
+  11 new cases (47 total), mutation-checked seven ways.
+  **Two things worth keeping.** Dropping the `changes > 0` clause fails seven tests including
+  BL-90's *entire* bypass family — the measurement that proves that clause is what keeps this
+  branch from swallowing the older one. And a **fourth defect surfaced only because the new tests
+  failed**: `update_state` re-serialises the tally from an explicit key whitelist — a third
+  hand-kept copy of the state's key set, beside `blank_state` and `parse_state` — so the new
+  counter incremented in memory and was silently dropped on every write. That is BL-159's
+  two-records-of-one-contract shape a third time, inside a single file.
+
 ### Added
 
 - **`orphan_node` now reports a Decision that nothing links to** (BL-162). Found by running the

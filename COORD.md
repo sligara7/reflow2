@@ -65,7 +65,6 @@ Add yourself if you're new here.
 
 
 
-- BL-163 — @ajs — since 2026-08-01 — tools/{loop_nudge,test_loop_nudge}.py, docs/backlog.md, docs/design/reflow2.json (the impact-check trigger keys on a ChangeEvent's presence where it means its precedence)
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
@@ -92,6 +91,7 @@ Add yourself if you're new here.
 
 Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `git log`.
 
+- **BL-163** — @ajs — 2026-08-01 — the impact-check trigger stops measuring a ChangeEvent's PRESENCE and starts measuring its PRECEDENCE: `PROPAGATE_OPS` exists, and a session that edited code, recorded a change and never propagated is nudged (#37). **Fixing the SHAPE alone would have caught nobody** — `match_shape` only refines a nudge already firing, and this session has no unchecked writes and has touched reflow2, so a third BLOCKING branch was the actual fix and it is the one interruption `cap:skill-triggers` had deliberately never added. Counterweight is the three-clause conjunction; dropping `changes > 0` fails BL-90's entire bypass family. **A fourth defect fell out: `update_state` keeps a THIRD hand-kept copy of the state key set and silently dropped the new counter** — BL-159's shape inside one file. 11 new cases (47), mutation-checked seven ways. — tools/{loop_nudge,test_loop_nudge}.py, CHANGELOG.md, docs/backlog.md, docs/design/reflow2.json
 - **BL-159** — @ajs — 2026-08-01 — the build refuses to let its own gate list drift: `skill_lint` cross-checks AGENTS.md's gate block against `ci.yml` four ways (coverage, fidelity-with-flags, and both rot directions). Found two real holes on its first run (`50fa157`, #33). — tools/skill_lint.py, tools/test_skill_lint.py, AGENTS.md, .github/workflows/ci.yml
 - **BL-68 re-scope** — @ajs — 2026-08-01 — L drops to M; two of three parts overtaken by the temporal machinery, Q1 dissolved, Q2 restated as *where does the threshold live* (`9a1eed2`, #32). Doc-only. — docs/backlog.md
 - **BL-160** — @ajs — 2026-08-01 — a checksum's LENGTH is a dialect too; `artifact::checksums_agree` answers it in the core for every consumer and `reflow2_check.py`'s Python workaround is deleted (`3ac67f7`, #31). — crates/reflow2-core/src/{artifact,drift}.rs, tests/checksum_dialect.rs, tools/reflow2_check.py

@@ -27,13 +27,20 @@ One script, three events, read from the hook's stdin JSON:
     the one the write count never sees.
 - **Stop** — the backstop, blocking ONCE with the reason the agent needs:
   - graph writes finished with no loop check → "call loop_status", or
+  - code was edited and a change recorded, and `propagate_change` was never
+    called → "the ChangeEvent is bookkeeping; run impact-check" (BL-163), or
   - the session never touched reflow2 at all and edited enough files → "the
     graph was never consulted; start with loop_status, impact-check before
     further edits, link-artifacts after".
   A second stop (`stop_hook_active`) always proceeds — a nudge that can loop
-  forever is a hostage-taker, not a trigger. The two cases are mutually
-  exclusive: any graph write means reflow2 was touched, so the bypass case
-  cannot also be armed.
+  forever is a hostage-taker, not a trigger. The cases are mutually exclusive:
+  any graph write means reflow2 was touched, so the bypass case cannot also be
+  armed, and the BL-163 case requires a recorded change, which is a write.
+
+  **Order is what the middle case adds.** The other two ask whether the loop ran
+  at all; that one asks whether it ran in the right ORDER — recording a change
+  after editing the code satisfies "a ChangeEvent exists" while being exactly
+  the bookkeeping-after the hook's own message says is not the loop.
 
 Deliberately does NOT read the graph: the session's own MCP server holds the
 single-writer lock, and the committed export can be a session stale. The hook
@@ -44,10 +51,12 @@ State is one small JSON per session under `.reflow2/loop-nudge/` (gitignored
 with the rest of `.reflow2/`). A hook must never break a session: any failure
 here warns on stderr and exits 0.
 
-Stdlib only, no arguments needed. Two thresholds, both env-tunable:
+Stdlib only, no arguments needed. Three thresholds, all env-tunable:
 `REFLOW2_LOOP_NUDGE_THRESHOLD` (default 1) — unchecked graph writes before the
 Stop backstop fires; `REFLOW2_LOOP_NUDGE_EDIT_THRESHOLD` (default 3) — file
-edits in a zero-reflow2 session before the bypass backstop fires.
+edits in a zero-reflow2 session before the bypass backstop fires;
+`REFLOW2_LOOP_NUDGE_PROPAGATE_THRESHOLD` (default 1) — propagate calls that a
+session with recorded changes and edited files must reach to stay silent.
 """
 
 from __future__ import annotations
@@ -104,6 +113,32 @@ EDIT_TOOLS = {"Edit", "Write", "MultiEdit", "NotebookEdit"}
 
 # Recording that something moved, on the record, before it moves.
 CHANGE_OPS = {"record_change", "add_change_event"}
+
+# LOOKING at what the recorded change reaches. The distinction between this set
+# and CHANGE_OPS is the whole of BL-163, and it is worth stating plainly because
+# the two read as synonyms and are not: `add_change_event` and `record_change`
+# are RECORDING ops — they say a thing moved — while `propagate_change` and
+# `propagate_from` are the act of asking what the movement touches. impact-check
+# is both, in that order.
+#
+# THE DEFECT THIS SET FIXES: the impact-check shape used to key on
+# `edits > 0 and changes == 0` — it fired only when a session recorded NOTHING.
+# So a session that edited code and then wrote its ChangeEvents up afterwards
+# had `changes > 0` and the trigger stayed silent, while every one of those
+# events was bookkeeping-after. The nudge's own message says "Bookkeeping is not
+# the loop"; the trigger shipped beside it could not tell the two orders apart,
+# because no op set counted looking at all. It checked a ChangeEvent's PRESENCE
+# where it meant its PRECEDENCE.
+#
+# WHY PRESENCE-OF-PROPAGATE AND NOT LITERAL ORDERING. The honest key would be
+# "propagated before the first edit", and that is deliberately NOT what this
+# implements. A session legitimately works several items — editing for item 1
+# while propagating for item 2 — and a strict ordering rule would fire on that,
+# which is exactly the fire-on-correct-work failure BL-23 and BL-42 name and
+# this family exists to avoid. Presence is the conservative proxy: it cannot
+# catch an agent who propagates late, and it never accuses one who did the work.
+# That limit is real and is stated rather than hidden.
+PROPAGATE_OPS = {"propagate_change", "propagate_from"}
 
 # Telling the design what is now on disk.
 ARTIFACT_OPS = {
@@ -194,8 +229,8 @@ def blank_state() -> dict:
     is genuinely absent — see [`update_state`] for why that distinction is the
     whole bug this file once had."""
     return {"writes": 0, "edits": 0, "touched": False,
-            "changes": 0, "artifacts": 0, "captures": 0, "gap_pass": 0,
-            "renderings": 0, "content": 0,
+            "changes": 0, "propagates": 0, "artifacts": 0, "captures": 0,
+            "gap_pass": 0, "renderings": 0, "content": 0,
             # Whether this tally was rebuilt after an unreadable one. A restart
             # keeps the mechanism working; this flag is what stops the restart
             # being mistaken for evidence. See `update_state`.
@@ -227,6 +262,13 @@ def parse_state(text: str) -> dict | None:
             # cap:skill-triggers — the shape fields. Absent in older state
             # files, which default to zero and simply yield the generic nudge.
             "changes": int(raw.get("changes", 0)),
+            # BL-163. Absent in older state files and defaulting to zero, which
+            # is the SAME shape as "this session never propagated" — a state
+            # file written by the previous version cannot be told from a session
+            # that skipped the step. That is safe only because the branch this
+            # feeds also requires `changes > 0` in the SAME tally, and a tally
+            # old enough to lack this key is one no longer being written to.
+            "propagates": int(raw.get("propagates", 0)),
             "artifacts": int(raw.get("artifacts", 0)),
             "captures": int(raw.get("captures", 0)),
             "gap_pass": int(raw.get("gap_pass", 0)),
@@ -343,6 +385,14 @@ def update_state(session_id: str, mutate) -> None:
                 "edits": int(state.get("edits", 0)),
                 "touched": bool(state.get("touched", False)),
                 "changes": int(state.get("changes", 0)),
+                # THIS LIST IS THE THIRD COPY OF THE STATE'S KEY SET
+                # (`blank_state`, `parse_state`, here), and a field missing from
+                # any one of them is silently dropped rather than failing. BL-163
+                # was written with the other two updated and this one not, so the
+                # counter incremented in memory and was thrown away on every
+                # write — caught only because the new tests failed. When you add
+                # a field, add it in all three.
+                "propagates": int(state.get("propagates", 0)),
                 "artifacts": int(state.get("artifacts", 0)),
                 "captures": int(state.get("captures", 0)),
                 "gap_pass": int(state.get("gap_pass", 0)),
@@ -441,16 +491,27 @@ def match_shape(state: dict) -> str | None:
     rather than add to it. A matcher that could arm the hook by itself would be
     adding a fourth way to be interrupted, which is the opposite.
 
-    The three shapes are mutually exclusive and ordered earliest-first, because a
+    The shapes are mutually exclusive and ordered earliest-first, because a
     session that never recorded the change has a different next step from one
     that recorded it and stopped there.
     """
     edits = state.get("edits", 0)
-    # 1. Something on disk moved and nothing on the record says so.
+    # 1a. Something on disk moved and nothing on the record says so.
     if edits > 0 and state.get("changes", 0) == 0:
         return (
             "impact-check — file(s) changed this session with no ChangeEvent "
             "recorded, so nothing computed what the change reaches"
+        )
+    # 1b. The change IS on the record and nobody asked what it reaches (BL-163).
+    #     The half that used to be invisible: `changes > 0` silenced the shape
+    #     above, so writing the ChangeEvents up after the edits satisfied the
+    #     very trigger that exists to catch writing them up after the edits.
+    #     Recording is not looking, and only PROPAGATE_OPS is looking.
+    if edits > 0 and state.get("propagates", 0) == 0:
+        return (
+            "impact-check — the change is recorded but propagate_change was "
+            "never called, so the ChangeEvent is bookkeeping and nothing "
+            "computed the blast radius it exists to compute"
         )
     # 2. The change IS recorded, and as-built was never told. The reachable
     #    half of the spec's checksum-drift shape: the hook cannot see drift, but
@@ -519,6 +580,8 @@ def main() -> int:
                 # intent.
                 if op in CHANGE_OPS:
                     state["changes"] += 1
+                if op in PROPAGATE_OPS:
+                    state["propagates"] += 1
                 if op in ARTIFACT_OPS:
                     state["artifacts"] += 1
                 if op in CAPTURE_OPS:
@@ -588,18 +651,67 @@ def main() -> int:
             }))
             return 0
 
+        # EVERY BRANCH BELOW HERE MAKES A NEGATIVE CLAIM, and a tally rebuilt
+        # from nothing cannot support one. "The graph was never consulted" and
+        # "propagate_change was never called" are both assertions that something
+        # did NOT happen, and the calls that would refute them are exactly what
+        # an unreadable tally lost (BL-161). The write nudge above is positive
+        # ("N writes went unchecked") and survives a restart honestly, which is
+        # why it sits on the other side of this line.
+        if state.get("reset"):
+            return 0
+
+        # BL-163 — the recorded-but-never-propagated session. This is the branch
+        # the row is actually about, and the reason the shape matcher alone was
+        # not enough: `record_change` is a graph WRITE, so a session that
+        # recorded its changes and then ran `loop_status` has `writes == 0` and
+        # `touched == True`, and sails past both of the older branches. Neither
+        # one can see a loop that ran in the wrong ORDER.
+        #
+        # THE CONJUNCTION IS THE COUNTERWEIGHT, all three clauses load-bearing:
+        #   - `edits > 0`     — something on disk actually moved; a pure design
+        #                       session that captures intent and never touches
+        #                       code has no blast radius to compute.
+        #   - `changes > 0`   — this session engaged the design brain and put a
+        #                       ChangeEvent on the record. That is what makes it
+        #                       a design-relevant session rather than any old
+        #                       edit, and it is what keeps this from becoming a
+        #                       second bypass nudge with no threshold.
+        #   - `propagates==0` — and then never asked what the change reaches.
+        # Drop any one of them and this fires on correct work, which BL-23 and
+        # BL-42 both name as the failure this family exists to avoid.
+        #
+        # THE ADMITTED COST, stated because it is a real change in kind: this is
+        # a NEW interruption. `cap:skill-triggers` deliberately added none — a
+        # shape only refined a nudge that was already firing. This branch arms
+        # one, and it does so on the argument the row makes: reflow2 fails the
+        # build on undeclared drift, on a broken export chain, on unchecked
+        # writes, and nothing whatsoever fails when an agent designs without
+        # consulting the design. The read side had no forcing function at all.
+        if (state["edits"] > 0
+                and state.get("changes", 0) > 0
+                and state.get("propagates", 0)
+                < env_threshold("REFLOW2_LOOP_NUDGE_PROPAGATE_THRESHOLD", 1)):
+            if not claim_nudge(session):
+                return 0
+            print(json.dumps({
+                "decision": "block",
+                "reason": (
+                    f"reflow2: {state['edits']} file(s) edited and "
+                    f"{state['changes']} change(s) recorded this session, and "
+                    f"propagate_change was never called — so the ChangeEvent is "
+                    f"bookkeeping and nothing computed what the change reaches. "
+                    f"Run impact-check (record the change, THEN propagate) "
+                    f"before further edits; confirm with loop_status. "
+                    f"Bookkeeping is not the loop. (This nudge fires once; "
+                    f"stopping again proceeds.)"
+                ),
+            }))
+            return 0
+
         # The upstream bypass (BL-90): code edited, the graph never consulted at
         # all. Blunt by design — the hook cannot know which files are design-
         # relevant, so a count threshold and the once-only rule bound the noise.
-        #
-        # THIS ONE CLAIM IS DROPPED WHEN THE TALLY WAS REBUILT. It is the only
-        # NEGATIVE assertion the hook makes — "the graph was never consulted" —
-        # and a tally restarted from nothing cannot support it, because the
-        # calls it would have counted are exactly what was lost. The write
-        # nudge above is positive ("N writes went unchecked") and survives a
-        # restart honestly, which is why only this branch checks the flag.
-        if state.get("reset"):
-            return 0
         if not state["touched"]:
             e = state["edits"]
             if e >= env_threshold("REFLOW2_LOOP_NUDGE_EDIT_THRESHOLD", 3):
