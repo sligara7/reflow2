@@ -318,3 +318,126 @@ fn a_store_that_already_holds_a_design_keeps_its_name_when_importing() {
     );
     std::fs::remove_dir_all(&dir).ok();
 }
+
+#[test]
+fn importing_a_design_into_an_empty_store_adopts_its_name() {
+    // WRITTEN BEFORE THE FIX (BL-169), and it failed: the restored design came
+    // back under the receiving store's minted id instead of its own.
+    //
+    // The CLI `--import` path already adopted, deliberately and with the reason
+    // in a comment — "or the round trip would not come back byte-identical
+    // (graph_id is inside the content hash)". `import_graph` did not, because
+    // the rule lived in `main.rs` rather than in the operation, so the tool and
+    // the command disagreed about what restoring a design means.
+    //
+    // What that cost, on this repository, on 2026-08-02: an export replayed
+    // through a temp graph came back with `graph_id` changed from `reflow2` to
+    // a generated id, and the renamed design was COMMITTED AND PUSHED. Both CI
+    // jobs and `reflow2_check.py` passed on it — the chain was intact and the
+    // content hash matched its own content; the design had simply stopped being
+    // called what it was called. Only `compare_designs` mentioned it, inside a
+    // `provenance_note` nothing gates on.
+    let dir = tmp("import-adopts");
+    let store = dir.join("graph");
+    let store_path = store.to_str().unwrap();
+
+    // A design that knows its own name, exported.
+    let doc = {
+        let src = tmp("import-adopts-src");
+        let src_store = src.join("graph");
+        let mut g = DesignGraph::open_rocksdb(src_store.to_str().unwrap()).unwrap();
+        g.add_project("proj:x", "X").unwrap();
+        g.export_graph().unwrap()
+    };
+    let original = doc.graph_id.clone();
+    assert_ne!(
+        original, "",
+        "the fixture must carry an id, or this proves nothing"
+    );
+
+    // Restore it into a fresh, empty store — which has already minted an id of
+    // its own, because identity is established at open.
+    let mut g = DesignGraph::open_rocksdb(store_path).unwrap();
+    let minted = g.graph_id().to_string();
+    assert_ne!(
+        minted, original,
+        "the receiving store must start under a DIFFERENT name, or the test \
+         cannot tell adoption from coincidence"
+    );
+
+    let report = g.import_graph(&doc).unwrap();
+
+    assert_eq!(
+        g.graph_id(),
+        original,
+        "restoring a design into an empty store must keep the design's name — \
+         importing under the receiver's name renames it silently, and graph_id \
+         is inside the export's content hash"
+    );
+    assert_eq!(
+        report.adopted_identity.as_deref(),
+        Some(original.as_str()),
+        "the adoption must be REPORTED, not merely done: a caller that cannot \
+         see the design was renamed cannot tell you about it"
+    );
+
+    // The design has to be readable under the adopted name, not just labelled
+    // with it — the id namespaces every stored key.
+    assert!(
+        g.get_node("Project", "proj:x").unwrap().is_some(),
+        "the imported design must be readable under the name it was adopted as"
+    );
+
+    // And it survives the reopen, because the sidecar was written.
+    drop(g);
+    let g = DesignGraph::open_rocksdb(store_path).unwrap();
+    assert_eq!(g.graph_id(), original, "the adopted name must be durable");
+    assert_eq!(
+        identity::resolve(store_path, "unused", || true)
+            .unwrap()
+            .origin,
+        Origin::Adopted,
+        "an adopted identity must say so, so it is distinguishable from a mint"
+    );
+}
+
+#[test]
+fn importing_into_a_store_that_already_holds_a_design_keeps_its_own_name() {
+    // THE COUNTERWEIGHT, and the reason the fix is not "always take the
+    // document's id". Layering an export onto a design that already exists is
+    // the ordinary upsert case — `build_design_graph.py` does it on every run —
+    // and taking the incoming name there would rename a live design to whatever
+    // was last imported into it. Adoption is for a RESTORE into an empty store,
+    // which is exactly the condition `adopt_on_import` tests.
+    let dir = tmp("import-keeps");
+    let store = dir.join("graph");
+    let mut g = DesignGraph::open_rocksdb(store.to_str().unwrap()).unwrap();
+    g.add_project("proj:mine", "Mine").unwrap();
+    let mine = g.graph_id().to_string();
+
+    let doc = {
+        let src = tmp("import-keeps-src");
+        let src_store = src.join("graph");
+        let mut other = DesignGraph::open_rocksdb(src_store.to_str().unwrap()).unwrap();
+        other.add_project("proj:theirs", "Theirs").unwrap();
+        other.export_graph().unwrap()
+    };
+    assert_ne!(doc.graph_id, mine, "the fixture must be a different design");
+
+    let report = g.import_graph(&doc).unwrap();
+
+    assert_eq!(
+        g.graph_id(),
+        mine,
+        "a store that already holds a design keeps its own name — layering an \
+         export onto it is an upsert, not a restore"
+    );
+    assert_eq!(
+        report.adopted_identity, None,
+        "nothing was adopted, so nothing should be reported as adopted"
+    );
+    assert!(
+        g.get_node("Project", "proj:mine").unwrap().is_some(),
+        "the design that was already here must still be readable"
+    );
+}

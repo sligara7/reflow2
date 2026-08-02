@@ -261,6 +261,18 @@ pub struct ImportReport {
     /// document.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub provenance_note: Option<String>,
+    /// Set when this import ADOPTED the document's design identity — a restore
+    /// into an empty store, which takes the design's own name rather than
+    /// renaming it to the receiver's (BL-169).
+    ///
+    /// Reported rather than merely done, because the alternative is exactly the
+    /// failure that filed the row: a design silently renamed, committed and
+    /// pushed through a fully green pipeline, with `graph_id` sitting inside the
+    /// export's content hash. `None` when nothing was adopted — an in-memory
+    /// graph, a store that already holds a design, or a document whose name the
+    /// store already carries.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub adopted_identity: Option<String>,
 }
 
 impl DesignGraph {
@@ -313,6 +325,37 @@ impl DesignGraph {
     /// Everything lands in one batch, so a document that fails validation
     /// half-way leaves the graph untouched rather than half-loaded.
     pub fn import_graph(&mut self, doc: &GraphExport) -> Result<ImportReport, DynoError> {
+        // WHOSE DESIGN IS THIS? Answered before a single write, because the id
+        // namespaces every stored key and the import writes under whatever name
+        // the graph currently carries (BL-169).
+        //
+        // Restoring a design into an EMPTY store takes the document's name.
+        // Anything else renames it: `graph_id` is inside the export's content
+        // hash, so a round trip that renamed would not come back byte-identical,
+        // and on 2026-08-02 exactly that shipped — an export replayed through a
+        // temp graph came back as `05a6fbe860bf7a23` where the design has been
+        // `reflow2` since its first commit, and it was committed and pushed with
+        // both CI jobs and the coherence gate green.
+        //
+        // This rule already existed and lived in the WRONG PLACE: `main.rs`
+        // applied it on the CLI `--import` path only, so the command and the
+        // tool disagreed about what a restore means. It belongs in the operation
+        // — one predicate, every caller, including any future one.
+        //
+        // `adopt_on_import` is the shared predicate and it is conservative in
+        // the direction that matters: a store already holding a design keeps its
+        // own name, because layering an export onto a live design is an upsert,
+        // not a restore, and taking the incoming name there would rename a
+        // design to whatever was last imported into it.
+        let mut adopted_identity = None;
+        if let Some(path) = self.store_path.clone() {
+            let holds = self.holds_a_design();
+            if let Some(adopted) = crate::identity::adopt_on_import(&path, &doc.graph_id, holds)? {
+                self.graph_id = adopted.graph_id.clone();
+                adopted_identity = Some(adopted.graph_id);
+            }
+        }
+
         // Endpoint types come from the document's own nodes, falling back to
         // what is already in the graph — so an export can be layered onto a
         // design it references without carrying it.
@@ -412,6 +455,7 @@ impl DesignGraph {
                      upgrade-direction check cannot be run on it"
                         .to_string()
                 }),
+                adopted_identity: adopted_identity.clone(),
             })
         })();
 

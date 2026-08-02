@@ -268,8 +268,17 @@ class ExportChain(unittest.TestCase):
 
     def second_export(self, repo: pathlib.Path):
         """Export again into the repo, after a real change, so the working file
-        genuinely replaces the committed one."""
-        s = Server(BIN, str(self.tmp / "graph2"))
+        genuinely replaces the committed one.
+
+        THE SAME STORE as the first export, deliberately. It used to be a second
+        one (`graph2`), which meant every "second export" in this fixture was a
+        DIFFERENT design with its own minted `graph_id` — so the chain tests
+        below were checking the lineage of two unrelated designs and passing.
+        Found 2026-08-02 when the identity check (BL-169) was added and
+        immediately failed on the fixture: a design replacing itself is what the
+        chain is about, and modelling it as two designs made the fixture prove
+        less than it claimed."""
+        s = Server(BIN, str(self.tmp / "graph"))
         try:
             coherent(s)
             s.call("add_requirement", {"id": "req:later", "name": "Later",
@@ -288,6 +297,52 @@ class ExportChain(unittest.TestCase):
                              "exporting onto the committed file must link to it")
         r = self.gate(export, root=repo, cwd=repo)
         self.assertNotIn("LINEAGE", r.stdout, f"a sound chain must not complain\n{r.stdout}")
+
+    def test_a_silently_renamed_design_fails(self):
+        """BL-169. A rename passes every OTHER check here, which is why it
+        shipped: the chain links across it perfectly, the content hash matches
+        its own content, and both CI jobs went green on a design that had
+        stopped being called what it was called."""
+        repo, _ = self.git_repo_with_export()
+        export = self.second_export(repo)
+        doc = json.loads(export.read_text())
+        was = doc["graph_id"]
+        doc["graph_id"] = "05a6fbe860bf7a23"  # what a temp-graph replay produced
+        # Re-hash so integrity still passes — the point is that identity is the
+        # ONLY check that can catch this one.
+        doc["content_hash"] = "sha256:" + hashlib.sha256(json.dumps(
+            {"edges": doc["edges"], "graph_id": doc["graph_id"], "nodes": doc["nodes"]},
+            sort_keys=True, ensure_ascii=False, separators=(",", ":"),
+        ).encode()).hexdigest()
+        export.write_text(json.dumps(doc, sort_keys=True, indent=2, ensure_ascii=False))
+        r = self.gate(export, root=repo, cwd=repo)
+        self.assertIn("IDENTITY", r.stdout,
+                      f"a silent rename must fail the gate\n{r.stdout}")
+        self.assertIn(was, r.stdout, "the failure must name what it was called")
+        self.assertNotIn("INTEGRITY", r.stdout,
+                         "integrity must still pass — proving identity is the check that caught it")
+        self.assertNotEqual(r.returncode, 0)
+
+    def test_an_unchanged_name_does_not_complain(self):
+        """The counterweight: identity must not fire on ordinary content change,
+        or it would be a second lineage check with a worse message."""
+        repo, _ = self.git_repo_with_export()
+        export = self.second_export(repo)
+        r = self.gate(export, root=repo, cwd=repo)
+        self.assertNotIn("IDENTITY", r.stdout,
+                         f"same name, changed content — not a rename\n{r.stdout}")
+
+    def test_an_unidentified_document_is_not_a_rename(self):
+        """A hand-authored document may legitimately carry no `graph_id`
+        (BL-138). Absence of a name is not a different name."""
+        repo, _ = self.git_repo_with_export()
+        export = self.second_export(repo)
+        doc = json.loads(export.read_text())
+        doc["graph_id"] = ""
+        export.write_text(json.dumps(doc, sort_keys=True, indent=2, ensure_ascii=False))
+        r = self.gate(export, root=repo, cwd=repo)
+        self.assertNotIn("IDENTITY", r.stdout,
+                         f"an unidentified document is not a rename\n{r.stdout}")
 
     def test_a_severed_chain_fails(self):
         """The exact shape of the July 2026 mistake: export elsewhere, copy the

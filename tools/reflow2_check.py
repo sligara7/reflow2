@@ -203,6 +203,84 @@ def _export_at(rev: str, root: str, rel: str) -> dict | None:
         return None
 
 
+def _export_pair(path: str, doc: dict) -> tuple[dict, dict] | None:
+    """This export and the one it replaced, or None when unanswerable.
+
+    Two contexts, one rule. Before a commit the working file is new and its
+    predecessor is HEAD's version; in CI the working file IS HEAD's version, so
+    the pair is HEAD against HEAD~1. Either way we return a document and the one
+    it replaced.
+
+    Shared by every check that compares an export with its predecessor, rather
+    than being reimplemented per check. Two copies of a predicate drift, and
+    when they do they give contradictory answers about the same file — the
+    defect [BL-177] records in `reflow2_init.py`, where the dry run and the real
+    run disagreed because each tested its own version of "would this change?".
+    """
+    located = _repo_relative(path)
+    if located is None:
+        return None  # not in a git working tree — nothing to compare against
+    root, rel = located
+    head = _export_at("HEAD", root, rel)
+    if head is None:
+        return None  # untracked, no commits yet, or the commit introducing it
+    if head.get("content_hash") != doc.get("content_hash"):
+        current, previous = doc, head  # a new export, not yet committed
+    else:
+        previous = _export_at("HEAD~1", root, rel)
+        if previous is None:
+            return None  # HEAD is the first commit carrying this export
+        current = head
+    if previous.get("content_hash") == current.get("content_hash"):
+        return None  # content unchanged — nothing replaced anything
+    return current, previous
+
+
+def check_export_identity(path: str, doc: dict) -> str | None:
+    """Refuse a design that changed its NAME without anyone saying so (BL-169).
+
+    `graph_id` is the design's durable identity: minted once, never negotiated,
+    and it namespaces every stored key — so a graph reopened under a different
+    name finds nothing and presents as an empty design. It is also inside the
+    export's `content_hash`, which means a rename is indistinguishable from
+    ordinary content change to every other check here.
+
+    That is not hypothetical. On 2026-08-02 an export replayed through a temp
+    graph came back as `05a6fbe860bf7a23` where the design had been `reflow2`
+    since its first commit, and it was committed and pushed. **The lineage check
+    passed** (the chain was intact across the rename), the integrity check
+    passed (the hash matched its own content), and **both CI jobs were green.**
+    The only signal anywhere was a `provenance_note` string in `compare_designs`
+    that nothing gates on. A design's identity moving is either deliberate or a
+    bug, and it must not be able to happen quietly.
+
+    Returns a failure message, or None when sound or unanswerable. A first
+    export has no predecessor to disagree with, and an unidentified document
+    (`graph_id: ""`, legitimate for a hand-authored one — BL-138) is not a
+    rename: absence of a name is not a different name.
+    """
+    pair = _export_pair(path, doc)
+    if pair is None:
+        return None
+    current, previous = pair
+    was, now = previous.get("graph_id"), current.get("graph_id")
+    if not was or not now or was == now:
+        return None
+    return (
+        f"IDENTITY  '{path}' changed the design's name from '{was}' to '{now}'. "
+        f"`graph_id` is minted once and never negotiated — it namespaces every "
+        f"stored key, so a store reopened under a different name finds nothing "
+        f"and reads as an EMPTY design — and it sits inside the content hash, "
+        f"which is why every other check here passes across a rename. The usual "
+        f"cause is a replay: an export imported into a TEMP graph through the "
+        f"`import_graph` tool and re-exported from there takes the temp store's "
+        f"name. Seed a replay with the CLI (`reflow2-mcp --graph-path <tmp> "
+        f"--import <doc>`), which adopts the document's identity into an empty "
+        f"store. If the rename is deliberate, commit it on its own so it is "
+        f"reviewable as what it is."
+    )
+
+
 def check_export_chain(path: str, doc: dict) -> str | None:
     """Verify this export links to its predecessor (`dec:export-hash-chain`).
 
@@ -223,22 +301,10 @@ def check_export_chain(path: str, doc: dict) -> str | None:
     chain deliberately does not advance while content is unchanged, and a first
     export has no predecessor; neither is a break.
     """
-    located = _repo_relative(path)
-    if located is None:
-        return None  # not in a git working tree — nothing to compare against
-    root, rel = located
-    head = _export_at("HEAD", root, rel)
-    if head is None:
-        return None  # untracked, no commits yet, or the commit introducing it
-    if head.get("content_hash") != doc.get("content_hash"):
-        current, previous = doc, head  # a new export, not yet committed
-    else:
-        previous = _export_at("HEAD~1", root, rel)
-        if previous is None:
-            return None  # HEAD is the first commit carrying this export
-        current = head
-    if previous.get("content_hash") == current.get("content_hash"):
-        return None  # content unchanged — the chain is not meant to advance
+    pair = _export_pair(path, doc)
+    if pair is None:
+        return None
+    current, previous = pair
     expected = previous.get("content_hash")
     actual = current.get("prev_content_hash")
     if not expected or actual == expected:
@@ -312,6 +378,12 @@ def main() -> int:
     broken_chain = check_export_chain(opts.export, doc)
     if broken_chain:
         failures.append(broken_chain)
+
+    # IDENTITY (BL-169) — a rename passes every check above, because graph_id is
+    # inside the content hash and the chain links across it perfectly well.
+    renamed = check_export_identity(opts.export, doc)
+    if renamed:
+        failures.append(renamed)
 
     with tempfile.TemporaryDirectory(prefix="reflow2-check-") as tmp:
         graph = os.path.join(tmp, "graph")
