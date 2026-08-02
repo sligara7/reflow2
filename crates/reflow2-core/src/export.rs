@@ -112,8 +112,33 @@ pub struct GraphExport {
     /// What lets `compare_designs` answer "does other descend from base?".
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub prev_content_hash: Option<String>,
+    /// Which design wrote it. **Optional on the way in (BL-138)**, and the
+    /// reason is that `import_graph` never reads it: an import loads into the
+    /// receiving graph, whose id the server already knows, so demanding it from
+    /// a hand author asks the caller to restate the receiver's own identity —
+    /// and then ignores the answer. The `adopt` skill's central instruction is
+    /// *"build one export document and `import_graph` it once"*, and following
+    /// it literally failed on `missing field 'graph_id'`.
+    ///
+    /// **`mirror_surface` DOES read it and still refuses a document without
+    /// one**, because the two operations genuinely differ: mirroring records
+    /// where a surface came from (`mirror_of`) and guards against mirroring a
+    /// design into itself, neither of which is answerable from an unidentified
+    /// document. Distinguishing them is the point — the same shape as [BL-119],
+    /// where one requirement was right for a round-tripped export and wrong for
+    /// a hand-authored one.
+    ///
+    /// Empty means unidentified; see [`GraphExport::is_unidentified`]. Every
+    /// export reflow2 writes carries a real one.
+    #[serde(default)]
     pub graph_id: String,
+    /// Defaulted so a document may legitimately carry no nodes — and so that a
+    /// hand-authored `{"nodes": [...]}` with no edge list is accepted rather
+    /// than refused for omitting an empty array.
+    #[serde(default)]
     pub nodes: Vec<ExportedNode>,
+    /// See [`GraphExport::nodes`].
+    #[serde(default)]
     pub edges: Vec<ExportedEdge>,
 }
 
@@ -122,6 +147,14 @@ impl GraphExport {
     /// third-party document rather than one reflow2 exported (BL-87).
     pub fn is_unstamped(&self) -> bool {
         self.stamp.is_none()
+    }
+
+    /// Whether the document names no source design (BL-138). Harmless for
+    /// `import_graph`, which never reads it; disqualifying for
+    /// `mirror_surface`, which cannot record where a surface came from without
+    /// it. Reported, never guessed at.
+    pub fn is_unidentified(&self) -> bool {
+        self.graph_id.is_empty()
     }
 
     /// The reflow2 version that wrote this document, or `"unstamped"` when it
@@ -291,14 +324,37 @@ impl DesignGraph {
 
         self.begin_batch();
         let result = (|| -> Result<ImportReport, DynoError> {
-            for n in &doc.nodes {
+            // EVERY FAULT IN ONE RESPONSE, NOT ONE PER ROUND TRIP (BL-118).
+            // This used to be `create_node(..)?`, so validation stopped at the
+            // first violation: an external adopt pass over a hand-authored
+            // 9,000-line document took FOUR consecutive imports to learn four
+            // faults — a missing stamp field, then three different enum
+            // violations — each attempt a full edit-retry cycle for one error.
+            //
+            // THE ATOMICITY IS UNTOUCHED AND MUST STAY THAT WAY: the same
+            // session named "nothing half-loaded across four failures" as one
+            // of the things that worked notably well. This is exactly
+            // `dec:bulk-is-all-or-nothing-with-per-item-findings` — every item
+            // attempted so you learn every failure at once, and if any failed
+            // nothing is written — which BL-153 settled for the bulk tools and
+            // whose own row noted that `import_graph` files the opposite
+            // defect. The shape is borrowed rather than reinvented.
+            //
+            // It still returns Err rather than an Ok-with-failures report, and
+            // that is deliberate: a caller that treated a rejected import as
+            // success would be the silent-failure this crate's first principle
+            // forbids. The error carries the whole list.
+            let mut faults: Vec<String> = Vec::new();
+            for (index, n) in doc.nodes.iter().enumerate() {
                 let props: std::collections::HashMap<String, Value> =
                     n.properties.clone().into_iter().collect();
-                self.create_node(&n.node_type, &n.node_id, props)?;
+                if let Err(e) = self.create_node(&n.node_type, &n.node_id, props) {
+                    faults.push(format!("nodes[{index}] {}: {e}", n.node_id));
+                }
             }
             let mut edges_written = 0;
             let mut skipped_edges = Vec::new();
-            for e in &doc.edges {
+            for (index, e) in doc.edges.iter().enumerate() {
                 let from = types
                     .get(e.from_id.as_str())
                     .copied()
@@ -311,14 +367,32 @@ impl DesignGraph {
                     (Some(ft), Some(tt)) => {
                         let props: std::collections::HashMap<String, Value> =
                             e.properties.clone().into_iter().collect();
-                        self.create_edge(&e.edge_type, ft, &e.from_id, tt, &e.to_id, props)?;
-                        edges_written += 1;
+                        match self.create_edge(&e.edge_type, ft, &e.from_id, tt, &e.to_id, props) {
+                            Ok(_) => edges_written += 1,
+                            Err(err) => faults.push(format!(
+                                "edges[{index}] {} {} -> {}: {err}",
+                                e.edge_type, e.from_id, e.to_id
+                            )),
+                        }
                     }
                     _ => skipped_edges.push(format!(
                         "{} {} -> {} (endpoint not in the document or the graph)",
                         e.edge_type, e.from_id, e.to_id
                     )),
                 }
+            }
+            if !faults.is_empty() {
+                let n = faults.len();
+                return Err(DynoError::Validation {
+                    node_type: "GraphExport".into(),
+                    property: "nodes/edges".into(),
+                    message: format!(
+                        "{n} item(s) in this document are invalid, and NOTHING was written — \
+                         the import is all-or-nothing. Every one is listed so you can fix them \
+                         in one edit rather than learning them one import at a time:\n  - {}",
+                        faults.join("\n  - ")
+                    ),
+                });
             }
             Ok(ImportReport {
                 nodes_written: doc.nodes.len(),
@@ -576,6 +650,23 @@ impl DesignGraph {
         at: Option<&str>,
     ) -> Result<MirrorReport, DynoError> {
         let source = doc.graph_id.clone();
+        // `graph_id` became optional for import (BL-138) because import never
+        // reads it. Mirroring does: it records `mirror_of` and guards against
+        // mirroring a design into itself, and neither question has an answer
+        // here. Refused by name rather than mirrored under an empty provenance,
+        // which would record a claim nobody made.
+        if doc.is_unidentified() {
+            return Err(DynoError::Validation {
+                node_type: node::PROJECT.into(),
+                property: "mirror_of".into(),
+                message: "this surface document carries no `graph_id`, so there is no way to \
+                          record WHERE it came from or to check it is not this design. \
+                          import_graph accepts an unidentified document because it never needs \
+                          the answer; mirroring does. Add the source design's `graph_id`, or \
+                          use import_graph if you meant to load it as your own."
+                    .into(),
+            });
+        }
         if source == self.graph_id() {
             return Err(DynoError::Validation {
                 node_type: node::PROJECT.into(),
