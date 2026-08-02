@@ -65,6 +65,7 @@ Add yourself if you're new here.
 
 
 
+- BL-163 — @ajs — since 2026-08-01 — tools/{loop_nudge,test_loop_nudge}.py, docs/backlog.md, docs/design/reflow2.json (the impact-check trigger keys on a ChangeEvent's presence where it means its precedence)
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
