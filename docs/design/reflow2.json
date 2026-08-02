@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ec0c68b305e229edfacb1cc4db556ef1625df51d3fdce064024f5ae1364f5ddd",
+  "content_hash": "sha256:15be74edd5d8ac28bbc155c5aaa9ce5e299d2ff324ac0a9564ca5be582214073",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -11006,6 +11006,18 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:readiness-forecast-is-a-temporal-fact",
+      "properties": {
+        "dependency_type": "data_flow",
+        "note": "A forecast is a projection OF the readiness level this decision defines, against the threshold it says must be stated. Its own rationale records the coupling: neither is useful alone.",
+        "optional": false,
+        "weight": 0.9,
+        "weight_basis": "evidence"
+      },
+      "to_id": "dec:readiness-is-an-observation-the-threshold-is-the-judgement"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:release-trigger-needs-a-required-item",
       "properties": {
         "evidence": "This refines the trigger dec:release-trigger states; it is meaningless without it and cannot be read on its own.",
@@ -16197,6 +16209,22 @@
       "from_id": "req:epochs-can-be-planned",
       "properties": {},
       "to_id": "dec:epoch-pins-a-version-combination"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:epochs-can-be-planned",
+      "properties": {
+        "note": "How the schedule runs FORWARD rather than only recording what happened: readiness projections are TemporalFacts marked as forecast, so the epoch by which a technology clears its threshold is derivable. Answers this requirement's EXPECTED modality with evidence a reader can tell from measurement."
+      },
+      "to_id": "dec:readiness-forecast-is-a-temporal-fact"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:epochs-can-be-planned",
+      "properties": {
+        "note": "How readiness enters the satisfaction schedule: as an OBSERVATION on the enabling technology, with the gating threshold stated on what it gates and never defaulted. This is what lets the epoch a requirement is satisfied in be computed rather than declared, which is what this requirement asks for."
+      },
+      "to_id": "dec:readiness-is-an-observation-the-threshold-is-the-judgement"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -37638,6 +37666,26 @@
       }
     },
     {
+      "node_id": "dec:readiness-forecast-is-a-temporal-fact",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "BL-68 vocabulary question 3, answered by Anthony 2026-08-01. A readiness FORECAST over time is carried as a `TemporalFact` series on the technology — \"TRL 3 valid from now, TRL 7 valid from epoch 2035\" — rather than as a projected `DimensionObservation` per epoch. THE DECIDING ARGUMENT IS A FIELD NAME, and it is not pedantry: `DimensionObservation.observed_at` says OBSERVED, and nobody observed anything in 2035. Recording a projection as an observation is exactly the fiction [BL-157] was filed about — a record asserting something happened that did not — and it would sit inside the very machinery a roadmap is computed from, so the fiction would propagate rather than sit still. `TemporalFact` is already defined as \"a time-bounded assertion true only between two epochs\", with VALID_FROM/VALID_TO and the property that any past state stays reconstructable; a readiness projection is literally that shape, so this reuses the vocabulary rather than bending a neighbouring one. TWO OBLIGATIONS THE SHAPE CARRIES, both of which must be built with it: the fact must MARK ITSELF as forecast rather than measured, because the whole value of the roadmap is that a reader can tell which epochs rest on evidence and which on projection; and it must carry CONFIDENCE THAT DECAYS WITH HORIZON, which `req:plans-move-honestly` already commits to for plans and which a ten-year TRL projection needs more than any plan does. WHAT THIS MAKES COMPUTABLE, which is BL-68's whole thesis: the epoch an increment can deliver on is the earliest epoch by which every enabling technology on its golden thread clears its stated threshold — and because the thread and the facts are both in the graph, the answer can NAME ITS REASON (\"2036 because THIS component is TRL 3 today, projected 7 in 2035\"), which is the legibility the row says real programs lacked.",
+        "name": "A readiness forecast is a TemporalFact, because a forecast is not an observation",
+        "rationale": "Anthony's call, 2026-08-01. Chosen over the projected DimensionObservation, which was the cheaper option and would have reused the existing per-epoch drift trail and its queries — rejected on the `observed_at` argument above. Also chosen over deferring the question until the representation ships, which would have followed this project's own recurring lesson (reproduce on real data before designing the fix); taken now instead because the forecast is not a refinement of the representation but the thing that makes the roadmap compute FORWARD rather than confirm backward, so designing the representation without it would settle the easy half against a guess about the hard one. Pairs with dec:readiness-is-an-observation-the-threshold-is-the-judgement; neither is useful alone.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:readiness-is-an-observation-the-threshold-is-the-judgement",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "BL-68 vocabulary question 2, answered by Anthony 2026-08-01. TWO PARTS, and the second is the load-bearing one. REPRESENTATION: readiness gets its OWN construct — an integer level 1-9 with a kind (TRL/MRL) — not a value in the `dimension` enum. Three reasons, all from the schema rather than preference: `DimensionAssessment.score` is a float 0.0-1.0 documented as \"0 = worst, 1 = best\", so a 1-9 ladder can only enter it lossily (TRL 7 as 0.78 asserts a precision the ladder does not have); the `dimension` enum is a closed list of QUALITY AXES — reliability, maintainability, coupling — and readiness is not a quality of the design, it is a fact about the maturity of an enabling technology; and `maturity` is ALREADY in that enum meaning code maturity, so adding TRL beside it would put two different things under one word, which is the [BL-115] shape (two states rendering identically because the vocabulary has no word for one of them). THRESHOLD: the level at which readiness GATES is stated on the thing being gated, and reflow2 REFUSES to supply a default. An absent threshold reports as ungated; it is never assumed. THIS IS THE PART THAT KEEPS THE FEATURE INSIDE `dec:report-dont-judge`: a TRL is an OBSERVATION, so computing over it is detect_gaps-shaped rather than ranking-shaped and does not conflict with `dec:alternatives-unranked-forkable`'s rule that the human does credit assignment. But the threshold IS a judgement — \"TRL below 5 means not buildable yet\" is a policy about risk appetite — and a default would let reflow2 silently decide buildability. THE PRECEDENT IS MEASURED, NOT ARGUED: `Interface.medium` defaulted to REST and thereby made two silent boundaries \"agree\" on a value neither had chosen, which `ver:seam-incompatibility` caught and BL-129 fixed. A defaulted readiness threshold is the same defect with a bigger blast radius, because it would gate a roadmap.",
+        "name": "Readiness is its own construct, and the gating threshold is stated — never defaulted",
+        "rationale": "Anthony's call, 2026-08-01, on the re-scoped BL-68 (PR #32) rather than on the row as filed in July. Chosen over adding `trl`/`mrl` to the dimension enum, which is cheaper and would have given the per-epoch forecast trail for free, and over a single project-wide threshold policy — rejected because it cannot express that a demonstrator tolerates TRL 4 while a fielded increment needs 8, which is exactly BL-68's own worked example (laser satellite refuelling: today's increment versus the ten-year one). Costs a schema change, so it pulls in the minor bump, the upgrade doc and the foundation-migration checklist.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:release-trigger",
       "node_type": "Decision",
       "properties": {
@@ -45128,7 +45176,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b481b3bb9bbe1a152d4e5f20547daed0b4412e28ff1ed1417f35183df63400c4",
+  "prev_content_hash": "sha256:ec0c68b305e229edfacb1cc4db556ef1625df51d3fdce064024f5ae1364f5ddd",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
