@@ -65,6 +65,7 @@ Add yourself if you're new here.
 
 
 
+- BL-169 — @ajs — since 2026-08-02 — import_graph adopts identity into an empty store (core + MCP), and reflow2_check refuses a silent graph_id change
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
