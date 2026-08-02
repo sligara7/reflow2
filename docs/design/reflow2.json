@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d56f83329878bff17364d276922328d3332f66e4c667aba595b2b241d4f96051",
+  "content_hash": "sha256:6578c70d651369557be4719cfc0f8a944c426e0a35ac4f71a64f773ade54646b",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5286,6 +5286,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-eff858c52555561f",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:bl104-built",
       "properties": {
         "accepted_baseline": true,
@@ -5472,6 +5481,15 @@
         "action": "modified"
       },
       "to_id": "dec:coverage-scope-is-declared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl174-false-green-for-consumers",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:skills-served"
     },
     {
       "edge_type": "CHANGED",
@@ -12274,6 +12292,14 @@
         "status": "rolled_back"
       },
       "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:kit-instructions",
+      "properties": {
+        "doc_kind": "agent_instructions"
+      },
+      "to_id": "cap:skills-served"
     },
     {
       "edge_type": "DOCUMENTS",
@@ -30307,6 +30333,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:kit-instructions",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:kit-pointer",
       "properties": {
         "completeness": "complete"
@@ -34136,6 +34170,17 @@
       }
     },
     {
+      "node_id": "art:kit-instructions",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:13f19b14c25c9300",
+        "location": "getting-started/AGENTS.md",
+        "name": "getting-started/AGENTS.md",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:kit-pointer",
       "node_type": "Artifact",
       "properties": {
@@ -37065,6 +37110,15 @@
       }
     },
     {
+      "node_id": "chg:baseline-eff858c52555561f",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-02",
+        "name": "First baseline. The file was never registered, so nothing moved — it is the text build.rs embeds as INSTRUCTIONS and get_instructions serves to every consumer project, and it was the one file in getting-started/ that the design could not see (POINTER.md and SETUP.md beside it were both registered). BL-165's shape a fourth time."
+      }
+    },
+    {
       "node_id": "chg:bl104-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -37118,6 +37172,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Anthony sharpens what lives in the repo: the design GRAPH is a third thing alongside the artifacts, and the implemented code is what only a code project adds"
+      }
+    },
+    {
+      "node_id": "chg:bl174-false-green-for-consumers",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The served instructions gain the false-green counterweight, and the file carrying them becomes an Artifact the design can see (BL-174)"
       }
     },
     {
@@ -47464,7 +47526,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:baf577a4f60588693a326c913f7582eaf5cf3fef222824154f1cd6404721b74b",
+  "prev_content_hash": "sha256:d56f83329878bff17364d276922328d3332f66e4c667aba595b2b241d4f96051",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
