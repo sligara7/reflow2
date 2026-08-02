@@ -33,6 +33,26 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Coverage scope is derived from version control, and the adopt skill now says so** (BL-172,
+  `dec:coverage-scope-is-declared` — accepted on the maintainer's word). Take everything version
+  control tracks and remove what you can name a rule for; never assemble a list of the places
+  worth looking, because a hand-picked scope makes a region nobody thought of *invisible* rather
+  than *unclaimed*. Phase 4 of `adopt` told you to sweep and never said how to decide the scope,
+  which is the hole BL-165 fell through.
+
+  **This holds whether or not the subject is software**, and the reasoning is worth carrying. A
+  non-code project puts **two** things under version control — the reflow2 design graph and the
+  design artifacts; a code project puts **three** — graph, artifacts, and the implemented code.
+  The first two are the constant; the implemented system is the only term that varies. A
+  satellite or a fleet cannot live in a repository; its drawings, specs and analyses can, so a
+  derived scope is if anything *more* clearly right there, because the tracked artifacts are the
+  whole of what the question could be about. A codebase is the special case — special by holding
+  *more* than the norm, being the one kind of subject an agent can inspect directly as well as
+  through its design. Of the three, the design graph is excluded from the sweep: a design cannot
+  be its own subject. Artifacts genuinely outside version control (a PLM
+  system, a wiki) are still swept and handed over by the agent: derivation is the default, not a
+  limit on what may be observed.
+
 - **The self-model's sweep derives its scope instead of naming it** (BL-170). It swept two hardcoded
   globs, so `schema/` was not *excluded* from coverage — it was never *considered*, and that is the
   general form of BL-165. It now sweeps everything `git ls-files` tracks, minus four named

@@ -135,6 +135,39 @@ The recovered design is a claim about the system; test it the way the trials tes
    Name your exclusions (build output, vendored trees, generated code); they come back listed,
    because *"we ignored it"* and *"it is covered"* must never look alike.
 
+   **Derive the scope, never list it** (`dec:coverage-scope-is-declared`). Take everything
+   version control tracks — `git ls-files` — and remove what you can name a rule for. Do not
+   assemble a list of the places worth looking: a hand-picked scope makes a region nobody
+   thought of *invisible* rather than *unclaimed*, and that is not a hypothetical. reflow2's own
+   sweep named two directories and so could not see `schema/` — the eleven files its
+   documentation calls "the foundation everything builds on" — for eleven releases, from a probe
+   written specifically to catch unregistered files. A derived scope puts a new region in scope
+   by default, which is the only arrangement in which the thing nobody has thought about can
+   surface.
+
+   **This holds whether or not the subject is software**, and it is worth being precise about
+   what is actually under version control:
+
+   | Project | Under version control |
+   |---|---|
+   | **Non-code** | the reflow2 design graph · the design artifacts |
+   | **Code** | the reflow2 design graph · the design artifacts · **the implemented code** |
+
+   The first two are the constant; the implemented system is the only term that varies. A
+   satellite, a building or a fleet cannot live in a repository — its drawings, specs, models
+   and analyses can, and normally do — so a derived scope is if anything *more* clearly right
+   there, because the tracked artifacts are the whole of what the question could be about. A
+   codebase is the special case, and special by holding **more** rather than less: it is the one
+   kind of subject an agent can inspect *directly* as well as through its design. Expect that
+   case to be common and do not mistake it for the rule — a default shaped around it would
+   quietly assume an implemented system that most subjects do not have.
+
+   Of the three, exclude the **design graph** from your sweep: a design cannot be its own
+   subject. Sweep the artifacts always, and the implemented code when there is any. If some
+   artifacts genuinely live outside version control — a PLM system, a document store, a wiki —
+   sweep those too and hand over the paths; derivation is the default, not a limit on what you
+   may observe.
+
    **This step exists because every other check is blind to it.** Gaps, defects and reconcile
    all reason about nodes that are *already in the graph*, so a pass that modelled a third of
    the system reports the same `0 open gaps` as one that modelled all of it — and the
