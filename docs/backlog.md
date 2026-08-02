@@ -2937,9 +2937,39 @@ FRONTIER** (what has no unbuilt dependency) rather than THE build order, because
 order is one valid order among many and presenting it as the order asserts a schedule reflow2 has
 no business asserting.
 
-**Revised size: M, not L** — parts (2) and most of the machinery for (3) already exist. Still
-needs Anthony on Q2-as-restated and Q3 (how a forecast over time is modelled), and still a schema
-change, so it pulls in the upgrade-doc and stamp-movement checklist.
+**Revised size: M, not L** — parts (2) and most of the machinery for (3) already exist. Still a
+schema change, so it pulls in the upgrade-doc and stamp-movement checklist.
+
+**BOTH REMAINING VOCABULARY QUESTIONS ANSWERED BY ANTHONY 2026-08-01. BL-68 IS UNBLOCKED AND
+READY TO BUILD; nothing on it now waits on a person.** The two calls are recorded as `accepted`
+Decisions, which is where the reasoning lives — the row keeps only the shape:
+
+- **`dec:readiness-is-an-observation-the-threshold-is-the-judgement`** (Q2). Readiness gets its
+  **own construct** — integer level 1–9 with a `kind` of TRL/MRL — not a value in the `dimension`
+  enum. The schema decided this, not preference: `DimensionAssessment.score` is a float 0.0–1.0
+  documented *"0 = worst, 1 = best"*, so a 1–9 ladder only enters it lossily; the enum is a closed
+  list of **quality axes** and readiness is not a quality of the design but a fact about an
+  enabling technology; and `maturity` is already in that enum meaning *code* maturity, so TRL
+  beside it would be two things under one word — [BL-115]'s shape. **The threshold is stated on
+  what it gates and reflow2 REFUSES to default it**; absent, it reports *ungated*. That refusal is
+  what keeps the feature inside `dec:report-dont-judge`: a TRL is an observation, so computing
+  over it is `detect_gaps`-shaped, but *"below 5 is not buildable"* is a policy about risk
+  appetite. The precedent is measured, not argued — `Interface.medium` defaulting to REST made two
+  silent boundaries "agree" on a value neither chose (`ver:seam-incompatibility`, [BL-129]).
+- **`dec:readiness-forecast-is-a-temporal-fact`** (Q3). A forecast rides a **`TemporalFact`**
+  series on the technology, not a projected `DimensionObservation`. **The deciding argument is a
+  field name and it is not pedantry:** `observed_at` says *observed*, and nobody observed anything
+  in 2035 — recording a projection as an observation is [BL-157]'s fiction sitting inside the
+  machinery a roadmap is computed from, where it would propagate rather than sit still. Two
+  obligations ride along and must be built with it: the fact **marks itself forecast rather than
+  measured**, and it carries **confidence that decays with horizon** (`req:plans-move-honestly`).
+
+Both are wired `GOVERNED_BY` from `req:epochs-can-be-planned`, and the forecast decision
+`DEPENDS_ON` the representation one — *neither is useful alone*. **Caught while wiring them, and
+worth carrying: as first written they were ZERO-EDGE ISLANDS, and `loop_status`, `detect_gaps` and
+`detect_defects` all reported clean** — `disconnected_community` only reports clusters of 2+, so a
+node with no edges at all never surfaces. That is the known blind spot reproducing on new work;
+`propagate_from` returning `total_impacted: 0` is the cheap way to catch it.
 
 **BL-69 · `single_point_of_failure` measured connectivity on the wrong graph — DONE 2026-07-21** —
 *self-host review, 2026-07-21, while dispositioning the two SPOF warnings on reflow2's own graph.*
