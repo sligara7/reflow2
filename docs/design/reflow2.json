@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:53feb79fe68e3ba640d9ac558846a31e505fa13c79d5b615fd0667c0bdbe1926",
+  "content_hash": "sha256:4521cbad48440294de6ef47434eef195b35e43bc4333862d776cd6781c6a8750",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -80,6 +80,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:certify-restructuring",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:compare"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4257,6 +4265,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:restructuring-is-certified",
+      "properties": {
+        "acted_at": "2026-08-02",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:roads-not-taken",
       "properties": {
         "acted_at": "2026-07-22",
@@ -5619,6 +5636,42 @@
         "action": "modified"
       },
       "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl180-function-preservation",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl180-function-preservation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:certify-restructuring"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl180-function-preservation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:maturity-restructuring-delta"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl180-function-preservation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:restructuring-is-certified"
     },
     {
       "edge_type": "CHANGED",
@@ -12770,6 +12823,12 @@
       "from_id": "cap:bulk-forms",
       "properties": {},
       "to_id": "dec:bulk-keeps-the-judgement-per-item"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:certify-restructuring",
+      "properties": {},
+      "to_id": "dec:maturity-restructuring-delta"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -31969,6 +32028,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:preserve",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:certify-restructuring"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:propagate",
       "properties": {
         "completeness": "complete"
@@ -32672,6 +32739,12 @@
       "from_id": "cap:bulk-forms",
       "properties": {},
       "to_id": "req:agent-native"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:certify-restructuring",
+      "properties": {},
+      "to_id": "req:restructuring-is-certified"
     },
     {
       "edge_type": "SATISFIES",
@@ -33983,6 +34056,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:preserve",
+      "properties": {},
+      "to_id": "cap:certify-restructuring"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:propagate",
       "properties": {},
       "to_id": "cap:propagate"
@@ -34664,6 +34743,14 @@
         "action": "created"
       },
       "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:preserve",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:preserve"
     },
     {
       "edge_type": "YIELDED",
@@ -35803,6 +35890,17 @@
       }
     },
     {
+      "node_id": "art:preserve",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4",
+        "location": "crates/reflow2-core/src/preserve.rs",
+        "name": "preserve.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:propagate",
       "node_type": "Artifact",
       "properties": {
@@ -36105,7 +36203,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f9826d4fac181a58978ecb09e37b439a4090bcbba3798fe18983e06f8a34e3c0",
+        "checksum": "sha256:9a2daac2b8c00696bf511be6120fc93de3a2f368e4e95e9765cc68371ec29c15",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -36577,6 +36675,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "One call where the surface measured N",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:certify-restructuring",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Classify every divergence between two as-designed records as function-bearing, structural, or unclassified, and return a verdict — preserved / not_preserved / indeterminate — naming the invariant checked and what the check could not see. Function is the Capability and Requirement population plus the SATISFIES links between them; structure is allocation, containment, interfaces and the seams between components. Unclassified never passes: an unrecognised divergence makes the verdict indeterminate, so a classifier that has not been taught a new part of the vocabulary cannot certify a design it never examined.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Certify that a restructuring preserved function",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -38665,6 +38776,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The served instructions gain the false-green counterweight, and the file carrying them becomes an Artifact the design can see (BL-174)"
+      }
+    },
+    {
+      "node_id": "chg:bl180-function-preservation",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Anthony chose the function-preservation check as the first step under the maturity-restructuring question — of the two offered (this, or fork-and-measure on the 14 cross-system seams)"
       }
     },
     {
@@ -44322,6 +44441,16 @@
       }
     },
     {
+      "node_id": "frag:art:preserve",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered preserve.rs"
+      }
+    },
+    {
       "node_id": "frag:art:propagate",
       "node_type": "Fragment",
       "properties": {
@@ -46876,6 +47005,21 @@
       }
     },
     {
+      "node_id": "req:restructuring-is-certified",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A restructuring is certified, not asserted",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When a design change claims to move structure while holding function invariant, reflow2 shall decide that claim from the two as-designed records alone — reporting whether any Capability or Requirement was added or removed and whether any SATISFIES link changed — and shall refuse to certify a divergence it cannot classify, answering indeterminate rather than passing it silently.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:review-expires-when-what-it-judged-changes",
       "node_type": "Requirement",
       "properties": {
@@ -48620,6 +48764,18 @@
       }
     },
     {
+      "node_id": "ver:preserve",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-02",
+        "level": "unit",
+        "method": "test",
+        "name": "The function-preservation check refuses what it cannot classify (crates/reflow2-core/tests/preserve.rs) — 15 cases. The suite defends the REFUSAL half, because a classifier that recognises ALLOCATED_TO and calls everything else benign hands out green certificates for changes it never looked at (BL-170's fourth quadrant). So: an unknown node type blocks certification, an unresolvable edge endpoint blocks it, a reworded capability blocks it (a rename and a scope change are the same bytes), and a known function change OUTRANKS an unknown, because more information cannot un-move a capability. `every_schema_node_type_has_a_class` walks the live schema — all 29 types — and fails the build when a new one lands with no class, so the omission is caught before a release rather than by a false green; it also asserts three known types are present, so it cannot pass by iterating an empty set. The load-bearing case is `depends_on_is_read_from_its_endpoints_not_its_type`: DEPENDS_ON is the functional DAG between Capabilities and packaging between Components, and classifying by edge type alone would file all 51 of this design's cross-system dependencies as function changes. MUTATION-CHECKED against four seeded regressions (unknown types falling back to structure, the verdict order inverted, one function endpoint sufficing for a function edge, a reworded function node waved through) — each was caught, none silently.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:propagate",
       "node_type": "Verification",
       "properties": {
@@ -49049,7 +49205,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9a7cfd7acac101efd5b5e3f335eadbc6d11a0d91ded323042aa5c7786b64f1d7",
+  "prev_content_hash": "sha256:53feb79fe68e3ba640d9ac558846a31e505fa13c79d5b615fd0667c0bdbe1926",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
