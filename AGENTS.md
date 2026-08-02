@@ -238,6 +238,7 @@ actually uses. **Both `-D warnings`, because that is what turns a local warning 
 
 ```bash
 cargo test --workspace                                   # both crates
+cargo test -p reflow2-core --no-default-features         # the in-memory backend, on its own
 cargo clippy -p reflow2-core --no-default-features --all-targets -- -D warnings
 cargo clippy -p reflow2-mcp --all-targets -- -D warnings
 cargo fmt --check
@@ -252,12 +253,20 @@ python3 tools/reflow2_check.py --export docs/design/reflow2.json   # design vs b
 > and the Python suites — `phase_trial`, `coherent_erosion_trial`, `model_the_loop`,
 > `stateless_seat_probe`, `test_init`, `test_shared_sessions`, `test_merge_driver`,
 > `test_degraded_server`, `test_nudge_path`, `test_loop_nudge`, `test_render_views`,
-> `test_stale_seat`, `test_reflow2_check`, `check_doc_versions` — so **green here is not green
+> `test_stale_seat`, `test_reflow2_check`, `check_doc_versions`, `test_check_doc_versions`,
+> `test_skill_lint` — so **green here is not green
 > there**, and *"believe CI"* below is not a figure of speech. Run the ones your change touches;
-> [docs/sharpening.md](docs/sharpening.md) says which instrument covers what. **Keeping these two
-> lists in agreement is manual and has already failed once (BL-159): the `-p reflow2-mcp` clippy
-> line was missing entirely and the `-p reflow2-core` one lacked `-D warnings`, so following this
-> block exactly still produced a red build.**
+> [docs/sharpening.md](docs/sharpening.md) says which instrument covers what.
+>
+> **KEEPING THESE TWO LISTS IN AGREEMENT IS NO LONGER MANUAL (BL-159).** `skill_lint.py` now fails
+> the build if any `cargo`/`python3` gate in `ci.yml` appears in neither this block nor the
+> sentence above, if a listed command is spelled differently from the way CI runs it (**flags
+> included** — that is the exact defect that filed BL-159: the `-p reflow2-mcp` clippy line was
+> missing entirely and the `-p reflow2-core` one lacked `-D warnings`, so following this block
+> exactly still produced a red build), or if either list names a gate CI has stopped running.
+> **So edit these two lists together with `ci.yml`, or the lint will say so.** Adding a gate to
+> `ci.yml` means adding it here — to the block if a developer should run it every time, to the
+> sentence above if not. Both answers are honest; silence is the one that is not.
 
 **Export the design EXACTLY ONCE PER PULL REQUEST, straight onto the committed file** — not once
 per commit. The distinction is not pedantry and it cost a broken chain on `56bc698`: PRs merge by

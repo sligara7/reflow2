@@ -224,6 +224,164 @@ NON_TOOL_TERMS = {
 }
 
 
+# ---------------------------------------------------------------------------
+# BL-159 — the documented gate list vs the gates CI actually runs
+# ---------------------------------------------------------------------------
+#
+# Two records of one contract, kept by hand, drifting: AGENTS.md's "A change is
+# done when all of these are clean" block, and `.github/workflows/ci.yml`. On
+# 2026-08-01 the block listed 8 commands against ci.yml's ~24 and one of the 8
+# carried the wrong flags, so following the file exactly still produced a red
+# build (PR #27). The file even predicts the experience — "green locally but red
+# in CI means your local run skipped a gate" — and then omitted the command that
+# caused it. The same shape as BL-152 (a skill instructing a call the tool made
+# unnecessary) and BL-154, and the same shape as BL-160 one layer down, where the
+# checksum rule had two records and only the gate spoke the second one.
+#
+# THE SPLIT THAT MAKES THIS HONEST, and it is BL-160's threshold lesson again:
+# the lint OBSERVES, the document JUDGES. "Is this ci.yml line a gate at all?" is
+# mechanical and lives here. "Should this gate be in the everyday local subset?"
+# is judgement and lives in AGENTS.md, where a human reads it.
+
+CI_WORKFLOW = REPO / ".github/workflows/ci.yml"
+AGENTS_MD = REPO / "AGENTS.md"
+
+# Lines in ci.yml that are not coherence gates. A gate is something a change can
+# be "clean" against; these are setup and prerequisites. Kept deliberately tiny —
+# every entry is a thing the lint stops watching, so the bar is "cannot fail in a
+# way a developer would call their change unclean".
+NOT_A_GATE = (
+    "python3 -m pip",  # installing a dependency is not a check
+    "cargo build",  # produces the binary the instruments need; clippy/test already compile
+)
+
+
+def _gate_identity(cmd: str) -> str | None:
+    """A stable name for one gate command, or None if it is not a gate.
+
+    EXACT on the script stem, never a substring: `check_doc_versions` and
+    `test_check_doc_versions` are two different suites, and a substring match
+    would report the second as covered by the first. That pair exists in this
+    repo today, which is why it is called out rather than left to luck.
+
+    Flags are deliberately dropped HERE and compared separately by the fidelity
+    check below — identity answers "is this gate documented at all", fidelity
+    answers "is it documented correctly". The BL-159 trigger was a FLAGS
+    difference, so collapsing the two would miss the very defect that filed it.
+    """
+    cmd = cmd.strip()
+    if any(cmd.startswith(p) for p in NOT_A_GATE):
+        return None
+    parts = cmd.split()
+    if not parts:
+        return None
+    if parts[0] == "python3":
+        for p in parts[1:]:
+            if p.endswith(".py"):
+                return pathlib.Path(p).stem
+        return None
+    if parts[0] == "cargo" and len(parts) > 1:
+        ident = f"cargo {parts[1]}"
+        if "--workspace" in parts:
+            ident += " --workspace"
+        if "-p" in parts:
+            ident += f" -p {parts[parts.index('-p') + 1]}"
+        return ident
+    return None
+
+
+def _strip_comment(line: str) -> str:
+    """Drop a trailing shell comment. The AGENTS.md block annotates its commands
+    (`cargo test --workspace   # both crates`), and the comment is not part of
+    the command being compared."""
+    return line.split("#", 1)[0].strip()
+
+
+def _first_quote_paragraph(tail: str) -> str:
+    """The first paragraph of the blockquote that follows the gate block.
+
+    The omissions are named there; later paragraphs are commentary that mentions
+    tools in prose. Scanning the whole quote read the backticked words `cargo`
+    and `python3` out of a sentence about this very lint and reported them as
+    gates CI had stopped running — found by the check failing on its own commit.
+    A bare `>` ends the paragraph.
+    """
+    lines: list[str] = []
+    started = False
+    for raw in tail.splitlines():
+        stripped = raw.lstrip()
+        if stripped.startswith(">"):
+            body = stripped[1:]
+            if started and not body.strip():
+                break
+            started = True
+            lines.append(body)
+        elif started:
+            break
+    return "\n".join(lines)
+
+
+def ci_gates() -> dict[str, str]:
+    """{identity: the full command as ci.yml runs it}.
+
+    Scans every line rather than parsing YAML: the workflow holds cargo/python3
+    invocations only inside `run:` steps, and a text scan needs no pyyaml, which
+    the core-gates job installs only for the schema step.
+    """
+    gates: dict[str, str] = {}
+    for raw in CI_WORKFLOW.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if line.startswith("run:"):
+            line = line[len("run:") :].strip()
+        elif line.startswith("- run:"):
+            line = line[len("- run:") :].strip()
+        if not (line.startswith("cargo ") or line.startswith("python3 ")):
+            continue
+        ident = _gate_identity(line)
+        if ident and ident not in gates:
+            gates[ident] = line
+    return gates
+
+
+def documented_gates() -> tuple[dict[str, str], set[str], bool]:
+    """What AGENTS.md says: ({identity: command} from the everyday block,
+    {name} declared as deliberately omitted, whether the block was found).
+
+    Both halves come from the ONE place a human reads them — the fenced block
+    and the blockquote directly under it. Deliberately not a second machine-
+    readable list: a lint that reads its own copy of the answer would be the
+    drift this check exists to catch, one turn of the screw further in.
+    """
+    text = AGENTS_MD.read_text(encoding="utf-8")
+    anchor = text.find("A change is done when all of these are clean")
+    if anchor < 0:
+        return {}, set(), False
+    start = text.find("```bash", anchor)
+    end = text.find("```", start + len("```bash")) if start >= 0 else -1
+    if start < 0 or end < 0:
+        return {}, set(), False
+
+    listed: dict[str, str] = {}
+    for raw in text[start + len("```bash") : end].splitlines():
+        cmd = _strip_comment(raw)
+        ident = _gate_identity(cmd)
+        if ident:
+            listed[ident] = cmd
+
+    omitted = set(re.findall(r"`([a-z0-9_]+)`", _first_quote_paragraph(text[end + 3 :])))
+    # Belt and braces: the runner words are never gate names, so prose that
+    # mentions them cannot be mistaken for a declaration however it is written.
+    #
+    # REPORTED RATHER THAN HIDDEN: reverting the paragraph scoping ALONE leaves
+    # every check passing, because this exclusion covers the only two words
+    # today's commentary happens to backtick. The two are not redundant in
+    # general — the exclusion handles `cargo`/`python3` wherever they appear,
+    # the scoping handles any OTHER backticked word a future paragraph adds —
+    # but against the current prose either one suffices, and saying so is worth
+    # more than a tidier claim.
+    return listed, omitted - {"cargo", "python3"}, True
+
+
 def served_tools() -> set[str]:
     """Tool names the MCP surface serves, from the #[tool] methods."""
     src = SERVICE.read_text(encoding="utf-8")
@@ -545,6 +703,66 @@ def main() -> int:
         not coupled,
         f"{coupled} — a recommendation is not an answer (dec:certainty-derived)",
     )
+
+    # ---- BL-159: the two records of the build-gate contract ------------------
+    print("== build gates (AGENTS.md vs ci.yml) ==")
+    ci = ci_gates()
+    listed, omitted, found_block = documented_gates()
+    check(
+        "AGENTS.md's gate block is findable (anchor + fenced bash block)",
+        found_block,
+        "the 'A change is done when all of these are clean' block moved or was "
+        "renamed — this check reads it by that sentence",
+    )
+    check(
+        "ci.yml parsed (refusing to lint against a broken read)",
+        len(ci) >= 10,
+        f"found only {len(ci)} gate commands in {CI_WORKFLOW.name}",
+    )
+
+    if found_block and len(ci) >= 10:
+        # COVERAGE. Every gate CI runs is either in the everyday block or named
+        # in the blockquote as deliberately left out. Silence is the failure
+        # mode: a gate in neither list is one a developer cannot know to run.
+        undeclared = sorted(i for i in ci if i not in listed and i not in omitted)
+        check(
+            "every gate ci.yml runs is either listed or declared omitted",
+            not undeclared,
+            f"in ci.yml and nowhere in AGENTS.md: {undeclared} — add each to the "
+            f"block if it belongs in the everyday subset, or name it in the "
+            f"blockquote if it does not. Both are honest; silence is not",
+        )
+
+        # FIDELITY, and this is the check that would have caught the defect that
+        # filed BL-159. The `-p reflow2-core` clippy line WAS in the block; it
+        # simply lacked `-D warnings`, so a coverage-only check would have passed
+        # it while a local run still went green against a red CI.
+        differing = sorted(
+            f"{i}\n        AGENTS.md: {listed[i]}\n        ci.yml:    {ci[i]}"
+            for i in listed
+            if i in ci and " ".join(listed[i].split()) != " ".join(ci[i].split())
+        )
+        check(
+            "a listed gate is spelled exactly as ci.yml runs it (flags included)",
+            not differing,
+            "\n      " + "\n      ".join(differing) if differing else "",
+        )
+
+        # Neither list may rot in the other direction. A documented gate CI does
+        # not run is a command nobody's build depends on, and a name in the
+        # omitted list that CI dropped is a promise about work that stopped.
+        phantom = sorted(i for i in listed if i not in ci)
+        check(
+            "every gate the block lists is one ci.yml actually runs",
+            not phantom,
+            f"documented but absent from ci.yml: {phantom}",
+        )
+        stale_omissions = sorted(o for o in omitted if o not in ci)
+        check(
+            "the omitted list names no gate ci.yml has stopped running",
+            not stale_omissions,
+            f"named as omitted but not in ci.yml: {stale_omissions}",
+        )
 
     if failures:
         print(f"\n{len(failures)} check(s) FAILED")

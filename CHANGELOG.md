@@ -31,6 +31,24 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **The build now refuses to let its own gate list drift** (BL-159). AGENTS.md's *"A change is
+  done when all of these are clean"* block and `.github/workflows/ci.yml` were two hand-kept
+  records of one contract, and following the documented one exactly still produced a red build.
+  `skill_lint.py` now cross-checks them four ways: **coverage** (every `cargo`/`python3` gate CI
+  runs is either in the block or named in the blockquote as deliberately omitted), **fidelity** (a
+  listed gate is spelled exactly as CI runs it, *flags included*), and both rot directions — a
+  documented gate CI does not run, and an omitted name CI has stopped running. Fidelity is the
+  load-bearing one: the defect that filed BL-159 was a flags difference on a gate that *was*
+  listed, which coverage alone cannot see. The lint **observes**, the document **judges** — whether
+  a `ci.yml` line is a gate at all is mechanical and lives in code; whether a gate belongs in the
+  everyday local subset is judgement and stays in AGENTS.md, read from the prose a person already
+  reads rather than a parallel machine-readable list. It found two real holes immediately
+  (`cargo test -p reflow2-core --no-default-features` and `test_check_doc_versions`, in `ci.yml`
+  and in neither list) and one in itself. New hermetic suite `tools/test_skill_lint.py`, 14 cases;
+  mutation-checked seven ways.
+
 ### Fixed
 
 - **A checksum's LENGTH is a dialect too, and the compensation lived in the wrong layer**
