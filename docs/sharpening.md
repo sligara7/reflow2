@@ -85,6 +85,52 @@ untyped parameters, and BL-32's stale server, which `smoke_mcp.py` cannot catch 
 because it spawns a fresh binary every run. **Asserting the published contract is a different check
 from asserting behaviour through your own client, and it is the one that catches this class.**
 
+## 2b. Friction is not the only generator — a false green is the other one
+
+§1 says you notice a blind spot by *bumping into the furniture*. That is friction: the tool fights
+you, and the wall is the evidence. Three of the items cited above arrived that way, and it is the
+generator the **report-friction** skill exists to harvest.
+
+**But friction is the loud half, and the loud half is not the dangerous half.** On 2026-08-02 a
+single session produced four findings and **not one of them was a wall.** Every one came from the
+opposite direction — checking a claim reflow2 had already reported as fine:
+
+| What reflow2 said | What checking it showed |
+|---|---|
+| `0 gaps, 0 defects, loop clean` | ten of eleven `schema/*.yaml` domains unregistered, through eleven releases (BL-165) |
+| `link_artifact` → success | `last_confirmed_at` silently erased on every re-link, and `verified` artifacts downgraded (BL-166) |
+| `reflow2 check: OK`, **and both CI jobs green** | the design's `graph_id` had been silently changed — the design was renamed (BL-169) |
+| a sweep's output, taken at face value | `Verification.location` set on none of 101 nodes, so ~71 test files can never read as claimed (BL-171) |
+
+Friction announces itself. **A false green is silent and looks exactly like health**, which makes it
+the more expensive of the two — BL-169 shipped a renamed design through a fully green pipeline, and
+the only signal anywhere in the system was a `provenance_note` string that nothing gates on.
+
+> **Rule.** A successful tool response is a **claim**, not a result. `0 gaps` means *nothing was
+> detected*, never *nothing is wrong* — the §1 line, "reflow2's silence is never evidence that
+> reflow2 is healthy", applies with equal force to its **success** output and not only to its
+> quiet.
+
+The four moves that turn a green into evidence, each of which produced one of the rows above:
+
+- **Read the result back.** After a write, fetch the node and confirm it says what you think you
+  wrote. This is what exposed an erasure the tool had reported as success.
+- **Diff two paths that ought to agree.** Script-built against hand-written; live graph against
+  committed export. Agreement is worth having; disagreement is a finding you would not otherwise
+  have looked for.
+- **Ask why odd output is odd, before excluding it.** Output that looks like noise is a hypothesis
+  about the tool, not a nuisance to filter. Suppressing it is §2's accommodation wearing different
+  clothes.
+- **Ask whether a gate would have caught it.** Usually it would not, and *that* is the finding —
+  larger than the defect that prompted the question.
+
+**This is the counterweight to using the tools heavily, not an argument against it.** Both are
+required: running the tools is what generates the evidence, and evaluating their answers is what
+turns it into a finding. Skip the tools and nothing is produced; trust their output and everything
+produced is discarded. The strongest single instance is BL-165's root cause — `coverage_report`
+could name all ten unregistered domains on the first call, so **the detector was never missing.**
+Nothing had ever called it, and the backlog row had spent days asserting the opposite.
+
 ## 3. The method
 
 Five practices, each earned:
