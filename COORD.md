@@ -65,6 +65,7 @@ Add yourself if you're new here.
 
 
 
+- BL-68 — @ajs — since 2026-08-02 — schema/readiness.yaml, schema/temporal.yaml, crates/reflow2-core/src/readiness.rs, crates/reflow2-mcp/src/service.rs, docs/upgrading-to-v0.22.0.md, docs/design/reflow2.json (readiness as a GATING score with a forecast — the last unbuilt part of BL-68; schema change, so it pulls the bump and the upgrade doc)
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
