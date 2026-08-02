@@ -31,6 +31,21 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **reflow2's own kit install is current again** (BL-175). This repository was carrying a
+  `REFLOW2.md` from reflow2 **0.15.0** — seven releases behind — while `CLAUDE.md` directed every
+  agent here to read it. It is now the 42-line pointer that `req:thin-install` intends, whose
+  closing line is the guarantee that stops this recurring: *"Upgrading reflow2 should never
+  produce a diff in this repository."*
+
+  **The cause was not neglect, it was hand-editing a file the installer owns.** `place_kit_file()`
+  refreshes a kit file only while its content still matches the manifest hash — the guard that
+  stops an installer destroying local edits. Three commits edited `REFLOW2.md` in place instead of
+  editing `getting-started/` and re-running, so the hash diverged and the file froze: every later
+  install correctly refused to touch it. **The protection that keeps your edits safe is the same
+  mechanism that keeps a stale file stale**, silently, until someone reads `--check`.
+
 ### Added
 
 - **The served instructions now say what to do when reflow2 does *not* get in your way** (BL-174).
