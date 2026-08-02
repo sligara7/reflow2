@@ -2875,6 +2875,70 @@ Why it matters: no roadmapping tool today *derives and defends* the delivery tim
 real readiness of the technology — they assert it. reflow2's thread + propagate makes derivation
 possible, which is a capability, not a viewpoint.
 
+---
+
+**RE-SCOPED 2026-08-01 — still UNBUILT, but two of its three parts have been overtaken, and the
+remaining one is smaller and sharper than the row above describes.**
+
+*First, the fact, measured rather than recalled: `TRL`, `MRL` and `readiness` appear **nowhere** in
+the code or the schema. The only neighbouring vocabulary is the `maturity` dimension in
+`schema/dimensions.yaml`, which **trends and does not gate** — exactly the distinction part (1)
+was filed to draw. Recorded because the belief that this was built has been carried before; the
+grep is the answer, not memory.*
+
+**Part (2) — increments/alternatives as comparable first-class entities — is substantially DONE,
+by two independent routes that between them answer vocabulary question 1.**
+
+- *Design **space**.* [BL-70] v1 (2026-07-22) settled it: `dec:alternatives-unranked-forkable`
+  (accepted) makes alternatives **branch-by-file**, not nodes in one graph and not world-tags —
+  and it settled the harder half too, that they are **unranked**, with the human doing credit
+  assignment in hindsight. `analyze_alternatives` lays N branches side by side on the same
+  measures.
+- *Design **time**.* `req:epochs-can-be-planned` (accepted) and `cap:satisfaction-schedule`
+  (realized, 2026-07-30) deliver the roadmap **atom** in Anthony's own words — *"a mapping of
+  requirements to the epoch or increment where they are satisfied"* — as the `SCHEDULED_FOR` edge
+  carrying `expected` / `required` modality, to a `DesignEpoch` (time) or a `Release` (capability
+  increment), which is precisely the two-paired-views framing. Plus planned epochs
+  (`ver:planned-epochs`) and `arrival_delta` (`ver:arrival-delta`, 13 cases) for plan-versus-actual.
+
+So Q1 — *"is an increment a new node type, a `Release` variant, or a scoped sub-graph?"* — **no
+longer needs answering.** It was two questions wearing one coat, and each half has its own
+accepted answer.
+
+**Part (3) — the derived roadmap — is HALF done, and the built half proves the shape works.**
+`dec:release-trigger` already computes a cut from *"every REQUIRED item scheduled for the
+increment is delivered"* — **the trigger is computed, not scheduled**, which is exactly BL-68's
+thesis in miniature and evidence that "derive the timeline, don't declare it" is implementable
+here. What is missing is only the direction: today the epoch is confirmed **backwards** from
+delivery, and BL-68 wants it computed **forwards** from readiness.
+
+**Part (1) — readiness as a GATING score with a forecast — is the whole of what remains,** and
+questions 2 and 3 stand unchanged. It is also now the *only* input the forward computation lacks.
+
+**THE ONE THING THE RE-SCOPE ADDS, and it sharpens Q2 rather than answering it.** Part (1) asks
+for a score that **gates**, and reflow2 has an accepted decision against storing scores that
+decide — `dec:alternatives-unranked-forkable` (*"the human is the reward function"*) and
+`dec:report-dont-judge`. These do **not** conflict, and saying why is the design work: **a TRL is
+an observation, not a preference** — it is an input fact about a technology, in the same family as
+a checksum or a `DimensionAssessment`, and computing over it is `detect_gaps`-shaped, not
+ranking-shaped. **The judgement is not the score; it is the THRESHOLD** — *"TRL below 5 means not
+buildable yet"* is a policy, and it is the user's to set. So Q2's real content is not *"new
+construct or dimension enum?"* but ***"where does the threshold live, and who is allowed to
+default it?"*** — with the strong prior that reflow2 must refuse to invent one, the same way
+`Interface.medium` defaulting to REST was found to make two silent boundaries "agree" on a value
+neither had chosen (`ver:seam-incompatibility`).
+
+**[BL-150]'s `dec:idea-build-order` is the other half and should be taken with this row, not
+separately.** BL-68 asks whether a *thing* is ready; that asks whether its *dependencies* are —
+and it carries the same overreach risk, with the same answer already drafted: report the **READY
+FRONTIER** (what has no unbuilt dependency) rather than THE build order, because a topological
+order is one valid order among many and presenting it as the order asserts a schedule reflow2 has
+no business asserting.
+
+**Revised size: M, not L** — parts (2) and most of the machinery for (3) already exist. Still
+needs Anthony on Q2-as-restated and Q3 (how a forecast over time is modelled), and still a schema
+change, so it pulls in the upgrade-doc and stamp-movement checklist.
+
 **BL-69 · `single_point_of_failure` measured connectivity on the wrong graph — DONE 2026-07-21** —
 *self-host review, 2026-07-21, while dispositioning the two SPOF warnings on reflow2's own graph.*
 Size **S–M**. ~~S–M~~
