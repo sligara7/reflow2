@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:27f02c57ab600b579bbef68db8ffe25efcd4c345b8def222638afbb91b64af85",
+  "content_hash": "sha256:5ec3375aec879f6f349158f78c3b66b17e7a0283b22ef158d9b0bbf616e806e4",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5406,6 +5406,33 @@
         "action": "modified"
       },
       "to_id": "cap:skill-triggers"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl165-schema-artifacts",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl165-schema-artifacts",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl165-schema-artifacts",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:schema"
     },
     {
       "edge_type": "CHANGED",
@@ -30469,11 +30496,99 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:schema-build",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-core",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-dimensions",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-environment",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-functional",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-inference",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-operate",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:schema-readiness",
       "properties": {
         "completeness": "complete"
       },
       "to_id": "cap:readiness-gating"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-readiness",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-structure",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-temporal",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-verify",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:schema"
     },
     {
       "edge_type": "REALIZES",
@@ -33055,11 +33170,91 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:schema-build",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:schema-core",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:schema-dimensions",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:schema-dimensions"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:schema-environment",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:schema-environment"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:schema-functional",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:schema-functional"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:schema-inference",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:schema-inference"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:schema-operate",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:schema-operate"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:schema-readiness",
       "properties": {
         "action": "created"
       },
       "to_id": "art:schema-readiness"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:schema-structure",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:schema-temporal",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:schema-verify",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:schema-verify"
     },
     {
       "edge_type": "YIELDED",
@@ -33388,7 +33583,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a91200b3bc4542cbf1f6cec695e8906b109a476309a923fff24c9a6702a3bcf9",
+        "checksum": "sha256:caeaf1afdbdb58a9506465da433bfaf4b2311ecb9be19c810d63e24446476d59",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
         "status": "realized"
@@ -34144,6 +34339,90 @@
       }
     },
     {
+      "node_id": "art:schema-build",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:d20010a455509deb8bb9b4ea9e72cf8bd0b343353ca3c6b92a42c9424457b3f2",
+        "last_confirmed_at": "2026-08-02",
+        "location": "schema/build.yaml",
+        "name": "build.yaml",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:schema-core",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:81403d844b84c265da25581c0e3794dbaabae825eebfca0de0917b7f2cfe5322",
+        "last_confirmed_at": "2026-08-02",
+        "location": "schema/core.yaml",
+        "name": "core.yaml",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:schema-dimensions",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9",
+        "last_confirmed_at": "2026-08-02",
+        "location": "schema/dimensions.yaml",
+        "name": "dimensions.yaml",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:schema-environment",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc",
+        "last_confirmed_at": "2026-08-02",
+        "location": "schema/environment.yaml",
+        "name": "environment.yaml",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:schema-functional",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:831166aee7d4de9bd90e5826d4b6ef474dd8be49f2cc14609f32d12039893222",
+        "last_confirmed_at": "2026-08-02",
+        "location": "schema/functional.yaml",
+        "name": "functional.yaml",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:schema-inference",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:52a5e92ffed17c501f9d849dcadbb5f4614d35b79c731a90860d4e7d7056b02d",
+        "last_confirmed_at": "2026-08-02",
+        "location": "schema/inference.yaml",
+        "name": "inference.yaml",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:schema-operate",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:543955d24d224ff0c0aff6f28928fa728248dc7694662b22cab0e8d1f1cc5168",
+        "last_confirmed_at": "2026-08-02",
+        "location": "schema/operate.yaml",
+        "name": "operate.yaml",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:schema-readiness",
       "node_type": "Artifact",
       "properties": {
@@ -34152,6 +34431,42 @@
         "last_confirmed_at": "2026-08-02",
         "location": "schema/readiness.yaml",
         "name": "readiness.yaml",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:schema-structure",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:8e528069f11575d45725f0fd260a992ba153cfd99de84cfabca797f9b60bccc0",
+        "last_confirmed_at": "2026-08-02",
+        "location": "schema/structure.yaml",
+        "name": "structure.yaml",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:schema-temporal",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09",
+        "last_confirmed_at": "2026-08-02",
+        "location": "schema/temporal.yaml",
+        "name": "temporal.yaml",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:schema-verify",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980",
+        "last_confirmed_at": "2026-08-02",
+        "location": "schema/verify.yaml",
+        "name": "verify.yaml",
         "status": "realized"
       }
     },
@@ -36736,6 +37051,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "BL-163: the impact-check trigger keys on a ChangeEvent's PRESENCE where it means its PRECEDENCE — no op set counts propagate_change at all, so recording the change AFTER the edit satisfies the trigger that exists to catch recording the change after the edit"
+      }
+    },
+    {
+      "node_id": "chg:bl165-schema-artifacts",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The eleven schema domains become registered Artifacts, and the self-model's filesystem sweep stops being blind to schema/ (BL-165)"
       }
     },
     {
@@ -42415,6 +42738,76 @@
       }
     },
     {
+      "node_id": "frag:art:schema-build",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered build.yaml"
+      }
+    },
+    {
+      "node_id": "frag:art:schema-core",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered core.yaml"
+      }
+    },
+    {
+      "node_id": "frag:art:schema-dimensions",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered dimensions.yaml"
+      }
+    },
+    {
+      "node_id": "frag:art:schema-environment",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered environment.yaml"
+      }
+    },
+    {
+      "node_id": "frag:art:schema-functional",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered functional.yaml"
+      }
+    },
+    {
+      "node_id": "frag:art:schema-inference",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered inference.yaml"
+      }
+    },
+    {
+      "node_id": "frag:art:schema-operate",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered operate.yaml"
+      }
+    },
+    {
       "node_id": "frag:art:schema-readiness",
       "node_type": "Fragment",
       "properties": {
@@ -42422,6 +42815,36 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered readiness.yaml"
+      }
+    },
+    {
+      "node_id": "frag:art:schema-structure",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered structure.yaml"
+      }
+    },
+    {
+      "node_id": "frag:art:schema-temporal",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered temporal.yaml"
+      }
+    },
+    {
+      "node_id": "frag:art:schema-verify",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered verify.yaml"
       }
     },
     {
@@ -46952,7 +47375,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:fe31bc0cbcc0dbccc08ae78fcd2db8b0d1dffdaed99adc1fc12a55a55514b808",
+  "prev_content_hash": "sha256:27f02c57ab600b579bbef68db8ffe25efcd4c345b8def222638afbb91b64af85",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

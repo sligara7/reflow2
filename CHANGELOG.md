@@ -31,6 +31,47 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **Re-registering a file no longer erases what the design already knew about it** (BL-166).
+  `link_artifact` built its properties from the four fields it takes and wrote them with the
+  create-or-**replace** form, so every one of `Artifact`'s other five was silently re-defaulted.
+  The casualty that matters is `last_confirmed_at` — the dated evidence that someone actually
+  checked the file against reality — which made a swept artifact indistinguishable from one nobody
+  ever looked at, the exact distinction `reconcile_artifacts(record_events: true)` exists to draw.
+  **`status` was the quieter half:** it only ever *looked* safe because its default (`realized`)
+  happened to equal the stored value, so an Artifact at `verified` was being silently downgraded
+  every time it was re-linked. A re-link still moves the properties it is given; it no longer
+  drops the rest.
+
+  **The evidence was in the committed design the whole time:** of the 34 artifacts
+  `tools/build_design_graph.py` re-links on every run, *zero* carried a `last_confirmed_at`, while
+  the only two in the entire design that did were the two registered by hand the day before and
+  never re-linked since. This is BL-46 — a partial edit silently resetting a verified capability
+  to `planned` — reappearing at a second call site; `upsert_node` was written for that incident
+  and documents this precise hazard, and `set_artifact_checksum` twenty lines below hand-rolls the
+  same merge rather than calling it.
+
+### Changed
+
+- **The eleven `schema/*.yaml` domains are registered artifacts** (BL-165), so the vocabulary is
+  in release manifests, `reconcile_artifacts` can see it drift, and a ChangeEvent about a schema
+  edit has somewhere correct to point. Ten of the eleven had never been registered, through eleven
+  releases — which is how a v0.22.0 ledger entry came to claim `src/temporal.rs` had changed when
+  the edit was to `schema/temporal.yaml`: with nowhere correct to point, the nearest-looking node
+  gets named. **They are derived from the directory, not listed**, so a twelfth domain registers
+  itself. No manifest is back-filled: the ten enter from the next release, per the same reasoning
+  that left documentation out of the nine releases before v0.10.1 (`dec:intent-preserved`).
+
+  **The root cause was not ten missing calls.** `coverage_report` names all ten on demand — the
+  detector was never missing. What was missing is that the filesystem sweep in
+  `build_design_graph.py`, written after the 2026-07-20 self-adopt found 15 of 33 source files
+  unregistered, had a hardcoded scope of the two `src/` trees — so the one probe built to catch
+  unregistered files could not see the directory AGENTS.md calls *"the foundation everything
+  builds on"*. It sweeps `schema/*.yaml` now, and says in its own words when a swept file has no
+  Artifact at all instead of leaving the reader to decode a synthetic id. That sentence found two
+  more on its first run (BL-167).
+
 ## [0.22.0] — 2026-08-02
 
 ### Fixed

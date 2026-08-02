@@ -183,3 +183,88 @@ fn documents_refuses_a_missing_endpoint_rather_than_dangling() {
         "a refused link must leave no edge behind"
     );
 }
+
+#[test]
+fn re_linking_an_artifact_keeps_what_the_design_already_knew() {
+    // WRITTEN BEFORE THE FIX, and both assertions failed (BL-165).
+    //
+    // `link_artifact` is idempotent by design — `tools/build_design_graph.py`
+    // re-links all 34 of its artifacts on every run, and a re-register after a
+    // file edit is the ordinary way to move a baseline. But it built its
+    // properties from the four fields it takes and called the create-or-REPLACE
+    // form, so every property it did not name was silently re-defaulted.
+    //
+    // The two that matter are the two below. `last_confirmed_at` is the dated
+    // evidence that a human or a sweep actually checked this file against
+    // reality — losing it makes a confirmed artifact indistinguishable from one
+    // nobody ever looked at, which is precisely the distinction
+    // `reconcile_artifacts(record_events: true)` exists to record. And `status`
+    // is the subtler one: it only ever LOOKED safe because Artifact.status
+    // defaults to `realized`, so re-defaulting was invisible on a realized
+    // artifact and silently DOWNGRADED a verified one.
+    let mut g = graph_with_capability();
+    let opts = || LinkArtifactOptions {
+        artifact_id: "art:ball".into(),
+        name: "Ball.cs".into(),
+        artifact_type: Some("code".into()),
+        location: Some("src/Ball.cs".into()),
+        checksum: Some("sha256:abc123".into()),
+        target_type: node::CAPABILITY.into(),
+        target_id: "cap:flight".into(),
+        completeness: None,
+        provenance: None,
+        fragment_id: None,
+    };
+    g.link_artifact(opts()).unwrap();
+
+    // Someone then records what the design learned about the file: it was
+    // checked on a date, and a check proved it good.
+    let mut props = g
+        .get_node(node::ARTIFACT, "art:ball")
+        .unwrap()
+        .unwrap()
+        .properties;
+    props.insert("last_confirmed_at".into(), "2026-08-02".into());
+    props.insert("status".into(), "verified".into());
+    g.create_node(node::ARTIFACT, "art:ball", props).unwrap();
+
+    // Re-register the same file — the idempotent call the rebuild makes.
+    g.link_artifact(opts()).unwrap();
+
+    // `.get()`, not `[..]`: the pre-fix behaviour DROPS the key outright, and an
+    // index panic reports "no entry found for key" instead of the diagnosis.
+    let art = g.get_node(node::ARTIFACT, "art:ball").unwrap().unwrap();
+    assert_eq!(
+        art.properties
+            .get("last_confirmed_at")
+            .and_then(|v| v.as_str()),
+        Some("2026-08-02"),
+        "re-linking erased the dated confirmation — a swept artifact must not \
+         become indistinguishable from an unswept one"
+    );
+    assert_eq!(
+        art.properties.get("status").and_then(|v| v.as_str()),
+        Some("verified"),
+        "re-linking silently downgraded a verified artifact to the schema \
+         default — the failure BL-46 already cost us once"
+    );
+
+    // The counterweight: a re-link must still UPDATE what it does name, or
+    // preserving state would just be a way of ignoring the caller.
+    let mut moved = opts();
+    moved.checksum = Some("sha256:def456".into());
+    g.link_artifact(moved).unwrap();
+    let art = g.get_node(node::ARTIFACT, "art:ball").unwrap().unwrap();
+    assert_eq!(
+        art.properties.get("checksum").and_then(|v| v.as_str()),
+        Some("sha256:def456"),
+        "a re-link must still move the properties it was given"
+    );
+    assert_eq!(
+        art.properties
+            .get("last_confirmed_at")
+            .and_then(|v| v.as_str()),
+        Some("2026-08-02"),
+        "...without that becoming a licence to drop the rest"
+    );
+}
