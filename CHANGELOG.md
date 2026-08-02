@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.22.1] — 2026-08-02
+
 ### Fixed
 
 - **Restoring a design no longer renames it** (BL-169). `import_graph` loaded a document into the
