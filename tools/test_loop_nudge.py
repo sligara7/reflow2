@@ -246,6 +246,14 @@ class SkillTriggers(unittest.TestCase):
     decided to send, so the count of nudges is unchanged and only the sentence
     improves. `ver:skill-triggers`'s own counterweight says a trigger firing on
     correct work is the BL-23/BL-42 failure, and this exists to reduce nagging.
+
+    STILL TRUE OF THE SHAPES, AND NO LONGER TRUE OF THE FILE (BL-163). The
+    matcher below still cannot arm the hook — `test_shapes_never_arm_the_hook_by
+    _themselves` pins that and still passes. But BL-163 added a Stop branch that
+    DOES arm, for the recorded-but-never-propagated session, because no shape
+    could ever reach it: that session has no unchecked writes and has touched
+    reflow2, so there was no nudge for a shape to refine. See `PropagatePrecedes`
+    below, which carries that branch's own counterweights.
     """
 
     def setUp(self):
@@ -274,6 +282,13 @@ class SkillTriggers(unittest.TestCase):
     def test_a_recorded_change_with_no_artifact_link_names_link_artifacts(self):
         run_hook(self.project, edit_tool())
         run_hook(self.project, post_tool("mcp__reflow2__record_change"))
+        # BL-163 added an EARLIER shape between these two — a change recorded
+        # and never propagated — so propagating is now part of clearing the way
+        # to this one, exactly as recording the change already was. The shapes
+        # are ordered earliest-first in the loop and PROPAGATE precedes the
+        # as-built reconcile, so this ordering is the file's own stated rule
+        # rather than a new one.
+        run_hook(self.project, post_tool("mcp__reflow2__propagate_change"))
         reason = self._stop_reason()
         self.assertIn("link-artifacts", reason)
         self.assertNotIn("impact-check", reason)
@@ -312,12 +327,41 @@ class SkillTriggers(unittest.TestCase):
 
     def test_THE_COUNTERWEIGHT_a_session_that_did_it_right_gets_nothing(self):
         """The case that matters most. A session that edited, recorded the
-        change, linked the artifact, captured intent AND ran the gap pass has
-        no shape — and, having run detect_gaps, no nudge at all."""
+        change, PROPAGATED it, linked the artifact, captured intent AND ran the
+        gap pass has no shape — and, having run detect_gaps, no nudge at all.
+
+        BL-163 ADDED `propagate_change` TO THIS FIXTURE, and that is a change to
+        what "did it right" MEANS, not a weakening of the counterweight. The
+        assertion is untouched: correct work is still met with silence. What
+        moved is the definition of correct — recording a change and never asking
+        what it reaches is the bookkeeping-after this hook's own message calls
+        out, so a session that stops there was never doing it right; it was
+        merely invisible. The sibling test below pins the exact fixture this one
+        used to have, and requires it to fire.
+        """
+        run_hook(self.project, edit_tool())
+        for op in ("record_change", "propagate_change", "link_artifact",
+                   "add_requirement", "detect_gaps"):
+            run_hook(self.project, post_tool(f"mcp__reflow2__{op}"))
+        self.assertIsNone(self._stop_reason(), "correct work must be met with silence")
+
+    def test_BL163_the_old_counterweight_fixture_is_exactly_the_defect(self):
+        """The fixture the test above carried before BL-163, which passed.
+
+        Edited code, recorded the change, linked the artifact, captured intent,
+        ran the gap pass — and never once asked what the change reached. Every
+        older branch reads this as a clean session: `record_change` is a graph
+        write, `detect_gaps` clears the write count, and `touched` is true, so
+        neither the write nudge nor the bypass nudge can see it. That is how a
+        whole session of bookkeeping-after passed for correct work.
+        """
         run_hook(self.project, edit_tool())
         for op in ("record_change", "link_artifact", "add_requirement", "detect_gaps"):
             run_hook(self.project, post_tool(f"mcp__reflow2__{op}"))
-        self.assertIsNone(self._stop_reason(), "correct work must be met with silence")
+        reason = self._stop_reason()
+        self.assertIsNotNone(reason, "bookkeeping-after must no longer read as clean")
+        self.assertIn("propagate_change was never called", reason)
+        self.assertIn("impact-check", reason)
 
     def test_shapes_never_arm_the_hook_by_themselves(self):
         """A shape with NO unchecked writes stays silent. The matcher refines an
@@ -329,9 +373,9 @@ class SkillTriggers(unittest.TestCase):
 
     def test_a_rendering_written_with_nothing_stored_names_session_artifacts(self):
         run_hook(self.project, edit_tool(path="docs/design/flow.svg"))
-        # Record the change and link the artifact so the earlier shapes clear
-        # and this one is what remains.
-        for op in ("record_change", "link_artifact", "add_capability"):
+        # Record the change, PROPAGATE it (BL-163) and link the artifact so the
+        # earlier shapes clear and this one is what remains.
+        for op in ("record_change", "propagate_change", "link_artifact", "add_capability"):
             run_hook(self.project, post_tool(f"mcp__reflow2__{op}"))
         run_hook(self.project, post_tool("mcp__reflow2__detect_gaps"))
         run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
@@ -343,7 +387,7 @@ class SkillTriggers(unittest.TestCase):
 
     def test_an_ordinary_code_edit_is_not_a_rendering(self):
         run_hook(self.project, edit_tool(path="crates/reflow2-core/src/heal.rs"))
-        for op in ("record_change", "link_artifact", "add_capability"):
+        for op in ("record_change", "propagate_change", "link_artifact", "add_capability"):
             run_hook(self.project, post_tool(f"mcp__reflow2__{op}"))
         run_hook(self.project, post_tool("mcp__reflow2__detect_gaps"))
         run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
@@ -352,7 +396,8 @@ class SkillTriggers(unittest.TestCase):
 
     def test_a_stored_rendering_gets_no_nudge(self):
         run_hook(self.project, edit_tool(path="docs/x.svg"))
-        for op in ("record_change", "link_artifact", "content_put", "add_capability"):
+        for op in ("record_change", "propagate_change", "link_artifact",
+                   "content_put", "add_capability"):
             run_hook(self.project, post_tool(f"mcp__reflow2__{op}"))
         run_hook(self.project, post_tool("mcp__reflow2__detect_gaps"))
         run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
@@ -366,6 +411,144 @@ class SkillTriggers(unittest.TestCase):
         reason = self._stop_reason()
         self.assertIn("loop_status", reason)
         self.assertNotIn("The shape says", reason)
+
+
+class PropagatePrecedes(unittest.TestCase):
+    """BL-163 — the trigger measures a ChangeEvent's PRESENCE, not its PRECEDENCE.
+
+    `CHANGE_OPS` held `record_change` and `add_change_event` — both RECORDING
+    ops — and no set counted `propagate_change` at all, so the hook could not
+    separate recording from looking because it never counted looking. The
+    impact-check shape fired on `changes == 0`, i.e. only when a session recorded
+    NOTHING; a session that edited code and wrote its ChangeEvents up afterwards
+    had `changes > 0` and was met with silence, while every one of those events
+    was the bookkeeping-after the hook's own message says is not the loop.
+
+    The three clauses of the fix are each pinned by a counterweight below, and
+    the FIRST of them is the one the row demanded: a session that propagated
+    must get nothing.
+    """
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.project = pathlib.Path(self.tmp.name)
+        (self.project / ".reflow2").mkdir()
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def _stop_reason(self, session="s1", env=None):
+        r = run_hook(self.project, stop(session), env=env)
+        if not r.stdout.strip():
+            return None
+        return json.loads(r.stdout).get("reason", "")
+
+    def _worked(self, *ops, session="s1", edits=1):
+        for _ in range(edits):
+            run_hook(self.project, edit_tool(session=session))
+        for op in ops:
+            run_hook(self.project, post_tool(f"mcp__reflow2__{op}", session=session))
+
+    # --- the true positive -------------------------------------------------
+
+    def test_a_change_recorded_and_never_propagated_is_bookkeeping(self):
+        """The defect, end to end, through the hook the harness actually runs.
+
+        `loop_status` here is what makes the case sharp: it clears the write
+        count, so the write nudge is disarmed and the session looks clean to
+        every branch that existed before this one.
+        """
+        self._worked("record_change", "loop_status")
+        reason = self._stop_reason()
+        self.assertIsNotNone(reason)
+        self.assertIn("propagate_change was never called", reason)
+        self.assertIn("impact-check", reason)
+        self.assertIn("Bookkeeping is not the loop", reason)
+
+    def test_add_change_event_is_recording_too_not_looking(self):
+        """Both CHANGE_OPS are recording ops — the bulk of the finding in one
+        line — so the other one must not clear this either."""
+        self._worked("add_change_event", "loop_status")
+        reason = self._stop_reason()
+        self.assertIsNotNone(reason)
+        self.assertIn("propagate_change was never called", reason)
+
+    # --- clause 1: `propagates == 0`. THE COUNTERWEIGHT THE ROW DEMANDED ----
+
+    def test_THE_COUNTERWEIGHT_a_session_that_propagated_gets_nothing(self):
+        """The case to pin first (BL-23, BL-42): a trigger that fires on correct
+        work is the failure this whole family exists to avoid."""
+        self._worked("record_change", "propagate_change", "loop_status")
+        self.assertIsNone(self._stop_reason(),
+                          "a session that looked at the blast radius did the work")
+
+    def test_propagate_from_is_looking_too(self):
+        """The speculative half. The impact-check skill says a "what would this
+        touch?" goes straight to `propagate_from` with seed ids, so it is the
+        same act and must clear the same trigger."""
+        self._worked("record_change", "propagate_from", "loop_status")
+        self.assertIsNone(self._stop_reason())
+
+    # --- clause 2: `changes > 0` -------------------------------------------
+
+    def test_a_capture_is_not_a_recorded_change(self):
+        """`changes > 0` is what keeps this from becoming a second bypass nudge.
+        A session that edited and captured intent — but recorded no ChangeEvent —
+        is the OLDER shape's business, not this branch's."""
+        self._worked("add_capability", "detect_gaps", "loop_status")
+        self.assertIsNone(self._stop_reason())
+
+    # --- clause 3: `edits > 0` ---------------------------------------------
+
+    def test_a_pure_design_session_is_never_asked_to_propagate(self):
+        """Nothing on disk moved, so there is no blast radius to compute. A
+        design session that records a change and stops is not this defect."""
+        for op in ("record_change", "loop_status"):
+            run_hook(self.project, post_tool(f"mcp__reflow2__{op}"))
+        self.assertIsNone(self._stop_reason())
+
+    # --- the BL-161 precedent: a negative claim needs an intact tally -------
+
+    def test_a_rebuilt_tally_never_claims_propagate_was_never_called(self):
+        """"You never propagated" is a NEGATIVE claim, and a tally rebuilt from
+        an unreadable one cannot support it — the calls that would refute it are
+        exactly what was lost. Same rule, same reason, as the bypass branch.
+        """
+        self._worked("record_change", "loop_status")
+        d = self.project / ".reflow2" / "loop-nudge"
+        (d / "s1.json").write_text("{corrupt")
+        # Rebuild the tally through the hook, then re-establish the shape.
+        self._worked("record_change", "loop_status")
+        self.assertIsNone(self._stop_reason(),
+                          "a rebuilt tally must not make the negative claim")
+
+    # --- bounds and promises -----------------------------------------------
+
+    def test_the_propagate_threshold_is_configurable(self):
+        """Two sessions, because the once-only claim is per session and a second
+        stop on the same one would be silent for the wrong reason."""
+        env = {"REFLOW2_LOOP_NUDGE_PROPAGATE_THRESHOLD": "2"}
+        self._worked("record_change", "propagate_change", "loop_status", session="s1")
+        self.assertIsNotNone(self._stop_reason(session="s1", env=env),
+                             "one propagate is under a threshold of two")
+        self._worked("record_change", "propagate_change", "propagate_change",
+                     "loop_status", session="s2")
+        self.assertIsNone(self._stop_reason(session="s2", env=env),
+                          "two propagates meet the threshold")
+
+    def test_the_propagate_nudge_fires_once(self):
+        """Both other blocking branches keep this promise on the same footing,
+        so this one has to as well (BL-111)."""
+        self._worked("record_change", "loop_status")
+        self.assertIsNotNone(self._stop_reason())
+        self.assertIsNone(self._stop_reason(), "the claim is spent")
+
+    def test_the_write_nudge_still_takes_precedence(self):
+        """Unchecked writes are the more urgent debt and keep their branch: this
+        one is reached only once the write count is clear."""
+        self._worked("record_change")  # no loop check — writes outstanding
+        reason = self._stop_reason()
+        self.assertIn("graph write", reason)
 
 
 class StateIntegrity(unittest.TestCase):
