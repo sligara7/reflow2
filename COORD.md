@@ -65,6 +65,7 @@ Add yourself if you're new here.
 
 
 
+- BL-180 function-preservation check — @ajs — since 2026-08-02 — crates/reflow2-core/src/preserve.rs (new), reflow2-mcp tool surface, getting-started/skills/
 - v0.22.1 CUT — @ajs — since 2026-08-02 — on Anthony's word; patch (behaviour fixes, stamp unmoved)
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
