@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5ec3375aec879f6f349158f78c3b66b17e7a0283b22ef158d9b0bbf616e806e4",
+  "content_hash": "sha256:baf577a4f60588693a326c913f7582eaf5cf3fef222824154f1cd6404721b74b",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -13021,6 +13021,12 @@
       "from_id": "cap:corpus-ingest",
       "properties": {},
       "to_id": "decision:ack:dfe1b2a6caace1f4"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:coverage",
+      "properties": {},
+      "to_id": "dec:coverage-scope-is-declared"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -39165,6 +39171,16 @@
       }
     },
     {
+      "node_id": "dec:coverage-scope-is-declared",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "THE HOLE, stated as the quadrant it lives in. `coverage_report` compares two sets — what the caller swept, and what the design claims — so it answers three of four cases and is STRUCTURALLY BLIND to the fourth. Swept and claimed: fine. Swept but unclaimed: `unclaimed_regions`. Claimed but unswept: `unobserved_locations`. NEITHER SWEPT NOR CLAIMED: nothing, because neither input mentions it. That empty cell is self-concealing — it is exactly where a region nobody has thought about sits, which is the one place a coverage tool most needs to see — and it is where `schema/` sat for eleven releases while `unobserved_locations` looked like the field that would have caught it. It could not: it can only name regions the design ALREADY claims. MEASURED, not reasoned: `coverage_report` over the eleven schema files named all ten unclaimed on the first call, so the detector was never missing; nothing had ever swept that directory. WHAT WOULD NOT FIX IT, because it is the obvious reach: persisting the sweep so `detect_gaps` can raise coverage from graph state (the deferral recorded in `cap:coverage` and in BL-95). Persisting a sweep whose scope was the two `src/` trees records \"54 files swept, all claimed\" and stays silent about `schema/`. That deferral is real and worth doing for its own reasons; it is not this. THE MISSING INPUT IS A THIRD SET — what the design expects to be swept — held independently of both the claims and the sweep, so \"neither claimed nor swept\" becomes nameable. THREE SHAPES. (1) A PROPERTY ON AN EXISTING NODE — Project, or Component, carries the region(s) it owns. Cheapest, no new node type, and it puts scope where ownership already lives (a team's Component naming its subtree composes with `claim_region` and with scoped `detect_gaps`). Weakness: a property is a single value with no history, so scope changes silently and there is nowhere to say when the region was last swept — the persistence deferral stays unaddressed and would later want the same field in a second place. (2) A FIRST-CLASS NODE recording a sweep AND its declared scope — the `DriftEvent` precedent, and it closes BOTH this and the recorded persistence deferral in one move, because a recorded sweep with a scope and a date is exactly what `detect_gaps` needs to raise coverage from graph state without a clock. Weakness: a schema change, which on this project moves the stamp and locks out older binaries, so it is the expensive option and it pulls in the staleness decision (`cap:freshness` precedent) rather than deferring it. (3) DERIVE IT — no declaration at all; the sweep is everything the version-control system tracks, minus NAMED exclusions, so a new region is in scope by default and what is left out is stated with its rule. Cheapest of all and it needs no vocabulary; this is the half being built for reflow2's own instrument under BL-170. Weakness: it assumes a repo, so it is right for a codebase and says nothing for a design whose subject is a fleet, a document set, or hardware — and reflow2's whole claim is to design anything (`req:design-anything`). NOT MUTUALLY EXCLUSIVE, and the shape of the answer may be (3) as the default with (1) or (2) as the override for subjects git cannot enumerate. WHAT THE COST IS EITHER WAY: `coverage_report` is `dec:report-dont-judge` — it reports, never scores, never blocks — and a declared scope is the first thing that would let it say a sweep was INCOMPLETE, which is a judgement. That is the line worth being deliberate about: saying \"your sweep did not cover what you said you own\" is still reporting a fact, but it is one step closer to a gate than anything in this family has been.",
+        "name": "OPEN — does the design declare what it expects to be swept, so a narrow sweep reads as narrow?",
+        "rationale": "Recorded proposed rather than decided, because AGENTS.md puts a Decision reaching `accepted` on the per-session side — that write is the user's signature. Raised with the measurement attached because the obvious answer (persist the sweep) is written down in two places as the thing to build next, and it would not have caught the case that prompted the question. Anthony asked the question directly (\"is this something we should build into reflow2\") after BL-165, and asked for the alternatives rather than a pick. The seam is deliberately NOT on the table: reflow2 performing its own file I/O was considered and rejected here — the agent sweeps because it knows what is relevant, holds the permissions, and can honour ignore rules, and a server-side sweeper would have to reimplement all three. The correction that belongs with this, because it is the argument that has been deferring the work: `docs/requirements-coverage.md` justifies the deferral with \"reflow2 cannot enumerate a filesystem it never reads\", and that is over-stated — `identity.rs` and `provenance.rs` in the core read and write files, as do `nudge.rs`, `latent.rs` and `main.rs` in the surface. The honest statement is narrower: the ANALYSIS never reads the subject system.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:design-authorship-identity",
       "node_type": "Decision",
       "properties": {
@@ -47375,7 +47391,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:27f02c57ab600b579bbef68db8ffe25efcd4c345b8def222638afbb91b64af85",
+  "prev_content_hash": "sha256:5ec3375aec879f6f349158f78c3b66b17e7a0283b22ef158d9b0bbf616e806e4",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

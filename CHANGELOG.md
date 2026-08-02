@@ -31,6 +31,25 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **The self-model's sweep derives its scope instead of naming it** (BL-170). It swept two hardcoded
+  globs, so `schema/` was not *excluded* from coverage — it was never *considered*, and that is the
+  general form of BL-165. It now sweeps everything `git ls-files` tracks, minus four named
+  exclusions echoed back with the rule that excluded them, and reports through `coverage_report` —
+  a capability built in v0.11.0 that had no caller here. A region nobody thought of is in scope by
+  default, which is the only way the case that hid BL-165 can surface.
+
+  **The hole this closes, stated as the quadrant it lives in.** `coverage_report` compares what the
+  caller swept against what the design claims, so it answers three cases — swept-and-claimed,
+  swept-but-unclaimed (`unclaimed_regions`), claimed-but-unswept (`unobserved_locations`) — and is
+  structurally blind to the fourth. *Neither swept nor claimed* is mentioned by neither input, so
+  nothing can name it; `unobserved_locations` looks like the field that would catch it and cannot,
+  because it only knows regions the design already claims. The general fix needs a third input —
+  what the design *expects* to be swept — and that crosses the vocabulary, so it is recorded as
+  `dec:coverage-scope-is-declared` (**proposed**) with three shapes and their costs rather than
+  chosen here.
+
 ### Fixed
 
 - **Re-registering a file no longer erases what the design already knew about it** (BL-166).
