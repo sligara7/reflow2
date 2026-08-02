@@ -590,7 +590,28 @@ impl DesignGraph {
         completeness: &str,
     ) -> Result<(), DynoError> {
         // Provenance Fragment (invalid provenance fails loud via schema validation).
-        self.create_node(
+        //
+        // `upsert_node`, not `create_node`: re-registering a file must not erase
+        // what the design already knows about it. `create_node` is
+        // create-or-REPLACE and re-materializes schema defaults over every
+        // property the caller omits, and this call site names only four of
+        // Artifact's nine. So a re-link silently dropped `last_confirmed_at` —
+        // the dated evidence that someone actually checked the file against
+        // reality, which is the whole distinction `reconcile_artifacts`'
+        // `record_events` exists to draw between a clean sweep and no sweep at
+        // all. `status` merely LOOKED safe, because its default (`realized`)
+        // happened to equal the stored value; an Artifact at `verified` was
+        // being silently downgraded on every re-link.
+        //
+        // Found doing BL-165, with the evidence sitting in the committed export:
+        // of the 34 artifacts `tools/build_design_graph.py` re-links on every
+        // run, ZERO carried a `last_confirmed_at`, while the only two in the
+        // whole design that did were the two registered by hand and never
+        // re-linked since. This is BL-46 (a partial edit silently resetting a
+        // verified capability to `planned`) reappearing at a different call
+        // site, which is why `upsert_node` was written — and `set_artifact_
+        // checksum` below hand-rolls the same merge rather than calling it.
+        self.upsert_node(
             node::FRAGMENT,
             fragment_id,
             Props::new()
@@ -599,7 +620,7 @@ impl DesignGraph {
                 .set("provenance", provenance),
         )?;
         // The Artifact itself.
-        self.create_node(
+        self.upsert_node(
             node::ARTIFACT,
             &opts.artifact_id,
             Props::new()

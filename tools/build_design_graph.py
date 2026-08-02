@@ -548,6 +548,25 @@ def sha(p: pathlib.Path) -> str:
     return "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest()[:16] if p.exists() else "sha256:absent"
 
 
+def sha_full(p: pathlib.Path) -> str:
+    return "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else "sha256:absent"
+
+
+def observed_hash(p: pathlib.Path) -> str:
+    """The hash width a family was REGISTERED with, so the sweep reports drift.
+
+    The schema domains carry the full 64-hex digest — `art:schema-readiness` was
+    registered that way from a live session and keeping it byte-identical is the
+    difference between registering a file and silently moving its accepted
+    baseline. The `.rs`/`.py` artifacts carry `sha()`'s 16-hex prefix.
+    `checksums_agree` (BL-160) reconciles the two dialects, so a mismatch here
+    would not be *wrong* — but the sweep exists to say whether a file changed,
+    and observing each family at the width it was registered keeps its output
+    about drift rather than about hash length.
+    """
+    return sha_full(p) if p.suffix == ".yaml" else sha(p)
+
+
 # ---- DEPENDS_ON, derived from source — never from prose -------------------
 #
 # The 2026-07-20 self-adopt run found the model carried zero DEPENDS_ON edges,
@@ -698,6 +717,28 @@ def build(s: Server, fresh: bool = True) -> None:
                                  "name": pathlib.Path(path).name, "location": path,
                                  "artifact_type": "code", "target_type": "Component",
                                  "target_id": cmp_id, "checksum": sha(p)})
+    # The schema domains are artifacts too (BL-165). GLOBBED, never listed:
+    # ARTIFACTS above is keyed component -> ONE path, so a second file belonging
+    # to a component it already carries is unrepresentable there — which is why
+    # ten of the eleven domains went unregistered for eleven releases while
+    # `art:schema` (src/schema.rs) sat in the table looking like the schema was
+    # covered. `art:schema-readiness` exists only because someone happened to
+    # call link_artifact in the session that created readiness.yaml. A hand-kept
+    # list here would inherit exactly that failure mode; the directory is the
+    # source of truth, so domain twelve registers itself.
+    #
+    # They realize cmp:schema because that is PROVABLE rather than interpreted:
+    # src/schema.rs embeds every one of these files with include_str! and merges
+    # them via Schema::from_multiple_yamls, so the module without the YAML
+    # implements nothing. Which module "owns" a given vocabulary is a judgement
+    # call, and making that call wrong is how BL-165 got filed — a ChangeEvent
+    # naming `art:temporal` for an edit to schema/temporal.yaml.
+    for p in sorted(REPO.glob("schema/*.yaml")):
+        s.call("link_artifact", {"artifact_id": f"art:schema-{p.stem}",
+                                 "name": p.name,
+                                 "location": p.relative_to(REPO).as_posix(),
+                                 "artifact_type": "spec", "target_type": "Component",
+                                 "target_id": "cmp:schema", "checksum": sha_full(p)})
     # cap:adopt is realized by a skill, not a module: the five-phase reverse-
     # engineering workflow lives in the kit and runs in the agent. Linking it
     # keeps `realized` honest; nothing automated verifies it, and that gap
@@ -923,10 +964,20 @@ def analyse(s: Server) -> None:
     # -- reconcile the model against the filesystem --------------------------
     # The probe the 2026-07-20 self-adopt run showed was missing: 15 of 33
     # source files had no Artifact and nothing here could say so. Sweep scope
-    # is the product (both crates' src trees + the kit installer) — trial
-    # scripts under tools/ are instruments, deliberately out of scope.
+    # is the product (both crates' src trees, the schema domains, and the kit
+    # installer) — trial scripts under tools/ are instruments, deliberately
+    # out of scope.
+    #
+    # schema/*.yaml joined the sweep for BL-165. The scope was "the product",
+    # read as the two src trees, and it silently meant this probe could not see
+    # the one directory AGENTS.md calls "the foundation everything builds on" —
+    # ten unregistered domains, through eleven releases, from a probe written to
+    # catch unregistered files. A schema edit is the highest-consequence edit in
+    # this repo (it moves the stamp and locks out older binaries), so it is the
+    # last thing the sweep should have been blind to.
     swept = sorted(
-        p for pat in ("crates/reflow2-core/src/*.rs", "crates/reflow2-mcp/src/*.rs")
+        p for pat in ("crates/reflow2-core/src/*.rs", "crates/reflow2-mcp/src/*.rs",
+                      "schema/*.yaml")
         for p in REPO.glob(pat)
         if p.name != "lib.rs"  # pure re-export shims; not a meaningful unit
     ) + [REPO / "tools/reflow2_init.py"]
@@ -940,11 +991,11 @@ def analyse(s: Server) -> None:
         loc = p.relative_to(REPO).as_posix()
         if loc in by_loc:
             observed.append({"artifact_id": by_loc[loc], "present": True,
-                             "checksum": sha(p)})
+                             "checksum": observed_hash(p)})
         else:
             unregistered.append(loc)
             observed.append({"artifact_id": f"art:unmodelled:{loc}",
-                             "present": True, "checksum": sha(p)})
+                             "present": True, "checksum": observed_hash(p)})
     drift = s.call("reconcile_artifacts", {"observed": observed, "exhaustive": True})
     findings = drift.get("findings", [])
     print(f"\n-- reconcile vs filesystem: {len(findings)} finding(s), "
@@ -953,6 +1004,18 @@ def analyse(s: Server) -> None:
         print(f"  {f.get('kind', '?'):24} {f.get('artifact_id', '?')}")
     if not findings:
         print("  model and filesystem agree")
+    # `unregistered` was collected here and never printed (found doing BL-165).
+    # The reconcile pass does surface these as `unknown_artifact` findings, so
+    # nothing was dropped outright — but the reader had to decode a synthetic
+    # `art:unmodelled:<path>` id to learn that a file in scope has no Artifact
+    # at all, which is a different and worse fact than a checksum that moved.
+    # Say it in its own words: this is the sentence BL-165 needed and did not
+    # get for eleven releases.
+    if unregistered:
+        print(f"\n-- {len(unregistered)} swept file(s) with NO Artifact — the design "
+              f"cannot see these --")
+        for loc in unregistered:
+            print(f"  {loc}")
 
 
 def main() -> int:
