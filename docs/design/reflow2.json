@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:552465848286e83a931492ceda702b47850e029946603cd597d12717bae5b9f6",
+  "content_hash": "sha256:9a7cfd7acac101efd5b5e3f335eadbc6d11a0d91ded323042aa5c7786b64f1d7",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -8208,6 +8208,15 @@
         "action": "modified"
       },
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:maturity-trajectory-is-normal",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:maturity-restructuring-delta"
     },
     {
       "edge_type": "CHANGED",
@@ -37895,6 +37904,14 @@
       }
     },
     {
+      "node_id": "chg:maturity-trajectory-is-normal",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Anthony generalises the restructuring idea: function-first-then-structure is how designs NORMALLY go, not a failure to correct"
+      }
+    },
+    {
       "node_id": "chg:merge-driver-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -39731,7 +39748,7 @@
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-02, thinking out loud after asking what a functional decomposition of reflow2 would be. Nothing here is intent; nothing has been promoted. THE DISTINCTION HE IS DRAWING, in his words: 'this is a different kind of delta from capability increments to more of breadboard design to production grade production design. it may involve keeping the same functions, but restructuring the design/packaging and/or which functions are allocated to which systems/services.' And the general form: 'knowing what I know now, would I have designed this the same way?' — which he says 'should almost be a reflow2 skill', and which applies to ANY design, not only reflow2's. EXPLICITLY NOT A REWRITE: 'I wasn't really saying to develop a reflow3. in fact, as the graph can support epochs and capability increments, we can evolve from the engineering mockup to full production grade morphing in the reflow2 graph for any design project.' TWO ORTHOGONAL AXES OF CHANGE, which is the load-bearing idea. (1) A CAPABILITY INCREMENT grows the function set — new requirements, new capabilities, delivered against a schedule. reflow2 models this well already: `DesignEpoch`, `SCHEDULED_FOR` with modality, `Release`/`INCLUDES`, and readiness gating on the increment. (2) A MATURITY RESTRUCTURING holds the function set INVARIANT and moves everything else — allocation, packaging, which functions live in which system or service, which seams are declared. reflow2 models this barely at all as a first-class thing, although the parts exist. THE PARTS THAT ALREADY EXIST, so this is assembly rather than invention: `ALLOCATED_TO` and `CONTAINS` already carry the allocation map that a restructuring moves; `evaluate_allocation` and `propose_allocation` already score and propose it; `dec:parallel-alternatives` plus `analyze_alternatives` already fork a design in SPACE (rather than time) and lay N variants side by side on the same measures; `compare_designs` already bands a difference into design content versus supporting layer; and `record_change` already snapshots a node's EDGES as well as its properties (BL-63), so a re-parenting is recoverable rather than lossy — which is what makes in-place evolution safe and is the technical reason a reflow3 is not needed. WHAT WOULD GIVE IT TEETH, and the part worth arguing about: a restructuring is SAFE EXACTLY WHEN FUNCTION IS PROVABLY PRESERVED, and that is computable rather than promised. The invariant is: no Capability added or removed, no SATISFIES edge changed — only `ALLOCATED_TO` / `CONTAINS` / Interface edges moved. `compare_designs` already reports at that granularity, so a skill could CERTIFY a restructuring rather than assert it. That is the difference between a refactor someone hopes is safe and one the graph checked, and it is the same move `dec:passing-is-verified` makes for tests. WHAT IS MISSING, three things, none of them large. (a) NO SKILL asks the question: of fifteen served skills, `revise-design` handles one node the user changed their mind about, `retire-from-design` handles removal, `check-health` finds structural DEFECTS (cycles, single points of failure, islands) — none asks whether the structure is the one you would CHOOSE now, which is a different question from whether it is broken. (b) NO VOCABULARY MARKS THE EPOCH AS A MATURITY STEP: `DesignEpoch.epoch_type` offers `baseline | revision | milestone | incident_response | release_cut`, and a restructuring is none of those; `ChangeEvent.change_type` offers `refactor`, which does not distinguish a code refactor from a design re-allocation. (c) NO MATURITY LADDER FOR THE DESIGN ITSELF: `ReadinessAssessment` (TRL/MRL 1-9) was built for the enabling TECHNOLOGIES an increment leans on, not for the design's own structural maturity — whether it should also apply to the design is an open question, and the hardware ladder Anthony named (breadboard, engineering mockup, EVT, DVT, PVT, pilot run, mass production) is the vocabulary he is reaching for. THE OBSERVATION THAT PROMPTED IT, measured rather than asserted: reflow2's own design carries EIGHT functional systems (`dec:bl83a-functional-decomposition`, accepted 2026-07-23) and exactly THREE Interfaces, none of which sits between two of those systems — while 51 `DEPENDS_ON` edges cross system boundaries against 22 that stay inside one, over 14 distinct system pairs, the two largest being coherence-loop to store and coherence-loop to vocabulary at 16 each. So the functional blocks are declared on the containment axis and their seams are not declared at all, which is what a MOSA reading would want first (`dec:mosa-conformance`, also proposed).",
         "name": "OPEN — is \"the same functions, structured as I would structure them NOW\" a second kind of delta the graph should model?",
-        "rationale": "Recorded through the brainstorm skill because Anthony was working the idea through rather than deciding it — he said so ('I guess what I'm saying...', 'almost what I'm saying is'), and explicitly withdrew the stronger reading (no reflow3). Kept as ONE question because the two halves are one idea: the skill he wants ('would I design it this way now?') is the human-facing form, and the second delta type is what the graph would need to hold its answer. Its options are prose rather than registered alternatives, deliberately, so it raises no `undecided_decision_point` gap while it is still a musing — the line the skill draws between a thought and a fork. The counter-argument recorded beside it rather than argued down: much of this may need no new vocabulary at all, since a restructuring is expressible today as an alternative branch compared with `analyze_alternatives`, and adding an epoch type or a change type earns its keep only if some computation reads it (`dec:edge-orthogonality` — a vocabulary distinction is worth having only when a computation reads it).",
+        "rationale": "Recorded through the brainstorm skill because Anthony was working the idea through rather than deciding it, and explicitly withdrew the stronger reading (no reflow3). ANTHONY'S CLOSING GENERALISATION, 2026-08-02, and it is the most important sentence in the discussion because it changes what the whole thing IS: 'this is really a realization that probably all designs start immature (breadboard or engineering mockup) and then morph to a more refined structure. this allows reflow2 to build in how designs typically go where initially getting function right is the first objective, then you go towards getting the structure/packaging right. this is often iterative and organic.' THE CONSEQUENCE, which reframes every measurement taken today: reflow2's 51 undeclared cross-system dependencies are NOT technical debt and NOT a criticism of any decision — they are the expected state of a design that has been correctly prioritising function. A design at that point is ON the normal trajectory, not off it. Which means the thing reflow2 should learn is not 'detect bad structure' but 'know that this trajectory EXISTS and where a design is along it' — the same move `dec:readiness-is-an-observation-the-threshold-is-the-judgement` makes for technology maturity, applied to the design's own structure. A tool that reported undeclared seams as defects would be punishing correct early-phase work, which is exactly the failure `cap:coverage` avoids by refusing to be a score, and exactly what `sharpening.md` §2 calls accommodation if the design were then bent to silence it. WHAT THAT IMPLIES FOR THE VOCABULARY QUESTION, sharpening option (c) rather than answering it: if function-first-then-structure is the norm, a maturity ladder for the DESIGN is not a nice-to-have bolted onto readiness — it is the axis along which every design moves, and 'where am I on it' becomes a first-class question a design brain should answer. The counter-argument stays on the record beside it: a distinction earns its keep only when a computation reads it (`dec:edge-orthogonality`), so the ladder is worth vocabulary only if something computes position along it rather than merely labelling it. Kept as ONE question because the skill Anthony wants ('would I design it this way now?') is the human-facing form and the second delta type is what the graph needs to hold its answer. Options are prose rather than registered alternatives, deliberately, so it raises no `undecided_decision_point` while it is still a musing.",
         "status": "proposed"
       }
     },
@@ -47616,7 +47633,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:241e9fbeeb9ee22155dbc3f7af48feff875d79e8df4fac051e168089bc4cde7b",
+  "prev_content_hash": "sha256:552465848286e83a931492ceda702b47850e029946603cd597d12717bae5b9f6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
