@@ -162,6 +162,59 @@ class Reflow2Check(unittest.TestCase):
         self.assertIn("DRIFT", r.stdout)
         self.assertIn("art:a", r.stdout)
 
+    def test_a_truncated_baseline_on_an_untouched_file_is_not_drift(self):
+        """BL-160, end to end and in the layer that was wrong.
+
+        `build_design_graph.py` registers `hexdigest()[:16]`, so most of
+        reflow2's own baselines are truncated, and `hash_file` used to truncate
+        the OBSERVATION to match — a Python workaround only this file knew. On
+        2026-08-01 a direct MCP sweep of the same clean tree the gate had just
+        called OK reported 51 artifacts drifted, which is what that divergence
+        looks like from outside. The gate now hashes the whole file and the core
+        decides whether the two digests are the same digest, so this case proves
+        the rule moved rather than vanished: nothing touched the file, and green
+        must mean the core agreed, not that the caller pre-truncated.
+        """
+        art_file = self.tmp / "short.txt"
+        art_file.write_text("registered short, never edited")
+        registered = short_sha(art_file)  # 16 of the 64 hex chars
+        self.assertEqual(len(registered), len("sha256:") + 16)
+
+        def build(s):
+            coherent(s)
+            s.call("create_node", {"node_type": "Artifact", "id": "art:short", "props": {
+                "name": "short.txt", "location": "short.txt", "checksum": registered}})
+            s.call("create_edge", {"edge_type": "REALIZES", "from_type": "Artifact",
+                                   "from_id": "art:short", "to_type": "Capability", "to_id": "cap:a"})
+
+        r = self.gate(self.export(build))
+        self.assertEqual(
+            r.returncode, 0,
+            f"a truncated baseline on an untouched file must not be drift\n{r.stdout}")
+        self.assertNotIn("DRIFT", r.stdout)
+
+    def test_a_changed_file_registered_short_is_still_drift(self):
+        """The counterweight to the case above, and the reason it is a separate
+        test: a length rule loose enough to stop the false red must not stop the
+        true one. Same 16-char baseline, file genuinely edited."""
+        art_file = self.tmp / "short2.txt"
+        art_file.write_text("registered short, v1")
+        registered = short_sha(art_file)
+
+        def build(s):
+            coherent(s)
+            s.call("create_node", {"node_type": "Artifact", "id": "art:short2", "props": {
+                "name": "short2.txt", "location": "short2.txt", "checksum": registered}})
+            s.call("create_edge", {"edge_type": "REALIZES", "from_type": "Artifact",
+                                   "from_id": "art:short2", "to_type": "Capability", "to_id": "cap:a"})
+
+        export = self.export(build)
+        art_file.write_text("registered short, v2 — edited, design not reconciled")
+        r = self.gate(export)
+        self.assertEqual(r.returncode, 1, f"real drift must still fail\n{r.stdout}")
+        self.assertIn("DRIFT", r.stdout)
+        self.assertIn("art:short2", r.stdout)
+
     def test_a_vanished_artifact_file_is_drift(self):
         def build(s):
             coherent(s)

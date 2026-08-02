@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:8cde46859dde2b75fc8b91f458e26d627836577d47b2103d9912a9840b75a393",
+  "content_hash": "sha256:b1c27b1eb3405d119718e8c2b2cb3336ef6b9d66b8aae26b043882ef106dfecc",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5143,6 +5143,60 @@
         "action": "added"
       },
       "to_id": "req:completion-computed"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl160-checksum-length-dialect",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl160-checksum-length-dialect",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl160-checksum-length-dialect",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:checksum-dialect-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl160-checksum-length-dialect",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl160-checksum-length-dialect",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ver:checksum-dialect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl160-checksum-length-dialect",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ver:gate-suite"
     },
     {
       "edge_type": "CHANGED",
@@ -31638,7 +31692,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7004caf86c1a19dd85875ce75182c3932679d9159239ffea85fa828f7c269ab9",
+        "checksum": "sha256:a91200b3bc4542cbf1f6cec695e8906b109a476309a923fff24c9a6702a3bcf9",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
         "status": "realized"
@@ -31704,7 +31758,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:99d7a0d0af8db7a3",
+        "checksum": "sha256:a1f3fd49ba2b91fbb23aeec8de41d0a09f7c4d2b3c3bed97963eb3457867df4e",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
         "status": "realized"
@@ -31715,7 +31769,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cc41bd84103db7e9",
+        "checksum": "sha256:a84c2afa299b6793cb78ae9aad6fda8cf659780728e38da0906ffa629dd41919",
         "location": "crates/reflow2-core/tests/checksum_dialect.rs",
         "name": "checksum_dialect.rs",
         "status": "realized"
@@ -31935,7 +31989,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1a73d079d4cd2087595445ab359a7ba6d2b171eb7a1fc3c9a1adb4c49f6d73df",
+        "checksum": "sha256:f8b0a6288f20e82f78d0b6267e9698094228b2a255b0305f861fa53e56c45198",
         "location": "crates/reflow2-core/src/drift.rs",
         "name": "drift.rs",
         "status": "realized"
@@ -34876,6 +34930,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-104 captured: derive delivery from the golden thread; the requirement lifecycle is 3/5 unused"
+      }
+    },
+    {
+      "node_id": "chg:bl160-checksum-length-dialect",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "BL-160: a registered checksum's LENGTH is a dialect too, and the compensation lived in the wrong layer. reflow2's own designs register `hexdigest()[:16]` (build_design_graph.py) while an honest caller running `sha256sum` supplies all 64, and `reconcile_artifacts` compared STRINGS — so a full sweep of a provably clean tree reported 51 phantom drifts in the same minute `reflow2_check.py` said \"OK — design and build agree\". The gate was right for the wrong reason: it carried a Python workaround truncating the observation to the registered length, which no other consumer had. This is BL-125 in a second form and takes the same verdict — a false red on a gate whose whole job is to be believed is worse than no gate. `artifact::checksums_agree` now answers it in the core for every consumer, on BOTH the drift comparison and `set_artifact_checksum`'s would-move-the-baseline guard (the half that would have failed a BL-157 bulk sweep on every short-registered artifact), and the Python workaround is DELETED rather than duplicated by the next consumer. Required is a real PREFIX relationship, never truncate-both-to-N, and it applies to the `sha256:` dialect only. MEASURED ON THE REAL DESIGN: 109 artifacts, 51 truncated baselines, all 51 now unchanged, and the only 4 drifts are the files this change edited. Corrects a belief the design itself had recorded — chg:accept-e52b527aba651ac4 says a full-length registration is \"harmless, since reconcile truncates the observation to the registered dialect\"; reconcile never did, the gate did."
       }
     },
     {
@@ -43910,7 +43972,7 @@
         "last_run_at": "2026-08-01",
         "level": "integration",
         "method": "test",
-        "name": "A digest is a digest whichever dialect it arrives in (crates/reflow2-core/tests/checksum_dialect.rs) — 5 cases. A bare hex digest matches its own `sha256:`-prefixed baseline and vice versa, so a caller who computes hashes one way and registers them another is not told an untouched tree has drifted; the drift event id is identical whichever dialect was observed, so one divergence is one event; and BOTH counterweights are pinned — a genuinely different digest still reports `checksum_change` with its `realizes` edges intact, and a non-hex fingerprint is left verbatim rather than normalised into agreement. WRITTEN BEFORE THE FIX: the three bug cases failed and the two counterweights passed, which is the mutation check — a fix that made every comparison equal would have passed the first three and destroyed the detector.",
+        "name": "A digest is a digest whichever dialect it arrives in (crates/reflow2-core/tests/checksum_dialect.rs) — 14 cases, 9 new for BL-160. PREFIX (BL-125): a bare hex digest matches its own `sha256:`-prefixed baseline and vice versa, the drift event id is identical whichever dialect was observed, and both counterweights hold — a genuinely different digest still reports `checksum_change` with its `realizes` edges intact, and a non-hex fingerprint is left verbatim. LENGTH (BL-160): a full 64-char digest matches a 16-char baseline and a truncated observation matches a full baseline, on the drift comparison AND on `set_artifact_checksum`'s would-move-the-baseline guard — the half that is not a gate problem at all but a BL-157 bulk sweep failing on every short-registered artifact for a change that never happened. When the two dialects agree the LONGER digest stays on the record, which also makes the accept idempotent ACROSS dialects: re-stating it coarsely mints one claim, not two. FIVE COUNTERWEIGHTS, and they are what keep the length rule from being a way to stop noticing: two FULL digests sharing their first sixteen characters are still drift (the case a truncate-both-to-N would pass); a truncated observation that disagrees WITHIN its own length is still drift; a genuinely different digest is still refused as a first baseline, still naming the disposition that would be honest; prefix tolerance does not escape the `sha256:` dialect, so `blake3:zz` and `blake3:zzzz` stay different; and an EMPTY digest agrees with nothing, because every string starts with the empty string. No minimum prefix length is imposed, deliberately — a short baseline is a weak baseline, but its strength is decided when it is REGISTERED, and a read side refusing to honour what the write side accepted is the same write/read disagreement this suite exists to close. WRITTEN BEFORE THE FIX: the four bug cases failed and all five counterweights passed. MUTATION-CHECKED SEVEN WAYS, each failing exactly the tests that name it: make agreement always-true and all seven counterweights fail while every bug case passes (which is what proves the counterweights carry the weight); revert to `==` and exactly the four bug cases fail; drop the sha256-dialect restriction and only the two dialect-boundary cases fail; truncate both sides to 16 and only the two sharing-a-prefix cases fail; drop the both-non-empty guard and only the empty-digest case fails; fix drift.rs alone and only the two accept-path cases fail; drop the longer-digest-wins rule and only the idempotence case fails. THE TEST WAS CORRECTED BY MEASUREMENT: the first version of the still-refused counterweight used a SHORT baseline, and against a 16-char baseline `NEAR` is a legitimate extension rather than a different digest — a 16-char baseline only ever pinned 16 characters, which was established by writing it wrong rather than assumed. PROVEN ON THE REAL DESIGN, and it is the row's own scenario replayed: the built binary driven over stdio JSON-RPC against a throwaway copy of reflow2's own 1221-node design, sweeping all 109 registered artifacts off the actual working tree with the FULL 64-char digest — 51 truncated baselines, all 51 unchanged, and the only 4 `checksum_change` findings are the four files this change edited. `tools/reflow2_check.py`'s Python workaround is DELETED, and tools/test_reflow2_check.py pins the pair end to end: an untouched file registered short gates GREEN, and the same short baseline on a genuinely edited file still gates RED.",
         "status": "passing"
       }
     },
@@ -44211,9 +44273,10 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
+        "last_run_at": "2026-08-01",
         "level": "integration",
         "method": "test",
-        "name": "test_reflow2_check.py",
+        "name": "test_reflow2_check.py — 13 cases, 2 new for BL-160: an untouched file whose baseline was registered at 16 hex chars gates GREEN with the gate hashing the whole file (the workaround it used to carry is gone, so green now means the CORE agreed rather than that the caller pre-truncated), and the counterweight beside it — the same short baseline on a genuinely edited file still gates RED.",
         "status": "passing"
       }
     },
@@ -44923,7 +44986,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9d747383103bd102814506e329cba75d0b7a8818f0a3d7d0beb8a5660db0c52f",
+  "prev_content_hash": "sha256:8cde46859dde2b75fc8b91f458e26d627836577d47b2103d9912a9840b75a393",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

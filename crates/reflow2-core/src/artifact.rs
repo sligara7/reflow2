@@ -62,6 +62,46 @@ pub(crate) fn canonical_checksum(checksum: &str) -> String {
     }
 }
 
+/// Whether two canonicalised checksums are the **same digest** — including when
+/// they were written at different LENGTHS (BL-160).
+///
+/// A design registers whatever its tooling produced. reflow2's own
+/// `tools/build_design_graph.py` writes `hexdigest()[:16]`; a caller running
+/// `sha256sum` supplies all 64. Both describe the same bytes, and comparing
+/// them as strings says the file changed. On 2026-08-01 that reported **51
+/// phantom drifts on a provably clean tree** in the same minute the coherence
+/// gate said the design and the build agreed — because `reflow2_check.py`
+/// carried a Python workaround truncating the observation to the registered
+/// length, and nothing else did. This is [`canonical_checksum`]'s own bug in a
+/// second form, with the same verdict: *a false red on a gate whose whole job
+/// is to be believed is worse than no gate*. Putting the rule here answers it
+/// for every consumer, not just the one that knew.
+///
+/// **What is required is a real prefix relationship, never truncate-both-to-N.**
+/// Two full digests that happen to share sixteen characters are two different
+/// digests and the file really did move. And prefix tolerance is a fact about
+/// hex digests of one algorithm — where a truncation genuinely is a prefix of
+/// the whole — so it applies to the `sha256:` dialect only; letting it loose on
+/// an arbitrary fingerprint would make `blake3:zz` and `blake3:zzzz` agree,
+/// which is the massage-everything-into-equality failure this pair of functions
+/// exists to avoid.
+///
+/// No minimum length is imposed. A short baseline is a weak baseline, but its
+/// strength is decided when it is registered — the write side takes a 16-char
+/// digest without complaint, and a read side that then refused to honour it
+/// would be the same write/read disagreement all over again.
+pub(crate) fn checksums_agree(a: &str, b: &str) -> bool {
+    if a == b {
+        return true;
+    }
+    let (Some(a_hex), Some(b_hex)) = (a.strip_prefix("sha256:"), b.strip_prefix("sha256:")) else {
+        return false;
+    };
+    // Both sides non-empty: `"anything".starts_with("")` is true, so a bare
+    // `sha256:` with no digest behind it would otherwise agree with everything.
+    !a_hex.is_empty() && !b_hex.is_empty() && (a_hex.starts_with(b_hex) || b_hex.starts_with(a_hex))
+}
+
 /// Which way an accepted drift went — the answer to the **second question**.
 ///
 /// The code moved; that much is observed. Accepting the new baseline is a
@@ -224,7 +264,7 @@ impl DesignGraph {
         };
         // Canonicalise before the accept id is hashed, so re-accepting the same
         // state stays idempotent whichever dialect the caller typed.
-        let checksum = &canonical_checksum(checksum);
+        let mut checksum = canonical_checksum(checksum);
 
         // Which of the three answers is even available is a FACT about the
         // artifact, not a preference: a first baseline compares against nothing,
@@ -244,7 +284,25 @@ impl DesignGraph {
         // re-running a sweep is safe. What is refused is a `baseline_established`
         // that would MOVE one — which is the laundering case, and the only one
         // the guard is for.
-        let would_move_baseline = recorded.is_some_and(|r| r != *checksum);
+        //
+        // "The same" is [`checksums_agree`], not `==`: a bulk BL-157 sweep that
+        // hashes with `sha256sum` and meets a 16-char baseline is re-stating the
+        // digest, not moving it, and refusing that would fail the sweep on every
+        // short-registered artifact for a change that never happened (BL-160).
+        let would_move_baseline = recorded
+            .as_deref()
+            .is_some_and(|r| !checksums_agree(r, &checksum));
+        // When the two dialects agree, the LONGER digest is what stays on the
+        // record: it contradicts nothing the shorter one said, carries more of
+        // the evidence, and makes the accept idempotent ACROSS dialects, since
+        // the event id is hashed from the value that is stored.
+        if let Some(r) = recorded.as_deref()
+            && !would_move_baseline
+            && r.len() > checksum.len()
+        {
+            checksum = r.to_string();
+        }
+        let checksum = &checksum;
         match (&disposition, had_baseline) {
             (DriftDisposition::BaselineEstablished, true) if would_move_baseline => {
                 return Err(DynoError::Validation {

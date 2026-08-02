@@ -33,6 +33,30 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **A checksum's LENGTH is a dialect too, and the compensation lived in the wrong layer**
+  (BL-160). Designs register digests at mixed lengths — reflow2's own `build_design_graph.py`
+  writes `hexdigest()[:16]` — while an honest caller running `sha256sum` supplies all 64, and
+  `reconcile_artifacts` compared **strings**. A full sweep of a provably clean tree reported
+  **51 phantom drifts** in the same minute `reflow2_check.py` said *"OK — design and build
+  agree"*: the gate was right for the wrong reason, because it carried a Python truncation
+  workaround no other consumer had. Every consumer that was not the gate — an agent driving
+  `reconcile_artifacts` over MCP, another project's CI, the coding agent the tool's own
+  description tells to *"compute the hashes yourself"* — hit the bug the gate was immune to.
+  This is BL-125 in a second form and takes the same verdict: *a false red on a gate whose whole
+  job is to be believed is worse than no gate*. `artifact::checksums_agree` now answers it in the
+  core, on **both** the drift comparison and `set_artifact_checksum`'s would-move-the-baseline
+  guard — the second is not a gate problem at all but a BL-157 bulk sweep being refused on every
+  short-registered artifact for a change that never happened. The Python workaround is **deleted**
+  rather than duplicated by the next consumer. What is required is a real **prefix** relationship,
+  never truncate-both-to-N, and it applies to the `sha256:` dialect only: two full digests sharing
+  sixteen characters are still drift, `blake3:zz` and `blake3:zzzz` stay different, and an empty
+  digest agrees with nothing. When the two dialects agree the longer digest stays on the record,
+  which makes the accept idempotent across dialects. No minimum prefix length is imposed — a short
+  baseline is a weak baseline, but its strength is decided when it is registered, and a read side
+  refusing to honour what the write side accepted would be the same write/read disagreement again.
+  Measured on reflow2's own design: 109 artifacts, 51 truncated baselines, all 51 unchanged.
+  9 new cases (14 total), mutation-checked seven ways.
+
 - **The loop nudge corrupted the record it judges from** (BL-161). A session that consulted the
   design graph constantly was told at Stop that it never had — three times in one session, and the
   second independent reproduction. `write_state` used `Path.write_text` (truncate, then write —
