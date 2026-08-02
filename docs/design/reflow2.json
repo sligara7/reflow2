@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:baf577a4f60588693a326c913f7582eaf5cf3fef222824154f1cd6404721b74b",
+  "content_hash": "sha256:d56f83329878bff17364d276922328d3332f66e4c667aba595b2b241d4f96051",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1893,6 +1893,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl172-coverage-scope-derived",
+      "properties": {},
+      "to_id": "epoch:coverage-scope-settled"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:bl48-bl49-tool-surface",
       "properties": {},
       "to_id": "epoch:v050-hardening"
@@ -2964,6 +2970,12 @@
       "from_id": "snap:epoch:arrival-delta:dec:where-content-lives:r2",
       "properties": {},
       "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:coverage-scope-settled:dec:coverage-scope-is-declared",
+      "properties": {},
+      "to_id": "epoch:coverage-scope-settled"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5433,6 +5445,33 @@
         "action": "modified"
       },
       "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl172-coverage-scope-derived",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl172-coverage-scope-derived",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:coverage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl172-coverage-scope-derived",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:coverage-scope-is-declared"
     },
     {
       "edge_type": "CHANGED",
@@ -16987,6 +17026,12 @@
       "from_id": "dec:arrival-delta",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:dec:arrival-delta"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:coverage-scope-is-declared",
+      "properties": {},
+      "to_id": "snap:epoch:coverage-scope-settled:dec:coverage-scope-is-declared"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -33545,7 +33590,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c59e170136c61deb",
+        "checksum": "sha256:14b6b93d62aa5ff7",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
         "status": "realized"
@@ -37068,6 +37113,14 @@
       }
     },
     {
+      "node_id": "chg:bl172-coverage-scope-derived",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Anthony sharpens what lives in the repo: the design GRAPH is a third thing alongside the artifacts, and the implemented code is what only a code project adds"
+      }
+    },
+    {
       "node_id": "chg:bl26-documents-write-side",
       "node_type": "ChangeEvent",
       "properties": {
@@ -39174,10 +39227,10 @@
       "node_id": "dec:coverage-scope-is-declared",
       "node_type": "Decision",
       "properties": {
-        "decision": "THE HOLE, stated as the quadrant it lives in. `coverage_report` compares two sets — what the caller swept, and what the design claims — so it answers three of four cases and is STRUCTURALLY BLIND to the fourth. Swept and claimed: fine. Swept but unclaimed: `unclaimed_regions`. Claimed but unswept: `unobserved_locations`. NEITHER SWEPT NOR CLAIMED: nothing, because neither input mentions it. That empty cell is self-concealing — it is exactly where a region nobody has thought about sits, which is the one place a coverage tool most needs to see — and it is where `schema/` sat for eleven releases while `unobserved_locations` looked like the field that would have caught it. It could not: it can only name regions the design ALREADY claims. MEASURED, not reasoned: `coverage_report` over the eleven schema files named all ten unclaimed on the first call, so the detector was never missing; nothing had ever swept that directory. WHAT WOULD NOT FIX IT, because it is the obvious reach: persisting the sweep so `detect_gaps` can raise coverage from graph state (the deferral recorded in `cap:coverage` and in BL-95). Persisting a sweep whose scope was the two `src/` trees records \"54 files swept, all claimed\" and stays silent about `schema/`. That deferral is real and worth doing for its own reasons; it is not this. THE MISSING INPUT IS A THIRD SET — what the design expects to be swept — held independently of both the claims and the sweep, so \"neither claimed nor swept\" becomes nameable. THREE SHAPES. (1) A PROPERTY ON AN EXISTING NODE — Project, or Component, carries the region(s) it owns. Cheapest, no new node type, and it puts scope where ownership already lives (a team's Component naming its subtree composes with `claim_region` and with scoped `detect_gaps`). Weakness: a property is a single value with no history, so scope changes silently and there is nowhere to say when the region was last swept — the persistence deferral stays unaddressed and would later want the same field in a second place. (2) A FIRST-CLASS NODE recording a sweep AND its declared scope — the `DriftEvent` precedent, and it closes BOTH this and the recorded persistence deferral in one move, because a recorded sweep with a scope and a date is exactly what `detect_gaps` needs to raise coverage from graph state without a clock. Weakness: a schema change, which on this project moves the stamp and locks out older binaries, so it is the expensive option and it pulls in the staleness decision (`cap:freshness` precedent) rather than deferring it. (3) DERIVE IT — no declaration at all; the sweep is everything the version-control system tracks, minus NAMED exclusions, so a new region is in scope by default and what is left out is stated with its rule. Cheapest of all and it needs no vocabulary; this is the half being built for reflow2's own instrument under BL-170. Weakness: it assumes a repo, so it is right for a codebase and says nothing for a design whose subject is a fleet, a document set, or hardware — and reflow2's whole claim is to design anything (`req:design-anything`). NOT MUTUALLY EXCLUSIVE, and the shape of the answer may be (3) as the default with (1) or (2) as the override for subjects git cannot enumerate. WHAT THE COST IS EITHER WAY: `coverage_report` is `dec:report-dont-judge` — it reports, never scores, never blocks — and a declared scope is the first thing that would let it say a sweep was INCOMPLETE, which is a judgement. That is the line worth being deliberate about: saying \"your sweep did not cover what you said you own\" is still reporting a fact, but it is one step closer to a gate than anything in this family has been.",
-        "name": "OPEN — does the design declare what it expects to be swept, so a narrow sweep reads as narrow?",
-        "rationale": "Recorded proposed rather than decided, because AGENTS.md puts a Decision reaching `accepted` on the per-session side — that write is the user's signature. Raised with the measurement attached because the obvious answer (persist the sweep) is written down in two places as the thing to build next, and it would not have caught the case that prompted the question. Anthony asked the question directly (\"is this something we should build into reflow2\") after BL-165, and asked for the alternatives rather than a pick. The seam is deliberately NOT on the table: reflow2 performing its own file I/O was considered and rejected here — the agent sweeps because it knows what is relevant, holds the permissions, and can honour ignore rules, and a server-side sweeper would have to reimplement all three. The correction that belongs with this, because it is the argument that has been deferring the work: `docs/requirements-coverage.md` justifies the deferral with \"reflow2 cannot enumerate a filesystem it never reads\", and that is over-stated — `identity.rs` and `provenance.rs` in the core read and write files, as do `nudge.rs`, `latent.rs` and `main.rs` in the surface. The honest statement is narrower: the ANALYSIS never reads the subject system.",
-        "status": "proposed"
+        "decision": "DECIDED by Anthony 2026-08-02, option 3 of three: the sweep is everything the version-control system tracks, minus NAMED exclusions echoed back with the rule that excluded them. No vocabulary change, no new property, no new node type — so the schema stamp does not move, which on this project is what locks out older binaries. (The node id says `declared` because that was the QUESTION; the answer is `derived`. Kept as a stable handle rather than re-minted, since `cap:coverage` is already GOVERNED_BY it.) WHAT IS IN THE REPOSITORY, in his own decomposition — this is the load-bearing part, because getting it wrong is what produced the objection this decision had to overturn. A NON-CODE PROJECT puts TWO things under version control: the reflow2 design graph, and the design artifacts. A CODE PROJECT puts THREE: the reflow2 design graph, the design artifacts, and the actual implemented code. THE FIRST TWO ARE THE CONSTANT. The implemented system is the only term that varies, and it is present in exactly one of the two cases. THE OBJECTION THIS OVERTURNS, which was mine and not his: the weakness recorded against this option said deriving from a repo 'says nothing for a design whose subject is a fleet, a document set, or hardware', against `req:design-anything`. It conflated the SUBJECT SYSTEM with the DESIGN'S ARTIFACTS, and a sweep only ever covers what is in the repository. A satellite, a building, a fleet cannot live in a repo — but its drawings, specs, models, analyses and requirement documents can, and normally do. In his words: 'while a hardware system, for example, can't live within a git repo, its design artifacts can. obviously, for all non-code projects, this is the case.' So a derived scope is not a code-only convenience. It is the general case, and it is MORE clearly right for a non-code project than for software, because there the tracked artifacts are the whole of what a coverage question could ever have been asking about. CODE IS THE SPECIAL CASE, AND SPECIAL BY BEING MORE THAN THE NORM, NOT LESS — 'code based projects are the system and can be inspected by the agent as well as the design'. It is the one case where the third term exists, so one sweep sees the implemented system alongside the graph and the artifacts. He also expects that exceptional case to be the majority of reflow2's use, which is exactly why it must not be mistaken for the rule the design is built on: a default inferred from the common case would quietly assume an implemented system that most subjects do not have. WHAT THIS MEANS FOR THE SWEEP ITSELF. Of the three tracked things, the design GRAPH is the one that must be excluded — a design cannot be its own subject, and `docs/design` is a named exclusion in reflow2's own sweep for exactly that reason. The other two are swept: the artifacts always, the implemented code when there is any. WHAT THIS GENUINELY CANNOT DO, which is a different limitation from the one it was charged with: a design artifact that is NOT under version control — a CAD file on someone's machine, a spec in a wiki, a drawing inside a PLM system — is invisible to a derived sweep. That is not fatal, because the seam already answers it: `coverage_report` takes caller-supplied observations, so an agent that can reach a PLM or a document store sweeps it and hands the paths over exactly as it hands over a repo listing. Derivation is the DEFAULT, not a restriction on what may be observed. WHAT IS STILL OPEN AND WAS NEVER THIS: `cap:coverage` records that the sweep is not persisted, so `detect_gaps` cannot raise coverage from graph state the way `unresolved_drift` is raised from a recorded `DriftEvent`. That deferral survives this decision untouched — it was never the fix for the blind quadrant, and it still needs a node to record a sweep in and a staleness rule (the `cap:freshness` precedent).",
+        "name": "Coverage scope is DERIVED from version control — because a sweep covers the design's artifacts, never the subject system",
+        "rationale": "Anthony's word, given 2026-08-02 in answer to the three shapes put to him. Recorded with his argument rather than just his choice, because the argument is the part that would otherwise be lost: it is not merely a preference between three costs, it identifies an ERROR in how option 3 was described to him — the artifact/subject conflation — and that error is what would have made a later reader re-open a settled question. The two rejected shapes are kept in the record deliberately (ADR discipline): (1) a scope property on Project/Component, cheap but with no history and nowhere to date a sweep; (2) a first-class node recording a sweep and its scope, which would have closed the persistence deferral in the same move but costs a schema change and pulls in the staleness decision. Both remain available as an OVERRIDE for a subject version control cannot enumerate — this decision fixes the default, not the ceiling.",
+        "status": "accepted"
       }
     },
     {
@@ -41259,6 +41312,16 @@
         "epoch_type": "revision",
         "name": "The subscribe side becomes declarable and the seam is computed",
         "sequence": 236,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:coverage-scope-settled",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Coverage scope settled and carried into the kit: derived from version control, on Anthony's word (2026-08-02)",
+        "sequence": 257,
         "status": "arrived"
       }
     },
@@ -45747,6 +45810,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:coverage-scope-settled:dec:coverage-scope-is-declared",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Capability\",\"other_id\":\"cap:coverage\",\"properties\":{}}]",
+        "state": "{\"decision\":\"DECIDED by Anthony 2026-08-02, option 3 of three: the sweep is everything the version-control system tracks, minus NAMED exclusions echoed back with the rule that excluded them. No vocabulary change, no new property, no new node type — so the schema stamp does not move, which on this project is what locks out older binaries. (The node id says `declared` because that was the QUESTION; the answer is `derived`. Kept as a stable handle rather than re-minted, since `cap:coverage` is already GOVERNED_BY it.) ANTHONY'S REASONING, WHICH CORRECTS THE WEAKNESS THIS OPTION WAS RECORDED WITH. The objection on file was that deriving from a repo 'says nothing for a design whose subject is a fleet, a document set, or hardware', against `req:design-anything`. That conflated two different things. THE SUBJECT SYSTEM and THE DESIGN'S ARTIFACTS ARE NOT THE SAME THING, and a sweep only ever covers the second. A satellite, a building, a fleet cannot live in a repo — but its drawings, specs, models, analyses and requirement documents can, and normally do. In his words: 'while a hardware system, for example, can't live within a git repo, its design artifacts can. obviously, for all non-code projects, this is the case.' So the derived scope is not a code-only convenience; it is the general case, and it is MORE clearly right for hardware than for software, because there the artifacts are all there is to sweep. CODE IS THE SPECIAL CASE, NOT THE NORM — and it is special by being MORE than the norm, not less: 'code based projects are the system and can be inspected by the agent as well as the design'. For a codebase the repo holds the subject system AND the design artifacts at once, so a sweep sees both; for everything else it sees the artifacts, which is all a coverage question ever asked about. He also expects that exceptional case to be the majority of reflow2's use, which is why it must not be mistaken for the rule the design is built on. WHAT THIS GENUINELY CANNOT DO, which is a different limitation from the one it was charged with: a design artifact that is NOT under version control — a CAD file on someone's machine, a spec in a wiki, a drawing inside a PLM system — is invisible to a derived sweep. That is not fatal, because the seam already answers it: `coverage_report` takes caller-supplied observations, so an agent that can reach a PLM or a document store sweeps it and hands the paths over exactly as it hands over a repo listing. Derivation is the DEFAULT, not a restriction on what may be observed. WHAT IS STILL OPEN AND WAS NEVER THIS: `cap:coverage` records that the sweep is not persisted, so `detect_gaps` cannot raise coverage from graph state the way `unresolved_drift` is raised from a recorded `DriftEvent`. That deferral survives this decision untouched — it was never the fix for the blind quadrant, and it still needs a node to record a sweep in and a staleness rule (the `cap:freshness` precedent).\",\"name\":\"Coverage scope is DERIVED from version control — because a sweep covers the design's artifacts, never the subject system\",\"rationale\":\"Anthony's word, given 2026-08-02 in answer to the three shapes put to him. Recorded with his argument rather than just his choice, because the argument is the part that would otherwise be lost: it is not merely a preference between three costs, it identifies an ERROR in how option 3 was described to him — the artifact/subject conflation — and that error is what would have made a later reader re-open a settled question. The two rejected shapes are kept in the record deliberately (ADR discipline): (1) a scope property on Project/Component, cheap but with no history and nowhere to date a sweep; (2) a first-class node recording a sweep and its scope, which would have closed the persistence deferral in the same move but costs a schema change and pulls in the staleness decision. Both remain available as an OVERRIDE for a subject version control cannot enumerate — this decision fixes the default, not the ceiling.\",\"status\":\"accepted\"}",
+        "target_id": "dec:coverage-scope-is-declared",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:kpp-capture:cap:kpp-proposal",
       "node_type": "Snapshot",
       "properties": {
@@ -47391,7 +47464,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5ec3375aec879f6f349158f78c3b66b17e7a0283b22ef158d9b0bbf616e806e4",
+  "prev_content_hash": "sha256:baf577a4f60588693a326c913f7582eaf5cf3fef222824154f1cd6404721b74b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
