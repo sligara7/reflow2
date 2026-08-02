@@ -361,3 +361,151 @@ fn the_chain_grows_from_an_unhashed_predecessor() {
         "the predecessor's identity is recomputed, not refused"
     );
 }
+
+// ---- The import_graph cluster: BL-117 / BL-118 / BL-138 --------------------
+//
+// All three come from real adopt passes by people who are not us, following the
+// `adopt` skill's central instruction — *"build one export document and
+// `import_graph` it once"* — and finding that the door the skill sends them to
+// does not describe itself, refuses what the skill produces, and reports one
+// fault per round trip.
+
+/// BL-138. The skill's own instruction, followed literally: nodes and edges and
+/// nothing else. It used to fail on `missing field 'graph_id'` — a field the
+/// server already knows and `import_graph` never reads.
+#[test]
+fn a_hand_authored_document_needs_no_graph_id_or_stamp() {
+    let doc: GraphExport = serde_json::from_str(
+        r#"{"nodes":[{"node_type":"Requirement","node_id":"req:hand",
+             "properties":{"name":"Hand-authored","statement":"Written by an agent"}}],
+            "edges":[]}"#,
+    )
+    .expect("a minimal {nodes, edges} document must deserialize");
+    assert!(doc.is_unidentified());
+    assert!(doc.is_unstamped());
+
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let report = g.import_graph(&doc).expect("and it must import");
+    assert_eq!(report.nodes_written, 1);
+    assert!(
+        g.get_node(node::REQUIREMENT, "req:hand").unwrap().is_some(),
+        "the node actually landed"
+    );
+}
+
+/// The edge list is optional too — a first adopt pass is usually nodes only.
+#[test]
+fn a_document_may_omit_the_edge_list_entirely() {
+    let doc: GraphExport = serde_json::from_str(
+        r#"{"nodes":[{"node_type":"Requirement","node_id":"req:only",
+             "properties":{"name":"Only","statement":"No edges yet"}}]}"#,
+    )
+    .expect("omitting `edges` must not be a refusal");
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    assert_eq!(g.import_graph(&doc).unwrap().nodes_written, 1);
+}
+
+/// BL-138's COUNTERWEIGHT, and the reason this is not simply "drop the field".
+/// `mirror_surface` genuinely needs to know where a surface came from — it
+/// records `mirror_of` and guards against mirroring a design into itself — so
+/// it must still refuse an unidentified document, by name.
+#[test]
+fn mirror_surface_still_refuses_a_document_that_names_no_source() {
+    let doc: GraphExport = serde_json::from_str(
+        r#"{"nodes":[{"node_type":"Requirement","node_id":"req:x",
+             "properties":{"name":"X","statement":"S"}}],"edges":[]}"#,
+    )
+    .unwrap();
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let err = g
+        .mirror_surface(&doc, None)
+        .expect_err("mirroring cannot record a provenance it was never given");
+    let msg = err.to_string();
+    assert!(msg.contains("graph_id"), "{msg}");
+    assert!(
+        msg.contains("import_graph"),
+        "the message must name the operation that DOES accept it: {msg}"
+    );
+}
+
+/// BL-118. Four faults used to cost four full edit-retry cycles, because
+/// validation stopped at the first. Now one response names every one of them,
+/// with its position, and still writes nothing.
+#[test]
+fn every_fault_in_the_document_is_reported_in_one_response() {
+    let doc: GraphExport = serde_json::from_str(
+        r#"{"nodes":[
+             {"node_type":"Requirement","node_id":"req:ok",
+              "properties":{"name":"Fine","statement":"Valid"}},
+             {"node_type":"Requirement","node_id":"req:bad-status",
+              "properties":{"name":"Bad","statement":"S","status":"not-a-status"}},
+             {"node_type":"NoSuchType","node_id":"x:1","properties":{}},
+             {"node_type":"Requirement","node_id":"req:missing-statement",
+              "properties":{"name":"No statement"}}
+           ],"edges":[]}"#,
+    )
+    .unwrap();
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let err = g.import_graph(&doc).expect_err("the document is invalid");
+    let msg = err.to_string();
+
+    // Every fault, not just the first — the whole point of the row.
+    for expected in ["req:bad-status", "x:1", "req:missing-statement"] {
+        assert!(msg.contains(expected), "missing {expected} from:\n{msg}");
+    }
+    // Positional, so a 9,000-line document can be navigated.
+    assert!(
+        msg.contains("nodes[1]") && msg.contains("nodes[3]"),
+        "{msg}"
+    );
+
+    // ATOMICITY UNTOUCHED — the half the row said must not be touched, and the
+    // half the reporting session praised. The VALID node must not have landed.
+    assert!(
+        g.get_node(node::REQUIREMENT, "req:ok").unwrap().is_none(),
+        "a rejected import writes nothing at all"
+    );
+}
+
+/// A bad EDGE is collected the same way, and reported with its own index.
+#[test]
+fn edge_faults_are_collected_beside_node_faults() {
+    let doc: GraphExport = serde_json::from_str(
+        r#"{"nodes":[
+             {"node_type":"Requirement","node_id":"req:a",
+              "properties":{"name":"A","statement":"S"}},
+             {"node_type":"Requirement","node_id":"req:b",
+              "properties":{"name":"B","statement":"S"}}
+           ],
+           "edges":[{"edge_type":"NO_SUCH_EDGE","from_id":"req:a","to_id":"req:b"}]}"#,
+    )
+    .unwrap();
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let msg = g.import_graph(&doc).expect_err("bad edge type").to_string();
+    assert!(msg.contains("edges[0]"), "{msg}");
+    assert!(msg.contains("NO_SUCH_EDGE"), "{msg}");
+    assert!(
+        g.get_node(node::REQUIREMENT, "req:a").unwrap().is_none(),
+        "still all-or-nothing"
+    );
+}
+
+/// The counterweight to BL-118: a VALID document is unaffected, and still
+/// commits in one batch.
+#[test]
+fn a_valid_document_still_imports_whole() {
+    let doc: GraphExport = serde_json::from_str(
+        r#"{"nodes":[
+             {"node_type":"Requirement","node_id":"req:a",
+              "properties":{"name":"A","statement":"S"}},
+             {"node_type":"Capability","node_id":"cap:a",
+              "properties":{"name":"CapA","description":"D"}}
+           ],
+           "edges":[{"edge_type":"SATISFIES","from_id":"cap:a","to_id":"req:a"}]}"#,
+    )
+    .unwrap();
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let r = g.import_graph(&doc).expect("valid");
+    assert_eq!((r.nodes_written, r.edges_written), (2, 1));
+    assert!(r.skipped_edges.is_empty());
+}

@@ -31,6 +31,37 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **`import_graph` now describes itself, reports every fault at once, and stops asking you for its
+  own identity** (BL-117, BL-118, BL-138 — all three from real `/adopt` passes by people who are
+  not us, following the skill's central instruction *"build one export document and `import_graph`
+  it once"*).
+  **BL-138:** a document of `{nodes, edges}` — literally what the skill says to build — used to
+  fail on `missing field 'graph_id'`. That field is now optional, and the reason it could be is the
+  finding: **`import_graph` never read it.** An import loads into the receiving graph, whose id the
+  server already knows, so the caller was being asked to restate the receiver's own identity and
+  then have the answer ignored. `edges` may be omitted entirely too. **The counterweight is why
+  this is not just deleting a requirement:** `mirror_surface` *does* read it and still refuses an
+  unidentified document by name, because mirroring records where a surface came from and guards
+  against mirroring a design into itself — neither answerable without the id. One rule was right
+  for a round-tripped export and wrong for a hand-authored one; the code now distinguishes them.
+  **BL-118:** validation stopped at the first violation, so a hand-authored 9,000-line document
+  cost four full edit-retry cycles to learn four faults. Every fault is now reported in one
+  response with its position (`nodes[1]`, `edges[0]`). **Atomicity is untouched and pinned
+  separately** — a rejected import still writes nothing at all, including the items that were
+  valid — and it still returns an *error* rather than an ok-with-failures report, so a rejected
+  import can never read as success. This is `dec:bulk-is-all-or-nothing-with-per-item-findings`
+  reused rather than reinvented.
+  **BL-117:** the document shape now rides `import_graph`'s own description — envelope, what is
+  optional, that endpoint types are recovered rather than stored — because an export of an empty
+  graph teaches none of it and the reporter had to burn a scratch graph to learn it.
+  6 new cases (18 in the suite), mutation-checked six ways.
+- **BL-119 closed without a build: it was already fixed** by `chg:bl87`, which made the import
+  stamp optional and reported. Confirmed in source rather than taken on report — and the same check
+  then found half of BL-138 stale for the identical reason. Two of five rows in one cluster had
+  been overtaken between filing and triage.
+
 ### Added
 
 - **The epoch an increment delivers on is computed, not declared** (BL-68 — the last unbuilt part

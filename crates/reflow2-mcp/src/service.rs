@@ -4820,11 +4820,29 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Load an exported design into this graph. Upsert, not replace: ids already \
-                       present are overwritten and anything not in the document is left alone, so \
-                       clear the graph first if you want a clean restore. Atomic — a document that \
-                       fails validation leaves the graph untouched rather than half-loaded. \
-                       Reports any edge whose endpoints were missing rather than dropping it.",
+        description = "Load an exported design into this graph. THE DOCUMENT SHAPE, because you \
+                       cannot learn it from an export of an empty graph and should not have to \
+                       reverse-engineer it: \
+                       {\"nodes\":[{\"node_type\":\"Requirement\",\"node_id\":\"req:x\",\
+                       \"properties\":{...}}],\"edges\":[{\"edge_type\":\"SATISFIES\",\
+                       \"from_id\":\"cap:x\",\"to_id\":\"req:x\",\"properties\":{}}]}. \
+                       That is the whole required envelope — `graph_id`, `stamp`, `content_hash` \
+                       and `prev_content_hash` are all OPTIONAL on the way in, and `edges` may be \
+                       omitted entirely. Endpoint types are not stored on an edge; they are \
+                       recovered from the nodes in the same document or from this graph. Use \
+                       describe_schema for the properties each node_type takes. \
+                       EACH NODE MUST BE COMPLETE: validation applies to the whole node, so a \
+                       partial node is refused rather than merged into the one already there — \
+                       unlike create_node, where a partial props object edits. Re-importing a \
+                       corrected node means sending all of its properties, not just the changed \
+                       one. \
+                       Upsert, not replace: ids already present are overwritten and anything not \
+                       in the document is left alone, so clear the graph first if you want a \
+                       clean restore. Atomic — a document that fails validation leaves the graph \
+                       untouched rather than half-loaded — and EVERY invalid item is reported in \
+                       one response with its position, so a document with N faults costs one \
+                       round trip rather than N. Reports any edge whose endpoints were missing \
+                       rather than dropping it.",
         annotations(read_only_hint = false)
     )]
     pub async fn import_graph(

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3dc44ba27ad662e149b8e8beed33bade6ae7fe0dd8ecb950cb775fcb4bce50cd",
+  "content_hash": "sha256:fe31bc0cbcc0dbccc08ae78fcd2db8b0d1dffdaed99adc1fc12a55a55514b808",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -7485,6 +7485,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:import-cluster",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:import-cluster",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:ingest-handshake",
       "properties": {
         "accepted_baseline": true,
@@ -14560,6 +14578,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:portability",
       "properties": {},
+      "to_id": "dec:import-merges-or-demands-whole-nodes"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:portability",
+      "properties": {},
       "to_id": "dec:repo-file-embedded"
     },
     {
@@ -16001,6 +16025,12 @@
       "from_id": "cmp:export",
       "properties": {},
       "to_id": "dec:export-door-spof-accepted"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:export",
+      "properties": {},
+      "to_id": "dec:import-merges-or-demands-whole-nodes"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -30776,6 +30806,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:import-document-usability",
+      "properties": {},
+      "to_id": "cap:portability"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:ingest",
       "properties": {},
       "to_id": "cap:ingest"
@@ -32333,7 +32369,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f44a5c6499968fb4cb8a0c98df80d64271cd7b098e3f8bd6c13a9f0c16a08337",
+        "checksum": "sha256:75b05ce1f91a84856c1b1d4ff2fdd9b99b3297879e3add9c939081e5b5ad2626",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
         "status": "realized"
@@ -32817,7 +32853,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:456584236c25cd276af1874c82c774f75847df776fe266662e1186719cb22472",
+        "checksum": "sha256:e5434a1817ae559f0fcb14ca39ac37931d1c25a5b9394495624736de15ff92ae",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -35858,6 +35894,14 @@
       }
     },
     {
+      "node_id": "chg:import-cluster",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The import_graph cluster (BL-117/118/138): the bulk door tells you its document shape, names every fault in one response instead of one per round trip, and stops demanding the receiver's own identity from a hand author"
+      }
+    },
+    {
       "node_id": "chg:ingest-handshake",
       "node_type": "ChangeEvent",
       "properties": {
@@ -37712,6 +37756,16 @@
         "name": "Names are assigned with zero coordination, never derived from shared state",
         "rationale": "Neither identifier is negotiated with anybody, so neither can race — unique by construction at one seat or fifteen. The fleet reached this by DELETING a whole mint-race guard: the race was an artifact of deriving the handle by reading a shared roster, so removing the derivation removed the race rather than patching it. reflow2 has the derived-identity bug twice today — every in-memory graph answered DEFAULT_GRAPH_ID until mirroring needed open_in_memory_as, and claims record a label rather than an owner.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:import-merges-or-demands-whole-nodes",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "BL-139's open half, and it is ANTHONY'S because it changes published behaviour rather than fixing a defect. `create_node` merges — its own description says \"a partial props object edits\" — and `import_graph` does not: re-importing an existing Requirement carrying only `{lineage: \"derived\"}` fails with `Requirement.statement: required property is missing`. The adopt workflow is import → detect → correct → re-import, so the mismatch lands precisely on the corrective step the skill prescribes. TWO OPTIONS, and the row already judged them: \"(2) is honest and cheap; (1) is what the workflow actually wants.\" (1) MERGE AT PROPERTY LEVEL, like `create_node`. (2) SAY PLAINLY that documents must carry complete nodes — DONE 2026-08-02, in `import_graph`'s own description, so the cheap half is delivered whichever way this goes. THE COST OF (1), which is why it is not a one-word swap and why nobody should make it casually. FIRST, it crosses THREE PUBLISHED BOUNDARIES — `ifc:core-api`, `ifc:graph-export` and `ifc:mcp-tools` — measured, not guessed: `propagate_from(\"art:export\")` reported 705 impacted nodes and `propagate_change` on this session's own edit reported 723, both crossing exactly those three. SECOND, and this is the part no boundary count shows: MERGING MAKES IMPORT NON-IDEMPOTENT FOR DELETION. Today a document is a complete statement of the nodes it names, so re-importing without a property REMOVES it and an export→import round trip reproduces the design exactly. Under (1) a property can only ever be added or changed, never dropped, and restoring a backup would silently retain whatever the live graph had accumulated since. That is a change to what an import MEANS, and it makes the migration and backup jobs this module exists for weaker in exchange for making the adopt loop smoother. THIRD, a middle path exists and should be considered rather than skipped: keep whole-node semantics as the default and let the DOCUMENT ask for merge explicitly (a per-node or per-document flag), so the adopt loop gets what it wants without redefining backup restore for everyone.",
+        "name": "OPEN — does import_graph merge a partial node like create_node, or keep demanding whole ones?",
+        "rationale": "Recorded proposed rather than decided, because AGENTS.md puts a Decision reaching `accepted` on the per-session side — that write is the user's signature. Raised now with the measurement attached because the row's framing (\"make import_graph merge like create_node\") reads as a small fix and the design says otherwise: this is the third time on this project that grep suggested a one-word swap and the graph reported a published-boundary change, and every previous time measuring first was what corrected it.",
+        "status": "proposed"
       }
     },
     {
@@ -44821,6 +44875,18 @@
       }
     },
     {
+      "node_id": "ver:import-document-usability",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-02",
+        "level": "integration",
+        "method": "test",
+        "name": "The bulk import door describes itself, reports every fault at once, and stops demanding the receiver's own identity (crates/reflow2-core/tests/export.rs, 6 new cases of 18). BL-138: a document of nodes and edges and nothing else — which is literally what the adopt skill instructs — imports, and the edge list may be omitted entirely; `graph_id` was demanded from hand authors and then NEVER READ by the operation demanding it, which is what made it worth removing rather than documenting. COUNTERWEIGHT, and the reason this is not just deleting a requirement: `mirror_surface` still REFUSES an unidentified document by name, because mirroring records where a surface came from and guards against mirroring a design into itself, and neither question is answerable without the id — the same shape as BL-119, where one requirement was right for a round-tripped export and wrong for a hand-authored one. BL-118: four faults in one document now cost ONE round trip instead of four, each reported with its position (`nodes[1]`, `edges[0]`) so a 9,000-line document can be navigated; ATOMICITY IS PINNED SEPARATELY — a rejected import writes nothing at all, including the items that were valid, which is the half the reporting session named as working notably well and the row said must not be touched. The shape is `dec:bulk-is-all-or-nothing-with-per-item-findings` reused rather than reinvented, and it still returns an ERROR rather than an ok-with-failures report, so a rejected import can never read as success. BL-117: the document shape now rides `import_graph`'s own description — the envelope, the optionality of every metadata field, that endpoint types are recovered rather than stored, and that each node must be COMPLETE (BL-139's honest half, delivered whichever way the merge question goes).",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:ingest",
       "node_type": "Verification",
       "properties": {
@@ -45493,7 +45559,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:85a2fdaa6baf3bcff1a9497f4da5788c3cbcf638f5fcfacc7e4bc81a83cbbfe3",
+  "prev_content_hash": "sha256:3dc44ba27ad662e149b8e8beed33bade6ae7fe0dd8ecb950cb775fcb4bce50cd",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
