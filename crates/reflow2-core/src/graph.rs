@@ -51,7 +51,18 @@ pub const DEFAULT_GRAPH_ID: &str = "reflow2";
 /// A design graph: a [`StorageEngine`] scoped to a single graph id.
 pub struct DesignGraph {
     engine: StorageEngine,
-    graph_id: String,
+    /// `pub(crate)` because each coherence-loop step is its own module of
+    /// `impl DesignGraph`, and `import_graph` has to be able to ADOPT a
+    /// restored design's name rather than write it under the receiver's
+    /// (BL-169). Read it through [`graph_id`](Self::graph_id) from outside.
+    pub(crate) graph_id: String,
+    /// Where the store lives on disk, when it lives on disk at all.
+    ///
+    /// Carried so the graph can reach its own identity sidecar
+    /// (`<path>.id.json`), which is what lets [`import_graph`](Self::import_graph)
+    /// adopt a restored design's name instead of silently renaming it (BL-169).
+    /// `None` for an in-memory graph, which has no sidecar and nothing to adopt.
+    pub(crate) store_path: Option<String>,
 }
 
 impl DesignGraph {
@@ -85,6 +96,7 @@ impl DesignGraph {
         Ok(Self {
             engine: StorageEngine::new_in_memory(schema),
             graph_id: graph_id.to_string(),
+            store_path: None,
         })
     }
 
@@ -138,6 +150,7 @@ impl DesignGraph {
             Self {
                 engine,
                 graph_id: identity.graph_id,
+                store_path: Some(path.to_string()),
             },
             provenance,
         ))

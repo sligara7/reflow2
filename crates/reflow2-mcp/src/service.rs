@@ -4820,9 +4820,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Load an exported design into this graph. THE DOCUMENT SHAPE, because you \
-                       cannot learn it from an export of an empty graph and should not have to \
-                       reverse-engineer it: \
+        description = "Load an exported design into this graph. THE DOCUMENT SHAPE, which an export of an \
+                       empty graph cannot teach you: \
                        {\"nodes\":[{\"node_type\":\"Requirement\",\"node_id\":\"req:x\",\
                        \"properties\":{...}}],\"edges\":[{\"edge_type\":\"SATISFIES\",\
                        \"from_id\":\"cap:x\",\"to_id\":\"req:x\",\"properties\":{}}]}. \
@@ -4840,9 +4839,11 @@ impl ReflowService {
                        in the document is left alone, so clear the graph first if you want a \
                        clean restore. Atomic — a document that fails validation leaves the graph \
                        untouched rather than half-loaded — and EVERY invalid item is reported in \
-                       one response with its position, so a document with N faults costs one \
-                       round trip rather than N. Reports any edge whose endpoints were missing \
-                       rather than dropping it.",
+                       one response with its position. Reports any edge whose endpoints were missing \
+                       rather than dropping it. \
+                       IDENTITY: an EMPTY store adopts the document's `graph_id` (reported as \
+                       `adopted_identity`) instead of renaming the design; a store already \
+                       holding one keeps its name.",
         annotations(read_only_hint = false)
     )]
     pub async fn import_graph(

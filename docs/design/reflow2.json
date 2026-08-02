@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6578c70d651369557be4719cfc0f8a944c426e0a35ac4f71a64f773ade54646b",
+  "content_hash": "sha256:241e9fbeeb9ee22155dbc3f7af48feff875d79e8df4fac051e168089bc4cde7b",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5454,6 +5454,69 @@
         "action": "modified"
       },
       "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl169-import-adopts-identity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl169-import-adopts-identity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl169-import-adopts-identity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl169-import-adopts-identity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl169-import-adopts-identity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl169-import-adopts-identity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl169-import-adopts-identity",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:design-identity"
     },
     {
       "edge_type": "CHANGED",
@@ -33734,7 +33797,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a1f3fd49ba2b91fbb23aeec8de41d0a09f7c4d2b3c3bed97963eb3457867df4e",
+        "checksum": "sha256:e13223ac72649aa498bcc78fbf4824f6b5a3a346fc78c3516bd79075eae5cd1a",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
         "status": "realized"
@@ -34020,7 +34083,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:75b05ce1f91a84856c1b1d4ff2fdd9b99b3297879e3add9c939081e5b5ad2626",
+        "checksum": "sha256:cbba2d0c482d766c6dae2ca016e0b9fd2f760a9987febfa7e9b477a2414df079",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
         "status": "realized"
@@ -34086,7 +34149,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1db59b3f290549cb",
+        "checksum": "sha256:929f2c142c37f7655ea8dda152d813c69d6a7c9d7f3ba9b700ff4de970179844",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -34251,7 +34314,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1702df92e14a3d7abac61e3e13387fd464bacc18bc31d5f9a858cde846dafe32",
+        "checksum": "sha256:9eee13f94445919641af92008ffa67b7a474c21ddfe08edacde256e176f90ff5",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
         "status": "realized"
@@ -34637,7 +34700,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e5434a1817ae559f0fcb14ca39ac37931d1c25a5b9394495624736de15ff92ae",
+        "checksum": "sha256:f9826d4fac181a58978ecb09e37b439a4090bcbba3798fe18983e06f8a34e3c0",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -34802,7 +34865,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8f406602ed3bdb046af77130ca482951818dd4ccfeada8afd4cfc0a9c0ea5e10",
+        "checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af",
         "location": "crates/reflow2-mcp/tests/design_identity.rs",
         "name": "design_identity.rs",
         "status": "realized"
@@ -37164,6 +37227,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The eleven schema domains become registered Artifacts, and the self-model's filesystem sweep stops being blind to schema/ (BL-165)"
+      }
+    },
+    {
+      "node_id": "chg:bl169-import-adopts-identity",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "import_graph adopts a restored design's identity instead of renaming it, and the gate refuses a silent rename (BL-169)"
       }
     },
     {
@@ -47526,7 +47597,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d56f83329878bff17364d276922328d3332f66e4c667aba595b2b241d4f96051",
+  "prev_content_hash": "sha256:6578c70d651369557be4719cfc0f8a944c426e0a35ac4f71a64f773ade54646b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

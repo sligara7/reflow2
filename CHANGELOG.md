@@ -33,6 +33,25 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **Restoring a design no longer renames it** (BL-169). `import_graph` loaded a document into the
+  receiving graph under *that graph's* name, so replaying an export through a temp store returned a
+  design called something else. `graph_id` namespaces every stored key and sits inside the export's
+  content hash, so the rename was invisible to every other check: the lineage chain linked across
+  it, the content hash matched its own content, `reflow2_check` passed and **both CI jobs were
+  green** on a design that had stopped being called what it was called. The only signal anywhere
+  was a `provenance_note` string in `compare_designs` that nothing gates on.
+
+  Importing into an **empty** store now adopts the document's identity and reports it as
+  `adopted_identity`; a store that already holds a design keeps its own name, because layering an
+  export onto a live design is an upsert, not a restore. **The rule was not copied — it moved.** It
+  had lived in the CLI's `--import` path, which is precisely why the command and the tool
+  disagreed about what restoring a design means; it now lives in the operation, so every caller
+  gets it.
+
+  `reflow2_check.py` gains an **`IDENTITY`** check that refuses a silent rename the way it already
+  refuses a severed chain, sharing the lineage check's pair-resolution rather than reimplementing
+  it.
+
 - **reflow2's own kit install is current again** (BL-175). This repository was carrying a
   `REFLOW2.md` from reflow2 **0.15.0** — seven releases behind — while `CLAUDE.md` directed every
   agent here to read it. It is now the 42-line pointer that `req:thin-install` intends, whose
