@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:85a2fdaa6baf3bcff1a9497f4da5788c3cbcf638f5fcfacc7e4bc81a83cbbfe3",
+  "content_hash": "sha256:3dc44ba27ad662e149b8e8beed33bade6ae7fe0dd8ecb950cb775fcb4bce50cd",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -656,6 +656,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:readiness-gating",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:readiness"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4291,6 +4299,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-41cb200c8b595eb3",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-43ae772560f9ccca",
       "properties": {
         "accepted_baseline": true,
@@ -4597,6 +4614,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-b15edaa1e77d695c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-b6c2d52afc751a6e",
       "properties": {
         "accepted_baseline": true,
@@ -4657,6 +4683,15 @@
         "action": "modified"
       },
       "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-c5c292951bc3363e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -5413,6 +5448,51 @@
         "action": "modified"
       },
       "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl68-readiness-gating",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl68-readiness-gating",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl68-readiness-gating",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl68-readiness-gating",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl68-readiness-gating",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
     },
     {
       "edge_type": "CHANGED",
@@ -10149,6 +10229,12 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:time-history",
       "properties": {},
+      "to_id": "cmp:readiness"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:time-history",
+      "properties": {},
       "to_id": "cmp:temporal"
     },
     {
@@ -14784,6 +14870,24 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:readiness-gating",
+      "properties": {},
+      "to_id": "dec:readiness-forecast-is-a-temporal-fact"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:readiness-gating",
+      "properties": {},
+      "to_id": "dec:readiness-is-an-observation-the-threshold-is-the-judgement"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:readiness-gating",
+      "properties": {},
+      "to_id": "dec:report-dont-judge"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:reconcile-built",
       "properties": {},
       "to_id": "dec:two-sided-accept"
@@ -16383,6 +16487,18 @@
       "from_id": "req:read-while-held",
       "properties": {},
       "to_id": "decision:ack:b53c7315f39f3640"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:readiness-gates-the-roadmap",
+      "properties": {},
+      "to_id": "dec:readiness-forecast-is-a-temporal-fact"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:readiness-gates-the-roadmap",
+      "properties": {},
+      "to_id": "dec:readiness-is-an-observation-the-threshold-is-the-judgement"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -28896,6 +29012,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:readiness",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:readiness-gating"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:readme",
       "properties": {
         "completeness": "partial"
@@ -28941,6 +29065,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-readiness",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:readiness-gating"
     },
     {
       "edge_type": "REALIZES",
@@ -29993,6 +30125,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:readiness-gating",
+      "properties": {},
+      "to_id": "req:readiness-gates-the-roadmap"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:reconcile-built",
       "properties": {},
       "to_id": "req:as-built-honest"
@@ -30800,6 +30938,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:readiness-gating",
+      "properties": {},
+      "to_id": "cap:readiness-gating"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:reconcile-built",
       "properties": {},
       "to_id": "cap:reconcile-built"
@@ -31464,6 +31608,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:readiness",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:readiness"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:render-views",
       "properties": {
         "action": "created"
@@ -31493,6 +31645,14 @@
         "action": "created"
       },
       "to_id": "art:schema"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:schema-readiness",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:schema-readiness"
     },
     {
       "edge_type": "YIELDED",
@@ -31777,7 +31937,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:3881be37de747b4d",
+        "checksum": "sha256:c59e170136c61deb",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
         "status": "realized"
@@ -32063,7 +32223,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:58145eda6df5305aa4ff2b61dc041cb6b53054d65a7cc8016a7dad861c03b7f3",
+        "checksum": "sha256:2f8887f1a71cd643b959e9e48e7d3c1bb98b9c793c86dcbffba1381b265f6b8d",
         "location": "reflow2.toml",
         "name": "reflow2.toml",
         "status": "realized"
@@ -32426,7 +32586,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1137e18d7251d7e7",
+        "checksum": "sha256:774ad95db84666b3",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
         "status": "realized"
@@ -32510,11 +32670,22 @@
       }
     },
     {
+      "node_id": "art:readiness",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:b964690c35967c76a12a9da11c404699c9026d433721813a71882f425f044123",
+        "location": "crates/reflow2-core/src/readiness.rs",
+        "name": "readiness.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:readme",
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:91b73f060c83a6718e22a9428cba4f8d3d713f59329986110f0fc113ef3ef783",
+        "checksum": "sha256:da4302eb091e89ce69d2c97b66e947472fba881f7718e86f5a2f5824e057ff22",
         "location": "README.md",
         "name": "README.md",
         "status": "realized"
@@ -32558,9 +32729,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:245e9dafa5f72a02",
+        "checksum": "sha256:56201fe977dc874f",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:schema-readiness",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a",
+        "location": "schema/readiness.yaml",
+        "name": "readiness.yaml",
         "status": "realized"
       }
     },
@@ -32635,7 +32817,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:42ebd5b066ce27ceaa2a03c9408796fc34d74c5e2de9d1dc6775413cd13cd5ae",
+        "checksum": "sha256:456584236c25cd276af1874c82c774f75847df776fe266662e1186719cb22472",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -32976,7 +33158,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bc2af0dc3b8b455e",
+        "checksum": "sha256:0d250aa84d8ebe16",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
         "status": "realized"
@@ -33945,6 +34127,19 @@
       }
     },
     {
+      "node_id": "cap:readiness-gating",
+      "node_type": "Capability",
+      "properties": {
+        "description": "TRL/MRL readiness as its own construct — a `ReadinessAssessment` carrying an integer level 1-9 and a kind, attached to the enabling technology — plus a `GATED_ON` edge from the increment to that technology carrying the level it demands, and a `TemporalFact` forecast series marking itself `forecast` rather than `measured` with author-stated confidence. From those three the delivery epoch is computed FORWARD: the earliest epoch by which every gating technology clears its stated level, reported with the reason (\"2036 because this component is TRL 3 today, projected 7 in 2035, and this increment needs 7\"). Refuses to invent a threshold: an ungated increment is reported ungated, never ready.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Readiness gates an increment, and the roadmap says why",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:reconcile-built",
       "node_type": "Capability",
       "properties": {
@@ -34508,6 +34703,15 @@
       }
     },
     {
+      "node_id": "chg:accept-41cb200c8b595eb3",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-02",
+        "name": "Version bump 0.21.0 -> 0.22.0 only. The schema change is what moved the design and it is recorded on chg:bl68-readiness-gating; this file records WHICH version, and no design claim in it changed."
+      }
+    },
+    {
       "node_id": "chg:accept-43ae772560f9ccca",
       "node_type": "ChangeEvent",
       "properties": {
@@ -34805,6 +35009,15 @@
       }
     },
     {
+      "node_id": "chg:accept-b15edaa1e77d695c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-02",
+        "name": "The hand-kept vocabulary counts only (10 domains / 28 node / 57 edge -> 11 / 29 / 60). Several were ALREADY stale before this change, which is BL-159's two-records-of-one-contract shape in the prose layer."
+      }
+    },
+    {
       "node_id": "chg:accept-b6c2d52afc751a6e",
       "node_type": "ChangeEvent",
       "properties": {
@@ -34860,6 +35073,15 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-08-01",
         "name": "BL-126 + BL-136: evidence_report gains the INPUT and INDEPENDENCE axes beside WHERE, plus set_evidence_scope and calibrated_against on the write side, delivering cap:evidence-scope and cap:independent-evidence."
+      }
+    },
+    {
+      "node_id": "chg:accept-c5c292951bc3363e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-02",
+        "name": "One dated feature-density illustration only: \"93 tools, 28 node types\" -> \"142 tools, 29 node types, measured 2026-08-02\". The skill's method — size a model by contracts and capabilities, never by an LOC ratio — is unchanged. Dated rather than merely corrected, because an undated measurement in prose is exactly what BL-164 is about: it had been silently wrong since the tool count moved."
       }
     },
     {
@@ -35161,6 +35383,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-66: the consumer CI coherence gate — reflow2_check.py reads the committed export, rehashes registered artifacts, runs detect_gaps, and exits non-zero on unaccepted drift or an open anchored gap at/above threshold; ci-gate skill + CI snippet ship in the kit; the tarball carries the script."
+      }
+    },
+    {
+      "node_id": "chg:bl68-readiness-gating",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-68 part (1): readiness becomes a GATING score with a forecast — a ReadinessAssessment construct (TRL/MRL, 1-9), a GATED_ON edge carrying the stated threshold, and TemporalFact gaining basis + confidence so a forecast marks itself as a projection rather than an observation"
       }
     },
     {
@@ -36583,6 +36813,20 @@
         "name": "provenance",
         "provenance": "authored",
         "purpose": "The provenance module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:readiness",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "location": "crates/reflow2-core/src/readiness.rs",
+        "name": "readiness",
+        "provenance": "authored",
+        "purpose": "TRL/MRL readiness assessments, the GATED_ON thresholds an increment states, and the forward roadmap computation that turns them into a delivery epoch with a named reason. Separate from `dimensions` on purpose: a dimension TRENDS a quality axis of the design, a readiness level is a FACT about the maturity of an enabling technology and it GATES.",
         "status": "planned",
         "tier": "operational"
       }
@@ -40684,6 +40928,16 @@
       }
     },
     {
+      "node_id": "frag:art:readiness",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered readiness.rs"
+      }
+    },
+    {
       "node_id": "frag:art:render-views",
       "node_type": "Fragment",
       "properties": {
@@ -40721,6 +40975,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered schema.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:schema-readiness",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered readiness.yaml"
       }
     },
     {
@@ -43033,6 +43297,21 @@
       }
     },
     {
+      "node_id": "req:readiness-gates-the-roadmap",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The epoch an increment can deliver on is computed from readiness, not declared",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "An increment's delivery epoch shall be DERIVED from the readiness of the technologies it is gated on: the earliest epoch by which every gating technology reaches the level stated for it, with the answer naming the technology and level that decided it. Readiness is an OBSERVATION (a TRL/MRL level 1-9 about an enabling technology) and the gating threshold is a JUDGEMENT stated by the user — reflow2 shall never supply a default threshold, and an increment with no stated threshold shall report as ungated rather than as ready. A projected level shall be distinguishable from a measured one wherever it is read.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:released-eq-designed",
       "node_type": "Requirement",
       "properties": {
@@ -44842,6 +45121,18 @@
       }
     },
     {
+      "node_id": "ver:readiness-gating",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-02",
+        "level": "integration",
+        "method": "test",
+        "name": "Readiness gates an increment and the roadmap says why (crates/reflow2-core/tests/readiness.rs) — 15 cases, plus 7 driven over real stdio in smoke_mcp.py §7b2. THE WORKED EXAMPLE IS THE ROW'S OWN: laser satellite refuelling, where the demonstrator and the fielded increment demand TRL 3 and TRL 7 of the SAME converter and get two different answers — which is the whole reason the threshold rides the edge rather than either endpoint. THE TWO REFUSALS ARE WHAT IS ACTUALLY PINNED: an increment with no stated threshold reports `ungated` and NEVER ready (mutating that verdict to achievable_now fails exactly the one test the item rests on), and a gate whose technology has no level and no clearing forecast makes the whole answer `indeterminate` — skipping it instead, and computing a date from the gates that happen to carry evidence, fails FIVE. That second one is the subtler half: an optimistic date built by ignoring the inconvenient record is exactly the undefendable slide-roadmap BL-68 exists to replace. ALSO PINNED: the slowest gate decides (an increment waits for its slowest dependency) while within one gate the earliest clearing forecast wins; a measured TemporalFact is not a projection; TRL and MRL are not interchangeable on EITHER the measured or the forecast path; the highest measured level wins rather than the latest, because readiness is ratcheted evidence and picking by date would make the answer depend on how completely history was backfilled; a rung outside 1-9 is refused at both ends rather than clamped; a Capability is gated by the same machinery as a Release; and GATED_ON is a traceability edge, so a slipped technology reaches the blast radius of every increment gated on it. MUTATION-CHECKED NINE WAYS, each failing exactly the tests that name it. THE MUTATION CHECK FOUND A HOLE IN THIS SUITE RATHER THAN CONFIRMING IT: dropping the ladder filter from the FORECAST path passed everything, because every existing case exercised only the MEASURED path — so an MRL projection silently clearing a TRL gate would have shipped a date built on the wrong evidence entirely. The sibling case was added and the mutation now fails it. AND THE SURFACE BUG ONLY THE REAL BINARY SHOWED: the typed Rust tests were green while the served JSON carried `Ungated` and `{\"GatedUntil\": ...}` — Rust's default enum tagging in an otherwise snake_case surface — caught by driving it over stdio, which is AGENTS.md's \"every other layer is a client we wrote\" landing on new code the same day it was written.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:reconcile-built",
       "node_type": "Verification",
       "properties": {
@@ -45202,7 +45493,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:15be74edd5d8ac28bbc155c5aaa9ce5e299d2ff324ac0a9564ca5be582214073",
+  "prev_content_hash": "sha256:85a2fdaa6baf3bcff1a9497f4da5788c3cbcf638f5fcfacc7e4bc81a83cbbfe3",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -45230,8 +45521,10 @@
       "DOCUMENTS",
       "DUPLICATES",
       "EVOLVES_INTO",
+      "GATED_ON",
       "GOVERNED_BY",
       "HAS_OBSERVATION",
+      "HAS_READINESS",
       "HAS_SNAPSHOT",
       "HAS_TEMPORAL_FACT",
       "IMPOSES",
@@ -45264,7 +45557,7 @@
       "VIOLATES_RULE",
       "YIELDED"
     ],
-    "edge_types": 58,
+    "edge_types": 60,
     "node_type_names": [
       "Actor",
       "Anchor",
@@ -45288,6 +45581,7 @@
       "Project",
       "QualityGate",
       "Question",
+      "ReadinessAssessment",
       "Release",
       "Requirement",
       "Resource",
@@ -45295,8 +45589,8 @@
       "TemporalFact",
       "Verification"
     ],
-    "node_types": 28,
-    "reflow2_version": "0.21.0",
+    "node_types": 29,
+    "reflow2_version": "0.22.0",
     "schema_version": 1
   }
 }

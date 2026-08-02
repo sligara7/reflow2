@@ -49,8 +49,9 @@ recorded.
 - **Granularity is the scale answer, and node count tracks distinct contracts and capabilities —
   not lines of code.** What a coarse-but-honest model costs in nodes is set by how many *distinct
   things the system does and exposes*, not how big it is: a 110k-LOC system landed at ~78 nodes,
-  yet reflow2 itself is ~34k LOC and lands near ~100 — feature density far above line density (93
-  tools, 28 node types). So size the model by counting contracts and capabilities, never by an
+  yet reflow2 itself is ~34k LOC and lands near ~100 — feature density far above line density (142
+  tools, 29 node types, measured 2026-08-02). So size the model by counting contracts and
+  capabilities, never by an
   LOC ratio: one `Interface` per *contract* (an OpenAPI file, a bus, a save format), never per
   endpoint; one `Verification` per suite or test area, never per test function; one `Artifact`
   per meaningful unit, not per file; a vendored or generated mass = **one opaque Component**.

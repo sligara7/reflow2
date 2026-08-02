@@ -3,8 +3,8 @@
 //! Reflow 2.0 captures a design's whole lifecycle (concept → operations) in one
 //! knowledge graph and keeps it coherent when anything changes. This crate is
 //! the LLM-free foundation of that system: it stands up the graph **store**
-//! (dynograph-foundation) configured with the reflow2 **schema** (27 node
-//! types, 53 edge types across 10 domains) and exposes schema-validated CRUD
+//! (dynograph-foundation) configured with the reflow2 **schema** (29 node
+//! types, 60 edge types across 11 domains) and exposes schema-validated CRUD
 //! over the design graph.
 //!
 //! It is deliberately neutral to the interaction surface (MCP / CLI / hosted /
@@ -57,6 +57,7 @@ pub mod nodes;
 pub mod operate;
 pub mod propagate;
 pub mod provenance;
+pub mod readiness;
 pub mod report;
 pub mod sanitize;
 pub mod schema;
@@ -121,6 +122,10 @@ pub use merge::{
 };
 pub use propagate::{BlastRadius, Hop, ImpactDirection, ImpactedNode, PropagateOptions};
 pub use provenance::{GraphStamp, Provenance};
+pub use readiness::{
+    GateFinding, GateStatus, READINESS_FACT, ReadinessForecast, ReadinessGate, ReadinessKind,
+    ReadinessObservation, ReadinessReport, ReadinessVerdict,
+};
 pub use report::{
     AllocationSummary, CertaintyBreakdown, GraphReport, LoopStatus, RequirementCertainty,
 };

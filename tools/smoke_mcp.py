@@ -294,10 +294,11 @@ def run(binary: str, graph_path: str) -> int:
     # cargo tests: every other layer is a client we wrote.
     print("\n== schema discovery (BL-1) ==")
     vocab = s.call("describe_schema", {})
-    c.ok("every node type is discoverable", len(vocab.get("node_types", [])) == 28,
+    c.ok("every node type is discoverable", len(vocab.get("node_types", [])) == 29,
          len(vocab.get("node_types", [])))
-    # 58 since CALIBRATED_AGAINST (2026-08-01, req:a-fit-is-not-a-test).
-    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 58,
+    # 60 since GATED_ON + HAS_READINESS (2026-08-02, BL-68); 58 before that,
+    # since CALIBRATED_AGAINST (2026-08-01, req:a-fit-is-not-a-test).
+    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 60,
          len(vocab.get("edge_types", [])))
 
     exact = s.call("describe_schema", {"from": "Capability", "to": "Component"})
@@ -873,6 +874,46 @@ def run(binary: str, graph_path: str) -> int:
          s.call_expect_error("release_includes",
                              {"release_id": "rel:v1", "target_type": "Requirement",
                               "target_id": "req:physics"}) is not None)
+
+    print("\n== 7b2. readiness gates the roadmap, and refuses to invent one (BL-68) ==")
+    # Driven over real stdio because every other layer is a client we wrote, and
+    # the refusal is the half most likely to be quietly softened by a wrapper.
+    rr0 = s.call("readiness_report", {"subject_id": "rel:v1"})
+    c.ok("an increment with NO stated threshold is ungated, never ready",
+         rr0["verdict"] == "ungated", rr0["verdict"])
+    s.call("add_readiness", {"id": "trl:engine", "target_type": "Component",
+                             "target_id": "cmp:physics", "kind": "TRL", "level": 3,
+                             "evidence": "breadboard"})
+    s.call("gate_on", {"subject_type": "Release", "subject_id": "rel:v1",
+                       "target_type": "Component", "target_id": "cmp:physics",
+                       "kind": "TRL", "min_level": 7,
+                       "rationale": "fielded hardware needs a qualified engine"})
+    rr1 = s.call("readiness_report", {"subject_id": "rel:v1"})
+    c.ok("a gate with no clearing forecast is indeterminate, not optimistic",
+         rr1["verdict"] == "indeterminate", rr1["verdict"])
+    s.call("plan_epoch", {"id": "epoch:2035", "name": "2035",
+                          "epoch_type": "milestone", "sequence": 900})
+    s.call("forecast_readiness", {"id": "fc:engine-2035", "target_type": "Component",
+                                  "target_id": "cmp:physics", "kind": "TRL", "level": 7,
+                                  "epoch_id": "epoch:2035", "confidence": 0.4})
+    rr2 = s.call("readiness_report", {"subject_id": "rel:v1"})
+    c.ok("with a forecast the delivery epoch is DERIVED",
+         rr2["verdict"].get("gated_until", {}).get("epoch_id") == "epoch:2035",
+         rr2["verdict"])
+    c.ok("and the answer names the technology that decided it",
+         rr2["deciding_target_id"] == "cmp:physics", rr2["deciding_target_id"])
+    c.ok("and says why, in words a reader can argue with",
+         "TRL 3" in rr2["summary"] and "needs TRL 7" in rr2["summary"], rr2["summary"])
+    c.ok("a rung outside 1-9 is refused, never clamped",
+         s.call_expect_error("add_readiness",
+                             {"id": "trl:bad", "target_type": "Component",
+                              "target_id": "cmp:physics", "kind": "TRL",
+                              "level": 12}) is not None)
+    c.ok("an unknown ladder is refused rather than defaulted to TRL",
+         s.call_expect_error("add_readiness",
+                             {"id": "trl:bad2", "target_type": "Component",
+                              "target_id": "cmp:physics", "kind": "SRL",
+                              "level": 4}) is not None)
 
     print("\n== 7c. a process is modellable (BL-37) ==")
     s.call("add_flow", {"id": "flow:play", "name": "A round of play",

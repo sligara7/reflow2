@@ -20,7 +20,7 @@ without reworking the core.
 Everything in `schema/` and the process docs describes a **core** that knows nothing about
 how it's driven:
 
-- the **graph store** (dynograph-foundation) + the **schema** (28 node types, 55 edges);
+- the **graph store** (dynograph-foundation) + the **schema** (29 node types, 60 edges);
 - the **coherence-loop operations**: extraction, impact propagation, gap-surfacing, heal.
 
 A **surface** sits on top of the core and lets a human interact with it. Swapping surfaces
@@ -71,7 +71,7 @@ Same core, same processes — only the `LlmBackend` implementation and the surfa
 
 Because the surface plugs in last, the implementation plan is:
 
-1. **Store + schema** — stand up dynograph-foundation with the 10 schema domains.
+1. **Store + schema** — stand up dynograph-foundation with the 11 schema domains.
 2. **Deterministic core** — graph CRUD, resolution, impact-propagation, validation,
    drift/compliance checks (no LLM).
 3. **LLM-reasoning ops behind `LlmBackend`** — extraction, SME, gap-surfacing, heal, with

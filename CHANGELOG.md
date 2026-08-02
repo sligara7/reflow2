@@ -31,6 +31,39 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **The epoch an increment delivers on is computed, not declared** (BL-68 — the last unbuilt part
+  of the board's most ambitious item). **SCHEMA CHANGE — the stamp moves BOTH ways, 28 → 29 node
+  types and 58 → 60 edge types**, the first release since v0.4.0 to move both at once. See
+  [docs/upgrading-to-v0.22.0.md](docs/upgrading-to-v0.22.0.md); everything is additive and nothing
+  is backfilled.
+  Three pieces, and the split between them is the design. `add_readiness` records an **observation**
+  — a TRL or MRL level 1–9 about an enabling technology, an input fact in the same family as a
+  checksum. `gate_on` states a **judgement** — "this increment needs that technology at TRL 7" —
+  and it rides an **edge**, so one increment can demand TRL 7 of one technology and TRL 4 of
+  another, and a demonstrator and a fielded increment can demand different levels of the *same*
+  technology (the row's own worked example). `forecast_readiness` records a **projection** as a
+  `TemporalFact` marked `basis: forecast`, because `observed_at` says *observed* and nobody observed
+  anything in 2035. `readiness_report` then derives the answer — the earliest epoch by which every
+  gating technology clears the level demanded of it — and names the one that decided it:
+  *"cannot deliver before 2035, because cmp:conversion is TRL 3 today, projected TRL 7 at 2035, and
+  this increment needs TRL 7."*
+  **Two refusals are the point, not the rough edges.** An increment with no stated threshold reports
+  `ungated`, **never "ready"** — silence about a gate is not evidence there is none. A gate whose
+  technology has no level and no clearing forecast makes the whole answer `indeterminate` rather
+  than a date computed from the gates that happen to have evidence; dropping the inconvenient one
+  would return an optimistic date built by ignoring half the record. Forecast confidence is likewise
+  **stated by the author and never derived from horizon** — a decay curve is a judgement about risk
+  appetite. The precedent throughout is `Interface.medium`, which once defaulted to `REST` and made
+  two silent boundaries "agree" on a value neither had chosen.
+  `GATED_ON` is a **traceability edge**, so a technology whose readiness slips reaches the blast
+  radius of every increment gated on it — asked before the code was written rather than after a
+  detector complained, which is the second time out of four that a new edge type has reached that
+  table on purpose. 15 cases, mutation-checked nine ways, plus seven checks driven over real stdio.
+  Built to `dec:readiness-is-an-observation-the-threshold-is-the-judgement` and
+  `dec:readiness-forecast-is-a-temporal-fact`.
+
 ### Fixed
 
 - **The loop nudge's impact-check trigger measured bookkeeping where it meant order** (BL-163).

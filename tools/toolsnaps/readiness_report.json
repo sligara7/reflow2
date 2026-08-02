@@ -1,0 +1,21 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "The DERIVED roadmap for one increment (BL-68): the earliest epoch by which every technology it is GATED_ON clears the level demanded of it, with the reason named — 'cannot deliver before 2035, because the converter is TRL 3 today, projected 7 at 2035, and this increment needs 7'. The answer is the max over per-gate clearing epochs, because an increment waits for its slowest dependency. Four verdicts, and two of them are refusals: `ungated` (no threshold stated — NOT ready), `achievable_now`, `gated_until`, and `indeterminate` (a gate has no level and no clearing forecast, so no date can be derived — reported loudly rather than dropped from the max, which would return an optimistic date built by ignoring the inconvenient evidence).",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "subject_id": {
+        "description": "The increment to derive a delivery epoch for.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "subject_id"
+    ],
+    "type": "object"
+  },
+  "name": "readiness_report"
+}
