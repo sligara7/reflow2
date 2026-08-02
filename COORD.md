@@ -65,6 +65,7 @@ Add yourself if you're new here.
 
 
 
+- BL-165 — @ajs — since 2026-08-02 — docs/design/reflow2.json (register the ten unregistered schema domains as Artifacts), plus whatever durably stops the eleventh recurring
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
