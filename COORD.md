@@ -65,6 +65,7 @@ Add yourself if you're new here.
 
 
 
+- BL-117/118/138/139 (the import_graph cluster) — @ajs — since 2026-08-02 — crates/reflow2-core/src/export.rs, crates/reflow2-mcp/src/service.rs, docs/backlog.md, docs/design/reflow2.json (BL-119 closes as already-done-by-chg:bl87; BL-139's merge semantics go to Anthony as a proposed Decision, not built on my own signature)
 - Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
 - Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
 
