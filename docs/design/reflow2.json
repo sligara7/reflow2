@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:55bd47e33411f5a4734c982bced34c29aa6be88b92afa4c1177f5bceff28306a",
+  "content_hash": "sha256:fed4a7455337280dbf85ab4d4590e35e8580283ca12d95f3717fb18c7fcf7a9a",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -3764,6 +3764,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-cross-org-federation",
+      "properties": {
+        "acted_at": "2026-08-03",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-dimension-correlation",
       "properties": {
         "acted_at": "2026-08-01",
@@ -3776,6 +3785,15 @@
       "from_id": "dec:idea-distributional-thresholds",
       "properties": {
         "acted_at": "2026-08-01",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-document-generation",
+      "properties": {
+        "acted_at": "2026-08-03",
         "role": "author"
       },
       "to_id": "who:claude-code"
@@ -3839,6 +3857,24 @@
       "from_id": "dec:idea-severability-cut",
       "properties": {
         "acted_at": "2026-08-01",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-standards-at-every-interface",
+      "properties": {
+        "acted_at": "2026-08-03",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-sysml-v2-boundary",
+      "properties": {
+        "acted_at": "2026-08-03",
         "role": "author"
       },
       "to_id": "who:claude-code"
@@ -41904,6 +41940,16 @@
       }
     },
     {
+      "node_id": "dec:idea-cross-org-federation",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, from a FIRST-PASS REVIEW OF openmbee.org — the website, the GitHub org listing and one (truncated) architecture page. Nothing here rests on reading their source or running it. Anthony intends to clone the repo for a deep review, and every reading below should be re-tested then. THE OBSERVATION: OpenMBEE's stated purpose is 'an open source collaborative engineering system' that 'enables engineers to work in the language of their choice and easily share and document their work across other tools', with the tagline 'Edit once, use everywhere'. Its answer to multi-organisation, multi-tool work is LINKED DATA — an RDF quadstore where the fourth term is a named graph, so many contexts coexist in one repository, plus transclusion so one source of truth appears in many places. WHY THIS IS THE AREA WHERE THEY ARE PLAINLY AHEAD OF reflow2, and it is not a small one: it is precisely the operating context Anthony described — several organisations with competing, partially-built, differently-motivated designs that must be made to interoperate although they were never designed to. reflow2 has `req:design-composes`, `compose_and_analyse`, `pair_designs` and `mirror_surface`, and `dec:linked-repos-poc` has sat PARKED since it was filed. Those compose EXPORTS — whole documents, pairwise — where OpenMBEE federates a live graph across repositories. THE HONEST COUNTER-ARGUMENT, and it is strong: reflow2 already decided against the architecture that makes their approach possible. `dec:repo-file-embedded` (the graph lives as a repo file, embedded, not a service) and `dec:multi-writer-architecture` (many writers keep the repo file and merge on pull — no hosted service) are the opposite answer to the same question, taken deliberately. A quadstore federation is a service, and adopting the capability may mean reopening those. NOTE ALSO that `dec:central-host` and `dec:live-tier` are BOTH still proposed in this design — OpenMBEE is a fairly complete picture of what saying yes to them costs and buys, which makes it evidence for those two questions whether or not this one is ever answered. WHAT WOULD CHANGE THE ANSWER: whether federation can be had at the EXPORT seam — `export_surface` and `mirror_surface` already publish a subset — rather than requiring a live shared store.",
+        "name": "OPEN — should reflow2 federate heterogeneous designs across organisations the way OpenMBEE does, rather than composing exports?",
+        "rationale": "Recorded through the brainstorm skill because this is an idea from a landscape review, not intent Anthony has stated. He asked for the areas where OpenMBEE is stronger to be captured as proposed ideas ahead of a deep review, in those words. DELIBERATELY LEFT UNLINKED: `describe_schema {from: Decision, to: Decision}` reports that NO edge type models the pair and that the seventeen which validate do so only through a `*` wildcard — 'validating is not the same as meaning what you intend… prefer leaving the edge out to asserting one that is wrong'. So this will surface as an `orphan_node` info finding, exactly as `dec:linked-repos-poc` does, and that is the true description of a parked idea rather than a defect to route around.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-dimension-correlation",
       "node_type": "Decision",
       "properties": {
@@ -41920,6 +41966,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — from the 2026-08-01 dynograph-foundation review. Nothing here is settled; recorded as a minor idea with a real objection.\n\nTHE IDEA: percentile and median (unused, in dynograph-vector::stats) would let surprising_connections report \"the top 5% most surprising couplings in THIS design\" rather than everything over a fixed score. A distributional cut self-calibrates to the graph it is run on; an absolute one does not, and a design with 100 nodes and one with 10,000 do not have the same natural scale.\n\nTHE HONEST COUNTER-ARGUMENT, and it is the projects own lesson: BL-23 established that when a detector punishes correct work, the answer is A DIFFERENT QUESTION, not a tuned threshold. A percentile is still a threshold — it just moves rather than sits still. Worse, a top-N-percent rule ALWAYS returns something, so a design with no surprising couplings at all would still be handed a list, which is exactly the false-signal failure the noise-floor work (BL-42) was about.\n\nWHERE IT MIGHT STILL HELP: not as a cut, but as CONTEXT on a finding already made — \"surprise 2.56, which is the highest in this design\" is more useful to a reader than a bare number, and asserts nothing extra.",
         "name": "OPEN — should surprise and severity be reported as distributional positions rather than absolute scores?",
         "rationale": "Kept deliberately small and recorded with the objection first, because the naive form of this idea contradicts an established lesson and a later session should meet the objection at the same moment as the idea.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-document-generation",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, from a first-pass review of openmbee.org — website and repository listing only, deep review pending. THE OBSERVATION: OpenMBEE's Model Development Kits 'implement DocGen language for dynamic, model-based document generation using view and viewpoint concepts'. Document generation is not a side feature there; it is half the value proposition, and the tagline 'Edit once, use everywhere' is largely a claim about documents — write the model once, and every specification, review pack and report derives from it rather than drifting from it. WHERE reflow2 STANDS, and the gap is narrower than it first looks: reflow2 already has the same underlying idea. `docs/viewpoints.md` is DoDAF-informed, `dec:views-are-projections` states that a view is a pure projection of the graph and that renderer fill-ins are DEFECTS, and `tools/render_views.py` projects six viewpoints and CONFESSES anything a view needs that the graph cannot supply — with every confession counted as a finding (BL-40). That confession discipline is arguably stronger than DocGen's, because it makes the gaps in a document visible instead of filling them. THE HONEST DIFFERENCE IS PRODUCT, NOT CONCEPT: `render_views.py` is a probe in the tools directory, run by developers of reflow2. DocGen is something an engineering organisation hands to its systems engineers to produce the artefacts a programme is contractually required to deliver. reflow2 has never claimed the second, and `req:no-se-knowledge` ('the user never needs systems engineering') suggests it may not want to. THE COUNTER-ARGUMENT: a document generator is a large surface with a long tail — templates, formats, numbering, review states — and every hour of it is an hour not spent on the coherence loop, which is the thing nobody else is building. WHAT WOULD CHANGE THE ANSWER: whether the projections reflow2 already computes are close enough to what a real programme must deliver that the remaining distance is rendering rather than modelling.",
+        "name": "OPEN — should reflow2's viewpoints become a document product, the way DocGen is for OpenMBEE?",
+        "rationale": "Recorded through the brainstorm skill at Anthony's request, ahead of a deep review against a clone of OpenMBEE's repository. The strength claim is deliberately hedged: reflow2 holds the concept (views as projections, confessions as findings) and OpenMBEE holds the product. Which of those is 'stronger' depends entirely on whether the user is a programme owing deliverables or a builder owing a coherent design, and reflow2 has so far chosen the second. Anthony's own position sits across both, which is why this is worth asking rather than assuming.",
         "status": "proposed"
       }
     },
@@ -41990,6 +42046,26 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — from the 2026-08-01 dynograph-foundation review. Nothing here is settled.\n\nTHE OBSERVATION: cut_structure (used today) reports articulation POINTS — single nodes whose removal splits the network. That answers \"what is a single point of failure\". It does not answer \"how separable are these two subsystems\", which is a different and equally architectural question.\n\nTHE IDEA: dynograph_graph::max_flow_min_cut (Edmonds-Karp, exact, unused) returns the minimum-capacity set of EDGES whose removal disconnects a source from a target. Read on a design graph: \"which contracts would you have to sever to split A from B, and how many?\" Edge weights are already coupling weights, so the capacity has a meaning here rather than being invented.\n\nWHERE IT LANDS: dec:mosa-conformance is OPEN and its own text says reflow2 \"already computes most of the criteria\" for modular open systems conformance. Severability is one of the ones it does not. req:modularity-computed is the standing requirement that severability be computed rather than asserted.\n\nTHE HONEST COUNTER-ARGUMENTS: min-cut needs a SOURCE and a TARGET, and nothing in the design says which two subsystems a user wants separated — so either the user picks the pair (a new question to ask) or reflow2 runs it over community pairs from leiden (defensible, but O(pairs) and the communities are themselves computed rather than declared). Also, low cut capacity is not automatically good: two subsystems SHOULD be coupled where the design says they should be, and a detector that rewards separation everywhere would push toward a design nobody wants — the same over-selectivity trap is_single_point_of_failure already had to be tuned out of.",
         "name": "OPEN — should severability be computed as a minimum EDGE CUT, not just as articulation points?",
         "rationale": "Chosen from the unused set because it maps onto an OPEN decision rather than onto a hypothetical: dec:mosa-conformance already claims most criteria are computable, and this names one that is not.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-standards-at-every-interface",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, from a first-pass review of openmbee.org — website, repository listing and one truncated architecture page. THE OBSERVATION: Flexo's stated guiding principle is 'to adopt open, web-compatible standards for data exchange at every interface, including for both data format and exchange protocols', realised as a layered stack of micro-services where each layer is independently developed, tested and replaced, and where the seams speak SPARQL, GraphQL, OSLC and SysML v2. WHY THIS ONE IS UNCOMFORTABLE RATHER THAN MERELY INTERESTING: reflow2 measured its own seam band at 0.0% on 2026-08-03 — 73 component-to-component couplings, none of them running through a declared contract that one side provides and another consumes. BL-179 establishes that this is a NORMAL POSITION for a design that correctly did function first, and that finding stands. But OpenMBEE is a design of comparable ambition that made seam declaration a FOUNDING principle rather than a later phase, and holding the two side by side is the fairest available test of whether function-first is a trajectory or an excuse. THE HONEST COUNTER-ARGUMENT, and it is not weak: standards at every interface is a rule with a price — it is why Flexo is a multi-service deployment where reflow2 is a single binary and a file in a repository, and `dec:install-once-per-machine` plus `req:thin-install` are commitments in the opposite direction. An internal seam between two modules of one binary does not need SPARQL; it needs to exist and be named. THE NARROWER VERSION WORTH TAKING SERIOUSLY: not 'every interface speaks a web standard' but 'every seam is DECLARED', which is reflow2's own `req:key-interfaces` already, unmet at 0%. WHAT WOULD CHANGE THE ANSWER: whether declaring reflow2's internal seams changes any computation — `dec:edge-orthogonality` says a distinction earns its keep only when something reads it, and today the seams band reads it, which is one reader more than there was a week ago.",
+        "name": "OPEN — should reflow2 adopt OpenMBEE's rule that every interface speaks an open, published protocol?",
+        "rationale": "Recorded through the brainstorm skill at Anthony's request. The claim of strength here is about the PRINCIPLE as stated, not about its execution: the architecture page was truncated on fetch, no source was read, and whether Flexo's interfaces actually hold that line is unknown and is exactly what the deep review should test. Recorded beside the counter-argument per the skill's rule that an idea killed in conversation loses its reasoning while an idea recorded with its objection keeps both — and the objection here is real, since reflow2's single-binary posture is a deliberate decision rather than an oversight.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-sysml-v2-boundary",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, from a first-pass review of openmbee.org — website and repository listing only, deep review pending. THE OBSERVATION: OpenMBEE's active development is not its stable product. MMS 4 stores models in SQL; the successor, Flexo / MMS 5, moves to an RDF quadstore and is described as 'GitHub for graphs', exposing SPARQL, GraphQL, OSLC and a SysML v2 API. A separate experimental SysML v2 execution environment (`Systemica`, Go) is also under way. Commits across those repositories were days old when reviewed (July–August 2026), so this is a live bet, not an aspiration. WHERE reflow2 STANDS: it has its own vocabulary — 29 node types, 60 edge types — and no standard interchange of any kind. It publishes three interfaces (`ifc:core-api`, `ifc:graph-export`, `ifc:mcp-tools`), and `export_surface` already emits a subset of a design deliberately. THE QUESTION IS NOT WHETHER TO ADOPT SysML v2 INTERNALLY — the vocabulary is load-bearing and `dec:bl83a-functional-decomposition` and `req:functional-vocabulary-computes` both depend on it — but whether reflow2 should be able to SPEAK it at the edge, in and out. THE ARGUMENT FOR: Anthony works in a defence/aerospace systems-engineering context and will be asked, professionally, why a design tool does not interoperate with the standard his field is converging on. An export that a SysML v2 service can ingest is a different claim from an export only reflow2 reads. THE HONEST COUNTER-ARGUMENT: SysML v2 is large, its tooling is young, and a partial mapping that silently drops what it cannot express would be worse than none — reflow2's whole posture is that a lossy translation must be reported, not quietly performed. Mapping 29 types onto SysML v2 would need the same no-silent-drop discipline `changelog_view` holds with `unmapped`. WHAT WOULD CHANGE THE ANSWER: whether a faithful SUBSET mapping exists that reports what it could not carry.",
+        "name": "OPEN — should reflow2 speak SysML v2 at its boundary, given that is where the standards gravity has moved?",
+        "rationale": "Recorded through the brainstorm skill at Anthony's request to capture, as proposed ideas, the areas where OpenMBEE is stronger than reflow2 — before a deep review he intends to run against a clone of their repository. The strength claimed here is narrow and should be read narrowly: OpenMBEE has committed to a standard interchange and reflow2 has none. Whether their SysML v2 implementation is any good is exactly what the deep review is for, and nothing in this node asserts that it is.",
         "status": "proposed"
       }
     },
@@ -50267,7 +50343,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:00dd45c8bd2e2fe7395b9b7bfaf7a8d05633081bdcef6a93cd08d25d2ee78e3e",
+  "prev_content_hash": "sha256:55bd47e33411f5a4734c982bced34c29aa6be88b92afa4c1177f5bceff28306a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
