@@ -468,7 +468,7 @@ impl DesignGraph {
 
     /// P0 · Intent — the top-level thing being designed. `name` is required.
     pub fn add_project(&mut self, id: &str, name: &str) -> Result<StoredNode, DynoError> {
-        self.create_node(node::PROJECT, id, Props::new().set("name", name))
+        self.upsert_node(node::PROJECT, id, Props::new().set("name", name))
     }
 
     /// P0 · Intent — a stated need. `name` and `statement` are required.
@@ -478,7 +478,7 @@ impl DesignGraph {
         name: &str,
         statement: &str,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::REQUIREMENT,
             id,
             Props::new().set("name", name).set("statement", statement),
@@ -497,7 +497,7 @@ impl DesignGraph {
         handle: Option<&str>,
         description: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::CONTRIBUTOR,
             id,
             Props::new()
@@ -531,7 +531,7 @@ impl DesignGraph {
         description: &str,
         status: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::CAPABILITY,
             id,
             Props::new()
@@ -714,7 +714,7 @@ impl DesignGraph {
         purpose: &str,
         level: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::COMPONENT,
             id,
             Props::new()
@@ -731,7 +731,7 @@ impl DesignGraph {
     /// a change: one Component [`provides`](Self::provides) it, others
     /// [`consume`](Self::consumes) it.
     pub fn add_interface(&mut self, id: &str, name: &str) -> Result<StoredNode, DynoError> {
-        self.create_node(node::INTERFACE, id, Props::new().set("name", name))
+        self.upsert_node(node::INTERFACE, id, Props::new().set("name", name))
     }
 
     /// Fill in what a consumer of this contract must agree with
@@ -974,7 +974,7 @@ impl DesignGraph {
         decision: &str,
         rationale: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::DECISION,
             id,
             Props::new()

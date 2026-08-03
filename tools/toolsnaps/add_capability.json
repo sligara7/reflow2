@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create a Capability node. `status` defaults to `planned`; set it when recording something that already exists, so adopting a running system does not describe it as entirely unbuilt.",
+  "description": "Create a Capability node. `status` defaults to `planned`; set it when recording something that already exists, so adopting a running system does not describe it as entirely unbuilt. CALLING THIS AGAIN WITH AN EXISTING ID REVISES that node: what you pass overwrites, and every field you do NOT pass keeps its current value instead of reverting to a default — so sharpening a description never silently unbuilds a verified capability (BL-183).",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

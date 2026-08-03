@@ -2820,7 +2820,12 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Create a Requirement node.",
+        description = "Create a Requirement node. A new one lands at `proposed`; only the \
+                       user's word moves it off, through set_requirement_status. CALLING THIS \
+                       AGAIN WITH AN EXISTING ID REVISES that node: what you pass overwrites, \
+                       and every field you do NOT pass keeps its current value instead of \
+                       reverting to a default — so rewording a requirement never silently \
+                       un-confirms it (BL-183).",
         annotations(read_only_hint = false)
     )]
     pub async fn add_requirement(
@@ -2841,7 +2846,11 @@ impl ReflowService {
     #[tool(
         description = "Create a Capability node. `status` defaults to `planned`; set it when \
                        recording something that already exists, so adopting a running system \
-                       does not describe it as entirely unbuilt.",
+                       does not describe it as entirely unbuilt. CALLING THIS AGAIN WITH AN \
+                       EXISTING ID REVISES that node: what you pass overwrites, and every field \
+                       you do NOT pass keeps its current value instead of reverting to a default \
+                       — so sharpening a description never silently unbuilds a verified \
+                       capability (BL-183).",
         annotations(read_only_hint = false)
     )]
     pub async fn add_capability(

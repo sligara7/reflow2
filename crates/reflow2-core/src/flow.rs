@@ -41,7 +41,7 @@ impl DesignGraph {
         entry_point: Option<&str>,
         exit_point: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::FLOW,
             id,
             Props::new()

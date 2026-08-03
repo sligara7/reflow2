@@ -55,7 +55,7 @@ impl DesignGraph {
         objective: Option<f64>,
         direction: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::CONSTRAINT,
             id,
             Props::new()

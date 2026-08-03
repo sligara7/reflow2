@@ -101,7 +101,7 @@ impl DesignGraph {
         method: Option<&str>,
         level: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::VERIFICATION,
             id,
             Props::new()
