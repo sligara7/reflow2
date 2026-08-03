@@ -2127,6 +2127,10 @@ pub struct MaturityReportReq {}
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct IlityReportReq {}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct CertifyPreservationReq {
     /// Path to the base export document — the design BEFORE the
     /// restructuring. Typically the committed export, or the export at the

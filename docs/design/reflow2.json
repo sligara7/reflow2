@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:fed4a7455337280dbf85ab4d4590e35e8580283ca12d95f3717fb18c7fcf7a9a",
+  "content_hash": "sha256:324710f6a8c9054c372ab68c16565d2e68f2d4acbdbea34f12ed9d17cfdf4fde",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -384,6 +384,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:ility-signals",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4827,6 +4835,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-7de2a2e421724346",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ility"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-80d1f87f330f26e8",
       "properties": {
         "accepted_baseline": true,
@@ -5994,6 +6011,42 @@
         "action": "modified"
       },
       "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl184-ility-signals",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl184-ility-signals",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl184-ility-signals",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:ility-signals"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl184-ility-signals",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:computed-evidence-reaches-its-axis"
     },
     {
       "edge_type": "CHANGED",
@@ -14531,6 +14584,12 @@
       "from_id": "cap:hierarchy",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:ility-signals",
+      "properties": {},
+      "to_id": "dec:report-dont-judge"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -32222,6 +32281,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:ility",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:ility-signals"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:ingest",
       "properties": {
         "completeness": "complete"
@@ -33518,6 +33585,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:ility-signals",
+      "properties": {},
+      "to_id": "req:computed-evidence-reaches-its-axis"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:independent-evidence",
       "properties": {},
       "to_id": "req:a-fit-is-not-a-test"
@@ -34424,6 +34497,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:ility",
+      "properties": {},
+      "to_id": "cap:ility-signals"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:import-document-usability",
       "properties": {},
       "to_id": "cap:portability"
@@ -35151,6 +35230,14 @@
         "action": "created"
       },
       "to_id": "art:identity"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:ility",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:ility"
     },
     {
       "edge_type": "YIELDED",
@@ -36308,6 +36395,17 @@
       }
     },
     {
+      "node_id": "art:ility",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3",
+        "location": "crates/reflow2-core/src/ility.rs",
+        "name": "ility.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:ingest",
       "node_type": "Artifact",
       "properties": {
@@ -36841,7 +36939,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ebe342afbf97ba124fdc381e91c874b0d5011c82418e4cbb94f1bc6d017e206e",
+        "checksum": "sha256:677aa0cf869c05f351b9f9396d94e5db6823cff06cdf2dab69d0f7dcc020e50f",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -37127,7 +37225,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4ec573135aa33c5ec41a25b939ffa4fe55c59bbf2a583fe6c50eeeab7c185f0d",
+        "checksum": "sha256:4d072ab236f25b15b9910259105694baaca81f6cb190d3b76b2cb691c5c1894b",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
         "status": "realized"
@@ -37915,6 +38013,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Check decomposition levels",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:ility-signals",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Gather what the existing detectors and reports already found — dependency cycles, articulation points, misplaced capabilities, decomposition mismatches, modularity, surprising couplings, build granularity, the trajectory bands — and attach each to the quality axis it bears on, naming the computation it came from. Report per axis whether a design graph can inform it at all, with the reason where it cannot. Never derive a score and never write to the graph. A finding counts against an axis only where its producing computation already treats it as a defect; ratios and positions are context. Where an asserted DimensionAssessment scores a target above the scale's own midpoint on an axis whose detectors found something against that same target, report the disagreement without ruling on it.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Connect computed evidence to the quality axis it informs",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -39098,6 +39209,15 @@
       }
     },
     {
+      "node_id": "chg:accept-7de2a2e421724346",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-03",
+        "name": "Registered before the clippy pass; the only edit since is manual_contains (iter().any() -> contains()) plus rustfmt. No behaviour and no design meaning moved — the 11 tests are unchanged and still passing."
+      }
+    },
+    {
       "node_id": "chg:accept-80d1f87f330f26e8",
       "node_type": "ChangeEvent",
       "properties": {
@@ -39610,6 +39730,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Every public add_* constructor now MERGES on an existing id instead of replacing, so re-calling one to revise a node stops resetting every property it does not name — 16 of 18 constructors were silently erasing the user's word. import_graph deliberately still replaces, because an import document is a complete statement of a node"
+      }
+    },
+    {
+      "node_id": "chg:bl184-ility-signals",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Computed evidence now reaches the quality axis it informs — Anthony's correction that the ilities are not a blanket judgement call, built as a separate reading that flags disagreement and never derives a score"
       }
     },
     {
@@ -45223,6 +45351,16 @@
       }
     },
     {
+      "node_id": "frag:art:ility",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered ility.rs"
+      }
+    },
+    {
       "node_id": "frag:art:ingest",
       "node_type": "Fragment",
       "properties": {
@@ -47114,6 +47252,21 @@
         "provenance": "authored",
         "statement": "reflow2 must be able to bring a dependency's design into a consuming design and run its ordinary analysis over the combined whole, so that composition problems appear as ordinary gaps rather than requiring a bespoke comparator. WHAT BLOCKS IT TODAY IS CONCRETE, not vague: import_graph writes every node under its ORIGINAL id with upsert semantics, so importing design Z into design A means Z's `cap:store` silently overwrites A's `cap:store`. It was built for layering a design onto itself — its own doc says an export can be layered onto a design it references — and using it to compose two DIFFERENT designs would corrupt the consumer without saying so. The other two composition mechanisms do not do this either, and it is worth being exact about why: mirror_surface deliberately imports only the published SURFACE and keeps it foreign, and merge_designs is a three-way merge of two versions of the SAME design. So a fourth thing is needed — a NAMESPACED import where both designs coexist and are separately identifiable. TWO THINGS THAT MUST NOT BE LOST. First, the combined graph must never be mistaken for the consumer's own design: every imported node stays attributable to where it came from, and an export of A must not start shipping Z's internals. Second, project-level detectors would now reason over both designs, so a consumer would see gaps belonging to its dependency — noise that would get the whole feature switched off. cap:scoped-analysis already narrows detection to a region and reports what it left out, so scoping the combined analysis to the seam is the likely answer rather than a new filter. NOTE THE TENSION WITH dec:nested-graphs, which chose a graph per ownership boundary precisely because edges cannot cross stores: this does not overturn that decision — the designs stay separately owned and separately released — but it does mean a THIRD, analysis-only composition alongside the two that exist.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:computed-evidence-reaches-its-axis",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "What the graph computes reaches the quality axis it informs",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Where reflow2 computes something that bears on a quality axis, it shall report that evidence against the axis by name, and shall say plainly of each axis whether a design graph can inform it at all — never deriving a score, never re-judging a finding the computation that produced it declined to call a defect, and never ruling on which side is right where a computed signal and an asserted assessment disagree.",
+        "status": "proposed"
       }
     },
     {
@@ -49635,6 +49788,18 @@
       }
     },
     {
+      "node_id": "ver:ility",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-03",
+        "level": "unit",
+        "method": "test",
+        "name": "Computed evidence reaches its axis without becoming a verdict (crates/reflow2-core/tests/ility.rs) — 11 cases, weighted to the refusals. THREE LINES DEFENDED AT ONCE. (1) NO SCORE IS EVER DERIVED — asserted as JSON field names rather than prose, because the report legitimately says the words 'grade' and 'score' while explaining what it refuses to do, and the first version of this test tripped on its own explanation. Collapsing findings into maintainability: 0.62 is the lossy move dec:readiness-is-an-observation-the-threshold-is-the-judgement already refused for TRL. (2) ADVERSE IS INHERITED, NEVER RE-JUDGED: a finding counts against an axis only where the computation that produced it already calls it a defect. Modularity is a ratio, a trajectory band is a POSITION `maturity` refuses to grade, a granularity observation is one `granularity` refuses to call a defect, and a surprising connection may be hidden coupling OR a creative link — all reported as context, because relabelling them here would overrule a module that deliberately declined to judge and would smuggle back the thresholds those modules were built without. (3) IT MUST NOT PRETEND: performance, security, scalability and observability report NOT INFORMED with the reason rather than reading clean. THE ASYMMETRY IS DELIBERATE AND TESTED: an asserted good score over adverse evidence is flagged, but an asserted LOW score over a quiet axis is NOT — 'no detector fired' is an absence of evidence, and treating it as evidence would be the reading claiming a clean axis is healthy, which it cannot know. MUTATION-CHECKED against five seeded regressions. Four were caught. THE FIFTH WAS INERT AND EXPOSED A MIS-NAMED TEST RATHER THAN A HOLE: deleting the HealSeverity::Info guard fails nothing, because all four mapped categories are Warning-or-Critical by construction and orphan_node is already excluded by mapping to no axis — so the test was renamed from an_info_defect_... to an_unmapped_defect_category_..., which is what it actually proves, and the guard's unreachability is stated at its site. A surviving mutation is not proof a test is weak; check the mutation first.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:import-document-usability",
       "node_type": "Verification",
       "properties": {
@@ -50343,7 +50508,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:55bd47e33411f5a4734c982bced34c29aa6be88b92afa4c1177f5bceff28306a",
+  "prev_content_hash": "sha256:fed4a7455337280dbf85ab4d4590e35e8580283ca12d95f3717fb18c7fcf7a9a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
