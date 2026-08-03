@@ -2118,6 +2118,10 @@ pub struct CompareDesignsReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct GranularityReportReq {}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct CertifyPreservationReq {
     /// Path to the base export document — the design BEFORE the
     /// restructuring. Typically the committed export, or the export at the
@@ -4929,6 +4933,31 @@ impl ReflowService {
                 )
             }
         }
+    }
+
+    #[tool(
+        description = "Does the BUILD separate what the DESIGN separates? Reports one fact and \
+                       refuses a verdict: an artifact realizing N capabilities the design \
+                       distinguishes is the build holding as one thing what the design holds as \
+                       N. IT NEVER SAYS 'monolith', 'too big' or 'split it', carries NO severity, \
+                       and rules on NEITHER side — N capabilities in one file may mean the file \
+                       should be N files, or that the design over-decomposed, or that it is right \
+                       for this phase (dec:report-dont-judge). THERE IS NO SIZE THRESHOLD: \
+                       artifacts are compared against THIS design's own distribution, so an \
+                       early-phase design where everything lives in one file has no outlier and \
+                       is told nothing — a uniformly coarse design is not a broken one. Both \
+                       cutoffs travel with the answer so they can be argued with, and \
+                       `not_observed_about` names what it cannot see: unregistered artifacts, \
+                       size of any kind, and outliers that mask each other. Pure arithmetic over \
+                       REALIZES edges — no file I/O.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn granularity_report(
+        &self,
+        Parameters(_req): Parameters<GranularityReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.granularity_report().map_err(dyno_err)?)
     }
 
     #[tool(

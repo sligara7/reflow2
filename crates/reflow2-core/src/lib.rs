@@ -46,6 +46,7 @@ pub mod export;
 pub mod fielded;
 pub mod flow;
 pub mod genesis;
+pub mod granularity;
 pub mod graph;
 pub mod heal;
 pub mod hierarchy;
@@ -104,6 +105,7 @@ pub use fielded::{
 };
 pub use flow::{FlowCycle, FlowReport, FlowStep, FlowTransition};
 pub use genesis::{GENESIS_EPOCH_ID, GenesisOptions, GenesisReport};
+pub use granularity::{GranularityObservation, GranularityReport};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
 pub use heal::{
     GeneratedContentStub, HealCategory, HealIssue, HealOp, HealOperation, HealOptions,

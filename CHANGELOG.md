@@ -33,6 +33,38 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **`granularity_report` — reflow2 can now see where its own build stopped following its
+  design** (BL-182). An artifact realizing N capabilities the design distinguishes is the build
+  holding as *one* thing what the design holds as *N*. It reports that fact and **refuses a
+  verdict**: no severity, no suggested fix, and none of the words that turn a fact into an
+  accusation — which side is wrong (the file should be N files? the design over-decomposed?
+  it is right for this phase?) is not reflow2's to say (`dec:report-dont-judge`).
+
+  **There is no size threshold, by construction.** Artifacts are compared against *this
+  design's own distribution*, so a breadboard-phase design where everything lives in one file
+  has no outlier and is told nothing — a uniformly coarse design is not a broken one. It speaks
+  only once a design has decomposed elsewhere and left one place behind, which is a position on
+  the trajectory rather than a score (`dec:maturity-restructuring-delta`). Both cutoffs travel
+  with the answer so they can be argued with, and `not_observed_about` names what it cannot
+  see: unregistered artifacts, size of any kind, and outliers that mask one another.
+
+  Surfaced in `graph_report_markdown` as well as on demand, because a reading nobody calls is
+  still invisible. Pure arithmetic over `REALIZES` edges — no file I/O, no LLM.
+
+### Changed
+
+- **`req:restructuring-is-certified` widened to the function layer that was actually built.** As
+  first written it named only Capability/Requirement addition-or-removal and a changed `SATISFIES`
+  link, while `certify_preservation` also holds Flow, Actor, Constraint and Project, and treats
+  the capability `DEPENDS_ON` DAG, `PART_OF_FLOW` and `INTERACTS_WITH` as function-bearing. **A
+  requirement narrower than its implementation is a live hazard**: coverage reads satisfied while
+  the requirement fails to pin the behaviour that matters, so a later "simplification" down to the
+  letter of the requirement would break nothing any test of intent could catch. The statement now
+  also records the rule that makes the check work at all — *a link is judged function-bearing by
+  its endpoints, never by its type alone.* Old wording preserved in
+  `snap:epoch:requirements-confirmed:req:restructuring-is-certified`.
+
+
 - **`certify_preservation` — a restructuring is now certified, not asserted** (BL-180,
   `dec:maturity-restructuring-delta`, `req:restructuring-is-certified`). A *maturity
   restructuring* holds the function set invariant and moves everything else: allocation,
