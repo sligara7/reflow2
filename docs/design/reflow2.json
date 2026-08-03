@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4521cbad48440294de6ef47434eef195b35e43bc4333862d776cd6781c6a8750",
+  "content_hash": "sha256:775b8499ea4944879eae95a50b7371359c4e3e8c5686bac0de8a55b1449edb29",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -352,6 +352,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:granularity-observation",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2021,6 +2029,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:certification-requirement-widened",
+      "properties": {},
+      "to_id": "epoch:requirements-confirmed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:changelog-view-required",
       "properties": {},
       "to_id": "epoch:v0200-scoped"
@@ -2102,6 +2116,12 @@
       "from_id": "chg:context-estimation-reassessed",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:decomposition-count-corrected",
+      "properties": {},
+      "to_id": "epoch:decomposition-count-corrected"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3035,6 +3055,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:decomposition-count-corrected:dec:bl83a-functional-decomposition",
+      "properties": {},
+      "to_id": "epoch:decomposition-count-corrected"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:kpp-capture:cap:kpp-proposal",
       "properties": {},
       "to_id": "epoch:kpp-capture"
@@ -3236,6 +3262,12 @@
       "from_id": "snap:epoch:reflow-workflow-review:req:mode-is-chosen-and-changeable",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:requirements-confirmed:req:restructuring-is-certified",
+      "properties": {},
+      "to_id": "epoch:requirements-confirmed"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4385,6 +4417,15 @@
         "evidence": "The published-surface export cannot carry a behavioural promise, so the capability ships a document that is structurally incomplete for the job it is offered for. Found by the dynograph-foundation trial, 2026-07-28."
       },
       "to_id": "cap:publish-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-020a057ec12710f0",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:granularity"
     },
     {
       "edge_type": "CHANGED",
@@ -5675,6 +5716,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:bl182-granularity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl182-granularity",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl182-granularity",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:granularity-observation"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl182-granularity",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:build-granularity-is-visible"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:bl26-documents-write-side",
       "properties": {
         "accepted_baseline": true,
@@ -6719,6 +6796,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:certification-requirement-widened",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:restructuring-is-certified"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:changelog-view-required",
       "properties": {
         "accepted_baseline": true,
@@ -7337,6 +7423,15 @@
         "action": "modified"
       },
       "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decomposition-count-corrected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:bl83a-functional-decomposition"
     },
     {
       "edge_type": "CHANGED",
@@ -14038,6 +14133,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:granularity-observation",
+      "properties": {},
+      "to_id": "dec:maturity-restructuring-delta"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:granularity-observation",
+      "properties": {},
+      "to_id": "dec:report-dont-judge"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:heal",
       "properties": {},
       "to_id": "dec:ask-not-repair"
@@ -17076,6 +17183,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "sys:documentation",
       "properties": {},
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:documentation",
+      "properties": {},
       "to_id": "dec:documentation-has-no-operational-coupling"
     },
     {
@@ -17257,6 +17370,12 @@
       "from_id": "dec:arrival-delta",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:dec:arrival-delta"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:bl83a-functional-decomposition",
+      "properties": {},
+      "to_id": "snap:epoch:decomposition-count-corrected:dec:bl83a-functional-decomposition"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -17461,6 +17580,12 @@
       "from_id": "req:mode-is-chosen-and-changeable",
       "properties": {},
       "to_id": "snap:epoch:reflow-workflow-review:req:mode-is-chosen-and-changeable"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:restructuring-is-certified",
+      "properties": {},
+      "to_id": "snap:epoch:requirements-confirmed:req:restructuring-is-certified"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -31748,6 +31873,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:granularity",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:granularity-observation"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:graph",
       "properties": {
         "completeness": "complete"
@@ -33006,6 +33139,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:granularity-observation",
+      "properties": {},
+      "to_id": "req:build-granularity-is-visible"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:heal",
       "properties": {},
       "to_id": "req:coherence"
@@ -33906,6 +34045,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:granularity",
+      "properties": {},
+      "to_id": "cap:granularity-observation"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:heal",
       "properties": {},
       "to_id": "cap:heal"
@@ -34599,6 +34744,14 @@
         "action": "created"
       },
       "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:granularity",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:granularity"
     },
     {
       "edge_type": "YIELDED",
@@ -35637,6 +35790,17 @@
       }
     },
     {
+      "node_id": "art:granularity",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15",
+        "location": "crates/reflow2-core/src/granularity.rs",
+        "name": "granularity.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:graph",
       "node_type": "Artifact",
       "properties": {
@@ -35972,7 +36136,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:df2273281fb9522d",
+        "checksum": "sha256:6cb1df223df40abbec793742166c6b6602805aacf2d8a98485b41679c711303c",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
         "status": "realized"
@@ -36203,7 +36367,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9a2daac2b8c00696bf511be6120fc93de3a2f368e4e95e9765cc68371ec29c15",
+        "checksum": "sha256:234577ff7ce07f52ee0e8bbfc64e3ffae16903d23c67350b0753e37724771923",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -37123,6 +37287,19 @@
       }
     },
     {
+      "node_id": "cap:granularity-observation",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Count the Capabilities each registered Artifact realizes and name those that are distributional outliers within this design, with the arithmetic and both cutoffs attached. It reports a fact and refuses a verdict: no severity, no suggested fix, and no claim about size — an artifact of any length realizing one capability is silent here. Because the comparison is against this design's own spread, a uniformly coarse early-phase design produces no finding, which is what keeps the reading from punishing correct function-first work.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Report where the build does not separate what the design separates",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:heal",
       "node_type": "Capability",
       "properties": {
@@ -37968,6 +38145,15 @@
       }
     },
     {
+      "node_id": "chg:accept-020a057ec12710f0",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-02",
+        "name": "Registered before the clippy pass; the only edit since is manual_is_multiple_of plus rustfmt. No behaviour and no design meaning moved — the 9 tests are unchanged and still passing."
+      }
+    },
+    {
       "node_id": "chg:accept-03a23acf45b3fec0",
       "node_type": "ChangeEvent",
       "properties": {
@@ -38787,6 +38973,14 @@
       }
     },
     {
+      "node_id": "chg:bl182-granularity",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "reflow2 gains a reading that would have surfaced service.rs on its own — Anthony's constraint was that the finding be reflow2's, not his eye's, and his objection that 'avoid monoliths' is subjective is what narrowed it to a record-vs-record disagreement"
+      }
+    },
+    {
       "node_id": "chg:bl26-documents-write-side",
       "node_type": "ChangeEvent",
       "properties": {
@@ -39027,6 +39221,14 @@
       }
     },
     {
+      "node_id": "chg:certification-requirement-widened",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Snapshot before widening: the statement named only Capability/Requirement addition-or-removal and SATISFIES change"
+      }
+    },
+    {
       "node_id": "chg:changelog-view-required",
       "node_type": "ChangeEvent",
       "properties": {
@@ -39168,6 +39370,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Ingest recovers the rationale layer: why it was built that way"
+      }
+    },
+    {
+      "node_id": "chg:decomposition-count-corrected",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Snapshot before the correction: the decision said \"seven functional systems\" and enumerated seven"
       }
     },
     {
@@ -40731,9 +40941,9 @@
       "node_id": "dec:bl83a-functional-decomposition",
       "node_type": "Decision",
       "properties": {
-        "decision": "reflow2's own decomposition is the seven functional systems a design-graph tool IS — vocabulary, store, coherence-loop, human-channel, time-history, intake, agent-surface — with the 38 Rust modules re-parented under them as implementation. The as-built crate grouping (reflow2-core / -mcp / kit) is retired from the as-designed view.",
+        "decision": "reflow2's own decomposition is the functional systems a design-graph tool IS — vocabulary, store, coherence-loop, human-channel, time-history, intake, agent-surface — with the 38 Rust modules re-parented under them as implementation. The as-built crate grouping (reflow2-core / -mcp / kit) is retired from the as-designed view. CORRECTED 2026-08-02: this said \"the seven functional systems\" and named seven. There are EIGHT — `sys:documentation` joined later under `dec:documentation-has-no-operational-coupling`, which accepts that documentation is part of the product while having no operational coupling, so it forms an island the detectors are told to expect. The choice this decision records is unchanged; only its enumeration had gone stale, which is why this is a correction on the record rather than a superseding decision (`dec:reopen-supersedes` governs reversals, not arithmetic). Found by re-measuring a claim rather than re-reading it: the decision's prose said seven while `scan_nodes` said eight. THE COUNT THAT WAS NOT WRONG, recorded so nobody \"fixes\" it twice: the 14 distinct cross-system pairs cited in `dec:maturity-restructuring-delta` are DIRECTED pairs; counted undirected the same 51 edges span 12. Both are right, they answer different questions, and the recorded figure means directed.",
         "name": "reflow2's systems are functional, not its file tree",
-        "rationale": "The self-model had been recovered backwards from the file tree, so its 38 Components were the Rust module list and the domain primitives a design-graph product fundamentally is — node and edge types — appeared nowhere (BL-83). A functional carving comes from the product's purpose (a genesis input), not the code, and cuts across crate boundaries, so adopt on the code can only re-derive the module view. Derived with the user, 2026-07-23. The retired crate view is recovered by adopt-on-a-copy (BL-83b) and the divergence measured by compare_designs (BL-83c).",
+        "rationale": "The self-model had been recovered backwards from the file tree, so its 38 Components were the Rust module list and the domain primitives a design-graph product fundamentally is — node and edge types — appeared nowhere (BL-83). A functional carving comes from the product's purpose (a genesis input), not the code, and cuts across crate boundaries, so adopt on the code can only re-derive the module view. Derived with the user, 2026-07-23. The retired crate view is recovered by adopt-on-a-copy (BL-83b) and the divergence measured by compare_designs (BL-83c). A SECOND GAP FELL OUT OF THE CORRECTION AND IS WORTH MORE THAN IT: the snapshot taken before the edit showed only SEVEN `GOVERNED_BY` edges into this decision, so `sys:documentation` was carrying no link to the decomposition that defines it — the eighth system existed in the graph while being invisible to anything traversing from this decision. Now linked, matching its seven siblings. Per sharpening §2 that edge is completing the model rather than silencing a complaint: the system genuinely is part of this decomposition, and nothing was reporting its absence.",
         "status": "accepted"
       }
     },
@@ -43010,6 +43220,16 @@
       }
     },
     {
+      "node_id": "epoch:decomposition-count-corrected",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The functional-decomposition decision catches up with the eighth system it gained after it was written",
+        "sequence": 260,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:evidence-quality",
       "node_type": "DesignEpoch",
       "properties": {
@@ -43106,6 +43326,16 @@
         "epoch_type": "revision",
         "name": "Reading the original reflow's workflows back against reflow2 (2026-07-28)",
         "sequence": 220,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:requirements-confirmed",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Anthony confirms both open requirements, and one is widened first — the certification requirement was narrower than what shipped",
+        "sequence": 259,
         "status": "arrived"
       }
     },
@@ -44258,6 +44488,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered github-mcp-nuggets.md"
+      }
+    },
+    {
+      "node_id": "frag:art:granularity",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered granularity.rs"
       }
     },
     {
@@ -45970,6 +46210,21 @@
       }
     },
     {
+      "node_id": "req:build-granularity-is-visible",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A design can see where its build stopped following it",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Where the build holds as one artifact what the design holds as several distinct capabilities, reflow2 shall report that disagreement as an observation measured against the design's own distribution — never against an absolute size, never as a defect, and without ruling on which side is wrong.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:build-loop-is-bounded",
       "node_type": "Requirement",
       "properties": {
@@ -47015,8 +47270,8 @@
         "name": "A restructuring is certified, not asserted",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "When a design change claims to move structure while holding function invariant, reflow2 shall decide that claim from the two as-designed records alone — reporting whether any Capability or Requirement was added or removed and whether any SATISFIES link changed — and shall refuse to certify a divergence it cannot classify, answering indeterminate rather than passing it silently.",
-        "status": "proposed"
+        "statement": "When a design change claims to move structure while holding function invariant, reflow2 shall decide that claim from the two as-designed records alone — reporting whether anything in the function layer (Capability, Requirement, Flow, Actor, Constraint, Project) was added or removed, and whether any link lying wholly inside that layer was added, removed or changed — and shall refuse to certify a divergence it cannot classify, answering indeterminate rather than passing it silently. A link shall be judged function-bearing by its endpoints and never by its type alone, because one edge type carries different meaning at different endpoints.",
+        "status": "accepted"
       }
     },
     {
@@ -47549,6 +47804,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:decomposition-count-corrected:dec:bl83a-functional-decomposition",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:agent-surface\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:coherence-loop\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:human-channel\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:intake\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:store\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:time-history\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:vocabulary\",\"properties\":{}}]",
+        "state": "{\"decision\":\"reflow2's own decomposition is the seven functional systems a design-graph tool IS — vocabulary, store, coherence-loop, human-channel, time-history, intake, agent-surface — with the 38 Rust modules re-parented under them as implementation. The as-built crate grouping (reflow2-core / -mcp / kit) is retired from the as-designed view.\",\"name\":\"reflow2's systems are functional, not its file tree\",\"rationale\":\"The self-model had been recovered backwards from the file tree, so its 38 Components were the Rust module list and the domain primitives a design-graph product fundamentally is — node and edge types — appeared nowhere (BL-83). A functional carving comes from the product's purpose (a genesis input), not the code, and cuts across crate boundaries, so adopt on the code can only re-derive the module view. Derived with the user, 2026-07-23. The retired crate view is recovered by adopt-on-a-copy (BL-83b) and the divergence measured by compare_designs (BL-83c).\",\"status\":\"accepted\"}",
+        "target_id": "dec:bl83a-functional-decomposition",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:kpp-capture:cap:kpp-proposal",
       "node_type": "Snapshot",
       "properties": {
@@ -47885,6 +48150,16 @@
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:defaults-do-not-assert\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:3f600ff329ecb31a\",\"properties\":{}}]",
         "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"The governance mode is chosen, visible and changeable — it is the one asserted default that is actually acted upon\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"Project.mode decides whether the design or the implementation is the source of truth, and reflow2 applies it by default, never asks for it, and provides no way to change it. THE MEASURED STATE, 2026-07-28. genesis.rs takes mode OPTIONALLY — \\\"if let Some(mode) = opts.mode\\\" — and its own comment states the consequence: \\\"Scaffold the Project (schema applies mode=flexible, status=active when unset)\\\". project_mode_of falls back to \\\"flexible\\\" again on read. The string \\\"mode\\\" does not appear anywhere in crates/reflow2-mcp/src/service.rs, so there is no set_project_mode and no setter of any kind on the served surface; after genesis it is reachable only through the create_node escape hatch — the same shape as the KPP objective finding and Requirement.concern. And reflow2's OWN Project carries mode = flexible, which nobody chose. WHY THIS IS WORSE THAN THE TEN PROPERTIES IN THE ORIGINAL SWEEP, and the difference is the whole point. Those defaults are asserted AND UNREAD — Requirement.concern sitting at core on 67 of 67 is inert, carrying no information and driving nothing. This one is asserted AND ACTED UPON: heal.rs:431 reads it, and in rigid mode HEAL only proposes and never auto-applies. So req:defaults-do-not-assert has, in this property, its first instance where the invented value changes what the system DOES. flexible is not a neutral setting either. In the vocabulary reflow2 inherited it means the architecture is NOT the source of truth, the implementation drives the architecture, and the response to drift is to update the design to match the build. That is a governance decision. reflow2 — a project whose thesis is that the design is the memory — is currently running in the mode that says the implementation drives the design, not because anyone decided so but because opts.mode was None. THE PRIOR ART IS A FAILURE, NOT A MODEL, and it corroborates rather than instructs. reflow defined development_mode in workflow_master.json with seven behavioural commitments per mode (architecture_source_of_truth, implementation_drives_architecture, drift_response, new_functionality_policy, change_request_required, auto_update_architecture_on_resync, plus the discovered-items routing), REQUIRED it as the P0-to-P1 transition prerequisite (\\\"fields_must_be_set: development_mode.mode\\\"), READ it in resync_protocol.json to choose between updating the architecture and realigning the implementation, and TESTED for it in 97-GAN-inspired-test.json — and NO WORKFLOW STEP ANYWHERE SETS IT. Not 00a, not 00b, not the 01 through 04 series. Its own META-04H check HA-005, \\\"Transition Prerequisites Satisfiability\\\", exists to catch exactly that and did not. So both systems arrive at the same place by different routes: a governance mode that everything consults and nothing establishes. THREE THINGS THIS REQUIRES, and they are separable. (1) The value is CHOSEN — genesis asks, or the mode reads as unspecified until someone says, per the rule ver:interface-spec already sets for Interface.medium: a default may record absence, never a choice. (2) The value is CHANGEABLE — a project's governance legitimately moves as it matures, exploratory to controlled, and today it cannot; brainmaker reported this from the field, half-right, since the sharper fact is that genesis does not set it at all, it defaults it. (3) The value is VISIBLE — a mode that silently changes HEAL's behaviour should be readable in the reports that say where the design stands. What rigid should MEAN beyond heal.rs:431 stays open and parked separately; this requirement is the prior question, because rigid cannot mean anything useful while the mode is unchoosable and unchangeable. Found 2026-07-28 reviewing 00a-basic_setup.json. Anthony's word: capture it.\",\"status\":\"proposed\"}",
         "target_id": "req:mode-is-chosen-and-changeable",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:requirements-confirmed:req:restructuring-is-certified",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:certify-restructuring\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-02\",\"role\":\"author\"}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"A restructuring is certified, not asserted\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"When a design change claims to move structure while holding function invariant, reflow2 shall decide that claim from the two as-designed records alone — reporting whether any Capability or Requirement was added or removed and whether any SATISFIES link changed — and shall refuse to certify a divergence it cannot classify, answering indeterminate rather than passing it silently.\",\"status\":\"proposed\"}",
+        "target_id": "req:restructuring-is-certified",
         "target_type": "Requirement"
       }
     },
@@ -48482,6 +48757,18 @@
         "level": "integration",
         "method": "test",
         "name": "A mode can be chosen after genesis, preserves the project, and refuses an unknown value",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:granularity",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-02",
+        "level": "unit",
+        "method": "test",
+        "name": "The granularity reading stays quiet when it should (crates/reflow2-core/tests/granularity.rs) — 9 cases, and most of them are silences. Anthony's objection is what shaped this suite: \"avoid monoliths\" IS a subjective design principle, so the module deliberately does not detect monoliths — it detects that two records the design already holds disagree about how many things there are (N Capabilities vs one Artifact) and refuses to say which side is wrong. THE LOAD-BEARING TEST IS `a_uniformly_coarse_design_is_not_punished`: eight artifacts each swallowing four capabilities produce NO finding, because a breadboard-phase design where everything lives in one file has nothing to be out of line with — dec:maturity-restructuring-delta's trap as an executable guarantee. `the_observation_carries_no_verdict` asserts the serialized report contains none of severity / suggested_fix / monolith / too big / should be split / violation / defect. `two_capabilities_in_one_file_is_not_worth_saying` pins MIN_DISTINCTIONS against a real statistical weakness found while writing the tests: counts pile up at one, the standard deviation collapses, and the distributional cutoff alone fires on noise — the test asserts z clears the bar and that the finding is suppressed anyway. `several_coarse_artifacts_mask_each_other` records z-masking as a known property rather than leaving it to be discovered in the field. Verified against reality twice: run on the committed design it names exactly one artifact (art:service, 10 capabilities, z=6.46, alone in the design), and run on the v0.21.0 export — BEFORE the observation was ever made — it names the same one at 9 capabilities, z=5.75, which is what makes this discovery rather than a rule fitted to a known answer.",
         "status": "passing"
       }
     },
@@ -49205,7 +49492,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:53feb79fe68e3ba640d9ac558846a31e505fa13c79d5b615fd0667c0bdbe1926",
+  "prev_content_hash": "sha256:4521cbad48440294de6ef47434eef195b35e43bc4333862d776cd6781c6a8750",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
