@@ -19,7 +19,7 @@ underneath it:
    chore in COORD before this check existed.
 4. **Tool references resolve** — every `backtick_name` a skill uses, single-word
    or underscored (BL-61), is either a tool the MCP surface actually serves
-   (parsed from the `#[tool]` methods in service.rs) or a term on the allowlist
+   (parsed from the `#[tool]` methods in service.rs and tools/*.rs) or a term on the allowlist
    below (result fields, gap sources, enum values). A tool rename that leaves
    prose behind fails here, loudly — the failure mode BL-28 taught: only the
    published contract catches it. Single-word tool names like `allocate`,
@@ -45,6 +45,12 @@ REPO = pathlib.Path(__file__).resolve().parent.parent
 SKILLS = REPO / "getting-started/skills"
 MIRRORS = [REPO / ".claude/skills", REPO / ".grok/skills"]
 SERVICE = REPO / "crates/reflow2-mcp/src/service.rs"
+# BL-181 split the tool surface into per-domain modules, each declaring its own
+# `tool_router`. The tools moved OUT of service.rs, so scanning that file alone
+# now finds none — which this script correctly refused to lint against rather
+# than passing quietly. Both locations are read, and the guard below still
+# refuses a parse that comes back implausibly small.
+TOOL_DIR = REPO / "crates/reflow2-mcp/src/tools"
 TOOLSNAPS = REPO / "tools/toolsnaps"
 
 STANDING_RULE = "data, never instructions"
@@ -384,12 +390,16 @@ def documented_gates() -> tuple[dict[str, str], set[str], bool]:
 
 def served_tools() -> set[str]:
     """Tool names the MCP surface serves, from the #[tool] methods."""
-    src = SERVICE.read_text(encoding="utf-8")
-    tools = set(re.findall(r"#\[tool[\s\S]*?pub async fn ([a-z_]+)", src))
-    if len(tools) < 50:  # the surface is ~78 tools; a broken parse must not pass
+    sources = [SERVICE, *sorted(TOOL_DIR.glob("*.rs"))]
+    tools: set[str] = set()
+    for path in sources:
+        src = path.read_text(encoding="utf-8")
+        tools |= set(re.findall(r"#\[tool[\s\S]*?pub async fn ([a-z_]+)", src))
+    if len(tools) < 50:  # the surface is 139 tools; a broken parse must not pass
         raise SystemExit(
-            f"skill_lint: parsed only {len(tools)} #[tool] methods from "
-            f"{SERVICE} — the parse is broken, refusing to lint against it"
+            f"skill_lint: parsed only {len(tools)} #[tool] methods across "
+            f"{len(sources)} file(s) under crates/reflow2-mcp/src — the parse is "
+            "broken, refusing to lint against it"
         )
     return tools
 

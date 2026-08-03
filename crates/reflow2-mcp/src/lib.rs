@@ -12,3 +12,4 @@ pub mod proxy;
 pub mod service;
 pub mod shared;
 pub mod skills;
+pub mod tools;

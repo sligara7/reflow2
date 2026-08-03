@@ -1,0 +1,401 @@
+//! `query` tools — one slice of the MCP surface.
+//!
+//! Split out of `service.rs` under BL-181, which had grown to 6,356 lines and
+//! 139 tools in one file: the design distinguished the systems these tools
+//! serve and the build did not separate them at all. That mismatch is what
+//! `granularity_report` reported, and this is the answer to it.
+//!
+//! **Function is unchanged by construction.** Every item here moved verbatim;
+//! nothing was rewritten. `rmcp` composes routers, so this module declares its
+//! own and `ReflowService::new` sums them — the surface a client sees is
+//! byte-identical, which `tools/toolsnap.py` is what proves rather than claims.
+
+#![allow(unused_imports)]
+
+use std::collections::HashMap;
+use std::sync::Arc;
+use std::sync::atomic::{AtomicU64, Ordering};
+
+use rmcp::{
+    ErrorData as McpError, RoleServer, ServerHandler,
+    handler::server::{router::tool::ToolRouter, wrapper::Parameters},
+    model::{
+        CallToolResult, ContentBlock, Implementation, ProtocolVersion, ServerCapabilities,
+        ServerInfo,
+    },
+    service::RequestContext,
+    tool, tool_handler, tool_router,
+};
+use schemars::JsonSchema;
+use serde::Deserialize;
+use serde_json::{Map as JsonMap, Value as JsonValue, json};
+use tokio::sync::RwLock;
+
+use reflow2_core::bulk::{
+    AskedRecord as BulkAskedRecord, ChecksumAccept as BulkChecksumAccept, EdgeSpec as BulkEdgeSpec,
+    GapAck as BulkGapAck, NodeSpec as BulkNodeSpec,
+};
+use reflow2_core::temporal::ChangeRecord;
+use reflow2_core::{
+    AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_SCOPE_DEPTH, DesignGraph,
+    Dimension, DriftDisposition, DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions,
+    HealProposal, HealStrategy, IngestOptions, LinkArtifactOptions, LoopStatus, ObservedArtifact,
+    ObservedPath, PromptCollector, PropagateOptions, ReadinessForecast, ReadinessGate,
+    ReadinessKind, ReadinessObservation, ReconcileOptions, StoredNode, Value,
+};
+
+use crate::dto::{EdgeDto, NodeDto};
+use crate::service::*;
+
+#[tool_router(router = query_router, vis = "pub")]
+impl ReflowService {
+    // ---- Generic CRUD (deterministic) ----
+
+    #[tool(
+        description = "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn create_node(
+        &self,
+        Parameters(req): Parameters<CreateNodeReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let props = parse_props(req.props)?;
+        let mut g = self.write_lock().await;
+        match g.upsert_node(&req.node_type, &req.id, props) {
+            Ok(n) => ok_json(NodeDto::from(n)),
+            Err(e) => Err(node_error(&g, &req.node_type, e)),
+        }
+    }
+
+    #[tool(
+        description = "Create or update MANY nodes in one call — the bulk form of create_node. \
+                       ALL OF IT OR NONE OF IT: every item is attempted so you learn every \
+                       failure in one round trip, and if anything failed nothing is written. \
+                       Upsert, like create_node, so re-running after a fix is safe.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn create_nodes(
+        &self,
+        Parameters(req): Parameters<CreateNodesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut specs = Vec::with_capacity(req.nodes.len());
+        for n in req.nodes {
+            specs.push(BulkNodeSpec {
+                node_type: n.node_type,
+                id: n.id,
+                props: parse_props(n.props)?,
+            });
+        }
+        let mut g = self.write_lock().await;
+        let report = g.create_nodes(&specs).map_err(dyno_err)?;
+        bulk_result(report, NodeDto::from)
+    }
+
+    #[tool(
+        description = "Create MANY edges in one call — the bulk form of create_edge, and so of \
+                       every typed helper built on it: contains, contain_component, satisfies, \
+                       allocate, realizes. Those helpers only fill in the endpoint types, so \
+                       naming both types per item is the whole difference. ALL OF IT OR NONE OF \
+                       IT: every item is attempted so you learn every failure at once, and if \
+                       anything failed nothing is written.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn create_edges(
+        &self,
+        Parameters(req): Parameters<CreateEdgesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut specs = Vec::with_capacity(req.edges.len());
+        for e in req.edges {
+            specs.push(BulkEdgeSpec {
+                edge_type: e.edge_type,
+                from_type: e.from_type,
+                from_id: e.from_id,
+                to_type: e.to_type,
+                to_id: e.to_id,
+                props: parse_props(e.props)?,
+            });
+        }
+        let mut g = self.write_lock().await;
+        let report = g.create_edges(&specs).map_err(dyno_err)?;
+        bulk_result(report, EdgeDto::from)
+    }
+
+    #[tool(
+        description = "Create an edge of any schema type between typed endpoints.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn create_edge(
+        &self,
+        Parameters(req): Parameters<CreateEdgeReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let props = parse_props(req.props)?;
+        let mut g = self.write_lock().await;
+        let edge = g.create_edge(
+            &req.edge_type,
+            &req.from_type,
+            &req.from_id,
+            &req.to_type,
+            &req.to_id,
+            props,
+        );
+        match edge {
+            Ok(e) => ok_json(EdgeDto::from(e)),
+            // Say what would have worked — see `edge_error`.
+            Err(e) => Err(edge_error(&g, &req.from_type, &req.to_type, e)),
+        }
+    }
+
+    #[tool(
+        description = "Discover the design vocabulary before writing to it: which node types \
+                       exist, which properties they require, and which edge types may join two \
+                       given types. Call this instead of guessing at create_node / create_edge. \
+                       No arguments returns everything; `node_type` focuses one type and the \
+                       edges it can carry; `from` + `to` together answer 'what may connect an X \
+                       to a Y?', ranking edge types that model the pair above ones that merely \
+                       accept it through a `*` wildcard.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn describe_schema(
+        &self,
+        Parameters(req): Parameters<DescribeSchemaReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        match (&req.node_type, &req.from, &req.to) {
+            (None, None, None) => ok_json(g.describe_vocabulary()),
+            (Some(t), None, None) if req.required_only => {
+                ok_json(g.describe_node_type_required(t).map_err(params_err)?)
+            }
+            (Some(t), None, None) => ok_json(g.describe_node_type(t).map_err(params_err)?),
+            (None, Some(f), Some(t)) => ok_json(g.edge_types_between(f, t).map_err(params_err)?),
+            // A half-given pair is a mistake, not a request for everything.
+            _ => Err(McpError::invalid_params(
+                "describe_schema takes no arguments (the full vocabulary), `node_type` alone, \
+                 or `from` and `to` together — not a mix."
+                    .to_string(),
+                None,
+            )),
+        }
+    }
+
+    #[tool(
+        description = "Fetch a node by type and id (null if absent).",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn get_node(
+        &self,
+        Parameters(req): Parameters<TypedIdReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        let node = g.get_node(&req.node_type, &req.id).map_err(dyno_err)?;
+        // One named shape both ways (BL-57): `{node: {...}}` when present,
+        // `{node: null}` when absent. Before, present returned a bare object
+        // and absent returned `{value: null}` (the scalar wrap) — two shapes,
+        // so an agent branching on the result read the absent case wrong.
+        self.ok_read(&g, json!({ "node": node.map(NodeDto::from) }))
+    }
+
+    #[tool(
+        description = "List nodes of a type. Answers with as many as fit in one reply and says \
+                       what it left out — `total` is how many exist, `omitted` how many did not \
+                       come back, `next_offset` where to resume, and `capped_by` why it stopped \
+                       (`size` when the payload was full, `limit` when you asked for fewer). A \
+                       cap is never silent, but it is also never a surprise: pass `brief: true` \
+                       for id/name/status only when you want the shape of a large type, or \
+                       `limit`/`offset` to page deliberately. On a mature design the full \
+                       properties of one type can be tens of thousands of characters — read \
+                       brief first, then fetch the few nodes you actually need with get_node.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn scan_nodes(
+        &self,
+        Parameters(req): Parameters<ScanReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        let nodes = g.scan_nodes(&req.node_type).map_err(dyno_err)?;
+        let total = nodes.len();
+        let offset = req.offset.unwrap_or(0).min(total);
+        let brief = req.brief.unwrap_or(false);
+
+        // Render one node at a time, stopping at whichever bound bites first:
+        // the caller's `limit`, or the payload budget. The budget exists because
+        // an unbounded read of a mature type does not fail loudly — it arrives
+        // as tens of thousands of characters that the client truncates, which is
+        // the silent drop rule 6 forbids, happening outside reflow2 where
+        // nothing can name it. Naming it here is the whole point.
+        let mut items: Vec<JsonValue> = Vec::new();
+        let mut bytes = 0usize;
+        let mut capped_by: Option<&'static str> = None;
+        for node in nodes.iter().skip(offset) {
+            if req.limit.is_some_and(|limit| items.len() >= limit) {
+                capped_by = Some("limit");
+                break;
+            }
+            let rendered = if brief {
+                brief_node(node)
+            } else {
+                serde_json::to_value(NodeDto::from(node.clone())).map_err(ser_err)?
+            };
+            let size = rendered.to_string().len();
+            // Always return at least one node: a single node larger than the
+            // whole budget must still be readable, or a big node becomes
+            // unreachable rather than merely expensive.
+            if !items.is_empty() && bytes + size > SCAN_PAYLOAD_BUDGET_BYTES {
+                capped_by = Some("size");
+                break;
+            }
+            bytes += size;
+            items.push(rendered);
+        }
+
+        let returned = items.len();
+        let next = offset + returned;
+        self.ok_read(
+            &g,
+            json!({
+                // `count` keeps its established meaning — how many came back in
+                // this reply — so a caller that only reads {count, items} is
+                // unaffected. `total` is the new, larger truth.
+                "count": returned,
+                "items": items,
+                "total": total,
+                "offset": offset,
+                "returned": returned,
+                "omitted": total.saturating_sub(next),
+                "next_offset": (next < total).then_some(next),
+                "capped_by": capped_by,
+                "brief": brief,
+            }),
+        )
+    }
+
+    #[tool(
+        description = "Find the reflow2 tool for a job you can describe but cannot name — \
+                       'how do I record that a file implements a capability?', 'what shows me \
+                       the blast radius?'. Ranked over the served surface itself (name, \
+                       description and parameter names), so it can never drift from the tools \
+                       that actually exist. The whole surface is too large to hold in context at \
+                       once; this is its catalogue. Descriptions come back trimmed — call the \
+                       tool you picked, or read its full schema, once you know its name.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn find_tools(
+        &self,
+        Parameters(req): Parameters<FindToolsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let query = req.query.to_lowercase();
+        let terms: Vec<&str> = query
+            .split(|c: char| !c.is_alphanumeric() && c != '_')
+            .filter(|t| !t.is_empty())
+            .collect();
+        let all = self.tool_router.list_all();
+        let searched = all.len();
+
+        let mut scored: Vec<(f64, JsonValue)> = all
+            .iter()
+            .filter_map(|tool| {
+                let name = tool.name.as_ref();
+                let description = tool.description.as_deref().unwrap_or("");
+                let params = tool
+                    .input_schema
+                    .get("properties")
+                    .and_then(JsonValue::as_object)
+                    .map(|p| p.keys().cloned().collect::<Vec<_>>())
+                    .unwrap_or_default();
+                let score = score_tool(name, description, &params, &terms);
+                (score > 0.0).then(|| {
+                    (
+                        score,
+                        json!({
+                            "tool": name,
+                            "score": score,
+                            "summary": trim_summary(description),
+                            "parameters": params,
+                        }),
+                    )
+                })
+            })
+            .collect();
+
+        // Ties broken by name so the same query answers the same way twice —
+        // a ranking that reshuffles teaches an agent not to trust it.
+        scored.sort_by(|a, b| {
+            b.0.partial_cmp(&a.0)
+                .unwrap_or(std::cmp::Ordering::Equal)
+                .then_with(|| a.1["tool"].as_str().cmp(&b.1["tool"].as_str()))
+        });
+        let matched = scored.len();
+        let limit = req.limit.unwrap_or(DEFAULT_TOOL_SEARCH_RESULTS).max(1);
+        let items: Vec<JsonValue> = scored.into_iter().take(limit).map(|(_, v)| v).collect();
+
+        ok_json(json!({
+            "count": items.len(),
+            "items": items,
+            "matched": matched,
+            "omitted": matched.saturating_sub(items.len()),
+            "searched": searched,
+            "query": req.query,
+        }))
+    }
+
+    #[tool(
+        description = "Find design nodes by what they say, when you don't know their ids — \
+                       'what does the design say about persistence?', 'is there already a \
+                       requirement about latency?'. BM25 keyword search over every node's \
+                       name/statement/description, ranked, optionally scoped to one node type. \
+                       Search BEFORE creating a node that might already exist, and to map the \
+                       user's words to the node they mean. Result reports its own bounds: \
+                       hits.len() == limit means there may be more, and a non-empty `stale` \
+                       list means the index has drifted from the store.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn search_design(
+        &self,
+        Parameters(req): Parameters<SearchDesignReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        let result = g
+            .search_design(
+                &req.query,
+                req.node_type.as_deref(),
+                req.limit.unwrap_or(10),
+            )
+            .map_err(dyno_err)?;
+        self.ok_read(&g, result)
+    }
+
+    #[tool(
+        description = "Delete a node by type and id (true if it existed).",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn delete_node(
+        &self,
+        Parameters(req): Parameters<TypedIdReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        let deleted = g.delete_node(&req.node_type, &req.id).map_err(dyno_err)?;
+        ok_json(json!({ "deleted": deleted }))
+    }
+
+    #[tool(
+        description = "Delete one edge by type and endpoint ids (true if it existed). For \
+                       retracting a link that was drawn in error — a wrongly-asserted SATISFIES, \
+                       an allocation that never happened. A link that WAS true and stopped being \
+                       true is design history, not an error: record it (record_change) rather \
+                       than erasing it. Until this tool existed the only way to remove a wrong \
+                       edge over MCP was to delete one of its endpoints.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn delete_edge(
+        &self,
+        Parameters(req): Parameters<DeleteEdgeReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        // `{deleted}` rather than the bare bool the core returns: a scalar in
+        // `structuredContent` is the BL-48 defect (ok_json would wrap it as an
+        // anonymous `{value}`, but the field deserves its name).
+        let deleted = g
+            .delete_edge(&req.edge_type, &req.from_id, &req.to_id)
+            .map_err(dyno_err)?;
+        ok_json(json!({ "deleted": deleted }))
+    }
+}

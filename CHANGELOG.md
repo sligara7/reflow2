@@ -31,6 +31,29 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **The MCP tool surface is carved into the systems the design already named** (BL-181).
+  `service.rs` had grown to **6,356 lines and 139 tools in one file** — the design distinguished
+  the systems those tools serve and the build separated none of them, which is exactly what
+  `granularity_report` reported. 141 items moved **verbatim** into eleven per-domain modules
+  under `tools/`, each declaring its own `tool_router`, summed in `ReflowService::new`.
+  `service.rs` is now 2,658 lines.
+
+  The carving follows `dec:bl83a-functional-decomposition` — *"reflow2's systems are functional,
+  not its file tree"* — because a file tree that disagrees with the design's own decomposition is
+  what this existed to fix. Router composition was already proven in-repo by `skills.rs`, so this
+  was addition rather than invention.
+
+  **Nothing about the served surface changed, and that is checked rather than claimed:** all 144
+  toolsnaps match, and `certify_preservation` returns **`preserved`** — 0 function changes, 0
+  unclassified, 36 structural. The first real restructuring that check has seen.
+
+  Re-running `granularity_report` afterwards shows `art:service` **gone from the report**, and
+  surfaces three artifacts that were masked behind it — `art:temporal` had been below the cutoff
+  at z=1.94 and reads z=4.54 once service.rs stops inflating the spread. That is the z-masking the
+  reading already warned about in `not_observed_about`, behaving as documented.
+
 ### Fixed
 
 - **Re-calling a constructor no longer erases what the design already knew** (BL-183). Every
