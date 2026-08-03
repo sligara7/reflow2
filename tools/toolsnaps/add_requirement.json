@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create a Requirement node.",
+  "description": "Create a Requirement node. A new one lands at `proposed`; only the user's word moves it off, through set_requirement_status. CALLING THIS AGAIN WITH AN EXISTING ID REVISES that node: what you pass overwrites, and every field you do NOT pass keeps its current value instead of reverting to a default — so rewording a requirement never silently un-confirms it (BL-183).",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

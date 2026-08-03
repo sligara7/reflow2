@@ -217,7 +217,7 @@ impl DesignGraph {
         artifact_type: Option<&str>,
         location: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::ARTIFACT,
             id,
             Props::new()

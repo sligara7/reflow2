@@ -36,7 +36,7 @@ impl DesignGraph {
         version: Option<&str>,
         unit_type: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::RELEASE,
             id,
             Props::new()
@@ -59,7 +59,7 @@ impl DesignGraph {
         env_type: Option<&str>,
         location: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::ENVIRONMENT,
             id,
             Props::new()
@@ -77,7 +77,7 @@ impl DesignGraph {
         name: &str,
         provider: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::RESOURCE,
             id,
             Props::new().set("name", name).set_opt("provider", provider),

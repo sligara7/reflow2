@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:775b8499ea4944879eae95a50b7371359c4e3e8c5686bac0de8a55b1449edb29",
+  "content_hash": "sha256:ab562739533aef1534a20bfb51b1504a3f685a2d7d54228fa0481477f68b9900",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5749,6 +5749,123 @@
         "action": "added"
       },
       "to_id": "req:build-granularity-is-visible"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:readiness"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:store"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:mcp-tools"
     },
     {
       "edge_type": "CHANGED",
@@ -17220,6 +17337,12 @@
       "from_id": "sys:vocabulary",
       "properties": {},
       "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "ver:constructors-preserve",
+      "properties": {},
+      "to_id": "req:no-silent-fallback"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -33895,6 +34018,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:constructors-preserve",
+      "properties": {},
+      "to_id": "cap:store"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:content-manifest",
       "properties": {},
       "to_id": "cap:content-manifest"
@@ -35376,7 +35505,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:caeaf1afdbdb58a9506465da433bfaf4b2311ecb9be19c810d63e24446476d59",
+        "checksum": "sha256:3850cb634766556b6630d709d927ae335828cc10a34604bff9c02777a92ba863",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
         "status": "realized"
@@ -35409,7 +35538,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9da41f6bdb9885f7",
+        "checksum": "sha256:6aeb7aaf31ccdd875990bce6735c75eeead49c7371c4bc39064d4e7f478733e8",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
         "status": "realized"
@@ -35662,7 +35791,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fbe714849869c1d8",
+        "checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc",
         "location": "crates/reflow2-core/src/dimensions.rs",
         "name": "dimensions.rs",
         "status": "realized"
@@ -35761,7 +35890,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e2e94e52eb601d53",
+        "checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e",
         "location": "crates/reflow2-core/src/flow.rs",
         "name": "flow.rs",
         "status": "realized"
@@ -35805,7 +35934,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:929f2c142c37f7655ea8dda152d813c69d6a7c9d7f3ba9b700ff4de970179844",
+        "checksum": "sha256:0c572c75d71045854e65d16ca6827271d9319bc13f35e470976c425fda05033c",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
         "status": "realized"
@@ -36025,7 +36154,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b03333680dc6e660",
+        "checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
         "status": "realized"
@@ -36102,7 +36231,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b964690c35967c76a12a9da11c404699c9026d433721813a71882f425f044123",
+        "checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5",
         "last_confirmed_at": "2026-08-02",
         "location": "crates/reflow2-core/src/readiness.rs",
         "name": "readiness.rs",
@@ -36367,7 +36496,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:234577ff7ce07f52ee0e8bbfc64e3ffae16903d23c67350b0753e37724771923",
+        "checksum": "sha256:298d1f67ad66afcbf2e2cab756e311d4c0d5d9fc36a4eef8fe4883febe3d5655",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -36510,7 +36639,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9fca335f5153966545aba1a64382f2a90c6388e6634ea023dd9441f9d320abbd",
+        "checksum": "sha256:829e4905cc5f40a8b24e6027b5522780c90e8c133742299549e80880b2f6abef",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
         "status": "realized"
@@ -36697,7 +36826,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:669e73b33ff4cbd1",
+        "checksum": "sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
         "status": "realized"
@@ -38978,6 +39107,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "reflow2 gains a reading that would have surfaced service.rs on its own — Anthony's constraint was that the finding be reflow2's, not his eye's, and his objection that 'avoid monoliths' is subjective is what narrowed it to a record-vs-record disagreement"
+      }
+    },
+    {
+      "node_id": "chg:bl183-constructors-merge",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Every public add_* constructor now MERGES on an existing id instead of replacing, so re-calling one to revise a node stops resetting every property it does not name — 16 of 18 constructors were silently erasing the user's word. import_graph deliberately still replaces, because an import document is a complete statement of a node"
       }
     },
     {
@@ -48504,6 +48641,18 @@
       }
     },
     {
+      "node_id": "ver:constructors-preserve",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-02",
+        "level": "unit",
+        "method": "test",
+        "name": "Re-calling a constructor does not erase what the design already knew (crates/reflow2-core/tests/constructors_preserve.rs) — 9 cases. WRITTEN BEFORE THE FIX: all 6 defect cases failed and all 3 counterweights passed. THE AUDIT, not the instance, is the finding: 16 of 18 public add_* helpers named a SUBSET of their node type's properties and wrote create-or-REPLACE, so re-calling one to revise a node reset every unnamed property to its schema default. add_interface lost 13 including `designation` (which contracts are published boundaries, req:key-interfaces); add_requirement lost `status`, which IS certainty (dec:certainty-derived), so rewording forged the user's signature in reverse; add_capability un-built a verified capability; add_artifact was BL-166 still reachable one call away, that fix having landed on link_artifact only. It survived BL-46 and BL-166 because it is INVISIBLE until a property has been moved off its default. It violated req:no-silent-fallback, accepted and priority CRITICAL. THE COUNTERWEIGHTS ARE WHAT KEEP THE FIX FROM BEING A DIFFERENT BUG: a first call still writes schema defaults rather than inheriting, a named property is still overwritten, and an explicitly-passed optional still wins — so `merge` never became `first write wins` or `you may never change this back`. create_node and import_graph deliberately still REPLACE, because an import document is a complete statement of a node and merging there would resurrect properties it meant to omit.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:content-manifest",
       "node_type": "Verification",
       "properties": {
@@ -49492,7 +49641,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4521cbad48440294de6ef47434eef195b35e43bc4333862d776cd6781c6a8750",
+  "prev_content_hash": "sha256:775b8499ea4944879eae95a50b7371359c4e3e8c5686bac0de8a55b1449edb29",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

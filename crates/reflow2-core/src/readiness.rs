@@ -284,7 +284,7 @@ impl DesignGraph {
                 node_id: obs.target_id.to_string(),
             });
         }
-        let stored = self.create_node(
+        let stored = self.upsert_node(
             node::READINESS_ASSESSMENT,
             obs.id,
             Props::new()

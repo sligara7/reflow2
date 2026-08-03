@@ -31,6 +31,31 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **Re-calling a constructor no longer erases what the design already knew** (BL-183). Every
+  public `add_*` helper named a *subset* of its node type's properties and wrote
+  create-or-**replace**, so calling one with an existing id — which is exactly how
+  **revise-design** says to change a node's text — silently reset every unnamed property to its
+  schema default. **16 of 18 constructors did this.** `add_interface` lost 13 properties
+  including `designation`, which is how the design says which contracts are the published
+  boundaries (`req:key-interfaces`). `add_requirement` lost `status`, which *is* certainty
+  (`dec:certainty-derived`), so rewording a requirement un-confirmed it. `add_capability`
+  un-built a `verified` capability. `add_artifact` was BL-166 still reachable one call away —
+  that fix had landed on `link_artifact` alone.
+
+  It survived BL-46 and BL-166 because **it is invisible until a property has been moved off its
+  default**, and it violated `req:no-silent-fallback` (accepted, priority *critical*).
+
+  **The served revise-design skill was also wrong, and worse:** it told you to revise with the
+  generic `create_node` and asserted that an existing id *merges*. It does not — it replaces. So
+  the instruction caused the defect. The skill and both mirrors now say to use the typed
+  constructor, and warn off `create_node` for revision.
+
+  `create_node` and `import_graph` still replace, deliberately: an import document is a
+  **complete** statement of a node, and merging there would resurrect properties it meant to
+  omit.
+
 ### Added
 
 - **`granularity_report` — reflow2 can now see where its own build stopped following its

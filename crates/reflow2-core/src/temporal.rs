@@ -384,7 +384,7 @@ impl DesignGraph {
         epoch_type: EpochType,
         sequence: i64,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::DESIGN_EPOCH,
             id,
             Props::new()
@@ -1104,7 +1104,7 @@ impl DesignGraph {
         name: &str,
         change_type: ChangeType,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
+        self.upsert_node(
             node::CHANGE_EVENT,
             id,
             Props::new()

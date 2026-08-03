@@ -124,7 +124,7 @@ impl DesignGraph {
         observed_at: &str,
         source_fragment_id: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
-        let node = self.create_node(
+        let node = self.upsert_node(
             node::DIMENSION_OBSERVATION,
             id,
             Props::new()
