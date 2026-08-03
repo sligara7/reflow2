@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ab562739533aef1534a20bfb51b1504a3f685a2d7d54228fa0481477f68b9900",
+  "content_hash": "sha256:00dd45c8bd2e2fe7395b9b7bfaf7a8d05633081bdcef6a93cd08d25d2ee78e3e",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1951,6 +1951,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl181-service-split",
+      "properties": {},
+      "to_id": "epoch:service-split"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:bl48-bl49-tool-surface",
       "properties": {},
       "to_id": "epoch:v050-hardening"
@@ -3280,6 +3286,12 @@
       "from_id": "snap:epoch:rmcp-v3:dec:stateless-seat-handle",
       "properties": {},
       "to_id": "epoch:rmcp-v3"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:service-split:art:service",
+      "properties": {},
+      "to_id": "epoch:service-split"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5713,6 +5725,33 @@
         "action": "added"
       },
       "to_id": "req:restructuring-is-certified"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl181-service-split",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl181-service-split",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl181-service-split",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "CHANGED",
@@ -17361,6 +17400,12 @@
       "from_id": "art:main",
       "properties": {},
       "to_id": "snap:epoch:rmcp-v3:art:main"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:service",
+      "properties": {},
+      "to_id": "snap:epoch:service-split:art:service"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -32528,71 +32573,7 @@
       "properties": {
         "completeness": "complete"
       },
-      "to_id": "cap:bulk-forms"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:service",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:complementary-pairing"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:service",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:content-manifest"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:service",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:content-store"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:service",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:governance-mode"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:service",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:planned-epochs"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:service",
-      "properties": {
-        "completeness": "complete"
-      },
       "to_id": "cap:read-loop-hint"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:service",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:satisfaction-schedule"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:service",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:seat-handle"
     },
     {
       "edge_type": "REALIZES",
@@ -32833,6 +32814,142 @@
         "completeness": "complete"
       },
       "to_id": "ver:stale-seat"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-ask",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-ask",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-assure",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-built",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-built",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-capture",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:governance-mode"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-claims",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:seat-handle"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-claims",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:stale-seat-refusal"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-coherence",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-coherence",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-content",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:content-manifest"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-content",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-exchange",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:complementary-pairing"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-operate",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-query",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-temporal",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:planned-epochs"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-temporal",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:satisfaction-schedule"
     },
     {
       "edge_type": "REALIZES",
@@ -35356,6 +35473,94 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-ask",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-assure",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-built",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-capture",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-claims",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-coherence",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-content",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-content"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-exchange",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-operate",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-query",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-temporal",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:unreachable-decision-test",
       "properties": {
         "action": "created"
@@ -36496,7 +36701,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:298d1f67ad66afcbf2e2cab756e311d4c0d5d9fc36a4eef8fe4883febe3d5655",
+        "checksum": "sha256:956d4217067a9c0b27f2afe1aefec4d9b70b5cee3c265dee939b6a43259d9bc0",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -36518,7 +36723,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1aaccabea7180ed00913dbdadd3c92dcdf6f2e0e18f5fd8fea4294e1ac07e052",
+        "checksum": "sha256:cd966c8316e0e6d8ebd9b02dc9e45fb2413ce1025e7d820f5b5ddc043457fa7c",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
         "status": "realized"
@@ -36719,6 +36924,127 @@
         "checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d",
         "location": "crates/reflow2-core/tests/stale_seat.rs",
         "name": "stale_seat.rs + test_stale_seat.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:tools-ask",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639",
+        "location": "crates/reflow2-mcp/src/tools/ask.rs",
+        "name": "tools/ask.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:tools-assure",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:5ae914d2543623778d31d4e504a13bfa18ea1570460233d7b7d46d379802de72",
+        "location": "crates/reflow2-mcp/src/tools/assure.rs",
+        "name": "tools/assure.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:tools-built",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:08d96581934e6de1a780d08b3df8090faa1d5b56f87a391a9adacc96bee34690",
+        "location": "crates/reflow2-mcp/src/tools/built.rs",
+        "name": "tools/built.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:tools-capture",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b",
+        "location": "crates/reflow2-mcp/src/tools/capture.rs",
+        "name": "tools/capture.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:tools-claims",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:30f35727b9157119714ad5a060cabdef3d87d3a69d88987e8ade91fb6155d623",
+        "location": "crates/reflow2-mcp/src/tools/claims_tools.rs",
+        "name": "tools/claims_tools.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:tools-coherence",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:7dfa6e822e0c4c7fc8b7fed0fabc0b2d17d3567630d493320e681401d138d730",
+        "location": "crates/reflow2-mcp/src/tools/coherence.rs",
+        "name": "tools/coherence.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:tools-content",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:18d0d737affde3064dabb7c858fdefa64df918ee7088fe83f9b225229bb50a56",
+        "location": "crates/reflow2-mcp/src/tools/content_tools.rs",
+        "name": "tools/content_tools.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:tools-exchange",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f",
+        "location": "crates/reflow2-mcp/src/tools/exchange.rs",
+        "name": "tools/exchange.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:tools-operate",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5",
+        "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
+        "name": "tools/operate_tools.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:tools-query",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174",
+        "location": "crates/reflow2-mcp/src/tools/query.rs",
+        "name": "tools/query.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:tools-temporal",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:814d67ab62c1014e402611dc1f73028332d2af8ca95a159dbf70022086065b34",
+        "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
+        "name": "tools/temporal_tools.rs",
         "status": "realized"
       }
     },
@@ -39099,6 +39425,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Anthony chose the function-preservation check as the first step under the maturity-restructuring question — of the two offered (this, or fork-and-measure on the 14 cross-system seams)"
+      }
+    },
+    {
+      "node_id": "chg:bl181-service-split",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Snapshot before the split: art:service realized ten capabilities and the component, all from one 6,356-line file"
       }
     },
     {
@@ -43487,6 +43821,16 @@
       }
     },
     {
+      "node_id": "epoch:service-split",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The MCP tool surface is carved into the systems the design already named — the first maturity restructuring reflow2 has run on itself",
+        "sequence": 261,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:snapshot-per-revision",
       "node_type": "DesignEpoch",
       "properties": {
@@ -45225,6 +45569,116 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered stale_seat.rs + test_stale_seat.py"
+      }
+    },
+    {
+      "node_id": "frag:art:tools-ask",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/ask.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:tools-assure",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/assure.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:tools-built",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/built.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:tools-capture",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/capture.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:tools-claims",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/claims_tools.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:tools-coherence",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/coherence.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:tools-content",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/content_tools.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:tools-exchange",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/exchange.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:tools-operate",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/operate_tools.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:tools-query",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/query.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:tools-temporal",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/temporal_tools.rs"
       }
     },
     {
@@ -48321,6 +48775,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:service-split:art:service",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:f5adfb4ad655e5f8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:f5adfb4ad655e5f8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:d10660c4fce94f91\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:b4d9cfc07a00a23eb177af08456bf4cfa7a4225e68cb5a70427d24f26a239129\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:2d3f53e0adc81c65e712be4489e1b889a92c2a75bfdb99566df166c4aa9a2c36\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:ebef7c8a6a4789265fdaafdd1154cd0b22b33a25f73e4944a12e191d29c70384\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:ea68b64a0ace91de3882a84df2579b43831ac14d153bdee3b3d29dd37df30b50\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:b5c6a0fda0f4f7e83c8b522b61e477ca0bee926d906c09582f53e0e90a1ab54e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:8539f6864f883aad\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:e8efc39625da0407\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:3f3cea7e7df234b5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:e5434a1817ae559f0fcb14ca39ac37931d1c25a5b9394495624736de15ff92ae\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:f9826d4fac181a58978ecb09e37b439a4090bcbba3798fe18983e06f8a34e3c0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:06a920acb1904585\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:dd075fc2b016c95c\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:f691ee260346fbeb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:f691ee260346fbeb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:f691ee260346fbeb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:8cf6bd3694ffafe2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:7b4c8bada025ba92\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:bulk-forms\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:complementary-pairing\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:content-manifest\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:content-store\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:governance-mode\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:planned-epochs\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:read-loop-hint\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:satisfaction-schedule\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:seat-handle\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:stale-seat-refusal\",\"properties\":{\"completeness\":\"partial\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:298d1f67ad66afcbf2e2cab756e311d4c0d5d9fc36a4eef8fe4883febe3d5655\",\"location\":\"crates/reflow2-mcp/src/service.rs\",\"name\":\"service.rs\",\"status\":\"realized\"}",
+        "target_id": "art:service",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:snapshot-per-revision:req:snapshot-per-revision-not-per-epoch",
       "node_type": "Snapshot",
       "properties": {
@@ -49641,7 +50105,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:775b8499ea4944879eae95a50b7371359c4e3e8c5686bac0de8a55b1449edb29",
+  "prev_content_hash": "sha256:ab562739533aef1534a20bfb51b1504a3f685a2d7d54228fa0481477f68b9900",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
