@@ -53,6 +53,7 @@ pub mod hierarchy;
 pub mod identity;
 pub mod ingest;
 pub mod llm;
+pub mod maturity;
 pub mod merge;
 pub mod nodes;
 pub mod operate;
@@ -119,6 +120,7 @@ pub use ingest::{
 pub use llm::{
     LlmBackend, LlmError, LlmParams, LlmRequest, LlmResponse, MockLlmBackend, complete_json,
 };
+pub use maturity::{MaturityBand, MaturityProfile};
 pub use merge::{
     AutoResolution, ConflictKind, MergeAction, MergeApplyReport, MergeConflict, MergeError,
     MergeProposal, MergeSummary, MergeUnit, Resolution, Source, merge_designs, resolve_merge,

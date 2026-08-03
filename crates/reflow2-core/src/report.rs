@@ -308,6 +308,10 @@ pub struct GraphReport {
     pub verifications: Vec<VerificationRecency>,
     /// Allocation health, when components exist.
     pub allocation: Option<AllocationSummary>,
+    /// Where the design sits on the function-to-structure trajectory (BL-179).
+    /// A position, never a verdict — and deliberately carrying no statement of
+    /// where the design *should* be.
+    pub maturity: crate::maturity::MaturityProfile,
     /// Artifacts whose build granularity is out of line with the design's own
     /// (BL-182). An observation, never a defect: it says the build holds as one
     /// thing what the design holds as several, and rules on neither side.
@@ -851,6 +855,7 @@ impl DesignGraph {
         // in full here rather than capped — the reading caps itself, by only
         // ever naming distributional outliers.
         let granularity_reading = self.granularity_report()?;
+        let maturity = self.maturity_report()?;
 
         let mut surprising = self.surprising_connections()?;
         let surprising_truncated = surprising.len().saturating_sub(TOP_N);
@@ -877,6 +882,7 @@ impl DesignGraph {
             gaps_truncated,
             verifications: self.verification_recency()?,
             allocation,
+            maturity,
             granularity: granularity_reading.observations,
             granularity_median: granularity_reading.median_capabilities_per_artifact,
             surprising,
@@ -1047,6 +1053,48 @@ impl GraphReport {
                 component_clause,
                 v.artifacts_verified,
                 v.artifacts
+            );
+        }
+
+        // Where the design sits on the function-to-structure trajectory.
+        if let Some(frontier) = self.maturity.frontier {
+            let _ = writeln!(m, "## Trajectory — function first, structure later\n");
+            for b in &self.maturity.bands {
+                let mark = if b.name == frontier {
+                    "  ← frontier"
+                } else {
+                    ""
+                };
+                match b.ratio {
+                    Some(r) => {
+                        let _ = writeln!(
+                            m,
+                            "- **{}** {:.0}% ({}/{}){}",
+                            b.name,
+                            r * 100.0,
+                            b.present,
+                            b.population,
+                            mark
+                        );
+                    }
+                    None => {
+                        let _ = writeln!(m, "- **{}** — not measurable yet", b.name);
+                    }
+                }
+            }
+            if !self.maturity.ahead_of_frontier.is_empty() {
+                let _ = writeln!(
+                    m,
+                    "\n_{} band(s) run ahead of the frontier ({}). That is the normal shape of a \
+                     design that got function right first — not work done out of order._",
+                    self.maturity.ahead_of_frontier.len(),
+                    self.maturity.ahead_of_frontier.join(", ")
+                );
+            }
+            let _ = writeln!(
+                m,
+                "\n_Where this design SHOULD be is deliberately not stated: a demonstrator may sit \
+                 here forever and be right. `maturity_report` carries the full reading._\n"
             );
         }
 

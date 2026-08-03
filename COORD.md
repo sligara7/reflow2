@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- BL-179 maturity profile — @ajs — since 2026-08-03 — crates/reflow2-core/src/maturity.rs (new), report.rs, reflow2-mcp tool surface
+
 
 - BL-183 constructors must not erase — @ajs — since 2026-08-02 — crates/reflow2-core/src/*.rs (18 add_* helpers), revise-design skill + mirrors, reflow2-mcp tool descriptions
 

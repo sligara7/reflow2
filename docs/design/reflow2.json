@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:00dd45c8bd2e2fe7395b9b7bfaf7a8d05633081bdcef6a93cd08d25d2ee78e3e",
+  "content_hash": "sha256:55bd47e33411f5a4734c982bced34c29aa6be88b92afa4c1177f5bceff28306a",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -488,6 +488,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:maturity-profile",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -5689,6 +5697,51 @@
         "action": "modified"
       },
       "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl179-maturity-profile",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl179-maturity-profile",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl179-maturity-profile",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl179-maturity-profile",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:maturity-profile"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl179-maturity-profile",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:trajectory-position-is-computed"
     },
     {
       "edge_type": "CHANGED",
@@ -14832,6 +14885,18 @@
       "from_id": "cap:machine-wide-install",
       "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:maturity-profile",
+      "properties": {},
+      "to_id": "dec:maturity-restructuring-delta"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:maturity-profile",
+      "properties": {},
+      "to_id": "dec:readiness-is-an-observation-the-threshold-is-the-judgement"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -32233,6 +32298,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:maturity",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:maturity-profile"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:merge",
       "properties": {
         "completeness": "complete"
@@ -33514,6 +33587,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:maturity-profile",
+      "properties": {},
+      "to_id": "req:trajectory-position-is-computed"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:mcp-surface",
       "properties": {},
       "to_id": "req:agent-native"
@@ -34387,6 +34466,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:maturity",
+      "properties": {},
+      "to_id": "cap:maturity-profile"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:mcp-surface",
       "properties": {},
       "to_id": "cap:mcp-surface"
@@ -35094,6 +35179,14 @@
         "action": "created"
       },
       "to_id": "art:main"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:maturity",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:maturity"
     },
     {
       "edge_type": "YIELDED",
@@ -36311,6 +36404,17 @@
       }
     },
     {
+      "node_id": "art:maturity",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f743c9902452b2b7b15da4df3d62a92d9dca2bdbbd0efcff7e3625eb9b809e9a",
+        "location": "crates/reflow2-core/src/maturity.rs",
+        "name": "maturity.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:merge",
       "node_type": "Artifact",
       "properties": {
@@ -36470,7 +36574,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6cb1df223df40abbec793742166c6b6602805aacf2d8a98485b41679c711303c",
+        "checksum": "sha256:f908416fd368f84adfee2fc8567f8904c01d6a2c18a6ee59ef0d07557aa3aeeb",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
         "status": "realized"
@@ -36701,7 +36805,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:956d4217067a9c0b27f2afe1aefec4d9b70b5cee3c265dee939b6a43259d9bc0",
+        "checksum": "sha256:ebe342afbf97ba124fdc381e91c874b0d5011c82418e4cbb94f1bc6d017e206e",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized"
@@ -36987,7 +37091,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7dfa6e822e0c4c7fc8b7fed0fabc0b2d17d3567630d493320e681401d138d730",
+        "checksum": "sha256:4ec573135aa33c5ec41a25b939ffa4fe55c59bbf2a583fe6c50eeeab7c185f0d",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
         "status": "realized"
@@ -37920,6 +38024,19 @@
         "name": "Install reflow2 once for every project on a machine",
         "provenance": "authored",
         "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:maturity-profile",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Measure seven bands — intent, function, allocation, seams, realization, assurance, operation — each as a count over a population carrying the question it answers, and name the lowest-scoring measurable band as the frontier. The frontier is relative, so the reading contains no threshold to default: it says where a design IS and refuses to say where it SHOULD be. Bands scoring above the frontier are reported as normal rather than as work out of order, because designs get function right first and structure later. A band with an empty population reads as unmeasured, never as zero, and no stage name is emitted since a label no computation reads would not earn its keep.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Locate a design on the function-to-structure trajectory",
+        "provenance": "authored",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -39417,6 +39534,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The served instructions gain the false-green counterweight, and the file carrying them becomes an Artifact the design can see (BL-174)"
+      }
+    },
+    {
+      "node_id": "chg:bl179-maturity-profile",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "reflow2 can say where a design sits on the function-to-structure trajectory — bands and a relative frontier, with no threshold and no stage label, on Anthony's call that a name no computation reads would not earn its keep"
       }
     },
     {
@@ -45102,6 +45227,16 @@
       }
     },
     {
+      "node_id": "frag:art:maturity",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered maturity.rs"
+      }
+    },
+    {
       "node_id": "frag:art:merge-driver-test",
       "node_type": "Fragment",
       "properties": {
@@ -48181,6 +48316,21 @@
       }
     },
     {
+      "node_id": "req:trajectory-position-is-computed",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A design can be located on the function-to-structure trajectory",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 shall compute where a design sits on the trajectory from function to structure, reporting each band of that trajectory as a count over a population and naming the lowest as the frontier — and shall never state where the design ought to be, because a demonstrator may correctly sit at function-first indefinitely while a fielded increment may not.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:trust-boundary-at-ingress",
       "node_type": "Requirement",
       "properties": {
@@ -49561,6 +49711,18 @@
       }
     },
     {
+      "node_id": "ver:maturity",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-03",
+        "level": "unit",
+        "method": "test",
+        "name": "A position never becomes a verdict (crates/reflow2-core/tests/maturity.rs) — 10 cases, most of them restraint. THE LOAD-BEARING CASE IS `a_function_first_design_is_located_not_condemned`: function done, structure undeclared, and the profile must locate the design without calling it broken — it asserts the serialized profile contains none of severity / defect / violation / \"should be\" / \"too low\" / failing, and that `not_observed_about` says outright that where the design SHOULD be is not reflow2's to state. THE FRONTIER IS RELATIVE — the lowest-scoring band — so there is NO THRESHOLD anywhere in this reading to default, argue with or quietly tune, which is stronger than the stated cutoffs `granularity` needed. An empty population reads as UNMEASURED with its reason, never as zero, because scoring an absence invents a deficiency; an empty design reports as empty rather than immature. Bands scoring ABOVE the frontier are reported as NORMAL, since real designs run ahead of themselves — reflow2 itself has shipped 22 releases and 84.5% passing assurance with 0% of its 73 component couplings declared through a contract. A one-sided contract does not count as a declared seam. Assurance counts a PASSING check, not an existing one (dec:passing-is-verified). Requirements the user settled OUT leave the intent population, because dropping something is their word too. MUTATION-CHECKED against five seeded regressions — frontier as the highest band, empty populations scored zero, one-sided contracts counting, assurance ignoring status, and dropped requirements still counted — all five caught. The first attempt at the one-sided mutation was a no-op and was rewritten the way the bug would actually be written before it counted as evidence.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:mcp-surface",
       "node_type": "Verification",
       "properties": {
@@ -50105,7 +50267,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ab562739533aef1534a20bfb51b1504a3f685a2d7d54228fa0481477f68b9900",
+  "prev_content_hash": "sha256:00dd45c8bd2e2fe7395b9b7bfaf7a8d05633081bdcef6a93cd08d25d2ee78e3e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
