@@ -33,6 +33,31 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **`ility_report` — what the graph can actually say about the quality axes** (BL-184).
+  `DimensionAssessment.score` is only ever *asserted*, and the one computation over the
+  `dimension` enum fits a slope to those assertions — so reflow2 computed the trend of an opinion
+  and never the ility. Meanwhile modularity, articulation points, dependency cycles, misplaced
+  capabilities, decomposition mismatches, surprising couplings, build granularity and the
+  trajectory bands were all being computed and connected to **no axis at all**. In reflow2's own
+  design the enum has **never been written to at all** — nine distinctions, zero instances.
+
+  This connects them and **computes nothing new**. It **never derives a score** and never writes
+  to the graph: collapsing three cycles into `maintainability: 0.62` asserts a precision nobody
+  has, which is why TRL was kept out of that same float.
+
+  **Adverse is inherited, never re-judged** — a finding counts against an axis only where the
+  computation that produced it already calls it a defect. A ratio, a trajectory position and a
+  granularity observation are reported as *context*, because relabelling them would overrule
+  modules that deliberately refused to grade.
+
+  **The answer is not blanket:** `performance`, `security`, `scalability` and `observability`
+  report *not informed*, with the reason, rather than reading clean. The output worth reading is
+  `worth_weighing` — targets carrying an asserted good score on an axis whose detectors found
+  something against them. A disagreement between two records; reflow2 rules on neither.
+
+  No schema change; the stamp does not move.
+
+
 - **`maturity_report` — where a design sits on the trajectory from function to structure**
   (BL-179). Designs normally get function right first and structure right later, iteratively and
   organically, so a well-developed function layer with no declared seams is a **normal position,

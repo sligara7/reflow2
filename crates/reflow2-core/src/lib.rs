@@ -51,6 +51,7 @@ pub mod graph;
 pub mod heal;
 pub mod hierarchy;
 pub mod identity;
+pub mod ility;
 pub mod ingest;
 pub mod llm;
 pub mod maturity;
@@ -113,6 +114,7 @@ pub use heal::{
     HealProposal, HealReport, HealSeverity, HealStrategy, ReviewedDefect, SkippedOperation,
 };
 pub use hierarchy::{HierarchyIssue, HierarchyIssueKind, Level};
+pub use ility::{AssertedScore, IlityEvidence, IlityReport, IlitySignal};
 pub use ingest::{
     DroppedEdge, FuzzyMerge, IngestOptions, IngestReport, IngestStatus, IngestStep, MatchKind,
     MergeCandidate, PassError,

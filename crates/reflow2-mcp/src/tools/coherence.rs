@@ -441,6 +441,36 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "What can this design's graph actually SAY about the quality axes — the \
+                       'ilities'? `DimensionAssessment.score` is only ever ASSERTED by a person \
+                       or an LLM, while reflow2 separately computes modularity, articulation \
+                       points, dependency cycles, misplaced capabilities, decomposition \
+                       mismatches, build granularity and the trajectory bands — and connects \
+                       none of it to the axis it informs. This connects them. IT NEVER DERIVES A \
+                       SCORE and never writes to the graph: collapsing three cycles into \
+                       `maintainability: 0.62` asserts a precision nobody has, which is exactly \
+                       why TRL was kept out of that same float. ADVERSE IS INHERITED, NEVER \
+                       RE-JUDGED — a finding counts against an axis only where the computation \
+                       that produced it already calls it a defect; a ratio, a trajectory position \
+                       and a granularity observation are reported as CONTEXT, because the modules \
+                       that produce them deliberately refuse to grade. THE ANSWER IS NOT BLANKET: \
+                       four of the nine axes — performance, security, scalability, observability \
+                       — cannot be informed by a design graph at all and say so with the reason, \
+                       rather than reading clean. The output worth reading is `worth_weighing`: \
+                       targets where somebody asserted a good score on an axis a detector found \
+                       something against. That is a disagreement between two records, and reflow2 \
+                       rules on neither.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn ility_report(
+        &self,
+        Parameters(_req): Parameters<IlityReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.ility_report().map_err(dyno_err)?)
+    }
+
+    #[tool(
         description = "Where does this design sit on the trajectory from FUNCTION to STRUCTURE? \
                        Designs normally get function right first and structure right later, \
                        iteratively and organically — so a well-developed function layer with no \
