@@ -31,6 +31,29 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`maturity_report` — where a design sits on the trajectory from function to structure**
+  (BL-179). Designs normally get function right first and structure right later, iteratively and
+  organically, so a well-developed function layer with no declared seams is a **normal position,
+  not debt**. Seven bands — intent, function, allocation, seams, realization, assurance,
+  operation — each a count over a population carrying the question it answers, with the
+  lowest-scoring measurable band named as the **frontier**.
+
+  **The frontier is relative, so the reading contains no threshold at all** — nothing to default,
+  argue with, or quietly tune. reflow2 states where a design *is* and refuses to state where it
+  *should* be, the same rule that stops it defaulting a TRL gate: a demonstrator may sit at
+  function-first forever and be right; a fielded increment may not.
+
+  Bands scoring **above** the frontier are reported as normal rather than as work done out of
+  order, because real designs run ahead of themselves. A band with nothing to measure reads as
+  *unmeasured*, never as zero. **No stage name is emitted** — breadboard/EVT/production is how
+  people talk about the profile, and a label no computation reads would not earn its keep
+  (`dec:edge-orthogonality`).
+
+  **No schema change; the stamp does not move.** Nothing new is declared — this computes over
+  edges already in the graph. Surfaced in `graph_report_markdown` as well as on demand.
+
 ### Changed
 
 - **The MCP tool surface is carved into the systems the design already named** (BL-181).

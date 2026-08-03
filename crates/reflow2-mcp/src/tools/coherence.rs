@@ -441,6 +441,33 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Where does this design sit on the trajectory from FUNCTION to STRUCTURE? \
+                       Designs normally get function right first and structure right later, \
+                       iteratively and organically — so a well-developed function layer with no \
+                       declared seams is a NORMAL POSITION, not debt. Reports seven bands \
+                       (intent, function, allocation, seams, realization, assurance, operation), \
+                       each as a count over a population with the question it answers, and names \
+                       the lowest-scoring one as the FRONTIER. THE FRONTIER IS RELATIVE, so there \
+                       is no threshold anywhere in this reading: reflow2 states where a design \
+                       IS and REFUSES to say where it SHOULD be, because a demonstrator may sit \
+                       at function-first forever and be right while a fielded increment may not \
+                       — the same rule that keeps it from defaulting a TRL gate. Bands scoring \
+                       ABOVE the frontier are reported as normal rather than as work done out of \
+                       order, because real designs run ahead of themselves. A band with nothing \
+                       to measure reads as unmeasured, never as zero. No stage name is emitted: \
+                       a label no computation reads would be a distinction that does not earn \
+                       its keep. Pure arithmetic over edges already in the graph — no file I/O.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn maturity_report(
+        &self,
+        Parameters(_req): Parameters<MaturityReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.maturity_report().map_err(dyno_err)?)
+    }
+
+    #[tool(
         description = "Does the BUILD separate what the DESIGN separates? Reports one fact and \
                        refuses a verdict: an artifact realizing N capabilities the design \
                        distinguishes is the build holding as one thing what the design holds as \
