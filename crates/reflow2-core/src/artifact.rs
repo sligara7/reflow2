@@ -673,35 +673,35 @@ impl DesignGraph {
         // Reject with the legal values named. An enum rejection that does not
         // list what IS allowed costs a round-trip to `describe_schema` and is
         // the single cheapest fix on the friction list (BL-192).
-        if let Some(g) = granularity {
-            if !GRANULARITIES.contains(&g) {
-                return Err(DynoError::Validation {
-                    node_type: node::ARTIFACT.into(),
-                    property: "granularity".into(),
-                    message: format!(
-                        "'{g}' is not an Artifact granularity (one of {}). `atomic` is one \
-                         deliverable; `opaque` claims a subtree ON PURPOSE (a settled archive, \
-                         a vendored tree); `pending_expansion` is a placeholder for items that \
-                         should each become their own node.",
-                        GRANULARITIES.join(", ")
-                    ),
-                });
-            }
+        if let Some(g) = granularity
+            && !GRANULARITIES.contains(&g)
+        {
+            return Err(DynoError::Validation {
+                node_type: node::ARTIFACT.into(),
+                property: "granularity".into(),
+                message: format!(
+                    "'{g}' is not an Artifact granularity (one of {}). `atomic` is one \
+                     deliverable; `opaque` claims a subtree ON PURPOSE (a settled archive, \
+                     a vendored tree); `pending_expansion` is a placeholder for items that \
+                     should each become their own node.",
+                    GRANULARITIES.join(", ")
+                ),
+            });
         }
-        if let Some(v) = volatility {
-            if !VOLATILITIES.contains(&v) {
-                return Err(DynoError::Validation {
-                    node_type: node::ARTIFACT.into(),
-                    property: "volatility".into(),
-                    message: format!(
-                        "'{v}' is not an Artifact volatility (one of {}). `stable` means any \
-                         content change is drift; `append_only` and `living` mean a content \
-                         change is expected and is reported as `expected_change` rather than \
-                         recorded — absence still fires either way.",
-                        VOLATILITIES.join(", ")
-                    ),
-                });
-            }
+        if let Some(v) = volatility
+            && !VOLATILITIES.contains(&v)
+        {
+            return Err(DynoError::Validation {
+                node_type: node::ARTIFACT.into(),
+                property: "volatility".into(),
+                message: format!(
+                    "'{v}' is not an Artifact volatility (one of {}). `stable` means any \
+                     content change is drift; `append_only` and `living` mean a content \
+                     change is expected and is reported as `expected_change` rather than \
+                     recorded — absence still fires either way.",
+                    VOLATILITIES.join(", ")
+                ),
+            });
         }
 
         let Some(existing) = self.get_node(node::ARTIFACT, artifact_id)? else {
