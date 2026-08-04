@@ -228,6 +228,20 @@ outside:
 Self-host confirms and generates load. **External subjects are the only source of genuine surprise**,
 so the regimen degenerates without them. Two constraints follow:
 
+> **Amendment, 2026-08-04 — one class of self-host generator does surprise, and it is worth naming
+> because it is cheap.** The claim above is right about *asking reflow2 about itself*: a tool that
+> goes quiet cannot surprise you. It is not right about **diffing two artifacts this project
+> maintains separately and expects to agree** — `schema/*.yaml`, `docs/design/reflow2.json`, and the
+> request structs under `crates/reflow2-mcp/src/`. None of those three consults the instrument under
+> test, so none can be answered by silence. Run against each other they produced [BL-198] through
+> [BL-203] in one sitting, and [BL-199] is the reason to trust the method: it found that **this
+> repo's own graph attaches 32 of its 35 document artifacts with `REALIZES`, contradicting the
+> link-artifacts skill reflow2 serves — which is exactly why [BL-176] was invisible to self-host
+> for eleven releases.** The generalised generator: **diff the practice the skills PRESCRIBE against
+> the practice this repo's graph FOLLOWS.** Self-host is blind wherever the two differ, because both
+> sides of every instrument's comparison were built by the same hand. Full working:
+> [built-right-review.md](built-right-review.md).
+
 - Keep at least one **non-reflow2 subject** in rotation, and prefer one nobody here wrote.
 - Watch for the tell that self-host has gone stale: **the instruments all pass while real users still
   hit friction.** That means the probes have converged on what the tool already does.
