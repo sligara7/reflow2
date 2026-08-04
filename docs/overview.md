@@ -76,6 +76,12 @@ Three records, three questions — kept separate on purpose:
   evolving reflow2: what using it on itself can and cannot tell you, the failure mode that would
   quietly invalidate the evidence base, and the four instruments that measure whether the loop works,
   with their baselines. **Read this before picking up a backlog item.**
+- **[built-right-review.md](built-right-review.md) — *"did we build this right?", answered by census.***
+  A 2026-08-04 run of the schema against the graph against the tool surface — three artifacts this
+  project maintains separately and expects to agree. Finds that 31% of the node vocabulary and 58% of
+  the edge vocabulary has never been instantiated, that 28 properties carry a single value, that
+  `provenance` is `authored` on 402 of 402 nodes, and **why [BL-176] was invisible to self-host.**
+  Sources [BL-198]–[BL-203].
 - [loop-dag.html](loop-dag.html) — the coherence loop drawn as a DAG: the six phases, the backward
   feedback edges, and what reflow2 can do about each. Generated with [loop-model.json](loop-model.json)
   by `tools/model_the_loop.py`.

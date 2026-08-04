@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:968b364344b9f003b38760898d9a6923e55f0e140641b0a21ea26d430dc7fb6f",
+  "content_hash": "sha256:4e0ab720bd570192630b99bfec32a2e57297d7143d300e24e7f21f3d4c34d587",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -3931,6 +3931,22 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-retrospective-asks-or-computes",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-retrospective-review-skill",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -43708,6 +43724,26 @@
       }
     },
     {
+      "node_id": "dec:idea-retrospective-asks-or-computes",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Raised 2026-08-04 alongside dec:idea-retrospective-review-skill, of which this is the shape question rather than the whether question. THE FORK. OPTION A — A QUESTION LIST. The skill carries Anthony's sixteen questions as prose and the agent answers them by reading the design and the code. Cheap to build, works on day one, works on any project regardless of what the graph holds, and is what a human reviewer actually does. The objection is precise and comes from reflow2's own record: BL-179 settled that reflow2 does not encode a good practice as a detector, because Anthony objected that \"avoid monoliths\" is \"kind of a subjective ask\" — and the resolution was that reflow2 reports where two records the design ALREADY HOLDS disagree and rules on neither side. Sixteen prose questions answered by an agent is subjective grading with a checklist in front of it, and the answers would vary by model, by session, and by how much of the codebase happened to fit in context. OPTION B — EVERY QUESTION BACKED BY A COMPUTATION. Each question maps to a reading that already exists or is buildable over records the graph holds, and any question with no such reading reports NOT INFORMED with the reason instead of inviting an opinion. This is exactly ility_report's discipline (BL-184) turned into a skill, and the mapping is largely already there: \"too joined together\" is modularity, misplaced capabilities and god-components; \"did the build separate what the design distinguishes\" is granularity_report; \"what did we leave until last\" is maturity_report's frontier; \"what happens if a key part breaks\" is articulation points and single points of failure; \"can others read and change this\" is partly coverage_report and the unregistered regions. The cost is that Anthony's speed-and-efficiency group and most of his security group have NO computation behind them today and would honestly report NOT INFORMED — which looks like a weaker skill and is a more honest one. OPTION C — THE CENSUS SHAPE, which is what actually produced BL-198..BL-203 and is neither A nor B. It asks nothing and grades nothing: it diffs artifacts the project maintains SEPARATELY and expects to agree — the schema against the graph against the tool surface, and the practice the skills PRESCRIBE against the practice the graph FOLLOWS. It surfaces disagreements and leaves every verdict to the human, which is precisely the BL-179 resolution generalised beyond detectors. Its limit is equally precise: it can only find a disagreement between two records that BOTH EXIST, so it is blind to anything nobody wrote down, and it says nothing about Anthony's speed, security or bad-input groups at all. AN HONEST OBSERVATION ABOUT THE THREE: they are not exclusive, and the census is the only one of them with evidence behind it today — six rows in one sitting, one of which (BL-199) explained a hard blocker that eleven releases of green instruments had missed. A plausible synthesis is C as the engine, B as the reporting discipline, and A kept only as the part a human is asked, never the part an agent answers. Nobody has chosen. NOT ASKED HERE, AND IT MAY MATTER MORE THAN THE FORK: whether a retrospective is worth anything when run by the same agent that built the thing. The census was, and its blind spot was real — BL-199 was found by a mechanical three-way diff, not by the agent noticing it had done something wrong.",
+        "name": "OPEN — should a retrospective review ASK its questions or COMPUTE them, and is it ever allowed to grade?",
+        "rationale": "Kept separate from dec:idea-retrospective-review-skill because one node holding two unrelated questions can never be answered, only half-answered. That node asks whether the skill should exist; this one asks what it would have to be to survive reflow2's own rule against subjective grading. Not registered as formal alternatives: registering them would make this a fork with a design behind each branch and start the loop asking Anthony to choose, which is exactly what a brainstorm should not do.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-retrospective-review-skill",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-04, after the \"did we build this right?\" census (docs/built-right-review.md, sourcing BL-198..BL-203): \"this exercise of retrospective design choices I think should be a skill within reflow2. This exercise of the agent being able to see the design in the current state and say, 'you know what, we could have done this better' is a good thing... I'm not sure, but being retrospective in analyzing what you've done is probably a good thing.\" THE IDEA: a served skill that reads a design in its CURRENT state and reports where it would have been built differently — the counterpart to check-health (which asks how the design is SHAPED) and detect-and-ask (which asks what the design MEANS). HIS CANDIDATE QUESTION LIST, in his own words, four groups: STRUCTURE AND SETUP — did I use the right layout or pattern; is the setup easy to understand; can other people read and change this easily; did I keep things too joined together, or are they separate. SPEED AND EFFICIENCY — does this use too much time, space or power; where is the main slowdown or bottleneck; can I do tasks at the same time to speed things up; did I save data or results I do not need to keep. WEAK POINTS AND RISKS — what happens if a key part breaks right now; did I handle bad inputs or errors safely; where is the system likely to slow down or crash under heavy use; is private data or system access safe from outside threats. FUTURE CHANGES — how hard is it to add new features later; will this break if the size or user count grows ten times bigger; did I leave clear notes or guides for the next person. WHAT ARGUES FOR IT: the census that prompted this produced six backlog rows in one sitting, including BL-199, which explained why BL-176 had been invisible to self-host for eleven releases — so the exercise demonstrably finds things no existing instrument found. Several of his groups already have computations that exist and are not gathered anywhere: modularity and misplaced capabilities and god-components answer \"too joined together\"; granularity_report answers \"did the build separate what the design distinguishes\"; maturity_report's frontier answers \"what did we leave until last\"; ility_report already maps findings onto quality axes and reports NOT INFORMED where nothing computes. WHAT ARGUES AGAINST IT, recorded beside the idea rather than used to kill it: reflow2 has one hard-won rule against exactly this shape — BL-179, where Anthony himself objected that \"avoid monoliths\" is \"kind of a subjective ask\", and the resolution was that reflow2 does not detect monoliths, it detects that two records the design ALREADY HOLDS disagree, and RULES ON NEITHER SIDE. A skill that asks sixteen questions in prose and lets an agent answer them would reintroduce precisely the subjective grading that ruling removed. The strongest form of the idea is therefore the one where every question is backed by a computation over records the design already holds, and any question with no such computation says NOT INFORMED rather than inviting an opinion — which is ility_report's discipline applied to a skill. That is a separate open question and is recorded as dec:idea-retrospective-asks-or-computes. ALSO OPEN, NOT ASKED HERE: whether the reviewer should be the same agent that built the thing (the census was, and its blind spot was real — it took a mechanical three-way diff, not judgement, to find BL-199).",
+        "name": "OPEN — should reflow2 serve a retrospective design-review skill?",
+        "rationale": "Recorded so the idea is not lost while it is still an idea. Nothing here is intent: no Requirement, no Capability, and no claim that reflow2 will build this. The counter-argument is recorded beside the idea rather than used against it, per the brainstorm skill — an idea killed in conversation loses its reasoning.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-severability-cut",
       "node_type": "Decision",
       "properties": {
@@ -52068,7 +52104,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:324710f6a8c9054c372ab68c16565d2e68f2d4acbdbea34f12ed9d17cfdf4fde",
+  "prev_content_hash": "sha256:968b364344b9f003b38760898d9a6923e55f0e140641b0a21ea26d430dc7fb6f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
