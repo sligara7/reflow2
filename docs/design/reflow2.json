@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:324710f6a8c9054c372ab68c16565d2e68f2d4acbdbea34f12ed9d17cfdf4fde",
+  "content_hash": "sha256:968b364344b9f003b38760898d9a6923e55f0e140641b0a21ea26d430dc7fb6f",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1703,6 +1703,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-020a057ec12710f0",
+      "properties": {},
+      "to_id": "epoch:v0230"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-0c440cc2eb44f74c",
       "properties": {},
       "to_id": "epoch:v0210"
@@ -1712,6 +1718,12 @@
       "from_id": "chg:accept-299470f8b4fae678",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-3697d785d60e5b5c",
+      "properties": {},
+      "to_id": "epoch:v0230"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1772,6 +1784,12 @@
       "from_id": "chg:accept-7bd49cad8e8337ba",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-7de2a2e421724346",
+      "properties": {},
+      "to_id": "epoch:v0230"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1967,9 +1985,45 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl179-maturity-profile",
+      "properties": {},
+      "to_id": "epoch:v0230"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl180-function-preservation",
+      "properties": {},
+      "to_id": "epoch:v0230"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:bl181-service-split",
       "properties": {},
       "to_id": "epoch:service-split"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl181-service-split",
+      "properties": {},
+      "to_id": "epoch:v0230"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl182-granularity",
+      "properties": {},
+      "to_id": "epoch:v0230"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {},
+      "to_id": "epoch:v0230"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl184-ility-signals",
+      "properties": {},
+      "to_id": "epoch:v0230"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2054,6 +2108,12 @@
       "from_id": "chg:certification-requirement-widened",
       "properties": {},
       "to_id": "epoch:requirements-confirmed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:certification-requirement-widened",
+      "properties": {},
+      "to_id": "epoch:v0230"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2144,6 +2204,12 @@
       "from_id": "chg:decomposition-count-corrected",
       "properties": {},
       "to_id": "epoch:decomposition-count-corrected"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:decomposition-count-corrected",
+      "properties": {},
+      "to_id": "epoch:v0230"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2948,6 +3014,12 @@
       "from_id": "rel:v0221",
       "properties": {},
       "to_id": "epoch:v0221"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "epoch:v0230"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4607,6 +4679,15 @@
         "action": "modified"
       },
       "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-3697d785d60e5b5c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
     },
     {
       "edge_type": "CHANGED",
@@ -12824,6 +12905,14 @@
     {
       "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v0221",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0230",
       "properties": {
         "status": "active"
       },
@@ -29607,6 +29696,1442 @@
     },
     {
       "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:8f8a543ba59ec079"
+      },
+      "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:14b6b93d62aa5ff7"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:c33a33c15e2611b3"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:c87a79726aeb111b"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:3850cb634766556b6630d709d927ae335828cc10a34604bff9c02777a92ba863"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:49f1f3095ea2707d"
+      },
+      "to_id": "art:bl124-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:fabb8097364ca9e2"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:6aeb7aaf31ccdd875990bce6735c75eeead49c7371c4bc39064d4e7f478733e8"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:6e8e23fce35b21d6"
+      },
+      "to_id": "art:bulk"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:c2bea913c620128c1e602aed078713c7598f92e7cada4024c67777584b23b8be"
+      },
+      "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:e13223ac72649aa498bcc78fbf4824f6b5a3a346fc78c3516bd79075eae5cd1a"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:a84c2afa299b6793cb78ae9aad6fda8cf659780728e38da0906ffa629dd41919"
+      },
+      "to_id": "art:checksum-dialect-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:5b6cb19cd4efedd8a4940a54412d033f73a904b376953f4f0f58d3ffee989d57"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:b73161a0fd04efee"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558"
+      },
+      "to_id": "art:compose"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39"
+      },
+      "to_id": "art:compose-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:c7b979d360e1e062"
+      },
+      "to_id": "art:content"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:4f23c464539aed28"
+      },
+      "to_id": "art:content-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed"
+      },
+      "to_id": "art:contradiction-alignment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:9eba28b2278c1a71"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:c30ee52bd7c3ec95"
+      },
+      "to_id": "art:coverage-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:adfea07b2891743b"
+      },
+      "to_id": "art:cycles-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde"
+      },
+      "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:7d0835791c240df51164b7b4cddd7c4ccaa6bb09ed14e7f843c53f39fefb639f"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:3bf2ed7ba5a6bccd928828657c0cc7e6b051e6b96c569f5f73528e6baf184d03"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:4b1842af22cfbae2c7b112540fe0e98cc857d8369104e9112f66f1d7c650ad31"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:6d274cf0f687fd7b3031761e30c174abfd473599c0fd64299fdb88cb71517c0f"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:f8b0a6288f20e82f78d0b6267e9698094228b2a255b0305f861fa53e56c45198"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:74c0459e03ad38ce"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:8956d2d0d4f31fe1"
+      },
+      "to_id": "art:evidence-quality-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:0f66b31cfaca4944"
+      },
+      "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896"
+      },
+      "to_id": "art:evidence-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:cbba2d0c482d766c6dae2ca016e0b9fd2f760a9987febfa7e9b477a2414df079"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:cfdf82f1a6497595"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2"
+      },
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:34701500af93dbcf"
+      },
+      "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15"
+      },
+      "to_id": "art:granularity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:0c572c75d71045854e65d16ca6827271d9319bc13f35e470976c425fda05033c"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:30fc1a09862792a9"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:d4e51659a479603aa29befad2e00fa504d6b185bc35ee25961073a79bf04e4b8"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3"
+      },
+      "to_id": "art:ility"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:72c167ebef5a7f98"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a"
+      },
+      "to_id": "art:ingest-handshake-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:49199cc1c858f4cf5b48e370f4b5203bd7989d341951399a28eebde91725c06e"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:07c82cd7671c1241"
+      },
+      "to_id": "art:interface-spec-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:13f19b14c25c9300"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:feebbdb1438ff2c52e51cb0fbb004476378ffa97d3c9aa72890b7aa92f4b81b5"
+      },
+      "to_id": "art:kit-pointer"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:65a01535f32f023e"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:15b7f82fc8a05031a7c77c92d6a5624442c047df47104973f8dc9091362045be"
+      },
+      "to_id": "art:latent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:b41bc1c569e39c7ab7d8d72d667fe56870b53eb720be82e6e4b6d7b870023c82"
+      },
+      "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:9eee13f94445919641af92008ffa67b7a474c21ddfe08edacde256e176f90ff5"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:f743c9902452b2b7b15da4df3d62a92d9dca2bdbbd0efcff7e3625eb9b809e9a"
+      },
+      "to_id": "art:maturity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:075bab31f3c131b6"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:cddbea4165e0e3b0"
+      },
+      "to_id": "art:merge-driver-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:774ad95db84666b3"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:9cbea33b6a561a9e"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14"
+      },
+      "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4"
+      },
+      "to_id": "art:preserve"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:26dde99a1df42e6f"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420"
+      },
+      "to_id": "art:publishable-promise-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5"
+      },
+      "to_id": "art:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:da4302eb091e89ce69d2c97b66e947472fba881f7718e86f5a2f5824e057ff22"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:99fc5da421a04f5e"
+      },
+      "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:f908416fd368f84adfee2fc8567f8904c01d6a2c18a6ee59ef0d07557aa3aeeb"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:dc88dfbc4e1aacbc"
+      },
+      "to_id": "art:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:56201fe977dc874f"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:d20010a455509deb8bb9b4ea9e72cf8bd0b343353ca3c6b92a42c9424457b3f2"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:81403d844b84c265da25581c0e3794dbaabae825eebfca0de0917b7f2cfe5322"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9"
+      },
+      "to_id": "art:schema-dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc"
+      },
+      "to_id": "art:schema-environment"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:831166aee7d4de9bd90e5826d4b6ef474dd8be49f2cc14609f32d12039893222"
+      },
+      "to_id": "art:schema-functional"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:52a5e92ffed17c501f9d849dcadbb5f4614d35b79c731a90860d4e7d7056b02d"
+      },
+      "to_id": "art:schema-inference"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:543955d24d224ff0c0aff6f28928fa728248dc7694662b22cab0e8d1f1cc5168"
+      },
+      "to_id": "art:schema-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a"
+      },
+      "to_id": "art:schema-readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:8e528069f11575d45725f0fd260a992ba153cfd99de84cfabca797f9b60bccc0"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:47fa2c2aa8b402bb"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:c1246d07a570d11ca8a76c3b7141fce085dfe1f760af41b671bbdf419cd3ef08"
+      },
+      "to_id": "art:scope-corpus-ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea"
+      },
+      "to_id": "art:scope-read-while-held"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:45aaec579dc701380a04d4f12b59a6b14ba5aeb619e823c021b0b21ed08e5caa"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d"
+      },
+      "to_id": "art:seam-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:c421c3496192d22d"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:677aa0cf869c05f351b9f9396d94e5db6823cff06cdf2dab69d0f7dcc020e50f"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:f6e66fec577e59d755de63c38fc02c7227eb28a64a7e33dc6cd4ab60a2c6b293"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:cd966c8316e0e6d8ebd9b02dc9e45fb2413ce1025e7d820f5b5ddc043457fa7c"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda"
+      },
+      "to_id": "art:skill-lint-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:d437174ef98701bd2fcfdd2f4fa97daafeac687c899df764f036536ccf3a29a4"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797"
+      },
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:c09cc6f310635d1b2fb9a888f38c323fbd2ae2fb9e816586a32f2c00c87a46fb"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783"
+      },
+      "to_id": "art:stateless-seat-probe"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83"
+      },
+      "to_id": "art:storyflow-resolution-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:76f2dec276b09685"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:b3b2bac1387c9c53"
+      },
+      "to_id": "art:surface-usage-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:e792e6bab2ad48527428df1c015f6ebe20fec9d79da22657f7ed088f8d605c56"
+      },
+      "to_id": "art:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:829e4905cc5f40a8b24e6027b5522780c90e8c133742299549e80880b2f6abef"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af"
+      },
+      "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:5d3f5c3b7ee5b14757e11779e086d82853401f3e8ceac245cd1dabc86f25a31a"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:27f84b4a505d648f2b2b86033ed818a01f6adf50e59ab8a25e76d293daa57162"
+      },
+      "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f"
+      },
+      "to_id": "art:test-shared-sessions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d"
+      },
+      "to_id": "art:test-stale-seat"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:5ae914d2543623778d31d4e504a13bfa18ea1570460233d7b7d46d379802de72"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:08d96581934e6de1a780d08b3df8090faa1d5b56f87a391a9adacc96bee34690"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:30f35727b9157119714ad5a060cabdef3d87d3a69d88987e8ade91fb6155d623"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:4d072ab236f25b15b9910259105694baaca81f6cb190d3b76b2cb691c5c1894b"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:18d0d737affde3064dabb7c858fdefa64df918ee7088fe83f9b225229bb50a56"
+      },
+      "to_id": "art:tools-content"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:814d67ab62c1014e402611dc1f73028332d2af8ca95a159dbf70022086065b34"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f"
+      },
+      "to_id": "art:unreachable-decision-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:ef7dbb708e027df2"
+      },
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34"
+      },
+      "to_id": "art:upgrading-v0120"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995"
+      },
+      "to_id": "art:upgrading-v0130"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28"
+      },
+      "to_id": "art:upgrading-v0150"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24"
+      },
+      "to_id": "art:upgrading-v0160"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda"
+      },
+      "to_id": "art:upgrading-v0180"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:3a36b9b6b248af09"
+      },
+      "to_id": "art:upgrading-v0190"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:d16abc28ea59e3f9"
+      },
+      "to_id": "art:upgrading-v0210"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {
+        "as_checksum": "sha256:0d250aa84d8ebe16"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "sys:agent-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "sys:documentation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "sys:human-channel"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "sys:intake"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "sys:store"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "sys:time-history"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0230",
+      "properties": {},
+      "to_id": "sys:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
       "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:1c729eee5b67e7dc"
@@ -31626,6 +33151,12 @@
       "from_id": "epoch:reading-carries-options",
       "properties": {},
       "to_id": "epoch:v0200"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:service-split",
+      "properties": {},
+      "to_id": "epoch:v0230"
     },
     {
       "edge_type": "PRECEDES",
@@ -36168,7 +37699,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:76727e985b61ed79f219e6d9005c8e393ad92aa4032c341396afd8b2156bed6c",
+        "checksum": "sha256:7d0835791c240df51164b7b4cddd7c4ccaa6bb09ed14e7f843c53f39fefb639f",
         "location": "reflow2.toml",
         "name": "reflow2.toml",
         "status": "realized"
@@ -38986,6 +40517,15 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-28",
         "name": "First registration — the file was written for cap:machine-wide-install in the same session that recorded it."
+      }
+    },
+    {
+      "node_id": "chg:accept-3697d785d60e5b5c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-03",
+        "name": "v0.23.0 cut: the version string moved from 0.22.1 to 0.23.0. The design meaning of a cut lives in the Release node and its epoch, not in a version string, so the design holds. Accepted BEFORE release_includes_all so the manifest freezes the post-bump checksum — the v0.20.0 cut got this order wrong and paid for it with a retry."
       }
     },
     {
@@ -44356,6 +45896,16 @@
       }
     },
     {
+      "node_id": "epoch:v0230",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.23.0 cut — certify_preservation, granularity_report, maturity_report and ility_report, plus the constructor-erasure fix; no schema change",
+        "sequence": 262,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:v040",
       "node_type": "DesignEpoch",
       "properties": {
@@ -46887,9 +48437,19 @@
       "node_type": "Release",
       "properties": {
         "name": "v0.22.1 — a restore stops renaming the design, and re-registering a file stops erasing what the design knew",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.22.1"
+      }
+    },
+    {
+      "node_id": "rel:v0230",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.23.0 — the design brain learns to talk about its own structure",
+        "status": "deployed",
+        "unit_type": "binary",
+        "version": "0.23.0"
       }
     },
     {
@@ -50508,7 +52068,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:fed4a7455337280dbf85ab4d4590e35e8580283ca12d95f3717fb18c7fcf7a9a",
+  "prev_content_hash": "sha256:324710f6a8c9054c372ab68c16565d2e68f2d4acbdbea34f12ed9d17cfdf4fde",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -50605,7 +52165,7 @@
       "Verification"
     ],
     "node_types": 29,
-    "reflow2_version": "0.22.1",
+    "reflow2_version": "0.23.0",
     "schema_version": 1
   }
 }
