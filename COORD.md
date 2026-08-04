@@ -50,6 +50,8 @@ Add yourself if you're new here.
 
 *Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
 
+- BL-186 build cap:corpus-ingest (the folder driver — v0.24.0's last build row) — @ajs — since 2026-08-04 — crates/reflow2-core/src/ingest.rs, reflow2-mcp tool surface, served skill, docs/{backlog,scope-corpus-ingest}.md
+
 
 
 
