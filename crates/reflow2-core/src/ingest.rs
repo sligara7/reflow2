@@ -464,6 +464,10 @@ pub struct IngestReport {
     /// ambiguous band is a question put to a person rather than a coin flip
     /// resolved by a constant (`dec:ask-not-repair`).
     pub merge_candidates: Vec<MergeCandidate>,
+    /// How many of those suspicions were persisted as `DUPLICATES` edges. The
+    /// candidates above are this document's answer; the edges are what lets HEAL
+    /// collect the same question across a whole corpus, in any order.
+    pub duplicates_recorded: usize,
     /// Edges created this run.
     pub edges_created: usize,
     /// The `DesignEpoch` matched-evolved snapshots were pinned to (`Some` only
@@ -1122,6 +1126,7 @@ impl DesignGraph {
             nodes_unchanged: st.nodes_unchanged,
             fuzzy_merges: st.fuzzy_merges,
             merge_candidates: st.merge_candidates,
+            duplicates_recorded: st.duplicates_recorded,
             edges_created: st.edges_created,
             epoch_used,
             pass_errors: errors,
@@ -1241,9 +1246,10 @@ impl DesignGraph {
                             // A score says the two are alike, not which is more
                             // specific; the existing node is suggested because it
                             // is the one already carrying edges and history.
-                            suggested_survivor: candidate,
+                            suggested_survivor: candidate.clone(),
                         });
                         self.integrate_new(st, node_type, id, new_map);
+                        self.suspect_duplicate(st, node_type, id, &candidate, Some(score));
                     }
                 }
                 // Nothing by score. Try the structural question before concluding
@@ -1251,6 +1257,9 @@ impl DesignGraph {
                 // scores 74, below every threshold reflow2 declares, and is the
                 // case a corpus produces most.
                 Ok(None) => {
+                    // Drawn AFTER integrate_new below: create_edge refuses a
+                    // dangling endpoint, and the node does not exist yet here.
+                    let mut pending_subset: Option<String> = None;
                     match self.token_subset_match(node_type, &new_map, id) {
                         Err(e) => st
                             .warnings
@@ -1262,6 +1271,7 @@ impl DesignGraph {
                             } else {
                                 id.to_string()
                             };
+                            pending_subset = Some(candidate.clone());
                             st.merge_candidates.push(MergeCandidate {
                                 extracted_id: id.to_string(),
                                 candidate_id: candidate,
@@ -1278,6 +1288,12 @@ impl DesignGraph {
                         Ok(None) => {}
                     }
                     self.integrate_new(st, node_type, id, new_map);
+                    if let Some(candidate) = pending_subset {
+                        // No score cleared anything, so no confidence is
+                        // asserted — absence reads as "not measured", which is
+                        // the same reason the candidate carries score 0.
+                        self.suspect_duplicate(st, node_type, id, &candidate, None);
+                    }
                 }
             },
         }
@@ -1356,6 +1372,64 @@ impl DesignGraph {
             Err(e) => st
                 .warnings
                 .push(format!("snapshot evolved {node_type} '{id}': {e}")),
+        }
+    }
+
+    /// Persist a near-match as a `DUPLICATES` edge, so the question survives the
+    /// document that raised it.
+    ///
+    /// **This is what makes `dec:ask-not-repair` affordable at corpus scale.**
+    /// That decision requires suspected duplicates to be asked rather than
+    /// silently merged, and `cap:corpus-ingest` notes the consequence: *"at
+    /// corpus scale the asking must be batched or the feature is unusable"*. A
+    /// `MergeCandidate` alone cannot be batched — it lives in one document's
+    /// [`IngestReport`] and is gone the moment the caller moves to the next
+    /// file. Four hundred documents produce four hundred separate asks, each
+    /// addressed to an agent that has already forgotten the last one.
+    ///
+    /// The batching machinery already exists and needed no new vocabulary:
+    /// HEAL's `duplicate` detector fires on a `DUPLICATES` edge, `propose_heal`
+    /// turns it into a merge with the survivor rules, and `apply_heal` refuses
+    /// anything no detector asked for. So the edge turns a transient suspicion
+    /// into a standing question that `detect_defects` collects across the whole
+    /// run, in any order, however long the run takes.
+    ///
+    /// **Drawn only in the ASK band.** At or above `auto_merge_threshold` the
+    /// nodes are merged and there is nothing left to ask; below the type's
+    /// `fuzzy_threshold` nothing was suspected at all. `confidence` carries the
+    /// score where one was measured and is OMITTED for a structural
+    /// (token-subset) match — writing 0.0 would read as "certainly unrelated",
+    /// which is the opposite of what a subset relation means.
+    ///
+    /// Never cascade-fails: a refused edge is a warning, because losing one
+    /// suspicion must not cost the document that carried it.
+    fn suspect_duplicate(
+        &mut self,
+        st: &mut Integration,
+        node_type: &'static str,
+        extracted_id: &str,
+        candidate_id: &str,
+        score: Option<u32>,
+    ) {
+        if extracted_id == candidate_id {
+            return;
+        }
+        let mut props = Props::new();
+        if let Some(s) = score {
+            props = props.set("confidence", f64::from(s) / 100.0);
+        }
+        match self.create_edge(
+            edge::DUPLICATES,
+            node_type,
+            extracted_id,
+            node_type,
+            candidate_id,
+            props,
+        ) {
+            Ok(_) => st.duplicates_recorded += 1,
+            Err(e) => st.warnings.push(format!(
+                "record duplicate suspicion {node_type} '{extracted_id}' ~ '{candidate_id}': {e}"
+            )),
         }
     }
 
@@ -1656,6 +1730,7 @@ struct Integration<'a> {
     nodes_unchanged: usize,
     fuzzy_merges: Vec<FuzzyMerge>,
     merge_candidates: Vec<MergeCandidate>,
+    duplicates_recorded: usize,
     edges_created: usize,
     warnings: Vec<String>,
     dropped_edges: Vec<DroppedEdge>,
@@ -1675,6 +1750,7 @@ impl<'a> Integration<'a> {
             nodes_unchanged: 0,
             fuzzy_merges: Vec::new(),
             merge_candidates: Vec::new(),
+            duplicates_recorded: 0,
             edges_created: 0,
             warnings: Vec::new(),
             dropped_edges: Vec::new(),

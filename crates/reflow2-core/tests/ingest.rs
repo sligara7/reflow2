@@ -499,6 +499,114 @@ fn the_more_specific_name_survives_a_merge_whichever_way_round() {
     assert_eq!(ba_alias.as_deref(), Some("Auth Gateway Service"));
 }
 
+/// The corpus half of `dec:ask-not-repair`, end to end.
+///
+/// That decision requires a suspected duplicate to be ASKED, never silently
+/// merged, and `cap:corpus-ingest` names the consequence: *"at corpus scale the
+/// asking must be batched or the feature is unusable"*. A `MergeCandidate`
+/// alone cannot be batched — it lives in one document's report and is gone when
+/// the caller opens the next file, so four hundred documents produce four
+/// hundred separate asks to an agent that has forgotten the last one.
+///
+/// Persisting the suspicion as a `DUPLICATES` edge hands it to machinery that
+/// already exists: HEAL's `duplicate` detector collects them across the whole
+/// run, in any order, however long the run takes. **This test is the proof that
+/// the handoff actually happens** — the edge alone would only be a claim.
+#[test]
+fn a_near_match_becomes_a_standing_question_heal_can_collect() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:one".into(),
+            ..Default::default()
+        },
+        &mock_cap("cap:auth", "Auth Service", false),
+    )
+    .unwrap();
+
+    // 84 — above Capability's fuzzy_threshold (82), below auto-merge (90), so
+    // it is created AND questioned rather than merged.
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:two".into(),
+                ..Default::default()
+            },
+            &mock_cap("cap:auth-2", "Authentication Service", false),
+        )
+        .unwrap();
+
+    assert!(report.fuzzy_merges.is_empty(), "the band must not merge");
+    assert_eq!(report.merge_candidates.len(), 1);
+    assert_eq!(
+        report.duplicates_recorded, 1,
+        "the suspicion must outlive the document that raised it"
+    );
+    assert_eq!(g.count_nodes(node::CAPABILITY).unwrap(), 2, "both survive");
+
+    // The edge is drawn between the two real nodes.
+    let dups = g.outgoing("cap:auth-2", Some(edge::DUPLICATES)).unwrap();
+    assert_eq!(dups.len(), 1);
+    assert_eq!(dups[0].to_id, "cap:auth");
+    assert_eq!(dups[0].properties["confidence"].as_f64(), Some(0.84));
+
+    // THE POINT: HEAL now carries the question, without ingest telling it to.
+    let issue = g
+        .detect_defects()
+        .unwrap()
+        .into_iter()
+        .find(|i| i.category.as_str() == "duplicate")
+        .expect("a persisted suspicion must reach the batched ask");
+    assert!(
+        issue.affected_ids.contains(&"cap:auth".to_string())
+            && issue.affected_ids.contains(&"cap:auth-2".to_string()),
+        "{issue:?}"
+    );
+}
+
+/// The counterweight, and the reason the edge is drawn only in the ask band: at
+/// or above `auto_merge_threshold` the nodes ARE merged, so there is nothing
+/// left to ask. Drawing one anyway would hand HEAL a question about a node that
+/// no longer exists and make every clean corpus run look ambiguous.
+#[test]
+fn an_auto_merge_leaves_no_question_behind() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:one".into(),
+            ..Default::default()
+        },
+        &mock_cap("cap:cache", "Caching", false),
+    )
+    .unwrap();
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:two".into(),
+                ..Default::default()
+            },
+            &mock_cap("cap:cache-2", "Caching", false),
+        )
+        .unwrap();
+
+    assert_eq!(report.fuzzy_merges.len(), 1, "identical names merge");
+    assert_eq!(
+        report.duplicates_recorded, 0,
+        "a merge answers the question; it must not also ask it"
+    );
+    assert!(
+        !g.detect_defects()
+            .unwrap()
+            .iter()
+            .any(|i| i.category.as_str() == "duplicate"),
+        "a clean convergence must not read as an outstanding duplicate"
+    );
+}
+
 /// Two documents that agree on the name must not manufacture an alias — an
 /// `alias_name` on every merge would make "these two specs disagreed about what
 /// to call it" unreadable, which is the only thing the field is for.
