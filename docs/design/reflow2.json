@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f231440aefae574b795e911ef5509cfdfef4a22fa9bd433fb9b1530501217408",
+  "content_hash": "sha256:94001240b7a42ad9d4695994356b65eb83aa38db493c5fc7b84436e268c7e470",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -4655,6 +4655,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-0809203dbd415e07",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-088f28fcb04c641f",
       "properties": {
         "accepted_baseline": true,
@@ -4742,6 +4751,15 @@
         "action": "modified"
       },
       "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-2b742a01768ff8ef",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
     },
     {
       "edge_type": "CHANGED",
@@ -5557,7 +5575,7 @@
       "edge_type": "CHANGED",
       "from_id": "chg:artifact-intent-properties",
       "properties": {
-        "accepted_baseline": false,
+        "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:artifact"
@@ -5566,7 +5584,7 @@
       "edge_type": "CHANGED",
       "from_id": "chg:artifact-intent-properties",
       "properties": {
-        "accepted_baseline": false,
+        "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:coverage"
@@ -5575,7 +5593,7 @@
       "edge_type": "CHANGED",
       "from_id": "chg:artifact-intent-properties",
       "properties": {
-        "accepted_baseline": false,
+        "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:drift"
@@ -5584,10 +5602,55 @@
       "edge_type": "CHANGED",
       "from_id": "chg:artifact-intent-properties",
       "properties": {
-        "accepted_baseline": false,
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:increment-plan"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-properties",
+      "properties": {
+        "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-properties",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-properties",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-properties",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-properties",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
     },
     {
       "edge_type": "CHANGED",
@@ -37905,10 +37968,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3850cb634766556b6630d709d927ae335828cc10a34604bff9c02777a92ba863",
+        "checksum": "sha256:f0b084efabffd96cbbb64ee30fbd89e6d3c241b742b6e4fd031e76ef1b8d7ffa",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -37992,10 +38057,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e13223ac72649aa498bcc78fbf4824f6b5a3a346fc78c3516bd79075eae5cd1a",
+        "checksum": "sha256:8a65b62d63d432035cb24244f35cdbb3098ee2cb990ac6c181eddc797e12605b",
+        "granularity": "atomic",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38124,10 +38191,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9eba28b2278c1a71",
+        "checksum": "sha256:657397fc982bc94a7b0624d219503cab8ddf1a325aabf023474db1dfc110881f",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/coverage.rs",
         "name": "coverage.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38223,10 +38292,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f8b0a6288f20e82f78d0b6267e9698094228b2a255b0305f861fa53e56c45198",
+        "checksum": "sha256:ad766fdd92b8a66a9237c04928ce4c07b4b3e938093c7e7879a9fa0077c7a0ee",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/drift.rs",
         "name": "drift.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38410,10 +38481,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:ec2f9d7f5a453c0a",
+        "checksum": "sha256:ca970b143ead843fb0731d03ff172c63cd37ba1b6b4e2c4f08d262c1d10521a3",
+        "granularity": "atomic",
         "location": "docs/increment-plan.md",
         "name": "increment-plan.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38763,11 +38836,13 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:d20010a455509deb8bb9b4ea9e72cf8bd0b343353ca3c6b92a42c9424457b3f2",
+        "checksum": "sha256:30b38b621f4c98f2487b82076867f0574e96480043a799cadc433797e1774426",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/build.yaml",
         "name": "build.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38972,10 +39047,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:677aa0cf869c05f351b9f9396d94e5db6823cff06cdf2dab69d0f7dcc020e50f",
+        "checksum": "sha256:f91908754d283de0d2e0b7d752f5d1e4c6f20a07cdfab2144b9f8faa995f89fe",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38994,10 +39071,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cd966c8316e0e6d8ebd9b02dc9e45fb2413ce1025e7d820f5b5ddc043457fa7c",
+        "checksum": "sha256:1d0b636dc047affcf17dba3a45a9865e0f7278b20a9d9b64c4d225af856cd9d0",
+        "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39214,10 +39293,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5ae914d2543623778d31d4e504a13bfa18ea1570460233d7b7d46d379802de72",
+        "checksum": "sha256:395195e896a9e9d2068f6c0d66e509a66600295237db4f642b7a88ce64bd9373",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39225,10 +39306,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:08d96581934e6de1a780d08b3df8090faa1d5b56f87a391a9adacc96bee34690",
+        "checksum": "sha256:bac04451bad4f944adaeead116637304d43e666f2109c9d39110f568b56e68c8",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39258,10 +39341,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4d072ab236f25b15b9910259105694baaca81f6cb190d3b76b2cb691c5c1894b",
+        "checksum": "sha256:a3ef1c2a5a4cfbe52d5142708511eb0e3a4f9c3484212c1ca761e0f5e7f12a7b",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40937,6 +41022,15 @@
       }
     },
     {
+      "node_id": "chg:accept-0809203dbd415e07",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-04",
+        "name": "BL-206: the gate swept 124 of 144 artifacts and reported OK over the other 20 — scan_nodes said `omitted: 20, capped_by: size` and the JSON-RPC client discarded those fields, then claimed `exhaustive: true`. The design held exactly as written; the code was repaired to do what it already claimed. Sweep now pages on next_offset and dies if the count misses total."
+      }
+    },
+    {
       "node_id": "chg:accept-088f28fcb04c641f",
       "node_type": "ChangeEvent",
       "properties": {
@@ -41023,6 +41117,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-2b742a01768ff8ef",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "performance_optimization",
+        "detected_at": "2026-08-04",
+        "name": "BL-205: loop_status digests the verification roll (74,239 -> 1,123 bytes). No design node moved — cap:loop-status already promised ONE CHEAP CALL and was already `verified`; the build had stopped meeting a contract the design has stated all along, so this is conformance, not new intent."
       }
     },
     {
@@ -52857,7 +52960,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:7f49f27524ab76a53e89e2df3d04cb12c3a688a47dcbe1d9ae82050ecadd3dad",
+  "prev_content_hash": "sha256:f231440aefae574b795e911ef5509cfdfef4a22fa9bd433fb9b1530501217408",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
