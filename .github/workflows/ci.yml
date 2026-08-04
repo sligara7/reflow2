@@ -31,6 +31,13 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
+        with:
+          # The export-lineage guard (BL-107) compares HEAD against HEAD~1, and
+          # checkout defaults to depth 1 — so `git show HEAD~1:...` failed, the
+          # check treated the question as unanswerable and SKIPPED, and it has
+          # therefore never once run in CI. Depth 2 is exactly what it needs
+          # (BL-208).
+          fetch-depth: 2
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy, rustfmt
@@ -68,6 +75,10 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v5
+        with:
+          # Same reason as the core job: the lineage guard runs in THIS job and
+          # needs HEAD~1 to exist (BL-208).
+          fetch-depth: 2
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy

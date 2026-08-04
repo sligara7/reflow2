@@ -72,6 +72,16 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **The export-lineage guard had never run in CI** (BL-208). `check_export_chain` compares HEAD's
+  export with HEAD~1's, and skips — silently — when that question cannot be answered.
+  `actions/checkout@v5` defaults to `fetch-depth: 1`, so `HEAD~1` has never existed in a CI
+  checkout and the guard has been inert since BL-107 added it. Found because `main` went green on a
+  real lineage break that the identical check fails on locally; **proved with two clones of the same
+  commit — `--depth 1` says `OK — design and build agree`, `--depth 2` reports the break.** Both
+  jobs now pin `fetch-depth: 2`. The skip is right for a laptop outside a git tree and exactly wrong
+  for the environment that is supposed to be authoritative: *a guard whose no-op path is silent will
+  eventually run nowhere and say so to nobody.*
+
 - **The CI design-coherence gate swept 124 of 144 artifacts and reported OK over the rest**
   (BL-206). `tools/reflow2_check.py` asked `scan_nodes` for every Artifact and iterated what came
   back. `scan_nodes` answers with as many nodes as **fit** and states what it withheld — here
