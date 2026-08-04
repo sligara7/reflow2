@@ -87,13 +87,31 @@ impl ReflowService {
                        capabilities claiming realized/verified with no passing check, recorded \
                        drift awaiting a disposition, and built capabilities nobody has checked \
                        against reality. Fire it between operational tasks instead of trying to \
-                       remember the loop; `clean: true` means nothing is owed.",
+                       remember the loop; `clean: true` means nothing is owed. `verifications` is \
+                       a DIGEST, not the roll: counts by status, how many have never actually run, \
+                       and every check NOT currently passing in full — the passing remainder is \
+                       counted in `omitted` rather than listed, because a per-check dump is what \
+                       stopped this call being cheap. `graph_report` carries every check with its \
+                       last run.",
         annotations(read_only_hint = true)
     )]
     pub async fn loop_status(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
         let status = g.loop_status().map_err(dyno_err)?;
         let mut payload = serde_json::to_value(&status).map_err(ser_err)?;
+        // The debt rollup is seven integers and a to-do list; the per-check roll
+        // beside it grew with the design until the whole reply was 74 KB and no
+        // longer fit in a harness turn — `cap:loop-status` says ONE CHEAP CALL,
+        // and the build stopped meeting it somewhere around the hundredth check.
+        // Digest here, never at the core: `graph_report` still serves the full
+        // list, and both still come from `verification_recency`, so the two
+        // surfaces cannot drift apart (the invariant report.rs states).
+        if let Some(obj) = payload.as_object_mut() {
+            obj.insert(
+                "verifications".into(),
+                verification_digest(&status.verifications).map_err(ser_err)?,
+            );
+        }
         // Whether the loop's own safety net exists (req:nudge-path-proven).
         // Machine-readable here, and in the handshake for the sessions that
         // never call this — which are precisely the ones a nudge is for.
@@ -540,4 +558,36 @@ impl ReflowService {
         let mut g = self.write_lock().await;
         ok_json(g.apply_heal(&proposal).map_err(dyno_err)?)
     }
+}
+
+/// Summarise the verification roll for `loop_status` — the digest that keeps
+/// "one cheap call" true as the check count grows.
+///
+/// What survives in full is what a reader would act on: every check that is
+/// **not currently passing**, in the loud-first order `verification_recency`
+/// already sorts them into. The passing remainder is counted, never dropped
+/// silently — `total` against `omitted` says exactly what is not here, the same
+/// contract `scan_nodes` states for a capped page.
+///
+/// `never_run` is the one count worth promoting out of the roll: a `passing`
+/// with no `last_run_at` is an assertion, not a measurement, and that is
+/// invisible in a status tally alone.
+fn verification_digest(
+    all: &[reflow2_core::report::VerificationRecency],
+) -> Result<serde_json::Value, serde_json::Error> {
+    let mut by_status: std::collections::BTreeMap<&str, usize> = std::collections::BTreeMap::new();
+    for v in all {
+        *by_status.entry(v.status.as_str()).or_insert(0) += 1;
+    }
+    let attention: Vec<_> = all.iter().filter(|v| v.status != "passing").collect();
+    let never_run = all.iter().filter(|v| v.last_run_at.is_none()).count();
+
+    Ok(json!({
+        "total": all.len(),
+        "by_status": by_status,
+        "never_run": never_run,
+        "attention": serde_json::to_value(&attention)?,
+        "omitted": all.len() - attention.len(),
+        "full_list": "graph_report — every check with its status and last run",
+    }))
 }

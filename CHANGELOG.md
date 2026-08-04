@@ -72,6 +72,22 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **`loop_status` is cheap again — it digests the verification roll instead of serving it**
+  (BL-205). `cap:loop-status` promises *one cheap call*, the SessionStart hook and the server
+  instructions both push you to run it, and the Stop hook nudges when graph writes finish without
+  one — while on this repo's own graph it answered in **74,239 bytes**, over the response limit,
+  so the call the loop depends on could not be read at all and had to be recovered from a spill
+  file with a script. **99.6% of that was `verifications`**, a full per-check roll beside eight
+  integers and a to-do list. It now returns a digest: counts `by_status`, `never_run` (a `passing`
+  check with no `last_run_at` is an *assertion*, not a measurement, which a status tally alone
+  cannot show), and every **not-passing** check in full, since those are the ones a reader acts
+  on. The passing remainder is counted in `omitted` and named in `full_list`, never dropped in
+  silence — the same contract `scan_nodes` states for a capped page. **74,239 → 1,123 bytes here,
+  with the 3 checks worth reading still present.** *Result-shape change, so minor by this file's
+  own rule.* No `brief`-style flag, deliberately: `graph_report` already serves the full roll from
+  the same `verification_recency` computation, so a flag would add a third surface onto one list
+  rather than a cheaper first one. Digested at the MCP boundary and not in core, so the two
+  surfaces still cannot disagree about what the checks say.
 - **reflow2's own design record now follows the `link-artifacts` skill it serves** (BL-199), and
   **CI enforces that it keeps doing so** (`tools/self_host_uses_documents.py`). Seven document
   artifacts asserted `REALIZES` against something they do not implement — three claimed a markdown
