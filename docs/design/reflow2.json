@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:72a877b69a0cb4710703b121e135473b465f0720fba45d9bba1c65a7d9903417",
+  "content_hash": "sha256:7f49f27524ab76a53e89e2df3d04cb12c3a688a47dcbe1d9ae82050ecadd3dad",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2027,6 +2027,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl199-reattachment",
+      "properties": {},
+      "to_id": "epoch:bl199-reattachment"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:bl48-bl49-tool-surface",
       "properties": {},
       "to_id": "epoch:v050-hardening"
@@ -3140,6 +3146,48 @@
       "from_id": "snap:epoch:arrival-delta:dec:where-content-lives:r2",
       "properties": {},
       "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:bl199-reattachment:art:collaborating",
+      "properties": {},
+      "to_id": "epoch:bl199-reattachment"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:bl199-reattachment:art:fleet-lessons",
+      "properties": {},
+      "to_id": "epoch:bl199-reattachment"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:bl199-reattachment:art:planning-at-scale",
+      "properties": {},
+      "to_id": "epoch:bl199-reattachment"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:bl199-reattachment:art:scope-read-while-held",
+      "properties": {},
+      "to_id": "epoch:bl199-reattachment"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:bl199-reattachment:art:upgrading-v0120",
+      "properties": {},
+      "to_id": "epoch:bl199-reattachment"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:bl199-reattachment:art:upgrading-v0130",
+      "properties": {},
+      "to_id": "epoch:bl199-reattachment"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:bl199-reattachment:art:upgrading-v0210",
+      "properties": {},
+      "to_id": "epoch:bl199-reattachment"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4842,6 +4890,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-5e5f712bc4f3be62",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:built-right-review"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-6269ffe550e65842",
       "properties": {
         "accepted_baseline": true,
@@ -5580,6 +5637,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-0da0e8c66a8d93bc",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:increment-plan"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-103ed5645f463462",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:built-right-review"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-eff858c52555561f",
       "properties": {
         "accepted_baseline": true,
@@ -6162,6 +6237,69 @@
         "action": "added"
       },
       "to_id": "req:computed-evidence-reaches-its-axis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl199-reattachment",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl199-reattachment",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl199-reattachment",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl199-reattachment",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:scope-read-while-held"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl199-reattachment",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:upgrading-v0120"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl199-reattachment",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:upgrading-v0130"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl199-reattachment",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:upgrading-v0210"
     },
     {
       "edge_type": "CHANGED",
@@ -13010,6 +13148,46 @@
     },
     {
       "edge_type": "DOCUMENTS",
+      "from_id": "art:built-right-review",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "proj:reflow2"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:collaborating",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "cap:git-merge-driver"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:fleet-lessons",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "dec:advisory-concurrency"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:github-mcp-study",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "proj:reflow2"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:increment-plan",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "proj:reflow2"
+    },
+    {
+      "edge_type": "DOCUMENTS",
       "from_id": "art:kit-instructions",
       "properties": {
         "doc_kind": "agent_instructions"
@@ -13018,11 +13196,35 @@
     },
     {
       "edge_type": "DOCUMENTS",
+      "from_id": "art:planning-at-scale",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "dec:live-tier"
+    },
+    {
+      "edge_type": "DOCUMENTS",
       "from_id": "art:readme",
       "properties": {
         "doc_kind": "readme"
       },
       "to_id": "proj:reflow2"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:scope-corpus-ingest",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "cap:corpus-ingest"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:scope-read-while-held",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "dec:read-while-held-mechanism"
     },
     {
       "edge_type": "DOCUMENTS",
@@ -13039,6 +13241,86 @@
         "doc_kind": "runbook"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:skills-catalog",
+      "properties": {
+        "doc_kind": "readme"
+      },
+      "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:storyflow-resolution-study",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "proj:reflow2"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:upgrade-v0110",
+      "properties": {
+        "doc_kind": "runbook"
+      },
+      "to_id": "rel:v0110"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:upgrading-v0120",
+      "properties": {
+        "doc_kind": "runbook"
+      },
+      "to_id": "rel:v0120"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:upgrading-v0130",
+      "properties": {
+        "doc_kind": "runbook"
+      },
+      "to_id": "rel:v0130"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:upgrading-v0150",
+      "properties": {
+        "doc_kind": "runbook"
+      },
+      "to_id": "rel:v0150"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:upgrading-v0160",
+      "properties": {
+        "doc_kind": "runbook"
+      },
+      "to_id": "rel:v0160"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:upgrading-v0180",
+      "properties": {
+        "doc_kind": "runbook"
+      },
+      "to_id": "rel:v0180"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:upgrading-v0190",
+      "properties": {
+        "doc_kind": "runbook"
+      },
+      "to_id": "rel:v0190"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:upgrading-v0210",
+      "properties": {
+        "doc_kind": "runbook"
+      },
+      "to_id": "rel:v0210"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -17680,15 +17962,39 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:collaborating",
+      "properties": {},
+      "to_id": "snap:epoch:bl199-reattachment:art:collaborating"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:detect",
       "properties": {},
       "to_id": "snap:epoch:aggregate-gap-ack:art:detect"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:fleet-lessons",
+      "properties": {},
+      "to_id": "snap:epoch:bl199-reattachment:art:fleet-lessons"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:main",
       "properties": {},
       "to_id": "snap:epoch:rmcp-v3:art:main"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:planning-at-scale",
+      "properties": {},
+      "to_id": "snap:epoch:bl199-reattachment:art:planning-at-scale"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:scope-read-while-held",
+      "properties": {},
+      "to_id": "snap:epoch:bl199-reattachment:art:scope-read-while-held"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -17701,6 +18007,24 @@
       "from_id": "art:service",
       "properties": {},
       "to_id": "snap:epoch:stateless-seat:art:service"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:upgrading-v0120",
+      "properties": {},
+      "to_id": "snap:epoch:bl199-reattachment:art:upgrading-v0120"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:upgrading-v0130",
+      "properties": {},
+      "to_id": "snap:epoch:bl199-reattachment:art:upgrading-v0130"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:upgrading-v0210",
+      "properties": {},
+      "to_id": "snap:epoch:bl199-reattachment:art:upgrading-v0210"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -33498,14 +33822,6 @@
     },
     {
       "edge_type": "REALIZES",
-      "from_id": "art:collaborating",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:git-merge-driver"
-    },
-    {
-      "edge_type": "REALIZES",
       "from_id": "art:compare",
       "properties": {
         "completeness": "complete"
@@ -33767,14 +34083,6 @@
         "completeness": "complete"
       },
       "to_id": "cmp:fielded"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:fleet-lessons",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "dec:advisory-concurrency"
     },
     {
       "edge_type": "REALIZES",
@@ -34106,14 +34414,6 @@
     },
     {
       "edge_type": "REALIZES",
-      "from_id": "art:planning-at-scale",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "dec:live-tier"
-    },
-    {
-      "edge_type": "REALIZES",
       "from_id": "art:preserve",
       "properties": {
         "completeness": "complete"
@@ -34314,14 +34614,6 @@
     },
     {
       "edge_type": "REALIZES",
-      "from_id": "art:scope-read-while-held",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "dec:read-while-held-mechanism"
-    },
-    {
-      "edge_type": "REALIZES",
       "from_id": "art:seam",
       "properties": {
         "completeness": "complete"
@@ -34351,6 +34643,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:self-host-documents-guard",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:heal"
     },
     {
       "edge_type": "REALIZES",
@@ -34754,22 +35054,6 @@
     },
     {
       "edge_type": "REALIZES",
-      "from_id": "art:upgrading-v0120",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:skills-served"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:upgrading-v0130",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:design-identity"
-    },
-    {
-      "edge_type": "REALIZES",
       "from_id": "art:upgrading-v0150",
       "properties": {
         "completeness": "complete"
@@ -34799,14 +35083,6 @@
         "completeness": "complete"
       },
       "to_id": "cmp:docs"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:upgrading-v0210",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:independent-evidence"
     },
     {
       "edge_type": "REALIZES",
@@ -36388,6 +36664,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:self-host-uses-documents",
+      "properties": {},
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:served-skills",
       "properties": {},
       "to_id": "cap:skills-served"
@@ -37168,6 +37450,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:self-host-documents-guard",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:self-host-documents-guard"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:service",
       "properties": {
         "action": "created"
@@ -37585,6 +37875,17 @@
         "checksum": "sha256:6aeb7aaf31ccdd875990bce6735c75eeead49c7371c4bc39064d4e7f478733e8",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:built-right-review",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:8f5ffbc7c6e84b5e",
+        "location": "docs/built-right-review.md",
+        "name": "built-right-review.md",
         "status": "realized"
       }
     },
@@ -38025,6 +38326,17 @@
         "checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3",
         "location": "crates/reflow2-core/src/ility.rs",
         "name": "ility.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:increment-plan",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:ec2f9d7f5a453c0a",
+        "location": "docs/increment-plan.md",
+        "name": "increment-plan.md",
         "status": "realized"
       }
     },
@@ -38565,6 +38877,17 @@
         "checksum": "sha256:c421c3496192d22d",
         "location": "crates/reflow2-core/src/search.rs",
         "name": "search.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:self-host-documents-guard",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:4d824c873120e938",
+        "location": "tools/self_host_uses_documents.py",
+        "name": "self_host_uses_documents.py",
         "status": "realized"
       }
     },
@@ -40763,6 +41086,14 @@
       }
     },
     {
+      "node_id": "chg:accept-5e5f712bc4f3be62",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "The census document gained a correction section recording that its own \"32 document artifacts are wrong\" claim was too broad — doing the BL-199 re-attachment showed 7 wrong, 11 arguable, the rest correct. The document became more honest; no design node moved, so nothing here is a design change."
+      }
+    },
+    {
       "node_id": "chg:accept-6269ffe550e65842",
       "node_type": "ChangeEvent",
       "properties": {
@@ -41255,6 +41586,22 @@
       }
     },
     {
+      "node_id": "chg:baseline-0da0e8c66a8d93bc",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "First baseline for the increment plan, registered 2026-08-04 with DOCUMENTS per the link-artifacts skill."
+      }
+    },
+    {
+      "node_id": "chg:baseline-103ed5645f463462",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "First baseline for the census document, registered 2026-08-04 with DOCUMENTS per the link-artifacts skill."
+      }
+    },
+    {
       "node_id": "chg:baseline-eff858c52555561f",
       "node_type": "ChangeEvent",
       "properties": {
@@ -41389,6 +41736,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Computed evidence now reaches the quality axis it informs — Anthony's correction that the ilities are not a blanket judgement call, built as a separate reading that flags disagreement and never derives a score"
+      }
+    },
+    {
+      "node_id": "chg:bl199-reattachment",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "art:upgrading-v0210 drops REALIZES cap:independent-evidence for DOCUMENTS rel:v0210"
       }
     },
     {
@@ -45660,6 +46015,16 @@
       }
     },
     {
+      "node_id": "epoch:bl199-reattachment",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "BL-199 — reflow2's own document artifacts are re-attached with DOCUMENTS where REALIZES was asserting implementation that never happened",
+        "sequence": 268,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:bl70-fork-layer",
       "node_type": "DesignEpoch",
       "properties": {
@@ -47489,6 +47854,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered search.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:self-host-documents-guard",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered self_host_uses_documents.py"
       }
     },
     {
@@ -50525,6 +50900,76 @@
       }
     },
     {
+      "node_id": "snap:epoch:bl199-reattachment:art:collaborating",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:dad9a5cd440cd681908a1fd89d1099b11e8be32f2a9fb6fefdfcff8830067e86\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:fe2f1a4c9ee8dcdcc3765ecb337301eb18bb94876417e0f974e825a5d62f5abf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:c21912e559c27f763ee7ad57e4564e64e4aa27b108ddbf5b107e8aa1a207b20e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:c21912e559c27f763ee7ad57e4564e64e4aa27b108ddbf5b107e8aa1a207b20e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:git-merge-driver\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3\",\"location\":\"docs/collaborating.md\",\"name\":\"collaborating.md\",\"status\":\"realized\"}",
+        "target_id": "art:collaborating",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:bl199-reattachment:art:fleet-lessons",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Decision\",\"other_id\":\"dec:advisory-concurrency\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\",\"location\":\"docs/fleet-lessons.md\",\"name\":\"fleet-lessons.md\",\"status\":\"realized\"}",
+        "target_id": "art:fleet-lessons",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:bl199-reattachment:art:planning-at-scale",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Decision\",\"other_id\":\"dec:live-tier\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\",\"location\":\"docs/planning-at-scale.md\",\"name\":\"planning-at-scale.md\",\"status\":\"realized\"}",
+        "target_id": "art:planning-at-scale",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:bl199-reattachment:art:scope-read-while-held",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Decision\",\"other_id\":\"dec:read-while-held-mechanism\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea\",\"location\":\"docs/scope-read-while-held.md\",\"name\":\"scope-read-while-held.md\",\"status\":\"realized\"}",
+        "target_id": "art:scope-read-while-held",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:bl199-reattachment:art:upgrading-v0120",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:skills-served\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\",\"location\":\"docs/upgrading-to-v0.12.0.md\",\"name\":\"upgrading-to-v0.12.0.md\",\"status\":\"realized\"}",
+        "target_id": "art:upgrading-v0120",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:bl199-reattachment:art:upgrading-v0130",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:design-identity\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995\",\"location\":\"docs/upgrading-to-v0.13.0.md\",\"name\":\"upgrading-to-v0.13.0.md\",\"status\":\"realized\"}",
+        "target_id": "art:upgrading-v0130",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:bl199-reattachment:art:upgrading-v0210",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:d16abc28ea59e3f9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:d16abc28ea59e3f9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:d16abc28ea59e3f9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:d16abc28ea59e3f9\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:independent-evidence\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:d16abc28ea59e3f9\",\"location\":\"docs/upgrading-to-v0.21.0.md\",\"name\":\"Upgrading to v0.21.0 — the stamp moves, and your evidence can say what it covers\",\"status\":\"realized\"}",
+        "target_id": "art:upgrading-v0210",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:coverage-scope-settled:dec:coverage-scope-is-declared",
       "node_type": "Snapshot",
       "properties": {
@@ -52085,6 +52530,18 @@
       }
     },
     {
+      "node_id": "ver:self-host-uses-documents",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-04",
+        "level": "system",
+        "method": "test",
+        "name": "reflow2's own design record still exercises DOCUMENTS, so it can still catch a BL-176 regression on itself (tools/self_host_uses_documents.py, run in CI). Three assertions: at least 5 document/spec artifacts carry a describing edge; at least one is attached ONLY by DOCUMENTS/SPECIFIES (the canary — without it, reverting BL-176 produces no finding here); and no artifact is attached solely by bookkeeping. MUTATION-CHECKED against three seeded regressions — restore REALIZES to every canary, strip all DOCUMENTS/SPECIFIES, and add a genuinely unattached artifact — all three caught, exit 1. Guards the RECORD rather than the code, which is the BL-199 lesson: tests/orphan_attachment.rs proves the detector behaves, this proves the repo still contains the shape that would notice it regressing.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:served-skills",
       "node_type": "Verification",
       "properties": {
@@ -52281,7 +52738,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6c699fb34ee9de63e93bdfa8c3550e9757a827ff24101a395033fa988432abf3",
+  "prev_content_hash": "sha256:72a877b69a0cb4710703b121e135473b465f0720fba45d9bba1c65a7d9903417",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
