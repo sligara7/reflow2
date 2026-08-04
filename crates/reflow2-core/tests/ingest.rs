@@ -395,6 +395,122 @@ fn a_new_id_with_a_matching_name_is_fuzzy_merged_and_edges_redirect() {
     );
 }
 
+/// Ingest the same pair of documents in both orders and read the name back.
+///
+/// Returns `(canonical_name, alias_name, capability_count, merge_count)`.
+fn ingest_both(
+    first: (&str, &str),
+    second: (&str, &str),
+) -> (String, Option<String>, usize, usize) {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:a".into(),
+            ..Default::default()
+        },
+        &mock_cap(first.0, first.1, false),
+    )
+    .unwrap();
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:b".into(),
+                ..Default::default()
+            },
+            &mock_cap(second.0, second.1, false),
+        )
+        .unwrap();
+    let name = g
+        .get_node(node::CAPABILITY, first.0)
+        .unwrap()
+        .or_else(|| g.get_node(node::CAPABILITY, second.0).unwrap())
+        .expect("one capability survives")
+        .properties
+        .get("name")
+        .and_then(|v| v.as_str())
+        .unwrap_or_default()
+        .to_string();
+    let alias = report
+        .fuzzy_merges
+        .first()
+        .and_then(|m| m.alias_name.clone());
+    (
+        name,
+        alias,
+        g.count_nodes(node::CAPABILITY).unwrap(),
+        report.fuzzy_merges.len(),
+    )
+}
+
+/// `req:corpus-ingest`'s load-bearing clause: *"Ordering must not decide meaning
+/// — which file happened to be read first must not determine the canonical name
+/// of anything."*
+///
+/// It did, and a corpus is exactly where it bites, because the order is the
+/// iteration order of a folder nobody chose. Measured before the fix, same two
+/// documents, same design: `A then B -> "Cache Read Path"`,
+/// `B then A -> "Read Path Cache"`. The merge was always right — one node, one
+/// recorded merge — and the NAME followed whichever document was read last,
+/// because the extracted map overwrites `name` on the survivor.
+#[test]
+fn the_order_two_documents_arrive_in_does_not_decide_the_canonical_name() {
+    let a = ("cap:read-path-cache", "Read Path Cache");
+    let b = ("cap:cache-read-path", "Cache Read Path");
+
+    let (ab_name, ab_alias, ab_caps, ab_merges) = ingest_both(a, b);
+    let (ba_name, ba_alias, ba_caps, ba_merges) = ingest_both(b, a);
+
+    // The merge itself was never the bug and must not regress.
+    assert_eq!((ab_caps, ab_merges), (1, 1), "A then B should merge to one");
+    assert_eq!((ba_caps, ba_merges), (1, 1), "B then A should merge to one");
+
+    assert_eq!(
+        ab_name, ba_name,
+        "the canonical name must not depend on which document was read first"
+    );
+
+    // Equal length here, so the lexicographic tiebreak decides — and the point
+    // is that it decides the SAME way both times.
+    assert_eq!(ab_name, "Cache Read Path");
+
+    // Nothing is discarded in silence: the name that lost is reported, both
+    // ways round, so the evidence a human chose it survives the merge.
+    assert_eq!(ab_alias.as_deref(), Some("Read Path Cache"));
+    assert_eq!(ba_alias.as_deref(), Some("Read Path Cache"));
+}
+
+/// The counterweight, and the reason the rule is "longer wins" rather than
+/// "lexicographically smallest wins": a longer name is the more specific one,
+/// which is the same reading `token_subset_match` already applies when it
+/// suggests a survivor. Order still must not matter.
+#[test]
+fn the_more_specific_name_survives_a_merge_whichever_way_round() {
+    let short = ("cap:auth", "Auth Gateway Service");
+    let long = ("cap:auth-2", "Auth Gateway Services");
+
+    let (ab_name, ab_alias, ..) = ingest_both(short, long);
+    let (ba_name, ba_alias, ..) = ingest_both(long, short);
+
+    assert_eq!(ab_name, "Auth Gateway Services", "the longer name survives");
+    assert_eq!(ba_name, ab_name, "and does so in either order");
+    assert_eq!(ab_alias.as_deref(), Some("Auth Gateway Service"));
+    assert_eq!(ba_alias.as_deref(), Some("Auth Gateway Service"));
+}
+
+/// Two documents that agree on the name must not manufacture an alias — an
+/// `alias_name` on every merge would make "these two specs disagreed about what
+/// to call it" unreadable, which is the only thing the field is for.
+#[test]
+fn agreeing_documents_record_no_alias() {
+    let (name, alias, caps, merges) =
+        ingest_both(("cap:cache", "Caching"), ("cap:cache-2", "Caching"));
+    assert_eq!((caps, merges), (1, 1));
+    assert_eq!(name, "Caching");
+    assert_eq!(alias, None, "identical names are not a disagreement");
+}
+
 #[test]
 fn a_new_id_with_a_dissimilar_name_is_not_merged() {
     let mut g = DesignGraph::open_in_memory().unwrap();

@@ -72,6 +72,25 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **The order two documents arrive in no longer decides the canonical name** (BL-186, toward
+  `cap:corpus-ingest`). `req:corpus-ingest` calls this its load-bearing clause — *"which file
+  happened to be read first must not determine the canonical name of anything"* — and it was
+  unsatisfied. On a fuzzy auto-merge the extracted property map overwrites `name` on the survivor,
+  so of two specs calling one thing `Read Path Cache` and `Cache Read Path`, **whichever was read
+  last named it** — and for a corpus that is the iteration order of a folder nobody chose. Measured
+  before the fix, same two documents, same design: `A then B → "Cache Read Path"`,
+  `B then A → "Read Path Cache"`. The merge was never wrong (one node, one recorded merge); only the
+  name followed arrival order. The survivor's name is now chosen from the two strings alone —
+  **longer wins, ties lexicographic** — which is the reading `token_subset_match` already applies
+  when it suggests the more specific side as survivor; the tiebreak exists only to make the rule
+  total, since equal-length names would otherwise fall back to arrival order and rebuild the bug.
+  **The losing name is reported, not discarded**: `FuzzyMerge` gains `canonical_name` and
+  `alias_name`, because a merge that silently drops one of two human-chosen names destroys the only
+  evidence a person ever chose it, and `dec:ask-not-repair` governs this capability. Agreeing
+  documents record no alias. *Deliberately not applied to the direct-id path*: re-ingesting the same
+  id with a new name is **matched-evolved**, where the newer document updating its own name is the
+  correct reading.
+
 - **The export-lineage guard had never run in CI** (BL-208). `check_export_chain` compares HEAD's
   export with HEAD~1's, and skips — silently — when that question cannot be answered.
   `actions/checkout@v5` defaults to `fetch-depth: 1`, so `HEAD~1` has never existed in a CI

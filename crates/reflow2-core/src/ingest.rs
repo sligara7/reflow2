@@ -336,6 +336,13 @@ pub struct FuzzyMerge {
     /// reported as a candidate rather than merged, because `Auth Service` is a
     /// strict subset of `Legacy Auth Service` and those are plainly two things.
     pub match_kind: MatchKind,
+    /// The name the merged node ended up carrying.
+    pub canonical_name: String,
+    /// The other name, when the two documents disagreed — `None` when they
+    /// called it the same thing. Reported rather than dropped: a merge that
+    /// silently discards one of two human-chosen names loses the only evidence
+    /// that the choice was ever made.
+    pub alias_name: Option<String>,
 }
 
 /// How a near-match was found. Recorded on every merge and every candidate,
@@ -1183,7 +1190,7 @@ impl DesignGraph {
         id: &str,
         props: Props,
     ) {
-        let new_map = sanitize_extracted(st, node_type, id, props.build());
+        let mut new_map = sanitize_extracted(st, node_type, id, props.build());
         match self.get_node(node_type, id) {
             Err(e) => st.warnings.push(format!("resolve {node_type} '{id}': {e}")),
             // Direct id hit → resolve against that node.
@@ -1203,12 +1210,24 @@ impl DesignGraph {
                     let (_, auto_merge) = self.resolution_thresholds(node_type);
                     if score >= auto_merge {
                         st.aliases.insert(id.to_string(), candidate.clone());
+                        // `req:corpus-ingest` — "ordering must not decide
+                        // meaning". The merge is right at this score; the NAME
+                        // is what used to follow whichever document was read
+                        // last, because the extracted map overwrites it. Two
+                        // specs naming one thing "Read Path Cache" and "Cache
+                        // Read Path" produced a different canonical name
+                        // depending on directory order, which for a corpus is
+                        // the read order of a folder nobody chose.
+                        let (canonical_name, alias_name) =
+                            self.settle_merged_name(node_type, &candidate, &mut new_map);
                         st.fuzzy_merges.push(FuzzyMerge {
                             extracted_id: id.to_string(),
                             canonical_id: candidate.clone(),
                             node_type,
                             score,
                             match_kind: MatchKind::Fuzzy,
+                            canonical_name,
+                            alias_name,
                         });
                         self.integrate_existing(st, node_type, &candidate, new_map);
                     } else {
@@ -1337,6 +1356,74 @@ impl DesignGraph {
             Err(e) => st
                 .warnings
                 .push(format!("snapshot evolved {node_type} '{id}': {e}")),
+        }
+    }
+
+    /// Decide which name a fuzzy-merged node keeps, **without consulting the
+    /// order the documents arrived in**, and say which name lost.
+    ///
+    /// `req:corpus-ingest` names this as its load-bearing clause: *"Ordering
+    /// must not decide meaning — which file happened to be read first must not
+    /// determine the canonical name of anything."* It did. The extracted
+    /// property map overwrites `name` on the survivor, so of two specs calling
+    /// one thing `Read Path Cache` and `Cache Read Path`, whichever was read
+    /// LAST named it — and for a corpus that is the iteration order of a folder
+    /// nobody chose. Measured before the fix: the same two documents produced
+    /// `"Cache Read Path"` one way round and `"Read Path Cache"` the other.
+    ///
+    /// The rule is **longer name wins, ties broken lexicographically**. Longer
+    /// is not a guess about quality — it is the same instinct
+    /// [`token_subset_match`](Self::token_subset_match) already encodes when it
+    /// suggests the longer side as survivor, on the reading that the more
+    /// specific name carries more of what the author meant (`Auth Service` over
+    /// `Auth`). The lexicographic tiebreak exists only to make the rule TOTAL:
+    /// without it, two equal-length names would fall back to arrival order and
+    /// rebuild the bug for the narrow case.
+    ///
+    /// **This picks a name; it does not rule on which is better.** The loser is
+    /// returned and recorded on the [`FuzzyMerge`] as `alias_name`, because a
+    /// merge that silently discards one of two human-chosen names destroys the
+    /// only evidence a person ever chose it — and `dec:ask-not-repair` governs
+    /// this capability. Deliberately NOT scoped to the direct-id path:
+    /// re-ingesting the SAME id with a new name is *matched-evolved*, where the
+    /// newer document updating its own name is the correct reading.
+    fn settle_merged_name(
+        &self,
+        node_type: &str,
+        canonical_id: &str,
+        new_map: &mut HashMap<String, Value>,
+    ) -> (String, Option<String>) {
+        let incoming = new_map
+            .get("name")
+            .and_then(Value::as_str)
+            .unwrap_or_default()
+            .to_string();
+        let existing = match self.get_node(node_type, canonical_id) {
+            Ok(Some(n)) => n
+                .properties
+                .get("name")
+                .and_then(Value::as_str)
+                .unwrap_or_default()
+                .to_string(),
+            // No existing name to weigh: whatever arrived stands, and there is
+            // no second name to report as an alias.
+            _ => return (incoming, None),
+        };
+        if incoming.is_empty() || incoming == existing {
+            new_map.remove("name");
+            return (existing, None);
+        }
+        // Total order, computed from the two strings alone — nothing here can
+        // see which document arrived first.
+        let incoming_wins = (incoming.chars().count(), existing.as_str())
+            > (existing.chars().count(), incoming.as_str());
+        if incoming_wins {
+            (incoming, Some(existing))
+        } else {
+            // Drop the losing name from the map rather than writing it: the
+            // rest of the extraction still applies to the survivor.
+            new_map.remove("name");
+            (existing, Some(incoming))
         }
     }
 
