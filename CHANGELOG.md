@@ -70,6 +70,21 @@ This file is the third view: *what changed, and when*.
     otherwise these would have been two more properties reachable from no tool, which is exactly
     the defect BL-202 records.
 
+### Fixed
+
+- **The CI design-coherence gate swept 124 of 144 artifacts and reported OK over the rest**
+  (BL-206). `tools/reflow2_check.py` asked `scan_nodes` for every Artifact and iterated what came
+  back. `scan_nodes` answers with as many nodes as **fit** and states what it withheld — here
+  `total: 144`, `returned: 124`, `omitted: 20`, `capped_by: "size"` — but the gate's JSON-RPC
+  client unwraps the `{count, items}` envelope to the items and drops those fields, so a capped
+  page was indistinguishable from a complete set. The gate then passed `exhaustive: true` to
+  `reconcile_artifacts`, asserting a sweep that was twenty artifacts short. **The blind spot was
+  already hiding real drift**: `art:tools-built` changed in `d6631e5` and the gate reported OK over
+  it twice. `reconcile_artifacts` was never wrong — asked about one of the missed artifacts
+  directly, it named the drift at once. The sweep now pages on `next_offset` and fails loudly if
+  the collected count misses `total`. *Its regression test was verified in both directions: with
+  the single-page sweep restored, the gate exits **green** with unaccepted drift present.*
+
 ### Changed
 
 - **`loop_status` is cheap again — it digests the verification roll instead of serving it**
