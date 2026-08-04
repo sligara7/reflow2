@@ -31,6 +31,34 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **`orphan_node` no longer calls a correctly-filed document an orphan** (BL-176). The rule counted
+  outgoing `REALIZES` and nothing else, so an Artifact linked the way the served **link-artifacts**
+  skill prescribes — a design doc, ADR, README, runbook or agent-instruction file with `DOCUMENTS`;
+  an OpenAPI/IDL contract with `SPECIFIES` — reported as *"realizes nothing"*. The message was true
+  and the **category** was false: an orphan is a node attached to nothing, and those are attached.
+  **Measured in the field before the fix: registering 26 ADR/architecture documents took structural
+  defects from 13 to 39 — +26, exactly the batch size — and the false-positive rate from 46% to 82%,
+  with ~730 documents still to come.** The reporter stopped work rather than continue, and refused
+  the available workaround (asserting a bogus `REALIZES`) because it would be a lie at 756× scale.
+  BL-114 had already witnessed the same thing twice in an unrelated repo.
+  **The list is now the EXCLUSIONS, and that is the load-bearing change.** Naming the edges that
+  *do* attach is what broke: an inclusion list must be extended every time the vocabulary grows, and
+  until someone remembers, correct work reads as a defect — BL-170's hidden inclusion list is the
+  same shape a second time. An Artifact is now an orphan only when **every** edge it carries, in
+  either direction, is bookkeeping (`INCLUDES`, `CHANGED`, `YIELDED`, `AT_EPOCH`), so a new *design*
+  edge counts as attachment the day it is added and only a new *bookkeeping* edge needs a line.
+  **Deliberately not the degree-zero rule the Decision arm uses:** almost every artifact in a mature
+  graph carries a Release `INCLUDES`, so counting it would silence the detector everywhere.
+  **An Artifact attached by nothing still fires, and so does a document that documents nothing** —
+  that distinction is the whole value of the rule and is pinned by three of the six new tests
+  (`crates/reflow2-core/tests/orphan_attachment.rs`).
+  **Honest limit, and it is BL-199: this repo cannot demonstrate its own fix.** All 139 of reflow2's
+  artifacts carry `REALIZES` — including 32 of the 35 documents and specs, against the skill's own
+  instruction — so `detect_defects` here goes 0 → 0 across the change. The evidence is the new tests
+  and the field measurement, never this graph.
+
 ## [0.23.0] — 2026-08-03
 
 **The design brain learned to talk about its own structure.** Four new readings, none of which
