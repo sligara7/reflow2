@@ -638,18 +638,55 @@ impl DesignGraph {
         // they only ever inflated the defect count and the
         // awaiting-generation pile.
         //
-        // What stays: an Artifact realizing nothing. DETECT has no counterpart
+        // What stays: an Artifact attached to nothing. DETECT has no counterpart
         // (its P3 detectors ask about capabilities, not files), so dropping it
         // would lose the finding entirely.
+        //
+        // BL-176 — WHAT COUNTS AS ATTACHMENT, AND WHY THIS IS AN EXCLUSION LIST.
+        // This rule used to be `REALIZES` and nothing else, so an Artifact filed
+        // exactly the way the served link-artifacts skill prescribes — a design
+        // doc linked with `DOCUMENTS`, an OpenAPI contract with `SPECIFIES` —
+        // reported as an orphan. The message ("realizes nothing") was true and
+        // the CATEGORY was false: an orphan is a node attached to nothing, and
+        // those are attached.
+        //
+        // Measured in the field before it was fixed: registering 26 ADR/
+        // architecture documents took structural defects 13 -> 39, +26 exactly
+        // the batch size, false positives 46% -> 82%, with ~730 documents still
+        // to come. The reporter STOPPED WORK rather than continue, and refused
+        // the workaround of adding a bogus `REALIZES` because it would be a lie
+        // at 756x scale. BL-114 had already witnessed it twice more in an
+        // unrelated repo (a doc that DOCUMENTS, one PRODUCES-d by a
+        // Verification, a corpus that SATISFIES a requirement).
+        //
+        // THE LIST IS INVERTED ON PURPOSE, and that is the load-bearing choice.
+        // Naming the edges that DO attach is what broke: an inclusion list has
+        // to be extended every time the vocabulary grows, and until someone
+        // remembers, correctly-modelled work reads as a defect. That is this
+        // bug, and BL-170's hidden inclusion list is the same shape a second
+        // time. Naming the edges that do NOT attach fails the safe way instead:
+        // a new design edge counts as attachment the day it is added, and only
+        // a new BOOKKEEPING edge needs a line here.
+        //
+        // Bookkeeping means an edge drawn by the machinery rather than by
+        // someone saying what this file is FOR: release membership, change
+        // records, extraction provenance and time. Every one of them is present
+        // on almost every artifact in a mature graph, so counting them would
+        // silence the detector everywhere — which is why this is not the
+        // degree-zero rule the Decision arm below uses.
         for art in self.scan_nodes(node::ARTIFACT)? {
-            if self
-                .outgoing(&art.node_id, Some(edge::REALIZES))?
-                .is_empty()
-            {
+            let attached = self
+                .outgoing(&art.node_id, None)?
+                .into_iter()
+                .chain(self.incoming(&art.node_id, None)?)
+                .any(|e| !ARTIFACT_BOOKKEEPING.contains(&e.edge_type.as_str()));
+            if !attached {
                 issues.push(orphan(
                     &art.node_id,
                     "Artifact",
-                    "realizes nothing",
+                    "is attached to nothing — no edge says what it is for \
+                     (REALIZES / DOCUMENTS / SPECIFIES / PRODUCES / SATISFIES); \
+                     release, change, provenance and epoch links do not count",
                     "generate_owner",
                 ));
             }
@@ -1703,6 +1740,21 @@ impl DesignGraph {
         Ok(())
     }
 }
+
+/// Edges that do NOT attach an Artifact to the design (BL-176).
+///
+/// Bookkeeping drawn by the machinery, not by anyone saying what the file is
+/// FOR: release membership, the change ledger, extraction provenance, and the
+/// time axis. Almost every artifact in a mature graph carries several, so
+/// counting them as attachment would silence `orphan_node` everywhere.
+///
+/// This list is the EXCLUSIONS on purpose. The inclusion form — naming the
+/// edges that do attach — is what BL-176 was: it has to be extended whenever
+/// the vocabulary grows, and until someone remembers, correct work reads as a
+/// defect. Adding a design edge type needs no change here; only a new
+/// bookkeeping edge does.
+const ARTIFACT_BOOKKEEPING: &[&str] =
+    &[edge::INCLUDES, edge::CHANGED, edge::YIELDED, edge::AT_EPOCH];
 
 /// Build an `orphan_node` issue.
 fn orphan(id: &str, type_label: &str, what: &str, fix: &'static str) -> HealIssue {

@@ -53,7 +53,13 @@ Add yourself if you're new here.
 
 
 
-- BL-183 constructors must not erase — @ajs — since 2026-08-02 — crates/reflow2-core/src/*.rs (18 add_* helpers), revise-design skill + mirrors, reflow2-mcp tool descriptions
+- BL-176 orphan_node attachment — @ajs — since 2026-08-04 — crates/reflow2-core/src/heal.rs, crates/reflow2-core/tests/orphan_attachment.rs (new), CHANGELOG.md, docs/{backlog,requirements-coverage}.md, docs/design/reflow2.json
+
+<!-- BL-183's claim was released 2026-08-04: it shipped in v0.23.0 (#64) and the board had carried it
+     as in-progress ever since. Left as a note rather than deleted silently — a stale claim is how two
+     people end up believing a lane is taken. -->
+
+
 
 - BL-182 granularity observation — @ajs — since 2026-08-02 — crates/reflow2-core/src/{granularity,report}.rs, reflow2-mcp tool surface
 

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4e0ab720bd570192630b99bfec32a2e57297d7143d300e24e7f21f3d4c34d587",
+  "content_hash": "sha256:72a877b69a0cb4710703b121e135473b465f0720fba45d9bba1c65a7d9903417",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5847,6 +5847,24 @@
         "action": "modified"
       },
       "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl176-orphan-attachment",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl176-orphan-attachment",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:heal"
     },
     {
       "edge_type": "CHANGED",
@@ -14557,6 +14575,12 @@
       "from_id": "cap:heal",
       "properties": {},
       "to_id": "dec:operational-spof"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:heal",
+      "properties": {},
+      "to_id": "dec:orphan-attachment-is-an-exclusion-list"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -33230,6 +33254,36 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:v0230",
+      "properties": {},
+      "to_id": "epoch:v0240-planned"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0240-planned",
+      "properties": {},
+      "to_id": "epoch:v0250-planned"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0250-planned",
+      "properties": {},
+      "to_id": "epoch:v0260-planned"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0260-planned",
+      "properties": {},
+      "to_id": "epoch:v0270-planned"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0270-planned",
+      "properties": {},
+      "to_id": "epoch:v0280-planned"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v040",
       "properties": {},
       "to_id": "epoch:v050-cut"
@@ -34033,6 +34087,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:orphan-attachment-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:heal"
     },
     {
       "edge_type": "REALIZES",
@@ -36182,6 +36244,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:orphan-attachment",
+      "properties": {},
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:planned-epochs",
       "properties": {},
       "to_id": "cap:planned-epochs"
@@ -36889,6 +36957,14 @@
         "action": "created"
       },
       "to_id": "art:operate"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:orphan-attachment-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:orphan-attachment-test"
     },
     {
       "edge_type": "YIELDED",
@@ -37913,7 +37989,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930",
+        "checksum": "sha256:d3c6e9fe1cac1177",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
         "status": "realized"
@@ -38147,6 +38223,17 @@
         "checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:orphan-attachment-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:9b388fef123f04c5",
+        "location": "crates/reflow2-core/tests/orphan_attachment.rs",
+        "name": "orphan_attachment.rs",
         "status": "realized"
       }
     },
@@ -41249,6 +41336,14 @@
       }
     },
     {
+      "node_id": "chg:bl176-orphan-attachment",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "BL-176: orphan_node counts DOCUMENTS and SPECIFIES as attachment, so a correctly-filed document stops reading as a defect"
+      }
+    },
+    {
       "node_id": "chg:bl179-maturity-profile",
       "node_type": "ChangeEvent",
       "properties": {
@@ -43955,6 +44050,16 @@
       }
     },
     {
+      "node_id": "dec:orphan-attachment-is-an-exclusion-list",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "PROPOSED, AWAITING ANTHONY'S WORD — the code is built and tested this way, but the rule shape is a judgement he should ratify. BL-176's fix could have taken either form. THE FORM NOT TAKEN: extend the inclusion list — count REALIZES plus DOCUMENTS plus SPECIFIES (plus PRODUCES incoming, plus SATISFIES) as attaching an Artifact. This is what the field report asked for and it would have closed the reported case. THE FORM TAKEN: invert it. An Artifact is an orphan when EVERY edge it carries, in either direction, is bookkeeping — INCLUDES from a Release, CHANGED from a ChangeEvent, YIELDED from a Fragment, AT_EPOCH. Anything else attaches. REASONING, and it is a generalisation of the bug rather than a preference: an inclusion list has to be extended every time the vocabulary grows, and until someone remembers, correctly-modelled work reads as a defect. That IS this bug — the list said REALIZES and the schema had since grown DOCUMENTS and SPECIFIES. BL-170 was the same shape from another direction, a hidden inclusion list making a region invisible, and BL-114 witnessed this same detector doing it twice in an unrelated repo. An exclusion list fails the other way: a new DESIGN edge counts as attachment the day it is added and needs no edit here, while only a new BOOKKEEPING edge needs a line. THE COUNTERWEIGHT THAT DEFINES THE RULE'S LIMIT: this is deliberately NOT the degree-zero rule the Decision arm of the same detector uses. Degree-zero was settled for Decisions by measurement and is right there — but almost every Artifact in a mature graph carries a Release INCLUDES edge, so degree-zero would silence orphan_node everywhere. The distinction is that bookkeeping edges are drawn by the machinery, not by anyone saying what the file is FOR. WHAT STILL FIRES, pinned by tests: an Artifact attached by nothing, and a document artifact with no DOCUMENTS edge — because BL-176 was explicit that this doc describes nothing either IS worth saying, so artifact_type must never be a free pass. THE HONEST LIMIT, and it is BL-199: reflow2's own graph goes 0 to 0 across this change and cannot demonstrate the fix, because all 139 of its artifacts carry REALIZES — including 32 of its 35 documents and specs, against the link-artifacts skill's own instruction. The evidence is the six new tests and the field measurement, never this graph. THE RISK OF THE CHOSEN FORM, stated so it is not discovered later: if a future bookkeeping edge type is added and nobody adds it here, it will silently count as attachment and quiet the detector for those nodes. That is the mirror of the failure being fixed, and it is accepted as the smaller one because bookkeeping edge types are added rarely and deliberately while design edge types are added often.",
+        "name": "What ATTACHES an Artifact is defined by excluding bookkeeping, not by listing the edges that count",
+        "rationale": "Recorded because the choice is invisible in the diff — both forms produce the same result on every case anyone has reported, and they differ only in how they FAIL as the vocabulary grows. A future maintainer reading `ARTIFACT_BOOKKEEPING` should find the reason it is an exclusion list rather than rediscovering the argument, and Anthony should get to overrule it while it is still cheap.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:pairing-role-placement",
       "node_type": "Decision",
       "properties": {
@@ -45942,6 +46047,56 @@
       }
     },
     {
+      "node_id": "epoch:v0240-planned",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED v0.24.0 — the document corpus can actually be ingested. Unblocks a user who stopped work at 26 of ~756 documents. BL-176 (done, #68) then BL-199 re-attach, BL-188 granularity intent + BL-191 volatility (both Artifact properties, so ONE schema touch), BL-186 build cap:corpus-ingest, BL-196 genesis asks about custody. Order is forced: ingest at all, then know where you stopped.",
+        "sequence": 263,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:v0250-planned",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED v0.25.0 — the loop tells the truth about what it is owed. No schema; all message and reporting quality, five of six sized S. BL-205 loop_status unreadable, BL-194 open_questions all-clear, BL-192 enums name legal values, BL-195 the bridge a ruling forbids, BL-201 wire or retire Requirement.concern, BL-203 an unexercised type is visible rather than silently empty.",
+        "sequence": 264,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:v0260-planned",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED v0.26.0 — status accounting: when was this true? The biggest conceptual gap either source found, and EIA-649 names it. BL-187 external anchor and BL-185 test-first both add Verification properties (ONE schema touch), BL-189 the retirement half. Half of one evidence corpus pins to commits no longer ancestors of main; 11 of this project's own verifications sat green on one two-day-old run.",
+        "sequence": 265,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:v0270-planned",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED v0.27.0 — seams, the frontier the instruments already name. maturity_report puts seams at 0% (0 of 73 couplings declared through a contract) across 23 releases, and Interface has 3 instances with the 5 spec properties set on none. BL-193 a CONSUMED interface with no spec fires no gap; BL-190 the stewardship edge joins it because a new edge type is a schema change and pairing keeps it to one bump.",
+        "sequence": 266,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:v0280-planned",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED v0.28.0 — one honest write surface. Largest and least urgent; nothing here blocks anyone. BL-202 (L) collapses the two write surfaces the typed constructors created — they reach 44% of declared properties and are the single cause behind BL-129 and BL-183. BL-198 stop serializing defaults, but measure the cost to compare_designs and the merge driver FIRST. BL-197 + BL-204: the words we ship stopped matching the code we ship.",
+        "sequence": 267,
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "epoch:v040",
       "node_type": "DesignEpoch",
       "properties": {
@@ -47074,6 +47229,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered operate.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:orphan-attachment-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered orphan_attachment.rs"
       }
     },
     {
@@ -51640,6 +51805,18 @@
       }
     },
     {
+      "node_id": "ver:orphan-attachment",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-04",
+        "level": "unit",
+        "method": "test",
+        "name": "An Artifact is an orphan only when every edge it carries is bookkeeping — a document attached by DOCUMENTS and a contract attached by SPECIFIES are attached (BL-176). Six cases in crates/reflow2-core/tests/orphan_attachment.rs. WRITTEN BEFORE THE FIX, and the split is the evidence: the 2 defect cases FAILED and all 4 counterweights PASSED against the old rule, so the counterweights were not passing by accident of the bug. What must still fire is pinned: an artifact attached by nothing, a document that documents nothing (artifact_type is never a free pass), and an artifact carrying only a Release INCLUDES edge — which is why this is NOT the degree-zero rule the Decision arm uses.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:planned-epochs",
       "node_type": "Verification",
       "properties": {
@@ -52104,7 +52281,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:968b364344b9f003b38760898d9a6923e55f0e140641b0a21ea26d430dc7fb6f",
+  "prev_content_hash": "sha256:6c699fb34ee9de63e93bdfa8c3550e9757a827ff24101a395033fa988432abf3",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
