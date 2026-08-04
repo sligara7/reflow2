@@ -181,6 +181,39 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Declare what an Artifact node stands for and how its content behaves — \
+                       the two things only its author can say. `granularity`: `atomic` (one \
+                       deliverable), `opaque` (a directory or vendored mass claimed as a unit ON \
+                       PURPOSE — do not descend), or `pending_expansion` (a PLACEHOLDER for items \
+                       that should each become their own node). Those last two look identical to \
+                       every report today, and they are opposite states: one is a decision, the \
+                       other is unfinished work — a registration check read GREEN over 359 \
+                       individually unreferenceable files because nothing could tell them apart. \
+                       `volatility`: `stable` (any content change is drift — the default and the \
+                       safe reading), or `append_only`/`living` (a log, a bus, a changelog: a \
+                       content change is EXPECTED and reports as `expected_change` rather than \
+                       being recorded, so you are not owed a disposition on every reconcile \
+                       forever). ABSENCE still fires at full severity whatever the volatility, \
+                       because a missing file is always a real finding. Omitted fields are left \
+                       alone; every other property is preserved.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn set_artifact_intent(
+        &self,
+        Parameters(req): Parameters<ArtifactIntentReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        let artifact = g
+            .set_artifact_intent(
+                &req.artifact_id,
+                req.granularity.as_deref(),
+                req.volatility.as_deref(),
+            )
+            .map_err(dyno_err)?;
+        ok_json(NodeDto::from(artifact))
+    }
+
+    #[tool(
         description = "Accept MANY drift baselines in one call — the bulk form of \
                        set_artifact_checksum, which was 244 consecutive calls across 22 sessions \
                        of recorded usage. EACH ITEM CARRIES ITS OWN DISPOSITION, and that is the \

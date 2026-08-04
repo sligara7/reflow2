@@ -31,6 +31,45 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **An Artifact can say what it stands for and how its content behaves** — two new optional
+  properties, one schema touch, both aimed at the same failure: *the graph could not tell two
+  opposite states apart, and reported the wrong one confidently.* **Schema change, so this is a
+  minor bump — but the stamp does not move (29 node types / 60 edge types unchanged), so no
+  upgrade doc is owed.** Both default to the pre-existing behaviour, so an older graph reads
+  exactly as it did.
+  - **`granularity`** (BL-188) — `atomic` (default) / `opaque` / `pending_expansion`. A directory
+    Artifact claims its whole subtree, which is the **adopt** skill's own rule, so a registration
+    check reported *"every live doc is registered"* — truthfully — across **359 individually
+    unreferenceable files**, and `coverage_report` counted the directory as covering everything
+    beneath it. Nothing distinguished *deliberately opaque* (a settled archive) from *nobody has
+    got to it yet*, which are opposite states with identical readings. `coverage_report` now
+    returns `pending_expansion` and `opaque_claims` separately, so *"53 artifacts, of which 3 stand
+    in for the rest"* is producible from the graph — a sentence that could not be formed at all
+    before. **Deliberately carries no count of what a placeholder stands for:** reflow2 does no
+    file I/O, so a stored number would be a caller-supplied figure nothing can recompute, which is
+    the staleness BL-187 exists to name.
+  - **`volatility`** (BL-191) — `stable` (default) / `append_only` / `living`. Five coordination
+    buses modelled with checksums, exactly per the adopt skill's *"a checksum is what makes later
+    drift detectable"*, produced **five `checksum_change` divergences within minutes — all correct,
+    all meaningless**, because those files are appended to by design; and that disposition was owed
+    again on every reconcile forever. A content change on a volatile artifact is now reported as
+    **`expected_change`** and **not written to the drift ledger**. **It is reported, not
+    suppressed** — silence would trade a false positive for a false negative, letting a wholesale
+    replacement pass unmentioned, which is the strictly worse bug and the trap BL-176 avoided.
+    **Absence still fires at full severity whatever the volatility.** **Shrink detection is
+    deliberately NOT included**: a shrink is the genuinely alarming event for an append-only file
+    and a checksum cannot express it — it needs a size baseline nothing records, and the reporting
+    team's own compaction shrinks those files on purpose, so the heuristic needs the design's
+    consent rather than a bare rule.
+  - **`set_artifact_intent`** is the new tool that writes them. A dedicated setter rather than
+    arguments on `add_artifact`, for the reason BL-183 made expensive: a constructor taking a
+    partial property set and writing the whole node erases what the caller did not name. Omitted
+    fields are left alone. **Its enum rejections name the legal values** (BL-192's cheapest fix) —
+    otherwise these would have been two more properties reachable from no tool, which is exactly
+    the defect BL-202 records.
+
 ### Changed
 
 - **reflow2's own design record now follows the `link-artifacts` skill it serves** (BL-199), and

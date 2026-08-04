@@ -647,4 +647,79 @@ impl DesignGraph {
         )?;
         Ok(())
     }
+
+    /// Declare what an Artifact node stands for and how its content behaves —
+    /// `granularity` (BL-188) and `volatility` (BL-191).
+    ///
+    /// Both are statements only the author can make. No amount of looking at the
+    /// tree distinguishes a settled archive from an untouched backlog, and no
+    /// amount of hashing distinguishes a log that grew from a source file that
+    /// was edited — which is why these are recorded rather than inferred.
+    ///
+    /// A separate setter rather than arguments on `add_artifact`, for the reason
+    /// BL-183 made expensive: a constructor that takes a partial property set
+    /// and writes the whole node erases everything the caller did not name.
+    /// Passing `None` here changes nothing, and every other property is
+    /// preserved.
+    pub fn set_artifact_intent(
+        &mut self,
+        artifact_id: &str,
+        granularity: Option<&str>,
+        volatility: Option<&str>,
+    ) -> Result<StoredNode, DynoError> {
+        const GRANULARITIES: [&str; 3] = ["atomic", "opaque", "pending_expansion"];
+        const VOLATILITIES: [&str; 3] = ["stable", "append_only", "living"];
+
+        // Reject with the legal values named. An enum rejection that does not
+        // list what IS allowed costs a round-trip to `describe_schema` and is
+        // the single cheapest fix on the friction list (BL-192).
+        if let Some(g) = granularity {
+            if !GRANULARITIES.contains(&g) {
+                return Err(DynoError::Validation {
+                    node_type: node::ARTIFACT.into(),
+                    property: "granularity".into(),
+                    message: format!(
+                        "'{g}' is not an Artifact granularity (one of {}). `atomic` is one \
+                         deliverable; `opaque` claims a subtree ON PURPOSE (a settled archive, \
+                         a vendored tree); `pending_expansion` is a placeholder for items that \
+                         should each become their own node.",
+                        GRANULARITIES.join(", ")
+                    ),
+                });
+            }
+        }
+        if let Some(v) = volatility {
+            if !VOLATILITIES.contains(&v) {
+                return Err(DynoError::Validation {
+                    node_type: node::ARTIFACT.into(),
+                    property: "volatility".into(),
+                    message: format!(
+                        "'{v}' is not an Artifact volatility (one of {}). `stable` means any \
+                         content change is drift; `append_only` and `living` mean a content \
+                         change is expected and is reported as `expected_change` rather than \
+                         recorded — absence still fires either way.",
+                        VOLATILITIES.join(", ")
+                    ),
+                });
+            }
+        }
+
+        let Some(existing) = self.get_node(node::ARTIFACT, artifact_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::ARTIFACT.into(),
+                node_id: artifact_id.into(),
+            });
+        };
+        let mut props = Props::new();
+        for (k, v) in &existing.properties {
+            props = props.set(k, v.clone());
+        }
+        if let Some(g) = granularity {
+            props = props.set("granularity", g);
+        }
+        if let Some(v) = volatility {
+            props = props.set("volatility", v);
+        }
+        self.create_node(node::ARTIFACT, artifact_id, props)
+    }
 }

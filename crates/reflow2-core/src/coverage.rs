@@ -115,6 +115,29 @@ pub struct CoverageReport {
     /// When the caller says the sweep was taken. reflow2 takes no clock; an
     /// undated sweep is reported as undated rather than assumed current.
     pub swept_at: Option<String>,
+    /// Artifacts declaring `granularity: pending_expansion` — PLACEHOLDERS that
+    /// stand in for items which should each become their own node, and which
+    /// nobody has got to yet (BL-188).
+    ///
+    /// These qualify every number above them. A directory artifact claims its
+    /// whole subtree, so `claimed` counts files that are individually
+    /// unreferenceable and coverage reads green over them — measured in the
+    /// field as *"every live doc is registered"* across 359 invisible files.
+    /// Naming the placeholders is what makes the sentence *"53 artifacts, of
+    /// which 3 stand in for the rest"* producible from the graph at all.
+    ///
+    /// Deliberately carries no count of what each stands for: reflow2 does no
+    /// file I/O, so a stored number would be a caller-supplied figure nothing
+    /// can recompute. The caller holding the sweep already knows it.
+    pub pending_expansion: Vec<String>,
+    /// Artifacts declaring `granularity: opaque` — a subtree claimed as a unit
+    /// ON PURPOSE (a settled archive, a vendored tree).
+    ///
+    /// Reported APART from `pending_expansion` because the two are opposite
+    /// states that used to read identically: one is a decision, the other is
+    /// unfinished work. A report that conflated them would tell a team its
+    /// archive was a backlog item, or its backlog was settled.
+    pub opaque_claims: Vec<String>,
 }
 
 /// Normalise a path for prefix comparison: forward slashes, no `./`, no
@@ -160,8 +183,8 @@ impl DesignGraph {
         exclusions: &[String],
         swept_at: Option<&str>,
     ) -> Result<CoverageReport, DynoError> {
-        let claims_list: Vec<String> = self
-            .scan_nodes(node::ARTIFACT)?
+        let artifacts = self.scan_nodes(node::ARTIFACT)?;
+        let claims_list: Vec<String> = artifacts
             .iter()
             .filter_map(|a| {
                 a.properties
@@ -171,6 +194,26 @@ impl DesignGraph {
             })
             .filter(|l| !l.is_empty())
             .collect();
+
+        // What the numbers below are standing on (BL-188). Collected from the
+        // nodes rather than inferred from the paths: whether a directory is a
+        // settled archive or an untouched backlog is a statement its author
+        // makes, and no amount of looking at the tree can recover it.
+        let by_granularity = |want: &str| -> Vec<String> {
+            artifacts
+                .iter()
+                .filter(|a| {
+                    a.properties
+                        .get("granularity")
+                        .and_then(Value::as_str)
+                        .unwrap_or("atomic")
+                        == want
+                })
+                .map(|a| a.node_id.clone())
+                .collect()
+        };
+        let pending_expansion = by_granularity("pending_expansion");
+        let opaque_claims = by_granularity("opaque");
         let exclusions: Vec<String> = exclusions.iter().map(|e| normalise(e)).collect();
 
         let mut excluded = Vec::new();
@@ -269,6 +312,8 @@ impl DesignGraph {
             excluded,
             unobserved_locations,
             swept_at: swept_at.map(str::to_string),
+            pending_expansion,
+            opaque_claims,
         })
     }
 }

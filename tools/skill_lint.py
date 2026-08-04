@@ -63,6 +63,17 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # Artifact.granularity and Artifact.volatility values (BL-188, BL-191) —
+    # property enums the link-artifacts skill names, not tools.
+    "granularity",
+    "atomic",
+    "opaque",
+    "pending_expansion",
+    "volatility",
+    "stable",
+    "append_only",
+    "living",
+    "expected_change",
     "path",
     "base_path",
     "next",

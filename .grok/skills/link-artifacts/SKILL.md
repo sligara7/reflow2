@@ -81,6 +81,26 @@ changed outside the loop (someone edited by hand, a merge landed, you refactored
    how a design erodes into fiction over N fix cycles while reporting zero gaps. When in doubt,
    the honest answer is `design_updated` — ask the user what the fix changed.
 
+## Two things only you can declare — say them once, not every reconcile
+
+Some artifacts are not one file, and some are *supposed* to change. Neither is visible from the
+outside: no amount of looking at a tree says whether a directory was left opaque on purpose, and no
+amount of hashing says whether a file grew by design. Declare them with `set_artifact_intent` and
+the reports stop asking:
+
+- **`volatility`** — `stable` (the default: any content change is drift) versus `append_only` /
+  `living` for a log, a coordination bus, a changelog. **Set this the moment you register such a
+  file.** Otherwise every reconcile reports a `checksum_change` that is correct and meaningless,
+  you dispose of it, and you owe that ritual again forever — which is how a real drift ends up
+  buried. A declared-volatile artifact reports `expected_change` instead, and that is *not*
+  recorded. **Absence still fires at full severity**, so this never hides a file going missing.
+- **`granularity`** — `atomic` (the default) versus `opaque` for a subtree you are claiming
+  deliberately (a vendored tree, a settled archive), or `pending_expansion` for a placeholder
+  standing in for files that should each become their own node. **A directory artifact claims
+  everything beneath it**, so without this a registration check and `coverage_report` both go
+  green over files nobody can reference — measured once at 359 of them. Declaring
+  `pending_expansion` is how you keep an honest to-do visible instead of buying a false tick.
+
 Pass `record_events: true` when you want the divergence written into the graph as a `DriftEvent`
 — useful for a drift you're not resolving now, since the event itself propagates into the design.
 

@@ -1956,6 +1956,34 @@ pub struct ReconcileArtifactsReq {
     pub detected_at: Option<String>,
 }
 
+/// What an Artifact stands for, and how its content behaves (BL-188, BL-191).
+///
+/// Both fields are optional and omitting one leaves it alone — this is a
+/// declaration you refine, not a form you re-fill. Deliberately its own request
+/// rather than arguments on `add_artifact`: a constructor that takes a partial
+/// property set and writes the whole node erases what the caller did not name,
+/// which is the defect BL-183 found in sixteen of eighteen constructors.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ArtifactIntentReq {
+    pub artifact_id: String,
+    /// `atomic` (one deliverable — the default), `opaque` (a subtree claimed as
+    /// a unit ON PURPOSE: a settled archive, a vendored tree — do not descend),
+    /// or `pending_expansion` (a PLACEHOLDER for items that should each become
+    /// their own node). The last two read identically to every report today and
+    /// are opposite states: a decision versus unfinished work.
+    #[serde(default)]
+    pub granularity: Option<String>,
+    /// `stable` (any content change is drift — the default, and the safe
+    /// reading), `append_only` (a log, a bus, a changelog: it grows by design),
+    /// or `living` (a continuously-edited document). For the last two a content
+    /// change reports as `expected_change` and is NOT recorded, so no
+    /// disposition is owed on every reconcile forever. Absence still fires at
+    /// full severity either way.
+    #[serde(default)]
+    pub volatility: Option<String>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct SetChecksumReq {

@@ -120,6 +120,16 @@ pub enum DriftKind {
     /// Cannot be judged: no checksum recorded, or none observed. Surfaced rather
     /// than treated as unchanged.
     NoBaseline,
+    /// The content changed and the artifact SAID it would — `volatility` is
+    /// `append_only` or `living` (BL-191). Reported so the caller can see it,
+    /// never recorded: a log that grew is not a divergence, and filing one on
+    /// every reconcile is how a detector is trained to be ignored.
+    ///
+    /// This is deliberately a distinct kind rather than silence. Suppressing the
+    /// finding would trade a false positive for a false negative — an
+    /// append-only file replaced wholesale would then pass unmentioned — which
+    /// is the strictly worse bug, and the trap BL-176 was careful to avoid.
+    ExpectedChange,
 }
 
 impl DriftKind {
@@ -132,12 +142,15 @@ impl DriftKind {
             DriftKind::Understated => "understated",
             DriftKind::Overstated => "overstated",
             DriftKind::NoBaseline => "no_baseline",
+            DriftKind::ExpectedChange => "expected_change",
         }
     }
 
-    /// The schema `DriftEvent.drift_type` this records as. `NoBaseline` has no
-    /// schema counterpart — it is an observability gap, not a divergence — so it
-    /// is reported but never recorded as a `DriftEvent`.
+    /// The schema `DriftEvent.drift_type` this records as. `NoBaseline` and
+    /// `ExpectedChange` have no schema counterpart — the first is an
+    /// observability gap and the second is the artifact behaving as declared,
+    /// and neither is a divergence — so both are reported but never recorded as
+    /// a `DriftEvent`.
     fn drift_type(self) -> Option<&'static str> {
         match self {
             DriftKind::MissingArtifact => Some("missing_artifact"),
@@ -150,6 +163,7 @@ impl DriftKind {
             DriftKind::Understated => Some("undocumented_addition"),
             DriftKind::Overstated => Some("spec_mismatch"),
             DriftKind::NoBaseline => None,
+            DriftKind::ExpectedChange => None,
         }
     }
 
@@ -166,6 +180,10 @@ impl DriftKind {
             // record that is behind; overstatement is a record that is wrong.
             DriftKind::Overstated => "high",
             DriftKind::NoBaseline => "low",
+            // Lowest of all: nothing is wrong. It is reported so that a
+            // wholesale replacement is still visible to a reader, not because
+            // anything is owed.
+            DriftKind::ExpectedChange => "low",
         }
     }
 }
@@ -355,20 +373,47 @@ impl DesignGraph {
                     unchanged += 1;
                     matched.push(obs.artifact_id.clone());
                 }
-                (Some(_), Some(_)) => findings.push(DriftFinding {
-                    artifact_id: obs.artifact_id.clone(),
-                    kind: DriftKind::ChecksumChange,
-                    message: format!(
-                        "'{}' has changed since it was registered against the design",
-                        obs.artifact_id
-                    ),
-                    realizes: realizes.clone(),
-                    observed_checksum: observed_canonical.clone(),
-                    event_id: None,
-                    direction: None,
-                    unrecorded: Vec::new(),
-                    unbuilt: Vec::new(),
-                }),
+                // The content moved. Whether that is DRIFT depends on what the
+                // artifact said about itself: a source file changing is a
+                // divergence, a log or a living document changing is the thing
+                // behaving as declared (BL-191). Read from the node, never
+                // guessed from the path or the artifact_type — a `.md` may be a
+                // frozen spec and a `.log` may be checked in and stable.
+                (Some(_), Some(_)) => {
+                    let volatility = artifact
+                        .properties
+                        .get("volatility")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or("stable");
+                    let expected = matches!(volatility, "append_only" | "living");
+                    findings.push(DriftFinding {
+                        artifact_id: obs.artifact_id.clone(),
+                        kind: if expected {
+                            DriftKind::ExpectedChange
+                        } else {
+                            DriftKind::ChecksumChange
+                        },
+                        message: if expected {
+                            format!(
+                                "'{}' has changed, and declares volatility '{volatility}' — \
+                             expected, so not recorded as drift. Absence would still be \
+                             reported.",
+                                obs.artifact_id
+                            )
+                        } else {
+                            format!(
+                                "'{}' has changed since it was registered against the design",
+                                obs.artifact_id
+                            )
+                        },
+                        realizes: realizes.clone(),
+                        observed_checksum: observed_canonical.clone(),
+                        event_id: None,
+                        direction: None,
+                        unrecorded: Vec::new(),
+                        unbuilt: Vec::new(),
+                    });
+                }
                 // Either side missing → we cannot judge. Say so; never pass silently.
                 (recorded, current) => {
                     let why = match (recorded.is_some(), current.is_some()) {
@@ -666,5 +711,8 @@ fn severity_rank(kind: DriftKind) -> u8 {
         DriftKind::Understated => 3,
         DriftKind::UndocumentedAddition => 4,
         DriftKind::NoBaseline => 5,
+        // Last on purpose: nothing is wrong. It sorts below `no_baseline`,
+        // which is at least an admission that something could not be judged.
+        DriftKind::ExpectedChange => 6,
     }
 }

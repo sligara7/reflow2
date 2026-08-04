@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:7f49f27524ab76a53e89e2df3d04cb12c3a688a47dcbe1d9ae82050ecadd3dad",
+  "content_hash": "sha256:f231440aefae574b795e911ef5509cfdfef4a22fa9bd433fb9b1530501217408",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -32,6 +32,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:artifact-declares-its-own-shape",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:drift"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -5544,6 +5552,42 @@
         "action": "modified"
       },
       "to_id": "dec:arrival-delta"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-properties",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-properties",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-properties",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-properties",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:schema-build"
     },
     {
       "edge_type": "CHANGED",
@@ -33752,6 +33796,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:artifact-intent-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:artifact-declares-its-own-shape"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:bl124-instrument",
       "properties": {
         "completeness": "complete"
@@ -36136,6 +36188,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:artifact-intent",
+      "properties": {},
+      "to_id": "cap:artifact-declares-its-own-shape"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:bounded-reads",
       "properties": {},
       "to_id": "cap:bounded-reads"
@@ -36855,6 +36913,14 @@
         "action": "created"
       },
       "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:artifact-intent-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:artifact-intent-test"
     },
     {
       "edge_type": "YIELDED",
@@ -37842,6 +37908,16 @@
         "checksum": "sha256:3850cb634766556b6630d709d927ae335828cc10a34604bff9c02777a92ba863",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:artifact-intent-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "location": "crates/reflow2-core/tests/artifact_intent.rs",
+        "name": "artifact_intent.rs",
         "status": "realized"
       }
     },
@@ -39411,6 +39487,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "What was planned against what arrived, computed and never stored",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:artifact-declares-its-own-shape",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BL-188 and BL-191, built together because both are Artifact properties and a schema change costs the same for two as for one. THE SHARED FAILURE, which is why they are one capability rather than two: in each case the graph held two OPPOSITE states that produced an identical reading, and the tool reported the wrong one confidently. GRANULARITY (atomic / opaque / pending_expansion) — a directory Artifact claims its whole subtree, which is the adopt skill's own rule, so a registration check reported \"every live doc is registered\", truthfully, across 359 individually unreferenceable files, and coverage_report counted the directory as covering everything beneath it. A settled archive claimed on purpose and a placeholder nobody has got to yet were indistinguishable. coverage_report now returns pending_expansion and opaque_claims SEPARATELY, which makes \"53 artifacts, of which 3 stand in for the rest\" producible from the graph — a sentence that could not be formed at all before. Deliberately stores NO count of what a placeholder stands for: reflow2 does no file IO, so a stored number would be a caller-supplied figure nothing can recompute, the exact staleness BL-187 names. VOLATILITY (stable / append_only / living) — five coordination buses modelled with checksums, exactly per the adopt skill's instruction, produced five checksum_change divergences within minutes, all correct and all meaningless, with the disposition owed again on every reconcile forever. A content change on a volatile artifact now reports as expected_change and is not written to the drift ledger. IT IS REPORTED, NOT SUPPRESSED, and that is the load-bearing restraint: silence would trade a false positive for a false negative and let a wholesale replacement pass unmentioned, which is strictly the worse bug and the trap BL-176 was careful to avoid. Absence still fires at full severity whatever the volatility. SHRINK DETECTION IS DELIBERATELY ABSENT and stays open: a shrink is the genuinely alarming event for an append-only file, a checksum cannot express it, it needs a size baseline nothing records, and the reporting team's own compaction shrinks those files on purpose — so the heuristic needs the design's consent rather than a bare rule. BOTH VALUES ARE READ FROM THE NODE, NEVER INFERRED: no amount of looking at a tree recovers whether opacity was a decision, and no amount of hashing distinguishes a log that grew from a source file that was edited. Written by set_artifact_intent, a dedicated setter rather than arguments on add_artifact, because a constructor taking a partial property set and writing the whole node erases what the caller did not name (BL-183). Adding the properties without a tool to write them would have created two more properties reachable from nothing, which is BL-202's exact defect.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "An artifact declares what it stands for and how its content behaves, so a report can tell two opposite states apart",
         "provenance": "authored",
         "status": "realized",
         "tier": "operational"
@@ -41567,6 +41656,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "The arrival delta moves from brainstorming to a decision, on Anthony's three calls (change_type scope_change used as least-wrong: nothing in the enum means 'an open question was settled')"
+      }
+    },
+    {
+      "node_id": "chg:artifact-intent-properties",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-188 + BL-191: an Artifact can declare what it stands for (granularity) and how its content behaves (volatility) — one schema touch, both aimed at the graph being unable to tell two opposite states apart"
       }
     },
     {
@@ -47117,6 +47214,16 @@
       }
     },
     {
+      "node_id": "frag:art:artifact-intent-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered artifact_intent.rs"
+      }
+    },
+    {
       "node_id": "frag:art:bl124-instrument",
       "node_type": "Fragment",
       "properties": {
@@ -51550,6 +51657,18 @@
       }
     },
     {
+      "node_id": "ver:artifact-intent",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-04",
+        "level": "unit",
+        "method": "test",
+        "name": "An artifact's declared granularity and volatility change what a report says about it, and change nothing else (crates/reflow2-core/tests/artifact_intent.rs, 9 cases). THE COUNTERWEIGHTS ARE THE POINT and are half the file: a stable artifact still reports checksum_change (the default does not move), an unchanged append_only artifact still reads as unchanged rather than as an expected change, an ordinary artifact is not named as a placeholder, and — the one that keeps this honest — a MISSING append_only artifact still fires at full severity, because declaring content volatile never says the file may vanish. MUTATION-CHECKED against three seeded regressions: treating every artifact as volatile (caught by the stable case), recording expected_change in the drift ledger after all (caught by the ledger case), and swapping the two granularity classes (caught by BOTH granularity cases, which is the proof they are genuinely reported apart rather than together).",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:bounded-reads",
       "node_type": "Verification",
       "properties": {
@@ -52738,7 +52857,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:72a877b69a0cb4710703b121e135473b465f0720fba45d9bba1c65a7d9903417",
+  "prev_content_hash": "sha256:7f49f27524ab76a53e89e2df3d04cb12c3a688a47dcbe1d9ae82050ecadd3dad",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

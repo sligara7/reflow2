@@ -32,9 +32,9 @@ The second rule: **an increment should be a sentence a user recognises**, not a 
 | Row | What | Size | Schema? |
 |---|---|---|---|
 | **BL-176** | `orphan_node` counts attachment, not `REALIZES` | S | no | ✅ **DONE** (#68) |
-| **BL-199** | re-attach reflow2's own 32 document artifacts with `DOCUMENTS` | S | no |
-| **BL-188** | artifact granularity intent — `opaque` vs `pending_expansion` | M | **yes** |
-| **BL-191** | artifact volatility — `stable` vs `append_only`/`living` | S | **yes** |
+| **BL-199** | re-attach reflow2's own document artifacts with `DOCUMENTS` | S | no | ✅ **DONE** (#69) |
+| **BL-188** | artifact granularity intent — `opaque` vs `pending_expansion` | M | **yes** | ✅ **DONE** |
+| **BL-191** | artifact volatility — `stable` vs `append_only`/`living` | S | **yes** | ✅ **DONE** |
 | **BL-186** | build `cap:corpus-ingest` (accepted requirement, accepted mechanism, unbuilt) | M | no |
 | **BL-196** | `genesis` asks where design artifacts will live | M | no (skill) |
 
@@ -50,6 +50,16 @@ here) → `BL-188` (know where you stopped) → `BL-186` (the build).
 **BL-196 rides along** because it is the same subject — custody — and is a skill question with no
 code: `genesis` already asks about deployment and platform, and should ask where artifacts will
 live while it is still cheap to answer.
+
+> **Status, 2026-08-04: four of six done.** The schema-clustering held — `granularity` and
+> `volatility` landed as one edit to `schema/build.yaml`, one validation run, one bump. **The
+> stamp did not move** (29/60 unchanged, since neither is a new node or edge type), so the
+> upgrade doc is not owed — step 3's conditionality, confirmed empirically rather than assumed.
+> One thing the plan did not anticipate and should have: adding properties with no tool to write
+> them would have created two more unreachable properties, which is [BL-202]'s exact defect. The
+> increment therefore also grew `set_artifact_intent`. **Read that as a standing rule for every
+> schema row below: a property nobody can set is not a feature.**
+> **Remaining here: [BL-186]** (build `cap:corpus-ingest`) **and [BL-196]** (genesis custody).
 
 ---
 

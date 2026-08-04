@@ -285,7 +285,14 @@ impl ReflowService {
                        30% of a system reports the same `0 open gaps` as one covering all of it. \
                        Deliberately not a score and never a pass/fail: a registered artifact whose \
                        location is a directory claims everything beneath it, so modelling a \
-                       vendored mass as one opaque unit is correct rather than a hole. Exclusions \
+                       vendored mass as one opaque unit is correct rather than a hole. THAT SAME \
+                       RULE IS ALSO HOW THIS GOES FALSELY GREEN, so the answer now says what it is \
+                       standing on: `opaque_claims` are subtrees claimed ON PURPOSE, \
+                       `pending_expansion` are PLACEHOLDERS nobody has expanded yet, and until an \
+                       artifact declares one (set_artifact_intent) the two are indistinguishable — \
+                       a registration check once read GREEN over 359 individually unreferenceable \
+                       files. Read them next to `claimed`: that is how you say '53 artifacts, of \
+                       which 3 stand in for the rest' instead of just 'covered'. Exclusions \
                        come back named. Run it at the end of an adopt pass, so a thin pass is \
                        measured rather than felt.",
         annotations(read_only_hint = true)
