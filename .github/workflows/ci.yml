@@ -91,6 +91,13 @@ jobs:
         run: python3 tools/reflow2_check.py --export docs/design/reflow2.json
       - name: Coherence-gate suite (hermetic — the gate's own regression net, BL-88)
         run: python3 tools/test_reflow2_check.py
+      - name: Self-host still exercises DOCUMENTS (BL-199 — the canary for BL-176)
+        # Guards the RECORD, not the code. reflow2 attached 32 of its 35 document
+        # artifacts with REALIZES, against its own served skill, so it never did
+        # the thing that fires BL-176 and could not find that bug on itself for
+        # eleven releases. This fails if the design record drifts back to
+        # REALIZES-only and silently loses the ability to catch that regression.
+        run: python3 tools/self_host_uses_documents.py docs/design/reflow2.json
       - name: Merge-driver suite (real git branches, not a home-grown client)
         # Git is the client this contract is with, so git runs the test: two
         # branches editing different parts of one export must merge with no

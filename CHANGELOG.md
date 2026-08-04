@@ -31,6 +31,25 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **reflow2's own design record now follows the `link-artifacts` skill it serves** (BL-199), and
+  **CI enforces that it keeps doing so** (`tools/self_host_uses_documents.py`). Seven document
+  artifacts asserted `REALIZES` against something they do not implement — three claimed a markdown
+  file *implements a Decision*, four claimed a capability that code elsewhere implements
+  (`docs/collaborating.md` did not implement the merge driver; `merge.rs` does) — and are now
+  attached with `DOCUMENTS`. Nine more legitimately realize `cmp:docs`, a component constituted by
+  its documents, and **gained** the describing edge they were missing rather than losing the true
+  one. **The point is not tidiness: seven artifacts now stand on a describing edge alone, so
+  reverting the BL-176 fix produces seven false positives in this repo. Until today it produced
+  none — which is exactly why eleven releases of `0 gaps, 0 defects, loop clean` never surfaced it.**
+  The new CI guard checks the *record*, not the code, and is mutation-checked against three seeded
+  regressions. Deliberately **not** changed: the 11 `schema/*.yaml` files, where `SPECIFIES` versus
+  `REALIZES` is a real judgement (the skill calls a machine-readable contract `SPECIFIES`; the yamls
+  genuinely *are* the vocabulary, embedded with `include_str!`) — left for a human to settle.
+  `delivered` held at 83/101 across the change; `impact-check` confirmed beforehand that every
+  affected Capability keeps a real code realizer.
+
 ### Fixed
 
 - **`orphan_node` no longer calls a correctly-filed document an orphan** (BL-176). The rule counted

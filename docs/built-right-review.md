@@ -194,9 +194,38 @@ of prescribed practice against actual practice** — grep what the skills tell a
 check whether the repo's own graph did it. This one took a single query and explained a hard
 blocker that had been invisible for months.
 
-The corollary for the immediate work: **fixing [BL-176] is necessary but not sufficient.** Those 32
-edges are also wrong on their own terms, and re-attaching them with `DOCUMENTS` is what would make
-this graph capable of regression-testing the fix.
+The corollary for the immediate work: **fixing [BL-176] is necessary but not sufficient.** Some of
+those 32 edges are also wrong on their own terms, and re-attaching them with `DOCUMENTS` is what
+would make this graph capable of regression-testing the fix.
+
+> ### Correction, 2026-08-04 — doing the re-attachment tested this section's own claim, and it was too broad
+>
+> The counts above are exact and stand: 35 document/spec artifacts, all 35 carrying `REALIZES`, 32
+> carrying `REALIZES` and nothing else, 4 `DOCUMENTS` edges and 0 `SPECIFIES` in the whole graph.
+> **What did not survive contact is the implication that all 32 were therefore WRONG.** Judging them
+> one at a time under [BL-199] gave three classes, not one:
+>
+> - **7 were genuinely wrong** and are now re-attached with `DOCUMENTS`. Three asserted that a
+>   markdown file *implements a Decision* (`dec:advisory-concurrency`, `dec:live-tier`,
+>   `dec:read-while-held-mechanism`); four claimed a capability that code elsewhere actually
+>   implements — `docs/collaborating.md` did not implement the merge driver (`merge.rs` does), and
+>   three upgrade guides did not implement the capability they explain how to migrate to.
+> - **11 are arguable and were deliberately left alone** — the `schema/*.yaml` files realizing
+>   `cmp:schema`. The **link-artifacts** skill says a machine-readable contract is `SPECIFIES`, which
+>   would make these the graph's first-ever `SPECIFIES` edges; but the yamls *are* the vocabulary,
+>   embedded with `include_str!`, so "they implement the schema component" is defensible. Changing
+>   11 nodes on a judgement that fine is Anthony's call, not a cleanup.
+> - **The rest are correct as they stand.** A served `SKILL.md` genuinely realizes its capability —
+>   there is no other implementation — and `README.md` genuinely realizes `cap:explains-itself`.
+>   9 more legitimately realize `cmp:docs`, a component that *is* constituted by its documents, and
+>   they gained the `DOCUMENTS` edge they were missing rather than losing the one they had.
+>
+> **The headline is unchanged and is if anything sharper: 4 `DOCUMENTS` edges and 0 `SPECIFIES`
+> across the whole graph is still why self-host could never surface [BL-176].** What was wrong was
+> the leap from *"these are structurally uniform"* to *"these are uniformly a mistake"* — a count
+> answered a question that only case-by-case judgement could answer. **Recorded rather than quietly
+> edited, because §0 sells this census as a method and a method that cannot report its own
+> over-reach is the `circular accommodation` §2 warns about.**
 
 ---
 

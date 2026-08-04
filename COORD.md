@@ -53,7 +53,7 @@ Add yourself if you're new here.
 
 
 
-- BL-176 orphan_node attachment — @ajs — since 2026-08-04 — crates/reflow2-core/src/heal.rs, crates/reflow2-core/tests/orphan_attachment.rs (new), CHANGELOG.md, docs/{backlog,requirements-coverage}.md, docs/design/reflow2.json
+- BL-199 self-host re-attachment — @ajs — since 2026-08-04 — docs/design/reflow2.json, tools/self_host_uses_documents.py (new), .github/workflows/ci.yml, CHANGELOG.md, docs/{backlog,built-right-review}.md
 
 <!-- BL-183's claim was released 2026-08-04: it shipped in v0.23.0 (#64) and the board had carried it
      as in-progress ever since. Left as a note rather than deleted silently — a stale claim is how two
