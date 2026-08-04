@@ -31,6 +31,15 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.23.0] — 2026-08-03
+
+**The design brain learned to talk about its own structure.** Four new readings, none of which
+existed at v0.22.1: reflow2 can now certify that a restructuring preserved function, notice on its
+own where its build stopped following its design, say where a design sits on the arc from function
+to structure, and connect the evidence it already computes to the quality axis that evidence
+informs. **No schema change — the stamp is unmoved at 29 node types / 60 edge types.**
+
+
 ### Added
 
 - **`ility_report` — what the graph can actually say about the quality axes** (BL-184).
