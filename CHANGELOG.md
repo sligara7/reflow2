@@ -70,6 +70,23 @@ This file is the third view: *what changed, and when*.
     otherwise these would have been two more properties reachable from no tool, which is exactly
     the defect BL-202 records.
 
+### Added
+
+- **A near-match now becomes a standing question HEAL can collect** (BL-186, toward
+  `cap:corpus-ingest`). `dec:ask-not-repair` requires a suspected duplicate to be *asked*, never
+  silently merged, and `cap:corpus-ingest` names the consequence: *"at corpus scale the asking must
+  be batched or the feature is unusable."* A `MergeCandidate` cannot be batched — it lives in one
+  document's `IngestReport` and is gone the moment the caller opens the next file, so four hundred
+  documents produce four hundred separate asks to an agent that has forgotten the last one. Ingest
+  now persists the suspicion as a **`DUPLICATES` edge**, which needed no new vocabulary because the
+  batching machinery already existed and ingest simply never wrote into it: HEAL's `duplicate`
+  detector fires on that edge, `propose_heal` turns it into a merge with the survivor rules, and
+  `apply_heal` refuses anything no detector asked for. **Drawn only in the ask band** — at or above
+  `auto_merge_threshold` the nodes are merged and nothing is left to ask. `confidence` carries the
+  measured score and is omitted for a structural token-subset match, since `0.0` would read as
+  "certainly unrelated". Never cascade-fails: a refused edge is a warning, because losing one
+  suspicion must not cost the document that carried it. `IngestReport` gains `duplicates_recorded`.
+
 ### Fixed
 
 - **The order two documents arrive in no longer decides the canonical name** (BL-186, toward
