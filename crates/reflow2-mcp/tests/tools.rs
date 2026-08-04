@@ -1683,6 +1683,87 @@ async fn loop_status_reports_debt_and_the_write_tools_point_at_the_loop() {
     );
 }
 
+/// `cap:loop-status` promises ONE CHEAP CALL. It stopped being one: the debt
+/// rollup is seven integers and a to-do list, but the per-check roll beside it
+/// grew with the design until a real graph answered in 74 KB — over the harness
+/// limit, so the one call you are told to fire between tasks could not be read
+/// at all and had to be `jq`-ed out of a spill file.
+///
+/// The digest is the fix, and this is what keeps it honest: the checks that are
+/// NOT passing survive in full, because those are the ones a reader acts on;
+/// the passing remainder is COUNTED, not dropped in silence.
+#[tokio::test]
+async fn loop_status_digests_the_verification_roll_instead_of_rolling_it() {
+    let s = seeded().await;
+
+    // One check that needs attention among many that do not — the shape of any
+    // mature design, and the shape that made the payload unreadable.
+    for i in 0..40 {
+        let id = format!("ver:bulk-{i}");
+        j!(s.add_verification(Parameters(VerificationReq {
+            id: id.clone(),
+            // Long names are the actual bulk: these are test descriptions in
+            // the real graph, hundreds of characters each.
+            name: format!(
+                "Check {i} — {}",
+                "a description long enough to matter when it is repeated once per check. "
+                    .repeat(4)
+            ),
+            method: Some("test".into()),
+            level: Some("unit".into()),
+        })));
+        j!(s.set_verification_status(Parameters(VerificationStatusReq {
+            verification_id: id,
+            status: if i == 7 { "failing" } else { "passing" }.into(),
+            last_run_at: if i % 2 == 0 {
+                Some("2026-08-04".into())
+            } else {
+                None
+            },
+        })));
+    }
+
+    let status = j!(s.loop_status());
+    let v = &status["verifications"];
+
+    assert!(
+        v.is_object(),
+        "the roll must come back as a digest, not an array — {v}"
+    );
+    assert_eq!(v["total"].as_u64().unwrap(), 40, "{v}");
+    assert_eq!(v["by_status"]["passing"].as_u64().unwrap(), 39, "{v}");
+    assert_eq!(v["by_status"]["failing"].as_u64().unwrap(), 1, "{v}");
+
+    // The one that is not passing survives in full; the other 39 are counted.
+    let attention = v["attention"].as_array().expect("attention is a list");
+    assert_eq!(attention.len(), 1, "{v}");
+    assert_eq!(attention[0]["verification_id"], "ver:bulk-7");
+    assert_eq!(v["omitted"].as_u64().unwrap(), 39, "{v}");
+
+    // A passing check that never ran is an assertion, not a measurement, and a
+    // status tally alone cannot say so.
+    assert_eq!(v["never_run"].as_u64().unwrap(), 20, "{v}");
+
+    // Nothing is hidden: the full roll is still one call away, and the digest
+    // says which one.
+    assert!(
+        v["full_list"].as_str().unwrap().contains("graph_report"),
+        "{v}"
+    );
+
+    // The regression itself. 40 long-named checks used to serialize into the
+    // reply verbatim; the digest must not scale with the roll.
+    let bytes = serde_json::to_string(&status).unwrap().len();
+    assert!(
+        bytes < 8_000,
+        "loop_status must stay cheap — {bytes} bytes for 40 checks"
+    );
+
+    // The debt rollup is untouched by the digest.
+    assert!(status["clean"].is_boolean(), "{status}");
+    assert!(status["next"].is_array(), "{status}");
+}
+
 // ---- dec:export-hash-chain · lineage at the file-write seam -----------------
 
 #[tokio::test]

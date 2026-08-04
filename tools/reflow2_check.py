@@ -113,6 +113,52 @@ class Server:
             die(2, f"server exited without responding.\n{err}")
         return json.loads(line)
 
+    def scan_all(self, node_type: str) -> list:
+        """Every node of `node_type` — paged, because one reply is not all of them.
+
+        `scan_nodes` answers with as many nodes as fit and says what it withheld
+        (`total` vs `returned`, plus `omitted`, `next_offset`, `capped_by`).
+        `call` unwraps the `{count, items}` envelope to the items and throws
+        those fields away, so a capped page arrives here looking exactly like a
+        complete set — and this gate then asserted `exhaustive: true` over it.
+
+        Measured on reflow2's own design 2026-08-04: `capped_by: "size"`,
+        `total: 144`, `returned: 124`, `omitted: 20`. Twenty registered
+        artifacts were never hashed, so a drifted file among them could not be
+        reported — `art:tools-coherence` drifted in this very commit and the
+        gate passed it in silence, while `reconcile_artifacts` named it the
+        moment it was asked directly. A gate that measures 86% of the tree and
+        reports as though it measured all of it is the false-green this whole
+        file exists to prevent.
+
+        The count is checked, not assumed: paging that silently comes up short
+        would rebuild the same bug one layer down.
+        """
+        out, offset = [], 0
+        while True:
+            resp = self._rpc(
+                "tools/call",
+                {
+                    "name": "scan_nodes",
+                    "arguments": {"node_type": node_type, "offset": offset},
+                },
+            )
+            if "error" in resp:
+                die(2, f"scan_nodes: {resp['error'].get('message', resp['error'])}")
+            env = resp["result"].get("structuredContent") or {}
+            out.extend(env.get("items") or [])
+            nxt, total = env.get("next_offset"), env.get("total")
+            if nxt is None or nxt <= offset:
+                break
+            offset = nxt
+        if total is not None and len(out) != total:
+            die(
+                2,
+                f"scan_nodes({node_type}) paged to {len(out)} of {total} — the sweep "
+                f"is short, and a short sweep reports OK over whatever it missed.",
+            )
+        return out
+
     def call(self, tool: str, args: dict):
         resp = self._rpc("tools/call", {"name": tool, "arguments": args})
         if "error" in resp:
@@ -397,7 +443,9 @@ def main() -> int:
 
         server = Server(opts.bin, graph)
         try:
-            artifacts = server.call("scan_nodes", {"node_type": "Artifact"}) or []
+            # Paged, not one reply: `exhaustive: true` below is a CLAIM, and it
+            # was false by 20 artifacts until this used scan_all.
+            artifacts = server.scan_all("Artifact")
             observed = []
             for art in artifacts:
                 props = art.get("properties", {})

@@ -31,8 +31,78 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **An Artifact can say what it stands for and how its content behaves** — two new optional
+  properties, one schema touch, both aimed at the same failure: *the graph could not tell two
+  opposite states apart, and reported the wrong one confidently.* **Schema change, so this is a
+  minor bump — but the stamp does not move (29 node types / 60 edge types unchanged), so no
+  upgrade doc is owed.** Both default to the pre-existing behaviour, so an older graph reads
+  exactly as it did.
+  - **`granularity`** (BL-188) — `atomic` (default) / `opaque` / `pending_expansion`. A directory
+    Artifact claims its whole subtree, which is the **adopt** skill's own rule, so a registration
+    check reported *"every live doc is registered"* — truthfully — across **359 individually
+    unreferenceable files**, and `coverage_report` counted the directory as covering everything
+    beneath it. Nothing distinguished *deliberately opaque* (a settled archive) from *nobody has
+    got to it yet*, which are opposite states with identical readings. `coverage_report` now
+    returns `pending_expansion` and `opaque_claims` separately, so *"53 artifacts, of which 3 stand
+    in for the rest"* is producible from the graph — a sentence that could not be formed at all
+    before. **Deliberately carries no count of what a placeholder stands for:** reflow2 does no
+    file I/O, so a stored number would be a caller-supplied figure nothing can recompute, which is
+    the staleness BL-187 exists to name.
+  - **`volatility`** (BL-191) — `stable` (default) / `append_only` / `living`. Five coordination
+    buses modelled with checksums, exactly per the adopt skill's *"a checksum is what makes later
+    drift detectable"*, produced **five `checksum_change` divergences within minutes — all correct,
+    all meaningless**, because those files are appended to by design; and that disposition was owed
+    again on every reconcile forever. A content change on a volatile artifact is now reported as
+    **`expected_change`** and **not written to the drift ledger**. **It is reported, not
+    suppressed** — silence would trade a false positive for a false negative, letting a wholesale
+    replacement pass unmentioned, which is the strictly worse bug and the trap BL-176 avoided.
+    **Absence still fires at full severity whatever the volatility.** **Shrink detection is
+    deliberately NOT included**: a shrink is the genuinely alarming event for an append-only file
+    and a checksum cannot express it — it needs a size baseline nothing records, and the reporting
+    team's own compaction shrinks those files on purpose, so the heuristic needs the design's
+    consent rather than a bare rule.
+  - **`set_artifact_intent`** is the new tool that writes them. A dedicated setter rather than
+    arguments on `add_artifact`, for the reason BL-183 made expensive: a constructor taking a
+    partial property set and writing the whole node erases what the caller did not name. Omitted
+    fields are left alone. **Its enum rejections name the legal values** (BL-192's cheapest fix) —
+    otherwise these would have been two more properties reachable from no tool, which is exactly
+    the defect BL-202 records.
+
+### Fixed
+
+- **The CI design-coherence gate swept 124 of 144 artifacts and reported OK over the rest**
+  (BL-206). `tools/reflow2_check.py` asked `scan_nodes` for every Artifact and iterated what came
+  back. `scan_nodes` answers with as many nodes as **fit** and states what it withheld — here
+  `total: 144`, `returned: 124`, `omitted: 20`, `capped_by: "size"` — but the gate's JSON-RPC
+  client unwraps the `{count, items}` envelope to the items and drops those fields, so a capped
+  page was indistinguishable from a complete set. The gate then passed `exhaustive: true` to
+  `reconcile_artifacts`, asserting a sweep that was twenty artifacts short. **The blind spot was
+  already hiding real drift**: `art:tools-built` changed in `d6631e5` and the gate reported OK over
+  it twice. `reconcile_artifacts` was never wrong — asked about one of the missed artifacts
+  directly, it named the drift at once. The sweep now pages on `next_offset` and fails loudly if
+  the collected count misses `total`. *Its regression test was verified in both directions: with
+  the single-page sweep restored, the gate exits **green** with unaccepted drift present.*
+
 ### Changed
 
+- **`loop_status` is cheap again — it digests the verification roll instead of serving it**
+  (BL-205). `cap:loop-status` promises *one cheap call*, the SessionStart hook and the server
+  instructions both push you to run it, and the Stop hook nudges when graph writes finish without
+  one — while on this repo's own graph it answered in **74,239 bytes**, over the response limit,
+  so the call the loop depends on could not be read at all and had to be recovered from a spill
+  file with a script. **99.6% of that was `verifications`**, a full per-check roll beside eight
+  integers and a to-do list. It now returns a digest: counts `by_status`, `never_run` (a `passing`
+  check with no `last_run_at` is an *assertion*, not a measurement, which a status tally alone
+  cannot show), and every **not-passing** check in full, since those are the ones a reader acts
+  on. The passing remainder is counted in `omitted` and named in `full_list`, never dropped in
+  silence — the same contract `scan_nodes` states for a capped page. **74,239 → 1,123 bytes here,
+  with the 3 checks worth reading still present.** *Result-shape change, so minor by this file's
+  own rule.* No `brief`-style flag, deliberately: `graph_report` already serves the full roll from
+  the same `verification_recency` computation, so a flag would add a third surface onto one list
+  rather than a cheaper first one. Digested at the MCP boundary and not in core, so the two
+  surfaces still cannot disagree about what the checks say.
 - **reflow2's own design record now follows the `link-artifacts` skill it serves** (BL-199), and
   **CI enforces that it keeps doing so** (`tools/self_host_uses_documents.py`). Seven document
   artifacts asserted `REALIZES` against something they do not implement — three claimed a markdown

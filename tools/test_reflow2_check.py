@@ -215,6 +215,62 @@ class Reflow2Check(unittest.TestCase):
         self.assertIn("DRIFT", r.stdout)
         self.assertIn("art:short2", r.stdout)
 
+    def test_a_drifted_artifact_past_the_first_page_is_still_drift(self):
+        """The gate swept one reply and called it the tree.
+
+        `scan_nodes` answers with as many nodes as FIT and reports what it held
+        back — `total` against `returned`, plus `omitted` and `next_offset`. The
+        gate's JSON-RPC client unwraps the `{count, items}` envelope to the items
+        and drops those fields, so a capped page arrived looking exactly like a
+        complete set, and the gate then passed `exhaustive: true` over it.
+
+        Measured on reflow2's own design 2026-08-04: total 144, returned 124,
+        `capped_by: "size"` — twenty artifacts never hashed. It was not
+        theoretical: `art:tools-built` had drifted the previous day and the gate
+        had reported OK twice over it. A checker that measures 86% of the tree
+        and speaks as though it measured all of it is the exact failure this
+        file exists to catch, arriving in the checker itself.
+
+        So: enough artifacts to force the cap, with the drifted one placed where
+        only a paging sweep reaches it.
+        """
+        # Long names are what makes the payload big — the same shape as the real
+        # design, where an artifact's name carries a sentence.
+        filler = "a name long enough that the reply fills up before the tree does. " * 6
+        clean = []
+        for i in range(200):
+            p = self.tmp / f"bulk-{i:03d}.txt"
+            p.write_text(f"bulk artifact {i}")
+            clean.append((f"art:aaa-{i:03d}", p.name, short_sha(p)))
+
+        drifted = self.tmp / "zzz-last.txt"
+        drifted.write_text("the last one, v1")
+        drifted_sum = short_sha(drifted)
+
+        def build(s):
+            coherent(s)
+            for art_id, name, checksum in clean:
+                s.call("create_node", {"node_type": "Artifact", "id": art_id, "props": {
+                    "name": f"{name} — {filler}", "location": name, "checksum": checksum}})
+            # Sorts last, so only a sweep that pages ever reaches it.
+            s.call("create_node", {"node_type": "Artifact", "id": "art:zzz-last", "props": {
+                "name": f"zzz-last.txt — {filler}", "location": drifted.name,
+                "checksum": drifted_sum}})
+            s.call("create_edge", {"edge_type": "REALIZES", "from_type": "Artifact",
+                                   "from_id": "art:zzz-last", "to_type": "Capability",
+                                   "to_id": "cap:a"})
+
+        export = self.export(build)
+        # Everything registered matches — then the LAST one changes, unaccepted.
+        drifted.write_text("the last one, v2 — edited, design not reconciled")
+
+        r = self.gate(export)
+        self.assertEqual(r.returncode, 1, f"drift past the first page must fail\n{r.stdout}")
+        self.assertIn(
+            "art:zzz-last", r.stdout,
+            f"the drifted artifact is past the first reply — a gate that stops at one "
+            f"page reports OK over it\n{r.stdout}")
+
     def test_a_vanished_artifact_file_is_drift(self):
         def build(s):
             coherent(s)
