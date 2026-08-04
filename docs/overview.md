@@ -76,6 +76,11 @@ Three records, three questions — kept separate on purpose:
   evolving reflow2: what using it on itself can and cannot tell you, the failure mode that would
   quietly invalidate the evidence base, and the four instruments that measure whether the loop works,
   with their baselines. **Read this before picking up a backlog item.**
+- **[increment-plan.md](increment-plan.md) — *what we do about everything now on the board.***
+  The 21 open rows from the `dev_storyflow` field report and the self-census, mapped onto five
+  planned increments (v0.24.0–v0.28.0), grouped by **schema cluster first** — a schema change pulls
+  the bump, the upgrade doc and the migration checklist, so two in one increment cost barely more
+  than one. Recorded in the graph as **planned epochs**, the first ever written.
 - **[built-right-review.md](built-right-review.md) — *"did we build this right?", answered by census.***
   A 2026-08-04 run of the schema against the graph against the tool surface — three artifacts this
   project maintains separately and expects to agree. Finds that 31% of the node vocabulary and 58% of

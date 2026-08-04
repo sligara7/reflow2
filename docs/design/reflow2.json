@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6c699fb34ee9de63e93bdfa8c3550e9757a827ff24101a395033fa988432abf3",
+  "content_hash": "sha256:72a877b69a0cb4710703b121e135473b465f0720fba45d9bba1c65a7d9903417",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -33254,6 +33254,36 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:v0230",
+      "properties": {},
+      "to_id": "epoch:v0240-planned"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0240-planned",
+      "properties": {},
+      "to_id": "epoch:v0250-planned"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0250-planned",
+      "properties": {},
+      "to_id": "epoch:v0260-planned"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0260-planned",
+      "properties": {},
+      "to_id": "epoch:v0270-planned"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0270-planned",
+      "properties": {},
+      "to_id": "epoch:v0280-planned"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v040",
       "properties": {},
       "to_id": "epoch:v050-cut"
@@ -46017,6 +46047,56 @@
       }
     },
     {
+      "node_id": "epoch:v0240-planned",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED v0.24.0 — the document corpus can actually be ingested. Unblocks a user who stopped work at 26 of ~756 documents. BL-176 (done, #68) then BL-199 re-attach, BL-188 granularity intent + BL-191 volatility (both Artifact properties, so ONE schema touch), BL-186 build cap:corpus-ingest, BL-196 genesis asks about custody. Order is forced: ingest at all, then know where you stopped.",
+        "sequence": 263,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:v0250-planned",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED v0.25.0 — the loop tells the truth about what it is owed. No schema; all message and reporting quality, five of six sized S. BL-205 loop_status unreadable, BL-194 open_questions all-clear, BL-192 enums name legal values, BL-195 the bridge a ruling forbids, BL-201 wire or retire Requirement.concern, BL-203 an unexercised type is visible rather than silently empty.",
+        "sequence": 264,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:v0260-planned",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED v0.26.0 — status accounting: when was this true? The biggest conceptual gap either source found, and EIA-649 names it. BL-187 external anchor and BL-185 test-first both add Verification properties (ONE schema touch), BL-189 the retirement half. Half of one evidence corpus pins to commits no longer ancestors of main; 11 of this project's own verifications sat green on one two-day-old run.",
+        "sequence": 265,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:v0270-planned",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED v0.27.0 — seams, the frontier the instruments already name. maturity_report puts seams at 0% (0 of 73 couplings declared through a contract) across 23 releases, and Interface has 3 instances with the 5 spec properties set on none. BL-193 a CONSUMED interface with no spec fires no gap; BL-190 the stewardship edge joins it because a new edge type is a schema change and pairing keeps it to one bump.",
+        "sequence": 266,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:v0280-planned",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED v0.28.0 — one honest write surface. Largest and least urgent; nothing here blocks anyone. BL-202 (L) collapses the two write surfaces the typed constructors created — they reach 44% of declared properties and are the single cause behind BL-129 and BL-183. BL-198 stop serializing defaults, but measure the cost to compare_designs and the merge driver FIRST. BL-197 + BL-204: the words we ship stopped matching the code we ship.",
+        "sequence": 267,
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "epoch:v040",
       "node_type": "DesignEpoch",
       "properties": {
@@ -52201,7 +52281,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4e0ab720bd570192630b99bfec32a2e57297d7143d300e24e7f21f3d4c34d587",
+  "prev_content_hash": "sha256:6c699fb34ee9de63e93bdfa8c3550e9757a827ff24101a395033fa988432abf3",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
