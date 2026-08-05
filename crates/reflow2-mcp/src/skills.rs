@@ -179,6 +179,38 @@ impl ReflowService {
                      The skills they refer to come from list_skills / get_skill.",
         }))
     }
+    /// What design lives at each of these paths — without opening any of them.
+    #[tool(
+        description = "Say what design lives at each given path, WITHOUT opening or writing \
+                       anything — the sibling of design_identity, which answers only for the \
+                       design THIS session is bound to. YOU find the candidate paths (`find . \
+                       -maxdepth 3 -name .reflow2`, and the same upward); reflow2 does no file \
+                       navigation, and this answers what each one IS. Use it before starting a \
+                       design anywhere, before pointing a project at a graph, and whenever \
+                       'which design am I in?' has more than one plausible answer. Returns each \
+                       design's stable id, label, minted-or-adopted origin and schema stamp. It \
+                       reads only the sidecar files beside each store, so no lock is taken, \
+                       nothing is written, and a design another session holds right now describes \
+                       fine. Node counts are deliberately absent: counting means opening, and \
+                       opening MINTS an identity where there is none.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn describe_designs(
+        &self,
+        Parameters(req): Parameters<crate::latent::DescribeDesignsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        if req.paths.is_empty() {
+            return Err(McpError::invalid_params(
+                "describe_designs needs at least one path. Walk the tree first — \
+                 `find . -maxdepth 3 -name .reflow2` — and pass what you found; an empty sweep \
+                 reported as 'nothing here' is the answer that starts an unwanted design."
+                    .to_string(),
+                None,
+            ));
+        }
+        structured(crate::latent::describe_designs_payload(&req.paths))
+    }
+
     /// Which design is this, and what is it called?
     #[tool(
         description = "Which design this graph holds: its durable id and its human label. The id is \

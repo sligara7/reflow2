@@ -31,6 +31,46 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **⭐ `describe_designs` — say what design lives at a path, without opening it.** The discovery
+  half of `req:a-session-chooses-its-design` (accepted), built from a field report: a session
+  opened at a repo root was told *"this directory has no design yet"* and started a **third**
+  design while two populated ones sat one and two directories below. Nothing could say what they
+  were.
+  - **You walk the tree; reflow2 says what each one is.** Finding `.reflow2` directories is file
+    navigation and belongs to the agent (`dec:agent-navigates-content`); naming the design at a
+    path is the half only reflow2 can answer. Takes a **list** of paths — the caller is building
+    a menu, and one round trip per candidate is the wrong shape for that.
+  - **Served on the LATENT surface too**, deliberately. A session with no design is the exact
+    moment someone is about to create one; a discovery tool reachable only *after* a design
+    exists would arrive too late to prevent anything.
+  - **⭐ It never opens the store, and that is the design rather than an optimisation.**
+    `open_rocksdb_with_provenance` writes `<path>.meta.json` and **mints `<path>.id.json` when the
+    store has none** — so a describe that opened the store would *name a design by the act of
+    inspecting it*, and would fail on any design another session is holding. Everything reported
+    comes from the two sidecar files beside the store, so it is lock-free, side-effect-free, and
+    works fine against a design being written right now.
+  - **Two deviations from the accepted decision, both forced by the code and both better than what
+    was asked for.** *No node counts* — counting means opening, and the decision's "node counts by
+    type" is not worth minting an identity to get. *No `busy` state* — the decision required
+    distinguishing busy from absent because a held store is exclusively locked; reading sidecars
+    removes the condition entirely rather than handling it.
+  - **Something-unnamed never reads as nothing-here.** Four states — `design`, `unnamed`,
+    `opted_in`, `absent` — because *"no design here"* is the sentence that starts an unwanted one.
+    Every row carries a plain-language `reading`, since a bare enum makes the caller invent the
+    meaning.
+
+### Changed
+
+- **`reflow2_start_design` now tells you to look before you start.** Its description previously
+  ended *"it is safe to call when unsure"* with no mention of checking nearby — the sentence
+  behind the accident above. It now requires a sweep of neighbouring `.reflow2` directories first
+  and says why, and its payload tells a caller who skipped the check to **say so immediately**,
+  while the recovery is still a deletion rather than a merge. Shipping the tool without the
+  instruction that makes anyone call it would have been this project's fifth
+  skill-disagrees-with-surface defect (BL-152, BL-178, BL-197, BL-204).
+
 ## [0.24.0] — 2026-08-05
 
 **The document corpus can actually be ingested — and pointing it at someone else's codebase
