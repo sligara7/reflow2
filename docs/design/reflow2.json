@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f485e9f9c16917bf69a85983e3b9028f130d06bdcdd7230a63ae9213754a6def",
+  "content_hash": "sha256:31c02265fa5073381a19b7fa2aef259279b86fe0be6918ddf1e167d14d4d6b16",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2047,6 +2047,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl186-folder-driver",
+      "properties": {},
+      "to_id": "epoch:bl186-folder-driver"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:bl186-ordering-and-standing-questions",
       "properties": {},
       "to_id": "epoch:bl186-corpus-ingest-lexical"
@@ -3226,6 +3232,12 @@
       "from_id": "snap:epoch:bl186-corpus-ingest-lexical:cap:corpus-ingest",
       "properties": {},
       "to_id": "epoch:bl186-corpus-ingest-lexical"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:bl186-folder-driver:cap:corpus-ingest",
+      "properties": {},
+      "to_id": "epoch:bl186-folder-driver"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5231,6 +5243,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-8ab68356b3e7a47f",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-975fcb51ce6ec113",
       "properties": {
         "accepted_baseline": true,
@@ -6515,6 +6536,51 @@
         "action": "added"
       },
       "to_id": "req:computed-evidence-reaches-its-axis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl186-folder-driver",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:increment-plan"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl186-folder-driver",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:scope-corpus-ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl186-folder-driver",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl186-folder-driver",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-content"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl186-folder-driver",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:corpus-ingest"
     },
     {
       "edge_type": "CHANGED",
@@ -10943,17 +11009,6 @@
         "action": "modified"
       },
       "to_id": "req:version-combination-is-an-object"
-    },
-    {
-      "edge_type": "CLAIMS",
-      "from_id": "who:ajs",
-      "properties": {
-        "claimed_at": "2026-08-04",
-        "depth": 2,
-        "note": "BL-186 — the folder driver, v0.24.0's last build row. Partial: arrival-order naming and the merge_candidate band landed in #73; the loop over a folder (one epoch, one Fragment per file) is what remains. Touches crates/reflow2-core/src/ingest.rs, the reflow2-mcp tool surface, the served skill, and docs/scope-corpus-ingest.md.",
-        "seat": "asligar-bitecool:405935:395513d2"
-      },
-      "to_id": "cap:corpus-ingest"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -18475,6 +18530,12 @@
       "from_id": "cap:corpus-ingest",
       "properties": {},
       "to_id": "snap:epoch:bl186-corpus-ingest-lexical:cap:corpus-ingest"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:corpus-ingest",
+      "properties": {},
+      "to_id": "snap:epoch:bl186-folder-driver:cap:corpus-ingest"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -34342,6 +34403,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:corpus",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:corpus-ingest"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:coverage",
       "properties": {
         "completeness": "complete"
@@ -35123,6 +35192,14 @@
         "completeness": "complete"
       },
       "to_id": "cap:explains-itself"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:skill-ingest-corpus",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:corpus-ingest"
     },
     {
       "edge_type": "REALIZES",
@@ -36693,6 +36770,15 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:corpus-is-one-design",
+      "properties": {
+        "pinned": "corpus_size,document_language,document_format,extraction_answers,vocabulary_overlap,storage_backend",
+        "swept": "document_count,document_order,fragment_id_collision,already_ingested,epoch_shared_vs_default"
+      },
+      "to_id": "cap:corpus-ingest"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:coverage",
       "properties": {},
       "to_id": "cap:coverage"
@@ -37423,6 +37509,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:corpus",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:corpus"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:coverage",
       "properties": {
         "action": "created"
@@ -37932,6 +38026,14 @@
         "action": "created"
       },
       "to_id": "art:service"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:skill-ingest-corpus",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:skill-ingest-corpus"
     },
     {
       "edge_type": "YIELDED",
@@ -38527,6 +38629,19 @@
       }
     },
     {
+      "node_id": "art:corpus",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:fabd3fb60d8467dd65f2d7b5fe646b1f6c33ec524c109078b2ce3698520bad83",
+        "granularity": "atomic",
+        "location": "crates/reflow2-core/src/corpus.rs",
+        "name": "corpus.rs — the corpus run: one epoch, one Fragment per document, the ambiguous band asked once",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:coverage",
       "node_type": "Artifact",
       "properties": {
@@ -38821,7 +38936,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:ca970b143ead843fb0731d03ff172c63cd37ba1b6b4e2c4f08d262c1d10521a3",
+        "checksum": "sha256:5084eca05fa917c1f59d205ca05ae80ca970f5560b580edca8441ea22f451da7",
         "granularity": "atomic",
         "location": "docs/increment-plan.md",
         "name": "increment-plan.md",
@@ -39323,10 +39438,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c1246d07a570d11ca8a76c3b7141fce085dfe1f760af41b671bbdf419cd3ef08",
+        "checksum": "sha256:de0871a98e6007aa5ee9e202d5396f014b3799efd72600f2a1a94de6d58ff182",
+        "granularity": "atomic",
         "location": "docs/scope-corpus-ingest.md",
         "name": "scope-corpus-ingest.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39389,7 +39506,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f91908754d283de0d2e0b7d752f5d1e4c6f20a07cdfab2144b9f8faa995f89fe",
+        "checksum": "sha256:bc9c2a3cef87a2545c83cb14e5d058c19c19a729022d4f387945c927c0b90a86",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -39409,11 +39526,24 @@
       }
     },
     {
+      "node_id": "art:skill-ingest-corpus",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:76853c8691449466c444e3a12566845d095bc54a5204ddeef74fb308bf23001e",
+        "granularity": "atomic",
+        "location": "getting-started/skills/ingest-corpus/SKILL.md",
+        "name": "ingest-corpus SKILL.md — the folder walk, which reflow2 cannot do itself",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:skill-lint",
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1d0b636dc047affcf17dba3a45a9865e0f7278b20a9d9b64c4d225af856cd9d0",
+        "checksum": "sha256:cf23864b1cc9d704c24b5a7a6920e815d7c3ff075cc613ab8bbb540638089dbb",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -39696,10 +39826,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:18d0d737affde3064dabb7c858fdefa64df918ee7088fe83f9b225229bb50a56",
+        "checksum": "sha256:5a81f97e05afd62edc28afabdf816c821216b14f0e7eaa2710acf600524b3019",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/content_tools.rs",
         "name": "tools/content_tools.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40170,12 +40302,12 @@
       "node_id": "cap:corpus-ingest",
       "node_type": "Capability",
       "properties": {
-        "description": "Take a directory of written specifications and produce one coherent design from the whole corpus, keeping each claim's provenance Fragment pointing back at its source document. Extends single-document extraction, which already works, with the two things a corpus needs and a file does not: a folder driver, and identity resolution ACROSS documents so the same thing named in many specs converges on one node. The primitive for that convergence already exists — every node type declares its own resolution strategy and threshold in the schema — so this is wiring an existing mechanism at batch scale rather than inventing one. Bound by dec:ask-not-repair: suspected duplicates are asked, never silently merged, which at corpus scale means the asking must be batched or the feature is unusable. PLANNED — BL-97.",
+        "description": "Take a directory of written specifications and produce one coherent design from the whole corpus, keeping each claim's provenance Fragment pointing back at its source document. Extends single-document extraction with the four things a corpus needs and one file does not: ONE epoch for the whole run (left alone, ingest opens an epoch per document and 500 files read as 500 unrelated events); one Fragment per document; identity resolution ACROSS documents, so the same thing named in many specs converges on one node; and the ambiguous near-match band gathered across the whole corpus and deduplicated into ONE question, because dec:ask-not-repair at corpus scale means the asking must be batched or the feature is unusable.\n\nBUILT 2026-08-05 (BL-186), as `ingest_corpus_step` over `corpus.rs`, plus the served `ingest-corpus` skill that walks the folder — reflow2 performs no file I/O, so the agent reads the files and the graph records what came of them and an opaque locator back (dec:agent-navigates-content).\n\nTWO PROPERTIES WORTH STATING BECAUSE THEY ARE NOT OBVIOUS FROM THE NAME. (1) THE HANDSHAKE BATCHES ACROSS DOCUMENTS: prompts for every document are gathered into one round, so a corpus costs the ~3 rounds a single document costs rather than 3N. That works because a prompt's id is a hash of its semantic content, so one shared answer pool cannot cross-feed documents and two identical documents are answered once — no new mechanism was needed. The document text still crosses the agent's context once per prompt, and that cost is NOT solved here. (2) RESUME IS DERIVED, NEVER BOOKMARKED: a document whose fragment_id already exists comes back `skipped` rather than failed, so re-running over a grown folder ingests only what is new and \"what is left\" is computed by asking the graph. That depends entirely on the caller deriving fragment_id from the path — the served skill says so in the strongest terms it has, because generating ids afresh re-ingests the whole corpus every time and looks like it worked.\n\nTHE LIMIT ON THE RECORD: convergence is LEXICAL. token_sort_ratio catches `Auth Service` ~ `Authentication Service` and cannot see `Read Cache` ~ `Local Store` at all — not a low score, invisible. So convergence holds for documents that share vocabulary, which a corpus written by many authors over years often does not. Whether to close that with embeddings is open (dec:idea-embeddings-adoption). The evidence scope on this capability's check records the same limit mechanically: `corpus_size` and `vocabulary_overlap` are PINNED, so the passing check proves the behaviour at three documents that share words, not at 1,124 that do not.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Ingest a folder of specifications as one design",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -41768,6 +41900,15 @@
       }
     },
     {
+      "node_id": "chg:accept-8ab68356b3e7a47f",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "detected_at": "2026-08-05",
+        "name": "The NON_TOOL_TERMS allowlist gained the CorpusReport field names and token_sort_ratio, which the ingest-corpus skill names in backticks. DESIGN_HOLDS deliberately: what skill_lint DOES is unchanged — only its data moved, to stay in agreement with a surface that grew elsewhere. The lint refusing the new skill until this was done is the guard working, not a defect."
+      }
+    },
+    {
       "node_id": "chg:accept-975fcb51ce6ec113",
       "node_type": "ChangeEvent",
       "properties": {
@@ -42286,6 +42427,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Computed evidence now reaches the quality axis it informs — Anthony's correction that the ilities are not a blanket judgement call, built as a separate reading that flags disagreement and never derives a score"
+      }
+    },
+    {
+      "node_id": "chg:bl186-folder-driver",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-186 built: the corpus run lands — one epoch for a folder, one Fragment per document, cross-document convergence, the near-match band asked once, and a batched handshake that costs a corpus the rounds a single document costs"
       }
     },
     {
@@ -46709,6 +46858,16 @@
       }
     },
     {
+      "node_id": "epoch:bl186-folder-driver",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "BL-186 complete: a folder of documents becomes one design, in one batched handshake (2026-08-05)",
+        "sequence": 275,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:bl199-reattachment",
       "node_type": "DesignEpoch",
       "properties": {
@@ -47981,6 +48140,16 @@
       }
     },
     {
+      "node_id": "frag:art:corpus",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered corpus.rs — the corpus run: one epoch, one Fragment per document, the ambiguous band asked once"
+      }
+    },
+    {
       "node_id": "frag:art:coverage",
       "node_type": "Fragment",
       "properties": {
@@ -48618,6 +48787,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered service.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:skill-ingest-corpus",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered ingest-corpus SKILL.md — the folder walk, which reflow2 cannot do itself"
       }
     },
     {
@@ -51706,6 +51885,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:bl186-folder-driver:cap:corpus-ingest",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CLAIMS\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"claimed_at\":\"2026-08-04\",\"depth\":2,\"note\":\"BL-186 — the folder driver, v0.24.0's last build row. Partial: arrival-order naming and the merge_candidate band landed in #73; the loop over a folder (one epoch, one Fragment per file) is what remains. Touches crates/reflow2-core/src/ingest.rs, the reflow2-mcp tool surface, the served skill, and docs/scope-corpus-ingest.md.\",\"seat\":\"asligar-bitecool:405935:395513d2\"}},{\"direction\":\"in\",\"edge_type\":\"DOCUMENTS\",\"other_type\":\"Artifact\",\"other_id\":\"art:scope-corpus-ingest\",\"properties\":{\"doc_kind\":\"design_doc\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:corpus\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:skill-ingest-corpus\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:corpus-is-one-design\",\"properties\":{\"pinned\":\"corpus_size,document_language,document_format,extraction_answers,vocabulary_overlap,storage_backend\",\"swept\":\"document_count,document_order,fragment_id_collision,already_ingested,epoch_shared_vs_default\"}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:ingest\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:ask-not-repair\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:corpus-ingest-mechanism\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:dfe1b2a6caace1f4\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:accreted-intent-becomes-a-design\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:corpus-ingest\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:sources-are-kept-not-just-parsed\",\"properties\":{}}]",
+        "state": "{\"description\":\"Take a directory of written specifications and produce one coherent design from the whole corpus, keeping each claim's provenance Fragment pointing back at its source document. Extends single-document extraction, which already works, with the two things a corpus needs and a file does not: a folder driver, and identity resolution ACROSS documents so the same thing named in many specs converges on one node. The primitive for that convergence already exists — every node type declares its own resolution strategy and threshold in the schema — so this is wiring an existing mechanism at batch scale rather than inventing one. Bound by dec:ask-not-repair: suspected duplicates are asked, never silently merged, which at corpus scale means the asking must be batched or the feature is unusable. PLANNED — BL-97.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Ingest a folder of specifications as one design\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:corpus-ingest",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:bl199-reattachment:art:collaborating",
       "node_type": "Snapshot",
       "properties": {
@@ -52582,6 +52771,18 @@
         "level": "integration",
         "method": "test",
         "name": "The store on the MCP surface (crates/reflow2-mcp/tests/tools.rs, 5 cases): text round-trips and a re-put reports `already_present` rather than looking like new work; NON-UTF-8 BYTES survive the JSON boundary as base64 and come back base64 unchanged, which is the whole reason that field exists; passing both `text` and `base64` is REFUSED rather than resolved by picking one, and passing neither is refused as a mistake rather than stored as an empty blob; `exists` answers false for an unstored hash without erroring, because that is the call someone makes to ask \"do I have everything?\"; and A SERVER WITH NO --content-path CONFIGURED REFUSES BY NAME instead of inventing a directory — blobs are committed, so where they live is a decision about the consumer's repo.",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:corpus-is-one-design",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-05",
+        "level": "integration",
+        "method": "test",
+        "name": "A folder becomes ONE design, in the rounds a single document costs (crates/reflow2-core/tests/corpus.rs, 8 cases). The load-bearing four: two specs naming the same component converge on ONE node while each keeps its own provenance Fragment; three documents pin to ONE epoch, not three; a re-run reports the already-ingested document as SKIPPED and not failed, so resume is derived from the graph rather than bookmarked; and a document that cannot be taken is NAMED with why while its siblings still ingest. Plus the cost property — three documents cost the same ROUNDS as one, which is what makes a corpus affordable. MUTATION-CHECKED: breaking the batching (gather one document per round instead of all) takes rounds 3 to 7 and documents_pending 3 to 1, and exactly the two tests that name those properties fail.",
         "status": "passing"
       }
     },
@@ -53586,7 +53787,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1b2c2645af78724237c693b7d8ba72678199cb9063b087461238682492275b2a",
+  "prev_content_hash": "sha256:f485e9f9c16917bf69a85983e3b9028f130d06bdcdd7230a63ae9213754a6def",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
