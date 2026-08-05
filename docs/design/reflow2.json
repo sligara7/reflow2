@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:31c02265fa5073381a19b7fa2aef259279b86fe0be6918ddf1e167d14d4d6b16",
+  "content_hash": "sha256:aea0ffa7868000cfdd797d624a777d69df04edc0eb92a4df7d4f05d2e63351aa",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2065,6 +2065,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl213-discriminator",
+      "properties": {},
+      "to_id": "epoch:bl213-sibling-discriminator"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:bl48-bl49-tool-surface",
       "properties": {},
       "to_id": "epoch:v050-hardening"
@@ -2248,6 +2254,12 @@
       "from_id": "chg:coord-board-settled",
       "properties": {},
       "to_id": "epoch:coord-moves-into-the-graph"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:corpus-trial-finds-silent-merge-loss",
+      "properties": {},
+      "to_id": "epoch:dev-storyflow-trial"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3283,6 +3295,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:bl213-sibling-discriminator:dec:auto-merge-at-90-destroys-sibling-names",
+      "properties": {},
+      "to_id": "epoch:bl213-sibling-discriminator"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:coord-moves-into-the-graph:dec:coord-board-in-graph",
       "properties": {},
       "to_id": "epoch:coord-moves-into-the-graph"
@@ -3790,6 +3808,15 @@
       "from_id": "dec:arrival-delta",
       "properties": {
         "acted_at": "2026-07-30",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:auto-merge-at-90-destroys-sibling-names",
+      "properties": {
+        "acted_at": "2026-08-05",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -4844,6 +4871,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-0bbd99a16b805b80",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -6665,6 +6701,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:bl213-discriminator",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:corpus"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl213-discriminator",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl213-discriminator",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-ingest-corpus"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl213-discriminator",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:auto-merge-at-90-destroys-sibling-names"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:bl26-documents-write-side",
       "properties": {
         "accepted_baseline": true,
@@ -8192,6 +8264,15 @@
         "action": "modified"
       },
       "to_id": "dec:coord-board-in-graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:corpus-trial-finds-silent-merge-loss",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:auto-merge-at-90-destroys-sibling-names"
     },
     {
       "edge_type": "CHANGED",
@@ -17853,6 +17934,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:auto-merge-at-90-destroys-sibling-names",
+      "properties": {},
+      "to_id": "dec:ask-not-repair"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:central-host",
       "properties": {},
       "to_id": "rule:no-foreclosure"
@@ -18620,6 +18707,12 @@
       "from_id": "dec:arrival-delta",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:dec:arrival-delta"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:auto-merge-at-90-destroys-sibling-names",
+      "properties": {},
+      "to_id": "snap:epoch:bl213-sibling-discriminator:dec:auto-merge-at-90-destroys-sibling-names"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -35195,6 +35288,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:sibling-merge-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:skill-ingest-corpus",
       "properties": {
         "completeness": "complete"
@@ -37235,6 +37336,15 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:siblings-are-not-merged-away",
+      "properties": {
+        "pinned": "node_type,locale,unicode_script,resolution_thresholds,corpus_size,separator_style",
+        "swept": "name_shape,prefix_family_size,abbreviation_vs_distinct_word,version_suffix,token_order,discriminator_enabled"
+      },
+      "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:skill-lint",
       "properties": {},
       "to_id": "cmp:skills"
@@ -38029,6 +38139,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:sibling-merge-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:sibling-merge-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:skill-ingest-corpus",
       "properties": {
         "action": "created"
@@ -38633,7 +38751,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fabd3fb60d8467dd65f2d7b5fe646b1f6c33ec524c109078b2ce3698520bad83",
+        "checksum": "sha256:9f9496cd532968cb39dc7461c83f488e856e97b00a4a438f2f25914ee044760d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/corpus.rs",
         "name": "corpus.rs — the corpus run: one epoch, one Fragment per document, the ambiguous band asked once",
@@ -38949,7 +39067,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2e2e55c06154f86f102b0167b075f78bd7f0ef14a232ee7cf899b000bde9a6cc",
+        "checksum": "sha256:7bda3eb9321b2786a0fe67839a5c420f90c89fe0d57c256776c41191f532753c",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
@@ -39526,11 +39644,24 @@
       }
     },
     {
+      "node_id": "art:sibling-merge-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f8d14a991b90377fab5074ee51dbbcf165d2ab813b1b5e742688b19d534c700b",
+        "granularity": "atomic",
+        "location": "crates/reflow2-core/tests/sibling_merge.rs",
+        "name": "sibling_merge.rs — a score says alike, not the same thing",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:skill-ingest-corpus",
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:76853c8691449466c444e3a12566845d095bc54a5204ddeef74fb308bf23001e",
+        "checksum": "sha256:c221daad4dd73582e3abec93e7d0493e75f71f7809f138c1852271fa63f37ea4",
         "granularity": "atomic",
         "location": "getting-started/skills/ingest-corpus/SKILL.md",
         "name": "ingest-corpus SKILL.md — the folder walk, which reflow2 cannot do itself",
@@ -39543,7 +39674,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cf23864b1cc9d704c24b5a7a6920e815d7c3ff075cc613ab8bbb540638089dbb",
+        "checksum": "sha256:c814d9d9f016f473fc89a222865c26d7278fbdfc6adb79706e649afa224787e8",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -41514,6 +41645,15 @@
       }
     },
     {
+      "node_id": "chg:accept-0bbd99a16b805b80",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "detected_at": "2026-08-05",
+        "name": "Allowlist gains distinguished_by and drops token_sort_ratio, which the reworded skill no longer backticks. What skill_lint DOES is unchanged; only its data moved to stay in agreement with a skill that changed elsewhere. The stale-entry check catching the now-unused term is the guard working."
+      }
+    },
+    {
       "node_id": "chg:accept-0c440cc2eb44f74c",
       "node_type": "ChangeEvent",
       "properties": {
@@ -42454,6 +42594,14 @@
       }
     },
     {
+      "node_id": "chg:bl213-discriminator",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Anthony chose option (c): a discriminator beyond the score. Siblings are held apart by whole-word difference, the refusal names the word, and the corpus report carries every merge with its document"
+      }
+    },
+    {
       "node_id": "chg:bl26-documents-write-side",
       "node_type": "ChangeEvent",
       "properties": {
@@ -42835,6 +42983,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Anthony settles the claim board: the in-progress table moves into the graph, the stated blocker dissolves because his brother has only given feedback, and claim_region's first real use returns a liveness the markdown could never carry"
+      }
+    },
+    {
+      "node_id": "chg:corpus-trial-finds-silent-merge-loss",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "The dev_storyflow trial ran end to end and found that auto-merge at 90 silently destroyed 4 of 9 crates from a single document — the threshold is inverted for prefixed sibling names, and the defect predates the corpus layer"
       }
     },
     {
@@ -44473,6 +44629,16 @@
         "decision": "possible_duplicate is a DETECT gap; HEAL merges only on a human-drawn DUPLICATES edge.",
         "name": "Suspected duplicates are asked, never merged",
         "rationale": "apply_heal deletes a node with no undo, so merge is safe only because the endpoints were asserted; a heuristic must not drive it. A gap can be acknowledged, a HEAL defect cannot be dismissed. Decided 2026-07-19 (https://claude.ai/code/session_013aumVdHrRHu24cLirn6Cam); evidence: 3dtictactoe trial, BL-27/BL-29.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:auto-merge-at-90-destroys-sibling-names",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED by Anthony 2026-08-05, taking OPTION (c) from the options this node recorded while open. The measurement below is unchanged; what follows it is the choice and what it does not cover.\n\n⭐ THE MEASUREMENT THAT FORCED IT, from the first real trial of cap:corpus-ingest over six dev_storyflow architecture documents. `dynograph_resolution::token_sort_ratio` against the auto-merge threshold of 90:\n\n  95  dynograph-vector   vs dynograph-core        <- SILENTLY MERGED, WRONG\n  94  dynograph-storage  vs dynograph-core        <- SILENTLY MERGED, WRONG\n  93  dynograph-extract  vs dynograph-context     <- SILENTLY MERGED, WRONG\n  91  dynograph-server   vs dynograph-query       <- SILENTLY MERGED, WRONG\n  84  Auth Service       vs Authentication Service (NOT merged — and this is the case the feature EXISTS for)\n\nONE DOCUMENT DECLARING NINE CRATES PRODUCED FIVE NODES. 44% of an architecture destroyed silently, and the survivors asserted something FALSE rather than merely being incomplete: `cmp:dynograph-core` carried the name \"dynograph-storage\".\n\nWHY NO THRESHOLD REPAIRS IT, which is the reason (a) was rejected: 95 was a sibling pair and 84 a true duplicate, so the ORDERING is inverted and no cutoff separates them. `docs/scope-corpus-ingest.md` asserted \"90 on a token-sorted ratio is near-identity\"; measured, that is false for the names real systems use.\n\nTHE CHOICE — A DIFFERENT QUESTION, NOT A BETTER NUMBER. Before auto-merging, both names are tokenised on every non-alphanumeric (deliberately NOT `name_tokens`, which splits on whitespace and so cannot see inside `dynograph-core`). A merge is REFUSED when either side carries a whole word the other does not ABBREVIATE. \"core\" and \"storage\" are not spellings of each other; \"auth\" and \"authentication\" are, with a three-character minimum because below that almost anything prefixes anything. An unpaired extra word is distinguishing too, so `Auth Service` and `Auth Service v2` stay apart — the case the scope doc warned collapsing would lose. Reordered tokens still converge, so BL-186's ordering fix is untouched.\n\nAND THE REFUSAL SAYS WHICH WORD DID IT. `MergeCandidate.distinguished_by` carries e.g. \"`storage` has no counterpart in \\\"dynograph-core\\\"\". \"These two were not merged\" is not something a person can rule on; naming the word is. `None` means the score simply fell short, which needs no explanation.\n\nTHE SECOND FIX IN THE SAME CHANGE: `CorpusReport.fuzzy_merges` was a `usize` for one day and is now `Vec<CorpusMerge>`, each entry carrying the DOCUMENT that caused it — which the single-document report structurally cannot know. A merge is the one thing an ingest does WITHOUT ASKING and cannot undo by re-running, and the aggregate had reduced it to a number at exactly the scale where that matters most.\n\nVERIFIED, AND MUTATION-CHECKED: `tests/sibling_merge.rs` pins nine crates staying nine, an abbreviation still merging, a version suffix staying apart, reordered tokens still converging, and the refusal naming its word. Disabling the discriminator returns 5-of-9 and fails exactly the three tests that name those properties while leaving the two that should be insensitive passing. Re-run against the real dev_storyflow document that found it: 9 of 9 crates survive, each with its own name.\n\n⭐ WHAT THIS DOES NOT FIX, AND IT IS THE HALF THAT REMAINS: the destructive direction is handled; the MISSING direction is untouched. `Read Cache` ~ `Local Store` is still invisible — not a low score, no score at all — so two documents that RENAMED the same thing still produce two nodes. This decision makes the lexical pass safe, not sufficient. `dec:idea-embeddings-adoption` is where that half lives, and this trial is the strongest evidence yet for it: the lexical signal here was not merely weak, it was INVERTED, which is the argument a semantic tiebreaker has been waiting for.\n\nALSO NOT SETTLED: the ask band is still noisy. The same trial's eleven merge candidates were ELEVEN OUT OF ELEVEN FALSE POSITIVES. The discriminator now labels the sibling ones, which should make them skimmable rather than gruelling, but nobody has measured the band again since.\n\nSTILL NOT MEASURED, and it bounds every number above: what this does across the other 1,118 documents. The trial was SIX documents chosen for topical overlap; 44% is one document's crate list, not a corpus-wide rate.",
+        "name": "DECIDED — a merge needs a discriminator, not a threshold: siblings are held apart by whole-word difference",
+        "rationale": "Moved to accepted on Anthony's explicit instruction (\"fix the fuzzy_merges regression, then the token discriminator\"), which chose option (c) over the four alternatives this node had recorded.\n\nThe measurement is kept in full rather than trimmed to the conclusion, because the numbers are what make the fix defensible and what would otherwise be re-derived: \"fuzzy matching is too aggressive\" decays into folklore within a session, and \"95 for a sibling pair, 84 for a true duplicate\" does not.\n\nTwo things are deliberately recorded as NOT fixed — the missing-convergence direction and the noisy ask band — so this does not read as having closed the resolution question. It closed the destructive half of it. The one that remains is the one that needs embeddings, and saying so here is what stops the next session treating lexical resolution as done.",
         "status": "accepted"
       }
     },
@@ -46878,6 +47044,16 @@
       }
     },
     {
+      "node_id": "epoch:bl213-sibling-discriminator",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "BL-213: the trial's finding is fixed — a token discriminator holds siblings apart, and the corpus report stops reducing merges to a count (2026-08-05)",
+        "sequence": 277,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:bl70-fork-layer",
       "node_type": "DesignEpoch",
       "properties": {
@@ -46935,6 +47111,16 @@
         "epoch_type": "revision",
         "name": "The functional-decomposition decision catches up with the eighth system it gained after it was written",
         "sequence": 260,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:dev-storyflow-trial",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "The first real trial of cap:corpus-ingest, on six dev_storyflow architecture documents — and it found a silent data-loss defect in ingest that predates the corpus layer (2026-08-05)",
+        "sequence": 276,
         "status": "arrived"
       }
     },
@@ -48787,6 +48973,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered service.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:sibling-merge-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered sibling_merge.rs — a score says alike, not the same thing"
       }
     },
     {
@@ -51965,6 +52161,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:bl213-sibling-discriminator:dec:auto-merge-at-90-destroys-sibling-names",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-05\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:ask-not-repair\",\"properties\":{}}]",
+        "state": "{\"decision\":\"RECORDED AS A MEASURED DEFECT PLUS AN OPEN QUESTION. Found 2026-08-05 by the FIRST REAL TRIAL of cap:corpus-ingest, over six architecture documents from dev_storyflow. Nothing here is settled, and the fix shape is genuinely open.\\n\\n⭐ THE MEASUREMENT, AND IT IS THE WHOLE FINDING. `dynograph_resolution::token_sort_ratio`, which `ingest::fuzzy_match` uses on node NAMES, against the auto-merge threshold of 90:\\n\\n  95  dynograph-vector   vs dynograph-core        <- SILENTLY MERGED\\n  94  dynograph-storage  vs dynograph-core        <- SILENTLY MERGED\\n  93  dynograph-extract  vs dynograph-context     <- SILENTLY MERGED\\n  91  dynograph-server   vs dynograph-query       <- SILENTLY MERGED\\n  89  dynograph-engine   vs dynograph-core        (asked)\\n  84  Auth Service       vs Authentication Service (NOT merged, NOT asked at Component's 90/80 bands)\\n\\nTHE THRESHOLD IS EXACTLY BACKWARDS FOR THE NAMES REAL SYSTEMS USE. Sibling modules sharing a prefix — the near-universal convention — score 91-95 and are merged without asking. The canonical duplicate the feature exists to catch, `Auth Service` ~ `Authentication Service`, scores 84 and is not. `docs/scope-corpus-ingest.md` asserted \\\"90 on a token-sorted ratio is near-identity\\\"; MEASURED, IT IS NOT.\\n\\nTHE IMPACT, MEASURED ON ONE DOCUMENT: dynograph.md declares NINE crates. After ingest the graph holds FIVE. FOUR CRATES — 44% of the architecture — WERE SILENTLY DESTROYED (dynograph-core, dynograph-vector, dynograph-query, dynograph-extract are gone as named nodes). And the survivors ASSERT SOMETHING FALSE rather than merely being incomplete: `cmp:dynograph-core` now carries the name \\\"dynograph-storage\\\", because the merged node keeps the first id and the longer name. The longer-name rule is BL-186's own #73 fix working exactly as designed — the defect is the merge, not the naming.\\n\\n⭐ THIS IS NOT A CORPUS DEFECT AND THE TRIAL NEARLY MISDIAGNOSED IT. The first reading blamed the new corpus driver. Isolating dynograph.md and ingesting it ALONE reproduces it exactly: 9 in, 5 out, 4 merges. So this is PRE-EXISTING IN `ingest` and has been true of every single-document ingest since fuzzy dedup landed. The corpus layer is only the first thing to put enough same-family names in front of it for the loss to be visible. Everything this project has ingested one document at a time may carry it.\\n\\nWHY NOBODY SAW IT: reflow2's own design uses prose names (\\\"The graph handle is an accepted single point of failure\\\"), not prefixed identifier names. `dev_storyflow` is a CODEBASE, so its architecture documents are full of `foo-bar` sibling crates. Self-host was structurally incapable of surfacing this — the same shape as BL-199, and the second time that shape has explained a long-invisible defect.\\n\\nDIRECTLY CONTRADICTS `dec:ask-not-repair` IN PRACTICE WHILE OBEYING IT IN FORM. The ruling says suspected duplicates are asked, never silently merged; the 90+ band is treated as \\\"not a suspicion\\\" and acts. The measurement says the 90+ band CONTAINS the very cases most in need of asking, so the rule is honoured and its purpose defeated.\\n\\nOPTIONS, NONE CHOSEN. (a) RAISE THE AUTO-MERGE THRESHOLD. Cheap, and wrong on its own: 95 was a sibling pair, so there is no threshold that separates them by score. (b) NEVER AUTO-MERGE — every match becomes a question, and the corpus batching (BL-186) is what makes that affordable. Honest and expensive; the 11-candidate band in the same trial was 11/11 FALSE POSITIVES, so a user would be answering \\\"no\\\" a great many times. (c) A DISCRIMINATOR BEYOND THE SCORE — refuse to merge when the names differ by a whole token that neither contains (\\\"core\\\" vs \\\"storage\\\" are not variants of each other, while \\\"Auth\\\" vs \\\"Authentication\\\" is a prefix). This targets the actual failure and is the option worth designing. (d) EMBEDDINGS as the tiebreaker in the band, which `dec:idea-embeddings-adoption` already asks about — and this trial is the strongest evidence yet FOR it, because the lexical signal is not merely weak here, it is INVERTED. (e) MAKE IT LOUD RATHER THAN CORRECT — keep merging but report every merge for review. Weakest alone, necessary in any case.\\n\\nMY OWN DEFECT, FOUND BY THE SAME TRIAL AND FIXED BY NOBODY YET: `CorpusReport.fuzzy_merges` is a `usize`. The single-document `IngestReport` carries `Vec<FuzzyMerge>` and its doc comment says \\\"auditable, never silent\\\" — the corpus aggregate reduces that to a COUNT, so at exactly the scale where silent merges matter most, WHAT was merged is unrecoverable from the report. That is a regression I introduced in BL-186 and it should be fixed before anyone runs a real corpus.\\n\\nNOT MEASURED, AND IT BOUNDS EVERYTHING ABOVE: what this does to the other 1,118 documents. The trial was SIX documents chosen for topical overlap. The 44% figure is one document's crate list, not a corpus-wide rate.\",\"name\":\"OPEN — auto-merge at 90 silently destroys SIBLING components and misses the duplicates it exists to catch; the threshold is backwards for real naming conventions\",\"rationale\":\"Filed the moment the trial produced it, with the scores rather than the impression, because \\\"fuzzy matching is too aggressive\\\" is the kind of claim that decays into folklore and then gets re-argued from scratch. The six numbers are reproducible from `dynograph_resolution::token_sort_ratio` directly.\\n\\nRecorded as its own node rather than as an amendment to `cap:corpus-ingest` because the capability is not where the defect lives — isolating a single document proved it is `ingest`'s, and attaching it to the corpus capability would have embalmed the misdiagnosis the trial itself corrected.\\n\\nThe self-criticism about `CorpusReport.fuzzy_merges` is on the node deliberately: the trial's most useful property was that it could show WHAT converged, and the shipped report cannot. Recording that where the fix will be read is worth more than recording it where it would be flattering.\",\"status\":\"proposed\"}",
+        "target_id": "dec:auto-merge-at-90-destroys-sibling-names",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:coord-moves-into-the-graph:dec:coord-board-in-graph",
       "node_type": "Snapshot",
       "properties": {
@@ -53625,6 +53831,18 @@
       }
     },
     {
+      "node_id": "ver:siblings-are-not-merged-away",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-05",
+        "level": "unit",
+        "method": "test",
+        "name": "A similarity score does not decide identity: sibling names stay apart and true duplicates still converge (crates/reflow2-core/tests/sibling_merge.rs, 5 cases). Nine crates sharing the `dynograph-` prefix survive as nine nodes each carrying its OWN name — before BL-213 this was five, with two carrying a sibling's name. An abbreviation (Auth / Authentication) is never reported as distinguished; a version suffix (Auth Service v2) is; reordered tokens (Read Path Cache / Cache Read Path) still converge, so BL-186's ordering fix is untouched; and a held-back merge names the word that held it. MUTATION-CHECKED: disabling the discriminator restores the 5-of-9 loss and fails exactly the three tests naming those properties, while the two that should be insensitive to it still pass. FIELD-CHECKED against the real dev_storyflow document that found the defect: 9 of 9 crates survive.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:skill-lint",
       "node_type": "Verification",
       "properties": {
@@ -53787,7 +54005,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f485e9f9c16917bf69a85983e3b9028f130d06bdcdd7230a63ae9213754a6def",
+  "prev_content_hash": "sha256:31c02265fa5073381a19b7fa2aef259279b86fe0be6918ddf1e167d14d4d6b16",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
