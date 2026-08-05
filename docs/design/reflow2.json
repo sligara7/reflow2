@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:94001240b7a42ad9d4695994356b65eb83aa38db493c5fc7b84436e268c7e470",
+  "content_hash": "sha256:1b2c2645af78724237c693b7d8ba72678199cb9063b087461238682492275b2a",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2035,6 +2035,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl186-ordering-and-standing-questions",
+      "properties": {},
+      "to_id": "epoch:bl186-corpus-ingest-lexical"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:bl199-reattachment",
       "properties": {},
       "to_id": "epoch:bl199-reattachment"
@@ -2284,6 +2290,12 @@
       "from_id": "chg:drift-scalar-reassessed",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:embeddings-question-findings",
+      "properties": {},
+      "to_id": "epoch:embeddings-question-gets-its-findings"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3157,6 +3169,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:bl186-corpus-ingest-lexical:cap:corpus-ingest",
+      "properties": {},
+      "to_id": "epoch:bl186-corpus-ingest-lexical"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:bl199-reattachment:art:collaborating",
       "properties": {},
       "to_id": "epoch:bl199-reattachment"
@@ -3208,6 +3226,12 @@
       "from_id": "snap:epoch:decomposition-count-corrected:dec:bl83a-functional-decomposition",
       "properties": {},
       "to_id": "epoch:decomposition-count-corrected"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:embeddings-question-gets-its-findings:dec:idea-embeddings-adoption",
+      "properties": {},
+      "to_id": "epoch:embeddings-question-gets-its-findings"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3891,6 +3915,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-corpus-ingest-strategies",
+      "properties": {
+        "acted_at": "2026-08-04",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-coupling-explained",
       "properties": {
         "acted_at": "2026-08-01",
@@ -4030,6 +4063,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-trial-driven-choice-skill",
+      "properties": {
+        "acted_at": "2026-08-04",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -4275,6 +4317,15 @@
       "from_id": "req:a-question-arrives-with-a-reading",
       "properties": {
         "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:accreted-intent-becomes-a-design",
+      "properties": {
+        "acted_at": "2026-08-04",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -6347,6 +6398,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:bl186-ordering-and-standing-questions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:bl186-ordering-and-standing-questions",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:corpus-ingest"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:bl199-reattachment",
       "properties": {
         "accepted_baseline": false,
@@ -8378,6 +8447,15 @@
         "action": "modified"
       },
       "to_id": "req:drift-rolls-up-to-a-score"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:embeddings-question-findings",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-embeddings-adoption"
     },
     {
       "edge_type": "CHANGED",
@@ -18177,6 +18255,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:corpus-ingest",
+      "properties": {},
+      "to_id": "snap:epoch:bl186-corpus-ingest-lexical:cap:corpus-ingest"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:design-identity",
       "properties": {},
       "to_id": "snap:epoch:v0130:cap:design-identity"
@@ -18282,6 +18366,12 @@
       "from_id": "dec:external-blob-store-pressure",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:dec:external-blob-store-pressure"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-embeddings-adoption",
+      "properties": {},
+      "to_id": "snap:epoch:embeddings-question-gets-its-findings:dec:idea-embeddings-adoption"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -35224,6 +35314,15 @@
       "to_id": "dep:dynograph-foundation"
     },
     {
+      "edge_type": "RISKS",
+      "from_id": "dec:idea-embeddings-adoption",
+      "properties": {
+        "evidence": "CONDITIONAL, and the edge exists mainly so the tension is findable: this decision is still `proposed`, so nothing is risked today. Answering it YES is what would bear on req:deterministic-core, because an ANN index is approximate by construction and embeddings need a model. Recorded 2026-08-04 because the node had NO design edges at all — its only edge was AUTHORED_BY, so propagate_from reported 0 impacted and no detector could see it (the BL-162 shape: a Decision that governs nothing is invisible). The scope is narrower than the blanket reading: the risk is real for search_design and anything feeding a gate, and materially weaker for ingest resolution, whose output under dec:ask-not-repair is a merge_candidate a human rules on rather than a verdict.",
+        "severity": "medium"
+      },
+      "to_id": "req:deterministic-core"
+    },
+    {
       "edge_type": "SATISFIES",
       "from_id": "cap:adopt",
       "properties": {},
@@ -35384,6 +35483,12 @@
       "from_id": "cap:content-store",
       "properties": {},
       "to_id": "req:the-store-is-reachable-from-a-session"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:corpus-ingest",
+      "properties": {},
+      "to_id": "req:accreted-intent-becomes-a-design"
     },
     {
       "edge_type": "SATISFIES",
@@ -38494,10 +38599,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:72c167ebef5a7f98",
+        "checksum": "sha256:2e2e55c06154f86f102b0167b075f78bd7f0ef14a232ee7cf899b000bde9a6cc",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -41939,6 +42046,14 @@
       }
     },
     {
+      "node_id": "chg:bl186-ordering-and-standing-questions",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Ingest settles a merged node's name without consulting arrival order, and persists a near-match as a DUPLICATES edge so the ask can be batched across a corpus"
+      }
+    },
+    {
       "node_id": "chg:bl199-reattachment",
       "node_type": "ChangeEvent",
       "properties": {
@@ -42424,6 +42539,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Reassess req:drift-rolls-up-to-a-score: the scalar is the WEAK part; reflow2's per-event disposition is already better"
+      }
+    },
+    {
+      "node_id": "chg:embeddings-question-findings",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The embeddings question gains verified findings and a per-path distinction, and BL-186 is scoped lexical without it"
       }
     },
     {
@@ -44264,6 +44387,16 @@
       }
     },
     {
+      "node_id": "dec:idea-corpus-ingest-strategies",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-04, while BL-186 was mid-build: \"maybe we setup an exploratory brainstorm and branch discussing the various ways that we could mass-ingest something like in dev_storyflow. then we can systematically test some different strategies and observe/measure which performs the best.\" Nothing here is chosen, and no option below has been costed by running it.\n\nTHE CASE, MEASURED (dev_storyflow, `/home/ajs7/project/dev_storyflow`, read-only): 1,124 markdown files, 22 MB, ~6M tokens of source text. 17 files at depth 1 and 1,107 below it, so a non-recursive ingest reads 1.5% of the corpus and reports nothing missing. docs/archive 333 files / 16.2 MB (73% of the volume, dated superseded board snapshots); memory/ 380; docs/evidence 195 md + 744 binaries; the plausibly design-bearing remainder is 216 files / 3.3 MB. The fleet's own survey (`reflow2_feedback.md`, api-boss 07426210) read samples rather than filenames and found docs/evidence is at least FIVE types, and that 102 of 334 memory files are unbuilt product intent that reflow2 already models — so a filename-level exclusion of memory/ would be wrong.\n\n(a) INGEST EVERYTHING, RECURSIVELY, NO SELECTION. Cheapest to specify, and the only option needing no human judgement. Expensive to run (~6M tokens before the per-pass multiplier) and the yield is poor: a design dominated by 333 superseded archives. Counter-argument that is specific rather than general — the archives are dated snapshots of the SAME few boards, so they are near-identical to each other, and the DUPLICATES bridge built for corpus-scale asking would turn them into thousands of standing questions. The mechanism that makes batched asking possible is the same one that makes an unselected corpus unusable.\n\n(b) PLAN THEN INGEST (directory triage). Walk the tree, group by directory, report counts + bytes + sample names, put THAT to the user as one batched ask about scope before any document is extracted. Cheap, one round, and it puts the judgement where it belongs — reflow2 cannot know that `archive/` is superseded, and hardcoding a skip-list is the \"shaping the model until the tool goes quiet\" failure docs/sharpening.md names. Honest counter-argument: directory-level judgement is wrong at file level, and the fleet's own deeper read proves it — docs/evidence holds 5 runbooks and 50 root-cause memos that are knowledge, not evidence, and excluding the directory loses them.\n\n(c) CLASSIFY THEN ROUTE. A cheap per-document classification pass first (design intent / evidence / archive / doctrine / hazard), then route by kind: intent gets the full extraction, evidence becomes an Artifact with an anchor, archive is skipped or marked pending_expansion. More calls but each tiny, and it matches what the corpus actually is rather than what its folders are named. Counter-argument: it adds a classifier whose errors are invisible, and it is the option most likely to quietly mis-file the thing you care about.\n\n(d) EXPLOIT THE CORPUS'S OWN SELF-LABELLING. It already declares itself: 102/334 memory files say FUTURE/parked, evidence files pin commit SHAs, grounding docs are headed \"READ-ONLY GROUNDING (no code, no build)\". Zero model cost for the signal. Counter-argument, measured: 117 of 334 memory files declare no type at all, and the fleet's filename convention and its frontmatter schema already disagree (`tech_` is 67 by filename and 6 by declared type) — so the labels cover most of the corpus and are silent exactly where it is messiest.\n\n(e) HIGH-VALUE-FIRST, INCREMENTALLY. Ingest docs/architecture (20), docs/decisions (6), docs/grounding (34), briefs and the root planning docs — the 216-file remainder — measure the design that results, then decide whether more is worth it. Fastest to first value, and it composes with the resume story already settled on BL-186 (the graph IS the resume point; sweep the folder, diff against registered Fragments, the remainder is the work left). Counter-argument: it answers \"is this useful\" and not \"does this scale\", which is the question BL-186 exists to answer.\n\nWHAT A TRIAL WOULD HAVE TO MEASURE, since none of the above is decidable by argument: documents ingested per unit cost; nodes created against merge candidates raised (signal to noise); how many candidates a HUMAN then has to rule on; coverage_report claimed against unclaimed; and the only test that actually matters, which the scope doc already states — \"whether an agent reading 500 heterogeneous markdown files produces a design a human recognises is a trial, not an argument, and it should be run on a real folder before anyone promises this to a user.\"",
+        "name": "OPEN — how should a corpus like dev_storyflow's 1,124 documents actually be mass-ingested?",
+        "rationale": "Recorded under the brainstorm skill so the options survive as options. Anthony proposed trialling several strategies and measuring which performs best; this node holds the strategies, and dec:idea-trial-driven-choice-skill holds the separate question of whether reflow2 should have a way to run that kind of trial at all. Measurements of dev_storyflow are exact greps taken 2026-08-04; the type judgements are the fleet's own from reflow2_feedback.md, not mine — my earlier filename-level read of memory/ was wrong and is corrected above.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-coupling-explained",
       "node_type": "Decision",
       "properties": {
@@ -44317,9 +44450,9 @@
       "node_id": "dec:idea-embeddings-adoption",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — surfaced by the 2026-08-01 dynograph-foundation review, but NOT a new idea: this question already exists as PROSE in docs/requirements-coverage.md (\"Note: are embeddings (an embeddings-rs sidecar) actually needed?\"). Recording it here moves it from a document into the graph, which is the direction dec:what-lives-where argues for; it does not settle it.\n\nWHAT IS AVAILABLE AND UNUSED: dynograph-vector ships an HNSW approximate-nearest-neighbour index (HnswConfig / HnswIndex / SearchResult, with filtered, batch and snapshot-persisted search) plus SIMD cosine similarity and the whole distance family. reflow2 uses none of it. search_design is BM25 lexical, and the schema carries embedding_field declarations on several node types that nothing populates.\n\nTHE CASE FOR: semantic search would find a requirement whose words differ from the query's. It would also strengthen resolution — the duplicate-detection path already has a fuzzy_then_vector strategy declared in the schema with the vector half unimplemented.\n\nTHE CASE AGAINST, and it is why this has stayed parked: embeddings need a MODEL, and reflow2-core is deliberately LLM-free and deterministic. An embedding provider at the core would break that, and putting it at the seam means a sidecar to install, version and keep in sync — which cuts against req:thin-install and the whole served-not-installed posture. Determinism is also load-bearing here: two runs of a detector must agree, and an ANN index is approximate by construction.\n\nNOT AN IDEA I AM ADVOCATING — recorded so the question is findable in the graph rather than only in a documentation footnote.",
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — surfaced by the 2026-08-01 dynograph-foundation review, but NOT a new idea: this question already exists as PROSE in docs/requirements-coverage.md (\"Note: are embeddings (an embeddings-rs sidecar) actually needed?\"). Recording it here moves it from a document into the graph, which is the direction dec:what-lives-where argues for; it does not settle it. STILL OPEN.\n\nWHAT IS AVAILABLE AND UNUSED: dynograph-vector ships an HNSW approximate-nearest-neighbour index (HnswConfig / HnswIndex / SearchResult, with filtered, batch and snapshot-persisted search) plus SIMD cosine similarity and the whole distance family. reflow2 uses none of it. search_design is BM25 lexical, and the schema carries embedding_field declarations on several node types that nothing populates.\n\nTHE CASE FOR: semantic search would find a requirement whose words differ from the query's. It would also strengthen resolution — the duplicate-detection path already has a fuzzy_then_vector strategy declared in the schema with the vector half unimplemented.\n\nTHE CASE AGAINST, and it is why this has stayed parked: embeddings need a MODEL, and reflow2-core is deliberately LLM-free and deterministic. An embedding provider at the core would break that, and putting it at the seam means a sidecar to install, version and keep in sync — which cuts against req:thin-install and the whole served-not-installed posture. Determinism is also load-bearing here: two runs of a detector must agree, and an ANN index is approximate by construction.\n\n--- 2026-08-04, re-examined while building BL-186 (cap:corpus-ingest). Four things are now MEASURED rather than supposed, and one distinction is offered against the case-against. The question is still open and this update does not settle it. ---\n\n1. THE PRODUCER EXISTS AND IS ANTHONY'S OWN. `embeddings-rs` (github.com/sligara7/embeddings-rs, local at a990e4d v0.1.1) is a Rust/ONNX parity sidecar for nomic-embed-text-v1.5 with a code-derived, drift-gated OpenAPI contract, written to pair with dynograph-foundation. That matters to the case-against: \"a provider dependency\" and \"a local, self-hosted, contract-frozen sidecar you maintain\" are not the same risk, and the deferral's stated reason was avoiding an external LLM provider.\n\n2. THE WHOLE PATH EXISTS AND IS INERT — VERIFIED, not read from the earlier note. dynograph-storage has an embeddings column family with set_embedding / get_embedding / delete_embedding / scan_embeddings_by_type. dynograph-vector really does ship HNSW (crates/dynograph-vector/src/hnsw.rs) and SIMD cosine (distance.rs). reflow2's own schema declares embedding_field on Capability, Requirement, Question and others. reflow2's source contains exactly two matches for \"embedding\": a bidi-sanitizer comment and a doc comment saying \"no embeddings\". So the missing piece was never the model or the index — it is reflow2 calling any of it. embedding_field is another declared-and-read-by-nothing field, this time spanning four components.\n\n3. NOT NEEDED FOR cap:corpus-ingest, AND ANTHONY SCOPED IT OUT ON 2026-08-04: \"keep BL-186 lexical and ship it.\" The cost half of the corpus problem is candidate generation, which the BM25 index already in the served binary answers; embeddings would ADD a round trip per node, not remove one. The ordering half was a naming bug, fixed lexically. The folder driver needs no vectors.\n\n4. WHERE IT WOULD ACTUALLY EARN ITS KEEP, and this is the honest limit of the lexical answer: req:corpus-ingest requires that \"the same component named in forty specifications must converge on one node\". Forty authors do not merely reorder tokens, they choose different words. token_sort_ratio cannot see \"Read Cache\" ~ \"Local Store\" at all — that is not a low score, it is invisible. The cases the scope doc names (Auth Service / Authentication Service = 84, Gateway / API Gateway = 74) are the EASY ones because they still share tokens. So shipping BL-186 lexical satisfies the requirement's ordering clause and its cost, and leaves its convergence clause satisfied only for documents that happen to share vocabulary. That limit should be stated to a user pointing reflow2 at a heterogeneous corpus rather than discovered by them.\n\n5. THE DISTINCTION OFFERED AGAINST THE CASE-AGAINST: determinism is treated above as one blanket objection — \"two runs of a detector must agree, and an ANN index is approximate by construction\". That is strong for search_design and for anything feeding a gate. It is materially weaker for INGEST RESOLUTION, because under dec:ask-not-repair that path's output is a merge_candidate a human rules on, not a verdict. Approximate retrieval feeding a QUESTION is a different risk from approximate retrieval feeding a GATE. So the answer may not be a single yes/no: \"yes, on the ingest resolution path only\" would leave req:deterministic-core intact. Offered as a distinction to consider, not as advocacy — the req:thin-install objection stands unchanged either way, since a sidecar to install, version and keep in sync is a real change to the one-binary deployment story.",
         "name": "OPEN — should reflow2 adopt embeddings and the HNSW index, or stay on lexical search?",
-        "rationale": "Captured because the review found the HNSW index entirely unused and the question live only in prose. The honest status is \"already parked, now visible\" rather than \"newly proposed\".",
+        "rationale": "Captured because the review found the HNSW index entirely unused and the question live only in prose. The honest status is \"already parked, now visible\" rather than \"newly proposed\". Updated 2026-08-04 after BL-186 forced the question in practice: the findings above are measured against the local checkouts of embeddings-rs and dynograph-foundation rather than recalled, and the per-path determinism distinction is new. Anthony's scoping call — BL-186 ships lexical — is recorded here so the decision to defer is visible on the node itself rather than only in the increment that deferred it.",
         "status": "proposed"
       }
     },
@@ -44420,6 +44553,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, from a first-pass review of openmbee.org — website and repository listing only, deep review pending. THE OBSERVATION: OpenMBEE's active development is not its stable product. MMS 4 stores models in SQL; the successor, Flexo / MMS 5, moves to an RDF quadstore and is described as 'GitHub for graphs', exposing SPARQL, GraphQL, OSLC and a SysML v2 API. A separate experimental SysML v2 execution environment (`Systemica`, Go) is also under way. Commits across those repositories were days old when reviewed (July–August 2026), so this is a live bet, not an aspiration. WHERE reflow2 STANDS: it has its own vocabulary — 29 node types, 60 edge types — and no standard interchange of any kind. It publishes three interfaces (`ifc:core-api`, `ifc:graph-export`, `ifc:mcp-tools`), and `export_surface` already emits a subset of a design deliberately. THE QUESTION IS NOT WHETHER TO ADOPT SysML v2 INTERNALLY — the vocabulary is load-bearing and `dec:bl83a-functional-decomposition` and `req:functional-vocabulary-computes` both depend on it — but whether reflow2 should be able to SPEAK it at the edge, in and out. THE ARGUMENT FOR: Anthony works in a defence/aerospace systems-engineering context and will be asked, professionally, why a design tool does not interoperate with the standard his field is converging on. An export that a SysML v2 service can ingest is a different claim from an export only reflow2 reads. THE HONEST COUNTER-ARGUMENT: SysML v2 is large, its tooling is young, and a partial mapping that silently drops what it cannot express would be worse than none — reflow2's whole posture is that a lossy translation must be reported, not quietly performed. Mapping 29 types onto SysML v2 would need the same no-silent-drop discipline `changelog_view` holds with `unmapped`. WHAT WOULD CHANGE THE ANSWER: whether a faithful SUBSET mapping exists that reports what it could not carry.",
         "name": "OPEN — should reflow2 speak SysML v2 at its boundary, given that is where the standards gravity has moved?",
         "rationale": "Recorded through the brainstorm skill at Anthony's request to capture, as proposed ideas, the areas where OpenMBEE is stronger than reflow2 — before a deep review he intends to run against a clone of their repository. The strength claimed here is narrow and should be read narrowly: OpenMBEE has committed to a standard interchange and reflow2 has none. Whether their SysML v2 implementation is any good is exactly what the deep review is for, and nothing in this node asserts that it is.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-trial-driven-choice-skill",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-04, in his own words: \"I kind of like this idea of brainstorming ideas for how to solve a problem and laying out trials for how to figure out which is the best approach - maybe this is a future reflow2 skill??\" Raised while brainstorming the corpus-ingest strategies (dec:idea-corpus-ingest-strategies), which is the first concrete case for it.\n\nWHAT ALREADY EXISTS, AND IT IS MORE THAN HALF — the design-space version of this shipped as BL-70 and nothing in this idea should be built without reading it first. `register_alternative` forks a `proposed` Decision into alternatives, each a pointer to that branch's own design export, GOVERNED_BY the Decision and CONTRADICTS its siblings, and it REFUSES unless the Decision is proposed — you fork an open choice, not a settled one. `analyze_alternatives` then compares the branches ON THE SAME MEASURES — design nodes, open gaps, structural defects, allocation modularity, capabilities verified, plus each branch's structural divergence from the baseline — in throwaway graphs, so it never touches the live one. Its own words are \"makes alternatives comparable on measures, not advocacy\", which is this idea's thesis already stated. `collapse_decision` picks the winner, moves the Decision to accepted, and SUPERSEDES the losers with OBSOLETES so the roads not taken stay on the record. `detect_gaps` fires `undecided_decision_point` once a Decision holds two or more registered alternatives, so an open fork nags and a musing does not.\n\nTHE GAP, AND IT IS SPECIFIC — reflow2 can compare DESIGNS; it cannot compare RUNS. Every measure `analyze_alternatives` reports is a property of the resulting graph's shape. None of them is a property of the PROCESS that produced it: what it cost, how long it took, how much of the corpus it covered, how much noise it raised, how many questions a human then had to answer, and whether the result was recognisable to the person who owns the material. The corpus-ingest strategies are indistinguishable on graph shape and completely different on all of those. A trial produces evidence about a PROCESS and there is nowhere in the graph to put it. That is the same hole [BL-187] names from the other side — the corpus records when something was true and nothing computes whether it still is.\n\nTHE SECOND GAP, AND IT IS THE ONE THIS PROJECT KEEPS FINDING — no skill drives the alternatives family end to end. `brainstorm` mentions `register_alternative` in passing, as the line where a musing becomes a fork. Nothing tells anyone to then run `analyze_alternatives` or `collapse_decision`. Same shape as `ingest_step`, which is built, served, verified, and named in no skill at all: a tool nobody is told to call is a tool nobody calls ([BL-154]).\n\nHONEST COUNTER-ARGUMENTS, recorded beside the idea rather than used to kill it. (1) `dec:report-dont-judge` — a trial that picks a winner by number is arithmetic overruling a person, which is the move this project refuses everywhere else; the skill would have to REPORT the measures and leave the collapse to the human, exactly as `collapse_decision` already requires a stated winner and a rationale. (2) The api-boss's objection to PMBOK in `reflow2_feedback.md` applies here too: reflow2 is a design-coherence tool, and importing an experiment harness risks \"a second, competing spine next to the golden thread\". (3) Trials are expensive, and the cheapest honest version of this idea may be a SKILL over the existing tools plus a convention for recording run measures as evidence, rather than any new vocabulary — which is what the last two node-type proposals in this project both collapsed into after measurement (`Attestation` → `TemporalFact`, `Hazard` → `DesignRule`).\n\nNOT PROMOTED, NOT SIZED, AND NOT MINE — recorded so the idea is findable and so the next session does not re-derive BL-70, which is the specific failure this session hit three times.",
+        "name": "OPEN — should reflow2 have a skill for \"brainstorm the options, then TRIAL them and let measurement choose\"?",
+        "rationale": "Captured under the brainstorm skill because Anthony floated it as a question, not a request. The load-bearing content is the survey of what BL-70 already provides: the idea is substantially built for design alternatives and genuinely missing for process trials, and that distinction is what would make it worth building rather than a second name for something that exists.",
         "status": "proposed"
       }
     },
@@ -46215,6 +46358,16 @@
       }
     },
     {
+      "node_id": "epoch:bl186-corpus-ingest-lexical",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "BL-186: corpus ingest stops letting arrival order name things, and a near-match becomes a standing question (2026-08-04)",
+        "sequence": 270,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:bl199-reattachment",
       "node_type": "DesignEpoch",
       "properties": {
@@ -46272,6 +46425,16 @@
         "epoch_type": "revision",
         "name": "The functional-decomposition decision catches up with the eighth system it gained after it was written",
         "sequence": 260,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:embeddings-question-gets-its-findings",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The embeddings question gets measured findings, and stops being an orphan (2026-08-04)",
+        "sequence": 269,
         "status": "arrived"
       }
     },
@@ -49376,6 +49539,21 @@
       }
     },
     {
+      "node_id": "req:accreted-intent-becomes-a-design",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A body of intent accreted over years, contradicting itself and never built, can still become a design",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Where a person has written down what they want to build over a long period — documents, drawings, proposals, notes — and has built NOTHING, reflow2 must be able to turn that corpus into a real design. Anthony, 2026-08-04: \"a daydreamer may just document thoughts (maybe over years about some dream project) - then one day, they say, I want to actually build it… it must create a reflow2 project from multiple fragments (and potentially contradicting or imperfect requirements/ideas/proposals) and turn them into an actual reflow2 project.\"\n\nTHREE THINGS DISTINGUISH THIS FROM req:corpus-ingest, which is about CONVERGENCE (the same component named in forty specs resolving to one node). (1) CONTRADICTION IS THE EXPECTED STATE, NOT A DEFECT. A 2019 idea disagreeing with a 2024 one is not an error to heal — both were genuinely held, and the disagreement is the most informative thing in the corpus. The design must be able to say \"you changed your mind here, forty times\" as a READING rather than as forty defects. (2) THERE IS NOTHING BUILT TO RECONCILE AGAINST. Every capability is `planned`, every requirement `proposed`, and the as-built half of the loop has no subject — which is honest and must not read as catastrophic. (3) THE CORPUS IS THE ONLY ARTIFACT. For a codebase the documents are one source among several and the code arbitrates; here the documents are the whole of what exists, so nothing outside them can settle a disagreement between them and the user is the only arbiter.\n\nIT ALSO SITS UNDER BOTH SIBLING SKILLS RATHER THAN BESIDE THEM, which is the structural half of the same observation. `adopt` is described for a system with \"little or no requirements documentation\" and recovers intent by reverse-engineering code — but a corpus this size falsifies that premise, and adopt's Phase 0 only REGISTERS documents as Fragments while Phase 3 is told to recover requirements ONLY from them. Measured on dev_storyflow: 17 Fragments and 9 Requirements recovered from 1,124 documents, after which a separate multi-session campaign had to read them by hand. `genesis` assumes an opening BRIEF — one statement — and has no shape for an opening FOLDER. So mass ingest is a primitive both skills should consume, not a third skill beside them.\n\nStatus deliberately `proposed`: this is Anthony's framing captured in his own words and awaiting his confirmation of the wording, not a settled requirement.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:adopt-existing",
       "node_type": "Requirement",
       "properties": {
@@ -51110,6 +51288,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:bl186-corpus-ingest-lexical:cap:corpus-ingest",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"DOCUMENTS\",\"other_type\":\"Artifact\",\"other_id\":\"art:scope-corpus-ingest\",\"properties\":{\"doc_kind\":\"design_doc\"}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:ingest\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:ask-not-repair\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:corpus-ingest-mechanism\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:dfe1b2a6caace1f4\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:accreted-intent-becomes-a-design\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:corpus-ingest\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:sources-are-kept-not-just-parsed\",\"properties\":{}}]",
+        "state": "{\"description\":\"Take a directory of written specifications and produce one coherent design from the whole corpus, keeping each claim's provenance Fragment pointing back at its source document. Extends single-document extraction, which already works, with the two things a corpus needs and a file does not: a folder driver, and identity resolution ACROSS documents so the same thing named in many specs converges on one node. The primitive for that convergence already exists — every node type declares its own resolution strategy and threshold in the schema — so this is wiring an existing mechanism at batch scale rather than inventing one. Bound by dec:ask-not-repair: suspected duplicates are asked, never silently merged, which at corpus scale means the asking must be batched or the feature is unusable. PLANNED — BL-97.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Ingest a folder of specifications as one design\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:corpus-ingest",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:bl199-reattachment:art:collaborating",
       "node_type": "Snapshot",
       "properties": {
@@ -51196,6 +51384,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:agent-surface\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:coherence-loop\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:human-channel\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:intake\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:store\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:time-history\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:vocabulary\",\"properties\":{}}]",
         "state": "{\"decision\":\"reflow2's own decomposition is the seven functional systems a design-graph tool IS — vocabulary, store, coherence-loop, human-channel, time-history, intake, agent-surface — with the 38 Rust modules re-parented under them as implementation. The as-built crate grouping (reflow2-core / -mcp / kit) is retired from the as-designed view.\",\"name\":\"reflow2's systems are functional, not its file tree\",\"rationale\":\"The self-model had been recovered backwards from the file tree, so its 38 Components were the Rust module list and the domain primitives a design-graph product fundamentally is — node and edge types — appeared nowhere (BL-83). A functional carving comes from the product's purpose (a genesis input), not the code, and cuts across crate boundaries, so adopt on the code can only re-derive the module view. Derived with the user, 2026-07-23. The retired crate view is recovered by adopt-on-a-copy (BL-83b) and the divergence measured by compare_designs (BL-83c).\",\"status\":\"accepted\"}",
         "target_id": "dec:bl83a-functional-decomposition",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:embeddings-question-gets-its-findings:dec:idea-embeddings-adoption",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:claude-code\",\"properties\":{\"acted_at\":\"2026-08-01\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — surfaced by the 2026-08-01 dynograph-foundation review, but NOT a new idea: this question already exists as PROSE in docs/requirements-coverage.md (\\\"Note: are embeddings (an embeddings-rs sidecar) actually needed?\\\"). Recording it here moves it from a document into the graph, which is the direction dec:what-lives-where argues for; it does not settle it.\\n\\nWHAT IS AVAILABLE AND UNUSED: dynograph-vector ships an HNSW approximate-nearest-neighbour index (HnswConfig / HnswIndex / SearchResult, with filtered, batch and snapshot-persisted search) plus SIMD cosine similarity and the whole distance family. reflow2 uses none of it. search_design is BM25 lexical, and the schema carries embedding_field declarations on several node types that nothing populates.\\n\\nTHE CASE FOR: semantic search would find a requirement whose words differ from the query's. It would also strengthen resolution — the duplicate-detection path already has a fuzzy_then_vector strategy declared in the schema with the vector half unimplemented.\\n\\nTHE CASE AGAINST, and it is why this has stayed parked: embeddings need a MODEL, and reflow2-core is deliberately LLM-free and deterministic. An embedding provider at the core would break that, and putting it at the seam means a sidecar to install, version and keep in sync — which cuts against req:thin-install and the whole served-not-installed posture. Determinism is also load-bearing here: two runs of a detector must agree, and an ANN index is approximate by construction.\\n\\nNOT AN IDEA I AM ADVOCATING — recorded so the question is findable in the graph rather than only in a documentation footnote.\",\"name\":\"OPEN — should reflow2 adopt embeddings and the HNSW index, or stay on lexical search?\",\"rationale\":\"Captured because the review found the HNSW index entirely unused and the question live only in prose. The honest status is \\\"already parked, now visible\\\" rather than \\\"newly proposed\\\".\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-embeddings-adoption",
         "target_type": "Decision"
       }
     },
@@ -52960,7 +53158,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f231440aefae574b795e911ef5509cfdfef4a22fa9bd433fb9b1530501217408",
+  "prev_content_hash": "sha256:94001240b7a42ad9d4695994356b65eb83aa38db493c5fc7b84436e268c7e470",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -395,6 +395,230 @@ fn a_new_id_with_a_matching_name_is_fuzzy_merged_and_edges_redirect() {
     );
 }
 
+/// Ingest the same pair of documents in both orders and read the name back.
+///
+/// Returns `(canonical_name, alias_name, capability_count, merge_count)`.
+fn ingest_both(
+    first: (&str, &str),
+    second: (&str, &str),
+) -> (String, Option<String>, usize, usize) {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:a".into(),
+            ..Default::default()
+        },
+        &mock_cap(first.0, first.1, false),
+    )
+    .unwrap();
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:b".into(),
+                ..Default::default()
+            },
+            &mock_cap(second.0, second.1, false),
+        )
+        .unwrap();
+    let name = g
+        .get_node(node::CAPABILITY, first.0)
+        .unwrap()
+        .or_else(|| g.get_node(node::CAPABILITY, second.0).unwrap())
+        .expect("one capability survives")
+        .properties
+        .get("name")
+        .and_then(|v| v.as_str())
+        .unwrap_or_default()
+        .to_string();
+    let alias = report
+        .fuzzy_merges
+        .first()
+        .and_then(|m| m.alias_name.clone());
+    (
+        name,
+        alias,
+        g.count_nodes(node::CAPABILITY).unwrap(),
+        report.fuzzy_merges.len(),
+    )
+}
+
+/// `req:corpus-ingest`'s load-bearing clause: *"Ordering must not decide meaning
+/// — which file happened to be read first must not determine the canonical name
+/// of anything."*
+///
+/// It did, and a corpus is exactly where it bites, because the order is the
+/// iteration order of a folder nobody chose. Measured before the fix, same two
+/// documents, same design: `A then B -> "Cache Read Path"`,
+/// `B then A -> "Read Path Cache"`. The merge was always right — one node, one
+/// recorded merge — and the NAME followed whichever document was read last,
+/// because the extracted map overwrites `name` on the survivor.
+#[test]
+fn the_order_two_documents_arrive_in_does_not_decide_the_canonical_name() {
+    let a = ("cap:read-path-cache", "Read Path Cache");
+    let b = ("cap:cache-read-path", "Cache Read Path");
+
+    let (ab_name, ab_alias, ab_caps, ab_merges) = ingest_both(a, b);
+    let (ba_name, ba_alias, ba_caps, ba_merges) = ingest_both(b, a);
+
+    // The merge itself was never the bug and must not regress.
+    assert_eq!((ab_caps, ab_merges), (1, 1), "A then B should merge to one");
+    assert_eq!((ba_caps, ba_merges), (1, 1), "B then A should merge to one");
+
+    assert_eq!(
+        ab_name, ba_name,
+        "the canonical name must not depend on which document was read first"
+    );
+
+    // Equal length here, so the lexicographic tiebreak decides — and the point
+    // is that it decides the SAME way both times.
+    assert_eq!(ab_name, "Cache Read Path");
+
+    // Nothing is discarded in silence: the name that lost is reported, both
+    // ways round, so the evidence a human chose it survives the merge.
+    assert_eq!(ab_alias.as_deref(), Some("Read Path Cache"));
+    assert_eq!(ba_alias.as_deref(), Some("Read Path Cache"));
+}
+
+/// The counterweight, and the reason the rule is "longer wins" rather than
+/// "lexicographically smallest wins": a longer name is the more specific one,
+/// which is the same reading `token_subset_match` already applies when it
+/// suggests a survivor. Order still must not matter.
+#[test]
+fn the_more_specific_name_survives_a_merge_whichever_way_round() {
+    let short = ("cap:auth", "Auth Gateway Service");
+    let long = ("cap:auth-2", "Auth Gateway Services");
+
+    let (ab_name, ab_alias, ..) = ingest_both(short, long);
+    let (ba_name, ba_alias, ..) = ingest_both(long, short);
+
+    assert_eq!(ab_name, "Auth Gateway Services", "the longer name survives");
+    assert_eq!(ba_name, ab_name, "and does so in either order");
+    assert_eq!(ab_alias.as_deref(), Some("Auth Gateway Service"));
+    assert_eq!(ba_alias.as_deref(), Some("Auth Gateway Service"));
+}
+
+/// The corpus half of `dec:ask-not-repair`, end to end.
+///
+/// That decision requires a suspected duplicate to be ASKED, never silently
+/// merged, and `cap:corpus-ingest` names the consequence: *"at corpus scale the
+/// asking must be batched or the feature is unusable"*. A `MergeCandidate`
+/// alone cannot be batched — it lives in one document's report and is gone when
+/// the caller opens the next file, so four hundred documents produce four
+/// hundred separate asks to an agent that has forgotten the last one.
+///
+/// Persisting the suspicion as a `DUPLICATES` edge hands it to machinery that
+/// already exists: HEAL's `duplicate` detector collects them across the whole
+/// run, in any order, however long the run takes. **This test is the proof that
+/// the handoff actually happens** — the edge alone would only be a claim.
+#[test]
+fn a_near_match_becomes_a_standing_question_heal_can_collect() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:one".into(),
+            ..Default::default()
+        },
+        &mock_cap("cap:auth", "Auth Service", false),
+    )
+    .unwrap();
+
+    // 84 — above Capability's fuzzy_threshold (82), below auto-merge (90), so
+    // it is created AND questioned rather than merged.
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:two".into(),
+                ..Default::default()
+            },
+            &mock_cap("cap:auth-2", "Authentication Service", false),
+        )
+        .unwrap();
+
+    assert!(report.fuzzy_merges.is_empty(), "the band must not merge");
+    assert_eq!(report.merge_candidates.len(), 1);
+    assert_eq!(
+        report.duplicates_recorded, 1,
+        "the suspicion must outlive the document that raised it"
+    );
+    assert_eq!(g.count_nodes(node::CAPABILITY).unwrap(), 2, "both survive");
+
+    // The edge is drawn between the two real nodes.
+    let dups = g.outgoing("cap:auth-2", Some(edge::DUPLICATES)).unwrap();
+    assert_eq!(dups.len(), 1);
+    assert_eq!(dups[0].to_id, "cap:auth");
+    assert_eq!(dups[0].properties["confidence"].as_f64(), Some(0.84));
+
+    // THE POINT: HEAL now carries the question, without ingest telling it to.
+    let issue = g
+        .detect_defects()
+        .unwrap()
+        .into_iter()
+        .find(|i| i.category.as_str() == "duplicate")
+        .expect("a persisted suspicion must reach the batched ask");
+    assert!(
+        issue.affected_ids.contains(&"cap:auth".to_string())
+            && issue.affected_ids.contains(&"cap:auth-2".to_string()),
+        "{issue:?}"
+    );
+}
+
+/// The counterweight, and the reason the edge is drawn only in the ask band: at
+/// or above `auto_merge_threshold` the nodes ARE merged, so there is nothing
+/// left to ask. Drawing one anyway would hand HEAL a question about a node that
+/// no longer exists and make every clean corpus run look ambiguous.
+#[test]
+fn an_auto_merge_leaves_no_question_behind() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.ingest(
+        BRIEF,
+        &IngestOptions {
+            fragment_id: "frag:one".into(),
+            ..Default::default()
+        },
+        &mock_cap("cap:cache", "Caching", false),
+    )
+    .unwrap();
+    let report = g
+        .ingest(
+            BRIEF,
+            &IngestOptions {
+                fragment_id: "frag:two".into(),
+                ..Default::default()
+            },
+            &mock_cap("cap:cache-2", "Caching", false),
+        )
+        .unwrap();
+
+    assert_eq!(report.fuzzy_merges.len(), 1, "identical names merge");
+    assert_eq!(
+        report.duplicates_recorded, 0,
+        "a merge answers the question; it must not also ask it"
+    );
+    assert!(
+        !g.detect_defects()
+            .unwrap()
+            .iter()
+            .any(|i| i.category.as_str() == "duplicate"),
+        "a clean convergence must not read as an outstanding duplicate"
+    );
+}
+
+/// Two documents that agree on the name must not manufacture an alias — an
+/// `alias_name` on every merge would make "these two specs disagreed about what
+/// to call it" unreadable, which is the only thing the field is for.
+#[test]
+fn agreeing_documents_record_no_alias() {
+    let (name, alias, caps, merges) =
+        ingest_both(("cap:cache", "Caching"), ("cap:cache-2", "Caching"));
+    assert_eq!((caps, merges), (1, 1));
+    assert_eq!(name, "Caching");
+    assert_eq!(alias, None, "identical names are not a disagreement");
+}
+
 #[test]
 fn a_new_id_with_a_dissimilar_name_is_not_merged() {
     let mut g = DesignGraph::open_in_memory().unwrap();

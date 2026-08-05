@@ -336,6 +336,13 @@ pub struct FuzzyMerge {
     /// reported as a candidate rather than merged, because `Auth Service` is a
     /// strict subset of `Legacy Auth Service` and those are plainly two things.
     pub match_kind: MatchKind,
+    /// The name the merged node ended up carrying.
+    pub canonical_name: String,
+    /// The other name, when the two documents disagreed — `None` when they
+    /// called it the same thing. Reported rather than dropped: a merge that
+    /// silently discards one of two human-chosen names loses the only evidence
+    /// that the choice was ever made.
+    pub alias_name: Option<String>,
 }
 
 /// How a near-match was found. Recorded on every merge and every candidate,
@@ -457,6 +464,10 @@ pub struct IngestReport {
     /// ambiguous band is a question put to a person rather than a coin flip
     /// resolved by a constant (`dec:ask-not-repair`).
     pub merge_candidates: Vec<MergeCandidate>,
+    /// How many of those suspicions were persisted as `DUPLICATES` edges. The
+    /// candidates above are this document's answer; the edges are what lets HEAL
+    /// collect the same question across a whole corpus, in any order.
+    pub duplicates_recorded: usize,
     /// Edges created this run.
     pub edges_created: usize,
     /// The `DesignEpoch` matched-evolved snapshots were pinned to (`Some` only
@@ -1115,6 +1126,7 @@ impl DesignGraph {
             nodes_unchanged: st.nodes_unchanged,
             fuzzy_merges: st.fuzzy_merges,
             merge_candidates: st.merge_candidates,
+            duplicates_recorded: st.duplicates_recorded,
             edges_created: st.edges_created,
             epoch_used,
             pass_errors: errors,
@@ -1183,7 +1195,7 @@ impl DesignGraph {
         id: &str,
         props: Props,
     ) {
-        let new_map = sanitize_extracted(st, node_type, id, props.build());
+        let mut new_map = sanitize_extracted(st, node_type, id, props.build());
         match self.get_node(node_type, id) {
             Err(e) => st.warnings.push(format!("resolve {node_type} '{id}': {e}")),
             // Direct id hit → resolve against that node.
@@ -1203,12 +1215,24 @@ impl DesignGraph {
                     let (_, auto_merge) = self.resolution_thresholds(node_type);
                     if score >= auto_merge {
                         st.aliases.insert(id.to_string(), candidate.clone());
+                        // `req:corpus-ingest` — "ordering must not decide
+                        // meaning". The merge is right at this score; the NAME
+                        // is what used to follow whichever document was read
+                        // last, because the extracted map overwrites it. Two
+                        // specs naming one thing "Read Path Cache" and "Cache
+                        // Read Path" produced a different canonical name
+                        // depending on directory order, which for a corpus is
+                        // the read order of a folder nobody chose.
+                        let (canonical_name, alias_name) =
+                            self.settle_merged_name(node_type, &candidate, &mut new_map);
                         st.fuzzy_merges.push(FuzzyMerge {
                             extracted_id: id.to_string(),
                             canonical_id: candidate.clone(),
                             node_type,
                             score,
                             match_kind: MatchKind::Fuzzy,
+                            canonical_name,
+                            alias_name,
                         });
                         self.integrate_existing(st, node_type, &candidate, new_map);
                     } else {
@@ -1222,9 +1246,10 @@ impl DesignGraph {
                             // A score says the two are alike, not which is more
                             // specific; the existing node is suggested because it
                             // is the one already carrying edges and history.
-                            suggested_survivor: candidate,
+                            suggested_survivor: candidate.clone(),
                         });
                         self.integrate_new(st, node_type, id, new_map);
+                        self.suspect_duplicate(st, node_type, id, &candidate, Some(score));
                     }
                 }
                 // Nothing by score. Try the structural question before concluding
@@ -1232,6 +1257,9 @@ impl DesignGraph {
                 // scores 74, below every threshold reflow2 declares, and is the
                 // case a corpus produces most.
                 Ok(None) => {
+                    // Drawn AFTER integrate_new below: create_edge refuses a
+                    // dangling endpoint, and the node does not exist yet here.
+                    let mut pending_subset: Option<String> = None;
                     match self.token_subset_match(node_type, &new_map, id) {
                         Err(e) => st
                             .warnings
@@ -1243,6 +1271,7 @@ impl DesignGraph {
                             } else {
                                 id.to_string()
                             };
+                            pending_subset = Some(candidate.clone());
                             st.merge_candidates.push(MergeCandidate {
                                 extracted_id: id.to_string(),
                                 candidate_id: candidate,
@@ -1259,6 +1288,12 @@ impl DesignGraph {
                         Ok(None) => {}
                     }
                     self.integrate_new(st, node_type, id, new_map);
+                    if let Some(candidate) = pending_subset {
+                        // No score cleared anything, so no confidence is
+                        // asserted — absence reads as "not measured", which is
+                        // the same reason the candidate carries score 0.
+                        self.suspect_duplicate(st, node_type, id, &candidate, None);
+                    }
                 }
             },
         }
@@ -1337,6 +1372,132 @@ impl DesignGraph {
             Err(e) => st
                 .warnings
                 .push(format!("snapshot evolved {node_type} '{id}': {e}")),
+        }
+    }
+
+    /// Persist a near-match as a `DUPLICATES` edge, so the question survives the
+    /// document that raised it.
+    ///
+    /// **This is what makes `dec:ask-not-repair` affordable at corpus scale.**
+    /// That decision requires suspected duplicates to be asked rather than
+    /// silently merged, and `cap:corpus-ingest` notes the consequence: *"at
+    /// corpus scale the asking must be batched or the feature is unusable"*. A
+    /// `MergeCandidate` alone cannot be batched — it lives in one document's
+    /// [`IngestReport`] and is gone the moment the caller moves to the next
+    /// file. Four hundred documents produce four hundred separate asks, each
+    /// addressed to an agent that has already forgotten the last one.
+    ///
+    /// The batching machinery already exists and needed no new vocabulary:
+    /// HEAL's `duplicate` detector fires on a `DUPLICATES` edge, `propose_heal`
+    /// turns it into a merge with the survivor rules, and `apply_heal` refuses
+    /// anything no detector asked for. So the edge turns a transient suspicion
+    /// into a standing question that `detect_defects` collects across the whole
+    /// run, in any order, however long the run takes.
+    ///
+    /// **Drawn only in the ASK band.** At or above `auto_merge_threshold` the
+    /// nodes are merged and there is nothing left to ask; below the type's
+    /// `fuzzy_threshold` nothing was suspected at all. `confidence` carries the
+    /// score where one was measured and is OMITTED for a structural
+    /// (token-subset) match — writing 0.0 would read as "certainly unrelated",
+    /// which is the opposite of what a subset relation means.
+    ///
+    /// Never cascade-fails: a refused edge is a warning, because losing one
+    /// suspicion must not cost the document that carried it.
+    fn suspect_duplicate(
+        &mut self,
+        st: &mut Integration,
+        node_type: &'static str,
+        extracted_id: &str,
+        candidate_id: &str,
+        score: Option<u32>,
+    ) {
+        if extracted_id == candidate_id {
+            return;
+        }
+        let mut props = Props::new();
+        if let Some(s) = score {
+            props = props.set("confidence", f64::from(s) / 100.0);
+        }
+        match self.create_edge(
+            edge::DUPLICATES,
+            node_type,
+            extracted_id,
+            node_type,
+            candidate_id,
+            props,
+        ) {
+            Ok(_) => st.duplicates_recorded += 1,
+            Err(e) => st.warnings.push(format!(
+                "record duplicate suspicion {node_type} '{extracted_id}' ~ '{candidate_id}': {e}"
+            )),
+        }
+    }
+
+    /// Decide which name a fuzzy-merged node keeps, **without consulting the
+    /// order the documents arrived in**, and say which name lost.
+    ///
+    /// `req:corpus-ingest` names this as its load-bearing clause: *"Ordering
+    /// must not decide meaning — which file happened to be read first must not
+    /// determine the canonical name of anything."* It did. The extracted
+    /// property map overwrites `name` on the survivor, so of two specs calling
+    /// one thing `Read Path Cache` and `Cache Read Path`, whichever was read
+    /// LAST named it — and for a corpus that is the iteration order of a folder
+    /// nobody chose. Measured before the fix: the same two documents produced
+    /// `"Cache Read Path"` one way round and `"Read Path Cache"` the other.
+    ///
+    /// The rule is **longer name wins, ties broken lexicographically**. Longer
+    /// is not a guess about quality — it is the same instinct
+    /// [`token_subset_match`](Self::token_subset_match) already encodes when it
+    /// suggests the longer side as survivor, on the reading that the more
+    /// specific name carries more of what the author meant (`Auth Service` over
+    /// `Auth`). The lexicographic tiebreak exists only to make the rule TOTAL:
+    /// without it, two equal-length names would fall back to arrival order and
+    /// rebuild the bug for the narrow case.
+    ///
+    /// **This picks a name; it does not rule on which is better.** The loser is
+    /// returned and recorded on the [`FuzzyMerge`] as `alias_name`, because a
+    /// merge that silently discards one of two human-chosen names destroys the
+    /// only evidence a person ever chose it — and `dec:ask-not-repair` governs
+    /// this capability. Deliberately NOT scoped to the direct-id path:
+    /// re-ingesting the SAME id with a new name is *matched-evolved*, where the
+    /// newer document updating its own name is the correct reading.
+    fn settle_merged_name(
+        &self,
+        node_type: &str,
+        canonical_id: &str,
+        new_map: &mut HashMap<String, Value>,
+    ) -> (String, Option<String>) {
+        let incoming = new_map
+            .get("name")
+            .and_then(Value::as_str)
+            .unwrap_or_default()
+            .to_string();
+        let existing = match self.get_node(node_type, canonical_id) {
+            Ok(Some(n)) => n
+                .properties
+                .get("name")
+                .and_then(Value::as_str)
+                .unwrap_or_default()
+                .to_string(),
+            // No existing name to weigh: whatever arrived stands, and there is
+            // no second name to report as an alias.
+            _ => return (incoming, None),
+        };
+        if incoming.is_empty() || incoming == existing {
+            new_map.remove("name");
+            return (existing, None);
+        }
+        // Total order, computed from the two strings alone — nothing here can
+        // see which document arrived first.
+        let incoming_wins = (incoming.chars().count(), existing.as_str())
+            > (existing.chars().count(), incoming.as_str());
+        if incoming_wins {
+            (incoming, Some(existing))
+        } else {
+            // Drop the losing name from the map rather than writing it: the
+            // rest of the extraction still applies to the survivor.
+            new_map.remove("name");
+            (existing, Some(incoming))
         }
     }
 
@@ -1569,6 +1730,7 @@ struct Integration<'a> {
     nodes_unchanged: usize,
     fuzzy_merges: Vec<FuzzyMerge>,
     merge_candidates: Vec<MergeCandidate>,
+    duplicates_recorded: usize,
     edges_created: usize,
     warnings: Vec<String>,
     dropped_edges: Vec<DroppedEdge>,
@@ -1588,6 +1750,7 @@ impl<'a> Integration<'a> {
             nodes_unchanged: 0,
             fuzzy_merges: Vec::new(),
             merge_candidates: Vec::new(),
+            duplicates_recorded: 0,
             edges_created: 0,
             warnings: Vec::new(),
             dropped_edges: Vec::new(),

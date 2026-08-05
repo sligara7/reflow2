@@ -70,7 +70,43 @@ This file is the third view: *what changed, and when*.
     otherwise these would have been two more properties reachable from no tool, which is exactly
     the defect BL-202 records.
 
+### Added
+
+- **A near-match now becomes a standing question HEAL can collect** (BL-186, toward
+  `cap:corpus-ingest`). `dec:ask-not-repair` requires a suspected duplicate to be *asked*, never
+  silently merged, and `cap:corpus-ingest` names the consequence: *"at corpus scale the asking must
+  be batched or the feature is unusable."* A `MergeCandidate` cannot be batched — it lives in one
+  document's `IngestReport` and is gone the moment the caller opens the next file, so four hundred
+  documents produce four hundred separate asks to an agent that has forgotten the last one. Ingest
+  now persists the suspicion as a **`DUPLICATES` edge**, which needed no new vocabulary because the
+  batching machinery already existed and ingest simply never wrote into it: HEAL's `duplicate`
+  detector fires on that edge, `propose_heal` turns it into a merge with the survivor rules, and
+  `apply_heal` refuses anything no detector asked for. **Drawn only in the ask band** — at or above
+  `auto_merge_threshold` the nodes are merged and nothing is left to ask. `confidence` carries the
+  measured score and is omitted for a structural token-subset match, since `0.0` would read as
+  "certainly unrelated". Never cascade-fails: a refused edge is a warning, because losing one
+  suspicion must not cost the document that carried it. `IngestReport` gains `duplicates_recorded`.
+
 ### Fixed
+
+- **The order two documents arrive in no longer decides the canonical name** (BL-186, toward
+  `cap:corpus-ingest`). `req:corpus-ingest` calls this its load-bearing clause — *"which file
+  happened to be read first must not determine the canonical name of anything"* — and it was
+  unsatisfied. On a fuzzy auto-merge the extracted property map overwrites `name` on the survivor,
+  so of two specs calling one thing `Read Path Cache` and `Cache Read Path`, **whichever was read
+  last named it** — and for a corpus that is the iteration order of a folder nobody chose. Measured
+  before the fix, same two documents, same design: `A then B → "Cache Read Path"`,
+  `B then A → "Read Path Cache"`. The merge was never wrong (one node, one recorded merge); only the
+  name followed arrival order. The survivor's name is now chosen from the two strings alone —
+  **longer wins, ties lexicographic** — which is the reading `token_subset_match` already applies
+  when it suggests the more specific side as survivor; the tiebreak exists only to make the rule
+  total, since equal-length names would otherwise fall back to arrival order and rebuild the bug.
+  **The losing name is reported, not discarded**: `FuzzyMerge` gains `canonical_name` and
+  `alias_name`, because a merge that silently drops one of two human-chosen names destroys the only
+  evidence a person ever chose it, and `dec:ask-not-repair` governs this capability. Agreeing
+  documents record no alias. *Deliberately not applied to the direct-id path*: re-ingesting the same
+  id with a new name is **matched-evolved**, where the newer document updating its own name is the
+  correct reading.
 
 - **The export-lineage guard had never run in CI** (BL-208). `check_export_chain` compares HEAD's
   export with HEAD~1's, and skips — silently — when that question cannot be answered.
