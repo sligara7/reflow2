@@ -14,10 +14,12 @@
 > **This is the primary instruction file for this repo** — it follows the
 > [agents.md](https://agents.md) convention, so every agent reads the same thing.
 >
-> **Before you start:** run **`git pull --rebase`**, then read **[COORD.md](COORD.md)** and claim
-> what you take. It is the shared board between the people and agents working this repo; a board
-> you haven't pulled is out of date, and it covers resolving merge conflicts without discarding
-> anyone's work. **[docs/backlog.md](docs/backlog.md)** has what is open and why.
+> **Before you start:** run **`git pull --rebase`**, then run **`claim_report`** and claim what you
+> take with **`claim_region`** — the board moved into the graph on 2026-08-04
+> (`dec:coord-board-in-graph`), so claims travel in `docs/design/reflow2.json` and a graph you
+> haven't pulled is out of date. **[COORD.md](COORD.md)** keeps the handles, the conventions, and
+> resolving merge conflicts without discarding anyone's work.
+> **[docs/backlog.md](docs/backlog.md)** has what is open and why.
 
 Read this first. It tells you what this project is, how it's organized, and the rules to
 follow so your changes stay coherent with the design.
@@ -211,10 +213,13 @@ output goes to stderr; stdout is the JSON-RPC channel and must stay clean.
 
 ## Working on this repo
 
-**Order of operations.** `git pull --rebase`, then claim your item on [COORD.md](COORD.md) and
-commit that line *before* the work — a claim nobody can see is not a claim. Then read
-[docs/backlog.md](docs/backlog.md) for what is open and why. COORD.md also covers resolving merge
-conflicts on the shared records without discarding anyone's work; read that before you hit one.
+**Order of operations.** `git pull --rebase`, then `claim_report` to see what is held, then
+`mint_seat` once and `claim_region` to take your item — *before* the work, because a claim nobody
+can see is not a claim. Release it with `release_claim` when you finish; if you forget, liveness
+is computed from your session, so the claim reads `gone` rather than sitting there looking taken.
+Then read [docs/backlog.md](docs/backlog.md) for what is open and why. [COORD.md](COORD.md) covers
+resolving merge conflicts on the shared records without discarding anyone's work; read that before
+you hit one.
 
 **Branches.** `feat/<short-name>` off `main`, one per claimed item where practical.
 
@@ -273,8 +278,19 @@ per commit. The distinction is not pedantry and it cost a broken chain on `56bc6
 **squash**, so N commits become one on `main`, and only the *last* export's `prev_content_hash`
 survives. If two commits on a branch each exported, the surviving one links to an intermediate that
 `main` never saw, and the history has a hole. A branch may hold as many commits as you like; only
-one of them may touch `docs/design/reflow2.json`, and it should be the last. (Corollary: put the
-COORD claim commit — which carries no export — first, which is what earlier PRs did by accident.)
+one of them may touch `docs/design/reflow2.json`, and it should be the last.
+
+> ⚠️ **The old corollary here — "put the COORD claim commit first, it carries no export" — died
+> with the claim board's move into the graph on 2026-08-04, and what replaced it is a real
+> tension rather than a rewording.** A claim is now graph state, so it travels in
+> `docs/design/reflow2.json` — and that file may only be written once per PR, last. So a claim
+> made *before* the work is not visible to anyone else until the PR **merges**, which is after
+> the work is done. That defeats the point of claiming first.
+>
+> With one writer this costs nothing and is why the move was still right. With two it is a
+> regression against the file it replaced, because COORD.md could be committed and pushed on its
+> own the moment work started. Recorded as `dec:a-graph-claim-cannot-be-published-before-its-pr`;
+> do not treat the claims layer as proven under contention until that is answered.
 
 The gate checks
 this since BL-107 and will fail the build if you get it wrong:
@@ -341,7 +357,7 @@ and the records are the project's memory:
 | [docs/requirements-coverage.md](docs/requirements-coverage.md) | a status moves |
 | [docs/backlog.md](docs/backlog.md) | an item is finished or discovered |
 | [docs/trials/](docs/trials/) | a real session went wrong — verbatim, append-only |
-| [COORD.md](COORD.md) | you start, and again when you finish |
+| `claim_region` / `release_claim` (the graph) | you start, and again when you finish |
 
 **Claims made in the records must be evidence-backed.** If a backlog entry asserts a consequence,
 it should be traceable to something someone observed — not inferred while writing the entry. When

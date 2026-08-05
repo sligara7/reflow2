@@ -9,7 +9,9 @@ rule at all.
 
 Order:
 
-1. **`git pull --rebase`**, then **[COORD.md](COORD.md)** — the claim board. Claim what you take.
+1. **`git pull --rebase`**, then **`claim_report`** — the claim board lives in the graph now
+   (`dec:coord-board-in-graph`, 2026-08-04). Claim what you take with `claim_region`.
+   **[COORD.md](COORD.md)** keeps the handles, conventions and conflict doctrine.
 2. **[AGENTS.md](AGENTS.md)** — commands, architecture, invariants.
 3. **[docs/backlog.md](docs/backlog.md)** — what is open and why.
 
