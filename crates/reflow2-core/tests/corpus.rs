@@ -276,6 +276,74 @@ fn nothing_is_written_until_the_handshake_finishes() {
     assert_eq!(g.count_nodes(node::DESIGN_EPOCH).unwrap(), 0);
 }
 
+/// ⭐ [BL-213] — a merge is the one thing an ingest does WITHOUT ASKING and
+/// cannot undo by re-running, so the corpus report must say WHAT merged and
+/// which document caused it. It carried only a count for one day, and the first
+/// real trial needed a hand-dump of the graph to discover that four of its five
+/// "merges" had destroyed distinct crates.
+#[test]
+fn the_report_says_what_merged_and_which_document_caused_it() {
+    const CACHE_A: &str = "STORAGE SPEC. The Read Path Cache serves reads from local disk.";
+    const CACHE_B: &str = "OPS SPEC. Operators size the Cache Read Path for peak traffic.";
+
+    fn answer_cache(prompt: &str) -> String {
+        if prompt.contains("[pass:project_intent]") {
+            r#"{"project":{"id":"proj:s","name":"Storage","mode":"flexible"}}"#.to_string()
+        } else if prompt.contains("[pass:discovery]") {
+            r#"{"components":true,"interfaces":false,"actors":false,"decisions":false,"artifacts":false,"verifications":false,"flows":false,"resources":false}"#.to_string()
+        } else if prompt.contains("[pass:components]") {
+            if prompt.contains("Operators size") {
+                r#"{"components":[{"id":"cmp:cache-read-path","name":"Cache Read Path","purpose":"serves reads"}]}"#.to_string()
+            } else {
+                r#"{"components":[{"id":"cmp:read-path-cache","name":"Read Path Cache","purpose":"serves reads"}]}"#.to_string()
+            }
+        } else {
+            r#"{}"#.to_string()
+        }
+    }
+
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let docs = vec![
+        doc("frag:storage", "storage.md", CACHE_A),
+        doc("frag:ops", "ops.md", CACHE_B),
+    ];
+    let mut answers: Vec<AgentAnswer> = Vec::new();
+    let report = loop {
+        match g
+            .ingest_corpus_step(&docs, &CorpusOptions::default(), answers.clone())
+            .unwrap()
+        {
+            CorpusStep::NeedsLlm { prompts, .. } => {
+                for p in prompts {
+                    answers.push(AgentAnswer {
+                        id: p.id,
+                        text: answer_cache(&p.prompt),
+                    });
+                }
+            }
+            CorpusStep::Done { report } => break report,
+        }
+    };
+
+    // The same thing named two ways converged — one node, not two.
+    assert_eq!(g.count_nodes(node::COMPONENT).unwrap(), 1);
+    assert_eq!(report.fuzzy_merges.len(), 1, "{:?}", report.fuzzy_merges);
+
+    let m = &report.fuzzy_merges[0];
+    // WHICH DOCUMENT did it. This is the half a single-document report cannot
+    // have and the half the trial actually needed.
+    assert_eq!(m.fragment_id, "frag:ops");
+    assert_eq!(m.title, "ops.md");
+    // And WHAT merged into what, with the name that survived — enough to undo it
+    // by hand, which is the only way it can be undone.
+    assert_eq!(m.merge.extracted_id, "cmp:cache-read-path");
+    assert_eq!(m.merge.canonical_id, "cmp:read-path-cache");
+    assert!(
+        m.merge.alias_name.is_some(),
+        "the discarded name is the only evidence the other choice was ever made"
+    );
+}
+
 #[test]
 fn every_document_reports_an_outcome_even_when_it_did_nothing() {
     let mut g = DesignGraph::open_in_memory().unwrap();
