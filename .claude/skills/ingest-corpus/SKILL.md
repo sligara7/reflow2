@@ -106,18 +106,35 @@ document 400 is worse than hearing it at document 0.
 - **`fuzzy_merges`** — how many times a name in one document landed on a node an earlier
   document created. **This is the number that says whether you got ONE design or N
   disconnected ones.** Zero across a large corpus is a red flag, not a clean run.
+- **`fuzzy_merges` also says WHAT merged**, with the document that caused it — a merge is
+  the one thing here that happens *without asking* and cannot be undone by re-running, so
+  read it rather than counting it.
 - **`merge_candidates`** — the ambiguous band, gathered across the whole corpus and
   deduplicated. Put these to the user as **one question with a list**, never one question
   per pair. They were deliberately created as separate nodes and recorded as `DUPLICATES`
   edges, so nothing is lost by asking later and nothing was decided by arithmetic
   (`dec:ask-not-repair`).
+  - ⭐ **A candidate carrying a `distinguished_by` reason scored high enough to merge and
+    was held back on purpose.** The reason names the word — *"storage has no counterpart in
+    dynograph-core"*. Expect a lot of these on a codebase corpus: sibling modules share a
+    prefix, so `dynograph-core` and `dynograph-storage` score 94, and before this existed
+    nine crates from one document silently became five. **A pair held back this way is
+    usually correct to leave apart** — skim them, don't grind through them.
 
 ## 6 · State the limit that the numbers will not show
 
-Convergence is **lexical**. `token_sort_ratio` catches `Auth Service` ~ `Authentication
-Service`, and it **cannot see `Read Cache` ~ `Local Store` at all** — that is not a low
-score, it is invisible. So convergence holds for documents that share vocabulary, and a
-corpus written by forty authors over ten years often does not.
+Convergence is **lexical**, and measured on a real corpus the lexical signal is not merely
+weak — for identifier-shaped names it is **inverted**:
+
+```
+95  dynograph-vector  vs dynograph-core          alike, and DIFFERENT THINGS
+84  Auth Service      vs Authentication Service  less alike, and THE SAME THING
+```
+
+A discriminator now holds the first kind apart (it reports `distinguished_by`), so the
+destructive half is handled. **The missing half is not**: `Read Cache` ~ `Local Store` is
+still invisible — not a low score, no score at all — so two documents that renamed the same
+thing stay two nodes and `fuzzy_merges` will read lower than the corpus deserves.
 
 **Say this to the user rather than letting them discover it.** The honest framing: the run
 converged what shared words, and anything renamed between documents is still two nodes.

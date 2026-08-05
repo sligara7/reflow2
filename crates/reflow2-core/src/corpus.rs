@@ -50,7 +50,7 @@ use dynograph_core::DynoError;
 
 use crate::agent::{AgentAnswer, AgentPrompt, PartialBackend};
 use crate::graph::DesignGraph;
-use crate::ingest::{IngestOptions, IngestReport, IngestStatus, MergeCandidate};
+use crate::ingest::{FuzzyMerge, IngestOptions, IngestReport, IngestStatus, MergeCandidate};
 use crate::nodes::node;
 use crate::temporal::ChangeType;
 
@@ -133,6 +133,22 @@ pub struct DocumentOutcome {
     pub error: Option<String>,
 }
 
+/// One merge that happened during a corpus run, and which document caused it.
+///
+/// The document attribution is the half the single-document report cannot have
+/// and a corpus needs: knowing that `dynograph-core` absorbed `dynograph-storage`
+/// is only actionable once you know which file said so.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct CorpusMerge {
+    /// The provenance Fragment of the document being ingested when this merged.
+    pub fragment_id: String,
+    /// That document's title, so the report reads without a join.
+    pub title: String,
+    /// What merged into what, at what score, and the name that survived.
+    #[serde(flatten)]
+    pub merge: FuzzyMerge,
+}
+
 /// The outcome of a corpus run.
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct CorpusReport {
@@ -154,11 +170,25 @@ pub struct CorpusReport {
     pub nodes_unchanged: usize,
     /// Edges created across the run.
     pub edges_created: usize,
-    /// Cross-document convergences: how many times a name in one document
-    /// resolved onto a node an earlier document created, instead of duplicating
-    /// it. **This is the number that says whether the corpus became ONE design**
-    /// rather than N disconnected ones.
-    pub fuzzy_merges: usize,
+    /// Every merge that happened, with the document that caused it ([BL-213]).
+    ///
+    /// **Not a count, and that was a real defect for one day.** A merge is the
+    /// one thing in an ingest that happens WITHOUT ASKING and cannot be undone
+    /// by re-running — the losing node never exists. The single-document
+    /// `IngestReport` has always carried the full list and calls it "auditable,
+    /// never silent"; this aggregate reduced it to a `usize`, so at exactly the
+    /// scale where silent merges matter most, *what* was merged was
+    /// unrecoverable from the report.
+    ///
+    /// It was found the way it had to be: the first real corpus trial reported
+    /// `fuzzy_merges=5`, and discovering that four of them had destroyed
+    /// distinct crates needed a hand-dump of the graph and a comparison against
+    /// the input. Nobody running a real corpus would do that.
+    ///
+    /// Deliberately unbounded while other reads are being bounded: a merge is an
+    /// action already taken on the user's behalf, which is a different thing
+    /// from a list of findings they may browse.
+    pub fuzzy_merges: Vec<CorpusMerge>,
     /// The ambiguous band, gathered across the WHOLE corpus and deduplicated —
     /// one question to put to a person, not one per document
     /// (`dec:ask-not-repair`, and the batching its own text demands at this
@@ -374,7 +404,7 @@ struct Aggregate {
     nodes_evolved: usize,
     nodes_unchanged: usize,
     edges_created: usize,
-    fuzzy_merges: usize,
+    fuzzy_merges: Vec<CorpusMerge>,
     duplicates_recorded: usize,
     candidates: Vec<MergeCandidate>,
     candidate_keys: HashSet<(String, String)>,
@@ -391,7 +421,7 @@ impl Aggregate {
             nodes_evolved: 0,
             nodes_unchanged: 0,
             edges_created: 0,
-            fuzzy_merges: 0,
+            fuzzy_merges: Vec::new(),
             duplicates_recorded: 0,
             candidates: Vec::new(),
             candidate_keys: HashSet::new(),
@@ -404,7 +434,15 @@ impl Aggregate {
         self.nodes_evolved += report.nodes_evolved;
         self.nodes_unchanged += report.nodes_unchanged;
         self.edges_created += report.edges_created;
-        self.fuzzy_merges += report.fuzzy_merges.len();
+        // Carry every merge WITH the document that caused it. A merge happens
+        // without asking and cannot be undone by re-running, so it is the last
+        // thing that should be reduced to a number.
+        self.fuzzy_merges
+            .extend(report.fuzzy_merges.into_iter().map(|merge| CorpusMerge {
+                fragment_id: doc.fragment_id.clone(),
+                title: doc.title.clone(),
+                merge,
+            }));
         self.duplicates_recorded += report.duplicates_recorded;
         if report.status == IngestStatus::Partial {
             self.degraded = true;

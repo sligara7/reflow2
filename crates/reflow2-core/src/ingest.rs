@@ -394,6 +394,89 @@ fn name_tokens(name: &str) -> Vec<String> {
         .collect()
 }
 
+/// Tokens for the DISTINGUISHER, split on every non-alphanumeric rather than on
+/// whitespace alone ([BL-213]).
+///
+/// Deliberately not [`name_tokens`]: that one splits on whitespace, so
+/// `dynograph-core` is a single token and the two halves of an identifier can
+/// never be compared. Real systems name sibling modules `prefix-thing`, and
+/// telling `dynograph-core` from `dynograph-storage` means seeing `core` and
+/// `storage` as separate words.
+fn identifier_tokens(name: &str) -> Vec<String> {
+    name.to_lowercase()
+        .split(|c: char| !c.is_alphanumeric())
+        .map(str::to_string)
+        .filter(|t| !t.is_empty() && !NAME_STOPWORDS.contains(&t.as_str()))
+        .collect()
+}
+
+/// Whether `short` is an abbreviation of `long` — `auth` of `authentication`.
+///
+/// Three characters minimum, because below that almost anything prefixes
+/// anything and the rule would wave through the merges it exists to stop.
+fn is_abbreviation_of(short: &str, long: &str) -> bool {
+    short.len() >= 3 && long.len() > short.len() && long.starts_with(short)
+}
+
+/// The token pair that makes two names DIFFERENT THINGS rather than two
+/// spellings of one thing — `None` when every difference is an abbreviation.
+///
+/// ⭐ WHY THIS EXISTS, measured 2026-08-05 by the first real corpus trial
+/// ([BL-213], `dec:auto-merge-at-90-destroys-sibling-names`). A similarity score
+/// says two names are ALIKE. It does not say they are the SAME THING, and for
+/// the names real systems actually use the two come apart badly:
+///
+/// ```text
+/// 95  dynograph-vector  vs dynograph-core         <- merged, and WRONG
+/// 94  dynograph-storage vs dynograph-core         <- merged, and WRONG
+/// 84  Auth Service      vs Authentication Service <- not merged, and WRONG
+/// ```
+///
+/// Nine crates from one document became five: 44% of an architecture silently
+/// destroyed, because sibling modules share a prefix and prefixes dominate the
+/// score. No threshold fixes it — 95 was a sibling pair and 84 was a true
+/// duplicate, so the ordering itself is inverted and a cutoff cannot separate
+/// them.
+///
+/// The discriminator asks a different question. `core` and `storage` are not
+/// spellings of each other, so the names denote different things however alike
+/// they score. `auth` and `authentication` are, so they may merge. An extra
+/// token with no counterpart at all (`Auth Service` vs `Auth Service v2`) is
+/// distinguishing too — that is the case `docs/scope-corpus-ingest.md` warned
+/// collapsing would lose.
+///
+/// Returns the offending pair for reporting, because "these two were not merged"
+/// is not actionable and "not merged: `core` vs `storage`" is.
+fn distinguishing_tokens(a: &str, b: &str) -> Option<String> {
+    let (ta, tb) = (identifier_tokens(a), identifier_tokens(b));
+    if ta.is_empty() || tb.is_empty() {
+        return None;
+    }
+    // Only the tokens one side has and the other lacks can distinguish; shared
+    // words say nothing either way.
+    let only_a: Vec<&String> = ta.iter().filter(|t| !tb.contains(t)).collect();
+    let only_b: Vec<&String> = tb.iter().filter(|t| !ta.contains(t)).collect();
+
+    let mut claimed = vec![false; only_b.len()];
+    for token in &only_a {
+        let partner = only_b.iter().enumerate().position(|(i, other)| {
+            !claimed[i] && (is_abbreviation_of(token, other) || is_abbreviation_of(other, token))
+        });
+        match partner {
+            Some(i) => claimed[i] = true,
+            // A word on one side that nothing on the other side abbreviates.
+            None => return Some(format!("`{token}` has no counterpart in \"{b}\"")),
+        }
+    }
+    // And the reverse: an extra word on the existing side is just as
+    // distinguishing as one on the new side.
+    if let Some(i) = claimed.iter().position(|c| !c) {
+        let token = only_b[i];
+        return Some(format!("`{token}` has no counterpart in \"{a}\""));
+    }
+    None
+}
+
 /// True when every word of `subset` appears in `superset` AND `subset` is
 /// strictly shorter. Equal token sets are excluded deliberately — those are the
 /// fuzzy pass's business, and reporting them twice would be noise.
@@ -432,6 +515,14 @@ pub struct MergeCandidate {
     /// edges" collapses the specific into the vague and is hard to undo.
     /// Reported, never acted on — reflow2 asks (`dec:ask-not-repair`).
     pub suggested_survivor: String,
+    /// Set when the pair scored high enough to merge and was held back anyway,
+    /// naming the word that makes them different things ([BL-213]).
+    ///
+    /// This is the difference between "these two were not merged" and "not
+    /// merged: `core` has no counterpart in \"dynograph-storage\"" — only the
+    /// second is something a person can rule on. `None` means the score simply
+    /// fell short, which needs no explanation.
+    pub distinguished_by: Option<String>,
 }
 
 /// Whether the ingest ran fully clean or degraded.
@@ -1213,7 +1304,23 @@ impl DesignGraph {
                 // near-match reported instead (`dec:ask-not-repair`).
                 Ok(Some((candidate, score))) => {
                     let (_, auto_merge) = self.resolution_thresholds(node_type);
-                    if score >= auto_merge {
+                    // A score says the names are ALIKE; it does not say they are
+                    // the same thing. For prefixed sibling names — how nearly
+                    // every real system names its modules — the two come apart,
+                    // and measured they come apart INVERTED: `dynograph-vector`
+                    // scored 95 against `dynograph-core` while the canonical
+                    // duplicate `Auth Service` ~ `Authentication Service` scored
+                    // 84. So the band alone cannot be trusted to act, and no
+                    // threshold repairs it ([BL-213]).
+                    let distinguished =
+                        self.existing_name(node_type, &candidate)
+                            .and_then(|existing| {
+                                new_map
+                                    .get("name")
+                                    .and_then(Value::as_str)
+                                    .and_then(|new_name| distinguishing_tokens(new_name, &existing))
+                            });
+                    if score >= auto_merge && distinguished.is_none() {
                         st.aliases.insert(id.to_string(), candidate.clone());
                         // `req:corpus-ingest` — "ordering must not decide
                         // meaning". The merge is right at this score; the NAME
@@ -1247,6 +1354,7 @@ impl DesignGraph {
                             // specific; the existing node is suggested because it
                             // is the one already carrying edges and history.
                             suggested_survivor: candidate.clone(),
+                            distinguished_by: distinguished,
                         });
                         self.integrate_new(st, node_type, id, new_map);
                         self.suspect_duplicate(st, node_type, id, &candidate, Some(score));
@@ -1283,6 +1391,9 @@ impl DesignGraph {
                                 auto_merge_threshold: auto_merge,
                                 match_kind: MatchKind::TokenSubset,
                                 suggested_survivor: survivor,
+                                // A subset match never reached the merge
+                                // decision, so nothing held it back.
+                                distinguished_by: None,
                             });
                         }
                         Ok(None) => {}
@@ -1563,6 +1674,17 @@ impl DesignGraph {
     /// Runs only when the fuzzy pass found nothing, so a pair already reported by
     /// score is not reported twice. Best = the smallest token-count difference,
     /// which is the closest qualification rather than the most distant one.
+    /// The `name` an existing node carries, if it has one. Used by the
+    /// distinguisher, which must compare the two NAMES rather than the ids.
+    fn existing_name(&self, node_type: &'static str, id: &str) -> Option<String> {
+        self.get_node(node_type, id).ok().flatten().and_then(|n| {
+            n.properties
+                .get("name")
+                .and_then(Value::as_str)
+                .map(str::to_string)
+        })
+    }
+
     fn token_subset_match(
         &self,
         node_type: &'static str,

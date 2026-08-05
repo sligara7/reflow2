@@ -72,12 +72,12 @@ NON_TOOL_TERMS = {
     "failures",
     "fuzzy_merges",
     "merge_candidates",
+    "distinguished_by",
     "epoch_id",
     "fragment_id",
     "source",
     "skipped",
     "authored",
-    "token_sort_ratio",
     # Artifact.granularity and Artifact.volatility values (BL-188, BL-191) —
     # property enums the link-artifacts skill names, not tools.
     "granularity",

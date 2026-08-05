@@ -31,6 +31,51 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **⭐ Sibling components are no longer silently merged away** (BL-213) — found by the FIRST
+  REAL TRIAL of `cap:corpus-ingest`, on six dev_storyflow architecture documents. **This is a
+  silent data-loss fix and it predates the corpus layer**: `ingest` has done it to every
+  single-document run since fuzzy dedup landed.
+  - **What went wrong.** A similarity score says two names are *alike*; it does not say they
+    are *the same thing*. For identifier-shaped names the two come apart, and measured
+    against `dynograph_resolution::token_sort_ratio` they come apart **inverted**:
+
+    ```
+    95  dynograph-vector  vs dynograph-core          merged, WRONG
+    94  dynograph-storage vs dynograph-core          merged, WRONG
+    84  Auth Service      vs Authentication Service  not merged, WRONG
+    ```
+
+    One document declaring **nine** crates produced **five** nodes — 44% of an architecture
+    gone — and the survivors asserted something *false* rather than merely being incomplete:
+    `cmp:dynograph-core` carried the name `dynograph-storage`.
+  - **Why no threshold fixes it.** 95 was a sibling pair and 84 a true duplicate, so the
+    ordering itself is wrong and no cutoff separates them. `docs/scope-corpus-ingest.md`
+    asserted *"90 on a token-sorted ratio is near-identity"*; measured, it is not.
+  - **The fix is a discriminator, not a number.** Before auto-merging, the names are
+    tokenised on every non-alphanumeric and compared: a merge is refused when either side
+    carries a whole word the other does not *abbreviate*. `core` and `storage` are not
+    spellings of each other; `auth` and `authentication` are. An unpaired extra word is
+    distinguishing too, so `Auth Service` and `Auth Service v2` stay apart — the case the
+    scope doc warned collapsing would lose. Reordered tokens still converge, so BL-186's
+    ordering fix is untouched.
+  - **A refusal now says which word did it** — `distinguished_by` on the merge candidate,
+    e.g. *"storage has no counterpart in dynograph-core"*. "These were not merged" is not
+    actionable; naming the word is.
+  - **Why it stayed invisible:** reflow2's own design uses prose names, not prefixed
+    identifiers. Only a codebase corpus produces `foo-bar` siblings in bulk, so self-host was
+    structurally incapable of surfacing it — **BL-199's shape, a second time**.
+
+- **The corpus report says WHAT merged, not how many times** (BL-213). `CorpusReport.fuzzy_merges`
+  was a `usize` for one day. A merge is the one thing an ingest does *without asking* and
+  cannot undo by re-running — the losing node never exists — and the single-document report
+  has always carried the full list, calling it *"auditable, never silent"*. The aggregate
+  threw that away at exactly the scale where it matters most: the trial reported
+  `fuzzy_merges=5` and finding that four had destroyed distinct crates took a hand-dump of
+  the graph. Each entry now carries the document that caused it, which the single-document
+  report cannot know.
+
 ### Added
 
 - **A whole folder of documents becomes one design** (BL-186, `cap:corpus-ingest` — the last
