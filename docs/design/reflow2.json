@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a10837f92cb09ef00a72febe14abf40719aa231ce7d6dc5b786298e65bd2675c",
+  "content_hash": "sha256:00b8eb2e5e18f36d56be4f23b6c48256ff7217a64815ee092e3e8b9e484097f8",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2377,6 +2377,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:describe-design-at-path",
+      "properties": {},
+      "to_id": "epoch:hxm-field-report"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:design-identity",
       "properties": {},
       "to_id": "epoch:v0120"
@@ -2449,6 +2455,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:hxm-field-report",
+      "properties": {},
+      "to_id": "epoch:hxm-field-report"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:import-adopts-identity",
       "properties": {},
       "to_id": "epoch:v0130"
@@ -2476,6 +2488,12 @@
       "from_id": "chg:instructions-served",
       "properties": {},
       "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:intent-crossing-corrected",
+      "properties": {},
+      "to_id": "epoch:many-projects-one-mind-brainstorm"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2518,6 +2536,12 @@
       "from_id": "chg:machine-state-not-shared",
       "properties": {},
       "to_id": "epoch:v0120"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:many-projects-brainstorm",
+      "properties": {},
+      "to_id": "epoch:many-projects-one-mind-brainstorm"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2740,6 +2764,12 @@
       "from_id": "chg:seat-handle",
       "properties": {},
       "to_id": "epoch:stateless-seat"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:session-chooses-its-design",
+      "properties": {},
+      "to_id": "epoch:hxm-field-report"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3457,6 +3487,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:many-projects-one-mind-brainstorm:dec:idea-intent-crosses-designs",
+      "properties": {},
+      "to_id": "epoch:many-projects-one-mind-brainstorm"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:mode-chosen:proj:reflow2",
       "properties": {},
       "to_id": "epoch:mode-chosen"
@@ -4107,6 +4143,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:how-a-session-is-pointed-at-a-design",
+      "properties": {
+        "acted_at": "2026-08-05",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-backlog-belongs-in-the-graph",
       "properties": {
         "acted_at": "2026-08-04",
@@ -4188,6 +4233,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-intent-crosses-designs",
+      "properties": {
+        "acted_at": "2026-08-05",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-interop-as-a-game",
       "properties": {
         "acted_at": "2026-08-01",
@@ -4212,6 +4266,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-one-owner-many-projects",
+      "properties": {
+        "acted_at": "2026-08-05",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -4287,6 +4350,15 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:live-tier",
       "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:loop-status-cannot-say-it-never-looked",
+      "properties": {
+        "acted_at": "2026-08-05",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -4383,6 +4455,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:no-design-here-never-looked",
+      "properties": {
+        "acted_at": "2026-08-05",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:orientation-is-computed-not-written",
       "properties": {
         "acted_at": "2026-07-31",
@@ -4412,6 +4493,15 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:plan-time-axis",
       "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:pointing-a-session-is-project-scope-only",
+      "properties": {
+        "acted_at": "2026-08-05",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -4536,6 +4626,15 @@
       "from_id": "req:a-question-arrives-with-a-reading",
       "properties": {
         "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-session-chooses-its-design",
+      "properties": {
+        "acted_at": "2026-08-05",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -8714,6 +8813,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:describe-design-at-path",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:describe-design-at-path"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:design-identity",
       "properties": {
         "accepted_baseline": true,
@@ -9083,6 +9191,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:hxm-field-report",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:no-design-here-never-looked"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:import-adopts-identity",
       "properties": {
         "accepted_baseline": true,
@@ -9344,6 +9461,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:intent-crossing-corrected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-intent-crosses-designs"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:interface-medium-reachable",
       "properties": {
         "accepted_baseline": true,
@@ -9566,6 +9692,15 @@
         "action": "modified"
       },
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:many-projects-brainstorm",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:idea-one-owner-many-projects"
     },
     {
       "edge_type": "CHANGED",
@@ -10664,6 +10799,15 @@
         "action": "modified"
       },
       "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:session-chooses-its-design",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:a-session-chooses-its-design"
     },
     {
       "edge_type": "CHANGED",
@@ -14957,6 +15101,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:describe-design-at-path",
+      "properties": {},
+      "to_id": "dec:describe-a-design-without-binding-to-it"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:design-dependencies-declared",
       "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
@@ -18077,11 +18227,47 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:how-a-session-is-pointed-at-a-design",
+      "properties": {},
+      "to_id": "dec:no-design-here-never-looked"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:idea-backlog-belongs-in-the-graph",
       "properties": {
         "note": "This open question is BOUND by the accepted rule rather than competing with it: dec:what-lives-where already says the design record should stop being prose you navigate and become a graph you query. The question here is only what that means mechanically for the backlog, and what vocabulary is missing before it can happen. Drawn deliberately — an idea node with only AUTHORED_BY is invisible to propagate_from and to the orphan detector (BL-209), which is how dec:export-once-per-pr came to be violated by the session that then re-announced it."
       },
       "to_id": "dec:what-lives-where"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-intent-crosses-designs",
+      "properties": {},
+      "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-one-owner-many-projects",
+      "properties": {},
+      "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:loop-status-cannot-say-it-never-looked",
+      "properties": {},
+      "to_id": "dec:loop-status-state-not-history"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:no-design-here-never-looked",
+      "properties": {},
+      "to_id": "dec:install-once-per-machine"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:pointing-a-session-is-project-scope-only",
+      "properties": {},
+      "to_id": "dec:how-a-session-is-pointed-at-a-design"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -18886,6 +19072,12 @@
       "from_id": "dec:idea-embeddings-adoption",
       "properties": {},
       "to_id": "snap:epoch:embeddings-question-gets-its-findings:dec:idea-embeddings-adoption"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-intent-crosses-designs",
+      "properties": {},
+      "to_id": "snap:epoch:many-projects-one-mind-brainstorm:dec:idea-intent-crosses-designs"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -37630,6 +37822,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:describe-design-at-path",
+      "properties": {},
+      "to_id": "req:a-session-chooses-its-design"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:design-dependencies-declared",
       "properties": {},
       "to_id": "req:design-dependencies-declared"
@@ -42475,6 +42673,19 @@
       }
     },
     {
+      "node_id": "cap:describe-design-at-path",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Given a filesystem path to a design store, report what it holds — graph id, label, node counts by type, and the reflow2 stamp it was minted under — WITHOUT the session binding to it or writing anything. The paired half of discovery: the agent walks the tree and finds `.reflow2` directories (file IO, which reflow2 does not do), and this answers what is inside each one, so a user can be shown a menu before anything is created.\n\nWHAT IT PREVENTS, measured: a session at the root of `hxm_program` was told \"this directory has no design yet\" and minted a THIRD graph while two populated ones sat one and two directories down. The agent could have listed them; nothing could say what they were.\n\n⚠️ MUST DISTINGUISH BUSY FROM ABSENT. A RocksDB store held by a running server is exclusively locked, so a describe that answers \"no design\" because it could not open the store would reproduce the very defect it exists to prevent. Reporting `busy` is a required outcome, not an error path.\n\nPLANNED — `dec:describe-a-design-without-binding-to-it` (accepted 2026-08-05), serving the discovery half of `req:a-session-chooses-its-design`. It does NOT settle how a session is then pointed at the chosen design, which stays open at `dec:how-a-session-is-pointed-at-a-design`.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Say what design lives at a path, without binding to it",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:design-dependencies-declared",
       "node_type": "Capability",
       "properties": {
@@ -45033,6 +45244,14 @@
       }
     },
     {
+      "node_id": "chg:describe-design-at-path",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Anthony approves the inverted shape: the agent walks the tree, reflow2 describes the design at each path without binding — replacing his graph-id enumeration ask, which measurement showed returns one per store"
+      }
+    },
+    {
       "node_id": "chg:design-identity",
       "node_type": "ChangeEvent",
       "properties": {
@@ -45145,6 +45364,14 @@
       }
     },
     {
+      "node_id": "chg:hxm-field-report",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "The hxm_program field report lands: an accidental third graph from an unchecked \"no design here\", a loop_status clean that never scanned, and cross-graph links done in prose the loop cannot see"
+      }
+    },
+    {
       "node_id": "chg:import-adopts-identity",
       "node_type": "ChangeEvent",
       "properties": {
@@ -45190,6 +45417,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The working instructions follow the skills into the server; a project keeps only a pointer"
+      }
+    },
+    {
+      "node_id": "chg:intent-crossing-corrected",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Correction within the hour: a published surface ALREADY carries designated Requirements, not only Interfaces — only Decisions cannot cross"
       }
     },
     {
@@ -45254,6 +45489,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "The MCP configs are machine state: gitignored, and the graph path in them relative so worktrees do not collide"
+      }
+    },
+    {
+      "node_id": "chg:many-projects-brainstorm",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Anthony's multi-project question recorded as two brainstorms: where the boundary goes when one owner has many release trains, and whether intent may cross it at all — plus the correction that no repo constraint exists"
       }
     },
     {
@@ -45566,6 +45809,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "art:service gained mint_seat and the claim_region seat guard"
+      }
+    },
+    {
+      "node_id": "chg:session-chooses-its-design",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Anthony's fix captured as intent: a session finds out what designs exist and is told which to use — with the measured correction that \"list all graph_ids\" returns one per store, so the useful tool describes a design at a PATH"
       }
     },
     {
@@ -46790,6 +47041,16 @@
       }
     },
     {
+      "node_id": "dec:describe-a-design-without-binding-to-it",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED by Anthony 2026-08-05: \"I like and approve: a tool that describes the design at a given path — id, label, node counts, mint stamp — without binding to it. Your agent walks the tree (which it can, as you said); reflow2 says what's in each .reflow2 it finds. That splits cleanly along the no-file-I/O rule.\"\n\nTHE SHAPE. Two responsibilities, split along the line this project already draws. THE AGENT FINDS THE DIRECTORIES — walking a tree for `.reflow2` is file IO, which reflow2 does not do and does not need to, because the ambient agent does it well (`dec:agent-navigates-content`, and its parent `dec:three-party-checks`: \"the LLM speaks, the graph remembers and counts, the human decides\"). REFLOW2 SAYS WHAT IS IN ONE — given a path, it reports the design's identity: graph id, label, how many nodes of what kind, the stamp it was minted under. Neither half can do the other's job, and the split is the same one that already governs content navigation and coverage sweeps.\n\n⭐ WHAT IT REPLACES, AND WHY THE OBVIOUS ASK WAS THE WRONG ONE. Anthony first asked for \"a reflow2 tool to simply return all graph_ids\". Measured before answering: that returns ONE PER STORE. Storage keys are `{graph_id}\\x00{type}\\x00{id}` and `dynograph_storage::keys::graph_prefix` exists, so the FOUNDATION supports many graphs per store — but reflow2 opens one graph per store by convention (`DEFAULT_GRAPH_ID`, one `.reflow2` per project), and the three graphs in the hxm_program field report are three separate STORES. Enumerating within a store is therefore a true answer to a question nobody has. Describing a store found on disk is the question that was actually being asked.\n\nWHAT THIS DOES AND DOES NOT SETTLE. It settles the DISCOVERY half of `req:a-session-chooses-its-design` — how an agent learns what designs exist before anything is created, which is what would have prevented the accidental third graph (`dec:no-design-here-never-looked`). It does NOT settle how a session is then POINTED at the chosen design: editing `.mcp.json` and reconnecting, versus a graph reference carried per call, remains open at `dec:how-a-session-is-pointed-at-a-design`, where Anthony has expressed a lean toward the first and the counter ([BL-123] — the `/mcp` reconnect is the one step an autonomous agent cannot take) is recorded against it.\n\n⚠️ THE CONSTRAINT THAT SHAPES THE BUILD, and it must not be discovered in the field: A ROCKSDB STORE HELD BY A RUNNING SERVER IS EXCLUSIVELY LOCKED. Describing a design at a path while another session holds it needs a shared or read-only open. `--shared` exists and this repo's own `.mcp.json` does not pass it — which is separately why the stale-server export replay is needed at every release cut. THE TOOL MUST SAY \"BUSY\" RATHER THAN FAILING OPAQUELY OR, WORSE, REPORTING NOTHING FOUND: a describe that answers \"no design\" because the store was locked would be the same defect this whole thread began with, in a new place.\n\nAND THE RULE THIS SERVES, which survives whatever the pointing mechanism turns out to be: DEFAULT WHEN EXACTLY ONE DESIGN IS REACHABLE; REFUSE AND LIST THEM WHEN SEVERAL ARE. Discovery is what makes the second half of that sentence possible — you cannot list what you never looked for.\n\nNOT CHECKED, and it decides whether this is a new tool or a parameter: whether `design_identity` could take an optional path and answer for a store it is not bound to.",
+        "name": "DECIDED — discovery is a pair: the agent walks the tree, and reflow2 describes the design at a path without binding to it",
+        "rationale": "Anthony's explicit approval of a shape that was offered as a CORRECTION to his own proposal, which is worth recording as the sequence rather than just the outcome: he asked for graph-id enumeration, the enumeration was measured and found to answer a different question, the inverse was offered, and he took it. Checking the ask before building it is what made the difference, and it took one grep.\n\nRecorded as accepted while `req:a-session-chooses-its-design` stays proposed. That is deliberate: he approved a MECHANISM, and the requirement's wording — particularly its second half about being pointed at a design — has not been read back to him. Promoting the requirement on the strength of approval for one half of it would be exactly the signature-forging `dec:certainty-derived` forbids.\n\nThe locking constraint is on the node rather than left for the build because a describe-tool that reports \"no design\" when the store is merely busy would reproduce `dec:no-design-here-never-looked` in a new place, and that is a cheap mistake to make.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:design-authorship-identity",
       "node_type": "Decision",
       "properties": {
@@ -46970,6 +47231,16 @@
       }
     },
     {
+      "node_id": "dec:how-a-session-is-pointed-at-a-design",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS THE SHAPE QUESTION UNDER `req:a-session-chooses-its-design`. Anthony 2026-08-05 stated a preference — \"I like this approach of just pointing .mcp.json at the graph_id\" — which is a lean toward (a), not a settlement, because the trade-off below was not in front of him when he said it.\n\n(a) EDIT `.mcp.json` AND RECONNECT. WORKS TODAY WITH ZERO CODE: `--graph-path` is an ordinary argument and accepts an absolute path, so any project's server can be pointed at any store right now. The agent can make the edit — Anthony's own point, \"an agent within a session can usually change files\". Counter: it costs a `/mcp` reconnect, and reconnecting is a step this project has already recorded as the one an autonomous agent CANNOT take ([BL-123]). So the cheap option's cost falls exactly on the case reflow2 most wants to serve.\n\n(b) A GRAPH REFERENCE CARRIED PER CALL (the field report's 2a). No reconnect; a session could even read one design and write another. Counter, and it is the strong one: this project already faced the identical shape for seats and went the other way — `dec:stateless-seat-handle` REFUSES a claim without a seat rather than guessing one, because a handle that changes under you is worse than one you must supply. A defaulted graph reference is that hazard with worse consequences: getting a seat wrong misattributes a claim, getting a graph wrong WRITES TO THE WRONG DESIGN, which is the very accident this whole thread began with.\n\n⭐ THE RULE THAT SHOULD SURVIVE WHICHEVER IS CHOSEN, and it is the contribution rather than the choice: DEFAULT WHEN EXACTLY ONE DESIGN IS REACHABLE; REFUSE AND LIST THEM WHEN SEVERAL ARE. That is `dec:no-design-here-never-looked` option (a) and this node's option (b) doing one job at two moments — discovery before creating, refusal before writing. A design chosen by silence is how three graphs appeared on one repo.\n\nTHE DISCOVERY HALF, WHICH BOTH OPTIONS NEED AND NEITHER PROVIDES. Anthony asked for \"a reflow2 tool to simply return all graph_ids\". MEASURED: that returns ONE PER STORE today — reflow2 opens one graph per store by convention, and his three graphs are three stores. The foundation does support many graphs per store (`{graph_id}\\x00{type}\\x00{id}`, `keys::graph_prefix`), so the enumeration is real but answers a question nobody currently has. THE USEFUL SHAPE IS THE OTHER ONE: a tool that DESCRIBES THE DESIGN AT A GIVEN PATH — graph id, label, node counts, mint stamp — without binding to it, so an agent that has walked the tree can show the user a menu. Splits cleanly along `dec:agent-navigates-content`: the agent finds the directories, reflow2 says what is in them.\n\n⚠️ THE COMPLICATION NOBODY HAS SOLVED, and it bites (a) and the discovery tool equally: a RocksDB store held by a running server is EXCLUSIVELY LOCKED. Describing a design at a path while another session holds it needs a shared or read-only open. `--shared` exists and this repo's own `.mcp.json` does not pass it, which is separately why the stale-server export replay is needed at every release cut. Any answer here should say what happens when the store is busy rather than discovering it in the field.\n\nNOT CHECKED: whether `design_identity` could take an optional path and answer for a store it is not bound to, which would make the discovery half a parameter rather than a new tool.",
+        "name": "OPEN — is a session pointed at a design by editing .mcp.json and reconnecting, or by a graph reference carried per call?",
+        "rationale": "Kept as a question despite Anthony stating a preference, because the preference was expressed before the reconnect cost was named — and [BL-123] already records that the `/mcp` reconnect is the one step an autonomous agent cannot take, which is a direct argument against the option he leaned toward. Recording his lean AND the counter is what the brainstorm discipline is for; deciding it on the lean alone would be reading agreement into an answer given without the trade-off.\n\nThe default-when-one, refuse-when-several rule is written as the thing that should survive either choice, because it is the part that actually prevents the observed accident and it is independent of the mechanism.\n\nThe locking complication is stated because it is the kind of constraint that turns a small tool into a medium one, and it is already known to this project from a different direction.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-backlog-belongs-in-the-graph",
       "node_type": "Decision",
       "properties": {
@@ -47060,6 +47331,16 @@
       }
     },
     {
+      "node_id": "dec:idea-intent-crosses-designs",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Surfaced 2026-08-05 by Anthony's multi-project question.\n\n⚠️ CORRECTED WITHIN THE HOUR, AND THE CORRECTION IS THE USEFUL PART. This node first claimed \"everything reflow2 has built for crossing a design boundary shares CONTRACTS... NOTHING CARRIES A DECISION OR A REQUIREMENT ACROSS.\" THAT IS WRONG ABOUT REQUIREMENTS, and it was wrong for the ordinary reason — the claim was made from the capability's one-line description (\"the contracts others may rely on, and nothing internal\") rather than from the code. Reading `export_surface` shows a second, deliberate half: `published_promises()`, behind `req:publishable-promise` (ACCEPTED — \"a published surface must be able to carry a behavioural promise, not only structure\"). Its own comment says why: \"a structural surface says what the boundaries ARE and cannot say what any of them undertakes to DO — 'fails loud rather than falling back', 'ordering is preserved' — because a behavioural commitment lives in a Requirement and every Requirement was withheld. FOUND BY A REAL TRIAL, where the promise ended up asserted in a comment in the CONSUMER's build file, on the wrong side of the seam.\"\n\nSO THE ACTUAL STATE, verified in `crates/reflow2-core/src/export.rs`: a published surface carries INTERFACES designated `published`, the artifacts that SPECIFY or REALIZE them, REQUIREMENTS the owner designated `published`, and the Project so a recipient knows whose surface it is. Everything else is withheld AND COUNTED. Opt-in throughout — designation is a deliberate act, never a default.\n\n⭐ SO THE REAL GAP IS NARROWER AND SHARPER THAN FIRST WRITTEN: WHAT CANNOT CROSS IS THE **DECISION** — the reasoning. A consumer can learn WHAT this design promises and WHERE its boundaries are. It cannot learn WHY. \"We settled that outdoor units send cumulative totals, so a lost reading heals itself\" is exactly the thing a sibling project should inherit, and there is no way to publish it.\n\nAND THE MECHANISM FOR THE PARENT DIRECTION ALREADY EXISTS: `cap:derived-completion` is VERIFIED, and `dec:nested-graphs`' second obligation names it — \"a parent's view of a composed child must derive from the child's own evidence or a requirement satisfied inside the child fires unsatisfied in the parent forever\". So a program-level design holding intent that child designs satisfy is ANTICIPATED and BUILT, not missing.\n\nOPTIONS, NONE CHOSEN. (a) NOTHING MORE CROSSES — interfaces and designated promises are the boundary, and reasoning stays private by design. Defensible and cheapest; the counter is that a sibling project then re-derives a ruling its neighbour already made, which is this project's most expensive recurring failure. (b) DECISIONS BECOME DESIGNATABLE, the same opt-in shape requirements already have. Small and consistent — the machinery, the designation vocabulary and the withheld-and-counted reporting all exist. Counter, and it is the hard one nobody has answered: IS A MIRRORED DECISION BINDING ON THE MIRRORING DESIGN, OR ONLY VISIBLE TO IT? A Decision that governs nothing on the far side is a note; one that governs is an authority claim across a boundary the whole rule exists to draw. (c) A STANDING \"HOUSE RULES\" DESIGN every project mirrors — one design holding what its author carries everywhere. Fits `dec:nested-graphs` cleanly because that design IS separately owned and shared. Counter: nothing models a design with no build, and it overlaps option (d) on `dec:idea-one-owner-many-projects`. (d) DO NOT SOLVE IT IN THE GRAPH. Counter: \"the person remembers\" is what `req:no-idea-goes-quiet` (accepted the same day) exists to reject.\n\n⚠️ THE PREREQUISITE THAT BOUNDS ALL OF IT, unchanged by the correction: reflow2's own `maturity_report` puts SEAMS at 0 OF 73. Not one coupling in this design runs through a declared Interface. So `publish-surface` and `mirror-surface` are `verified` by their own tests and have NEVER been exercised on the design that ships them — the same shape that hid [BL-176] for eleven releases and produced [BL-213] this morning. `dec:linked-repos-poc` is the trial that would fix that, and it has been parked since 2026-07-27.\n\nTHE METHOD NOTE, because this is the second time today: I asserted an absence from a capability's DESCRIPTION and the code said otherwise. The description was not wrong — \"nothing internal\" is true of what it withholds — it simply was not the whole surface. READ THE EXPORT, NOT THE SUMMARY.",
+        "name": "OPEN — a published surface already carries designated REQUIREMENTS; should DECISIONS cross a design boundary too?",
+        "rationale": "Corrected an hour after it was written, on the same day, because the first version asserted an absence it had not checked — and an absence is exactly the kind of claim that hardens into folklore. The correction is kept in the node rather than silently replacing the text so the failure mode stays visible: I read a capability's one-line description and reported it as the whole mechanism.\n\nKept separate from `dec:idea-one-owner-many-projects` because that node asks WHERE the boundary goes and this asks WHAT MAY CROSS IT.\n\nThe remaining question genuinely narrowed rather than closed: requirements already cross, so the open part is Decisions, and the hard sub-question — binding or merely visible — is now the thing worth Anthony's word rather than the broad \"should intent cross\".",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-interop-as-a-game",
       "node_type": "Decision",
       "properties": {
@@ -47086,6 +47367,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — from the 2026-08-01 dynograph-foundation review. Nothing here is settled.\n\nTHE IDEA: dynograph_graph::link_prediction_all / link_prediction_from (unused) score non-adjacent node pairs by how much their neighbourhoods overlap — common neighbours, Jaccard, or Adamic-Adar (which down-weights hubs). Read on a design graph: \"these two look like they should be connected and are not — is there a missing SATISFIES, or DEPENDS_ON?\"\n\nWHERE IT LANDS: BL-114's unsolved half. That item records that disconnected_community SUGGESTS adding a bridge while its suggestion does not know the detector's own selectivity, so the advised bridge's only correct forms are edge types the measurement excludes. Link prediction would propose WHICH bridge, on evidence rather than on a template.\n\nIT MUST BE AN ASK, NEVER A REPAIR. dec:ask-not-repair (suspected duplicates are asked, never merged) and dec:report-dont-judge both apply directly, and apply_heal already proposes-and-stops in rigid mode. A predicted edge written into the graph would be reflow2 inventing design.\n\nTHE HONEST COUNTER-ARGUMENT, and it may be fatal: a golden thread is largely a TREE. Trees have very few common neighbours, so neighbourhood-overlap scores may be near-zero almost everywhere and the signal may simply not exist on this shape of graph. That is measurable BEFORE any build — run it over reflow2's own 1179-node export and see whether anything scores. docs/sharpening.md is exactly the discipline for that, and this should not be built until the instrument says there is a signal.",
         "name": "OPEN — should reflow2 propose MISSING edges from neighbourhood overlap, as a question rather than a repair?",
         "rationale": "Included because it is the only unused foundation function that addresses BL-114's open half; recorded with its likely-fatal objection attached rather than argued down, so a later session inherits both.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-one-owner-many-projects",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-05, in his own words: \"one idea that I've come across is that I work many inter-related projects. it seems like a reflow2 project/graph is limited to one git repo. curious if we should remove this constraint? then I can use the reflow2 graph in one project (project_x) and still use it to guide a closely related project (say project_y). the benefit of this is that a set of projects done in this manner can all influence each other. another option is to build the reflow2 graph in the parent folder of a bunch of interrelated projects. for instance, all my individual projects are in a folder called git_projects - maybe this is the appropriate place to build the graph versus within each project.\"\n\n⭐ FIRST, THE PREMISE DOES NOT HOLD, AND THAT MATTERS BEFORE ANY OPTION IS WEIGHED. There is NO CONSTRAINT TO REMOVE. `--graph-path` is an ordinary CLI argument; this repo's `.mcp.json` passes `./.reflow2/graph` and that is a CONVENTION, not a binding. Verified the same day by creating graphs at arbitrary filesystem paths outside any repository during the corpus trial. `dec:install-once-per-machine` already states the position: \"reflow2 installs once per machine; the in-repo half is optional and only for repos you share.\" So the question is not CAN the graph live elsewhere — it can, today, with no change — but WHERE IT SHOULD, which is a design question about authority rather than a limitation to lift.\n\nSECOND, THE PLACEMENT RULE IS ALREADY DECIDED AND IT DISPOSES OF ONE OPTION OUTRIGHT. `dec:nested-graphs` (ACCEPTED, Anthony, 2026-07-25): \"A design is its own graph when something at that level is separately OWNED, separately RELEASED, or separately SHARED — and a subtree of one graph otherwise. THE HIERARCHY DOES NOT DECIDE; AUTHORITY DOES.\" A `git_projects/` parent folder is a filesystem convention with no authority attached, so under the accepted rule it is NOT a reason to put a graph there. If those projects share a graph it must be because they share an owner, a release train or a recipient — never because they share a directory.\n\n⭐ THIRD, AND THIS IS WHY THE QUESTION IS GENUINELY OPEN RATHER THAN ALREADY ANSWERED: THE RULE WAS WRITTEN FOR FEDERATION BETWEEN OWNERS, AND ANTHONY'S CASE IS ONE OWNER WITH MANY RELEASE TRAINS. The discriminator is a three-way OR — owned, released, OR shared — so \"separately released\" alone sends his projects to separate graphs. But every cost the rule cites for a seam (a coordinate, an evidence roll-up, a freshness check) is a cost of crossing an AUTHORITY boundary, and there is no authority boundary here. He is paying federation's price to solve a filing problem. The rule is not wrong; his case sits on a seam in it that multi-org federation never presented.\n\nOPTIONS, NONE CHOSEN. (a) ONE GRAPH FOR THE FAMILY, levels inside it. The accepted rule already blesses this \"for everything inside one ownership boundary\" and `cap:scoped-analysis` delivers per-level reading, so nothing new is needed. Counter, from the rule's own text: what one graph cannot give is separate write locks, separate release trains, or a way to share ONE project without shipping the others — and his projects DO release separately, which is exactly the case (a) was said not to cover. (b) A GRAPH PER PROJECT, MIRRORED. What the accepted rule prescribes, and the linking half is BUILT (`cap:mirror-surface`, `cap:publish-surface`). Counter: `dec:linked-repos-poc` names the blocker — \"reflow2 structures roughly one and a half of the six characteristics an interface spec needs and puts the rest in one free-text string, so today two graphs can be linked and still not be comparable\" — and reflow2's own `maturity_report` puts SEAMS at 0 of 73, so the mechanism this option rests on is the least-exercised thing in the design. (c) A GRAPH IN THE PARENT FOLDER. Ruled out by `dec:nested-graphs` as stated, but worth keeping visible because it is what Anthony reached for and the reason it fails is not obvious: a folder is where things SIT, not who decides them. (d) ONE GRAPH FOR INTENT, SEPARATE GRAPHS FOR BUILD. Not previously considered: the shared thing across his projects is what he is trying to achieve, and the separate thing is what each repo ships. Counter: reflow2 has no vocabulary for a design that holds only intent and no build, and `req:accreted-intent-becomes-a-design` is the closest thing — which is about a corpus, not a standing hub. (e) DO NOTHING; the constraint he wanted removed does not exist, and he can point `--graph-path` wherever he likes today. Counter: that answers the mechanism and ignores the question, which is what SHOULD be one design.\n\nWHAT MUST NOT BE RE-DERIVED WHEN THIS IS PICKED UP: `dec:nested-graphs` and its four stated obligations (the coordinate, the roll-up, freshness, the seam), `dec:linked-repos-poc` and its dependency on `req:interface-spec-complete`, `req:design-composes` and `req:composed-analysis` (both accepted), and `cap:mirror-surface`/`cap:publish-surface`/`cap:composed-analysis` (all built). The LINKING half exists; the COMPARING half does not.\n\nNOT CHECKED, and it bears directly on (b): whether `mirror_surface` and `compose_and_analyse` have ever been run on two real designs. `dec:linked-repos-poc` is one of the two parked Decisions that `detect_defects` has been reporting as governing nothing all session, which suggests not.",
+        "name": "OPEN — where does the graph live when ONE PERSON works many interrelated projects, which is the case dec:nested-graphs' rule was not written for?",
+        "rationale": "Captured under the brainstorm skill at Anthony's request, and the search he asked for was run first — he said \"I know we've discussed linking projects in the past, so there should already be some discussion on this,\" and he was right. Recording what already exists BEFORE recording the new question is the whole point of the exercise, and this project has spent a session establishing that the expensive failure is re-deriving what is written down.\n\nThe premise correction is on the node rather than left in conversation because it is the most perishable part: \"the graph is limited to one git repo\" is a reasonable thing to believe from the outside, it is false, and nothing in the repo says so plainly. If that correction lives only in a chat it will be believed again.\n\nDeliberately NOT registered as formal alternatives — that would make this a fork the loop starts asking him to choose between, which is exactly what a brainstorm should not do. Kept separate from dec:idea-intent-crosses-designs because that one asks what may cross a boundary and this one asks where the boundary is; one node holding both could only ever be half-answered.",
         "status": "proposed"
       }
     },
@@ -47220,6 +47511,16 @@
       }
     },
     {
+      "node_id": "dec:loop-status-cannot-say-it-never-looked",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS A MEASURED FIELD DEFECT PLUS AN OPEN QUESTION. Reported 2026-08-05 from the hxm_program session, item 4 of six.\n\nWHAT WAS OBSERVED, in the reporter's words: \"After the capture batch, `loop_status` reported `unsurfaced_gaps: 0` — but `detect_gaps` had never been run, and when it did run it found 3 REAL PHASE-LEVEL GAPS.\" Their conclusion is the sentence worth keeping: \"AN AGENT THAT TRUSTS `clean: true` HAS NO REASON TO RUN THE DETECTOR.\"\n\n⭐ WHY THIS IS NOT SIMPLY A MISSING TIMESTAMP. `loop_status` is the call the SessionStart hook and the server instructions both push every session to run FIRST, described as \"the one cheap call that says what the coherence loop is owed\". It is the orientation surface. A false clean there does not mislead one report — it tells the agent the loop is settled at the exact moment the loop has not started.\n\nAND IT COLLIDES WITH AN ACCEPTED DECISION RATHER THAN JUST BEING AN OVERSIGHT. `dec:loop-status-state-not-history` is ACCEPTED: \"Loop debt is computed from graph state, never from run history\" — with the stated reason that LOOKING IS NOT WRITING, so counting runs would reward bookkeeping. That ruling is right and it is exactly what produces this: a gap that has never been detected is not IN the state, so state-derived debt cannot see it. The defect is downstream of a correct decision, which is why it needs a decision rather than a patch.\n\nTHIS IS THE THIRD INSTANCE OF ONE SHAPE IN A WEEK, AND THE PATTERN NOW HAS A NAME IN THIS PROJECT'S OWN RECORD: [BL-206], the coherence gate reporting OK over 20 artifacts it never swept; [BL-208], the export-lineage guard reporting nothing because a shallow checkout meant it could not see `HEAD~1`; and `dec:no-design-here-never-looked`, filed from the same report, where \"this directory has no design yet\" was asserted without looking. The carried sentence from BL-208 was \"a guard whose no-op path is silent will eventually run nowhere and say so to nobody\". THIS IS THE READING-SURFACE VERSION: A COUNT THAT CANNOT DISTINGUISH ZERO FROM UNMEASURED READS AS ZERO.\n\nOPTIONS, NONE CHOSEN. (a) THE REPORTER'S SUGGESTION — a `last_gap_scan` timestamp, or a `scanned: false` field. Cheap and directly answers it. Counter: a timestamp IS run history, which is what `dec:loop-status-state-not-history` deliberately excluded, so taking it means amending that decision rather than quietly contradicting it — and the amendment has to explain why THIS history is legitimate when run-counting was not. The distinguishing argument, if it is taken: recording that a detector RAN is not the same as crediting the agent for running it; one is a property of the reading, the other is a score. (b) MAKE THE ABSENCE STRUCTURAL RATHER THAN TEMPORAL — report `unsurfaced_gaps` as unknown until a scan has ever produced a gap-or-none result for the current graph revision, keyed on state rather than on time. Fits the accepted decision without amending it. Counter: needs a notion of \"the graph revision a scan covered\", which does not exist. (c) NEVER REPORT A ZERO — say \"run detect_gaps\" whenever the count is zero, whatever the cause. Crude, honest, costs nothing, and would have prevented the observed failure. Counter: it makes a genuinely clean design nag forever, which is how a signal gets trained to be ignored — the exact failure [BL-191] fixed for volatile artifacts. (d) LEAVE IT AND RELY ON THE STOP HOOK, which the reporter notes DID catch this (\"the stop-hook nudge caught this — 'bookkeeping is not the loop' — which worked\"). Counter: the hook fires at the END of a session, and the false clean is read at the START.\n\nNOT CHECKED, and it widens or narrows this considerably: whether the other zero-valued counters in `loop_status` have the same property — `unexamined_claims`, `unproven_capabilities`, `undispositioned_drift`, `unwritten_answers`. If they are all state-derived in the same way, this is one defect with five faces rather than one field.",
+        "name": "OPEN — loop_status reports unsurfaced_gaps 0 before detect_gaps has ever run, so \"clean\" and \"never scanned\" are the same answer",
+        "rationale": "Filed as its own node rather than a backlog row because the fix is not obvious and the obvious fix contradicts an accepted decision. `dec:loop-status-state-not-history` says debt is computed from state and never from run history, for a good stated reason; a `last_gap_scan` timestamp is run history. Whoever takes this has to either amend that decision with an argument for why recording a reading differs from scoring an agent, or find a state-shaped answer. A backlog row would have carried the symptom and lost the collision.\n\nThe three-instance pattern is written out because this is the point at which it stops being a coincidence: two gates and now the orientation call, all reporting a confident absence they never measured. Naming it once, with the instances, is cheaper than finding it a fourth time.\n\nThe unchecked item — whether the other four counters share the property — is stated because it decides whether this is one row or five, and nobody has looked.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:loop-status-state-not-history",
       "node_type": "Decision",
       "properties": {
@@ -47321,6 +47622,16 @@
       }
     },
     {
+      "node_id": "dec:no-design-here-never-looked",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS A MEASURED FIELD DEFECT PLUS AN OPEN QUESTION. Reported 2026-08-05 from a real session on `hxm_program`, Anthony's own working repo at NSLS-II. Nothing here is settled.\n\n⭐ WHAT HAPPENED, AND IT IS AN ACCIDENT THE TOOL CAUSED RATHER THAN FAILED TO PREVENT. A session rooted at the repo root was told \"this directory has no design yet\" and offered only `reflow2_start_design`. TWO POPULATED GRAPHS EXISTED ONE AND TWO DIRECTORIES DOWN:\n\n    ~/git_projects/hxm_program/.reflow2                      37bbd9a6e0e75369  \"hxm_program\"          minted 0.23.0 TODAY\n    ~/git_projects/hxm_program/simulated_beamlines/.reflow2  8a9ce30fedd213e5  \"simulated_beamlines\"  minted 0.17.0\n    ~/git_projects/hxm_program/simulated_beamlines/HEX/.reflow2  6771abb9b0683423  \"HEX\"              minted 0.22.1\n\nThe user believed the design lived at `simulated_beamlines`. By the time that surfaced, the agent HAD ALREADY MINTED A NEW ROOT GRAPH. The reporter's own summary: \"One directory listing would have prevented the accidental third graph.\"\n\nWHY THIS IS THE SEVERE ONE OF THE SIX FILED. Every other item in the report is friction — this one produced a WRONG ARTEFACT in the user's repository, silently, and the user did not learn of it until later. It is also the exact failure shape this project has been finding all week and naming in its own words: A GREEN OR CONFIDENT ANSWER FROM SOMETHING THAT NEVER LOOKED. `reflow2_check` reported OK over 20 artifacts it never swept ([BL-206]); the export-lineage guard reported nothing because it could not see `HEAD~1` ([BL-208]); `loop_status` reports `unsurfaced_gaps: 0` before `detect_gaps` has ever run (item 4 of this same report). \"No design here\" is that sentence again, addressed to a person deciding whether to create one.\n\nAND IT IS WORSE THAN THE OTHERS IN ONE RESPECT: the other three report a state, and this one INVITES AN IRREVERSIBLE ACT on the strength of it. A design minted in the wrong place is not a bad reading; it is a fourth thing to reconcile.\n\nTHE SECOND HALF, WHICH THE REPORT COUPLES TO IT: SESSION BINDING. \"The MCP server binds to the session's working directory. From a root-rooted session there is no way to write into the nested HEX graph — the user would have to open a session in that directory.\" Verified against this repo's own `.mcp.json`: the launcher is passed `--graph-path ./.reflow2/graph`, a RELATIVE path with NO ANCESTOR WALK. So which design you are editing is decided by where your shell happened to be. Also reported: choosing the new root graph \"required a manual `/mcp` reconnect after `start_design`, because the running server predated the design and kept serving only `start_design`.\"\n\n⚠️ THIS FALSIFIES ADVICE GIVEN THE SAME DAY, and the correction belongs on the record next to it. Asked how to structure exactly these repos, this agent answered that a single graph needs no restructuring because `Artifact.location` is an opaque string and reflow2 performs no file IO — so one graph could register artifacts across sibling repos. TRUE OF ARTIFACT LOCATIONS AND FALSE OF THE THING THAT MATTERS: with cwd-binding and no ancestor walk, \"one graph\" silently means \"every session must start at the repo root\", and a session opened one directory down does not find it — it offers to mint another. The advice was given from the schema and the doctrine (`dec:install-once-per-machine`) without checking the launcher. THE SAME METHOD ERROR AS THE `export_surface` CORRECTION AN HOUR EARLIER: an absence asserted from a description rather than read from the code.\n\nOPTIONS, NONE CHOSEN. (a) SCAN BEFORE OFFERING TO MINT — the reporter's own suggestion: \"no design here, but 2 exist below: [paths, labels]. Use one of those, or really start fresh?\" Cheapest, and it directly prevents the accident that occurred. Counter: reflow2 performs NO FILE IO by doctrine (`dec:agent-navigates-content`), so the scan cannot be reflow2's — it has to be the agent's, which makes this an instruction in the served surface rather than a tool, and instructions are weaker than a type system. That may be the honest answer rather than a weakness, but it should be chosen rather than defaulted to. (b) WALK ANCESTORS WHEN RESOLVING THE GRAPH PATH, the way git finds `.git`. Familiar and predictable; counter: it silently changes which design a session writes to based on cwd depth, which is the same class of surprise, and `--graph-path` is explicit today. (c) A GRAPH SELECTOR — \"design tools take an optional graph ref, defaulting to the nearest `.reflow2`\" (reporter's 2a). The largest, and it is the one that would also answer the nested-write problem. Counter: it makes every tool call carry an ambient target, and this project has been careful that a claim without a seat is refused rather than guessed (`dec:stateless-seat-handle`). (d) HOT-LOAD THE FULL SURFACE AFTER `start_design` (reporter's 2b) — narrower, fixes only the reconnect papercut, and is independent of the rest.\n\nWHAT MUST NOT BE RE-DERIVED: `dec:install-once-per-machine` (the in-repo half is optional), `.mcp.json` passing a RELATIVE `--graph-path`, and the fact that three graphs of three different mint versions (0.17.0 / 0.22.1 / 0.23.0) now coexist in one repo with no stated compatibility policy — the report's item 6.\n\nNOT CHECKED: whether `reflow2_start_design` could refuse, rather than warn, when a `.reflow2` exists below it. Refusing is stronger than reporting and may be right for an act this hard to undo.",
+        "name": "OPEN — \"this directory has no design yet\" is asserted without looking, and it minted a THIRD graph on a repo that already had two",
+        "rationale": "Filed from a first-hand field report on Anthony's real work rather than from self-host, which is the second time in one day that pointing reflow2 at something it did not author produced a finding self-host could not. That pattern is now three-for-three ([BL-199], [BL-213], this) and is the strongest standing argument for keeping external use in rotation.\n\nRecorded as its own node rather than as one of six backlog rows because it is categorically different from the other five: those are friction, this one CAUSED a wrong artefact in a user's repository and invited an irreversible act on the strength of an unchecked claim. Filing it beside \"version skew is a papercut\" would flatten that.\n\nThe falsified advice is written into the node deliberately. It was given today, confidently, from doctrine rather than from the launcher — and an agent reading this later needs to see that the one-graph recommendation rested on a fact nobody had checked, not just that it was incomplete.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:one-retire-edge",
       "node_type": "Decision",
       "properties": {
@@ -47398,6 +47709,16 @@
         "name": "OPEN — does reflow2 model scheduled time (H-hour, durations, critical path) as a first-class axis?",
         "rationale": "Named as the honest gap while mapping a staff planning process onto the existing vocabulary, which otherwise carried it almost without strain: ALLOCATED_TO is troop-to-task, Interface plus PROVIDES/CONSUMES is a coordination point or transfer of authority, Decision plus register_alternative is COA development and comparison, Constraint is constraints and restraints with breach computed, Verification is a rehearsal or confirmation brief, and a FRAGO is a ChangeEvent with a computed blast radius. Recorded rather than acted on because (c) is a real design choice that turns on whether any computation would read it — the same test dec:exploratory-staging applies to brainstorm vocabulary — and because getting it wrong means either reimplementing MS Project badly or leaving the highest-value computation on the table. Detail in docs/planning-at-scale.md §1.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:pointing-a-session-is-project-scope-only",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED BY DOING IT, 2026-08-05, on `hxm_program`. This is `dec:how-a-session-is-pointed-at-a-design` option (a) — edit config, restart — CARRIED OUT AND VERIFIED, together with the constraint that makes it safe.\n\n⭐ THE RULE THAT MATTERS, AND IT WAS MISSING FROM THE PROCEDURE THIS AGENT SUPPLIED: reflow2 is configured USER-GLOBALLY on this machine (`~/.claude.json` `mcpServers`, `~/.config/opencode/opencode.json`) with a RELATIVE `--graph-path .reflow2/graph`. An absolute project path must go ONLY into PROJECT-SCOPED config — `~/.claude.json` under `projects[\"/ABS/PATH\"].mcpServers.reflow2`, or `claude mcp add reflow2 --scope local`. PUTTING AN ABSOLUTE PATH IN THE GLOBAL ENTRY WOULD POINT EVERY PROJECT ON THE MACHINE AT ONE PROJECT'S GRAPH.\n\n⚠️ AND THAT IS EXACTLY WHAT THIS AGENT'S INSTRUCTIONS WOULD HAVE CAUSED. Asked for \"exact instructions\", it produced a procedure saying \"edit every config that launches reflow2\" and listed only REPO-LOCAL paths (`.mcp.json`, `opencode.json`, `.vscode/mcp.json`). THE ERROR WAS IN THE DERIVATION, NOT THE TYPING: the procedure was read out of `tools/reflow2_init.py`, which writes repo-local configs — and `reflow2_init.py` NEVER WRITES `~/.claude.json`, so it does not describe how this machine is actually set up. A generic answer was given to a specific question by reading the installer's INTENT instead of the machine's STATE. The user's own agent caught it and wrote the missing rule.\n\nTHE VERIFIED PROCEDURE, as executed: (1) confirm the target store EXISTS and read its `graph.id.json` for the id and label — never point at a missing path, because that mints a new empty graph; (2) add the project-scoped override, changing ONLY `--graph-path` and preserving `--shared` and `--only-if-present`; (3) RESTART THE SESSION — a `/mcp` reconnect is not enough, because the stdio server survives it and project scope is read at session start — then confirm via `ps` that the process start time is after the edit and the command line shows the absolute path; (4) call `design_identity` and check the id and label against step 1, stopping before any write if they disagree.\n\nWHAT THIS AGENT DID NOT KNOW AND SHOULD HAVE: `--only-if-present` EXISTS AND IS ALREADY SHIPPED (`crates/reflow2-mcp/src/main.rs:76`, checked at `main.rs:772` against `latent::design_present`). It is why a graph-less directory only OFFERS `start_design` rather than silently minting. That narrows `dec:no-design-here-never-looked`: the mint is not silent, it needs a yes — but the offer is still made with no mention of the populated graphs one and two directories away, so \"one accidental yes later\" remains the live path and the finding stands.\n\n⚠️ THE LIMITATION THAT SURVIVES, AND IT IS THE ORIGINAL PROBLEM ONLY PARTLY FIXED: PROJECT SCOPE IS KEYED TO THE DIRECTORY THE SESSION WAS OPENED IN. An override on `/ABS/PATH/TO/PROJECT` does NOTHING for a session opened in a subdirectory. So the fix holds for sessions started at the project root and not otherwise — which is precisely the case that produced the extra graph. The user's stated safety net is a habit rather than a mechanism: `find . -maxdepth 3 -name .reflow2` before minting anything. THAT IS THE ARGUMENT FOR `cap:describe-design-at-path` REMAINING NECESSARY RATHER THAN SUPERSEDED BY THIS.\n\nALSO NOT COVERED: opencode's global config still resolves the relative path, so an opencode session on a reflow2 project needs its own project-level config with the array-shaped `command` (binary at head).\n\nA NOTE ON THE THREE GRAPHS, since the record should not carry a stale story: the two sim-scoped graphs (`simulated_beamlines`, `HEX`) ARE INTENTIONAL AND STAY. The root `hxm_program` graph — the one this project recorded as the accidental third — has been ADOPTED as the program-level design and is what the override now points at. The accident became the intent, which does not excuse the mint but does mean the lesson is about not minting a FOURTH.",
+        "name": "DECIDED in the field — a session is pointed at a design by a PROJECT-SCOPED config override, and an absolute path must never enter a global config",
+        "rationale": "Recorded because a procedure this agent supplied as a deliverable was wrong in a way that could have repointed every project on the user's machine, and the correction came from the user actually doing it. The failure mode is worth naming precisely: the answer was derived from `reflow2_init.py` — the installer — and presented as a description of a specific machine it does not configure. Reading intent instead of state is the same error made twice earlier the same day (`export_surface`'s published promises, and the one-graph advice given without reading the launcher). Three times in one session makes it a habit rather than a slip.\n\nRecorded as ACCEPTED rather than proposed because it was not a choice offered and taken — it was executed, verified with `design_identity`, and is now the machine's live configuration. `dec:how-a-session-is-pointed-at-a-design` stays open regardless: this settles what to do TODAY, and the per-call graph reference remains the question, made sharper by the surviving limitation that project scope keys on the launch directory.\n\nThe `--only-if-present` correction is on the node because it changes how `dec:no-design-here-never-looked` should be read: the mint is not silent. The finding survives, at lower severity, and saying so is better than leaving the earlier node overstating it.",
+        "status": "accepted"
       }
     },
     {
@@ -49132,6 +49453,16 @@
       }
     },
     {
+      "node_id": "epoch:hxm-field-report",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "incident_response",
+        "name": "Field report from hxm_program: three graphs on one repo, one of them minted BY ACCIDENT because the pre-design surface never looked for nearby designs (2026-08-05)",
+        "sequence": 281,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:ideas-stay-connected",
       "node_type": "DesignEpoch",
       "properties": {
@@ -49168,6 +49499,16 @@
         "epoch_type": "revision",
         "name": "Linking repos: a design analysed against its dependency's design, and an interface that publishes a complete contract (2026-07-27, post-v0.16.0)",
         "sequence": 200,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:many-projects-one-mind-brainstorm",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Anthony asks where the graph lives when one person works many interrelated projects — and the question exposes that mirroring shares contracts, not intent (2026-08-05)",
+        "sequence": 280,
         "status": "arrived"
       }
     },
@@ -52305,6 +52646,21 @@
       }
     },
     {
+      "node_id": "req:a-session-chooses-its-design",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A session can find out what designs exist nearby and be told which one to use, rather than inheriting one from where the shell happened to be",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Which design a session writes to must be a STATED CHOICE, and the information needed to make that choice must be available BEFORE anything is created. Two halves: (1) an agent must be able to discover what designs exist in and around a working tree and what each one holds — label, size, when it was minted — without opening a session against each; (2) a session must be able to be pointed at a chosen design explicitly.\n\nANTHONY, 2026-08-05, after the hxm_program field report: \"can we just pass the location of the reflow2 graph via a prompt or skill; it can default to whichever folder path that the session is opened in, but maybe we could just say 'use reflow2 graph as /path/to/reflow2/graph/to/use/for/this/session'.\" And on the mechanism, once told a skill could not do it alone: \"I like this approach of just pointing .mcp.json at the graph_id... an agent within a session can usually change files. can a reflow2 tool be to simply return all graph_ids to the agent and the agent then can choose whichever graph_id the user specifies to use for the project?\"\n\nWHY IT IS A REQUIREMENT AND NOT A CONVENIENCE. Today the answer is implicit: `.mcp.json` passes a RELATIVE `--graph-path`, so the design a session edits is decided by where the shell was opened, with no ancestor walk and no report of what else exists. Measured consequence, on Anthony's own repo the same day: a session at the root was told \"this directory has no design yet\" and minted a THIRD graph while two populated ones sat one and two directories down (`dec:no-design-here-never-looked`). An implicit answer to \"which design am I editing\" is not a smaller version of an explicit one — it is the mechanism by which a design gets created in the wrong place and nobody is told.\n\nTHE DIVISION OF LABOUR THIS INHERITS, and it shapes the answer rather than limiting it: reflow2 performs NO FILE IO (`dec:agent-navigates-content`), so WALKING THE TREE TO FIND `.reflow2` DIRECTORIES IS THE AGENT'S JOB — Anthony's own observation that \"an agent within a session can usually change files\" is the same point from the other side. What only reflow2 can answer is what a store at a given path actually HOLDS. So the requirement is met by a pair, not by one tool.\n\n⚠️ MEASURED, AND IT CORRECTS THE OBVIOUS READING OF THE ASK: \"return all graph_ids\" would return ONE per store today. Storage keys are `{graph_id}\\x00{type}\\x00{id}` and `dynograph_storage::keys::graph_prefix` exists, so many graphs per store is supported by the FOUNDATION — but reflow2 opens one graph per store by convention (`DEFAULT_GRAPH_ID`, one `.reflow2` directory per project), and the three graphs in this field report are three separate STORES. Enumerating within a store is therefore true and not useful yet; describing a store found on disk is what the case actually needs.\n\nNOT SETTLED HERE, deliberately: whether being \"pointed at a design\" means editing `.mcp.json` and reconnecting (cheap, works today, needs no release) or a graph reference carried per call (no reconnect, much larger). That is `dec:how-a-session-is-pointed-at-a-design`.\n\nStatus `proposed`: captured in Anthony's words and awaiting his confirmation of the wording.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:accreted-intent-becomes-a-design",
       "node_type": "Requirement",
       "properties": {
@@ -54324,6 +54680,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:many-projects-one-mind-brainstorm:dec:idea-intent-crosses-designs",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-05\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:nested-graphs\",\"properties\":{}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Surfaced 2026-08-05 by Anthony's multi-project question, and it is the half his framing exposes that no existing node covers.\\n\\n⭐ THE GAP. His stated benefit is that \\\"a set of projects done in this manner can ALL INFLUENCE EACH OTHER.\\\" Everything reflow2 has built for crossing a design boundary shares CONTRACTS: `cap:publish-surface` publishes \\\"just the boundary — the contracts others may rely on, and nothing internal\\\", `cap:mirror-surface` brings the other side's published surface in as local nodes carrying a coordinate, and `cap:seam-incompatibility` says when two linked designs disagree at that boundary. ALL OF IT IS ABOUT INTERFACES. NOTHING CARRIES A DECISION OR A REQUIREMENT ACROSS. So two of his projects can be checked for whether they fit together, and still know nothing about why the other was built the way it was.\\n\\nTHAT IS PROBABLY NOT WHAT HE MEANS BY INFLUENCE. A ruling made in project_x — \\\"we settled that outdoor units send cumulative totals, so a lost reading heals itself\\\" — is exactly the kind of thing that should reach project_y, and it is not a contract. Neither is a requirement he holds across everything he builds. `dec:nested-graphs` deliberately made foreignness \\\"a property of the NODE rather than of the link\\\", which is the mechanism that WOULD carry this — the question is whether anything other than an Interface is allowed to be mirrored.\\n\\nWHY IT MAY BE DELIBERATE RATHER THAN MISSING, and this is the strongest counter: `cap:publish-surface`'s whole point is \\\"and nothing internal\\\". A Decision is the most internal thing a design holds — it is the reasoning, the alternatives, the roads not taken. Publishing it is a much larger act than publishing a contract, and a boundary that leaks reasoning may not be a boundary at all. `dec:nested-graphs` chose ownership as the discriminator precisely so a design could share ONE part without sharing everything; letting intent cross could dissolve that.\\n\\nOPTIONS, NONE CHOSEN. (a) NOTHING CROSSES BUT CONTRACTS — today's behaviour, made explicit. Cheapest and defensible; the counter is that it answers Anthony's question with \\\"you cannot have what you asked for\\\" and he should hear that plainly rather than discover it. (b) A DESIGN MAY PUBLISH SELECTED DECISIONS AND REQUIREMENTS, not only Interfaces — publication stays deliberate, so nothing leaks, but the publishable set widens. Counter: `export_surface` and the surface vocabulary would need to say WHAT KIND of thing is published, and the mirrored copy raises a hard question nobody has answered — is a mirrored Decision still binding on the mirroring design, or only visible to it? (c) A STANDING \\\"HOUSE RULES\\\" DESIGN that his projects all mirror — one design holding the intent he carries everywhere (how he works, what he always requires), which every project mirrors and none owns. Fits the accepted rule cleanly, because that design IS separately owned and separately shared. Counter: nothing in reflow2 models a design with no build, and it is close to (d) on `dec:idea-one-owner-many-projects` without being the same thing. (d) DO NOT SOLVE IT IN THE GRAPH — this is what a person carries between their own projects, and the graph should not try to. Counter: that is the argument this whole product exists to reject, since \\\"the person remembers\\\" is what fails at eighteen months (`req:no-idea-goes-quiet`, accepted the same day).\\n\\nNOT VERIFIED: whether `export_surface`/`mirror_surface` are structurally limited to Interfaces or merely conventionally used that way. If the mechanism is already general, (b) may be a vocabulary question rather than a build.\\n\\n⚠️ AND THE PREREQUISITE THAT BOUNDS ALL OF IT: reflow2's own `maturity_report` puts SEAMS at 0 OF 73 — not one coupling in this design runs through a declared Interface that one side provides and the other consumes. So the machinery every option here builds on has never been exercised on the design that ships it, which is the same \\\"self-host cannot see it\\\" shape that hid [BL-176] for eleven releases and produced [BL-213] this morning. Any answer here should be trialled on two real designs before it is believed.\",\"name\":\"OPEN — mirroring shares CONTRACTS; should INTENT cross a design boundary too, which is what \\\"projects influence each other\\\" actually asks for?\",\"rationale\":\"Recorded separately from `dec:idea-one-owner-many-projects` because that node asks WHERE the boundary goes and this one asks WHAT MAY CROSS IT. They travel together and are answered differently: a person could put everything in one graph and still want to know whether intent crosses when they later split it.\\n\\nKept as a question rather than a proposal because the counter-argument is strong and structural: `cap:publish-surface` exists to publish the boundary \\\"and nothing internal\\\", so widening it is a change to what a design boundary MEANS, not an added feature. That deserves Anthony's word, not an agent's inference from one sentence of his.\\n\\nThe seams-at-zero warning is on the node deliberately. It is the second time in one day that a mechanism has turned out to be unexercised on reflow2's own design, and the first time cost a silent data-loss defect. Naming it here is cheaper than rediscovering it.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-intent-crosses-designs",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:mode-chosen:proj:reflow2",
       "node_type": "Snapshot",
       "properties": {
@@ -56028,7 +56394,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:aea0ffa7868000cfdd797d624a777d69df04edc0eb92a4df7d4f05d2e63351aa",
+  "prev_content_hash": "sha256:a10837f92cb09ef00a72febe14abf40719aa231ce7d6dc5b786298e65bd2675c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
