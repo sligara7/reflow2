@@ -33,6 +33,41 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A whole folder of documents becomes one design** (BL-186, `cap:corpus-ingest` — the last
+  build row of this increment). New tool **`ingest_corpus_step`**, the corpus sibling of
+  `ingest_step`, plus a served **`ingest-corpus`** skill for the half reflow2 cannot do: walking
+  the directory. **No schema change; purely additive to the tool surface** (148 toolsnaps, 1
+  added, 0 changed, 0 removed).
+  - **One epoch for the whole run.** Left alone, `ingest` opens `epoch:{fragment_id}` per
+    document, so 500 files landed as 500 unrelated events on the time axis instead of one ingest.
+  - **Identity converges across documents.** The same component named in forty specs resolves to
+    one node while each document keeps its own provenance `Fragment` — which is the difference
+    between one design and forty disconnected ones. The report says so as `fuzzy_merges`, and
+    zero across a large corpus is a red flag rather than a clean run.
+  - **The ambiguous band is asked ONCE.** Near-matches are gathered across the whole corpus and
+    deduplicated, because `dec:ask-not-repair` at corpus scale means the asking must be batched
+    or the feature is unusable — the same pair surfacing in six documents is one question.
+  - **⭐ The handshake batches, so a corpus costs the rounds a document does.** Prompts for every
+    document are gathered into one round: ~3 rounds for a hundred documents instead of ~300.
+    This needed **no new mechanism** — a prompt's id was already a hash of its semantic content,
+    so one shared answer pool cannot cross-feed documents and two identical documents are
+    answered once. *The document text still crosses the agent's context once per prompt, and
+    that cost is not solved here.*
+  - **Re-running is safe and is the resume path.** A document whose `fragment_id` already exists
+    comes back `skipped`, **not** `failed`, so pointing it at a grown folder ingests only what is
+    new. Resume is *derived from the graph*, never bookmarked — there is no cursor and no
+    progress file. It depends entirely on the caller deriving `fragment_id` from the path, which
+    is why the skill says so in the strongest terms it has.
+  - **Every document that could not be read is NAMED, with why**, and one bad document never
+    cancels its siblings. A run that cannot say what it did not understand manufactures
+    confidence, which is worse than no run.
+  - **The limit, stated rather than discovered:** convergence is lexical. `token_sort_ratio`
+    catches `Auth Service` ~ `Authentication Service` and **cannot see `Read Cache` ~ `Local
+    Store` at all**. The check's evidence scope records the same limit mechanically — `corpus_size`
+    and `vocabulary_overlap` are **pinned**, so a passing check proves three documents that share
+    words, not 1,124 that do not. *(This is also the first VERIFIES edge in this repo to carry an
+    evidence scope: the vocabulary shipped in v0.21.0 and 116 of 116 edges had never used it.)*
+
 - **An Artifact can say what it stands for and how its content behaves** — two new optional
   properties, one schema touch, both aimed at the same failure: *the graph could not tell two
   opposite states apart, and reported the wrong one confidently.* **Schema change, so this is a

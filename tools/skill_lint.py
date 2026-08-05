@@ -63,6 +63,21 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # CorpusReport / CorpusDocument fields and DocumentStatus values (BL-186) —
+    # the ingest-corpus skill names what it tells you to READ in the report, not
+    # tools. `token_sort_ratio` is the resolution function whose lexical limit
+    # that skill is obliged to state.
+    "documents_ingested",
+    "documents_skipped",
+    "failures",
+    "fuzzy_merges",
+    "merge_candidates",
+    "epoch_id",
+    "fragment_id",
+    "source",
+    "skipped",
+    "authored",
+    "token_sort_ratio",
     # Artifact.granularity and Artifact.volatility values (BL-188, BL-191) —
     # property enums the link-artifacts skill names, not tools.
     "granularity",

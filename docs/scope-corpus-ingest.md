@@ -3,7 +3,22 @@
 > Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and
 > reading order.
 
-*Scoping only — nothing here is built. `cap:corpus-ingest` is `planned` ([BL-97](backlog.md)).
+> **BUILT 2026-08-05 — [BL-186]. `cap:corpus-ingest` is `verified`.** Every step of the sequence
+> below now exists: coverage first, the Decision and Verification passes, per-type thresholds, the
+> SP-3b handshake (`ingest_step`), and the folder driver itself as **`ingest_corpus_step`** over
+> `crates/reflow2-core/src/corpus.rs`, with the walk in the served **`ingest-corpus`** skill.
+>
+> **Open decision 1 resolved to (b), as this doc recommended** — the handshake, not a skill doing
+> the disciplines by hand. Two things this doc did not anticipate, both recorded on the capability:
+> **the handshake batches ACROSS documents**, so a corpus costs the ~3 rounds one document costs
+> rather than 3N (no new mechanism — a prompt id was already a content hash); and **re-running is
+> the resume path**, because a document whose `fragment_id` already exists comes back `skipped`
+> rather than failed. Finding 1's quadratic `fuzzy_match` is **still not addressed** and is still
+> the right thing to measure — but the dominant cost turned out to be agent round trips, which is
+> what the batching attacks.
+
+*Scoping only when written — the findings below are preserved as they stood, and the sections that
+have since been overtaken carry their own BUILT notes. `cap:corpus-ingest` was `planned` ([BL-97](backlog.md)).
 Written 2026-07-26 by reading `ingest.rs`, `graph.rs` and the schema, not from memory. The reading
 changed the shape of the work in both directions: one hard part is already solved, and a different
 one was not on the list at all.*
