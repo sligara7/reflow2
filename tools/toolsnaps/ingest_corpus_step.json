@@ -1,0 +1,83 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Turn a WHOLE FOLDER of documents into one design, with you as the model (cap:corpus-ingest). The corpus sibling of ingest_step, and the reason to prefer it over looping that one: it gathers the prompts for EVERY document into one round, so a hundred documents cost the same ~3 rounds a single document does instead of three hundred. YOU walk the directory and read the files — reflow2 performs no file I/O — and hand over `text` per document plus an opaque `source` locator it stores and never parses. Drive it like ingest_step: call with no `answers`, answer everything it returns, call again with the SAME documents plus every answer so far, until `status: done`. NOTHING IS WRITTEN until that final round, so an abandoned corpus leaves no half-design behind. WHAT IT DOES THAT A LOOP CANNOT: one epoch for the whole run rather than one per file; cross-document identity, so the same component named in forty specs converges on ONE node; and the ambiguous near-match band gathered across the corpus and DEDUPLICATED into one question instead of the same question forty times (dec:ask-not-repair). RE-RUNNING IS SAFE AND IS THE RESUME PATH: a document whose fragment_id already exists comes back `skipped`, not `failed`, so pointing it at a grown folder ingests only what is new. Read `failures` before you trust the result — it names every document that could not be taken, because a run that cannot say what it did not understand is worse than no run.",
+  "inputSchema": {
+    "$defs": {
+      "CorpusDocumentReq": {
+        "additionalProperties": false,
+        "description": "One document in a corpus run.",
+        "properties": {
+          "fragment_id": {
+            "description": "Provenance Fragment id for this document. Unique within the run; one\nthat already exists is SKIPPED rather than failed, which is what makes a\nre-run resumable.",
+            "type": "string"
+          },
+          "source": {
+            "default": null,
+            "description": "Opaque locator back to the source — a path, a page, a line range.\nStored verbatim and never parsed, so use whatever suits the medium.",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "text": {
+            "description": "The document's text. You read the file; reflow2 does no file I/O.",
+            "type": "string"
+          },
+          "title": {
+            "description": "Human title — normally the file name.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "fragment_id",
+          "title",
+          "text"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "answers": {
+        "default": [],
+        "description": "Every answer gathered so far, earlier rounds included — the run replays\nfrom the top rather than resuming, which is what keeps it stateless.",
+        "items": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "documents": {
+        "description": "Every document in the run, in the order to integrate them. Order affects\nwhich document's Fragment a shared node is first attributed to; it does\nNOT affect the merged name, which is settled from the two strings alone.",
+        "items": {
+          "$ref": "#/$defs/CorpusDocumentReq"
+        },
+        "type": "array"
+      },
+      "epoch_id": {
+        "default": null,
+        "description": "The ONE epoch the whole run pins to. Omit and it is\n`epoch:corpus-ingest` — never one epoch per document, which is what\nmakes 500 files read as 500 unrelated events.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "provenance": {
+        "default": null,
+        "description": "How this content entered the graph. Defaults to `imported`, because a\ncorpus is usually somebody else's writing; say `authored` if it is yours.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "documents"
+    ],
+    "type": "object"
+  },
+  "name": "ingest_corpus_step"
+}

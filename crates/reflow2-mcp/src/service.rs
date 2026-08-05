@@ -1913,6 +1913,46 @@ pub struct IngestStepReq {
     pub answers: Vec<JsonObject>,
 }
 
+/// One document in a corpus run.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct CorpusDocumentReq {
+    /// Provenance Fragment id for this document. Unique within the run; one
+    /// that already exists is SKIPPED rather than failed, which is what makes a
+    /// re-run resumable.
+    pub fragment_id: String,
+    /// Human title — normally the file name.
+    pub title: String,
+    /// The document's text. You read the file; reflow2 does no file I/O.
+    pub text: String,
+    /// Opaque locator back to the source — a path, a page, a line range.
+    /// Stored verbatim and never parsed, so use whatever suits the medium.
+    #[serde(default)]
+    pub source: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct IngestCorpusStepReq {
+    /// Every document in the run, in the order to integrate them. Order affects
+    /// which document's Fragment a shared node is first attributed to; it does
+    /// NOT affect the merged name, which is settled from the two strings alone.
+    pub documents: Vec<CorpusDocumentReq>,
+    /// The ONE epoch the whole run pins to. Omit and it is
+    /// `epoch:corpus-ingest` — never one epoch per document, which is what
+    /// makes 500 files read as 500 unrelated events.
+    #[serde(default)]
+    pub epoch_id: Option<String>,
+    /// How this content entered the graph. Defaults to `imported`, because a
+    /// corpus is usually somebody else's writing; say `authored` if it is yours.
+    #[serde(default)]
+    pub provenance: Option<String>,
+    /// Every answer gathered so far, earlier rounds included — the run replays
+    /// from the top rather than resuming, which is what keeps it stateless.
+    #[serde(default)]
+    pub answers: Vec<JsonObject>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CoverageReportReq {

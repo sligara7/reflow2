@@ -59,7 +59,17 @@ live while it is still cheap to answer.
 > them would have created two more unreachable properties, which is [BL-202]'s exact defect. The
 > increment therefore also grew `set_artifact_intent`. **Read that as a standing rule for every
 > schema row below: a property nobody can set is not a feature.**
-> **Remaining here: [BL-186]** (build `cap:corpus-ingest`) **and [BL-196]** (genesis custody).
+> **[BL-186] DONE 2026-08-05** — `ingest_corpus_step` + the served `ingest-corpus` skill;
+> `cap:corpus-ingest` is `verified`. The increment's forced order held exactly as written: ingest
+> at all ([BL-176]), then know where you stopped ([BL-188]), then the build. Two things this plan
+> did not anticipate, and both are worth carrying to the rows below. **(1) The batching was free.**
+> The corpus handshake gathers prompts across every document, so a folder costs the ~3 rounds one
+> document costs instead of 3N — and it needed no new mechanism, because a prompt id was already a
+> hash of its semantic content. *The win came from reading what already existed, not from building.*
+> **(2) The cost that matters was not the one the scope doc named.** It worried about reflow2's
+> quadratic `fuzzy_match`; the dominant cost is agent round trips and context, which is the user's
+> bill rather than ours. Still unmeasured at real corpus size.
+> **Remaining here: [BL-196]** (genesis custody).
 
 ---
 

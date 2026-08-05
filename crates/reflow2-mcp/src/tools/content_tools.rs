@@ -37,11 +37,12 @@ use reflow2_core::bulk::{
 };
 use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
-    AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_SCOPE_DEPTH, DesignGraph,
-    Dimension, DriftDisposition, DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions,
-    HealProposal, HealStrategy, IngestOptions, LinkArtifactOptions, LoopStatus, ObservedArtifact,
-    ObservedPath, PromptCollector, PropagateOptions, ReadinessForecast, ReadinessGate,
-    ReadinessKind, ReadinessObservation, ReconcileOptions, StoredNode, Value,
+    AgentAnswer, AgentBackend, AskedQuestion, ChangeType, CorpusDocument, CorpusOptions,
+    DEFAULT_SCOPE_DEPTH, DesignGraph, Dimension, DriftDisposition, DynoError, EpochType,
+    GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy, IngestOptions,
+    LinkArtifactOptions, LoopStatus, ObservedArtifact, ObservedPath, PromptCollector,
+    PropagateOptions, ReadinessForecast, ReadinessGate, ReadinessKind, ReadinessObservation,
+    ReconcileOptions, StoredNode, Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -237,6 +238,71 @@ impl ReflowService {
         let mut g = self.write_lock().await;
         ok_json(
             g.ingest_step(&req.input, &options, answers)
+                .map_err(dyno_err)?,
+        )
+    }
+
+    #[tool(
+        description = "Turn a WHOLE FOLDER of documents into one design, with you as the model \
+                       (cap:corpus-ingest). The corpus sibling of ingest_step, and the reason to \
+                       prefer it over looping that one: it gathers the prompts for EVERY document \
+                       into one round, so a hundred documents cost the same ~3 rounds a single \
+                       document does instead of three hundred. YOU walk the directory and read the \
+                       files — reflow2 performs no file I/O — and hand over `text` per document \
+                       plus an opaque `source` locator it stores and never parses. Drive it like \
+                       ingest_step: call with no `answers`, answer everything it returns, call \
+                       again with the SAME documents plus every answer so far, until \
+                       `status: done`. NOTHING IS WRITTEN until that final round, so an abandoned \
+                       corpus leaves no half-design behind. WHAT IT DOES THAT A LOOP CANNOT: one \
+                       epoch for the whole run rather than one per file; cross-document identity, \
+                       so the same component named in forty specs converges on ONE node; and the \
+                       ambiguous near-match band gathered across the corpus and DEDUPLICATED into \
+                       one question instead of the same question forty times (dec:ask-not-repair). \
+                       RE-RUNNING IS SAFE AND IS THE RESUME PATH: a document whose fragment_id \
+                       already exists comes back `skipped`, not `failed`, so pointing it at a \
+                       grown folder ingests only what is new. Read `failures` before you trust the \
+                       result — it names every document that could not be taken, because a run \
+                       that cannot say what it did not understand is worse than no run.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn ingest_corpus_step(
+        &self,
+        Parameters(req): Parameters<IngestCorpusStepReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let answers: Vec<AgentAnswer> = req
+            .answers
+            .into_iter()
+            .map(|a| serde_json::from_value(JsonValue::Object(a)))
+            .collect::<Result<_, _>>()
+            .map_err(|e| McpError::invalid_params(format!("invalid answer: {e}"), None))?;
+        let documents: Vec<CorpusDocument> = req
+            .documents
+            .into_iter()
+            .map(|d| CorpusDocument {
+                fragment_id: d.fragment_id,
+                title: d.title,
+                text: d.text,
+                source: d.source,
+            })
+            .collect();
+        if documents.is_empty() {
+            return Err(McpError::invalid_params(
+                "ingest_corpus_step needs at least one document — an empty corpus would report a \
+                 clean run over nothing, which is the false-green this tool exists to avoid"
+                    .to_string(),
+                None,
+            ));
+        }
+        let options = CorpusOptions {
+            epoch_id: req
+                .epoch_id
+                .unwrap_or_else(|| "epoch:corpus-ingest".to_string()),
+            provenance: req.provenance.unwrap_or_else(|| "imported".to_string()),
+            ..CorpusOptions::default()
+        };
+        let mut g = self.write_lock().await;
+        ok_json(
+            g.ingest_corpus_step(&documents, &options, answers)
                 .map_err(dyno_err)?,
         )
     }
