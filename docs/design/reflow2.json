@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1b2c2645af78724237c693b7d8ba72678199cb9063b087461238682492275b2a",
+  "content_hash": "sha256:f485e9f9c16917bf69a85983e3b9028f130d06bdcdd7230a63ae9213754a6def",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1135,6 +1135,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:5c02d9fc4c3ab022",
+      "properties": {},
+      "to_id": "cap:artifact-declares-its-own-shape"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:634fc0554d9ccfc6",
       "properties": {},
       "to_id": "cap:store"
@@ -1927,6 +1933,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:backlog-brainstorm-data-model-constraint",
+      "properties": {},
+      "to_id": "epoch:backlog-in-the-graph-brainstorm"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:baseline-eff858c52555561f",
       "properties": {},
       "to_id": "epoch:v0221"
@@ -2149,6 +2161,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:claim-cannot-precede-its-export",
+      "properties": {},
+      "to_id": "epoch:coord-moves-into-the-graph"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:claim-liveness",
       "properties": {},
       "to_id": "epoch:v0120"
@@ -2218,6 +2236,12 @@
       "from_id": "chg:context-estimation-reassessed",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:coord-board-settled",
+      "properties": {},
+      "to_id": "epoch:coord-moves-into-the-graph"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2320,6 +2344,12 @@
       "from_id": "chg:framework-registry-reassessed",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:gap-reporting-at-corpus-scale",
+      "properties": {},
+      "to_id": "epoch:ideas-stay-connected"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2437,6 +2467,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:no-idea-goes-quiet",
+      "properties": {},
+      "to_id": "epoch:ideas-stay-connected"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:nudge-fires-once",
       "properties": {},
       "to_id": "epoch:v0220"
@@ -2512,6 +2548,12 @@
       "from_id": "chg:reading-carries-options-cap",
       "properties": {},
       "to_id": "epoch:reading-carries-options"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:reads-are-the-unscheduled-half",
+      "properties": {},
+      "to_id": "epoch:reads-are-the-failing-half"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2674,6 +2716,12 @@
       "from_id": "chg:two-answers-2026-07-25",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:unbounded-reads-counted",
+      "properties": {},
+      "to_id": "epoch:reads-are-the-failing-half"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3169,6 +3217,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:backlog-in-the-graph-brainstorm:dec:idea-backlog-belongs-in-the-graph",
+      "properties": {},
+      "to_id": "epoch:backlog-in-the-graph-brainstorm"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:bl186-corpus-ingest-lexical:cap:corpus-ingest",
       "properties": {},
       "to_id": "epoch:bl186-corpus-ingest-lexical"
@@ -3214,6 +3268,12 @@
       "from_id": "snap:epoch:bl199-reattachment:art:upgrading-v0210",
       "properties": {},
       "to_id": "epoch:bl199-reattachment"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:coord-moves-into-the-graph:dec:coord-board-in-graph",
+      "properties": {},
+      "to_id": "epoch:coord-moves-into-the-graph"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3394,6 +3454,12 @@
       "from_id": "snap:epoch:reading-carries-options:req:a-question-arrives-with-a-reading",
       "properties": {},
       "to_id": "epoch:reading-carries-options"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reads-are-the-failing-half:dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
+      "properties": {},
+      "to_id": "epoch:reads-are-the-failing-half"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3673,6 +3739,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-graph-claim-cannot-be-published-before-its-pr",
+      "properties": {
+        "acted_at": "2026-08-04",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:agent-navigates-content",
       "properties": {
         "acted_at": "2026-07-31",
@@ -3898,8 +3973,26 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:gap-reporting-when-most-intent-is-unbuilt",
+      "properties": {
+        "acted_at": "2026-08-04",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:github-mcp-tandem",
       "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-backlog-belongs-in-the-graph",
+      "properties": {
+        "acted_at": "2026-08-04",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -4252,6 +4345,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
+      "properties": {
+        "acted_at": "2026-08-04",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:what-lives-where",
       "properties": {
         "acted_at": "2026-07-31",
@@ -4497,6 +4599,15 @@
       "from_id": "req:modularity-computed",
       "properties": {
         "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:no-idea-goes-quiet",
+      "properties": {
+        "acted_at": "2026-08-04",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -5792,6 +5903,15 @@
         "action": "modified"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:backlog-brainstorm-data-model-constraint",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-backlog-belongs-in-the-graph"
     },
     {
       "edge_type": "CHANGED",
@@ -7595,6 +7715,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:claim-cannot-precede-its-export",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:a-graph-claim-cannot-be-published-before-its-pr"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:claim-liveness",
       "properties": {
         "accepted_baseline": true,
@@ -7988,6 +8117,15 @@
         "action": "modified"
       },
       "to_id": "req:context-is-a-modelled-quantity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:coord-board-settled",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:coord-board-in-graph"
     },
     {
       "edge_type": "CHANGED",
@@ -8591,6 +8729,15 @@
         "action": "modified"
       },
       "to_id": "req:framework-is-chosen-not-defaulted"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:gap-reporting-at-corpus-scale",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:gap-reporting-when-most-intent-is-unbuilt"
     },
     {
       "edge_type": "CHANGED",
@@ -9323,6 +9470,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:no-idea-goes-quiet",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:no-idea-goes-quiet"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:nudge-fires-once",
       "properties": {
         "accepted_baseline": true,
@@ -9680,6 +9836,15 @@
         "action": "modified"
       },
       "to_id": "cap:gap-carries-a-reading"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reads-are-the-unscheduled-half",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one"
     },
     {
       "edge_type": "CHANGED",
@@ -10565,6 +10730,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:unbounded-reads-counted",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:v0210-rescoped",
       "properties": {
         "accepted_baseline": false,
@@ -10769,6 +10943,17 @@
         "action": "modified"
       },
       "to_id": "req:version-combination-is-an-object"
+    },
+    {
+      "edge_type": "CLAIMS",
+      "from_id": "who:ajs",
+      "properties": {
+        "claimed_at": "2026-08-04",
+        "depth": 2,
+        "note": "BL-186 — the folder driver, v0.24.0's last build row. Partial: arrival-order naming and the merge_candidate band landed in #73; the loop over a folder (one epoch, one Fragment per file) is what remains. Touches crates/reflow2-core/src/ingest.rs, the reflow2-mcp tool surface, the served skill, and docs/scope-corpus-ingest.md.",
+        "seat": "asligar-bitecool:405935:395513d2"
+      },
+      "to_id": "cap:corpus-ingest"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -17601,9 +17786,41 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:a-graph-claim-cannot-be-published-before-its-pr",
+      "properties": {},
+      "to_id": "dec:coord-board-in-graph"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:a-graph-claim-cannot-be-published-before-its-pr",
+      "properties": {},
+      "to_id": "dec:export-once-per-pr"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:central-host",
       "properties": {},
       "to_id": "rule:no-foreclosure"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-backlog-belongs-in-the-graph",
+      "properties": {
+        "note": "This open question is BOUND by the accepted rule rather than competing with it: dec:what-lives-where already says the design record should stop being prose you navigate and become a graph you query. The question here is only what that means mechanically for the backlog, and what vocabulary is missing before it can happen. Drawn deliberately — an idea node with only AUTHORED_BY is invisible to propagate_from and to the orphan detector (BL-209), which is how dec:export-once-per-pr came to be violated by the session that then re-announced it."
+      },
+      "to_id": "dec:what-lives-where"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
+      "properties": {},
+      "to_id": "dec:views-are-projections"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
+      "properties": {},
+      "to_id": "dec:what-lives-where"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -18351,6 +18568,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:coord-board-in-graph",
+      "properties": {},
+      "to_id": "snap:epoch:coord-moves-into-the-graph:dec:coord-board-in-graph"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:coverage-scope-is-declared",
       "properties": {},
       "to_id": "snap:epoch:coverage-scope-settled:dec:coverage-scope-is-declared"
@@ -18366,6 +18589,12 @@
       "from_id": "dec:external-blob-store-pressure",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:dec:external-blob-store-pressure"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-backlog-belongs-in-the-graph",
+      "properties": {},
+      "to_id": "snap:epoch:backlog-in-the-graph-brainstorm:dec:idea-backlog-belongs-in-the-graph"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -18396,6 +18625,12 @@
       "from_id": "dec:stateless-seat-handle",
       "properties": {},
       "to_id": "snap:epoch:rmcp-v3:dec:stateless-seat-handle"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
+      "properties": {},
+      "to_id": "snap:epoch:reads-are-the-failing-half:dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -41893,6 +42128,14 @@
       }
     },
     {
+      "node_id": "chg:backlog-brainstorm-data-model-constraint",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The backlog brainstorm gains the measured data-model constraint: free text is unlimited but only 52 properties are indexed, so prose in a node is grep by another name"
+      }
+    },
+    {
       "node_id": "chg:baseline-0da0e8c66a8d93bc",
       "node_type": "ChangeEvent",
       "properties": {
@@ -42326,6 +42569,14 @@
       }
     },
     {
+      "node_id": "chg:claim-cannot-precede-its-export",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The move's own supporting argument is falsified within the hour: \"visibility is unchanged\" is wrong, because a claim now rides in a file that may only be written once per PR, last"
+      }
+    },
+    {
       "node_id": "chg:claim-liveness",
       "node_type": "ChangeEvent",
       "properties": {
@@ -42427,6 +42678,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Reassess req:context-is-a-modelled-quantity: static token estimation is the weak half; measurement is the answer"
+      }
+    },
+    {
+      "node_id": "chg:coord-board-settled",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Anthony settles the claim board: the in-progress table moves into the graph, the stated blocker dissolves because his brother has only given feedback, and claim_region's first real use returns a liveness the markdown could never carry"
       }
     },
     {
@@ -42587,6 +42846,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Reassess req:framework-is-chosen-not-defaulted: terminology mapping is cosmetic and label-gated analyses are a smell"
+      }
+    },
+    {
+      "node_id": "chg:gap-reporting-at-corpus-scale",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The scale finding is recorded: unsatisfied_requirement is per-node (verified in is_aggregate), so 300 captured ideas produce 300 identical gaps — BL-145 at an order of magnitude, against a base rate the detectors never assumed"
       }
     },
     {
@@ -42766,6 +43033,14 @@
       }
     },
     {
+      "node_id": "chg:no-idea-goes-quiet",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Anthony's dev_storyflow framing becomes intent: an idea in the graph must stay loud and stay traceable to its source, and \"automatically linked\" is restated as its inverse"
+      }
+    },
+    {
       "node_id": "chg:nudge-fires-once",
       "node_type": "ChangeEvent",
       "properties": {
@@ -42875,6 +43150,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "The capability and its check take the shape and language obligations"
+      }
+    },
+    {
+      "node_id": "chg:reads-are-the-unscheduled-half",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Anthony's root question is reframed and measured: the transition is IN and OUT, the OUT half is unscheduled, and reviewed_gaps returning 130,922 characters in this very session is the evidence"
       }
     },
     {
@@ -43107,6 +43390,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Anthony answered both open questions: concurrent planning waits, documentation ships from the next release"
+      }
+    },
+    {
+      "node_id": "chg:unbounded-reads-counted",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The unverified item is closed by counting: 3 of 33 collection-returning tools let the caller bound the result and only scan_nodes can page — so it is an increment, not a bug list"
       }
     },
     {
@@ -43947,6 +44238,16 @@
       }
     },
     {
+      "node_id": "dec:a-graph-claim-cannot-be-published-before-its-pr",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS A FINDING PLUS AN OPEN QUESTION, NOT AS A PROPOSAL. Found 2026-08-04 IMMEDIATELY AFTER accepting `dec:coord-board-in-graph`, while updating AGENTS.md to match the move — by noticing that a sentence in it had silently become false. Nothing here is settled, and this does NOT reverse the move.\n\nTHE COLLISION, BETWEEN TWO RULES THAT ARE EACH CORRECT ALONE. (1) `dec:export-once-per-pr` and AGENTS.md: \"a branch may hold as many commits as you like; only one of them may touch `docs/design/reflow2.json`, and it should be the LAST\" — because PRs squash-merge, so only the final export's `prev_content_hash` survives and an intermediate export puts a hole in the lineage chain. (2) `dec:coord-board-in-graph`, accepted minutes earlier: a claim is graph state, recorded by `claim_region`, and it travels in the committed export. TOGETHER THEY SAY: A CLAIM MADE BEFORE THE WORK BECOMES VISIBLE TO ANYONE ELSE ONLY WHEN THE PR MERGES — which is after the work is finished. Claiming first is exactly what a claim is for.\n\n⭐ THIS FALSIFIES A CLAIM MADE ON THE DECIDING NODE, AND THE CORRECTION BELONGS ON THE RECORD RATHER THAN BEING QUIETLY ABSORBED. `dec:coord-board-in-graph` argued, both while open and at acceptance: \"both travel in the committed export exactly as COORD.md travels in git — so VISIBILITY IS UNCHANGED.\" That is wrong, and the asymmetry is precisely the one that matters. COORD.md could be committed and pushed AS ITS OWN COMMIT the moment work started — AGENTS.md even prescribed it (\"put the COORD claim commit, which carries no export, FIRST\"). The export cannot be, because writing it early is the thing that breaks the lineage chain. The old advice was not merely superseded; the property it depended on — that a claim costs no export — is the property the move removed.\n\nWHAT IT COSTS TODAY: NOTHING, AND THAT IS WHY THE MOVE STANDS. reflow2 has one writer. `dec:coord-board-in-graph` already records that the claims layer is \"UNPROVEN under contention\" and that the single-writer proof is all that was obtained. This is a second, sharper instance of that same limit — and it is worse than the general statement, because it is not that contention is untested but that a KNOWN MECHANISM makes pre-announcement impossible.\n\nOPTIONS, NONE CHOSEN. (a) ACCEPT IT AND SAY SO — with one writer a claim is a note to your future self, and the export at PR time is soon enough. Cheapest and honest; the counter is that it silently retires \"claim before you work\", which is the discipline the board existed to enforce. (b) LET A CLAIM COMMIT EXPORT, AND EXEMPT IT FROM THE CHAIN — the export gate would need to distinguish a claims-only delta from a design delta. Counter: the gate exists because silent chain breaks happened repeatedly ([BL-107], six commits in a row; [BL-156]), and an exemption is a hole in exactly the check that catches them. (c) CLAIMS LEAVE THE EXPORT — a separate small committed file, written per claim, merged by union like COORD.md was. Counter: that is COORD.md with extra steps, and re-splits the fact into two places, which is the failure the move existed to end. (d) PUBLISH CLAIMS OUT OF BAND — a hosted surface or live tier, which `dec:central-host` and `dec:live-tier` both already ask about. Counter: both are open, both are much larger than this, and `dec:multi-writer-architecture` settled on the repo file with no hosted service.\n\nWHAT MUST NOT BE RE-DERIVED: that COORD.md's `merge=union` in `.gitattributes` is what made the old claim commit cheap and conflict-free, and that `docs/design/reflow2.json` uses the `merge=reflow2` three-way driver instead — the two files were never merging the same way, and any option here inherits that difference.\n\nNOT CHECKED: whether `release_claim` has the same problem in reverse — a claim released mid-branch is also invisible until the PR merges, which would mean a finished lane still reads as held by exactly the mechanism that was supposed to fix stale claims. Liveness would cover the case where the session ended, but not the case where the same session released and kept working.",
+        "name": "OPEN — a claim in the graph cannot be announced before the work, because the export it rides in may only be written once per PR",
+        "rationale": "Filed the moment it was found rather than after, because it was found by the cheapest possible route — updating a document to match a decision, and noticing that one sentence in it had become false — and that route only exists while the change is being made. An hour later the sentence would have read as merely stale.\n\nRecorded as its own node rather than as an amendment to `dec:coord-board-in-graph` because that decision is ACCEPTED and this does not reopen it: the move was right, one of its supporting arguments was wrong, and those are different facts. Folding a falsification into an accepted node would either weaken a decision that should stand or hide the correction — `dec:reopen-supersedes` sets the rule that a settled choice is not un-accepted, and this is not a re-opening.\n\nThe unchecked item about `release_claim` is named so its absence reads as a hole rather than as completed analysis — and it is the more alarming half, since it would undo the stale-claim fix that was the whole justification for the move.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:advisory-concurrency",
       "node_type": "Decision",
       "properties": {
@@ -44170,10 +44471,10 @@
       "node_id": "dec:coord-board-in-graph",
       "node_type": "Decision",
       "properties": {
-        "decision": "UNDECIDED. Anthony, 2026-07-25: COORD.md was invented so he and his brother could coordinate; the claims layer shipped the same day; and reflow2 is developed by using reflow2 on itself, so the question is whether the markdown board should now be a graph read. WHAT WOULD ACTUALLY CHANGE, because it is less than it sounds: `claim_region` records a Contributor holding a seed node to a depth, `claim_report` computes the region and the overlaps, and both travel in the committed export exactly as COORD.md travels in git — so visibility is unchanged, and the gain is that the region is COMPUTED from the design (it follows the graph as the design moves) rather than being a hand-typed list of file paths that goes stale silently. WHAT WOULD BE LOST, and it is the part worth deciding rather than assuming: COORD.md is readable by a human with no reflow2 and no binary, it shows up as a diff in a pull request, and it holds the merge-conflict doctrine for the shared records — none of which a graph read does. The sane split, if this is taken: claims in the graph for WHO HAS WHAT, COORD.md retained for the conventions and the conflict doctrine, and the in-progress table deleted rather than maintained in two places, since two places for the same fact is the failure the backlog-in-the-graph move exists to end.",
-        "name": "OPEN — does reflow2's own claim board move from COORD.md into the graph?",
-        "rationale": "Raised as a dogfooding question, which is how most of this project's real findings have arrived — and it is a genuinely good test of the claims layer, because reflow2's own two-person collaboration is the only live multi-writer case that exists. Held proposed because a claim board is a coordination mechanism between two people, and switching it unilaterally would mean one of them silently changing where the other must look; that is Anthony's brother's call as much as his. The prerequisite is honest: nobody has used claim_region for real yet, so the first move is to run it on one real piece of work and see whether claim_report says something a person would have said.",
-        "status": "proposed"
+        "decision": "DECIDED by Anthony 2026-08-04, taking the split this node had already written down while it was open: CLAIMS IN THE GRAPH for who has what, COORD.md RETAINED for the conventions and the merge-conflict doctrine, and the IN-PROGRESS TABLE DELETED rather than maintained in two places — because two places for the same fact is the failure the whole documents-into-the-graph move exists to end.\n\nTHE STATED BLOCKER DISSOLVED RATHER THAN BEING OVERRULED, which is worth recording precisely because this node held itself open on it since 2026-07-25. The rationale read: \"a claim board is a coordination mechanism between two people, and switching it unilaterally would mean one of them silently changing where the other must look; that is Anthony's brother's call as much as his.\" Anthony, 2026-08-04: \"my brother hasn't actively developed any of this apart from offering feedback.\" So there is no second writer to strand — the premise was that two people coordinate through this board, and only one of them has ever written to it. The caution was correct when written and the fact it was resting on turned out not to hold. THE CONSEQUENCE IS NARROWER THAN THE DECISION LOOKS: reflow2 still has no live multi-writer case, so the claims layer remains UNPROVEN under contention. This move proves it under a single writer only, and that limit should not be quietly forgotten the first time a second person appears.\n\n⭐ THE PREREQUISITE WAS RUN, AND IT PASSED ON A CAPABILITY THE MARKDOWN STRUCTURALLY CANNOT HAVE. This node named its own gate — \"nobody has used claim_region for real yet, so the first move is to run it on one real piece of work and see whether claim_report says something a person would have said.\" Run 2026-08-04 on the live work: `claim_region` with seed `cap:corpus-ingest`, depth 2, contributor `who:ajs`, carrying BL-186's note. `claim_report` returned the claim, zero overlaps, zero stale — and `liveness: \"live\"`, COMPUTED from the claiming seat's host and pid rather than stored. Its own advisory states the payoff: \"`gone` means that session has exited and the claim is a ghost (excluded from overlaps), `unknown` means it was made on another machine or before seats were recorded — unknown is never read as free, because taking work somebody is actively doing is the expensive mistake.\"\n\nTHAT IS THE DIRECT FIX FOR THE FAILURE THAT PROMPTED THIS, and it is not the reason first given. This node argued the gain was that a computed region FOLLOWS THE DESIGN instead of going stale as a hand-typed file list. True, but secondary. The measured failure is different: on 2026-08-04 COORD.md was carrying BL-186 as in-progress after #73 had landed it, and the file itself contains a note recording that this was the THIRD STALE CLAIM FOUND IN ONE SWEEP. A markdown line cannot know its author walked away — a claim is only ever retired by someone remembering to retire it, which is exactly the class of thing people forget. Liveness computed from the session means an abandoned claim reads `gone` on its own, with nobody remembering anything. The markdown board was not merely going stale; IT HAD NO MECHANISM BY WHICH IT COULD EVER NOT.\n\nWHAT IS KNOWINGLY GIVEN UP, restated at the point of deciding rather than left in the open-question text where it would read as unresolved: COORD.md's in-progress table was readable by a human with no reflow2 and no binary, and it appeared as a diff in every pull request. A graph claim does neither — it travels in the committed export, so it is visible, but reading it needs the tool. That is accepted deliberately. The conventions, the handles table and the merge-conflict doctrine STAY in COORD.md for exactly that reason: they are addressed to someone who may not have reflow2 running, and they are prose about practice rather than facts about state.\n\nTHE STANDING RULE THIS SETS, and it is the general form: A DOCUMENT SHOULD HOLD WHAT IS ADDRESSED TO SOMEONE WITHOUT THE TOOL, AND THE GRAPH SHOULD HOLD WHAT THE TOOL CAN COMPUTE. COORD.md splits cleanly along that line — practice stays, state goes. It is the same test as `dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one` (\"can you delete this document and regenerate it from the graph?\"), and the in-progress table is the first thing in this repo to pass it by being deleted rather than by already having been derived.",
+        "name": "DECIDED — the claim board moves into the graph; COORD.md keeps the conventions and the conflict doctrine",
+        "rationale": "Raised as a dogfooding question, which is how most of this project's real findings have arrived — and it was a genuinely good test of the claims layer.\n\nMOVED TO ACCEPTED 2026-08-04 on Anthony's explicit word, after its own stated prerequisite was run for the first time. Two things are recorded here that a later reader would otherwise have to reconstruct. FIRST, the decision did not overrule its objection — the objection's premise (two people coordinating) turned out to be false, and saying so is different from deciding against it, because if a second writer ever appears the caution becomes live again rather than having been settled. SECOND, the reason for the move is not the reason originally given: computed-region-follows-the-design was the argument, and computed LIVENESS turned out to be what actually fixes the observed failure. The original argument was not wrong, it was aimed at the wrong half — worth keeping, because it is the second time in this project a fork resolved on something outside the recorded options (see the method finding on dec:agent-navigates-content).\n\nThe unproven-under-contention limit is stated on the node rather than left implicit: a single-writer proof is what was obtained, and the claims layer's real case is still ahead of it.",
+        "status": "accepted"
       }
     },
     {
@@ -44357,6 +44658,16 @@
       }
     },
     {
+      "node_id": "dec:gap-reporting-when-most-intent-is-unbuilt",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS A FINDING PLUS AN OPEN QUESTION, NOT AS A PROPOSAL. Raised 2026-08-04 while answering Anthony's dev_storyflow question (req:no-idea-goes-quiet). Nothing here is settled.\n\nTHE FINDING, VERIFIED IN CODE RATHER THAN SUPPOSED. `unsatisfied_requirement` fires per Requirement with no incoming SATISFIES, and it is NOT an aggregate gap — checked in `GapSource::is_aggregate()` (crates/reflow2-core/src/detect.rs), where `UnvalidatedCapability` is the sole `true` arm and `UnsatisfiedRequirement` is listed exhaustively among the `false` ones, with the comment that per-node keying is deliberate so a change to the named set expires the judgement. CONSEQUENCE: ingesting a corpus of 300 ideas that nothing yet implements produces 300 gaps that all say the same thing, burying every distinct finding beneath them.\n\nTHIS IS [BL-145] AT AN ORDER OF MAGNITUDE. That row reads: \"One detector produced 27 of 49 gaps saying the same thing, and buried every distinct finding below the fold\" — found 2026-08-01 by an /adopt pass over music_graph. It was filed at 27 against 49. A captured corpus is where it stops being a presentation annoyance: at 300 it is not noise, it is a wall, and it lands on exactly the user whose whole reason for ingesting was to stop losing track of things.\n\n⭐ WHY THIS IS NOT SIMPLY BL-145 RESTATED, AND IT IS THE PART WORTH KEEPING. Every existing detector was designed against a design that is MOSTLY BUILT, where an unsatisfied requirement is an exception worth naming one at a time. A captured corpus inverts the base rate: unbuilt is the NORMAL state, unbuilt is CORRECT, and req:accreted-intent-becomes-a-design already says so explicitly — \"every capability is `planned`, every requirement `proposed`, and the as-built half of the loop has no subject — which is honest and must not read as catastrophic.\" So the defect is not that the detector is chatty. It is that the detector's severity model encodes an assumption about the design's phase that the corpus case falsifies. The same suspicion should be carried to `unrealized_capability`, `unallocated_capability`, `design_without_build` and `build_without_verification`, none of which were checked here.\n\nOPTIONS, NONE CHOSEN. (a) MAKE IT AGGREGATE when the count crosses a bar — one gap saying \"300 requirements are unsatisfied\", drilling down on request. Cheapest, and `is_aggregate` is the existing seam. Counter, and the code comment states it directly: aggregate keying means a standing judgement does not expire when the set changes, so a requirement added later is silently covered by a judgement made before it existed — which is the right trade for a rollup and the wrong one for a finding that names nodes. (b) BAND BY PHASE — read the project's mode or the design's position on the maturity trajectory, and let a design with nothing built report this as a reading rather than as gaps. Fits maturity_report's existing frontier computation and dec:orientation-is-computed-not-written. Counter: it makes gap severity depend on a computed phase, and reflow2 has been careful that \"where this design SHOULD be is deliberately not stated\". (c) SCOPE IT — detect_gaps already takes a `scope` seed, so the corpus user asks per region rather than globally. Counter: it requires the user to already know which region to ask about, which is precisely what someone who just ingested 1,124 documents does not know. (d) DO NOTHING TO THE DETECTOR AND FIX THE PRESENTATION — group identical gap_sources in the report and lead with the distinct ones. Counter: `detect_gaps` is consumed by agents and by CI, not only by the report, so a presentation-only fix leaves both other consumers buried.\n\nWHAT THIS REPRIORITISES, offered as an observation and not as a plan. `epoch:v0240-planned` sequences the corpus increment as ingest-then-know-where-you-stopped. This finding says a fifth thing sits between them: a corpus that ingests correctly and then buries its own findings has not delivered req:no-idea-goes-quiet, whose whole content is that an unbuilt idea must stay LOUD. Loud and unreadable are not the same state, and 300 identical gaps is the second one. Whether that makes it a v0.24.0 obligation or a v0.25.0 one is Anthony's call — [BL-205] and [BL-194], both already scheduled for v0.25.0 as \"the loop tells the truth about what it is owed\", are the same family and may want to travel together.\n\nNOT VERIFIED HERE, and it bears on which option is right: whether `acknowledge_gaps` (the bulk form) already makes 300 gaps tractable by letting one reason dispose of many at once. If it does, the wall is lower than stated and (d) rises. Nobody checked.",
+        "name": "OPEN — how should gap reporting behave when most requirements are legitimately unbuilt, as a captured corpus makes normal?",
+        "rationale": "Recorded now rather than as a backlog row because it is a defect against a shipped capability with a real fork behind it, and this session has just spent an hour establishing that the backlog is where such things go to be re-derived. The measurement (is_aggregate checked in source, BL-145's 27-of-49 as the prior instance) is written down so the next session argues from the code rather than from the impression that gap output is noisy. Kept separate from req:no-idea-goes-quiet because that node states what the user needs and this one asks how the machine should behave — one node holding both could only ever be half-answered. The unchecked item (bulk acknowledge) is named explicitly so its absence is visible as a hole rather than passing as a completed analysis.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:github-mcp-tandem",
       "node_type": "Decision",
       "properties": {
@@ -44374,6 +44685,16 @@
         "name": "The graph handle is an accepted single point of failure",
         "rationale": "The architecture is explicit (AGENTS.md): DesignGraph is 'the single handle everything else hangs off' — one schema-validated CRUD surface so every coherence-loop module speaks to one store one way. Removing it strands schema, search and vocabulary (each with its file) plus the export chain, which is the BL-69 detector telling the truth about the spine. Redundancy is incoherent here twice over: these are modules compiled into one binary (they cannot fail independently of cmp:graph at run time — the same reasoning as the F6 library filter, which cannot see cmp:graph only because it provides no Interface node), and a second graph handle would mean two write paths to one store, exactly the incoherence the single handle exists to prevent. Accepted 2026-07-21 while dispositioning BL-69's corrected findings; sibling of dec:service-spof-accepted.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:idea-backlog-belongs-in-the-graph",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-04: \"It's weak at holding what we learned about the tool while using it, because that lands in markdown by convention, and markdown doesn't get queried — it gets grepped, by someone who already knows what they're looking for. this needs to be solved. I wanted to stop using the BL, but it keeps growing as you say - instead, I wanted everything in the graph.\" His preference is stated and is NOT recorded as settled: what \"everything in the graph\" means mechanically is the open part.\n\nTHE MEASUREMENT, taken 2026-08-04. `docs/backlog.md` is 3,350 lines / 581,031 bytes across 132 rows. Of the 8 rows filed in one session (BL-205..212), SIX are referenced by ZERO graph nodes. The file is not a registered Artifact, so `coverage_report` does not count it and no checksum tracks it. FOUR things were re-derived in that same session that were already written down somewhere: BL-205 (third rediscovery), `dec:export-once-per-pr` (accepted, invisible, violated and then re-announced as new), BL-70's alternatives family (nearly re-proposed), and dev_storyflow's hand-made doc-intent scope table (re-derived worse from filenames).\n\nTHE FRAME IS ALREADY ACCEPTED AND THE BACKLOG VIOLATES IT. `dec:what-lives-where` states the rule: \"the design record should stop being PROSE YOU NAVIGATE and become A GRAPH YOU QUERY, with the prose kept as provenance hanging off the nodes it produced.\" It carries a falsifiable test — \"IF REFLOW2 WORKS, STORYFLOW WOULD NOT HAVE NEEDED dev_storyflow… If a user still ends up splitting their repo to stay sane, reflow2 has not delivered what this decision claims.\" THE SAME TEST GENERALISES AND REFLOW2 CURRENTLY FAILS IT ON ITSELF: if reflow2 works, reflow2 would not need a 581 KB markdown backlog. It is also the exact failure the dev_storyflow api-boss measured in that fleet's MEMORY.md — \"an index that must be read IN FULL to be useful has a hard ceiling\", 20 KB against a 17 KB limit with everything past the line silently invisible. The backlog is 29 times that size.\n\nWHY IT HAS RESISTED THE OBVIOUS FIX — A BACKLOG ROW IS NOT ONE THING. Reading the eight rows from one session, they are at least four: (i) DEFECTS AGAINST SHIPPED CAPABILITIES (BL-205 loop_status too large, BL-206 the gate's truncated sweep, BL-208 the inert CI guard, BL-209 the blind orphan detector); (ii) UNBUILT WORK (BL-186 the folder driver, BL-211 genesis-from-a-folder); (iii) OPEN DESIGN QUESTIONS (BL-207's fix-shape fork); (iv) DISCOVERED LIMITS (BL-212, chronology cannot be recovered from a folder). Three of those four already have a home: unbuilt work is a Capability at `planned` behind a Requirement, an open question is a `proposed` Decision — which is what this very node is — and a discovered limit is a Constraint or DesignRule.\n\n⭐ THE ONE THAT HAS NO HOME, AND IT IS THE LARGEST CATEGORY: a defect found by USING the tool. reflow2 has no way to say \"this capability is built, VERIFIED, and does not do what it claims.\" `Verification` answers whether a check passes — and every one of BL-205/206/208/209 sat under a passing check. `DriftEvent` answers whether the code moved away from the design — and in all four cases the code and the design AGREED, and both were wrong. HEAL's issues are computed from graph shape, not recorded observations, so they vanish between runs. That absence is why these rows land in markdown: there is nothing to write them to.\n\nOPTIONS, none chosen. (a) ROUTE EACH ROW TO THE TYPE IT ALREADY IS and add no vocabulary. Cheapest, and it works for three categories of four. Counter: for the defect category it loses the finding — \"this is broken, here is the measurement, here is how it was found\" becomes \"here is a need\", which erases the evidence and reads as intent rather than as a bug. (b) A `Finding`/`Defect` NODE TYPE carrying claim, evidence, when observed, and what it bears on. Counter, and it is strong: this project has proposed a node type and WITHDRAWN it after measuring TWICE in one week (`Attestation` → `TemporalFact`, `Hazard` → `DesignRule` + `CONSTRAINS`), so the prior against new vocabulary is heavy — and `TemporalFact` (\"a time-bounded assertion true only between two epochs\") may already be the shape, since a defect is exactly \"this was true of the build from epoch X until the fix\". (c) EVERYTHING BECOMES A PROPOSED DECISION. Counter: 132 proposed Decisions would swamp `where-am-i` and the decision list, and most rows are not forks between real alternatives. (d) KEEP THE MARKDOWN BUT DERIVE IT FROM THE GRAPH rather than maintaining it by hand. In-house precedent exists and is unused for this: `dec:views-are-projections` (\"a view is a projection of the graph; renderer fill-ins are defects\") and `tools/render_views.py` already render DoDAF-flavoured views into docs/viewpoints.md. The backlog is simply not one of them. Counter: this solves RETRIEVAL and not CAPTURE — it only helps once the content is in the graph, so it composes with (a)/(b) rather than competing. (e) DO NOTHING AND ACCEPT THE COST, recorded so it is a choice rather than a default: the backlog is readable by a human today, and the re-derivation cost, while real, has been paid without anyone stopping work.\n\n--- ADDED 2026-08-04, ANTHONY ASKED WHAT A NODE AND AN EDGE CAN ACTUALLY HOLD. THE ANSWER IS THE CONSTRAINT THAT SHAPES EVERY OPTION ABOVE, AND IT IS MEASURED. ---\n\nWHAT A NODE CAN HOLD. The schema's whole type system is `string` (170 declarations), `enum` (89), `float` (34), `bool` (10), `int` (7). There is NO dedicated text type and NO `max_length` anywhere in any schema file — `string` IS the narrative field and it is unbounded in practice: the `decision` property of this very node runs to several thousand characters without complaint. Every type carries at least one narrative-shaped field (`Decision.decision` + `.rationale`, `Requirement.statement`, `Capability.description`, `Component.purpose`), and Decision requires only `name` and `decision`. AND THE SCHEMA IS ADDITIVE: dynograph-core's own test is named `extra_properties_allowed` — \"Extra properties should be allowed (schema is additive)\" — so a property the schema never declared is stored rather than refused. It validates the TYPES of declared properties and enforces the required ones; anything else passes through.\n\nWHAT AN EDGE CAN HOLD. More than assumed: 44 of the 60 edge types carry properties, across 46 distinct property names, and several are free text — `note`, `evidence`, `rationale`, `diff_summary`. SIXTEEN CARRY NOTHING, and they are all bookkeeping or temporal: AT_EPOCH, HAS_SNAPSHOT, VALID_FROM, VALID_TO, ABOUT_ENTITY, OCCURS_DURING, PERFORMED_IN, and — worth noting against [BL-212] — PRECEDES. The edge that would say \"this document came before that one\" can carry no evidence for the claim.\n\n⭐ THE STING, AND IT IS WHY THIS BELONGS ON THIS NODE RATHER THAN AS TRIVIA: ONLY 52 PROPERTIES IN THE ENTIRE SCHEMA ARE `fulltext: true`, and those are the only ones `search_design` indexes. The distribution is name 20 · description 12 · statement 5 · summary 3, then singletons: rationale, decision, purpose, question, evidence, intent, effects, design_intent, criteria, context_setter, answer, title. So `Decision.decision` IS indexed and — measured — `Decision.rationale` is NOT. Every \"why\" written into a rationale field is stored and unsearchable. The same is true of any extra property invented under the additive rule: stored, not indexed, not returned by `describe_schema`, read by no report. That is this project's recurring declared-and-read-by-nothing shape one rung worse, because it is UNDECLARED and read by nothing.\n\nTHE CONSEQUENCE FOR EVERY OPTION ABOVE: UNLIMITED PROSE IN A NODE IS GREP BY ANOTHER NAME. What makes the graph queryable rather than navigable is the `fulltext:` flag, the typed properties and the EDGES — not the narrative. Moving the backlog into nodes therefore helps only to the extent a row becomes STRUCTURE: which capability the defect bears on (an edge), what was measured (a typed property), whether it is still true (a status or a temporal bound), with the prose hanging off that as explanation rather than as the record. A row moved in as one long `description` rebuilds `backlog.md` inside the graph with worse ergonomics and no gain — and that failure would be invisible, because it would look like progress.\n\nAND IT PUTS A NUMBER ON THE DEPENDENCY WITH `dec:idea-embeddings-adoption`: with 52 lexically-indexed fields and no vector half, \"query the graph\" today means ranked keyword search over names, descriptions and statements. Better than grep — cross-node, ranked, no filename needed — but the same KIND of retrieval. The ceiling on \"an agent can work from the graph alone\" is set by that open question, so the two ideas should be weighed together rather than separately.\n\nWHAT MUST NOT BE RE-DERIVED WHEN THIS IS PICKED UP: `dec:what-lives-where` (the accepted rule and its falsifiable test), `dec:views-are-projections` plus `tools/render_views.py` (the rendering half already exists), [BL-198] (a serialized default is indistinguishable from a choice — the same \"what does the graph actually record\" family), and [BL-209] (22 Decisions invisible because `AUTHORED_BY` counts as attachment — a graph-native backlog would land straight into that blind spot and must not).",
+        "name": "OPEN — should the backlog stop being a 581 KB markdown file and become graph nodes, and what is missing before it can?",
+        "rationale": "Captured under the brainstorm skill at Anthony's request. The load-bearing content is the taxonomy and the single gap it exposes: three of the four kinds of backlog row already have a node type, and the fourth — a defect in a capability that is built, verified and wrong — has none, which is why those rows have no choice but to be prose. Recording the measurement (581 KB, 6 of 8 rows with zero graph representation, four re-derivations in one session) so the next session argues from numbers rather than from the impression that the file is getting long. Extended 2026-08-04 with the data-model constraint Anthony asked for — free text is unbounded and the schema is additive, but only 52 properties are indexed and `rationale` is not one of them, so the answer turns on how much of a row becomes structure rather than prose. Note the irony worth keeping: this rationale is itself unsearchable.",
+        "status": "proposed"
       }
     },
     {
@@ -44995,6 +45316,16 @@
         "name": "The epoch chain is backfilled from shipped releases only — real tags, or nothing",
         "rationale": "User decided 2026-07-24 among three options. THE REJECTED ALTERNATIVES: (a) forward-only — anchor from today and leave the past alone. Rejected because all 34 existing decisions are the ones actually worth re-opening; a fork layer that can only fork decisions made after it was built is a fork layer with nothing to fork. (b) full reconstruction — invent an epoch per work session across the whole history and synthesize the missing snapshots. Rejected because most of those boundaries are guesses, and a fabricated epoch is worse than an absent one: it looks like evidence. Release tags are the natural resolution because they are the only points in this project's history that are independently attested (a tag, a date, a published binary, a committed export), and because \"the design as of the release that shipped it\" is the question a fork actually asks. The cost is deliberately accepted: the 9 founding decisions anchor to v0.4.0, the earliest tag carrying an export, which is their earliest EVIDENCE rather than their origin — recorded as such in that epoch's description instead of being silently presented as the date they were made. FOUND WHILE DOING THIS: reflow2's own temporal axis was nearly unused — zero Snapshots, 8 of 42 ChangeEvents pinned, no Decision anchored at all, the chain stopped four days back — because add_change_event (cheap, epoch-free) had been used throughout where record_change (pins and snapshots) was meant. The fork layer's foundation was missing, not merely its ref layer.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS A REFRAME PLUS A MEASUREMENT, NOT AS A PROPOSAL. Anthony, 2026-08-04, stating the root question that unifies the dev_storyflow corpus and the reflow2-dogfooding threads: \"how do we transition documents to graph entities? whether that is a huge corpus of documents in dev_storyflow or getting away from using documents in reflow2, it is how do we make decisions based on graph content, not documents.\" Nothing here is settled.\n\nTHE SPLIT. (IN) documents become graph entities — ingest_step, provenance Fragments, the content store, cross-document convergence. Partly built, and every remaining piece is scheduled across epoch:v0240-planned..v0280-planned. (OUT) a person or agent DECIDES from graph content instead of from a document. Almost nothing is scheduled. The whole increment plan is capture, detection, seams and write-surface.\n\n⭐ THE MEASUREMENT, AND ALL OF IT IS FIRST-HAND FROM ONE SESSION ON 2026-08-04 RATHER THAN RECALLED. `reviewed_gaps` returned 130,922 CHARACTERS and could not be read at all — it was written to a file and queried with `jq`. That is the tool answering \"what have we already decided to accept\", which is a decision-making read, and it was unusable AS a read. It joins: `loop_status` at 72,886 characters until [BL-205] fixed it the day before, and it is the call the SessionStart hook and the server instructions both call \"the one cheap call\"; `describe_schema` on ONE node type at ~30 KB ([BL-142]); and `scan_nodes` on 241 Decisions, where the where-am-i skill's own guidance forced reading names only and confessing that exactly one had been read in full. Add the standing limit: 52 properties are `fulltext: true` and `Decision.rationale` is not one of them.\n\nTHEY ARE ALL ONE DEFECT: A READ THAT RETURNS EVERYTHING IT KNOWS INSTEAD OF WHAT WAS ASKED. The graph holds the content correctly. It cannot serve it back at the size it now holds. That is neither a vocabulary problem nor an ingest problem, which is why every framing so far has missed it — `dec:idea-backlog-belongs-in-the-graph` reasoned about what a node can HOLD, and the binding constraint is what a read can RETURN.\n\nTHE CONSEQUENCE THAT SHOULD NOT BE SOFTENED: TODAY A DOCUMENT BEATS THE GRAPH FOR MAKING A DECISION, AND IT IS A FAIR FIGHT THE GRAPH LOSES. A document can be skimmed, searched with ctrl-F, and read end to end. The graph offers 130 KB or a list of names. Reaching for the markdown is therefore RATIONAL BEHAVIOUR RESPONDING TO A REAL DIFFERENCE, not a bad habit to be disciplined out of, and no improvement to capture changes it.\n\nTHE SHAPE OF AN ANSWER, offered because the in-house precedent is already built and shipped rather than as advocacy: the transition is not documents → graph, it is DOCUMENTS → GRAPH → DERIVED DOCUMENTS. `cap:changelog-view` (\"a changelog is a derivable view of the graph's own delta\") shipped in v0.20.0 and CHANGELOG.md is generated today; `dec:views-are-projections` is accepted; `tools/render_views.py` is 44 KB of renderer producing docs/viewpoints.md and has existed since 2026-07-19. The renderer, the doctrine and the proof all exist — the backlog simply is not one of its views. This also explains why option (d) on `dec:idea-backlog-belongs-in-the-graph` kept losing: it was judged as a RIVAL to the capture options when it is the OUT half of the same answer, and that node already half-saw it (\"solves RETRIEVAL and not CAPTURE — it composes with (a)/(b) rather than competing\").\n\n⭐ THE TEST THIS YIELDS, AND IT IS ANTHONY'S OWN DELETION INSTINCT MADE SAFE. He asked: \"should I delete the documents and force us to use the reflow2 graph?\" Deletion is the right TEST and the wrong COMMITMENT. The test is: CAN YOU DELETE THIS DOCUMENT AND REGENERATE IT FROM THE GRAPH? Yes → the graph is the source and the document was a view. No → the document is still the source, and WHAT CANNOT BE REGENERATED IS PRECISELY WHAT THE GRAPH IS MISSING. Run it per document, never on the repo at once, and regenerate BEFORE deleting so nothing is ever at risk. Where each stands today, assessed 2026-08-04: CHANGELOG.md PASSES (already derived); docs/viewpoints.md PASSES; COORD.md's in-progress table passes the day `claim_region` is used for real, because the computation exists and is served (`dec:coord-board-in-graph`); docs/backlog.md FAILS, and the rows that cannot regenerate are the exact statement of what vocabulary is absent; AGENTS.md FAILS PERMANENTLY AND CORRECTLY, because an agent reads it before it knows reflow2 exists. That last row is why this is not a march toward zero documents — it is a march toward zero documents that are SOURCES, and the test says which is which instead of leaving it to taste.\n\nFOR A CORPUS THE TEST POINTS THE OTHER WAY. Source documents cannot be regenerated and must not be — `req:sources-are-kept-not-just-parsed` says so. The test applies instead to the READING: after ingest, can \"what did I want to build, and what of it exists\" be answered without opening a document? A no means the ingest landed prose rather than structure, which is exactly what the 52-fulltext-properties limit predicts for rows imported as long descriptions.\n\nWHAT IS NOT DECIDED HERE. Whether the OUT half is a v0.24.0 obligation, its own increment, or a discipline applied to every read as it is touched. Which reads to fix first, and by what rule — `reviewed_gaps` is the loudest but `scan_nodes` on a mature type may be the most consequential. Whether \"answer-shaped rather than type-shaped\" needs new tools or bounded forms of the existing ones. And whether the backlog renderer is a `render_views.py` view, a served tool, or neither.\n\n--- COUNTED 2026-08-04, SAME SESSION. The item left unverified above is now closed, and it answers the bug-list-or-increment question against the cheaper reading. ---\n\n⭐ OF 33 COLLECTION-RETURNING READ TOOLS ON THE SERVED SURFACE, EXACTLY THREE LET THE CALLER BOUND THE RESULT, AND ONLY ONE CAN PAGE. Counted over `crates/reflow2-mcp/src/tools/*.rs` (144 tool functions across 12 modules). The 33 are: alternatives_for, budget_report, changelog_view, claim_report, confirmation_ledger, content_manifest, coverage_report, describe_schema, detect_defects, detect_gaps, dimension_drifts, evidence_report, export_graph, export_surface, find_tools, flow_report, granularity_report, graph_report, graph_report_markdown, hierarchy_issues, ility_report, loop_status, maturity_report, open_questions, readiness_report, recall_resolutions, release_report, reviewed_defects, reviewed_gaps, scan_nodes, seam_report, search_design, surprising_connections. The three bounded: `scan_nodes` (limit + offset + next_offset + capped_by — the only real paging), `search_design` (limit, no offset), `find_tools` (limit with a default). The only other `limit` in the tool surface is `Constraint.limit`, a domain property, not a bound.\n\nSO IT IS AN INCREMENT, NOT A BUG LIST — the guess of \"four\" was low by an order of magnitude. TWO HONEST QUALIFIERS THAT KEEP THE NUMBER FROM BEING OVERSTATED. (i) Not all 30 are broken today: several bound themselves internally rather than by parameter — `loop_status` became a digest under [BL-205], and `graph_report_markdown` is a summary by construction. The claim is that the CALLER cannot bound them, not that all thirty are unreadable now. (ii) Because none of them share a paging mechanism, each fix is bespoke. That is the real cost, and it is the argument for treating this as one increment with a common shape rather than as thirty separate rows — which is exactly how [BL-205] was filed and fixed, alone, one tool at a time, three days ago.\n\nTHE SHAPE THIS SUGGESTS, not chosen: `scan_nodes` already solved this problem completely — `total` against `returned`, `omitted`, `next_offset`, `capped_by`, and a payload budget so a cap is never silent but never a surprise. It is an in-house pattern, tested, and adopted by exactly one tool. Generalising it is a smaller design question than inventing one.",
+        "name": "OPEN — \"documents to graph entities\" is TWO problems, and the failing one is reading the graph back, not getting content into it",
+        "rationale": "Recorded because the measurement is perishable in the exact way this project keeps rediscovering: \"reviewed_gaps returned 130,922 characters\" becomes \"reads felt big once\" within a session or two, and then the next reader re-derives it or, worse, does not. The numbers are first-hand from a single sitting and are written down so the next session argues from them.\n\nKept as its own node rather than appended to `dec:idea-backlog-belongs-in-the-graph` because it CONTRADICTS that node's framing rather than extending it. That node asks what a node and an edge can hold and concludes the answer turns on how much of a row becomes structure; this one says the binding constraint is downstream of that entirely — a perfectly structured graph nobody can read back is still a graph nobody decides from. Folding the correction into the node it corrects would hide it.\n\nDeliberately does NOT register alternatives, so this stays a question rather than becoming a fork the loop asks Anthony to choose between.\n\nAMENDED the same session: the item this node named as unchecked was checked, and the answer (3 of 33, one pager) moved it from a bug list to an increment. Recorded as an amendment with the prior state snapshotted rather than as a fresh node, because the unchecked and checked forms are the same claim at two confidence levels — and the fact that naming the hole is what got it filled within the hour is worth the record.",
+        "status": "proposed"
       }
     },
     {
@@ -46358,6 +46689,16 @@
       }
     },
     {
+      "node_id": "epoch:backlog-in-the-graph-brainstorm",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The backlog question gets the data-model constraint that shapes every answer to it (2026-08-04)",
+        "sequence": 271,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:bl186-corpus-ingest-lexical",
       "node_type": "DesignEpoch",
       "properties": {
@@ -46409,6 +46750,16 @@
       }
     },
     {
+      "node_id": "epoch:coord-moves-into-the-graph",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "The claim board moves into the graph on Anthony's word, after claim_region's first real use (2026-08-04)",
+        "sequence": 274,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:coverage-scope-settled",
       "node_type": "DesignEpoch",
       "properties": {
@@ -46455,6 +46806,16 @@
         "epoch_type": "baseline",
         "name": "Genesis",
         "sequence": 0,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:ideas-stay-connected",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "An idea captured from a corpus must not go quiet again — Anthony's dev_storyflow framing, and the scale finding it exposes (2026-08-04)",
+        "sequence": 272,
         "status": "arrived"
       }
     },
@@ -46525,6 +46886,16 @@
         "epoch_type": "revision",
         "name": "A reading arrives as selectable options, recommendation first, in the user's own language",
         "sequence": 242,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:reads-are-the-failing-half",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The root question is reframed: transitioning documents to the graph is two halves, and the unscheduled half is reading it back (2026-08-04)",
+        "sequence": 273,
         "status": "arrived"
       }
     },
@@ -48849,6 +49220,18 @@
       }
     },
     {
+      "node_id": "question:5c02d9fc4c3ab022",
+      "node_type": "Question",
+      "properties": {
+        "asked_at": "2026-08-04",
+        "context_setter": "Nothing asked for capability “An artifact declares what it stands for and how its content behaves, so a report can tell two opposite states apart”",
+        "gap_id": "gap:5c02d9fc4c3ab022",
+        "question": "When a file or folder is registered, reflow2 now lets you say what it stands for — whether it's one finished thing, a whole folder you're deliberately treating as a single item, or a placeholder you still mean to break up — and whether its contents are expected to keep changing. Nothing in your written-down needs actually asked for that. Was it worth adding, and if so, what problem of yours does it solve? Or should it come back out?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:634fc0554d9ccfc6",
       "node_type": "Question",
       "properties": {
@@ -50484,6 +50867,21 @@
       }
     },
     {
+      "node_id": "req:no-idea-goes-quiet",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "An idea in the graph stays connected to whether it was built and to where it was written — the user never hunts for the source document again",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Once an idea or requirement is in the design, reflow2 must keep it connected in BOTH directions without the user remembering it exists: FORWARD to the design and implementation that serve it (or the visible absence of any), and BACKWARD to the document and location it was written in. The user must never again have to recall that they wrote something, hunt for the file, and hand-point an agent at it.\n\nANTHONY, 2026-08-04, IN HIS OWN WORDS: \"I put in dev_storyflow probably hundreds of ideas (some of which may be requirements) - I always struggled of translating these ideas into design and implementation. It was always manual process of me trying to find the document or documents that I had written the idea/requirement in and then purposefully point the agent to it. my hope is that by putting this in the graph, that these requirements are automatically linked to design and implementation (kind of a core feature of reflow2).\"\n\nWHAT \"AUTOMATICALLY LINKED\" MUST AND MUST NOT MEAN, because the obvious reading of his words would break the product. reflow2 must NOT auto-draw SATISFIES/REALIZES edges from similarity: the adopt skill's central discipline is that \"a requirement backed out of the implementation that satisfies it is satisfied by construction — it can never contradict anything, so a graph of those can never say anything,\" and auto-linking would make every captured idea read as delivered and the completion reading say 100% forever. Edge PREDICTION is a live open question and deliberately framed as a question rather than a repair (dec:idea-missing-edge-prediction, proposed). What must be automatic is the INVERSE: an idea nothing implements FIRES AND KEEPS FIRING (unsatisfied_requirement — \"a Requirement has no SATISFIES from any Capability\", verified in detect.rs), and an idea that IS implemented is reachable to its file paths through the existing thread — Requirement <-SATISFIES- Capability -ALLOCATED_TO-> Component <-REALIZES- Artifact. The backward half is already carried by ingest: every extracted node gets YIELDED to its provenance Fragment, whose content_ref holds the blob hash plus the agent's locator (dec:agent-navigates-content).\n\n⭐ THE RESTATEMENT THAT MATTERS, AND IT IS NOT THE PROBLEM AS FIRST DESCRIBED. The stated pain is retrieval — \"I could not find the document.\" The operative pain is VISIBILITY: an idea written eighteen months ago was invisible until he happened to remember it existed. Auto-linking would restore that invisibility under a friendlier name, because a linked idea reads as handled. Staying LOUD until ruled on is therefore the requirement, and cheap retrieval is its by-product rather than its point.\n\nDISTINCT FROM ITS TWO NEIGHBOURS, on the same pattern req:accreted-intent-becomes-a-design uses to separate itself from req:corpus-ingest. req:corpus-ingest is CONVERGENCE (forty specs naming one component resolve to one node). req:accreted-intent-becomes-a-design is INGEST (a contradictory, never-built corpus becomes a design at all). THIS one is what the design owes the user AFTERWARDS — it is satisfied or violated long after ingest has finished, and it is violated silently. req:golden-thread (accepted) states the thread must not break; this states that an idea's END of that thread must be loud when the thread does not reach it, which is the case a corpus makes normal rather than exceptional.\n\nStatus deliberately `proposed`: Anthony's framing captured in his words and awaiting his confirmation of the wording. The reading above (\"loud, not linked\") is MY restatement of what he asked for and is the part most worth his challenge — he asked for automatic linking and is being told the opposite is what serves him.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:no-se-knowledge",
       "node_type": "Requirement",
       "properties": {
@@ -51288,6 +51686,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:backlog-in-the-graph-brainstorm:dec:idea-backlog-belongs-in-the-graph",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-04\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:what-lives-where\",\"properties\":{\"note\":\"This open question is BOUND by the accepted rule rather than competing with it: dec:what-lives-where already says the design record should stop being prose you navigate and become a graph you query. The question here is only what that means mechanically for the backlog, and what vocabulary is missing before it can happen. Drawn deliberately — an idea node with only AUTHORED_BY is invisible to propagate_from and to the orphan detector (BL-209), which is how dec:export-once-per-pr came to be violated by the session that then re-announced it.\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-04: \\\"It's weak at holding what we learned about the tool while using it, because that lands in markdown by convention, and markdown doesn't get queried — it gets grepped, by someone who already knows what they're looking for. this needs to be solved. I wanted to stop using the BL, but it keeps growing as you say - instead, I wanted everything in the graph.\\\" His preference is stated and is NOT recorded as settled: what \\\"everything in the graph\\\" means mechanically is the open part.\\n\\nTHE MEASUREMENT, taken 2026-08-04. `docs/backlog.md` is 3,350 lines / 581,031 bytes across 132 rows. Of the 8 rows filed in one session (BL-205..212), SIX are referenced by ZERO graph nodes. The file is not a registered Artifact, so `coverage_report` does not count it and no checksum tracks it. FOUR things were re-derived in that same session that were already written down somewhere: BL-205 (third rediscovery), `dec:export-once-per-pr` (accepted, invisible, violated and then re-announced as new), BL-70's alternatives family (nearly re-proposed), and dev_storyflow's hand-made doc-intent scope table (re-derived worse from filenames).\\n\\nTHE FRAME IS ALREADY ACCEPTED AND THE BACKLOG VIOLATES IT. `dec:what-lives-where` states the rule: \\\"the design record should stop being PROSE YOU NAVIGATE and become A GRAPH YOU QUERY, with the prose kept as provenance hanging off the nodes it produced.\\\" It carries a falsifiable test — \\\"IF REFLOW2 WORKS, STORYFLOW WOULD NOT HAVE NEEDED dev_storyflow… If a user still ends up splitting their repo to stay sane, reflow2 has not delivered what this decision claims.\\\" THE SAME TEST GENERALISES AND REFLOW2 CURRENTLY FAILS IT ON ITSELF: if reflow2 works, reflow2 would not need a 581 KB markdown backlog. It is also the exact failure the dev_storyflow api-boss measured in that fleet's MEMORY.md — \\\"an index that must be read IN FULL to be useful has a hard ceiling\\\", 20 KB against a 17 KB limit with everything past the line silently invisible. The backlog is 29 times that size.\\n\\nWHY IT HAS RESISTED THE OBVIOUS FIX — A BACKLOG ROW IS NOT ONE THING. Reading the eight rows from one session, they are at least four: (i) DEFECTS AGAINST SHIPPED CAPABILITIES (BL-205 loop_status too large, BL-206 the gate's truncated sweep, BL-208 the inert CI guard, BL-209 the blind orphan detector); (ii) UNBUILT WORK (BL-186 the folder driver, BL-211 genesis-from-a-folder); (iii) OPEN DESIGN QUESTIONS (BL-207's fix-shape fork); (iv) DISCOVERED LIMITS (BL-212, chronology cannot be recovered from a folder). Three of those four already have a home: unbuilt work is a Capability at `planned` behind a Requirement, an open question is a `proposed` Decision — which is what this very node is — and a discovered limit is a Constraint or DesignRule.\\n\\n⭐ THE ONE THAT HAS NO HOME, AND IT IS THE LARGEST CATEGORY: a defect found by USING the tool. reflow2 has no way to say \\\"this capability is built, VERIFIED, and does not do what it claims.\\\" `Verification` answers whether a check passes — and every one of BL-205/206/208/209 sat under a passing check. `DriftEvent` answers whether the code moved away from the design — and in all four cases the code and the design AGREED, and both were wrong. HEAL's issues are computed from graph shape, not recorded observations, so they vanish between runs. That absence is why these rows land in markdown: there is nothing to write them to.\\n\\nOPTIONS, none chosen. (a) ROUTE EACH ROW TO THE TYPE IT ALREADY IS and add no vocabulary. Cheapest, and it works for three categories of four. Counter: for the defect category it loses the finding — \\\"this is broken, here is the measurement, here is how it was found\\\" becomes \\\"here is a need\\\", which erases the evidence and reads as intent rather than as a bug. (b) A `Finding`/`Defect` NODE TYPE carrying claim, evidence, when observed, and what it bears on. Counter, and it is strong: this project has proposed a node type and WITHDRAWN it after measuring TWICE in one week (`Attestation` → `TemporalFact`, `Hazard` → `DesignRule` + `CONSTRAINS`), so the prior against new vocabulary is heavy — and `TemporalFact` (\\\"a time-bounded assertion true only between two epochs\\\") may already be the shape, since a defect is exactly \\\"this was true of the build from epoch X until the fix\\\". (c) EVERYTHING BECOMES A PROPOSED DECISION. Counter: 132 proposed Decisions would swamp `where-am-i` and the decision list, and most rows are not forks between real alternatives. (d) KEEP THE MARKDOWN BUT DERIVE IT FROM THE GRAPH rather than maintaining it by hand. In-house precedent exists and is unused for this: `dec:views-are-projections` (\\\"a view is a projection of the graph; renderer fill-ins are defects\\\") and `tools/render_views.py` already render DoDAF-flavoured views into docs/viewpoints.md. The backlog is simply not one of them. Counter: this solves RETRIEVAL and not CAPTURE — it only helps once the content is in the graph, so it composes with (a)/(b) rather than competing. (e) DO NOTHING AND ACCEPT THE COST, recorded so it is a choice rather than a default: the backlog is readable by a human today, and the re-derivation cost, while real, has been paid without anyone stopping work.\\n\\nWHAT MUST NOT BE RE-DERIVED WHEN THIS IS PICKED UP: `dec:what-lives-where` (the accepted rule and its falsifiable test), `dec:views-are-projections` plus `tools/render_views.py` (the rendering half already exists), [BL-198] (a serialized default is indistinguishable from a choice — the same \\\"what does the graph actually record\\\" family), and [BL-209] (22 Decisions invisible because `AUTHORED_BY` counts as attachment — a graph-native backlog would land straight into that blind spot and must not).\",\"name\":\"OPEN — should the backlog stop being a 581 KB markdown file and become graph nodes, and what is missing before it can?\",\"rationale\":\"Captured under the brainstorm skill at Anthony's request. The load-bearing content is the taxonomy and the single gap it exposes: three of the four kinds of backlog row already have a node type, and the fourth — a defect in a capability that is built, verified and wrong — has none, which is why those rows have no choice but to be prose. Recording the measurement (581 KB, 6 of 8 rows with zero graph representation, four re-derivations in one session) so the next session argues from numbers rather than from the impression that the file is getting long.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-backlog-belongs-in-the-graph",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:bl186-corpus-ingest-lexical:cap:corpus-ingest",
       "node_type": "Snapshot",
       "properties": {
@@ -51365,6 +51773,16 @@
         "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:d16abc28ea59e3f9\",\"location\":\"docs/upgrading-to-v0.21.0.md\",\"name\":\"Upgrading to v0.21.0 — the stamp moves, and your evidence can say what it covers\",\"status\":\"realized\"}",
         "target_id": "art:upgrading-v0210",
         "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:coord-moves-into-the-graph:dec:coord-board-in-graph",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-25\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"UNDECIDED. Anthony, 2026-07-25: COORD.md was invented so he and his brother could coordinate; the claims layer shipped the same day; and reflow2 is developed by using reflow2 on itself, so the question is whether the markdown board should now be a graph read. WHAT WOULD ACTUALLY CHANGE, because it is less than it sounds: `claim_region` records a Contributor holding a seed node to a depth, `claim_report` computes the region and the overlaps, and both travel in the committed export exactly as COORD.md travels in git — so visibility is unchanged, and the gain is that the region is COMPUTED from the design (it follows the graph as the design moves) rather than being a hand-typed list of file paths that goes stale silently. WHAT WOULD BE LOST, and it is the part worth deciding rather than assuming: COORD.md is readable by a human with no reflow2 and no binary, it shows up as a diff in a pull request, and it holds the merge-conflict doctrine for the shared records — none of which a graph read does. The sane split, if this is taken: claims in the graph for WHO HAS WHAT, COORD.md retained for the conventions and the conflict doctrine, and the in-progress table deleted rather than maintained in two places, since two places for the same fact is the failure the backlog-in-the-graph move exists to end.\",\"name\":\"OPEN — does reflow2's own claim board move from COORD.md into the graph?\",\"rationale\":\"Raised as a dogfooding question, which is how most of this project's real findings have arrived — and it is a genuinely good test of the claims layer, because reflow2's own two-person collaboration is the only live multi-writer case that exists. Held proposed because a claim board is a coordination mechanism between two people, and switching it unilaterally would mean one of them silently changing where the other must look; that is Anthony's brother's call as much as his. The prerequisite is honest: nobody has used claim_region for real yet, so the first move is to run it on one real piece of work and see whether claim_report says something a person would have said.\",\"status\":\"proposed\"}",
+        "target_id": "dec:coord-board-in-graph",
+        "target_type": "Decision"
       }
     },
     {
@@ -51665,6 +52083,16 @@
         "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"A gap put to the user arrives with the agent's recommendation — recommending is not deciding\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"When reflow2 puts a gap to the user, the agent's READING of it travels with the question: what it would do and why, and what would change that answer. The user still decides; the agent stops pretending it has no view.\\n\\nWHAT IS MISSING TODAY, and it is an omission rather than a prohibition. `detect-and-ask` is explicit that the agent must \\\"never invent an answer on their behalf\\\", which is right and must not be weakened. But the skill says nothing about offering a reading, so the default behaviour is a bare question — `gap_to_prompt` returns \\\"is it covered, deferred, or dropped?\\\" and the agent relays it. `cap:surface` (\\\"turn a gap into a question in the user's words\\\", `verified`) delivers the translation and nothing more.\\n\\nWHY THAT IS A DEFECT AND NOT NEUTRALITY. `req:no-se-knowledge` says the user never needs systems engineering. A bare gap question hands them back the analysis the agent has already done and asks them to redo it in their own head — which is precisely the SE work that requirement exists to spare them. The agent has read the graph, seen the precedents, and formed a view; withholding it is not impartiality, it is making the user pay for the agent's caution.\\n\\nIT IS ALSO WHAT `dec:three-party-checks` ALREADY DESCRIBES: \\\"The LLM speaks, the graph remembers and counts, the human decides.\\\" Offering a reading IS the LLM speaking. The decision stays with the human, untouched — and `dec:certainty-derived` still governs the write, because a recommendation changes no status until the user answers.\\n\\nTHE LINE THAT MUST NOT BE CROSSED, stated so this cannot be read as licence. Recommending is not deciding: no requirement moves off `proposed`, no decision reaches `accepted`, no gap is acknowledged on a reading the user has not confirmed. And a recommendation must carry WHAT WOULD CHANGE IT — the condition under which the other option wins — or it is steering rather than advising. An option presented without its counterweight is a decision taken quietly.\\n\\nTHE PART WORTH RECORDING, and the reason this is design rather than style: WHEN THE USER OVERRULES A RECOMMENDATION, THAT IS INFORMATION. A design where the agent advised one way and the human chose another has learned something neither party knew alone, and today it is invisible because the recommendation was never on the record. Whether the recommendation itself should be stored beside the question is left open here rather than assumed.\\n\\nMEASURED, not theorised: every gap put to Anthony on 2026-07-31 needed the recommendation added by hand, and he asked for it explicitly twice — \\\"provide your recommendation\\\", \\\"present them in simple english and your recommendations for how to proceed\\\". A shape a user has to request each time is a default in the wrong place.\\n\\nTENSION NAMED SO IT IS NOT CONFLATED: `dec:report-dont-judge` says the confirmation ledger reports claim history and never judges a claim. That governs what a COMPUTATION may assert about evidence. It does not govern whether an agent may advise a human who asked — different actor, different act. Conflating the two would silence exactly the party `dec:three-party-checks` puts there to speak.\",\"status\":\"accepted\"}",
         "target_id": "req:a-question-arrives-with-a-reading",
         "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reads-are-the-failing-half:dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-04\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:views-are-projections\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:what-lives-where\",\"properties\":{}}]",
+        "state": "{\"decision\":\"RECORDED AS A REFRAME PLUS A MEASUREMENT, NOT AS A PROPOSAL. Anthony, 2026-08-04, stating the root question that unifies the dev_storyflow corpus and the reflow2-dogfooding threads: \\\"how do we transition documents to graph entities? whether that is a huge corpus of documents in dev_storyflow or getting away from using documents in reflow2, it is how do we make decisions based on graph content, not documents.\\\" Nothing here is settled.\\n\\nTHE SPLIT. (IN) documents become graph entities — ingest_step, provenance Fragments, the content store, cross-document convergence. Partly built, and every remaining piece is scheduled across epoch:v0240-planned..v0280-planned. (OUT) a person or agent DECIDES from graph content instead of from a document. Almost nothing is scheduled. The whole increment plan is capture, detection, seams and write-surface.\\n\\n⭐ THE MEASUREMENT, AND ALL OF IT IS FIRST-HAND FROM ONE SESSION ON 2026-08-04 RATHER THAN RECALLED. `reviewed_gaps` returned 130,922 CHARACTERS and could not be read at all — it was written to a file and queried with `jq`. That is the tool answering \\\"what have we already decided to accept\\\", which is a decision-making read, and it was unusable AS a read. It joins: `loop_status` at 72,886 characters until [BL-205] fixed it the day before, and it is the call the SessionStart hook and the server instructions both call \\\"the one cheap call\\\"; `describe_schema` on ONE node type at ~30 KB ([BL-142]); and `scan_nodes` on 241 Decisions, where the where-am-i skill's own guidance forced reading names only and confessing that exactly one had been read in full. Add the standing limit: 52 properties are `fulltext: true` and `Decision.rationale` is not one of them.\\n\\nTHEY ARE ALL ONE DEFECT: A READ THAT RETURNS EVERYTHING IT KNOWS INSTEAD OF WHAT WAS ASKED. The graph holds the content correctly. It cannot serve it back at the size it now holds. That is neither a vocabulary problem nor an ingest problem, which is why every framing so far has missed it — `dec:idea-backlog-belongs-in-the-graph` reasoned about what a node can HOLD, and the binding constraint is what a read can RETURN.\\n\\nTHE CONSEQUENCE THAT SHOULD NOT BE SOFTENED: TODAY A DOCUMENT BEATS THE GRAPH FOR MAKING A DECISION, AND IT IS A FAIR FIGHT THE GRAPH LOSES. A document can be skimmed, searched with ctrl-F, and read end to end. The graph offers 130 KB or a list of names. Reaching for the markdown is therefore RATIONAL BEHAVIOUR RESPONDING TO A REAL DIFFERENCE, not a bad habit to be disciplined out of, and no improvement to capture changes it.\\n\\nTHE SHAPE OF AN ANSWER, offered because the in-house precedent is already built and shipped rather than as advocacy: the transition is not documents → graph, it is DOCUMENTS → GRAPH → DERIVED DOCUMENTS. `cap:changelog-view` (\\\"a changelog is a derivable view of the graph's own delta\\\") shipped in v0.20.0 and CHANGELOG.md is generated today; `dec:views-are-projections` is accepted; `tools/render_views.py` is 44 KB of renderer producing docs/viewpoints.md and has existed since 2026-07-19. The renderer, the doctrine and the proof all exist — the backlog simply is not one of its views. This also explains why option (d) on `dec:idea-backlog-belongs-in-the-graph` kept losing: it was judged as a RIVAL to the capture options when it is the OUT half of the same answer, and that node already half-saw it (\\\"solves RETRIEVAL and not CAPTURE — it composes with (a)/(b) rather than competing\\\").\\n\\n⭐ THE TEST THIS YIELDS, AND IT IS ANTHONY'S OWN DELETION INSTINCT MADE SAFE. He asked: \\\"should I delete the documents and force us to use the reflow2 graph?\\\" Deletion is the right TEST and the wrong COMMITMENT. The test is: CAN YOU DELETE THIS DOCUMENT AND REGENERATE IT FROM THE GRAPH? Yes → the graph is the source and the document was a view. No → the document is still the source, and WHAT CANNOT BE REGENERATED IS PRECISELY WHAT THE GRAPH IS MISSING. Run it per document, never on the repo at once, and regenerate BEFORE deleting so nothing is ever at risk. Where each stands today, assessed 2026-08-04: CHANGELOG.md PASSES (already derived); docs/viewpoints.md PASSES; COORD.md's in-progress table passes the day `claim_region` is used for real, because the computation exists and is served (`dec:coord-board-in-graph`); docs/backlog.md FAILS, and the rows that cannot regenerate are the exact statement of what vocabulary is absent; AGENTS.md FAILS PERMANENTLY AND CORRECTLY, because an agent reads it before it knows reflow2 exists. That last row is why this is not a march toward zero documents — it is a march toward zero documents that are SOURCES, and the test says which is which instead of leaving it to taste.\\n\\nFOR A CORPUS THE TEST POINTS THE OTHER WAY. Source documents cannot be regenerated and must not be — `req:sources-are-kept-not-just-parsed` says so. The test applies instead to the READING: after ingest, can \\\"what did I want to build, and what of it exists\\\" be answered without opening a document? A no means the ingest landed prose rather than structure, which is exactly what the 52-fulltext-properties limit predicts for rows imported as long descriptions.\\n\\nWHAT IS NOT DECIDED HERE. Whether the OUT half is a v0.24.0 obligation, its own increment, or a discipline applied to every read as it is touched. Which reads to fix first, and by what rule — `reviewed_gaps` is the loudest but `scan_nodes` on a mature type may be the most consequential. Whether \\\"answer-shaped rather than type-shaped\\\" needs new tools or bounded forms of the existing ones. And whether the backlog renderer is a `render_views.py` view, a served tool, or neither.\\n\\nNOT VERIFIED, AND IT WOULD CHANGE THE PRIORITY: how many of the ~140 served tools return unbounded results. Four are named above because four were hit by hand in one session; nobody has counted. If it is four, this is a bug list. If it is forty, it is an increment.\",\"name\":\"OPEN — \\\"documents to graph entities\\\" is TWO problems, and the failing one is reading the graph back, not getting content into it\",\"rationale\":\"Recorded because the measurement is perishable in the exact way this project keeps rediscovering: \\\"reviewed_gaps returned 130,922 characters\\\" becomes \\\"reads felt big once\\\" within a session or two, and then the next reader re-derives it or, worse, does not. The four numbers are first-hand from a single sitting and are written down so the next session argues from them.\\n\\nKept as its own node rather than appended to `dec:idea-backlog-belongs-in-the-graph` because it CONTRADICTS that node's framing rather than extending it. That node asks what a node and an edge can hold and concludes the answer turns on how much of a row becomes structure; this one says the binding constraint is downstream of that entirely — a perfectly structured graph nobody can read back is still a graph nobody decides from. Folding the correction into the node it corrects would hide it.\\n\\nDeliberately does NOT register alternatives, so this stays a question rather than becoming a fork the loop asks Anthony to choose between. The unchecked item — how many served tools return unbounded results — is stated as unchecked so its absence reads as a hole rather than as a completed analysis, and it is named as the thing that decides whether this is a bug list or an increment.\",\"status\":\"proposed\"}",
+        "target_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
+        "target_type": "Decision"
       }
     },
     {
@@ -53158,7 +53586,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:94001240b7a42ad9d4695994356b65eb83aa38db493c5fc7b84436e268c7e470",
+  "prev_content_hash": "sha256:1b2c2645af78724237c693b7d8ba72678199cb9063b087461238682492275b2a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

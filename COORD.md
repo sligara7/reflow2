@@ -1,41 +1,41 @@
-# COORD.md — who's working on what
+# COORD.md — how we work together
 
-The claim board for reflow2. Two people, two agents (Claude Code and grok build), one repo,
-coordinating through git.
+**The claim board moved into the graph on 2026-08-04** (`dec:coord-board-in-graph`). Who holds
+what is now `claim_report`, not a table in this file. What stays here is the part addressed to
+someone who may not have reflow2 running: the handles, the conflict doctrine, and the conventions.
 
-Its only job is **avoiding collisions**: knowing what someone else already has in hand, so two
-people don't build the same thing or edit the same module at once. It is not a plan, a spec, or
-a status report —
+That split is the general rule this repo now follows: **a document holds what is addressed to
+someone without the tool; the graph holds what the tool can compute.**
 
 | Question | Where |
 |---|---|
-| Who has what right now | **this file** |
+| Who has what right now | **`claim_report`** (reflow2 MCP) |
 | What the work *is*, and why | [docs/backlog.md](docs/backlog.md) |
 | Is the code meeting the docs | [docs/requirements-coverage.md](docs/requirements-coverage.md) |
 | What changed and when | [CHANGELOG.md](CHANGELOG.md) |
 
 ## For agents reading this
 
-**Before anything else: `git pull --rebase`.** A claim board you haven't pulled is a claim board
-from the past — you'll claim something that's already taken and find out at merge time. Pull,
-then read.
+**Before anything else: `git pull --rebase`.** Claims travel in `docs/design/reflow2.json`, so a
+graph you haven't pulled is a claim board from the past — same trap as before, same fix.
 
-**Before starting work:** read the In-progress list. If someone holds the item, or holds
-something that touches the same files, pick something else or say so — don't quietly work in
-parallel.
+**Before starting work:** `claim_report`. If someone holds the region, or holds something that
+touches it, pick something else or say so — don't quietly work in parallel. Overlaps are ranked
+and reported; an overlap is a warning, never a refusal.
 
-**When you start:** add one line under **In progress** with the handle, the date, and roughly
-what you're touching. Commit that line *before* the work, not after — a claim nobody can see is
-not a claim.
+**When you start:** `mint_seat` once, keep the value, then `claim_region` with the contributor,
+a seed node, a depth, and a note saying what you're doing. The region is *computed* from the
+seed, so it follows the design as the design moves — you are claiming a part of the design, not
+a list of file paths.
 
-**When you finish:** move the line to **Recently finished** with the commit, and push.
+**When you finish:** `release_claim`. And if you forget, it degrades safely, which is the whole
+reason for the move: liveness is computed from the claiming session, so an abandoned claim reads
+`gone` on its own rather than sitting there looking taken. This file could never do that — a
+markdown line cannot know its author walked away, and on 2026-08-04 three stale claims were
+found in a single sweep.
 
-**Keep it one line per item.** Two agents editing this file will eventually collide in git; a
-line-per-item makes the conflict trivial to resolve, a table or a paragraph does not.
-
-**Don't restate the backlog here.** Reference the id (`BL-4`) and let
-[docs/backlog.md](docs/backlog.md) carry the description, so there's one source of truth for what
-the work actually is.
+**Reference the backlog id (`BL-4`), don't restate it.** One source of truth for what the work
+actually is.
 
 ## Handles
 
@@ -48,29 +48,27 @@ Add yourself if you're new here.
 
 ## In progress
 
-*Format: `- BL-n or short title — @handle — since YYYY-MM-DD — files/areas touched`*
-
-- BL-186 build cap:corpus-ingest (the folder driver — v0.24.0's last build row) — @ajs — since 2026-08-04 — crates/reflow2-core/src/ingest.rs, reflow2-mcp tool surface, served skill, docs/{backlog,scope-corpus-ingest}.md
-
-
-
-
-<!-- BL-199's claim was released 2026-08-04: it shipped as #69 and the board carried it as
-     in-progress afterwards. Same reason the BL-183 note below exists, and the third stale claim
-     found in one sweep — see the note at the end of this section. -->
+**Moved to the graph 2026-08-04.** Run `claim_report`. As of the move it holds one claim:
+`cap:corpus-ingest` at depth 2, held by `who:ajs`, carrying BL-186's note — the same item this
+table carried, re-made through `claim_region` as the first real use of the claims layer.
 
 
 
-<!-- BL-183's claim was released 2026-08-04: it shipped in v0.23.0 (#64) and the board had carried it
-     as in-progress ever since. Left as a note rather than deleted silently — a stale claim is how two
-     people end up believing a lane is taken. -->
 
+<!-- WHAT THIS SECTION USED TO HOLD, and why it is summarised rather than simply deleted. Four
+     claims were released from it on 2026-08-04 — BL-199 (#69), BL-183 (v0.23.0, #64), BL-182
+     (#53), and the v0.22.1 cut — THREE OF THEM FOUND STALE IN A SINGLE SWEEP, each naming a PR
+     that had already merged, and one of them carried in two sections at once. That is the
+     measured failure behind dec:coord-board-in-graph, and the diagnosis it prompted generalises:
 
+       "This file's own opening rule is that a claim nobody can see is not a claim — and the
+        failure it actually suffers is the opposite one, a claim nobody removed still reading as
+        taken. 'When you finish: move the line' is the step that gets skipped, because finishing
+        feels like the end. Anything that would detect this lives in git, not here: every one of
+        the three names a PR that is merged."
 
-<!-- BL-182's claim was released 2026-08-04: it shipped as #53 on 2026-08-02 and already had a
-     Recently-finished entry, so the board was carrying the same item in both sections at once. -->
-
-
+     A markdown line cannot know its author walked away. A graph claim computes liveness from the
+     claiming session, so the step that gets skipped no longer has to be remembered. -->
 
 
 
@@ -86,18 +84,24 @@ Add yourself if you're new here.
 
 
 
-<!-- The v0.22.1 CUT claim was released 2026-08-04: v0.22.1 shipped, and v0.23.0 has since been cut
-     and has its own Recently-finished entry, so this lane had been closed twice over.
 
-     THREE STALE CLAIMS FOUND IN ONE SWEEP (this, BL-182, BL-199), on top of BL-183's the same day.
-     Worth stating plainly rather than just tidying: this file's own opening rule is that a claim
-     nobody can see is not a claim — and the failure it actually suffers is the opposite one, a
-     claim nobody removed still reading as taken. "When you finish: move the line" is the step that
-     gets skipped, because finishing feels like the end. Anything that would detect this lives in
-     git, not here: every one of the three names a PR that is merged. -->
 
-- Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-brownfield-ophyd-service.md (private) (findings log; no code yet)
-- Greenfield trial on aidrone — @ajs — since 2026-07-18 — docs/trials-private/2026-07-18-greenfield-aidrone.md (private) (running findings log; design lives in ~/projects/aidrone)
+
+
+
+
+
+
+**Two claims need Anthony's call before they are re-made or released** — deliberately not decided
+here, because releasing someone else's claim on their behalf is the one move this file has always
+forbidden:
+
+- Brownfield trial on ophyd-service — @ajs — since 2026-07-18 — `docs/trials-private/2026-07-18-brownfield-ophyd-service.md` (private) (findings log; no code yet)
+- Greenfield trial on aidrone — @ajs — since 2026-07-18 — `docs/trials-private/2026-07-18-greenfield-aidrone.md` (private) (running findings log; design lives in `~/projects/aidrone`)
+
+Both are 17 days old, which the old stale-claims rule would have made fair game. Neither has an
+obvious seed node in reflow2's own graph — they are trials of reflow2 *on other projects* — so
+re-making them as claims needs a decision about what they are claiming, not just a tool call.
 
 
 
@@ -465,8 +469,17 @@ Trimmed periodically; the durable history is [CHANGELOG.md](CHANGELOG.md) and `g
 
 ## Stale claims
 
-If an item has been claimed for **more than a week with no commits against it**, anyone may take
-it — leave a note on the line saying you did, rather than deleting the original claim.
+**Now computed, not a rule to remember.** `claim_report` returns `liveness` per claim: `live`
+means the claiming session is still running, `gone` means it exited and the claim is a ghost —
+excluded from overlaps automatically. `unknown` means the claim was made on another machine or
+before seats were recorded, and **`unknown` is never read as free**, because taking work someone
+is actively doing is the expensive mistake.
+
+The old rule was *"claimed more than a week with no commits against it — anyone may take it,
+leave a note rather than deleting."* It is kept here as a fallback for the `unknown` case, where
+a human still has to judge. It is no longer the primary mechanism, and the reason is on the
+record: the rule only ever fired when someone remembered to apply it, and on 2026-08-04 three
+stale claims were found in one sweep by nobody having done so.
 
 ## When git conflicts
 
