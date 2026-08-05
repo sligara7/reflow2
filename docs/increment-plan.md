@@ -69,7 +69,17 @@ live while it is still cheap to answer.
 > **(2) The cost that matters was not the one the scope doc named.** It worried about reflow2's
 > quadratic `fuzzy_match`; the dominant cost is agent round trips and context, which is the user's
 > bill rather than ours. Still unmeasured at real corpus size.
-> **Remaining here: [BL-196]** (genesis custody).
+> **CUT 2026-08-05 as v0.24.0, with [BL-196] DESCOPED to v0.25.0 on Anthony's word.** The increment
+> was justified by unblocking a user stuck at 26 of ~756 documents; the corpus path is built,
+> trialled and fixed, and BL-196 is a *genesis skill* question that does not touch it. Descoping is
+> recorded rather than quietly dropped — the plan said six rows and five shipped.
+>
+> **What the increment did NOT anticipate, and both are worth carrying:** the trial found
+> [BL-213], a silent data-loss defect **older than everything in this increment** — `ingest` had
+> been merging sibling components away on every single-document run since fuzzy dedup landed. It
+> was invisible to self-host because reflow2's own design uses prose names rather than prefixed
+> identifiers, which is **[BL-199]'s shape a second time**. The standing conclusion: *a green
+> self-host is the weakest evidence available; keep a real external corpus in rotation.*
 
 ---
 
