@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:aea0ffa7868000cfdd797d624a777d69df04edc0eb92a4df7d4f05d2e63351aa",
+  "content_hash": "sha256:a10837f92cb09ef00a72febe14abf40719aa231ce7d6dc5b786298e65bd2675c",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -1723,6 +1723,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-0809203dbd415e07",
+      "properties": {},
+      "to_id": "epoch:v0240"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-0bbd99a16b805b80",
+      "properties": {},
+      "to_id": "epoch:v0240"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-0c440cc2eb44f74c",
       "properties": {},
       "to_id": "epoch:v0210"
@@ -1732,6 +1744,12 @@
       "from_id": "chg:accept-299470f8b4fae678",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-2b742a01768ff8ef",
+      "properties": {},
+      "to_id": "epoch:v0240"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1771,6 +1789,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-5e5f712bc4f3be62",
+      "properties": {},
+      "to_id": "epoch:v0240"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-6269ffe550e65842",
       "properties": {},
       "to_id": "epoch:v0220"
@@ -1780,6 +1804,12 @@
       "from_id": "chg:accept-635435417e73d6d7",
       "properties": {},
       "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-6ecebcb8257533cf",
+      "properties": {},
+      "to_id": "epoch:v0240"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1810,6 +1840,12 @@
       "from_id": "chg:accept-80d1f87f330f26e8",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-8ab68356b3e7a47f",
+      "properties": {},
+      "to_id": "epoch:v0240"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -1915,6 +1951,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:anthony-rules-on-five",
+      "properties": {},
+      "to_id": "epoch:anthony-rules-on-five"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:arrival-delta-built",
       "properties": {},
       "to_id": "epoch:arrival-delta"
@@ -1927,6 +1969,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:artifact-intent-properties",
+      "properties": {},
+      "to_id": "epoch:v0240"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:atomic-requirement",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -1936,6 +1984,24 @@
       "from_id": "chg:backlog-brainstorm-data-model-constraint",
       "properties": {},
       "to_id": "epoch:backlog-in-the-graph-brainstorm"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-0da0e8c66a8d93bc",
+      "properties": {},
+      "to_id": "epoch:v0240"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-103ed5645f463462",
+      "properties": {},
+      "to_id": "epoch:v0240"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-15ac915379dcb2d2",
+      "properties": {},
+      "to_id": "epoch:v0240"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2002,6 +2068,12 @@
       "from_id": "chg:bl174-false-green-for-consumers",
       "properties": {},
       "to_id": "epoch:v0221"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:bl176-orphan-attachment",
+      "properties": {},
+      "to_id": "epoch:v0240"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3112,6 +3184,12 @@
       "from_id": "rel:v0230",
       "properties": {},
       "to_id": "epoch:v0230"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "epoch:v0240"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4482,6 +4560,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:an-artifact-declares-what-only-its-author-knows",
+      "properties": {
+        "acted_at": "2026-08-05",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:analyse-at-any-level",
       "properties": {
         "acted_at": "2026-07-25",
@@ -5162,6 +5249,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-6ecebcb8257533cf",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-6f1ba29acecb8d91",
       "properties": {
         "accepted_baseline": true,
@@ -5747,6 +5843,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:anthony-rules-on-five",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:increment-plan"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:anthony-rules-on-five",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:an-artifact-declares-what-only-its-author-knows"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:arrival-delta-built",
       "properties": {
         "accepted_baseline": true,
@@ -5987,6 +6101,15 @@
         "action": "modified"
       },
       "to_id": "art:built-right-review"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-15ac915379dcb2d2",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact-intent-test"
     },
     {
       "edge_type": "CHANGED",
@@ -13591,6 +13714,14 @@
     {
       "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v0230",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0240",
       "properties": {
         "status": "active"
       },
@@ -32082,6 +32213,1514 @@
     },
     {
       "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:8f8a543ba59ec079"
+      },
+      "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:14b6b93d62aa5ff7"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:c33a33c15e2611b3"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:c87a79726aeb111b"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:f0b084efabffd96cbbb64ee30fbd89e6d3c241b742b6e4fd031e76ef1b8d7ffa"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:35902cf49663ef135e774805a69f8b2b3fda3673af859d2289c90594ec1ea845"
+      },
+      "to_id": "art:artifact-intent-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:49f1f3095ea2707d"
+      },
+      "to_id": "art:bl124-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:fabb8097364ca9e2"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:6aeb7aaf31ccdd875990bce6735c75eeead49c7371c4bc39064d4e7f478733e8"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:8f5ffbc7c6e84b5e"
+      },
+      "to_id": "art:built-right-review"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:6e8e23fce35b21d6"
+      },
+      "to_id": "art:bulk"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:c2bea913c620128c1e602aed078713c7598f92e7cada4024c67777584b23b8be"
+      },
+      "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:8a65b62d63d432035cb24244f35cdbb3098ee2cb990ac6c181eddc797e12605b"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:a84c2afa299b6793cb78ae9aad6fda8cf659780728e38da0906ffa629dd41919"
+      },
+      "to_id": "art:checksum-dialect-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:5b6cb19cd4efedd8a4940a54412d033f73a904b376953f4f0f58d3ffee989d57"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:b73161a0fd04efee"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558"
+      },
+      "to_id": "art:compose"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39"
+      },
+      "to_id": "art:compose-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:c7b979d360e1e062"
+      },
+      "to_id": "art:content"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:4f23c464539aed28"
+      },
+      "to_id": "art:content-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed"
+      },
+      "to_id": "art:contradiction-alignment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:9f9496cd532968cb39dc7461c83f488e856e97b00a4a438f2f25914ee044760d"
+      },
+      "to_id": "art:corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:657397fc982bc94a7b0624d219503cab8ddf1a325aabf023474db1dfc110881f"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:c30ee52bd7c3ec95"
+      },
+      "to_id": "art:coverage-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:adfea07b2891743b"
+      },
+      "to_id": "art:cycles-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde"
+      },
+      "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:34059cb7abe2cce90cd3a8e28dd893b8235383585e7299e0ca50bbca0a4a0116"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:3bf2ed7ba5a6bccd928828657c0cc7e6b051e6b96c569f5f73528e6baf184d03"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:4b1842af22cfbae2c7b112540fe0e98cc857d8369104e9112f66f1d7c650ad31"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:6d274cf0f687fd7b3031761e30c174abfd473599c0fd64299fdb88cb71517c0f"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:ad766fdd92b8a66a9237c04928ce4c07b4b3e938093c7e7879a9fa0077c7a0ee"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:74c0459e03ad38ce"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:8956d2d0d4f31fe1"
+      },
+      "to_id": "art:evidence-quality-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:0f66b31cfaca4944"
+      },
+      "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896"
+      },
+      "to_id": "art:evidence-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:cbba2d0c482d766c6dae2ca016e0b9fd2f760a9987febfa7e9b477a2414df079"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:3dc8f44f7add68ae0f56d7da184e667fd8860ededaa57262e8bd800de87be691"
+      },
+      "to_id": "art:export-via-binary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:cfdf82f1a6497595"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2"
+      },
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:34701500af93dbcf"
+      },
+      "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15"
+      },
+      "to_id": "art:granularity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:0c572c75d71045854e65d16ca6827271d9319bc13f35e470976c425fda05033c"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:d3c6e9fe1cac1177"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:30fc1a09862792a9"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:d4e51659a479603aa29befad2e00fa504d6b185bc35ee25961073a79bf04e4b8"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3"
+      },
+      "to_id": "art:ility"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:752fa1ea328b5bafe200ef45ea7c1e230648bb86f580bd0278886b8cdde5ee3e"
+      },
+      "to_id": "art:increment-plan"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:7bda3eb9321b2786a0fe67839a5c420f90c89fe0d57c256776c41191f532753c"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a"
+      },
+      "to_id": "art:ingest-handshake-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:49199cc1c858f4cf5b48e370f4b5203bd7989d341951399a28eebde91725c06e"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:07c82cd7671c1241"
+      },
+      "to_id": "art:interface-spec-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:13f19b14c25c9300"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:feebbdb1438ff2c52e51cb0fbb004476378ffa97d3c9aa72890b7aa92f4b81b5"
+      },
+      "to_id": "art:kit-pointer"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:65a01535f32f023e"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:15b7f82fc8a05031a7c77c92d6a5624442c047df47104973f8dc9091362045be"
+      },
+      "to_id": "art:latent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:b41bc1c569e39c7ab7d8d72d667fe56870b53eb720be82e6e4b6d7b870023c82"
+      },
+      "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:9eee13f94445919641af92008ffa67b7a474c21ddfe08edacde256e176f90ff5"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:f743c9902452b2b7b15da4df3d62a92d9dca2bdbbd0efcff7e3625eb9b809e9a"
+      },
+      "to_id": "art:maturity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:075bab31f3c131b6"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:cddbea4165e0e3b0"
+      },
+      "to_id": "art:merge-driver-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:774ad95db84666b3"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:9b388fef123f04c5"
+      },
+      "to_id": "art:orphan-attachment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:9cbea33b6a561a9e"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14"
+      },
+      "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4"
+      },
+      "to_id": "art:preserve"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:26dde99a1df42e6f"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420"
+      },
+      "to_id": "art:publishable-promise-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5"
+      },
+      "to_id": "art:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:da4302eb091e89ce69d2c97b66e947472fba881f7718e86f5a2f5824e057ff22"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:99fc5da421a04f5e"
+      },
+      "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:f908416fd368f84adfee2fc8567f8904c01d6a2c18a6ee59ef0d07557aa3aeeb"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:dc88dfbc4e1aacbc"
+      },
+      "to_id": "art:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:56201fe977dc874f"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:30b38b621f4c98f2487b82076867f0574e96480043a799cadc433797e1774426"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:81403d844b84c265da25581c0e3794dbaabae825eebfca0de0917b7f2cfe5322"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9"
+      },
+      "to_id": "art:schema-dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc"
+      },
+      "to_id": "art:schema-environment"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:831166aee7d4de9bd90e5826d4b6ef474dd8be49f2cc14609f32d12039893222"
+      },
+      "to_id": "art:schema-functional"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:52a5e92ffed17c501f9d849dcadbb5f4614d35b79c731a90860d4e7d7056b02d"
+      },
+      "to_id": "art:schema-inference"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:543955d24d224ff0c0aff6f28928fa728248dc7694662b22cab0e8d1f1cc5168"
+      },
+      "to_id": "art:schema-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a"
+      },
+      "to_id": "art:schema-readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:8e528069f11575d45725f0fd260a992ba153cfd99de84cfabca797f9b60bccc0"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:47fa2c2aa8b402bb"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:de0871a98e6007aa5ee9e202d5396f014b3799efd72600f2a1a94de6d58ff182"
+      },
+      "to_id": "art:scope-corpus-ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea"
+      },
+      "to_id": "art:scope-read-while-held"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:45aaec579dc701380a04d4f12b59a6b14ba5aeb619e823c021b0b21ed08e5caa"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d"
+      },
+      "to_id": "art:seam-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:c421c3496192d22d"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:4d824c873120e938"
+      },
+      "to_id": "art:self-host-documents-guard"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:bc9c2a3cef87a2545c83cb14e5d058c19c19a729022d4f387945c927c0b90a86"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:f6e66fec577e59d755de63c38fc02c7227eb28a64a7e33dc6cd4ab60a2c6b293"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:f8d14a991b90377fab5074ee51dbbcf165d2ab813b1b5e742688b19d534c700b"
+      },
+      "to_id": "art:sibling-merge-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:c221daad4dd73582e3abec93e7d0493e75f71f7809f138c1852271fa63f37ea4"
+      },
+      "to_id": "art:skill-ingest-corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:c814d9d9f016f473fc89a222865c26d7278fbdfc6adb79706e649afa224787e8"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda"
+      },
+      "to_id": "art:skill-lint-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:d437174ef98701bd2fcfdd2f4fa97daafeac687c899df764f036536ccf3a29a4"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797"
+      },
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:c09cc6f310635d1b2fb9a888f38c323fbd2ae2fb9e816586a32f2c00c87a46fb"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783"
+      },
+      "to_id": "art:stateless-seat-probe"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83"
+      },
+      "to_id": "art:storyflow-resolution-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:76f2dec276b09685"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:b3b2bac1387c9c53"
+      },
+      "to_id": "art:surface-usage-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:e792e6bab2ad48527428df1c015f6ebe20fec9d79da22657f7ed088f8d605c56"
+      },
+      "to_id": "art:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:829e4905cc5f40a8b24e6027b5522780c90e8c133742299549e80880b2f6abef"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af"
+      },
+      "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:5d3f5c3b7ee5b14757e11779e086d82853401f3e8ceac245cd1dabc86f25a31a"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:27f84b4a505d648f2b2b86033ed818a01f6adf50e59ab8a25e76d293daa57162"
+      },
+      "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f"
+      },
+      "to_id": "art:test-shared-sessions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d"
+      },
+      "to_id": "art:test-stale-seat"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:395195e896a9e9d2068f6c0d66e509a66600295237db4f642b7a88ce64bd9373"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:bac04451bad4f944adaeead116637304d43e666f2109c9d39110f568b56e68c8"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:30f35727b9157119714ad5a060cabdef3d87d3a69d88987e8ade91fb6155d623"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:a3ef1c2a5a4cfbe52d5142708511eb0e3a4f9c3484212c1ca761e0f5e7f12a7b"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:5a81f97e05afd62edc28afabdf816c821216b14f0e7eaa2710acf600524b3019"
+      },
+      "to_id": "art:tools-content"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:814d67ab62c1014e402611dc1f73028332d2af8ca95a159dbf70022086065b34"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f"
+      },
+      "to_id": "art:unreachable-decision-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:ef7dbb708e027df2"
+      },
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34"
+      },
+      "to_id": "art:upgrading-v0120"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995"
+      },
+      "to_id": "art:upgrading-v0130"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28"
+      },
+      "to_id": "art:upgrading-v0150"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24"
+      },
+      "to_id": "art:upgrading-v0160"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda"
+      },
+      "to_id": "art:upgrading-v0180"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:3a36b9b6b248af09"
+      },
+      "to_id": "art:upgrading-v0190"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:d16abc28ea59e3f9"
+      },
+      "to_id": "art:upgrading-v0210"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {
+        "as_checksum": "sha256:0d250aa84d8ebe16"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "sys:agent-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "sys:documentation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "sys:human-channel"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "sys:intake"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "sys:store"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "sys:time-history"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0240",
+      "properties": {},
+      "to_id": "sys:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
       "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:1c729eee5b67e7dc"
@@ -34166,6 +35805,12 @@
       "edge_type": "PRECEDES",
       "from_id": "epoch:v0230",
       "properties": {},
+      "to_id": "epoch:v0240"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0230",
+      "properties": {},
       "to_id": "epoch:v0240-planned"
     },
     {
@@ -34673,6 +36318,14 @@
     {
       "edge_type": "REALIZES",
       "from_id": "art:export",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:export-via-binary",
       "properties": {
         "completeness": "complete"
       },
@@ -35758,6 +37411,12 @@
       "from_id": "cap:arrival-delta",
       "properties": {},
       "to_id": "req:plans-move-honestly"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:artifact-declares-its-own-shape",
+      "properties": {},
+      "to_id": "req:an-artifact-declares-what-only-its-author-knows"
     },
     {
       "edge_type": "SATISFIES",
@@ -37723,6 +39382,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:export-via-binary",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:export-via-binary"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:fielded",
       "properties": {
         "action": "created"
@@ -38474,9 +40141,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8f8a543ba59ec079",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/acknowledgement_not_structure.rs",
         "name": "acknowledgement_not_structure.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38485,9 +40154,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:14b6b93d62aa5ff7",
+        "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38496,9 +40167,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c33a33c15e2611b3",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/agent.rs",
         "name": "agent.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38507,9 +40180,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:d282035a162e3e56",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/allocate.rs",
         "name": "allocate.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38518,9 +40193,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c87a79726aeb111b",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/alternatives.rs",
         "name": "alternatives.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38541,9 +40218,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
+        "checksum": "sha256:35902cf49663ef135e774805a69f8b2b3fda3673af859d2289c90594ec1ea845",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/artifact_intent.rs",
         "name": "artifact_intent.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38552,9 +40232,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:49f1f3095ea2707d",
+        "granularity": "atomic",
         "location": "tools/bl124_instrument.py",
         "name": "bl124_instrument.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38563,9 +40245,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:fabb8097364ca9e2",
+        "granularity": "atomic",
         "location": "getting-started/skills/brainstorm/SKILL.md",
         "name": "brainstorm/SKILL.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38574,9 +40258,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6aeb7aaf31ccdd875990bce6735c75eeead49c7371c4bc39064d4e7f478733e8",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38585,9 +40271,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:8f5ffbc7c6e84b5e",
+        "granularity": "atomic",
         "location": "docs/built-right-review.md",
         "name": "built-right-review.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38596,9 +40284,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6e8e23fce35b21d6",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/bulk.rs",
         "name": "bulk.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38607,9 +40297,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c2bea913c620128c1e602aed078713c7598f92e7cada4024c67777584b23b8be",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/changelog.rs",
         "name": "tests/changelog.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38631,9 +40323,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:a84c2afa299b6793cb78ae9aad6fda8cf659780728e38da0906ffa629dd41919",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/checksum_dialect.rs",
         "name": "checksum_dialect.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38642,9 +40336,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:5b6cb19cd4efedd8a4940a54412d033f73a904b376953f4f0f58d3ffee989d57",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/claims.rs",
         "name": "claims.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38653,9 +40349,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3",
+        "granularity": "atomic",
         "location": "docs/collaborating.md",
         "name": "collaborating.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38664,9 +40362,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b73161a0fd04efee",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/compare.rs",
         "name": "compare.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38675,9 +40375,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/compose.rs",
         "name": "compose.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38686,9 +40388,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/compose.rs",
         "name": "tests/compose.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38697,9 +40401,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/confirm.rs",
         "name": "confirm.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38708,9 +40414,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/confirmation_vocabulary.rs",
         "name": "confirmation_vocabulary.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38719,9 +40427,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c7b979d360e1e062",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/content.rs",
         "name": "content.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38730,9 +40440,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:4f23c464539aed28",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/content.rs",
         "name": "tests/content.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38741,9 +40453,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/contradiction_alignment.rs",
         "name": "tests/contradiction_alignment.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38778,9 +40492,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c30ee52bd7c3ec95",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/coverage.rs",
         "name": "tests/coverage.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38789,9 +40505,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:adfea07b2891743b",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/cycles.rs",
         "name": "Circular-dependency suite — detection, selectivity, and what the finding says it walked",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38800,9 +40518,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/degraded.rs",
         "name": "degraded.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38810,10 +40530,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:7d0835791c240df51164b7b4cddd7c4ccaa6bb09ed14e7f843c53f39fefb639f",
+        "checksum": "sha256:34059cb7abe2cce90cd3a8e28dd893b8235383585e7299e0ca50bbca0a4a0116",
+        "granularity": "atomic",
         "location": "reflow2.toml",
         "name": "reflow2.toml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38822,9 +40544,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:3bf2ed7ba5a6bccd928828657c0cc7e6b051e6b96c569f5f73528e6baf184d03",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/depends.rs",
         "name": "depends.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38833,9 +40557,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:4b1842af22cfbae2c7b112540fe0e98cc857d8369104e9112f66f1d7c650ad31",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/depends.rs",
         "name": "tests/depends.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38844,9 +40570,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6d274cf0f687fd7b3031761e30c174abfd473599c0fd64299fdb88cb71517c0f",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38855,9 +40583,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/dimensions.rs",
         "name": "dimensions.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38879,9 +40609,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:74c0459e03ad38ce",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/dto.rs",
         "name": "dto.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38890,9 +40622,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8956d2d0d4f31fe1",
+        "granularity": "atomic",
         "location": "tools/evidence_quality_instrument.py",
         "name": "Evidence-quality instrument — what the three axes report on a real design",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38901,9 +40635,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:0f66b31cfaca4944",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence_quality.rs",
         "name": "The evidence-quality family suite — all three axes with their counterweights",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38912,9 +40648,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence.rs",
         "name": "tests/evidence.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38923,9 +40661,24 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cbba2d0c482d766c6dae2ca016e0b9fd2f760a9987febfa7e9b477a2414df079",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:export-via-binary",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:3dc8f44f7add68ae0f56d7da184e667fd8860ededaa57262e8bd800de87be691",
+        "granularity": "atomic",
+        "location": "tools/export_via_binary.py",
+        "name": "export_via_binary.py — export through a chosen binary, so the stamp says what shipped",
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38934,9 +40687,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cfdf82f1a6497595",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/fielded.rs",
         "name": "fielded.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38945,9 +40700,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2",
+        "granularity": "atomic",
         "location": "docs/fleet-lessons.md",
         "name": "fleet-lessons.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38956,9 +40713,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/flow.rs",
         "name": "flow.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38967,9 +40726,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8196df94f5775161",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/genesis.rs",
         "name": "genesis.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38978,9 +40739,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:34701500af93dbcf",
+        "granularity": "atomic",
         "location": "docs/github-mcp-nuggets.md",
         "name": "github-mcp-nuggets.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -38989,9 +40752,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/granularity.rs",
         "name": "granularity.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39000,9 +40765,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:0c572c75d71045854e65d16ca6827271d9319bc13f35e470976c425fda05033c",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39011,9 +40778,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:d3c6e9fe1cac1177",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39022,9 +40791,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:30fc1a09862792a9",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39033,9 +40804,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:d4e51659a479603aa29befad2e00fa504d6b185bc35ee25961073a79bf04e4b8",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/identity.rs",
         "name": "identity.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39044,9 +40817,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/ility.rs",
         "name": "ility.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39054,7 +40829,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:5084eca05fa917c1f59d205ca05ae80ca970f5560b580edca8441ea22f451da7",
+        "checksum": "sha256:752fa1ea328b5bafe200ef45ea7c1e230648bb86f580bd0278886b8cdde5ee3e",
         "granularity": "atomic",
         "location": "docs/increment-plan.md",
         "name": "increment-plan.md",
@@ -39081,9 +40856,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/ingest_handshake.rs",
         "name": "tests/ingest_handshake.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39092,9 +40869,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:49199cc1c858f4cf5b48e370f4b5203bd7989d341951399a28eebde91725c06e",
+        "granularity": "atomic",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39103,9 +40882,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:07c82cd7671c1241",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/interface_spec.rs",
         "name": "tests/interface_spec.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39114,9 +40895,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:13f19b14c25c9300",
+        "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39125,9 +40908,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:feebbdb1438ff2c52e51cb0fbb004476378ffa97d3c9aa72890b7aa92f4b81b5",
+        "granularity": "atomic",
         "location": "getting-started/POINTER.md",
         "name": "POINTER.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39136,9 +40921,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:65a01535f32f023e",
+        "granularity": "atomic",
         "location": "getting-started/skills/kpp-proposal/SKILL.md",
         "name": "kpp-proposal/SKILL.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39147,9 +40934,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:15b7f82fc8a05031a7c77c92d6a5624442c047df47104973f8dc9091362045be",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/latent.rs",
         "name": "latent.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39158,9 +40947,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6869d93e97fc9393",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/llm.rs",
         "name": "llm.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39169,9 +40960,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13",
+        "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39180,9 +40973,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b41bc1c569e39c7ab7d8d72d667fe56870b53eb720be82e6e4b6d7b870023c82",
+        "granularity": "atomic",
         "location": "tools/reflow2_install.py",
         "name": "reflow2_install.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39191,9 +40986,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9eee13f94445919641af92008ffa67b7a474c21ddfe08edacde256e176f90ff5",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39202,9 +40999,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f743c9902452b2b7b15da4df3d62a92d9dca2bdbbd0efcff7e3625eb9b809e9a",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/maturity.rs",
         "name": "maturity.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39213,9 +41012,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:075bab31f3c131b6",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/merge.rs",
         "name": "merge.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39224,9 +41025,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cddbea4165e0e3b0",
+        "granularity": "atomic",
         "location": "tools/test_merge_driver.py",
         "name": "test_merge_driver.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39235,9 +41038,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:774ad95db84666b3",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39246,9 +41051,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/nudge.rs",
         "name": "nudge.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39257,9 +41064,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39268,9 +41077,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9b388fef123f04c5",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/orphan_attachment.rs",
         "name": "orphan_attachment.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39279,9 +41090,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:9cbea33b6a561a9e",
+        "granularity": "atomic",
         "location": "getting-started/skills/parallel-work/SKILL.md",
         "name": "parallel-work/SKILL.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39290,9 +41103,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14",
+        "granularity": "atomic",
         "location": "docs/planning-at-scale.md",
         "name": "planning-at-scale.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39301,9 +41116,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/preserve.rs",
         "name": "preserve.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39312,9 +41129,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:26dde99a1df42e6f",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/propagate.rs",
         "name": "propagate.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39323,9 +41142,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39334,9 +41155,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/publishable_promise.rs",
         "name": "tests/publishable_promise.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39345,10 +41168,12 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "crates/reflow2-core/src/readiness.rs",
         "name": "readiness.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39357,9 +41182,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:da4302eb091e89ce69d2c97b66e947472fba881f7718e86f5a2f5824e057ff22",
+        "granularity": "atomic",
         "location": "README.md",
         "name": "README.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39368,9 +41195,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:99fc5da421a04f5e",
+        "granularity": "atomic",
         "location": "tools/render_views.py",
         "name": "render_views.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39379,9 +41208,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f908416fd368f84adfee2fc8567f8904c01d6a2c18a6ee59ef0d07557aa3aeeb",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39390,9 +41221,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:dc88dfbc4e1aacbc",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/sanitize.rs",
         "name": "sanitize.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39401,9 +41234,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:56201fe977dc874f",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39426,10 +41261,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:81403d844b84c265da25581c0e3794dbaabae825eebfca0de0917b7f2cfe5322",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
         "name": "core.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39438,10 +41275,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/dimensions.yaml",
         "name": "dimensions.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39450,10 +41289,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/environment.yaml",
         "name": "environment.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39462,10 +41303,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:831166aee7d4de9bd90e5826d4b6ef474dd8be49f2cc14609f32d12039893222",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/functional.yaml",
         "name": "functional.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39474,10 +41317,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:52a5e92ffed17c501f9d849dcadbb5f4614d35b79c731a90860d4e7d7056b02d",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/inference.yaml",
         "name": "inference.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39486,10 +41331,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:543955d24d224ff0c0aff6f28928fa728248dc7694662b22cab0e8d1f1cc5168",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/operate.yaml",
         "name": "operate.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39498,10 +41345,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/readiness.yaml",
         "name": "readiness.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39510,10 +41359,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:8e528069f11575d45725f0fd260a992ba153cfd99de84cfabca797f9b60bccc0",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
         "name": "structure.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39522,10 +41373,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
         "name": "temporal.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39534,10 +41387,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
         "name": "verify.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39546,9 +41401,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:47fa2c2aa8b402bb",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/scope.rs",
         "name": "scope.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39570,9 +41427,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea",
+        "granularity": "atomic",
         "location": "docs/scope-read-while-held.md",
         "name": "scope-read-while-held.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39581,9 +41440,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:45aaec579dc701380a04d4f12b59a6b14ba5aeb619e823c021b0b21ed08e5caa",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/seam.rs",
         "name": "seam.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39592,9 +41453,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/seam.rs",
         "name": "tests/seam.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39603,9 +41466,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c421c3496192d22d",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/search.rs",
         "name": "search.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39614,9 +41479,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:4d824c873120e938",
+        "granularity": "atomic",
         "location": "tools/self_host_uses_documents.py",
         "name": "self_host_uses_documents.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39638,9 +41505,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:f6e66fec577e59d755de63c38fc02c7227eb28a64a7e33dc6cd4ab60a2c6b293",
+        "granularity": "atomic",
         "location": "getting-started/SETUP.md",
         "name": "getting-started/SETUP.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39688,9 +41557,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda",
+        "granularity": "atomic",
         "location": "tools/test_skill_lint.py",
         "name": "test_skill_lint.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39699,9 +41570,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:d437174ef98701bd2fcfdd2f4fa97daafeac687c899df764f036536ccf3a29a4",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/skills.rs",
         "name": "skills.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39710,9 +41583,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/build.rs",
         "name": "build.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39721,9 +41596,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:c09cc6f310635d1b2fb9a888f38c323fbd2ae2fb9e816586a32f2c00c87a46fb",
+        "granularity": "atomic",
         "location": "SKILLS.md",
         "name": "SKILLS.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39732,9 +41609,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783",
+        "granularity": "atomic",
         "location": "tools/stateless_seat_probe.py",
         "name": "stateless_seat_probe.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39743,9 +41622,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83",
+        "granularity": "atomic",
         "location": "docs/storyflow-resolution-nuggets.md",
         "name": "storyflow-resolution-nuggets.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39754,9 +41635,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:76f2dec276b09685",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39765,9 +41648,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b3b2bac1387c9c53",
+        "granularity": "atomic",
         "location": "tools/surface_usage.py",
         "name": "Surface-usage instrument — which parts of reflow2 real sessions actually drive",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39776,9 +41661,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b1cec4ec107ef2b1",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/surprises.rs",
         "name": "surprises.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39787,9 +41674,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e792e6bab2ad48527428df1c015f6ebe20fec9d79da22657f7ed088f8d605c56",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/sync.rs",
         "name": "sync.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39798,9 +41687,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:829e4905cc5f40a8b24e6027b5522780c90e8c133742299549e80880b2f6abef",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39809,9 +41700,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef",
+        "granularity": "atomic",
         "location": "tools/test_degraded_server.py",
         "name": "test_degraded_server.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39820,9 +41713,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/design_identity.rs",
         "name": "design_identity.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39831,9 +41726,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:5d3f5c3b7ee5b14757e11779e086d82853401f3e8ceac245cd1dabc86f25a31a",
+        "granularity": "atomic",
         "location": "tools/test_init.py",
         "name": "test_init.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39842,9 +41739,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:27f84b4a505d648f2b2b86033ed818a01f6adf50e59ab8a25e76d293daa57162",
+        "granularity": "atomic",
         "location": "tools/test_nudge_path.py",
         "name": "test_nudge_path.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39853,9 +41752,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39864,9 +41765,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f",
+        "granularity": "atomic",
         "location": "tools/test_shared_sessions.py",
         "name": "test_shared_sessions.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39875,9 +41778,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/stale_seat.rs",
         "name": "stale_seat.rs + test_stale_seat.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39886,9 +41791,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39923,9 +41830,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "tools/capture.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39934,9 +41843,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:30f35727b9157119714ad5a060cabdef3d87d3a69d88987e8ade91fb6155d623",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/claims_tools.rs",
         "name": "tools/claims_tools.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39971,9 +41882,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39982,9 +41895,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -39993,9 +41908,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40004,9 +41921,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:814d67ab62c1014e402611dc1f73028332d2af8ca95a159dbf70022086065b34",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40015,9 +41934,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/unreachable_decision.rs",
         "name": "unreachable_decision.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40026,9 +41947,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:ef7dbb708e027df2",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.11.0.md",
         "name": "upgrading-to-v0.11.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40037,9 +41960,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.12.0.md",
         "name": "upgrading-to-v0.12.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40048,9 +41973,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.13.0.md",
         "name": "upgrading-to-v0.13.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40059,9 +41986,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.15.0.md",
         "name": "upgrading-to-v0.15.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40070,9 +41999,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.16.0.md",
         "name": "upgrading-to-v0.16.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40081,9 +42012,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.18.0.md",
         "name": "upgrading-to-v0.18.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40092,9 +42025,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:3a36b9b6b248af09",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.19.0.md",
         "name": "upgrading-to-v0.19.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40103,9 +42038,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:d16abc28ea59e3f9",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.21.0.md",
         "name": "Upgrading to v0.21.0 — the stamp moves, and your evidence can say what it covers",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40114,9 +42051,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -40125,9 +42064,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:0d250aa84d8ebe16",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -41927,6 +43868,15 @@
       }
     },
     {
+      "node_id": "chg:accept-6ecebcb8257533cf",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "detected_at": "2026-08-05",
+        "name": "The v0.24.0 version bump. DESIGN_HOLDS deliberately: the design meaning of a cut lives in the Release node and its epoch, never in a version string, so nothing about what this project IS moved here. This drift is structural to every cut — reflow2.toml is a registered artifact and bumping it is step 1 — and accepting it BEFORE freezing the release manifest is what stops the manifest recording the pre-bump checksum and costing a second export."
+      }
+    },
+    {
       "node_id": "chg:accept-6f1ba29acecb8d91",
       "node_type": "ChangeEvent",
       "properties": {
@@ -42369,6 +44319,14 @@
       }
     },
     {
+      "node_id": "chg:anthony-rules-on-five",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Anthony rules: the artifact declaration earns a requirement and its gap is answered, \"loud not linked\" is confirmed as written, and both reframe decisions are accepted with the OUT half widened into v0.25.0"
+      }
+    },
+    {
       "node_id": "chg:arrival-delta-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -42430,6 +44388,15 @@
       "properties": {
         "change_type": "baseline_established",
         "name": "First baseline for the census document, registered 2026-08-04 with DOCUMENTS per the link-artifacts skill."
+      }
+    },
+    {
+      "node_id": "chg:baseline-15ac915379dcb2d2",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-05",
+        "name": "First baseline. Registered in v0.24.0's window without a checksum, so it has been reporting `no_baseline` on every gate run since — correctly, since nothing could judge it. Set now BEFORE freezing the release manifest, because `without_checksum` named it as the one entry that could not say WHAT shipped, and a manifest with a hole is the thing AGENTS.md says a release must not have. Nothing moved: this records a baseline, not a change."
       }
     },
     {
@@ -44979,7 +46946,7 @@
         "decision": "RECORDED AS A FINDING PLUS AN OPEN QUESTION, NOT AS A PROPOSAL. Raised 2026-08-04 while answering Anthony's dev_storyflow question (req:no-idea-goes-quiet). Nothing here is settled.\n\nTHE FINDING, VERIFIED IN CODE RATHER THAN SUPPOSED. `unsatisfied_requirement` fires per Requirement with no incoming SATISFIES, and it is NOT an aggregate gap — checked in `GapSource::is_aggregate()` (crates/reflow2-core/src/detect.rs), where `UnvalidatedCapability` is the sole `true` arm and `UnsatisfiedRequirement` is listed exhaustively among the `false` ones, with the comment that per-node keying is deliberate so a change to the named set expires the judgement. CONSEQUENCE: ingesting a corpus of 300 ideas that nothing yet implements produces 300 gaps that all say the same thing, burying every distinct finding beneath them.\n\nTHIS IS [BL-145] AT AN ORDER OF MAGNITUDE. That row reads: \"One detector produced 27 of 49 gaps saying the same thing, and buried every distinct finding below the fold\" — found 2026-08-01 by an /adopt pass over music_graph. It was filed at 27 against 49. A captured corpus is where it stops being a presentation annoyance: at 300 it is not noise, it is a wall, and it lands on exactly the user whose whole reason for ingesting was to stop losing track of things.\n\n⭐ WHY THIS IS NOT SIMPLY BL-145 RESTATED, AND IT IS THE PART WORTH KEEPING. Every existing detector was designed against a design that is MOSTLY BUILT, where an unsatisfied requirement is an exception worth naming one at a time. A captured corpus inverts the base rate: unbuilt is the NORMAL state, unbuilt is CORRECT, and req:accreted-intent-becomes-a-design already says so explicitly — \"every capability is `planned`, every requirement `proposed`, and the as-built half of the loop has no subject — which is honest and must not read as catastrophic.\" So the defect is not that the detector is chatty. It is that the detector's severity model encodes an assumption about the design's phase that the corpus case falsifies. The same suspicion should be carried to `unrealized_capability`, `unallocated_capability`, `design_without_build` and `build_without_verification`, none of which were checked here.\n\nOPTIONS, NONE CHOSEN. (a) MAKE IT AGGREGATE when the count crosses a bar — one gap saying \"300 requirements are unsatisfied\", drilling down on request. Cheapest, and `is_aggregate` is the existing seam. Counter, and the code comment states it directly: aggregate keying means a standing judgement does not expire when the set changes, so a requirement added later is silently covered by a judgement made before it existed — which is the right trade for a rollup and the wrong one for a finding that names nodes. (b) BAND BY PHASE — read the project's mode or the design's position on the maturity trajectory, and let a design with nothing built report this as a reading rather than as gaps. Fits maturity_report's existing frontier computation and dec:orientation-is-computed-not-written. Counter: it makes gap severity depend on a computed phase, and reflow2 has been careful that \"where this design SHOULD be is deliberately not stated\". (c) SCOPE IT — detect_gaps already takes a `scope` seed, so the corpus user asks per region rather than globally. Counter: it requires the user to already know which region to ask about, which is precisely what someone who just ingested 1,124 documents does not know. (d) DO NOTHING TO THE DETECTOR AND FIX THE PRESENTATION — group identical gap_sources in the report and lead with the distinct ones. Counter: `detect_gaps` is consumed by agents and by CI, not only by the report, so a presentation-only fix leaves both other consumers buried.\n\nWHAT THIS REPRIORITISES, offered as an observation and not as a plan. `epoch:v0240-planned` sequences the corpus increment as ingest-then-know-where-you-stopped. This finding says a fifth thing sits between them: a corpus that ingests correctly and then buries its own findings has not delivered req:no-idea-goes-quiet, whose whole content is that an unbuilt idea must stay LOUD. Loud and unreadable are not the same state, and 300 identical gaps is the second one. Whether that makes it a v0.24.0 obligation or a v0.25.0 one is Anthony's call — [BL-205] and [BL-194], both already scheduled for v0.25.0 as \"the loop tells the truth about what it is owed\", are the same family and may want to travel together.\n\nNOT VERIFIED HERE, and it bears on which option is right: whether `acknowledge_gaps` (the bulk form) already makes 300 gaps tractable by letting one reason dispose of many at once. If it does, the wall is lower than stated and (d) rises. Nobody checked.",
         "name": "OPEN — how should gap reporting behave when most requirements are legitimately unbuilt, as a captured corpus makes normal?",
         "rationale": "Recorded now rather than as a backlog row because it is a defect against a shipped capability with a real fork behind it, and this session has just spent an hour establishing that the backlog is where such things go to be re-derived. The measurement (is_aggregate checked in source, BL-145's 27-of-49 as the prior instance) is written down so the next session argues from the code rather than from the impression that gap output is noisy. Kept separate from req:no-idea-goes-quiet because that node states what the user needs and this one asks how the machine should behave — one node holding both could only ever be half-answered. The unchecked item (bulk acknowledge) is named explicitly so its absence is visible as a hole rather than passing as a completed analysis.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -45640,7 +47607,7 @@
         "decision": "RECORDED AS A REFRAME PLUS A MEASUREMENT, NOT AS A PROPOSAL. Anthony, 2026-08-04, stating the root question that unifies the dev_storyflow corpus and the reflow2-dogfooding threads: \"how do we transition documents to graph entities? whether that is a huge corpus of documents in dev_storyflow or getting away from using documents in reflow2, it is how do we make decisions based on graph content, not documents.\" Nothing here is settled.\n\nTHE SPLIT. (IN) documents become graph entities — ingest_step, provenance Fragments, the content store, cross-document convergence. Partly built, and every remaining piece is scheduled across epoch:v0240-planned..v0280-planned. (OUT) a person or agent DECIDES from graph content instead of from a document. Almost nothing is scheduled. The whole increment plan is capture, detection, seams and write-surface.\n\n⭐ THE MEASUREMENT, AND ALL OF IT IS FIRST-HAND FROM ONE SESSION ON 2026-08-04 RATHER THAN RECALLED. `reviewed_gaps` returned 130,922 CHARACTERS and could not be read at all — it was written to a file and queried with `jq`. That is the tool answering \"what have we already decided to accept\", which is a decision-making read, and it was unusable AS a read. It joins: `loop_status` at 72,886 characters until [BL-205] fixed it the day before, and it is the call the SessionStart hook and the server instructions both call \"the one cheap call\"; `describe_schema` on ONE node type at ~30 KB ([BL-142]); and `scan_nodes` on 241 Decisions, where the where-am-i skill's own guidance forced reading names only and confessing that exactly one had been read in full. Add the standing limit: 52 properties are `fulltext: true` and `Decision.rationale` is not one of them.\n\nTHEY ARE ALL ONE DEFECT: A READ THAT RETURNS EVERYTHING IT KNOWS INSTEAD OF WHAT WAS ASKED. The graph holds the content correctly. It cannot serve it back at the size it now holds. That is neither a vocabulary problem nor an ingest problem, which is why every framing so far has missed it — `dec:idea-backlog-belongs-in-the-graph` reasoned about what a node can HOLD, and the binding constraint is what a read can RETURN.\n\nTHE CONSEQUENCE THAT SHOULD NOT BE SOFTENED: TODAY A DOCUMENT BEATS THE GRAPH FOR MAKING A DECISION, AND IT IS A FAIR FIGHT THE GRAPH LOSES. A document can be skimmed, searched with ctrl-F, and read end to end. The graph offers 130 KB or a list of names. Reaching for the markdown is therefore RATIONAL BEHAVIOUR RESPONDING TO A REAL DIFFERENCE, not a bad habit to be disciplined out of, and no improvement to capture changes it.\n\nTHE SHAPE OF AN ANSWER, offered because the in-house precedent is already built and shipped rather than as advocacy: the transition is not documents → graph, it is DOCUMENTS → GRAPH → DERIVED DOCUMENTS. `cap:changelog-view` (\"a changelog is a derivable view of the graph's own delta\") shipped in v0.20.0 and CHANGELOG.md is generated today; `dec:views-are-projections` is accepted; `tools/render_views.py` is 44 KB of renderer producing docs/viewpoints.md and has existed since 2026-07-19. The renderer, the doctrine and the proof all exist — the backlog simply is not one of its views. This also explains why option (d) on `dec:idea-backlog-belongs-in-the-graph` kept losing: it was judged as a RIVAL to the capture options when it is the OUT half of the same answer, and that node already half-saw it (\"solves RETRIEVAL and not CAPTURE — it composes with (a)/(b) rather than competing\").\n\n⭐ THE TEST THIS YIELDS, AND IT IS ANTHONY'S OWN DELETION INSTINCT MADE SAFE. He asked: \"should I delete the documents and force us to use the reflow2 graph?\" Deletion is the right TEST and the wrong COMMITMENT. The test is: CAN YOU DELETE THIS DOCUMENT AND REGENERATE IT FROM THE GRAPH? Yes → the graph is the source and the document was a view. No → the document is still the source, and WHAT CANNOT BE REGENERATED IS PRECISELY WHAT THE GRAPH IS MISSING. Run it per document, never on the repo at once, and regenerate BEFORE deleting so nothing is ever at risk. Where each stands today, assessed 2026-08-04: CHANGELOG.md PASSES (already derived); docs/viewpoints.md PASSES; COORD.md's in-progress table passes the day `claim_region` is used for real, because the computation exists and is served (`dec:coord-board-in-graph`); docs/backlog.md FAILS, and the rows that cannot regenerate are the exact statement of what vocabulary is absent; AGENTS.md FAILS PERMANENTLY AND CORRECTLY, because an agent reads it before it knows reflow2 exists. That last row is why this is not a march toward zero documents — it is a march toward zero documents that are SOURCES, and the test says which is which instead of leaving it to taste.\n\nFOR A CORPUS THE TEST POINTS THE OTHER WAY. Source documents cannot be regenerated and must not be — `req:sources-are-kept-not-just-parsed` says so. The test applies instead to the READING: after ingest, can \"what did I want to build, and what of it exists\" be answered without opening a document? A no means the ingest landed prose rather than structure, which is exactly what the 52-fulltext-properties limit predicts for rows imported as long descriptions.\n\nWHAT IS NOT DECIDED HERE. Whether the OUT half is a v0.24.0 obligation, its own increment, or a discipline applied to every read as it is touched. Which reads to fix first, and by what rule — `reviewed_gaps` is the loudest but `scan_nodes` on a mature type may be the most consequential. Whether \"answer-shaped rather than type-shaped\" needs new tools or bounded forms of the existing ones. And whether the backlog renderer is a `render_views.py` view, a served tool, or neither.\n\n--- COUNTED 2026-08-04, SAME SESSION. The item left unverified above is now closed, and it answers the bug-list-or-increment question against the cheaper reading. ---\n\n⭐ OF 33 COLLECTION-RETURNING READ TOOLS ON THE SERVED SURFACE, EXACTLY THREE LET THE CALLER BOUND THE RESULT, AND ONLY ONE CAN PAGE. Counted over `crates/reflow2-mcp/src/tools/*.rs` (144 tool functions across 12 modules). The 33 are: alternatives_for, budget_report, changelog_view, claim_report, confirmation_ledger, content_manifest, coverage_report, describe_schema, detect_defects, detect_gaps, dimension_drifts, evidence_report, export_graph, export_surface, find_tools, flow_report, granularity_report, graph_report, graph_report_markdown, hierarchy_issues, ility_report, loop_status, maturity_report, open_questions, readiness_report, recall_resolutions, release_report, reviewed_defects, reviewed_gaps, scan_nodes, seam_report, search_design, surprising_connections. The three bounded: `scan_nodes` (limit + offset + next_offset + capped_by — the only real paging), `search_design` (limit, no offset), `find_tools` (limit with a default). The only other `limit` in the tool surface is `Constraint.limit`, a domain property, not a bound.\n\nSO IT IS AN INCREMENT, NOT A BUG LIST — the guess of \"four\" was low by an order of magnitude. TWO HONEST QUALIFIERS THAT KEEP THE NUMBER FROM BEING OVERSTATED. (i) Not all 30 are broken today: several bound themselves internally rather than by parameter — `loop_status` became a digest under [BL-205], and `graph_report_markdown` is a summary by construction. The claim is that the CALLER cannot bound them, not that all thirty are unreadable now. (ii) Because none of them share a paging mechanism, each fix is bespoke. That is the real cost, and it is the argument for treating this as one increment with a common shape rather than as thirty separate rows — which is exactly how [BL-205] was filed and fixed, alone, one tool at a time, three days ago.\n\nTHE SHAPE THIS SUGGESTS, not chosen: `scan_nodes` already solved this problem completely — `total` against `returned`, `omitted`, `next_offset`, `capped_by`, and a payload budget so a cap is never silent but never a surprise. It is an in-house pattern, tested, and adopted by exactly one tool. Generalising it is a smaller design question than inventing one.",
         "name": "OPEN — \"documents to graph entities\" is TWO problems, and the failing one is reading the graph back, not getting content into it",
         "rationale": "Recorded because the measurement is perishable in the exact way this project keeps rediscovering: \"reviewed_gaps returned 130,922 characters\" becomes \"reads felt big once\" within a session or two, and then the next reader re-derives it or, worse, does not. The numbers are first-hand from a single sitting and are written down so the next session argues from them.\n\nKept as its own node rather than appended to `dec:idea-backlog-belongs-in-the-graph` because it CONTRADICTS that node's framing rather than extending it. That node asks what a node and an edge can hold and concludes the answer turns on how much of a row becomes structure; this one says the binding constraint is downstream of that entirely — a perfectly structured graph nobody can read back is still a graph nobody decides from. Folding the correction into the node it corrects would hide it.\n\nDeliberately does NOT register alternatives, so this stays a question rather than becoming a fork the loop asks Anthony to choose between.\n\nAMENDED the same session: the item this node named as unchecked was checked, and the answer (3 of 33, one pager) moved it from a bug list to an increment. Recorded as an amendment with the prior state snapshotted rather than as a fresh node, because the unchecked and checked forms are the same claim at two confidence levels — and the fact that naming the hole is what got it filled within the hour is worth the record.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -46994,6 +48961,16 @@
       }
     },
     {
+      "node_id": "epoch:anthony-rules-on-five",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "Anthony rules on the pending record: the artifact declaration earns a requirement, \"loud not linked\" is confirmed, and the OUT half is accepted and scheduled (2026-08-05)",
+        "sequence": 278,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:arrival-delta",
       "node_type": "DesignEpoch",
       "properties": {
@@ -47491,6 +49468,16 @@
       }
     },
     {
+      "node_id": "epoch:v0240",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.24.0 cut — the document corpus can actually be ingested, and the trial that proved it found a silent data-loss defect older than the increment",
+        "sequence": 279,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:v0240-planned",
       "node_type": "DesignEpoch",
       "properties": {
@@ -47505,8 +49492,8 @@
       "node_type": "DesignEpoch",
       "properties": {
         "epoch_type": "release_cut",
-        "name": "PLANNED v0.25.0 — the loop tells the truth about what it is owed. No schema; all message and reporting quality, five of six sized S. BL-205 loop_status unreadable, BL-194 open_questions all-clear, BL-192 enums name legal values, BL-195 the bridge a ruling forbids, BL-201 wire or retire Requirement.concern, BL-203 an unexercised type is visible rather than silently empty.",
-        "sequence": 264,
+        "name": "PLANNED v0.25.0 — \"The graph can be READ at the size it has reached.\" WIDENED 2026-08-05 on Anthony's word, from \"the loop tells the truth about what it is owed\" to the whole OUT half (dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one, accepted). THE MEASUREMENT THAT FORCED IT: of 33 collection-returning read tools, THREE let the caller bound the result and only scan_nodes can page; reviewed_gaps returned 130,922 characters and had to be read with jq. Today a document BEATS the graph for making a decision, and that is a fair fight the graph loses — so no capture improvement is worth anything until this lands. Rows already here and still right: BL-194 open_questions all-clear, BL-192 enums name legal values, BL-195 the bridge a ruling forbids, BL-201 wire or retire Requirement.concern, BL-203 an unexercised type is visible. Joining them: generalise scan_nodes' envelope (total/returned/omitted/next_offset/capped_by + payload budget) to the other 30, since it already solved this and was adopted by exactly one tool; and dec:gap-reporting-when-most-intent-is-unbuilt (accepted), because 300 captured ideas produce 300 identical gaps and that is the same defect wearing a detector's clothes. BL-205 is DONE, shipped early in #70 — the plan carried it as open and was stale.",
+        "sequence": 250,
         "status": "planned"
       }
     },
@@ -48453,6 +50440,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered export.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:export-via-binary",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered export_via_binary.py — export through a chosen binary, so the stamp says what shipped"
       }
     },
     {
@@ -49598,12 +51595,13 @@
       "node_id": "question:5c02d9fc4c3ab022",
       "node_type": "Question",
       "properties": {
+        "answer": "KEEP IT — and write the requirement. (Anthony, 2026-08-05, answering the question as asked.)\n\nThe problem it solves, in the terms the question put: the two states read IDENTICALLY without it and they are OPPOSITE. A folder claimed deliberately and a placeholder nobody has got to yet are a decision and unfinished work — a registration check reported \"every live doc is registered\", truthfully, over 359 individually unreferenceable files. And a file that is supposed to keep changing fired drift forever, so the same meaningless disposition was owed on every reconcile.\n\nRecorded as `req:an-artifact-declares-what-only-its-author-knows`, accepted, and `cap:artifact-declares-its-own-shape` now SATISFIES it. The general form that made it worth a requirement rather than two properties: some facts about an artifact are only knowable by the person who put it there, and reflow2 performs no file IO by doctrine, so it cannot even try to observe them.\n\nNoted rather than tidied: the capability shipped BEFORE the requirement, which is the reverse of the loop this project prescribes. The gap was right to fire and the intent is catching up.",
         "asked_at": "2026-08-04",
         "context_setter": "Nothing asked for capability “An artifact declares what it stands for and how its content behaves, so a report can tell two opposite states apart”",
         "gap_id": "gap:5c02d9fc4c3ab022",
         "question": "When a file or folder is registered, reflow2 now lets you say what it stands for — whether it's one finished thing, a whole folder you're deliberately treating as a single item, or a placeholder you still mean to break up — and whether its contents are expected to keep changing. Nothing in your written-down needs actually asked for that. Was it worth adding, and if so, what problem of yours does it solve? Or should it come back out?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -50154,9 +52152,19 @@
       "node_type": "Release",
       "properties": {
         "name": "v0.23.0 — the design brain learns to talk about its own structure",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.23.0"
+      }
+    },
+    {
+      "node_id": "rel:v0240",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.24.0 — a folder of documents becomes one design, and the first real trial found what green gates could not",
+        "status": "deployed",
+        "unit_type": "binary",
+        "version": "0.24.0"
       }
     },
     {
@@ -50368,6 +52376,21 @@
         "priority": "high",
         "provenance": "authored",
         "statement": "Every capability is reachable from a coding agent over one surface.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:an-artifact-declares-what-only-its-author-knows",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A registered file says what it stands for and how its content is expected to behave, because no amount of looking can tell",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When something is registered against the design, reflow2 must let its author state two things nothing can observe from the outside: WHAT THE NODE STANDS FOR — one finished thing, a folder deliberately claimed as a single item, or a placeholder still meant to be broken up — and WHETHER ITS CONTENT IS EXPECTED TO KEEP CHANGING. Reports must then tell those states apart rather than reading them alike.\n\nANTHONY, 2026-08-05, answering the standing question (\"was it worth adding, and if so what problem does it solve, or should it come back out?\"): KEEP IT, and write the requirement.\n\nWHY IT IS A REQUIREMENT AND NOT A FEATURE THAT ESCAPED. The two states this distinguishes are OPPOSITE and read IDENTICALLY without it. A directory artifact claims its whole subtree — which is the adopt skill's own rule — so a registration check reported \"every live doc is registered\", truthfully, across 359 individually unreferenceable files, and `coverage_report` counted the directory as covering everything beneath it. \"Deliberately opaque\" (a settled archive, a vendored tree) and \"nobody has got to it yet\" are a DECISION and UNFINISHED WORK, and a report that cannot separate them is confidently wrong rather than merely incomplete. The same shape on the content side: checksumming a live append-only file fires drift forever, so the disposition is owed again on every reconcile and the signal trains its reader to ignore it.\n\nTHE GENERAL FORM, which is why this belongs in the design rather than as two properties: SOME FACTS ABOUT AN ARTIFACT ARE ONLY KNOWABLE BY THE PERSON WHO PUT IT THERE. Neither hashing a file nor walking a tree can say whether a directory was left whole on purpose or whether a file is supposed to grow. reflow2 performs no file IO by doctrine, so it cannot even try — which makes the author's declaration the only possible source, and makes its ABSENCE a silent default rather than an unanswered question.\n\nRECORDED AS THE ANSWER TO A GAP THAT WAS RIGHT TO FIRE. `unmotivated_capability` asked why a capability existed that no requirement wanted, and the honest answer was that it was built from measured friction before the intent was written down. The gap did its job; this is the intent catching up, not the gap being explained away. Note the ordering deliberately: the capability shipped first and the requirement follows, which is the reverse of the loop this project prescribes — worth seeing rather than tidying, because the friction that produced it was real and the design was genuinely silent.\n\nSTATUS `accepted` ON ANTHONY'S EXPLICIT WORD, given 2026-08-05 in reply to the question as asked.",
         "status": "accepted"
       }
     },
@@ -51253,7 +53276,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Once an idea or requirement is in the design, reflow2 must keep it connected in BOTH directions without the user remembering it exists: FORWARD to the design and implementation that serve it (or the visible absence of any), and BACKWARD to the document and location it was written in. The user must never again have to recall that they wrote something, hunt for the file, and hand-point an agent at it.\n\nANTHONY, 2026-08-04, IN HIS OWN WORDS: \"I put in dev_storyflow probably hundreds of ideas (some of which may be requirements) - I always struggled of translating these ideas into design and implementation. It was always manual process of me trying to find the document or documents that I had written the idea/requirement in and then purposefully point the agent to it. my hope is that by putting this in the graph, that these requirements are automatically linked to design and implementation (kind of a core feature of reflow2).\"\n\nWHAT \"AUTOMATICALLY LINKED\" MUST AND MUST NOT MEAN, because the obvious reading of his words would break the product. reflow2 must NOT auto-draw SATISFIES/REALIZES edges from similarity: the adopt skill's central discipline is that \"a requirement backed out of the implementation that satisfies it is satisfied by construction — it can never contradict anything, so a graph of those can never say anything,\" and auto-linking would make every captured idea read as delivered and the completion reading say 100% forever. Edge PREDICTION is a live open question and deliberately framed as a question rather than a repair (dec:idea-missing-edge-prediction, proposed). What must be automatic is the INVERSE: an idea nothing implements FIRES AND KEEPS FIRING (unsatisfied_requirement — \"a Requirement has no SATISFIES from any Capability\", verified in detect.rs), and an idea that IS implemented is reachable to its file paths through the existing thread — Requirement <-SATISFIES- Capability -ALLOCATED_TO-> Component <-REALIZES- Artifact. The backward half is already carried by ingest: every extracted node gets YIELDED to its provenance Fragment, whose content_ref holds the blob hash plus the agent's locator (dec:agent-navigates-content).\n\n⭐ THE RESTATEMENT THAT MATTERS, AND IT IS NOT THE PROBLEM AS FIRST DESCRIBED. The stated pain is retrieval — \"I could not find the document.\" The operative pain is VISIBILITY: an idea written eighteen months ago was invisible until he happened to remember it existed. Auto-linking would restore that invisibility under a friendlier name, because a linked idea reads as handled. Staying LOUD until ruled on is therefore the requirement, and cheap retrieval is its by-product rather than its point.\n\nDISTINCT FROM ITS TWO NEIGHBOURS, on the same pattern req:accreted-intent-becomes-a-design uses to separate itself from req:corpus-ingest. req:corpus-ingest is CONVERGENCE (forty specs naming one component resolve to one node). req:accreted-intent-becomes-a-design is INGEST (a contradictory, never-built corpus becomes a design at all). THIS one is what the design owes the user AFTERWARDS — it is satisfied or violated long after ingest has finished, and it is violated silently. req:golden-thread (accepted) states the thread must not break; this states that an idea's END of that thread must be loud when the thread does not reach it, which is the case a corpus makes normal rather than exceptional.\n\nStatus deliberately `proposed`: Anthony's framing captured in his words and awaiting his confirmation of the wording. The reading above (\"loud, not linked\") is MY restatement of what he asked for and is the part most worth his challenge — he asked for automatic linking and is being told the opposite is what serves him.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -54005,7 +56028,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:31c02265fa5073381a19b7fa2aef259279b86fe0be6918ddf1e167d14d4d6b16",
+  "prev_content_hash": "sha256:aea0ffa7868000cfdd797d624a777d69df04edc0eb92a4df7d4f05d2e63351aa",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -54102,7 +56125,7 @@
       "Verification"
     ],
     "node_types": 29,
-    "reflow2_version": "0.23.0",
+    "reflow2_version": "0.24.0",
     "schema_version": 1
   }
 }
