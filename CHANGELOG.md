@@ -31,6 +31,18 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.24.0] — 2026-08-05
+
+**The document corpus can actually be ingested — and pointing it at someone else's codebase
+immediately found a silent data-loss bug eleven releases of green self-host could not see.**
+
+This increment set out to unblock a user who stopped at 26 of ~756 documents. It ends with the
+folder driver built, trialled on a real corpus, and the defect that trial exposed fixed. The
+sequence is the point: **the corpus ingest was green on every gate before the trial ran.**
+
+**Minor, not patch** — `CorpusReport` changed shape and the tool surface grew by one. **No schema
+change: the stamp is unmoved at 29 node types / 60 edge types, so no upgrade doc is owed.**
+
 ### Fixed
 
 - **⭐ Sibling components are no longer silently merged away** (BL-213) — found by the FIRST
