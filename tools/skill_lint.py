@@ -89,6 +89,20 @@ NON_TOOL_TERMS = {
     "append_only",
     "living",
     "expected_change",
+    # SCHEDULED_FOR / DesignEpoch / GATED_ON vocabulary the plan-increments
+    # skill names. `achieved` is the odd one and it is deliberate: the skill has
+    # to state that the modality does NOT exist, because delivery is computed by
+    # arrival_delta and never asserted — naming an absence is the only way to
+    # stop an agent inventing it.
+    "achieved",
+    "expected",
+    "required",
+    "modality",
+    "sequence",
+    "deployed",
+    "kind",
+    "min_level",
+    "unreleased_component",
     "path",
     "base_path",
     "next",

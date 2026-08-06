@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0efc5bc5801dfeaef5beafecc3859fa8cb5dd75b21b6cdfe2193207e5c537917",
+  "content_hash": "sha256:76c053c1d3f8db113f9f5ce8c1fdaa5d37a883ef28ae6503ef5a6b94b62f2eaa",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -668,6 +668,14 @@
     {
       "edge_type": "ALLOCATED_TO",
       "from_id": "cap:parallel-work",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:plan-increments",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -4007,6 +4015,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:plan-increments",
+      "properties": {
+        "acted_at": "2026-08-06T12:55:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cap:recover-from-tests",
       "properties": {
         "acted_at": "2026-07-24",
@@ -5365,6 +5382,15 @@
       "to_id": "who:claude-code"
     },
     {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ver:plan-increments",
+      "properties": {
+        "acted_at": "2026-08-06T12:55:00Z",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
       "edge_type": "BLOCKS",
       "from_id": "req:kit-reaches-the-agent",
       "properties": {
@@ -6162,6 +6188,15 @@
         "action": "modified"
       },
       "to_id": "req:what-next"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-f5d009f115db42d1",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -17278,6 +17313,12 @@
       "from_id": "cap:parallel-work",
       "properties": {},
       "to_id": "decision:ack:bd5aefd848b8d3e4"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:plan-increments",
+      "properties": {},
+      "to_id": "rule:fixes-are-judged-by-the-third-party"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -37713,6 +37754,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:plan-increments-skill",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:plan-increments"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:preserve",
       "properties": {
         "completeness": "complete"
@@ -39045,6 +39094,18 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:plan-increments",
+      "properties": {},
+      "to_id": "req:conventions-ride-the-tool-not-only-the-skill"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:plan-increments",
+      "properties": {},
+      "to_id": "req:epochs-can-be-planned"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:plan-movement-recorded",
       "properties": {},
       "to_id": "req:plans-move-honestly"
@@ -39978,6 +40039,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:plan-increments",
+      "properties": {},
+      "to_id": "cap:plan-increments"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:planned-epochs",
       "properties": {},
       "to_id": "cap:planned-epochs"
@@ -40772,6 +40839,14 @@
         "action": "created"
       },
       "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:plan-increments-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:plan-increments-skill"
     },
     {
       "edge_type": "YIELDED",
@@ -42209,6 +42284,19 @@
       }
     },
     {
+      "node_id": "art:plan-increments-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:ce7feac76c8da9cd72c6188a2f0035565f37031c2632354820baaf7fc1ffcdcd",
+        "granularity": "atomic",
+        "location": "getting-started/skills/plan-increments/SKILL.md",
+        "name": "plan-increments/SKILL.md",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:planning-at-scale",
       "node_type": "Artifact",
       "properties": {
@@ -42613,7 +42701,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c814d9d9f016f473fc89a222865c26d7278fbdfc6adb79706e649afa224787e8",
+        "checksum": "sha256:f249ba49c9197e10b7b091a80b34bf812951a869fd05e99abf32182ecbcaa5f5",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -44047,6 +44135,19 @@
       }
     },
     {
+      "node_id": "cap:plan-increments",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The plan-increments SKILL. The temporal axis has one of the richest tool surfaces in the product — plan_epoch, add_epoch, set_epoch_status, schedule_for, arrival_delta, forecast_readiness, add_release, release_includes, release_report, changelog_view, pin_at_epoch, precedes, gate_on, add_readiness, readiness_report, budget_report — and, until now, ZERO skill coverage. Sixteen skills, none touching planning.\n\nWHAT THE SKILL CARRIES THAT NO AGENT GUESSES, which is the whole justification under req:conventions-ride-the-tool-not-only-the-skill: plan_epoch (has not happened) versus add_epoch (has); SCHEDULED_FOR meaning DUE AT against AT_EPOCH meaning BELONGS TO, separate on purpose because one edge carrying both would be indistinguishable to every detector; modality expected (a plan) versus required (an obligation whose miss is a computed violation, the scheduling face of a KPP); and THE DELIBERATE ABSENCE OF `achieved`, because delivery is computed by arrival_delta and never asserted — a plan recording its own success is a second source of truth able to disagree with the first.\n\n⭐ IT ALSO NAMES A FAILURE THE OTHER SKILLS DO NOT: a delivery plan kept OUTSIDE the graph — a numbered list in a conversation, a roadmap in a README, \"next up\" in a commit message. Anthony, 2026-08-06, pointing at this agent's own conversational queue of proposed next work: \"your queue of proposed next work should also be a reflow2 skill\". That is the third instance of the shadow-list class in one session — flo2's README list of open decisions, [BL-215]'s hand-copied decisions from the hxm_program field report, and an agent's own to-do list — and the first where the agent was the one keeping it. A list in a session is worse than a stale document: it vanishes at session end, so the next agent rebuilds it and loses the ordering the user had already reasoned through.\n\nPROVEN AGAINST A REAL STALE PLAN on the day it was written (see ver:plan-increments): reflow2's own temporal axis held 24 releases and 72 epochs, and ELEVEN SCHEDULED_FOR edges, all pointing at three retired releases. Nothing was scheduled into any of the five planned future increments. arrival_delta on the just-arrived v0.24.0 answered `items: []` and `ready_to_cut: false` — for an increment that had already shipped and deployed — because its plan lived in the node's NAME as prose and never as structure.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "The practice of planning delivery in increments is served, so a consumer does not have to reconstruct it from fifteen tool descriptions",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:plan-movement-recorded",
       "node_type": "Capability",
       "properties": {
@@ -45317,6 +45418,15 @@
       "properties": {
         "change_type": "requirement_creep",
         "name": "Anthony accepted the eight proposed requirements captured this session"
+      }
+    },
+    {
+      "node_id": "chg:accept-f5d009f115db42d1",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-06T13:10:00Z",
+        "name": "NON_TOOL_TERMS gains the SCHEDULED_FOR / DesignEpoch / GATED_ON vocabulary the new plan-increments skill names — modality, expected, required, achieved, sequence, kind, min_level, deployed, unreleased_component. The lint's own failure message asks for exactly this, in the same diff. No design meaning: the allowlist is how the lint distinguishes a field name from a mistyped tool, and adding the terms a new skill legitimately uses carries no claim about the design."
       }
     },
     {
@@ -50922,7 +51032,7 @@
         "epoch_type": "release_cut",
         "name": "PLANNED v0.24.0 — the document corpus can actually be ingested. Unblocks a user who stopped work at 26 of ~756 documents. BL-176 (done, #68) then BL-199 re-attach, BL-188 granularity intent + BL-191 volatility (both Artifact properties, so ONE schema touch), BL-186 build cap:corpus-ingest, BL-196 genesis asks about custody. Order is forced: ingest at all, then know where you stopped.",
         "sequence": 263,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -52233,6 +52343,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered parallel-work/SKILL.md"
+      }
+    },
+    {
+      "node_id": "frag:art:plan-increments-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered plan-increments/SKILL.md"
       }
     },
     {
@@ -57304,6 +57424,18 @@
       }
     },
     {
+      "node_id": "ver:plan-increments",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-06T12:55:00Z",
+        "level": "integration",
+        "method": "demonstration",
+        "name": "The skill is served and its first exercise found reflow2's own plan was decorative (2026-08-06, 4 checks). SERVED: list_skills returns 17 (was 16) with plan-increments present, and get_skill returns the full body — build.rs embeds it, so it cannot drift from the running binary (dec:skills-served). EXERCISED ON A REAL STALE PLAN, which is what it was written for: reflow2's temporal axis held 24 Releases and 72 DesignEpochs against ELEVEN SCHEDULED_FOR edges, every one pointing at v0.19.0/v0.20.0/v0.21.0 — all retired. NOTHING was scheduled into any of the five planned future increments. ARRIVAL CLOSED: epoch:v0240-planned was still `planned` while rel:v0240 was `deployed`, the exact both-directions staleness the skill's step 4 says to check for; set_epoch_status moved it to arrived. AND THE DELTA REFUSED TO FLATTER: arrival_delta on it answered `items: []`, `required_count: 0` and `ready_to_cut: false` FOR AN INCREMENT THAT HAD ALREADY SHIPPED, with the note \"an increment that promises nothing has not been scoped\". The v0.24.0 plan lived in the epoch node's NAME as prose and never as structure, so the planned-versus-delivered delta the whole axis exists to compute had nothing to compute against. That is the finding the skill is meant to prevent, demonstrated on the design that ships it.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:planned-epochs",
       "node_type": "Verification",
       "properties": {
@@ -57792,7 +57924,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:54f6603bbd938ee1a6aa66348470825180bdd6dae75ea9f0885fcb4675d1b45f",
+  "prev_content_hash": "sha256:0efc5bc5801dfeaef5beafecc3859fa8cb5dd75b21b6cdfe2193207e5c537917",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -33,6 +33,35 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **⭐ New skill: `plan-increments`** — planning delivery in increments and steps. Sixteen skills
+  covered capture, detection, revision, health and collaboration; **none covered the temporal
+  axis**, which has one of the richest tool surfaces in the product (`plan_epoch`, `add_epoch`,
+  `set_epoch_status`, `schedule_for`, `arrival_delta`, `forecast_readiness`, `add_release`,
+  `release_includes`, `precedes`, `gate_on`, `readiness_report`, …). Every consumer planning
+  increments was reconstructing the practice from tool descriptions.
+
+  **It carries the four conventions nobody guesses:** `plan_epoch` (has not happened) vs
+  `add_epoch` (has); `SCHEDULED_FOR` = *due at* vs `AT_EPOCH` = *belongs to*, separate because one
+  edge for both would be indistinguishable to every detector; `modality: expected` (a plan) vs
+  `required` (an obligation whose miss is a computed violation — a KPP with a deadline); and the
+  **deliberate absence of `achieved`**, because delivery is computed by `arrival_delta` and never
+  asserted — *a plan recording its own success is the plan lying about itself*.
+
+  **It also names a failure the other skills do not: a delivery plan kept outside the graph** — a
+  numbered list in a conversation, a roadmap in a README, "next up" in a commit message. Raised by
+  @ajs pointing at the assistant's own conversational queue. That is the third instance of the
+  shadow-list class in one session, and the first where the agent was the one keeping the list; a
+  list in a session is worse than a stale document, because it vanishes at session end and the next
+  agent rebuilds it, losing whatever ordering the user had already reasoned through.
+
+  **Its first exercise was reflow2's own plan, and the plan did not survive it**
+  (`ver:plan-increments`, passing): 24 Releases and 72 DesignEpochs against **eleven**
+  `SCHEDULED_FOR` edges, all pointing at retired releases, and nothing scheduled into any of the
+  five planned future increments. `epoch:v0240-planned` was still `planned` while `rel:v0240` was
+  `deployed` — now closed. And `arrival_delta` on it answered `items: []`, `required_count: 0`,
+  `ready_to_cut: false` **for an increment that had already shipped**, because that plan lived in
+  the epoch's *name* as prose and never as structure.
+
 - **⭐ The shipped build gate now checks your dependency pins, not just your files.**
   `reflow2_check.py` — the gate that goes to every consumer in the kit — reconciles **declared
   dependencies** against what the build actually resolves, alongside the artifact reconcile it
