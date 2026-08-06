@@ -420,6 +420,10 @@ pub(crate) fn read_debt_summary(s: &LoopStatus) -> String {
     add(s.unsurfaced_gaps, "gap(s) never asked");
     add(s.unanswered_questions, "question(s) awaiting the user");
     add(s.unwritten_answers, "answer(s) not written back");
+    add(
+        s.unsettled_assigned_decisions,
+        "decision(s) awaiting a named approver",
+    );
     add(s.structural_defects, "structural defect(s)");
     add(
         s.unproven_capabilities,

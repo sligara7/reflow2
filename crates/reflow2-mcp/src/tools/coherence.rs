@@ -83,7 +83,10 @@ impl ReflowService {
                        capture→detect→ask→decide steps are owed right now, computed from graph \
                        state alone (never from run history — looking is not writing). One call \
                        returns a short to-do list: anchored gaps never put to the user, \
-                       questions still waiting or answered-but-unwritten, structural defects, \
+                       questions still waiting or answered-but-unwritten, open decisions a named \
+                       person was ASKED to settle (a `proposed` Decision carrying an \
+                       AUTHORED_BY `role=approver` — one with no approver is somebody thinking \
+                       out loud and stays deliberately quiet), structural defects, \
                        capabilities claiming realized/verified with no passing check, recorded \
                        drift awaiting a disposition, and built capabilities nobody has checked \
                        against reality. Fire it between operational tasks instead of trying to \
