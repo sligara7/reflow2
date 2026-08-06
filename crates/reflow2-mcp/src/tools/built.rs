@@ -57,7 +57,10 @@ impl ReflowService {
                        surface export would mention. This is what you MEAN to depend on; \
                        reconcile_dependencies compares it against what the build actually \
                        resolves. A declaration without a version is refused: the version is the \
-                       whole point.",
+                       whole point. Pass `graph_id` when the dependency is ITSELF a reflow2 \
+                       design, which makes it composable from this committed file rather than \
+                       from a per-machine config — omit it otherwise, because absent means \
+                       'nobody has said', never 'there is no design'.",
         annotations(read_only_hint = false)
     )]
     pub async fn declare_dependency(
@@ -72,6 +75,7 @@ impl ReflowService {
             components: req.components,
             features: req.features,
             declared_in: req.declared_in,
+            graph_id: req.graph_id,
             note: req.note,
         };
         let mut g = self.write_lock().await;

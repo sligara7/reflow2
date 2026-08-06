@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:85b172570e751b31038df76931f69696ebf4d636b81652008e896554b1bd4b3e",
+  "content_hash": "sha256:486ecbac17168b89ba7e0c927cb5ca93ac7958bb15aa6a7418391a5913978d05",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5365,6 +5365,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "ver:dependency-names-its-design",
+      "properties": {
+        "acted_at": "2026-08-06T14:40:00Z",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "ver:merge",
       "properties": {
         "acted_at": "2026-07-22",
@@ -9257,6 +9266,60 @@
         "action": "added"
       },
       "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependency-names-its-design",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependency-names-its-design",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependency-names-its-design",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependency-names-its-design",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependency-names-its-design",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependency-names-its-design",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:design-dependencies-declared"
     },
     {
       "edge_type": "CHANGED",
@@ -19646,6 +19709,12 @@
       "from_id": "ver:constructors-preserve",
       "properties": {},
       "to_id": "req:no-silent-fallback"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "ver:dependency-names-its-design",
+      "properties": {},
+      "to_id": "dec:idea-a-session-holds-several-graphs"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -39793,6 +39862,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:dependency-names-its-design",
+      "properties": {},
+      "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:derived-completion",
       "properties": {},
       "to_id": "cap:derived-completion"
@@ -41792,10 +41867,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3bf2ed7ba5a6bccd928828657c0cc7e6b051e6b96c569f5f73528e6baf184d03",
+        "checksum": "sha256:45cd6ca68f900aa040d2c075a7dc08311afd8acf8e94bd266f101e4fe1ee8ae7",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/depends.rs",
         "name": "depends.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -41803,10 +41880,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4b1842af22cfbae2c7b112540fe0e98cc857d8369104e9112f66f1d7c650ad31",
+        "checksum": "sha256:f2a9a6d42ce95561436f9ae64e64cef57bd11d90d2c5e6d5bb50825da3d2aee6",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/depends.rs",
         "name": "tests/depends.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -42690,7 +42769,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8181e17674f63ab4a725b2d9dc634d8332f6813289ec21a4671960bdb2a5c61c",
+        "checksum": "sha256:b25675b4fb01f84ac29e04eede3d88ebb7e558277fe655276c3a04ba8ac0bf5c",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -42977,7 +43056,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bac04451bad4f944adaeead116637304d43e666f2109c9d39110f568b56e68c8",
+        "checksum": "sha256:1fa0345d69bcb2799d61736814cdc79ebe12120a8967668b451ea8d74db1ab6d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -46281,6 +46360,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "A design can declare which version of another design it depends on, and reflow2 checks that claim against what the build actually resolves"
+      }
+    },
+    {
+      "node_id": "chg:dependency-names-its-design",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A dependency declaration can name the graph_id of the dependency's OWN reflow2 design, optionally — so a composition target is derivable from a committed, version-pinned manifest instead of a per-machine config, and the direction the dependency edge carries survives. Absent means \"nobody has said\", never \"there is no design\"."
       }
     },
     {
@@ -56970,6 +57057,18 @@
       }
     },
     {
+      "node_id": "ver:dependency-names-its-design",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-06T14:40:00Z",
+        "level": "unit",
+        "method": "test",
+        "name": "A dependency that is itself a reflow2 design can say so, and one that is not stays silent (crates/reflow2-core/tests/depends.rs, 2 cases added, 12 passing in the file). LINKED: graph_id round-trips through the store and appears in reflow2.toml as `graph_id = \\\"dynograph-foundation\\\"`. UNLINKED, which is the case that carries the doctrine: a second declaration without one round-trips as None AND its manifest entry contains no graph_id line at all — absence is stored as absence, so a reader can tell \\\"this dependency has no reflow2 design\\\" from \\\"nobody recorded whether it does\\\". BLANK IS NOT A VALUE: a whitespace-only graph_id is treated as unstated rather than as a design whose id happens to be blank. A TEST-AUTHORING SLIP WORTH KEEPING: the first version of the blank case asserted the whole manifest contained no \\\"graph_id =\\\", which passed for the wrong reason and then failed for the right one — the [reflow2] header always emits the design's OWN graph_id, so the assertion had to be scoped to the dependency entry. The test caught the test.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:derived-completion",
       "node_type": "Verification",
       "properties": {
@@ -57983,7 +58082,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:76c053c1d3f8db113f9f5ce8c1fdaa5d37a883ef28ae6503ef5a6b94b62f2eaa",
+  "prev_content_hash": "sha256:85b172570e751b31038df76931f69696ebf4d636b81652008e896554b1bd4b3e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

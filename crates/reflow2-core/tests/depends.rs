@@ -23,6 +23,9 @@ fn decl() -> DependencyDeclaration {
         ],
         features: vec!["rocksdb".into(), "fulltext".into()],
         declared_in: Some("Cargo.toml".into()),
+        // The ordinary case: a build dependency nobody has said is also a
+        // design. The graph_id-bearing case has its own test below.
+        graph_id: None,
         note: Some("v0.12.0 verified safe to take: built and tested against it.".into()),
     }
 }
@@ -176,5 +179,88 @@ fn an_empty_manifest_still_says_which_reflow2_wrote_it_and_that_it_is_silent() {
     assert!(
         toml.contains("NOTHING DECLARED"),
         "an empty manifest must say so rather than look like a complete one:\n{toml}"
+    );
+}
+
+/// A dependency that is ITSELF a reflow2 design can say so, and one that is not
+/// stays silent — the distinction the whole field exists to carry.
+///
+/// The two facts sat side by side in this file and never touched: "my build pins
+/// v0.12.0 of that" and "that is also a design I can compose with". Recording
+/// the second makes a composition target derivable from a committed,
+/// version-pinned manifest rather than from a per-machine config, and it keeps
+/// the DIRECTION the dependency edge already carries — which a flat list of
+/// graph ids cannot express.
+#[test]
+fn a_dependency_that_is_also_a_design_says_so_and_one_that_is_not_stays_silent() {
+    let mut g = graph();
+
+    let mut linked = decl();
+    linked.graph_id = Some("dynograph-foundation".into());
+    g.declare_dependency(&linked).unwrap();
+
+    let mut plain = decl();
+    plain.id = "dep:serde".into();
+    plain.name = "serde".into();
+    plain.source = "https://crates.io".into();
+    plain.graph_id = None;
+    g.declare_dependency(&plain).unwrap();
+
+    let back = g.declared_dependencies().unwrap();
+    let linked_back = back
+        .iter()
+        .find(|d| d.name == "dynograph-foundation")
+        .unwrap();
+    let plain_back = back.iter().find(|d| d.name == "serde").unwrap();
+    assert_eq!(
+        linked_back.graph_id.as_deref(),
+        Some("dynograph-foundation")
+    );
+    assert_eq!(
+        plain_back.graph_id, None,
+        "absence must round-trip as absence: 'nobody has said' is not 'there is no design'"
+    );
+
+    let toml = g.dependency_manifest().unwrap();
+    assert!(
+        toml.contains("graph_id = \"dynograph-foundation\""),
+        "the link must travel in the committed file:\n{toml}"
+    );
+    // The serde entry must carry no graph_id line at all. An always-present
+    // empty field would make "has no design" and "nobody recorded one" look the
+    // same, which is the distinction this field exists to preserve.
+    let serde_block = toml
+        .split("[dependencies.serde]")
+        .nth(1)
+        .expect("serde entry present");
+    assert!(
+        !serde_block.contains("graph_id"),
+        "an undeclared graph_id must be ABSENT, not empty:\n{serde_block}"
+    );
+}
+
+/// An empty string is not a graph_id. Storing one would assert that the
+/// dependency has a design whose id happens to be blank.
+#[test]
+fn a_blank_graph_id_is_treated_as_nobody_having_said() {
+    let mut g = graph();
+    let mut blank = decl();
+    blank.graph_id = Some("   ".into());
+    g.declare_dependency(&blank).unwrap();
+
+    let back = g.declared_dependencies().unwrap();
+    assert_eq!(back[0].graph_id, None);
+
+    // Scoped to the DEPENDENCY entry: the `[reflow2]` header always carries this
+    // design's OWN graph_id, so a whole-file search for "graph_id =" would pass
+    // for the wrong reason. (It did, on the first version of this assertion.)
+    let toml = g.dependency_manifest().unwrap();
+    let entry = toml
+        .split("[dependencies.dynograph-foundation]")
+        .nth(1)
+        .expect("the dependency entry is present");
+    assert!(
+        !entry.contains("graph_id"),
+        "a blank graph_id must be stored as nothing at all:\n{entry}"
     );
 }
