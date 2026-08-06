@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Say what design lives at each given path, WITHOUT opening or writing anything — the sibling of design_identity, which answers only for the design THIS session is bound to. YOU find the candidate paths (`find . -maxdepth 3 -name .reflow2`, and the same upward); reflow2 does no file navigation, and this answers what each one IS. Use it before starting a design anywhere, before pointing a project at a graph, and whenever 'which design am I in?' has more than one plausible answer. Returns each design's stable id, label, minted-or-adopted origin and schema stamp. It reads only the sidecar files beside each store, so no lock is taken, nothing is written, and a design another session holds right now describes fine. Node counts are deliberately absent: counting means opening, and opening MINTS an identity where there is none.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "paths": {
+        "description": "Store paths to describe — the same value `--graph-path` takes, e.g.\n`/repo/.reflow2/graph`. YOU find these by walking the tree (reflow2 does\nno file navigation); pass every candidate at once rather than one per\ncall, because the point is to show a person a menu.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "paths"
+    ],
+    "type": "object"
+  },
+  "name": "describe_designs"
+}

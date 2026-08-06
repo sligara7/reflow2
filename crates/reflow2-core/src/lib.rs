@@ -42,6 +42,7 @@ pub mod coverage;
 pub mod depends;
 pub mod detect;
 pub mod dimensions;
+pub mod discover;
 pub mod drift;
 pub mod export;
 pub mod fielded;
@@ -102,6 +103,7 @@ pub use coverage::{CoverageReport, ObservedPath, UnclaimedRegion};
 pub use depends::{DependencyDeclaration, DependencyFinding, DependencyReport, ObservedDependency};
 pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, GapSource};
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
+pub use discover::{DesignAtPath, DesignPathState, describe_at};
 pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};
 pub use export::{
     ExportedEdge, ExportedNode, GraphExport, ImportReport, MirrorRef, MirrorReport, SurfaceExport,

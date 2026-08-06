@@ -57,6 +57,46 @@ pub struct LatentService {
 #[serde(deny_unknown_fields)]
 pub struct NoArgs {}
 
+#[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct DescribeDesignsReq {
+    /// Store paths to describe — the same value `--graph-path` takes, e.g.
+    /// `/repo/.reflow2/graph`. YOU find these by walking the tree (reflow2 does
+    /// no file navigation); pass every candidate at once rather than one per
+    /// call, because the point is to show a person a menu.
+    pub paths: Vec<String>,
+}
+
+/// The shared body of `describe_designs`, served on both the latent surface and
+/// the full one. A session with NO design is exactly where this matters most —
+/// it is the moment someone is about to create one — so it cannot live only on
+/// the surface you get after a design already exists.
+pub(crate) fn describe_designs_payload(paths: &[String]) -> serde_json::Value {
+    let found: Vec<reflow2_core::DesignAtPath> =
+        paths.iter().map(|p| reflow2_core::describe_at(p)).collect();
+    let named = found
+        .iter()
+        .filter(|d| d.state == reflow2_core::DesignPathState::Design)
+        .count();
+    json!({
+        "described": found.len(),
+        "designs_found": named,
+        "results": found,
+        "how_to_read_this": "state `design` means a real design lives there and can be named. \
+                             `unnamed` means something is there whose identity could not be read \
+                             WITHOUT opening the store — and opening would mint one, so it is not \
+                             opened. `opted_in` means the directory exists and nothing is written \
+                             yet. `absent` means nothing is there.",
+        "nothing_was_opened": "This read only the sidecar files beside each store. No store was \
+                               opened, no lock taken, and nothing was written — so it is safe \
+                               against a design another session is holding right now, and it \
+                               cannot create the thing it was asked to look for.",
+        "no_sizes": "Node counts are deliberately absent: counting means opening the store, which \
+                     writes a schema stamp and mints an identity when there is none. Naming a \
+                     design by the act of inspecting it is the failure this exists to prevent."
+    })
+}
+
 #[tool_router(router = tool_router)]
 impl LatentService {
     pub fn new(graph_path: String) -> Self {
@@ -64,6 +104,44 @@ impl LatentService {
             graph_path,
             tool_router: Self::tool_router(),
         }
+    }
+
+    /// What design lives at each of these paths — without opening any of them.
+    #[tool(
+        description = "Say what design lives at each given path, WITHOUT opening or writing \
+                       anything. Call this BEFORE reflow2_start_design, every time. YOU find the \
+                       candidate paths — `find . -maxdepth 3 -name .reflow2` and the same upward \
+                       — because reflow2 does no file navigation; this answers what each one IS. \
+                       WHY IT EXISTS: a session opened at a repo root was told 'no design here' \
+                       and started a THIRD design while two populated ones sat one and two \
+                       directories below. Nothing could say what they were. Returns the design's \
+                       stable id, its label, whether it was minted or adopted, and the schema \
+                       stamp — enough to put a menu in front of the user. It reads only the \
+                       sidecar files beside each store: no lock is taken, nothing is written, and \
+                       a design another session is holding right now describes fine. Node counts \
+                       are deliberately absent because counting would mean opening, and opening \
+                       MINTS an identity where there is none — naming a design by the act of \
+                       looking at it is the very failure this prevents."
+    )]
+    pub async fn describe_designs(
+        &self,
+        Parameters(req): Parameters<DescribeDesignsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        if req.paths.is_empty() {
+            return Err(McpError::invalid_params(
+                "describe_designs needs at least one path. Walk the tree first — \
+                 `find . -maxdepth 3 -name .reflow2` — and pass what you found; an empty sweep \
+                 reported as 'nothing here' is the answer that starts an unwanted design."
+                    .to_string(),
+                None,
+            ));
+        }
+        let payload = describe_designs_payload(&req.paths);
+        let text = serde_json::to_string_pretty(&payload)
+            .map_err(|e| McpError::internal_error(e.to_string(), None))?;
+        let mut result = CallToolResult::structured(payload);
+        result.content = vec![ContentBlock::text(text)];
+        Ok(result)
     }
 
     /// Opt this directory in, and say plainly what has to happen next.
@@ -79,7 +157,14 @@ impl LatentService {
                        Call this when the user asks to design, plan or capture requirements for \
                        this project — including via /genesis or /adopt. It creates the design's \
                        directory and returns the one step that finishes the job. It does NOT \
-                       create requirements, and it is safe to call when unsure."
+                       create requirements. ⚠️ LOOK BEFORE YOU START: run \
+                       `find . -maxdepth 3 -name .reflow2` and the same upward from here, then \
+                       describe_designs on whatever you find, and put any existing design to the \
+                       user BEFORE calling this. 'No design HERE' is not 'no design NEARBY' — a \
+                       session that skipped this started a third design on a repo that already \
+                       had two, one and two directories down, and nobody noticed until later. \
+                       Starting one is cheap to do and awkward to undo, so the check is not \
+                       optional even when the user sounds certain."
     )]
     pub async fn reflow2_start_design(
         &self,
@@ -118,7 +203,14 @@ impl LatentService {
                                 project or the adopt skill for code that already exists.",
             "do_not": "Do not report reflow2 as broken, missing or misconfigured, and do not write \
                        design notes into files as a substitute. The design surface is one reconnect \
-                       away and the graph is where design belongs."
+                       away and the graph is where design belongs.",
+            "if_you_did_not_check_nearby": "Say so to the user NOW, before going further. This \
+                                            call only created a directory — nothing has been \
+                                            designed — so if a design already exists one or two \
+                                            levels away, the recovery is to point this project at \
+                                            THAT one and remove the directory just made. Waiting \
+                                            until work has been captured makes it a merge instead \
+                                            of a deletion."
         });
         let text = serde_json::to_string_pretty(&payload)
             .map_err(|e| McpError::internal_error(e.to_string(), None))?;
