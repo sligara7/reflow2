@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b3a530ec8ba624371a08315d08b46cd9264bb1656483291950ca9b570bd33766",
+  "content_hash": "sha256:1a6c8e87eee80275fa5bed109a359f09022d014f6cfe89eb1f22bc99924f54fd",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -379,6 +379,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:graph-registry",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:registry"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:heal",
       "properties": {
         "weight_basis": "estimated"
@@ -400,6 +408,22 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:hosted-state-on-a-volume",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:hosted-state-on-a-volume",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:packaging"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -627,6 +651,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:owed-to-a-contributor",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:parallel-work",
       "properties": {
         "weight_basis": "estimated"
@@ -763,6 +795,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:release-publishes-a-container",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:remote-sessions",
       "properties": {
         "weight_basis": "estimated"
@@ -864,6 +904,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:select-graph-by-id",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:registry"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3873,6 +3921,24 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:graph-registry",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cap:hosted-state-on-a-volume",
+      "properties": {
+        "acted_at": "2026-08-05T23:30:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cap:kpp-proposal",
       "properties": {
         "acted_at": "2026-07-25",
@@ -3900,6 +3966,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:owed-to-a-contributor",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cap:recover-from-tests",
       "properties": {
         "acted_at": "2026-07-24",
@@ -3909,9 +3984,45 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:release-publishes-a-container",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cap:scoped-analysis",
       "properties": {
         "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cap:select-graph-by-id",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cmp:packaging",
+      "properties": {
+        "acted_at": "2026-08-05T23:30:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cmp:registry",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -4526,6 +4637,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:one-process-many-stores",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:orientation-is-computed-not-written",
       "properties": {
         "acted_at": "2026-07-31",
@@ -4667,6 +4787,24 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "ifc:rendezvous-sidecar",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ifc:session-graph-selector",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-hint-names-its-next-call",
       "properties": {
         "acted_at": "2026-07-31",
@@ -4688,6 +4826,15 @@
       "from_id": "req:a-question-arrives-with-a-reading",
       "properties": {
         "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-session-cannot-reach-another-designs-graph",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -4724,6 +4871,15 @@
       "from_id": "req:an-artifact-declares-what-only-its-author-knows",
       "properties": {
         "acted_at": "2026-08-05",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:an-assigned-open-decision-is-reported",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -4865,6 +5021,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:hosted-state-outlives-the-image",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:inviolable-intent",
       "properties": {
         "acted_at": "2026-07-24",
@@ -4877,6 +5042,15 @@
       "from_id": "req:key-interfaces",
       "properties": {
         "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:many-people-and-many-projects-compose",
+      "properties": {
+        "acted_at": "2026-08-05T23:15:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -4945,6 +5119,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:reflow2-consumable-as-an-image",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:requirement-lineage",
       "properties": {
         "acted_at": "2026-07-25",
@@ -5002,6 +5185,15 @@
       "from_id": "req:sources-are-kept-not-just-parsed",
       "properties": {
         "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-loop-says-what-is-owed-to-a-person",
+      "properties": {
+        "acted_at": "2026-08-05T23:10:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -8065,6 +8257,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:central-host-status-corrected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:central-host"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:certification-requirement-widened",
       "properties": {
         "accepted_baseline": false,
@@ -9169,6 +9370,42 @@
         "action": "modified"
       },
       "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:flo2-proposal-multi-graph-hosting",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:multi-writer-architecture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:flo2-proposal-multi-graph-hosting",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:design-reachable-without-the-repo"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:flo2-proposal-multi-graph-hosting",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:many-designs-one-service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:flo2-proposal-multi-graph-hosting",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:no-idea-goes-quiet"
     },
     {
       "edge_type": "CHANGED",
@@ -11475,6 +11712,17 @@
       "to_id": "req:version-combination-is-an-object"
     },
     {
+      "edge_type": "CLAIMS",
+      "from_id": "who:ajs",
+      "properties": {
+        "claimed_at": "2026-08-05T23:05:00Z",
+        "depth": 2,
+        "note": "Capturing flo2's three-part proposal (multi-graph hosting, container packaging, who-owes-what) into reflow2's design. Touches the hosting question req:many-designs-one-service deliberately left open, and re-opens dec:multi-writer-architecture on Anthony's word.",
+        "seat": "asligar-bitecool:773132:9983a2a3"
+      },
+      "to_id": "req:many-designs-one-service"
+    },
+    {
       "edge_type": "CONSTRAINS",
       "from_id": "con:pairing-stops-at-the-boundary",
       "properties": {
@@ -11508,11 +11756,27 @@
     },
     {
       "edge_type": "CONSUMES",
+      "from_id": "cmp:main",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:rendezvous-sidecar"
+    },
+    {
+      "edge_type": "CONSUMES",
       "from_id": "cmp:service",
       "properties": {
         "weight_basis": "estimated"
       },
       "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:service",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:session-graph-selector"
     },
     {
       "edge_type": "CONSUMES",
@@ -15751,6 +16015,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:graph-registry",
+      "properties": {},
+      "to_id": "dec:one-process-many-stores"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:heal",
       "properties": {},
       "to_id": "dec:ask-not-repair"
@@ -15898,6 +16168,12 @@
       "from_id": "cap:hierarchy",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:hosted-state-on-a-volume",
+      "properties": {},
+      "to_id": "dec:one-process-many-stores"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -17677,6 +17953,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:select-graph-by-id",
+      "properties": {},
+      "to_id": "dec:how-a-session-is-pointed-at-a-design"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:select-graph-by-id",
+      "properties": {},
+      "to_id": "dec:one-process-many-stores"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:session-artifacts",
       "properties": {},
       "to_id": "decision:ack:9eb6b2b4c5513865"
@@ -18253,6 +18541,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:registry",
+      "properties": {},
+      "to_id": "dec:one-process-many-stores"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:sanitize",
       "properties": {},
       "to_id": "decision:ack:dd3647889c878492"
@@ -18390,6 +18684,18 @@
       "from_id": "dec:no-design-here-never-looked",
       "properties": {},
       "to_id": "dec:install-once-per-machine"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:one-process-many-stores",
+      "properties": {},
+      "to_id": "dec:central-host"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:one-process-many-stores",
+      "properties": {},
+      "to_id": "rule:no-foreclosure"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -18795,6 +19101,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:reflow2-consumable-as-an-image",
+      "properties": {},
+      "to_id": "dec:idea-package-versus-shared-server"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:scenarios-are-modelled",
       "properties": {},
       "to_id": "decision:ack:73e198ee5e28f1f1"
@@ -18870,6 +19182,12 @@
       "from_id": "req:stale-seat-knows",
       "properties": {},
       "to_id": "decision:ack:acaf4106e0b94ec0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:the-loop-says-what-is-owed-to-a-person",
+      "properties": {},
+      "to_id": "dec:who-needs-to-know"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -36235,6 +36553,22 @@
     },
     {
       "edge_type": "PROVIDES",
+      "from_id": "cmp:main",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:rendezvous-sidecar"
+    },
+    {
+      "edge_type": "PROVIDES",
+      "from_id": "cmp:registry",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:session-graph-selector"
+    },
+    {
+      "edge_type": "PROVIDES",
       "from_id": "cmp:service",
       "properties": {
         "weight_basis": "estimated"
@@ -38092,6 +38426,24 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:graph-registry",
+      "properties": {},
+      "to_id": "req:a-session-cannot-reach-another-designs-graph"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:graph-registry",
+      "properties": {},
+      "to_id": "req:many-designs-one-service"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:graph-registry",
+      "properties": {},
+      "to_id": "req:many-people-and-many-projects-compose"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:heal",
       "properties": {},
       "to_id": "req:coherence"
@@ -38113,6 +38465,12 @@
       "from_id": "cap:hierarchy",
       "properties": {},
       "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:hosted-state-on-a-volume",
+      "properties": {},
+      "to_id": "req:hosted-state-outlives-the-image"
     },
     {
       "edge_type": "SATISFIES",
@@ -38293,6 +38651,24 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:owed-to-a-contributor",
+      "properties": {},
+      "to_id": "req:an-assigned-open-decision-is-reported"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:owed-to-a-contributor",
+      "properties": {},
+      "to_id": "req:no-idea-goes-quiet"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:owed-to-a-contributor",
+      "properties": {},
+      "to_id": "req:the-loop-says-what-is-owed-to-a-person"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:parallel-work",
       "properties": {},
       "to_id": "req:concurrent-planning"
@@ -38413,6 +38789,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:release-publishes-a-container",
+      "properties": {},
+      "to_id": "req:reflow2-consumable-as-an-image"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:remote-sessions",
       "properties": {},
       "to_id": "req:sessions-across-machines"
@@ -38509,6 +38891,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:select-graph-by-id",
+      "properties": {},
+      "to_id": "req:many-designs-one-service"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:session-artifacts",
       "properties": {},
       "to_id": "req:agent-artifacts-are-captured"
@@ -38524,6 +38912,12 @@
       "from_id": "cap:session-memory",
       "properties": {},
       "to_id": "req:session-memory-in-graph"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:shared-sessions",
+      "properties": {},
+      "to_id": "req:many-people-and-many-projects-compose"
     },
     {
       "edge_type": "SATISFIES",
@@ -40520,11 +40914,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8f8a543ba59ec079",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/acknowledgement_not_structure.rs",
         "name": "acknowledgement_not_structure.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40533,11 +40925,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:14b6b93d62aa5ff7",
-        "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40546,11 +40936,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c33a33c15e2611b3",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/agent.rs",
         "name": "agent.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40559,11 +40947,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:d282035a162e3e56",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/allocate.rs",
         "name": "allocate.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40572,11 +40958,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c87a79726aeb111b",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/alternatives.rs",
         "name": "alternatives.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40611,11 +40995,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:49f1f3095ea2707d",
-        "granularity": "atomic",
         "location": "tools/bl124_instrument.py",
         "name": "bl124_instrument.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40624,11 +41006,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:fabb8097364ca9e2",
-        "granularity": "atomic",
         "location": "getting-started/skills/brainstorm/SKILL.md",
         "name": "brainstorm/SKILL.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40637,11 +41017,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6aeb7aaf31ccdd875990bce6735c75eeead49c7371c4bc39064d4e7f478733e8",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40650,11 +41028,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:8f5ffbc7c6e84b5e",
-        "granularity": "atomic",
         "location": "docs/built-right-review.md",
         "name": "built-right-review.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40663,11 +41039,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6e8e23fce35b21d6",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/bulk.rs",
         "name": "bulk.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40676,11 +41050,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c2bea913c620128c1e602aed078713c7598f92e7cada4024c67777584b23b8be",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/changelog.rs",
         "name": "tests/changelog.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40702,11 +41074,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:a84c2afa299b6793cb78ae9aad6fda8cf659780728e38da0906ffa629dd41919",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/checksum_dialect.rs",
         "name": "checksum_dialect.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40715,11 +41085,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:5b6cb19cd4efedd8a4940a54412d033f73a904b376953f4f0f58d3ffee989d57",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/claims.rs",
         "name": "claims.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40728,11 +41096,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3",
-        "granularity": "atomic",
         "location": "docs/collaborating.md",
         "name": "collaborating.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40741,11 +41107,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b73161a0fd04efee",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/compare.rs",
         "name": "compare.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40754,11 +41118,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/compose.rs",
         "name": "compose.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40767,11 +41129,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/compose.rs",
         "name": "tests/compose.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40780,11 +41140,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/confirm.rs",
         "name": "confirm.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40793,11 +41151,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/confirmation_vocabulary.rs",
         "name": "confirmation_vocabulary.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40806,11 +41162,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c7b979d360e1e062",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/content.rs",
         "name": "content.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40819,11 +41173,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:4f23c464539aed28",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/content.rs",
         "name": "tests/content.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40832,11 +41184,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/contradiction_alignment.rs",
         "name": "tests/contradiction_alignment.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40871,11 +41221,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c30ee52bd7c3ec95",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/coverage.rs",
         "name": "tests/coverage.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40884,11 +41232,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:adfea07b2891743b",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/cycles.rs",
         "name": "Circular-dependency suite — detection, selectivity, and what the finding says it walked",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40897,11 +41243,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/degraded.rs",
         "name": "degraded.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40923,11 +41267,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:3bf2ed7ba5a6bccd928828657c0cc7e6b051e6b96c569f5f73528e6baf184d03",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/depends.rs",
         "name": "depends.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40936,11 +41278,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:4b1842af22cfbae2c7b112540fe0e98cc857d8369104e9112f66f1d7c650ad31",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/depends.rs",
         "name": "tests/depends.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40949,11 +41289,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6d274cf0f687fd7b3031761e30c174abfd473599c0fd64299fdb88cb71517c0f",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -40962,11 +41300,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/dimensions.rs",
         "name": "dimensions.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41014,11 +41350,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:74c0459e03ad38ce",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/dto.rs",
         "name": "dto.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41027,11 +41361,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8956d2d0d4f31fe1",
-        "granularity": "atomic",
         "location": "tools/evidence_quality_instrument.py",
         "name": "Evidence-quality instrument — what the three axes report on a real design",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41040,11 +41372,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:0f66b31cfaca4944",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence_quality.rs",
         "name": "The evidence-quality family suite — all three axes with their counterweights",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41053,11 +41383,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence.rs",
         "name": "tests/evidence.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41066,11 +41394,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cbba2d0c482d766c6dae2ca016e0b9fd2f760a9987febfa7e9b477a2414df079",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41092,11 +41418,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cfdf82f1a6497595",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/fielded.rs",
         "name": "fielded.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41105,11 +41429,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2",
-        "granularity": "atomic",
         "location": "docs/fleet-lessons.md",
         "name": "fleet-lessons.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41118,11 +41440,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/flow.rs",
         "name": "flow.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41131,11 +41451,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8196df94f5775161",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/genesis.rs",
         "name": "genesis.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41144,11 +41462,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:34701500af93dbcf",
-        "granularity": "atomic",
         "location": "docs/github-mcp-nuggets.md",
         "name": "github-mcp-nuggets.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41157,11 +41473,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/granularity.rs",
         "name": "granularity.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41170,11 +41484,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:0c572c75d71045854e65d16ca6827271d9319bc13f35e470976c425fda05033c",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41183,11 +41495,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:d3c6e9fe1cac1177",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41196,11 +41506,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:30fc1a09862792a9",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41209,11 +41517,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:d4e51659a479603aa29befad2e00fa504d6b185bc35ee25961073a79bf04e4b8",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/identity.rs",
         "name": "identity.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41222,11 +41528,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/ility.rs",
         "name": "ility.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41261,11 +41565,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/ingest_handshake.rs",
         "name": "tests/ingest_handshake.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41274,11 +41576,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:49199cc1c858f4cf5b48e370f4b5203bd7989d341951399a28eebde91725c06e",
-        "granularity": "atomic",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41287,11 +41587,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:07c82cd7671c1241",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/interface_spec.rs",
         "name": "tests/interface_spec.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41300,11 +41598,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:13f19b14c25c9300",
-        "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41313,11 +41609,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:feebbdb1438ff2c52e51cb0fbb004476378ffa97d3c9aa72890b7aa92f4b81b5",
-        "granularity": "atomic",
         "location": "getting-started/POINTER.md",
         "name": "POINTER.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41326,11 +41620,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:65a01535f32f023e",
-        "granularity": "atomic",
         "location": "getting-started/skills/kpp-proposal/SKILL.md",
         "name": "kpp-proposal/SKILL.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41352,11 +41644,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6869d93e97fc9393",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/llm.rs",
         "name": "llm.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41365,11 +41655,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13",
-        "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41378,11 +41666,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b41bc1c569e39c7ab7d8d72d667fe56870b53eb720be82e6e4b6d7b870023c82",
-        "granularity": "atomic",
         "location": "tools/reflow2_install.py",
         "name": "reflow2_install.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41391,11 +41677,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9eee13f94445919641af92008ffa67b7a474c21ddfe08edacde256e176f90ff5",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41404,11 +41688,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f743c9902452b2b7b15da4df3d62a92d9dca2bdbbd0efcff7e3625eb9b809e9a",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/maturity.rs",
         "name": "maturity.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41417,11 +41699,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:075bab31f3c131b6",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/merge.rs",
         "name": "merge.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41430,11 +41710,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cddbea4165e0e3b0",
-        "granularity": "atomic",
         "location": "tools/test_merge_driver.py",
         "name": "test_merge_driver.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41443,11 +41721,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:774ad95db84666b3",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41456,11 +41732,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/nudge.rs",
         "name": "nudge.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41469,11 +41743,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41482,11 +41754,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9b388fef123f04c5",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/orphan_attachment.rs",
         "name": "orphan_attachment.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41495,11 +41765,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:9cbea33b6a561a9e",
-        "granularity": "atomic",
         "location": "getting-started/skills/parallel-work/SKILL.md",
         "name": "parallel-work/SKILL.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41508,11 +41776,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14",
-        "granularity": "atomic",
         "location": "docs/planning-at-scale.md",
         "name": "planning-at-scale.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41521,11 +41787,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/preserve.rs",
         "name": "preserve.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41534,11 +41798,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:26dde99a1df42e6f",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/propagate.rs",
         "name": "propagate.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41547,11 +41809,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41560,11 +41820,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/publishable_promise.rs",
         "name": "tests/publishable_promise.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41573,12 +41831,10 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "crates/reflow2-core/src/readiness.rs",
         "name": "readiness.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41587,11 +41843,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:da4302eb091e89ce69d2c97b66e947472fba881f7718e86f5a2f5824e057ff22",
-        "granularity": "atomic",
         "location": "README.md",
         "name": "README.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41600,11 +41854,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:99fc5da421a04f5e",
-        "granularity": "atomic",
         "location": "tools/render_views.py",
         "name": "render_views.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41613,11 +41865,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f908416fd368f84adfee2fc8567f8904c01d6a2c18a6ee59ef0d07557aa3aeeb",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41626,11 +41876,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:dc88dfbc4e1aacbc",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/sanitize.rs",
         "name": "sanitize.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41639,11 +41887,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:56201fe977dc874f",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41666,12 +41912,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:81403d844b84c265da25581c0e3794dbaabae825eebfca0de0917b7f2cfe5322",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
         "name": "core.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41680,12 +41924,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/dimensions.yaml",
         "name": "dimensions.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41694,12 +41936,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/environment.yaml",
         "name": "environment.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41708,12 +41948,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:831166aee7d4de9bd90e5826d4b6ef474dd8be49f2cc14609f32d12039893222",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/functional.yaml",
         "name": "functional.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41722,12 +41960,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:52a5e92ffed17c501f9d849dcadbb5f4614d35b79c731a90860d4e7d7056b02d",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/inference.yaml",
         "name": "inference.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41736,12 +41972,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:543955d24d224ff0c0aff6f28928fa728248dc7694662b22cab0e8d1f1cc5168",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/operate.yaml",
         "name": "operate.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41750,12 +41984,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/readiness.yaml",
         "name": "readiness.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41764,12 +41996,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:8e528069f11575d45725f0fd260a992ba153cfd99de84cfabca797f9b60bccc0",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
         "name": "structure.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41778,12 +42008,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
         "name": "temporal.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41792,12 +42020,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
         "name": "verify.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41806,11 +42032,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:47fa2c2aa8b402bb",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/scope.rs",
         "name": "scope.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41832,11 +42056,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea",
-        "granularity": "atomic",
         "location": "docs/scope-read-while-held.md",
         "name": "scope-read-while-held.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41845,11 +42067,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:45aaec579dc701380a04d4f12b59a6b14ba5aeb619e823c021b0b21ed08e5caa",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/seam.rs",
         "name": "seam.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41858,11 +42078,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/seam.rs",
         "name": "tests/seam.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41871,11 +42089,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c421c3496192d22d",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/search.rs",
         "name": "search.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41884,11 +42100,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:4d824c873120e938",
-        "granularity": "atomic",
         "location": "tools/self_host_uses_documents.py",
         "name": "self_host_uses_documents.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41910,11 +42124,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:f6e66fec577e59d755de63c38fc02c7227eb28a64a7e33dc6cd4ab60a2c6b293",
-        "granularity": "atomic",
         "location": "getting-started/SETUP.md",
         "name": "getting-started/SETUP.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41962,11 +42174,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda",
-        "granularity": "atomic",
         "location": "tools/test_skill_lint.py",
         "name": "test_skill_lint.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -41988,11 +42198,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/build.rs",
         "name": "build.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42001,11 +42209,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:c09cc6f310635d1b2fb9a888f38c323fbd2ae2fb9e816586a32f2c00c87a46fb",
-        "granularity": "atomic",
         "location": "SKILLS.md",
         "name": "SKILLS.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42014,11 +42220,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783",
-        "granularity": "atomic",
         "location": "tools/stateless_seat_probe.py",
         "name": "stateless_seat_probe.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42027,11 +42231,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83",
-        "granularity": "atomic",
         "location": "docs/storyflow-resolution-nuggets.md",
         "name": "storyflow-resolution-nuggets.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42040,11 +42242,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:76f2dec276b09685",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42053,11 +42253,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b3b2bac1387c9c53",
-        "granularity": "atomic",
         "location": "tools/surface_usage.py",
         "name": "Surface-usage instrument — which parts of reflow2 real sessions actually drive",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42066,11 +42264,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b1cec4ec107ef2b1",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/surprises.rs",
         "name": "surprises.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42079,11 +42275,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e792e6bab2ad48527428df1c015f6ebe20fec9d79da22657f7ed088f8d605c56",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/sync.rs",
         "name": "sync.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42092,11 +42286,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:829e4905cc5f40a8b24e6027b5522780c90e8c133742299549e80880b2f6abef",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42105,11 +42297,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef",
-        "granularity": "atomic",
         "location": "tools/test_degraded_server.py",
         "name": "test_degraded_server.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42118,11 +42308,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/design_identity.rs",
         "name": "design_identity.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42131,11 +42319,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:5d3f5c3b7ee5b14757e11779e086d82853401f3e8ceac245cd1dabc86f25a31a",
-        "granularity": "atomic",
         "location": "tools/test_init.py",
         "name": "test_init.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42144,11 +42330,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:27f84b4a505d648f2b2b86033ed818a01f6adf50e59ab8a25e76d293daa57162",
-        "granularity": "atomic",
         "location": "tools/test_nudge_path.py",
         "name": "test_nudge_path.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42157,11 +42341,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42170,11 +42352,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f",
-        "granularity": "atomic",
         "location": "tools/test_shared_sessions.py",
         "name": "test_shared_sessions.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42183,11 +42363,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/stale_seat.rs",
         "name": "stale_seat.rs + test_stale_seat.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42196,11 +42374,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42235,11 +42411,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "tools/capture.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42248,11 +42422,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:30f35727b9157119714ad5a060cabdef3d87d3a69d88987e8ade91fb6155d623",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/claims_tools.rs",
         "name": "tools/claims_tools.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42287,11 +42459,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42300,11 +42470,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42313,11 +42481,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42326,11 +42492,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:814d67ab62c1014e402611dc1f73028332d2af8ca95a159dbf70022086065b34",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42339,11 +42503,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/unreachable_decision.rs",
         "name": "unreachable_decision.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42352,11 +42514,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:ef7dbb708e027df2",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.11.0.md",
         "name": "upgrading-to-v0.11.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42365,11 +42525,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.12.0.md",
         "name": "upgrading-to-v0.12.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42378,11 +42536,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.13.0.md",
         "name": "upgrading-to-v0.13.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42391,11 +42547,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.15.0.md",
         "name": "upgrading-to-v0.15.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42404,11 +42558,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.16.0.md",
         "name": "upgrading-to-v0.16.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42417,11 +42569,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.18.0.md",
         "name": "upgrading-to-v0.18.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42430,11 +42580,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:3a36b9b6b248af09",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.19.0.md",
         "name": "upgrading-to-v0.19.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42443,11 +42591,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:d16abc28ea59e3f9",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.21.0.md",
         "name": "Upgrading to v0.21.0 — the stamp moves, and your evidence can say what it covers",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42456,11 +42602,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -42469,11 +42613,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:0d250aa84d8ebe16",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -43088,6 +43230,19 @@
       }
     },
     {
+      "node_id": "cap:graph-registry",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A process-level map from graph key to an open design, plus the metadata that currently rides on the service — graph_path, content_path, identity, and the write_gen counter the loop nudge reads (service.rs:94-99) — all of which become per-graph rather than per-process.\n\nOpening is ON DEMAND AND BOUNDED. A cold open builds the full-text index and takes seconds on a large design (shared.rs allows 30 seconds for it), so the first request for a graph cannot be treated as cheap, and concurrent first requests for the same graph must COLLAPSE INTO ONE OPEN rather than racing. Eviction has a policy, because each open graph costs a RocksDB instance with its own block cache, file handles and tantivy index: an idle timeout per graph (today's --idle-timeout is per process) plus a cap on simultaneously open graphs, with a stated error when the cap is hit rather than silent thrashing.\n\nSingle-writer is untouched: the registry holds N stores and N locks, one lock each. Single-graph mode becomes a registry of one, pre-populated at startup with selection defaulted — not a second code path — so --graph-path, --only-if-present and the latent surface behave exactly as they do today.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "One process holds many designs: open on demand, bounded, evicted when idle",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:heal",
       "node_type": "Capability",
       "properties": {
@@ -43110,6 +43265,19 @@
         "name": "Check decomposition levels",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:hosted-state-on-a-volume",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Two halves, kept in one capability because the requirement is only met when both hold.\n\nHALF ONE — WHERE THE FILES LIVE (packaging). Every design's RocksDB directory, the sidecars that describe it (graph.id.json, graph.meta.json, the sync marker, the rendezvous file) and the content store live on mounted storage, never inside the image. The sidecars sit on the SAME volume as the store they describe, because they are read before the design is opened. Under multi-graph hosting the volume carries a graphs root with one directory per design beneath it, and cap:graph-registry maps graph_id to a path under that root. The volume must be a real block device or local volume: RocksDB's exclusive lock is a filesystem lock and network filesystems — NFS especially — honour those unreliably, so a lock that silently fails to exclude is how two processes end up writing one store.\n\nHALF TWO — WHAT HAPPENS WHEN IT IS WRONG (core code), and this is the sharp end. Today a design opened under an id it was not created with finds nothing and PRESENTS AS AN EMPTY DESIGN, reporting nothing wrong (identity.rs). On a laptop that is confusing. On a hosted server, where a path is easy to get subtly wrong and the operator is not the design's owner, it silently shows somebody an empty project that still exists on disk beside it. The capability is that this case is REFUSED WITH A STATED REASON rather than served as an empty design.\n\nWHY HALF TWO EARNS ITS PLACE INDEPENDENTLY: the guard is worth having whether or not reflow2 is ever containerised. An empty design that should not be empty is the one failure the coherence loop cannot detect, because every detector reasons about what the graph says and a graph that says nothing has nothing to catch.\n\nThe acceptance test is a container replacement: stop the container, start the new image against the same volume, and every design is still there and still itself — graph_id unchanged, and no design opens empty.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Designs live on mounted storage, and a store without its identity sidecar is refused rather than opened empty",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -43400,6 +43568,19 @@
       }
     },
     {
+      "node_id": "cap:owed-to-a-contributor",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A contributor scope on the loop's own reporting: today loop_status answers \"what does this design owe?\" and takes no arguments at all, while detect_gaps already accepts a scope for one part of the design — so this follows an established pattern rather than inventing one.\n\nThe input already exists and is already structured: AUTHORED_BY with role=approver is the graph SAYING that a named contributor owes an answer here. Nothing computes on it today. The narrowest useful first cut is a loop_status field counting Decisions that are proposed AND carry an approver edge, which closes the concrete instance without disturbing the deliberate quiet around brainstormed decisions.\n\nLarger shapes recorded but not chosen: a distinct gap source for a Decision proposed-and-assigned-but-not-settled (separate from undecided_decision_point, which reasonably wants real forks); and letting a Question be raised against a node directly, decoupling the Question machinery from gap derivation — the largest change, and the one that would let a specific question be put to a specific person and the answer tracked.\n\nNOTIFICATION IS DELIBERATELY NOT PART OF THIS. proxy.rs holds that the server never initiates a message, verified against the service rather than assumed; that property is worth keeping and a consumer can poll. What must live here is the ANSWER to \"what is owed to this person\", because only the graph knows.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "The loop answers what is owed to a named person, computed from edges the graph already carries",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:parallel-work",
       "node_type": "Capability",
       "properties": {
@@ -43595,6 +43776,19 @@
       }
     },
     {
+      "node_id": "cap:release-publishes-a-container",
+      "node_type": "Capability",
+      "properties": {
+        "description": "One more job in release.yml, which already builds a per-platform binary matrix (linux-x86_64, macos-arm64, macos-x86_64) and packages the consumer kit — this is not new machinery.\n\nBuilds for linux/amd64 (and linux/arm64 if consumers may land on arm hosts), tags the image with the version already in [workspace.package] so a consumer pins rather than chasing latest, publishes to a registry the consumer can pull from, and runs as a non-root user with the mounted data volume writable by that uid — the commonest way a first container run fails.\n\nThere is no Dockerfile in the repo today, so this starts from nothing. The image's own documentation must state plainly that reflow2 has NO authentication and must not be reachable from outside a private network.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "The release workflow publishes a tagged container image alongside the binaries",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:remote-sessions",
       "node_type": "Capability",
       "properties": {
@@ -43747,6 +43941,19 @@
         "name": "A seat is minted on request and carried by the caller, and a claim that cannot name one is refused",
         "provenance": "authored",
         "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:select-graph-by-id",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Per-session selection of which design a session is attached to, replacing --graph-path fixed for the process lifetime.\n\nSELECTION IS BY graph_id, NOT BY PATH. A path is a property of the server's filesystem and leaks it to clients; graph_id is the durable name the design already answers to, and the registry maps id to path. This also matches how identity already works — graph_id, the version stamp and the sync marker live in sidecar files designed to be read BEFORE the design is opened.\n\nPreferred carrier is an HTTP path prefix (/g/<graph_id>/), because the selection is then visible in logs and routable by ordinary proxies. An MCP initialize parameter is the second option. A tool call that attaches the session is the worst: it makes every session stateful in a way a reconnect silently loses, and it leaves a window in which a session is connected to nothing.\n\nContributes an answer to dec:how-a-session-is-pointed-at-a-design, which holds this as an open shape question.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A session names the design it wants by graph_id, and the server maps id to path",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -45227,6 +45434,14 @@
       }
     },
     {
+      "node_id": "chg:central-host-status-corrected",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "name": "dec:central-host moved from accepted back to proposed on Anthony's word, 2026-08-05. Its status contradicted its own text, which opens \"UNDECIDED\" and lays out four roads with none chosen, and downstream reads status rather than prose — where-am-i reports accepted decisions back as \"what you decided\", so the graph was telling Anthony he had settled on a hosted surface. Nothing about the decision itself changed; only the record was brought back into agreement with what the node already said. Recorded before the edit."
+      }
+    },
+    {
       "node_id": "chg:certification-requirement-widened",
       "node_type": "ChangeEvent",
       "properties": {
@@ -45536,6 +45751,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Anthony collapses the nested-graphs decision: a graph per ownership boundary, levels inside each"
+      }
+    },
+    {
+      "node_id": "chg:flo2-proposal-multi-graph-hosting",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "flo2's proposal arrives: the hosting question req:many-designs-one-service left open is answered as one-process-many-stores, dec:multi-writer-architecture is re-opened on Anthony's word, and two requirements flo2 depends on (a container image, and the loop being able to say what is owed to a named person) enter the design"
       }
     },
     {
@@ -46617,6 +46840,19 @@
       }
     },
     {
+      "node_id": "cmp:packaging",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "packaging",
+        "provenance": "authored",
+        "purpose": "How reflow2 SHIPS — the part of the system that turns a build into something a consumer can install, pin and run.\n\nOwns what already exists and was never modelled: release.yml's per-platform binary matrix (linux-x86_64, macos-arm64, macos-x86_64), the consumer kit and its manifest, and the install/update path. Adds the container image: a Dockerfile, a linux/amd64 (and possibly linux/arm64) build, version tagging from [workspace.package] so consumers pin rather than chase latest, publication to a pullable registry, and a non-root runtime uid that matches the mounted volume's ownership.\n\nRECORDED BECAUSE THE BLIND SPOT WAS PRE-EXISTING, not because the container created it. The design's 54 other components mirror Rust modules, so nothing owned the shipping path even though the release workflow, the kit and the installer are real, load-bearing artifacts and req:frictionless-update is accepted intent. Capturing flo2's container requirement is what walked into it.\n\nAlso carries the documentation obligation that comes with a server image: reflow2 has NO authentication, --http-allow-host is DNS-rebinding protection only, and the image must be stated to require a private network behind a gateway that does authorize.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:propagate",
       "node_type": "Component",
       "properties": {
@@ -46652,6 +46888,19 @@
         "name": "readiness",
         "provenance": "authored",
         "purpose": "TRL/MRL readiness assessments, the GATED_ON thresholds an increment states, and the forward roadmap computation that turns them into a delivery epoch with a named reason. Separate from `dimensions` on purpose: a dimension TRENDS a quality axis of the design, a readiness level is a FACT about the maturity of an enabling technology and it GATES.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:registry",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "registry",
+        "provenance": "authored",
+        "purpose": "The graph registry: a process-level map from graph_id to an open design, owning the per-graph metadata that today rides on ReflowService as per-process state — graph_path, content_path, identity, and the write_gen counter the loop nudge reads (service.rs:94-99).\n\nNew module, does not exist today. What binds the process to one graph is the CLI contract and the startup path in main.rs, not the core: DesignGraph::open_rocksdb (graph.rs:113) is already a plain function call with no process-global state, and ReflowService.graph is already Arc<RwLock<DesignGraph>> (service.rs:74) because several sessions already share one server. So this component is a map of things already shaped to be shared, plus a lifecycle — on-demand bounded opening, single-flight so concurrent first requests for one graph collapse into one open, an idle timeout per graph, and a cap on simultaneously open graphs with a stated error at the cap.\n\nHolds N single-writer stores with one RocksDB lock each. It does not make any store multi-writer.",
         "status": "planned",
         "tier": "operational"
       }
@@ -47156,7 +47405,7 @@
         "decision": "UNDECIDED. Raised by Anthony 2026-07-25 from his own situation: he is in Long Island, his brother is in Washington State, they want to work on one design at the same time and to see each other's projects. FOUR ROADS, and the middle ones are not the obvious winners. (a) GIT IS ALREADY THE CENTRAL SERVER — the design is a file in the repo, the repo already spans both coasts, and the claims layer that shipped 2026-07-25 already answers \"who has what in hand\" the moment either side pulls. Nothing to host, nothing to secure, nothing to pay for, and no new place for the design to live. What it cannot do is tell you about a claim before the other person pushes. (b) A HOSTED MCP over HTTPS — one server process holding the graph, both people's agents connecting to it, so a claim is visible the moment it is made and a design is reachable by someone who never cloned the repo. Costs: reflow2-mcp serves stdio only today (rmcp's streamable-HTTP transport exists, the binary does not use it), authentication does not exist at all, and it puts the design on a machine — which weakens but does not erase dec:repo-file-embedded's objection, since the machine would be Anthony's own droplet rather than a vendor's. NOTE WHAT MAKES (b) CHEAPER THAN IT LOOKS: one server process with many clients is ALREADY compatible with the single-writer store, because there is still exactly one writer — the server. (c) HYBRID — host a read/publish surface for reaching and browsing designs, keep writes local and merge through git, so the durable record never moves. THE CHEAPEST FIRST CUT, worth naming because it needs almost no core work: one server process PER PROJECT, each with its own graph path and its own token, and project selection becomes which URL the agent points at — no graph_id plumbing, no multi-tenancy, and a per-project blast radius if one goes wrong. A private tailnet instead of public TLS removes the authentication problem for exactly two people, which is the population this actually has. (d) ONE LIVE SHARED WORKING TREE on a droplet — both people editing the same checkout simultaneously, seeing each other's edits, with a push to a \"true\" git repo every so often for permanent storage (Anthony, 2026-07-25). THE DESIGN HALF OF THIS IS (b) AND IS SOUND; THE CODE HALF INVERTS THE PROPERTY IT IS REACHING FOR. A shared checkout does not remove conflicts, it removes conflict DETECTION: with one copy there is no common ancestor to merge against, so two agents doing read-modify-write on one file interleave into last-write-wins with no marker, no three-way merge and nothing to review — strictly less safe than what they have now. It also shares the things git assumes are private (one index, one HEAD, one branch: `git checkout` on his side changes files under her mid-edit), shares the build directory and the graph's single-writer lock, and makes the droplet a single point of failure for two people who can currently both work on a plane. The batched push is its own cost: history granularity, attribution and bisect all collapse into one commit, the gates that are supposed to gate a commit are replaced by a timer, and \"every so often\" is precisely the size of the loss window when the droplet dies.",
         "name": "OPEN — does reflow2 gain a hosted surface (one MCP over HTTPS) alongside the repo file?",
         "rationale": "Held proposed, not built, because it sits against a decision made HOURS earlier on 2026-07-25 (dec:multi-writer-architecture: repo file plus merge on pull, no hosted service) and it must not be drifted into. Per dec:reopen-supersedes, the move is a NEW decision point rather than flipping that one back to proposed. What is genuinely new, and the reason this is not a rerun of the same argument: that decision answered \"how do two writers avoid clobbering each other\", and its rationale turned on concurrency being hypothetical and on not putting the user's design on someone else's machine. Neither objection addresses what was raised now — two machines that never share a filesystem, several projects per person, and wanting to READ and contribute to a design without cloning its repo. It is also the second field-sourced trigger in two days on the same seam, which is what cap:revise-trigger exists to notice; that it arrived by conversation rather than by detector is a finding about the detector, not about the trigger. THE HONEST COUNTER-ARGUMENT, recorded so nobody has to rediscover it: reflow2's loop is ask-the-human-and-record-the-decision, which is deliberate, attributable and slow — a shared live server optimises for simultaneity, which this tool does not need and may be harmed by. The thing the two of them described wanting is mostly non-colliding parallel work plus visibility, and git plus the claims layer already delivers most of that. What it does NOT deliver is the publishing case, and that is the strongest argument on the hosted side. WHAT OPTION (d) CLARIFIED, and it is the useful split: the appeal is real-time VISIBILITY, and visibility does not require a shared working tree. The graph is the artefact where simultaneity genuinely pays and where a single writer already exists to serialise it; source code is the artefact where the distributed copy is doing load-bearing work that a shared tree would silently undo. So the two halves of \"host it\" should be decided separately rather than together.",
-        "status": "accepted"
+        "status": "proposed"
       }
     },
     {
@@ -47887,6 +48136,16 @@
         "decision": "RECORDED AS A MEASURED FIELD DEFECT PLUS AN OPEN QUESTION. Reported 2026-08-05 from a real session on `hxm_program`, Anthony's own working repo at NSLS-II. Nothing here is settled.\n\n⭐ WHAT HAPPENED, AND IT IS AN ACCIDENT THE TOOL CAUSED RATHER THAN FAILED TO PREVENT. A session rooted at the repo root was told \"this directory has no design yet\" and offered only `reflow2_start_design`. TWO POPULATED GRAPHS EXISTED ONE AND TWO DIRECTORIES DOWN:\n\n    ~/git_projects/hxm_program/.reflow2                      37bbd9a6e0e75369  \"hxm_program\"          minted 0.23.0 TODAY\n    ~/git_projects/hxm_program/simulated_beamlines/.reflow2  8a9ce30fedd213e5  \"simulated_beamlines\"  minted 0.17.0\n    ~/git_projects/hxm_program/simulated_beamlines/HEX/.reflow2  6771abb9b0683423  \"HEX\"              minted 0.22.1\n\nThe user believed the design lived at `simulated_beamlines`. By the time that surfaced, the agent HAD ALREADY MINTED A NEW ROOT GRAPH. The reporter's own summary: \"One directory listing would have prevented the accidental third graph.\"\n\nWHY THIS IS THE SEVERE ONE OF THE SIX FILED. Every other item in the report is friction — this one produced a WRONG ARTEFACT in the user's repository, silently, and the user did not learn of it until later. It is also the exact failure shape this project has been finding all week and naming in its own words: A GREEN OR CONFIDENT ANSWER FROM SOMETHING THAT NEVER LOOKED. `reflow2_check` reported OK over 20 artifacts it never swept ([BL-206]); the export-lineage guard reported nothing because it could not see `HEAD~1` ([BL-208]); `loop_status` reports `unsurfaced_gaps: 0` before `detect_gaps` has ever run (item 4 of this same report). \"No design here\" is that sentence again, addressed to a person deciding whether to create one.\n\nAND IT IS WORSE THAN THE OTHERS IN ONE RESPECT: the other three report a state, and this one INVITES AN IRREVERSIBLE ACT on the strength of it. A design minted in the wrong place is not a bad reading; it is a fourth thing to reconcile.\n\nTHE SECOND HALF, WHICH THE REPORT COUPLES TO IT: SESSION BINDING. \"The MCP server binds to the session's working directory. From a root-rooted session there is no way to write into the nested HEX graph — the user would have to open a session in that directory.\" Verified against this repo's own `.mcp.json`: the launcher is passed `--graph-path ./.reflow2/graph`, a RELATIVE path with NO ANCESTOR WALK. So which design you are editing is decided by where your shell happened to be. Also reported: choosing the new root graph \"required a manual `/mcp` reconnect after `start_design`, because the running server predated the design and kept serving only `start_design`.\"\n\n⚠️ THIS FALSIFIES ADVICE GIVEN THE SAME DAY, and the correction belongs on the record next to it. Asked how to structure exactly these repos, this agent answered that a single graph needs no restructuring because `Artifact.location` is an opaque string and reflow2 performs no file IO — so one graph could register artifacts across sibling repos. TRUE OF ARTIFACT LOCATIONS AND FALSE OF THE THING THAT MATTERS: with cwd-binding and no ancestor walk, \"one graph\" silently means \"every session must start at the repo root\", and a session opened one directory down does not find it — it offers to mint another. The advice was given from the schema and the doctrine (`dec:install-once-per-machine`) without checking the launcher. THE SAME METHOD ERROR AS THE `export_surface` CORRECTION AN HOUR EARLIER: an absence asserted from a description rather than read from the code.\n\nOPTIONS, NONE CHOSEN. (a) SCAN BEFORE OFFERING TO MINT — the reporter's own suggestion: \"no design here, but 2 exist below: [paths, labels]. Use one of those, or really start fresh?\" Cheapest, and it directly prevents the accident that occurred. Counter: reflow2 performs NO FILE IO by doctrine (`dec:agent-navigates-content`), so the scan cannot be reflow2's — it has to be the agent's, which makes this an instruction in the served surface rather than a tool, and instructions are weaker than a type system. That may be the honest answer rather than a weakness, but it should be chosen rather than defaulted to. (b) WALK ANCESTORS WHEN RESOLVING THE GRAPH PATH, the way git finds `.git`. Familiar and predictable; counter: it silently changes which design a session writes to based on cwd depth, which is the same class of surprise, and `--graph-path` is explicit today. (c) A GRAPH SELECTOR — \"design tools take an optional graph ref, defaulting to the nearest `.reflow2`\" (reporter's 2a). The largest, and it is the one that would also answer the nested-write problem. Counter: it makes every tool call carry an ambient target, and this project has been careful that a claim without a seat is refused rather than guessed (`dec:stateless-seat-handle`). (d) HOT-LOAD THE FULL SURFACE AFTER `start_design` (reporter's 2b) — narrower, fixes only the reconnect papercut, and is independent of the rest.\n\nWHAT MUST NOT BE RE-DERIVED: `dec:install-once-per-machine` (the in-repo half is optional), `.mcp.json` passing a RELATIVE `--graph-path`, and the fact that three graphs of three different mint versions (0.17.0 / 0.22.1 / 0.23.0) now coexist in one repo with no stated compatibility policy — the report's item 6.\n\nNOT CHECKED: whether `reflow2_start_design` could refuse, rather than warn, when a `.reflow2` exists below it. Refusing is stronger than reporting and may be right for an act this hard to undo.",
         "name": "OPEN — \"this directory has no design yet\" is asserted without looking, and it minted a THIRD graph on a repo that already had two",
         "rationale": "Filed from a first-hand field report on Anthony's real work rather than from self-host, which is the second time in one day that pointing reflow2 at something it did not author produced a finding self-host could not. That pattern is now three-for-three ([BL-199], [BL-213], this) and is the strongest standing argument for keeping external use in rotation.\n\nRecorded as its own node rather than as one of six backlog rows because it is categorically different from the other five: those are friction, this one CAUSED a wrong artefact in a user's repository and invited an irreversible act on the strength of an unchecked claim. Filing it beside \"version skew is a papercut\" would flatten that.\n\nThe falsified advice is written into the node deliberately. It was given today, confidently, from doctrine rather than from the launcher — and an agent reading this later needs to see that the one-graph recommendation rested on a fact nobody had checked, not just that it was incomplete.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:one-process-many-stores",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "PROPOSED, NOT SETTLED. Submitted by @ajs from flo2 (docs/proposals/multi-graph-hosting.md, written against reflow2 0.24.0) as the concrete architectural answer to the hosting question that req:many-designs-one-service deliberately left open — that requirement's own statement says \"this is deliberately silent on where the designs live: one process per design and one holding many are both answers to it, and that is the hosting question, not this requirement.\" This is that question being answered.\n\nTHE ANSWER: one process opens, serves and closes SEVERAL design graphs at once, with each client session attached to exactly one — instead of the process binding one graph directory at startup and holding it for its whole life.\n\nTWO MISREADINGS KILLED EXPLICITLY, because both make the change sound far more dangerous than it is. (1) IT DOES NOT RELAX SINGLE-WRITER. RocksDB's exclusive lock is held PER DIRECTORY; nothing prevents one process holding many directories and many locks. Each design keeps exactly the single-writer guarantee it has today. The proposal is to hold N single-writer stores, not to make one store multi-writer. (2) IT IS NOT MANY DESIGNS INSIDE ONE STORE. graph_id already namespaces every stored key, so co-habiting is technically possible — and it is the wrong answer.\n\nTHE ALTERNATIVE CONSIDERED AND REJECTED — many designs inside a single RocksDB store, relying on graph_id namespacing. Rejected because it would collapse the per-project directory the rest of reflow2 is built on: per-project export and the committed design document, backups and --import restore, the sidecar identity/version/sync files, the git merge driver, and the plain fact that a project's design lives under its own .reflow2/. It also makes identity.rs's silent failure mode — a design opened under the wrong id presents as EMPTY — considerably easier to hit. The gain is a smaller number of open RocksDB instances, which is a resource optimisation, not an architectural benefit. NOTE: this is the same shape as dec:idea-many-graphs-one-store, which Anthony raised as a brainstorm on 2026-08-05; this proposal answers it in the negative for the HOSTING case.\n\nWHY THIS IS SMALLER THAN IT SOUNDS — the groundwork is already in place, and this is the part worth reading before estimating. ReflowService.graph is already Arc<RwLock<DesignGraph>> (crates/reflow2-mcp/src/service.rs:74), chosen precisely because several client sessions share one server (req:sessions-share-a-graph) — a registry of graphs is a map of things already shaped to be shared. Seats are already per-session not per-process (service.rs:88-93, req:seat-per-client). Per-session service instances already exist and already carry graph, graph_path and content_path (service.rs:2484-2492), so attaching a session to a CHOSEN graph is a change to where those fields come from, not to their existence. Identity is already out-of-band and per-store (crates/reflow2-core/src/identity.rs), designed to be read BEFORE the design is opened — exactly what a registry must do. HTTP already exists (--http and --serve-shared since v0.14.0). Opening is already a plain function call with no process-global state (DesignGraph::open_rocksdb, crates/reflow2-core/src/graph.rs:113). What binds the process to one graph is the CLI contract and the startup path in main.rs, not the core.\n\nWHAT ACTUALLY HAS TO CHANGE. (1) A graph registry with a lifecycle: a process-level map from graph key to open graph, carrying the metadata that currently rides on the service — graph_path, content_path, identity, and the write_gen counter the loop nudge reads (service.rs:94-99), all becoming per-graph. Opening must be on demand and BOUNDED: a cold open builds the full-text index and takes seconds on a large design (shared.rs allows 30 seconds), so the first request cannot be treated as cheap and concurrent first requests for the same graph must collapse into one open rather than racing. Eviction needs a policy — each open graph costs a RocksDB instance with its own block cache, file handles and tantivy index — so an idle timeout per graph (the existing --idle-timeout is per PROCESS) plus a cap on simultaneously open graphs, with a clear error at the cap rather than silent thrashing. (2) How a session says which graph it wants: today --graph-path, fixed for the process lifetime. SELECTION SHOULD BE BY graph_id, NOT BY PATH — a path is a property of the server's filesystem and leaks it to clients, while graph_id is the durable name the design already answers to; the registry maps id to path. Candidates in order of preference: an HTTP path prefix (/g/<graph_id>/, visible in logs and routable by ordinary proxies), an MCP initialize parameter, or a tool call that attaches the session — the last is the worst, because it makes every session stateful in a way a reconnect silently loses and leaves a window in which a session is connected to nothing. (3) The rendezvous convention: shared.rs publishes a sidecar beside each store saying a server holds this graph and where it is, and the election is arbitrated by whichever spawned process wins the RocksDB lock — a convention that assumes one server per graph. A multi-graph server holds several stores and therefore several rendezvous claims, and should publish into EACH held graph's sidecar so an unrelated local session that opens that directory attaches rather than failing its open. (4) Not breaking the single-graph path: the overwhelmingly common case is one project, one directory, --graph-path, and it must keep working exactly as it does, including --only-if-present and the latent surface (main.rs:772) which is what makes reflow2 installable machine-wide without minting a store in every directory. THE CLEANEST FRAMING: single-graph mode is multi-graph mode with a registry of one, pre-populated at startup and with selection defaulted — NOT a second code path. (5) Commands that open the store directly: --import, --export and --stop-shared open it outside the server and currently instruct the user to stop the server first; with one server holding many graphs, \"stop the server\" becomes a much more expensive instruction because it evicts every other project, so these should either route through the running server or grow a per-graph release.\n\nRISKS ACCEPTED WITH THIS SHAPE. Isolation regressions are silent and severe — a handler that reaches the wrong graph corrupts a design rather than erroring, which is why it is carried as its own requirement rather than as a note here. Resource exhaustion: N open graphs is N block caches and N tantivy indices, and without a cap a busy server degrades in a way that looks like reflow2 being slow. Failure blast radius grows: today a panic loses one project's session; serving fifty, it loses fifty. And flo2 becomes schedule-coupled to this work — under the per-project-process alternative flo2 could have been built entirely around an unchanged reflow2, and that coupling is being accepted deliberately.",
+        "name": "PROPOSED — a hosted reflow2 holds N single-writer stores in one process, one lock each; the directory stays the unit of a design",
+        "rationale": "Raised by @ajs from flo2's side of the seam, 2026-08-05, and it is the first time the hosting question has arrived with a concrete consumer behind it rather than as an architecture preference. WHY IT IS RECORDED HERE RATHER THAN AS A RE-OPENING OF dec:multi-writer-architecture: Anthony authorized re-opening that decision on 2026-08-05 (\"yes, re-open it\"), and per dec:reopen-supersedes a re-opening mints a NEW decision rather than flipping the accepted node — but that new decision ALREADY EXISTS as dec:central-host, whose own rationale says exactly this and cites the same rule. Minting a third node for the same seam would have been the duplicate HEAL later flags and somebody has to merge. So this records the concrete ANSWER and hangs it under dec:central-host, which holds the question.\n\nWHAT IS GENUINELY NEW HERE, and the reason this is not a rerun of the 2026-07-25 argument: dec:multi-writer-architecture rejected a hosted service on cost against confirmed intent — it contradicts req:persistence (\"the graph lives at ./.reflow2/graph inside the consumer project, so the design travels with the repo\") and req:invocation (\"the reflow2-mcp binary spoken to over stdio\"). Neither objection is answered by this proposal and both still stand for the LOCAL case. What changed is that flo2 is a hosted web app whose whole premise is that somebody who cannot clone a repository or run a CLI can still take part in designing something — and that premise is already accepted intent here, as req:design-reachable-without-the-repo. The proposal does not ask the local case to move; it asks for a second deployment shape alongside it, which is precisely what rule:no-foreclosure was written to keep reachable (\"build nothing today that forecloses growing into a hosted, multi-user, multi-project service\"). This is that rule being cashed in.\n\nTHE HONEST COUNTER-ARGUMENT, recorded so nobody rediscovers it: dec:multi-writer-architecture's rejection of a hosted service turned partly on permanent operational burden and on putting the design on a machine the user does not control. A container image and a graph registry do not make either objection false — they make it somebody's job. The proposal is explicit that reflow2 has NO AUTHENTICATION OF ANY KIND today and that authorization is flo2's job at the layer in front; reflow2's obligation is only that a session bound to graph X cannot address graph Y. If that split is not stated and held, this decision quietly converts an accepted \"no hosted service\" into a hosted service with no security story, which is the drift dec:reopen-supersedes exists to prevent.\n\nWHAT WAS CHECKED AND FOUND SOUND, recorded because it is the natural place to look and it is the wrong place: the export is NOT incomplete. Every node type created during a session appears in export_graph's output, including Question, ChangeEvent and Fragment, and adopt_on_import correctly preserves graph_id so a clone adopts the design's identity rather than minting a new one.",
         "status": "proposed"
       }
     },
@@ -52078,6 +52337,34 @@
       }
     },
     {
+      "node_id": "ifc:rendezvous-sidecar",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "designation": "internal",
+        "medium": "unspecified",
+        "name": "&lt;graph-path&gt;.server.json — a running server announcing, beside the store, that it holds this design and where it can be reached",
+        "paradigm": "unspecified",
+        "payload_format": "unspecified",
+        "provenance": "authored",
+        "transport_security": "unspecified"
+      }
+    },
+    {
+      "node_id": "ifc:session-graph-selector",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "designation": "internal",
+        "medium": "unspecified",
+        "name": "How a session says which design it is attached to — graph_id in, bound session out",
+        "paradigm": "unspecified",
+        "payload_format": "unspecified",
+        "provenance": "authored",
+        "transport_security": "unspecified"
+      }
+    },
+    {
       "node_id": "proj:reflow2",
       "node_type": "Project",
       "properties": {
@@ -52955,6 +53242,21 @@
       }
     },
     {
+      "node_id": "req:a-session-cannot-reach-another-designs-graph",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A session bound to one design cannot address another, and that is a security property rather than a tidiness one",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Raised by @ajs from flo2, 2026-08-05, as the single highest-risk part of multi-graph hosting. Today isolation between designs is a CONSEQUENCE OF PROCESS SEPARATION, and it is total — nothing in the code maintains it because nothing has to. The moment one process serves several designs, isolation becomes something the code must actively maintain: every tool handler must be unable to reach a graph other than its session's.\n\nFor flo2 this is a security property, not a tidiness one: project A's design must be unreachable from project B's session. It deserves its own tests, and property tests rather than examples, because the failure is silent and severe — a handler that reaches the wrong graph CORRUPTS a design rather than erroring, and no gap detector would ever notice.\n\nWHERE THE OBLIGATION STOPS, and this must be stated plainly rather than assumed: reflow2 has NO AUTHENTICATION OF ANY KIND today. --http-allow-host is Host-header allowlisting, which is DNS-rebinding protection only. Authorization — deciding WHICH graph a given human may reach — is the job of the layer in front, which for flo2 is flo2's own. reflow2's obligation is only that a session bound to graph X cannot address graph Y. Recording both halves matters: if only the first is remembered, a hosted reflow2 ships believing it defends itself.\n\nThe mechanism this needs already exists and is already noted as unused: req:many-designs-one-service states that \"segregation is enforced by the store, not by convention: every node and edge already carries a graph_id, which is exactly the primitive this needs, and today it is pinned to the constant reflow2 — so the mechanism exists and is unused.\" This requirement is what makes that segregation load-bearing rather than latent.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:a-session-chooses-its-design",
       "node_type": "Requirement",
       "properties": {
@@ -53057,6 +53359,21 @@
         "provenance": "authored",
         "statement": "When something is registered against the design, reflow2 must let its author state two things nothing can observe from the outside: WHAT THE NODE STANDS FOR — one finished thing, a folder deliberately claimed as a single item, or a placeholder still meant to be broken up — and WHETHER ITS CONTENT IS EXPECTED TO KEEP CHANGING. Reports must then tell those states apart rather than reading them alike.\n\nANTHONY, 2026-08-05, answering the standing question (\"was it worth adding, and if so what problem does it solve, or should it come back out?\"): KEEP IT, and write the requirement.\n\nWHY IT IS A REQUIREMENT AND NOT A FEATURE THAT ESCAPED. The two states this distinguishes are OPPOSITE and read IDENTICALLY without it. A directory artifact claims its whole subtree — which is the adopt skill's own rule — so a registration check reported \"every live doc is registered\", truthfully, across 359 individually unreferenceable files, and `coverage_report` counted the directory as covering everything beneath it. \"Deliberately opaque\" (a settled archive, a vendored tree) and \"nobody has got to it yet\" are a DECISION and UNFINISHED WORK, and a report that cannot separate them is confidently wrong rather than merely incomplete. The same shape on the content side: checksumming a live append-only file fires drift forever, so the disposition is owed again on every reconcile and the signal trains its reader to ignore it.\n\nTHE GENERAL FORM, which is why this belongs in the design rather than as two properties: SOME FACTS ABOUT AN ARTIFACT ARE ONLY KNOWABLE BY THE PERSON WHO PUT IT THERE. Neither hashing a file nor walking a tree can say whether a directory was left whole on purpose or whether a file is supposed to grow. reflow2 performs no file IO by doctrine, so it cannot even try — which makes the author's declaration the only possible source, and makes its ABSENCE a silent default rather than an unanswered question.\n\nRECORDED AS THE ANSWER TO A GAP THAT WAS RIGHT TO FIRE. `unmotivated_capability` asked why a capability existed that no requirement wanted, and the honest answer was that it was built from measured friction before the intent was written down. The gap did its job; this is the intent catching up, not the gap being explained away. Note the ordering deliberately: the capability shipped first and the requirement follows, which is the reverse of the loop this project prescribes — worth seeing rather than tidying, because the friction that produced it was real and the design was genuinely silent.\n\nSTATUS `accepted` ON ANTHONY'S EXPLICIT WORD, given 2026-08-05 in reply to the question as asked.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:an-assigned-open-decision-is-reported",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A Decision left proposed AND assigned to somebody is reported by the loop; one nobody was asked to decide stays quiet",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Raised by @ajs from flo2, 2026-08-05, and this is the concrete instance that exposed req:the-loop-says-what-is-owed-to-a-person. A design can hold any number of Decision nodes at proposed — genuinely open choices, one of them blocking another person's work — and NOTHING REPORTS THEM.\n\nMEASURED TWICE, ON TWO DESIGNS, INDEPENDENTLY. (1) On flo2's own design, holding EIGHT proposed decisions: detect_gaps returned 12 gaps, NONE referencing a Decision; loop_status reported unanswered_questions 0, unwritten_answers 0, and has no field that counts an open decision at all. (2) REPRODUCED ON REFLOW2'S OWN DESIGN, 2026-08-05, deliberately as a test rather than by accident: capturing this proposal created dec:one-process-many-stores at status proposed and gave it an AUTHORED_BY edge with role=approver to who:ajs — the exact shape this requirement says should be reported. loop_status then returned clean:false with unsurfaced_gaps 11, unanswered_questions 0, and NO field counting an open decision; detect_gaps returned 11 gaps of which ZERO referenced dec:one-process-many-stores. Every one of the 11 was about the capabilities and requirements captured alongside it. So the loop reported eleven things it was owed and stayed silent about the one item a named person had actually been asked to decide.\n\nThat second measurement matters more than the first: it is on the design of the tool itself, made by the tool's own instrumentation, on a node built specifically to be the positive case. The detector is not failing on an exotic shape — it is silent on the canonical one.\n\nTHE QUIET IS RIGHT; THE LACK OF AN EXIT IS NOT. This is documented and deliberate. The brainstorm skill records a musing as a proposed Decision with its options in prose precisely so the loop stays silent while somebody is still thinking, and detect_gaps fires undecided_decision_point only on a Decision holding two or more REGISTERED ALTERNATIVES — a fork with real design behind each branch. That line is a good one and must survive: a brainstormed Decision with no approver must keep costing nothing, so thinking out loud stays free.\n\nTHE PROBLEM IS THAT THERE IS NO WAY TO CROSS IT. A musing that becomes a live question owned by a named person has no state to move to. register_alternative does not fit: it requires a LOCATION per alternative — where that alternative's design export lives, branch-by-file — and the options here are prose (\"connect the user's own git repo\" against \"provision a hosted sandbox\"), neither of which has a design export. Using it would mean inventing file paths that do not exist in order to make a detector notice something true. And the Question machinery cannot be pointed at a Decision: answer_question refuses unless gap_to_prompt already recorded a question, and gap_to_prompt takes a GapCandidate from detect_gaps, so Questions are GAP-DERIVED ONLY — there is no way to raise a standalone question against a node somebody must decide on. That refusal is correct and well-explained; the limitation is upstream of it.\n\nTHE GRAPH ALREADY KNOWS, which is what makes this cheaper than it looks: AUTHORED_BY with role=approver is already the graph SAYING that a named contributor owes an answer here. The information is present and structured. Nothing computes on it.\n\nTHE DISCRIMINATOR THIS REQUIREMENT ASKS FOR: proposed AND carrying an approver edge means somebody has been asked to decide and the loop should say so. Proposed with no approver means somebody is thinking, and the loop stays silent. The graph already distinguishes these two; the loop does not read the distinction.\n\nWHAT IT COST, which is the shape of what it will cost users: flo2's requirement was that its open decisions surface for the second contributor when he clones. The graph could not satisfy it, so it was met OUTSIDE THE GRAPH — a hand-written list in README.md plus a committed loop-nudge hook. That list is a second copy of something the graph already holds, maintained by hand, with nothing checking the two agree. It will drift the first time a decision is added or settled, and it will drift SILENTLY — the precise failure mode reflow2 exists to prevent. A design brain that holds the open decisions but cannot report them pushes its users into keeping a shadow list.",
+        "status": "proposed"
       }
     },
     {
@@ -53750,6 +54067,21 @@
       }
     },
     {
+      "node_id": "req:hosted-state-outlives-the-image",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A design survives replacing the container it was served from — state lives on a volume, and a store is never separated from its identity sidecar",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Raised by @ajs from flo2, 2026-08-05, and flagged in the proposal as THE PART TO GET RIGHT. A reflow2 design is not configuration that can be rebuilt. It is the product. Baking any of the following into an image means losing every design on the next deploy.\n\nTHE GRAPH DIRECTORIES. .reflow2/graph is a RocksDB directory — live database files, not a snapshot. Under multi-graph hosting there will be many, so the volume wants a graphs root with one directory per design beneath it, and the registry maps graph_id to a path under that root.\n\nTHE SIDECAR FILES, ON THE SAME VOLUME AS THE STORE THEY DESCRIBE. graph.id.json (identity), graph.meta.json (version and schema stamp), the sync marker and the rendezvous file all live BESIDE the store, not inside it. Separating a store from its identity sidecar is the silent failure identity.rs warns about: a design opened under an id it was not created with finds nothing and PRESENTS AS AN EMPTY DESIGN rather than erroring. In a container, where paths are easy to get subtly wrong, this is the failure to design against — the design is still on disk and reflow2 opens an empty one beside it reporting nothing wrong.\n\nTHE CONTENT STORE, WHICH NEEDS A DECISION RATHER THAN A DEFAULT. --content-path defaults to ./reflow2-content and its doc comment says to point it at a directory inside the repo, because blobs are committed so they travel with the design. A HOSTED SERVER HAS NO REPO, so that assumption does not hold and the hosted case needs its own answer — most likely a second volume, or object storage. This is deliberately left open rather than guessed.\n\nTHE VOLUME TYPE IS NOT A DETAIL. RocksDB's exclusive lock is a filesystem lock, and network filesystems honour those unreliably — NFS especially. The volume must be a real block device or a local volume. A lock that silently fails to exclude is how two processes end up writing one store, which is the corruption case the entire single-writer design exists to prevent, and it fails with no error saying so.\n\nTHE ACCEPTANCE TEST IS A CONTAINER REPLACEMENT: stop the container, start the new image against the same volume, and every design is still there and still ITSELF — the graph_id is unchanged and no design opens empty.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:human-decides",
       "node_type": "Requirement",
       "properties": {
@@ -53882,6 +54214,21 @@
         "provenance": "authored",
         "statement": "A person works on more than one project at a time, so reflow2 must be able to hold more than one design without their contents mixing, and a session must state which design it is operating on before it can read or write. Anthony, 2026-07-25: he has reflow2 itself and storyflow; his brother has several. Three properties follow. Selection is EXPLICIT — a session that has not named its design must be refused rather than defaulted to the last one used or the only one present, because a tool call landing in the wrong project is a silent corruption that no gap detector would ever notice. Segregation is enforced by the store, not by convention: every node and edge already carries a graph_id, which is exactly the primitive this needs, and today it is pinned to the constant \"reflow2\" — so the mechanism exists and is unused, the same shape as the temporal axis and the inviolable-intent vocabulary before them. And the identity of a design must be stable across machines, so the same project reached from two places is one design rather than two that happen to share a name. This is deliberately silent on where the designs live: one process per design and one holding many are both answers to it, and that is the hosting question, not this requirement.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:many-people-and-many-projects-compose",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Many people on one project AND many projects at once — the two axes must hold TOGETHER, which neither accepted requirement says",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-05, stating what flo2 actually is: \"a web app that has reflow2 as its core service... you will probably have multiple people working simultaneously on the same project - and secondly, you could have multiple different projects going on through the web app simultaneously. reflow2 needs to support both.\"\n\nBOTH AXES ARE ALREADY ACCEPTED INTENT, SEPARATELY. Axis one is req:sessions-share-a-graph — \"several sessions on one machine work the same design at the same time\" — accepted, and already realized: cap:shared-sessions is VERIFIED, serving many sessions from one process over --http, and it satisfies single-writer rather than working around it because one server means exactly one writer. Axis two is req:many-designs-one-service — \"one reflow2 can hold several designs, and a session says which one it is working on\" — accepted, and deliberately silent on where the designs live.\n\nWHAT IS MISSING IS THE COMPOSITION, AND IT IS NOT IMPLIED BY EITHER. Nothing in the design states that N people across M projects works — only that N people on ONE project works, and that M projects can be held. The cross product is a distinct claim with distinct failure modes, and flo2 is the first consumer that needs it.\n\nTHE CONCRETE QUESTION THE COMPOSITION RAISES, which the flo2 proposal does not answer: LOCK GRANULARITY. req:sessions-share-a-graph requires that \"reads must not queue behind each other (the graph sits behind a lock that today serialises everything)\", and cap:shared-sessions met that by moving the graph from a Mutex to an RwLock — PER PROCESS, holding one graph. Once one process holds many graphs, a per-process lock would make a write on project A block reads on project B, which is a cross-tenant performance coupling that neither requirement forbids because neither one can see it. The registry map itself must not become the new serialisation point. The property that has to hold: concurrency is per-design, so activity on one project is invisible in the latency of another.\n\nRELATED BUT NOT THE SAME AS ISOLATION. req:a-session-cannot-reach-another-designs-graph is about CORRECTNESS and security — project A's design must be unreachable from project B's session. This requirement is about CONCURRENCY — project A's traffic must not degrade project B's. A design can have either without the other, and a hosted service needs both.\n\nNOTE ON WHAT \"MANY PEOPLE\" NOW MEANS. req:sessions-share-a-graph was written for \"several sessions ON ONE MACHINE\" (Anthony, 2026-07-26, six concurrent sessions on his own box). flo2 makes them several people on several machines reaching one hosted process, which keeps the single-writer property intact — there is still exactly one writer, the server — but changes who the seats belong to and puts req:seat-per-client under real load rather than local load.",
+        "status": "proposed"
       }
     },
     {
@@ -54166,6 +54513,21 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "An increment's delivery epoch shall be DERIVED from the readiness of the technologies it is gated on: the earliest epoch by which every gating technology reaches the level stated for it, with the answer naming the technology and level that decided it. Readiness is an OBSERVATION (a TRL/MRL level 1-9 about an enabling technology) and the gating threshold is a JUDGEMENT stated by the user — reflow2 shall never supply a default threshold, and an increment with no stated threshold shall report as ungated rather than as ready. A projected level shall be distinguishable from a measured one wherever it is read.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:reflow2-consumable-as-an-image",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "reflow2 is consumable as a pinned, versioned container image, so a consumer needs no Rust toolchain and reflow2 needs no knowledge of their deploy",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Raised by @ajs from flo2, 2026-08-05. flo2 wants to consume reflow2 as a pinned image rather than installing it, so that nobody building the web app needs a Rust toolchain and nobody maintaining reflow2 touches flo2's deploy. It is what lets a second contributor (@alex) consume reflow2 without building it.\n\nTHE JOB ITSELF IS SMALL AND IS NOT NEW MACHINERY. release.yml already builds a per-platform binary matrix (linux-x86_64, macos-arm64, macos-x86_64) and packages the consumer kit; a container is one more job in that workflow. Build for linux/amd64, and linux/arm64 too if flo2 may land on arm hosts. Tag the image with the reflow2 version already in [workspace.package], so a consumer pins a version rather than chasing latest. Publish to a registry flo2 can pull from. Run as a non-root user, and make sure the mounted data volume is writable by that uid — the commonest way a first container run fails. There is no Dockerfile in the repo today, so this starts from nothing.\n\nTWO RUNTIME SETTINGS A SERVER NEEDS AND A LAPTOP DOES NOT. (1) The idle timeout does not belong on a hosted server: --idle-timeout defaults to 120 minutes and exists, per its own comment, because holding the lock blocks every CLI use of the graph — right for a developer's machine, wrong for a service, where the container exiting on idle looks like a crash loop to an orchestrator. The timeout is carried by the shared-server path, and the explicit --http branch constructs its surface with no SharedServer attached, so it appears not to apply there; which mode the container runs must be confirmed and the behaviour pinned rather than inherited. (2) Binding and reachability: the container must bind a routable address rather than loopback, and --http-allow-host is DNS-rebinding protection, NOT authentication. The image must be deployed on a private network behind flo2's gateway, and that expectation belongs in the image's own documentation so nobody deploys it thinking it defends itself.\n\nREADINESS. The rendezvous sidecar is written only AFTER the store is held and the port is bound, which makes it an honest readiness signal: if it exists, the server got all the way up. A healthcheck can use that, or an equivalent endpoint. What a healthcheck must NOT do is report ready before a cold open finishes — opening a large design builds its full-text index and takes seconds, not milliseconds.",
         "status": "proposed"
       }
     },
@@ -54497,6 +54859,21 @@
         "provenance": "authored",
         "statement": "An existing graph opens, or is refused loudly with what to do.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:the-loop-says-what-is-owed-to-a-person",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The loop can answer what this design owes a NAMED PERSON, not only what it owes in total",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Raised by @ajs from flo2, 2026-08-05. It began as friction — a proposed Decision that nothing reported — and became the largest open question in flo2's design when it was put as a product question instead: \"Shawn proposes an idea in flo2. How does that ever surface to Alex or me?\" Today it does not. Not reliably, and not at all without someone independently deciding to go and look.\n\nTRACE IT THROUGH, because three links are missing and the chain needs all three. (1) IS IT VISIBLE TO THE LOOP? Sometimes. A proposed Requirement with nothing satisfying it does fire unsatisfied_requirement, so that case works. A proposed Decision fires nothing. So whether a contribution is visible depends on which node type it happened to be captured as — an implementation detail the contributor cannot see and should not have to care about. (2) DOES ANYTHING SAY WHOSE IT IS? No. The gap says a requirement is unsatisfied; nothing says Shawn raised this, or that @ajs should judge it. AUTHORED_BY with role=approver already exists and is exactly the right shape, but NOTHING COMPUTES ON IT. (3) IS ANYONE TOLD? No — and this one is structural rather than missing: proxy.rs states that the reflow2 server NEVER INITIATES A MESSAGE (no notifications, no sampling requests, no progress pushes, \"verified against the service, not assumed\"). Every byte belongs to a request the client started.\n\nTHE MISMATCH UNDERNEATH. reflow2's coherence loop assumes ONE PERSON AT A KEYBOARD, with an agent asking them questions in a conversation. That assumption is sound and it is why the loop works so well in a coding harness. flo2 puts people in different places at different times, so the same loop has to become asynchronous — an inbox rather than a conversation. Nothing about the graph prevents that; the loop simply has no notion of a person to owe something to.\n\nTHE CHEAP PRIMITIVE, and the reason this is a sibling rather than a new idea: loop_status today answers \"what does this design owe?\" and TAKES NO ARGUMENTS AT ALL, while detect_gaps already accepts a scope for \"one part of the design\". A contributor scope on loop_status follows an established pattern. With that, the rest is flo2's own work and is ordinary: poll per user, render the inbox, email when it grows.\n\nNOTIFICATION IS DELIBERATELY OUT OF SCOPE. The server never initiating a message is a property worth keeping, and flo2 can poll. What has to live in reflow2 is the ANSWER to \"what is owed to this person\", because only the graph knows.\n\nTHE REAL DESIGN QUESTION INSIDE THIS, not to be papered over: what \"owed to\" MEANS per item type. A gap on a requirement Shawn raised is arguably owed to whoever must judge it, not to him. That is a genuine question and not a small one.\n\nWHY IT MATTERS HERE AND NOT ONLY TO flo2: this is the axis on which the accepted req:no-idea-goes-quiet currently fails. That requirement promises an idea \"stays connected to whether it was built... the user never has to remember it exists\" — and it holds for one person at one keyboard while failing completely for a contributor who is somewhere else.",
+        "status": "proposed"
       }
     },
     {
@@ -56735,7 +57112,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:00b8eb2e5e18f36d56be4f23b6c48256ff7217a64815ee092e3e8b9e484097f8",
+  "prev_content_hash": "sha256:b3a530ec8ba624371a08315d08b46cd9264bb1656483291950ca9b570bd33766",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
