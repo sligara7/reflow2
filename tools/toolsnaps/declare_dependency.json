@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Declare which version of ANOTHER DESIGN this one depends on — the pin a seam analysis is taken AS OF. Records the source, the version (a tag or commit), the parts taken, and the build switches forwarded BY NAME, because a renamed feature is a downstream build break that no API diff or surface export would mention. This is what you MEAN to depend on; reconcile_dependencies compares it against what the build actually resolves. A declaration without a version is refused: the version is the whole point.",
+  "description": "Declare which version of ANOTHER DESIGN this one depends on — the pin a seam analysis is taken AS OF. Records the source, the version (a tag or commit), the parts taken, and the build switches forwarded BY NAME, because a renamed feature is a downstream build break that no API diff or surface export would mention. This is what you MEAN to depend on; reconcile_dependencies compares it against what the build actually resolves. A declaration without a version is refused: the version is the whole point. Pass `graph_id` when the dependency is ITSELF a reflow2 design, which makes it composable from this committed file rather than from a per-machine config — omit it otherwise, because absent means 'nobody has said', never 'there is no design'.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -30,6 +30,14 @@
           "type": "string"
         },
         "type": "array"
+      },
+      "graph_id": {
+        "default": null,
+        "description": "The `graph_id` of the dependency's OWN reflow2 design, if it has one —\nthe link that makes a composition target derivable from this committed,\nversion-pinned file instead of from a per-machine config. OMIT IT unless\nthe dependency really is a reflow2 design: absent means \"nobody has said\",\nnever \"there is no design\", and most dependencies never will have one.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "id": {
         "description": "Stable id, e.g. `dep:dynograph-foundation`.",

@@ -72,6 +72,22 @@ pub struct DependencyDeclaration {
     /// Which build file the pin actually lives in, so the claim can be rechecked
     /// at its source rather than trusted.
     pub declared_in: Option<String>,
+    /// The `graph_id` of the dependency's OWN reflow2 design, when it has one.
+    ///
+    /// This is the link between two facts that already sit side by side in the
+    /// same file and never touched: "my build pins v0.12.0 of this thing" and
+    /// "that thing is also a design I can compose with". With it, the
+    /// composition target is derivable from a committed, version-pinned manifest
+    /// instead of being configured per machine — and it inherits the DIRECTION
+    /// the dependency edge already carries, which a flat list of graph ids
+    /// cannot express.
+    ///
+    /// ⚠️ OPTIONAL, AND ITS ABSENCE MEANS "NOBODY HAS SAID" — never "there is no
+    /// design". Most dependencies will never have one: serde, tokio, rocksdb.
+    /// A dependency without a graph_id is the ordinary case and must not read as
+    /// a defect, which is the same rule `reconcile_dependencies` already applies
+    /// to the manifest as a whole.
+    pub graph_id: Option<String>,
     /// Free-text note — why this pin, what was verified, what is owed.
     pub note: Option<String>,
 }
@@ -133,6 +149,12 @@ impl DesignGraph {
         if let Some(d) = &decl.declared_in {
             props = props.set("declared_in", d.as_str());
         }
+        // Only when stated. An empty string would be a claim that the dependency
+        // has a design whose id happens to be blank, which is not the same as
+        // nobody having said.
+        if let Some(g) = decl.graph_id.as_deref().filter(|g| !g.trim().is_empty()) {
+            props = props.set("dependency_graph_id", g);
+        }
         if let Some(n) = &decl.note {
             props = props.set("description", n.as_str());
         }
@@ -183,6 +205,7 @@ impl DesignGraph {
                 components: split("components"),
                 features: split("features"),
                 declared_in: get("declared_in"),
+                graph_id: get("dependency_graph_id"),
                 note: get("description"),
             });
         }
@@ -327,6 +350,12 @@ impl DesignGraph {
             }
             if let Some(x) = &d.declared_in {
                 s.push_str(&format!("declared_in = \"{x}\"\n"));
+            }
+            // Emitted only when stated. A reader must be able to tell "this
+            // dependency has no reflow2 design" from "nobody recorded whether it
+            // does", and an always-present empty field would collapse the two.
+            if let Some(g) = &d.graph_id {
+                s.push_str(&format!("graph_id = \"{g}\"\n"));
             }
             if let Some(n) = &d.note {
                 s.push_str(&format!("note = \"{}\"\n", n.replace('"', "'")));

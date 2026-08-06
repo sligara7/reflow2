@@ -1694,6 +1694,13 @@ pub struct DeclareDependencyReq {
     /// Which build file the pin actually lives in.
     #[serde(default)]
     pub declared_in: Option<String>,
+    /// The `graph_id` of the dependency's OWN reflow2 design, if it has one —
+    /// the link that makes a composition target derivable from this committed,
+    /// version-pinned file instead of from a per-machine config. OMIT IT unless
+    /// the dependency really is a reflow2 design: absent means "nobody has said",
+    /// never "there is no design", and most dependencies never will have one.
+    #[serde(default)]
+    pub graph_id: Option<String>,
     #[serde(default)]
     pub note: Option<String>,
 }

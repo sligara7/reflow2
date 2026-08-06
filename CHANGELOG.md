@@ -31,6 +31,28 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **⭐ A dependency declaration can name the dependency's own design.** `declare_dependency` gains
+  an optional `graph_id`, carried through `reflow2.toml`. **Minor** — a tool-surface shape change.
+
+  Two facts already sat side by side in that file and never touched: *"my build pins v0.12.0 of
+  this"* and *"this is also a design I can compose with"*. Linking them makes a composition target
+  **derivable from a committed, version-pinned manifest** instead of configured per machine — and
+  it keeps the **direction** the dependency edge already carries, which a flat list of graph ids
+  cannot express. Raised by @ajs: reflow2 declares dynograph-foundation as an external dependency
+  *and* dynograph-foundation is itself a reflow2 project, and nothing joined the two.
+
+  ⚠️ **Optional, and absent means "nobody has said" — never "there is no design".** Most
+  dependencies never will have one (serde, tokio, rocksdb), so an unlinked dependency is the
+  ordinary case and must not read as a defect. Stored only when stated, emitted only when stored,
+  and a blank string is treated as unstated rather than as a design whose id happens to be blank.
+  `ver:dependency-names-its-design`, passing.
+
+  Not yet applied to reflow2's own declaration: `declare_dependency` is the right tool for that and
+  the running server predates this build, so it lands after a restart rather than by writing the
+  raw property behind the tool's back.
+
 ### Fixed
 
 - **The dependency check was inert on Python 3.10 — most CI in the world.** `reflow2_check.py`
