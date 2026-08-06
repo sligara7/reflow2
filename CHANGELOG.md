@@ -33,6 +33,29 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **⭐ `getting-started/UPDATING.md` — how to update reflow2 without losing your design.** Ships in
+  the consumer kit, not this repo's `docs/`, because the people who need it will never read this
+  repository.
+
+  Covers both deployment shapes: a locally-installed binary (replace it, restart the session, the
+  store survives and the version stamp tells you what it found) and a container (replacing the
+  image touches nothing, because none of the design is in the image — tested, not asserted).
+
+  ⚠️ **It leads with the mistake that looks like data loss:** mounting `.../graph` instead of its
+  parent leaves the identity sidecar behind, and a store opened without the identity it was created
+  with **presents as an empty design while reporting no error** — the data still on disk beside it.
+
+  It also states plainly that **reflow2 does not back your design up and will not**
+  (`dec:backup-belongs-to-the-consumer`, proposed): backup is a property of *where the data lives*
+  — your volume, your retention, your compliance — and reflow2 knows none of it. What it gives you
+  instead is named: `export_graph` as a complete deterministic content-hashed snapshot, `--import`
+  as a restore that preserves `graph_id`, and — for the repo-file model — git already being an
+  off-host backup for free. The hosted case is the one that needs real work, and it belongs to
+  whoever runs the server.
+
+  Known gap, stated in the doc rather than hidden: **downgrading is not checked.** An older reflow2
+  opening a store a newer one wrote has no verdict and no warning today.
+
 - **⭐ A dependency declaration can name the dependency's own design.** `declare_dependency` gains
   an optional `graph_id`, carried through `reflow2.toml`. **Minor** — a tool-surface shape change.
 
