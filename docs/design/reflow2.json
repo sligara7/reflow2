@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1a6c8e87eee80275fa5bed109a359f09022d014f6cfe89eb1f22bc99924f54fd",
+  "content_hash": "sha256:f6689f6e46809e2079c5a7c830a26df039d83ac8be282b32f11a24f5f5673200",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -648,6 +648,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:owed-to-a-contributor",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -5247,6 +5255,15 @@
       "from_id": "ver:merge",
       "properties": {
         "acted_at": "2026-07-22",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ver:owed-to-a-contributor",
+      "properties": {
+        "acted_at": "2026-08-06T08:55:00Z",
         "role": "author"
       },
       "to_id": "who:claude-code"
@@ -10003,6 +10020,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:loop-reports-assigned-decisions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:loop-reports-assigned-decisions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:loop-reports-assigned-decisions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:loop-reports-assigned-decisions",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:owed-to-a-contributor"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:machine-state-not-shared",
       "properties": {
         "accepted_baseline": true,
@@ -11712,17 +11765,6 @@
       "to_id": "req:version-combination-is-an-object"
     },
     {
-      "edge_type": "CLAIMS",
-      "from_id": "who:ajs",
-      "properties": {
-        "claimed_at": "2026-08-05T23:05:00Z",
-        "depth": 2,
-        "note": "Capturing flo2's three-part proposal (multi-graph hosting, container packaging, who-owes-what) into reflow2's design. Touches the hosting question req:many-designs-one-service deliberately left open, and re-opens dec:multi-writer-architecture on Anthony's word.",
-        "seat": "asligar-bitecool:773132:9983a2a3"
-      },
-      "to_id": "req:many-designs-one-service"
-    },
-    {
       "edge_type": "CONSTRAINS",
       "from_id": "con:pairing-stops-at-the-boundary",
       "properties": {
@@ -13390,6 +13432,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "drift:06ddfa1dc1cc1d49",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "drift:1ce1cf92d38064b1",
       "properties": {
         "optional": false,
@@ -13426,6 +13477,15 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "drift:2eb535296102e959",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "drift:35363b89192baf00",
       "properties": {
         "optional": false,
@@ -13441,6 +13501,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "art:drift"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "drift:44af92a269d833cd",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "art:report"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -39590,6 +39659,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:owed-to-a-contributor",
+      "properties": {},
+      "to_id": "cap:owed-to-a-contributor"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:planned-epochs",
       "properties": {},
       "to_id": "cap:planned-epochs"
@@ -41864,10 +41939,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f908416fd368f84adfee2fc8567f8904c01d6a2c18a6ee59ef0d07557aa3aeeb",
+        "checksum": "sha256:8bd4c075a84bdd69680cfd8708f96979dbc351c0f8934b31f2ed2e993b1c4692",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -42110,7 +42187,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bc9c2a3cef87a2545c83cb14e5d058c19c19a729022d4f387945c927c0b90a86",
+        "checksum": "sha256:8181e17674f63ab4a725b2d9dc634d8332f6813289ec21a4671960bdb2a5c61c",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -42432,7 +42509,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a3ef1c2a5a4cfbe52d5142708511eb0e3a4f9c3484212c1ca761e0f5e7f12a7b",
+        "checksum": "sha256:350da82c45348088ed525aea2775d0f6f40019dd4b3b33b4183b4ae0441dd825",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -43576,7 +43653,7 @@
         "is_exit_point": false,
         "name": "The loop answers what is owed to a named person, computed from edges the graph already carries",
         "provenance": "authored",
-        "status": "planned",
+        "status": "in_progress",
         "tier": "operational"
       }
     },
@@ -45919,6 +45996,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The gate reads the export chain, so a severed lineage stops being silent"
+      }
+    },
+    {
+      "node_id": "chg:loop-reports-assigned-decisions",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "loop_status grows unsettled_assigned_decisions — a Decision left proposed while carrying an AUTHORED_BY role=approver is now reported, and one with no approver stays deliberately quiet. The first cut of cap:owed-to-a-contributor, and the narrowest thing that closes req:an-assigned-open-decision-is-reported."
       }
     },
     {
@@ -50532,6 +50617,18 @@
       }
     },
     {
+      "node_id": "drift:06ddfa1dc1cc1d49",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-08-06T08:55:00Z",
+        "drift_type": "checksum_change",
+        "name": "art:tools-coherence drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:tools-coherence' has changed since it was registered against the design"
+      }
+    },
+    {
       "node_id": "drift:1ce1cf92d38064b1",
       "node_type": "DriftEvent",
       "properties": {
@@ -50580,6 +50677,18 @@
       }
     },
     {
+      "node_id": "drift:2eb535296102e959",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-08-06T08:55:00Z",
+        "drift_type": "checksum_change",
+        "name": "art:service drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:service' has changed since it was registered against the design"
+      }
+    },
+    {
       "node_id": "drift:35363b89192baf00",
       "node_type": "DriftEvent",
       "properties": {
@@ -50601,6 +50710,18 @@
         "resolved": true,
         "severity": "medium",
         "summary": "'art:drift' has changed since it was registered against the design"
+      }
+    },
+    {
+      "node_id": "drift:44af92a269d833cd",
+      "node_type": "DriftEvent",
+      "properties": {
+        "detected_at": "2026-08-06T08:55:00Z",
+        "drift_type": "checksum_change",
+        "name": "art:report drift",
+        "resolved": true,
+        "severity": "medium",
+        "summary": "'art:report' has changed since it was registered against the design"
       }
     },
     {
@@ -56624,6 +56745,18 @@
       }
     },
     {
+      "node_id": "ver:owed-to-a-contributor",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-06T08:55:00Z",
+        "level": "unit",
+        "method": "test",
+        "name": "An open decision is owed only once somebody has been ASKED to settle it (crates/reflow2-core/tests/report.rs, 5 cases): a proposed Decision alone is silent; adding AUTHORED_BY role=author is still silent, because recording whose idea it is says nothing about who owes an answer; role=approver makes it owed and names it in `next`; settling it clears the debt. The author-is-not-an-approver case is the one that matters — without it every attributed brainstorm becomes a nag, which is the deliberate quiet this was built not to break.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:planned-epochs",
       "node_type": "Verification",
       "properties": {
@@ -57112,7 +57245,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b3a530ec8ba624371a08315d08b46cd9264bb1656483291950ca9b570bd33766",
+  "prev_content_hash": "sha256:1a6c8e87eee80275fa5bed109a359f09022d014f6cfe89eb1f22bc99924f54fd",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

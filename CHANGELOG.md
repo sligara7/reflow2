@@ -33,6 +33,35 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **⭐ `loop_status` reports an open decision somebody was ASKED to settle.** New counter
+  `unsettled_assigned_decisions`: a `Decision` left `proposed` while carrying an `AUTHORED_BY`
+  edge with `role=approver`. It also names itself in `next` and in the read-side loop hint, so it
+  surfaces on an ordinary orientation read rather than only when someone thinks to ask.
+
+  **The approver edge is the discriminator, and that is the whole design.** A `proposed` Decision
+  with *no* approver is somebody thinking out loud — the **brainstorm** skill records musings
+  exactly that way — and it stays silent, so thinking out loud still costs nothing. Recording
+  *whose* idea it is (`role=author`) does not make it owed either; only being asked does. On
+  reflow2's own design that means **49 proposed decisions and exactly one reported**.
+
+  Closes `req:an-assigned-open-decision-is-reported` and is the first cut of
+  `cap:owed-to-a-contributor` (now `in_progress` — the contributor *scope* on `loop_status`,
+  the other half of `req:the-loop-says-what-is-owed-to-a-person`, is not built).
+
+  **Why it was worth building first:** the defect had three independent witnesses. flo2 measured
+  it on its own design (eight open decisions, `detect_gaps` returning nothing about any of them,
+  `loop_status` with no field that could); it was then reproduced deliberately here while
+  capturing flo2's proposal (11 gaps, **zero** referencing the assigned decision); and
+  [BL-215]'s hxm_program field report hit the same shape from a different project — *"every
+  captured decision was ALSO hand-copied into markdown for teammates"*. A design brain that holds
+  the open decisions but cannot report them pushes its users into keeping a shadow list, which is
+  the precise failure reflow2 exists to prevent.
+
+  `undecided_decision_point` does not cover this and should not be stretched to: it reasonably
+  wants two or more **registered alternatives**, each with a design export behind it, and a
+  decision whose options are prose has none — making it fire would mean inventing file paths that
+  do not exist.
+
 - **⭐ `describe_designs` — say what design lives at a path, without opening it.** The discovery
   half of `req:a-session-chooses-its-design` (accepted), built from a field report: a session
   opened at a repo root was told *"this directory has no design yet"* and started a **third**

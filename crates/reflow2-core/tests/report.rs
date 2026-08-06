@@ -160,6 +160,59 @@ fn a_design_with_nothing_owed_reads_clean() {
 }
 
 #[test]
+fn an_open_decision_is_owed_only_once_somebody_has_been_asked_to_settle_it() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_contributor("who:a", "A", Some("person"), Some("a"), None)
+        .unwrap();
+
+    // A musing. add_decision lands `proposed` on purpose, and the brainstorm
+    // skill records half-formed ideas exactly this way — so thinking out loud
+    // must keep costing nothing.
+    g.add_decision("dec:musing", "Maybe X?", "Still turning it over.", None)
+        .unwrap();
+    let thinking = g.loop_status().unwrap();
+    assert_eq!(
+        thinking.unsettled_assigned_decisions, 0,
+        "a proposed decision nobody was asked to settle is thinking, not debt"
+    );
+
+    // An author is not an approver. Recording WHOSE idea it is says nothing
+    // about who owes an answer, so this must stay quiet too — otherwise every
+    // attributed brainstorm becomes a nag.
+    g.authored_by("Decision", "dec:musing", "who:a", Some("author"), None)
+        .unwrap();
+    assert_eq!(
+        g.loop_status().unwrap().unsettled_assigned_decisions,
+        0,
+        "author != approver"
+    );
+
+    // Asking a named person to decide is what creates the debt.
+    g.add_decision("dec:asked", "Which way?", "Two roads, in prose.", None)
+        .unwrap();
+    g.authored_by("Decision", "dec:asked", "who:a", Some("approver"), None)
+        .unwrap();
+
+    let owed = g.loop_status().unwrap();
+    assert_eq!(owed.unsettled_assigned_decisions, 1);
+    assert!(!owed.clean);
+    assert!(
+        owed.next.iter().any(|l| l.contains("asked to settle")),
+        "{:?}",
+        owed.next
+    );
+
+    // Settling it clears the debt — the counter is state, never run history.
+    g.set_decision_status("dec:asked", "accepted").unwrap();
+    assert_eq!(
+        g.loop_status().unwrap().unsettled_assigned_decisions,
+        0,
+        "an accepted decision is not owed"
+    );
+}
+
+#[test]
 fn captured_intent_owes_a_surface_pass_until_the_question_is_asked() {
     use reflow2_core::AskedQuestion;
 

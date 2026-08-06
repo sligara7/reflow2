@@ -369,6 +369,26 @@ pub struct LoopStatus {
     /// Questions the user answered whose gap is still open — the answer never
     /// reached the design (write it in, or acknowledge the gap).
     pub unwritten_answers: usize,
+    /// Decisions left `proposed` that a NAMED person has been asked to settle —
+    /// an `AUTHORED_BY` edge carrying `role=approver`.
+    ///
+    /// The discriminator is the approver edge, and it is the whole point. A
+    /// `proposed` Decision with no approver is somebody THINKING OUT LOUD: the
+    /// brainstorm skill records a musing exactly that way so the loop stays
+    /// quiet while an idea is still forming, and that quiet is deliberate and
+    /// worth keeping. A `proposed` Decision WITH an approver is somebody having
+    /// been ASKED, and nothing else in the design will ever remind them.
+    ///
+    /// Before this counter the graph held both states, told them apart
+    /// structurally, and reported neither — measured twice on two designs
+    /// (`req:an-assigned-open-decision-is-reported`): eight open decisions on
+    /// one, `detect_gaps` returning nothing about any of them, and
+    /// `loop_status` with no field that could. `undecided_decision_point` does
+    /// not cover this: it reasonably wants two or more REGISTERED alternatives,
+    /// each with a design export behind it, and a decision whose options are
+    /// prose has none — so making it fire would mean inventing file paths that
+    /// do not exist.
+    pub unsettled_assigned_decisions: usize,
     /// Structural defects HEAL reports right now.
     pub structural_defects: usize,
     /// Capabilities claiming `realized`/`verified` with no passing check.
@@ -486,6 +506,34 @@ impl DesignGraph {
         let unanswered_questions = questions.iter().filter(|q| q.status == "asked").count();
         let unwritten_answers = questions.iter().filter(|q| q.status == "answered").count();
 
+        // A Decision that is still `proposed` AND carries an approver edge:
+        // somebody was asked to decide and nothing else says so. The approver
+        // edge is the discriminator — without it a `proposed` Decision is a
+        // brainstorm, and staying quiet about those is deliberate.
+        let mut unsettled_assigned_decisions = 0usize;
+        for dec in self.scan_nodes(node::DECISION)? {
+            let proposed = dec
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                == Some("proposed");
+            if !proposed {
+                continue;
+            }
+            let has_approver = self
+                .outgoing(&dec.node_id, Some(edge::AUTHORED_BY))?
+                .iter()
+                .any(|e| {
+                    e.properties
+                        .get("role")
+                        .and_then(dynograph_core::Value::as_str)
+                        == Some("approver")
+                });
+            if has_approver {
+                unsettled_assigned_decisions += 1;
+            }
+        }
+
         let structural_defects = self.detect_defects()?.len();
 
         // A component-granularity check clears this debt (BL-73): the claim
@@ -533,6 +581,13 @@ impl DesignGraph {
                  the answer in, or acknowledge the gap"
             ));
         }
+        if unsettled_assigned_decisions > 0 {
+            next.push(format!(
+                "{unsettled_assigned_decisions} open decision(s) name someone who was asked \
+                 to settle them — decide (set_decision_status), or drop the approver if \
+                 nobody was actually asked"
+            ));
+        }
         if unsurfaced_gaps > 0 {
             next.push(format!(
                 "{unsurfaced_gaps} open gap(s) have never been put to the user — run \
@@ -568,6 +623,7 @@ impl DesignGraph {
             unsurfaced_gaps,
             unanswered_questions,
             unwritten_answers,
+            unsettled_assigned_decisions,
             structural_defects,
             unproven_capabilities,
             undispositioned_drift,
