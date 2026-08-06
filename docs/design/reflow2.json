@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:486ecbac17168b89ba7e0c927cb5ca93ac7958bb15aa6a7418391a5913978d05",
+  "content_hash": "sha256:8b5471e9a4ad6f613807a90c1e2fc226debe99bf268f11f092afb43307fe12fd",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -4141,6 +4141,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:backup-belongs-to-the-consumer",
+      "properties": {
+        "acted_at": "2026-08-06T15:00:00Z",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:calibration-propagates",
       "properties": {
         "acted_at": "2026-08-01",
@@ -6629,6 +6638,15 @@
         "action": "modified"
       },
       "to_id": "art:artifact-intent-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-3b39b24ee5303e6c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:updating-doc"
     },
     {
       "edge_type": "CHANGED",
@@ -14810,6 +14828,22 @@
     },
     {
       "edge_type": "DOCUMENTS",
+      "from_id": "art:updating-doc",
+      "properties": {
+        "doc_kind": "runbook"
+      },
+      "to_id": "dec:backup-belongs-to-the-consumer"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:updating-doc",
+      "properties": {
+        "doc_kind": "runbook"
+      },
+      "to_id": "req:hosted-state-outlives-the-image"
+    },
+    {
+      "edge_type": "DOCUMENTS",
       "from_id": "art:upgrade-v0110",
       "properties": {
         "doc_kind": "runbook"
@@ -19023,6 +19057,12 @@
       "from_id": "dec:auto-merge-at-90-destroys-sibling-names",
       "properties": {},
       "to_id": "dec:ask-not-repair"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:backup-belongs-to-the-consumer",
+      "properties": {},
+      "to_id": "rule:fixes-are-judged-by-the-third-party"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -43168,6 +43208,19 @@
       }
     },
     {
+      "node_id": "art:updating-doc",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:47790db3adb4de239294068eb0bbe1b919a6203bb5385b4f47692b5288c7fa1c",
+        "granularity": "atomic",
+        "location": "getting-started/UPDATING.md",
+        "name": "UPDATING.md",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:upgrade-v0110",
       "node_type": "Artifact",
       "properties": {
@@ -45706,6 +45759,15 @@
       }
     },
     {
+      "node_id": "chg:baseline-3b39b24ee5303e6c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-06T15:00:00Z",
+        "name": "First baseline for the update runbook that ships in the consumer kit. Nothing moved — the file is new."
+      }
+    },
+    {
       "node_id": "chg:baseline-eff858c52555561f",
       "node_type": "ChangeEvent",
       "properties": {
@@ -48099,6 +48161,16 @@
         "name": "DECIDED — a merge needs a discriminator, not a threshold: siblings are held apart by whole-word difference",
         "rationale": "Moved to accepted on Anthony's explicit instruction (\"fix the fuzzy_merges regression, then the token discriminator\"), which chose option (c) over the four alternatives this node had recorded.\n\nThe measurement is kept in full rather than trimmed to the conclusion, because the numbers are what make the fix defensible and what would otherwise be re-derived: \"fuzzy matching is too aggressive\" decays into folklore within a session, and \"95 for a sibling pair, 84 for a true duplicate\" does not.\n\nTwo things are deliberately recorded as NOT fixed — the missing-convergence direction and the noisy ask band — so this does not read as having closed the resolution question. It closed the destructive half of it. The one that remains is the one that needs embeddings, and saying so here is what stops the next session treating lexical resolution as done.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:backup-belongs-to-the-consumer",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED by Anthony, 2026-08-06: \"the responsibility to backup the reflow2 graph is probably more the responsibility of the flo2 project? reflow2 only needs to provide the documentation on how to update reflow2 properly so that any graph data is persistent.\"\n\nTHE BOUNDARY, and it is cleaner than it first looked: BACKUP IS A PROPERTY OF WHERE THE DATA LIVES — the consumer's volume, their storage account, their retention window, their compliance rules. reflow2 knows none of those and cannot learn them. A design tool that shipped an opinionated backup would be wrong for most projects that installed it, and would be carrying operational burden that dec:multi-writer-architecture already rejected on exactly those grounds.\n\nWHAT REFLOW2 OWES INSTEAD, and this is the whole of it:\n(1) A DOCUMENTED UPDATE PATH — getting-started/UPDATING.md, which ships in the consumer kit rather than living in this repo's docs, per rule:fixes-are-judged-by-the-third-party. It states where the design actually lives, that the binary and the design are separate in every deployment shape, and the ONE mistake that looks like data loss: mounting the store directory instead of its parent leaves the identity sidecar behind, and a store opened without its identity PRESENTS AS AN EMPTY DESIGN while the data sits untouched on disk beside it.\n(2) HONEST PRIMITIVES a consumer can build a backup FROM: export_graph is a complete, deterministic, content-hashed snapshot; --import is a restore that preserves graph_id, so a restored design IS the same design rather than a copy sharing a name; and for the repo-file model the committed export means git is already an off-host backup, versioned and replicated for free.\n(3) NOT LYING when something is off. This is where the boundary stops being purely documentary, and it is the part that remains reflow2's problem: the version stamp reports an older store as \"additive only — everything in it still reads\", and there is NO verdict at all for the reverse. See dec:idea-need-to-know-compartments and the downgrade gap.\n\nWHY THE ASYMMETRY BETWEEN THE TWO DEPLOYMENT SHAPES MATTERS HERE: under the repo-file model (dec:multi-writer-architecture, accepted) the export is committed, so backup is solved by git and nobody has to think about it. A HOSTED SERVER HAS NO REPO — the same asymmetry that makes --content-path's default wrong for a container — so the hosted case is the one that needs real backup work, and it is precisely the case that belongs to whoever runs the server. flo2 owns flo2's volume.\n\nWHAT WAS CONSIDERED AND NOT CHOSEN: reflow2 shipping snapshot/restore/off-host-push machinery, in the shape storyflow's scripts/ops already proves out (safe-deploy: snapshot, deploy, fingerprint node counts by type, alarm on any user-data decrease, off-host copy verified rather than assumed, receipts kept). Those concepts are sound and a consumer should borrow them — the doc points at the shape. They are not reflow2's to run, because every one of them is parameterised by facts only the consumer has.\n\n⚠️ ONE THING THIS DECISION DOES NOT SETTLE, recorded so it is not read as settled: reflow2 gives a consumer a stronger fingerprint than node counts, because the export is content-hashed and deterministic. Whether a comparison helper belongs in the shipped kit — as reflow2_check.py's dependency reconciliation now does for pins — is a separate question from whether reflow2 runs backups, and it has not been asked.",
+        "name": "Backing up a design is the consumer's job; what reflow2 owes is a documented update path and honest primitives",
+        "rationale": "Captured on Anthony's word, 2026-08-06, and it NARROWS a requirement rather than growing one: req:hosted-state-outlives-the-image already says designs must survive a container replacement, and this says who is responsible for the case where they do not. Scoping it down was his call and it is the right one — the alternative was reflow2 acquiring a backup subsystem parameterised by facts it cannot know.\n\nRecorded as a Decision rather than a Requirement because it says what reflow2 will NOT do, and the positive half it implies (the doc) is a deliverable that already exists rather than intent awaiting satisfaction.\n\nTHE PART WORTH RE-READING LATER: the boundary holds for backup and does NOT hold for honesty. \"We do not back your data up\" is a fair thing for a tool to say. \"We opened a store an older binary wrote and said nothing\" is not, and no amount of documentation fixes it — which is why the downgrade gate stayed on the queue as work rather than being absorbed into this decision as prose.",
+        "status": "proposed"
       }
     },
     {
@@ -58082,7 +58154,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:85b172570e751b31038df76931f69696ebf4d636b81652008e896554b1bd4b3e",
+  "prev_content_hash": "sha256:486ecbac17168b89ba7e0c927cb5ca93ac7958bb15aa6a7418391a5913978d05",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
