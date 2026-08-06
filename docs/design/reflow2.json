@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f6689f6e46809e2079c5a7c830a26df039d83ac8be282b32f11a24f5f5673200",
+  "content_hash": "sha256:54f6603bbd938ee1a6aa66348470825180bdd6dae75ea9f0885fcb4675d1b45f",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -2933,6 +2933,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:undefer-skill-adherence-measurement",
+      "properties": {},
+      "to_id": "epoch:skill-use-still-needs-reminding"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:user-is-still-the-reminder",
+      "properties": {},
+      "to_id": "epoch:skill-use-still-needs-reminding"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:v0210-rescoped",
       "properties": {},
       "to_id": "epoch:v0210"
@@ -3773,6 +3785,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:skill-use-still-needs-reminding:req:skill-adherence-is-measured",
+      "properties": {},
+      "to_id": "epoch:skill-use-still-needs-reminding"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:skill-use-still-needs-reminding:req:skill-use-survives-a-long-session",
+      "properties": {},
+      "to_id": "epoch:skill-use-still-needs-reminding"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:snapshot-per-revision:req:snapshot-per-revision-not-per-epoch",
       "properties": {},
       "to_id": "epoch:snapshot-per-revision"
@@ -4315,6 +4339,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-session-holds-several-graphs",
+      "properties": {
+        "acted_at": "2026-08-06T09:40:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-backlog-belongs-in-the-graph",
       "properties": {
         "acted_at": "2026-08-04",
@@ -4396,6 +4429,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-gap-flows-to-the-dependency",
+      "properties": {
+        "acted_at": "2026-08-06T09:40:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-intent-crosses-designs",
       "properties": {
         "acted_at": "2026-08-05",
@@ -4438,6 +4480,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-need-to-know-compartments",
+      "properties": {
+        "acted_at": "2026-08-06T10:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -4523,6 +4574,15 @@
       "from_id": "dec:idea-trial-driven-choice-skill",
       "properties": {
         "acted_at": "2026-08-04",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:linked-repos-poc",
+      "properties": {
+        "acted_at": "2026-07-27T00:00:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -5181,12 +5241,30 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:skill-adherence-is-measured",
+      "properties": {
+        "acted_at": "2026-08-06T11:20:00Z",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:skill-use-survives-a-long-session",
       "properties": {
         "acted_at": "2026-07-31",
         "role": "author"
       },
       "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:skill-use-survives-a-long-session",
+      "properties": {
+        "acted_at": "2026-08-06T11:10:00Z",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -5247,6 +5325,15 @@
       "properties": {
         "acted_at": "2026-07-25",
         "role": "reviewer"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ver:container-image",
+      "properties": {
+        "acted_at": "2026-08-06T11:45:00Z",
+        "role": "author"
       },
       "to_id": "who:claude-code"
     },
@@ -8409,6 +8496,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:classification-and-dependency-are-orthogonal",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-need-to-know-compartments"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:cluster-claims-built",
       "properties": {
         "accepted_baseline": true,
@@ -8640,6 +8736,33 @@
         "action": "modified"
       },
       "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:container-packaging",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:hosted-state-on-a-volume"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:container-packaging",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:release-publishes-a-container"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:container-packaging",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:packaging"
     },
     {
       "edge_type": "CHANGED",
@@ -10017,6 +10140,33 @@
         "action": "modified"
       },
       "to_id": "cap:coverage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:linked-repos-trial-run",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:complementary-pairing"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:linked-repos-trial-run",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:composed-analysis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:linked-repos-trial-run",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:linked-repos-poc"
     },
     {
       "edge_type": "CHANGED",
@@ -11556,6 +11706,24 @@
         "action": "modified"
       },
       "to_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:undefer-skill-adherence-measurement",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:skill-adherence-is-measured"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:user-is-still-the-reminder",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:skill-use-survives-a-long-session"
     },
     {
       "edge_type": "CHANGED",
@@ -18712,11 +18880,29 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-a-session-holds-several-graphs",
+      "properties": {},
+      "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:idea-backlog-belongs-in-the-graph",
       "properties": {
         "note": "This open question is BOUND by the accepted rule rather than competing with it: dec:what-lives-where already says the design record should stop being prose you navigate and become a graph you query. The question here is only what that means mechanically for the backlog, and what vocabulary is missing before it can happen. Drawn deliberately — an idea node with only AUTHORED_BY is invisible to propagate_from and to the orphan detector (BL-209), which is how dec:export-once-per-pr came to be violated by the session that then re-announced it."
       },
       "to_id": "dec:what-lives-where"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-gap-flows-to-the-dependency",
+      "properties": {},
+      "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-gap-flows-to-the-dependency",
+      "properties": {},
+      "to_id": "req:design-composes"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -18732,6 +18918,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-need-to-know-compartments",
+      "properties": {},
+      "to_id": "dec:multi-writer-architecture"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-need-to-know-compartments",
+      "properties": {},
+      "to_id": "req:a-session-cannot-reach-another-designs-graph"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:idea-one-owner-many-projects",
       "properties": {},
       "to_id": "dec:nested-graphs"
@@ -18741,6 +18939,12 @@
       "from_id": "dec:idea-package-versus-shared-server",
       "properties": {},
       "to_id": "dec:multi-writer-architecture"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:linked-repos-poc",
+      "properties": {},
+      "to_id": "req:design-composes"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -19809,6 +20013,18 @@
       "from_id": "req:reviewed-defects",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:req:reviewed-defects"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:skill-adherence-is-measured",
+      "properties": {},
+      "to_id": "snap:epoch:skill-use-still-needs-reminding:req:skill-adherence-is-measured"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:skill-use-survives-a-long-session",
+      "properties": {},
+      "to_id": "snap:epoch:skill-use-still-needs-reminding:req:skill-use-survives-a-long-session"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -37004,6 +37220,30 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:docker-build-script",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:release-publishes-a-container"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:dockerfile",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:hosted-state-on-a-volume"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:dockerfile",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:release-publishes-a-container"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:drift",
       "properties": {
         "completeness": "partial"
@@ -37465,6 +37705,14 @@
         "completeness": "partial"
       },
       "to_id": "cap:explains-itself"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:release-workflow",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cmp:packaging"
     },
     {
       "edge_type": "REALIZES",
@@ -39329,6 +39577,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:container-image",
+      "properties": {},
+      "to_id": "cap:release-publishes-a-container"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:content-manifest",
       "properties": {},
       "to_id": "cap:content-manifest"
@@ -40182,6 +40436,22 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:docker-build-script",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:docker-build-script"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:dockerfile",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:dockerfile"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:drift",
       "properties": {
         "action": "created"
@@ -40483,6 +40753,14 @@
         "action": "created"
       },
       "to_id": "art:readiness"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:release-workflow",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:release-workflow"
     },
     {
       "edge_type": "YIELDED",
@@ -41407,6 +41685,32 @@
       }
     },
     {
+      "node_id": "art:docker-build-script",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:0d2baac279bc9cdc70b5567031d81347ca6412c994647ec5a4f8b9c81b1505f4",
+        "granularity": "atomic",
+        "location": "docker/build.sh",
+        "name": "docker/build.sh",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:dockerfile",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:7ba2d1770e2d3752216743b5de56505e2be2419498a3aab9c3cf62607603b422",
+        "granularity": "atomic",
+        "location": "Dockerfile",
+        "name": "Dockerfile",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:drift",
       "node_type": "Artifact",
       "properties": {
@@ -41921,6 +42225,19 @@
         "location": "README.md",
         "name": "README.md",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:release-workflow",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:e1a55d661c3b9ba857e4eb99d40e6d8b84db5c9e5009e3f3b43721507d2d1fcd",
+        "granularity": "atomic",
+        "location": ".github/workflows/release.yml",
+        "name": "release.yml",
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -43354,7 +43671,7 @@
         "is_exit_point": false,
         "name": "Designs live on mounted storage, and a store without its identity sidecar is refused rather than opened empty",
         "provenance": "authored",
-        "status": "planned",
+        "status": "in_progress",
         "tier": "operational"
       }
     },
@@ -43861,7 +44178,7 @@
         "is_exit_point": false,
         "name": "The release workflow publishes a tagged container image alongside the binaries",
         "provenance": "authored",
-        "status": "planned",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -45559,6 +45876,14 @@
       }
     },
     {
+      "node_id": "chg:classification-and-dependency-are-orthogonal",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "name": "Correction to dec:idea-need-to-know-compartments: \"upward may be fine, downward is spillage\" conflated the DEPENDENCY direction with the CLASSIFICATION direction. They are independent axes, and in reflow2's own real case they run OPPOSITE — the least sensitive design (dynograph-foundation) is the most upstream."
+      }
+    },
+    {
       "node_id": "chg:cluster-claims-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -45596,6 +45921,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-157 + BL-158: the ledger gains a word for \"nothing moved\" — a first baseline is recorded as a first baseline, and a clean reconcile records what it confirmed"
+      }
+    },
+    {
+      "node_id": "chg:container-packaging",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "reflow2 gains a container image: a Dockerfile and a release.yml job that publishes a version-tagged image, so a consumer (flo2, and @alex) can run reflow2 without a Rust toolchain. Carries the volume layout that keeps designs outside the image."
       }
     },
     {
@@ -45996,6 +46329,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The gate reads the export chain, so a severed lineage stops being silent"
+      }
+    },
+    {
+      "node_id": "chg:linked-repos-trial-run",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "dec:linked-repos-poc EXECUTED 2026-08-06, parked since 2026-07-27 — with flo2 substituted for storyflow. The linking machinery works and the labelling does not exist: both compositions imported cleanly (0 skipped edges, including a 0.16.0 export into a 0.24.0 graph), and BOTH paired ZERO boundaries because reflow2 declares no `required` interface at all. The one conflict found is a true positive and is the flo2 seam this session was about."
       }
     },
     {
@@ -46468,6 +46809,22 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The unverified item is closed by counting: 3 of 33 collection-returning tools let the caller bound the result and only scan_nodes can page — so it is an increment, not a bug list"
+      }
+    },
+    {
+      "node_id": "chg:undefer-skill-adherence-measurement",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "req:skill-adherence-is-measured is UN-DEFERRED on Anthony's word, 2026-08-06 — \"un-defer req:skill-adherence-is-measured\". Deferring it left cap:skill-triggers (verified) with a hole nothing but a human could see: every shape that capability recognises is a shape in the graph-write stream, and \"no skill has been loaded\" is not a graph write. Twice now the decay has been found by asking an agent rather than by any mechanism, which is the state this requirement's own statement calls \"not a mechanism\"."
+      }
+    },
+    {
+      "node_id": "chg:user-is-still-the-reminder",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "requirement_creep",
+        "name": "Anthony, 2026-08-06: \"as always, please use reflow2 skills and tools to implement any of this. this always gives us a first use case to see where we need to fix/improve reflow2 skills and tools. I still don't like reminding this all the time (which needs to be an enduring requirement to increase the probability that an agent will use reflow2 skills and tools and not rely on itself).\" Adds a second dated observation to req:skill-use-survives-a-long-session and, newly, the DOGFOODING rationale — skill use is the instrument that finds defects in the skills, so skipping it costs evidence, not just tidiness."
       }
     },
     {
@@ -47814,6 +48171,16 @@
       }
     },
     {
+      "node_id": "dec:idea-a-session-holds-several-graphs",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-06: \"maybe a .mcp.json could have the graph_id for reflow2, dynograph-foundation, and flo2...so when any design decision is made, reflow2 can utilize all 3 graphs?\"\n\n⭐ EXTENDED THE SAME DAY, AND THE EXTENSION IS WHAT MAKES IT AN ARCHITECTURE RATHER THAN A CONVENIENCE. Anthony's second pass: \"projectC is dependent upon projectB which is dependent upon projectA and these are all managed by user1. say user2 is responsible for projectD which is dependent upon projectC. user2's .mcp.json should only have the graph_id for projectC and projectD, while user1's .mcp.json should have projectA, B and C. theoretically, you could link huge projects together with multiple users only managing their respective set of projects.\"\n\nTHE RULE THAT FALLS OUT OF HIS OWN EXAMPLE, and he did not state it explicitly: projectC appears in BOTH configs. So a graph_id in a config does not mean one thing — THE SAME GRAPH IS WRITABLE FOR ITS OWNER AND READABLE FOR ITS CONSUMER. user1 owns C and may write it; user2 depends on C and may only read it. The set a user holds is therefore {the graphs I own → writable} ∪ {the graphs I directly depend on → readable}, and that is not a flat list of equals — it is a list with a role per entry.\n\nTHIS RESOLVES THE TENSION THIS NODE WAS RECORDED TO NAME. Option (b) below was written as the conservative choice — one writable graph, N readable. Anthony's federation makes it the GENERAL one: N writable (the ones you own) and M readable (the ones you depend on), which degenerates to (b) for a single-project owner and to today's behaviour for someone with no dependencies. Option (a) — a flat list where every graph is equal — stops being the simple choice once the roles are visible, because it is the only one that has to answer \"which of these three does this write land in\".\n\n⭐ THE SCALE PROPERTY, which is the real content of \"link huge projects together\": NOBODY HOLDS THE WHOLE DAG. Each user holds a LOCAL CUT of it — their own subtree plus one hop outward — and the cuts overlap exactly at the ownership seams. That is why it composes to arbitrary size without any user, machine or process ever loading the whole federation, and it is a materially different claim from \"one process holds many graphs\" (dec:one-process-many-stores), which is about a SERVER holding tenants. This is about a PERSON holding a neighbourhood.\n\n⚠️ THE HONEST LIMIT, and it is the thing worth deciding rather than discovering: user2 sees C but NOT B or A. If user2's need in C turns out to require a change in B, user2 cannot see that and cannot even tell that B exists. The requirement has to RELAY — user2 asks C's owner, who then discovers it is really a B problem. Whether that is a feature (bounded blast radius, matching real ownership and real org charts) or a defect (a need can stall invisibly one hop out of view) is a genuine question. The bounded reading is probably right and is how every package ecosystem already behaves; the cost is that transitive needs travel at the speed of humans, which is exactly the friction Anthony opened this whole thread wanting to remove.\n\nAND IT SHARPENS THE AUTHORITY QUESTION NEXT DOOR: the boundary of authority is EXACTLY the shared graph. Everything dec:idea-gap-flows-to-the-dependency asks — who may write intent into a design they do not own — is now localised to the overlap, C. It is not a question about the federation; it is a question about each seam in it, asked once per seam, between two named people.\n\nIT ALSO MAKES OPTION (c) NEXT DOOR ACTUALLY WORK AT SCALE. \"The upstream pulls rather than the downstream pushes\" needs a reverse index — who declares a dependency on me — which today does not exist because req:design-dependencies-declared points downward only. Under this federation the reverse index is small and local: C's owner asks who declares a dependency on C and finds exactly user2's D, never the whole world.\n\nRELATED AND ALREADY OPEN: dec:idea-cross-org-federation asks whether reflow2 should federate heterogeneous designs across ORGANISATIONS the way OpenMBEE does, rather than composing exports. Anthony's example is the same shape one scale down — across PEOPLE rather than organisations — which is useful, because it means the mechanism can be tried on two brothers and three repos before it has to survive two companies.\n\n⚠️ IT ALSO PULLS AGAINST A DECISION MADE TWELVE HOURS EARLIER. dec:one-process-many-stores (proposed, 2026-08-05) has each client session ATTACHED TO EXACTLY ONE graph, and carries req:a-session-cannot-reach-another-designs-graph as a SECURITY property for flo2: project A's design must be unreachable from project B's session. Both can be true, but only if the distinction is stated rather than discovered later: MULTI-TENANT ISOLATION (strangers' projects on a hosted server, must not see each other) is not the same as COMPOSITION (one author's own interdependent designs, useless apart). The federation above makes the split cleaner than it first looked — isolation is between TENANTS, composition is within one tenant's declared neighbourhood — but nothing in the design says so yet.\n\nIT LANDS ON AN OPEN QUESTION HE HAS ALREADY LEANED ON. dec:how-a-session-is-pointed-at-a-design (proposed) records his 2026-08-05 preference — \"I like this approach of just pointing .mcp.json at the graph_id\" — and the counter beside it: [BL-123] holds that the /mcp reconnect is the one step an autonomous agent cannot take, so config-file selection is the option an agent cannot exercise for itself. A multi-graph .mcp.json inherits that counter unchanged.\n\nWHAT IS ALREADY BUILT, so the gap is smaller than the question sounds. cap:composed-analysis is REALIZED: two designs analysed together without either being written to, the other's ids namespaced into an in-memory graph, every finding attributed ours / theirs / seam. describe_designs (shipped 2026-08-05) answers what design lives at a path without opening it. So \"reason across several graphs\" is a call you can make today; what a config would add is that it happens BY DEFAULT and WITHOUT BEING ASKED.\n\nOPTIONS, NONE CHOSEN.\n\n(a) A FLAT LIST OF graph_ids, ALL EQUAL. Closest to the first phrasing. Now the weakest, because the federation example shows the entries are NOT equal and this is the only option that must then answer \"which one does a write land in\" at every call site.\n\n(b) ROLES PER ENTRY — owned/writable versus depended-on/readable, which is what Anthony's own example describes. Preserves single-writer per graph, preserves the isolation property's shape, matches how every dependency manifest already works, and degenerates gracefully for the one-project case. Counter: it does not by itself serve the flo2 case, because flo2's need is for something to be written INTO reflow2 — that is dec:idea-gap-flows-to-the-dependency, not this node.\n\n(c) NOTHING IN CONFIG — composition stays an explicit call against a dependency declared in the manifest, where req:design-dependencies-declared already puts it. Cheapest and already built. Counter: an explicit call is one somebody has to remember to make, which is the failure req:no-idea-goes-quiet exists to reject.\n\n(d) THE MANIFEST, NOT .mcp.json, IS THE RIGHT FILE — and the federation strengthens this considerably. reflow2 ALREADY declares its dynograph-foundation dependency this way, pinned and version-checked, with ver:design-dependencies-declared passing against the real thing. A DEPENDENCY IS A PROPERTY OF THE DESIGN, NOT OF THE MACHINE SOMEBODY READS IT ON: projectD depends on projectC no matter whose laptop is open, so putting it in .mcp.json — per-machine, and gitignored in this very repo — means every clone and every teammate re-states it, which is the shadow-list failure in a new costume. The counter, and it is real: the manifest says what the DESIGN depends on, while .mcp.json says what THIS PERSON is working on, and Anthony's user1/user2 split is genuinely about people. Those may both be needed — a committed manifest for the dependency edges, a per-user config for which subtree you have in hand.",
+        "name": "OPEN — should .mcp.json name SEVERAL graph_ids so one session reasons across reflow2 + flo2 + dynograph-foundation at once, and how does that sit against one-session-one-graph?",
+        "rationale": "Captured under the brainstorm skill, 2026-08-06, and EXTENDED the same day when Anthony generalised his own example from three graphs to an arbitrary federation with per-user scopes. The extension was folded into this node rather than minted as a new one because it answers the SAME question — which graphs a session can see — at a larger scale; the skill's \"several unrelated ideas mean several Decisions\" does not apply to one idea getting sharper.\n\nKept SEPARATE from dec:idea-gap-flows-to-the-dependency deliberately, even though Anthony raised both in one breath: this is ACCESS (which graphs a session can see), that is AUTHORITY (who may write intent into a design they do not own). They have different right answers, and one node holding both could only ever be half-answered. The federation makes the split sharper rather than blurrier — it localises the authority question to each ownership seam.\n\nThe collaboration fact that bears on it and is new to the design: Anthony and his brother are split BY LAYER, not by project — Anthony on reflow2 core, his brother on the flo2 web app around it. That is not \"many people on one project\" (req:sessions-share-a-graph) nor \"many projects at once\" (req:many-designs-one-service); it is one owner per graph with the dependency running BETWEEN the owners, so the seam is simultaneously a technical boundary and a human one. req:many-people-and-many-projects-compose was written hours earlier assuming several people on one project and does not cover this shape. Anthony's user1/user2 example is the general form of the same thing.\n\nWhat is NOT recorded here, because he has not said it: whether the per-user scope is meant to be a PERMISSION (user2 may not reach A and B) or merely a CONVENIENCE (user2 has no reason to load them). Those differ the moment anything is hosted, and reflow2 has no authentication to enforce the former.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-backlog-belongs-in-the-graph",
       "node_type": "Decision",
       "properties": {
@@ -47904,6 +48271,16 @@
       }
     },
     {
+      "node_id": "dec:idea-gap-flows-to-the-dependency",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-06: \"having somewhat independent reflow2 projects linked allows for requirements from one project to flow naturally to another without a user specifying we need to update package x because package y has a gap that only package x can fix. having reflow2 be able to do this automatically would be great.\"\n\nTHE WORKED EXAMPLE IS THIS REPOSITORY, AND IT WAS ENTIRELY BY HAND. flo2 hit a wall it could not climb from inside itself — a proposed Decision that nothing reported — and the fix had to land in reflow2. What carried it across was a human writing a markdown proposal in the flo2 repo, a human reading it, and an agent re-typing it as reflow2 nodes (chg:flo2-proposal-multi-graph-hosting). NOTHING IN EITHER GRAPH KNEW.\n\n⭐ SHARPENED 2026-08-06 BY A CONCRETE CASE AND A SCALING ARGUMENT THAT CHANGES THE ANSWER. Anthony: \"say my brother, who only has read access for reflow2, needs place a requirement upon reflow2 in order for flo2 to properly function... should my brother have the ability to add proposed ideas to reflow2 (write only for proposed, else read only) or should my brother place the external requirement in flo2 and when I open all 3 of my projects, it'll (the agent) see this requirement in the flo2 graph. I'm leaning towards the prior because say projectA (the one being depended upon) is huge and has multiple other projects dependent upon it and don't actually track any of the dependent projects/graphs, then option B may not function... think of it like a Google service is project A...they are not going to load every graph that is dependent upon them.\"\n\n⭐ THAT ARGUMENT DEFEATS OPTION (C) BELOW, WHICH THIS AGENT HAD RECOMMENDED, AND THE REFUTATION IS RECORDED RATHER THAN THE RECOMMENDATION QUIETLY WITHDRAWN. \"The upstream pulls rather than the downstream pushes\" rests on the upstream being able to ENUMERATE ITS DEPENDENTS. A widely-depended-on design cannot: it does not know who depends on it, and would not load their graphs if it did. And DISCOVERY OF DEPENDENTS IS ITSELF A PUSH — either the upstream somehow learns of every consumer, or consumers register, and registering is a write. Pull cannot bootstrap itself. It survives only in the SMALL federation case Anthony described earlier (C's owner asking who declares a dependency on C, finding exactly D).\n\n⭐ THE ANALOGY IS AN ISSUE TRACKER, NOT PUB/SUB. Anthony reached for \"socket publish/subscribe\". Pub/sub is the right shape for the OTHER direction and already exists: the upstream publishes its surface (export_surface, built), consumers mirror it (mirror_surface, built). The REVERSE channel in every real ecosystem is a tracker: you do not get write access to Google's codebase, you file an issue. ANYONE MAY FILE; ONLY MAINTAINERS TRIAGE. That is precisely \"write only for proposed, else read only\", and it scales because the upstream keeps ONE inbox rather than N graphs.\n\n⭐⭐ IN SYSTEMS-ENGINEERING TERMS THIS IS NOT EXOTIC, IT IS THE NORMAL DIRECTION. flo2 is a CUSTOMER of reflow2; reflow2 is the SUPPLIER. A customer levying a requirement on a supplier is the most ordinary transaction in the discipline. Framing it as \"writing into a design you do not own\" made an unremarkable act sound like a violation.\n\n⭐⭐ THE VOCABULARY IS ALREADY THERE, WHICH THIS AGENT PREVIOUSLY GOT WRONG BY NOT LOOKING. Checked against describe_schema, a Requirement already carries every field this needs: `source` (\"who/what stated it — a user, a regulation, a stakeholder\"), `provenance` with an `imported` value, `designation` published/internal so the downstream can mark what it publishes, `status` starting at `proposed` with only the owner's word moving it off (set_requirement_status), and AUTHORED_BY carrying role author/reviewer/approver. A levied requirement is expressible TODAY as: add_requirement (lands proposed) + authored_by <them> role=author + source \"<their design>\" + provenance imported. NOTHING IN THE SCHEMA NEEDS TO CHANGE.\n\n⭐ AND IT IS ALREADY REPORTABLE, BY WORK MERGED THE SAME DAY. loop_status gained `unsettled_assigned_decisions` (PR #81, 2026-08-06) — a Decision left proposed while carrying an approver edge. The identical shape answers \"a proposed Requirement from an external source is waiting on you\". THE INBOX IS ALREADY COMPUTABLE; it has never been pointed at this case.\n\nSO WHAT IS MISSING IS TWO THINGS: (1) TRANSPORT — how a node gets from their machine into this graph; (2) ENFORCEMENT — nothing stops a writer doing more than filing, because reflow2 HAS NO AUTHENTICATION and cannot acquire one without becoming a different product.\n\n⭐ TRANSPORT ALREADY EXISTS, AND IT IS **GIT** — NOT ANY ONE PROVIDER.\n⚠️ CORRECTED BY ANTHONY, 2026-08-06, and the correction matters because the first version of this node named GitHub: \"we can probably use GitHub for this example, but not every project will use GitHub. every project is designed to use a git repo though so other git providers like gitlab can also work.\"\n\nThe mechanism is a BRANCH CARRYING A PROPOSED-STATUS NODE IN THE COMMITTED EXPORT, offered to the owner, who merges it or does not. Every primitive that needs is plain git — a branch, a diff, a merge — and reflow2's own three-way merge driver already operates on the export FILE, provider-agnostic by construction. A hosted forge (GitHub pull request, GitLab merge request, Gitea, Bitbucket) is one CONVENIENT UI over those primitives and supplies the review gate and audit trail for free; NONE OF IT IS REQUIRED. With no forge at all the same exchange works by `git format-patch` and email, `git request-pull`, or a shared bare repo over SSH — which is also what makes it usable where a forge cannot go, including the disconnected case dec:idea-need-to-know-compartments cares about.\n\nTHE LOAD-BEARING FACT: dec:multi-writer-architecture (accepted) already made the repo file the unit of exchange, and req:persistence puts the design inside the consumer project. So \"the design travels as a file in a git repo\" is not a workaround adopted for this feature — it is the architecture, and this transport falls out of it for free. ZERO NEW REFLOW2 CODE.\n\nITS LIMIT, STATED PLAINLY: it requires the filer to have a clone and a git workflow, which is exactly what flo2's non-technical contributors do not have — so for the HOSTED case flo2's own layer must be the mailbox, and that lands back on req:reflow2-consumable-as-an-image and dec:one-process-many-stores.\n\nOPTIONS, NONE CHOSEN — REORDERED BY THE ARGUMENT ABOVE.\n\n(A) ⭐ ANTHONY'S LEAN: WRITE-ONLY-AT-PROPOSED. A consumer may create nodes at `proposed`, attributed and sourced, and may do nothing else — no accepting, no editing, no deleting. Expressible in today's schema, reportable by today's loop, transportable by plain git, and it scales because the upstream keeps one inbox rather than N graphs. Counter, and it is the honest one: reflow2 cannot enforce it. \"Write only for proposed\" is a property of WHATEVER HOLDS THE MAILBOX — a forge's branch permissions, a maintainer's judgement, or flo2's own layer — and calling it a reflow2 feature would be the same overclaim dec:idea-need-to-know-compartments warns about.\n\n(B) THE REQUIREMENT STAYS IN THE DOWNSTREAM GRAPH and the upstream owner sees it when they open both. Anthony's own counter is decisive at scale: a heavily-depended-on design will not load its dependents' graphs and does not know who they are. Still fine for the two-brothers case, and it is what the composition machinery already supports with no new anything.\n\n(C) THE UPSTREAM PULLS. Refuted above as a general mechanism. Retained for the small federation case only.\n\n(D) A THIRD, PROGRAM-LEVEL GRAPH holding cross-project intent, with the others as composed children. dec:nested-graphs and cap:derived-completion anticipate the shape. Answers \"where does shared intent live\" rather than \"how does a need travel\", and adds a design to maintain.\n\n⚠️ THE PREREQUISITE THAT STILL BOUNDS ALL OF IT: dec:linked-repos-poc was RUN 2026-08-06 and found reflow2 declares NO `required` interface at all, so nothing pairs across any seam. The channel this node is about has no labelled boundary to run along.\n\n⚠️ AND THE CONSTRAINT FROM dec:idea-need-to-know-compartments: an automatic cross-graph write is a channel between compartments, and the safe direction is defined against SENSITIVITY, not against the dependency arrow. Option (A) is materially safer than any automatic flow precisely because a human files it and a human accepts it — the write is deliberate at both ends.",
+        "name": "OPEN — how does a downstream owner levy a requirement on an upstream design they do not own? (Anthony leans: write-only-at-proposed, carried by git)",
+        "rationale": "Captured under the brainstorm skill 2026-08-06, then SHARPENED twice the same day.\n\n⭐ THREE CORRECTIONS TO THIS AGENT ARE PRESERVED IN THE NODE rather than edited away, because each was a different failure worth keeping visible.\n\n(1) Option (C), upstream-pulls, was RECOMMENDED here and is refuted by Anthony's Google-service argument: pull requires enumerating dependents, a widely-used design cannot, and discovery of dependents is itself a push, so pull cannot bootstrap.\n\n(2) This node previously implied the graph could not express a levied requirement. describe_schema shows it already can — `source`, `provenance: imported`, `designation`, `status: proposed` and AUTHORED_BY roles are all present. Same failure dec:idea-intent-crosses-designs corrected on 2026-08-05: asserting an absence from a summary instead of reading the surface. READ THE SCHEMA, NOT THE SUMMARY.\n\n(3) The transport was first written as \"a pull request... enforced by GitHub\". Anthony corrected it: not every project uses GitHub, but every project uses a git repo. The distinction is not pedantic — coupling reflow2's answer to one vendor's feature would narrow a product whose whole persistence story (req:persistence, dec:multi-writer-architecture) is already vendor-neutral, and would exclude exactly the disconnected and self-hosted environments where the file-and-merge model is the ONLY workable one. The primitives are branch/diff/merge; a forge is a UI over them.\n\nKept SEPARATE from dec:idea-a-session-holds-several-graphs (ACCESS — which graphs a session can see) because this is AUTHORITY — who may write what, and at which status. The federation node localises this question to each ownership seam; this node is what happens at one.\n\nThe reframe worth keeping even if every option here is rejected: this is a CUSTOMER REQUIREMENT LEVIED ON A SUPPLIER, the most ordinary transaction in systems engineering.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-intent-crosses-designs",
       "node_type": "Decision",
       "properties": {
@@ -47950,6 +48327,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — from the 2026-08-01 dynograph-foundation review. Nothing here is settled.\n\nTHE IDEA: dynograph_graph::link_prediction_all / link_prediction_from (unused) score non-adjacent node pairs by how much their neighbourhoods overlap — common neighbours, Jaccard, or Adamic-Adar (which down-weights hubs). Read on a design graph: \"these two look like they should be connected and are not — is there a missing SATISFIES, or DEPENDS_ON?\"\n\nWHERE IT LANDS: BL-114's unsolved half. That item records that disconnected_community SUGGESTS adding a bridge while its suggestion does not know the detector's own selectivity, so the advised bridge's only correct forms are edge types the measurement excludes. Link prediction would propose WHICH bridge, on evidence rather than on a template.\n\nIT MUST BE AN ASK, NEVER A REPAIR. dec:ask-not-repair (suspected duplicates are asked, never merged) and dec:report-dont-judge both apply directly, and apply_heal already proposes-and-stops in rigid mode. A predicted edge written into the graph would be reflow2 inventing design.\n\nTHE HONEST COUNTER-ARGUMENT, and it may be fatal: a golden thread is largely a TREE. Trees have very few common neighbours, so neighbourhood-overlap scores may be near-zero almost everywhere and the signal may simply not exist on this shape of graph. That is measurable BEFORE any build — run it over reflow2's own 1179-node export and see whether anything scores. docs/sharpening.md is exactly the discipline for that, and this should not be built until the instrument says there is a signal.",
         "name": "OPEN — should reflow2 propose MISSING edges from neighbourhood overlap, as a question rather than a repair?",
         "rationale": "Included because it is the only unused foundation function that addresses BL-114's open half; recorded with its likely-fatal objection attached rather than argued down, so a later session inherits both.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-need-to-know-compartments",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-06, extending the federation idea into his own professional domain: \"in the military, when you have a clearance, there is a 'need to know' and a person only gets what they need to know. often SAP/SAR programs are like this. reflow2 could support both this mechanically by user1 being the only person to projectA... then user2 who does not have a need to know only has access to projectB... and their projectC. mechanically, they'd have to have access to some machine that could hold the graph for the different clearance levels.\"\n\nNOTE ON THE EXAMPLE: Anthony flagged immediately afterwards that he had muddled which made-up project sat at which level (\"oops, I think I goofed up the clearance levels of my made up projects, but hopefully the point is still valid\"). It is. Nothing below rests on the specific levels — only on the SHAPE: user1 holds {A, B}, user2 holds {B, C}, and B is the overlap. The levels are deliberately not restated here, because the slip turned out to expose a real error in the first version of this node. See the correction below.\n\nTHE STRUCTURAL ANALOGY IS EXACT, AND THAT IS WHY IT IS DANGEROUS. The federation shape recorded in dec:idea-a-session-holds-several-graphs — each person holds their own subtree plus one hop outward, cuts overlapping at ownership seams — is, drawn on a whiteboard, indistinguishable from need-to-know compartmentation. The overlap graph is the shared compartment. Nothing about the picture is wrong.\n\n⚠️⚠️ WHAT MUST NOT BE READ INTO IT, AND THIS IS THE MOST IMPORTANT LINE IN THIS NODE: reflow2 IS NOT AN ACCESS CONTROL AND MUST NEVER BE DESCRIBED AS ONE. It has NO AUTHENTICATION OF ANY KIND — recorded already in req:a-session-cannot-reach-another-designs-graph, and --http-allow-host is Host-header allowlisting for DNS-rebinding protection, not authentication. A list of graph_ids in a config file is a CONVENIENCE SCOPE: it says which designs a session bothers to load, not which designs a person is permitted to read. Anyone with filesystem read access to the store reads the entire design, config or no config. In most domains that distinction is pedantic. In THIS one it is the difference between a tool and an incident, and it is precisely the permission-versus-convenience question left open on the federation node — now with real consequences attached.\n\nTHE REAL SEPARATION IS THE ACCREDITATION BOUNDARY, NOT THE APPLICATION. Anthony said the mechanical part himself — \"they'd have to have access to some machine that could hold the graph for the different clearance levels.\" The enclave, the system-high accreditation and whatever guard moves data between them are the controls. reflow2's honest role is to be COMPATIBLE with that separation, never to implement it.\n\n⭐ AND HERE THE FEDERATION SHAPE EARNS ITS KEEP FOR A REASON THAT HAS NOTHING TO DO WITH CONVENIENCE. Because nobody holds the whole DAG — each person holds a local cut — the design CAN be split across enclaves at all. A design brain that required the whole federation resident in one process to answer a question would be unusable above unclassified, full stop. The local-cut property is what makes cross-enclave design possible, and that is an architectural argument for it independent of anything about laptops and subtrees.\n\n⭐ THE FILE-BASED MODEL IS THE ONE THAT SURVIVES AN AIR GAP, AND IT IS NOT LEGACY. dec:multi-writer-architecture (ACCEPTED) keeps the design as a graph-in-a-repo-file with many writers merging on pull, and its product is an EXPORT — a single, complete, content-hashed, deterministic file, with a three-way merge that can reconcile two divergent copies. FILES ARE WHAT A CROSS-DOMAIN TRANSFER PROCESS CAN ACTUALLY MOVE. The hosted always-on server of dec:one-process-many-stores — flo2's model, proposed the previous day — is not that, and could not be. So reflow2 now has TWO deployment shapes serving genuinely different worlds: hosted, for flo2's non-technical browser collaborators; file-and-merge, for anything behind an accreditation boundary. Recording this because the hosted work could easily be mistaken for the direction of travel, and for this class of user the repo-file model is not the old way — it is the only way.\n\n⚠️⚠️ THE DIRECT COLLISION WITH THE FEATURE ANTHONY ASKED FOR AN HOUR EARLIER. dec:idea-gap-flows-to-the-dependency proposes that a gap in one design automatically become a requirement in the design it depends on. IN A COMPARTMENTED SETTING, AN AUTOMATIC CROSS-GRAPH WRITE IS A CHANNEL BETWEEN COMPARTMENTS. And it is worse than the content: the mere EXISTENCE and TIMING of activity on one side can be inferable from the other — a node id, a timestamp, a counter that ticks, \"someone is blocked on this\" — none of which is the sensitive fact and all of which can carry it. AGGREGATION compounds it: two designs each individually releasable may not be releasable together.\n\n⭐⭐ CORRECTION, 2026-08-06, PROMPTED BY ANTHONY'S OWN SLIP ABOUT THE LEVELS — and it changes the engineering conclusion, so it is recorded rather than quietly edited. The first version of this node said \"upward may be fine, downward is spillage.\" THAT CONFLATED TWO DIFFERENT AXES. Dependency direction (who consumes whom) and classification direction (what is more sensitive) are INDEPENDENT, and assuming they align is exactly the mistake the muddled example accidentally surfaced.\n\nIn the example as loosely written, the most sensitive project happened to also be the most upstream, so \"flows upstream\" and \"flows to higher classification\" looked like the same sentence. THEY ARE NOT, AND REFLOW2'S OWN REAL CASE IS THE OPPOSITE ONE: dynograph-foundation is the most upstream design and the least sensitive — a public library — while its consumers are the things that could carry sensitivity. So a gap in a classified consumer flowing UP into an unclassified foundation is a flow toward LOWER classification, which is the dangerous direction. The feature's most natural and most useful direction is, in the realistic configuration, the unsafe one.\n\nTHE CONSTRAINT THEREFORE HAS TO BE STATED AGAINST THE SENSITIVITY LATTICE, NOT AGAINST THE DEPENDENCY GRAPH — \"one-directional by construction\" is not enough, because the design cannot know which direction is safe without being told something it currently has no vocabulary for. Which loops back to option (b) below: SOME marking axis may be unavoidable, not because reflow2 should enforce anything, but because without it the tool cannot tell the safe direction from the unsafe one and must therefore refuse to flow anything automatically at all. That is a defensible answer — refuse rather than guess is this project's standing doctrine — and it should be reached deliberately rather than by omission.\n\nTHERE IS NO MARKING VOCABULARY, AND `designation` IS NOT IT. Searched before writing: the only thing resembling a marking is `designation` on Requirements and Interfaces, whose values are `internal` / `published`. That is the SHAPE of a marking — an opt-in, per-node, computed-upon label, withheld by default and counted when withheld — but it is about PUBLICATION BOUNDARIES, not sensitivity, and reading it as a classification would be a category error. Whether reflow2 should gain a real marking axis is a schema question and therefore at least a minor version, per the CHANGELOG's own rule.\n\nOPTIONS, NONE CHOSEN.\n\n(a) REFLOW2 MODELS NOTHING ABOUT CLASSIFICATION. The enclave separates; reflow2 is just a design tool that happens to run inside one. Cheapest, most honest, impossible to misread. Counter: the user still has to mark things somewhere, and it will end up in prose inside node text — the shadow-list failure again, and here an unmarked-but-sensitive statement sitting in a `statement` field is a genuine problem. AND, per the correction above, this option forecloses automatic cross-graph flow entirely, because a tool with no sensitivity vocabulary cannot know which direction is safe.\n\n(b) A DESCRIPTIVE MARKING AXIS — a sensitivity label per node or per design, never enforcing, so an export can SAY what it contains and an automatic flow can at least refuse to run toward a lower label. Counter, and it is severe: a marking that does not enforce invites exactly the misreading warned about above, and a WRONG marking is more dangerous than none, because people act on it.\n\n(c) REFLOW2 PROMISES ONLY NEGATIVE PROPERTIES, and says so plainly: never requires the whole federation in one place, never initiates a message (already true and verified against the service — proxy.rs), never phones home, and its export is a complete, self-describing, content-hashed file a human can inspect before it crosses anything. Marketed as COMPATIBLE WITH an accreditation boundary, never as implementing one. Cheap, truthful, and very nearly the current state already.\n\n(d) CROSS-GRAPH FLOW IS DIRECTIONAL BY CONSTRUCTION AND EVERY CROSSING IS AN AUDITABLE EVENT — with the correction above attached: the direction must be defined against sensitivity, which (a) cannot express. Worth having on its own merits even with no classification involved, because \"which design wrote into mine, when, and why\" is a question any consumer wants answered.\n\nWHAT IS NOT RECORDED HERE BECAUSE ANTHONY HAS NOT SAID IT: whether this is a real requirement he intends reflow2 to meet, or an observation that the shape happens to fit a world he knows well. He called it \"just another spinoff of this idea\", which reads as the latter — and the difference matters enormously, because (b) and (d) are real work and (a) and (c) are mostly writing down what is already true.",
+        "name": "OPEN — is the per-user graph scope a convenience or a COMPARTMENT, and what must reflow2 promise (and refuse to promise) if designs are separated by clearance?",
+        "rationale": "Captured under the brainstorm skill, 2026-08-06, as the third node in one conversation — kept separate from the ACCESS question (dec:idea-a-session-holds-several-graphs) and the AUTHORITY question (dec:idea-gap-flows-to-the-dependency) because it asks a third thing: what reflow2 may TRUTHFULLY CLAIM about separation, which is a question about the product's promises rather than about its mechanism.\n\nCORRECTED WITHIN THE HOUR, AND THE CORRECTION IS KEPT IN THE NODE rather than silently replacing the text — the same discipline dec:idea-intent-crosses-designs used on 2026-08-05, and for the same reason: the failure mode should stay visible. The first version asserted \"upward may be fine, downward is spillage\", which quietly assumed the dependency ordering and the sensitivity ordering run together. They do not, and reflow2's own dependency chain is a counterexample — dynograph-foundation is simultaneously the most upstream and the least sensitive design in it. The error surfaced only because Anthony flagged that he had muddled the levels in his own example, which forced a re-read; a tidier example would have hidden it. Recorded as chg:classification-and-dependency-are-orthogonal.\n\nWritten with a deliberate bias toward what reflow2 must NOT say. Anthony is a Space Force systems engineer and this is his working domain, so the failure mode here is not that reflow2 lacks a feature — it is that a structural resemblance between \"per-user graph scoping\" and \"need-to-know\" gets read as a security property by someone who then relies on it. The node therefore leads with the disclaimer rather than the opportunity, and the disclaimer is drawn from intent the design already holds rather than from caution: req:a-session-cannot-reach-another-designs-graph states in its own text that reflow2 has no authentication and that authorization belongs to the layer in front.\n\nAlso recorded because it re-values something that could otherwise look superseded: the repo-file-plus-merge model (dec:multi-writer-architecture, accepted) is the ONLY one of reflow2's two deployment shapes that can cross an air gap, since its product is a complete deterministic file and a three-way merge. The hosted multi-graph work of the previous day is additive, not a migration, and this is the clearest statement yet of who each shape is for.",
         "status": "proposed"
       }
     },
@@ -48087,9 +48474,9 @@
       "node_id": "dec:linked-repos-poc",
       "node_type": "Decision",
       "properties": {
-        "decision": "PROPOSED as a proof of concept, Anthony 2026-07-27, captured while fresh rather than worked: build a reflow2 design graph inside storyflow (adopt is under way, not finished) and another inside dynograph-foundation, then have an agent LINK them through their published surfaces and identify where the interfaces are incompatible. THE CASE IS WELL CHOSEN AND NOT A TOY: reflow2 and storyflow BOTH depend on dynograph-foundation, so it is a real three-way seam between three real repositories with a real answer, and both consumers were built by the same author at different times against a foundation that moved — which is precisely how interface drift happens in the wild. Each project's graph would then PUBLISH ITS OWN INTERFACE SPEC, which is what any consumer needs and what makes the seam checkable. What this would actually prove, and why it is worth doing rather than arguing: whether dec:nested-graphs (a graph per ownership boundary) and cap:mirror-surface hold up on three designs nobody built to be composed. WHAT IT DEPENDS ON: req:interface-spec-complete first — reflow2 structures roughly one and a half of the six characteristics an interface spec needs and puts the rest in one free-text string, so today two graphs can be linked and still not be comparable. Then req:seam-incompatibility, which is the finding the PoC is meant to produce.",
-        "name": "OPEN — prove composition on reflow2 + storyflow + dynograph-foundation",
-        "rationale": "Anthony's own framing, and it lands on intent reflow2 already holds: req:design-composes (accepted, blocked on dec:nested-graphs at the time), dec:nested-graphs (DECIDED — a design is its own graph when separately owned, released or shared, which is exactly three sibling repos), cap:mirror-surface and cap:publish-surface (both built). So the LINKING half exists and the COMPARING half does not. Recorded as a decision point rather than a plan because the sequencing is a real choice: structure the interface spec first and then run the PoC, or run the PoC against today's thin spec to find out what it cannot say. Also worth noting the PoC has a second payoff independent of the result — it is the first time reflow2 would be pointed at a design it did not author, twice, which is the adopt path Anthony says his real work almost always starts from.",
+        "decision": "PROPOSED as a proof of concept, Anthony 2026-07-27. ⭐ EXECUTED 2026-08-06 at his instruction (\"let's trial this out\"), after being parked for ten days — and with flo2 SUBSTITUTED FOR STORYFLOW, because storyflow's adopt was never finished while flo2 is actively developed, has a live one-directional dependency on reflow2, has its own graph on the same machine, is built by a second person, and had just generated a real cross-design event.\n\nTHE ORIGINAL PROPOSAL: build a reflow2 design graph inside storyflow and another inside dynograph-foundation, then have an agent LINK them through their published surfaces and identify where the interfaces are incompatible. WHAT IT WAS MEANT TO PROVE: whether dec:nested-graphs (a graph per ownership boundary) and cap:mirror-surface hold up on designs nobody built to be composed.\n\n=== WHAT WAS ACTUALLY RUN ===\nThree real designs, their committed exports, composed against reflow2's live design in a throwaway in-memory graph (nothing written to any of them): reflow2 (1497 nodes, graph_id `reflow2`), dynograph-foundation (179 nodes, graph_id `dynograph-foundation`, export written by reflow2 0.16.0), flo2 (77 nodes, graph_id `1a97fc1f1de4d5d2`, written by 0.24.0). compose_and_analyse then pair_designs, each pair in turn.\n\n=== RESULT 1: THE MECHANISM WORKS ===\nBoth compositions imported cleanly with ZERO SKIPPED EDGES — 179 nodes / 270 edges from dynograph-foundation, 77 / 181 from flo2. Ids namespaced as designed; neither source design touched.\n\n⭐ CROSS-VERSION COMPOSITION SURVIVED, AND THAT IS A REAL DATA POINT: dynograph-foundation's export was written by reflow2 0.16.0 and imported into a 0.24.0 graph with nothing dropped. [BL-216] filed the three-graphs-three-versions worry on 2026-08-05 as something that \"becomes load-bearing the moment cross-graph linking lands\". It landed, and it did not bite. That is evidence, not proof — one export, eight minor versions apart, no schema change between them that this design happened to use.\n\n⭐ RESULT 2: A TRUE POSITIVE, AND IT IS THE SEAM THIS WHOLE SESSION WAS ABOUT.\nThe flo2 pairing reported exactly one CONFLICT: `ifc:core-api` (ours, medium `library`) against `ifc:model-provider-api` (flo2, medium `REST`), names matching at 80/100 — \"very likely the same contract, but they cannot be connected as either is currently built.\" That is precisely the flo2↔reflow2 problem: flo2 is a web app that needs an HTTP surface, reflow2 exposes a library/stdio one, and closing it is what dec:one-process-many-stores and req:reflow2-consumable-as-an-image exist to do. THE TOOL COMPUTED IT FROM TWO DESIGNS NOBODY BUILT TO BE COMPOSED, AND NOBODY TOLD IT THE ANSWER. That is the single strongest piece of evidence this project has that the composition idea is sound.\n\n⚠️ RESULT 3: ZERO PAIRED BOUNDARIES ON BOTH PAIRS, AND THE REASON IS ONE MISSING LABEL.\npaired = 0 against dynograph-foundation AND against flo2. seam_findings = 0 on both — which does NOT mean the designs agree; it means NOTHING IS CONNECTED ACROSS THE SEAM. All 15 of dynograph-foundation's published interfaces landed in DEAD SURFACE (\"they publish this and nothing here requires it\"), and 5 of flo2's did.\n\nTHE CAUSE IS SINGULAR: REFLOW2 DECLARES NO `required` INTERFACE ANYWHERE. Pairing matches complements — published/both against required/both, never like with like — so with nothing required, nothing can ever pair. reflow2 compiles against dynograph-core; that dependency is real, load-bearing, already declared in the version manifest (req:design-dependencies-declared, accepted, verified) — AND INVISIBLE TO THE SEAM MACHINERY.\n\n⚠️ THE MOST DANGEROUS NUMBER IN THE RUN IS `unmet_needs: 0`. It reads as \"nothing is missing\" and it means \"we never said we needed anything\". A design that has declared no needs cannot have an unmet one. Anyone reading that field without reading `dead_surface: 15` beside it would conclude the seam was healthy.\n\nRELATED, AND THE SAME ROOT: reflow2 holds FIVE Interfaces for 1497 nodes, two of which were created the previous night, and both of those came back as `unclassified_ours` — the tool naming rather than counting them precisely because `internal` is the DEFAULT and cannot distinguish \"deliberately internal\" from \"never classified\". This is maturity_report's SEAMS 0 OF 73 appearing as data instead of as a score. A near-miss makes it concrete: dynograph-foundation ALSO publishes an `ifc:core-api`, and reflow2 has one too, and they cannot pair because both are `published` — like-with-like, correctly refused.\n\n⚠️ RESULT 4: TWO FINDINGS THAT BEAR ON THE FEDERATION IDEA RAISED THE SAME DAY.\n(1) flo2's graph_id is `1a97fc1f1de4d5d2` while the other two are `reflow2` and `dynograph-foundation` — an opaque mint beside two readable labels. dec:idea-a-session-holds-several-graphs proposes listing graph_ids in a config file; nobody hand-writes `1a97fc1f1de4d5d2` and knows what they typed, so either identity gains a human-facing name or that mechanism needs a different key.\n(2) THE ACCESS MODEL ANTHONY DESCRIBED CANNOT BE EXPRESSED IN THE GRAPH AT ALL. He specified: userAJ read/write on all three; userAlex read-only on reflow2, read/write on flo2. `who:ajs` and `who:alex` exist as Contributors and AUTHORED_BY records who DID write something, but there is no node type, edge type or property for who MAY write something. That is not a limitation the trial hit — it is a vocabulary that does not exist, and it is the concrete form of the permission-versus-convenience question left open on dec:idea-need-to-know-compartments.\n\n=== WHAT THIS ANSWERS AND WHAT IT DOES NOT ===\nANSWERED: dec:nested-graphs and the composition capabilities hold up on three real designs built at different times by different hands against a moving foundation. Nothing crashed, nothing was silently dropped, the ids namespaced, and the one genuine incompatibility was found and explained in a sentence a person can act on.\nNOT ANSWERED, because the run could not reach it: whether seam_report's contract comparison is any good. It needs PAIRS, and there were none. The dependency this decision named — req:interface-spec-complete first, or run against today's thin spec — turns out to have been the wrong dependency: the blocker was not that the spec is thin, it is that nothing is LABELLED as required.\n\n=== THE CHEAPEST NEXT STEP, NOT TAKEN HERE ===\nDeclare reflow2's `required` interfaces — what it consumes from dynograph-foundation, and what flo2 must be able to reach. A handful of nodes. It would convert 15 dead surfaces into real pairs or real unmet needs, and it is the prerequisite for seam_report ever having anything to compare. Recorded rather than done, because it is design about reflow2's own boundaries and belongs to Anthony's word rather than an agent's tidying.",
+        "name": "RUN 2026-08-06 — composition proved on reflow2 + flo2 + dynograph-foundation: the linking works, the labelling does not exist",
+        "rationale": "Anthony's own framing, and it lands on intent reflow2 already holds: req:design-composes (accepted), dec:nested-graphs (DECIDED — a design is its own graph when separately owned, released or shared, which is exactly three sibling repos), cap:mirror-surface and cap:publish-surface (both built). So the LINKING half exists and the COMPARING half does not. Recorded originally as a decision point rather than a plan because the sequencing was a real choice: structure the interface spec first, or run the PoC against today's thin spec to find out what it cannot say.\n\n⭐ THE SEQUENCING QUESTION IS NOW ANSWERED, AND BOTH BRANCHES WERE WRONG. Running it first was right, and what it found was not \"the spec is too thin to compare\" — it was that there is nothing to compare, because no boundary on this side is labelled as a need. req:interface-spec-complete was recorded as this PoC's prerequisite; it is not. The prerequisite is a `required` designation on the interfaces reflow2 actually consumes, which is smaller and more specific than making the spec structurally complete.\n\nThe second payoff predicted when this was proposed did land: it was the first time reflow2 was pointed at designs it did not author, twice, which is the adopt path Anthony says his real work almost always starts from. The result — clean import, correct namespacing, one true positive, and an honest zero everywhere the design had not been labelled — is the behaviour that path needs.\n\nKept as `proposed` rather than moved to accepted: the PoC RAN, but what it proposed to prove is only half proven. seam_report was never exercised because pairing produced nothing to feed it, and that half stays open until reflow2 declares what it requires. Recorded via chg:linked-repos-trial-run.",
         "status": "proposed"
       }
     },
@@ -48811,7 +49198,7 @@
         "decision": "Accepted the gap gap:230d69056201ed59.",
         "name": "Reviewed: gap:230d69056201ed59",
         "rationale": "Anthony, 2026-07-31: park until the other fixes ship. Two reasons, and the first is a genuine blocker rather than a preference. It sits against `dec:loop-status-state-not-history` — loop debt is computed from graph state and NEVER from run history — and whether the KIT may report on its own adoption is a different question from what the LOOP may reason from when it computes debt. That distinction has to be settled before anything is built, or it gets discovered afterwards. Second, the three fixes accepted alongside it (situation-triggered nudging, imperative hint wording, conventions on the tool) are cheaper and more directly aimed at the problem; measurement is how you learn whether they worked, so it is worth more AFTER they ship than before. Revisit when they land. Recorded as deferred, not dropped: the need is real and this is a sequencing call.",
-        "status": "accepted"
+        "status": "superseded"
       }
     },
     {
@@ -50236,6 +50623,16 @@
       }
     },
     {
+      "node_id": "epoch:skill-use-still-needs-reminding",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "2026-08-06 — the user is still the reminder mechanism, and says so. New evidence on req:skill-use-survives-a-long-session six days after it was accepted, in a session where cap:skill-triggers (verified) fired correctly and still did not reach the failure.",
+        "sequence": 1,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:snapshot-per-revision",
       "node_type": "DesignEpoch",
       "properties": {
@@ -51413,6 +51810,26 @@
       }
     },
     {
+      "node_id": "frag:art:docker-build-script",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered docker/build.sh"
+      }
+    },
+    {
+      "node_id": "frag:art:dockerfile",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered Dockerfile"
+      }
+    },
+    {
       "node_id": "frag:art:drift",
       "node_type": "Fragment",
       "properties": {
@@ -51790,6 +52207,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered readiness.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:release-workflow",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered release.yml"
       }
     },
     {
@@ -52526,7 +52953,7 @@
       "node_id": "question:230d69056201ed59",
       "node_type": "Question",
       "properties": {
-        "answer": "Park it until the other fixes ship. It is blocked on a real decision — whether the kit may report on its own adoption without breaking the rule that the loop never reasons from run history — and there is more value in landing the nudge and hint changes first, when there will be something worth measuring. (Anthony, 2026-07-31.)",
+        "answer": "Yes — build it. Anthony, 2026-08-06, un-deferring this after the 2026-07-31 answer's own precondition came true: the fixes it was parked behind (situation-triggered nudging via cap:skill-triggers, now verified; conventions riding the tool; imperative hint wording) have all shipped, so there is now something worth measuring. The trigger for reversing it was that the user was STILL having to remind an agent to use reflow2's skills — \"I still don't like reminding this all the time (which needs to be an enduring requirement to increase the probability that an agent will use reflow2 skills and tools and not rely on itself).\"\n\nTHE HARD PART IS UNCHANGED AND IS STILL THE FIRST THING TO SETTLE, not a detail to discover during the build: whether the kit may report on its own ADOPTION without breaking dec:loop-status-state-not-history, which says loop debt is computed from graph state and never from run history. The distinction this requirement already names — what the LOOP may reason from when it computes debt, versus what the KIT may report about ITSELF as a product — is the thing to decide first. It may be a real distinction or a rationalisation for the thing that decision forbids, and that must be answered before anything is built.\n\nThe evidence for reversing the parking, recorded because it is the shape of the problem rather than an anecdote: a session that used the tools heavily and unprompted still failed to load list_skills at start, never loaded link-artifacts while doing its work by hand, and only loaded revise-design after being told to. cap:skill-triggers fired correctly throughout — its shapes are all shapes in the graph-write stream, and \"no skill has been loaded\" is not a graph write, so nothing counts it. That hole is exactly what this requirement covers, and only a human noticed it. Twice.",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “Whether the kit is actually used is measured, not inferred from whether the design looks tidy”",
         "gap_id": "gap:230d69056201ed59",
@@ -54889,7 +55316,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Nothing in reflow2 records whether its skills were used, so the only reason this whole family of findings exists is that a user asked an agent directly and the agent answered honestly. That is not a mechanism.\n\nWHAT MAKES IT ACUTE: a design can look healthy while the kit is barely being used. This session ended with 0 gaps, 0 defects, a clean loop and a green gate — and two skills loaded out of eight. `detect_gaps` measures whether the DESIGN is coherent; nothing measures whether the PRACTICE is. The report-friction skill already concedes the wider version of this in its own words — ordinary use produces better evidence and currently loses all of it — and `req:friction-has-a-baseline` was dropped, so there is no standing measurement at all.\n\nTHE HARD CONSTRAINT, which is why this is a requirement and not a fix: `dec:loop-status-state-not-history` says loop debt is computed from graph state and NEVER from run history, straight out of the BL-74 fleet trial. Any naive answer here — log which skills were called — is exactly the run-history reasoning that decision rejects, and a study that comes back recommending it has not read the decision.\n\nTHE DISTINCTION THAT MAY RESOLVE IT, offered as the open question rather than the answer: that decision governs what the LOOP may reason from when it computes debt. It does not obviously govern what the KIT may report about ITSELF as a product — the difference between \"this design owes you three gaps\" (must be state-derived, must be true of the graph as it stands) and \"reflow2 was installed here and its skills were loaded twice in nine hours\" (a fact about the tool's adoption, not about the user's design). Whether that distinction is real, or a rationalisation for the thing the decision forbids, is the question — and it must be settled before anything is built, not discovered afterwards.\n\nBOUNDARIES THAT HOLD EITHER WAY: whatever is measured must respect report-friction's redaction discipline, which has no counterpart in the prior art — tool names and argument SHAPES, node TYPES not ids, counts not contents — because reflow2 installs into other people's projects, and the thing being measured is the user, not the design.",
-        "status": "deferred"
+        "status": "accepted"
       }
     },
     {
@@ -54900,10 +55327,10 @@
         "designation": "internal",
         "kind": "functional",
         "lineage": "original",
-        "name": "Skill use is triggered by the situation, not remembered — the rungs cover loop debt, and skills fire on things the graph cannot see",
+        "name": "Skill use is triggered by the situation, not remembered — and the USER must never be the trigger",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "An agent's use of reflow2's SKILLS must not decay over a session while its use of the TOOLS holds. Measured on reflow2's own repo, 2026-07-31, in a long session: `loop_status` was called unprompted throughout and every write went through `record_change`, two-sided checksum accepts and one-export-per-commit — but exactly two skills were loaded all session, and both only because the user typed a slash command. `impact-check`, `link-artifacts`, `capture-intent`, `revise-design`, `check-health` and `report-friction` were never loaded. THE THREE BL-74 RUNGS ARE ALL `verified` AND THIS STILL HAPPENED, which is the finding: they are working as designed and do not reach this.\n\nTHE STRUCTURAL REASON. The rungs compute LOOP DEBT — a property of graph state, which is what `dec:loop-status-state-not-history` correctly insists on. Skills fire on SITUATIONS: about to change code, just wrote a file, the user just shared an idea. The graph cannot see any of those, so the trigger mechanism covers one half of the problem and structurally cannot reach the other. That is why `impact-check` was dropped hardest — nothing in the system knows an edit is coming, and by the time the graph could tell, the edit has happened and the blast radius is a post-mortem rather than a check.\n\nWHAT COST SOMETHING, honestly: `impact-check` was never run before changing `snapshot_node`, `delete_edge` and `delete_node`; the blast radius was reasoned about by hand instead of computed. `link-artifacts` was never loaded and a stale `art:nodes` checksum was nearly shipped — caught only by grepping after the export, which then required restoring the export and redoing it. `check-health` cost nothing, because `detect_defects` was run bare and did catch the island.\n\nCANDIDATE MECHANISMS, in the order the evidence supports, NOT a decided design. (1) Extend the PostToolUse hook from COUNTING writes to matching SHAPES — a file edit with no ChangeEvent in the window means impact-check, an artifact checksum drift means link-artifacts. `req:nudge-covers-bypass` already arms the nudge on file-edit events and already names impact-check and link-artifacts, and is `verified`; what is missing is the shape-matching, not the trigger. (2) A refusal, where refusing is honest — reflow2's strongest mechanism, proven three times in this session alone — but only where skipping is genuinely wrong, because a guard that punishes correct work is the failure this project keeps naming.\n\nWHY IT MATTERS BEYOND THIS SESSION: BL-74 called this adoption-critical and found it in the author's own fleet, self-reported by the driving agent. This is the same failure observed from inside, on a session with MORE context about reflow2 than a consumer's agent will have — so it is likely a best case rather than a typical one.",
+        "statement": "An agent's use of reflow2's SKILLS must not decay over a session while its use of the TOOLS holds. Measured on reflow2's own repo, 2026-07-31, in a long session: `loop_status` was called unprompted throughout and every write went through `record_change`, two-sided checksum accepts and one-export-per-commit — but exactly two skills were loaded all session, and both only because the user typed a slash command. `impact-check`, `link-artifacts`, `capture-intent`, `revise-design`, `check-health` and `report-friction` were never loaded. THE THREE BL-74 RUNGS ARE ALL `verified` AND THIS STILL HAPPENED, which is the finding: they are working as designed and do not reach this.\n\nTHE STRUCTURAL REASON. The rungs compute LOOP DEBT — a property of graph state, which is what `dec:loop-status-state-not-history` correctly insists on. Skills fire on SITUATIONS: about to change code, just wrote a file, the user just shared an idea. The graph cannot see any of those, so the trigger mechanism covers one half of the problem and structurally cannot reach the other. That is why `impact-check` was dropped hardest — nothing in the system knows an edit is coming, and by the time the graph could tell, the edit has happened and the blast radius is a post-mortem rather than a check.\n\nWHAT COST SOMETHING, honestly: `impact-check` was never run before changing `snapshot_node`, `delete_edge` and `delete_node`; the blast radius was reasoned about by hand instead of computed. `link-artifacts` was never loaded and a stale `art:nodes` checksum was nearly shipped — caught only by grepping after the export, which then required restoring the export and redoing it. `check-health` cost nothing, because `detect_defects` was run bare and did catch the island.\n\nCANDIDATE MECHANISMS, in the order the evidence supports, NOT a decided design. (1) Extend the PostToolUse hook from COUNTING writes to matching SHAPES — a file edit with no ChangeEvent in the window means impact-check, an artifact checksum drift means link-artifacts. `req:nudge-covers-bypass` already arms the nudge on file-edit events and already names impact-check and link-artifacts, and is `verified`; what is missing is the shape-matching, not the trigger. (2) A refusal, where refusing is honest — reflow2's strongest mechanism, proven three times in this session alone — but only where skipping is genuinely wrong, because a guard that punishes correct work is the failure this project keeps naming.\n\nWHY IT MATTERS BEYOND THIS SESSION: BL-74 called this adoption-critical and found it in the author's own fleet, self-reported by the driving agent. This is the same failure observed from inside, on a session with MORE context about reflow2 than a consumer's agent will have — so it is likely a best case rather than a typical one.\n\n=== ⭐ SECOND OBSERVATION, 2026-08-06 — SIX DAYS LATER, MECHANISM (1) SHIPPED AND VERIFIED, AND THE USER IS STILL THE TRIGGER ===\n\nAnthony, unprompted, mid-session: \"as always, please use reflow2 skills and tools to implement any of this. this always gives us a first use case to see where we need to fix/improve reflow2 skills and tools. I STILL DON'T LIKE REMINDING THIS ALL THE TIME (which needs to be an enduring requirement to increase the probability that an agent will use reflow2 skills and tools and not rely on itself).\"\n\n⭐ HIS WORDS PROMOTE THIS FROM AN OBSERVATION TO A STANDING OBLIGATION, AND THAT IS THE REVISION: the requirement was written as \"skill use must not DECAY over a session\". It is now stronger — THE USER MUST NOT BE THE REMINDER MECHANISM AT ALL. A design brain whose correct operation depends on its owner repeating an instruction has moved the burden onto the person it was built to relieve, and it will not survive contact with a consumer who does not know to say it.\n\nWHAT MAKES THIS OBSERVATION DIFFERENT FROM THE FIRST, AND WORSE: `cap:skill-triggers` is now `verified` — the shape-matching hook of candidate mechanism (1) was BUILT and WORKS. It fired correctly in this very session (the Stop hook caught graph writes with no loop check, and was obeyed). The self-assessment for 2026-08-06 is genuinely better than 2026-07-31: capture-intent and brainstorm were both loaded and followed, and `claim_region`, `propagate_change`, `reconcile_artifacts`, `set_artifact_checksums`, `describe_schema`, `compose_and_analyse`, `pair_designs`, `detect_defects` and `loop_status` were all used unprompted. AND IT STILL WAS NOT ENOUGH — `list_skills` was never called at session start, `link-artifacts` was never loaded although its work was done by hand, and `revise-design` was loaded only after the user's reminder.\n\n⭐ THE BLIND SPOT IS NOW NAMEABLE, AND IT IS STRUCTURAL. `cap:skill-triggers` recognises SHAPES IN THE GRAPH-WRITE STREAM — an edit with no ChangeEvent, a change never propagated, a capture with no gap pass. Every shape it knows is a shape that requires the agent to have ALREADY TOUCHED THE GRAPH. THE ONE SITUATION IT CANNOT SEE IS \"NO SKILL HAS BEEN LOADED\", because a skill load is not a graph write and nothing counts it. That is not a defect in the capability; it is the exact hole `req:skill-adherence-is-measured` was written to fill — AND THAT REQUIREMENT IS `deferred`. The DEPENDS_ON edge between them already says so in its own evidence: \"without a measurement, whether that requirement is ever met is unknowable — the decay it names was found by asking an agent, not by any mechanism.\" Today it was found by asking an agent again. That is now twice.\n\n⭐ THE NEW RATIONALE, WHICH RAISES THE PRIORITY AND WAS NOT IN THE FIRST VERSION: Anthony's reason is not process hygiene. It is INSTRUMENTATION — \"this always gives us a first use case to see where we need to fix/improve reflow2 skills and tools.\" Every skill invocation is a test of that skill against real work, and this session proved the point twice over: following brainstorm surfaced that its step 2 is STALE (it instructs `set_decision_status` to `proposed` because \"add_decision defaults to accepted\", which stopped being true on 2026-07-25), and following capture-intent's \"search before you add\" is the only reason the flo2 capture did not mint duplicates of `req:many-designs-one-service`. AN AGENT THAT RECONSTRUCTS A SKILL FROM GENERAL COMPETENCE PRODUCES ROUGHLY THE RIGHT WORK AND GENERATES NO EVIDENCE. The skills are reflow2's product surface, and unexercised product surface is how [BL-176] hid for eleven releases.\n\nSO SKIPPING A SKILL HAS TWO COSTS, NOT ONE: the work is done less well, AND the defect in the skill goes unfound. The second is the one that compounds.",
         "status": "accepted"
       }
     },
@@ -55817,6 +56244,26 @@
       }
     },
     {
+      "node_id": "snap:epoch:skill-use-still-needs-reminding:req:skill-adherence-is-measured",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"ctr:claude-fable\",\"properties\":{\"acted_at\":\"2026-07-31\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:skill-use-survives-a-long-session\",\"properties\":{\"evidence\":\"Without a measurement, whether that requirement is ever met is unknowable — the decay it names was found by asking an agent, not by any mechanism.\",\"optional\":false,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:230d69056201ed59\",\"properties\":{}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Whether the kit is actually used is measured, not inferred from whether the design looks tidy\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"Nothing in reflow2 records whether its skills were used, so the only reason this whole family of findings exists is that a user asked an agent directly and the agent answered honestly. That is not a mechanism.\\n\\nWHAT MAKES IT ACUTE: a design can look healthy while the kit is barely being used. This session ended with 0 gaps, 0 defects, a clean loop and a green gate — and two skills loaded out of eight. `detect_gaps` measures whether the DESIGN is coherent; nothing measures whether the PRACTICE is. The report-friction skill already concedes the wider version of this in its own words — ordinary use produces better evidence and currently loses all of it — and `req:friction-has-a-baseline` was dropped, so there is no standing measurement at all.\\n\\nTHE HARD CONSTRAINT, which is why this is a requirement and not a fix: `dec:loop-status-state-not-history` says loop debt is computed from graph state and NEVER from run history, straight out of the BL-74 fleet trial. Any naive answer here — log which skills were called — is exactly the run-history reasoning that decision rejects, and a study that comes back recommending it has not read the decision.\\n\\nTHE DISTINCTION THAT MAY RESOLVE IT, offered as the open question rather than the answer: that decision governs what the LOOP may reason from when it computes debt. It does not obviously govern what the KIT may report about ITSELF as a product — the difference between \\\"this design owes you three gaps\\\" (must be state-derived, must be true of the graph as it stands) and \\\"reflow2 was installed here and its skills were loaded twice in nine hours\\\" (a fact about the tool's adoption, not about the user's design). Whether that distinction is real, or a rationalisation for the thing the decision forbids, is the question — and it must be settled before anything is built, not discovered afterwards.\\n\\nBOUNDARIES THAT HOLD EITHER WAY: whatever is measured must respect report-friction's redaction discipline, which has no counterpart in the prior art — tool names and argument SHAPES, node TYPES not ids, counts not contents — because reflow2 installs into other people's projects, and the thing being measured is the user, not the design.\",\"status\":\"deferred\"}",
+        "target_id": "req:skill-adherence-is-measured",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:skill-use-still-needs-reminding:req:skill-use-survives-a-long-session",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:conventions-ride-the-tool-not-only-the-skill\",\"properties\":{\"evidence\":\"It is one answer to that requirement's problem: if a skill may never be loaded, the unskippable fraction has to live somewhere the agent cannot miss.\",\"optional\":false,\"weight_basis\":\"evidence\"}},{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:skill-adherence-is-measured\",\"properties\":{\"evidence\":\"Without a measurement, whether that requirement is ever met is unknowable — the decay it names was found by asking an agent, not by any mechanism.\",\"optional\":false,\"weight_basis\":\"evidence\"}},{\"direction\":\"in\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:skill-triggers\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"ctr:claude-fable\",\"properties\":{\"acted_at\":\"2026-07-31\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:nudge-covers-bypass\",\"properties\":{\"evidence\":\"That requirement already arms the nudge on file-edit events and already names impact-check and link-artifacts; what is missing is shape-matching on top of it, not a new trigger.\",\"optional\":false,\"weight_basis\":\"evidence\"}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"Skill use is triggered by the situation, not remembered — the rungs cover loop debt, and skills fire on things the graph cannot see\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"An agent's use of reflow2's SKILLS must not decay over a session while its use of the TOOLS holds. Measured on reflow2's own repo, 2026-07-31, in a long session: `loop_status` was called unprompted throughout and every write went through `record_change`, two-sided checksum accepts and one-export-per-commit — but exactly two skills were loaded all session, and both only because the user typed a slash command. `impact-check`, `link-artifacts`, `capture-intent`, `revise-design`, `check-health` and `report-friction` were never loaded. THE THREE BL-74 RUNGS ARE ALL `verified` AND THIS STILL HAPPENED, which is the finding: they are working as designed and do not reach this.\\n\\nTHE STRUCTURAL REASON. The rungs compute LOOP DEBT — a property of graph state, which is what `dec:loop-status-state-not-history` correctly insists on. Skills fire on SITUATIONS: about to change code, just wrote a file, the user just shared an idea. The graph cannot see any of those, so the trigger mechanism covers one half of the problem and structurally cannot reach the other. That is why `impact-check` was dropped hardest — nothing in the system knows an edit is coming, and by the time the graph could tell, the edit has happened and the blast radius is a post-mortem rather than a check.\\n\\nWHAT COST SOMETHING, honestly: `impact-check` was never run before changing `snapshot_node`, `delete_edge` and `delete_node`; the blast radius was reasoned about by hand instead of computed. `link-artifacts` was never loaded and a stale `art:nodes` checksum was nearly shipped — caught only by grepping after the export, which then required restoring the export and redoing it. `check-health` cost nothing, because `detect_defects` was run bare and did catch the island.\\n\\nCANDIDATE MECHANISMS, in the order the evidence supports, NOT a decided design. (1) Extend the PostToolUse hook from COUNTING writes to matching SHAPES — a file edit with no ChangeEvent in the window means impact-check, an artifact checksum drift means link-artifacts. `req:nudge-covers-bypass` already arms the nudge on file-edit events and already names impact-check and link-artifacts, and is `verified`; what is missing is the shape-matching, not the trigger. (2) A refusal, where refusing is honest — reflow2's strongest mechanism, proven three times in this session alone — but only where skipping is genuinely wrong, because a guard that punishes correct work is the failure this project keeps naming.\\n\\nWHY IT MATTERS BEYOND THIS SESSION: BL-74 called this adoption-critical and found it in the author's own fleet, self-reported by the driving agent. This is the same failure observed from inside, on a session with MORE context about reflow2 than a consumer's agent will have — so it is likely a best case rather than a typical one.\",\"status\":\"accepted\"}",
+        "target_id": "req:skill-use-survives-a-long-session",
+        "target_type": "Requirement"
+      }
+    },
+    {
       "node_id": "snap:epoch:snapshot-per-revision:req:snapshot-per-revision-not-per-epoch",
       "node_type": "Snapshot",
       "properties": {
@@ -56157,6 +56604,18 @@
         "level": "unit",
         "method": "test",
         "name": "Re-calling a constructor does not erase what the design already knew (crates/reflow2-core/tests/constructors_preserve.rs) — 9 cases. WRITTEN BEFORE THE FIX: all 6 defect cases failed and all 3 counterweights passed. THE AUDIT, not the instance, is the finding: 16 of 18 public add_* helpers named a SUBSET of their node type's properties and wrote create-or-REPLACE, so re-calling one to revise a node reset every unnamed property to its schema default. add_interface lost 13 including `designation` (which contracts are published boundaries, req:key-interfaces); add_requirement lost `status`, which IS certainty (dec:certainty-derived), so rewording forged the user's signature in reverse; add_capability un-built a verified capability; add_artifact was BL-166 still reachable one call away, that fix having landed on link_artifact only. It survived BL-46 and BL-166 because it is INVISIBLE until a property has been moved off its default. It violated req:no-silent-fallback, accepted and priority CRITICAL. THE COUNTERWEIGHTS ARE WHAT KEEP THE FIX FROM BEING A DIFFERENT BUG: a first call still writes schema defaults rather than inheriting, a named property is still overwritten, and an explicitly-passed optional still wins — so `merge` never became `first write wins` or `you may never change this back`. create_node and import_graph deliberately still REPLACE, because an import document is a complete statement of a node and merging there would resurrect properties it meant to omit.",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:container-image",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-06T11:45:00Z",
+        "level": "integration",
+        "method": "demonstration",
+        "name": "The image builds, runs unprivileged, and a design survives replacing the container (run by hand on a real Docker daemon, 2026-08-06, 6 checks): builds clean on BOTH bases (ubuntu:22.04 the release base, ubuntu:24.04 the dev fallback); the container reaches `Up (healthy)`, so the HEALTHCHECK's /dev/tcp probe works and the port is only bound after the store is open; `id` inside reports uid 1000 on both bases; the volume gets the designed layout with graph.id.json and graph.meta.json BESIDE the store rather than inside it; and THE ACCEPTANCE TEST FROM req:hosted-state-outlives-the-image PASSES — stop the container, start a new one against the same volume, and graph_id is byte-identical (4934a26b7cc87ed2 both times) with ZERO re-mint warnings, so the new container adopted the existing design rather than opening an empty one beside it. WHAT THIS DOES NOT COVER, stated because the gap is invisible otherwise: the release.yml `container` job has never run — publishing needs a version tag — so registry login, push, multi-tag and the pull-back verification are unexercised. The Dockerfile is proven; the publish path is written and untested.",
         "status": "passing"
       }
     },
@@ -57245,7 +57704,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1a6c8e87eee80275fa5bed109a359f09022d014f6cfe89eb1f22bc99924f54fd",
+  "prev_content_hash": "sha256:f6689f6e46809e2079c5a7c830a26df039d83ac8be282b32f11a24f5f5673200",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

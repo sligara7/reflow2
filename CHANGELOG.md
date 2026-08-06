@@ -33,6 +33,45 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **⭐ reflow2 ships as a container image.** A `Dockerfile`, a `container` job in `release.yml`
+  publishing a version-tagged image to the registry, and `docker/build.sh` for a local build.
+  Closes `req:reflow2-consumable-as-an-image`; a consumer runs reflow2 with no Rust toolchain and
+  pins a version rather than chasing `latest`.
+
+  **The binary is copied in, not rebuilt.** The `container` job wraps the artifact the `binaries`
+  job already produced. That avoids a second ~14-minute RocksDB compile, and — the part that
+  matters — guarantees **the image ships the exact binary the release ships**, rather than a
+  separately-compiled twin that could differ with nothing reporting it.
+
+  **State lives on `/data`, never in the image** (`req:hosted-state-outlives-the-image`):
+  `/data/graphs/<design>/graph` for stores, sidecars **beside** them, `/data/content` for blobs.
+  `--content-path` is set explicitly because its default points inside a consumer's *repo*, and a
+  hosted server has none. Runs as uid 1000 so `chown -R 1000:1000 <volume>` is a complete
+  instruction.
+
+  **Confirmed in code rather than inherited:** the 120-minute `--idle-timeout` expiry is armed
+  only inside `serve_http`'s `Some(SharedServer{..})` branch. The image runs plain `--http`, which
+  passes `None`, so **it cannot exit on idle** — a property of the code, not of a flag someone
+  must remember. Likewise the graph is opened *before* the socket binds, so the healthcheck's port
+  probe cannot report ready during a cold full-text index build.
+
+  **Verified by running it** (`ver:container-image`, passing): builds on both bases, reaches
+  `Up (healthy)`, runs as uid 1000, produces the designed volume layout, and — the acceptance test
+  from the requirement — **a design survives replacing the container**, `graph_id` byte-identical
+  with zero re-mint warnings. Two defects were found this way and fixed: a binary built on a newer
+  host dies at container start with `GLIBC_2.38 not found` (the base is now an `ARG`, and
+  `docker/build.sh` pre-flights the binary against it rather than shipping an image that builds
+  green and dies), and `useradd --uid 1000` exits 4 on `ubuntu:24.04`, which already ships a user
+  there (now created only if absent).
+
+  ⚠️ **No authentication.** `--http-allow-host` is DNS-rebinding protection, not auth. The image
+  must sit on a private network behind a gateway that authenticates; this is stated in the image's
+  own labels and in the Dockerfile.
+
+  Not yet exercised: the publish path itself (registry login, push, pull-back verification) needs
+  a version tag to run, and `cmp:packaging` correctly reports as *built but shipping in nothing*
+  until a release includes it.
+
 - **⭐ `loop_status` reports an open decision somebody was ASKED to settle.** New counter
   `unsettled_assigned_decisions`: a `Decision` left `proposed` while carrying an `AUTHORED_BY`
   edge with `role=approver`. It also names itself in `next` and in the read-side loop hint, so it
