@@ -152,13 +152,28 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ContentRefReq>,
     ) -> Result<CallToolResult, McpError> {
-        let store = self.content_store()?;
-        let present = store.exists(&req.hash).map_err(dyno_err)?;
-        ok_json(serde_json::json!({
-            "hash": req.hash,
-            "present": present,
-            "store": store.root().display().to_string(),
-        }))
+        // Answers rather than refusing when no store is configured: this is the
+        // cheap "do I have everything?" call, and the person asking it is often
+        // the one who has nothing. Absent store means absent bytes, which is a
+        // fact, not an error (`dec:manifest-answers-without-a-store`).
+        match self.content_store_for_reading() {
+            Some(store) => {
+                let present = store.exists(&req.hash).map_err(dyno_err)?;
+                ok_json(serde_json::json!({
+                    "hash": req.hash,
+                    "present": present,
+                    "store": store.root().display().to_string(),
+                }))
+            }
+            None => ok_json(serde_json::json!({
+                "hash": req.hash,
+                "present": false,
+                "store": serde_json::Value::Null,
+                "store_configured": false,
+                "note": "no content store is configured, so no bytes are present here. \
+                         Start the server with --content-path <dir> to point at one.",
+            })),
+        }
     }
 
     #[tool(
@@ -182,9 +197,12 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ContentManifestReq>,
     ) -> Result<CallToolResult, McpError> {
-        let store = self.content_store()?;
+        // Deliberately does NOT require a store: `missing` is the whole point of
+        // this call for someone handed the design on its own, and that reader has
+        // no store (`dec:manifest-answers-without-a-store`).
+        let store = self.content_store_for_reading();
         let g = self.graph.read().await;
-        let manifest = g.content_manifest(&store).map_err(dyno_err)?;
+        let manifest = g.content_manifest(store.as_ref()).map_err(dyno_err)?;
         let mut out = serde_json::to_value(&manifest).map_err(|e| {
             McpError::internal_error(format!("cannot serialize the manifest: {e}"), None)
         })?;

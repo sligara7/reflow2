@@ -211,7 +211,7 @@ fn design_with_content(name: &str) -> (DesignGraph, ContentStore) {
 #[test]
 fn the_manifest_names_the_content_and_what_it_explains() {
     let (g, s) = design_with_content("manifest");
-    let m = g.content_manifest(&s).unwrap();
+    let m = g.content_manifest(Some(&s)).unwrap();
 
     assert_eq!(m.entries.len(), 1);
     let e = &m.entries[0];
@@ -235,7 +235,7 @@ fn content_the_design_references_but_this_checkout_lacks_is_reported_by_name() {
     let (g, _s) = design_with_content("missing-bytes");
     // A different store — the design travelled, the blobs did not.
     let empty = store("missing-bytes-elsewhere");
-    let m = g.content_manifest(&empty).unwrap();
+    let m = g.content_manifest(Some(&empty)).unwrap();
 
     assert_eq!(m.missing.len(), 1, "the absent blob must be named");
     assert!(!m.entries[0].present);
@@ -252,7 +252,7 @@ fn bytes_nothing_references_are_reported_as_orphaned() {
     let (g, s) = design_with_content("orphan");
     let stray = s.put(b"a render nobody wired up").unwrap();
 
-    let m = g.content_manifest(&s).unwrap();
+    let m = g.content_manifest(Some(&s)).unwrap();
     assert_eq!(m.orphaned, vec![stray], "an unreferenced blob must surface");
     assert!(m.missing.is_empty(), "the referenced one is still present");
 }
@@ -271,7 +271,7 @@ fn a_content_ref_that_is_not_a_hash_is_not_treated_as_content() {
             .set("content_ref", "docs/notes/old.md"),
     )
     .unwrap();
-    let m = g.content_manifest(&s).unwrap();
+    let m = g.content_manifest(Some(&s)).unwrap();
     assert!(
         m.entries.is_empty() && m.missing.is_empty(),
         "a path is not a content hash and must not be reported as missing content: {m:?}"
@@ -291,7 +291,7 @@ fn the_locator_travels_verbatim_and_is_never_parsed() {
             .set("content_ref", format!("{hash}#L412-L440").as_str()),
     )
     .unwrap();
-    let m = g.content_manifest(&s).unwrap();
+    let m = g.content_manifest(Some(&s)).unwrap();
     assert_eq!(m.entries[0].locator.as_deref(), Some("L412-L440"));
     assert!(
         m.entries[0].present,
@@ -344,7 +344,7 @@ fn the_manifest_reports_total_size_and_the_largest_entries() {
     s.put(&vec![b'a'; 2048]).unwrap();
     s.put(&vec![b'b'; 512]).unwrap();
 
-    let m = g.content_manifest(&s).unwrap();
+    let m = g.content_manifest(Some(&s)).unwrap();
     assert!(
         m.total_bytes >= 2048 + 512,
         "total must count every blob, got {}",

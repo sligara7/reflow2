@@ -442,7 +442,20 @@ impl DesignGraph {
     /// other. Rendering it to a committed file (see [`ContentManifest::render`])
     /// is a projection, the same relationship `dec:views-are-projections`
     /// already sets for every other view.
-    pub fn content_manifest(&self, store: &ContentStore) -> Result<ContentManifest, DynoError> {
+    /// `store` is OPTIONAL, and `None` is a real answer rather than an error.
+    ///
+    /// The reader this exists for is "someone handed the design ON ITS OWN"
+    /// (`cap:content-manifest`) — and that reader, by definition, may have no
+    /// store at all. Refusing to answer them would invert the capability: they
+    /// would have to configure storage before being told what they are missing.
+    /// With `None`, every referenced hash reports as `missing`, nothing reports
+    /// as `orphaned` (no bytes exist to be unreferenced), and `store_root` says
+    /// so in words instead of naming a directory nobody chose
+    /// (`dec:manifest-answers-without-a-store`).
+    pub fn content_manifest(
+        &self,
+        store: Option<&ContentStore>,
+    ) -> Result<ContentManifest, DynoError> {
         use crate::nodes::{edge, node};
 
         let mut entries: Vec<ManifestEntry> = Vec::new();
@@ -475,7 +488,10 @@ impl DesignGraph {
             referenced_by.dedup();
 
             entries.push(ManifestEntry {
-                present: store.exists(&hash)?,
+                present: match store {
+                    Some(s) => s.exists(&hash)?,
+                    None => false, // no store: referenced and absent is the truth
+                },
                 hash,
                 name: fragment
                     .properties
@@ -494,15 +510,24 @@ impl DesignGraph {
             .filter(|e| !e.present)
             .map(|e| e.hash.clone())
             .collect();
-        let orphaned: Vec<String> = store
-            .list()?
-            .into_iter()
-            .filter(|h| !referenced.contains(h))
-            .collect();
+        let orphaned: Vec<String> = match store {
+            Some(s) => s
+                .list()?
+                .into_iter()
+                .filter(|h| !referenced.contains(h))
+                .collect(),
+            None => Vec::new(),
+        };
 
-        let (total_bytes, largest) = store.sizes()?;
+        let (total_bytes, largest) = match store {
+            Some(s) => s.sizes()?,
+            None => (0, Vec::new()),
+        };
         Ok(ContentManifest {
-            store_root: store.root().display().to_string(),
+            store_root: match store {
+                Some(s) => s.root().display().to_string(),
+                None => "(no content store configured)".to_string(),
+            },
             entries,
             missing,
             orphaned,
