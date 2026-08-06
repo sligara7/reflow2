@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:76c053c1d3f8db113f9f5ce8c1fdaa5d37a883ef28ae6503ef5a6b94b62f2eaa",
+  "content_hash": "sha256:85b172570e751b31038df76931f69696ebf4d636b81652008e896554b1bd4b3e",
   "edges": [
     {
       "edge_type": "ALLOCATED_TO",
@@ -5386,6 +5386,15 @@
       "from_id": "ver:plan-increments",
       "properties": {
         "acted_at": "2026-08-06T12:55:00Z",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ver:toml-fallback-reader",
+      "properties": {
+        "acted_at": "2026-08-06T14:05:00Z",
         "role": "author"
       },
       "to_id": "who:claude-code"
@@ -11741,6 +11750,24 @@
         "action": "modified"
       },
       "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:toml-fallback-reader",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:toml-fallback-reader",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:design-dependencies-declared"
     },
     {
       "edge_type": "CHANGED",
@@ -19625,6 +19652,12 @@
       "from_id": "ver:stateless-seat",
       "properties": {},
       "to_id": "decision:ack:350d55cf9c8c3247"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "ver:toml-fallback-reader",
+      "properties": {},
+      "to_id": "rule:fixes-are-judged-by-the-third-party"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -40276,6 +40309,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:toml-fallback-reader",
+      "properties": {},
+      "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:tool-carries-convention",
       "properties": {},
       "to_id": "cap:tool-carries-convention"
@@ -41547,7 +41586,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:aee59db6d9b5aea281eab8fbedff001813663a9db4d14d257649d221121ffabe",
+        "checksum": "sha256:f5c8d8b7a04dcbdda90f874828c568747bfdb6393a952bc3270e679471f3941b",
         "granularity": "atomic",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
@@ -46970,6 +47009,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The structural pass: a subset relation scoring cannot reach"
+      }
+    },
+    {
+      "node_id": "chg:toml-fallback-reader",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The shipped gate reads Cargo pins without tomllib, so the dependency check is not inert on Python 3.10 — which is what reflow2's own CI runner carries, and where the check reported \"could not read any build file\" on its very first run."
       }
     },
     {
@@ -57867,6 +57914,18 @@
       }
     },
     {
+      "node_id": "ver:toml-fallback-reader",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-06T14:05:00Z",
+        "level": "unit",
+        "method": "test",
+        "name": "The dependency check works without tomllib, and says what it cannot read (tools/reflow2_check.py, 2026-08-06, 3 cases). EQUIVALENCE: with tomllib blocked, the line reader returns results BYTE-IDENTICAL to tomllib on reflow2's own three Cargo manifests — same source, same v0.12.0 pin, the same five grouped crates. HONEST ABOUT ITS LIMITS: on a synthetic manifest holding a multi-line inline table and a [dependencies.X] sub-table, it read the one shape it understands and NAMED BOTH it did not — \\\"'spans' spans lines, not read\\\" and \\\"[dependencies.subtable] sub-table form not read\\\" — rather than returning a short list that would read as a complete one. WHY IT EXISTS: the check shipped reading only tomllib and its first CI run on reflow2's own repo reported \\\"could not read any build file to check them\\\", because ubuntu-22.04 carries Python 3.10. Correct locally, inert on most CI in the world. No `tomli`, no pip: the kit installs into other people's projects and a runtime dependency is a cost they did not agree to.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:tool-carries-convention",
       "node_type": "Verification",
       "properties": {
@@ -57924,7 +57983,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0efc5bc5801dfeaef5beafecc3859fa8cb5dd75b21b6cdfe2193207e5c537917",
+  "prev_content_hash": "sha256:76c053c1d3f8db113f9f5ce8c1fdaa5d37a883ef28ae6503ef5a6b94b62f2eaa",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
