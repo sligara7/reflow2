@@ -26,6 +26,8 @@ on:
 
 permissions:
   contents: write
+  # The container job pushes to the registry attached to this repository.
+  packages: write
 
 jobs:
   binaries:
@@ -114,6 +116,66 @@ jobs:
           name: kit
           path: dist/*
           if-no-files-found: error
+
+  container:
+    name: container image
+    # binaries: this job WRAPS the already-built linux-x86_64 binary instead of
+    # recompiling it — see the Dockerfile for why (a rebuild would take ~14
+    # minutes on RocksDB and could ship a binary that differs from the released
+    # one). kit: that job already fails the build when the tag and Cargo.toml
+    # version disagree, so depending on it means this image cannot be tagged
+    # with a version the release does not actually ship.
+    needs: [binaries, kit]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: binary-linux-x86_64
+          path: dist
+      - name: Stage the binary into the build context
+        run: |
+          set -euo pipefail
+          tar -xzf dist/reflow2-mcp-linux-x86_64.tar.gz -C .
+          test -x reflow2-mcp || { echo "reflow2-mcp missing or not executable" >&2; exit 1; }
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - name: Build and push
+        env:
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          set -euo pipefail
+          VERSION="${TAG#v}"
+          IMAGE="ghcr.io/$(echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')/reflow2-mcp"
+          # A consumer PINS a version. `latest` is published too, but the
+          # version tag is the one flo2 and anyone else should reference —
+          # chasing `latest` is how a consumer gets a surface change it never
+          # agreed to (req:reflow2-consumable-as-an-image).
+          docker buildx build \
+            --platform linux/amd64 \
+            --tag "${IMAGE}:${VERSION}" \
+            --tag "${IMAGE}:latest" \
+            --label "org.opencontainers.image.version=${VERSION}" \
+            --label "org.opencontainers.image.revision=${GITHUB_SHA}" \
+            --label "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}" \
+            --label "org.opencontainers.image.description=reflow2 design server. NO AUTHENTICATION — deploy on a private network behind a gateway that authenticates." \
+            --push .
+          echo "IMAGE=${IMAGE}" >> "$GITHUB_ENV"
+          echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
+      - name: Verify the image is actually pullable
+        run: |
+          set -euo pipefail
+          # The release workflow already learned this lesson once (BL-55): a run
+          # that goes green while shipping nothing is worse than a red one,
+          # because nobody looks. Pushing is not evidence the manifest resolves.
+          docker buildx imagetools inspect "${IMAGE}:${VERSION}" > /dev/null
+          echo "published ${IMAGE}:${VERSION}"
 
   publish:
     name: publish release
