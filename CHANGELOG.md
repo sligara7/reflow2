@@ -31,6 +31,22 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **The dependency check was inert on Python 3.10 — most CI in the world.** `reflow2_check.py`
+  read pins with `tomllib`, which arrives in 3.11. Its very first CI run on reflow2's own repo
+  reported *"could not read any build file to check them"*, because the runner is `ubuntu-22.04`.
+  Correct locally, doing nothing where it mattered.
+
+  Now falls back to a narrow line reader when `tomllib` is absent — **byte-identical results to
+  `tomllib`** on reflow2's own three Cargo manifests, and it **names every shape it cannot read**
+  (`'x' spans lines, not read`, `[dependencies.y] sub-table form not read`) rather than returning a
+  short list that would pass for a complete one. No `tomli`, no pip: the kit installs into other
+  people's projects and a runtime dependency is a cost they did not agree to.
+
+  Worth noting what worked: the honest-silence path built in the previous change is what *reported*
+  this on the first run instead of passing quietly. `ver:toml-fallback-reader`, passing.
+
 ### Added
 
 - **⭐ New skill: `plan-increments`** — planning delivery in increments and steps. Sixteen skills

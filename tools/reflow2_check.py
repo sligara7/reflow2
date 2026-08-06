@@ -39,6 +39,7 @@ import glob
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -207,13 +208,86 @@ def hash_file(path: str) -> str:
     return f"sha256:{h.hexdigest()}"
 
 
+_TOML_SECTION = re.compile(r"^\s*\[([^\]]+)\]\s*$")
+_TOML_INLINE = re.compile(r"^\s*([A-Za-z0-9_.-]+)\s*=\s*\{(.+)\}\s*$")
+_TOML_UNCLOSED = re.compile(r"^\s*([A-Za-z0-9_.-]+)\s*=\s*\{[^}]*$")
+_TOML_KV = re.compile(r'([A-Za-z0-9_-]+)\s*=\s*"([^"]*)"')
+
+
+def _dependency_tables(path: str) -> tuple[list[dict], list[str]]:
+    """Every `*dependencies` table in a Cargo manifest, and what could not be read.
+
+    Prefers `tomllib` (Python 3.11+), which is exact. Falls back to a LINE READER
+    when it is absent — and that fallback exists because of a measured failure,
+    not a hypothetical one: this gate shipped reading only `tomllib`, and its
+    first CI run reported "could not read any build file to check them" on
+    reflow2's own repo. The runner is ubuntu-22.04, which carries Python 3.10.
+    Most CI in the world is older than 3.11, so the dependency check was inert
+    almost everywhere it mattered while being perfectly correct locally.
+
+    The fallback is deliberately narrow — single-line inline tables, which is how
+    Cargo pins are almost always written — and it REPORTS WHAT IT CANNOT READ
+    rather than skipping quietly. A parser that silently drops the shapes it does
+    not know rebuilds, one level down, exactly the silence this gate was extended
+    to remove. The kit stays install-free: no `tomli`, no pip, because reflow2
+    installs into other people's projects and a runtime dependency is a cost they
+    did not agree to.
+    """
+    try:
+        import tomllib
+    except ModuleNotFoundError:
+        tomllib = None
+
+    if tomllib is not None:
+        try:
+            with open(path, "rb") as fh:
+                data = tomllib.load(fh)
+        except (OSError, ValueError):
+            return [], [f"{path}: unreadable as TOML"]
+        return [
+            data.get("dependencies", {}) or {},
+            data.get("dev-dependencies", {}) or {},
+            (data.get("workspace", {}) or {}).get("dependencies", {}) or {},
+        ], []
+
+    tables: dict[str, dict] = {}
+    unparsed: list[str] = []
+    section = ""
+    try:
+        with open(path, encoding="utf-8") as fh:
+            lines = fh.readlines()
+    except OSError:
+        return [], [f"{path}: unreadable"]
+
+    for line in lines:
+        if (m := _TOML_SECTION.match(line)) is not None:
+            section = m.group(1).strip()
+            # `[dependencies.serde]` is a sub-table per dependency. Legal TOML and
+            # not handled here; say so rather than pretend the section was empty.
+            if re.search(r"(^|\.)dependencies\.", section):
+                unparsed.append(f"{path}: [{section}] sub-table form not read")
+            continue
+        if not section.endswith("dependencies"):
+            continue
+        if (m := _TOML_INLINE.match(line)) is not None:
+            tables.setdefault(section, {})[m.group(1)] = dict(
+                _TOML_KV.findall(m.group(2))
+            )
+        elif _TOML_UNCLOSED.match(line) is not None:
+            unparsed.append(
+                f"{path}: '{_TOML_UNCLOSED.match(line).group(1)}' spans lines, not read"
+            )
+    return list(tables.values()), unparsed
+
+
 def observe_dependencies(root: str, declared: list) -> tuple[list, list[str]]:
     """What the BUILD actually pins, read fresh from build files.
 
-    Returns `(observations, sources_read)`. An empty `sources_read` means this
-    gate could not look — which is reported, never treated as "depends on
-    nothing" (`reconcile_dependencies` insists on that distinction and the gate
-    must honour it).
+    Returns `(observations, sources_read, unparsed)`. An empty `sources_read`
+    means this gate could not look — which is reported, never treated as "depends
+    on nothing" (`reconcile_dependencies` insists on that distinction and the
+    gate must honour it). `unparsed` names manifest shapes that WERE seen and
+    could not be read, so a partial read is never mistaken for a complete one.
 
     MATCHED BY SOURCE, NOT BY NAME, and that is the whole difficulty. A design
     declares ONE dependency — `dynograph-foundation` — while the build names
@@ -227,28 +301,20 @@ def observe_dependencies(root: str, declared: list) -> tuple[list, list[str]]:
     whose pins live in package.json, pyproject.toml, go.mod or versions.env gets
     `sources_read == []` and is told so plainly.
     """
-    try:
-        import tomllib
-    except ModuleNotFoundError:  # Python < 3.11
-        return [], []
-
     by_source: dict[str, dict] = {}
     sources_read: list[str] = []
+    unparsed: list[str] = []
 
     manifests = [os.path.join(root, "Cargo.toml")]
     manifests += sorted(glob.glob(os.path.join(root, "crates", "*", "Cargo.toml")))
     for manifest in manifests:
         if not os.path.exists(manifest):
             continue
-        try:
-            with open(manifest, "rb") as fh:
-                data = tomllib.load(fh)
-        except (OSError, ValueError):
+        tables, could_not_read = _dependency_tables(manifest)
+        unparsed.extend(could_not_read)
+        if not tables and could_not_read:
             continue
         sources_read.append(os.path.relpath(manifest, root))
-        tables = [data.get("dependencies", {}),
-                  data.get("dev-dependencies", {}),
-                  data.get("workspace", {}).get("dependencies", {})]
         for table in tables:
             for crate, spec in (table or {}).items():
                 if not isinstance(spec, dict):
@@ -289,7 +355,7 @@ def observe_dependencies(root: str, declared: list) -> tuple[list, list[str]]:
                 "observed_in": ", ".join(sources_read),
             }
         )
-    return observations, sources_read
+    return observations, sources_read, unparsed
 
 
 def _git(args: list[str], cwd: str) -> str | None:
@@ -582,7 +648,11 @@ def main() -> int:
             # been caught by the gate passing.
             deps = (server.call("reconcile_dependencies", {"observed": []}) or {}).get("report", {})
             declared_deps = deps.get("declared", []) or []
-            observed_deps, sources_read = observe_dependencies(opts.root, declared_deps)
+            observed_deps, sources_read, unparsed = observe_dependencies(
+                opts.root, declared_deps
+            )
+            for shape in unparsed:
+                notes.append(f"dependencies: {shape}")
 
             if declared_deps and not sources_read:
                 notes.append(
