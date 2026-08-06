@@ -33,6 +33,33 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **⭐ The shipped build gate now checks your dependency pins, not just your files.**
+  `reflow2_check.py` — the gate that goes to every consumer in the kit — reconciles **declared
+  dependencies** against what the build actually resolves, alongside the artifact reconcile it
+  already did.
+
+  **Why this mattered:** `req:design-dependencies-declared` has been accepted, its capability
+  built, and `ver:design-dependencies-declared` passing — and **nothing a consumer ever ran
+  invoked any of it.** A declaration nobody verifies is a promise, not a check. So in any project
+  using reflow2, a dependency the build took that nothing declared ("the reliance nobody agreed
+  to") and a declaration the build had moved past (a stale promise) were both unreported, forever.
+
+  **Observations are keyed by SOURCE, not by name.** A design declares one dependency
+  (`dynograph-foundation`) while the build names five crates from it. Name-matching would report
+  four false `undeclared` findings and one backwards `unobserved`; grouping by the git URL both
+  sides share reports the one true comparison.
+
+  **Honest silence where it cannot look.** Only Cargo is read today. A project pinning in
+  `package.json`, `pyproject.toml`, `go.mod` or `versions.env` is told *"N declared, and this gate
+  could not read any build file to check them — NOTHING VERIFIED THE PINS"*, rather than passing
+  quietly. It deliberately does **not** reconcile against an empty observation set, which would
+  fire `unobserved` on every declaration and fail projects for having declared anything at all —
+  punishing the correct behaviour is worse than the silence it replaces.
+
+  Verified positively and negatively (`ver:check-reconciles-dependencies`, passing): the real pin
+  reports as agreeing, and a deliberately-wrong tag failed the build with
+  `version_mismatch — declared v0.12.0 but the build resolves v0.99.0`.
+
 - **⭐ reflow2 ships as a container image.** A `Dockerfile`, a `container` job in `release.yml`
   publishing a version-tagged image to the registry, and `docker/build.sh` for a local build.
   Closes `req:reflow2-consumable-as-an-image`; a consumer runs reflow2 with no Rust toolchain and
