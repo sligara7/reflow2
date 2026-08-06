@@ -35,6 +35,7 @@ on PATH, or a local cargo build).
 from __future__ import annotations
 
 import argparse
+import glob
 import hashlib
 import json
 import os
@@ -204,6 +205,91 @@ def hash_file(path: str) -> str:
         for chunk in iter(lambda: f.read(1 << 16), b""):
             h.update(chunk)
     return f"sha256:{h.hexdigest()}"
+
+
+def observe_dependencies(root: str, declared: list) -> tuple[list, list[str]]:
+    """What the BUILD actually pins, read fresh from build files.
+
+    Returns `(observations, sources_read)`. An empty `sources_read` means this
+    gate could not look — which is reported, never treated as "depends on
+    nothing" (`reconcile_dependencies` insists on that distinction and the gate
+    must honour it).
+
+    MATCHED BY SOURCE, NOT BY NAME, and that is the whole difficulty. A design
+    declares ONE dependency — `dynograph-foundation` — while the build names
+    five crates from it (`dynograph-core`, `-storage`, `-graph`, …). Matching on
+    name would report the declaration as unobserved and all five crates as
+    undeclared, which is four false findings and one backwards one. The stable
+    identifier both sides share is the SOURCE (a git URL, a registry), so
+    observations are grouped by source and reported under the declared name.
+
+    Only Cargo is read today. That is a real limit, not a hidden one: a project
+    whose pins live in package.json, pyproject.toml, go.mod or versions.env gets
+    `sources_read == []` and is told so plainly.
+    """
+    try:
+        import tomllib
+    except ModuleNotFoundError:  # Python < 3.11
+        return [], []
+
+    by_source: dict[str, dict] = {}
+    sources_read: list[str] = []
+
+    manifests = [os.path.join(root, "Cargo.toml")]
+    manifests += sorted(glob.glob(os.path.join(root, "crates", "*", "Cargo.toml")))
+    for manifest in manifests:
+        if not os.path.exists(manifest):
+            continue
+        try:
+            with open(manifest, "rb") as fh:
+                data = tomllib.load(fh)
+        except (OSError, ValueError):
+            continue
+        sources_read.append(os.path.relpath(manifest, root))
+        tables = [data.get("dependencies", {}),
+                  data.get("dev-dependencies", {}),
+                  data.get("workspace", {}).get("dependencies", {})]
+        for table in tables:
+            for crate, spec in (table or {}).items():
+                if not isinstance(spec, dict):
+                    continue  # a bare "1.2.3" is a crates.io pin with no shared source
+                source = spec.get("git") or spec.get("path") or spec.get("registry")
+                if not source:
+                    continue
+                # A git dep's VERSION is whatever pins it. `tag` first: it is the
+                # only one a human wrote on purpose and the only one a provider
+                # can be held to.
+                version = spec.get("tag") or spec.get("rev") or spec.get("branch") or spec.get("version")
+                entry = by_source.setdefault(
+                    source, {"version": version, "components": set(), "features": set()}
+                )
+                entry["components"].add(crate)
+                for feat in spec.get("features", []) or []:
+                    entry["features"].add(feat)
+                if entry["version"] is None:
+                    entry["version"] = version
+
+    # Report each observed source under the DECLARED name when one claims it, so
+    # the reconcile compares like with like. An observation matching nothing
+    # declared keeps its own source as its name — that is the "reliance nobody
+    # agreed to", and it should surface rather than be quietly dropped.
+    declared_by_source = {
+        (d.get("source") or "").strip(): d.get("name") for d in declared if d.get("source")
+    }
+    observations = []
+    for source, entry in sorted(by_source.items()):
+        if entry["version"] is None:
+            continue  # a path/registry dep with no pin says nothing about version
+        observations.append(
+            {
+                "name": declared_by_source.get(source, source),
+                "version": entry["version"],
+                "components": sorted(entry["components"]),
+                "features": sorted(entry["features"]),
+                "observed_in": ", ".join(sources_read),
+            }
+        )
+    return observations, sources_read
 
 
 def _git(args: list[str], cwd: str) -> str | None:
@@ -475,6 +561,57 @@ def main() -> int:
                     )
                 else:
                     notes.append(f"drift: {what}")
+
+            # DEPENDENCIES — the design says which version of another design it
+            # depends on (req:design-dependencies-declared, accepted). That has
+            # been checkable since the capability shipped and NOTHING A CONSUMER
+            # RUNS EVER CHECKED IT: this gate reconciled artifacts and stopped.
+            # A declaration nobody verifies is a promise, not a check.
+            #
+            # ⭐ WHY THE EMPTY CASE IS HANDLED SEPARATELY RATHER THAN JUST
+            # RECONCILING: with no observations every declared dependency comes
+            # back `unobserved`, so a project whose pins this gate cannot read
+            # would fail for having declared anything at all — punishing the
+            # correct behaviour. Silence about what was not checked is the bug;
+            # inventing findings about it is a worse one.
+            # The tool answers `{manifest, report}` — the report is the nested
+            # half. Reading `declared` off the top level silently yields [] and
+            # the gate then reports "0 declared … agree", which is a FALSE GREEN
+            # in the code written to prevent false greens. Caught by checking the
+            # number against a design known to declare one; it would never have
+            # been caught by the gate passing.
+            deps = (server.call("reconcile_dependencies", {"observed": []}) or {}).get("report", {})
+            declared_deps = deps.get("declared", []) or []
+            observed_deps, sources_read = observe_dependencies(opts.root, declared_deps)
+
+            if declared_deps and not sources_read:
+                notes.append(
+                    f"dependencies: {len(declared_deps)} declared, and this gate could not read "
+                    f"any build file to check them — NOTHING VERIFIED THE PINS. Only Cargo is "
+                    f"read today; a project pinning elsewhere is unchecked, not clean."
+                )
+            elif declared_deps or observed_deps:
+                report = (server.call(
+                    "reconcile_dependencies", {"observed": observed_deps}
+                ) or {}).get("report", {})
+                for finding in report.get("findings", []):
+                    kind = finding.get("kind")
+                    detail = finding.get("detail") or kind
+                    if kind in ("undeclared", "version_mismatch", "unobserved"):
+                        failures.append(
+                            f"DEPEND {finding.get('dependency')}: {kind} — {detail} "
+                            f"Fix the pin, or re-declare it (declare_dependency), then re-export."
+                        )
+                    else:
+                        notes.append(f"dependency: {finding.get('dependency')}: {kind} — {detail}")
+                if not report.get("findings"):
+                    notes.append(
+                        f"dependencies: {len(declared_deps)} declared, "
+                        f"{len(observed_deps)} observed in {', '.join(sources_read)} — agree"
+                    )
+            # Nothing declared AND nothing observed is genuinely quiet: the design
+            # has said it depends on no other design, which is a statement, not a
+            # silence — and reconcile's own note already says so if asked.
 
             gaps = server.call("detect_gaps", {}) or []
             for gap in gaps:
