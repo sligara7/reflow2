@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e882dceea53cd833f3cd484956ddfa12e027d9ad22e29f6c3c397d69b4070487",
+  "content_hash": "sha256:4b3a7fff00f435ab30fcf926a187d7375a956bcb831e84f8409de2affd36d0a1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -978,6 +978,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:skill-loads-are-counted",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:nudge"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -11891,6 +11899,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:skill-loads-are-counted",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skill-loads-are-counted",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:skill-loads-are-counted"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skill-loads-are-counted",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:skill-adherence-is-measured"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:skills-served",
       "properties": {
         "accepted_baseline": true,
@@ -18727,6 +18762,12 @@
       "from_id": "cap:shared-sessions",
       "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:skill-loads-are-counted",
+      "properties": {},
+      "to_id": "dec:adoption-is-reported-the-loop-still-computes"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -38092,6 +38133,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:loop-nudge",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:skill-loads-are-counted"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:machine-install",
       "properties": {
         "completeness": "complete"
@@ -38697,6 +38746,14 @@
         "completeness": "complete"
       },
       "to_id": "ver:install-reaches-the-agent"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-loop-nudge",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:skill-loads-are-counted"
     },
     {
       "edge_type": "REALIZES",
@@ -39838,6 +39895,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:skill-loads-are-counted",
+      "properties": {},
+      "to_id": "req:skill-adherence-is-measured"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:skill-triggers",
       "properties": {},
       "to_id": "req:skill-use-survives-a-long-session"
@@ -40747,6 +40810,12 @@
       "from_id": "ver:skill-lint",
       "properties": {},
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:skill-loads-are-counted",
+      "properties": {},
+      "to_id": "cap:skill-loads-are-counted"
     },
     {
       "edge_type": "VERIFIES",
@@ -41717,6 +41786,14 @@
         "action": "created"
       },
       "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-loop-nudge",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-loop-nudge"
     },
     {
       "edge_type": "YIELDED",
@@ -42721,10 +42798,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13",
+        "checksum": "sha256:1b610577b6ffc1e8a4a08c8c00352b1a95a7e22a92e78fa56ba6b5206611a8c8",
+        "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -43419,6 +43498,19 @@
         "location": "tools/test_init.py",
         "name": "test_init.py",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-loop-nudge",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:9cd27ccb7bdafea2079d2f691dd664085354c61f96185ff4d6956caba11184c9",
+        "granularity": "atomic",
+        "location": "tools/test_loop_nudge.py",
+        "name": "test_loop_nudge.py",
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45127,6 +45219,19 @@
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Several sessions work one design at once, through one server",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:skill-loads-are-counted",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The hook counts get_skill calls per session, and the Stop backstop names it when a session did real work, engaged reflow2, and loaded ZERO skills. Closes the hole chg:undefer-skill-adherence-measurement names: cap:skill-triggers recognises shapes, every shape it knows lives in the graph-write stream, and \"no skill has been loaded\" is not a graph write — so the one situation a human kept having to correct by hand was the one situation the mechanism structurally could not see.\n\nWHERE THE COUNT LIVES, and why that is the whole design: the per-session tally file the hook already keeps, which is session state and not graph state. Nothing here is written into the design, and no adoption field is read by loop_status, detect_gaps or detect_defects — the line dec:adoption-is-reported-the-loop-still-computes draws, held by a check that the loop's answer is unchanged whether or not the count exists.\n\nTHE CONJUNCTION IS THE COUNTERWEIGHT, because this ARMS a nudge rather than refining one, which ver:skill-triggers deliberately never did: the session must have TOUCHED reflow2 (a total bypass is caught upstream and needs the blunter message), must have edited at least the bypass threshold of files (so a trivial or read-only session stays silent), and must have loaded zero skills. It is placed LAST, after every other Stop branch declines, so it never adds an interruption to a session already being interrupted — it fires only on the session that did everything else right and still never opened a skill.\n\nWHAT IT DOES NOT CLAIM: it measures LOADING, not FOLLOWING. An agent can call get_skill and ignore every word, and nothing here would know. The offline half (tools/surface_usage.py) answers the same question across many sessions rather than inside one.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A session that never opened a skill is visible, and says so before it ends",
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
@@ -47573,6 +47678,14 @@
       }
     },
     {
+      "node_id": "chg:skill-loads-are-counted",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The hook counts skill loads and names the session that opened none — the half of req:skill-adherence-is-measured that cap:skill-triggers structurally could not see"
+      }
+    },
+    {
       "node_id": "chg:skills-served",
       "node_type": "ChangeEvent",
       "properties": {
@@ -48539,6 +48652,16 @@
         "name": "OPEN — a claim in the graph cannot be announced before the work, because the export it rides in may only be written once per PR",
         "rationale": "Filed the moment it was found rather than after, because it was found by the cheapest possible route — updating a document to match a decision, and noticing that one sentence in it had become false — and that route only exists while the change is being made. An hour later the sentence would have read as merely stale.\n\nRecorded as its own node rather than as an amendment to `dec:coord-board-in-graph` because that decision is ACCEPTED and this does not reopen it: the move was right, one of its supporting arguments was wrong, and those are different facts. Folding a falsification into an accepted node would either weaken a decision that should stand or hide the correction — `dec:reopen-supersedes` sets the rule that a settled choice is not un-accepted, and this is not a re-opening.\n\nThe unchecked item about `release_claim` is named so its absence reads as a hole rather than as completed analysis — and it is the more alarming half, since it would undo the stale-claim fix that was the whole justification for the move.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:adoption-is-reported-the-loop-still-computes",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "The distinction req:skill-adherence-is-measured offered is REAL, and it is drawn here: dec:loop-status-state-not-history governs what the LOOP may reason from when it computes debt, and adoption data may never enter that computation. It does not forbid the KIT reporting a fact about itself. Three things make the line enforceable rather than promised: (1) adoption is counted in SESSION state — the hook's per-session tally file — and in transcripts read offline, never in the design graph, so it is not graph state and cannot be reasoned from as if it were; (2) no adoption field is read by loop_status, detect_gaps or detect_defects; (3) a check asserts that the loop's answer is UNCHANGED whether or not adoption data exists, which is what converts the separation from a convention into a property. The test to apply to any future addition: does this measurement ever change what the loop says is owed? If yes, it is forbidden regardless of what it is called.",
+        "name": "The kit may report its own adoption, because adoption never reaches the debt computation — and a test holds that line rather than a promise",
+        "rationale": "WHY THE DISTINCTION IS NOT A RATIONALISATION, which is what the requirement asked to be settled. dec:loop-status-state-not-history exists to protect ONE thing: the answer to \"what does this design still need?\" must not depend on who did what. If debt read run history, two identical designs would owe different things because their session logs differ, and the design would stop being the single source of truth. That is the harm, and it is specific. Adoption answers a different question, for a different reader, with a different consequence — \"is the TOOL being used as intended?\", read by the maintainer, changing the TOOL. It never touches the protected answer. So the distinction is not \"a different name for the same thing\"; it is a different question that happens to be answered from the same kind of evidence, and the decision constrains the QUESTION rather than the evidence.\n\nTHE PRECEDENT ALREADY EXISTS AND WAS FOUND RATHER THAN INVENTED. tools/surface_usage.py has done exactly this since 2026-08-01: it reads session transcripts offline, counts get_skill calls among them, and states in its own module docstring that it \"writes nothing back into any design — 'looking is not writing' (dec:loop-status-state-not-history). Nothing here becomes graph state.\" So the shape this decision blesses was already shipping and already reasoned; what was missing was the ruling that makes it deliberate rather than incidental, and a place for the near-real-time half.\n\nWHAT IS ACTUALLY BUILT UNDER IT, and why it is small. The measurement half largely existed. The hole named by chg:undefer-skill-adherence-measurement is different and narrower: cap:skill-triggers recognises SHAPES, every shape it knows is a shape in the graph-write stream, and \"no skill has been loaded\" is not a graph write — so the one situation the user kept having to correct by hand was the one situation the mechanism structurally could not see. Counting get_skill per session closes that, and it is session state by nature.\n\nTHE COST THIS ACCEPTS, stated because the file it lands in resists exactly this. A new arming branch is a NEW interruption, and ver:skill-triggers' own counterweight says a trigger that fires on correct work is the failure BL-23 and BL-42 both name. So the branch is placed LAST, after every other Stop branch has declined, and is conjoined tightly: the session must have TOUCHED reflow2 (a total bypass is already caught upstream), must have edited at least the bypass threshold of files (so a trivial or read-only session is silent), and must have loaded ZERO skills. It therefore fires only on the session that did everything else right and still never opened a skill — which is precisely the case a human had to catch, twice, by asking.\n\nWHAT IS NOT CLAIMED. This measures LOADING, not FOLLOWING. An agent can call get_skill and ignore every word of it, and nothing here would know. Adherence in the strong sense stays unmeasured, and the requirement's name should not be read as claiming otherwise. The honest claim is that not-loading is now visible where it was invisible.\n\nBOUNDARY CARRIED FORWARD from the requirement, unchanged: whatever is reported respects report-friction's redaction discipline — tool names and argument SHAPES, node TYPES not ids, counts not contents — because reflow2 installs into other people's projects and the thing being measured is the user, not their design.\n\nApproved by Anthony 2026-08-07 (\"yes, build it\") against the recommendation as stated, after he asked for the question in plain terms. The prior \"yes, build it\" of 2026-08-06 un-deferred the requirement; this settles the precondition it carried.",
+        "status": "accepted"
       }
     },
     {
@@ -53562,6 +53685,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-loop-nudge",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_loop_nudge.py"
+      }
+    },
+    {
       "node_id": "frag:art:test-nudge-path",
       "node_type": "Fragment",
       "properties": {
@@ -53945,7 +54078,7 @@
       "node_id": "question:230d69056201ed59",
       "node_type": "Question",
       "properties": {
-        "answer": "Yes — build it. Anthony, 2026-08-06, un-deferring this after the 2026-07-31 answer's own precondition came true: the fixes it was parked behind (situation-triggered nudging via cap:skill-triggers, now verified; conventions riding the tool; imperative hint wording) have all shipped, so there is now something worth measuring. The trigger for reversing it was that the user was STILL having to remind an agent to use reflow2's skills — \"I still don't like reminding this all the time (which needs to be an enduring requirement to increase the probability that an agent will use reflow2 skills and tools and not rely on itself).\"\n\nTHE HARD PART IS UNCHANGED AND IS STILL THE FIRST THING TO SETTLE, not a detail to discover during the build: whether the kit may report on its own ADOPTION without breaking dec:loop-status-state-not-history, which says loop debt is computed from graph state and never from run history. The distinction this requirement already names — what the LOOP may reason from when it computes debt, versus what the KIT may report about ITSELF as a product — is the thing to decide first. It may be a real distinction or a rationalisation for the thing that decision forbids, and that must be answered before anything is built.\n\nThe evidence for reversing the parking, recorded because it is the shape of the problem rather than an anecdote: a session that used the tools heavily and unprompted still failed to load list_skills at start, never loaded link-artifacts while doing its work by hand, and only loaded revise-design after being told to. cap:skill-triggers fired correctly throughout — its shapes are all shapes in the graph-write stream, and \"no skill has been loaded\" is not a graph write, so nothing counts it. That hole is exactly what this requirement covers, and only a human noticed it. Twice.",
+        "answer": "Yes — build it. Anthony, 2026-08-07, after asking for the question in plain English and a recommendation. This is the second \"yes\": the 2026-08-06 one un-deferred the requirement, and this one answers the precondition that requirement carried — whether the kit may report its own ADOPTION without breaking dec:loop-status-state-not-history.\n\nSettled as dec:adoption-is-reported-the-loop-still-computes (accepted): the distinction is REAL, because that decision protects one specific thing — the answer to \"what does this design still need?\" must not depend on who did what — and adoption never touches that answer. It is a different question (is the TOOL being used as intended?), for a different reader (the maintainer), changing a different thing (the tool). The line is held by three properties rather than a promise: the count lives in session state and offline transcripts, never in the graph; no adoption field is read by loop_status / detect_gaps / detect_defects; and a check asserts the loop's answer is unchanged whether or not the count exists. The standing test for anything added later: does this measurement ever change what the loop says is owed? If yes, it is forbidden whatever it is called.\n\nBuilt as cap:skill-loads-are-counted. Deliberately smaller than the requirement's title, and the gap between the two is stated rather than glossed: this measures LOADING, not FOLLOWING. The offline half already existed (tools/surface_usage.py, which has counted get_skill calls since 2026-08-01 and writes nothing to any graph); the missing half was near-real-time, and it is the hole chg:undefer-skill-adherence-measurement named — every shape cap:skill-triggers recognises lives in the graph-write stream, and \"no skill has been loaded\" is not a graph write.\n\nRecommendation he accepted, recorded because the ordering was a judgement and not an obvious one: fix the trigger first (it attacks the actual complaint, which was having to remind agents by hand), then the reporting. Stated to him at the time: an agent recommending that the tool nudge agents rather than measure them has an interest in that ordering, and he should weight it accordingly.",
         "asked_at": "2026-07-31",
         "context_setter": "Nothing satisfies requirement “Whether the kit is actually used is measured, not inferred from whether the design looks tidy”",
         "gap_id": "gap:230d69056201ed59",
@@ -58706,6 +58839,18 @@
       }
     },
     {
+      "node_id": "ver:skill-loads-are-counted",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-07",
+        "level": "integration",
+        "method": "test",
+        "name": "A session that did design work, moved files, and never opened a skill is told so before it ends — and the correct sessions around it are not (tools/test_loop_nudge.py, class SkillLoadsAreCounted, 9 cases). MOST OF THE CASES ARE COUNTERWEIGHTS, because this branch ARMS a nudge where cap:skill-triggers only ever refined one: loading a single skill silences it; listing skills does NOT count as loading one (knowing the menu is not reading the recipe, and counting it would let a session tick the box); a session below the edit floor is left alone; a session that never touched reflow2 gets the blunter bypass message and NOT this one; and where another branch already fired, exactly one message is printed. Plus the two invariants every blocking branch here owes: it fires once per session, and a tally rebuilt after an unreadable one never makes the negative claim, because the get_skill calls that would refute it are exactly what was lost. THE LINE dec:adoption-is-reported-the-loop-still-computes DRAWS IS HELD AS A PROPERTY: the hook leaves the designed project byte-identical (no export, no store, no stray file), and a grep with a positive control asserts no skill counter is readable by anything in reflow2-core that computes debt. FOUND BY RUNNING IT: the first implementation incremented both new counters in memory and threw them away on every write, because the state key set is duplicated in three places and only two were updated — the same defect BL-163 hit, in the same file, under a comment that warns about it by name.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:skill-triggers",
       "node_type": "Verification",
       "properties": {
@@ -58868,7 +59013,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:02146cfadfdd61d2fb085c276b97d1d2aa1c32c6cef78b04ed1263da89f0ef0c",
+  "prev_content_hash": "sha256:e882dceea53cd833f3cd484956ddfa12e027d9ad22e29f6c3c397d69b4070487",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
