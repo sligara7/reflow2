@@ -755,5 +755,143 @@ class FiresOnce(unittest.TestCase):
                       "an unspent claim must still be there when debt appears")
 
 
+class SkillLoadsAreCounted(unittest.TestCase):
+    """`cap:skill-loads-are-counted` — the session that did everything else
+    right and never opened a skill.
+
+    The hole `cap:skill-triggers` cannot reach: every shape it recognises lives
+    in the graph-write stream, and "no skill has been loaded" is not a graph
+    write. Twice the decay was found by a human asking an agent.
+
+    Most of these are COUNTERWEIGHTS rather than the feature. This branch ARMS a
+    nudge, which `cap:skill-triggers` deliberately never did, so what matters as
+    much as its firing is the set of correct sessions it stays quiet for.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory(prefix="loop-nudge-skills-")
+        self.project = pathlib.Path(self._tmp.name)
+        (self.project / ".reflow2").mkdir()
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def _worked(self, session="s1", n=4):
+        """A session that did DESIGN work, checked the loop, and moved n files.
+
+        Clean by every other branch's reckoning: the write is settled by the
+        loop check, so `writes` is 0; no ChangeEvent, so the propagate branch
+        stays quiet; reflow2 was touched, so the bypass branch stays quiet.
+        Whatever fires on this shape fires on an otherwise-correct session.
+        """
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability", session))
+        run_hook(self.project, post_tool("mcp__reflow2__loop_status", session))
+        for _ in range(n):
+            run_hook(self.project, edit_tool(session=session, path="/tmp/a.rs"))
+
+    def test_a_session_that_worked_and_loaded_no_skill_is_told(self):
+        self._worked()
+        out = run_hook(self.project, stop()).stdout
+        self.assertIn("block", out)
+        self.assertIn("no skill was ever loaded", out)
+        # The message must name the way IN, not just the failing. A nudge that
+        # says "you should have used a skill" and not how is the shape
+        # `dec:a-failing-check-says-against-what` exists to prevent.
+        self.assertIn("list_skills", out)
+        self.assertIn("get_skill", out)
+
+    def test_loading_one_skill_silences_it(self):
+        # THE CENTRAL COUNTERWEIGHT. One `get_skill` and this must never speak.
+        self._worked()
+        run_hook(self.project, post_tool("mcp__reflow2__get_skill"))
+        out = run_hook(self.project, stop()).stdout
+        self.assertEqual(out.strip(), "",
+                         "a session that opened a skill has nothing owed here")
+
+    def test_listing_skills_is_not_loading_one(self):
+        # Knowing the menu exists is not reading the recipe. If `list_skills`
+        # counted, a session could tick the box without opening anything —
+        # which is the exact self-deception this capability exists to end.
+        self._worked()
+        run_hook(self.project, post_tool("mcp__reflow2__list_skills"))
+        out = run_hook(self.project, stop()).stdout
+        self.assertIn("no skill was ever loaded", out)
+
+    def test_a_small_session_is_left_alone(self):
+        # Below the edit floor. Most sessions are small, and nagging every one
+        # of them is how a trigger gets ignored (BL-23, BL-42).
+        self._worked(n=1)
+        out = run_hook(self.project, stop()).stdout
+        self.assertEqual(out.strip(), "", "a one-file session is not a practice failure")
+
+    def test_a_session_that_never_touched_reflow2_gets_the_bypass_message(self):
+        # Not this branch's case: the session that ignored the design brain
+        # entirely needs the blunter message, and getting BOTH would be two
+        # interruptions for one failure.
+        for _ in range(4):
+            run_hook(self.project, edit_tool(path="/tmp/a.rs"))
+        out = run_hook(self.project, stop()).stdout
+        self.assertIn("never consulted", out)
+        self.assertNotIn("no skill was ever loaded", out)
+
+    def test_it_never_speaks_over_a_branch_that_already_fired(self):
+        # Placed LAST so it can only fill silence. Here the write nudge is owed,
+        # AND no skill was loaded — exactly one message may result.
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+        for _ in range(4):
+            run_hook(self.project, edit_tool(path="/tmp/a.rs"))
+        out = run_hook(self.project, stop()).stdout
+        self.assertIn("block", out)
+        self.assertNotIn("no skill was ever loaded", out)
+        self.assertEqual(out.count('"decision"'), 1, "one stop, one message")
+
+    def test_a_rebuilt_tally_never_claims_no_skill_was_loaded(self):
+        # A NEGATIVE CLAIM on an amnesiac count. The unreadable tally lost
+        # exactly the `get_skill` calls that would refute it (BL-161).
+        d = self.project / ".reflow2" / "loop-nudge"
+        d.mkdir(parents=True)
+        (d / "s1.json").write_text("{corrupt")
+        self._worked()
+        out = run_hook(self.project, stop()).stdout
+        self.assertNotIn("no skill was ever loaded", out)
+
+    def test_it_keeps_the_once_per_session_promise(self):
+        self._worked()
+        first = run_hook(self.project, stop())
+        self.assertIn("no skill was ever loaded", first.stdout)
+        second = run_hook(self.project, stop())
+        self.assertEqual(second.stdout.strip(), "",
+                         "every blocking branch makes the promise, so every one keeps it")
+
+    def test_the_count_never_leaves_the_session_tally(self):
+        # THE LINE `dec:adoption-is-reported-the-loop-still-computes` DRAWS,
+        # held as a property rather than a promise: adoption is session state,
+        # never design state. If a skill count ever reached the graph it would
+        # become something the loop could reason from, which is precisely what
+        # `dec:loop-status-state-not-history` forbids.
+        #
+        # Checked two ways, because either alone is weak. First: the hook writes
+        # nothing into the project at all — no export, no store, no stray file.
+        before = sorted(p.name for p in self.project.iterdir())
+        self._worked()
+        run_hook(self.project, post_tool("mcp__reflow2__get_skill"))
+        run_hook(self.project, stop())
+        after = sorted(p.name for p in self.project.iterdir())
+        self.assertEqual(before, after,
+                         "the hook must leave the designed project untouched")
+
+        # Second: the counter is absent from every module that computes loop
+        # debt. A grep, with a POSITIVE CONTROL so a silently-wrong path cannot
+        # pass it by matching nothing.
+        core = pathlib.Path(__file__).resolve().parent.parent / "crates" / "reflow2-core" / "src"
+        sources = list(core.rglob("*.rs"))
+        self.assertTrue(sources, "positive control: the core sources must be findable")
+        blob = "\n".join(p.read_text(errors="ignore") for p in sources)
+        self.assertIn("loop_status", blob, "positive control: the loop lives here")
+        self.assertNotIn("SKILL_OPS", blob)
+        self.assertNotIn('"skills"', blob,
+                         "no skill count may be readable by anything that computes debt")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

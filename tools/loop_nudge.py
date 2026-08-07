@@ -190,6 +190,19 @@ RENDERING_SUFFIXES = (
 # Putting bytes in the content store.
 CONTENT_OPS = {"content_put"}
 
+# Loading a skill (`cap:skill-loads-are-counted`). `get_skill` only: it is the
+# call that puts a skill's text in front of the agent. `list_skills` is
+# discovery — knowing the menu exists is not reading the recipe, and counting it
+# here would let a session tick the box without opening anything.
+#
+# THE COUNT IS SESSION STATE, NOT GRAPH STATE, and that is the whole of the
+# `dec:adoption-is-reported-the-loop-still-computes` line. It lives in the tally
+# file beside the other per-session counters, is never written into the design,
+# and is read by nothing that computes loop debt. `dec:loop-status-state-not-history`
+# governs what the LOOP may reason from; this is the KIT reporting a fact about
+# itself, and the two stay separate because the data never crosses over.
+SKILL_OPS = {"get_skill"}
+
 # Deliberately says reflow2 is INSTALLED here, never that a design EXISTS here.
 # The hook cannot know: it runs before the server is reachable, and the graph
 # meta file carries no node counts. The old text asserted a design graph and
@@ -230,7 +243,14 @@ def blank_state() -> dict:
     whole bug this file once had."""
     return {"writes": 0, "edits": 0, "touched": False,
             "changes": 0, "propagates": 0, "artifacts": 0, "captures": 0,
-            "gap_pass": 0, "renderings": 0, "content": 0,
+            "gap_pass": 0, "renderings": 0, "content": 0, "skills": 0,
+            # Graph writes for the WHOLE session, never reset by a loop check —
+            # distinct from `writes`, which is "unchecked since the last loop
+            # check" and is deliberately cleared. Only this can answer "did this
+            # session do design work at all", which `writes` cannot: a session
+            # that wrote and then ran loop_status has `writes == 0` and looks
+            # identical to one that only ever read.
+            "wrote": 0,
             # Whether this tally was rebuilt after an unreadable one. A restart
             # keeps the mechanism working; this flag is what stops the restart
             # being mistaken for evidence. See `update_state`.
@@ -274,6 +294,16 @@ def parse_state(text: str) -> dict | None:
             "gap_pass": int(raw.get("gap_pass", 0)),
             "renderings": int(raw.get("renderings", 0)),
             "content": int(raw.get("content", 0)),
+            # cap:skill-loads-are-counted. Absent in older state files and
+            # defaulting to zero — the SAME shape as "this session loaded no
+            # skill", so a tally written by the previous version is
+            # indistinguishable from a real zero. Safe only because the branch
+            # this feeds also requires `touched` and an edit count in the same
+            # tally, and a tally old enough to lack this key is one no longer
+            # being written to. Same argument as `propagates` above, and it
+            # holds for the same reason.
+            "skills": int(raw.get("skills", 0)),
+            "wrote": int(raw.get("wrote", 0)),
             "reset": bool(raw.get("reset", False)),
             "nudged": bool(raw.get("nudged", False)),
         }
@@ -398,6 +428,13 @@ def update_state(session_id: str, mutate) -> None:
                 "gap_pass": int(state.get("gap_pass", 0)),
                 "renderings": int(state.get("renderings", 0)),
                 "content": int(state.get("content", 0)),
+                # cap:skill-loads-are-counted. Added here THIRD, after the note
+                # above was read and then ignored anyway: both of these were
+                # incremented in memory and thrown away on every write, and the
+                # new tests failed exactly as BL-163's did. The warning works;
+                # it just cannot make anyone read it before writing the code.
+                "skills": int(state.get("skills", 0)),
+                "wrote": int(state.get("wrote", 0)),
                 "reset": bool(state.get("reset", False)),
                 "nudged": bool(state.get("nudged", False)),
             }))
@@ -575,6 +612,10 @@ def main() -> int:
                     state["writes"] = 0
                 elif is_write(op):
                     state["writes"] += 1
+                # Cumulative and never cleared — see `blank_state`. A loop check
+                # settles the DEBT, it does not un-write what was written.
+                if is_write(op):
+                    state["wrote"] += 1
                 # Shape tallies are cumulative and are NOT cleared by a loop
                 # check: detect_gaps does not un-edit a file or un-capture
                 # intent.
@@ -590,6 +631,8 @@ def main() -> int:
                     state["gap_pass"] += 1
                 if op in CONTENT_OPS:
                     state["content"] += 1
+                if op in SKILL_OPS:
+                    state["skills"] += 1
 
             update_state(session, touch)
             return 0
@@ -729,6 +772,64 @@ def main() -> int:
                         f"stopping again proceeds.)"
                     ),
                 }))
+            return 0
+
+        # cap:skill-loads-are-counted — LAST, and last on purpose.
+        #
+        # The hole this closes is the one `cap:skill-triggers` structurally
+        # cannot reach. Every shape that capability recognises is a shape in the
+        # graph-write stream, and "no skill has been loaded" is not a graph
+        # write, so nothing counted it. Twice the decay was found by a human
+        # asking an agent — which `req:skill-adherence-is-measured` calls, in
+        # its own words, "not a mechanism".
+        #
+        # THIS ARMS A NUDGE, which `cap:skill-triggers` deliberately never did,
+        # so the conjunction carries the whole counterweight — all three clauses
+        # load-bearing, and `ver:skill-triggers` says why: a trigger that fires
+        # on correct work is the failure BL-23 and BL-42 both name.
+        #   - reached here at all — every other branch declined, so the session
+        #     is otherwise clean. This never adds a second interruption to a
+        #     session already being interrupted; it can only speak where there
+        #     would have been silence.
+        #   - `wrote > 0`        — the session did DESIGN work, not merely a
+        #                          read. This is the clause that keeps an
+        #                          existing contract intact: "a single read
+        #                          means the agent DID consult the graph — no
+        #                          bypass", and one `scan_nodes` must stay
+        #                          silent. It has to be the cumulative counter,
+        #                          because `writes` is cleared by a loop check
+        #                          and a session that wrote and then checked
+        #                          would look read-only here.
+        #   - `edits >= N`       — real work landed on disk. Shares the bypass
+        #                          threshold, so a read-only or trivial session
+        #                          is silent, which is most sessions.
+        #   - `skills == 0`      — and not one skill was ever opened.
+        #
+        # A NEGATIVE CLAIM, so it sits below the `reset` guard above: a tally
+        # rebuilt from nothing lost exactly the `get_skill` calls that would
+        # refute it, and "you loaded no skills" is not something to assert from
+        # an amnesiac count.
+        skill_edit_floor = env_threshold("REFLOW2_LOOP_NUDGE_EDIT_THRESHOLD", 3)
+        if (state.get("wrote", 0) > 0
+                and state["edits"] >= skill_edit_floor
+                and state.get("skills", 0) == 0):
+            if not claim_nudge(session):
+                return 0
+            print(json.dumps({
+                "decision": "block",
+                "reason": (
+                    f"reflow2: {state['edits']} file(s) edited this session and "
+                    f"no skill was ever loaded. The skills carry this project's "
+                    f"conventions, and they are SERVED, not installed — "
+                    f"list_skills names them, get_skill reads one in full. Load "
+                    f"the one that covers what you just did (link-artifacts "
+                    f"after writing a file, impact-check before changing a "
+                    f"design, revise-design when editing what the graph already "
+                    f"says) and check the work against it. Reading it afterwards "
+                    f"still catches what it would have prevented. (This nudge "
+                    f"fires once; stopping again proceeds.)"
+                ),
+            }))
         return 0
 
     return 0
