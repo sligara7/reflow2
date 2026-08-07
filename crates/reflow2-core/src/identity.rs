@@ -172,6 +172,114 @@ pub fn resolve(
     Ok(identity)
 }
 
+/// Has a RocksDB store ever held data at this path?
+///
+/// Asked BEFORE the store is opened, because opening creates the directory and
+/// erases the distinction. Deliberately "has ever held data" rather than "exists":
+/// a store that was created and never written carries `CURRENT`, `MANIFEST-*` and
+/// `OPTIONS-*` from the open alone, and treating those as content would refuse a
+/// path somebody merely touched. Data lands either in an SST or, before it is
+/// flushed, in a non-empty write-ahead log.
+///
+/// A read failure answers `false`. This feeds a REFUSAL, and a directory we
+/// cannot list is not evidence that a design is in it — the conservative answer
+/// for a guard is the one that does not invent a reason to refuse.
+pub fn store_has_content(graph_path: &str) -> bool {
+    let Ok(entries) = std::fs::read_dir(graph_path) else {
+        return false;
+    };
+    entries.flatten().any(|e| {
+        let name = e.file_name();
+        let name = name.to_string_lossy();
+        if name.ends_with(".sst") {
+            return true;
+        }
+        // The WAL: data written and not yet flushed is here and nowhere else.
+        name.ends_with(".log") && e.metadata().map(|m| m.len() > 0).unwrap_or(false)
+    })
+}
+
+/// Read this design's identity on a durable open, refusing the one case
+/// [`resolve`] cannot tell apart from a new design.
+///
+/// **The case.** The identity sidecar sits BESIDE the store, so the two can be
+/// parted — a partial restore, a snapshot taken mid-write, a sync tool that skips
+/// dotfiles, or (the one the Dockerfile warns about in capitals at its `/data`
+/// layout) a container started with `-v` scoped to `.../graph` instead of its
+/// parent. When they are parted, `resolve` finds no file and asks
+/// `holds_default_design`, which probes only for a design under the OLD SHARED
+/// id. That probe is the legacy migration path and **cannot see a minted design
+/// by construction** — every design created since identity landed is under a
+/// minted id. So it answers false, a new id is minted, and the mint is written
+/// over the missing sidecar. The design is still on disk, now unreachable because
+/// the id namespaces every stored key, and the id needed to reach it is gone.
+/// Nothing errors; the design presents as empty and healthy.
+///
+/// `cap:hosted-state-on-a-volume` states the required behaviour directly — "a
+/// store without its identity sidecar is refused rather than opened empty" — and
+/// the same rule already holds one case over: an UNREADABLE sidecar is refused
+/// with "reflow2 will not guess". Corrupt was refused and ABSENT was not, which
+/// is the wrong way round, because absent is the likelier of the two on a volume.
+///
+/// **Why the guard is `store_has_content` and not a scan.** The honest check
+/// would be "does this store hold a design under ANY id" — but ids namespace
+/// every key and the storage engine offers no enumeration of them
+/// (`count_nodes` needs the id you are trying to discover), so that question
+/// cannot be asked without a change to the pinned foundation. "The store already
+/// held data, and it is not the legacy design" answers the same question from the
+/// outside, using only what a filesystem can see.
+///
+/// The three outcomes, and why each is what it is:
+///
+/// - **sidecar present** — nothing to guard; `resolve` reads it, corrupt included.
+/// - **no sidecar, no prior content** — a genuinely new store. Mint, as before.
+/// - **no sidecar, prior content, holds the legacy design** — the migration case.
+///   Adopt, as before, or every pre-identity graph would be refused.
+/// - **no sidecar, prior content, no legacy design** — REFUSE. Something was here
+///   and we cannot name it.
+///
+/// Refusing costs an operator one error naming the file to put back. Opening
+/// costs them the design, silently — and `dec:two-sided-accept` ("silent
+/// drift-accept does not exist") is the same principle one layer up.
+pub fn resolve_on_open(
+    graph_path: &str,
+    default_id: &str,
+    store_had_content: bool,
+    holds_default_design: impl FnOnce() -> bool,
+) -> Result<DesignIdentity, DynoError> {
+    // A sidecar that exists is `resolve`'s business either way — it reads it, and
+    // refuses it if it is unreadable. The closure is never reached on that path.
+    if identity_path(graph_path).exists() {
+        return resolve(graph_path, default_id, || false);
+    }
+
+    if !store_had_content {
+        // Nothing was ever stored here, so there is no design to lose. This is
+        // every first open, and it must stay cheap and silent.
+        return resolve(graph_path, default_id, holds_default_design);
+    }
+
+    if holds_default_design() {
+        // A pre-identity graph: its data really is under the shared id, and
+        // adopting it is what keeps it readable. Refusing here would lock every
+        // graph that predates identity out of its own design.
+        return resolve(graph_path, default_id, || true);
+    }
+
+    Err(DynoError::Storage(format!(
+        "the design at {graph_path} has lost its identity file ({}), and reflow2 will not guess.\n\
+         This store already holds data, but not under the shared id every pre-identity design \
+         used — so it belongs to a design whose name lived only in that file. Opening anyway \
+         would mint a NEW name, write it over the missing one, and present the design as empty \
+         while it is still on disk and no longer reachable.\n\
+         The identity file is a SIBLING of the store, not inside it. If this is a container, the \
+         usual cause is a volume mounted at the store directory instead of its parent — mount the \
+         parent. Otherwise restore {} from a backup, alongside the store it belongs to.",
+        identity_path(graph_path).display(),
+        identity_path(graph_path).display(),
+    )))
+}
+
 /// Persist an identity beside the store.
 pub fn write(graph_path: &str, identity: &DesignIdentity) -> Result<(), DynoError> {
     let path = identity_path(graph_path);

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:02146cfadfdd61d2fb085c276b97d1d2aa1c32c6cef78b04ed1263da89f0ef0c",
+  "content_hash": "sha256:e882dceea53cd833f3cd484956ddfa12e027d9ad22e29f6c3c397d69b4070487",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2605,6 +2605,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:isolation-check-scope-split",
+      "properties": {},
+      "to_id": "epoch:isolation-check-scope-split"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:iteration-budget-was-elicited",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
@@ -3568,6 +3574,12 @@
       "from_id": "snap:epoch:hxm-field-report:req:a-session-chooses-its-design",
       "properties": {},
       "to_id": "epoch:hxm-field-report"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:isolation-check-scope-split:ver:sessions-cannot-cross-designs",
+      "properties": {},
+      "to_id": "epoch:isolation-check-scope-split"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5693,6 +5705,15 @@
         "action": "modified"
       },
       "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-3fac4692fb0601d6",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-sessions-cannot-cross-designs"
     },
     {
       "edge_type": "CHANGED",
@@ -10250,6 +10271,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:isolation-check-scope-split",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-sessions-cannot-cross-designs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:isolation-check-scope-split",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ver:sessions-cannot-cross-designs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:isolation-check-written",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:test-sessions-cannot-cross-designs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:isolation-check-written",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:hosted-state-on-a-volume"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:isolation-check-written",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ver:sessions-cannot-cross-designs"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:iteration-budget-was-elicited",
       "properties": {
         "accepted_baseline": false,
@@ -11786,6 +11852,42 @@
         "action": "added"
       },
       "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:sidecar-loss-refused",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:sidecar-loss-refused",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:sidecar-loss-refused",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:hosted-state-on-a-volume"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:sidecar-loss-refused",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ver:sessions-cannot-cross-designs"
     },
     {
       "edge_type": "CHANGED",
@@ -16774,6 +16876,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:hosted-state-on-a-volume",
+      "properties": {},
+      "to_id": "dec:sidecar-loss-guarded-by-store-evidence"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:ility-signals",
       "properties": {},
       "to_id": "dec:report-dont-judge"
@@ -20457,6 +20565,12 @@
       "from_id": "req:supporting-is-not-conflict",
       "properties": {},
       "to_id": "snap:epoch:prune-proposed:req:supporting-is-not-conflict"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "ver:sessions-cannot-cross-designs",
+      "properties": {},
+      "to_id": "snap:epoch:isolation-check-scope-split:ver:sessions-cannot-cross-designs"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -38602,6 +38716,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-sessions-cannot-cross-designs",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "ver:sessions-cannot-cross-designs"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-shared-sessions",
       "properties": {
         "completeness": "complete"
@@ -39941,6 +40063,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-session-cannot-name-another-design",
+      "properties": {},
+      "to_id": "req:a-session-cannot-address-another-design"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:acknowledgement-not-structure",
       "properties": {},
       "to_id": "cap:heal"
@@ -40586,6 +40714,12 @@
       "from_id": "ver:session-artifacts",
       "properties": {},
       "to_id": "cap:session-artifacts"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:sessions-cannot-cross-designs",
+      "properties": {},
+      "to_id": "cap:hosted-state-on-a-volume"
     },
     {
       "edge_type": "VERIFIES",
@@ -41602,6 +41736,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-sessions-cannot-cross-designs",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-sessions-cannot-cross-designs"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-shared-sessions",
       "properties": {
         "action": "created"
@@ -42404,10 +42546,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0c572c75d71045854e65d16ca6827271d9319bc13f35e470976c425fda05033c",
+        "checksum": "sha256:15823284a28c35d3e70eee48cfcc6d4d3e05479d36724ec05833d5cb9ab105f5",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -42437,10 +42581,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d4e51659a479603aa29befad2e00fa504d6b185bc35ee25961073a79bf04e4b8",
+        "checksum": "sha256:bca3fb382cb6f8bff6c15fcb432077855e56631f192c8bd5ec26620ac78c88b8",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/identity.rs",
         "name": "identity.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -43295,6 +43441,19 @@
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-sessions-cannot-cross-designs",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:af9a346e7973cb6661f2b3d95cde2e43827667136916833ea3d0ee2402f0cf81",
+        "granularity": "atomic",
+        "location": "crates/reflow2-mcp/tests/sessions_cannot_cross_designs.rs",
+        "name": "sessions_cannot_cross_designs.rs",
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45322,6 +45481,15 @@
       }
     },
     {
+      "node_id": "chg:accept-3fac4692fb0601d6",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-07",
+        "name": "Registered before `cargo fmt` ran; the only delta is rustfmt reflowing one call site. No assertion, name or comment changed."
+      }
+    },
+    {
       "node_id": "chg:accept-41cb200c8b595eb3",
       "node_type": "ChangeEvent",
       "properties": {
@@ -46917,6 +47085,22 @@
       }
     },
     {
+      "node_id": "chg:isolation-check-scope-split",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "ver:sessions-cannot-cross-designs is narrowed to the clauses it actually proves — it was PASSING while its statement claimed two properties no test could reach"
+      }
+    },
+    {
+      "node_id": "chg:isolation-check-written",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The conditional precondition of dec:one-process-many-stores is written and run — 4 clauses hold, and the volume case does not"
+      }
+    },
+    {
       "node_id": "chg:iteration-budget-was-elicited",
       "node_type": "ChangeEvent",
       "properties": {
@@ -47378,6 +47562,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "One server, many sessions: several seats work the same design at once"
+      }
+    },
+    {
+      "node_id": "chg:sidecar-loss-refused",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "A store that outlived its identity sidecar is now refused instead of opened empty — the volume clause of cap:hosted-state-on-a-volume enforced in code rather than in a Dockerfile comment"
       }
     },
     {
@@ -49601,6 +49793,16 @@
       }
     },
     {
+      "node_id": "dec:sidecar-loss-guarded-by-store-evidence",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "On a durable open, refuse when the identity sidecar is absent AND the store directory already held data AND the legacy probe finds no design under the old shared id. \"Already held data\" is answered BEFORE the store is opened, from the filesystem alone: a `.sst` file, or a non-empty write-ahead log. Opening creates the directory, so the evidence exists for exactly one line. All three prior behaviours are unchanged — a sidecar that is present is read (and still refused if unreadable), a genuinely fresh store still mints, and a pre-identity graph under the shared id is still adopted.",
+        "name": "A lost identity sidecar is caught by what the filesystem can see, because the store cannot be asked what designs it holds",
+        "rationale": "THE CHECK THIS REPLACES IS ONE WE CANNOT WRITE. The honest question is \"does this store hold a design under ANY id\", and it cannot be asked: graph_id namespaces every stored key and dynograph-storage exposes no enumeration of ids — count_nodes(graph_id, type) requires the very id you are trying to discover. dynograph-storage is pinned by git tag v0.12.0 in the workspace Cargo.toml, so acquiring that scan means a change to another repository, a new tag, and a bump here. That is a real option and it is the BETTER fix; it is not this fix.\n\n\"The store already held data, and it is not the legacy design\" answers the same question from outside, with nothing but read_dir. It is a PROXY, and the ways it is wrong are worth stating rather than discovering: a store created and opened but never written, whose sidecar is then lost, is refused though nothing is at stake — the refusal names how to proceed, and the alternative (minting over a live design) is unbounded, so the tie breaks toward refusing. A store whose data files were deleted while the directory survived would not be caught, which is not a case a mis-scoped mount produces.\n\nWHY A PROXY NOW BEATS THE REAL CHECK LATER. cap:hosted-state-on-a-volume is BUILT, not planned — art:dockerfile realizes it — and it already ships knowing this exact failure. Dockerfile:78-82 says so in capitals: a store opened without its identity sidecar \"finds nothing and PRESENTS AS AN EMPTY DESIGN, reporting nothing wrong\", and mounting `.../graph` rather than its parent \"is a plausible-looking mistake that silently loses a project. MOUNT THE PARENT.\" The mitigation for a known silent-data-loss path was a comment addressed to the one person who cannot read it: the operator gets no error, because there is no error. The capability's own statement already says the required behaviour is to refuse.\n\nWHAT IT DOES NOT DO, so nobody reads more into a green check: it does not RECOVER the design. The store still holds it, under an id nothing can now name. Recovery needs the sidecar restored from backup, or the scan above — at which point the id could be read back off the store and the refusal could become self-healing. That is the follow-on this defers, and the reason to prefer the foundation change eventually rather than instead.\n\nThe asymmetry it removes was already visible in the code: an UNREADABLE sidecar was refused with \"reflow2 will not guess\", while an ABSENT one minted silently — and absent is the likelier of the two on a mounted volume.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:skills-served",
       "node_type": "Decision",
       "properties": {
@@ -51230,6 +51432,16 @@
         "epoch_type": "revision",
         "name": "Install once per machine: no project needs setting up, and a directory with no design costs nothing (2026-07-28, post-v0.17.0)",
         "sequence": 23,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:isolation-check-scope-split",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The isolation check is split so the half that cannot be tested yet is a node rather than a comment in a test",
+        "sequence": 285,
         "status": "arrived"
       }
     },
@@ -53367,6 +53579,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered served_skills.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-sessions-cannot-cross-designs",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered sessions_cannot_cross_designs.rs"
       }
     },
     {
@@ -56629,6 +56851,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:isolation-check-scope-split:ver:sessions-cannot-cross-designs",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-sessions-cannot-cross-designs\",\"properties\":{\"completeness\":\"partial\"}},{\"direction\":\"out\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:hosted-state-on-a-volume\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-session-cannot-address-another-design\",\"properties\":{}}]",
+        "state": "{\"kind\":\"verification\",\"last_run_at\":\"2026-08-07\",\"level\":\"integration\",\"method\":\"test\",\"name\":\"A session attached to design X cannot reach design Y in the same process: a graph_id it was not attached to is REFUSED rather than served; a path is not an alternative route in; a reconnect re-attaches to the same design rather than to none or to the first in the registry; and a write lands in the attached design only — proven by opening two graphs in one process, writing to each, and asserting each store contains only its own nodes. PLANNED — written before the build, because dec:one-process-many-stores was accepted 2026-08-06 conditional on this check existing first, and an isolation regression CORRUPTS silently rather than erroring.\",\"status\":\"passing\"}",
+        "target_id": "ver:sessions-cannot-cross-designs",
+        "target_type": "Verification"
+      }
+    },
+    {
       "node_id": "snap:epoch:kpp-capture:cap:kpp-proposal",
       "node_type": "Snapshot",
       "properties": {
@@ -57171,6 +57403,19 @@
       }
     },
     {
+      "node_id": "fact:defect-create-node-documented-as-replacing-but-merges",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "TWO SURFACES SHARE THE NAME `create_node` AND HAVE OPPOSITE SEMANTICS, and every consumer-facing document describes the wrong one. The MCP TOOL `create_node` MERGES: crates/reflow2-mcp/src/tools/query.rs:64 calls `g.upsert_node(...)`, and its own tool description says so (\"An existing id MERGES: the props you pass overwrite, every stored property you omit survives\"). The RUST method `DesignGraph::create_node` REPLACES (graph.rs:220, \"Create (or replace)\"). An agent can only call the tool; it cannot call the method. THREE PLACES TELL THE AGENT THE METHOD'S SEMANTICS FOR THE TOOL: (1) the served `revise-design` SKILL — \"Do NOT reach for the generic `create_node` to revise. It is create-or-replace, so passing only the changed field resets every other property to its schema default — which silently downgrades an `accepted` requirement to `proposed`, reopens a settled Decision, and drops an artifact's checksum.\" (2) ver:constructors-preserve's description — \"create_node and import_graph deliberately still REPLACE\". (3) crates/reflow2-core/tests/upsert.rs module doc. MEASURED FALSE 2026-08-07 on invented nodes in a throwaway graph, using the skill's own scare case: a Requirement set to status=accepted, then `create_node` with props={statement} ALONE. Result — statement changed, and status stayed \"accepted\"; name, priority, provenance, concern, designation, kind and lineage all survived. Nothing was reset. Confirmed twice more in ordinary use the same day, on a TemporalFact updated with one property at a time. CONTRADICTED WITHIN THE GRAPH ITSELF: chg:merge-integrity-bl47-bl46 records \"create_node on an existing id merges instead of replacing (the revise-design contract, now real)\" — so the fix landed and the documents were never followed. ver:constructors-preserve PASSES while its description misstates this, and it can: grep shows the test asserts nothing about create_node at all. WHAT IT COSTS, hit today rather than imagined: several node types have NO typed constructor — TemporalFact is one, and TemporalFact is what dec:defects-are-temporal-facts makes the standard way to record a defect found by use. For those, `create_node` is the ONLY route, and the skill tells the agent that taking it will destroy the node. An agent that believes the skill either does not record the defect or passes a whole property set it had to reconstruct by hand, risking the very reset it was avoiding. The skill's advice (prefer typed constructors) stays right; the REASON given for it is false, and the reason is what an agent reasons from when the advice does not cover its case.",
+        "subject_id": "cmp:skills",
+        "valid_from": "2026-08-07",
+        "value": "{\"filed_as\":\"https://github.com/sligara7/reflow2/issues/91 (finding 1 of 3), 2026-08-07, on Anthony's word\",\"tool_that_merges\":\"create_node (MCP), crates/reflow2-mcp/src/tools/query.rs:64 -> upsert_node\",\"method_that_replaces\":\"DesignGraph::create_node, crates/reflow2-core/src/graph.rs:220\",\"documents_stating_the_wrong_one\":[\"skill revise-design step 3\",\"ver:constructors-preserve description\",\"crates/reflow2-core/tests/upsert.rs module doc\"],\"graph_contradicts_itself\":\"chg:merge-integrity-bl47-bl46 says create_node merges\",\"verification_passes_anyway\":\"ver:constructors-preserve asserts nothing about create_node\",\"probe\":{\"setup\":\"Requirement req:probe, status set to accepted\",\"call\":\"create_node props={statement} only\",\"expected_by_skill\":\"status downgraded to proposed\",\"observed\":\"status stayed accepted; 7 other properties survived; statement updated\"},\"concrete_cost\":\"TemporalFact has no typed constructor, and dec:defects-are-temporal-facts makes it the standard defect record\",\"fix_shape\":\"correct the three documents; optionally rename one surface so the collision cannot recur; add a create_node case to constructors_preserve.rs so prose stops being the only guard\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-lineage-message-omits-its-own-decision",
       "node_type": "TemporalFact",
       "properties": {
@@ -57183,6 +57428,20 @@
       }
     },
     {
+      "node_id": "fact:defect-lost-identity-sidecar-opens-empty",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "CLOSED 2026-08-07, same day, by dec:sidecar-loss-guarded-by-store-evidence — the refusal now exists in code (identity::resolve_on_open + store_has_content), ver:sessions-cannot-cross-designs passes 5/5, and the whole workspace is green. Read the rest as the record of what was true inside VALID_FROM..VALID_TO; the closure is PARTIAL IN ONE NAMED WAY, which is why it is stated here rather than left to be rediscovered: the refusal STOPS the loss but does not RECOVER a design already lost, because the id can still not be read back off the store. The clause below beginning \"NOT YET FIXED\" described the fix that was not taken — a scan for a design under ANY id — and it was not taken because dynograph-storage exposes no such enumeration and is pinned by git tag v0.12.0, i.e. it lives in another repository. What shipped is a filesystem proxy for that scan. --- ORIGINAL RECORD FOLLOWS --- A store that loses its identity sidecar is OPENED EMPTY rather than refused, and the open destroys the evidence — the exact failure cap:hosted-state-on-a-volume forbids in its own statement (\"a store without its identity sidecar is refused rather than opened empty\"). Found 2026-08-07 by ver:sessions-cannot-cross-designs, written as the precondition dec:one-process-many-stores was accepted conditional on; measured, not reasoned: original id 55f9907b65553b63, id after reopen c485cd821d5a263b, real design reachable false. MECHANISM: identity lives in `<path>.id.json`, a SIBLING of the store, so the two can be parted. identity::resolve (crates/reflow2-core/src/identity.rs:126) finds no file and asks holds_default_design(), which probes ONLY for a design under DEFAULT_GRAPH_ID (graph.rs:146-148). That probe is the legacy migration path and CANNOT SEE A MINTED DESIGN BY CONSTRUCTION — every design created since identity landed is under a minted id. So the probe answers false, a NEW id is minted, and resolve() WRITES IT to the sidecar (identity.rs:171). The design is still on disk, now unreachable because graph_id namespaces every stored key, and the id needed to reach it has been overwritten. The graph then reports itself healthy and empty; nothing errors. THE SHARPENING, found by propagating chg:isolation-check-written rather than by reading code: this capability IS ALREADY BUILT — art:dockerfile realizes it, satisfying req:hosted-state-outlives-the-image — and THE DOCKERFILE ALREADY DOCUMENTS THIS EXACT FAILURE IN CAPITALS, at Dockerfile:78-82: \"THE SIDECARS ARE NOT OPTIONAL AND NOT SEPARABLE. A store opened without the identity sidecar it was created with finds nothing and PRESENTS AS AN EMPTY DESIGN, reporting nothing wrong. Because they sit beside the store rather than inside it, mounting only `.../graph` and not its parent directory is a plausible-looking mistake that silently loses a project. MOUNT THE PARENT.\" So the failure mode was known, written down, and mitigated with A COMMENT ASKING THE OPERATOR NOT TO MAKE THE MISTAKE — while the capability the Dockerfile realizes says the store must be REFUSED rather than opened empty. The design says enforce it in code; what shipped was a warning. A mis-scoped `-v` is not an exotic input, and the operator who makes it is the one person who cannot see the warning, because it is in the image's source rather than in the error they get — which is no error at all. ADJACENCY THAT SHOWS THE RULE WAS ALREADY KNOWN IN CODE TOO: an UNREADABLE sidecar is correctly refused with \"reflow2 will not guess\" (identity.rs:138-145, tested at tests/design_identity.rs:139), so corrupt was refused and ABSENT was not — and absent is the more likely of the two on a volume.",
+        "subject_id": "cap:hosted-state-on-a-volume",
+        "valid_from": "2026-08-07",
+        "valid_to": "2026-08-07",
+        "value": "{\"found_by\":\"ver:sessions-cannot-cross-designs, test a_store_whose_identity_sidecar_is_lost_is_refused_rather_than_opened_empty\",\"measured\":{\"original_id\":\"55f9907b65553b63\",\"id_after_reopen\":\"c485cd821d5a263b\",\"design_reachable_after_reopen\":false,\"sidecar_overwritten\":true},\"capability_violated\":\"cap:hosted-state-on-a-volume\",\"capability_is_built\":true,\"realized_by\":\"art:dockerfile\",\"requirement_behind_it\":\"req:hosted-state-outlives-the-image\",\"decision_at_risk\":\"dec:one-process-many-stores\",\"cause\":\"crates/reflow2-core/src/graph.rs:146-148 probes only DEFAULT_GRAPH_ID; crates/reflow2-core/src/identity.rs:156-171 mints and writes on a false probe\",\"correct_behaviour_already_present_for_the_adjacent_case\":\"crates/reflow2-core/src/identity.rs:138-145 refuses an UNREADABLE sidecar\",\"already_documented_as_an_operator_warning\":\"Dockerfile:78-82\",\"found_by_propagation\":\"propagate_change on chg:isolation-check-written put art:dockerfile and req:hosted-state-outlives-the-image in the distance-1 ring, which is what showed the capability was already built\",\"fix_not_authorised_yet\":true}"
+      }
+    },
+    {
       "node_id": "fact:defect-main-rs-realizes-the-wrong-capability",
       "node_type": "TemporalFact",
       "properties": {
@@ -57192,6 +57451,30 @@
         "statement": "art:main (crates/reflow2-mcp/src/main.rs) REALIZES cap:snapshot-read and cmp:main, and nothing else — so the file that carries the whole CLI surface is traced to one capability it barely touches and NOT to the ones it actually serves. Measured 2026-08-06 by reconcile_artifacts, which returned propagation_seeds ['cap:snapshot-read','cmp:main'] for a change that was entirely about cap:content-store's --content-path argument. CONSEQUENCE: the reconcile-driven path from a code change back to the intent that justified it — the loop link-artifacts step 6 exists to close, and which the skill calls 'the loop the original Reflow never closed' — lands on the wrong capability for any CLI change. The correct blast radius was only obtained because the agent hand-named cap:content-store in add_change_event from judgement; had it trusted the graph, ifc:mcp-tools would never have appeared as a boundary crossing and a tool-surface change would have shipped unnoticed. THE UNDERLYING SHAPE is that main.rs is one atomic artifact standing for many capabilities (content store, HTTP/shared serving, export, import, merge driver, latent mode), which is the pending_expansion case link-artifacts describes: a placeholder standing in for files that should each become their own node, where an atomic registration buys a false tick. Not yet decided whether the fix is more REALIZES edges from the one artifact or a finer artifact decomposition.",
         "subject_id": "art:main",
         "value": "{\"artifact\":\"art:main\",\"location\":\"crates/reflow2-mcp/src/main.rs\",\"realizes_actual\":[\"cap:snapshot-read\",\"cmp:main\"],\"realizes_expected_at_least\":[\"cap:content-store\"],\"found_by\":\"reconcile_artifacts propagation_seeds, 2026-08-06\",\"granularity_declared\":\"atomic\",\"candidate_granularity\":\"pending_expansion\",\"why_it_mattered_today\":\"the correct radius (829 impacted, ifc:mcp-tools crossed) came from a hand-named seed, not from the graph\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-rebuild-strands-the-shared-server",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A REBUILD STRANDS AN ATTACHED SESSION'S SHARED SERVER, UNRECOVERABLY, AND THE ERROR POINTS AT A LOG THAT CANNOT EXPLAIN IT. Hit 2026-08-07 doing nothing unusual: `cargo test --workspace` with a Claude Code session attached over MCP. SEQUENCE: the shared daemon reached its 120-minute idle timeout and exited, releasing the store lock — correct, by design, and logged as such. The session's client then tried to auto-start a replacement and failed with \"could not spawn the shared reflow2 server: No such file or directory (os error 2)\". CAUSE: spawn_daemon resolves the binary with std::env::current_exe() (crates/reflow2-mcp/src/shared.rs). cargo test had relinked reflow2-mcp, so the running process's current_exe() resolved to a DELETED INODE, while a perfectly good binary sat at the same path the whole time. THREE THINGS MAKE IT WORSE THAN A TRANSIENT: (1) it is unrecoverable for the life of the session — every later respawn resolves the same dead inode, and only a full MCP reconnect clears it; (2) the error's advice, \"Check the server log beside the graph directory\", names the wrong file, because the failure is in the PARENT process and never reaches the daemon log — whose last line is the idle-timeout exit, which reads like the cause and is not; (3) it will hit anyone who runs the test suite while a session is attached, which on this repo is everyone. SAME SHAPE AS fact:defect-lineage-message-omits-its-own-decision: a message whose stated remedy cannot address the actual cause, so the reader spends their time in the wrong place. Note the idle expiry itself is not the defect and should not be 'fixed' — shared.rs documents why the daemon must expire (it holds the store's exclusive write lock, and an immortal daemon trades one lock problem for another).",
+        "subject_id": "cap:shared-sessions",
+        "valid_from": "2026-08-07",
+        "value": "{\"filed_as\":\"https://github.com/sligara7/reflow2/issues/91 (finding 2 of 3), 2026-08-07, on Anthony's word\",\"observed\":\"2026-08-07, cargo test --workspace with an MCP session attached\",\"error\":\"could not spawn the shared reflow2 server: No such file or directory (os error 2)\",\"cause\":\"std::env::current_exe() in crates/reflow2-mcp/src/shared.rs spawn_daemon resolves a deleted inode after a relink\",\"binary_was_fine\":\"target/debug/reflow2-mcp existed and ran throughout\",\"recovery\":\"full MCP reconnect only\",\"misleading_advice\":\"'Check the server log beside the graph directory' - failure is in the parent, never reaches that log\",\"blast\":\"anyone running the test suite with a session attached\",\"not_the_defect\":\"the 120-minute idle expiry, which shared.rs justifies: the daemon holds the store's exclusive write lock\",\"fix_shape\":\"fall back to the resolved binary path when current_exe() no longer exists, or detect ENOENT on spawn and name the cause\",\"prior_diagnoses\":\"recorded in session handoffs 2026-08-06 as 'worth filing and still unfiled'; this is the first time it is in the graph\"}"
+      }
+    },
+    {
+      "node_id": "ver:a-session-cannot-name-another-design",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "level": "integration",
+        "method": "test",
+        "name": "A design a session was not attached to cannot be reached by NAMING it: a graph_id it was not attached to is REFUSED rather than served, and a path is not an alternative route in. PLANNED, and it cannot be otherwise yet — both clauses need a surface on which a session names the design it wants, and cmp:registry is planned with cap:select-graph-by-id unrealized, so there is nothing to ask. SPLIT OUT of ver:sessions-cannot-cross-designs on 2026-08-07 because that check was PASSING while its statement still claimed these two: a green check standing for an untested clause is worse than an absent one, and this is the precondition dec:one-process-many-stores was accepted on, so the overstatement was load-bearing. WHERE THIS SURFACES, checked rather than assumed: loop_status's verification digest, which lists every check not currently passing (planned 3 to 4, total 119 to 120). NOT detect_gaps — its gap count did not move, because unverified_capability fires on a Capability with zero incoming VERIFIES and this check verifies a REQUIREMENT. Deliberately NOT edged to cap:select-graph-by-id: that would close gap:cb4c1b4025b0d3fc with a check that proves nothing, which is gaming the detector rather than informing it. So the countable trace is loop_status, and the second guard is a tripwire test (the_registry_clauses_are_not_covered_here in crates/reflow2-mcp/tests/sessions_cannot_cross_designs.rs) that FAILS the moment crates/reflow2-mcp/src/registry.rs appears — belt and braces, because a status is a property any hand can set to passing in one call, and a failing test is not.",
+        "status": "planned"
       }
     },
     {
@@ -58380,10 +58663,11 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
+        "last_run_at": "2026-08-07",
         "level": "integration",
         "method": "test",
-        "name": "A session attached to design X cannot reach design Y in the same process: a graph_id it was not attached to is REFUSED rather than served; a path is not an alternative route in; a reconnect re-attaches to the same design rather than to none or to the first in the registry; and a write lands in the attached design only — proven by opening two graphs in one process, writing to each, and asserting each store contains only its own nodes. PLANNED — written before the build, because dec:one-process-many-stores was accepted 2026-08-06 conditional on this check existing first, and an isolation regression CORRUPTS silently rather than erroring.",
-        "status": "planned"
+        "name": "A write lands in the attached design ONLY — two designs open simultaneously in one process, written to in interleaved turns, and each store proven to contain only its own nodes; plus the two properties that half rests on: the STORE is the isolation boundary rather than the id (naming another design's graph_id from a different store serves nothing and writes nothing into it), and a reopen re-attaches to the same design even with a different design opened first and still held. NARROWED 2026-08-07 (epoch:isolation-check-scope-split): this node previously also claimed \"a graph_id it was not attached to is REFUSED rather than served\" and \"a path is not an alternative route in\", and was set PASSING while no test could reach either — both need a surface on which a session NAMES a design, and cmp:registry is planned. Those two clauses are now ver:a-session-cannot-name-another-design, which is PLANNED and says so. dec:one-process-many-stores was accepted conditional on ALL FOUR, so its condition is HALF MET, and the graph now computes that instead of resting on a comment in a test file.",
+        "status": "passing"
       }
     },
     {
@@ -58584,7 +58868,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d63c416910b0b0f4c146bb77a7c934aa9202583d6fd308dea0d32af49f239f5c",
+  "prev_content_hash": "sha256:02146cfadfdd61d2fb085c276b97d1d2aa1c32c6cef78b04ed1263da89f0ef0c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

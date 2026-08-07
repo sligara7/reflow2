@@ -124,6 +124,11 @@ impl DesignGraph {
         path: &str,
     ) -> Result<(Self, crate::provenance::Provenance), DynoError> {
         let schema = crate::schema::load_schema()?;
+        // Ask BEFORE opening whether a store has ever held data here: opening
+        // creates the directory, and after that "a design was here" and "nothing
+        // was ever here" look identical. It is the only evidence that survives a
+        // lost identity sidecar, and it is gone one line later.
+        let store_had_content = crate::identity::store_has_content(path);
         // Open the store FIRST. A build without the `rocksdb` feature fails loud
         // here (naming the feature — AGENTS.md rule 4), and it must do so BEFORE
         // the provenance stamp touches disk: check_and_stamp writes
@@ -143,9 +148,16 @@ impl DesignGraph {
         // identity file yet: a store that ALREADY holds a design under the old
         // shared id keeps that id. Minting one instead would leave the design on
         // disk and open a new empty one beside it, reporting nothing wrong.
-        let identity = crate::identity::resolve(path, DEFAULT_GRAPH_ID, || {
-            Self::holds_a_design_probe(&engine, DEFAULT_GRAPH_ID)
-        })?;
+        //
+        // `resolve_on_open` rather than `resolve`: the probe below can only see a
+        // design under the OLD SHARED id, so on a store whose sidecar has been
+        // parted from it — the mounted-volume case `cap:hosted-state-on-a-volume`
+        // is about — it answers "no design here" for a design that is very much
+        // here, and the mint that follows overwrites the only record of its name.
+        let identity =
+            crate::identity::resolve_on_open(path, DEFAULT_GRAPH_ID, store_had_content, || {
+                Self::holds_a_design_probe(&engine, DEFAULT_GRAPH_ID)
+            })?;
         Ok((
             Self {
                 engine,
