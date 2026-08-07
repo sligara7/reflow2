@@ -27,8 +27,20 @@ struct Cli {
     /// Deliberately NOT under `--graph-path`: that lives in `.reflow2/`, which
     /// is gitignored, and blobs are COMMITTED so they travel with the design
     /// (`dec:where-content-lives`). Point this at a directory inside the repo.
-    #[arg(long, default_value = "./reflow2-content")]
-    content_path: String,
+    ///
+    /// NO DEFAULT, DELIBERATELY. It carried `default_value = "./reflow2-content"`
+    /// until 2026-08-06, which made the refusal in `ReflowService::content_store`
+    /// unreachable from this binary: every launch passed `Some(default)`, so a
+    /// server nobody had configured would have created a blob directory at
+    /// whatever CWD it happened to start in — the exact silent fallback that
+    /// method's own doc comment forbids, citing `req:no-silent-fallback`.
+    /// `ver:content-surface` asserted the refusal and passed anyway, because it
+    /// tested `ReflowService::in_memory()` (where `content_path` is `None`), a
+    /// state this binary could never reach. Blobs are COMMITTED, so where they
+    /// live is a decision about the consumer's repo and must be theirs to make.
+    /// See `fact:defect-content-store-invents-its-directory`.
+    #[arg(long)]
+    content_path: Option<String>,
 
     /// Serve over HTTP on this address instead of stdio, so SEVERAL sessions
     /// share one design (`req:sessions-share-a-graph`). One process holds the
@@ -806,7 +818,7 @@ async fn main() -> anyhow::Result<()> {
         if let Some(note) = provenance {
             eprintln!("reflow2: {note}");
         }
-        let service = service.with_content_path(Some(cli.content_path.clone()));
+        let service = service.with_content_path(cli.content_path.clone());
         serve_http(
             move || Ok(service.share()),
             cli.http.as_deref().unwrap_or("127.0.0.1:0"),
@@ -878,7 +890,7 @@ async fn main() -> anyhow::Result<()> {
     // and explains itself beats one that dies before it can be asked.
     match ReflowService::new_reporting(&cli.graph_path) {
         Ok((service, provenance)) => {
-            let service = service.with_content_path(Some(cli.content_path.clone()));
+            let service = service.with_content_path(cli.content_path.clone());
             // Say it on stderr as well as the log: an operator running this by
             // hand sees stderr, and "which reflow2 wrote this graph" is exactly
             // the question that used to have no answer at all.
@@ -1141,6 +1153,36 @@ where
 mod tests {
     use super::read_resolutions;
     use reflow2_core::Resolution;
+
+    /// The CLI must not choose where a consumer's blobs live.
+    ///
+    /// `ReflowService::content_store` refuses when `content_path` is `None`,
+    /// citing `req:no-silent-fallback` — but until 2026-08-06 this arg carried
+    /// `default_value = "./reflow2-content"`, so the binary always passed
+    /// `Some(..)` and that refusal could never fire. `ver:content-surface`
+    /// asserted the refusal and passed regardless, because it exercised
+    /// `ReflowService::in_memory()`, a state the binary cannot reach. This test
+    /// guards the CLI itself, which is where the defect actually lived:
+    /// reintroducing any default here fails HERE rather than being discovered by
+    /// a consumer finding blobs in whatever directory their server started in.
+    ///
+    /// See `fact:defect-content-store-invents-its-directory`.
+    #[test]
+    fn an_unconfigured_server_chooses_no_content_directory() {
+        use clap::Parser;
+        let cli = super::Cli::parse_from(["reflow2-mcp"]);
+        assert_eq!(
+            cli.content_path, None,
+            "--content-path must have NO default: blobs are committed, so where \
+             they live is the consumer's decision, and a default makes the \
+             refusal in content_store() unreachable"
+        );
+
+        // And it is still honoured when actually given — the fix must not make
+        // the flag inert, which would be the opposite defect.
+        let cli = super::Cli::parse_from(["reflow2-mcp", "--content-path", "blobs"]);
+        assert_eq!(cli.content_path.as_deref(), Some("blobs"));
+    }
 
     #[test]
     fn reads_each_choice() {

@@ -2810,6 +2810,59 @@ async fn a_server_with_no_content_store_says_so_instead_of_choosing_one() {
     );
 }
 
+/// The two READ calls answer without a store; only the byte paths refuse.
+///
+/// `dec:manifest-answers-without-a-store`. `cap:content-manifest` exists for
+/// "someone handed the design ON ITS OWN", and `missing` is the whole reason it
+/// exists — so refusing that reader for having no store would invert the
+/// capability. Writes and byte reads still refuse, because there is genuinely
+/// nowhere to put or find bytes.
+#[tokio::test]
+async fn the_manifest_answers_without_a_store_while_writes_still_refuse() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+
+    // The manifest ANSWERS, and says in words that there is no store rather than
+    // naming a directory nobody chose.
+    let out = s
+        .content_manifest(Parameters(ContentManifestReq { path: None }))
+        .await
+        .expect("the manifest must answer without a store");
+    let said = format!("{out:?}");
+    assert!(
+        said.contains("no content store configured"),
+        "it must name the absence in words, got: {said}"
+    );
+
+    // `exists` answers false rather than erroring — it is the cheap "do I have
+    // everything?" call, and no store means no bytes, which is a fact.
+    let out = s
+        .content_exists(Parameters(ContentRefReq {
+            hash: "sha256:00".into(),
+        }))
+        .await
+        .expect("exists must answer without a store");
+    let said = format!("{out:?}");
+    assert!(
+        said.contains("store_configured"),
+        "it must say the store is unconfigured, got: {said}"
+    );
+
+    // But a WRITE still refuses and still names the remedy: nothing changed
+    // about the path that actually needs a directory.
+    let err = s
+        .content_put(Parameters(ContentPutReq {
+            text: Some("nowhere to go".into()),
+            base64: None,
+            accept_large: None,
+        }))
+        .await
+        .expect_err("no store configured");
+    assert!(
+        format!("{err:?}").contains("--content-path"),
+        "the write refusal must still name the remedy"
+    );
+}
+
 // ---- BL-153 fix shapes (1) and (3) — the bulk forms over the surface -------
 
 /// A rejected bulk write comes back as an ERROR carrying every failure, not as

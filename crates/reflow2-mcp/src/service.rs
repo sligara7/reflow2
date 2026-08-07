@@ -2461,6 +2461,20 @@ impl ReflowService {
         self
     }
 
+    /// The content store for a READ that must still answer without one.
+    ///
+    /// `content_store` refuses when nothing is configured, which is right for
+    /// writes and for fetching bytes. It is wrong for `content_manifest` and
+    /// `content_exists`: those exist to tell somebody what they are MISSING, and
+    /// the person who needs that most is the one holding the design with no
+    /// store beside it. Refusing would make them configure storage before being
+    /// told what to put in it (`dec:manifest-answers-without-a-store`).
+    pub(crate) fn content_store_for_reading(&self) -> Option<reflow2_core::ContentStore> {
+        self.content_path
+            .as_deref()
+            .map(reflow2_core::ContentStore::new)
+    }
+
     /// The content store, or a refusal that names why there is none.
     ///
     /// Fails loud rather than defaulting to a directory nobody chose
