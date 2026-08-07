@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d63c416910b0b0f4c146bb77a7c934aa9202583d6fd308dea0d32af49f239f5c",
+  "content_hash": "sha256:02146cfadfdd61d2fb085c276b97d1d2aa1c32c6cef78b04ed1263da89f0ef0c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10394,6 +10394,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:lineage-message-names-its-decision",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:lineage-message-names-its-decision",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:export-once-per-pr"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:linked-repos-trial-run",
       "properties": {
         "accepted_baseline": false,
@@ -15540,7 +15558,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:cluster-claims",
       "properties": {},
+      "to_id": "dec:a-graph-claim-cannot-be-published-before-its-pr"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cluster-claims",
+      "properties": {},
       "to_id": "dec:advisory-concurrency"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cluster-claims",
+      "properties": {},
+      "to_id": "dec:coord-board-in-graph"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -17604,6 +17634,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:portability",
       "properties": {},
+      "to_id": "dec:export-once-per-pr"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:portability",
+      "properties": {},
       "to_id": "dec:import-merges-or-demands-whole-nodes"
     },
     {
@@ -19039,6 +19075,12 @@
       "from_id": "cmp:alternatives",
       "properties": {},
       "to_id": "dec:fork-point-address"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:claims",
+      "properties": {},
+      "to_id": "dec:coord-board-in-graph"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -39886,6 +39928,18 @@
       "to_id": "epoch:defects-in-the-graph"
     },
     {
+      "edge_type": "VALID_TO",
+      "from_id": "fact:defect-content-store-invents-its-directory",
+      "properties": {},
+      "to_id": "epoch:defects-closed-2026-08-07"
+    },
+    {
+      "edge_type": "VALID_TO",
+      "from_id": "fact:defect-lineage-message-omits-its-own-decision",
+      "properties": {},
+      "to_id": "epoch:defects-closed-2026-08-07"
+    },
+    {
       "edge_type": "VERIFIES",
       "from_id": "ver:acknowledgement-not-structure",
       "properties": {},
@@ -41893,7 +41947,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f5c8d8b7a04dcbdda90f874828c568747bfdb6393a952bc3270e679471f3941b",
+        "checksum": "sha256:a663b78895bd7c095bc88340def62806526b14be46856c5b21cfc5eb0e7f67e2",
         "granularity": "atomic",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
@@ -46903,6 +46957,14 @@
       }
     },
     {
+      "node_id": "chg:lineage-message-names-its-decision",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "The lineage gate names dec:export-once-per-pr and admits a third cause — a PR that already exported, where restore-and-re-export cannot help"
+      }
+    },
+    {
       "node_id": "chg:linked-repos-trial-run",
       "node_type": "ChangeEvent",
       "properties": {
@@ -51066,6 +51128,17 @@
         "epoch_type": "revision",
         "name": "The functional-decomposition decision catches up with the eighth system it gained after it was written",
         "sequence": 260,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:defects-closed-2026-08-07",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "created_at": "2026-08-07",
+        "description": "The lifecycle half of dec:defects-are-temporal-facts, exercised for the first time. #88 fixed the content store inventing a directory; this increment makes the lineage gate name dec:export-once-per-pr. Both facts get VALID_TO set here rather than being edited into past tense, so \"was this ever broken, and when did it stop\" stays answerable.",
+        "epoch_type": "revision",
+        "name": "Two defects found by USE are fixed and CLOSED on the record — the first time VALID_TO retires a defect instead of a prose \"DONE\" annotation (2026-08-07)",
         "status": "arrived"
       }
     },
@@ -58511,7 +58584,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:8b5471e9a4ad6f613807a90c1e2fc226debe99bf268f11f092afb43307fe12fd",
+  "prev_content_hash": "sha256:d63c416910b0b0f4c146bb77a7c934aa9202583d6fd308dea0d32af49f239f5c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
