@@ -460,16 +460,44 @@ fn attached_count_answers_only_when_the_process_is_tracking() {
     // req:a-session-can-tell-it-is-not-alone leans on this: a seat that can see
     // how many sessions are attached cannot honestly report a graph-wide rollup
     // as its own result.
+    // ASSERTED BY MEMBERSHIP, NOT BY CARDINALITY, and that is the whole point of
+    // this comment. The first version of this test read the count, attached a
+    // second lease, and asserted `before + 1`. It passed locally and on the PR
+    // that introduced it, then failed in CI on the very next run: `left: Some(2),
+    // right: Some(1)`. The registry is PROCESS-global and cargo runs a test
+    // binary's tests as parallel threads in ONE process, so the sibling tests in
+    // this file attach and drop leases of their own and the total moves
+    // underneath any delta assertion. A flake, introduced by me, and exactly the
+    // shared-state-read-as-private-state confusion this whole feature exists to
+    // fix — committed while fixing it.
+    //
+    // So: the count proves only that the process is TRACKING (Some, and at least
+    // our two), and the precise behaviour is asserted through the seats we own,
+    // which no other test can touch.
     let lease = reflow2_core::identity::SeatLease::attach();
-    let before = reflow2_core::identity::attached_seat_count()
-        .expect("a process that has attached a seat is tracking");
     let second = reflow2_core::identity::SeatLease::attach();
-    assert_eq!(
-        reflow2_core::identity::attached_seat_count(),
-        Some(before + 1),
-        "a second session must be visible to the first"
+    let mine = second.id().to_string();
+
+    let count = reflow2_core::identity::attached_seat_count()
+        .expect("a process that has attached a seat is tracking");
+    assert!(
+        count >= 2,
+        "both our leases must be attached; got {count}"
     );
+    assert_eq!(
+        reflow2_core::identity::seat_liveness(&mine),
+        reflow2_core::identity::Liveness::Live,
+    );
+
     drop(second);
-    assert_eq!(reflow2_core::identity::attached_seat_count(), Some(before));
+    assert_eq!(
+        reflow2_core::identity::seat_liveness(&mine),
+        reflow2_core::identity::Liveness::Gone,
+        "a departed session must be visible as departed to the one still here"
+    );
+    assert!(
+        reflow2_core::identity::attached_seat_count().is_some_and(|n| n >= 1),
+        "the surviving lease keeps the process tracking"
+    );
     drop(lease);
 }
