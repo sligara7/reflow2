@@ -86,7 +86,13 @@ impl ReflowService {
                        questions still waiting or answered-but-unwritten, open decisions a named \
                        person was ASKED to settle (a `proposed` Decision carrying an \
                        AUTHORED_BY `role=approver` — one with no approver is somebody thinking \
-                       out loud and stays deliberately quiet), structural defects, \
+                       out loud and stays deliberately quiet), structural defects, DEFECTS FOUND \
+                       BY USING THE BUILD that are still open (a `TemporalFact` with \
+                       `fact_type: \"defect\"` and no `VALID_TO` — a different question from the \
+                       structural kind, which reasons about the design's shape; this one is a \
+                       capability that is realized, verified, and does not do what it claims, so \
+                       it sits under a PASSING check with code and design agreeing and both \
+                       wrong), \
                        capabilities claiming realized/verified with no passing check, recorded \
                        drift awaiting a disposition, and built capabilities nobody has checked \
                        against reality. Fire it between operational tasks instead of trying to \

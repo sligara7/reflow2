@@ -511,3 +511,87 @@ fn surfacing_recency_does_not_make_the_loop_dirty() {
         "…and it must actually be visible"
     );
 }
+
+/// A defect found by USING the build is counted until it is FIXED, and fixing it
+/// means pinning `VALID_TO` rather than editing the record.
+///
+/// `dec:defects-are-temporal-facts` (accepted 2026-08-06) chose `TemporalFact`
+/// over a new node type and said, in its own words, that nothing in the loop read
+/// them yet — "discoverable rather than SURFACED". This is that reader.
+///
+/// The three negative cases are the point, because each is a way the count could
+/// be quietly wrong: a fact that is not a defect must not be counted (`fact_type`
+/// is free-form and shared with readiness assertions, which is exactly why it was
+/// reusable); a CLOSED defect must not be counted, because a design whose fixed
+/// bugs keep nagging trains people to ignore the field; and `structural_defects`
+/// must not move, because HEAL answers a different question and conflating them
+/// would make either number unreadable.
+#[test]
+fn an_open_defect_fact_is_loop_debt_and_a_closed_one_is_not() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_capability("cap:x", "X", "does x", Some("realized"))
+        .unwrap();
+    g.create_node(
+        node::DESIGN_EPOCH,
+        "epoch:fixed",
+        Props::new()
+            .set("name", "the release that fixed it")
+            .set("epoch_type", "revision")
+            .set("sequence", 1i64),
+    )
+    .unwrap();
+
+    let defect = |g: &mut DesignGraph, id: &str, kind: &str| {
+        g.create_node(
+            node::TEMPORAL_FACT,
+            id,
+            Props::new()
+                .set("subject_id", "cap:x")
+                .set("fact_type", kind)
+                .set("basis", "measured")
+                .set("statement", "X is built, verified, and returns the wrong answer"),
+        )
+        .unwrap();
+    };
+
+    defect(&mut g, "fact:open", "defect");
+    defect(&mut g, "fact:closed", "defect");
+    // Not a defect: fact_type is free-form and readiness already uses it as a
+    // discriminator, so a reader that ignores it would count unrelated facts.
+    defect(&mut g, "fact:readiness", "status");
+
+    let structural_before = g.loop_status().unwrap().structural_defects;
+
+    let open = g.loop_status().unwrap();
+    assert_eq!(open.open_defects, 3 - 1, "the `status` fact is not a defect");
+    assert!(
+        open.next.iter().any(|l| l.contains("found by USING")),
+        "an open defect must reach the to-do list, not just the count: {:?}",
+        open.next
+    );
+
+    // Fix one: pin the epoch that fixed it. The record is not edited.
+    g.create_edge(
+        edge::VALID_TO,
+        node::TEMPORAL_FACT,
+        "fact:closed",
+        node::DESIGN_EPOCH,
+        "epoch:fixed",
+        Props::new(),
+    )
+    .unwrap();
+
+    let after = g.loop_status().unwrap();
+    assert_eq!(after.open_defects, 1, "a closed defect stops being debt");
+    assert_eq!(
+        after.structural_defects, structural_before,
+        "HEAL answers a different question and must not move"
+    );
+    assert!(
+        g.get_node(node::TEMPORAL_FACT, "fact:closed")
+            .unwrap()
+            .is_some(),
+        "the fixed defect survives as history"
+    );
+}

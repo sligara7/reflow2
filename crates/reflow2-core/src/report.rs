@@ -391,6 +391,32 @@ pub struct LoopStatus {
     pub unsettled_assigned_decisions: usize,
     /// Structural defects HEAL reports right now.
     pub structural_defects: usize,
+    /// Defects found by USING a built capability and not yet fixed — a
+    /// `TemporalFact` with `fact_type: "defect"` and no `VALID_TO`.
+    ///
+    /// A different question from `structural_defects`, and the difference is the
+    /// reason this field exists. HEAL reasons about the design's SHAPE and
+    /// recomputes from scratch every run, so it can only ever report what is
+    /// wrong with the graph. This counts what somebody OBSERVED to be wrong with
+    /// the BUILD — the case `dec:defects-are-temporal-facts` was accepted to
+    /// cover: a capability that is realized, verified, and does not do what it
+    /// claims. Every one of those sits under a PASSING check (so `verifications`
+    /// is silent), with code and design in agreement and both wrong (so
+    /// `undispositioned_drift` is silent too).
+    ///
+    /// Absence of `VALID_TO` is the open/closed test, not a status property:
+    /// fixing a defect means pinning the epoch that fixed it, so the history
+    /// survives instead of being overwritten.
+    ///
+    /// WHY IT IS HERE AT ALL: `dec:defects-are-temporal-facts` recorded, at the
+    /// time it was accepted, that nothing in the loop read these — "a defect
+    /// recorded here is discoverable rather than SURFACED" — and named this
+    /// reader as the half that matters. Retiring `docs/backlog.md`
+    /// (`dec:backlog-is-retired`) migrated 65 open defects in and made the debt
+    /// concrete: without this counter they are findable by `search_design` and
+    /// invisible to the loop, which is a narrower invisibility than a 589 KB
+    /// markdown file but is still invisibility.
+    pub open_defects: usize,
     /// Capabilities claiming `realized`/`verified` with no passing check.
     pub unproven_capabilities: usize,
     /// Recorded divergences (`DriftEvent`) awaiting a disposition.
@@ -536,6 +562,25 @@ impl DesignGraph {
 
         let structural_defects = self.detect_defects()?.len();
 
+        // Open = no VALID_TO. `dec:defects-are-temporal-facts` puts the lifecycle
+        // on the edge rather than in a status property precisely so that fixing
+        // one pins the epoch that fixed it instead of overwriting the record, and
+        // reading it back has to use the same test.
+        let mut open_defects = 0usize;
+        for fact in self.scan_nodes(node::TEMPORAL_FACT)? {
+            let is_defect = fact
+                .properties
+                .get("fact_type")
+                .and_then(dynograph_core::Value::as_str)
+                == Some("defect");
+            if !is_defect {
+                continue;
+            }
+            if self.outgoing(&fact.node_id, Some(edge::VALID_TO))?.is_empty() {
+                open_defects += 1;
+            }
+        }
+
         // A component-granularity check clears this debt (BL-73): the claim
         // HAS a passing check, one hop away — the coverage line says at which
         // granularity, and the per-component gap asks whether that is enough.
@@ -606,6 +651,13 @@ impl DesignGraph {
                  passing check — add or run their Verification"
             ));
         }
+        if open_defects > 0 {
+            next.push(format!(
+                "{open_defects} defect(s) found by USING the build are open — fix one and \
+                 pin VALID_TO to the epoch that fixed it, or search_design them to see what \
+                 is known broken"
+            ));
+        }
         if undispositioned_drift > 0 {
             next.push(format!(
                 "{undispositioned_drift} recorded divergence(s) await a disposition \
@@ -625,6 +677,7 @@ impl DesignGraph {
             unwritten_answers,
             unsettled_assigned_decisions,
             structural_defects,
+            open_defects,
             unproven_capabilities,
             undispositioned_drift,
             unexamined_claims,
