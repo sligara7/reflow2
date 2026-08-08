@@ -19,7 +19,7 @@
 > (`dec:coord-board-in-graph`), so claims travel in `docs/design/reflow2.json` and a graph you
 > haven't pulled is out of date. **[COORD.md](COORD.md)** keeps the handles, the conventions, and
 > resolving merge conflicts without discarding anyone's work.
-> **[docs/backlog.md](docs/backlog.md)** has what is open and why.
+> **The graph** has what is open and why: the graph — `loop_status` for what the loop owes, `detect_gaps` for the open questions, `search_design` to find a past finding by its words. `docs/backlog.md` was retired 2026-08-07 (`dec:backlog-is-retired`); its open rows are nodes now.
 
 Read this first. It tells you what this project is, how it's organized, and the rules to
 follow so your changes stay coherent with the design.
@@ -217,7 +217,7 @@ output goes to stderr; stdout is the JSON-RPC channel and must stay clean.
 `mint_seat` once and `claim_region` to take your item — *before* the work, because a claim nobody
 can see is not a claim. Release it with `release_claim` when you finish; if you forget, liveness
 is computed from your session, so the claim reads `gone` rather than sitting there looking taken.
-Then read [docs/backlog.md](docs/backlog.md) for what is open and why. [COORD.md](COORD.md) covers
+Then ask the graph what is open and why: the graph — `loop_status` for what the loop owes, `detect_gaps` for the open questions, `search_design` to find a past finding by its words. [COORD.md](COORD.md) covers
 resolving merge conflicts on the shared records without discarding anyone's work; read that before
 you hit one.
 
@@ -355,7 +355,7 @@ and the records are the project's memory:
 |---|---|
 | [CHANGELOG.md](CHANGELOG.md) | a user would notice |
 | [docs/requirements-coverage.md](docs/requirements-coverage.md) | a status moves |
-| [docs/backlog.md](docs/backlog.md) | an item is finished or discovered |
+| the graph (a TemporalFact `defect`, a `planned` Capability, a `proposed` Decision, a DesignRule) | an item is discovered — see `dec:backlog-is-retired` for which shape |
 | [docs/trials/](docs/trials/) | a real session went wrong — verbatim, append-only |
 | `claim_region` / `release_claim` (the graph) | you start, and again when you finish |
 

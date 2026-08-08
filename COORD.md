@@ -10,7 +10,7 @@ someone without the tool; the graph holds what the tool can compute.**
 | Question | Where |
 |---|---|
 | Who has what right now | **`claim_report`** (reflow2 MCP) |
-| What the work *is*, and why | [docs/backlog.md](docs/backlog.md) |
+| What the work *is*, and why | the graph — `loop_status`, `detect_gaps`, `search_design` (`dec:backlog-is-retired`) |
 | Is the code meeting the docs | [docs/requirements-coverage.md](docs/requirements-coverage.md) |
 | What changed and when | [CHANGELOG.md](CHANGELOG.md) |
 
@@ -34,7 +34,7 @@ reason for the move: liveness is computed from the claiming session, so an aband
 markdown line cannot know its author walked away, and on 2026-08-04 three stale claims were
 found in a single sweep.
 
-**Reference the backlog id (`BL-4`), don't restate it.** One source of truth for what the work
+**Reference the node id (`fact:bl-4`, `cap:bl-97`), don't restate it.** One source of truth for what the work
 actually is.
 
 ## Handles
