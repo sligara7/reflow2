@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a1664268f405b0e9c05b0c224f942240a93dd6be87f70517e1f164b3eccf8bbc",
+  "content_hash": "sha256:25c8c45de0cd640c873dfa7bf39b5fb20d28f09b2e525a723f8be74c4d648ae8",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -471,6 +471,12 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-tool-minted-seat-is-never-registered-so-gone-is-still-unreachable",
+      "properties": {},
+      "to_id": "cap:claim-liveness"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-add-verification-cannot-set-kind-or-last-run-at",
       "properties": {},
       "to_id": "cap:reconcile-verified"
@@ -917,11 +923,27 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:claim-a-region-by-query",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:claim-liveness",
       "properties": {
         "weight_basis": "estimated"
       },
       "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:claims-carry-their-age",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2588,6 +2610,12 @@
       "from_id": "question:ff976610480dab90",
       "properties": {},
       "to_id": "req:the-store-is-reachable-from-a-session"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-claim-may-be-a-query-20260808",
+      "properties": {},
+      "to_id": "epoch:a-claim-may-be-a-query"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4505,6 +4533,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-claim-may-be-a-query:dec:a-claim-may-need-a-list-rather-than-a-radius",
+      "properties": {},
+      "to_id": "epoch:a-claim-may-be-a-query"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:aggregate-gap-ack:art:detect",
       "properties": {},
       "to_id": "epoch:aggregate-gap-ack"
@@ -5096,6 +5130,24 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:claim-a-region-by-query",
+      "properties": {
+        "acted_at": "2026-08-08",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cap:claims-carry-their-age",
+      "properties": {
+        "acted_at": "2026-08-08",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cap:compare-alternatives",
       "properties": {
         "acted_at": "2026-07-22",
@@ -5253,6 +5305,14 @@
       "properties": {
         "acted_at": "2026-08-05T23:10:00Z",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-claim-may-need-a-list-rather-than-a-radius",
+      "properties": {
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -6160,6 +6220,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-dated-observation-does-not-read-as-standing-doctrine",
+      "properties": {
+        "acted_at": "2026-08-08",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-hint-names-its-next-call",
       "properties": {
         "acted_at": "2026-07-31",
@@ -6846,6 +6915,24 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-finding-carries-its-bounds"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-claim-may-be-a-query-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-claim-may-be-a-query-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:a-claim-may-need-a-list-rather-than-a-radius"
     },
     {
       "edge_type": "CHANGED",
@@ -13680,6 +13767,60 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-feedback-review-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:claim-liveness"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-feedback-review-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:claims-carry-their-age"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-feedback-review-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-feedback-review-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:a-claim-may-need-a-list-rather-than-a-radius"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-feedback-review-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:defect-a-tool-minted-seat-is-never-registered-so-gone-is-still-unreachable"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-feedback-review-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:a-dated-observation-does-not-read-as-standing-doctrine"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:storyflow-second-field-report-20260808",
       "properties": {
         "accepted_baseline": false,
@@ -14019,6 +14160,60 @@
         "action": "modified"
       },
       "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:tool-minted-seat-liveness-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:tool-minted-seat-liveness-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:tool-minted-seat-liveness-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:tool-minted-seat-liveness-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:tool-minted-seat-liveness-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:claim-liveness"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:tool-minted-seat-liveness-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "fact:defect-a-tool-minted-seat-is-never-registered-so-gone-is-still-unreachable"
     },
     {
       "edge_type": "CHANGED",
@@ -17698,6 +17893,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:claim-a-region-by-query",
+      "properties": {},
+      "to_id": "dec:a-claim-may-need-a-list-rather-than-a-radius"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:claim-liveness",
       "properties": {},
       "to_id": "dec:advisory-concurrency"
@@ -17737,6 +17938,12 @@
       "from_id": "cap:claim-liveness",
       "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:cluster-claims",
+      "properties": {},
+      "to_id": "dec:a-claim-may-need-a-list-rather-than-a-radius"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -22516,6 +22723,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:a-claim-may-need-a-list-rather-than-a-radius",
+      "properties": {},
+      "to_id": "snap:epoch:a-claim-may-be-a-query:dec:a-claim-may-need-a-list-rather-than-a-radius"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:anchor-retire-or-implement",
       "properties": {},
       "to_id": "snap:epoch:reflow-workflow-review:dec:anchor-retire-or-implement"
@@ -22864,9 +23077,21 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:claim-liveness",
+      "properties": {},
+      "to_id": "fact:defect-a-tool-minted-seat-is-never-registered-so-gone-is-still-unreachable"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:content-store",
       "properties": {},
       "to_id": "fact:defect-content-store-invents-its-directory"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:stale-seat-refusal",
+      "properties": {},
+      "to_id": "fact:correction-the-export-loses-nothing-the-108-were-serialized-defaults"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -42614,6 +42839,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:mint-seat-liveness-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:handed-out-seat-liveness"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:nodes",
       "properties": {
         "completeness": "partial"
@@ -42923,6 +43156,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:seat-liveness-shared-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:handed-out-seat-liveness"
     },
     {
       "edge_type": "REALIZES",
@@ -43564,6 +43805,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:claim-a-region-by-query",
+      "properties": {},
+      "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:claim-liveness",
       "properties": {
         "coverage": "partial",
@@ -43576,6 +43823,12 @@
       "from_id": "cap:claim-liveness",
       "properties": {},
       "to_id": "req:claims-have-owners"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:claims-carry-their-age",
+      "properties": {},
+      "to_id": "req:a-dated-observation-does-not-read-as-standing-doctrine"
     },
     {
       "edge_type": "SATISFIES",
@@ -45331,6 +45584,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:handed-out-seat-liveness",
+      "properties": {},
+      "to_id": "cap:claim-liveness"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:heal",
       "properties": {},
       "to_id": "cap:heal"
@@ -46314,6 +46573,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:mint-seat-liveness-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:mint-seat-liveness-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:nodes",
       "properties": {
         "action": "created"
@@ -46559,6 +46826,14 @@
         "action": "created"
       },
       "to_id": "art:search"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:seat-liveness-shared-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:seat-liveness-shared-test"
     },
     {
       "edge_type": "YIELDED",
@@ -47192,7 +47467,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5b26eb7f12555e2e6a00ea8b50f3924d56ad6318f0d020384833cd537a8f567a",
+        "checksum": "sha256:5a933a36f2ff5606df032f929c969218e54fc9d142c8629a7743243d7e3fa241",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/claims.rs",
         "name": "claims.rs",
@@ -47712,7 +47987,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8170aad432c7374ca4070c9bf5c0e57f55be28ce069c0b44e9ab613b7de8ecc4",
+        "checksum": "sha256:b2040f682b99860815459e4b4c34150019ff02f40821f9dd9e75fadfda5bf29a",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/identity.rs",
         "name": "identity.rs",
@@ -47894,7 +48169,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1eee8d1c08bf33ab58c3bbc7c60d658eafc796f631b98db952fb4f5ea9dac53d",
+        "checksum": "sha256:165cb2635beb44383f67fc440f8597956839feba946b485251d43445ed9b196d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -47950,6 +48225,19 @@
         "granularity": "atomic",
         "location": "tools/migrate_backlog.py",
         "name": "tools/migrate_backlog.py — the one-shot migration that executed dec:backlog-is-retired, and the record of which row became which node",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:mint-seat-liveness-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:fa90553f10cfd1194c8ac6b5962e1c5c57dc269e5d662bc62869db823d923a44",
+        "granularity": "atomic",
+        "location": "crates/reflow2-mcp/tests/mint_seat_liveness.rs",
+        "name": "mint_seat_liveness.rs",
         "status": "realized",
         "volatility": "stable"
       }
@@ -48422,6 +48710,19 @@
       }
     },
     {
+      "node_id": "art:seat-liveness-shared-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:8e5af9fd122fc56d39472920dc28410b6a157ed889964b4c01eed80fb8cd52aa",
+        "granularity": "atomic",
+        "location": "crates/reflow2-core/tests/seat_liveness_shared.rs",
+        "name": "seat_liveness_shared.rs",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:self-host-documents-guard",
       "node_type": "Artifact",
       "properties": {
@@ -48842,7 +49143,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:268477a9e54b93dde4db095e677c4cf8b8e3bda988fe484de74272d9647f704e",
+        "checksum": "sha256:9349d575b229d76389271afb868beaacfd0aaa3be3d0723982a92cf3b119ebfb",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/claims_tools.rs",
         "name": "tools/claims_tools.rs",
@@ -49488,6 +49789,19 @@
       }
     },
     {
+      "node_id": "cap:claim-a-region-by-query",
+      "node_type": "Capability",
+      "properties": {
+        "description": "claim_region accepts a QUERY describing the region, alongside the existing seed+depth. The query is evaluated at read time, every time, so the claim still follows the design as it changes — the property the seed+depth rule was chosen for, and the reason an explicit stored node list is refused (dec:a-claim-may-need-a-list-rather-than-a-radius). Serves cross-cutting duties a radius cannot describe: an audit, a sweep over everything of one kind, cold-validating what another session recorded. Two questions are deliberately left to the build: which query language, and whether an unevaluable or empty query is refused at claim time or reported at read time. claim_report must be able to say which shape a claim used, or a reader cannot tell a narrow region from a query that stopped matching.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A claim describes its region by a query, for work no radius can express",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:claim-liveness",
       "node_type": "Capability",
       "properties": {
@@ -49497,6 +49811,19 @@
         "name": "A claim names the session that made it, and a claim nobody is working says so",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:claims-carry-their-age",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Three parts, smallest first. (1) CAPTURE-TIME GUIDANCE: when a statement asserts what the system is right now, the capture path names TemporalFact rather than letting prose be the path of least resistance — subject_id is its only required property, and VALID_FROM / VALID_TO attach it to epochs. (2) A DETECTOR: a Requirement whose statement asserts current system state, with no TemporalFact and no VALID_TO, is unfalsifiable by construction and nothing reports it today. (3) AGE AT READ-BACK: where-am-i and search_design mark how old a node's factual half is, so a six-week-old observation is not narrated as current. Part 3 belongs with the read-half increment; parts 1 and 2 stand alone.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Time-bound claims land in a TemporalFact, and age is visible where claims are read",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -50863,6 +51190,14 @@
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "chg:a-claim-may-be-a-query-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Snapshot of the decision while it still reads OPEN / NOT YET DECIDED, before Anthony's ruling is written into it"
       }
     },
     {
@@ -53311,6 +53646,14 @@
       }
     },
     {
+      "node_id": "chg:storyflow-feedback-review-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "dev_storyflow's 2026-08-08 reports reviewed and recorded: a shipped seat-liveness fix proved incomplete, time-bound claims need a home with an expiry, and the computed claim region is re-opened"
+      }
+    },
+    {
       "node_id": "chg:storyflow-second-field-report-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -53364,6 +53707,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The shipped gate reads Cargo pins without tomllib, so the dependency check is not inert on Python 3.10 — which is what reflow2's own CI runner carries, and where the check reported \"could not read any build file\" on its very first run."
+      }
+    },
+    {
+      "node_id": "chg:tool-minted-seat-liveness-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "A seat the server handed out but never leased stops borrowing the server's liveness: on a shared server it reads unknown, and mint_seat stops promising otherwise"
       }
     },
     {
@@ -54257,6 +54608,16 @@
         "handle": "claude-code",
         "kind": "automated_agent",
         "name": "Claude Code"
+      }
+    },
+    {
+      "node_id": "dec:a-claim-may-need-a-list-rather-than-a-radius",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED 2026-08-08, Anthony's word: a claim may be described by a QUERY in addition to seed+depth, and an explicit stored node LIST is refused. Seed+depth remains and is unchanged for the work it already fits. WHY THE LIST IS THE ONE OPTION REJECTED, and this is the whole of the reasoning: the original choice — 'the region is COMPUTED from seed+depth rather than stored as a node list, so it follows the design as it changes' — was made to stop a claim going stale the moment the design moves. A query PRESERVES that property, because it is still evaluated fresh every time anyone reads the board; a stored list is the single option that throws it away. So this widens how a region may be DESCRIBED without weakening the guarantee the original decision bought. WHAT IT UNBLOCKS: cross-cutting duties — an audit, a sweep over everything of one kind, cold-validating what another session recorded — which are a general category rather than one team's oddity, and which no radius can express. SUPERSEDES NOTHING: the seed+depth rule stands as the default; this is an addition, so the earlier choice is neither re-opened again nor un-accepted (dec:reopen-supersedes). STILL UNANSWERED and deliberately not decided here: what query language, and whether an unevaluable or empty query is refused at claim time or reported at read time. Both are build questions; the shape is settled, the surface is not.",
+        "name": "A claimed region may be defined by a QUERY as well as by a seed and a depth — and never by a stored node list",
+        "rationale": "Because the cost was measured rather than argued. dev_storyflow w-aa0607ff, 2026-08-08: their lane was 'cold-test the retrievability of nodes another session mined', spanning two unrelated slices — there is no seed whose depth-2 radius is that work. They claimed a representative node and put the truth in the `note`, so claim_report's PROSE was right while its STRUCTURED answer was wrong for them, which is the exact failure a structured board exists to remove. THE STRONGER EVIDENCE IS BEHAVIOURAL AND IT IS THREE FOR THREE: both prior workers on that lane skipped claim_region entirely and kept a text file of document paths, because a flat list described their region better than the graph could. A tool losing to a text file is the same shape as the finding that drove the read-half increment — 'today a document BEATS the graph for making a decision, and that is a fair fight the graph loses'. THE COUNTER-ARGUMENT WAS PUT AND WEIGHED, not skipped: a claim is ADVISORY and never a lock, so a wrong region misleads a colleague rather than corrupting a write, which argues for keeping the mechanism simple. It was outweighed because an advisory board whose structured field is routinely wrong is how a signal gets trained into being ignored — the same objection that condemned permanently-`live` seat liveness in the same session, and the reason both were treated as real rather than cosmetic.",
+        "status": "accepted"
       }
     },
     {
@@ -57126,6 +57487,16 @@
       }
     },
     {
+      "node_id": "epoch:a-claim-may-be-a-query",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Anthony rules on the claimed region: a claim may be defined by a QUERY as well as a seed and depth, and an explicit node list is refused (2026-08-08)",
+        "sequence": 288,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:aggregate-gap-ack",
       "node_type": "DesignEpoch",
       "properties": {
@@ -59150,6 +59521,16 @@
       }
     },
     {
+      "node_id": "frag:art:mint-seat-liveness-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered mint_seat_liveness.rs"
+      }
+    },
+    {
       "node_id": "frag:art:nodes",
       "node_type": "Fragment",
       "properties": {
@@ -59457,6 +59838,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered search.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:seat-liveness-shared-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered seat_liveness_shared.rs"
       }
     },
     {
@@ -60827,6 +61218,21 @@
         "status": "retired",
         "unit_type": "binary",
         "version": "0.9.0"
+      }
+    },
+    {
+      "node_id": "req:a-dated-observation-does-not-read-as-standing-doctrine",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A claim about what the system IS carries when it was true, and is read back with its age",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A statement about the system's CURRENT state must be recorded as a time-bounded assertion and surfaced with its age wherever it is read back, so it can go false. Prose written into a Requirement's `statement` has no expiry: it reads present-tense forever, no report flags it, and it is unfalsifiable by construction. The design already draws this line once — `dec:verification-freshness-not-a-gap` ruled that a check older than its code is a freshness FACT rather than a gap — and this is the same distinction one node type along: a claim about what the design SHOULD BE belongs in Requirement prose; a claim about what the system IS RIGHT NOW belongs in a TemporalFact, which keeps both states instead of overwriting. Reading a dated observation back to a person as settled doctrine upgrades it into a standing property that nobody chose.",
+        "status": "proposed"
       }
     },
     {
@@ -62877,6 +63283,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-claim-may-be-a-query:dec:a-claim-may-need-a-list-rather-than-a-radius",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Capability\",\"other_id\":\"cap:cluster-claims\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"role\":\"approver\"}}]",
+        "state": "{\"decision\":\"RE-OPENS the settled choice that a claim's region is COMPUTED from a seed and a depth rather than stored as a node list. The existing rule is deliberate and stated in the tool itself — 'the region is COMPUTED from seed+depth rather than stored as a node list, so it follows the design as it changes' — and its benefit is real: a stored list goes stale the moment the design moves, which is the failure a claim board exists to avoid. The question re-opened is whether that is the ONLY shape a claim may take, or the default one. PROPOSED SHAPE, from the reporter: allow a claim over an explicit node LIST or over a QUERY, alongside seed+depth. A query would keep the follows-the-design property that motivated the original choice, which is the reason to prefer it over a bare list. NOT YET DECIDED — recorded so the trade is visible rather than re-derived.\",\"name\":\"OPEN — a claimed region is computed from seed+depth, and a cross-cutting duty is not a radius: does a claim also take a list?\",\"rationale\":\"Because the cost is now measured rather than argued. dev_storyflow w-aa0607ff, 2026-08-08: their lane was 'cold-test the retrievability of nodes another session mined', spanning two unrelated slices — there is no seed whose depth-2 radius is that work. They claimed a representative node and put the truth in the `note`, which means claim_report's PROSE was right while its STRUCTURED answer was wrong for them. That is the specific failure mode a structured board is supposed to remove. THE STRONGER EVIDENCE IS BEHAVIOURAL, AND IT IS THREE FOR THREE: both prior workers on the same lane skipped claim_region entirely and kept a text file of document paths instead, because a flat list described their actual region better than the graph could. A tool losing to a text file is the same shape as the finding that drove the read-half increment — 'today a document BEATS the graph for making a decision, and that is a fair fight the graph loses'. Cross-cutting duties (audit, cold-validation, a sweep over everything of one kind) are a general category, not one team's oddity, and the radius cannot express any of them. Counter-argument to weigh before deciding: a claim is ADVISORY and never a lock, so the cost of a wrong region is a colleague misreading who holds what, not a corrupted write — which is an argument for keeping the mechanism simple. Against that: an advisory board whose structured field is routinely wrong is how a signal gets trained into being ignored, which is the same objection raised against permanently-live seat liveness.\",\"status\":\"proposed\"}",
+        "target_id": "dec:a-claim-may-need-a-list-rather-than-a-radius",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:aggregate-gap-ack:art:detect",
       "node_type": "Snapshot",
       "properties": {
@@ -64515,6 +64931,18 @@
       }
     },
     {
+      "node_id": "fact:correction-the-export-loses-nothing-the-108-were-serialized-defaults",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "correction",
+        "statement": "CORRECTION, SAME SESSION, BEFORE ANYTHING ACTED ON IT: I recorded a defect saying `export_graph` silently deletes property values and that the divergence guard cannot see properties. IT WAS WRONG, AND THE GUARD'S OWN MESSAGE WAS RIGHT. The offending node has been DELETED rather than retired, because it was never true — a mistake is deleted, history is retired (retire-from-design's one question). WHAT I OBSERVED, and it was real: a live export wrote `granularity`/`volatility` on 54 artifacts where the committed file carried 162, while the tool said 'nothing in it would be lost'. WHAT I THEN ASSUMED WITHOUT TESTING: that the missing 108 were VALUES, and therefore that a guard which failed to flag them was blind to property-level loss. THE PROBE THAT SETTLES IT, which cost one command: round-trip the SAME live graph through the repo's freshly-built binary with tools/export_via_binary.py and count again.\n    live via 0.24.0 server          artifacts=162  with granularity= 54\n    re-exported via 0.25.0 binary   artifacts=162  with granularity=162\n    committed                       artifacts=162  with granularity=162\nIdentical to committed. NOTHING WAS LOST. 162 is EVERY artifact in the design, which was the clue sitting in plain sight: a property present on literally all of them is a DEFAULT being serialized, not intent somebody recorded. v0.25.0 writes schema defaults into the export and v0.24.0 does not, so the 108 are `atomic`/`stable` defaults and the 54 are the ones actually set by hand. THE REAL FINDING UNDERNEATH, and it is worth more than the false one: THIS IS THE MEASUREMENT BL-198 ASKED FOR. That item (`epoch:planned-one-write-surface`) says 'stop serializing defaults, but measure the cost to compare_designs and the merge driver FIRST'. Here is the cost, measured on live data: two builds one release apart produce 108 phantom property-level `changed` findings in compare_designs for a design nobody edited — enough noise to make an agent invent a data-loss defect and block a PR on it. Serialized defaults are not free, and the instrument that reports them cannot tell a default from a decision. A COMPARISON THAT CANNOT SAY WHICH SIDE MEANT IT IS THE SAME SHAPE AS AN EDGE THAT CANNOT SAY WHO ASSERTED IT (DUPLICATES `basis`, which cost dev_storyflow ten proposed deletions) — the fix there was to make provenance explicit rather than to tune the detector, and the same argument applies. HOW THE ERROR HAPPENED, since that is the reusable part: `compare_designs` reported 108 property differences and I read a DIFFERENCE as a LOSS, then reasoned three steps forward from it — through 'the daemon holds the lock so no other process could have written' — to a confident mechanism, and wrote it into a PR body and a handoff note before running the one command that checks it. THE TOOL NEVER CLAIMED LOSS; I DID. This is the session's own theme turned on its author: a confident answer from something that never looked. The standing lesson holds in both directions — evaluate the tool independently, and evaluate your own reading of the tool just as hard.",
+        "subject_id": "cap:stale-seat-refusal",
+        "valid_from": "2026-08-08"
+      }
+    },
+    {
       "node_id": "fact:defect-a-contradiction-cannot-be-resolved-only-acknowledged",
       "node_type": "TemporalFact",
       "properties": {
@@ -64606,6 +65034,18 @@
       }
     },
     {
+      "node_id": "fact:defect-a-tool-minted-seat-is-never-registered-so-gone-is-still-unreachable",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE 2026-08-08 SEAT-LIVENESS FIX LANDED ON THE TRANSPORT THAT DID NOT NEED IT AND MISSED THE ONE THAT REPORTED IT: A SEAT RETURNED BY THE `mint_seat` TOOL IS NEVER REGISTERED, SO `gone` IS STILL UNREACHABLE FOR IT — AND THE TOOL NOW PROMISES OTHERWISE IN ITS OWN OUTPUT. Follows fact:defect-claim-liveness-is-the-servers-pid-not-the-sessions (w-613d836b, 2026-08-07), which #100 answered with a SeatRegistry: register on attach, remove on drop, so a departed session reads `gone` instead of borrowing the daemon's pid. That mechanism WORKS. Nothing on the served path populates it. MEASURED HERE 2026-08-08 against v0.25.0 source, by running the tool handler and probing liveness directly:\n    tool-minted seat   before=Live   after release_seat=Live    <- gone unreachable\n    registered seat                  after release_seat=Gone    <- the fix, on a path nothing calls\nTHE MECHANISM, three links, each directly readable: (1) the registry is populated ONLY by `identity::SeatLease::attach()`; (2) the only callers are service.rs wrap_at and share, which build the service's OWN seat; (3) `seat_for_claim` uses that seat ONLY when the caller OMITS `seat`, and `crates/reflow2-mcp/src/tools/claims_tools.rs:114` mints the tool's seat with bare `identity::mint_seat()` and never registers it. So the registry answers for the session-held seat, and `dec:stateless-seat-handle` REFUSES the omit path on the sessionless transport — which is precisely where a caller must pass a tool-minted seat, and precisely the deployment (`--shared`) the original defect was reported from. WORSE THAN A MISS, AN OVERCLAIM: the same change added `liveness_is_this_session` to mint_seat's output — 'Your claims read `live` while you are attached and `gone` once you are not — including if this session crashes rather than exits cleanly.' That is FALSE for the seat that tool returns. The field it replaced said the opposite and WAS TRUE. A correct caveat was traded for an incorrect promise, which is strictly worse than the original defect: a reader who believed the old text was right to distrust liveness, and a reader who believes the new text is wrong to trust it. WHY THE CHECK DID NOT CATCH IT, AND THE PRECEDENT THAT SAYS WHAT TO DO: `ver:claim-liveness` is `passing` and its own name states its scope — 'Proven end to end over stdio with a genuinely exited server process'. Stdio is the one transport where the caller may omit `seat` and get the registered lease, so the check proves the fixed path and never touches the broken one. crates/reflow2-mcp/tests/ contains NO liveness test at all; the regression test lives in reflow2-core/tests/claims.rs and calls `register_seat` BY HAND, supplying the very step the server omits. That is what made a real fix look proven. This project has already split a check for exactly this reason — ver:a-session-cannot-name-another-design was carved out of ver:sessions-cannot-cross-designs on 2026-08-07 because a green check standing for an untested clause is worse than an absent one. Same remedy applies. REPORTED INDEPENDENTLY THE SAME DAY by dev_storyflow w-aa0607ff (api-boss fleet, ~18:12 EDT), who measured two different sessions' seats sharing pid 3840196 = the --serve-shared process, and correctly concluded `gone` can never fire. They were running 0.24.0 (their export stamp), so they had not seen #100; the finding stands on v0.25.0 regardless, which is the part worth knowing. THEIR GENERALISATION IS THE MOST VALUABLE LINE IN THE REPORT AND SHOULD BE RUN AS A SWEEP: `--shared` 'turned a session-local metric into a shared-state one WITHOUT CHANGING ITS INTERFACE' was already ratified about loop_status counts, and nobody re-audited the other tools whose meaning --shared silently changed. The greppable question: WHICH OUTPUTS DESCRIBE A SESSION BUT ARE COMPUTED FROM SOMETHING THE SERVER OWNS? FIX SHAPE: register the seat the `mint_seat` tool hands out (it is the seat that will be carried), or — since nothing ties that seat to a client connection — make the field say what it can actually observe, per their proposal: `liveness: \"unknown (shared server - cannot observe client sessions)\"`. A field that cannot produce its negative value must not present its positive one as information. Either way the mint_seat advisory must stop asserting the behaviour it does not have.",
+        "subject_id": "cap:claim-liveness",
+        "valid_from": "2026-08-08"
+      }
+    },
+    {
       "node_id": "fact:defect-add-verification-cannot-set-kind-or-last-run-at",
       "node_type": "TemporalFact",
       "properties": {
@@ -64642,6 +65082,19 @@
         "subject_id": "cap:detect",
         "valid_from": "2026-08-07",
         "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-ec25cf2c\",\"gap\":\"gap:0a77650b58242054 - '48 verified capabilities not validated', 48 ids in one item\",\"observed\":\"closed it correctly for one capability; unsurfaced_gaps stayed at 69\",\"harm\":\"a worker cannot see their own contribution; a boss cannot see progress\",\"fix_shape\":\"per-capability items, or a remaining/closed count on the aggregate\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-an-enforced-rule-with-no-check-is-unaskable",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "\"WHICH OF MY RULES HAVE NO DETECTOR?\" IS NOT A QUESTION THE GRAPH CAN BE ASKED — AND REFLOW2'S OWN ANSWER IS FOUR OUT OF FOUR. Proposed by dev_storyflow's api-boss 5d608b85, 2026-08-08, as the one high-leverage item in a GOVERNANCE-AS-DESIGN opportunity built on Anthony's own words. MEASURED HERE THE SAME DAY, and the number is the argument: reflow2 has 5 DesignRules; FOUR carry `enforced: true` (rule:bl-135, rule:bl-212, rule:bl-41, rule:fixes-are-judged-by-the-third-party) which the schema defines as 'violations are gate-blocking'; and NOT ONE of the five has an incoming VERIFIES edge. Four rules that block the build, zero detectors, and no report names it. THE MECHANISM: `schema/verify.yaml:80` declares VERIFIES as `from: Verification, to: \"*\"`. The wildcard ACCEPTS a DesignRule target — nothing is broken — but it does not MODEL it, so `describe_schema` ranks it as merely accepted and no detector treats rules as verifiable things. AGENTS.md already warns about exactly this distinction: 'several will validate, and validating is not the same as meaning what you intended.' Here the cost of the wildcard is not a wrong edge but an unaskable question. THEIR EVIDENCE, which is stronger than ours: in ONE session that fleet found five rules with no check — a routing rule naming a file that names no worker entry point; a verification step that false-negatives on a shared tree; a comms rule whose quoted example is a forgeable handshake; a claim protocol with no detector for its own bypass; and a detector built for that bypass that was blind to it. Their words: 'Every one is a RULE WITHOUT A CHECK, and no report could have listed them, because the graph cannot currently be asked.' FIX SHAPE, theirs, and it is small: enumerate VERIFIES' `to:` explicitly rather than leaving it wildcard, then make `enforced: true` with no incoming VERIFIES a detectable defect. CHECKED BEFORE PROPOSING, twice. (1) THE STAMP DOES NOT MOVE: it carries `edge_type_names`, `edge_types`, `node_type_names`, `node_types`, `schema_version` — not endpoint lists — so modelling the endpoints owes NO upgrade doc, which makes this far cheaper than a normal schema change. (2) THE SAFE ENUMERATION IS KNOWN: VERIFIES today points at Capability (126), Requirement (3), Artifact (3), Component (1), so narrowing must include all four or it would invalidate live edges. THEIR COUNTER-ARGUMENT IS THE BEST PART AND MUST SURVIVE INTO THE BUILD: 'A GRAPH NODE GREEN-WASHES EXACTLY LIKE A DOCUMENT' — proven twice in their own graph, where nine directory artifacts swallowed 373 files while the check read green. Governance-in-graph without executable checks is prettier prose with identical blind spots, which is why the DETECTOR is the proposal and the vocabulary is not.",
+        "subject_id": "cap:vocabulary",
+        "valid_from": "2026-08-08",
+        "value": "{\"proposed_by\":\"dev_storyflow api-boss 5d608b85, 2026-08-08, from Anthony's own governance idea\",\"measured_here\":\"5 DesignRules, 4 enforced:true, 0 with any incoming VERIFIES\",\"unverified_enforced\":\"rule:bl-135, rule:bl-212, rule:bl-41, rule:fixes-are-judged-by-the-third-party\",\"mechanism\":\"schema/verify.yaml:80 VERIFIES is to:'*' - accepts DesignRule, does not model it, so the question is not first-class\",\"their_evidence\":\"five rules-without-checks found in one session, none listable by any report\",\"fix_shape\":\"enumerate VERIFIES to:; then enforced:true + no incoming VERIFIES is a detectable defect\",\"stamp_does_not_move\":\"stamp carries edge_type_names and counts, not endpoint lists - NO upgrade doc owed\",\"safe_enumeration\":\"Capability 126, Requirement 3, Artifact 3, Component 1 - all four must stay or live edges break\",\"their_counter_argument\":\"a graph node green-washes exactly like a document; the detector is the proposal, not the vocabulary\"}"
       }
     },
     {
@@ -65708,6 +66161,18 @@
       }
     },
     {
+      "node_id": "ver:handed-out-seat-liveness",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-08",
+        "level": "integration",
+        "method": "test",
+        "name": "A seat the server HANDED OUT but never leased reads `unknown` on a shared server, not `live` — proven over the served tool surface (mint_seat → claim_region → claim_report), not by calling register_seat by hand. Six cases in two dedicated binaries: crates/reflow2-core/tests/seat_liveness_shared.rs (the predicate, plus that a leased seat still answers Live/Gone and that unknown ≠ gone) and crates/reflow2-mcp/tests/mint_seat_liveness.rs (end to end through claim_report, that an unobservable seat is not reported as a ghost, and that mint_seat's advisory says it cannot observe the session and names release_claim). SPLIT FROM ver:claim-liveness deliberately, on the 2026-08-07 precedent: that check is passing and its own name states its scope as \"proven end to end over stdio\", which is the single transport where #100's registry applies — so it stood for a transport it never touched. Both defect-bearing cases were run as positive controls with the fix disabled and both FAIL, so neither is vacuous. Own test binaries because declare_serving_many_sessions is a process-global one-way latch and tests/claims.rs asserts the stdio reading of the same call.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:heal",
       "node_type": "Verification",
       "properties": {
@@ -66548,7 +67013,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:bce3e321268e9cab2107d78c11898271fc1376cf584ab9282a0912560e401e3b",
+  "prev_content_hash": "sha256:a1664268f405b0e9c05b0c224f942240a93dd6be87f70517e1f164b3eccf8bbc",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
