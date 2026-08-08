@@ -1095,3 +1095,82 @@ fn a_provenance_decided_merge_does_not_blame_the_alphabet() {
     // Still a deletion, so still a human's call.
     assert!(proposal.requires_human_review);
 }
+
+// ---- 2026-08-08 · a finding says when its node is a hub --------------------
+//
+// dev_storyflow: a scoped detect_defects returned `in_scope: 5`, every one a
+// duplicate — and one node was in THREE of the pairs while another was in the
+// other two. Five findings were TWO nodes. Mid-stand-down, the count read as
+// five independent judgements corroborating each other.
+
+#[test]
+fn a_node_in_several_duplicate_findings_is_named_as_a_hub() {
+    // storyflow's shape in miniature: cap:hub is asserted duplicate of three
+    // unrelated capabilities, so three findings are really one node.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_capability(
+        "cap:hub",
+        "Hub",
+        "the node the scorer pairs with everything",
+        None,
+    )
+    .unwrap();
+    for id in ["cap:one", "cap:two", "cap:three"] {
+        g.add_capability(id, id, "unrelated", None).unwrap();
+        g.create_edge(
+            edge::DUPLICATES,
+            node::CAPABILITY,
+            "cap:hub",
+            node::CAPABILITY,
+            id,
+            Props::new().set("basis", "asserted"),
+        )
+        .unwrap();
+    }
+
+    let issues = g.detect_defects().unwrap();
+    let dups: Vec<_> = issues
+        .iter()
+        .filter(|i| i.category == HealCategory::Duplicate)
+        .collect();
+    assert_eq!(dups.len(), 3, "three pairs");
+
+    for issue in &dups {
+        let hub = issue
+            .hubs
+            .iter()
+            .find(|h| h.node_id == "cap:hub")
+            .unwrap_or_else(|| panic!("every finding must name the shared node: {:?}", issue.hubs));
+        assert_eq!(
+            hub.in_findings, 3,
+            "and say how many findings it appears in, so three findings do not \
+             read as three independent judgements"
+        );
+        // The one-off partner is NOT a hub — otherwise the signal is noise.
+        assert!(
+            !issue.hubs.iter().any(|h| h.node_id.starts_with("cap:on")
+                || h.node_id == "cap:two"
+                || h.node_id == "cap:three"),
+            "a node in exactly one finding is not a hub: {:?}",
+            issue.hubs
+        );
+    }
+}
+
+#[test]
+fn an_ordinary_duplicate_pair_reports_no_hub() {
+    // The counterweight. If `hubs` were populated for every finding it would be
+    // noise, and a warning that fires always is a warning nobody reads (BL-42).
+    let g = dup_graph();
+    let issues = g.detect_defects().unwrap();
+    let dup = issues
+        .iter()
+        .find(|i| i.category == HealCategory::Duplicate)
+        .expect("fixture has a duplicate");
+    assert!(
+        dup.hubs.is_empty(),
+        "one pair, no shared node, nothing to say: {:?}",
+        dup.hubs
+    );
+}

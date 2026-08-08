@@ -133,6 +133,36 @@ pub struct HealIssue {
     pub suggested_fix_type: &'static str,
     /// Node ids involved.
     pub affected_ids: Vec<String>,
+    /// Nodes in `affected_ids` that ALSO appear in other findings of the same
+    /// category, with how many findings each appears in. Empty is the normal
+    /// case and the field is omitted from JSON entirely when so.
+    ///
+    /// This exists because a COUNT makes correlated findings read as
+    /// independent corroboration. dev_storyflow, 2026-08-08: a scoped
+    /// `detect_defects` returned `in_scope: 5`, every one a duplicate — and one
+    /// Decision was in THREE of the pairs while one Requirement was in the
+    /// other two. Five findings were two nodes the scorer pairs with
+    /// everything. Their words, and the reason this is a field rather than a
+    /// nicety: five separate warnings read as five separate judgements
+    /// corroborating each other, while "one node the scorer pairs with
+    /// everything" reads as what it is — a property of the SCORER, not of the
+    /// design. They were mid-stand-down at the time and had to read five
+    /// messages by hand to work it out.
+    ///
+    /// Deliberately a structured field and not a sentence in `message`: the
+    /// same fleet reported, the same day, that qualifications buried in prose
+    /// are qualifications nothing can act on.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub hubs: Vec<HubMembership>,
+}
+
+/// A node that appears in more than one finding of the same category.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct HubMembership {
+    /// The node appearing in several findings.
+    pub node_id: String,
+    /// How many findings of this category it appears in (always >= 2).
+    pub in_findings: usize,
 }
 
 /// How aggressively to heal (docs/heal-process.md strategies).
@@ -372,6 +402,63 @@ fn merge_op_for(issue: &HealIssue, index: &HashMap<String, String>) -> Result<He
         remove_type: remove_type.clone(),
         remove_id: remove.clone(),
     })
+}
+
+/// Fill each issue's `hubs`: the nodes it shares with OTHER findings of the
+/// same category.
+///
+/// Scoped per category on purpose. A node legitimately appears in a duplicate
+/// finding and a disconnected-community finding at once, and saying so would be
+/// noise; what misleads is several findings of the SAME kind that are really
+/// one node wearing many hats. Counting across categories would turn every
+/// well-connected node into a permanent warning, which is the BL-42 shape —
+/// a detector that fires on almost everything stops being read.
+///
+/// Runs once over the collected issues rather than inside each detector, so
+/// every category gets it for free and no detector can forget.
+fn annotate_hubs(issues: &mut [HealIssue]) {
+    // (category, node) -> how many findings of that category name it.
+    let mut counts: HashMap<(&'static str, &str), usize> = HashMap::new();
+    for issue in issues.iter() {
+        // A node named twice by ONE finding is still one finding for it.
+        let mut seen = std::collections::HashSet::new();
+        for id in &issue.affected_ids {
+            if seen.insert(id.as_str()) {
+                *counts
+                    .entry((issue.category.as_str(), id.as_str()))
+                    .or_default() += 1;
+            }
+        }
+    }
+    // Collect first, then write: the borrow above is immutable and the counts
+    // must be complete before any issue is annotated.
+    let hubs: Vec<Vec<HubMembership>> = issues
+        .iter()
+        .map(|issue| {
+            let mut found: Vec<HubMembership> = issue
+                .affected_ids
+                .iter()
+                .filter_map(|id| {
+                    let n = *counts.get(&(issue.category.as_str(), id.as_str()))?;
+                    (n >= 2).then(|| HubMembership {
+                        node_id: id.clone(),
+                        in_findings: n,
+                    })
+                })
+                .collect();
+            // Deterministic: most-shared first, then id.
+            found.sort_by(|a, b| {
+                b.in_findings
+                    .cmp(&a.in_findings)
+                    .then_with(|| a.node_id.cmp(&b.node_id))
+            });
+            found.dedup_by(|a, b| a.node_id == b.node_id);
+            found
+        })
+        .collect();
+    for (issue, found) in issues.iter_mut().zip(hubs) {
+        issue.hubs = found;
+    }
 }
 
 /// Rank of a `provenance` value for the merge-survivor choice: lower survives.
@@ -832,6 +919,7 @@ impl DesignGraph {
                 message: format!("'{}' and '{}' contradict each other", e.from_id, e.to_id),
                 suggested_fix_type: "generate_decision",
                 affected_ids: affected,
+                hubs: Vec::new(),
             });
         }
 
@@ -875,6 +963,7 @@ impl DesignGraph {
                 ),
                 suggested_fix_type: "merge",
                 affected_ids: affected,
+                hubs: Vec::new(),
             });
         }
 
@@ -891,11 +980,13 @@ impl DesignGraph {
                 ),
                 suggested_fix_type: "generate_entity",
                 affected_ids: affected,
+                hubs: Vec::new(),
             });
         }
 
         self.detect_structural_defects(&mut issues)?;
 
+        annotate_hubs(&mut issues);
         issues.sort_by(|a, b| a.id.cmp(&b.id));
         Ok(issues)
     }
@@ -952,6 +1043,7 @@ impl DesignGraph {
                     ),
                     suggested_fix_type: "generate_bridge",
                     affected_ids: affected,
+                    hubs: Vec::new(),
                 });
             }
         }
@@ -1018,6 +1110,7 @@ impl DesignGraph {
                     ),
                     suggested_fix_type: "add_redundancy",
                     affected_ids: vec![id],
+                    hubs: Vec::new(),
                 });
             }
         }
@@ -1124,6 +1217,7 @@ impl DesignGraph {
                 message: format!("circular dependency: {path}{basis}"),
                 suggested_fix_type: "break_cycle",
                 affected_ids: affected,
+                hubs: Vec::new(),
             });
         }
 
@@ -1157,6 +1251,7 @@ impl DesignGraph {
                     message: format!("component '{id}' is not connected to anything"),
                     suggested_fix_type: "generate_bridge",
                     affected_ids: vec![id],
+                    hubs: Vec::new(),
                 });
             }
         }
@@ -1957,6 +2052,9 @@ fn orphan_at(
         message: format!("{type_label} '{id}' {what}"),
         suggested_fix_type: fix,
         affected_ids: affected,
+        // Filled by annotate_hubs once every issue is collected — a single
+        // orphan cannot know what else names its node.
+        hubs: Vec::new(),
     }
 }
 

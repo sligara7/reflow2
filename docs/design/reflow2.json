@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c11e9784713df9df07097317ce008945be99fed10afc15e680278e22ffbabf65",
+  "content_hash": "sha256:6597ec38fa0f2faf40a98633bbf61dce6f912fd947584751cb6da220f7edcd1f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -423,6 +423,18 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-pre-served-skills-install-is-stranded",
+      "properties": {},
+      "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-pre-served-skills-install-is-stranded",
+      "properties": {},
+      "to_id": "req:thin-install"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path",
       "properties": {},
       "to_id": "cap:detect"
@@ -522,6 +534,18 @@
       "from_id": "fact:defect-ingest-writes-duplicates-that-heal-then-merges",
       "properties": {},
       "to_id": "dec:ask-not-repair"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-installer-cannot-warn-that-the-graph-dir-is-already-tracked",
+      "properties": {},
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-installer-cannot-warn-that-the-graph-dir-is-already-tracked",
+      "properties": {},
+      "to_id": "cap:kit"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6382,6 +6406,17 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:defect-a-pre-served-skills-install-is-stranded",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "Two agents derived the migration independently the same day and disagreed, one with a regression. The decision point exists because the knowledge is re-derived per session rather than held anywhere.",
+        "validation_status": "validated"
+      },
+      "to_id": "dec:idea-the-kit-diagnoses-a-stale-project"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path",
       "properties": {
         "basis": "observed",
@@ -6401,6 +6436,17 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-skill-may-assert-the-defaults-it-relies-on"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:defect-installer-cannot-warn-that-the-graph-dir-is-already-tracked",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "The one-line skip is check (1) of the six, already half-built and silently inert. Whether it is fixed in place or absorbed into a wider diagnosis is part of this decision.",
+        "validation_status": "validated"
+      },
+      "to_id": "dec:idea-the-kit-diagnoses-a-stale-project"
     },
     {
       "edge_type": "CAUSES",
@@ -13731,17 +13777,6 @@
         "action": "modified"
       },
       "to_id": "req:version-combination-is-an-object"
-    },
-    {
-      "edge_type": "CLAIMS",
-      "from_id": "who:claude-code",
-      "properties": {
-        "claimed_at": "2026-08-08T17:30:00Z",
-        "depth": 2,
-        "note": "Re-opening dec:merge-survivor-provenance on Anthony's word: the id tiebreak must not decide which node dies.",
-        "seat": "asligar-bitecool:1687426:5df78ec5"
-      },
-      "to_id": "cap:heal"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -42603,6 +42638,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-finding-names-its-hub",
+      "properties": {},
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-merge-says-what-it-destroys",
       "properties": {},
       "to_id": "cap:heal"
@@ -43398,6 +43439,15 @@
         "evidence": "ingest.rs:1517 suspect_duplicate persists a DUPLICATES edge for any name match in the 70-89 token_sort_ratio ASK band; heal.rs:798 fires `duplicate` on any DUPLICATES edge regardless of who drew it, so the decision's premise -- that merge is safe only because a human asserted the endpoints -- is false in the shipped build. Field-observed 2026-08-07 in dev_storyflow: 10 proposed node deletions from 81-85 scores on unrelated nodes."
       },
       "to_id": "dec:ask-not-repair"
+    },
+    {
+      "edge_type": "VIOLATES",
+      "from_id": "fact:defect-installer-cannot-warn-that-the-graph-dir-is-already-tracked",
+      "properties": {
+        "confidence": 0.9,
+        "evidence": "The installer reports the ignore line as added and stays silent about the tracked files that make it inert, so a user who read their .gitignore reasonably concludes the graph is excluded when it is still in version control."
+      },
+      "to_id": "req:no-silent-fallback"
     },
     {
       "edge_type": "YIELDED",
@@ -45219,7 +45269,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ceffdf5b68db7623c3130773d58f48f8edb2de9a481b5a86ffa85736bcd7a80b",
+        "checksum": "sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -52492,6 +52542,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, from a first-pass review of openmbee.org — website and repository listing only, deep review pending. THE OBSERVATION: OpenMBEE's active development is not its stable product. MMS 4 stores models in SQL; the successor, Flexo / MMS 5, moves to an RDF quadstore and is described as 'GitHub for graphs', exposing SPARQL, GraphQL, OSLC and a SysML v2 API. A separate experimental SysML v2 execution environment (`Systemica`, Go) is also under way. Commits across those repositories were days old when reviewed (July–August 2026), so this is a live bet, not an aspiration. WHERE reflow2 STANDS: it has its own vocabulary — 29 node types, 60 edge types — and no standard interchange of any kind. It publishes three interfaces (`ifc:core-api`, `ifc:graph-export`, `ifc:mcp-tools`), and `export_surface` already emits a subset of a design deliberately. THE QUESTION IS NOT WHETHER TO ADOPT SysML v2 INTERNALLY — the vocabulary is load-bearing and `dec:bl83a-functional-decomposition` and `req:functional-vocabulary-computes` both depend on it — but whether reflow2 should be able to SPEAK it at the edge, in and out. THE ARGUMENT FOR: Anthony works in a defence/aerospace systems-engineering context and will be asked, professionally, why a design tool does not interoperate with the standard his field is converging on. An export that a SysML v2 service can ingest is a different claim from an export only reflow2 reads. THE HONEST COUNTER-ARGUMENT: SysML v2 is large, its tooling is young, and a partial mapping that silently drops what it cannot express would be worse than none — reflow2's whole posture is that a lossy translation must be reported, not quietly performed. Mapping 29 types onto SysML v2 would need the same no-silent-drop discipline `changelog_view` holds with `unmapped`. WHAT WOULD CHANGE THE ANSWER: whether a faithful SUBSET mapping exists that reports what it could not carry.",
         "name": "OPEN — should reflow2 speak SysML v2 at its boundary, given that is where the standards gravity has moved?",
         "rationale": "Recorded through the brainstorm skill at Anthony's request to capture, as proposed ideas, the areas where OpenMBEE is stronger than reflow2 — before a deep review he intends to run against a clone of their repository. The strength claimed here is narrow and should be read narrowly: OpenMBEE has committed to a standard interchange and reflow2 has none. Whether their SysML v2 implementation is any good is exactly what the deep review is for, and nothing in this node asserts that it is.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-the-kit-diagnoses-a-stale-project",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNSETTLED. Six things are mechanically decidable and none is currently reported: (1) is anything under `.reflow2/` tracked by git; (2) are the MCP configs tracked, carrying absolute paths meaningless on another machine; (3) does `.reflow2/kit-version.json` match the installed kit; (4) do local skill copies exist and differ from the served ones, given a local copy silently SHADOWS the served one; (5) is `--graph-path` absolute rather than relative-and-cwd-dependent; (6) is a committed export present, and current against the live graph. SHAPES, not a recommendation: (a) extend `reflow2_init.py --check`, which already reports what a run would change and already owns the stamp and the skill mirrors — smallest, and it means one command answers \"what would change\" and \"what is wrong\"; (b) a separate `reflow2_doctor.py` beside `reflow2_check.py`, on the argument that \"would this install change files\" and \"is this project's reflow2 setup sane\" are different questions with different audiences; (c) fold the checks into `check_kit_manifest.py`, which already compares the stamp and is closest in spirit; (d) decline, and put the six checks in a served skill instead, on the ground that an agent can run git itself and instructions are cheaper than code. WHATEVER THE SHAPE, IT REPORTS AND DOES NOT REPAIR: `git rm --cached` is a judgement about someone's history, and rewriting an MCP config is not something to do silently. Name the finding, name the remedy, let the human run it — the same split `dec:ask-not-repair` draws for merges. AND IT CANNOT BE AN MCP TOOL: `dec:agent-navigates-content` keeps reflow2 out of file IO, and every check above reads the filesystem or shells to git. The kit is the home; the machinery is half-built there already.",
+        "name": "OPEN — should the kit ship a command that tells a project how it is out of date, instead of every agent re-deriving the migration?",
+        "rationale": "Raised because the evidence arrived in an unusually clean form. `req:thin-install` is ACCEPTED and quotes Alex asking for exactly this on 2026-07-25; `cap:skills-served` delivered the forward half; and on 2026-08-08 Alex — the requirement's own author — spent eight manual steps escaping a 0.11.0 kit under a 0.24.0 binary, because nothing exists for a project installed BEFORE served skills. TWO AGENTS DERIVED THAT MIGRATION INDEPENDENTLY THE SAME DAY AND DISAGREED: his eight steps against my seven, overlapping on six. His included a regression (rewriting `--graph-path` to a relative path, the configuration `dec:no-design-here-never-looked` records as minting an accidental third graph in Anthony's own repo); mine got the stamp filename wrong on first pass. Neither was careless — the knowledge is scattered across the installer source, three accepted decisions and two verifications, and is re-derived per session. That is the failure reflow2's own instructions name as its reason to exist, pointed at the migration rather than the design. Evidence: fact:defect-a-pre-served-skills-install-is-stranded and fact:defect-installer-cannot-warn-that-the-graph-dir-is-already-tracked.",
         "status": "proposed"
       }
     },
@@ -61725,6 +61785,19 @@
       }
     },
     {
+      "node_id": "fact:defect-a-pre-served-skills-install-is-stranded",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`req:thin-install` IS SATISFIED FOR NEW INSTALLS AND NOT FOR OLD ONES, AND THE REQUIREMENT'S OWN AUTHOR HIT THE GAP FOURTEEN DAYS AFTER RAISING IT. Alex asked for this on 2026-07-25 — quoted verbatim inside the requirement: 'you wouldn't need to change anything in your repo again and updates would be confined to the reflow package.' It was accepted. `cap:skills-served` then delivered the forward half: skills come from the binary, the installer copies nothing, and an upgrade leaves a project byte-identical (ver:served-skills, 23 cases in tools/test_init.py). WHAT NOBODY BUILT IS THE ROUTE OUT FOR A PROJECT INSTALLED BEFORE THAT. On 2026-08-08 Alex's project was running binary 0.24.0 against `.reflow2/kit-version.json` 0.11.0 — thirteen versions of frozen kit, exactly the state the requirement's statement describes ('it otherwise freezes at install time while reflow2 keeps moving'). Getting out took EIGHT MANUAL STEPS derived by his agent from first principles: export the design, untrack `.reflow2/`, delete committed skill copies, untrack the MCP configs, replace a long AGENTS.md with the pointer, update .gitignore, rewrite the MCP configs, add a committed export. THE MEASURE OF THE PROBLEM IS THAT TWO AGENTS DERIVED IT INDEPENDENTLY ON THE SAME DAY AND DISAGREED. His agent produced eight steps; I produced seven; they overlap on six. HIS INCLUDED A REGRESSION — rewriting `--graph-path` from absolute to RELATIVE, which is the configuration `dec:no-design-here-never-looked` records as having minted an accidental third graph in Anthony's own hxm_program repo, and which that node calls the severe one of six because it 'produced a WRONG ARTEFACT in the user's repository, silently'. MINE GOT THE STAMP FILENAME WRONG on first pass (`.install-stamp` for `kit-version.json`) and I shipped it to the user flagged as unverified. NEITHER OF US WAS CARELESS; the knowledge is simply scattered across the installer source, three accepted decisions and two verifications, and is re-derived per session. THAT IS THE EXACT FAILURE reflow2's own AGENTS.md names as its reason to exist — 'a stateless agent re-derives the design every session and decides silently over a scope bigger than its memory' — here applied to the MIGRATION rather than the design. WHAT IS MECHANICALLY CHECKABLE AND CURRENTLY IS NOT, every item drawn from a real miss today: is anything under `.reflow2/` tracked by git (the installer has this check and a one-line fault skips it — fact:defect-installer-cannot-warn-that-the-graph-dir-is-already-tracked); are the MCP configs tracked, carrying absolute paths that are meaningless elsewhere; does `kit-version.json` match the installed kit; do local skill copies exist and differ from the served ones, since a local copy SHADOWS the served one silently; is `--graph-path` absolute; is a committed export present and current against the live graph. SIX CHECKS, ALL DECIDABLE, NONE REQUIRING JUDGEMENT. NOTE WHERE IT CANNOT LIVE: not the MCP surface. `dec:agent-navigates-content` keeps reflow2 out of file IO, and every check above reads the filesystem or shells to git. The kit already ships tools that do exactly this — `reflow2_init.py --check`, `check_kit_manifest.py`, `reflow2_check.py` — so the home is there and the machinery is half-built.",
+        "subject_id": "req:thin-install",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08, Alex's own project, fourteen days after he raised req:thin-install\",\"his_words_in_the_requirement\":\"you wouldn't need to change anything in your repo again and updates would be confined to the reflow package (2026-07-25)\",\"state_found\":\"binary 0.24.0, .reflow2/kit-version.json 0.11.0 - thirteen versions of frozen kit\",\"forward_half_delivered\":\"cap:skills-served - skills served from the binary, upgrade leaves a project byte-identical (ver:served-skills)\",\"missing_half\":\"no route out for a project installed BEFORE served skills\",\"cost\":\"eight manual steps, derived from first principles\",\"two_agents_disagreed\":\"his 8 steps vs my 7, overlapping on 6\",\"his_regression\":\"rewrote --graph-path absolute -> relative, the configuration dec:no-design-here-never-looked records as minting an accidental third graph in hxm_program\",\"my_error\":\"guessed .install-stamp for kit-version.json; shipped flagged as unverified\",\"root\":\"the knowledge is scattered across installer source, three decisions and two verifications, and is re-derived per session\",\"six_checkable_things\":\"tracked .reflow2/; tracked MCP configs; kit stamp vs installed kit; local skill copies shadowing served ones; --graph-path absolute; committed export present and current\",\"where_it_cannot_live\":\"the MCP surface - dec:agent-navigates-content keeps reflow2 out of file IO\",\"where_it_can\":\"the kit, beside reflow2_init.py --check, check_kit_manifest.py, reflow2_check.py\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path",
       "node_type": "TemporalFact",
       "properties": {
@@ -61958,6 +62031,19 @@
       }
     },
     {
+      "node_id": "fact:defect-installer-cannot-warn-that-the-graph-dir-is-already-tracked",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE INSTALLER HAS A GUARD FOR 'IGNORING A TRACKED FILE DOES NOTHING' AND IT STRUCTURALLY CANNOT FIRE FOR `.reflow2/` — THE ONE ENTRY MOST LIKELY TO BE ALREADY TRACKED. Reported 2026-08-08 by Alex, an early adopter who started on v0.0.5: his `.gitignore` contains `.reflow2` and git is nonetheless tracking `.reflow2/graph/LOG`, `.reflow2/graph/fulltext/meta.json` and `.reflow2/graph/fulltext/.managed.json`. His question was whether the installer or his agent had written the ignore line, and what he is supposed to be committing at all. BOTH HALVES ARE THE INSTALLER'S. `tools/reflow2_init.py ensure_gitignore()` writes the block, and `IGNORE_LINES` carries `.reflow2/` — so the ignore line is ours, not his agent's. The same function then loops the ignore lines to warn about any git is ALREADY tracking, because `already_tracked`'s own docstring says it plainly: 'gitignore does not untrack a tracked file, so saying \"ignored\" without saying that would be a half-truth.' THE LOOP OPENS `if line.endswith(\"/\"): continue`. `.reflow2/` is the ONLY entry ending in a slash, so the warning is skipped for exactly the path it matters most for — and it matters most there because the store is created the moment you first use reflow2, long before anyone runs the installer that would ignore it, so `git add .` in between tracks it forever. MEASURED, NOT REASONED, AND IT CORRECTED MY OWN HYPOTHESIS. I assumed the check would also fail on a directory path and that the skip was therefore a workaround. Reproduced in a scratch repo — commit two files under `.reflow2/`, add the ignore rule afterwards — and `git ls-files --error-unmatch '.reflow2/'` returns 0, correctly reporting the directory as tracked. SO THE UNDERLYING CHECK WORKS AND THE SKIP IS THE WHOLE BUG. FIX SHAPE: drop the `endswith('/')` skip; the existing `already_tracked` call is correct for a directory as written. Optionally report the count and the remedy per path — `git ls-files -- '.reflow2/'` names the tracked files, and `git rm -r --cached .reflow2` is the fix a user needs to be told. WHY IT IS WORTH MORE THAN ITS SIZE: this is a silent wrong answer to a user who did everything right. Alex read his .gitignore, saw `.reflow2`, and reasonably concluded the graph was excluded. The installer ran, said nothing, and the store stayed in version control — which is the class of failure req:no-silent-fallback exists for, in the one tool a new user meets first. A SECOND, UNTESTED RISK WORTH STATING AS UNTESTED: a committed `fulltext/meta.json` is tantivy index metadata, so checking out an older commit would restore a stale index descriptor over live segment files. I did not test whether that corrupts the index or is merely ignored; `.reflow2/graph/LOG` is RocksDB's info log and is only noise.",
+        "subject_id": "cap:kit",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08 by Alex, early adopter, started on v0.0.5\",\"symptom\":\".gitignore contains .reflow2 and git still tracks .reflow2/graph/LOG, fulltext/meta.json, fulltext/.managed.json\",\"his_question\":\"did the install script or the agent add the ignore line, and what should be committed at all\",\"answer_a\":\"the installer - tools/reflow2_init.py ensure_gitignore(), IGNORE_LINES carries .reflow2/\",\"answer_b\":\"gitignore never untracks; those files predate the rule\",\"defect\":\"reflow2_init.py:766 `if line.endswith('/'): continue` skips the already-tracked warning, and .reflow2/ is the only directory entry\",\"why_it_matters_there\":\"the store exists from first use, before the installer that ignores it - so git add . in between tracks it permanently\",\"hypothesis_corrected_by_test\":\"I assumed --error-unmatch fails on a directory and the skip was a workaround. Reproduced: it returns 0 for a tracked directory. The check works; the skip is the whole bug.\",\"fix_shape\":\"remove the endswith('/') skip; optionally name the tracked files (git ls-files -- .reflow2/) and the remedy (git rm -r --cached .reflow2)\",\"class\":\"a silent wrong answer to a user who did everything right - req:no-silent-fallback, in the first tool a new user meets\",\"untested_risk\":\"a committed fulltext/meta.json is a tantivy index descriptor; restoring a stale one over live segments may or may not corrupt the index - NOT TESTED. LOG is rocksdb noise.\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-kit-manifest-drift-is-invisible-to-ci",
       "node_type": "TemporalFact",
       "properties": {
@@ -62130,12 +62216,12 @@
       "node_type": "TemporalFact",
       "properties": {
         "basis": "measured",
-        "confidence": 1.0,
+        "confidence": 0.7,
         "fact_type": "defect",
-        "statement": "SMALL, CHEAP SURFACE FRICTIONS, ALL MINOR AND ALL REAL — AND ONE OF THEM PROPAGATED A FALSE CORRECTION FIVE HOPS. (1) `add_contributor` TAKES THE HANDLE AS `id` WHILE `claim_region` TAKES THE SAME HANDLE AS `contributor_id`. w-08baa598 passed `contributor_id` to add_contributor first — because that is the field name the very next call in the documented sequence uses — and got `failed to deserialize parameters: unknown field 'contributor_id', expected one of 'id', 'name', 'kind', 'handle', 'description'`. Cost one round trip. THE ERROR MESSAGE IS GOOD and is why this is minor rather than blocking: it named the accepted fields. The two calls are adjacent steps in the fleet's prescribed worker sequence and the asymmetry carries no meaning. FIX SHAPE: accept `contributor_id` as an alias on add_contributor. (2) `set_verification_kind`'s RESPONSE ECHOES THE PRE-UPDATE `status`. w-ec25cf2c got `\"status\":\"planned\"` in the same payload that correctly reported `\"kind\":\"validation\"`, even though they set status immediately after and a get_node confirmed `passing`. Nothing is wrong in the store — the echo simply invites a reader to believe a field was reset. FOUR REPRODUCTIONS NOW, ACROSS TWO DAYS: w-ec25cf2c (2026-08-07), then on 2026-08-08 w-3f408ab0 (who verified by get_node rather than by either echo, and observed that a following set_verification_status echoed both correctly) and sb-boss ab2291fa, who reports it as *'two workers and I'*. Their conclusion is the durable one: THE ECHO DESCRIBES THE WRITE, NOT THE STATE — and their fleet now re-reads every node instead of trusting any echo, *'which is the right habit but a poor reason for it.'* FIX SHAPE: have the echo reflect the post-write node, or omit fields the call did not touch. (3) 2026-08-08, w-9d1d1499: `claim_region`'s TWO REFUSALS ARE BOTH CORRECT AND NEITHER NAMES ITS OWN FIX. It needs `seat` on the sessionless transport and refuses otherwise; it also needs a Contributor to exist first, failing with `Node not found: Contributor <handle>`. Both behaviours are documented — IN THE TOOL DESCRIPTIONS, which an agent only reads if it happens to load that tool. THE COST WAS NOT ONE RETRY. A worker hit the second refusal, concluded the tool was broken, and wrote *'there is NO mint_seat tool in the served surface'* INTO THE WORKER ONBOARDING FILE — a false correction that then TRAVELLED FIVE HOPS and reached a boss offering to amend PROTOCOL on it, before another worker disproved it with one command. FIX SHAPE: make the two refusals name their own fix — `\"call add_contributor first\"` / `\"call mint_seat and pass it as seat\"`. NOTE THE FAMILY RESEMBLANCE to fact:defect-a-deferred-tool-reads-as-a-nonexistent-one: in both cases a refusal a session cannot act on is upgraded by a reasonable agent into a claim that the tool does not exist, and that claim is then written down. NOTE THE COMMON THREAD across (1) and (2) with the far more serious fact:defect-write-response-describes-the-write-not-the-state: a response describing something other than the current state of the node, and a reader who trusts it is wrong. Here it is cosmetic; there it was silent data loss.",
+        "statement": "SMALL, CHEAP SURFACE FRICTIONS — TWO REAL, ONE DISPROVEN BY MEASUREMENT. (1) REAL: `add_contributor` TAKES THE HANDLE AS `id` WHILE `claim_region` TAKES THE SAME HANDLE AS `contributor_id`. w-08baa598 passed `contributor_id` to add_contributor first — because that is the field name the very next call in the documented sequence uses — and got `failed to deserialize parameters: unknown field 'contributor_id', expected one of 'id', 'name', 'kind', 'handle', 'description'`. Cost one round trip. THE ERROR MESSAGE IS GOOD and is why this is minor: it named the accepted fields. The two calls are adjacent steps in the fleet's prescribed worker sequence and the asymmetry carries no meaning. FIX SHAPE: accept `contributor_id` as an alias on add_contributor. (2) ~~`set_verification_kind` ECHOES THE PRE-UPDATE `status`~~ — **DISPROVEN HERE 2026-08-08 BY RUNNING IT, AND THIS ENTRY NOW EXISTS TO RECORD THAT.** Four seats reported it across two days (w-ec25cf2c, w-3f408ab0, sb-boss ab2291fa as 'two workers and I'), and their fleet adopted a standing habit of re-reading every node rather than trusting any echo. THE ECHO IS CORRECT. Probe: create a Verification, `set_verification_status(passing)` FIRST, then `set_verification_kind(validation)` — the ordering that would expose a stale read. The echo returned `status: passing, kind: validation` and a `get_node` returned exactly the same. `verify.rs:169-175` reads the existing node, copies every property except `kind`, and returns what `create_node` wrote; `git log -L` dates that loop to 9073b9e, 2026-07-22, the commit that introduced `Verification.kind` — so it has been correct since the feature existed and was never stale, including on the day they filed. WHAT THEY ACTUALLY SAW: they called set_verification_kind while the status genuinely still WAS `planned`, set it to `passing` afterwards, and read the earlier echo as though it described the later state. The echo described the node at the moment of that call, correctly. THE FINDING IS NOW ABOUT REPORTING, NOT ABOUT THE ECHO, and it cuts two ways. Their file's no-dedup rule exists so a maintainer can see RECURRENCE — 'one report reads as one seat's opinion while two reads as the tool doing it to everyone' — and here it turned one misreading into four, which read as strong evidence and was not. RECURRENCE IS NOT CORROBORATION WHEN THE SEATS SHARE A METHOD. And I recorded the four reproductions as strengthening the case before testing it, which is the same credulity one layer along; rule:fixes-are-judged-by-the-third-party exists for exactly this. THEIR HABIT SURVIVES THE CORRECTION AND IS STILL RIGHT: re-reading a node after a write that matters is what AGENTS.md asks for anyway. Only the stated reason was wrong. (3) REAL: `claim_region`'s TWO REFUSALS ARE BOTH CORRECT AND NEITHER NAMES ITS OWN FIX. It needs `seat` on the sessionless transport and refuses otherwise; it also needs a Contributor to exist first, failing with `Node not found: Contributor <handle>`. Both are documented — IN THE TOOL DESCRIPTIONS, which an agent only reads if it happens to load that tool. THE COST WAS NOT ONE RETRY. A worker hit the second refusal, concluded the tool was broken, and wrote 'there is NO mint_seat tool in the served surface' INTO THE WORKER ONBOARDING FILE — a false correction that TRAVELLED FIVE HOPS and reached a boss offering to amend PROTOCOL on it, before another worker disproved it with one command. FIX SHAPE: make the refusals name their own fix — 'call add_contributor first' / 'call mint_seat and pass it as seat'. NOTE THE FAMILY RESEMBLANCE to fact:defect-a-deferred-tool-reads-as-a-nonexistent-one AND to (2) above: in all three a session's reasonable inference about the tool was written down and propagated, and in two of them the inference was false. The expensive failure in this channel is not the tools — it is a conclusion travelling faster than a test.",
         "subject_id": "cap:shared-sessions",
         "valid_from": "2026-08-07",
-        "value": "{\"reported\":\"2026-08-07 w-08baa598 and w-ec25cf2c; 2026-08-08 w-3f408ab0, sb-boss ab2291fa, w-9d1d1499\",\"friction_a\":\"add_contributor takes id, claim_region takes contributor_id, for the same handle in adjacent steps\",\"friction_a_fix\":\"accept contributor_id as an alias on add_contributor\",\"friction_b\":\"set_verification_kind echoes the pre-update status - four reproductions across two days\",\"friction_b_fix\":\"echo the post-write node, or omit untouched fields\",\"friction_c\":\"claim_region's two refusals (missing seat, missing Contributor) are correct and neither names its fix\",\"friction_c_cost\":\"a worker concluded mint_seat does not exist and wrote it into onboarding; the false correction travelled five hops to a boss offering to amend PROTOCOL\",\"friction_c_fix\":\"make each refusal name its own fix - 'call add_contributor first' / 'call mint_seat and pass it as seat'\",\"common_thread\":\"a response or refusal that describes something other than current state or actionable cause; cosmetic here, silent data loss in the concurrent-write case\"}"
+        "value": "{\"reported\":\"2026-08-07 w-08baa598 and w-ec25cf2c; 2026-08-08 w-3f408ab0, sb-boss ab2291fa, w-9d1d1499\",\"friction_a\":\"REAL - add_contributor takes id, claim_region takes contributor_id, same handle, adjacent steps\",\"friction_a_fix\":\"accept contributor_id as an alias on add_contributor\",\"friction_b\":\"DISPROVEN 2026-08-08 by running it - set_verification_kind's echo matches the stored node exactly\",\"friction_b_probe\":\"set status=passing first, then set kind; echo returned status passing / kind validation, identical to a following get_node\",\"friction_b_code\":\"verify.rs:169-175 copies every existing property except kind; git log -L dates it to 9073b9e 2026-07-22, the commit that added Verification.kind\",\"friction_b_what_they_saw\":\"they called set_verification_kind while status genuinely was planned, set passing afterwards, and read the earlier echo as describing the later state\",\"friction_b_lesson\":\"four seats reproduced one misreading; recurrence is not corroboration when the seats share a method. Their re-read-everything habit is still right; only its stated reason was wrong.\",\"my_own_error\":\"I recorded the four reproductions as strengthening the case before testing it\",\"friction_c\":\"REAL - claim_region's two refusals are correct and neither names its fix\",\"friction_c_cost\":\"a worker concluded mint_seat does not exist and wrote it into onboarding; the false correction travelled five hops\",\"friction_c_fix\":\"make each refusal name its own fix\",\"common_thread\":\"a conclusion about the tool travelling faster than a test - twice out of three, the conclusion was false\"}"
       }
     },
     {
@@ -62214,6 +62300,18 @@
         "subject_id": "cap:shared-sessions",
         "valid_from": "2026-08-07",
         "value": "{\"reported\":\"2026-08-07 dev_storyflow, api-boss 5d608b85, from a live 5-hour shift\",\"scale\":\"7 --shared client processes + 1 --serve-shared; 3 bosses + 4 workers; one graph\",\"held_1\":\"zero lock contention all day; the REFLOW2-HOLD/RELEASE ritual is gone entirely\",\"held_2\":\"server-side behaviour reaches attached seats with no restart; only the tool list is negotiated at connect; restarted 1 session instead of 6\",\"held_3\":\"advisory claims defended explicitly: no deadlocks, no waiting, no force-release\",\"held_4\":\"mint_seat vs add_contributor as separate concepts held up\",\"held_5\":\"concurrent reads of the same nodes uneventful\",\"held_6\":\"workers on the design brain returned re-resolvable node ids instead of prose\",\"do_not_change\":\"advisory-not-lock claims; forced checksum disposition; per-property merge; served skills; --shared itself\"}"
+      }
+    },
+    {
+      "node_id": "ver:a-finding-names-its-hub",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-08",
+        "level": "unit",
+        "method": "test",
+        "name": "A node appearing in several findings of one category is named as a hub with its count, and an ordinary pair reports none",
+        "status": "passing"
       }
     },
     {
@@ -63644,7 +63742,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2dc5b06470abcdecbc823f5fbf2ba0d8213a7334728ede42c1a0214747d7faa3",
+  "prev_content_hash": "sha256:c11e9784713df9df07097317ce008945be99fed10afc15e680278e22ffbabf65",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
