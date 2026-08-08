@@ -142,6 +142,28 @@ pub enum GapSource {
     /// resulting id — so changing it would silently expire every capability
     /// acknowledgement a user has made.
     UnverifiedCapability,
+    /// A `DesignRule` whose violations are gate-blocking, with no passing
+    /// `Verification` that could detect one.
+    ///
+    /// A rule the build enforces and nothing checks is a promise the design
+    /// makes and cannot keep. It was not merely unreported before — it was
+    /// UNASKABLE, because `VERIFIES` was declared `to: "*"`, which accepts a
+    /// DesignRule target without modelling one, so no detector treated a rule as
+    /// a verifiable thing. Enumerating that edge is what makes this question
+    /// expressible; this variant is what makes it asked.
+    ///
+    /// Scoped to `enforced` rules ON PURPOSE. An advisory rule with no detector
+    /// is guidance, and demanding a check for it would produce a list that
+    /// cannot reach zero — the failure that retired `unverified_artifact` and
+    /// `unexpected_coupling`. Note `enforced` DEFAULTS to true, so a rule that
+    /// never said otherwise is claiming to be gate-blocking and is answered here.
+    ///
+    /// The counter-argument, from the same report that proposed this and worth
+    /// keeping in view: *"a graph node green-washes exactly like a document"*.
+    /// Attaching any Verification silences this gap, so the check must actually
+    /// pass — and a passing check that tests nothing is still a lie the graph
+    /// cannot see. The detector informs; it does not certify.
+    UnverifiedEnforcedRule,
     /// Capabilities with no check of their own, riding a passing check on the
     /// component they are allocated to (BL-73). One gap per carrying
     /// component, at 0.35 — the question is "is component granularity enough
@@ -270,6 +292,7 @@ impl GapSource {
             // the serialized name, and gap ids hash this string.
             GapSource::StatusContradiction => "status_contradiction",
             GapSource::UnverifiedCapability => "unverified_capability",
+            GapSource::UnverifiedEnforcedRule => "unverified_enforced_rule",
             GapSource::ComponentGranularityVerification => "component_granularity_verification",
             GapSource::UnverifiedArtifact => "unverified_artifact",
             GapSource::UnprovidedInterface => "unprovided_interface",
@@ -335,6 +358,10 @@ impl GapSource {
             | GapSource::UnreleasedComponent
             | GapSource::StatusContradiction
             | GapSource::UnverifiedCapability
+            // Per-rule: the finding names the one rule with no detector, so
+            // accepting "this rule is checked by review, not by code" must not
+            // also accept the next enforced rule somebody writes.
+            | GapSource::UnverifiedEnforcedRule
             | GapSource::ComponentGranularityVerification
             | GapSource::UnverifiedArtifact
             | GapSource::UnprovidedInterface
@@ -961,6 +988,7 @@ impl DesignGraph {
         self.detect_unallocated_capabilities(&pop, &mut gaps)?;
         self.detect_unrealized_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
+        self.detect_unverified_enforced_rules(&pop, &mut gaps)?;
         self.detect_failing_verifications(&mut gaps)?;
         self.detect_unresolved_drift(&mut gaps)?;
         self.detect_unreleased_components(&mut gaps)?;
@@ -2102,6 +2130,86 @@ impl DesignGraph {
                     "Requirement '{}' has status=met and 0 incoming SATISFIES; `met` suppresses unsatisfied_requirement by design, so this is the only detector that can see it.",
                     req.node_id
                 ),
+            });
+        }
+        Ok(())
+    }
+
+    /// A `DesignRule` the build enforces that nothing can detect a violation of.
+    ///
+    /// ITS OWN DETECTOR, not a clause inside the capability one, and the tests
+    /// are why: `detect_unverified_capabilities` early-returns when the project
+    /// has zero verifications, because "nothing is verified yet" is already said
+    /// once at project level. That gate is right for a capability and WRONG for
+    /// a rule — a rule that claims to fail builds is unanswerable from the
+    /// moment it is written, whether or not anything else has a check yet. The
+    /// first draft of this lived in that function and silently never fired on a
+    /// young design; the test that expected it to fire is what found that.
+    fn detect_unverified_enforced_rules(
+        &self,
+        pop: &Population,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        // A gate-blocking rule nobody can detect a violation of (the governance
+        // proposal, dev_storyflow api-boss 2026-08-08, from Anthony's framing).
+        //
+        // Deliberately NOT riding a component's check the way a capability may:
+        // a rule is not allocated anywhere, so there is no carrier one hop away
+        // and no third state to compute. Either something checks this rule or
+        // nothing does.
+        for n in self.scan_nodes(node::DESIGN_RULE)? {
+            // `enforced` DEFAULTS to true (schema/core.yaml), so absence is a
+            // claim, not silence: a rule that never said otherwise is asserting
+            // that violations block the build. Only an explicit `false` — a rule
+            // offered as guidance — is exempt.
+            if n.properties.get("enforced").and_then(|v| v.as_bool()) == Some(false) {
+                continue;
+            }
+            // `dec:passing-is-verified`: attaching a `planned` check must not
+            // silence the question, or this detector becomes the green-washing
+            // its own proposal warned about.
+            if self.has_passing_verification(&n.node_id)? {
+                continue;
+            }
+            let name = node_name(&n);
+            gaps.push(GapCandidate {
+                id: gap_id(
+                    GapSource::UnverifiedEnforcedRule,
+                    std::slice::from_ref(&n.node_id),
+                ),
+                gap_source: GapSource::UnverifiedEnforcedRule,
+                scope: GapScope::Project,
+                // Above `unverified_capability` (0.55) because this rule already
+                // claims the power to fail a build. An unproven capability is
+                // work not yet confirmed; an unverifiable enforced rule is an
+                // obligation nobody can observe compliance with, and it is
+                // stated at the project level rather than about one part.
+                severity: 0.6,
+                title: format!("Nothing detects a violation of \u{201c}{name}\u{201d}"),
+                description: format!(
+                    "The rule \u{201c}{name}\u{201d} is enforced — its violations are \
+                     gate-blocking — but no passing verification could detect one. What checks \
+                     it, or should it be advisory rather than enforced?"
+                ),
+                affected_ids: vec![n.node_id.clone()],
+                suggested_depth: 2,
+                evidence: {
+                    let attached = self.incoming(&n.node_id, Some(edge::VERIFIES))?.len();
+                    if attached == 0 {
+                        format!(
+                            "DesignRule '{}' has enforced=true and 0 incoming VERIFIES; project \
+                             has {} verification(s).",
+                            n.node_id, pop.verifications
+                        )
+                    } else {
+                        format!(
+                            "DesignRule '{}' has enforced=true and {attached} incoming VERIFIES, \
+                             none of them passing; a check that has not passed cannot detect \
+                             anything.",
+                            n.node_id
+                        )
+                    }
+                },
             });
         }
         Ok(())

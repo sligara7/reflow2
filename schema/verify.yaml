@@ -79,8 +79,33 @@ schema:
 
     VERIFIES:
       from: Verification
-      to: "*"
-      extraction_hint: A Verification checks a Capability, Artifact, or Component.
+      # ENUMERATED RATHER THAN `*`, and the DesignRule entry is the point.
+      #
+      # The wildcard ACCEPTED a DesignRule target — nothing was broken — but it
+      # did not MODEL one, so `describe_schema` ranked it as merely tolerated and
+      # no detector treated a rule as a verifiable thing. The cost was not a
+      # wrong edge; it was an unaskable question: "which of my rules have no
+      # detector?" reflow2's own answer was FOUR OUT OF FOUR — five DesignRules,
+      # four carrying `enforced: true` (which this schema defines as
+      # gate-blocking), and not one of the five with an incoming VERIFIES.
+      #
+      # Proposed by dev_storyflow's api-boss 2026-08-08 from Anthony's own
+      # governance-as-design framing, after they found five rules-without-checks
+      # in a single session — a routing rule naming a file that names no worker
+      # entry point, a comms rule whose quoted example is a forgeable handshake,
+      # a claim protocol with no detector for its own bypass. Their words: "no
+      # report could have listed them, because the graph cannot currently be
+      # asked."
+      #
+      # THE LIST MUST KEEP ALL FIVE. The first four are DERIVED from live edges,
+      # not copied from the report that proposed this: narrowing to fewer would
+      # invalidate edges that exist today. Re-derive before ever trimming it.
+      to: [Capability, Requirement, Artifact, Component, DesignRule]
+      extraction_hint: >
+        A Verification checks a Capability, Artifact, Component, Requirement, or
+        DesignRule. Requirement was already true and unlisted here — three such
+        edges existed while this hint named only three types, which is how a hint
+        stops being a description and becomes a guess.
       properties:
         coverage: { type: enum, values: [full, partial, smoke] }
         # BL-126, dec:evidence-scope-on-the-verifies-edge. WHAT PART of the
