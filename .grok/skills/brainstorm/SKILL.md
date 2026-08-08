@@ -44,8 +44,16 @@ One **Decision at status `proposed`** per *question*, with the ideas as its opti
 decision text:
 
 1. `add_decision` — name it as the open question (*"OPEN — does X…?"*), not as a conclusion.
-2. `set_decision_status` to `proposed`. **This call is not optional**: `add_decision` defaults to
-   `accepted`, which would assert a settlement that never happened.
+2. **Confirm the node came back `status: proposed`** — `add_decision` lands there, and a Decision
+   that reads `accepted` would assert a settlement that never happened. Only reach for
+   `set_decision_status` if it did not.
+
+   *Stated as a relation rather than as a verdict, on purpose.* This step used to read *"this call
+   is not optional: `add_decision` defaults to `accepted`"*, which was true until 2026-07-25 and
+   then quietly became an instruction to make a redundant write on every brainstormed idea. Two
+   dev_storyflow sessions measured it on 2026-08-08 and filed it independently. A skill that names
+   a tool's DEFAULT has taken a dependency on that default; checking what the tool actually
+   returned stays true across any future change to it.
 3. Say in the text that it is **recorded as brainstorming, not as a proposal**, so a later session
    reads it the way the user meant it.
 4. Each idea in the user's own words. Where you know, add what is cheap or expensive about it, and

@@ -595,9 +595,32 @@ impl DesignGraph {
             ));
         }
         if structural_defects > 0 {
+            // The IMPERATIVE names the read-only tool; the skill is named as
+            // context, and its destructive step is named with it.
+            //
+            // This line used to read "run check-health (detect_defects)", which
+            // is ambiguous in the dangerous direction: `check-health` is the
+            // SKILL and its step 3 applies merges, while `detect_defects` in the
+            // brackets only reads. dev_storyflow reported it five times across
+            // four seats in two days — one of them filed deliberately as a
+            // duplicate so recurrence would be visible — because `next` is the
+            // most authoritative-feeling string in the payload to a session that
+            // has just arrived, and a session that follows it literally, which
+            // is what `next` is FOR, walked into ten irreversible node
+            // deletions. Two of their people read past it in their own sessions
+            // and said so. They ended up posting a fleet-wide stop-order at the
+            // top of their worker board to counteract one string this tool
+            // emits into a call every worker is required to make.
+            //
+            // The general rule, worth applying to any future entry here: when a
+            // skill contains an irreversible step, the loop's own to-do list
+            // must not name that skill as the thing to do. Note the contrast
+            // with the `detect-and-ask` line above, which names a skill quite
+            // deliberately — that skill only reads and asks.
             next.push(format!(
-                "{structural_defects} structural defect(s) outstanding — run check-health \
-                 (detect_defects)"
+                "{structural_defects} structural defect(s) outstanding — run detect_defects to \
+                 read them (the check-health skill is the wider workflow; its repair step can \
+                 delete nodes, so read what it proposes before applying)"
             ));
         }
         if unproven_capabilities > 0 {

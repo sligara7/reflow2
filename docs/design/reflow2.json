@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2ed4f793748a0fae35e1be34ef2d0a7db3b7f9ed27959602ddaebb6d584eda7f",
+  "content_hash": "sha256:6a000776b92afb171d2b90f5ce9e5d55d488b44196a6e1d09cd8f8467f72bd78",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11646,6 +11646,42 @@
         "action": "modified"
       },
       "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:next-names-the-safe-tool-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:next-names-the-safe-tool-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:next-names-the-safe-tool-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:next-names-the-safe-tool-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:loop-status"
     },
     {
       "edge_type": "CHANGED",
@@ -44188,10 +44224,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:fabb8097364ca9e2",
+        "checksum": "sha256:6f101376a547fe6ef1f9a9d7d2d3da29b84505a96b352ed69d19b8514772c0ec",
+        "granularity": "atomic",
         "location": "getting-started/skills/brainstorm/SKILL.md",
         "name": "brainstorm/SKILL.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45149,7 +45187,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8bd4c075a84bdd69680cfd8708f96979dbc351c0f8934b31f2ed2e993b1c4692",
+        "checksum": "sha256:672d623cd26f73c4f88bb08497c8cdf25a40dfdacb0d4fac1905ec96f7d9dabc",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -49745,6 +49783,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Multi-writer architecture decided: repo file + merge on pull, confirming rather than superseding dec:repo-file-embedded"
+      }
+    },
+    {
+      "node_id": "chg:next-names-the-safe-tool-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "The loop's to-do list names the read-only tool as the imperative, and the brainstorm skill stops citing a default that changed"
       }
     },
     {
@@ -62917,7 +62963,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5430b00dcafa89f38dcf34bdacd56c2cfdf400c4b0786f9d439dfb84406b2179",
+  "prev_content_hash": "sha256:2ed4f793748a0fae35e1be34ef2d0a7db3b7f9ed27959602ddaebb6d584eda7f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
