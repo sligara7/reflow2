@@ -3020,3 +3020,41 @@ async fn an_empty_ask_batch_is_refused_rather_than_treated_as_a_no_op() {
         .is_err()
     );
 }
+
+// ---- 2026-08-08 · add_contributor forgives claim_region's field name -------
+
+#[test]
+fn add_contributor_accepts_contributor_id_as_an_alias_for_id() {
+    // dev_storyflow, 2026-08-07: a worker passed `contributor_id` to
+    // add_contributor because that is what `claim_region` calls the SAME handle
+    // one step later in the documented sequence, and lost a round trip to
+    // `unknown field 'contributor_id'`. The asymmetry carries no meaning.
+    let via_alias: ContributorReq = serde_json::from_value(serde_json::json!({
+        "contributor_id": "who:alias",
+        "name": "Aliased",
+    }))
+    .expect("contributor_id must be accepted as an alias for id");
+    assert_eq!(via_alias.id, "who:alias");
+
+    // The documented name still works and is still the one the schema teaches.
+    let via_id: ContributorReq = serde_json::from_value(serde_json::json!({
+        "id": "who:canonical",
+        "name": "Canonical",
+    }))
+    .expect("id must keep working");
+    assert_eq!(via_id.id, "who:canonical");
+
+    // deny_unknown_fields is NOT loosened by the alias — a genuinely unknown
+    // field must still be refused, or this fix would have bought forgiveness
+    // by removing a guard.
+    let bogus = serde_json::from_value::<ContributorReq>(serde_json::json!({
+        "id": "who:x",
+        "name": "X",
+        "contribtuor_id": "typo",
+    }));
+    assert!(
+        bogus.is_err(),
+        "an unknown field must still be refused; the alias forgives one known mistake, \
+         not every mistake"
+    );
+}

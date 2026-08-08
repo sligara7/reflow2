@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6597ec38fa0f2faf40a98633bbf61dce6f912fd947584751cb6da220f7edcd1f",
+  "content_hash": "sha256:83a172173add1f316a25394bdb60b1b6e5569115c67adec7cb252b4d8868be97",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -453,6 +453,18 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-rebased-commit-keeps-a-green-that-belongs-to-another-commit",
+      "properties": {},
+      "to_id": "cap:portability"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-rebased-commit-keeps-a-green-that-belongs-to-another-commit",
+      "properties": {},
+      "to_id": "req:the-tool-finds-its-own-blind-spots"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-a-running-server-cannot-say-it-is-stale",
       "properties": {},
       "to_id": "cap:shared-sessions"
@@ -474,6 +486,12 @@
       "from_id": "fact:defect-causes-validation-status-hint-names-the-wrong-enum",
       "properties": {},
       "to_id": "cap:vocabulary"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-causes-validation-status-hint-names-the-wrong-enum",
+      "properties": {},
+      "to_id": "req:schema-prose-is-checked"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6499,6 +6517,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-refusal-names-its-own-fix-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-refusal-names-its-own-fix-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-refusal-names-its-own-fix-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-020a057ec12710f0",
       "properties": {
         "accepted_baseline": true,
@@ -6598,6 +6643,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-1ea01d3ea7e8701a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-22c390d18e06606a",
       "properties": {
         "accepted_baseline": true,
@@ -6667,6 +6721,15 @@
         "action": "modified"
       },
       "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-3e20436d326c84d6",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -7063,6 +7126,15 @@
         "action": "modified"
       },
       "to_id": "art:readme"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-b1fafb5f84628d53",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-inference"
     },
     {
       "edge_type": "CHANGED",
@@ -14629,6 +14701,16 @@
         "evidence": "Both report that a Verification's qualifications live outside any field the loop can read. That one asks for structured RESULT fields (exit_code, command, observed/expected); this one asks for bounds/caveats/grade and a findings/report field. Same root, two proposals - settle them together."
       },
       "to_id": "fact:defect-verification-evidence-is-prose-so-passing-can-contradict-itself"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:defect-causes-validation-status-hint-names-the-wrong-enum",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 1.0,
+        "evidence": "A SECOND proven instance for a requirement that had one. The first was schema prose asserting a relationship the schema cannot hold (the dead Anchor type). This is schema prose asserting VALUES the property's own enum rejects — CAUSES.validation_status offered 'observational / intervention / mechanism / temporal' against an enum of unvalidated/hypothesis/validated/refuted, with zero overlap. It suggests a THIRD mechanical check beyond the two the requirement names: a parenthesised slash-separated list in a property description must match that property's enum values. Crude, but it would have caught this, and that parenthetical shape is the convention every such hint uses. Found by calling describe_schema first, as AGENTS.md instructs, and being refused by the write."
+      },
+      "to_id": "req:schema-prose-is-checked"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -42650,6 +42732,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-refusal-names-its-own-fix",
+      "properties": {},
+      "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-session-cannot-name-another-design",
       "properties": {},
       "to_id": "req:a-session-cannot-address-another-design"
@@ -44819,7 +44907,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7550e9e59eb9a31e49637a4612eaf6b2e2198e04cc35482dfa8436c7cbce8b7c",
+        "checksum": "sha256:5b26eb7f12555e2e6a00ea8b50f3924d56ad6318f0d020384833cd537a8f567a",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/claims.rs",
         "name": "claims.rs",
@@ -45785,7 +45873,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:917dcbb355fa177e7e2e03212bba59dcf5bf489cbe08b01e963489e7a39a8c7e",
+        "checksum": "sha256:f87ec8468301e8d9887438e149c9d7dcbe1696d2a34438ac32a20afd8ed70846",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/inference.yaml",
@@ -45938,7 +46026,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ae2ea2e7fc966561604e7c69bc95cb0c911dbcafb0939d46cd2984312db61a01",
+        "checksum": "sha256:40407c67d5f51959483e88ae3390f796a5a9b5fdd756a2dca76c0283d9751847",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -48303,6 +48391,14 @@
       }
     },
     {
+      "node_id": "chg:a-refusal-names-its-own-fix-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "A refusal names the call that fixes it, add_contributor forgives the sibling field name, and a schema hint stops offering values its enum rejects"
+      }
+    },
+    {
       "node_id": "chg:accept-020a057ec12710f0",
       "node_type": "ChangeEvent",
       "properties": {
@@ -48401,6 +48497,15 @@
       }
     },
     {
+      "node_id": "chg:accept-1ea01d3ea7e8701a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-08",
+        "name": "ContributorReq.id gains a serde alias for contributor_id. The surface still teaches one name and deny_unknown_fields is unchanged; no design meaning moved."
+      }
+    },
+    {
       "node_id": "chg:accept-22c390d18e06606a",
       "node_type": "ChangeEvent",
       "properties": {
@@ -48470,6 +48575,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-3e20436d326c84d6",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-08",
+        "name": "ContributorReq.id gains a serde alias for contributor_id. The rationale moved from a /// doc comment to a // comment after the toolsnap gate caught it: JsonSchema derives the advertised description from doc comments, so the explanation had become part of the served add_contributor schema. All 149 toolsnaps now match — the served surface is unchanged, which is what the alias was always meant to be."
       }
     },
     {
@@ -48856,6 +48970,15 @@
         "change_type": "refactor",
         "detected_at": "2026-08-02",
         "name": "The hand-kept vocabulary counts only (10 domains / 28 node / 57 edge -> 11 / 29 / 60). Several were ALREADY stale before this change, which is BL-159's two-records-of-one-contract shape in the prose layer."
+      }
+    },
+    {
+      "node_id": "chg:accept-b1fafb5f84628d53",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-08",
+        "name": "CAUSES.validation_status's description corrected: it offered 'observational / intervention / mechanism / temporal' against an enum of unvalidated/hypothesis/validated/refuted, zero overlap. The enum is unchanged, so no design meaning moved — only the prose that describes it, which is what describe_schema serves to agents. Second proven instance of req:schema-prose-is-checked (proposed)."
       }
     },
     {
@@ -61811,6 +61934,19 @@
       }
     },
     {
+      "node_id": "fact:defect-a-rebased-commit-keeps-a-green-that-belongs-to-another-commit",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A FORCE-PUSHED REBASE ON AN OPEN PR RAN NO CI, AND THE PR WENT ON REPORTING ITSELF READY TO MERGE. Found here 2026-08-08 while landing the storyflow HEAL stack. PR #105 was rebased onto main after #106 squash-merged, and force-pushed. `gh run list --branch` showed ONE run, against the PRE-REBASE sha `5d097f9`; the rebased commit `16d6e11` had none and never got one. Meanwhile `gh pr view 105` reported `mergeable: MERGEABLE, mergeStateStatus: CLEAN` and `gh pr checks` reported nothing at all rather than reporting an absence. A reader doing the normal thing — checking the PR is clean before merging — would have merged a commit no gate had ever seen. THIS IS THE HOUSE FAILURE SHAPE, in the house's own words: a green that belongs to something other than what you are about to ship. Same family as BL-206 (`reflow2_check` reported OK over 20 artifacts it never swept), `dec:no-design-here-never-looked` ('no design here' asserted without looking), and `loop_status` reporting `unsurfaced_gaps: 0` before detect_gaps has ever run. Here the green was real — it just belonged to a different commit. `.github/workflows/ci.yml` triggers on `push: branches: [main]` and an unfiltered `pull_request:`, so nothing in the configuration explains the miss; GitHub simply did not raise a `synchronize` for that force-push. CAUSE NOT ESTABLISHED, and saying so matters: the retarget from a feature-branch base to `main` happened seconds after the push, and either the race or the base change may be responsible. NOT TESTED. WORKAROUND THAT WORKED, one command pair: `gh pr close 105 && gh pr reopen 105` fires `pull_request: reopened`, which is in the default trigger types, and CI queued immediately against the correct sha. WHY IT MATTERS BEYOND THIS PR: reflow2's own release procedure and [[branch-then-pr-practice]] both rest on 'mark ready only on green', and this is a case where green is present, current-looking, and about a commit that no longer exists in the branch. The check a human can actually perform is `gh run list --branch <b>` and compare `headSha` against `gh pr view --json headRefOid` — two commands, and neither is in any documented routine here. FIX SHAPE: add that comparison to the pre-merge routine in AGENTS.md / the release procedure; or have the gate itself refuse when the head sha has no completed run, which is the stronger form because it does not depend on remembering.",
+        "subject_id": "cap:portability",
+        "valid_from": "2026-08-08",
+        "value": "{\"found\":\"2026-08-08, landing PR #105 of the storyflow HEAL stack\",\"symptom\":\"rebased commit 16d6e11 had no CI run; only run was against pre-rebase 5d097f9\",\"what_the_ui_said\":\"gh pr view: mergeable MERGEABLE, mergeStateStatus CLEAN; gh pr checks: 'no checks reported' rather than an explicit absence\",\"risk\":\"merging a commit no gate had seen, while the PR reads as ready\",\"config_does_not_explain_it\":\"ci.yml triggers on push:[main] and an unfiltered pull_request:\",\"cause_not_established\":\"force-push and base retarget happened seconds apart; either the race or the base change may be responsible - NOT TESTED\",\"workaround_that_worked\":\"gh pr close N && gh pr reopen N fires pull_request: reopened and CI queued against the right sha\",\"class\":\"a green that belongs to a different commit - same family as BL-206, dec:no-design-here-never-looked, loop_status unsurfaced_gaps 0 before any scan\",\"manual_check\":\"gh run list --branch <b> headSha vs gh pr view --json headRefOid\",\"fix_shape\":\"put the sha comparison in the pre-merge routine, or have the gate refuse when the head sha has no completed run\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-a-running-server-cannot-say-it-is-stale",
       "node_type": "TemporalFact",
       "properties": {
@@ -62323,6 +62459,18 @@
         "level": "unit",
         "method": "test",
         "name": "A merge proposal discloses what it would destroy before it can be applied, and a proposal that deletes a node stops reporting itself as needing no review",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-refusal-names-its-own-fix",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-08",
+        "level": "unit",
+        "method": "test",
+        "name": "A claim for an unknown Contributor names add_contributor and still refuses; add_contributor accepts claim_region's field name without loosening deny_unknown_fields",
         "status": "passing"
       }
     },
@@ -63742,7 +63890,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c11e9784713df9df07097317ce008945be99fed10afc15e680278e22ffbabf65",
+  "prev_content_hash": "sha256:6597ec38fa0f2faf40a98633bbf61dce6f912fd947584751cb6da220f7edcd1f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

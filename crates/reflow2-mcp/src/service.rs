@@ -1524,7 +1524,24 @@ pub struct GovernedByReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ContributorReq {
+    // WHY THE ALIAS, and why this is a `//` comment rather than a `///` one:
+    // JsonSchema derives the advertised description from the doc comment, so
+    // anything written above with three slashes is served to every caller. The
+    // first attempt put this rationale there and the toolsnap gate caught it —
+    // a nine-line field report inside the `id` property's description, in a
+    // change whose own text claimed the alias was "deliberately not in the
+    // advertised schema". That is dev_storyflow's own complaint (prose in a
+    // field nothing can act on) reproduced while fixing it.
+    //
+    // dev_storyflow, 2026-08-07: a worker passed `contributor_id` to
+    // add_contributor because that is what `claim_region` calls the SAME handle
+    // one step later in the documented sequence, and lost a round trip to
+    // `unknown field 'contributor_id'`. The asymmetry carries no meaning, so it
+    // is forgiven rather than defended — and forgiven QUIETLY: `id` stays the
+    // one name the surface teaches, and `deny_unknown_fields` still refuses a
+    // genuine typo.
     /// Stable id (e.g. `who:ajs`, `who:claude-code`).
+    #[serde(alias = "contributor_id")]
     pub id: String,
     pub name: String,
     /// `person` (default) / `automated_agent` / `organization`.
