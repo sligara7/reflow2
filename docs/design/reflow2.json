@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6a000776b92afb171d2b90f5ce9e5d55d488b44196a6e1d09cd8f8467f72bd78",
+  "content_hash": "sha256:2dc5b06470abcdecbc823f5fbf2ba0d8213a7334728ede42c1a0214747d7faa3",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -411,6 +411,36 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-finding-has-no-bounds-so-grading-goes-in-the-name",
+      "properties": {},
+      "to_id": "cap:evidence-scope"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-finding-has-no-bounds-so-grading-goes-in-the-name",
+      "properties": {},
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path",
+      "properties": {},
+      "to_id": "cap:detect"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path",
+      "properties": {},
+      "to_id": "req:the-store-is-reachable-from-a-session"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path",
+      "properties": {},
+      "to_id": "req:the-tool-finds-its-own-blind-spots"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-a-running-server-cannot-say-it-is-stale",
       "properties": {},
       "to_id": "cap:shared-sessions"
@@ -426,6 +456,12 @@
       "from_id": "fact:defect-an-aggregate-gap-hides-partial-progress",
       "properties": {},
       "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-causes-validation-status-hint-names-the-wrong-enum",
+      "properties": {},
+      "to_id": "cap:vocabulary"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -450,6 +486,30 @@
       "from_id": "fact:defect-content-store-invents-its-directory",
       "properties": {},
       "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-duplicate-findings-hide-a-hub-so-five-are-two",
+      "properties": {},
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-four-live-counts-and-none-names-its-predicate",
+      "properties": {},
+      "to_id": "req:a-surface-states-its-own-scope"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-get-skill-carries-no-version",
+      "properties": {},
+      "to_id": "cap:skill-loads-are-counted"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-get-skill-carries-no-version",
+      "properties": {},
+      "to_id": "cap:skills-served"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -483,9 +543,33 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-merge-survivor-ignores-priority-and-status",
+      "properties": {},
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-no-way-to-mark-a-capability-contested",
+      "properties": {},
+      "to_id": "cap:reconcile-verified"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-open-questions-zero-reads-as-an-all-clear",
       "properties": {},
       "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-orientation-needs-a-seed-and-a-new-session-has-none",
+      "properties": {},
+      "to_id": "cap:scoped-analysis"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-orientation-needs-a-seed-and-a-new-session-has-none",
+      "properties": {},
+      "to_id": "cap:search"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -504,6 +588,24 @@
       "from_id": "fact:defect-stale-server-reproduced-first-hand-here",
       "properties": {},
       "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-the-mandated-cold-start-check-costs-the-largest-payload",
+      "properties": {},
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-the-read-surface-cannot-answer-a-set-question",
+      "properties": {},
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-the-read-surface-cannot-answer-a-set-question",
+      "properties": {},
+      "to_id": "cap:search"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6255,6 +6357,72 @@
         "evidence": "The published-surface export cannot carry a behavioural promise, so the capability ships a document that is structurally incomplete for the job it is offered for. Found by the dynograph-foundation trial, 2026-07-28."
       },
       "to_id": "cap:publish-surface"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "chg:next-names-the-safe-tool-20260808",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "That change fixed the brainstorm skill's stale citation of add_decision's pre-2026-07-25 default. Fixing the instance is what raised the class: nothing stops the next skill sentence pinned to a default from aging the same way.",
+        "validation_status": "validated"
+      },
+      "to_id": "dec:idea-a-skill-may-assert-the-defaults-it-relies-on"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:defect-a-finding-has-no-bounds-so-grading-goes-in-the-name",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "The bounds/grade/findings half of the question.",
+        "validation_status": "validated"
+      },
+      "to_id": "dec:idea-a-finding-carries-its-bounds"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "The field report is why this decision point exists: cap:storybook_output was realized, built and rendering while dead, and no edge type could express the missing writer.",
+        "validation_status": "validated"
+      },
+      "to_id": "dec:idea-a-capability-declares-its-input-path"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:defect-causes-validation-status-hint-names-the-wrong-enum",
+      "properties": {
+        "basis": "observed",
+        "confidence": 0.8,
+        "evidence": "A second instance of the same class found the same day, one layer lower: a property's own description disagreeing with its validator, with no build step or file boundary between them. Whatever guard is settled for skills should be weighed against this case too.",
+        "validation_status": "validated"
+      },
+      "to_id": "dec:idea-a-skill-may-assert-the-defaults-it-relies-on"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:defect-no-way-to-mark-a-capability-contested",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "A capability demoted after a failing walk asserted something false during the window, visible to every attached session on a shared graph.",
+        "validation_status": "validated"
+      },
+      "to_id": "dec:idea-a-capability-can-be-marked-contested"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:defect-verification-evidence-is-prose-so-passing-can-contradict-itself",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "The structured-result-fields half of the question, reported a day earlier. Both edges land on one Decision deliberately: settling either alone would give the same node type two competing homes for a check's qualifications.",
+        "validation_status": "validated"
+      },
+      "to_id": "dec:idea-a-finding-carries-its-bounds"
     },
     {
       "edge_type": "CHANGED",
@@ -12963,6 +13131,177 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:idea-a-capability-can-be-marked-contested"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:idea-a-capability-declares-its-input-path"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:idea-a-finding-carries-its-bounds"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:idea-a-skill-may-assert-the-defaults-it-relies-on"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:defect-a-finding-has-no-bounds-so-grading-goes-in-the-name"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "fact:defect-add-verification-cannot-set-kind-or-last-run-at"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:defect-causes-validation-status-hint-names-the-wrong-enum"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:defect-duplicate-findings-hide-a-hub-so-five-are-two"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:defect-four-live-counts-and-none-names-its-predicate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:defect-get-skill-carries-no-version"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "fact:defect-loop-status-next-routes-to-the-destructive-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:defect-merge-survivor-ignores-priority-and-status"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:defect-no-way-to-mark-a-capability-contested"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:defect-orientation-needs-a-seed-and-a-new-session-has-none"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "fact:defect-rollups-became-fleet-numbers-without-saying-so"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "fact:defect-small-surface-frictions-contributor-field-and-stale-echo"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:defect-the-mandated-cold-start-check-costs-the-largest-payload"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:defect-the-read-surface-cannot-answer-a-set-question"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:stub-survivor-reconciliation",
       "properties": {
         "accepted_baseline": false,
@@ -13356,6 +13695,28 @@
         "action": "modified"
       },
       "to_id": "req:version-combination-is-an-object"
+    },
+    {
+      "edge_type": "CLAIMS",
+      "from_id": "who:claude-code",
+      "properties": {
+        "claimed_at": "2026-08-08T16:40:00Z",
+        "depth": 2,
+        "note": "Capturing the second dev_storyflow feedback file (2026-08-08, 161 lines) — HEAL/duplicate findings half.",
+        "seat": "asligar-bitecool:1687426:5df78ec5"
+      },
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "CLAIMS",
+      "from_id": "who:claude-code",
+      "properties": {
+        "claimed_at": "2026-08-08T16:40:00Z",
+        "depth": 2,
+        "note": "Capturing the second dev_storyflow feedback file (2026-08-08) — loop/report/verification-surface half.",
+        "seat": "asligar-bitecool:1687426:5df78ec5"
+      },
+      "to_id": "cap:loop-status"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -14201,11 +14562,41 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "fact:defect-a-finding-has-no-bounds-so-grading-goes-in-the-name",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 1.0,
+        "evidence": "Both report that a Verification's qualifications live outside any field the loop can read. That one asks for structured RESULT fields (exit_code, command, observed/expected); this one asks for bounds/caveats/grade and a findings/report field. Same root, two proposals - settle them together."
+      },
+      "to_id": "fact:defect-verification-evidence-is-prose-so-passing-can-contradict-itself"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:defect-merge-survivor-ignores-priority-and-status",
+      "properties": {
+        "alignment": "opposing",
+        "confidence": 0.9,
+        "evidence": "The decision settles the survivor by provenance with id breaking ties. Measured in the field 2026-08-08: that rule would delete a critical/proposed requirement in favour of an unrelated medium/accepted one. Neither priority nor status is consulted anywhere in the rule, so the destructive half lands on the more load-bearing node."
+      },
+      "to_id": "dec:merge-survivor-provenance"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "fact:defect-stale-server-reproduced-first-hand-here",
       "properties": {
         "alignment": "supporting",
         "confidence": 1.0,
         "evidence": "Independent first-hand reproduction on a second machine and a second project, including the /proc/self/exe '(deleted)' marker being present and correct at the moment it was needed. Raises the proposed fix from plausible to validated."
+      },
+      "to_id": "fact:defect-a-running-server-cannot-say-it-is-stale"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:defect-the-mandated-cold-start-check-costs-the-largest-payload",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 1.0,
+        "evidence": "That fact is the server being unable to answer the staleness question; this is the answer being priced out of reach. req:the-server-is-the-authority-on-its-own-currency subsumes both."
       },
       "to_id": "fact:defect-a-running-server-cannot-say-it-is-stale"
     },
@@ -50170,6 +50561,14 @@
       }
     },
     {
+      "node_id": "chg:storyflow-second-field-report-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "name": "The second dev_storyflow field report lands: a capability can be realized and dead for want of an input path, a finding has nowhere to put its bounds so grading went into node names, and merge still picks the wrong survivor"
+      }
+    },
+    {
       "node_id": "chg:stub-survivor-reconciliation",
       "node_type": "ChangeEvent",
       "properties": {
@@ -51680,12 +52079,52 @@
       }
     },
     {
+      "node_id": "dec:idea-a-capability-can-be-marked-contested",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNSETTLED. Reported 2026-08-08 by dev_storyflow's sb-boss: they demoted a capability from `realized` to `in_progress` after a failing walk, and between the walk and the demotion the graph went on asserting something false with no way to say so — a window that, on a `--shared` graph, every attached session reads as current. Two shapes, both theirs: (a) a lightweight `contested` marker or status value; (b) let a FAILING `kind=validation` VERIFIES edge automatically flag the capability's status as unsafe to trust. THE SECOND FITS THIS DESIGN'S GRAIN BETTER ON ITS FACE AND THAT IS WORTH STATING, THOUGH NOT DECIDING: dec:passing-is-verified already computes \"verified\" from a check that PASSES rather than from a status field, so computing \"contested\" from a check that FAILS is the same move inverted, needs no new enum value, and cannot be forgotten the way a marker can. The argument against it is equally real — a failing check does not always mean the claim is wrong, and auto-flagging would make every red test a challenge to the design rather than to the code.",
+        "name": "OPEN — how does a capability say its own status is under challenge, in the window between evidence arriving and someone being ready to restate it?",
+        "rationale": "Recorded because demoting early is itself a claim — it asserts a position on work that may turn out fine — so the absence of a middle state pushes a reporter toward one of two wrong assertions. Adjacent and worth reading together: req:blocking-is-partial applies the same instinct to drift rather than to a failing check. Evidence: fact:defect-no-way-to-mark-a-capability-contested.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-capability-declares-its-input-path",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNSETTLED. dev_storyflow's most-wanted ask, 2026-08-08: express \"this capability needs a surface where a person (or an upstream system) actually writes the data it consumes\", so a capability that is realized, built and rendering — but dead because nothing ever writes its input — is caught by a detector rather than by three people producing three wrong root causes. Shapes worth weighing rather than a recommendation: (a) a new edge — cap FED_BY ifc/Actor — with an unrealized_input_path gap when a capability that consumes a field has no writer; (b) a property on the Capability (`needs_input_path: true`) with the detector reading it, which is cheaper and weaker because nothing forces the flag; (c) generalise the existing INTERACTS_WITH by adding a `required` property, so \"an actor interacts with this\" can become \"this does not function unless an actor does\"; (d) decline it as out of scope, on the ground that reflow2 models the design and not the operational data path. NOTE WHAT ALREADY EXISTS AND WHY IT IS NOT ENOUGH: req:the-store-is-reachable-from-a-session says \"a capability nothing can call is not delivered — the content store needs a surface\", which is exactly this insight scoped to ONE capability and written by hand; nothing generalises it and nothing detects it.",
+        "name": "OPEN — should a capability be able to declare that it needs a human INPUT path, so that the absence of one is DETECTABLE rather than diagnosable only by three people failing?",
+        "rationale": "Recorded because it is the one thing the fleet said would have saved the most time, and because it is a VOCABULARY question rather than a detector bug — detect_gaps structurally cannot ask about a surface the design has no way to say is required, which is req:the-tool-finds-its-own-blind-spots in its sharpest instance to date. Left `proposed` deliberately: every shape above changes the schema or the detector set, and which one is right is Anthony's call, not a field report's. The evidence is fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-finding-carries-its-bounds",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNSETTLED, and it must be settled as ONE question rather than two. Two dev_storyflow reports a day apart ask for different fields on the same node for the same underlying reason — a Verification's qualifications have nowhere to live except its name. (A) 2026-08-07: structured RESULT fields — `exit_code`, `command`, `observed`/`expected` — so the graph can flag `status: passing` beside a non-zero exit as incoherent, and a re-run can be compared mechanically. (B) 2026-08-08: a `bounds`/`caveats` field and ideally a `grade`, plus a `findings`/`report` field, so `name` can go back to being a name and the qualifications become data the loop can reason about. Also on the table, and cheaper than either: truncate `name` in loop_status's rollup, or return `name` + `detail` separately, which fixes the READ cost without touching the schema. THE COUNTER-ARGUMENT DESERVES AIRING: reflow2 already has cap:evidence-scope (what a check pinned and swept, on the VERIFIES edge per dec:evidence-scope-on-the-verifies-edge) and reconcile_verification for feeding real outcomes back, so the machinery for \"evidence is structured, not prose\" is PARTLY BUILT — and the honest question may be whether these are extensions of it or a second, competing home for the same information.",
+        "name": "OPEN — does a Verification gain structured fields for its BOUNDS and its FINDINGS, and is that the same decision as giving it structured RESULT fields?",
+        "rationale": "Recorded as one decision because settling either half alone would put two structured homes for a check's qualifications into the same node type, which is how a schema acquires an overlap nobody can later explain. The urgency is not theoretical: the missing field has already become fleet DOCTRINE at dev_storyflow (\"carry the grading and all bounds in the node NAME\"), it has made graph_report.top_gaps titles ~2,000-character essays, and reflow2's OWN loop_status digest reads the same way for the same reason. Evidence: fact:defect-a-finding-has-no-bounds-so-grading-goes-in-the-name and fact:defect-verification-evidence-is-prose-so-passing-can-contradict-itself.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-session-holds-several-graphs",
       "node_type": "Decision",
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-06: \"maybe a .mcp.json could have the graph_id for reflow2, dynograph-foundation, and flo2...so when any design decision is made, reflow2 can utilize all 3 graphs?\"\n\n⭐ EXTENDED THE SAME DAY, AND THE EXTENSION IS WHAT MAKES IT AN ARCHITECTURE RATHER THAN A CONVENIENCE. Anthony's second pass: \"projectC is dependent upon projectB which is dependent upon projectA and these are all managed by user1. say user2 is responsible for projectD which is dependent upon projectC. user2's .mcp.json should only have the graph_id for projectC and projectD, while user1's .mcp.json should have projectA, B and C. theoretically, you could link huge projects together with multiple users only managing their respective set of projects.\"\n\nTHE RULE THAT FALLS OUT OF HIS OWN EXAMPLE, and he did not state it explicitly: projectC appears in BOTH configs. So a graph_id in a config does not mean one thing — THE SAME GRAPH IS WRITABLE FOR ITS OWNER AND READABLE FOR ITS CONSUMER. user1 owns C and may write it; user2 depends on C and may only read it. The set a user holds is therefore {the graphs I own → writable} ∪ {the graphs I directly depend on → readable}, and that is not a flat list of equals — it is a list with a role per entry.\n\nTHIS RESOLVES THE TENSION THIS NODE WAS RECORDED TO NAME. Option (b) below was written as the conservative choice — one writable graph, N readable. Anthony's federation makes it the GENERAL one: N writable (the ones you own) and M readable (the ones you depend on), which degenerates to (b) for a single-project owner and to today's behaviour for someone with no dependencies. Option (a) — a flat list where every graph is equal — stops being the simple choice once the roles are visible, because it is the only one that has to answer \"which of these three does this write land in\".\n\n⭐ THE SCALE PROPERTY, which is the real content of \"link huge projects together\": NOBODY HOLDS THE WHOLE DAG. Each user holds a LOCAL CUT of it — their own subtree plus one hop outward — and the cuts overlap exactly at the ownership seams. That is why it composes to arbitrary size without any user, machine or process ever loading the whole federation, and it is a materially different claim from \"one process holds many graphs\" (dec:one-process-many-stores), which is about a SERVER holding tenants. This is about a PERSON holding a neighbourhood.\n\n⚠️ THE HONEST LIMIT, and it is the thing worth deciding rather than discovering: user2 sees C but NOT B or A. If user2's need in C turns out to require a change in B, user2 cannot see that and cannot even tell that B exists. The requirement has to RELAY — user2 asks C's owner, who then discovers it is really a B problem. Whether that is a feature (bounded blast radius, matching real ownership and real org charts) or a defect (a need can stall invisibly one hop out of view) is a genuine question. The bounded reading is probably right and is how every package ecosystem already behaves; the cost is that transitive needs travel at the speed of humans, which is exactly the friction Anthony opened this whole thread wanting to remove.\n\nAND IT SHARPENS THE AUTHORITY QUESTION NEXT DOOR: the boundary of authority is EXACTLY the shared graph. Everything dec:idea-gap-flows-to-the-dependency asks — who may write intent into a design they do not own — is now localised to the overlap, C. It is not a question about the federation; it is a question about each seam in it, asked once per seam, between two named people.\n\nIT ALSO MAKES OPTION (c) NEXT DOOR ACTUALLY WORK AT SCALE. \"The upstream pulls rather than the downstream pushes\" needs a reverse index — who declares a dependency on me — which today does not exist because req:design-dependencies-declared points downward only. Under this federation the reverse index is small and local: C's owner asks who declares a dependency on C and finds exactly user2's D, never the whole world.\n\nRELATED AND ALREADY OPEN: dec:idea-cross-org-federation asks whether reflow2 should federate heterogeneous designs across ORGANISATIONS the way OpenMBEE does, rather than composing exports. Anthony's example is the same shape one scale down — across PEOPLE rather than organisations — which is useful, because it means the mechanism can be tried on two brothers and three repos before it has to survive two companies.\n\n⚠️ IT ALSO PULLS AGAINST A DECISION MADE TWELVE HOURS EARLIER. dec:one-process-many-stores (proposed, 2026-08-05) has each client session ATTACHED TO EXACTLY ONE graph, and carries req:a-session-cannot-reach-another-designs-graph as a SECURITY property for flo2: project A's design must be unreachable from project B's session. Both can be true, but only if the distinction is stated rather than discovered later: MULTI-TENANT ISOLATION (strangers' projects on a hosted server, must not see each other) is not the same as COMPOSITION (one author's own interdependent designs, useless apart). The federation above makes the split cleaner than it first looked — isolation is between TENANTS, composition is within one tenant's declared neighbourhood — but nothing in the design says so yet.\n\nIT LANDS ON AN OPEN QUESTION HE HAS ALREADY LEANED ON. dec:how-a-session-is-pointed-at-a-design (proposed) records his 2026-08-05 preference — \"I like this approach of just pointing .mcp.json at the graph_id\" — and the counter beside it: [BL-123] holds that the /mcp reconnect is the one step an autonomous agent cannot take, so config-file selection is the option an agent cannot exercise for itself. A multi-graph .mcp.json inherits that counter unchanged.\n\nWHAT IS ALREADY BUILT, so the gap is smaller than the question sounds. cap:composed-analysis is REALIZED: two designs analysed together without either being written to, the other's ids namespaced into an in-memory graph, every finding attributed ours / theirs / seam. describe_designs (shipped 2026-08-05) answers what design lives at a path without opening it. So \"reason across several graphs\" is a call you can make today; what a config would add is that it happens BY DEFAULT and WITHOUT BEING ASKED.\n\nOPTIONS, NONE CHOSEN.\n\n(a) A FLAT LIST OF graph_ids, ALL EQUAL. Closest to the first phrasing. Now the weakest, because the federation example shows the entries are NOT equal and this is the only option that must then answer \"which one does a write land in\" at every call site.\n\n(b) ROLES PER ENTRY — owned/writable versus depended-on/readable, which is what Anthony's own example describes. Preserves single-writer per graph, preserves the isolation property's shape, matches how every dependency manifest already works, and degenerates gracefully for the one-project case. Counter: it does not by itself serve the flo2 case, because flo2's need is for something to be written INTO reflow2 — that is dec:idea-gap-flows-to-the-dependency, not this node.\n\n(c) NOTHING IN CONFIG — composition stays an explicit call against a dependency declared in the manifest, where req:design-dependencies-declared already puts it. Cheapest and already built. Counter: an explicit call is one somebody has to remember to make, which is the failure req:no-idea-goes-quiet exists to reject.\n\n(d) THE MANIFEST, NOT .mcp.json, IS THE RIGHT FILE — and the federation strengthens this considerably. reflow2 ALREADY declares its dynograph-foundation dependency this way, pinned and version-checked, with ver:design-dependencies-declared passing against the real thing. A DEPENDENCY IS A PROPERTY OF THE DESIGN, NOT OF THE MACHINE SOMEBODY READS IT ON: projectD depends on projectC no matter whose laptop is open, so putting it in .mcp.json — per-machine, and gitignored in this very repo — means every clone and every teammate re-states it, which is the shadow-list failure in a new costume. The counter, and it is real: the manifest says what the DESIGN depends on, while .mcp.json says what THIS PERSON is working on, and Anthony's user1/user2 split is genuinely about people. Those may both be needed — a committed manifest for the dependency edges, a per-user config for which subtree you have in hand.",
         "name": "OPEN — should .mcp.json name SEVERAL graph_ids so one session reasons across reflow2 + flo2 + dynograph-foundation at once, and how does that sit against one-session-one-graph?",
         "rationale": "Captured under the brainstorm skill, 2026-08-06, and EXTENDED the same day when Anthony generalised his own example from three graphs to an arbitrary federation with per-user scopes. The extension was folded into this node rather than minted as a new one because it answers the SAME question — which graphs a session can see — at a larger scale; the skill's \"several unrelated ideas mean several Decisions\" does not apply to one idea getting sharper.\n\nKept SEPARATE from dec:idea-gap-flows-to-the-dependency deliberately, even though Anthony raised both in one breath: this is ACCESS (which graphs a session can see), that is AUTHORITY (who may write intent into a design they do not own). They have different right answers, and one node holding both could only ever be half-answered. The federation makes the split sharper rather than blurrier — it localises the authority question to each ownership seam.\n\nThe collaboration fact that bears on it and is new to the design: Anthony and his brother are split BY LAYER, not by project — Anthony on reflow2 core, his brother on the flo2 web app around it. That is not \"many people on one project\" (req:sessions-share-a-graph) nor \"many projects at once\" (req:many-designs-one-service); it is one owner per graph with the dependency running BETWEEN the owners, so the seam is simultaneously a technical boundary and a human one. req:many-people-and-many-projects-compose was written hours earlier assuming several people on one project and does not cover this shape. Anthony's user1/user2 example is the general form of the same thing.\n\nWhat is NOT recorded here, because he has not said it: whether the per-user scope is meant to be a PERMISSION (user2 may not reach A and B) or merely a CONVENIENCE (user2 has no reason to load them). Those differ the moment anything is hosted, and reflow2 has no authentication to enforce the former.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-skill-may-assert-the-defaults-it-relies-on",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNSETTLED. The instance is fixed; the class is not. Two dev_storyflow seats independently measured that the `brainstorm` skill instructed them to call `set_decision_status(proposed)` because \"add_decision defaults to accepted\" — behaviour that changed on 2026-07-25 and is dated in add_decision's own description — so a conscientious agent made a redundant write on every brainstormed idea. PR #102 corrected the text on 2026-08-08. WHAT REMAINS OPEN IS THE SHAPE OF THE GUARD, and three were offered: (a) let a skill ASSERT the defaults it relies on, so skill_lint fails loudly at the moment the default changes rather than the text aging quietly; (b) GENERATE the sentence from the tool's actual default at build time, so it cannot disagree; (c) forbid a skill from naming a default at all and require it to state the RELATION instead — \"confirm the returned status is `proposed`\" — which stays true across any default change and needs no new machinery. THERE IS AN OBVIOUS HOME: skill_lint.py already enforces that every tool a skill NAMES is served, and is run in CI on every push; asserting a default is the same kind of contract one field deeper.",
+        "name": "OPEN — when a served skill's text depends on a served tool's DEFAULT, should that dependency be asserted so the build breaks when the default moves?",
+        "rationale": "Worth a decision rather than a fix note because of what the reporters said about it, which generalises past this skill: a served skill and a served tool ship from the SAME BINARY and disagreed about that binary's behaviour — the one place this class of drift should be impossible. And the skill is the half a session reads BEFORE acting, so it is the half that silently teaches the wrong model; here it taught it with emphasis (\"This call is not optional\"), which is exactly the wording that survives a skim. Their formulation is the reusable one: A RULE PINNED TO A BEHAVIOUR MUST NAME HOW TO RE-CHECK IT, NEVER JUST ITS VERDICT. Reported 2026-08-08 by dragon Boss f96eccd3 and api-boss 5d608b85, both by RUNNING it and reading the echo; api-boss stated their own bound honestly, that they did not test whether the redundant call is harmful, only that it is unnecessary.",
         "status": "proposed"
       }
     },
@@ -61186,6 +61625,32 @@
       }
     },
     {
+      "node_id": "fact:defect-a-finding-has-no-bounds-so-grading-goes-in-the-name",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A VERIFICATION HAS NOWHERE TO PUT THE CAVEATS THAT QUALIFY ITS RESULT, SO dev_storyflow HAS RATIFIED 'CARRY THE GRADING AND ALL BOUNDS IN THE NODE NAME' AS FLEET DOCTRINE — AND THE DAMAGE IS VISIBLE IN REFLOW2'S OWN OUTPUT, NOT ONLY THEIRS. Reported 2026-08-08 by dragon Boss f96eccd3 and independently by w-02baf79f. A Verification carries name, status, kind, method, level, last_run_at and NO field for the qualifications on the result. Because a bare `passing` reads to a session six weeks out as uniform coverage, the fleet arrived independently at the workaround and then adopted it on the bus as practice. THREE MEASURED CONSEQUENCES. (1) graph_report.top_gaps[0].title is a ~2,000-CHARACTER ESSAY, because a gap title embeds the verification's name; loop_status.verifications.attention[] is unreadable for the same reason; w-02baf79f measured one `name` at ~450 WORDS carrying a full graded walk report — verdict, L0/L2/L3 legs, a correction with six measured field counts, refuted mechanisms, file:line citations, bounds and an evidence path. Their judgement, which is the fair one: THAT IS EXCELLENT CONTENT IN THE WRONG FIELD. `name` is what a list renders. (2) THE NAMES ARE NO LONGER USABLE AS NAMES — they cannot be scanned, sorted or shown in a list. (3) THE BOUNDS ARE PROSE INSIDE A STRING, SO NOTHING CAN ACT ON THEM: `ver:fleet_compaction_hook` carries `status: passing` while its own name argues at length that it is FAILING, and no detector can see the contradiction because one half is a field and the other half is an essay. THIS IS NOT ONLY THEIR PROBLEM. reflow2's own loop_status verification digest reads the same way for the same reason — see ver:a-session-cannot-name-another-design, whose `name` is a multi-paragraph rationale — so this design has been paying the cost of the missing field without diagnosing it. THE SECOND-ORDER COST w-02baf79f NAMES: loop_status is advertised as the one cheap call and every worker is told to make it routinely, and it now returns a payload dominated by prose nobody asked for, which is a direct disincentive to the habit the loop depends on. FIX SHAPE, theirs: a first-class `bounds`/`caveats` field and ideally a `grade`, so `name` can go back to being a name and the qualifications become data the loop can reason about; plus a `findings`/`report` field so a walk's evidence has somewhere to live that is not its title; and truncate `name` in loop_status's rollup, or return `name` + `detail` separately. WEIGH WITH fact:defect-verification-evidence-is-prose-so-passing-can-contradict-itself — that report asks for structured RESULT fields (exit_code, command, observed/expected) for the same underlying reason, and the two proposals should be settled together rather than one at a time.",
+        "subject_id": "cap:evidence-scope",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08 dev_storyflow, dragon Boss f96eccd3 and w-02baf79f, independently\",\"missing_fields\":\"bounds/caveats, grade, findings/report on Verification\",\"workaround_now_doctrine\":\"carry the grading and all bounds in the node NAME, ratified on the fleet bus\",\"measured\":\"top_gaps[0].title ~2000 chars; one loop_status attention name ~450 words; names unscannable\",\"unseeable_contradiction\":\"ver:fleet_compaction_hook status passing while its own name argues it is failing\",\"also_true_here\":\"reflow2's own loop_status digest reads the same way - ver:a-session-cannot-name-another-design\",\"second_order\":\"the cheapest call in the surface returns prose, discouraging the habit the loop depends on\",\"fix_shape\":\"bounds/caveats + grade + findings/report fields; truncate name in the rollup or split name/detail\",\"settle_with\":\"fact:defect-verification-evidence-is-prose-so-passing-can-contradict-itself\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE THING dev_storyflow WOULD MOST LIKE CLOSED: NOTHING LINKS A CAPABILITY TO THE AUTHORING SURFACE THAT FEEDS IT, SO A CAPABILITY CAN BE `realized`, BUILT, RENDERING — AND DEAD. Reported 2026-08-08 by sb-boss ab2291fa, item 5, explicitly labelled 'the thing that would have saved the most time today' and 'the gap I would most like closed'. `cap:storybook_output` was status `realized`, its component was built, its proposer existed, its frontend rendered — AND THE CAPABILITY WAS DEAD, because no UI writes the field it consumes. EVERY EXISTING EDGE TYPE WAS SATISFIABLE WITHOUT THAT SURFACE EXISTING: REALIZES, SATISFIES, DEPENDS_ON and CONSUMES were all present and all honest. THE DIAGNOSTIC COST IS THE MEASURE OF IT: three people produced three different root causes, and all three were greppable mechanisms — because a greppable mechanism is the only kind of cause a search can find. The true cause, 'nobody ever writes this', HAD NO ARTIFACT TO FIND. THIS IS A VOCABULARY GAP, NOT A DETECTOR BUG: detect_gaps cannot ask about a surface the design has no way to say is required, which is req:the-tool-finds-its-own-blind-spots in its sharpest form to date — a detector that finds the missing half of something BEGUN, over a thing that was never begun and cannot be expressed. REFLOW2 HAS ALREADY MET THE INSTANCE AND NOT THE GENERAL CASE: req:the-store-is-reachable-from-a-session says 'a capability nothing can call is not delivered - the content store needs a surface', which is this same insight scoped to one capability and written by hand. Nothing generalises it and nothing detects it. NOTE THE ASYMMETRY WORTH THINKING ABOUT: the missing edge is not another machine-to-machine dependency, it is the HUMAN INPUT PATH — where a person or an upstream system actually puts the data the capability consumes — and reflow2 models actors INTERACTS_WITH capabilities but never that an interaction is REQUIRED for the capability to function at all.",
+        "subject_id": "req:the-tool-finds-its-own-blind-spots",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08 dev_storyflow, sb-boss ab2291fa item 5, named as their most-wanted\",\"case\":\"cap:storybook_output realized, component built, FE rendering, and dead - no UI writes the field it consumes\",\"why_invisible\":\"REALIZES/SATISFIES/DEPENDS_ON/CONSUMES were all satisfiable without the input surface existing\",\"diagnostic_cost\":\"three people, three root causes, all greppable; the true cause had no artifact to find\",\"class\":\"vocabulary gap, not a detector bug - cannot detect what cannot be expressed\",\"instance_already_here\":\"req:the-store-is-reachable-from-a-session is this insight scoped to one capability, written by hand\",\"asymmetry\":\"INTERACTS_WITH says an actor interacts; nothing says an interaction is REQUIRED for the capability to function\",\"ask\":\"a way to express 'this capability needs a human INPUT path' so its absence is detectable\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-a-running-server-cannot-say-it-is-stale",
       "node_type": "TemporalFact",
       "properties": {
@@ -61205,10 +61670,10 @@
         "basis": "measured",
         "confidence": 1.0,
         "fact_type": "defect",
-        "statement": "`add_verification` CANNOT SET `kind` OR `last_run_at`, SO RECORDING ONE VALIDATION TAKES FOUR CALLS AND THE NODE IS BORN AS THE VERY THING THE GAP SAID WAS INSUFFICIENT. Two reporters, dev_storyflow 2026-08-07. (1) w-ec25cf2c, answering an `unvalidated_capability` gap for ONE capability, had to run: add_verification -> set_verification_kind(validation) -> verifies(...) -> set_verification_status(passing, last_run_at). `add_verification` accepts `method` and `level` but NOT `kind`, so a node created specifically to satisfy an unvalidated_capability gap is born `kind: verification` — which is exactly what that gap says is already present and not enough. THE DEFAULT IS THE OPPOSITE OF THE INTENT IN THE ONE WORKFLOW THAT MOST OFTEN CREATES THESE. (2) w-fb7d30ab hit the other missing parameter: `add_verification` upserts name/level/method but has no `last_run_at`, so a node UPDATED to describe a NEW run keeps the OLD run's date. They re-ran stack_currency.py on 2026-08-07 and recorded the result into `ver:fleet_stack_currency_gate`; the node's text then described the 08-07 run while `last_run_at` still read `2026-08-03`. The node was internally inconsistent AND THE WRITE REPORTED SUCCESS with nothing saying so. They looked for a route out and could not find one — `reconcile_verification` looked like the intended path but takes real test-run outcomes, which is a different act from 're-ran a measurement script'. FIX SHAPE, from both: accept `kind` on add_verification (and ideally `verifies`, `status`, `last_run_at` too, collapsing four calls to one), or have the gap's own prompt name the exact call sequence; and either accept `last_run_at` or have the upsert WARN when name/description change while last_run_at does not. THE REPORTER'S FRAMING IS THE REUSABLE PART: a date that silently belongs to a previous run is the same failure class as 'a documented constant is not a measurement'.",
+        "statement": "`add_verification` CANNOT SET `kind`, `status` OR `last_run_at`, SO RECORDING ONE VALIDATION TAKES FOUR CALLS AND THE NODE IS BORN AS THE VERY THING THE GAP SAID WAS INSUFFICIENT. Three reporters, dev_storyflow, 2026-08-07 and 2026-08-08. (1) w-ec25cf2c, answering an `unvalidated_capability` gap for ONE capability, had to run: add_verification -> set_verification_kind(validation) -> verifies(...) -> set_verification_status(passing, last_run_at). `add_verification` accepts `method` and `level` but NOT `kind`, so a node created specifically to satisfy an unvalidated_capability gap is born `kind: verification` — which is exactly what that gap says is already present and not enough. THE DEFAULT IS THE OPPOSITE OF THE INTENT IN THE ONE WORKFLOW THAT MOST OFTEN CREATES THESE. (2) w-fb7d30ab hit the other missing parameter: `add_verification` upserts name/level/method but has no `last_run_at`, so a node UPDATED to describe a NEW run keeps the OLD run's date. They re-ran stack_currency.py on 2026-08-07 and recorded the result into `ver:fleet_stack_currency_gate`; the node's text then described the 08-07 run while `last_run_at` still read `2026-08-03`. The node was internally inconsistent AND THE WRITE REPORTED SUCCESS with nothing saying so. They looked for a route out and could not find one — `reconcile_verification` looked like the intended path but takes real test-run outcomes, which is a different act from 're-ran a measurement script'. (3) 2026-08-08, w-4d05e937 (LANE UNSUSPECTED-VALIDATION-WALK) ADDS THE THIRD MISSING PARAMETER AND THE REASON IT IS WORSE THAN INCONVENIENT. `status` is missing too, so the node is born `kind: verification, status: planned` — THE EXACT TWO VALUES THAT MAKE IT NOT ANSWER THE GAP. Their framing is the one to keep: BETWEEN CALL 1 AND CALL 4 THE GRAPH HOLDS A NODE ASSERTING SOMETHING NOBODY MEANT, and on a `--shared` graph THAT WINDOW IS VISIBLE TO EVERY OTHER ATTACHED SESSION. What was a four-call annoyance on a single-writer store is a publication of a false claim on a shared one, for as long as the sequence takes. They filed it knowing the `kind` half was already reported, per the file's own no-dedup rule. FIX SHAPE, from all three: accept `kind`, `status`, `last_run_at` and a `verifies` target on add_verification, collapsing four calls to one; or have the gap's own prompt name the exact call sequence; and either accept `last_run_at` or have the upsert WARN when name/description change while last_run_at does not. THE REUSABLE FRAMING: a date that silently belongs to a previous run is the same failure class as 'a documented constant is not a measurement' — and an intermediate state visible to other writers is the same failure class as a non-atomic write.",
         "subject_id": "cap:reconcile-verified",
         "valid_from": "2026-08-07",
-        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-ec25cf2c (kind) and w-fb7d30ab (last_run_at), independently\",\"defect_a\":\"no kind param, so a node answering an unvalidated_capability gap is born kind: verification\",\"defect_b\":\"no last_run_at param, so an updated node keeps the previous run's date and the write still reports success\",\"cost\":\"four calls to record one validation\",\"no_workaround_found\":\"reconcile_verification takes test-run outcomes, a different act from re-running a measurement script\",\"fix_shape\":\"accept kind (and verifies/status/last_run_at) on add_verification; warn when the description moves and last_run_at does not\"}"
+        "value": "{\"reported\":\"2026-08-07 w-ec25cf2c (kind) and w-fb7d30ab (last_run_at); 2026-08-08 w-4d05e937 (status + the shared-window consequence)\",\"defect_a\":\"no kind param, so a node answering an unvalidated_capability gap is born kind: verification\",\"defect_b\":\"no last_run_at param, so an updated node keeps the previous run's date and the write still reports success\",\"defect_c\":\"no status param, so the node is born planned - with kind, the exact two values that fail to answer the gap\",\"cost\":\"four calls to record one validation\",\"shared_graph_consequence\":\"between call 1 and call 4 the graph publishes a claim nobody meant, visible to every attached session\",\"no_workaround_found\":\"reconcile_verification takes test-run outcomes, a different act from re-running a measurement script\",\"fix_shape\":\"accept kind, status, last_run_at and a verifies target on add_verification; warn when the description moves and last_run_at does not\"}"
       }
     },
     {
@@ -61248,6 +61713,19 @@
         "subject_id": "cap:reconcile-artifacts",
         "valid_from": "2026-08-08",
         "value": "{\"reported\":\"2026-08-08 dev_storyflow, api-boss 5d608b85\",\"defect\":\"volatility: append_only exempts every edit to the file, including a structural rewrite of binding rules, and the exemption is invisible\",\"loop_status_said\":\"undispositioned_drift: 0 - meaning no detector had looked, not that nothing changed\",\"what_caught_it\":\"the Stop hook, not loop_status\",\"fix_shape\":\"suppress reporting but still allow a design_updated disposition; or report 'N artifacts exempted by volatility'\",\"credit\":\"propagate_change found a risk crossing on req:fleet_no_idle_worker at distance 3 that no reviewer raised; set_artifact_checksum's forced disposition called good design worth keeping\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-causes-validation-status-hint-names-the-wrong-enum",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`describe_schema`'s HINT FOR `CAUSES.validation_status` NAMES FOUR VALUES, AND THE ENUM ACCEPTS FOUR DIFFERENT ONES. Found here, in this repo, on 2026-08-08, by following describe_schema and being refused. The hint reads: 'Whether the causal claim has been tested (observational / intervention / mechanism / temporal).' The enum is `[\"unvalidated\", \"hypothesis\", \"validated\", \"refuted\"]`. NOT ONE OF THE FOUR WORDS IN THE PROSE IS ACCEPTED. I called describe_schema BEFORE writing the edge — which is what AGENTS.md says to do instead of guessing — read the parenthetical as the value list, and the write was refused. THE REFUSAL WAS EXCELLENT and is why this is minor: it named the edge, the property, the offered value and all four accepted ones, so the fix took one retry and no investigation. The cost is one round trip; the significance is the class. THIS IS THE SAME SHAPE AS THE brainstorm/add_decision DRIFT REPORTED BY dev_storyflow THE SAME DAY, one layer lower: two halves of the SAME served surface, shipped from the SAME binary, disagreeing about that binary's behaviour — there a skill against a tool, here a property's description against its own validator. And it is the more troubling instance of the two, because a description sitting beside the enum it describes has NOTHING between them: no build step, no separate file, no drift window. Whatever guard dec:idea-a-skill-may-assert-the-defaults-it-relies-on settles on for skills, a description and its enum living in one struct ought to be checkable mechanically and is not. FIX SHAPE: correct the hint to the accepted values; and consider a lint that fails when a property description contains a parenthesised slash-separated list whose members are not the property's enum values — crude, but it would have caught this one and it is the pattern every such hint uses. NOTE THE HONEST BOUND ON MY OWN CLAIM: I did not audit the other property descriptions. This is one instance found by tripping over it, not a survey, and the survey is the obvious next step.",
+        "subject_id": "cap:vocabulary",
+        "valid_from": "2026-08-08",
+        "value": "{\"found\":\"2026-08-08, in this repo, by calling describe_schema first and being refused\",\"hint_says\":\"observational / intervention / mechanism / temporal\",\"enum_accepts\":\"unvalidated / hypothesis / validated / refuted\",\"overlap\":\"none\",\"cost\":\"one round trip; the refusal named the property and all four accepted values\",\"class\":\"a served description disagreeing with the served validator beside it - same shape as the brainstorm/add_decision drift, one layer lower and with no drift window at all\",\"fix_shape\":\"correct the hint; consider a lint that checks a parenthesised slash-list in a property description against that property's enum\",\"bound\":\"one instance found by tripping over it - the other property descriptions were NOT audited\"}"
       }
     },
     {
@@ -61328,6 +61806,45 @@
       }
     },
     {
+      "node_id": "fact:defect-duplicate-findings-hide-a-hub-so-five-are-two",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "FIVE DUPLICATE FINDINGS WERE REALLY TWO HUB NODES, AND THE COUNT IS WHAT MADE THEM LOOK INDEPENDENT. Reported 2026-08-08 by w-3f408ab0 (dev_storyflow, LANE STORYBOOK-WALK). A detect_defects scoped to cap:storybook_output (depth 3, region_size 71) returned `in_scope: 5`, every one `category: duplicate` / `suggested_fix_type: merge`. Reading the MEMBERS rather than the count: `dec:edge_reads_derive_from_schema_not_allowlist` appears in THREE of the five pairs — against three decisions with nothing in common but being decisions — and `req:backend_as_product` appears in the other two. So five findings are two nodes the scorer pairs with everything. WHY THIS IS A REPORT AND NOT A SHRUG, in the reporter's words: their fleet is stood down from apply_heal because 'mechanical' merges were proposed off false duplicates, and FIVE SEPARATE WARNINGS READ AS FIVE SEPARATE JUDGEMENTS CORROBORATING EACH OTHER, while 'one node the scorer pairs with everything' reads as what it is — a property of the SCORER, not of the design. The grouping would have made the stand-down diagnosable from one call instead of from a human reading five messages. FIX SHAPE: when a node appears in >= N duplicate pairs, say so in the output (`hub: true`), or group the pairs by shared member. The detector already holds every pair, so the grouping is free. THE REPORTER FRAMES IT AS THEIR OWN RULE POINTED BACK AT US: a set reduced to a scalar is not a check of the set — here the scalar is the finding count. NOT FIXED BY THE 2026-08-08 DUPLICATES.basis WORK (PR #99): that stops a suspected edge licensing a deletion; it does not stop five findings over two nodes reading as five independent judgements.",
+        "subject_id": "cap:heal",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08 dev_storyflow, w-3f408ab0, LANE STORYBOOK-WALK\",\"measured\":\"detect_defects scope cap:storybook_output depth 3 region_size 71 -> in_scope 5, all duplicate/merge\",\"actual\":\"dec:edge_reads_derive_from_schema_not_allowlist in 3 of 5 pairs; req:backend_as_product in the other 2\",\"harm\":\"a count makes correlated findings read as independent corroboration, during a stand-down\",\"fix_shape\":\"hub: true when a node appears in >=N pairs, or group pairs by shared member; the pairs are already in hand\",\"not_covered_by\":\"PR #99 DUPLICATES.basis - that gates deletion, not the counting\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-four-live-counts-and-none-names-its-predicate",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "FOUR DIFFERENT NUMBERS DESCRIBING WHAT READS AS ONE SET WERE ALL LIVE AND ALL CORRECT, AND NOTHING IN THE SURFACE SAYS WHICH QUESTION EACH ANSWERED. Reported 2026-08-08 by dragon Boss f96eccd3, who credits the find to their worker w-4d05e937 for refusing to inherit a number from the brief. The boss had quoted '53 capabilities claim built' from scan_nodes. The worker produced four, all live at the same moment: status in {realized, verified} = 53, a STATUS-FIELD question; capabilities_verified = 56, has ANY Verification attached; realization.realized = 37, has an ARTIFACT that REALIZES it; and the population of gap:0a77650b58242054 = 48, the gap's own set. FOUR DIFFERENT PREDICATES OVER THE SAME NODE TYPE, EVERY ONE LEGITIMATE, AND NEITHER graph_report NOR loop_status LABELS WHICH IS WHICH — so a fleet quotes one of them for weeks believing it is THE number. THIS IS FIELD EVIDENCE FOR AN ACCEPTED REQUIREMENT NOTHING SATISFIES: req:a-surface-states-its-own-scope ('an output says which question it answered, and what it could not see') is accepted and currently sits in gap:45e43cc49581b991 with no capability delivering it. The half usually argued is 'what it could not see'; this report is the OTHER half — WHICH QUESTION IT ANSWERED — and it is the half that produced the error here, because all four numbers were complete and none was ambiguous about coverage. FIX SHAPE, theirs: name the predicate inline next to each count (`capabilities_verified: 56 (have >=1 VERIFIES edge)`), and/or let a rollup return the SET behind it so a denominator is auditable without re-deriving it by hand. Their formulation is worth keeping verbatim: A COUNT WHOSE DEFINITION TRAVELS WITH IT CANNOT BE QUOTED AS A DIFFERENT COUNT.",
+        "subject_id": "req:a-surface-states-its-own-scope",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08 dev_storyflow, dragon Boss f96eccd3, credited to w-4d05e937\",\"numbers\":\"53 status in {realized,verified}; 56 has any Verification; 37 realization.realized (has an Artifact); 48 the gap's own set\",\"defect\":\"four predicates over one node type, no output labels which is which\",\"consequence\":\"a fleet quotes one for weeks believing it is THE number\",\"evidence_for\":\"req:a-surface-states-its-own-scope (accepted, unsatisfied, gap:45e43cc49581b991)\",\"which_half\":\"which question it ANSWERED - not the coverage half usually argued\",\"fix_shape\":\"name the predicate inline beside each count; let a rollup return the set behind it\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-get-skill-carries-no-version",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A SESSION THAT READ A SKILL AT MINUTE 0 AND ACTS ON IT AT MINUTE 90 HAS NO WAY TO KNOW THE SERVED SKILL CHANGED UNDERNEATH IT, BECAUSE `get_skill` OUTPUT CARRIES NO VERSION OR HASH. Reported 2026-08-08 by w-02baf79f (dev_storyflow), and filed by them as an ADJACENT risk rather than a reflow2 bug — the honest framing, which is worth preserving. WHAT HAPPENED TO THEM was not in reflow2: their binding rulebook PROTOCOL.md grew from 801 to 819 lines WHILE THEY WERE READING IT, the delta was a new binding rule, a peer had committed into the shared clone, and their working tree was clean so nothing warned them. THE REASON IT IS FILED HERE IS A COMPLIMENT AND A GAP IN ONE: reflow2's skills are SERVED, NOT INSTALLED, explicitly so they cannot go stale relative to the binary (dec:skills-served) — which the reporter notes solves exactly the class of problem they just hit in a file that is NOT served. THE RESIDUE: served-ness makes the skill current at the moment of the CALL; it says nothing across a long session. A skill can be revised between minute 0 and minute 90 of the same session and nothing in the response would differ. FIX SHAPE, theirs: stamp get_skill output with a version or content hash, so a long session can cheaply detect that the instructions it is following have been revised. THE SECOND-ORDER VALUE THEY NAME IS THE BETTER ARGUMENT: it makes 'I read the skill' A CHECKABLE CLAIM RATHER THAN A DURABLE-SOUNDING ONE — which lands directly on cap:skill-loads-are-counted, where the count currently records that a skill was opened but not WHICH TEXT was opened.",
+        "subject_id": "cap:skills-served",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08 dev_storyflow, w-02baf79f, filed by them as an adjacent risk not a bug\",\"their_incident\":\"PROTOCOL.md grew 801->819 lines mid-read, the delta was a new binding rule, nothing warned them\",\"why_here\":\"dec:skills-served solves that class for reflow2 - the reporter says so - but only at call time\",\"residue\":\"a skill revised mid-session is indistinguishable in the response; no version or hash is carried\",\"fix_shape\":\"stamp get_skill output with a version/content hash\",\"second_order\":\"makes 'I read the skill' checkable; lands on cap:skill-loads-are-counted, which counts opens but not which text\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-ingest-corpus-answers-are-keyed-on-the-document-text",
       "node_type": "TemporalFact",
       "properties": {
@@ -61350,7 +61867,7 @@
         "statement": "CORPUS INGEST WRITES THE `DUPLICATES` EDGE THAT `dec:ask-not-repair` PROMISED ONLY A HUMAN WOULD DRAW — SO HEAL PROPOSES IRREVERSIBLE DELETIONS FROM A STRING SCORE, AND THE check-health SKILL CALLS THAT HALF THE SAFE ONE. Reported by dev_storyflow 2026-08-07 as the highest-severity item that channel has sent; ROOT CAUSE DIAGNOSED HERE, and neither reporting session had it. WHAT THEY MEASURED, from opposite ends and without connecting them: (a) api-boss `5d608b85`, during ingest_corpus_step, saw 6 fuzzy merge candidates scoring 81-85 on semantically UNRELATED nodes, and filed it low-priority because the auto-merge threshold of 90 held and nothing merged; (b) hours later sb-boss `ab2291fa` ran propose_heal(balanced) on the same graph and got 10 operations, EVERY ONE a Merge that DELETES its remove_id, including `req:graph_is_the_content_bible`, a load-bearing node. They verified four pairs by READING them: `dec:local_uses_brand_hostnames_not_ports` (local dev selects a brand by /etc/hosts subdomain, not port) paired against `dec:scorecard_is_generated_never_hand_edited` (the benchmark runner generates the scorecard). No shared subject, vocabulary, or edges. Three bosses stood the whole fleet down from running check-health. THE MECHANISM, read out of this repo rather than inferred: crates/reflow2-core/src/ingest.rs:1517 `suspect_duplicate` PERSISTS a near-match as a real `DUPLICATES` edge whenever the score lands in the ASK band — at or above the type's fuzzy_threshold and below auto_merge_threshold, defaults 70 and 90 (identity via resolution_thresholds, ingest.rs:1629). The score is `token_sort_ratio` over NAMES ONLY, case- and order-insensitive, explicitly 'no embeddings' (ingest.rs:1654) — a character-ratio over sorted tokens, which is why two long design-node names sharing ordinary English words reach 81-85 with no shared subject. That edge is then indistinguishable from a human's: heal.rs:798 fires `duplicate` on ANY `DUPLICATES` edge, propose_heal turns it into a Merge, and apply_heal deletes. WHY THIS IS A DESIGN VIOLATION AND NOT A TUNING PROBLEM: `dec:ask-not-repair` is ACCEPTED and reads 'possible_duplicate is a DETECT gap; HEAL merges only on a human-drawn DUPLICATES edge', with the rationale 'apply_heal deletes a node with no undo, so merge is safe only because the endpoints were asserted; a heuristic must not drive it.' Ingest makes that premise false. The irony is documented in the code: ingest.rs:1492 says persisting the edge 'is what makes dec:ask-not-repair affordable at corpus scale', reasoning that the edge turns a transient suspicion into a standing QUESTION detect_defects can batch. The reasoning is sound about batching and wrong about safety — nothing downstream reads the edge as a question, because nothing can tell it from an assertion. THE THIRD LINK, and it is the one that closes the circuit: the served check-health skill tables `duplicate` as 'machine — merged by apply_heal', and step 3 says in terms 'requires_human_review being true does not mean you should withhold the mechanical merge', two paragraphs before conceding 'a merge deletes a node and cannot be undone'. AN AGENT FOLLOWING THE SKILL EXACTLY DELETES TEN DESIGN NODES. sb-boss stopped at step 2 only because the pairings looked implausible enough to read. WORSE ON A SHARED GRAPH: one seat's apply hits every attached session instantly, with no undo and no notification — 7 client processes were attached that day. FIX SHAPE, not yet chosen: the ingest-written edge needs to be distinguishable from a human's (it already carries `confidence`, but that property is OMITTED for a structural token-subset match, so its absence does NOT mean human) — a provenance marker on the edge, with HEAL merging only unmarked ones; and 'delete a node' should not be classed mechanical regardless of source. The scorer is a separate, smaller question: 81-85 on unrelated nodes means token_sort_ratio over names is not measuring duplication of meaning at the band that matters.",
         "subject_id": "dec:ask-not-repair",
         "valid_from": "2026-08-07",
-        "value": "{\"severity\":\"highest reported by this channel\",\"reported\":\"2026-08-07 dev_storyflow, sb-boss ab2291fa + api-boss 5d608b85, independently, from opposite ends\",\"root_cause_found\":\"here, 2026-08-07, by reading crates/reflow2-core/src/ingest.rs and heal.rs\",\"chain\":\"ingest.rs:1517 suspect_duplicate writes DUPLICATES in the 70-89 ASK band -> heal.rs:798 fires duplicate on any DUPLICATES edge -> propose_heal builds a Merge -> apply_heal deletes\",\"scorer\":\"token_sort_ratio over node NAMES only, no embeddings (ingest.rs:1654)\",\"thresholds\":\"DEFAULT_FUZZY_THRESHOLD 70 / DEFAULT_AUTO_MERGE_THRESHOLD 90, per-type via schema resolution block\",\"decision_violated\":\"dec:ask-not-repair, accepted 2026-07-19: merge only on a human-drawn edge, a heuristic must not drive it\",\"skill_half\":\"check-health tables duplicate as machine-fixable and tells the agent not to withhold the merge\",\"observed_consequence\":\"10 proposed node deletions, incl. req:graph_is_the_content_bible; 3 bosses stood the fleet down from check-health\",\"blast_on_shared\":\"one apply hits all attached seats, no undo, no notification; 7 attached that day\",\"not_yet_fixed\":\"true\"}"
+        "value": "{\"severity\":\"highest reported by this channel\",\"reported\":\"2026-08-07 dev_storyflow, sb-boss ab2291fa + api-boss 5d608b85, independently, from opposite ends\",\"root_cause_found\":\"here, 2026-08-07, by reading crates/reflow2-core/src/ingest.rs and heal.rs\",\"chain\":\"ingest.rs:1517 suspect_duplicate writes DUPLICATES in the 70-89 ASK band -> heal.rs:798 fires duplicate on any DUPLICATES edge -> propose_heal builds a Merge -> apply_heal deletes\",\"scorer\":\"token_sort_ratio over node NAMES only, no embeddings (ingest.rs:1654)\",\"thresholds\":\"DEFAULT_FUZZY_THRESHOLD 70 / DEFAULT_AUTO_MERGE_THRESHOLD 90, per-type via schema resolution block\",\"decision_violated\":\"dec:ask-not-repair, accepted 2026-07-19: merge only on a human-drawn edge, a heuristic must not drive it\",\"skill_half\":\"check-health tables duplicate as machine-fixable and tells the agent not to withhold the merge\",\"observed_consequence\":\"10 proposed node deletions, incl. req:graph_is_the_content_bible; 3 bosses stood the fleet down from check-health\",\"blast_on_shared\":\"one apply hits all attached seats, no undo, no notification; 7 attached that day\",\"reproductions_20260808\":\"four independent, across three seats, plus one at cmp:dynograph scope where 16 of 23 in-scope defects were DELETIONS and req:backend_as_product was proposed for merger with FIVE unrelated requirements\",\"stand_down_scope_20260808\":\"widened from check-health to the WHOLE HEAL SURFACE - sb-boss: 'Nobody in this fleet may now run apply_heal'\",\"fixed_on_main\":\"PR #99, DUPLICATES.basis asserted|suspected, absent reads as suspected; merged 2026-08-08\",\"still_open_because\":\"the fleet runs 0.24.0 - the fix is merged and UNRELEASED, so the stand-down stands and the whole HEAL surface is dark to them\",\"survivor_half_not_covered\":\"fact:defect-merge-survivor-ignores-priority-and-status - #99 gates WHETHER a merge runs, not WHICH node survives\"}"
       }
     },
     {
@@ -61398,10 +61915,10 @@
         "basis": "measured",
         "confidence": 1.0,
         "fact_type": "defect",
-        "statement": "`loop_status`'s OWN `next` LIST NAMES THE DESTRUCTIVE SKILL AS THE IMPERATIVE, AND IT IS THE FIELD A FRESH SESSION TRUSTS MOST. Reported by w-abbb53d2 (dev_storyflow, 2026-08-07). loop_status returned, verbatim: `\"26 structural defect(s) outstanding — run check-health (detect_defects)\"`. That line is the tool telling an arriving session what to do next, and it is the single most authoritative-feeling string in the payload for a seat that has just cold-started and is looking for its footing. On that night it named the one skill three bosses had stood the entire fleet down from running — because check-health step 3 applies the 'mechanical' operations without review, which on that graph was 10 irreversible node deletions from duplicate detections scored 81-85 on unrelated nodes (see fact:defect-ingest-writes-duplicates-that-heal-then-merges). The safe half, `detect_defects`, is in the parenthetical — the part most likely to be skimmed. A session that follows `next` literally, which is what `next` is FOR, walks into it. THE REPORTER WAS EXPLICIT THAT THIS IS DISTINCT from the apply_heal reports already filed and asked for it not to be deduped: those are about the skill and the scorer, this is about THE LOOP'S OWN GUIDANCE FIELD POINTING AT THE HAZARD, so the routing survives even for a reader who never opens the skill. THIS REPO CONFIRMS the wording is still shipped: loop_status's `next` on reflow2's own graph today reads `\"1 structural defect(s) outstanding — run check-health (detect_defects)\"`. FIX SHAPE, small and mechanical: have `next` name the NON-MUTATING call as the instruction and the skill as context — `\"run detect_defects (scoped to your area); see check-health for the workflow\"` — rather than the reverse. GENERALISATION THE REPORTER OFFERED: when a skill contains an irreversible step, the loop's own to-do list should not name that skill as the imperative.",
+        "statement": "`loop_status`'s OWN `next` LIST NAMES THE DESTRUCTIVE SKILL AS THE IMPERATIVE, AND IT IS THE FIELD A FRESH SESSION TRUSTS MOST. Reported by w-abbb53d2 (dev_storyflow, 2026-08-07). loop_status returned, verbatim: `\"26 structural defect(s) outstanding — run check-health (detect_defects)\"`. That line is the tool telling an arriving session what to do next, and it is the single most authoritative-feeling string in the payload for a seat that has just cold-started and is looking for its footing. On that night it named the one skill three bosses had stood the entire fleet down from running — because check-health step 3 applies the 'mechanical' operations without review, which on that graph was 10 irreversible node deletions from duplicate detections scored 81-85 on unrelated nodes (see fact:defect-ingest-writes-duplicates-that-heal-then-merges). The safe half, `detect_defects`, is in the parenthetical — the part most likely to be skimmed. A session that follows `next` literally, which is what `next` is FOR, walks into it. THE REPORTER WAS EXPLICIT THAT THIS IS DISTINCT from the apply_heal reports already filed and asked for it not to be deduped: those are about the skill and the scorer, this is about THE LOOP'S OWN GUIDANCE FIELD POINTING AT THE HAZARD, so the routing survives even for a reader who never opens the skill. THIS REPO CONFIRMS the wording is still shipped: loop_status's `next` on reflow2's own graph today reads `\"1 structural defect(s) outstanding — run check-health (detect_defects)\"`. FIX SHAPE, small and mechanical: have `next` name the NON-MUTATING call as the instruction and the skill as context — `\"run detect_defects (scoped to your area); see check-health for the workflow\"` — rather than the reverse. GENERALISATION THE REPORTER OFFERED: when a skill contains an irreversible step, the loop's own to-do list should not name that skill as the imperative. ---- 2026-08-08 UPDATE: THREE MORE INDEPENDENT REPRODUCTIONS, AND THE STRONGEST EVIDENCE YET THAT A STRING CAN BECOME DOCTRINE. sb-boss ab2291fa (item 1): *'It printed into my session TWICE and I read past it BOTH TIMES'* — from the seat that issued the stand-down. w-9d1d1499: *'I received that conflated string personally, in the call I am REQUIRED to make'*, and named the precise conflation — check-health is the SKILL and it reads AND APPLIES, detect_defects is the TOOL and it only reads, and the string names the destructive one first with the safe one parenthesised as if they were the same act. w-02baf79f filed it a THIRD time ten minutes after a peer, deliberately and with the reason stated: *'one report reads as one seat's opinion while two reads as the tool doing it to everyone.'* THE MEASURE OF THE COST IS THE COUNTERMEASURE: this fleet now runs a STANDING STOP-ORDER POSTED AT THE TOP OF THE WORKER BOARD, so every worker reads a `## 🛑` warning before they are allowed to trust the output of a required call. In w-02baf79f's words, *'the doctrine patch is load-bearing where a string change would do.'* ---- STATUS: FIXED ON MAIN, NOT YET IN ANY RELEASE. `req:a-hint-names-its-next-call` was accepted and the wording changed in PR #102 (main `51e3c63`, 2026-08-08). THIS FACT STAYS OPEN — no VALID_TO — BECAUSE THE FLEET RUNS 0.24.0 AND STILL RECEIVES THE OLD STRING. Closing it on the merge rather than the release would assert a fix reached a user it has not reached, which is the same class of error as a status believed forever. THIS IS THE CONCRETE REASON THE RELEASE CUT IS OWED.",
         "subject_id": "cap:loop-status",
         "valid_from": "2026-08-07",
-        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-abbb53d2\",\"verbatim\":\"26 structural defect(s) outstanding - run check-health (detect_defects)\",\"still_shipped\":\"confirmed on reflow2's own graph 2026-08-07: same wording, 1 defect\",\"why_distinct\":\"reporter asked it not be deduped: this is the guidance field, not the skill or the scorer\",\"fix_shape\":\"name the non-mutating call as the imperative, the skill as context\",\"generalisation\":\"a to-do list should not name a skill whose steps include an irreversible one\"}"
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-abbb53d2; three more 2026-08-08 (sb-boss ab2291fa, w-9d1d1499, w-02baf79f)\",\"verbatim\":\"27 structural defect(s) outstanding - run check-health (detect_defects)\",\"reproductions\":4,\"seats\":\"one boss and three workers, across two days\",\"read_past_it\":\"sb-boss saw it twice and read past it both times, from the seat that issued the stand-down\",\"conflation\":\"check-health is the SKILL and applies; detect_defects is the TOOL and only reads; the string names the destructive one first\",\"countermeasure_in_place\":\"a standing stop-order posted at the top of the worker board, so every worker reads a warning before trusting a required call\",\"fix_shape\":\"name the non-mutating call as the imperative, the skill as context\",\"fixed_on_main\":\"PR #102, main 51e3c63, 2026-08-08, req:a-hint-names-its-next-call\",\"still_open_because\":\"the fleet runs 0.24.0 and still receives the old string - closing on merge would assert a fix reached a user it has not\",\"generalisation\":\"a to-do list should not name a skill whose steps include an irreversible one\"}"
       }
     },
     {
@@ -61431,6 +61948,32 @@
       }
     },
     {
+      "node_id": "fact:defect-merge-survivor-ignores-priority-and-status",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE PROPOSED MERGE WOULD HAVE DELETED A `critical`/`proposed` REQUIREMENT IN FAVOUR OF AN UNRELATED `accepted` ONE, BECAUSE SURVIVOR SELECTION CONSULTS NEITHER PRIORITY NOR STATUS. Reported 2026-08-08 by w-9d1d1499 (dev_storyflow, LANE PROSE-JOIN) — a fourth independent seat reaching the duplicate-detector conclusion. They read BOTH nodes of one pair rather than trusting the score. `req:graph_is_the_content_bible`, priority CRITICAL, status PROPOSED: characters, locations, events, dimensions, dialogue, props and factions flow FROM the graph INTO every rendered panel, so rendered media is grounded rather than re-invented per render. `req:backend_as_product`, priority medium, status ACCEPTED: any authorized client - third-party frontend, phone app, CLI, editor plugin - can consume the narrative-graph capabilities WITHOUT our UI, API key with per-key rate tiers and a daily ingest budget. One is about grounding rendered media; the other about strangers building against a public API. NO SHARED REQUIREMENT, SURFACE OR ACTOR — the similarity is prose alone. TWO DISTINCT DEFECTS IN ONE CASE. (1) SCORING: name/prose similarity with no weighting by shared referents (actors, surfaces, components), so two requirements that touch nothing in common score as covering the same ground. (2) DIRECTION: the destructive half lands on the more load-bearing node. dec:merge-survivor-provenance settles the survivor by PROVENANCE with id breaking ties, and neither priority nor status is consulted anywhere in that rule — so an accepted, medium-priority node can eat a critical one that is still awaiting the user's word, which is exactly the certainty dec:certainty-derived says a status carries. THIS IS THE HALF PR #99 DID NOT COVER, and the distinction matters: #99 made a heuristic edge non-mergeable, so this case no longer proceeds automatically — but the moment a human DOES assert a duplicate, the same rule still picks the same survivor. FIX SHAPE, theirs: weight similarity by shared referents rather than prose; and never propose a merge that deletes a higher-priority or differently-statused node without saying so in the proposal.",
+        "subject_id": "cap:heal",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08 dev_storyflow, w-9d1d1499, LANE PROSE-JOIN, fourth independent seat\",\"pair\":\"req:graph_is_the_content_bible (critical, proposed) vs req:backend_as_product (medium, accepted)\",\"overlap\":\"none - no shared requirement, surface or actor; similarity is prose alone\",\"defect_a\":\"similarity is not weighted by shared referents\",\"defect_b\":\"survivor selection consults provenance and id only - not priority, not status\",\"conflicts_with\":\"dec:merge-survivor-provenance\",\"not_covered_by\":\"PR #99 - that gates WHETHER a merge may run, not WHICH node survives when a human asserts one\",\"fix_shape\":\"weight by shared referents; refuse or flag a merge that deletes a higher-priority or differently-statused node\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-no-way-to-mark-a-capability-contested",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "BETWEEN LEARNING A CAPABILITY'S CLAIM IS FALSE AND BEING READY TO RESTATE IT, THE GRAPH GOES ON ASSERTING THE FALSE THING, BECAUSE THERE IS NO WAY TO MARK A STATUS AS UNDER CHALLENGE. Reported 2026-08-08 by sb-boss ab2291fa, item 4. They demoted `cap:storybook_output` from `realized` to `in_progress` after a failing walk. Between the walk and the demotion the graph asserted something false WITH NO WAY TO SAY SO — and on a `--shared` graph that window is not private: every other attached session reads the stale claim as current. The status enum (planned / in_progress / realized / verified) has no value meaning 'disputed pending evidence', and demoting early is itself a claim — it asserts a position on work that may turn out fine. FIX SHAPE, theirs, and they offered two: a lightweight `contested` marker; OR let a FAILING `kind=validation` VERIFIES edge automatically flag the capability's status as unsafe to trust, which needs no new status value and is computed rather than remembered. THE SECOND SHAPE FITS THIS DESIGN BETTER ON ITS FACE — dec:passing-is-verified already computes 'verified' from a check that passes rather than from a status field, so computing 'contested' from a check that fails is the same move in the other direction. WORTH NOTING THE ADJACENCY: req:blocking-is-partial ('work that drifted can be frozen without freezing the work that did not') is the same instinct applied to drift rather than to a failing check.",
+        "subject_id": "cap:reconcile-verified",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08 dev_storyflow, sb-boss ab2291fa item 4\",\"case\":\"cap:storybook_output demoted realized -> in_progress after a failing walk; the window between asserted something false\",\"shared_graph\":\"the stale claim is visible to every attached session during that window\",\"gap\":\"no status value or marker means 'disputed pending evidence'; demoting early is itself a claim\",\"fix_shape_a\":\"a lightweight contested marker\",\"fix_shape_b\":\"a failing kind=validation VERIFIES edge flags the capability as unsafe to trust - computed, not remembered\",\"fits_existing\":\"dec:passing-is-verified already computes verified from a passing check; this is the same move inverted\",\"adjacent\":\"req:blocking-is-partial\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-open-questions-zero-reads-as-an-all-clear",
       "node_type": "TemporalFact",
       "properties": {
@@ -61441,6 +61984,19 @@
         "subject_id": "cap:loop-status",
         "valid_from": "2026-08-07",
         "value": "{\"reported\":\"2026-08-07 dev_storyflow api-boss 5d608b85; also 2026-08-03 by api-boss 07426210\",\"same_session_contrast\":\"open_questions count 0 while loop_status owed 69 gaps / 26 defects / 20 unproven / 20 unexamined\",\"proof_of_harm\":\"the fleet's boss cold-start card carries a hand-written 'count: 0 is NOT an all-clear' warning\",\"reporter_framing\":\"a caveat maintained in a downstream doc is a defect routed around rather than fixed\",\"fix_shape\":\"on count==0, state what the answer does not cover and point at loop_status\",\"class\":\"one of three same-day cases of a correct number answering a different question than the reader's\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-orientation-needs-a-seed-and-a-new-session-has-none",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE MOMENT A SESSION HAS THE MOST TIME AVAILABLE IS THE MOMENT THE DESIGN BRAIN IS LEAST USABLE, BECAUSE EVERY ORIENTATION TOOL WANTS A SEED AND A SESSION AT CHECK-IN HAS NONE. Reported 2026-08-08 by w-02baf79f (dev_storyflow), sitting AVAILABLE in the pool with no lane. Every piece of guidance they are given says ORIENT BEFORE YOU TOUCH ANYTHING. The orientation tools are shaped around a seed: detect_gaps and detect_defects want a `scope` node id, claim_region wants a `seed_id`. A worker at check-in has no lane and therefore no seed. THE ONLY SEEDLESS CALLS ARE GLOBAL ROLLUPS, WHICH THEIR OWN DOCTRINE FORBIDS THEM TO ATTRIBUTE TO THEMSELVES (see fact:defect-rollups-became-fleet-numbers-without-saying-so). So the honest options were (a) call nothing, or (b) call an unscoped tool and hedge the number in a paragraph. THEY CHOSE (a) AND RECORDED WHY, which is what makes this a measurement rather than a complaint. THE INVERSION IS THE FINDING, in their words: the moment with the most time available — sitting available, nothing to do — is the moment the design brain is least usable, and the moment they are busiest, mid-lane, is when they are told to orient. NOTE WHAT REFLOW2 ALREADY HAS AND WHY IT DOES NOT CLOSE THIS: search_design is seedless and works, but it requires you to already know the WORDS — which is the same guessing problem recorded in dec:idea-what-governs-this-file, where an accepted decision was found only because the right search term was guessed. FIX SHAPE, theirs: a search_design-backed 'what regions exist and how big are they' summary, or let detect_gaps take a FREE-TEXT TOPIC instead of a node id, so a seedless session can FIND its seed rather than needing one to start.",
+        "subject_id": "cap:scoped-analysis",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08 dev_storyflow, w-02baf79f, at an unclaimed pool check-in\",\"shape\":\"detect_gaps/detect_defects want scope; claim_region wants seed_id; a session at check-in has no seed\",\"only_seedless\":\"global rollups, which their doctrine forbids attributing to themselves\",\"what_they_did\":\"called nothing, and recorded why\",\"inversion\":\"most time available = least usable; busiest mid-lane = when told to orient\",\"why_search_does_not_close_it\":\"search_design is seedless but needs the right words - the guessing problem in dec:idea-what-governs-this-file\",\"fix_shape\":\"a 'what regions exist and how big' summary, or detect_gaps taking a free-text topic\"}"
       }
     },
     {
@@ -61463,10 +62019,10 @@
         "basis": "measured",
         "confidence": 1.0,
         "fact_type": "defect",
-        "statement": "`--shared` TURNED SESSION-LOCAL METRICS INTO SHARED-STATE METRICS WITHOUT CHANGING THEIR INTERFACE, AND TWO BOSSES ATTRIBUTED A FLEET-WIDE MOVEMENT TO THEIR OWN CHANGE — IN THE FLATTERING DIRECTION. loop_status and graph_report read IDENTICALLY before and after the migration; only the MEANING of their numbers changed. A total is now a fleet number moved by every attached boss and worker, wearing the timestamp of whoever asked. MEASURED on one graph in one day by non-coordinating sessions: defects 42 -> 6 -> 5 -> 12 (the 5 -> 12 arriving an hour later to a session that had done nothing at all), and gaps 48 -> 55 -> 69. api-boss `5d608b85` reported '42 -> 6' to the user TWICE as their own result; it was not. A worker checking in reported gaps 55 -> 69 and defects 12 -> 26 between two check-ins hours apart and, correctly, could name no cause. CONSEQUENCE THE REPORTER DREW AND IT IS THE GENERAL ONE: every citation of these counts written before `--shared` is now subtly wrong, and nothing in the output says so. THE ROOT SHAPE, in their words: A SESSION CANNOT TELL THAT IT IS NOT ALONE. Nothing in any payload reports concurrency — no attached-session count, no last-write-by — so every seat reasons as if solo and the output actively encourages it. They fixed it with a fleet convention (state whether a count is FLEET or SCOPED), which is a discipline layered on top of a tool that could just say it; a caveat maintained in a downstream doc is a defect routed around rather than fixed. RELATED AND SEPARATELY REPORTED: there is no 'what changed since I looked, and by whom' query — sessions discover the graph moved by re-running a rollup and noticing a different number, which is the worst possible detector, and for ephemeral seats that die on context exhaustion the first real question on return is exactly 'what happened while I was gone'. ChangeEvent exists as a node type; nothing answers 'writes by other seats since T'. FIX SHAPE: have loop_status/graph_report label their own rollups as graph-wide and report the number of currently-attached sessions; a scoped detect_gaps/detect_defects is already attributable and could say so.",
+        "statement": "`--shared` TURNED SESSION-LOCAL METRICS INTO SHARED-STATE METRICS WITHOUT CHANGING THEIR INTERFACE, AND TWO BOSSES ATTRIBUTED A FLEET-WIDE MOVEMENT TO THEIR OWN CHANGE — IN THE FLATTERING DIRECTION. loop_status and graph_report read IDENTICALLY before and after the migration; only the MEANING of their numbers changed. A total is now a fleet number moved by every attached boss and worker, wearing the timestamp of whoever asked. MEASURED on one graph in one day by non-coordinating sessions: defects 42 -> 6 -> 5 -> 12 (the 5 -> 12 arriving an hour later to a session that had done nothing at all), and gaps 48 -> 55 -> 69. api-boss `5d608b85` reported '42 -> 6' to the user TWICE as their own result; it was not. A worker checking in reported gaps 55 -> 69 and defects 12 -> 26 between two check-ins hours apart and, correctly, could name no cause. CONSEQUENCE THE REPORTER DREW AND IT IS THE GENERAL ONE: every citation of these counts written before `--shared` is now subtly wrong, and nothing in the output says so. THE ROOT SHAPE, in their words: A SESSION CANNOT TELL THAT IT IS NOT ALONE. Nothing in any payload reports concurrency — no attached-session count, no last-write-by — so every seat reasons as if solo and the output actively encourages it. They fixed it with a fleet convention (state whether a count is FLEET or SCOPED), which is a discipline layered on top of a tool that could just say it; a caveat maintained in a downstream doc is a defect routed around rather than fixed. ---- 2026-08-08, w-9d1d1499 (LANE PROSE-JOIN) ADDS THE CLEANEST INSTANCE YET AND THE COST OF THE WORKAROUND. loop_status read `67 gaps / 26 defects / 19 unproven` at their check-in and `48 / 27 / 14` hours later. THEY EXECUTED ZERO DESIGN WRITES THE ENTIRE SESSION, so none of that movement was theirs — AND THE ONLY WAY TO SAY SO IS A PARAGRAPH OF ENGLISH ASSERTING IT, WHICH THE NEXT READER HAS TO TAKE ON TRUST. Their PROTOCOL now carries a standing rule (§🔒 rule 5) whose ENTIRE CONTENT IS *'a global graph count is a fleet number, never your result'* — A DOCTRINE RULE EXISTING SOLELY TO COMPENSATE FOR SOMETHING THE TOOL COULD REPORT DIRECTLY. That is the second binding fleet rule written to work around one reflow2 output in as many days (see fact:defect-loop-status-next-routes-to-the-destructive-skill and its stop-order), and the pattern is the finding: when a tool will not say something, a downstream constitution grows a rule that everyone must remember instead. THEIR FIX SHAPE IS SHARPER THAN THE ORIGINAL: let loop_status/graph_report optionally take a `contributor_id` (or use the seat) and return *'changed since your first call this session: N, of which yours: M'*. THE DATA IS ALREADY THERE — authored_by, seats, ChangeEvents. It would replace a rule everyone must remember with a number anyone can cite. RELATED AND SEPARATELY REPORTED: there is no 'what changed since I looked, and by whom' query — sessions discover the graph moved by re-running a rollup and noticing a different number, which is the worst possible detector, and for ephemeral seats that die on context exhaustion the first real question on return is exactly 'what happened while I was gone'. That requirement is now ACCEPTED here as req:what-changed-since-i-looked-and-by-whom, and NOTHING SATISFIES IT (gap:e1a591cdc38809a5). FIX SHAPE: have loop_status/graph_report label their own rollups as graph-wide and report the number of currently-attached sessions; a scoped detect_gaps/detect_defects is already attributable and could say so.",
         "subject_id": "cap:loop-status",
         "valid_from": "2026-08-07",
-        "value": "{\"reported\":\"2026-08-07 dev_storyflow, api-boss 5d608b85, plus corroborating worker check-ins\",\"measured\":\"defects 42->6->5->12 and gaps 48->55->69 on one graph in one day, sessions not coordinating\",\"mis_attribution\":\"two bosses claimed a global movement as their own result, in the flattering direction\",\"root\":\"a session cannot tell it is not alone; no concurrency in any payload\",\"workaround_in_use\":\"hand-maintained FLEET-vs-SCOPED convention in fleet docs\",\"fix_shape\":\"label rollups graph-wide; report attached_sessions, last_write_at, last_write_by\",\"related\":\"no 'writes by other seats since T' query; movement is detected by noticing a different number\"}"
+        "value": "{\"reported\":\"2026-08-07 api-boss 5d608b85 plus corroborating worker check-ins; 2026-08-08 w-9d1d1499\",\"measured_0807\":\"defects 42->6->5->12 and gaps 48->55->69 on one graph in one day, sessions not coordinating\",\"measured_0808\":\"67/26/19 at check-in, 48/27/14 hours later, by a session that made zero design writes\",\"mis_attribution\":\"two bosses claimed a global movement as their own result, in the flattering direction\",\"root\":\"a session cannot tell it is not alone; no concurrency in any payload\",\"workaround_in_use\":\"PROTOCOL §rule 5 - 'a global graph count is a fleet number, never your result' - a doctrine rule compensating for a missing field\",\"pattern\":\"second binding fleet rule in two days written to work around one reflow2 output\",\"fix_shape\":\"label rollups graph-wide; report attached_sessions, last_write_at, last_write_by; accept contributor_id/seat and return 'changed since your first call: N, of which yours: M'\",\"data_already_present\":\"authored_by, seats, ChangeEvents\",\"related_requirement\":\"req:what-changed-since-i-looked-and-by-whom - accepted, unsatisfied, gap:e1a591cdc38809a5\"}"
       }
     },
     {
@@ -61489,10 +62045,10 @@
         "basis": "measured",
         "confidence": 1.0,
         "fact_type": "defect",
-        "statement": "TWO SMALL, CHEAP SURFACE FRICTIONS REPORTED THE SAME DAY, BOTH MINOR AND BOTH REAL. (1) `add_contributor` TAKES THE HANDLE AS `id` WHILE `claim_region` TAKES THE SAME HANDLE AS `contributor_id`. w-08baa598 passed `contributor_id` to add_contributor first — because that is the field name the very next call in the documented sequence uses — and got `failed to deserialize parameters: unknown field 'contributor_id', expected one of 'id', 'name', 'kind', 'handle', 'description'`. Cost one round trip. THE ERROR MESSAGE IS GOOD and is why this is minor rather than blocking: it named the accepted fields. The two calls are adjacent steps in the fleet's prescribed worker sequence and the asymmetry carries no meaning. FIX SHAPE: accept `contributor_id` as an alias on add_contributor. (2) `set_verification_kind`'s RESPONSE ECHOES THE PRE-UPDATE `status`. w-ec25cf2c got `\"status\":\"planned\"` in the same payload that correctly reported `\"kind\":\"validation\"`, even though they set status immediately after and a get_node confirmed `passing`. Nothing is wrong in the store — the echo simply invites a reader to believe a field was reset. They only knew it was fine because they re-read the node instead of trusting the echo, which their fleet already treats as doctrine. FIX SHAPE: have the echo reflect the post-write node, or omit fields the call did not touch. NOTE THE COMMON THREAD with the far more serious fact:defect-write-response-describes-the-write-not-the-state: in both cases a response describes something other than the current state of the node, and a reader who trusts it is wrong. Here it is cosmetic; there it was silent data loss.",
+        "statement": "SMALL, CHEAP SURFACE FRICTIONS, ALL MINOR AND ALL REAL — AND ONE OF THEM PROPAGATED A FALSE CORRECTION FIVE HOPS. (1) `add_contributor` TAKES THE HANDLE AS `id` WHILE `claim_region` TAKES THE SAME HANDLE AS `contributor_id`. w-08baa598 passed `contributor_id` to add_contributor first — because that is the field name the very next call in the documented sequence uses — and got `failed to deserialize parameters: unknown field 'contributor_id', expected one of 'id', 'name', 'kind', 'handle', 'description'`. Cost one round trip. THE ERROR MESSAGE IS GOOD and is why this is minor rather than blocking: it named the accepted fields. The two calls are adjacent steps in the fleet's prescribed worker sequence and the asymmetry carries no meaning. FIX SHAPE: accept `contributor_id` as an alias on add_contributor. (2) `set_verification_kind`'s RESPONSE ECHOES THE PRE-UPDATE `status`. w-ec25cf2c got `\"status\":\"planned\"` in the same payload that correctly reported `\"kind\":\"validation\"`, even though they set status immediately after and a get_node confirmed `passing`. Nothing is wrong in the store — the echo simply invites a reader to believe a field was reset. FOUR REPRODUCTIONS NOW, ACROSS TWO DAYS: w-ec25cf2c (2026-08-07), then on 2026-08-08 w-3f408ab0 (who verified by get_node rather than by either echo, and observed that a following set_verification_status echoed both correctly) and sb-boss ab2291fa, who reports it as *'two workers and I'*. Their conclusion is the durable one: THE ECHO DESCRIBES THE WRITE, NOT THE STATE — and their fleet now re-reads every node instead of trusting any echo, *'which is the right habit but a poor reason for it.'* FIX SHAPE: have the echo reflect the post-write node, or omit fields the call did not touch. (3) 2026-08-08, w-9d1d1499: `claim_region`'s TWO REFUSALS ARE BOTH CORRECT AND NEITHER NAMES ITS OWN FIX. It needs `seat` on the sessionless transport and refuses otherwise; it also needs a Contributor to exist first, failing with `Node not found: Contributor <handle>`. Both behaviours are documented — IN THE TOOL DESCRIPTIONS, which an agent only reads if it happens to load that tool. THE COST WAS NOT ONE RETRY. A worker hit the second refusal, concluded the tool was broken, and wrote *'there is NO mint_seat tool in the served surface'* INTO THE WORKER ONBOARDING FILE — a false correction that then TRAVELLED FIVE HOPS and reached a boss offering to amend PROTOCOL on it, before another worker disproved it with one command. FIX SHAPE: make the two refusals name their own fix — `\"call add_contributor first\"` / `\"call mint_seat and pass it as seat\"`. NOTE THE FAMILY RESEMBLANCE to fact:defect-a-deferred-tool-reads-as-a-nonexistent-one: in both cases a refusal a session cannot act on is upgraded by a reasonable agent into a claim that the tool does not exist, and that claim is then written down. NOTE THE COMMON THREAD across (1) and (2) with the far more serious fact:defect-write-response-describes-the-write-not-the-state: a response describing something other than the current state of the node, and a reader who trusts it is wrong. Here it is cosmetic; there it was silent data loss.",
         "subject_id": "cap:shared-sessions",
         "valid_from": "2026-08-07",
-        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-08baa598 and w-ec25cf2c\",\"friction_a\":\"add_contributor takes id, claim_region takes contributor_id, for the same handle in adjacent steps\",\"friction_a_fix\":\"accept contributor_id as an alias on add_contributor\",\"friction_b\":\"set_verification_kind echoes the pre-update status, inviting a reader to think a field was reset\",\"friction_b_fix\":\"echo the post-write node, or omit untouched fields\",\"both_error_messages\":\"good - named the accepted fields, which is why these are minor\",\"common_thread\":\"a response that describes something other than current state; cosmetic here, silent data loss in the concurrent-write case\"}"
+        "value": "{\"reported\":\"2026-08-07 w-08baa598 and w-ec25cf2c; 2026-08-08 w-3f408ab0, sb-boss ab2291fa, w-9d1d1499\",\"friction_a\":\"add_contributor takes id, claim_region takes contributor_id, for the same handle in adjacent steps\",\"friction_a_fix\":\"accept contributor_id as an alias on add_contributor\",\"friction_b\":\"set_verification_kind echoes the pre-update status - four reproductions across two days\",\"friction_b_fix\":\"echo the post-write node, or omit untouched fields\",\"friction_c\":\"claim_region's two refusals (missing seat, missing Contributor) are correct and neither names its fix\",\"friction_c_cost\":\"a worker concluded mint_seat does not exist and wrote it into onboarding; the false correction travelled five hops to a boss offering to amend PROTOCOL\",\"friction_c_fix\":\"make each refusal name its own fix - 'call add_contributor first' / 'call mint_seat and pass it as seat'\",\"common_thread\":\"a response or refusal that describes something other than current state or actionable cause; cosmetic here, silent data loss in the concurrent-write case\"}"
       }
     },
     {
@@ -61506,6 +62062,32 @@
         "subject_id": "cap:shared-sessions",
         "valid_from": "2026-08-08",
         "value": "{\"observed\":\"2026-08-08, reflow2's own repo, during the session capturing dev_storyflow's report\",\"trigger\":\"loop_status returned open_defects: 90, absent at session start and absent from the checked-out source\",\"proof_not_in_source\":\"grep -rn open_defects crates/ = no matches; feat/loop-reads-defect-facts verified NOT an ancestor of HEAD\",\"cause\":\"the --serve-shared daemon hit its idle timeout during long cargo runs and auto-respawned at 05:22 from a target/debug binary built in an earlier session on another branch\",\"binary_comparison\":\"strings /proc/1345843/exe | grep -c open_defects = 1; strings target/debug/reflow2-mcp | grep -c open_defects = 0\",\"deleted_marker\":\"readlink /proc/1345843/exe -> '.../target/debug/reflow2-mcp (deleted)' - the proposed signal, present and correct\",\"validates\":\"fact:defect-a-running-server-cannot-say-it-is-stale and req:the-server-is-the-authority-on-its-own-currency\",\"sibling\":\"fact:defect-rebuild-strands-the-shared-server - same idle-timeout-plus-relink sequence, different symptom\",\"cost\":\"every server-computed rollup read after 05:22 is of unknown provenance; writes, export, gate and CI unaffected\",\"now_confirmed\":\"two machines, two projects, two independent incidents\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-the-mandated-cold-start-check-costs-the-largest-payload",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE ONE CHECK EVERY SESSION IS REQUIRED TO MAKE BEFORE IT TRUSTS ANYTHING IS THE MOST EXPENSIVE CALL IN THE API, AND IT IS PAID FOR TWO SCALARS. Reported 2026-08-08 by dragon Boss f96eccd3. Their constitution (S.md step 6, and reflow2's own BL-32 note) binds every session to confirm the serving binary BY RELATION: read graph_report -> served_by.reflow2_version and compare it against `reflow2-mcp --version` on disk. THE RULE IS RIGHT — a literal expires, a relation does not. But `served_by` is reachable only through graph_report, which also returns the ENTIRE verification roll (28 nodes on their graph, several with multi-thousand-character names) plus top_gaps with full descriptions. They needed exactly two scalars, reflow2_version and binary_mtime_unix, and paid a very large payload for them. THE REPORTER'S OWN CONCLUSION IS THE FINDING: the cheapest-to-state rule in their constitution is the most expensive to obey, WHICH IS PRECISELY THE PRESSURE THAT MAKES A SESSION SKIP IT AND QUOTE A REMEMBERED LITERAL INSTEAD — the failure that produced the rule. A guard whose cost scales with the graph will be skipped on the graphs where it matters most. FIX SHAPE, theirs: a tiny `server_identity` call returning the serving binary's version, mtime and pid; or carry those two fields in loop_status, which is already advertised as the one cheap call. RELATED, AND NOT THE SAME THING: fact:defect-a-running-server-cannot-say-it-is-stale is about the server being unable to ANSWER the staleness question; this is about the answer being priced out of reach. req:the-server-is-the-authority-on-its-own-currency is accepted and unbuilt, and would subsume both — the /proc/self/exe `(deleted)` check is one syscall and needs no payload at all.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08 dev_storyflow, dragon Boss f96eccd3\",\"binding_rule\":\"confirm the serving binary by relation - graph_report.served_by vs --version on disk\",\"cost\":\"graph_report also returns the full verification roll (28 nodes, multi-thousand-char names) and top_gaps\",\"wanted\":\"two scalars - reflow2_version, binary_mtime_unix\",\"finding\":\"the cheapest-to-state rule is the most expensive to obey, which is the pressure that makes a session skip it\",\"fix_shape\":\"a tiny server_identity call (version, mtime, pid), or carry both in loop_status\",\"related\":\"fact:defect-a-running-server-cannot-say-it-is-stale; req:the-server-is-the-authority-on-its-own-currency (accepted, unbuilt)\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-the-read-surface-cannot-answer-a-set-question",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A LANE WHOSE DELIVERABLE WAS A DENOMINATOR HAD TO HAND-DERIVE IT TWICE, BECAUSE THE READ SURFACE CANNOT ANSWER A SET QUESTION. Reported 2026-08-08 by w-4d05e937 (dev_storyflow, LANE UNSUSPECTED-VALIDATION-WALK), items 1 and 3. TWO INDEPENDENT MISSES, ONE SHAPE. (1) `get_node` RETURNS PROPERTIES BUT NO EDGES. Their brief required excluding capabilities that already carry a walk-type Verification — a VERIFIES edge query. get_node on a Verification returns kind/status/method/level/name and nothing about what it verifies; evidence_report gives per-capability check COUNTS but never WHICH check. The only routes they could see to the actual edges were a full unscoped detect_gaps dump or an export, which workers are told not to take. THEY FELL BACK TO MATCHING VERIFICATION NAMES AGAINST CAPABILITY IDS AND HAD TO PUBLISH THAT AS A STATED WEAKNESS IN THEIR OWN METHOD. (2) `scan_nodes` HAS NO STATUS FILTER. Their population was 'every Capability with status realized or verified'; they pulled all 95 and tallied by hand. It happened to agree with the boss's independent count — and their own comment is the right one: HAND-TALLYING IS EXACTLY WHERE A DENOMINATOR QUIETLY DRIFTS, AND THE DENOMINATOR WAS THE DELIVERABLE. NOTE THE INTERACTION WITH cap:bounded-reads, which is working correctly and makes this worse: scan_nodes honestly reports `omitted` and `capped_by` when a payload fills, so a hand-tally over a large type is not merely tedious, it is a paging loop the reader must get right. FIX SHAPE, theirs: `get_node(..., with_edges: true)`, or a `verifies_report` mirroring evidence_report but NAMING the target; and `scan_nodes(node_type, status: [...])` or a `count_by_status`. Both are cheap, and both turn a guessable answer into a checkable one.",
+        "subject_id": "cap:bounded-reads",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08 dev_storyflow, w-4d05e937, LANE UNSUSPECTED-VALIDATION-WALK, items 1 and 3\",\"miss_a\":\"get_node returns properties but no edges; evidence_report counts checks but never names them\",\"miss_a_cost\":\"fell back to matching verification NAMES against capability ids, published as a weakness in their own method\",\"miss_b\":\"scan_nodes has no status filter; pulled all 95 capabilities and tallied by hand\",\"miss_b_cost\":\"the denominator was the deliverable, and hand-tallying is where a denominator drifts\",\"interaction\":\"cap:bounded-reads is correct and makes the hand-tally a paging loop the reader must get right\",\"fix_shape\":\"get_node(with_edges: true) or a verifies_report naming targets; scan_nodes(status: [...]) or count_by_status\"}"
       }
     },
     {
@@ -62963,7 +63545,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2ed4f793748a0fae35e1be34ef2d0a7db3b7f9ed27959602ddaebb6d584eda7f",
+  "prev_content_hash": "sha256:6a000776b92afb171d2b90f5ce9e5d55d488b44196a6e1d09cd8f8467f72bd78",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
