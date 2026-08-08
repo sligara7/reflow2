@@ -62,7 +62,15 @@ Read the whole proposal, not just the operations:
 - `skipped_operations` — anything dropped, with a reason (a cap hit, an endpoint that doesn't
   resolve). Never ignore this list; nothing is dropped silently, so a non-empty list means
   something real was set aside.
-- `requires_human_review` — true whenever `generated_content` is non-empty.
+- `would_destroy` — **what applying this would DELETE, said before you can apply it.** One entry
+  per merge, naming the doomed node, the properties that die with it, and — when both nodes carry
+  the same provenance — that the survivor was picked by the ALPHABET rather than by anything in
+  the design. Read this list before `operations`; it is the only field that tells you the cost of
+  saying yes. Empty means the proposal destroys nothing.
+- `requires_human_review` — true when `generated_content` is non-empty **or the proposal would
+  destroy a node** (so: true for every merge). Before 2026-08-08 it was the first clause only,
+  which meant a proposal made entirely of irreversible deletions reported `false` at confidence
+  0.9. That is the signal dev_storyflow followed into ten deletions.
 
 ## 3. Apply only the mechanical part
 
@@ -73,10 +81,16 @@ operations and then bringing the rest to the user is the correct sequence. (The 
 that stops a mechanical apply is **rigid** mode — reported as `blocked_by_mode`.)
 
 > ⚠️ **"Mechanical" does not mean "unread." Every operation today is a merge, and a merge
-> DELETES a node with no undo.** Read the pairs before you apply them, and say what you are
-> about to remove. `requires_human_review` being true does not by itself mean you should
-> withhold the merge — it signals that there is *also* judgement work in `generated_content`
-> (step 4) — but it is not permission to skip looking either.
+> DELETES a node with no undo.** Read `would_destroy` before you apply — it names every node
+> that dies and what dies with it. Say what you are about to remove, in the user's words, and
+> get their answer when anything in that list carries consequence: a differing `priority` or
+> `status`, or the line saying **the alphabet chose the victim** (equal provenance, so the
+> smaller id won and nothing about the design decided it).
+>
+> Since 2026-08-08 `requires_human_review` is true for **every** proposal containing a merge,
+> not only for ones with `generated_content`. So it no longer distinguishes "there is also
+> generative work" from "this deletes design" — check `would_destroy` and `generated_content`
+> separately to tell which you have. It is never permission to skip looking.
 >
 > **On a shared graph, say so first.** Your apply reaches every attached session instantly,
 > with no undo and no notification to anyone else. If other seats are attached, tell the user
@@ -107,7 +121,7 @@ Read the `HealReport` back:
   whose properties were overwritten. Usually that is fine, but it is a real loss and the user
   should hear about anything that looks like it mattered.
 
-If `requires_human_review` is true there is judgement work left over — the generative half is
+If `generated_content` is non-empty there is judgement work left over — the generative half is
 not built, so `apply_heal` will not have resolved the `generated_content` issues (it only ever
 applies the mechanical `operations`). Go to step 4 to bring those to the user.
 

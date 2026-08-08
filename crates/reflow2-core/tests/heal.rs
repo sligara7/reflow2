@@ -3,7 +3,11 @@
 //! The two behaviors that matter most: HEAL *proposes* (never mutates during
 //! detection/proposal), and the one content-free repair — duplicate **merge** —
 //! actually applies, re-points the merged node's edges, and verifies the defect
-//! is gone. Generative fixes are gated behind `requires_human_review`.
+//! is gone. Generative fixes are gated behind `requires_human_review` — and
+//! since 2026-08-08 so is every merge, because "content-free" was never the
+//! same as "consequence-free": the merge DELETES a node, and a proposal that
+//! deletes design content now says what it would destroy before anyone can
+//! apply it (`would_destroy`).
 
 use reflow2_core::nodes::{Props, edge, node};
 use reflow2_core::{
@@ -66,9 +70,27 @@ fn proposal_computes_without_mutating() {
         }
         other => panic!("expected a Merge op, got {other:?}"),
     }
-    // A structural-only proposal needs no human review and is high-confidence.
-    assert!(!proposal.requires_human_review);
-    assert!(proposal.confidence > 0.8);
+    // CHANGED 2026-08-08, and the old assertion is the finding. This read:
+    //   "A structural-only proposal needs no human review and is high-confidence."
+    //   assert!(!proposal.requires_human_review);
+    //   assert!(proposal.confidence > 0.8);
+    // "Structural-only" was doing the damage. The one structural repair HEAL
+    // performs is a MERGE, and a merge DELETES A NODE with no undo — so the
+    // proposal this test blessed as needing no human review is a proposal to
+    // destroy design. dev_storyflow followed exactly that signal into ten
+    // deletions and stood their fleet down from the whole HEAL surface.
+    // The test encoded the assumption rather than catching it, which is why it
+    // is rewritten here rather than deleted.
+    assert!(
+        proposal.requires_human_review,
+        "a proposal whose only operation deletes a node is not a proposal that needs no review"
+    );
+    assert!(proposal.confidence <= 0.5);
+    assert_eq!(
+        proposal.would_destroy.len(),
+        1,
+        "and it must say what it would destroy, before anyone can apply it"
+    );
 }
 
 #[test]
@@ -564,6 +586,12 @@ fn hand_proposal(ops: Vec<HealOperation>) -> HealProposal {
         operations: ops,
         generated_content: vec![],
         skipped_operations: vec![],
+        // Left empty on purpose: apply re-derives every operation and does NOT
+        // consult the proposal's own advisory fields (see the note at
+        // `apply_heal`), so a hand-built proposal understating what it destroys
+        // must still be judged on its operations. That is the property these
+        // refusal tests exist to pin.
+        would_destroy: vec![],
         confidence: 0.9,
         requires_human_review: false,
         summary: "hand-built".into(),
@@ -904,4 +932,166 @@ fn a_self_loop_duplicates_edge_never_becomes_a_merge() {
         g.get_node(node::CAPABILITY, "cap:a").unwrap().is_some(),
         "the node must survive"
     );
+}
+
+// ---- 2026-08-08 · a merge says what it destroys BEFORE the act -------------
+//
+// dev_storyflow's field report: their scoped detect_defects returned five
+// duplicate findings, propose_heal turned them into ten node deletions, and the
+// proposal reported `requires_human_review: false` with confidence 0.9 — so the
+// served check-health skill was right to call it the mechanical half, and the
+// fleet stood itself down from the whole HEAL surface as a result.
+//
+// The cost WAS reported — in `HealReport::discarded`, which is the receipt of an
+// irreversible act. The person deciding reads the PROPOSAL. These pin the
+// disclosure at the only place it helps.
+
+#[test]
+fn a_proposal_that_would_delete_a_node_demands_human_review() {
+    // The defect exactly: this proposal generates no content, so before
+    // 2026-08-08 `requires_human_review` was false and confidence 0.9 — for a
+    // proposal whose entire content is an irreversible deletion.
+    let g = dup_graph();
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+
+    assert!(
+        matches!(proposal.operations[0].op, HealOp::Merge { .. }),
+        "fixture must produce a merge for this test to mean anything"
+    );
+    assert!(
+        proposal.generated_content.is_empty(),
+        "the whole point is that a DELETION demands review even with nothing generated"
+    );
+    assert!(
+        proposal.requires_human_review,
+        "a proposal that deletes a node must demand review; generating a sentence \
+         has always demanded it and deleting a node did not"
+    );
+    assert_eq!(
+        proposal.confidence, 0.5,
+        "confidence must reflect that a human still has to look"
+    );
+}
+
+#[test]
+fn the_proposal_names_the_properties_the_merge_would_destroy() {
+    // storyflow's pair, reproduced in miniature: two requirements a human
+    // asserted as duplicates, differing in exactly the two fields that carry
+    // consequence — and both `authored`, so the ALPHABET picks the victim.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_requirement(
+        "req:a-backend",
+        "Backend as product",
+        "third parties consume the API",
+    )
+    .unwrap();
+    g.add_requirement(
+        "req:z-content-bible",
+        "Graph is the content bible",
+        "panels are grounded",
+    )
+    .unwrap();
+    // NOTE the trap, hit while writing this: the Rust `create_node` REPLACES
+    // (graph.rs), unlike the MCP tool of the same name which merges — so
+    // passing only priority/status here dropped the required `statement` and
+    // the call was refused. Every property the node keeps must be restated.
+    g.create_node(
+        node::REQUIREMENT,
+        "req:z-content-bible",
+        Props::new()
+            .set("name", "Graph is the content bible")
+            .set("statement", "panels are grounded")
+            .set("priority", "critical")
+            .set("status", "proposed"),
+    )
+    .unwrap();
+    g.create_node(
+        node::REQUIREMENT,
+        "req:a-backend",
+        Props::new()
+            .set("name", "Backend as product")
+            .set("statement", "third parties consume the API")
+            .set("priority", "medium")
+            .set("status", "accepted"),
+    )
+    .unwrap();
+    g.create_edge(
+        edge::DUPLICATES,
+        node::REQUIREMENT,
+        "req:a-backend",
+        node::REQUIREMENT,
+        "req:z-content-bible",
+        Props::new().set("basis", "asserted"),
+    )
+    .unwrap();
+
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    assert_eq!(
+        proposal.would_destroy.len(),
+        1,
+        "one merge, one disclosure: {:?}",
+        proposal.would_destroy
+    );
+    let note = &proposal.would_destroy[0];
+    assert_eq!(
+        note.reference, "req:z-content-bible",
+        "the alphabet keeps req:a-backend, so the critical one is the victim"
+    );
+    assert!(
+        note.reason.contains("priority 'critical' -> 'medium'"),
+        "the proposal must say a critical priority dies here: {}",
+        note.reason
+    );
+    assert!(
+        note.reason.contains("status 'proposed' -> 'accepted'"),
+        "and that the status changes under it: {}",
+        note.reason
+    );
+    assert!(
+        note.reason.contains("THE ALPHABET CHOSE THE VICTIM"),
+        "equal provenance means nothing about the DESIGN decided this, and \
+         saying so is the whole disclosure: {}",
+        note.reason
+    );
+}
+
+#[test]
+fn a_provenance_decided_merge_does_not_blame_the_alphabet() {
+    // The counterweight. When provenance genuinely decides, the note must NOT
+    // cry alphabet — otherwise the warning is noise and gets skimmed, which is
+    // how the fleet read past the `next` string twice.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_capability("cap:a", "Guessed", "read out of the code", None)
+        .unwrap();
+    g.add_capability("cap:z", "Stated", "what the stakeholder said", None)
+        .unwrap();
+    g.set_provenance(node::CAPABILITY, "cap:a", "inferred")
+        .unwrap();
+    g.create_edge(
+        edge::DUPLICATES,
+        node::CAPABILITY,
+        "cap:a",
+        node::CAPABILITY,
+        "cap:z",
+        Props::new().set("basis", "asserted"),
+    )
+    .unwrap();
+
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    let note = &proposal.would_destroy[0];
+    assert_eq!(note.reference, "cap:a", "the machine's guess is the victim");
+    assert!(
+        !note.reason.contains("THE ALPHABET"),
+        "provenance decided this one, so the alphabet must not be blamed: {}",
+        note.reason
+    );
+    assert!(
+        note.reason.contains("provenance 'inferred' -> 'authored'"),
+        "and it should still say what dies with it: {}",
+        note.reason
+    );
+    // Still a deletion, so still a human's call.
+    assert!(proposal.requires_human_review);
 }
