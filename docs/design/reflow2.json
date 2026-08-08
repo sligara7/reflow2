@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2dc5b06470abcdecbc823f5fbf2ba0d8213a7334728ede42c1a0214747d7faa3",
+  "content_hash": "sha256:c11e9784713df9df07097317ce008945be99fed10afc15e680278e22ffbabf65",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6426,6 +6426,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-merge-proposal-discloses-what-it-would-destroy",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-merge-proposal-discloses-what-it-would-destroy",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-merge-proposal-discloses-what-it-would-destroy",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-020a057ec12710f0",
       "properties": {
         "accepted_baseline": true,
@@ -6810,6 +6837,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-7a8e70b448098faa",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -13700,23 +13736,12 @@
       "edge_type": "CLAIMS",
       "from_id": "who:claude-code",
       "properties": {
-        "claimed_at": "2026-08-08T16:40:00Z",
+        "claimed_at": "2026-08-08T17:30:00Z",
         "depth": 2,
-        "note": "Capturing the second dev_storyflow feedback file (2026-08-08, 161 lines) — HEAL/duplicate findings half.",
+        "note": "Re-opening dec:merge-survivor-provenance on Anthony's word: the id tiebreak must not decide which node dies.",
         "seat": "asligar-bitecool:1687426:5df78ec5"
       },
       "to_id": "cap:heal"
-    },
-    {
-      "edge_type": "CLAIMS",
-      "from_id": "who:claude-code",
-      "properties": {
-        "claimed_at": "2026-08-08T16:40:00Z",
-        "depth": 2,
-        "note": "Capturing the second dev_storyflow feedback file (2026-08-08) — loop/report/verification-surface half.",
-        "seat": "asligar-bitecool:1687426:5df78ec5"
-      },
-      "to_id": "cap:loop-status"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -39583,6 +39608,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:check-health-skill",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:check-kit-manifest",
       "properties": {
         "completeness": "complete"
@@ -42570,6 +42603,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-merge-says-what-it-destroys",
+      "properties": {},
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-session-cannot-name-another-design",
       "properties": {},
       "to_id": "req:a-session-cannot-address-another-design"
@@ -43487,6 +43526,14 @@
         "action": "created"
       },
       "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:check-health-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:check-health-skill"
     },
     {
       "edge_type": "YIELDED",
@@ -44681,6 +44728,19 @@
       }
     },
     {
+      "node_id": "art:check-health-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:c89109a61fe5a9da6d097dd273a3e1b04b0d698d858b87ae3f25bf2139472ac7",
+        "granularity": "atomic",
+        "location": "getting-started/skills/check-health/SKILL.md",
+        "name": "check-health/SKILL.md",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:check-kit-manifest",
       "node_type": "Artifact",
       "properties": {
@@ -45159,7 +45219,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:59f01a1c703a87a634fb0ec46bc69c830783401474c3f48a29e552983e87914b",
+        "checksum": "sha256:ceffdf5b68db7623c3130773d58f48f8edb2de9a481b5a86ffa85736bcd7a80b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -45878,7 +45938,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f249ba49c9197e10b7b091a80b34bf812951a869fd05e99abf32182ecbcaa5f5",
+        "checksum": "sha256:2a0d95cf199f0a46d893e098279061a1be5959278021113570f759bfabab46f4",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -48185,6 +48245,14 @@
       }
     },
     {
+      "node_id": "chg:a-merge-proposal-discloses-what-it-would-destroy",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "A merge proposal says what it would destroy BEFORE the act, and a proposal that deletes nodes stops reporting itself as needing no human review"
+      }
+    },
+    {
       "node_id": "chg:accept-020a057ec12710f0",
       "node_type": "ChangeEvent",
       "properties": {
@@ -48563,6 +48631,15 @@
         "change_type": "refactor",
         "detected_at": "2026-08-01",
         "name": "Version string bumped 0.19.0 to 0.20.0 for the v0.20.0 cut. The design meaning of the cut lives in rel:v0200 and epoch:v0200, not in this file — the manifest's declared surface and its dynograph-foundation pin (v0.12.0) are both unchanged, so nothing a consumer agrees with has moved."
+      }
+    },
+    {
+      "node_id": "chg:accept-7a8e70b448098faa",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "detected_at": "2026-08-08",
+        "name": "NON_TOOL_TERMS gains would_destroy, priority, status, false. The lint's own contract is unchanged — it still fails when a skill names a tool that is not served; these are the field terms the amended check-health skill now tells a reader to look at, and the lint's failure message asks for them in the same diff. No design meaning moved, so design_holds."
       }
     },
     {
@@ -55814,6 +55891,16 @@
       }
     },
     {
+      "node_id": "frag:art:check-health-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered check-health/SKILL.md"
+      }
+    },
+    {
       "node_id": "frag:art:check-kit-manifest",
       "node_type": "Fragment",
       "properties": {
@@ -61957,7 +62044,7 @@
         "statement": "THE PROPOSED MERGE WOULD HAVE DELETED A `critical`/`proposed` REQUIREMENT IN FAVOUR OF AN UNRELATED `accepted` ONE, BECAUSE SURVIVOR SELECTION CONSULTS NEITHER PRIORITY NOR STATUS. Reported 2026-08-08 by w-9d1d1499 (dev_storyflow, LANE PROSE-JOIN) — a fourth independent seat reaching the duplicate-detector conclusion. They read BOTH nodes of one pair rather than trusting the score. `req:graph_is_the_content_bible`, priority CRITICAL, status PROPOSED: characters, locations, events, dimensions, dialogue, props and factions flow FROM the graph INTO every rendered panel, so rendered media is grounded rather than re-invented per render. `req:backend_as_product`, priority medium, status ACCEPTED: any authorized client - third-party frontend, phone app, CLI, editor plugin - can consume the narrative-graph capabilities WITHOUT our UI, API key with per-key rate tiers and a daily ingest budget. One is about grounding rendered media; the other about strangers building against a public API. NO SHARED REQUIREMENT, SURFACE OR ACTOR — the similarity is prose alone. TWO DISTINCT DEFECTS IN ONE CASE. (1) SCORING: name/prose similarity with no weighting by shared referents (actors, surfaces, components), so two requirements that touch nothing in common score as covering the same ground. (2) DIRECTION: the destructive half lands on the more load-bearing node. dec:merge-survivor-provenance settles the survivor by PROVENANCE with id breaking ties, and neither priority nor status is consulted anywhere in that rule — so an accepted, medium-priority node can eat a critical one that is still awaiting the user's word, which is exactly the certainty dec:certainty-derived says a status carries. THIS IS THE HALF PR #99 DID NOT COVER, and the distinction matters: #99 made a heuristic edge non-mergeable, so this case no longer proceeds automatically — but the moment a human DOES assert a duplicate, the same rule still picks the same survivor. FIX SHAPE, theirs: weight similarity by shared referents rather than prose; and never propose a merge that deletes a higher-priority or differently-statused node without saying so in the proposal.",
         "subject_id": "cap:heal",
         "valid_from": "2026-08-08",
-        "value": "{\"reported\":\"2026-08-08 dev_storyflow, w-9d1d1499, LANE PROSE-JOIN, fourth independent seat\",\"pair\":\"req:graph_is_the_content_bible (critical, proposed) vs req:backend_as_product (medium, accepted)\",\"overlap\":\"none - no shared requirement, surface or actor; similarity is prose alone\",\"defect_a\":\"similarity is not weighted by shared referents\",\"defect_b\":\"survivor selection consults provenance and id only - not priority, not status\",\"conflicts_with\":\"dec:merge-survivor-provenance\",\"not_covered_by\":\"PR #99 - that gates WHETHER a merge may run, not WHICH node survives when a human asserts one\",\"fix_shape\":\"weight by shared referents; refuse or flag a merge that deletes a higher-priority or differently-statused node\"}"
+        "value": "{\"reported\":\"2026-08-08 dev_storyflow, w-9d1d1499, LANE PROSE-JOIN, fourth independent seat\",\"pair\":\"req:graph_is_the_content_bible (critical, proposed) vs req:backend_as_product (medium, accepted)\",\"overlap\":\"none - no shared requirement, surface or actor; similarity is prose alone\",\"defect_a\":\"similarity is not weighted by shared referents\",\"defect_b\":\"survivor selection consults provenance and id only - not priority, not status\",\"mechanism_confirmed_here\":\"heal.rs:392 merge_survivor - provenance_rank then `a <= b` on the id. Both their requirements are authored, so the ranks TIE and the ALPHABET decides: req:backend_as_product sorts first and lives. Read from the code 2026-08-08, not inferred from the report.\",\"prior_instance\":\"heal.rs:356 records BL-47 (2026-07-20) - the same id tiebreak 'nearly deleted an authored, verified node in favour of its vintage stub'. That was fixed by adding the provenance layer ABOVE the tiebreak; the tiebreak itself survived and is reachable whenever two human-authored nodes collide.\",\"partially_addressed_20260808\":\"chg:a-merge-proposal-discloses-what-it-would-destroy. HealProposal now carries would_destroy naming the doomed node, the properties that die with it, and - when provenance ties - that THE ALPHABET CHOSE THE VICTIM. requires_human_review now also fires on any proposal that deletes a node (it was !generated_content.is_empty(), so ten deletions reported false at confidence 0.9). ver:a-merge-says-what-it-destroys passing.\",\"still_open\":\"THE RULE ITSELF IS UNCHANGED. Provenance then id still picks the survivor, and the alphabet still decides a tie. The fix makes the choice VISIBLE before the irreversible act; it does not make it non-arbitrary. Deliberate: ranking priority above status (or vice versa) asserts a policy about what matters more, which dec:readiness-is-an-observation-the-threshold-is-the-judgement says reflow2 must not default. dec:merge-survivor-provenance is therefore NOT re-opened, and the CONTRADICTS edge stands.\",\"also_still_open\":\"the scoring half - weight similarity by shared referents rather than prose\",\"not_covered_by\":\"PR #99 - that gates WHETHER a merge runs, not WHICH node survives when a human asserts one\"}"
       }
     },
     {
@@ -62127,6 +62214,18 @@
         "subject_id": "cap:shared-sessions",
         "valid_from": "2026-08-07",
         "value": "{\"reported\":\"2026-08-07 dev_storyflow, api-boss 5d608b85, from a live 5-hour shift\",\"scale\":\"7 --shared client processes + 1 --serve-shared; 3 bosses + 4 workers; one graph\",\"held_1\":\"zero lock contention all day; the REFLOW2-HOLD/RELEASE ritual is gone entirely\",\"held_2\":\"server-side behaviour reaches attached seats with no restart; only the tool list is negotiated at connect; restarted 1 session instead of 6\",\"held_3\":\"advisory claims defended explicitly: no deadlocks, no waiting, no force-release\",\"held_4\":\"mint_seat vs add_contributor as separate concepts held up\",\"held_5\":\"concurrent reads of the same nodes uneventful\",\"held_6\":\"workers on the design brain returned re-resolvable node ids instead of prose\",\"do_not_change\":\"advisory-not-lock claims; forced checksum disposition; per-property merge; served skills; --shared itself\"}"
+      }
+    },
+    {
+      "node_id": "ver:a-merge-says-what-it-destroys",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-08",
+        "level": "unit",
+        "method": "test",
+        "name": "A merge proposal discloses what it would destroy before it can be applied, and a proposal that deletes a node stops reporting itself as needing no review",
+        "status": "passing"
       }
     },
     {
@@ -63545,7 +63644,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6a000776b92afb171d2b90f5ce9e5d55d488b44196a6e1d09cd8f8467f72bd78",
+  "prev_content_hash": "sha256:2dc5b06470abcdecbc823f5fbf2ba0d8213a7334728ede42c1a0214747d7faa3",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

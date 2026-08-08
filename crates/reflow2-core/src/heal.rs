@@ -250,9 +250,45 @@ pub struct HealProposal {
     pub generated_content: Vec<GeneratedContentStub>,
     /// Operations dropped, with reasons.
     pub skipped_operations: Vec<SkippedOperation>,
+    /// What applying this proposal would DESTROY, said before the act.
+    ///
+    /// One entry per merge that deletes a node, naming the doomed node and the
+    /// properties that die with it — because a merge keeps only the survivor's
+    /// properties, so every value the loser held and the winner does not is
+    /// gone with no undo.
+    ///
+    /// This exists because the cost was reported in exactly the wrong place.
+    /// [`HealReport::discarded`] has always said what a merge let go, but a
+    /// report is the receipt of an irreversible act; the person deciding
+    /// whether to apply reads the PROPOSAL, and the proposal said nothing. A
+    /// disclosure that arrives after the deletion is not a disclosure, and
+    /// `cap:heal` SATISFIES `req:no-silent-fallback` (accepted, critical),
+    /// which this failed.
+    ///
+    /// It also names the case nothing else can: when both nodes carry the same
+    /// provenance the survivor falls to the **smaller id** (BL-29), so the
+    /// ALPHABET decides which one dies. That is fine between two equivalent
+    /// nodes and indefensible between nodes that differ, and until now nothing
+    /// said which had happened. Reported by dev_storyflow 2026-08-08, where the
+    /// tiebreak would have deleted a `critical`/`proposed` requirement in
+    /// favour of an unrelated `medium`/`accepted` one.
+    ///
+    /// Empty when the proposal deletes nothing.
+    #[serde(default)]
+    pub would_destroy: Vec<SkippedOperation>,
     /// 0..1 confidence in the proposal as a whole.
     pub confidence: f64,
-    /// True whenever the proposal generates content (discipline 3).
+    /// True whenever the proposal generates content (discipline 3) **or would
+    /// destroy a node** (2026-08-08).
+    ///
+    /// The second clause is the fix for a defect that read as a feature: this
+    /// was `!generated_content.is_empty()`, so a proposal made ENTIRELY of
+    /// irreversible node deletions generated no content, reported
+    /// `requires_human_review: false` and carried confidence 0.9. That is the
+    /// machinery behind the served check-health skill calling merges the safe
+    /// mechanical half, and behind a fleet applying ten deletions on its word.
+    /// Generating a sentence has always demanded review; deleting a node did
+    /// not.
     pub requires_human_review: bool,
     /// Human-readable summary.
     pub summary: String,
@@ -1276,7 +1312,27 @@ impl DesignGraph {
             }
         }
 
-        let requires_human_review = !generated_content.is_empty();
+        // What this proposal would DESTROY, computed before anyone can apply it.
+        // Deliberately derived from the operations actually in the proposal —
+        // after the max_operations cap above — so it describes what would
+        // happen, never what was considered.
+        let mut would_destroy = Vec::new();
+        for operation in &operations {
+            if let HealOp::Merge {
+                keep_type,
+                keep_id,
+                remove_type,
+                remove_id,
+            } = &operation.op
+            {
+                would_destroy.push(SkippedOperation {
+                    reference: remove_id.clone(),
+                    reason: self.merge_loss_note(keep_type, keep_id, remove_type, remove_id)?,
+                });
+            }
+        }
+
+        let requires_human_review = !generated_content.is_empty() || !would_destroy.is_empty();
         let confidence = if requires_human_review { 0.5 } else { 0.9 };
         let summary = format!(
             "{} issue(s) addressed: {} structural op(s), {} awaiting generation, {} skipped.",
@@ -1293,10 +1349,95 @@ impl DesignGraph {
             operations,
             generated_content,
             skipped_operations,
+            would_destroy,
             confidence,
             requires_human_review,
             summary,
         })
+    }
+
+    /// What is lost when `remove_id` is merged into `keep_id`, in one sentence
+    /// a person can act on before applying.
+    ///
+    /// Says three things, in the order that matters to someone deciding:
+    /// the properties that die, whether the ALPHABET picked the victim, and
+    /// nothing else. It deliberately reports long free-text fields by NAME
+    /// rather than by value — dumping two statements into a proposal field
+    /// would reproduce the defect dev_storyflow reported the same day, where a
+    /// finding with nowhere to put its prose ends up unreadable.
+    fn merge_loss_note(
+        &self,
+        keep_type: &str,
+        keep_id: &str,
+        remove_type: &str,
+        remove_id: &str,
+    ) -> Result<String, DynoError> {
+        let keep = self.get_node(keep_type, keep_id)?;
+        let doomed = self.get_node(remove_type, remove_id)?;
+        let (Some(keep), Some(doomed)) = (keep, doomed) else {
+            // merge_op_for refuses unresolvable endpoints before an operation
+            // exists, so this is unreachable for a proposal — but a missing
+            // node must not silently read as "nothing is lost".
+            return Ok(format!(
+                "deleting '{remove_id}': its properties could not be read, so what this destroys is UNKNOWN"
+            ));
+        };
+
+        // Short, enum-like fields are quoted by value; free text by name only.
+        const BY_VALUE: [&str; 6] = [
+            "priority",
+            "status",
+            "provenance",
+            "designation",
+            "kind",
+            "level",
+        ];
+        let mut valued = Vec::new();
+        let mut named = Vec::new();
+        let mut keys: Vec<&String> = doomed.properties.keys().collect();
+        keys.sort();
+        for key in keys {
+            let lost = doomed.properties.get(key);
+            let kept = keep.properties.get(key);
+            if lost == kept {
+                continue;
+            }
+            if BY_VALUE.contains(&key.as_str()) {
+                let lost = lost.and_then(dynograph_core::Value::as_str).unwrap_or("-");
+                let kept = kept.and_then(dynograph_core::Value::as_str).unwrap_or("-");
+                valued.push(format!("{key} '{lost}' -> '{kept}'"));
+            } else {
+                named.push(key.clone());
+            }
+        }
+
+        let mut note = format!("deleting '{remove_id}' keeps only '{keep_id}'s properties");
+        if valued.is_empty() && named.is_empty() {
+            note.push_str("; the two hold identical properties, so nothing is lost with it");
+        } else {
+            if !valued.is_empty() {
+                note.push_str(&format!("; LOST: {}", valued.join(", ")));
+            }
+            if !named.is_empty() {
+                note.push_str(&format!("; also replaced: {}", named.join(", ")));
+            }
+        }
+
+        // Whether the choice was decided by the design or by the alphabet.
+        let rank_of = |n: &crate::StoredNode| {
+            provenance_rank(
+                n.properties
+                    .get("provenance")
+                    .and_then(dynograph_core::Value::as_str),
+            )
+        };
+        if rank_of(&keep) == rank_of(&doomed) {
+            note.push_str(
+                ". THE ALPHABET CHOSE THE VICTIM: both carry the same provenance, so the smaller \
+                 id survived (BL-29) — nothing about the design decided which of these two lives",
+            );
+        }
+        Ok(note)
     }
 
     /// Every structural operation HEAL sanctions for the graph as it stands.

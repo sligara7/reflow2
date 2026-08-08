@@ -78,6 +78,15 @@ NON_TOOL_TERMS = {
     "source",
     "skipped",
     "authored",
+    # HealProposal fields and the node properties a merge disclosure quotes
+    # (2026-08-08) — check-health now tells you to read `would_destroy` before
+    # applying, and to look at the doomed node's `priority` and `status`,
+    # because a merge keeps only the survivor's. `false` is the old value of
+    # `requires_human_review` the skill quotes while explaining what changed.
+    "would_destroy",
+    "priority",
+    "status",
+    "false",
     # Artifact.granularity and Artifact.volatility values (BL-188, BL-191) —
     # property enums the link-artifacts skill names, not tools.
     "granularity",
