@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5430b00dcafa89f38dcf34bdacd56c2cfdf400c4b0786f9d439dfb84406b2179",
+  "content_hash": "sha256:2ed4f793748a0fae35e1be34ef2d0a7db3b7f9ed27959602ddaebb6d584eda7f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -396,6 +396,12 @@
       "from_id": "fact:correction-stranded-server-is-recoverable-without-a-reconnect",
       "properties": {},
       "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-contradiction-cannot-be-resolved-only-acknowledged",
+      "properties": {},
+      "to_id": "cap:heal"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13316,17 +13322,6 @@
       "to_id": "req:version-combination-is-an-object"
     },
     {
-      "edge_type": "CLAIMS",
-      "from_id": "who:claude-code",
-      "properties": {
-        "claimed_at": "2026-08-08",
-        "depth": 2,
-        "note": "Fixing the defect where seat liveness is the SERVER's pid, so `gone` is unreachable under --shared and a dead worker's region reads held (fact:defect-claim-liveness-is-the-servers-pid-not-the-sessions). Touching identity.rs (seat_liveness), claims.rs (the advisory text), and the MCP session layer. Claimed LATE and after the writes had already started, which was my error, not the tool's — the board was empty so nothing collided.",
-        "seat": "asligar-bitecool:1540317:7232f67b"
-      },
-      "to_id": "cap:claim-liveness"
-    },
-    {
       "edge_type": "CONSTRAINS",
       "from_id": "con:pairing-stops-at-the-boundary",
       "properties": {
@@ -20577,6 +20572,34 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "fact:correction-stranded-server-is-recoverable-without-a-reconnect",
+      "properties": {
+        "note": "This correction is the clause that stands, on measured evidence rather than recency."
+      },
+      "to_id": "dec:the-stranded-server-correction-stands"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "fact:correction-stranded-server-is-recoverable-without-a-reconnect",
+      "properties": {},
+      "to_id": "decision:ack:heal:4bd7c50f777fe56e"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "fact:defect-rebuild-strands-the-shared-server",
+      "properties": {
+        "note": "Names which of this node's clauses still stands. Its recoverability claim is withdrawn on the record rather than edited out, so the fact that the graph carried a confident untested claim stays visible."
+      },
+      "to_id": "dec:the-stranded-server-correction-stands"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "fact:defect-rebuild-strands-the-shared-server",
+      "properties": {},
+      "to_id": "decision:ack:heal:4bd7c50f777fe56e"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "ifc:core-api",
       "properties": {},
       "to_id": "dec:core-api-spof-accepted"
@@ -20951,6 +20974,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:ownership-is-an-edge-so-debt-has-an-addressee",
+      "properties": {
+        "note": "The decision fixes the BUILD ORDER for this requirement: consume the CLAIMS edges claim_region already writes before introducing an OWNED_BY edge type. It constrains how the requirement may be satisfied, not whether."
+      },
+      "to_id": "dec:ownership-reads-claims-before-adding-an-edge"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:plans-move-honestly",
       "properties": {},
       "to_id": "decision:ack:52b1ed1377382961"
@@ -21068,6 +21099,14 @@
       "from_id": "req:stale-seat-knows",
       "properties": {},
       "to_id": "decision:ack:acaf4106e0b94ec0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:the-export-is-serialised-rather-than-socially-enforced",
+      "properties": {
+        "note": "The decision fixes WHERE this requirement is implemented -- reflow2_check.py rather than the server -- so the requirement is shaped by it and any later attempt to build it server-side should meet this first."
+      },
+      "to_id": "dec:export-serialisation-belongs-to-the-gate"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -40574,6 +40613,15 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "art:check",
+      "properties": {
+        "coverage": "planned",
+        "evidence": "dec:export-serialisation-belongs-to-the-gate places this requirement's implementation in reflow2_check.py, which already reads the committed export and so already holds the evidence a second exporting commit would break. PLANNED, not partial: nothing in the script checks the lineage chain today, so this edge records WHERE the work lands rather than claiming any of it is done. Drawn because the requirement and its decision were otherwise a two-node island disconnected from the rest of the design -- true, and a true statement about accepted work that is wired to nothing is worth fixing rather than acknowledging away."
+      },
+      "to_id": "req:the-export-is-serialised-rather-than-socially-enforced"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:adopt",
       "properties": {},
       "to_id": "req:adopt-existing"
@@ -52417,6 +52465,16 @@
       }
     },
     {
+      "node_id": "dec:the-stranded-server-correction-stands",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Where fact:defect-rebuild-strands-the-shared-server and fact:correction-stranded-server-is-recoverable-without-a-reconnect disagree, THE CORRECTION STANDS: a session stranded by the deleted-inode spawn failure IS recoverable in place, by starting a replacement daemon by hand from the on-disk path. The original node's remaining claims — the spawn failure itself, its cause in current_exe() resolving a deleted inode, and its misleading 'check the server log' advice — are unaffected and still hold.",
+        "name": "The recoverability clause is withdrawn; the rest of the stranded-server defect stands",
+        "rationale": "Recorded because detect_defects reported the CONTRADICTS edge as an unresolved contradiction, and it was right to: two facts about the same failure disagreed, and nothing said which a reader should act on. Left alone, the next stranded session finds both and has no way to choose — which is worse than either claim alone, because the expensive answer ('unrecoverable, restart the session') is the one written with more authority. WHY THE CORRECTION WINS ON EVIDENCE RATHER THAN ON RECENCY: it was established by execution on 2026-08-08 — the failure was hit, the recovery run, and a dozen subsequent tool calls succeeded in the same session with no reconnect. The original clause was inherited from a session handoff and reasoned from the spawn path, never tested; the node's own evidence field says the diagnosis was 'recorded ... as worth filing and still unfiled'. A measured claim beats a reasoned one about the same mechanism. THE DISTINCTION THAT MAKES BOTH NODES TRUE ONCE THIS IS APPLIED: the dead inode blocks the client from CREATING a daemon, not from FINDING one. Attaching is a separate act, and any daemon started by any means satisfies the lookup. So the original is right about spawn and wrong about the session. NOT DONE HERE, deliberately: the original node's statement is left intact rather than edited. Its wrong clause is now answered on the record instead of erased, which keeps visible that reflow2's own graph carried a confident untested claim for a day — the same failure class the design keeps finding elsewhere, and worth being able to point at.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
       "node_type": "Decision",
       "properties": {
@@ -53693,6 +53751,16 @@
         "decision": "Accepted the structural defect heal:4b023a9e7da76757.",
         "name": "Reviewed: heal:4b023a9e7da76757",
         "rationale": "Correct as read, and correct to leave standing for now: req:complementary-pairing anticipates req:seam-incompatibility and nothing follows through because BOTH are `proposed` and waiting on Anthony's word. Manufacturing a follow-through would assert a design commitment nobody has made — the same forgery `dec:certainty-derived` forbids. Withdraw this acknowledgement when either requirement is accepted; the follow-through is then real work, not bookkeeping.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:heal:4bd7c50f777fe56e",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the structural defect heal:4bd7c50f777fe56e.",
+        "name": "Reviewed: heal:4bd7c50f777fe56e",
+        "rationale": "ACKNOWLEDGED UNDER PROTEST, and the protest is the point: this contradiction IS resolved, and the detector cannot see it. dec:the-stranded-server-correction-stands is accepted, is edged GOVERNED_BY from both endpoints, and states exactly which clause of the older fact is withdrawn and why. That is precisely what the check-health skill says makes a contradiction go away ('two nodes joined by CONTRADICTS with no resolving Decision') and what every such issue's own suggested_fix_type asks for ('generate_decision'). It changed nothing: detect_defects returned the identical issue id afterwards. The detector reads the edge and never looks for the Decision — recorded as fact:defect-a-contradiction-cannot-be-resolved-only-acknowledged. So this acknowledgement is a WORKAROUND for a reflow2 defect, not a judgement that the disagreement is acceptable. It is chosen over the only alternative — deleting the CONTRADICTS edge — because deleting it would erase that reflow2's own graph carried a confident, untested claim for a day, and that history is worth more than a clean defect list. WHEN THE DETECTOR IS FIXED, this acknowledgement should be withdrawn (withdraw_defect_acknowledgement) rather than left standing, or the graph will record a resolved contradiction as a tolerated one forever.",
         "status": "accepted"
       }
     },
@@ -61046,6 +61114,19 @@
       }
     },
     {
+      "node_id": "fact:defect-a-contradiction-cannot-be-resolved-only-acknowledged",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE `contradiction` DETECTOR FIRES ON THE EDGE AND NEVER LOOKS FOR THE RESOLVING DECISION ITS OWN SKILL PROMISES — SO A CONTRADICTION CAN BE ACKNOWLEDGED OR ERASED, BUT NEVER RESOLVED. Found here on 2026-08-08 by running check-health, and only because a contradiction was deliberately recorded earlier the same session. THE DOCUMENTED CONTRACT: the served check-health skill's category table reads `contradiction` = 'two nodes joined by CONTRADICTS **with no resolving Decision**', and `suggested_fix_type` on every such issue is `generate_decision`. Both say plainly that recording a Decision is how this defect goes away. THE ACTUAL BEHAVIOUR (crates/reflow2-core/src/heal.rs, the CONTRADICTS loop): it walks every CONTRADICTS edge, skips only those carrying `alignment: supporting`, and emits an issue. IT NEVER CONSULTS ANY DECISION. Verified by execution: two TemporalFacts were joined by CONTRADICTS (a measured correction against a claim it disproved); `dec:the-stranded-server-correction-stands` was created, ACCEPTED, and edged GOVERNED_BY from BOTH endpoints, stating explicitly which clause survives and why; `detect_defects` re-run reported the identical issue id, unchanged. SO THE ONLY WAYS OUT ARE BOTH LOSSY: acknowledge_defect, which files a resolved disagreement in the same drawer as an unresolved one and so destroys the distinction the acknowledgement list exists to preserve; or delete the CONTRADICTS edge, which erases that the disagreement ever happened — and for a graph whose whole premise is that history survives, that is the worse of the two. THE IRONY IS TWENTY LINES ABOVE THE BUG, in the same loop's own comment, about the `alignment` property this detector was taught to read in July: 'the only ways out were to acknowledge a defect that is not one, or to stop recording corroboration at all. A property the detector ignores is a property that lies.' The identical sentence applies one step along: A RESOLUTION THE DETECTOR IGNORES IS A RESOLUTION THAT DOES NOTHING. The fix that was applied to `alignment` was never applied to the resolution half. FIX SHAPE: before emitting, check whether a Decision is linked to both endpoints (GOVERNED_BY from each, or a Decision naming both in an edge) and skip if so — which is exactly what `generate_decision` invites the user to build. Open question worth settling rather than assuming: whether the resolving Decision must be `accepted`, since a `proposed` one is somebody thinking out loud and should probably not silence anything. THE CLASS THIS BELONGS TO, and it is now the fourth instance this week: documented behaviour and actual behaviour disagreeing, with the documentation being the more generous of the two — alongside claim_region's schema describing the pre-shared-server architecture, cap:claim-liveness promising a `gone` that was unreachable, and check-health calling node deletion mechanical.",
+        "subject_id": "cap:heal",
+        "valid_from": "2026-08-08",
+        "value": "{\"observed\":\"2026-08-08, reflow2's own graph, by running check-health after deliberately recording a correction\",\"documented\":\"check-health skill: contradiction = CONTRADICTS 'with no resolving Decision'; suggested_fix_type = generate_decision\",\"actual\":\"heal.rs CONTRADICTS loop skips only alignment=supporting and never consults a Decision\",\"proof\":\"dec:the-stranded-server-correction-stands created, accepted, GOVERNED_BY from both endpoints; detect_defects returned the same issue id unchanged\",\"only_exits\":\"acknowledge_defect (conflates resolved with unresolved) or delete the edge (erases the disagreement)\",\"precedent_in_the_same_loop\":\"the alignment fix of 2026-07-28, whose comment reads 'a property the detector ignores is a property that lies'\",\"fix_shape\":\"skip when a Decision links both endpoints; decide whether it must be accepted rather than proposed\",\"class\":\"documented behaviour more generous than actual behaviour - fourth instance this week\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-a-deferred-tool-reads-as-a-nonexistent-one",
       "node_type": "TemporalFact",
       "properties": {
@@ -62836,7 +62917,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:acb87bd743525a4dff470c4a1993ea080a3ae924956e4fc98bf5411443cbbec1",
+  "prev_content_hash": "sha256:5430b00dcafa89f38dcf34bdacd56c2cfdf400c4b0786f9d439dfb84406b2179",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
