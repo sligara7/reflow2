@@ -32,7 +32,15 @@ What the categories mean, and what to do about each:
 | `orphan_node` | a Capability allocated nowhere, an Artifact realizing nothing, a Requirement satisfied by nothing | user |
 | `contradiction` | two nodes joined by `CONTRADICTS` with no resolving Decision | user |
 | `unresolved_setup` | an `ANTICIPATES` with no follow-through — a planned need never built | user |
-| `duplicate` | two nodes marked `DUPLICATES` | **machine** — merged by `apply_heal` |
+| `duplicate` | two nodes joined by a `DUPLICATES` edge **a human asserted** (`basis: asserted`) | **machine** — merged by `apply_heal`, and it **deletes** the loser |
+
+A `DUPLICATES` edge a *machine* proposed — corpus ingest's name match, an
+extraction pass — carries `basis: suspected` and is **not** reported here at all.
+It arrives through `detect_gaps` as a `possible_duplicate` question instead,
+because a name-similarity score is a suspicion and merging on one would delete a
+node nobody agreed was redundant (`dec:ask-not-repair`). Confirm such a pair by
+re-drawing the edge with `basis: asserted`; acknowledge the gap if they are
+genuinely distinct.
 
 Also worth a look, and read the same way: `hierarchy_issues` (decomposition — a level skipped or
 mismatched), `surprising_connections` (coupling that crosses otherwise-distant parts of the
@@ -60,11 +68,27 @@ Read the whole proposal, not just the operations:
 
 If there are `operations`, call `apply_heal` with the proposal. It applies the mechanical
 operations atomically and re-checks its own work — and it leaves the `generated_content`
-defects untouched for the human. `requires_human_review` being true does **not** mean you
-should withhold the mechanical merge: it only signals that there is *also* judgement work in
-`generated_content` (step 4). `apply_heal` never acts on that half, so applying the operations
-and then bringing the rest to the user is the correct sequence. (The only thing that stops a
-mechanical apply is **rigid** mode — reported as `blocked_by_mode`.)
+defects untouched for the human. `apply_heal` never acts on that half, so applying the
+operations and then bringing the rest to the user is the correct sequence. (The only thing
+that stops a mechanical apply is **rigid** mode — reported as `blocked_by_mode`.)
+
+> ⚠️ **"Mechanical" does not mean "unread." Every operation today is a merge, and a merge
+> DELETES a node with no undo.** Read the pairs before you apply them, and say what you are
+> about to remove. `requires_human_review` being true does not by itself mean you should
+> withhold the merge — it signals that there is *also* judgement work in `generated_content`
+> (step 4) — but it is not permission to skip looking either.
+>
+> **On a shared graph, say so first.** Your apply reaches every attached session instantly,
+> with no undo and no notification to anyone else. If other seats are attached, tell the user
+> that before applying, not after.
+>
+> This warning is here because the earlier wording — *"`requires_human_review` being true does
+> not mean you should withhold the mechanical merge"* — was read, correctly, as *apply it
+> without reading it*. In dev_storyflow on 2026-08-07 that proposal was ten node deletions
+> built from name-similarity scores of 81–85 on unrelated nodes, with a load-bearing
+> requirement on the list. The suspicion-vs-assertion hole that produced it is fixed
+> (`basis`), and this paragraph is the second guard: a plan that deletes design content is
+> read before it is run.
 
 **Pass the proposal back exactly as you received it.** Every operation is checked against what HEAL
 proposes for the graph as it stands, and anything else is refused before a single write. So do not

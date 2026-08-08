@@ -220,7 +220,7 @@ fn full_coherence_loop() {
         "cap:fast",
         node::CAPABILITY,
         "cap:fast-dup",
-        Props::new(),
+        Props::new().set("basis", "asserted"),
     )
     .unwrap();
 

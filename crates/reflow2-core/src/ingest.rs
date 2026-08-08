@@ -1498,12 +1498,33 @@ impl DesignGraph {
     /// file. Four hundred documents produce four hundred separate asks, each
     /// addressed to an agent that has already forgotten the last one.
     ///
-    /// The batching machinery already exists and needed no new vocabulary:
-    /// HEAL's `duplicate` detector fires on a `DUPLICATES` edge, `propose_heal`
-    /// turns it into a merge with the survivor rules, and `apply_heal` refuses
-    /// anything no detector asked for. So the edge turns a transient suspicion
-    /// into a standing question that `detect_defects` collects across the whole
-    /// run, in any order, however long the run takes.
+    /// The batching machinery already exists and needed no new vocabulary: the
+    /// edge turns a transient suspicion into a standing question that survives
+    /// the run, in any order, however long it takes.
+    ///
+    /// # `basis: suspected` is load-bearing, and it was missing until 2026-08-08
+    ///
+    /// This function originally wrote a BARE `DUPLICATES` edge, and reasoned
+    /// that HEAL's `duplicate` detector would collect it as a standing question.
+    /// That reasoning was right about batching and wrong about safety: HEAL maps
+    /// `duplicate` to an applicable `Merge`, so what was written as *a question*
+    /// was read downstream as *a human's assertion that these are the same
+    /// thing* — the exact precondition `dec:ask-not-repair` says merge is safe
+    /// only because of. Nothing in the edge distinguished the two.
+    ///
+    /// Measured in dev_storyflow on 2026-08-07: `token_sort_ratio` scored six
+    /// pairs of semantically unrelated design nodes at 81-85, inside this ASK
+    /// band; `propose_heal` then offered TEN node deletions, and the served
+    /// check-health skill classed them as the mechanical half safe to apply
+    /// without review. Three bosses stood their fleet down from check-health
+    /// rather than run it. Nobody's graph was destroyed only because the
+    /// pairings looked implausible enough that a human read them.
+    ///
+    /// So the edge now says who decided. `suspected` keeps every batching
+    /// property the original design wanted — the suspicion is durable, HEAL and
+    /// DETECT can both find it later, and `detect_gaps` raises it as a
+    /// `possible_duplicate` the user can answer or acknowledge — while making it
+    /// impossible for a name-similarity score to reach `apply_heal`'s delete.
     ///
     /// **Drawn only in the ASK band.** At or above `auto_merge_threshold` the
     /// nodes are merged and there is nothing left to ask; below the type's
@@ -1525,7 +1546,12 @@ impl DesignGraph {
         if extracted_id == candidate_id {
             return;
         }
-        let mut props = Props::new();
+        // A heuristic proposed this pair, so it is a question and never a merge
+        // licence. Written explicitly rather than left to the schema default:
+        // the value is the whole safety property, and a reader of the stored
+        // edge should not have to know what the default was on the day it was
+        // written to know whether a machine or a person decided.
+        let mut props = Props::new().set("basis", "suspected");
         if let Some(s) = score {
             props = props.set("confidence", f64::from(s) / 100.0);
         }

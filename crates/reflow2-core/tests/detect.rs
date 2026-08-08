@@ -588,7 +588,10 @@ fn a_duplicate_the_user_already_recorded_is_left_to_heal() {
         "cmp:board-model",
         node::COMPONENT,
         "cmp:game-engine",
-        reflow2_core::nodes::Props::new(),
+        // `asserted` is the point of this test: the USER recorded it, which is
+        // what makes it HEAL's to repair. A `suspected` edge would correctly
+        // come back here as a question instead.
+        reflow2_core::nodes::Props::new().set("basis", "asserted"),
     )
     .unwrap();
 

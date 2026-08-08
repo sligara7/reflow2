@@ -130,7 +130,8 @@ schema:
       pass_1_extractable: true
       properties:
         confidence: { type: float, range: [0.0, 1.0] }
-      extraction_hint: Source and target cover the same ground (candidate for consolidation).
+        basis: { type: enum, values: [asserted, suspected], default: suspected, description: "WHO decided these cover the same ground, and therefore whether HEAL may merge them. `asserted` = a human drew this edge, which is the ONLY basis on which apply_heal will delete a node (dec:ask-not-repair). `suspected` = a heuristic proposed it — corpus ingest's fuzzy name match, an extraction pass — and it is asked as a possible_duplicate gap instead. DEFAULTS TO `suspected`, AND ABSENT READS AS `suspected` TOO: merge is irreversible, so an edge that cannot prove somebody meant it does not license a deletion. Legacy edges written before this property existed therefore stop being mergeable until re-asserted, which costs one call; the other default cost dev_storyflow ten proposed node deletions." }
+      extraction_hint: Source and target cover the same ground (candidate for consolidation). `basis` says whether a human asserted it or a heuristic suspected it — only `asserted` may be merged.
 
     ANTICIPATES:
       from: "*"
