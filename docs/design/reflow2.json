@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4b3a7fff00f435ab30fcf926a187d7375a956bcb831e84f8409de2affd36d0a1",
+  "content_hash": "sha256:3ebe6ac5a730f3a5614ee5426a3acf907a3c4ec3682112354b2b86a748297872",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2631,6 +2631,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:kit-manifest-check-passes-after-reinstall",
+      "properties": {},
+      "to_id": "epoch:kit-manifest-refreshed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:kpp-built",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -3588,6 +3594,12 @@
       "from_id": "snap:epoch:isolation-check-scope-split:ver:sessions-cannot-cross-designs",
       "properties": {},
       "to_id": "epoch:isolation-check-scope-split"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:kit-manifest-refreshed:ver:kit-manifest-agrees",
+      "properties": {},
+      "to_id": "epoch:kit-manifest-refreshed"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5314,6 +5326,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:recursive-black-box-decomposition",
+      "properties": {
+        "acted_at": "2026-08-07",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:reflow2-consumable-as-an-image",
       "properties": {
         "acted_at": "2026-08-05T23:10:00Z",
@@ -5422,11 +5443,56 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-tool-finds-its-own-blind-spots",
+      "properties": {
+        "acted_at": "2026-08-07",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:thin-install",
       "properties": {
         "role": "author"
       },
       "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:vocabulary-covers-information",
+      "properties": {
+        "acted_at": "2026-08-07",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:vocabulary-covers-materiel",
+      "properties": {
+        "acted_at": "2026-08-07",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:vocabulary-covers-personnel",
+      "properties": {
+        "acted_at": "2026-08-07",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:vocabulary-covers-states",
+      "properties": {
+        "acted_at": "2026-08-07",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -9676,6 +9742,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:edges-need-both-ends-audited",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:test-edges-need-both-ends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:edges-need-both-ends-audited",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ver:edges-need-both-ends"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:embeddings-question-findings",
       "properties": {
         "accepted_baseline": false,
@@ -10375,6 +10459,33 @@
         "action": "modified"
       },
       "to_id": "req:key-interfaces"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:kit-manifest-check-passes-after-reinstall",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ver:kit-manifest-agrees"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:kit-manifest-check-written",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:check-kit-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:kit-manifest-check-written",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ver:kit-manifest-agrees"
     },
     {
       "edge_type": "CHANGED",
@@ -12841,6 +12952,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:recursive-black-box-decomposition"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:released-eq-designed"
     },
     {
@@ -12853,6 +12970,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:the-tool-finds-its-own-blind-spots"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:thin-install"
     },
     {
@@ -12860,6 +12983,30 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:trust-boundary-at-ingress"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:vocabulary-covers-information"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:vocabulary-covers-materiel"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:vocabulary-covers-personnel"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:vocabulary-covers-states"
     },
     {
       "edge_type": "CONTAINS",
@@ -20606,6 +20753,12 @@
       "from_id": "req:supporting-is-not-conflict",
       "properties": {},
       "to_id": "snap:epoch:prune-proposed:req:supporting-is-not-conflict"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "ver:kit-manifest-agrees",
+      "properties": {},
+      "to_id": "snap:epoch:kit-manifest-refreshed:ver:kit-manifest-agrees"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -37234,6 +37387,56 @@
       "to_id": "cmp:skills"
     },
     {
+      "edge_type": "INTERACTS_WITH",
+      "from_id": "act:ci-runner",
+      "properties": {
+        "interaction": "reads — the committed export is the only thing it can see"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "INTERACTS_WITH",
+      "from_id": "act:designer",
+      "properties": {
+        "interaction": "answers — gaps reach them as a plain question, and their reply is what moves a status"
+      },
+      "to_id": "cap:surface"
+    },
+    {
+      "edge_type": "INTERACTS_WITH",
+      "from_id": "act:driving-agent",
+      "properties": {
+        "interaction": "receives — the nudge that names the skill the situation calls for"
+      },
+      "to_id": "cap:skill-loads-are-counted"
+    },
+    {
+      "edge_type": "INTERACTS_WITH",
+      "from_id": "act:driving-agent",
+      "properties": {
+        "interaction": "drives — every graph read and write reaches the design through this surface"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "OPERATES_IN",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "env:ci"
+    },
+    {
+      "edge_type": "OPERATES_IN",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "env:container"
+    },
+    {
+      "edge_type": "OPERATES_IN",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "env:dev"
+    },
+    {
       "edge_type": "PRECEDES",
       "from_id": "epoch:arrival-delta",
       "properties": {},
@@ -37586,6 +37789,14 @@
       "from_id": "art:check",
       "properties": {},
       "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:check-kit-manifest",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:kit-manifest-agrees"
     },
     {
       "edge_type": "REALIZES",
@@ -38725,6 +38936,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-check-kit-manifest",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:kit-manifest-agrees"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-degraded-server",
       "properties": {
         "completeness": "complete"
@@ -38738,6 +38957,14 @@
         "completeness": "complete"
       },
       "to_id": "ver:design-identity"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-edges-need-both-ends",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:edges-need-both-ends"
     },
     {
       "edge_type": "REALIZES",
@@ -41037,6 +41264,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:check-kit-manifest",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:check-kit-manifest"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:checksum-dialect-test",
       "properties": {
         "action": "created"
@@ -41773,6 +42008,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-check-kit-manifest",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-check-kit-manifest"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-degraded-server",
       "properties": {
         "action": "created"
@@ -41786,6 +42029,14 @@
         "action": "created"
       },
       "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-edges-need-both-ends",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-edges-need-both-ends"
     },
     {
       "edge_type": "YIELDED",
@@ -42015,6 +42266,33 @@
   "graph_id": "reflow2",
   "nodes": [
     {
+      "node_id": "act:ci-runner",
+      "node_type": "Actor",
+      "properties": {
+        "actor_type": "external_system",
+        "description": "A non-human, non-agent consumer: GitHub Actions runs tools/reflow2_check.py against the committed export on every push and pull request, and fails the build on unaccepted drift or a broken export chain. It is the only actor that can REFUSE work. It reads only what is COMMITTED, which is exactly why the kit manifest cannot be gated there (fact:defect-kit-manifest-drift-is-invisible-to-ci). Distinct from the driving agent: it never writes, never answers a question, and cannot be asked one.",
+        "name": "The CI runner"
+      }
+    },
+    {
+      "node_id": "act:designer",
+      "node_type": "Actor",
+      "properties": {
+        "actor_type": "stakeholder",
+        "description": "Reached ONLY through the agent — the other half of req:driving-agent, and dec:idea-human-newcomer-reader is the open question about whether any other human counts. Never expected to know systems engineering (req:no-se-knowledge), so every question reaches them as options with a recommendation first (req:a-question-arrives-with-a-reading). They own the decisions: every move of a Requirement off `proposed` records THEIR word, never the agent's (dec:certainty-derived). `stakeholder` rather than `user` is deliberate and is the design's own claim — they hold the authority and do not operate the tool.",
+        "name": "The person whose design it is"
+      }
+    },
+    {
+      "node_id": "act:driving-agent",
+      "node_type": "Actor",
+      "properties": {
+        "actor_type": "user",
+        "description": "The primary actor, and the one req:driving-agent names: \"The driving agents are coding agents, not humans.\" A coding agent attached over MCP drives the whole loop — captures intent, runs the detectors, builds, reconciles. req:agent-native (\"an agent can drive the whole loop\") is its requirement. Recorded 2026-08-07: the Actor type existed with ZERO instances for 24 releases, so every operational view rendered empty and nothing said why. Not a Contributor — a Contributor authors the design; this is who the design SERVES. ON THE actor_type CHOICE, because it is arguable: `user` records the ROLE (it is who reflow2 is for) rather than the NATURE (it is a system). `external_system` would record the nature and lose the point that this is the primary user, which is the whole of req:driving-agent.",
+        "name": "The driving coding agent"
+      }
+    },
+    {
       "node_id": "art:acknowledgement-not-structure-test",
       "node_type": "Artifact",
       "properties": {
@@ -42170,6 +42448,19 @@
         "granularity": "atomic",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:check-kit-manifest",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:b78fa9e7b867218d12b5f4e478f55228619203e15bebb578d54b0bd00ea0a97d",
+        "granularity": "atomic",
+        "location": "tools/check_kit_manifest.py",
+        "name": "check_kit_manifest.py",
         "status": "realized",
         "volatility": "stable"
       }
@@ -43468,6 +43759,19 @@
       }
     },
     {
+      "node_id": "art:test-check-kit-manifest",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:35bd149e47e2a2669241c63df99a4c7b31d1120dd1bb857779376464f39b9bcc",
+        "granularity": "atomic",
+        "location": "tools/test_check_kit_manifest.py",
+        "name": "test_check_kit_manifest.py",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:test-degraded-server",
       "node_type": "Artifact",
       "properties": {
@@ -43487,6 +43791,19 @@
         "location": "crates/reflow2-mcp/tests/design_identity.rs",
         "name": "design_identity.rs",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-edges-need-both-ends",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:adefdf5e47e07f96619a6aa0f32238c8beb42fbd1cc12c067cdcdba7cceb2f05",
+        "granularity": "atomic",
+        "location": "crates/reflow2-core/tests/edges_need_both_ends.rs",
+        "name": "edges_need_both_ends.rs",
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -47030,6 +47347,14 @@
       }
     },
     {
+      "node_id": "chg:edges-need-both-ends-audited",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "ver:edges-need-both-ends written as an audit over all 16 typed edge helpers — the guard was already tested on create_edge, the helpers were not"
+      }
+    },
+    {
       "node_id": "chg:embeddings-question-findings",
       "node_type": "ChangeEvent",
       "properties": {
@@ -47219,6 +47544,22 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Published boundaries designated, severability computed, and a new Decision now lands proposed"
+      }
+    },
+    {
+      "node_id": "chg:kit-manifest-check-passes-after-reinstall",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "ver:kit-manifest-agrees went failing → passing because the INSTALLED KIT was refreshed (0.22.0 → 0.24.0), not because the check or the design changed. Anthony chose re-running tools/reflow2_init.py over acknowledge_gap; it overwrote nothing (ten edited skill mirrors kept, all three MCP configs left alone) and check_kit_manifest.py then exited 0 with 10 notes and no findings. RECORDED AFTER THE EDIT, and that is the point of writing it down: the snapshot pinned beside this event holds the NEW (passing) state, so the prior `failing` value survives only in this text. revise-design step 2 — snapshot BEFORE editing — was skipped, because reconcile_verification was called with record_events at its default of false: it reported the divergence ('recorded as failing, the run reported passed') to the session and wrote nothing. Without this event the graph would say `passing` with no trace it ever said otherwise, and answering what-changed-when-and-why would need git archaeology — which is the test revise-design sets and the thing req:the-past-is-never-overwritten exists to prevent. The drift itself lives in gitignored local state under .reflow2/, so no commit can fix it and no CI can see it: this check can catch a stale kit, but only a person at the machine can clear one."
+      }
+    },
+    {
+      "node_id": "chg:kit-manifest-check-written",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "ver:kit-manifest-agrees is written and run after 13 days planned — one real finding, and the discovery that it can never be a CI gate"
       }
     },
     {
@@ -51569,6 +51910,16 @@
       }
     },
     {
+      "node_id": "epoch:kit-manifest-refreshed",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The installed kit was refreshed rather than the gap acknowledged, so ver:kit-manifest-agrees went failing → passing (2026-08-07)",
+        "sequence": 286,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:kpp-capture",
       "node_type": "DesignEpoch",
       "properties": {
@@ -52577,6 +52928,24 @@
       }
     },
     {
+      "node_id": "env:ci",
+      "node_type": "Environment",
+      "properties": {
+        "env_type": "staging",
+        "location": "github.com/sligara7/reflow2 — ubuntu runner, checkout only, no .reflow2/ store",
+        "name": "GitHub Actions CI"
+      }
+    },
+    {
+      "node_id": "env:container",
+      "node_type": "Environment",
+      "properties": {
+        "env_type": "production",
+        "location": "/data on a real block device or local volume — never NFS",
+        "name": "Hosted container on a mounted volume"
+      }
+    },
+    {
       "node_id": "env:dev",
       "node_type": "Environment",
       "properties": {
@@ -52742,6 +53111,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered tests/changelog.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:check-kit-manifest",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered check_kit_manifest.py"
       }
     },
     {
@@ -53665,6 +54044,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-check-kit-manifest",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_check_kit_manifest.py"
+      }
+    },
+    {
       "node_id": "frag:art:test-degraded-server",
       "node_type": "Fragment",
       "properties": {
@@ -53682,6 +54071,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered design_identity.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-edges-need-both-ends",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered edges_need_both_ends.rs"
       }
     },
     {
@@ -56205,6 +56604,21 @@
       }
     },
     {
+      "node_id": "req:recursive-black-box-decomposition",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Every element of a design is a black box with inner function and interfaces, nested as deep as the design needs, in any domain",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-07, in his words: treat everything in design as a systems-engineering BLACK BOX that has some inner functionality and an interface with other black boxes. Inside a black box may be a series of other black boxes making up the parent black box, and this continues down further and further as the design needs — system-of-systems level, then systems level, then component level, and so on. This should apply to just about any design project, from code projects to biology projects. Secondly, graph theory is then applied over which functions are allocated to which systems.\n\nHE ADDED, AND IT IS THE POINT OF RECORDING THIS: \"I'm a little surprised that reflow2 does not have this as it was one of the primary things I designed it for.\" So this requirement is not new intent — it is ORIGINAL intent that had no node, which is the failure mode this project has hit before (dec:idea-backlog-belongs-in-the-graph: accepted, invisible, violated, re-announced as new). Two prior answers in that conversation told him the recursive model was largely absent, and that was WRONG; the measurement below is the correction.\n\nWHAT ALREADY EXISTS, measured 2026-08-07 rather than recalled: the vocabulary is complete and the backbone is real. Component carries a `level` (48 at `component`, 8 at `subsystem`), CONTAINS nests Component inside Component (42 edges), ALLOCATED_TO puts capabilities on components (138 edges), and the graph-theory half is built and running — evaluate_allocation computes modularity, god-components and misplaced capabilities; cap:hierarchy checks decomposition levels; req:analyse-at-any-level already requires that any level be analysable on its own; req:decomposition-covers-its-parent already requires a decomposition to be checkable against what the parent held. DECOMPOSES exists as an edge type and is UNUSED (0 instances) because CONTAINS carries it.\n\nWHERE IT FALLS SHORT OF THE STATEMENT, and all three are measured:\n1. DEPTH IS TWO, not \"as deep as the design needs\". Project -> 8 subsystems -> 42 components, max depth 2, nothing above system-of-systems and nothing below component. The schema does not bound this; the population does. And 14 components are roots — 6 ordinary components sit outside every subsystem, so the tree is not even complete at the depth it has.\n2. THE INTERFACE HALF IS ~9% POPULATED. 5 Interface nodes and 5 PROVIDES / 5 CONSUMES edges for 56 components. \"An interface with other black boxes\" is the half that makes a black box a black box, and it is almost entirely unmodelled — the same fact the trajectory reports as `seams 0% (0/73)`.\n3. THE DOMAIN CLAIM IS UNTESTED OUTSIDE SOFTWARE. Every calibration number behind the granularity guidance comes from code (110k LOC -> ~78 nodes; reflow2's own 34k LOC -> ~100 nodes). The adopt skill does explicitly claim non-code subjects and carries a table for them, but nothing has exercised \"code projects to biology projects\".\n\nTHE ASYMMETRY THIS EXPOSES, offered as reasoning rather than as settled: the standing guidance is one Interface per contract and one Artifact per meaningful unit, never per endpoint, file or function. For software that is defensible because the fine grain is REDUNDANTLY AVAILABLE — a compiler, an LSP and a type checker each hold element-level truth exactly and continuously, so a graph copy would be worse and staler. For a building, a satellite or an organism there is no compiler: nothing else holds \"this penetration weakens this member\", so the fine grain is not redundant, it is the only copy. The same rule may therefore be right for code and wrong for physical design, and reflow2 applies it uniformly.\n\nWHAT WOULD SATISFY THIS, so it is not read as satisfied by the vocabulary alone: an arbitrary-depth nesting that is exercised beyond two levels, both sides of every contract modelled at each level so a change at one level propagates across siblings at that level (the electrical-drawing-affects-structural case he gave), and the allocation analysis reading something other than a perfect score over an empty structure.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:reflow2-consumable-as-an-image",
       "node_type": "Requirement",
       "properties": {
@@ -56580,6 +56994,21 @@
       }
     },
     {
+      "node_id": "req:the-tool-finds-its-own-blind-spots",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Asking for gaps returns the design's own blind spots — the user is never the detector",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-07, and he named the point himself so it is quoted rather than paraphrased: \"the bigger point I'm trying to make is not can you render some view and whether you do it accurately/honestly or not — it is that when I type /gaps, does reflow2 automatically find all these gaps/issues.\"\n\nSo honest rendering is NOT the requirement. A renderer that confesses is necessary and is already built. The requirement is that the FINDING is automatic: `/gaps` must surface the design's own blind spots without a human thinking to look for them.\n\nWHAT detect_gaps DOES FIND, so the shortfall is not overstated: unsatisfied requirements, unallocated and unrealized and unverified capabilities, failing verifications, unreleased components, missing interface halves, status contradictions, duplicates, surprising couplings. Every one of those is a MISSING HALF OF SOMETHING THAT EXISTS. That is the shape it is good at.\n\nWHAT IT DID NOT FIND, all measured on reflow2's own design on 2026-08-07, and every one of them found by a human querying by hand:\n1. 6 Components sit in no subsystem, and `hierarchy_issues` returns 0.\n2. `evaluate_allocation` reports modularity 1.0 from `total_internal: 1, total_external: 0` — a perfect score over ONE dependency, while the graph holds 171 DEPENDS_ON edges — and `graph_report` prints it as \"Allocation health\".\n3. 30 of 60 edge types have ZERO instances. Nothing reports this. Among them `DECOMPOSES`, the edge for the recursive decomposition this project was built around.\n4. 8 of 29 node types have zero instances, including `Actor`, `Flow` and `QualityGate` — so three viewpoints render empty and nothing says why.\n5. Two node names contain HTML entities (`&lt;`, `&gt;`), i.e. escaped display text stored as design content.\n6. Four whole UAF domains have no vocabulary at all (personnel, states, information, materiel) — which detect_gaps structurally cannot ask, because it reasons about instances and this is a question about the schema.\n\nTHE ASYMMETRY THIS NAMES: detect_gaps finds the missing half of something that was begun. It cannot find something that was NEVER BEGUN. A type with no instances, an edge type never drawn, a decomposition one level deep and a metric computed over one data point all look identical to a design that simply has no problem there. This is the same shape `dec:loop-status-cannot-say-it-never-looked` already records for unsurfaced_gaps, where \"clean\" and \"never scanned\" are one answer, and the same shape `coverage_report` exists to fix for ARTIFACTS — there is no equivalent for vocabulary or structure.\n\nTHE PRECEDENT, and it is exact: `chg:orphan-decision-degree-zero` records this happening once already — \"Found 2026-08-01 by running check-health and detect-and-ask on reflow2's own design, GETTING A CLEAN BILL FROM EVERY DETECTOR — detect_defects 0, hierarchy_issues 0, dimension_drifts 0, propose_heal 0 operations — and then counting zero-degree nodes by hand\". One detector was added for that one case. The general principle was never made a requirement, so the next instance had to be found by hand again, which is what happened today.\n\nONE CONCRETE LEAD, because it is cheaper than it looks: `tools/render_views.py` already computes a CONFESSION LIST — everything a viewpoint needed and could not find — and it currently catches things detect_gaps does not, including every ChangeEvent pinned to no epoch and a real contradiction where `epoch:v0240-planned` and `epoch:v0250-planned` disagree between their PRECEDES edge and their sequence numbers. Two independent gap-finding mechanisms exist, the richer one is not wired into the loop, and `docs/viewpoints.md` already says \"a confession list is a work list\".\n\nTHE STANDING TRAP THIS MUST NOT FALL INTO, quoted from the catalogue's own rule 4: a detector that reaches zero findings by only asking questions the graph can already answer has been tuned to the instrument. Satisfying this requirement by adding checks that happen to pass is the failure mode, not the fix.\n\nRELATED INTENT ALREADY IN THE GRAPH, so this is not read as unprecedented: `req:skill-use-survives-a-long-session` already states that the USER must never be the trigger — for skills. This is the same principle for findings.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:thin-install",
       "node_type": "Requirement",
       "properties": {
@@ -56651,6 +57080,66 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "When several coupled designs each carry their own version, the question that matters before deploying is not \"do these two agree at their seam?\" but \"does THIS SET of versions hold together?\" — and that set must be a durable, named, dated object the design can re-check, not a comparison run once and lost. reflow2 today has only pairwise machinery: cap:design-dependencies-declared (declare which version of another design you depend on), cap:seam-incompatibility (say when two linked designs disagree at a boundary), cap:composed-analysis (analyse two designs together without merging them), compare_designs (two as-designed records). Nothing names an N-way combination or lets it be validated again later. THE PRIOR ART IS reflow's OWN, and it worked: workflow 01b-bottom_up_integration.json step SE-08 (Mixed-Version Validation) created a version-specific index file — naming convention index_v{scenario}-{YYYYMMDD}.json, e.g. index_v2.0-auth-v1.0-gateway-20251030.json — pointing at specific versioned files rather than symlinks, then ran validation over that combination (checking interface contract compatibility, breaking changes between versions, integration issues, dependency conflicts), generated a system graph for that combination alone, and recorded the outcome so known-good combinations were documented. Its stated use case: \"Validate auth_service v2.0 works with api_gateway v1.0 before deploying.\" Also supported baseline snapshots for regression testing. THIS IS THE MECHANISM req:epochs-can-be-planned ALREADY ASKS FOR, captured 2026-07-28 in Anthony's own words: \"an epoch or increment must pin the set of per-repo design versions it means, or the question 'which epoch are we talking about?' has no answer, which is the failure this exists to prevent.\" reflow had built the pin; reflow2 stated the need without it. Operationally load-bearing for the ecosystem case rather than the single-repo one: several coupled repos, each with its own graph, evolving at different rates. Found 2026-07-28 reviewing the original reflow workflows. Anthony's word: capture it.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:vocabulary-covers-information",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "What crosses an interface is modellable — data entities, their attributes and their relationships",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-07, from the UAF audit: there is no data-entity or information-element type, so a logical data model has nothing to project from.\n\nWHAT EXISTS AND WHY IT IS NOT ENOUGH: `Interface` carries `operations` and `payload_format` as free text, and `SPECIFIES` exists for pointing an Interface at a machine-readable contract (an OpenAPI file, a protobuf schema) — with ZERO instances. So the graph can say a contract exists, what medium it uses and how it authenticates, but not WHAT TRAVELS OVER IT in any form a computation can read. An interface is currently a promise with no stated structure behind it.\n\nWHAT CANNOT BE SAID TODAY: the entities two components exchange; an entity's attributes; that two interfaces carry the SAME entity, which is what makes a change to it propagate to both; that one system's field maps to another's under a different name, which is the whole substance of making two organisations' designs interoperate.\n\nWHY IT MATTERS BEYOND reflow2, and this one bears directly on the stated purpose: `reflow2-real-operating-context` says the job is making partially-built, differently-motivated designs interoperate when they were never designed to. Interoperability failures are overwhelmingly SEMANTIC — the same concept under two names, two units, two precisions — and none of that is expressible. `con:pairing-stops-at-the-boundary` already records the ceiling in the graph's own words: pairing sees boundaries, not the types that cross them. That constraint is this requirement's evidence.\n\nNOT SPECIFIED HERE: whether this is a full entity-relationship layer or something much thinner, and whether reflow2 should model entities itself or only carry a locator to an external schema — `dec:agent-navigates-content` (the agent navigates content, the graph records where it landed) is an argument for the thinner answer, and the trade is not settled.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:vocabulary-covers-materiel",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Physical resources are modellable — supply, sparing, maintenance and consumption, which `Resource` does not mean",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-07, from the UAF audit, asked as \"what if I said create/render me a logistics view\": there is no logistics vocabulary, and the type whose name promises it means something else entirely.\n\nTHE TRAP, MEASURED: `Resource` exists, and its only instance is `dep:dynograph-foundation` with `resource_type: design-dependency`, carrying a provider URL, a version, a feature list and the file it was declared in. It models a SOFTWARE DEPENDENCY. `REQUIRES_RESOURCE` has one instance and means \"this design depends on that library\". Of the four missing domains this is the one most likely to be assumed covered, because the name is already taken by something else.\n\nWHAT CANNOT BE SAID TODAY: a consumable and its consumption rate; a spare and its provisioning quantity; a maintenance action, interval or turnaround; transport, storage or shelf life; what a system needs to keep operating as opposed to what it needed to be built. A logistics view has no nouns to draw.\n\nWHY IT MATTERS BEYOND reflow2: software has no materiel, so this costs nothing here and is load-bearing for every physical programme — which `reflow2-real-operating-context` and the adopt skill both say are in scope (\"a satellite, a building or a fleet cannot live in a repository — its drawings, specs, models and analyses can\").\n\nNOT SPECIFIED HERE: whether the existing `Resource` type is generalised with a wider `resource_type` vocabulary or a separate type is added beside it. The first is cheaper and risks conflating a build-time dependency with an operational consumable; the second is cleaner and costs a type. That is a decision, and it should be made rather than defaulted.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:vocabulary-covers-personnel",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "People are modellable inside the design, not only around it — organisation, role, and who performs a function",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-07, from the UAF audit: the Personnel domain has NO vocabulary in reflow2. Two people-shaped types exist and neither is this — `Contributor` is who authored the design, `Actor` is who the designed system serves. Both sit outside the system being designed.\n\nWHAT CANNOT BE SAID TODAY: which role performs a function; the organisation a function belongs to; a post, a competence, or a responsibility assignment; who is accountable for a component. So an organisational view, a manning view, or a responsibility matrix has nothing to project from — and \"which function is allocated to which system\" (already answered by ALLOCATED_TO) has no counterpart for \"which function is allocated to which PERSON or ROLE\".\n\nWHY IT MATTERS BEYOND reflow2, which is the reason this is a requirement and not a curiosity: reflow2 itself is a tool with an agent and one user, so people barely appear inside its design and their absence is invisible here. Almost every non-software project has people IN the design — a beamline has operators, a satellite programme has crews and controllers, a hospital system has clinicians. `rule:fixes-are-judged-by-the-third-party` says fixes are judged by what they do for somebody else's project, and this is a gap only somebody else's project would feel.\n\nNOT SPECIFIED HERE, deliberately: whether this is one node type or several, whether a role is a first-class node or a property on an edge, and whether reflow2 should follow UAF's Post/Role/Competence split or a simpler shape. Those are design questions and picking one now would foreclose them.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:vocabulary-covers-states",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Behavioural state and its transitions are modellable, distinct from lifecycle status",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-07, from the UAF audit: there is no state machine anywhere in the schema, and a whole UAF model-kind column depends on one.\n\nTHE DISTINCTION THAT MAKES THIS A REAL GAP RATHER THAN A NAMING ONE: reflow2 has plenty of `status` fields — a Requirement is proposed/accepted/deferred/dropped/met, a Capability is planned/realized/verified, a Verification is planned/passing/failing. Every one of those is a LIFECYCLE status: where a design element has got to in its own maturation. None of them is a BEHAVIOURAL state: a mode the designed thing is in while it operates. And no transition is modelled between any of them — the enums are values, not a graph, so even the lifecycles cannot be projected as a state diagram.\n\nWHAT CANNOT BE SAID TODAY: that a detector is in acquiring / idle / faulted; that a vehicle is in launch / cruise / re-entry; that a protocol connection is in handshake / established / draining; which event causes which transition; which states are safe to be interrupted in. A state view is not expressible, and neither is \"what modes must this interface work across\".\n\nWHY IT MATTERS BEYOND reflow2: reflow2 is a request-response tool with no operating modes to speak of, so the absence costs nothing here and everything on anything with modes. Anthony's own current case is one — a beamline instrument has states, and the analysis stack behaves differently in each.\n\nNOT SPECIFIED HERE: whether states attach to Components, Capabilities or both; whether a transition is an edge or a node; and whether lifecycle status should be unified with behavioural state or kept firmly apart. Kept apart is the likelier answer and is still a decision, not an assumption.",
         "status": "proposed"
       }
     },
@@ -56990,6 +57479,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-sessions-cannot-cross-designs\",\"properties\":{\"completeness\":\"partial\"}},{\"direction\":\"out\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:hosted-state-on-a-volume\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-session-cannot-address-another-design\",\"properties\":{}}]",
         "state": "{\"kind\":\"verification\",\"last_run_at\":\"2026-08-07\",\"level\":\"integration\",\"method\":\"test\",\"name\":\"A session attached to design X cannot reach design Y in the same process: a graph_id it was not attached to is REFUSED rather than served; a path is not an alternative route in; a reconnect re-attaches to the same design rather than to none or to the first in the registry; and a write lands in the attached design only — proven by opening two graphs in one process, writing to each, and asserting each store contains only its own nodes. PLANNED — written before the build, because dec:one-process-many-stores was accepted 2026-08-06 conditional on this check existing first, and an isolation regression CORRUPTS silently rather than erroring.\",\"status\":\"passing\"}",
         "target_id": "ver:sessions-cannot-cross-designs",
+        "target_type": "Verification"
+      }
+    },
+    {
+      "node_id": "snap:epoch:kit-manifest-refreshed:ver:kit-manifest-agrees",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:check-kit-manifest\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-check-kit-manifest\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:kit\",\"properties\":{}}]",
+        "state": "{\"kind\":\"verification\",\"last_run_at\":\"2026-08-07\",\"level\":\"system\",\"method\":\"test\",\"name\":\"The installed kit's manifest agrees with the kit source it claims to be — version, file set and per-file hashes (friction 2026-07-25: reflow2's own manifest is four releases stale and nothing noticed; unwritten)\",\"status\":\"passing\"}",
+        "target_id": "ver:kit-manifest-agrees",
         "target_type": "Verification"
       }
     },
@@ -57524,6 +58023,19 @@
       }
     },
     {
+      "node_id": "fact:defect-allocation-health-is-green-over-an-empty-structure",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE TWO INSTRUMENTS THAT WOULD REVEAL AN UNPOPULATED DECOMPOSITION BOTH REPORT SUCCESS. Measured 2026-08-07 on reflow2's own design while answering Anthony's question about recursive black-box decomposition. (1) evaluate_allocation returns modularity 1.0 with total_external 0 and total_internal 1 — a PERFECT modularity score computed over exactly ONE dependency. Every one of the 44 listed components reports external_weight 0 and internal_weight 0. The graph holds 171 DEPENDS_ON edges; the allocation evaluator sees one, so the metric is structurally starved and the number it prints is 1/1. graph_report_markdown renders this as \"Allocation health: Modularity 1.00 across 44 component(s); 0 misplaced capability(ies). No god-components.\" (2) hierarchy_issues returns count 0 on a hierarchy that is TWO levels deep and INCOMPLETE: 8 subsystems contain 42 components, and 6 ordinary components sit outside every subsystem — 14 component roots in total. Neither the shallowness nor the six orphans is reported. WHY THIS MATTERS MORE THAN EITHER NUMBER: req:recursive-black-box-decomposition is original intent — Anthony's words, \"one of the primary things I designed it for\" — and the reason it went unnoticed is that the design's own health readout says the decomposition is perfect. This is the exact pattern the standing feedback names: a green gate is the weakest evidence in the building, and 0 gaps / 0 defects / loop clean held throughout eleven releases in which ten schema domains were invisible. Here the same shape appears one layer in: the allocation analysis cannot distinguish a well-modularised design from one with almost no modelled dependencies, and reports the second as the first. THE COMPANION MEASUREMENT, which is the real hole: 5 Interface nodes and 5 PROVIDES / 5 CONSUMES edges for 56 components. The trajectory already reports this honestly as seams 0% (0/73) and calls it the frontier — so the SEAM metric is candid where the ALLOCATION metric is not, about the same underlying emptiness. NOT A REQUEST TO CHANGE THE MODULARITY FORMULA: dec:report-dont-judge is deliberate and granularity_report's refusal to rule is right. What is wrong is a metric reporting a value at all when its denominator is one, instead of saying it has too little to measure — the same distinction dec:loop-status-cannot-say-it-never-looked already raises for unsurfaced_gaps, where \"clean\" and \"never scanned\" are the same answer.",
+        "subject_id": "cap:allocate",
+        "valid_from": "2026-08-07",
+        "value": "{\"found_while\":\"answering Anthony's question about recursive black-box decomposition, 2026-08-07\",\"evaluate_allocation\":{\"modularity\":1.0,\"total_internal\":1,\"total_external\":0,\"unweighted_dependencies\":1,\"components_listed\":44,\"components_with_nonzero_weight\":1,\"depends_on_edges_in_graph\":171},\"hierarchy_issues\":{\"count\":0,\"subsystems\":8,\"components_contained\":42,\"components_outside_any_subsystem\":6,\"component_roots\":14,\"max_depth\":2},\"interfaces\":{\"interface_nodes\":5,\"provides_edges\":5,\"consumes_edges\":5,\"components\":56},\"candid_by_contrast\":\"the trajectory reports seams 0% (0/73) honestly about the same emptiness\",\"requirement_this_hid\":\"req:recursive-black-box-decomposition\",\"analogous_recorded_defect\":\"dec:loop-status-cannot-say-it-never-looked — clean and never-scanned are the same answer\",\"not_asked_for\":\"a change to the modularity formula, or any judgement from granularity_report (dec:report-dont-judge)\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-content-store-invents-its-directory",
       "node_type": "TemporalFact",
       "properties": {
@@ -57546,6 +58058,32 @@
         "subject_id": "cmp:skills",
         "valid_from": "2026-08-07",
         "value": "{\"filed_as\":\"https://github.com/sligara7/reflow2/issues/91 (finding 1 of 3), 2026-08-07, on Anthony's word\",\"tool_that_merges\":\"create_node (MCP), crates/reflow2-mcp/src/tools/query.rs:64 -> upsert_node\",\"method_that_replaces\":\"DesignGraph::create_node, crates/reflow2-core/src/graph.rs:220\",\"documents_stating_the_wrong_one\":[\"skill revise-design step 3\",\"ver:constructors-preserve description\",\"crates/reflow2-core/tests/upsert.rs module doc\"],\"graph_contradicts_itself\":\"chg:merge-integrity-bl47-bl46 says create_node merges\",\"verification_passes_anyway\":\"ver:constructors-preserve asserts nothing about create_node\",\"probe\":{\"setup\":\"Requirement req:probe, status set to accepted\",\"call\":\"create_node props={statement} only\",\"expected_by_skill\":\"status downgraded to proposed\",\"observed\":\"status stayed accepted; 7 other properties survived; statement updated\"},\"concrete_cost\":\"TemporalFact has no typed constructor, and dec:defects-are-temporal-facts makes it the standard defect record\",\"fix_shape\":\"correct the three documents; optionally rename one surface so the collision cannot recur; add a create_node case to constructors_preserve.rs so prose stops being the only guard\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-documented-hook-path-may-not-exist",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.85,
+        "fact_type": "defect",
+        "statement": "CORRECTED 2026-08-07, SAME DAY, AND THE CORRECTION MATTERS — the first write of this fact called it a doc-vs-code disagreement that would bite consumers. IT WOULD NOT. Anthony asked the diagnostic question directly (\"is it because the version of reflow2 is the developmental version only available on this machine? If this were installed via the standard method, would we be seeing this error?\") and the answer is: NO, a standard install would not see it, and the documentation is correct for the audience it is written for. VERIFIED, not assumed: `release.yml:108` does `cp tools/loop_nudge.py kit-stage/reflow2-kit/tools/`, so the script IS in the released kit tarball; and `install.sh:124` extracts with `--strip-components=1`, which drops the tarball's `reflow2-kit/` wrapper so the kit lands directly at `~/.local/share/reflow2/kit/`. After `curl ... install.sh | sh` the documented path `~/.local/share/reflow2/kit/tools/loop_nudge.py` therefore EXISTS, the snippet in getting-started/AGENTS.md is right, and flo2's tracked settings.json is right.\n\nWHAT THIS ACTUALLY IS: a DEVELOPER-LAYOUT artifact, not a consumer defect. Two install layouts existed on one machine and one project was configured for the other. reflow2 here runs from the checkout at ~/project/reflow2 and the consumer installer was never run, so `~/.local/share/reflow2/` did not exist at all — while the GLOBAL hook in ~/.claude/settings.json correctly points at the checkout. That is why reflow2 worked in its own repo and broke only in flo2: flo2's project-level hook was written for the consumer layout this machine does not have.\n\nWHAT REMAINS TRUE AND WORTH KEEPING: the failure SHAPE is still the worst available. A PostToolUse hook that cannot start its script returns a BLOCKING error, so every single `mcp__reflow2__*` call in that project is interrupted rather than degraded — the opposite of cap:degraded-surface's promise that the server explains its own absence instead of vanishing. A missing hook script is a configuration problem, and it presented as reflow2 being unusable. That is a real and separable finding: whatever the cause, the blast radius of a mis-pathed hook should not be every tool call.\n\nWHAT IS NO LONGER CLAIMED: that the prose defeats the installer's guard. `ensure_hooks` skipping a nonexistent script and the docs naming a literal path are both correct in their own contexts, and there is no contradiction between them. The earlier framing generalised one machine's mixed state into a defect in the product, which is the error `rule:fixes-are-judged-by-the-third-party` exists to prevent — this repo is the test rig, and a finding true only of the test rig is not a finding about the kit.\n\nORIGINAL REPORT FOLLOWS, kept because the symptom and the diagnosis path are worth having on the record. Reported live by Anthony while working on flo2: every `mcp__reflow2__*` call returned `PostToolUse:mcp__reflow2__get_skill hook returned blocking error — python3: can't open file '/home/ajs7/.local/share/reflow2/kit/tools/loop_nudge.py': [Errno 2] No such file or directory`. flo2's `.claude/settings.json`, git-tracked and clean, registers three hooks (SessionStart, PostToolUse, Stop) at that path. WORKAROUND APPLIED: `~/.local/share/reflow2/kit` is now a symlink to /home/ajs7/project/reflow2, so the documented path resolves, flo2's tracked settings stay correct as written, and no tracked file was edited. Verified by running the hook from flo2's directory — exit 0, correct orientation output. THE CAVEAT THAT MAKES IT A WORKAROUND rather than a fix: the symlink points at a WORKING TREE rather than a checksum-verified release, so flo2 now runs whatever is in that checkout including uncommitted changes. Convenient for a developer, wrong for a consumer, and not what install.sh means by that path — running the real installer would replace it with a verified kit.",
+        "subject_id": "cap:kit",
+        "valid_from": "2026-08-07",
+        "value": "{\"corrected\":\"2026-08-07 same day, on Anthony's question — the consumer-defect framing was wrong\",\"standard_install_affected\":false,\"evidence_that_it_is_not_a_consumer_defect\":{\"release.yml:108\":\"cp tools/loop_nudge.py kit-stage/reflow2-kit/tools/ — the script IS in the kit tarball\",\"install.sh:124\":\"tar --strip-components=1 — the kit lands directly at ~/.local/share/reflow2/kit/\",\"conclusion\":\"the documented path exists after a standard install; docs and flo2's settings are both correct\"},\"actual_cause\":\"two install layouts on one machine — reflow2 runs from the checkout here and the consumer installer was never run, so the consumer path was absent while the global hook correctly pointed at the checkout\",\"still_a_real_finding\":\"a mis-pathed PostToolUse hook returns a BLOCKING error, so it interrupts every reflow2 call instead of degrading — contradicting cap:degraded-surface regardless of why the path is wrong\",\"no_longer_claimed\":\"that the docs defeat the installer's guard; both are correct in context\",\"lesson\":\"rule:fixes-are-judged-by-the-third-party — a finding true only of the test rig is not a finding about the kit\",\"workaround_applied\":\"symlink ~/.local/share/reflow2/kit -> /home/ajs7/project/reflow2, verified from flo2, exit 0\",\"workaround_caveat\":\"points at a working tree, not a checksum-verified release\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-kit-manifest-drift-is-invisible-to-ci",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE KIT MANIFEST CANNOT BE GATED IN CI, AND THAT IS WHY ITS DRIFT SURVIVES. `.reflow2/` is gitignored (.gitignore:22), so `.reflow2/kit-version.json` is NEVER COMMITTED — `git ls-files .reflow2/` returns nothing. A CI checkout therefore has no stamp at all, and any check over it finds nothing to examine and passes. Wiring ver:kit-manifest-agrees into ci.yml would produce a permanently green check that inspects nothing, which is the failure mode this project already names: a green gate is the weakest evidence in the building. FOUND 2026-08-07 while writing that verification, which had sat `planned` since 2026-07-25 — thirteen days in which the stamp went from four releases stale to describing kit 0.22.0/8ed097f against a source at 0.24.0/a5b0f0d. The friction report that raised it said \"reflow2's own manifest is four releases stale and nothing noticed\"; the reason nothing noticed is structural, not inattention. THE CHECK ITSELF IS WRITTEN AND RUNS (tools/check_kit_manifest.py, 14 cases in tools/test_check_kit_manifest.py), and against this repo it reports exactly one real finding — stale_version — with the ten skill mirrors correctly classified as notes rather than drift. WHERE IT CAN ACTUALLY RUN IS THE OPEN QUESTION, and it is a design question rather than a wiring one: candidates are orientation time (the SessionStart hook already prints an orientation line and already knows whether a design is present), a loop_nudge shape, or folding the hash and file-set claims into `reflow2_init.py --check`, which already reports the VERSION half and is the run people trust before letting anything touch a repo. TWO THINGS THE CHECK GOT WRONG FIRST, both corrected by reading the installer rather than reasoning about it, and both worth keeping as calibration: (1) a manifest entry for a retired file looked like drift and is the installer's INTENDED steady state — install() writes new_manifest[rel] = recorded on purpose at reflow2_init.py:1031 for an edited retired file, so flagging it would make the gate permanently red on any project that ever edited a skill; (2) the six `.claude/skills/` and four `.grok/skills/` copies here are deliberate byte-identical mirrors of getting-started/skills/, enforced by skill_lint (skill_lint.py:45-46), so flagging their mere presence would make the gate red on the one repository that maintains them correctly. A first cut flagged all ten, and a doubled path segment (`skills/skills/...`) made every mirror read as drifted — a path that could not resolve looked identical to a difference.",
+        "subject_id": "cap:thin-install",
+        "valid_from": "2026-08-07",
+        "value": "{\"cause\":\".gitignore:22 excludes .reflow2/, so .reflow2/kit-version.json is never committed and CI has no stamp\",\"consequence_if_wired\":\"a permanently green CI check that examines nothing\",\"measured\":{\"stamp_version\":\"0.22.0\",\"stamp_commit\":\"8ed097f\",\"source_version\":\"0.24.0\",\"source_commit\":\"a5b0f0d\",\"findings\":1,\"notes\":11},\"check\":\"tools/check_kit_manifest.py\",\"check_tests\":\"tools/test_check_kit_manifest.py, 14 cases\",\"planned_since\":\"2026-07-25\",\"open_question\":\"where it runs — orientation hook, a loop_nudge shape, or folded into reflow2_init.py --check which already reports the version half\",\"false_positives_corrected\":[\"retired-but-tracked entries are install()'s intended steady state (reflow2_init.py:1031)\",\"the skills mirrors are deliberate and skill_lint-enforced (skill_lint.py:45)\",\"a doubled path segment made every mirror read as drifted\"]}"
       }
     },
     {
@@ -58073,10 +58611,11 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
+        "last_run_at": "2026-08-07",
         "level": "unit",
         "method": "test",
-        "name": "An edge to a node that does not exist is refused, not written (found 2026-07-25: authored_by accepted contributor id \"person:anthony\", which was never created — the edge was stored and get_node returned null for its target, so a phantom AUTHORED_BY sat in the graph until noticed by eye; unwritten)",
-        "status": "planned"
+        "name": "An edge to a node that does not exist is refused, not written — THROUGH EVERY TYPED HELPER, not only through create_edge. Found 2026-07-25: authored_by accepted contributor id \"person:anthony\", which was never created; the edge was stored, get_node returned null for its target, and a phantom AUTHORED_BY sat in the graph until noticed by eye. THE GUARD LANDED IN create_edge (graph.rs:297, 2026-07-28) AND WAS ALREADY TESTED THERE — write_side.rs holds four cases: missing target refused, missing source refused, refusal leaves nothing behind, a legitimate edge still accepted, and an unknown edge type still named FIRST (vocabulary errors before instance errors). What none of those covered is the helpers: every one of them calls create_edge directly, while the original defect was in a typed helper. So crates/reflow2-core/tests/edges_need_both_ends.rs is an AUDIT over all 16 public helpers that join two pre-existing nodes, plus a size-floor test so the table cannot quietly shrink, an atomicity case (a refused authored_by leaves no edge on its source), and a counterweight across three modules so breaking all sixteen is not the cheapest way to pass. The audit shape is deliberate: BL-183 found exactly this divergence on the node side, where 16 of 18 add_* constructors had drifted from the generic path. MUTATION-CHECKED, AND THE RESULT WAS NOT THE EXPECTED ONE: disabling the guard failed 14 of 16, not 16 — `documents` and `release_includes` carry their own existence checks before delegating (artifact.rs:519/525, operate.rs:336) and still refused. That is safer rather than broken, and it is recorded because it changes what the file proves: fourteen helpers depend entirely on the shared guard and would regress together, two would hold. OUT OF SCOPE and named: constructors that create their own source node, the bulk form (covered by bulk.rs under dec:bulk-is-all-or-nothing-with-per-item-findings), and gate_on, which takes a struct and validates a rung range first.",
+        "status": "passing"
       }
     },
     {
@@ -58295,10 +58834,11 @@
       "node_type": "Verification",
       "properties": {
         "kind": "verification",
+        "last_run_at": "2026-08-07",
         "level": "system",
         "method": "test",
         "name": "The installed kit's manifest agrees with the kit source it claims to be — version, file set and per-file hashes (friction 2026-07-25: reflow2's own manifest is four releases stale and nothing noticed; unwritten)",
-        "status": "planned"
+        "status": "passing"
       }
     },
     {
@@ -59013,7 +59553,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e882dceea53cd833f3cd484956ddfa12e027d9ad22e29f6c3c397d69b4070487",
+  "prev_content_hash": "sha256:4b3a7fff00f435ab30fcf926a187d7375a956bcb831e84f8409de2affd36d0a1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
